@@ -4112,22 +4112,22 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.5.tgz#a979ddb163cc5a1abd5a5b1d53fbb85306c1e0a0"
-  integrity sha512-FXGaEbk83fxaN9XDIZEJLovFJUurcdbKTlPr+OcnB6tbTJ+uHvBLCue5gG1gBvhS6z0Q8MSR1tBgiiFZjeiRGw==
+"@steedos-ui/amis@^2.2.17":
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.17.tgz#338f088c97ac5ff1e044f284d9a90b7866c3edc8"
+  integrity sha512-2M8gg6JON2RMBhRQefhANIJaf/IgFhyjpdBwACoCqwuRp3TviH53gHK1sCb6G49GC848NLozHYSA80zhFU5nPw==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
 
-"@steedos-ui/builder-community@^2.2.15":
-  version "2.2.15"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.15.tgz#a19df983b22d1b8ae4557ce38536e195f0ce7f51"
-  integrity sha512-9qTWNQg0mRNAkh/hhk8jupSbFHA26igj88kBKNdMabC7SYAxy2/083F088VyrIB43Kwui2Q/VBwz7GQ+nnetSw==
+"@steedos-ui/builder-community@^2.2.17":
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.17.tgz#b57f9b1a686a1624eb9c898f0108e300840b035f"
+  integrity sha512-MPsFUuSnL3ST37H2sbXM0paWwwKzbAgDgCcz1pfLOhRm5kRcmSapR+aH632KkdY/sAlou6SobJVoe/glE/wpkw==
 
-"@steedos-ui/builder-widgets@^2.2.15":
-  version "2.2.15"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.15.tgz#5f9fa4d32d81bc93791f7d472d654dfc964b796a"
-  integrity sha512-iEKGo+i43IVTM4sNbor1R2xItDxtRZqnHUQe7wrjotyiSYG6DiROkp/gUjMzihxMDGn8hn4hCdiaA4hgVVtKiw==
+"@steedos-ui/builder-widgets@^2.2.17":
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.17.tgz#6339f1f2d6f31e1f74136229a2f650fb179bc197"
+  integrity sha512-pnGDDyQEIIos+9uYKNeV46eWafG6yoF+akJ8Ni84v9MYPMAUZ94eu+pVZkAXKli+xaNTGru67tk7CCyHFnPIEA==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4138,10 +4138,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^2.2.15":
-  version "2.2.15"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.15.tgz#c1d68db7b7a53f476a2c6e9d849e93c98dcc500b"
-  integrity sha512-WzSnENJAki0yOfL902abqQ/yDXSOg1P/nYtP3icXchGXUmjWvRAgXD39TSxba+hbv39Y6Ic6R3Wlrwnx8WENjg==
+"@steedos-ui/design-system@^2.2.17":
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.17.tgz#41782a6da44d6e2336c4db57618a24dd5a14e4ed"
+  integrity sha512-2KBqcUIywBhVIOBEbi693+nMJTUEa2+txwe8c4w+X2ZbRUQbCE9j6Huq6+ylj/kT0uyacl8sDO7/5Sn8J3qNSQ==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
@@ -5599,23 +5599,22 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-amis-formula@^1.3.12:
-  version "1.3.13"
-  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-1.3.13.tgz#1e790e5a4b9ff78c8a51786da38192d2b2576bd8"
-  integrity sha512-/aGHaVgdgMb9j2MjL18/QA3ErTppLLkl6vWmCGks1zUR8IOssjzL36UpgiKPF5K3xHjZVgfNmqrLplqxjYWi3g==
+amis-formula@^1.3.15:
+  version "1.3.15"
+  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-1.3.15.tgz#50ae2fbb998ab81500e87d3345f968fa7aef1d56"
+  integrity sha512-wkRlxpbJJOUEVnpjhCefxWyeEVQvc9fSXQtwAlEOmh+MvXCtUKL7ImlwWDNqvye+yCaOiJGlAge8QCFLKAZxJA==
   dependencies:
     lodash "^4.17.15"
     moment "^2.29.1"
     tslib "^2.3.1"
 
-amis@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/amis/-/amis-1.8.0.tgz#f664cf6befe3c876b5f00e37dd6b1c9b2303ee48"
-  integrity sha512-vMJKZNV5PMnvaUcJCF0F8744BAzpr2f0cdNbZi/+q1Mim/5R4E8CMWC9ZCV0dMALJRu2adzhO6bwZngLbF2OLg==
+amis@^1.9.1-beta.17:
+  version "1.9.1-beta.21"
+  resolved "https://registry.yarnpkg.com/amis/-/amis-1.9.1-beta.21.tgz#8d34d734370d1d86a585a0975fd74da5b6b7daa2"
+  integrity sha512-U8FF9Rd1jikrJy01kOKUgsRr9ZRB5ec/2loGU/KrKExk7p/DpLGf5cFJPfulUvTjgVoiDGTNQ8Ohzw6Vsd3d7A==
   dependencies:
-    amis-formula "^1.3.12"
+    amis-formula "^1.3.15"
     ansi-to-react "^6.1.6"
-    async "2.6.0"
     attr-accept "2.2.2"
     blueimp-canvastoblob "2.1.0"
     classnames "2.3.1"
@@ -5640,7 +5639,7 @@ amis@^1.8.0:
     mobx-react "^6.3.1"
     mobx-state-tree "^3.17.3"
     moment "^2.19.3"
-    monaco-editor "0.33.0"
+    monaco-editor "0.30.1"
     mpegts.js "^1.6.10"
     papaparse "^5.3.0"
     prop-types "^15.6.1"
@@ -5653,6 +5652,7 @@ amis@^1.8.0:
     react-color "^2.19.3"
     react-cropper "^2.1.8"
     react-dropzone "^11.4.2"
+    react-hook-form "7.30.0"
     react-input-range "1.3.0"
     react-json-view "1.21.3"
     react-overlays "5.1.1"
@@ -6387,13 +6387,6 @@ async@1.x:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
-
-async@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
-  integrity sha512-xAfGg1/NTLBBKlHFmnd7PlmUW9KhVQIUuSrYem9xzFUZy13ScvtyGGejaae9iAVRiRq9+Cx7DPFaAAhCpyxyPw==
-  dependencies:
-    lodash "^4.14.0"
 
 async@>=0.6.0, async@^3.2.0, async@^3.2.3:
   version "3.2.3"
@@ -17293,7 +17286,7 @@ lodash.uniqby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
   integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
 
-lodash@4.17.11, lodash@4.17.15, lodash@4.17.21, lodash@4.17.5, lodash@^3.10.1, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0, lodash@~4.17.10, lodash@~4.17.21:
+lodash@4.17.11, lodash@4.17.15, lodash@4.17.21, lodash@4.17.5, lodash@^3.10.1, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0, lodash@~4.17.10, lodash@~4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -18567,7 +18560,12 @@ moment-timezone@^0.5.31, moment-timezone@^0.5.x:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
   integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
-monaco-editor@0.33.0, monaco-editor@^0.33.0:
+monaco-editor@0.30.1:
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.30.1.tgz#47f8d18a0aa2264fc5654581741ab8d7bec01689"
+  integrity sha512-B/y4+b2O5G2gjuxIFtCE2EkM17R2NM7/3F8x0qcPsqy4V83bitJTIO4TIeZpYlzu/xy6INiY/+84BEm6+7Cmzg==
+
+monaco-editor@^0.33.0:
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.33.0.tgz#842e244f3750a2482f8a29c676b5684e75ff34af"
   integrity sha512-VcRWPSLIUEgQJQIE0pVT8FcGBIgFoxz7jtqctE+IiCxWugD0DwgyQBcZBhdSrdMC84eumoqMZsGl2GTreOzwqw==
@@ -22757,6 +22755,11 @@ react-dropzone@^11.4.2:
     attr-accept "^2.2.2"
     file-selector "^0.4.0"
     prop-types "^15.8.1"
+
+react-hook-form@7.30.0:
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.30.0.tgz#c9e2fd54d3627e43bd94bf38ef549df2e80c1371"
+  integrity sha512-DzjiM6o2vtDGNMB9I4yCqW8J21P314SboNG1O0obROkbg7KVS0I7bMtwSdKyapnCPjHgnxc3L7E5PEdISeEUcQ==
 
 react-input-range@1.3.0:
   version "1.3.0"
