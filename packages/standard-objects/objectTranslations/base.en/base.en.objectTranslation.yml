@@ -104,7 +104,7 @@ fields:
         value: terminated
     description: 
   process_state:
-    label: Instance State
+    label: Process State
     type: select
     options:
       - label: Draft

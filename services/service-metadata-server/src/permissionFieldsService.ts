@@ -4,7 +4,7 @@ const SERVICE_NAME = 'permission_fields';
 const METADATA_TYPE = 'permission_fields';
 const objectql = require("@steedos/objectql");
 
-const systemFields = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'process_state'];
+const systemFields = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state'];
 
 async function getFieldPermission(apiName) {
     const schema = objectql.getSteedosSchema();

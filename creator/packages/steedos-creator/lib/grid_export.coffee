@@ -47,7 +47,7 @@ filterModelToOdataFilters = (filterModel)->
 
 ObjectGrid.getFilters = (object_name, list_view_id, is_related, related_object_name, record_id)->
 	defaultListViewComponentName = Steedos.Page.Listview.getDefaultName(object_name, list_view_id);
-	if(window.gridRefs && window.gridRefs[defaultListViewComponentName])
+	if(window.gridRefs && window.gridRefs[defaultListViewComponentName] && window.gridRefs[defaultListViewComponentName].current)
 		grid = window.gridRefs[defaultListViewComponentName].current;
 	else
 		grid = window.gridRef.current;
@@ -59,7 +59,7 @@ ObjectGrid.getFilters = (object_name, list_view_id, is_related, related_object_n
 
 GridExport.excel = (object_name, list_view_id, is_related, related_object_name, record_id, mainRecordName, relatedList)->
 	defaultListViewComponentName = Steedos.Page.Listview.getDefaultName(object_name, list_view_id);
-	if(window.gridRefs && window.gridRefs[defaultListViewComponentName])
+	if(window.gridRefs && window.gridRefs[defaultListViewComponentName] && window.gridRefs[defaultListViewComponentName].current)
 		grid = window.gridRefs[defaultListViewComponentName].current;
 	else
 		grid = window.gridRef.current;

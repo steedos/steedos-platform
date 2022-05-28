@@ -69,7 +69,7 @@ Template.creator_report.helpers
 			return true
 		if filter_logic != filter_logic_for_cancel
 			return true
-		if JSON.stringify(filter_items) != JSON.stringify(filter_items_for_cancel)
+		if JSON.stringify(filter_items || []) != JSON.stringify(filter_items_for_cancel || [])
 			return true
 		return false
 	

@@ -1,6 +1,13 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:03
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-05-24 14:03:39
+ * @Description: 
+ */
 var objectql = require('@steedos/objectql');
   
-async function insertParentAndChildrenFieldForTreeObject(doc){
+async function insertParentAndChildrenFieldForTreeObject(doc, needToCheckExists){
     const baseProps = {
         object: doc.name,
         reference_to: doc.name,
@@ -12,9 +19,16 @@ async function insertParentAndChildrenFieldForTreeObject(doc){
         company_id: doc.company_id,
         company_ids: doc.company_ids
     }
-    const fields = await objectql.getObject(doc.name).toConfig().fields;
+    let isParentFieldExists = false;
+    let isChildrenFieldExists = false;
+    if(needToCheckExists){
+      const object = await objectql.getObject(doc.name);
+      const fields = object.toConfig().fields;
+      isParentFieldExists = _.has(fields,'parent');
+      isChildrenFieldExists = _.has(fields,'children');
+    }
     let docs = [];
-    if(!_.has(fields,'parent')){
+    if(!isParentFieldExists){
       docs.push(
         {
           _name: 'parent',
@@ -23,14 +37,13 @@ async function insertParentAndChildrenFieldForTreeObject(doc){
         }
       )
     }
-    if(!_.has(fields,'children')){
+    if(!isChildrenFieldExists){
       docs.push(
         {
           _name: 'children',
           label: '子' + doc.label,
           multiple: true, 
-          omit: true,
-          hidden: true,
+          visible_on: "{{false}}",
           ...baseProps
         }
       )

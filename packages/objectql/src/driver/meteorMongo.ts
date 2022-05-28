@@ -1,7 +1,7 @@
 import { JsonMap, Dictionary } from "@salesforce/ts-types";
 import { SteedosDriver } from "./index"
 import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
-import { SteedosIDType } from "../types";
+import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter } from 'odata-v4-mongodb';
@@ -9,6 +9,7 @@ import { createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { SteedosFieldDBType } from "./fieldDBType";
 import { ObjectId } from "mongodb";
+import { formatRecord } from './format';
 
 var Fiber = require('fibers');
 
@@ -630,5 +631,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
 
     _makeNewID(tableName?: string) {
         return new ObjectId().toHexString();
+    }
+
+    formatRecord(doc: Dictionary<any>, objectConfig: SteedosObjectType){
+        return formatRecord(doc, objectConfig);
     }
 }

@@ -2,6 +2,7 @@ name: audit_records
 label: Audit Record
 icon: record
 hidden: true
+version: 2
 fields:
   related_to:
     label: "Related Object Record"

@@ -1,7 +1,6 @@
 name: object_listviews
 label: List View
 icon: forecasts
-hidden: true
 version: 2
 fields:
   label:

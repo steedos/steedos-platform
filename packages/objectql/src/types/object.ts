@@ -4,7 +4,7 @@ import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generat
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
-import { SteedosDataSourceType, SteedosDatabaseDriverType } from "./datasource";
+import { SteedosDataSourceType, SteedosDatabaseDriverType, getDataSource } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
 import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
@@ -557,10 +557,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async refreshIndexes(){
-        if(this.datasource.driver === SteedosDatabaseDriverType.Mongo){
+        if(this.datasource.driver === SteedosDatabaseDriverType.Mongo  || this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo){
             const adapter = this.datasource.adapter;
             await adapter.connect()
-            const collection = (adapter as any).collection(this.name);
+            let collection = (adapter as any).collection(this.name);
+            if (this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo) {
+                let defaultAdapter = getDataSource('default').adapter
+                await defaultAdapter.connect();
+                collection = (defaultAdapter as any).collection(this.name);
+            }
             const indexesInfo = [];
             const dropIndexNames = [];
             for (const key in this.fields) {
@@ -580,7 +585,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         try {
                             await collection.createIndex(key, indexInfo)
                         } catch (error) {
-                            console.error(error)
+                            // DO NOTHING
                         }
                     }
                     // await collection.createIndexes(indexesInfo)
@@ -588,20 +593,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     console.error(error)
                 }
             }
-            if(dropIndexNames && dropIndexNames.length > 0){
-                try {
-                    for await (const indexName of dropIndexNames) {
-                        try {
-                            await collection.dropIndex(indexName)
-                        } catch (error) {
+            // if(dropIndexNames && dropIndexNames.length > 0){
+            //     try {
+            //         for await (const indexName of dropIndexNames) {
+            //             try {
+            //                 await collection.dropIndex(indexName)
+            //             } catch (error) {
                             
-                        }
-                    }
+            //             }
+            //         }
                     
-                } catch (error) {
-                    console.error(error)
-                }
-            }
+            //     } catch (error) {
+            //         console.error(error)
+            //     }
+            // }
         }
     }
 
@@ -854,22 +859,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         return await this.callAdapter('insert', this.table_name, doc, userSession)
     }
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
     }
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
     }
     // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         await this.processUneditableFields(userSession, doc)
         let clonedQueryFilters = queryFilters;
         return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
@@ -887,10 +896,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         return await this.callAdapter('directInsert', this.table_name, doc, userSession)
     }
 
     async directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        doc = this.formatRecord(doc);
         await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('directUpdate', this.table_name, clonedId, doc, userSession)
@@ -1659,6 +1670,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
         // // _.each(userObjectUneditableFields, (name: string)=>{
         // //     delete doc[name]
         // // })
+    }
+
+    private formatRecord(doc: JsonMap) {
+        let adapterFormat = this._datasource["formatRecord"];
+        if (typeof adapterFormat == 'function') {
+            doc = adapterFormat.apply(this._datasource, [doc, this.toConfig()]);
+        }
+        return doc;
     }
 
     private async callAdapter(method: string, ...args: any[]) {

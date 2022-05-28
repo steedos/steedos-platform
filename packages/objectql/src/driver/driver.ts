@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-13 10:38:53
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-05-21 15:56:26
  * @Description: 
  */
 import { Dictionary } from '@salesforce/ts-types';
@@ -90,6 +90,7 @@ export interface SteedosDriver {
     directAggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
     directAggregatePrefixalPipeline?(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
+    formatRecord?(doc: Dictionary<any>, objectConfig: SteedosObjectType): any;
     dropEntities?(): any;
     registerEntities?(objects: Dictionary<SteedosObjectType>): any;
     dropTables?(): any;

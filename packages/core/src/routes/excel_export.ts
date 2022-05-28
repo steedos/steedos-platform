@@ -29,10 +29,12 @@ const exportRecordData = async function (req, res) {
         if (!collection) {
             res.status(404).send({ msg: `collection not exists: ${objectName}` })
         }
+
+        const collectionConfig = await collection.getConfig();
         
         let lng = userSession.language;
         if(lng){
-            steedosI18n.translationObject(lng, collection.name, collection)
+            steedosI18n.translationObject(lng, collection.name, collectionConfig)
         }
 
         removeInvalidMethod(queryParams);
@@ -73,7 +75,7 @@ const exportRecordData = async function (req, res) {
             }
             if (entities) {
 
-                const fieldConfigs = collection.fields
+                const fieldConfigs = collectionConfig.fields
 
                 for (let i=0; i<entities.length; i++) {
                     let record = entities[i]
@@ -250,7 +252,15 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
         case "master_detail":
         case "lookup":
             let reference_to = fieldConfig.reference_to
-            let ref_coll = await objectql.getObject(reference_to);
+            let ref_coll: any;
+            let id = fieldValue;
+            // 判断reference_to是已经指定的对象名，还是通过function计算的对象名
+            if (_.isFunction(reference_to)) {
+                reference_to = fieldValue.o;
+                id = fieldConfig.multiple ? fieldValue.ids : fieldValue.ids[0];
+            }
+            ref_coll = await objectql.getObject(reference_to);
+            const nameFieldKey = await ref_coll.getNameFieldKey();
             let reference_to_field = fieldConfig.reference_to_field
             let filters: any[] = []
             if (reference_to_field) {
@@ -261,31 +271,31 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
 
             if (!fieldConfig.multiple) {
                 filters[1] = "=";
-                filters[2] = fieldValue;
-                let ref_record = await ref_coll.find({ filters: filters });
+                filters[2] = id;
+                let ref_record = await ref_coll.find({ filters: filters, fields: [filters[0], nameFieldKey] });
                 if(ref_record && ref_record.length == 1){
-                    return ref_record[0].name;
+                    return ref_record[0][nameFieldKey];
                 }else{
-                    return fieldValue;
+                    return id;
                 }
             } else {
                 filters[1] = "in";
-                filters[2] = fieldValue;
-                // 如果fieldValue不是数组，则返回fieldValue
-                if (!_.isArray(fieldValue)) {
-                    return fieldValue;
+                filters[2] = id;
+                // 如果id不是数组，则返回id
+                if (!_.isArray(id)) {
+                    return id;
                 }
-                let ref_record = await ref_coll.find({ filters: filters, fields: [filters[0], "name"] });
+                let ref_record = await ref_coll.find({ filters: filters, fields: [filters[0], nameFieldKey] });
 
-                for (let i = 0; i < fieldValue.length; i++) {
+                for (let i = 0; i < id.length; i++) {
                     let _record = _.find(ref_record, function(r){
-                        return r[filters[0]] == fieldValue[i]
+                        return r[filters[0]] == id[i]
                     });
                     if(_record){
-                        fieldValue[i] = _record.name
+                        id[i] = _record[nameFieldKey]
                     }
                 }
-                return fieldValue;
+                return id;
             }
         case "date":
             return moment(fieldValue).format("YYYY-MM-DD");

@@ -37,6 +37,13 @@ fields:
     group: 企业微信
     hidden: false
     sort_no: 80
+  qywx_domain_verify_file:
+    label: 域名验证文件
+    type: file
+    group: 企业微信
+    hidden: false
+    sort_no: 90
+    inlineHelpText: 企业微信可信域名验证文件（.txt），用于OAuth授权登录等功能
   qywx_need_sync:
     label: 同步企业微信
     type: boolean
