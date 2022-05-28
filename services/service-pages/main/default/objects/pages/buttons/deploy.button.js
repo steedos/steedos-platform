@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutaon@hotoa.com
  * @Date: 2022-03-29 20:33:44
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-10 14:20:32
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-05-28 17:44:34
  * @Description: 
  */
 module.exports = {
@@ -14,13 +14,18 @@ module.exports = {
             async: true,
             data: JSON.stringify({ pageId: record_id }),
             success: function (data) {
-                toastr.success('页面已发布。');
+                SteedosUI.notification.success({
+                    message: '页面已发布。'
+                });
                 SteedosUI.reloadRecord(object_name, record_id);
                 FlowRouter.reload();
                 $(document.body).removeClass('loading');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(t(XMLHttpRequest.responseJSON.error))
+                SteedosUI.notification.error({
+                    message: '操作失败',
+                    description: t(XMLHttpRequest.responseJSON.error),
+                });
                 $(document.body).removeClass('loading');
             }
         };

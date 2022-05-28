@@ -65,6 +65,10 @@ body{
     position: fixed;
 }
 
+.steedos-amis-form .antd-Select-option{
+    width: 100% !important;
+}
+
 @media (max-width: 768px) {
     .steedos-amis-form::before{
         border-bottom: none;
