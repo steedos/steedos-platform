@@ -1,16 +1,17 @@
 const objectql = require('@steedos/objectql');
+const _ = require('underscore');
 function getFieldsTemplate(fields, expand){
     if(expand != false){
         expand = true;
     }
-    const fieldsName = ['_id'];
-    const displayFields = [];
+    let fieldsName = ['_id'];
+    let displayFields = [];
     //TODO 此处需要考虑相关对象查询
     _.each(fields, function(field){
         if(field.name.indexOf('.') < 0){
             if(expand && (field.type == 'lookup' || field.type == 'master_detail') && field.reference_to){
                 const NAME_FIELD_KEY = objectql.getObject(field.reference_to).NAME_FIELD_KEY;
-                fieldsName.push(`${field.name}:${field.name}__expand{_id,name,${NAME_FIELD_KEY}}`)
+                fieldsName.push(`${field.name}:${field.name}__expand{_id,${NAME_FIELD_KEY}}`)
             }else{
                 fieldsName.push(field.name)
             }
@@ -24,6 +25,10 @@ function getFieldsTemplate(fields, expand){
             }
         }
     })
+
+    displayFields = _.uniq(displayFields);
+    fieldsName = _.uniq(fieldsName);
+
     if(displayFields.length > 0){
         return `${fieldsName.join(',')},_display{${displayFields.join(',')}}`;
     }

@@ -61,14 +61,20 @@ function lookupToAmisPicker(field, readonly){
                 }
             }
         }
-    })
+    });
+
+    const fields = {
+        [referenceTo.labelField.name]: referenceTo.labelField,
+        [referenceTo.valueField.name]: referenceTo.valueField
+    };
+
+    _.each(tableFields, (tableField)=>{
+        fields[tableField.name] = tableField;
+    });
 
     const source = getApi({
         name: referenceTo.objectName
-    }, null, {
-        [referenceTo.labelField.name]: referenceTo.labelField,
-        [referenceTo.valueField.name]: referenceTo.valueField
-    }, {alias: 'rows', queryOptions: `filters: {__filters}, top: {__top}, skip: {__skip}, sort: "{__sort}"`});
+    }, null, fields, {alias: 'rows', queryOptions: `filters: {__filters}, top: {__top}, skip: {__skip}, sort: "{__sort}"`});
     source.data.$term = "$term";
     source.data.$self = "$$";
    
@@ -114,7 +120,8 @@ function lookupToAmisPicker(field, readonly){
         size: "lg",
         pickerSchema: Table.getTableSchema(tableFields, {
             top:  top
-        })
+        }),
+        joinValues: false
     }
     if(field.multiple){
         data.multiple = true
