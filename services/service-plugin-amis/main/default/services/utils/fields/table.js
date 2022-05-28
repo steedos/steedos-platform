@@ -57,7 +57,7 @@ function getTableColumns(fields){
         }
     });
 
-    columns.push(getOperation(fields));
+    // columns.push(getOperation(fields));
 
     return columns;
 }

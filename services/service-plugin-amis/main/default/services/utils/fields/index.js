@@ -294,10 +294,10 @@ function convertSFieldToAmisField(field, readonly) {
             }
             break;
         case 'lookup':
-            convertData = Lookup.lookupToAmisSelect(field, readonly)
+            convertData = Lookup.lookupToAmis(field, readonly)
             break;
         case 'master_detail':
-            convertData = Lookup.lookupToAmisPicker(field, readonly)
+            convertData = Lookup.lookupToAmis(field, readonly)
             break;
         case 'autonumber':
             //TODO
@@ -335,7 +335,7 @@ function convertSFieldToAmisField(field, readonly) {
             break;
         case 'grid':
             convertData = {
-                type: 'table',
+                type: 'input-table',
                 strictMode:false,
                 affixHeader: false, // 是否固定表头, 不固定表头, 否则form有y轴滚动条时, 表头会跟随滚动条滚动.
                 // needConfirm: true,  此属性设置为false后，导致table不能编辑。
