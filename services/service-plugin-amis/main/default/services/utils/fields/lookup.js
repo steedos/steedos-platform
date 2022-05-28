@@ -224,8 +224,6 @@ exports.lookupToAmis = (field, readonly)=>{
     }
     const refObject = objectql.getObject(referenceTo.objectName);
 
-    // 对象配置enable_enhanced_lookup属性值有点奇怪, 给部分对象自动添加了enable_enhanced_lookup=true
-    
     // 此处不参考 steedos 的 enable_enhanced_lookup 规则. 如果默认是开启弹出选择,用户选择过程操作太繁琐, 所以默认是关闭弹出选择.
     if(refObject.enable_enhanced_lookup == true){
         return lookupToAmisPicker(field, readonly);
