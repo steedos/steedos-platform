@@ -337,7 +337,8 @@ if Meteor.isClient
 	Creator.getJsReportUrlQuery = ()->
 		urlQuery = "?space_id=#{Steedos.getSpaceId()}"
 		filter_items = Tracker.nonreactive ()->
-			return Creator.getListViewFilters(Session.get("object_name"), Session.get("list_view_id"))
+			return Session.get("filter_items")
+			# return Creator.getListViewFilters(Session.get("object_name"), Session.get("list_view_id"))
 		if filter_items
 			filterQuery = encodeURI JSON.stringify(filter_items)
 			urlQuery += "&user_filters=#{filterQuery}"
