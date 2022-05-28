@@ -91,7 +91,6 @@
                         div.id="amisModalContainer";
                         document.body.appendChild(div)
                     }
-                    console.log('getModalContainer=============', props, this);
                     return div;
                 },
                 jumpTo: (to, action) => {
@@ -133,7 +132,6 @@
                         }
                     }, env);
                 }
-                console.log("props====>", props)
                 return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name}, Object.assign({}, AmisEnv, env))));
             };
 
