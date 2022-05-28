@@ -135,7 +135,8 @@
                             "options": {
                                 "schema": schema,
                                 "data": data,
-                                "name": page.name
+                                "name": page.name,
+                                "pageType": page.type
                             }
                         },
                     }
@@ -148,23 +149,43 @@
                 return lodash.find(obj, {name : componentName})
             }
 
-            //渲染loading
-            SteedosUI.render(BuilderComponent, {
-                model: "page", content: {
-                    "data": loadingContentData
-                }
-            }, root)
+            if(!lodash.isFunction(root)){
+                //渲染loading
+                SteedosUI.render(BuilderComponent, {
+                    model: "page", content: {
+                        "data": loadingContentData
+                    }
+                }, root)
+            }
 
             Promise.all([
                 waitForThing(window, 'BuilderComponent'),
                 waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
             ]).then(()=>{
                 //渲染page
-                SteedosUI.render(BuilderComponent, {
-                    model: "page", content: {
-                        "data": pageContentData
-                    }
-                }, root)
+                if(!lodash.isFunction(root)){
+                    SteedosUI.render(BuilderComponent, {
+                        model: "page", content: {
+                            "data": pageContentData
+                        }
+                    }, root)
+                }else{
+                    data.modalName = lodash.uniqueId(`modal-${page.object_name}`);
+                    SteedosUI.Modal({
+                        name: data.modalName,
+                        title: data.title,
+                        destroyOnClose: true,
+                        maskClosable: false,
+                        keyboard: false, // 禁止 esc 关闭
+                        footer: null,
+                        bodyStyle: {padding: "0px", paddingTop: "12px"},
+                        children: React.createElement(BuilderComponent, {
+                            model: "page", content: {
+                                "data": pageContentData
+                            }
+                        })
+                    }).show();
+                }
             });
         }
 
@@ -287,8 +308,8 @@
     Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues, options) {
         const page = Steedos.Page.getPage('form', appId, objectApiName);
         if (page && page.schema) {
-            const elementId = getModalElement(`${objectApiName}-standard_new`);
-            return Steedos.Page.render(elementId, page, Object.assign({}, options, {
+            // const elementId = getModalElement(`${objectApiName}-standard_new`);
+            return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
                 appId: appId,
                 objectName: objectApiName,
                 title: title,
@@ -318,8 +339,8 @@
     Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId, options) {
         const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
         if (page && page.schema) {
-            const elementId = getModalElement(`${objectApiName}-standard_edit`);
-            return Steedos.Page.render(elementId, page, Object.assign({}, options, {
+            // const elementId = getModalElement(`${objectApiName}-standard_edit`);
+            return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
                 appId: appId,
                 objectName: objectApiName,
                 title: title,

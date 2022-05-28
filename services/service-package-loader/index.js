@@ -107,7 +107,7 @@ module.exports = {
         },
         loadPackageMetadataServices: async function (packagePath) {
             const filePatten = [
-                path.join(packagePath, 'main', 'default', 'services', `*.service.js`),
+                path.join(packagePath, 'main', 'default', 'services', "**", `*.service.js`),
                 "!" + path.join(packagePath, "**", "node_modules"),
             ];
             const matchedPaths = globby.sync(filePatten);

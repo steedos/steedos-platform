@@ -1,6 +1,6 @@
-name: enable
+name: resetSchema
 is_enable: true
-label: 启用
+label: 重置
 'on': record_only
 visible: true
-sort: 100
+sort: 9999

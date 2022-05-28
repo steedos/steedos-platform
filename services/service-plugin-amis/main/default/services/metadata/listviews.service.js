@@ -8,7 +8,6 @@ const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
 const _ = require("underscore");
 const clone = require("clone");
-
 module.exports = {
     name: "amis-metadata-listviews",
     mixins: [],
@@ -32,9 +31,20 @@ module.exports = {
                 path: "/getFilterFields",
             },
             async handler(ctx) {
-                return await this.getObjects(ctx);
+                const fields = await this.getFilterFields(ctx);
+                return { fields }
             },
         },
+        getSelectFieldOptions: {
+            rest: {
+                method: "GET",
+                path: "/getSelectFieldOptions",
+            },
+            async handler(ctx) {
+                const options = await this.getSelectFieldOptions(ctx);
+                return { status: 0, data: { options } }
+            },
+        }
     },
 
     /**
@@ -54,10 +64,11 @@ module.exports = {
                 const spaceId = userSession.spaceId;
                 const objectConfig = await objectql.getObjectConfig(objectName);
 
-                steedosI18n.translationObject(lng, object.name, object);
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const fields = [];
                 _.each(objectConfig.fields, (field) => {
+                    field.label = field.label || field.name
                     switch (field.type) {
                         case 'text':
                             fields.push({
@@ -94,12 +105,14 @@ module.exports = {
                                 name: field.name,
                             });
                             break;
+                        case 'lookup':
+                        case 'master_detail':
                         case 'select':
                             fields.push({
                                 label: field.label,
-                                type: field.type,
+                                type: 'select',
                                 name: field.name,
-                                source: "/amis/api/mock2/form/getOptions?waitSeconds=1",   //TODO
+                                source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
                                 searchable: true
                             });
                             break;
@@ -108,8 +121,31 @@ module.exports = {
                     }
                 });
 
-                return objects;
+                return fields;
             },
         },
+        getSelectFieldOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, fieldName } = ctx.params;
+                const lng = userSession.language || "zh-CN";
+                const objectConfig = await objectql.getObjectConfig(objectName);
+
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                const field = objectConfig.fields[fieldName];
+                if(field.type === 'select'){
+                    return field.options;
+                }else if(field.reference_to){
+                    const records = await objectql.getObject(field.reference_to).find({filters: [[]]})
+                    return _.map(records, (record)=>{
+                        return {
+                            label: record[objectConfig._NAME_FIELD_KEY || 'name'],
+                            value: record[objectConfig._idFieldName || '_id']
+                        };
+                    })
+                }
+            },
+        }
     },
 };

@@ -1,5 +1,3 @@
-/* @import '/amis/sdk/sdk.css'; */
-
 @import '/unpkg.com/amis@1.8.0/lib/themes/default.css';
 
 @import '/unpkg.com/amis@1.8.0/lib/themes/antd.css';
@@ -9,10 +7,10 @@
     width: 100%;
 } */
 
-.amis-scope{
+.page-template-root{
+    height: 100%;
     background: #ffffff;
 }
-
 .amis-scope svg {
     display: inline !important;
     vertical-align: initial !important;
@@ -34,4 +32,49 @@ body{
 .a-Table svg {
     display: inline !important;
     vertical-align: initial !important;
+}
+
+.ant-modal-root .amis-scope .antd-Panel-footerWrap{
+    position: sticky;
+    width: 100%;
+    bottom: 0px;
+    background: #ffffff
+}
+
+.amis-scope .antd-Modal-content{
+    max-height: calc(100vh - 200px);
+}
+
+.amis-scope .antd-Modal-content .antd-Modal-body{
+    height: calc(100% - 108px);
+    overflow: auto;
+}
+
+.steedos-amis-form .antd-Collapse .antd-Form--normal{
+    display: grid!important;
+    grid-template-columns: repeat(2,minmax(0,1fr))!important;
+    grid-row-gap: 1rem!important;
+    row-gap: 1rem!important;
+    grid-column-gap: 1.5rem!important;
+    -moz-column-gap: 1.5rem!important;
+    column-gap: 1.5rem!important;
+}
+
+/* fix checkbox 隐藏时导致滚动条异常 */
+.steedos-amis-form .antd-Collapse .antd-Form--normal .antd-Checkbox input{
+    position: fixed;
+}
+
+@media (max-width: 768px) {
+    .steedos-amis-form::before{
+        border-bottom: none;
+    }
+    
+    .steedos-amis-form .antd-Collapse .antd-Form--normal{
+        grid-template-columns: none !important;
+    }
+
+    .ant-modal-root .amis-scope .antd-Panel-footerWrap{
+        position: fixed;
+    }
 }

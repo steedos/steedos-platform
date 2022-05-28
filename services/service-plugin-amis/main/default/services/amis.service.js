@@ -1,3 +1,12 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-05-23 10:01:02
+ * @Description: 
+ */
+const AmisSchema = require('./utils/amis-schema');
+
 module.exports = {
     name: "amis",
     mixins: [],
@@ -21,7 +30,14 @@ module.exports = {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { type, app, objectApiName, recordId, formFactor } = ctx.params;
-                return this.getDefaultSchema(type, app, objectApiName, recordId, formFactor, userSession );
+                return this.getDefaultSchema({type, app, objectApiName, recordId, formFactor, userSession});
+            }
+        },
+        getInitSchema: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { type, objectApiName, formFactor } = ctx.params;
+                return this.getInitSchema({type, objectApiName, formFactor, userSession} );
             }
         }
     },
@@ -38,7 +54,7 @@ module.exports = {
      */
     methods: {
         getDefaultSchema: {
-            handler(type, app, objectApiName, recordId, formFactor, userSession) {
+            handler({type, app, objectApiName, recordId, formFactor, userSession}) {
                 // if(type === 'list'){
                 //     return {
                 //         type: 'page',
@@ -69,6 +85,13 @@ module.exports = {
                 //         "type": "dialog"
                 //       }
                 // }
+            }
+        },
+        getInitSchema: {
+            handler({type, objectApiName, formFactor, userSession}) {
+                if(type === 'form' && objectApiName){
+                   return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 
+                }
             }
         }
     },

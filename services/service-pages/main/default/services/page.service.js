@@ -108,6 +108,49 @@ module.exports = {
                 const { pageId, schema } = ctx.params;
                 return await this.changePageVersion(pageId, schema, userSession);
             }
+        },
+        resetDefaultVersion: {
+            rest: {
+                method: "POST",
+                path: "/resetDefaultSchema"
+            },
+            params: {
+                pageId: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                const userSession = ctx.meta.user;
+                const { pageId } = ctx.params;
+                const page = await objectql.getObject('pages').findOne(pageId)
+                const pageVersion = await this.getLatestPageVersion(pageId);
+                const broker = objectql.getSteedosSchema().broker;
+                const actions = broker.registry.getActionList({
+                    onlyLocal: false
+                });
+                if(_.find(actions, (action)=>{
+                    return action.name === `${page.render_engine}.getInitSchema`
+                })){
+                    const schema = await broker.call(`${page.render_engine}.getInitSchema`, {type: page.type, objectApiName: page.object_name})
+                    if(schema){
+                        const now = new Date();
+                        await objectql.getObject('page_versions').directInsert({
+                            page: pageId,
+                            is_active: false,
+                            version: pageVersion && pageVersion.version ? pageVersion.version + 1 : 1,
+                            schema: JSON.stringify(schema, null, 4),
+                            space: page.space,
+                            owner: userSession.userId,
+                            created: now,
+                            modified: now,
+                            created_by: userSession.userId,
+                            modified_by: userSession.userId,
+                            company_id: page.company_id,
+                            company_ids: page.company_ids
+                        })
+                    }
+                }
+
+                return {}
+            }
         }
     },
 

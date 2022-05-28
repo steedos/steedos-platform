@@ -3,3 +3,4 @@ is_enable: true
 label: 发布
 'on': record_only
 visible: true
+sort: 200
