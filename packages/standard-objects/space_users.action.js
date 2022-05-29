@@ -354,7 +354,7 @@ module.exports = {
     });
     let observered = false;
     const modalName = "modal-setPassword";
-    SteedosUI.Modal({ 
+    const modal = SteedosUI.Modal({ 
       title: t("Change Password"), 
       width:"100px", 
       name: modalName, 
@@ -385,7 +385,8 @@ module.exports = {
         mutationObserver && mutationObserver.disconnect();
         delete SteedosUI.refs[modalName];
       }
-    }).show();
+    });
+    modal && modal.show();
   },
   setPasswordVisible: function (object_name, record_id, record_permissions) {
     var organization = Session.get("organization");
