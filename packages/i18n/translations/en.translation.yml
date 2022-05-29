@@ -696,6 +696,7 @@ CustomLabels:
   contacts_tableau_modify_username: Change username
   contacts_tableau_modify_password: Change password
   Change password successfully: Change password successfully
+  new_password_placeholder: Please enter a new password
   Steedos Creator: Creator
   Refresh: Refresh
   Confirm: Confirm

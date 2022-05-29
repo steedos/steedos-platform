@@ -641,6 +641,7 @@ CustomLabels:
   contacts_tableau_modify_username: 更改用户名
   contacts_tableau_modify_password: 更改密码
   Change password successfully: 更改密码成功
+  new_password_placeholder: 请输入新密码
   Steedos Creator: 开发平台
   Refresh: 刷新
   Confirm: 确定

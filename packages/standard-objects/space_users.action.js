@@ -317,27 +317,35 @@ module.exports = {
       }
     }
 
-    swal({
-      title: t("Change Password"),
-      type: "input",
-      inputType: "password",
-      inputValue: "",
-      showCancelButton: true,
-      closeOnConfirm: false,
-      confirmButtonText: t('OK'),
-      cancelButtonText: t('Cancel'),
-      showLoaderOnConfirm: false
-    }, function (inputValue) {
-      var result;
-      if (inputValue === false) {
-        return false;
-      }
-      result = Steedos.validatePassword(inputValue);
-      if (result.error) {
-        return toastr.error(result.error.reason);
-      }
-      doUpdate(inputValue);
+    const inputRef = React.createRef();
+    const reactInput = React.createElement("input", {
+      type: 'password',
+      placeholder: t("new_password_placeholder"),
+      autoComplete: "new-password",
+      ref: inputRef
     });
+    const modalName = "modal-setPassword";
+    SteedosUI.Modal({ 
+      title: t("Change Password"), 
+      width:"100px", 
+      name: modalName, 
+      children: reactInput, 
+      okText: t('OK'),
+      cancelText: t('Cancel'),
+      destroyOnClose:true,
+      onOk: function(){
+        let inputValue = inputRef.current && inputRef.current.value;
+        let result = Steedos.validatePassword(inputValue);
+        if (result.error) {
+          return SteedosUI.message.error(result.error.reason);
+        }
+        doUpdate(inputValue);
+        SteedosUI.refs[modalName].close();
+      },
+      afterClose: function(){
+        delete SteedosUI.refs[modalName];
+      }
+    }).show();
   },
   setPasswordVisible: function (object_name, record_id, record_permissions) {
     var organization = Session.get("organization");
