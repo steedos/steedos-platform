@@ -15,7 +15,7 @@ const checkRepeatCompany = function(orgId, spaceId){
     }
 }
 
-Creator.Objects['company'].triggers = {
+Creator.Objects['company'].triggers = Object.assign({}, Creator.Objects['company'].triggers,{
     "before.insert.server.company": {
         on: "server",
         when: "before.insert",
@@ -147,7 +147,7 @@ Creator.Objects['company'].triggers = {
             }
         }
     }
-}
+})
 
 let _ = require("underscore");
 

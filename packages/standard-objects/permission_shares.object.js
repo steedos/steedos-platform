@@ -1,6 +1,6 @@
 const objectql = require('@steedos/objectql');
 
-Creator.Objects['permission_shares'].triggers = {
+Creator.Objects['permission_shares'].triggers = Object.assign({}, Creator.Objects['permission_shares'].triggers, {
   "before.insert.server.sharing": {
     on: "server",
     when: "before.insert",
@@ -31,7 +31,7 @@ Creator.Objects['permission_shares'].triggers = {
       }
     }
   }
-}
+})
 
 if(Meteor.isServer){
   Meteor.startup(function() {

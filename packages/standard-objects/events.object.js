@@ -37,7 +37,7 @@ let removeNotifications = function(doc, assignees){
     Creator.removeNotifications(doc, assignees, "events");
 }
 
-Creator.Objects['events'].triggers = {
+Creator.Objects['events'].triggers = Object.assign({}, Creator.Objects['events'].triggers,{
     "after.insert.server.events": {
         on: "server",
         when: "after.insert",
@@ -80,4 +80,4 @@ Creator.Objects['events'].triggers = {
             }
         }
     }
-}
+})

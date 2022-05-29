@@ -1,4 +1,4 @@
-Creator.Objects['cms_files'].triggers = {
+Creator.Objects['cms_files'].triggers = Object.assign({}, Creator.Objects['cms_files'].triggers,{
   "before.remove.server.default": {
     on: "server",
     when: "before.remove",
@@ -10,4 +10,4 @@ Creator.Objects['cms_files'].triggers = {
       });
     }
   }
-}
+})

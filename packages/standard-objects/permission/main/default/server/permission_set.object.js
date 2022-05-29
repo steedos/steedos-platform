@@ -5,7 +5,7 @@ function checkType(name, type){
     }
 }
 
-Creator.Objects['permission_set'].triggers = {
+Creator.Objects['permission_set'].triggers = Object.assign({}, Creator.Objects['permission_set'].triggers,{
     "before.insert.server.check": {
         on: "server",
         when: "before.insert",
@@ -127,4 +127,4 @@ Creator.Objects['permission_set'].triggers = {
             }
         }
     }
-}
+})

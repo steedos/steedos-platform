@@ -1,4 +1,4 @@
-Creator.Objects['chat_rooms'].triggers = {
+Creator.Objects['chat_rooms'].triggers = Object.assign({}, Creator.Objects['chat_rooms'].triggers,{
     "after.insert.server.rooms": {
         on: "server",
         when: "after.insert",
@@ -18,4 +18,4 @@ Creator.Objects['chat_rooms'].triggers = {
             });
         }
     }
-}
+})

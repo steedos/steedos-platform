@@ -1,4 +1,4 @@
-Creator.Objects['chat_messages'].triggers = {
+Creator.Objects['chat_messages'].triggers = Object.assign({}, Creator.Objects['chat_messages'].triggers,{
     "after.insert.server.chatMessages": {
         on: "server",
         when: "after.insert",
@@ -54,4 +54,4 @@ Creator.Objects['chat_messages'].triggers = {
             }
         }
     }
-}
+})
