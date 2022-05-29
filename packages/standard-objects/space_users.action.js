@@ -318,12 +318,41 @@ module.exports = {
     }
 
     const inputRef = React.createRef();
+
+    // 监听到debug模式修改密码字段的type时自动清空密码框
+    const mutationObserver = (() => {
+      try {
+        return new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'type') {
+              mutation.target.remove();
+            }
+          });
+        });
+      }
+      catch (ex) {
+        console.warn("MutationObserver Not Found:", ex);
+      }
+    })();
     const reactInput = React.createElement("input", {
       type: 'password',
       placeholder: t("new_password_placeholder"),
       autoComplete: "new-password",
-      ref: inputRef
+      ref: inputRef,
+      onKeyDown: (event) => {
+        // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
+        if((event.ctrlKey || event.metaKey) && [67, 88, 86, 65].indexOf(event.keyCode) > -1){
+          event.preventDefault();
+          return false;
+        }
+      },
+      onContextMenu: (event) => {
+        // 禁用鼠标右键菜单
+        event.preventDefault();
+        return false;
+      }
     });
+    let observered = false;
     const modalName = "modal-setPassword";
     SteedosUI.Modal({ 
       title: t("Change Password"), 
@@ -333,6 +362,16 @@ module.exports = {
       okText: t('OK'),
       cancelText: t('Cancel'),
       destroyOnClose:true,
+      modalRender: function(node){
+        if(!observered){
+          let input = inputRef.current;
+          if(input){
+            mutationObserver && mutationObserver.observe(input, {attributes: true});
+            observered = true;
+          }
+        }
+        return node;
+      },
       onOk: function(){
         let inputValue = inputRef.current && inputRef.current.value;
         let result = Steedos.validatePassword(inputValue);
@@ -343,6 +382,7 @@ module.exports = {
         SteedosUI.refs[modalName].close();
       },
       afterClose: function(){
+        mutationObserver && mutationObserver.disconnect();
         delete SteedosUI.refs[modalName];
       }
     }).show();
