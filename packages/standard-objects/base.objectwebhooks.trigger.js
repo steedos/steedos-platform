@@ -50,21 +50,25 @@ const objectWebhooksPreSend = async function (userId, doc, object_name, action) 
         if (_.isEmpty(oh.fields)) {
             data = doc;
         } else {
-            for (const fieldName in oh.fields) {
+            for (const fieldName of oh.fields) {
                 var objField, refNameFieldKey, refObj, refRecord;
                 objField = objFields[fieldName];
-                if (objField.type === 'lookup' && _.isString(objField.reference_to) && !objField.multiple) {
-                    refObj = Creator.getObject(objField.reference_to);
+                if (!objField) {
+                    console.log('[objectWebhooksPreSend] not found field: ' + fieldName);
+                    continue;
+                }
+                if (['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to) && !objField.multiple) {
+                    refObj = objectql.getObject(objField.reference_to);
                     if (refObj) {
                         refNameFieldKey = await refObj.getNameFieldKey();
                         //TODO 此处未考虑lookup字段的value不是主键的情况
                         refRecord = await refObj.findOne(doc[fieldName], {fields: [refNameFieldKey]});
                         if (refRecord) {
-                            return data[fieldName] = refRecord[refNameFieldKey];
+                            data[fieldName] = refRecord[refNameFieldKey];
                         }
                     }
                 } else {
-                    return data[fieldName] = doc[fieldName];
+                    data[fieldName] = doc[fieldName];
                 }
             }
         }
