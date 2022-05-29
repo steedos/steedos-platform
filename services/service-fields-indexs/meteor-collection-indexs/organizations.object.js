@@ -1,10 +1,13 @@
+/*
+ * @Author: baozhoutao@hotoa.com
+ * @Date: 2022-02-28 09:25:03
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-05-29 11:50:10
+ * @Description: 
+ */
 
 if (Meteor.isServer) {
-    db.organizations._ensureIndex({
-        "space": 1
-    }, {
-        background: true
-    });
+
     db.organizations._ensureIndex({
         "space": 1,
         "users": 1

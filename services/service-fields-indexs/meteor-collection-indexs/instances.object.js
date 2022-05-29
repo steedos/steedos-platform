@@ -1,16 +1,14 @@
+/*
+ * @Author: baozhoutao@hotoa.com
+ * @Date: 2022-02-28 09:25:03
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-05-29 11:46:57
+ * @Description: 
+ */
 if (Meteor.isServer) {
   const objectql = require("@steedos/objectql");
   const config = objectql.getSteedosConfig();
-  db.instances._ensureIndex({
-    "space": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1
-  }, {
-    background: true
-  });
+
   db.instances._ensureIndex({
     "submitter": 1
   }, {
@@ -47,11 +45,7 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.instances._ensureIndex({
-    "created": 1
-  }, {
-    background: true
-  });
+
   db.instances._ensureIndex({
     "_id": 1,
     "submit_date": 1
@@ -169,16 +163,7 @@ if (Meteor.isServer) {
     "submitter": 1,
     "applicant": 1
   }, Steedos.formatIndex(["is_deleted", "state", "space", "is_archive", "submitter", "applicant"]));
-  db.instances._ensureIndex({
-    "modified": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "modified": 1
-  }, {
-    background: true
-  });
+
   db.instances._ensureIndex({
     "cc_users": 1
   }, {
