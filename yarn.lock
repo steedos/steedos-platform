@@ -20724,12 +20724,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-pass-stream@~0.1.0:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/pass-stream/-/pass-stream-0.1.5.tgz#9e3afa4d5825cdd1376075bdb56de36dfb33649f"
-  integrity sha1-njr6TVglzdE3YHW9tW3jbfszZJ8=
-  dependencies:
-    readable-stream "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz"
+pass-stream@1.0.0, pass-stream@~0.1.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pass-stream/-/pass-stream-1.0.0.tgz#72850ad6b20ff7a2724a780f50e2506200b61e82"
+  integrity sha1-coUK1rIP96JySngPUOJQYgC2HoI=
 
 passport-http-bearer@1.0.1:
   version "1.0.1"
@@ -23092,10 +23090,6 @@ readable-stream@1.1.x:
     inherits "^2.0.3"
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
-
-"readable-stream@https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz":
-  version "1.0.2"
-  resolved "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz#129e553a773186632e8b58939c58e6f607542b63"
 
 readable-stream@~2.1.5:
   version "2.1.5"

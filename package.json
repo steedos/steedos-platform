@@ -50,7 +50,8 @@
     "**/globby": "9.2.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
-    "**/graphql": "15.5.0"
+    "**/graphql": "15.5.0",
+    "**/pass-stream": "1.0.0"
   },
   "devDependencies": {
     "@octokit/core": "^3.5.1",
