@@ -260,8 +260,7 @@ fields:
     disabled: true
   from_code_id:
     type: text
-    omit: true
-    hidden: true
+    visible_on: "{{false}}"
     disabled: true
 paging:
   enabled: false

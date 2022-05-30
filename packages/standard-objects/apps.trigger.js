@@ -103,19 +103,21 @@ module.exports = {
         let id = this.id;
         if(id && _.isEmpty(this.data.values)){
             let lng = await getLng(this.userId);
-            let allApps = clone(await objectql.getAppConfigs(this.spaceId));
-            let apps = {}
-            _.each(allApps, function(app){
-                if(app._id === id && app.is_creator){
-                    apps[app._id] = app
-                }
-            })
-            i18n.translationApps(lng, apps)
-            let sefl = this;
-            _.each(apps, function(app){
-                app.name = app.label
-                Object.assign(sefl.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
-            })
+            let app = await objectql.getAppConfig(id);
+            // let allApps = clone(await objectql.getAppConfigs(this.spaceId));
+            // let apps = {}
+            // _.each(allApps, function(app){
+            //     if(app._id === id && app.is_creator){
+            //         apps[app._id] = app
+            //     }
+            // })
+            i18n.translationApp(lng, app._id, app)
+            Object.assign(this.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
+            // let sefl = this;
+            // _.each(apps, function(app){
+            //     app.name = app.label
+            //     Object.assign(sefl.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
+            // })
         }
     },
     // afterInsert: async function () {
