@@ -290,12 +290,13 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
 export const runQuotedByObjectFieldFormulas = async function (objectName: string, recordId: string, userSession: any, options: {
     fieldNames?: Array<string>,
     escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>,
-    quotedByConfigs?: SteedosQuotedByFieldFormulasTypeConfig
+    quotedByConfigs?: SteedosQuotedByFieldFormulasTypeConfig,
+    isOnlyForCurrentObject?: boolean
 } = {}) {
     let currentUserId = userSession ? userSession.userId : undefined;
-    let { fieldNames, escapeConfigs, quotedByConfigs } = options;
+    let { fieldNames, escapeConfigs, quotedByConfigs, isOnlyForCurrentObject } = options;
     if (!quotedByConfigs) {
-        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs);
+        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs, isOnlyForCurrentObject);
         // console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
     }

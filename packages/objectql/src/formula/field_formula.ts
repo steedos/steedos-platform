@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:03
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-05-30 10:08:55
+ * @Description: 
+ */
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { sortFieldFormulaConfigs, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { getSteedosSchema } from '../types/schema';
@@ -42,8 +49,9 @@ export const getObjectFieldFormulaConfigs = async (objectName: string, fieldName
  * @param objectName 
  * @param fieldNames 
  * @param escapeConfigs 要跳过的字段公式
+ * @param isOnlyForCurrentObject 要跳过其他对象上的字段公式，只检测当前对象上的字段公式，新建记录的时候传入true可以提高性能，避免不必要的公式计算
  */
-export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
+export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>, isOnlyForCurrentObject?: boolean): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
     const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
     let configsOnCurrentObject = [];
     let configsOnOtherObjects = [];
@@ -66,7 +74,7 @@ export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, f
             if (isOwn) {
                 configsOnCurrentObject.push(config);
             }
-            else {
+            else if (!isOnlyForCurrentObject) {
                 configsOnOtherObjects.push(config);
             }
         }

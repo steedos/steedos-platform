@@ -1807,10 +1807,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             else {
                 let currentUserId = userSession ? userSession.userId : undefined;
                 await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
-                if (method === "update") {
-                    // 新建记录时肯定不会有字段被引用，不需要重算被引用的公式字段值
-                    await runQuotedByObjectFieldFormulas(objectName, recordId, userSession);
-                }
+                // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
+                // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946
+                const isOnlyForCurrentObject = method === "insert";
+                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { isOnlyForCurrentObject });
             }
         }
     }
