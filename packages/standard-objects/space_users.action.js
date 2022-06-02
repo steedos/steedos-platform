@@ -284,8 +284,7 @@ module.exports = {
     }
 
     var userSession = Creator.USER_CONTEXT;
-
-    if (!isAdmin) {
+    if (!isAdmin || (record_id == this.record._id)) {
       var isPasswordEmpty = false;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", { type: 'get', async: false });
       if (!result.error) {
