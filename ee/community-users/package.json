@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_community-users",
-  "version": "2.2.36",
+  "version": "2.2.37",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
