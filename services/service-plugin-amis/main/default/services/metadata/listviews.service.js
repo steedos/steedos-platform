@@ -224,64 +224,73 @@ module.exports = {
 
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
+                const fieldsArr = [];
+                _.each(objectConfig.fields , (field, field_name)=>{
+                    if(!_.has(field, "name")){
+                        field.name = field_name
+                    }
+                    fieldsArr.push(field)
+                })
                 const fields = [];
-                _.each(objectConfig.fields, (field) => {
-                    field.label = field.label || field.name
-                    switch (field.type) {
-                        case 'text':
-                            fields.push({
-                                label: field.label,
-                                type: field.type,
-                                name: field.name,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        case 'number':
-                            fields.push({
-                                label: field.label,
-                                type: field.type,
-                                name: field.name,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        case 'date':
-                            fields.push({
-                                label: field.label,
-                                type: field.type,
-                                name: field.name,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        case 'datetime':
-                            fields.push({
-                                label: field.label,
-                                type: field.type,
-                                name: field.name,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        case 'time':
-                            fields.push({
-                                label: field.label,
-                                type: field.type,
-                                name: field.name,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        case 'lookup':
-                        case 'master_detail':
-                        case 'select':
-                            fields.push({
-                                label: field.label,
-                                type: 'select',
-                                name: field.name,
-                                source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
-                                searchable: true,
-                                operators: getFieldOperators(field.type)
-                            });
-                            break;
-                        default:
-                            break;
+                _.each(_.sortBy(fieldsArr, "sort_no"), function(field){
+                    if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
+                        field.label = field.label || field.name
+                        switch (field.type) {
+                            case 'text':
+                                fields.push({
+                                    label: field.label,
+                                    type: field.type,
+                                    name: field.name,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            case 'number':
+                                fields.push({
+                                    label: field.label,
+                                    type: field.type,
+                                    name: field.name,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            case 'date':
+                                fields.push({
+                                    label: field.label,
+                                    type: field.type,
+                                    name: field.name,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            case 'datetime':
+                                fields.push({
+                                    label: field.label,
+                                    type: field.type,
+                                    name: field.name,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            case 'time':
+                                fields.push({
+                                    label: field.label,
+                                    type: field.type,
+                                    name: field.name,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            case 'lookup':
+                            case 'master_detail':
+                            case 'select':
+                                fields.push({
+                                    label: field.label,
+                                    type: 'select',
+                                    name: field.name,
+                                    source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
+                                    searchable: true,
+                                    operators: getFieldOperators(field.type)
+                                });
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
 
