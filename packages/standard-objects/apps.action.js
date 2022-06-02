@@ -1,9 +1,17 @@
+/*
+ * @Author: baozhoutao@hotoa.com
+ * @Date: 2021-12-27 10:49:33
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-05-30 11:53:17
+ * @Description: 
+ */
 module.exports = {
     customize: function (object_name, record_id, fields) {
         var doc = Creator.odata.get(object_name, record_id);
         var newRecord = _.pick(doc, Creator.getObjectFieldsName(object_name));
         delete newRecord.is_system;
         delete newRecord._id;
+        delete newRecord.record_permissions;
         newRecord.from_code_id = record_id;
         Creator.odata.insert(object_name, newRecord, function(result, error){
             if(result){
@@ -14,7 +22,7 @@ module.exports = {
     },
     customizeVisible: function(object_name, record_id, record_permissions, record){
         if(record._id === 'admin'){return false;}
-        return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+        return Creator.baseObject.actions.standard_new.visible() && record.is_system && !record.from_code_id;
     },
     reset: function(object_name, record_id, fields){
         var record = Creator.odata.get(object_name, record_id);
@@ -23,6 +31,7 @@ module.exports = {
         newRecord.from_code_id = newRecord._id;
         delete newRecord.is_system;
         delete newRecord._id;
+        delete newRecord.record_permissions;
         Creator.odata.update(object_name, record_id, newRecord);
         FlowRouter.reload();
     },

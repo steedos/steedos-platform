@@ -1798,7 +1798,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     };
 
     private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
-        if (["insert", "update", "updateMany"].indexOf(method) > -1) {
+        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
             if (method === "updateMany") {
                 // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
                 // let filters: SteedosQueryFilters = args[1];
@@ -1806,7 +1806,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             else {
                 let currentUserId = userSession ? userSession.userId : undefined;
-                await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
+                if(method !== "delete"){
+                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
+                }
                 // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
                 // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946
                 const isOnlyForCurrentObject = method === "insert";

@@ -326,36 +326,45 @@ router.get('/api/qiyeweixin/stockData', async function (req, res) {
     qywxSync.write("access_token:" + access_token)
 
     deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
+    // console.log("before deptListRes",deptListRes);
     deptListRes = await deptListRes.json()
+    // console.log("deptListRes: ",deptListRes)
     deptListRes = deptListRes.department
     // console.log(deptListRes)
     for (let i = 0; i < deptListRes.length; i++) {
         qywxSync.write("部门ID:" + deptListRes[i]['id'])
         await qywxSync.deptinfoPush(deptListRes[i]['id'], deptListRes[i]['name'], deptListRes[i]['parentid'])
-    }
 
-    for (let i = 0; i < deptListRes.length; i++) {
         userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
         userListRes = await userListRes.json()
         userListRes = userListRes.userlist
         for (let ui = 0; ui < userListRes.length; ui++) {
             await qywxSync.userinfoPush(userListRes[ui]['userid'])
         }
-
     }
 
-    for (let i = 0; i < deptListRes.length; i++) {
-        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
-        userListRes = await userListRes.json()
-        userListRes = userListRes.userlist
-        for (let ui = 0; ui < userListRes.length; ui++) {
-            await qywxSync.userinfoPush(userListRes[ui]['userid'])
-        }
+    // for (let i = 0; i < deptListRes.length; i++) {
+    //     userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+    //     userListRes = await userListRes.json()
+    //     userListRes = userListRes.userlist
+    //     for (let ui = 0; ui < userListRes.length; ui++) {
+    //         await qywxSync.userinfoPush(userListRes[ui]['userid'])
+    //     }
 
-    }
+    // }
+
+    // for (let i = 0; i < deptListRes.length; i++) {
+    //     userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+    //     userListRes = await userListRes.json()
+    //     userListRes = userListRes.userlist
+    //     for (let ui = 0; ui < userListRes.length; ui++) {
+    //         await qywxSync.userinfoPush(userListRes[ui]['userid'])
+    //     }
+
+    // }
 
 
-    res.status(200).send({ message: "dsa" });
+    res.status(200).send({ message: "ok" });
 });
 
 
