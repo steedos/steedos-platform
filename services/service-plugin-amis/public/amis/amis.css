@@ -50,6 +50,11 @@ body{
     overflow: auto;
 }
 
+.amis-scope .antd-Select-option > label {
+    display: block;
+    min-width: 100px;
+}
+
 .steedos-amis-form .antd-Collapse .antd-Form--normal{
     display: grid!important;
     grid-template-columns: repeat(2,minmax(0,1fr))!important;
