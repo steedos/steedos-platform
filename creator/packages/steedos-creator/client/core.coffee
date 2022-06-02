@@ -487,6 +487,11 @@ if Meteor.isClient
 			if filter_item.value
 				isFiltering = true;
 			return !isFiltering;
+		if !isFiltering
+			_.every filter_items, (filter_item)->
+				if filter_item.length > 0
+					isFiltering = true;
+				return !isFiltering;
 		return isFiltering
 	
 	Creator.pushCurrentPathToUrlQuery = ()->

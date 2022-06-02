@@ -1,0 +1,12 @@
+name: listview_form
+is_active: true
+label: 列表视图表单
+object_name: object_listviews
+pageAssignments:
+  - desktop: true
+    mobile: true
+    page: listview
+    type: orgDefault
+render_engine: amis
+type: form
+widgets: []

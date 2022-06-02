@@ -14,7 +14,7 @@ function getReadonlyFormAdaptor(fields){
             const valueField = field.name;
             if(field.options){
                 const options = JSON.stringify({options: field.options});
-                scriptStr = scriptStr + `var ${field.name}Options= (${options}).options;console.log('${field.name}Options', ${field.name}Options);`;
+                scriptStr = scriptStr + `var ${field.name}Options= (${options}).options;`;
             }else if(field.optionsFunction){
                 scriptStr = scriptStr + `var ${field.name}Options = eval(${field.optionsFunction.toString()})(api.data);`
             }
@@ -44,7 +44,6 @@ function getReadonlyFormAdaptor(fields){
     return  `
     var data = payload.data.data[0];
     ${scriptStr}
-    console.log('data', data);
     payload.data = data;
     return payload;
 `
@@ -83,7 +82,8 @@ function getConvertDataScriptStr(fields){
 function getEditFormInitApi(object, recordId, fields){
     return {
         method: "post",
-        url: graphql.getApi()+"?rf="+ (new Date()).getTime(),
+        url: graphql.getApi(),
+        sendOn: "!!this.recordId",
         cache: APICACHE,
         adaptor: `
             var data = payload.data.data[0];
@@ -92,7 +92,6 @@ function getEditFormInitApi(object, recordId, fields){
             };
             payload.data = data;
             delete payload.extensions;
-            console.log('getEditFormInitApi', payload);
             return payload;
         `,
         data: graphql.getFindOneQuery(object, recordId, fields)

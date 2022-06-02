@@ -125,26 +125,35 @@ if Meteor.isClient
 			Modal.show("standard_query_modal")
 
 		"standard_new": (object_name, record_id, fields)->
-			current_record_id = Session.get("record_id")
-			if current_record_id
-				# amis 相关子表右上角新建
-				Creator.relatedObjectStandardNew(object_name)
-				return 
+			# current_record_id = Session.get("record_id")
+			# if current_record_id
+			# 	# amis 相关子表右上角新建
+			# 	Creator.relatedObjectStandardNew(object_name)
+			# 	return 
 			object = Creator.getObject(object_name);
 			gridName = this.action.gridName;
-			initialValues={}
-			if(gridName)
-				selectedRows = window.gridRefs?[gridName].current?.api?.getSelectedRows()
+			isRelated = this.action.isRelated;
+			if isRelated
+				relatedFieldName = this.action.relatedFieldName;
+				masterRecordId = this.action.masterRecordId;
+				initialValues = this.action.initialValues
+				if !initialValues
+					initialValues = {};
+					initialValues[relatedFieldName] = masterRecordId
 			else
-				selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
-			
-			if selectedRows?.length
-				record_id = selectedRows[0]._id;
-				if record_id
-					initialValues = Creator.odata.get(object_name, record_id)
+				initialValues={}
+				if(gridName)
+					selectedRows = window.gridRefs?[gridName].current?.api?.getSelectedRows()
+				else
+					selectedRows = window.gridRef?.current?.api?.getSelectedRows()	
+				
+				if selectedRows?.length
+					record_id = selectedRows[0]._id;
+					if record_id
+						initialValues = Creator.odata.get(object_name, record_id)
 
-			else
-				initialValues = FormManager.getInitialValues(object_name)
+				else
+					initialValues = FormManager.getInitialValues(object_name)
 
 			if object?.version >= 2
 				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, '新建 ' + object.label, initialValues , {gridName: gridName});

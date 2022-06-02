@@ -639,20 +639,21 @@ Template.creator_view.events
 			if !_.isEmpty(defaultDoc)
 				initialValues = defaultDoc
 		if relateObject?.version >= 2
-			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-				name: "#{related_object_name}_standard_new_form",
-				objectApiName: related_object_name,
-				title: '新建 ' + relateObject.label,
-				initialValues: initialValues,
-				afterInsert: (result)->
-					setTimeout(()->
-						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
-						if Creator.getObject(current_object_name).version > 1
-							SteedosUI.reloadRecord(current_object_name, current_record_id)
-						FlowRouter.reload();
-					, 1);
-					return true;
-			}, null, {iconPath: '/assets/icons'})
+			return Creator.executeAction(related_object_name, Object.assign({isRelated: true, initialValues: initialValues}, Creator.getObject(related_object_name).actions.standard_new))
+			# return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+			# 	name: "#{related_object_name}_standard_new_form",
+			# 	objectApiName: related_object_name,
+			# 	title: '新建 ' + relateObject.label,
+			# 	initialValues: initialValues,
+			# 	afterInsert: (result)->
+			# 		setTimeout(()->
+			# 			# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+			# 			if Creator.getObject(current_object_name).version > 1
+			# 				SteedosUI.reloadRecord(current_object_name, current_record_id)
+			# 			FlowRouter.reload();
+			# 		, 1);
+			# 		return true;
+			# }, null, {iconPath: '/assets/icons'})
 
 
 

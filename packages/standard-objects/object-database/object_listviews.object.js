@@ -1,6 +1,16 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-05-30 18:38:47
+ * @Description: 
+ */
 const _ = require("underscore");
 
 function transformFilters(filters){
+  if(_.isString(filters)){
+    return filters;
+  }
   let _filters = [];
   _.each(filters, function(filter){
     if(_.isObject(filter)){

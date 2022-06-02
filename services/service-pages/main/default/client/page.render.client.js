@@ -57,8 +57,7 @@
         }
     }
 
-    Steedos.Page.render = function (root, page, data) {
-
+    Steedos.Page.render = function (root, page, data, options) {
         const loadingContentData = {
             "inputs": [],
             // "title": "loading",
@@ -111,7 +110,8 @@
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
-            const defData = Object.assign({}, data, {
+
+            const defData = lodash.defaultsDeep({}, data , {
                 data: {
                     context: {
                         rootUrl: __meteor_runtime_config__.ROOT_URL,
@@ -120,7 +120,7 @@
                         authToken: Creator.USER_CONTEXT.user.authToken
                     }
                 }
-            })
+            });
 
             schema = lodash.defaultsDeep(defData , schema);
 
@@ -170,21 +170,40 @@
                         }
                     }, root)
                 }else{
-                    data.modalName = lodash.uniqueId(`modal-${page.object_name}`);
-                    SteedosUI.Modal({
-                        name: data.modalName,
-                        title: data.title,
-                        destroyOnClose: true,
-                        maskClosable: false,
-                        keyboard: false, // 禁止 esc 关闭
-                        footer: null,
-                        bodyStyle: {padding: "0px", paddingTop: "12px"},
-                        children: React.createElement(BuilderComponent, {
-                            model: "page", content: {
-                                "data": pageContentData
-                            }
-                        })
-                    }).show();
+                    if(root === SteedosUI.Drawer){
+                        data.drawerName = data.drawerName || lodash.uniqueId(`drawer-${page.object_name}`);
+                        SteedosUI.Drawer(Object.assign({
+                            name: data.drawerName,
+                            title: data.title,
+                            destroyOnClose: true,
+                            maskClosable: false,
+                            footer: null,
+                            bodyStyle: {padding: "0px", paddingTop: "12px"},
+                            children: React.createElement(BuilderComponent, {
+                                model: "page", content: {
+                                    "data": pageContentData
+                                }
+                            })
+                        }, options?.props)).show();
+                    }else{
+                        data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
+                        SteedosUI.Modal(Object.assign({
+                            name: data.modalName,
+                            title: data.title,
+                            destroyOnClose: true,
+                            maskClosable: false,
+                            keyboard: false, // 禁止 esc 关闭
+                            footer: null,
+                            bodyStyle: {padding: "0px", paddingTop: "12px"},
+                            children: React.createElement(BuilderComponent, {
+                                model: "page", content: {
+                                    "data": pageContentData
+                                }
+                            })
+                        }, options?.props)).show();
+                    }
+
+                    
                 }
             });
         }
@@ -313,7 +332,7 @@
                 appId: appId,
                 objectName: objectApiName,
                 title: title,
-                initialValues: initialValues,
+                data: initialValues,
             }));
         }
 

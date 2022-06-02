@@ -120,6 +120,25 @@ Creator.getListViewFilters = (object_name, list_view_id, is_related, related_obj
 		filter_items = Session.get("filter_items")
 		_objFields = creator_obj.fields
 
+		if filter_items && filter_items.length > 0 && window.lodash.isArray(filter_items[0])
+			filter = filter_items;
+			standardQuery = Creator.getStandardQuery(object_name, Session.get("standard_query"))
+			if standardQuery and standardQuery.length
+				if filter
+					filter = [filter, "and", standardQuery]
+				else
+					filter = standardQuery
+			sidebarFilter = Session.get("grid_sidebar_filters")
+			if sidebarFilter and sidebarFilter.length
+				if filter
+					filter = [ filter, "and", sidebarFilter ]
+				else
+					filter = sidebarFilter
+			if !filter
+				# filter 为undefined时要设置为空，否则dxDataGrid控件会使用上次使用过的filter
+				filter = null
+			return filter
+
 		_filters = []
 		_.forEach filter_items, (fi)->
 			if fi.value == undefined

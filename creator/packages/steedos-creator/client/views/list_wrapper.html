@@ -214,28 +214,6 @@
 							{{/if}}
 						{{/if}}
 						</div>
-						<div class="slds-grid slds-no-flex slds-hide filter-list-container">
-							<div class="filter-list slds-grid slds-grid_vertical">
-								<div class="slds-form slds-form_stacked slds-grow slds-scrollable_y slds-grid slds-grid_vertical">
-									<div class="slds-filters">
-										<div class="slds-filters__header slds-grid slds-has-divider_bottom-space">
-											{{#unless is_filter_changed}}
-												<h2 class="slds-align-middle slds-text-heading_small">{{_ "creator_list_filter"}}</h2>
-												{{> steedos_button className="slds-col_bump-left slds-button_icon slds-button_icon-small close-filter-panel" title=(_ "creator_filter_close_filter_panel")
-													iconCategory="utility" iconName="forward" iconClassName="slds-button__icon_hint" variant="icon"}}
-											{{else}}
-												<button class="slds-button slds-button_neutral cancel-change">{{_ "creator_list_filter_cancel"}}</button>
-												<!-- <button class="slds-button slds-button_neutral filters-save-as">{{_ "creator_list_filter_save_as"}}</button> -->
-												<button class="slds-button slds-button_brand save-change">{{_ "creator_list_filter_save"}}</button>
-											{{/unless}}
-										</div>
-										<div class="vert-scroller">
-											{{> filter_option_list}}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

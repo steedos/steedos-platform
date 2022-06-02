@@ -190,65 +190,66 @@ fields:
         value: desc
   filters:
     label: Filters
-    type: grid
+    type: code
     is_wide: true
     hidden: false
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     depend_on:
       - object_name
-  filters.$:
-    label: Filter
-    blackbox: true
-  filters.$.field:
-    label: Field
-    type: lookup
-    showIcon: false
-    optionsFunction: !!js/function |
-      function(values){
-        if(values.object_name){
-          return Creator.getObjectFilterFieldOptions(values.object_name)
-        }
-        return []
-      }
-  filters.$.operation:
-    label: Operator
-    type: lookup
-    showIcon: false
-    optionsFunction: !!js/function |
-      function(values){
-        if(values.object_name){
-          if(!this.template){
-            let options = Creator.getFieldOperation();
-            Creator.pushBetweenBuiltinOptionals('date', options);
-            return options;
-          }
+  # filters.$:
+  #   label: Filter
+  #   blackbox: true
+  # filters.$.field:
+  #   label: Field
+  #   type: lookup
+  #   showIcon: false
+  #   optionsFunction: !!js/function |
+  #     function(values){
+  #       if(values.object_name){
+  #         return Creator.getObjectFilterFieldOptions(values.object_name)
+  #       }
+  #       return []
+  #     }
+  # filters.$.operation:
+  #   label: Operator
+  #   type: lookup
+  #   showIcon: false
+  #   optionsFunction: !!js/function |
+  #     function(values){
+  #       if(values.object_name){
+  #         if(!this.template){
+  #           let options = Creator.getFieldOperation();
+  #           Creator.pushBetweenBuiltinOptionals('date', options);
+  #           return options;
+  #         }
           
-          const filter = _.find(values.filters, function (item) {
-            return item._id === values._grid_row_id
-          })
+  #         const filter = _.find(values.filters, function (item) {
+  #           return item._id === values._grid_row_id
+  #         })
 
-          if(filter){
-            var field = filter.field;
-            if(field){
-              var object_fields = Creator.getObject(values.object_name).fields
-              var filter_field_type;
-              if(object_fields[field]){
-                filter_field_type = object_fields[field].type
-                return Creator.getFieldOperation(filter_field_type);
-              }
-            }
-          }
-        }
-        return [];
-      }
-  filters.$.value:
-    label: Value
-    blackbox: true
+  #         if(filter){
+  #           var field = filter.field;
+  #           if(field){
+  #             var object_fields = Creator.getObject(values.object_name).fields
+  #             var filter_field_type;
+  #             if(object_fields[field]){
+  #               filter_field_type = object_fields[field].type
+  #               return Creator.getFieldOperation(filter_field_type);
+  #             }
+  #           }
+  #         }
+  #       }
+  #       return [];
+  #     }
+  # filters.$.value:
+  #   label: Value
+  #   blackbox: true
   filter_logic:
     label: Logic
     type: text
     readonly: true
+    hidden: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
   mobile_columns:
     label: Mobile Columns
@@ -297,6 +298,9 @@ list_views:
 actions:
   customize:
     label: Customize
+    on: record_only
+  copy:
+    label: 复制 
     on: record_only
 permission_set:
   user:

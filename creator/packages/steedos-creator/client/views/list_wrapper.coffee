@@ -352,32 +352,32 @@ Template.creator_list_wrapper.events
 #		template.$(".dx-datagrid-export-button").click()
 
 	'click .btn-filter-list': (event, template)->
-		$(event.currentTarget).toggleClass("slds-is-selected")
-		$(".filter-list-container").toggleClass("slds-hide")
+		Creator.showListFilter(Session.get("object_name"));
+		# $(event.currentTarget).toggleClass("slds-is-selected")
+		# $(".filter-list-container").toggleClass("slds-hide")
 
 	'click .close-filter-panel': (event, template)->
 		$(".btn-filter-list").removeClass("slds-is-selected")
 		$(".filter-list-container").addClass("slds-hide")
 	
 	'click .add-list-view': (event, template)->
-		$(".btn-add-list-view").click()
+		# $(".btn-add-list-view").click()
+		Creator.executeAction("object_listviews", Object.assign({isRelated: true, initialValues: {object_name: Session.get("object_name")}}, Creator.getObject("object_listviews").actions.standard_new))
 
 	'click .copy-list-view': (event, template)->
+		Creator.executeAction("object_listviews", Creator.getObject("object_listviews").actions.copy, Session.get("list_view_id"));
+		# delete current_list_view._id
 
-		current_list_view = _.clone(Creator.getListView(Session.get("object_name"), Session.get("list_view_id")))
+		# delete current_list_view.name
 
-		delete current_list_view._id
+		# delete current_list_view.label
 
-		delete current_list_view.name
+		# if current_list_view.filters
+		# 	current_list_view.filters = transformFilters(current_list_view.filters)
 
-		delete current_list_view.label
+		# Session.set "cmDoc", current_list_view
 
-		if current_list_view.filters
-			current_list_view.filters = transformFilters(current_list_view.filters)
-
-		Session.set "cmDoc", current_list_view
-
-		$(".btn-add-list-view").click()
+		# $(".btn-add-list-view").click()
 
 	'click .reset-column-width': (event, template)->
 		list_view_id = Session.get("list_view_id")
@@ -401,7 +401,8 @@ Template.creator_list_wrapper.events
 				Session.set "list_view_visible", true
 
 	'click .edit-list-view': (event, template)->
-		$(".btn-edit-list-view").click()
+		# $(".btn-edit-list-view").click()
+		Creator.executeAction("object_listviews", Creator.getObject("object_listviews").actions.standard_edit, Session.get("list_view_id"))
 
 	'click .cancel-change': (event, template)->
 		list_view_id = Session.get("list_view_id")

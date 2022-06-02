@@ -184,25 +184,26 @@ Template.related_object_list.events
 				initialValues = defaultDoc
 
 		if relateObject?.version >= 2
-			return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-				name: "#{related_object_name}_standard_new_form",
-				objectApiName: related_object_name,
-				title: '新建 ' + relateObject.label,
-				initialValues: initialValues,
-				afterInsert: (result)->
-					if(result.length > 0)
-						record = result[0];
-						# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
-						if Creator.getObject(object_name).version > 1
-							SteedosUI.reloadRecord(object_name, record_id)
-						setTimeout(()->
-							app_id = Session.get("app_id")
-							url = "/app/#{app_id}/#{related_object_name}/view/#{record._id}"
-							FlowRouter.go url
-						, 1);
-						return true;
+			return Creator.executeAction(related_object_name, Object.assign({isRelated: true, initialValues: initialValues}, Creator.getObject(related_object_name).actions.standard_new))
+			# return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+			# 	name: "#{related_object_name}_standard_new_form",
+			# 	objectApiName: related_object_name,
+			# 	title: '新建 ' + relateObject.label,
+			# 	initialValues: initialValues,
+			# 	afterInsert: (result)->
+			# 		if(result.length > 0)
+			# 			record = result[0];
+			# 			# ObjectForm有缓存，新建子表记录可能会有汇总字段，需要刷新表单数据
+			# 			if Creator.getObject(object_name).version > 1
+			# 				SteedosUI.reloadRecord(object_name, record_id)
+			# 			setTimeout(()->
+			# 				app_id = Session.get("app_id")
+			# 				url = "/app/#{app_id}/#{related_object_name}/view/#{record._id}"
+			# 				FlowRouter.go url
+			# 			, 1);
+			# 			return true;
 
-			}, null, {iconPath: '/assets/icons'})
+			# }, null, {iconPath: '/assets/icons'})
 
 		if selectedRows?.length
 			# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
