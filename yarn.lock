@@ -4112,22 +4112,22 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^2.2.19":
-  version "2.2.19"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.19.tgz#c75ccd00fcfde46233b011dcde28a4b0ea5004e7"
-  integrity sha512-rk7EDCY8gkqOKpfW+y6NsPQOLOSeWQl5h6dVKKw0sXDFm6fFboRuO0WHfdxAimmEa3Cq374aYbGljNt3n2D4dQ==
+"@steedos-ui/amis@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.20.tgz#98facf8b8af9ef232e0deaef1980290a1bd9675d"
+  integrity sha512-eODdX6yzm/xUmKIHbL6AMbnR6hEvOrNgDaKEHlvTqg5MhQ5V28zz3pgn+7GnfsbK5EAIe833cwIXIt55CkfLJg==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
 
-"@steedos-ui/builder-community@^2.2.19":
-  version "2.2.19"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.19.tgz#2a0df70c74373660b9b00a719a064d4ee1cf6031"
-  integrity sha512-J3GAVeBEg+BegJ6J0r3oqfDvRue1T1dWUFvI180ukNJAFko+1/1aeXH1VTAoHt7TnLXpmNk5SatR7pw49FO6JA==
+"@steedos-ui/builder-community@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.20.tgz#71beb545064325ca95c7b0ca7ef4427bfa57f928"
+  integrity sha512-od4sVmU/m2qmYwigQxQSS9t+8PmPRA6MPvKcCeLZuWiXoDchx7DWJqTuT636+Mmvjs1lw4sgUmozoh/WVbOjhA==
 
-"@steedos-ui/builder-widgets@^2.2.19":
-  version "2.2.19"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.19.tgz#245087dd9b42eef0d7498a733a87c98942333d34"
-  integrity sha512-Nrm/zmUuZUTKMaaTdVvUGYmw1/7na/HFAzA9Pj7g5eWr/Az1wUZbRQE+HFWvKctd4BSUQHF9WLlTQjDvvDi5Fg==
+"@steedos-ui/builder-widgets@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.20.tgz#5485c8ff3c8f203889c1ba1eede52872ea7904a6"
+  integrity sha512-Ntubcyyo6mRr2adNt8FS8FZR59RT7ecaQSYOoeT6Zjw58GM/n6/2Z6Yv8011UTyQpjx15PhgKzc0MjHhTmIC/w==
   optionalDependencies:
     create-inferno-context "^0.2.4"
     create-react-context "^0.2.3"
@@ -4138,10 +4138,10 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos-ui/design-system@^2.2.19":
-  version "2.2.19"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.19.tgz#229f8fd221f1eefc9221f2c754faa300dedc2084"
-  integrity sha512-iuI4m9R8aKrMq/vSYsfV5MV91MEnQ4xp04+J913JLH9mCseK3SDod+FQou/cxos78o6+Zaw/lZ1MIHS6xcLGjQ==
+"@steedos-ui/design-system@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.20.tgz#54b5ae005615ada029837d03c64b4a65f086048f"
+  integrity sha512-+XmhoiyuE6jLdZ/+YHU9ZPbqN7fE5HlKBuWyNJ4LX4lB1ZFl+1Cb4zZUkeYVA61C5LirGxVuXcroXeU15LNhLg==
   dependencies:
     react-required-if "^1.0.3"
   optionalDependencies:
