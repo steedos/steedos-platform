@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-translations",
-  "version": "2.2.37",
+  "version": "2.2.38",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_plugin-field-encryption",
-  "version": "2.2.37",
+  "version": "2.2.38",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
