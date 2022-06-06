@@ -91,7 +91,7 @@ function lookupToAmisPicker(field, readonly){
         if(api.data.$term){
             filters = [["name", "contains", "'+ api.data.$term +'"]];
         }else if(selfData.op === 'loadOptions' && selfData.value){
-            filters = [["${valueField}", "=", selfData.value]];
+            filters = [["${valueField.name}", "=", selfData.value]];
         }
         if(allowSearchFields){
             allowSearchFields.forEach(function(key){
