@@ -29,11 +29,15 @@ Meteor.methods
 		if spaceUser.invite_state == "pending" or spaceUser.invite_state == "refused"
 			throw new Meteor.Error(400, "该用户尚未同意加入该工作区，无法修改密码")
 
-		Steedos.validatePassword(password)
+		# Steedos.validatePassword(password)
 		logout = true;
 		if this.userId == user_id
 			logout = false
-		Accounts.setPassword(user_id, password, {logout: logout})
+		
+		Accounts.setPassword(user_id, {
+			algorithm: 'sha-256',
+			digest: password
+		}, {logout: logout})
 		changedUserInfo = db.users.findOne({_id: user_id})
 		if changedUserInfo
 			db.users.update({_id: user_id}, {$push: {'services.password_history': changedUserInfo.services?.password?.bcrypt}})

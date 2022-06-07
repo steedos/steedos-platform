@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-06 12:01:19
+ * @Description: 
+ */
 import * as express from 'express';
 import { AccountsServer } from '../../../server';
 import { sendError } from '../../utils/send-error';
@@ -17,21 +24,21 @@ export const changePassword = (accountsServer: AccountsServer) => async (
       res.json({ message: 'Unauthorized' });
       return;
     }
-    // oldPassword 已经是 sha256之后的
+    // oldPassword 、newPassword 已经是 sha256之后的
     const { oldPassword, newPassword } = req.body;
 
-    let passworPolicy = ((config as any).password || {}).policy
+    // let passworPolicy = ((config as any).password || {}).policy
 
-    if(passworPolicy){
-      if(!(new RegExp(passworPolicy)).test(newPassword || '')){
-          sendError(res, new Error((config as any).password.policyError));
-          return;
-      }
-    }
+    // if(passworPolicy){
+    //   if(!(new RegExp(passworPolicy)).test(newPassword || '')){
+    //       sendError(res, new Error((config as any).password.policyError));
+    //       return;
+    //   }
+    // }
     
     const password: any = accountsServer.getServices().password;
 
-    await password.changePassword((req as any).userId, oldPassword, hashPassword(newPassword, password.options.passwordHashAlgorithm));
+    await password.changePassword((req as any).userId, oldPassword, newPassword);
     password.db.collection.updateOne({_id: (req as any).userId}, {$set: {password_expired: false}})
     try {
       Creator.getCollection('space_users').update({user: (req as any).userId}, {$set: {password_expired: false}}, {

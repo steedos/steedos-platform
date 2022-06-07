@@ -890,7 +890,7 @@ if Meteor.isServer
 				valid = false
 
 			passworPolicy = Meteor.settings.public?.password?.policy
-			passworPolicyError = Meteor.settings.public?.password?.policyError
+			passworPolicyError = Meteor.settings.public?.password?.policyError || Meteor.settings.public?.password?.policyerror || "密码不符合规则"
 			if passworPolicy
 				if !(new RegExp(passworPolicy)).test(pwd || '')
 					reason = passworPolicyError

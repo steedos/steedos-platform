@@ -62,7 +62,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
 
   res.json({
     tenant: tenant,
-    password: config.password?config.password:{},
+    password: config.password ? config.password : ( config.public?.password ? config.public?.password : {} ),
     root_url: process.env.ROOT_URL,
     already_mail_service: already_mail_service,
     already_sms_service: already_sms_service,

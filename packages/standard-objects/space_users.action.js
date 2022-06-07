@@ -277,14 +277,16 @@ module.exports = {
     return false;
   },
   setPassword: function (object_name, record_id) {
+    console.log('setPassword', this);
     var organization = Session.get("organization");
     var isAdmin = Creator.isSpaceAdmin();
     if (!isAdmin) {
       isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
     }
-
+    const username = this.record.username;
     var userSession = Creator.USER_CONTEXT;
-    if (!isAdmin || (record_id == this.record._id)) {
+    var currentSpaceUser = db.space_users.findOne({user: Creator.USER_CONTEXT.userId});
+    if (!isAdmin || (currentSpaceUser._id == this.record._id)) {
       var isPasswordEmpty = false;
       var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", { type: 'get', async: false });
       if (!result.error) {
@@ -300,7 +302,7 @@ module.exports = {
     var doUpdate = function (inputValue) {
       window.$("body").addClass("loading");
       try {
-        Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, inputValue, function (error, result) {
+        Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, CryptoJS.SHA256(inputValue).toString(), function (error, result) {
           window.$("body").removeClass("loading");
           if (error) {
             return toastr.error(error.reason);
@@ -374,6 +376,11 @@ module.exports = {
       onOk: function(){
         let inputValue = inputRef.current && inputRef.current.value;
         let result = Steedos.validatePassword(inputValue);
+        if(username && inputValue){
+          if(window.lodash.includes(inputValue, username)){
+            return SteedosUI.message.error('密码不能包含用户名');
+          }
+        }
         if (result.error) {
           return SteedosUI.message.error(result.error.reason);
         }
