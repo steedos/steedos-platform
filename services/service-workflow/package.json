@@ -4,6 +4,7 @@
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
+    "lodash": "4.17.21",
     "node-schedule": "^2.0.0"
   },
   "private": false,

@@ -13,6 +13,8 @@ const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const { excuteTriggers } = require('../utils/trigger');
+const { getStep } = require('../uuflowManager');
+
 /**
  * 审批中提交申请单
  * body {
@@ -62,15 +64,30 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
         const approve_from_client = hashData['Approvals'][0];
 
         // beforeStepSubmit
-        let insId = approve_from_client.instance;
-        let instanceDoc = (await objectql.getObject('instances').find({ filters: [['_id', '=', insId]], fields: ['flow'] }))[0];
-        await excuteTriggers({ when: 'beforeStepSubmit', userSession: userSession, flowId: instanceDoc['flow'], insId: insId });
+        const insId = approve_from_client.instance;
+        const instanceDoc = (await objectql.getObject('instances').find({ filters: [['_id', '=', insId]], fields: ['flow', 'flow_version'] }))[0];
+        const flowId = instanceDoc.flow;
+        await excuteTriggers({ when: 'beforeStepSubmit', userId, flowId, insId });
+
+        // beforeEnd
+        const flowDoc = await objectql.getObject('flows').findOne(flowId);
+        const next_steps = approve_from_client["next_steps"];
+        const next_step_id = next_steps[0]["step"];
+        const next_step = getStep(instanceDoc, flowDoc, next_step_id);
+        const next_step_type = next_step["step_type"];
+        if (next_step_type == "end") {
+            await excuteTriggers({ when: 'beforeEnd', userId, flowId, insId });
+        }
 
         Fiber(async function () {
             try {
                 uuflowManager.workflow_engine(approve_from_client, userSession, userId);
                 // afterStepSubmit
-                await excuteTriggers({ when: 'afterStepSubmit', userId: userId, flowId: instanceDoc['flow'], insId: insId });
+                await excuteTriggers({ when: 'afterStepSubmit', userId, flowId, insId });
+                // afterEnd
+                if (next_step_type === 'end') {
+                    await excuteTriggers({ when: 'afterEnd', userId, flowId, insId });
+                }
                 res.status(200).send({});
             } catch (e) {
                 console.error(e);

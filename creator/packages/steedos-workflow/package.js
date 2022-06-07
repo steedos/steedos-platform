@@ -370,9 +370,9 @@ Package.onUse(function(api) {
 	api.addFiles('routes/api_workflow_drafts.coffee', 'server');
 	api.addFiles('routes/api_workflow_remove.coffee', 'server');
 	// api.addFiles('routes/api_workflow_submit.coffee', 'server');
-	api.addFiles('routes/api_workflow_terminate.coffee', 'server');
+	// api.addFiles('routes/api_workflow_terminate.coffee', 'server');
 	api.addFiles('routes/api_workflow_reassign.coffee', 'server');
-	api.addFiles('routes/api_workflow_relocate.coffee', 'server');
+	// api.addFiles('routes/api_workflow_relocate.coffee', 'server');
 	api.addFiles('routes/api_workflow_archive.coffee', 'server');
 	api.addFiles('routes/api_workflow_export.coffee', 'server');
 	api.addFiles('routes/api_workflow_space_changeset.coffee', 'server');
