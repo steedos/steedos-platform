@@ -3,7 +3,7 @@ const PACKAGE_SERVICES_KEY = '$PACKAGE-SERVICES';
 const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PERFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
-import { map } from 'lodash';
+import { map, filter } from 'lodash';
 
 let savePackageServicesTimeoutID = null;
 
@@ -504,7 +504,8 @@ export const ActionHandlers = {
             metadataApiName = "*";
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
-        return await query(ctx, key);
+        const result = await query(ctx, key);
+        return result ? filter(result, (item)=>{ return item && item.metadataType === metadataType}) : result;
     },
     async getServiceMetadata(ctx: any) {
         let { serviceName, metadataType, metadataApiName } = ctx.params;
