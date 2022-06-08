@@ -1,0 +1,16 @@
+{
+  "name": "@steedos/service-files",
+  "version": "2.2.38",
+  "main": "package.service.js",
+  "scripts": {},
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "formidable": "2.0.1",
+    "mkdirp": "1.0.4",
+    "moment": "^2.29.1"
+  }
+}

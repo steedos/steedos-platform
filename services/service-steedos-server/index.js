@@ -53,6 +53,7 @@ module.exports = {
 			"@steedos/unpkg",
 			"@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
+			"@steedos/service-files",
 		],
 		plugins: [
 			"@steedos/webapp-accounts",

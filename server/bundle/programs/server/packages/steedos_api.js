@@ -1880,7 +1880,7 @@ require("/node_modules/meteor/steedos:api/lib/restivus/restivus.coffee");
 require("/node_modules/meteor/steedos:api/core.coffee");
 require("/node_modules/meteor/steedos:api/steedos/space_users.coffee");
 require("/node_modules/meteor/steedos:api/steedos/organizations.coffee");
-require("/node_modules/meteor/steedos:api/routes/s3.coffee");
+// require("/node_modules/meteor/steedos:api/routes/s3.coffee");
 require("/node_modules/meteor/steedos:api/routes/push.coffee");
 require("/node_modules/meteor/steedos:api/routes/aliyun_push.coffee");
 

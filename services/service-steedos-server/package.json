@@ -16,6 +16,7 @@
     "@steedos/service-charts": "2.2.39",
     "@steedos/service-cloud-init": "2.2.39",
     "@steedos/service-fields-indexs": "2.2.39",
+    "@steedos/service-files": "2.2.39",
     "@steedos/service-meteor-package-loader": "2.2.39",
     "@steedos/service-node-red": "2.2.39",
     "@steedos/service-pages": "2.2.39",
