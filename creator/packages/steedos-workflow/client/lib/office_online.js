@@ -73,30 +73,32 @@ OfficeOnline.http.downloadFile = function(file_url, download_dir, filename, arg)
 					else
 						cmd = '\"' + homePath + '\"' + '\\vbs\\edit.vbs ' + '\"' + filePath + '\" ' + arg;
 
-					var child = exec(cmd);
-					child.on('close', function() {
-						// 转换为pdf后需上传
-						if (arg == "Steedos.User.isDocToPdf") {
-							var pdfName = path.basename(filename, path.extname(filename)) + ".pdf";
-							var pdfPath = path.join(download_dir, pdfName);
-							fs.exists(pdfPath, function(exists) {
-								if (exists == true) {
-									NodeManager.setUploadRequests(pdfPath, pdfName);
-								} else {
-									$(document.body).removeClass('loading');
-									$('.loading-text').text("");
+					setTimeout(function() {
+						var child = exec(cmd);
+						child.on('close', function() {
+							// 转换为pdf后需上传
+							if (arg == "Steedos.User.isDocToPdf") {
+								var pdfName = path.basename(filename, path.extname(filename)) + ".pdf";
+								var pdfPath = path.join(download_dir, pdfName);
+								fs.exists(pdfPath, function(exists) {
+									if (exists == true) {
+										NodeManager.setUploadRequests(pdfPath, pdfName);
+									} else {
+										$(document.body).removeClass('loading');
+										$('.loading-text').text("");
 
-									toastr.error(TAPi18n.__('workflow_attachment_wordToPdf_failed'));
+										toastr.error(TAPi18n.__('workflow_attachment_wordToPdf_failed'));
 
-									// 解锁
-									InstanceManager.unlockAttach(Session.get('cfs_file_id'));
-								}
-							})
-						}
-					});
-					child.on('error', function(error) {
-						toastr.error(error);
-					});
+										// 解锁
+										InstanceManager.unlockAttach(Session.get('cfs_file_id'));
+									}
+								})
+							}
+						});
+						child.on('error', function(error) {
+							toastr.error(error);
+						});
+					}, 500);
 				}
 
 			} else {
@@ -208,30 +210,32 @@ OfficeOnline.https.downloadFile = function(file_url, download_dir, filename, arg
 					else
 						cmd = '\"' + homePath + '\"' + '\\vbs\\edit.vbs ' + '\"' + filePath + '\" ' + arg;
 
-					var child = exec(cmd);
-					child.on('close', function() {
-						// 转换为pdf后需上传
-						if (arg == "Steedos.User.isDocToPdf") {
-							var pdfName = path.basename(filename, path.extname(filename)) + ".pdf";
-							var pdfPath = path.join(download_dir, pdfName);
-							fs.exists(pdfPath, function(exists) {
-								if (exists == true) {
-									NodeManager.setUploadRequests(pdfPath, pdfName);
-								} else {
-									$(document.body).removeClass('loading');
-									$('.loading-text').text("");
+					setTimeout(function() {
+						var child = exec(cmd);
+						child.on('close', function() {
+							// 转换为pdf后需上传
+							if (arg == "Steedos.User.isDocToPdf") {
+								var pdfName = path.basename(filename, path.extname(filename)) + ".pdf";
+								var pdfPath = path.join(download_dir, pdfName);
+								fs.exists(pdfPath, function(exists) {
+									if (exists == true) {
+										NodeManager.setUploadRequests(pdfPath, pdfName);
+									} else {
+										$(document.body).removeClass('loading');
+										$('.loading-text').text("");
 
-									toastr.error(TAPi18n.__('workflow_attachment_wordToPdf_failed'));
+										toastr.error(TAPi18n.__('workflow_attachment_wordToPdf_failed'));
 
-									// 解锁
-									InstanceManager.unlockAttach(Session.get('cfs_file_id'));
-								}
-							})
-						}
-					});
-					child.on('error', function(error) {
-						toastr.error(error);
-					});
+										// 解锁
+										InstanceManager.unlockAttach(Session.get('cfs_file_id'));
+									}
+								})
+							}
+						});
+						child.on('error', function(error) {
+							toastr.error(error);
+						});
+					}, 500);
 				}
 			} else {
 				$(document.body).removeClass('loading');
