@@ -238,7 +238,6 @@ install("meteorhacks:async");
 install("steedos:oauth2-server");
 install("smoral:sweetalert");
 install("peppelg:bootstrap-3-modal");
-install("steedos:lightning-design-system");
 install("steedos:odata");
 install("steedos:object-database");
 install("steedos:mailqueue");
@@ -475,7 +474,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "lib/index.js"
 };
 
@@ -502,7 +501,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "lib/index.js"
 };
 
@@ -529,7 +528,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "index.js"
 };
 
@@ -556,7 +555,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "index.js"
 };
 
@@ -583,7 +582,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "index.js"
 };
 
@@ -610,7 +609,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "package.service.js"
 };
 
@@ -637,7 +636,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "lib/index.js"
 };
 
@@ -664,7 +663,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "lib/index.js"
 };
 
@@ -691,7 +690,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "lib/index.js"
 };
 
@@ -718,7 +717,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-workflow",
-  "version": "2.2.39",
+  "version": "2.2.40",
   "main": "package.service.js"
 };
 
