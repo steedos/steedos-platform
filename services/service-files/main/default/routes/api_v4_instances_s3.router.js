@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-08 18:45:04
+ * @LastEditTime: 2022-06-09 15:19:22
  * @Description: 
  */
 const express = require("express");
@@ -11,9 +11,7 @@ const core = require('@steedos/core');
 const formidable = require('formidable');
 const {
     getCollection,
-    _makeNewID,
-    fileKeyMaker,
-    save
+    File
 } = require('../manager');
 const FS_COLLECTION_NAME = 'instances';
 const DB_COLLECTION_NAME = 'cfs.instances.filerecord';
@@ -59,6 +57,9 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
 
                 const collection = getCollection(DB_COLLECTION_NAME);
 
+
+                const newFile = new File({ name:originalFilename, size, mimetype, fsCollectionName: FS_COLLECTION_NAME});
+
                 let filename = originalFilename;
 
                 if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(filename.toLowerCase())) {
@@ -75,29 +76,7 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                     filename = filename.replace(/%/g, "-");
                 }
 
-                const now = new Date();
-                const newFileId = _makeNewID();
-                const fileKey = fileKeyMaker({ _id: newFileId, filename, instance, fsCollectionName: FS_COLLECTION_NAME });
-                const newFile = {
-                    "_id": newFileId,
-                    "original": {
-                        "type": mimetype,
-                        "size": size,
-                        "name": filename
-                    },
-                    // "metadata" : {},
-                    "uploadedAt": now,
-                    "copies": {
-                        [FS_COLLECTION_NAME]: {
-                            "name": filename,
-                            "type": mimetype,
-                            "size": size,
-                            "key": fileKey,
-                            "updatedAt": now,
-                            "createdAt": now
-                        }
-                    }
-                };
+                newFile.name = filename;
 
                 let parentId = '';
                 const metadata = {
@@ -137,7 +116,7 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                             metadata.locked_by_name = locked_by_name;
                         }
                         newFile.metadata = metadata;
-                        await collection.insertOne(newFile);
+                        await collection.insertOne(newFile.insertDoc());
                         // 删除同一个申请单同一个步骤同一个人上传的重复的文件
                         if (overwrite && overwrite.toLocaleLowerCase() === "true") {
                             await collection.deleteMany({
@@ -152,13 +131,13 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                         }
                     }
                 } else {
-                    metadata.parent = newFileId;
+                    metadata.parent = newFile.id;
                     newFile.metadata = metadata;
-                    await collection.insertOne(newFile);
+                    await collection.insertOne(newFile.insertDoc());
                 }
 
                 // 保存文件
-                save(tempFilePath, FS_COLLECTION_NAME, fileKey, function (err, result) {
+                newFile.save(tempFilePath, function (err, result) {
                     const resp = {
                         version_id: newFile._id,
                         size: size
@@ -168,14 +147,14 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
 
 
             } catch (error) {
-                console.error(`[/api/v4/instances/s3/]: ${error}`);
+                console.error(error);
                 res.status(500).send({ message: error.message });
             }
 
         });
 
     } catch (error) {
-        console.error(`[/api/v4/instances/s3/]: ${error}`);
+        console.error(error);
         res.status(500).send({ message: error.message });
     }
 
