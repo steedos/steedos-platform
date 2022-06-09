@@ -37,14 +37,15 @@ module.exports = {
             }
         },
         getMenus:{
-            rest: {
-                method: "GET",
-                path: "/menus"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/menus"
+            // },
             params: {
             },
             async handler(ctx) {
-                return await ActionHandlers.getMenus(ctx);
+                const result = await ActionHandlers.getMenus(ctx);
+                return result;
             }
         },
         getAppMenus: {
