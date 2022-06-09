@@ -3859,6 +3859,11 @@
   resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.17.5.tgz#f4d25d85e8f85970698941a076b344cb16cd57fd"
   integrity sha512-vj1MgAeUHRbg3EeGQUR79QrgIoJI6U84IRCkRVnvgdBJs1iy3zb/chtz71/x4EVTfowY6+3gjR3hG11mJo1h3A==
 
+"@salesforce-ux/design-system@^2.17.5":
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.18.0.tgz#1874e1f8451f5b5a84939ffec4a721203421caea"
+  integrity sha512-DXWo7YWJtGjJ/zYtOfjPO5iNOBXhUVprtG4iGfOw1UTbnzOZJuNmKFKfGZvGlnyqMzT3kDe/rcrHg12rdmGJPA==
+
 "@salesforce/dev-config@^1.4.4":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@salesforce/dev-config/-/dev-config-1.6.0.tgz#f2d2c279b998c6d837b05ee6ac086890f2e8ea84"
@@ -19266,22 +19271,6 @@ node-pre-gyp@0.6.34:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-node-pre-gyp@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.11.0.tgz#db1f33215272f692cd38f03238e3e9b47c5dd054"
-  integrity sha512-TwWAOZb0j7e9eGaf9esRx3ZcLaE5tQ2lvYy1pb5IAaG1a2e2Kv5Lms1Y4hpj+ciXJRofIxxlt5haeQ/2ANeE0Q==
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4"
-
 node-red-admin@0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/node-red-admin/-/node-red-admin-0.2.7.tgz#fcfab6960ba7d383c2efeaa6e47d07f14f2e4d21"
@@ -25161,14 +25150,6 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
-
-sqlite3@^4.0.6:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/sqlite3/-/sqlite3-4.2.0.tgz#49026d665e9fc4f922e56fb9711ba5b4c85c4901"
-  integrity sha512-roEOz41hxui2Q7uYnWsjMOTry6TcNUNmp8audCx18gF10P2NknwdpF+E+HKvz/F2NvPKGGBF4NGc+ZPQ+AABwg==
-  dependencies:
-    nan "^2.12.1"
-    node-pre-gyp "^0.11.0"
 
 sqlstring@2.3.1:
   version "2.3.1"

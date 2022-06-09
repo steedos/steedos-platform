@@ -44,6 +44,7 @@ module.exports = {
 			'@steedos-ui/builder-community',
 			'@steedos-ui/design-system',
 			'@steedos-ui/builder-widgets',
+			'@salesforce-ux/design-system',
 			'axios'
 		],
 	},
