@@ -7,7 +7,7 @@
 * Read about DevExtreme licensing here: https://js.devexpress.com/Licensing/
 */
 
-html,
+/* html,
 body,
 div,
 span,
@@ -130,7 +130,7 @@ menu,
 nav,
 section {
     display: block;
-}
+} */
 
 .dx-full-height {
     height: 100%;
