@@ -1,6 +1,6 @@
-@import '/unpkg.com/amis@1.8.0/lib/themes/default.css';
+@import '/unpkg.com/amis@1.10.1/lib/themes/default.css';
 
-@import '/unpkg.com/amis@1.8.0/lib/themes/antd.css';
+@import '/unpkg.com/amis@1.10.1/lib/themes/antd.css';
 
 
 /* .amis-routes-wrapper{
@@ -11,10 +11,10 @@
     height: 100%;
     background: #ffffff;
 }
-.amis-scope svg {
+/* .amis-scope svg {
     display: inline !important;
     vertical-align: initial !important;
-}
+} */
 
 body{
     -webkit-font-smoothing: inherit !important;
