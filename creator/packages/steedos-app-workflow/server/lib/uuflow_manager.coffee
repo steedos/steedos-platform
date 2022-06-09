@@ -1550,7 +1550,14 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 					setObj.cc_users = instance.cc_users
 
 				setObj.current_step_name = next_step_name
-				setObj.final_decision = 'approved'
+				final_decision = ''
+				if step.oneClickApproval and ['approved','readed'].includes(judge)
+					# 如果开启了一键核准并且选择了核准则设置final_decision为approved
+					final_decision = 'approved'
+				else if step.oneClickRejection and 'rejected' is judge
+					# 如果开启了一键驳回并且选择了驳回则设置final_decision为rejected
+					final_decision = 'rejected'
+				setObj.final_decision = final_decision || 'approved' # 会签到结束默认为approved
 				setObj.current_step_auto_submit = false
 			else
 				# 若不是结束结点
