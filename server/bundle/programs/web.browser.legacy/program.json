@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "cee03dee3ba9c951d86d9248f652f45cbb15b6c4.js",
+      "path": "4bbce80af5efd8a61d57b15374fea10b691d7a3b.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/cee03dee3ba9c951d86d9248f652f45cbb15b6c4.js?meteor_js_resource=true",
-      "size": 15211551,
-      "hash": "cee03dee3ba9c951d86d9248f652f45cbb15b6c4",
-      "sri": "9VDy+FqAtE3w7bIw/nYb3VUAFv+pJX7RaMkJ+feYnxDFx96u9kA07bUFHbGvs9oJ0Q4gjXACk71jjlY0baVOsw=="
+      "url": "/4bbce80af5efd8a61d57b15374fea10b691d7a3b.js?meteor_js_resource=true",
+      "size": 15211259,
+      "hash": "4bbce80af5efd8a61d57b15374fea10b691d7a3b",
+      "sri": "l+YAh8rRD4kEvmz2YrLWPvzWRbowRBIFJfcDcxbBwTu79QqNS0j5H5HH9ysQH/DSOZ4+shNxC+AHNuvagZnWYA=="
     },
     {
-      "path": "cee03dee3ba9c951d86d9248f652f45cbb15b6c4.stats.json",
+      "path": "4bbce80af5efd8a61d57b15374fea10b691d7a3b.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/cee03dee3ba9c951d86d9248f652f45cbb15b6c4.stats.json?meteor_js_resource=true",
-      "size": 311833,
-      "hash": "54ccea7d674f0cb6c1218ef49d9d15597a262920",
-      "sri": "Rax9DLxJiItI479GFd31j1QFUoRhnfSwYomGxJLL4gyjB0z+G9QilzU//CLf/9I801/34qIpYsUBGAwhyfGEqw=="
+      "url": "/4bbce80af5efd8a61d57b15374fea10b691d7a3b.stats.json?meteor_js_resource=true",
+      "size": 311778,
+      "hash": "b977f28f1d76c7a4badcc778620eb00f3ae7780a",
+      "sri": "W68XiWwdJrkMoyfxjd+bCRIOCSEGdolPZkHI9EbBVSzZErMayPqlmNA3pSxZ34ckYbt/g2FGMDAONE42uq94dg=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3432,14 +3432,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "963b730cda32baa83052625be1d7befbdb101f97.css",
+      "path": "1baf1657946c39a96fdb34309672e3c33ba7c5a2.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/963b730cda32baa83052625be1d7befbdb101f97.css?meteor_css_resource=true",
-      "size": 1648430,
-      "hash": "963b730cda32baa83052625be1d7befbdb101f97",
-      "sri": "wLDF07nKJtIvD31MdVY8/xNAJyWXqo59enwAXqB6q7iBh/ObUxPDJGK8OSjKl95rKKO7nXp5CmJiFmh8uLJfmQ=="
+      "url": "/1baf1657946c39a96fdb34309672e3c33ba7c5a2.css?meteor_css_resource=true",
+      "size": 1644648,
+      "hash": "1baf1657946c39a96fdb34309672e3c33ba7c5a2",
+      "sri": "ZTZ3Ht4oritZP+XJnzZBjKR46aZ+pvavr9/8aInJxywquPIMopw2WmXxrNKiVYYkgHHAk1AF5/Bf9NsRZGHARQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -4002,26 +4002,6 @@
       "sri": "PXW6rXgvLGkRAkl6HA1FOqcphvEtkt2bhzcVC4dBffhvefDJtJ1xJKUga46vVeGo0Ri1Jo9zImfa9JSYZDP31Q=="
     },
     {
-      "path": "packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/banner-brand-default.png",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/banner-brand-default.png",
-      "size": 28146,
-      "hash": "7304929696ebdd905cf47afcc54b15f539dc18e4",
-      "sri": "tlOztS6ura981nkmlUriZCSSz8yUulgkKUB96u2LmJxE4ydJF8cX/O+Hi60YikVepnX0U3a8nA39yTZ9DLgjTQ=="
-    },
-    {
-      "path": "packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png",
-      "size": 3040,
-      "hash": "c4872dd3b83d16cb461d5305a484dfdf7a0b6767",
-      "sri": "GQ7sBVgtSK+E5gRlGzQhM6smUYRH3UIs5AyqXFLeqYAyAnFxn+Vu+YuglSjDySUSDEpSSMdZw9ksUBZXq6UP6A=="
-    },
-    {
       "path": "packages/steedos_creator/assets/logo-square.png",
       "where": "client",
       "type": "asset",
@@ -4147,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/customize.css",
-      "size": 672,
-      "hash": "6184e35623415e90a81a464c036b0e695d9b6b03",
+      "size": 652,
+      "hash": "466516164a13b475cd02a78eb619f792fb5620e4",
       "sri": null
     },
     {
@@ -5095,7 +5075,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "3edb309f4bd69421f688322baeb664d4edbacd84"
+      "hash": "203dfff2d62196288e3450be2c802f00460fec2a"
     }
   ]
 }

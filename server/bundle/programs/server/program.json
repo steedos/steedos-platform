@@ -631,9 +631,6 @@
       "path": "packages/peppelg_bootstrap-3-modal.js"
     },
     {
-      "path": "packages/steedos_lightning-design-system.js"
-    },
-    {
       "sourceMap": "packages/steedos_odata.js.map",
       "path": "packages/steedos_odata.js"
     },
