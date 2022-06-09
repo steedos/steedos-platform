@@ -6,7 +6,7 @@ module.exports = {
         }
 
         var doUpdate = function () {
-            $("body").addClass("loading");
+            window.$("body").addClass("loading");
             var userSession = Creator.USER_CONTEXT;
             var spaceId = userSession.spaceId;
             var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
@@ -22,7 +22,7 @@ module.exports = {
                     name: 'Authorization',
                     value: authorization
                 }];
-                $.ajax({
+                window.$.ajax({
                     type: "POST",
                     url: url,
                     data: fetchParams,
@@ -37,15 +37,15 @@ module.exports = {
                     },
                     success: function (data) {
                         console.log(data);
-                        $("body").removeClass("loading");
+                        window.$("body").removeClass("loading");
                         var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
                         console.log(logInfo);
                         toastr.success(logInfo);
                         /* 更新组织后刷新分部列表，直接显示新的关联组织、排序号等列表信息 */
-                        $(".slds-page-header--object-home .btn-refresh").trigger("click");
+                        window.$(".slds-page-header--object-home .btn-refresh").trigger("click");
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        $("body").removeClass("loading");
+                        window.$("body").removeClass("loading");
                         console.error(XMLHttpRequest.responseJSON);
                         if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
                             toastr.error(XMLHttpRequest.responseJSON.error.message)
@@ -58,7 +58,7 @@ module.exports = {
             } catch (err) {
                 console.error(err);
                 toastr.error(err);
-                $("body").removeClass("loading");
+                window.$("body").removeClass("loading");
             }
         }
 
