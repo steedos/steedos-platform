@@ -154,14 +154,14 @@ function getObjectServiceMethodsSchema() {
                 return await this.object.getRecordView(userSession, context);
             }
         },
-        createDefaulRecordView: {
+        createDefaultRecordView: {
             async handler(userSession) {
-                return await this.object.createDefaulRecordView(userSession);
+                return await this.object.createDefaultRecordView(userSession);
             }
         },
-        getDefaulRecordView: {
+        getDefaultRecordView: {
             async handler(userSession) {
-                return await this.object.getDefaulRecordView(userSession);
+                return await this.object.getDefaultRecordView(userSession);
             }
         },
         getRelateds: {
@@ -172,6 +172,26 @@ function getObjectServiceMethodsSchema() {
         refreshIndexes: {
             async handler() {
                 return await this.object.refreshIndexes();
+            }
+        },
+        allowRead:{
+            async handler(userSession) {
+                return await this.object.allowRead(userSession);
+            }
+        },
+        allowInsert:{
+            async handler(userSession) {
+                return await this.object.allowInsert(userSession);
+            }
+        },
+        allowUpdate:{
+            async handler(userSession) {
+                return await this.object.allowUpdate(userSession);
+            }
+        },
+        allowDelete:{
+            async handler(userSession) {
+                return await this.object.allowDelete(userSession);
             }
         }
         // getPageView: {
@@ -545,7 +565,7 @@ function getObjectServiceActionsSchema() {
                 return await this.getRecordView(userSession, context);
             }
         },
-        createDefaulRecordView: {
+        createDefaultRecordView: {
             rest: {
                 method: "POST",
                 path: "/defUiSchema"
@@ -555,10 +575,10 @@ function getObjectServiceActionsSchema() {
                 if(!userSession.is_space_admin){
                     throw new Error('no permission.')
                 }
-                return await this.createDefaulRecordView(userSession);
+                return await this.createDefaultRecordView(userSession);
             }
         },
-        getDefaulRecordView: {
+        getDefaultRecordView: {
             rest: {
                 method: "GET",
                 path: "/uiSchemaTemplate"
@@ -568,7 +588,7 @@ function getObjectServiceActionsSchema() {
                 if(!userSession.is_space_admin){
                     throw new Error('no permission.')
                 }
-                return await this.getDefaulRecordView(userSession);
+                return await this.getDefaultRecordView(userSession);
             }
         },
         getRelateds: {
@@ -583,6 +603,30 @@ function getObjectServiceActionsSchema() {
         refreshIndexes: {
             async handler(ctx) {
                 return await this.refreshIndexes();
+            }
+        },
+        allowRead: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return await this.allowRead(userSession);
+            }
+        },
+        allowInsert: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return await this.allowInsert(userSession);
+            }
+        },
+        allowUpdate: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return await this.allowUpdate(userSession);
+            }
+        },
+        allowDelete: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                return await this.allowDelete(userSession);
             }
         }
     };

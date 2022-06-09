@@ -184,6 +184,21 @@ module.exports = {
 
                 const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
                 return {
+                    details: _.compact(_.map(results[0], 'metadata.key')),
+                    masters: _.compact(_.map(results[1], 'metadata.key')),
+                    lookup_details: _.compact(_.map(results[2], 'metadata.key')),
+                }
+            }
+        },
+        getAllRelationsInfo: {
+            async handler(ctx) {
+                const objectApiName = "*";
+                const detailsInfoKey = this.masterDetailActionHandler.getDetailsInfoKey(objectApiName);
+                const mastersInfo = this.masterDetailActionHandler.getMastersInfoKey(objectApiName);
+                const lookupDetailsInfo = this.lookupActionHandler.getDetailsInfoKey(objectApiName);
+
+                const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                return {
                     details: _.compact(_.map(results[0], 'metadata')),
                     masters: _.compact(_.map(results[1], 'metadata')),
                     lookup_details: _.compact(_.map(results[2], 'metadata')),

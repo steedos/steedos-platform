@@ -224,7 +224,7 @@ export class MasterDetailActionHandler{
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
-                mastersInfo.push(metadata);
+                mastersInfo.push(metadata.key);
             }
         }
         return mastersInfo;
@@ -232,7 +232,7 @@ export class MasterDetailActionHandler{
 
     async addMaster(objectApiName: any, masterObjectApiName: string, field: any){
         const masterFullName = `${masterObjectApiName}.${field.name}`
-        await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName, masterFullName), data: masterFullName}, {meta: {}})
+        await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName, masterFullName), data: {type: 'master', objectName: objectApiName, key: masterFullName}}, {meta: {}})
         return true;
     }
 
@@ -270,7 +270,7 @@ export class MasterDetailActionHandler{
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
-                detailsInfo.push(metadata);
+                detailsInfo.push(metadata.key);
             }
         }
         return detailsInfo;
@@ -278,7 +278,7 @@ export class MasterDetailActionHandler{
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: detailFullName}, {meta: {}})
+        await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: {type: 'detail', objectName: objectApiName, key: detailFullName}}, {meta: {}})
         this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
         return true;
     }

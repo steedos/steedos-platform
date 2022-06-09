@@ -241,6 +241,10 @@ export class SteedosSchema {
         return schemaObjects;
         // return await this.metadataBroker.call("objects.getAll");
     }
+
+    async getAllRelationsInfo(){
+        return await this.broker.call('objects.getAllRelationsInfo');
+    }
 }
 
 export function getSteedosSchema(broker?: any, metadataBroker?: any): SteedosSchema {
@@ -259,6 +263,10 @@ export function getSteedosSchema(broker?: any, metadataBroker?: any): SteedosSch
     // }
 
     return schema;
+}
+
+export function getAllRelationsInfo(schema?: SteedosSchema) {
+    return (schema ? schema : getSteedosSchema()).getAllRelationsInfo();
 }
 
 (function loadRun() {

@@ -37,6 +37,7 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
+			"@steedos/service-ui",
 			"@steedos/service-translations",
 			"@steedos/workflow",
 			"@steedos/accounts",

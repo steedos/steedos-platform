@@ -95,7 +95,7 @@ export class LookupActionHandler {
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
-                detailsInfo.push(metadata);
+                detailsInfo.push(metadata.key);
             }
         }
         return detailsInfo;
@@ -109,7 +109,7 @@ export class LookupActionHandler {
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any) {
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName, detailFullName), data: detailFullName }, { meta: {} })
+        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName, detailFullName), data: {type: 'detail', objectName: objectApiName, key: detailFullName} }, { meta: {} })
         this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
         return true;
     }
