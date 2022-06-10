@@ -286,8 +286,9 @@ Creator.getAppMenuUrlForInternet = (menu)->
 	url = menu.path
 	if Steedos.isExpression(url)
 		url = Steedos.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
+	# 外部链接地址中可能会带有#号，比如/builder/?p_ids=619383545b2e9a72ec0558b3#/page/public/test
+	# 此时url中已经在#号前面出现了一个?号，这个问号不可以被识别为url参数，只有#号后面的?号才应该被识别为url参数
 	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
-	# 如果没有#号时去判断是否有？号，有末尾加&，无末尾加？；    有#号时判断#号后面是否有？号，有末尾加&，无末尾加？
 	linkStr = if hasQuerySymbol then "&" else "?"
 	return "#{url}#{linkStr}#{$.param(params)}"
 
