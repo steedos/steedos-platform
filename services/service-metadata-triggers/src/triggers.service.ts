@@ -181,13 +181,11 @@ module.exports = {
 	events: {
 		[`$METADATA.${METADATA_TYPE}.*`]: {
             async handler(ctx) {
-				console.log(`-----------------$METADATA.${METADATA_TYPE}.*----------------`);
                 return await ActionHandlers.refresh(ctx);
             }
         },
 		[`$METADATA.${METADATA_TYPE}-pattern.*`]: {
             async handler(ctx) {
-				console.log(`-----------------$METADATA.${METADATA_TYPE}-pattern.*----------------`);
                 return await ActionHandlers.refresh(ctx);
             }
         }

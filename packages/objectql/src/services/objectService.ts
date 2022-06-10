@@ -2,7 +2,8 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource, SteedosDatabaseDriverType } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionRestProp, generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields, getLocalService } from './helpers';
+import { generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields, getLocalService } from './helpers';
+// generateActionRestProp, 
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../util/convert';
 import { extend } from '../util';
@@ -457,10 +458,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         count: {
-            rest: {
-                method: "GET",
-                path: "/count"
-            },
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
@@ -474,10 +471,6 @@ function getObjectServiceActionsSchema() {
             }
         },
         getField: {
-            rest: {
-                method: "GET",
-                path: "/field"
-            },
             params: {
                 fieldApiName: { type: "string" },
             },
@@ -487,10 +480,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getFields: {
-            rest: {
-                method: "GET",
-                path: "/fields"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/fields"
+            // },
             async handler(ctx) {
                 return this.getFields()
             }
@@ -506,10 +499,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getUserObjectPermission: {
-            rest: {
-                method: "GET",
-                path: "/getUserObjectPermission"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/getUserObjectPermission"
+            // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 return this.getUserObjectPermission(userSession)
@@ -536,10 +529,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getRecordPermissionsById: {
-            rest: {
-                method: "GET",
-                path: "/recordPermissions/:recordId"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/recordPermissions/:recordId"
+            // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { recordId } = ctx.params;
@@ -555,10 +548,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getRecordView: {
-            rest: {
-                method: "GET",
-                path: "/uiSchema"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/uiSchema"
+            // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { context } = ctx.params;
@@ -566,10 +559,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         createDefaultRecordView: {
-            rest: {
-                method: "POST",
-                path: "/defUiSchema"
-            },
+            // rest: {
+            //     method: "POST",
+            //     path: "/defUiSchema"
+            // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 if(!userSession.is_space_admin){
@@ -579,10 +572,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getDefaultRecordView: {
-            rest: {
-                method: "GET",
-                path: "/uiSchemaTemplate"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/uiSchemaTemplate"
+            // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 if(!userSession.is_space_admin){
@@ -592,10 +585,10 @@ function getObjectServiceActionsSchema() {
             }
         },
         getRelateds: {
-            rest: {
-                method: "GET",
-                path: "/relateds"
-            },
+            // rest: {
+            //     method: "GET",
+            //     path: "/relateds"
+            // },
             async handler(ctx) {
                 return await this.getRelateds();
             }
@@ -730,14 +723,15 @@ module.exports = {
     merged(schema) {
         let settings = schema.settings;
         let objectConfig = settings.objectConfig;
-        if (objectConfig.enable_api) {
-            _.each(schema.actions, (action, actionName) => {
-                let rest = generateActionRestProp(actionName);
-                if (rest.method) {
-                    action.rest = rest;
-                }
-            })
-        }
+        // 先关闭对象服务action rest api, 否则会导致 action rest api 过多, 请求速度变慢.
+        // if (objectConfig.enable_api) {
+        //     _.each(schema.actions, (action, actionName) => {
+        //         let rest = generateActionRestProp(actionName);
+        //         if (rest.method) {
+        //             action.rest = rest;
+        //         }
+        //     })
+        // }
         if (objectConfig.enable_graphql || true) { // TODO object.yml添加enable_graphql属性
             _.each(schema.actions, (action, actionName) => {
                 let gpObj = generateActionGraphqlProp(actionName, objectConfig);
