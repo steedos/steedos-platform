@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 10:57:13
+ * @LastEditTime: 2022-06-10 17:52:26
  * @Description: 
  */
 const express = require("express");
@@ -17,6 +17,9 @@ const {
 const FS_COLLECTION_NAME = 'instances';
 const DB_COLLECTION_NAME = 'cfs.instances.filerecord';
 
+/**
+ * 申请单上传附件
+ */
 router.post('/api/v4/instances/s3/', core.requireAuthentication, async function (req, res) {
     try {
 
@@ -130,14 +133,14 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ message: error.message });
+                res.status(500).send({ error: error.message });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: error.message });
+        res.status(500).send({ error: error.message });
     }
 
 });

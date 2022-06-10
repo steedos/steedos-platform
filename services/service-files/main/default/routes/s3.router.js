@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 11:11:26
+ * @LastEditTime: 2022-06-10 17:52:40
  * @Description: 
  */
 
@@ -138,14 +138,14 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ message: error.message });
+                res.status(500).send({ error: error.message });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: error.message });
+        res.status(500).send({ error: error.message });
     }
 
 });

@@ -2,18 +2,29 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 11:39:52
+ * @LastEditTime: 2022-06-10 20:04:50
  * @Description: 文件类，处理文件保存
  */
 'use strict';
 // @ts-check
 
-const objectql = require('@steedos/objectql');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const { _makeNewID } = require('./util');
-const AWS = require('aws-sdk');
+const {
+    _makeNewID,
+    getStoreName,
+    storageBasePath,
+    fileStoreFullPath,
+    getS3FoldOption,
+    getS3BucketOption
+} = require('./util');
+const {
+    LOCAL_STORE,
+    OSS_STORE,
+    S3_STORE,
+    STEEDOSCLOUD_STORE
+} = require('./consts');
 
 class File {
 
@@ -102,26 +113,6 @@ class File {
         return doc;
     }
 
-
-    /**
-     * 获取文件存储的文件夹路径
-     * @param {String} fsCollectionName 
-     * @returns 
-     */
-    storageBasePath(fsCollectionName) {
-        return path.join(process.env.STEEDOS_STORAGE_DIR, `files/${fsCollectionName}`);
-    }
-
-    /**
-     * 
-     * @returns 
-     */
-    getStoreName() {
-        const config = objectql.getSteedosConfig();
-        const storeName = config.public.cfs ? (config.public.cfs.store || 'local') : 'local';
-        return storeName;
-    }
-
     /**
      * 生成文件存储路径后缀
      * @param {{ _id, filename, instance, fsCollectionName }} param0 
@@ -129,7 +120,7 @@ class File {
      */
     fileKeyMaker({ _id, filename, instance, fsCollectionName }) {
 
-        const storeName = this.getStoreName();
+        const storeName = getStoreName();
 
         const name_split = filename.split('.');
         const extention = name_split.pop();
@@ -145,7 +136,7 @@ class File {
                 customPathPrefix += instance;
             }
 
-            const pathname = path.join(this.storageBasePath(fsCollectionName), customPathPrefix);
+            const pathname = path.join(storageBasePath(fsCollectionName), customPathPrefix);
 
             const absolutePath = path.resolve(pathname);
             // 如果文件夹不存在，则创建文件夹
@@ -159,14 +150,6 @@ class File {
 
     }
 
-    /**
-     * 文件存储完整路径
-     * @param {String} fsCollectionName 
-     * @param {String} fileKey 
-     */
-    fileStoreFullPath(fsCollectionName, fileKey) {
-        return path.join(this.storageBasePath(fsCollectionName), fileKey);
-    }
 
     /**
      * 保存文件
@@ -175,57 +158,31 @@ class File {
      */
     save(tempFilePath, callback) {
         try {
-            const storeName = this.getStoreName();
+            const storeName = getStoreName();
             const fsCollectionName = this._fsCollectionName;
             const fileKey = this._fileKey;
-            if ('local' === storeName) {
-                const fileStorePath = this.fileStoreFullPath(fsCollectionName, fileKey);
+            if (LOCAL_STORE === storeName) {
+                const fileStorePath = fileStoreFullPath(fsCollectionName, fileKey);
                 fs.renameSync(tempFilePath, fileStorePath);
                 callback(null);
             }
-            else if ('OSS' === storeName || 'S3' === storeName) {
-
+            else if (OSS_STORE === storeName || S3_STORE === storeName) {
                 // 将文件保存到OSS或S3
-                const config = objectql.getSteedosConfig();
-                const options = config.cfs.aws || {};
 
-                // Determine which folder (key prefix) in the bucket to use
-                let folder = options.folder;
-                if (typeof folder === "string" && folder.length) {
-                    if (folder.slice(0, 1) === "/") {
-                        folder = folder.slice(1);
-                    }
-                    if (folder.slice(-1) !== "/") {
-                        folder += "/";
-                    }
-                } else {
-                    folder = "";
-                }
-
-                const bucket = options.bucket;
-                if (!bucket)
-                    throw new Error('未指定bucket');
-
-                const defaultAcl = options.ACL || 'private';
-
-                const serviceParams = Object.assign({
-                    Bucket: bucket,
-                    region: null, //required
-                    accessKeyId: null, //required
-                    secretAccessKey: null, //required
-                    ACL: defaultAcl
-                }, options);
-
-                const S3 = new AWS.S3(serviceParams);
+                const { S3Client } = require('./s3client')
 
                 const stream = fs.createReadStream(tempFilePath);
+
+                const folder = getS3FoldOption();
+                const bucket = getS3BucketOption();
+
                 const params = {
                     Bucket: bucket,
                     Key: folder + fileKey,
                     Body: stream
                 };
 
-                S3.upload(params, function (err, data) {
+                S3Client.upload(params, function (err, data) {
                     console.log(err, data);
                     // 删除临时文件
                     fs.unlinkSync(tempFilePath);
@@ -234,7 +191,7 @@ class File {
                 });
 
             }
-            else if ('STEEDOSCLOUD' === storeName) {
+            else if (STEEDOSCLOUD_STORE === storeName) {
                 // TODO
             }
             else {
@@ -253,6 +210,44 @@ class File {
 
 }
 
+/**
+ * 读取文件流
+ * @param {*} fsCollectionName 
+ * @param {*} fileKey 
+ * @returns stream
+ */
+function createFileReadStream(fsCollectionName, fileKey) {
+    const storeName = getStoreName();
+    if (LOCAL_STORE === storeName) {
+        const filePath = fileStoreFullPath(fsCollectionName, fileKey);
+        const exists = fs.existsSync(filePath);
+        if (!exists) {
+            let error = new Error('No file found');
+            error.statusCode = 404;
+            throw error;
+        }
+        return fs.createReadStream(filePath);
+    }
+    else if (OSS_STORE === storeName || S3_STORE === storeName) {
+        const { S3Client } = require('./s3client');
+        const folder = getS3FoldOption();
+        const bucket = getS3BucketOption();
+        const params = {
+            Bucket: bucket,
+            Key: folder + fileKey
+        };
+        return S3Client.getObject(params).createReadStream();
+    }
+    else if (STEEDOSCLOUD_STORE === storeName) {
+        // TODO
+    }
+    else {
+        throw new Error(`Unsupported store name: ${storeName}`);
+    }
+
+}
+
 module.exports = {
-    File
+    File,
+    createFileReadStream
 };

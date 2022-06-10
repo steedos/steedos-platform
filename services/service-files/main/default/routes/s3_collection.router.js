@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 10:54:50
+ * @LastEditTime: 2022-06-10 17:52:32
  * @Description: 
  */
 
@@ -13,8 +13,6 @@ const formidable = require('formidable');
 const {
     getCollection,
     File,
-    formatFileName,
-    _makeNewID
 } = require('../manager');
 
 /**
@@ -67,14 +65,14 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ message: error.message });
+                res.status(500).send({ error: error.message });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: error.message });
+        res.status(500).send({ error: error.message });
     }
 
 });

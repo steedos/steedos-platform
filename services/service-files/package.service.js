@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-08 09:46:48
+ * @LastEditTime: 2022-06-10 19:25:52
  * @Description: 
  */
 "use strict";
@@ -40,21 +40,14 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		'file.save': {
 
-			async handler(ctx) {
-				console.log('[service-files] file.save!!!]');
-				const userSession = ctx.meta.user;
-				
-			}
-		}
 	},
 
 	/**
 	 * Events
 	 */
 	events: {
-		
+
 	},
 
 	/**
