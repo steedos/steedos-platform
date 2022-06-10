@@ -19,6 +19,7 @@ import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getPatternListeners } from '../dynamic-load';
+import { getCacher } from '@steedos/cachers';
 
 const clone = require('clone')
 
@@ -393,10 +394,51 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
     }
 
+    getTriggerActions(when: string){
+
+        const triggers = [];
+
+        const cache = getCacher('action-triggers');
+        const triggerActions = cache.get('triggerActions');
+
+        if(!_.isEmpty(triggerActions)){
+            _.map(triggerActions, (item)=>{
+                if(item && item.metadata){
+                    const { metadata } = item
+                    if(metadata.isPattern){
+                        try {
+                            if(metadata.listenTo === '*'){
+                                triggers.push(item);
+                            }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
+                                triggers.push(item);
+                            }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
+                                triggers.push(item);
+                            }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                                try {
+                                    if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
+                                        triggers.push(item);
+                                    }
+                                } catch (error) {
+                                }
+                            }
+                        } catch (error) {
+                            console.log(`error`, error);
+                        }
+                    }else{
+                        if(metadata.when === when && metadata.listenTo === this.name){
+                            triggers.push(item);
+                        }
+                    }
+                    
+                }
+            })
+        }
+
+        return triggers;
+    }
+
     async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
-        console.time('runTriggerActions.triggers.filter')
-        let triggers = await this._schema.metadataBroker.call('triggers.filter', { objectApiName: this.name, when: when })
-        console.timeEnd('runTriggerActions.triggers.filter')
+        let triggers = this.getTriggerActions(when);
         if (_.isEmpty(triggers)) {
             return;
         }
@@ -699,7 +741,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
             rolesFieldsPermission = {};
         }else{
             if (!rolesFieldsPermission) {
-                console.log('------------->getRecordView.FieldPermission.getObjectFieldsPermissionGroupRole')
                 rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
             }
         }
@@ -841,40 +882,40 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('find', this.table_name, clonedQuery, userSession)
     }
 
     // 此函数支持driver: MeteorMongo
     async aggregate(query: SteedosQueryOptions, externalPipeline, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
     // 此函数支持driver: MeteorMongo
     async directAggregate(query: SteedosQueryOptions, externalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
     // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
     async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        console.time('findOne.processUnreadableField');
         if(userSession)
             await this.processUnreadableField(userSession, clonedQuery);
-        console.timeEnd('findOne.processUnreadableField');
-        console.time('findOne.callAdapter')
         const result = await this.callAdapter('findOne', this.table_name, id, clonedQuery, userSession);
-        console.timeEnd('findOne.callAdapter')
         return result
     }
 
@@ -885,21 +926,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
     }
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
     }
     // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedQueryFilters = queryFilters;
         return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
     }
@@ -922,7 +963,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('directUpdate', this.table_name, clonedId, doc, userSession)
     }
@@ -1552,25 +1593,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
-        // 后台直接去掉uneditable_fields相关判断逻辑
-        // [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
-        // if (!userSession) {
-        //     return
-        // }
+    // private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
+    //     后台直接去掉uneditable_fields相关判断逻辑
+    //     [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
+    //     if (!userSession) {
+    //         return
+    //     }
 
-        // let userObjectPermission = await this.getUserObjectPermission(userSession)
-        // let userObjectUneditableFields = userObjectPermission.uneditable_fields
+    //     let userObjectPermission = await this.getUserObjectPermission(userSession)
+    //     let userObjectUneditableFields = userObjectPermission.uneditable_fields
 
-        // let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
-        // if (intersection.length > 0) {
-        //     throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
-        // }
+    //     let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
+    //     if (intersection.length > 0) {
+    //         throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
+    //     }
 
-        // // _.each(userObjectUneditableFields, (name: string)=>{
-        // //     delete doc[name]
-        // // })
-    }
+    //     // _.each(userObjectUneditableFields, (name: string)=>{
+    //     //     delete doc[name]
+    //     // })
+    // }
 
     private formatRecord(doc: JsonMap) {
         let adapterFormat = this._datasource["formatRecord"];
@@ -1586,11 +1627,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');
         }
-        console.time('callAdapter.allow');
-        let allow = await this.allow(method, args[args.length - 1])
-        console.timeEnd('callAdapter.allow');
-        if (!allow) {
-            throw new Error('not find permission')
+        const userSession: SteedosUserSession = args[args.length - 1];
+        if(_.isNull(userSession) || _.isUndefined(userSession)){
+            let allow = await this.allow(method, userSession)
+            if (!allow) {
+                throw new Error('not find permission')
+            }
         }
 
         let objectName = args[0], recordId: string, doc: JsonMap;
@@ -1612,52 +1654,30 @@ export class SteedosObjectType extends SteedosObjectProperties {
             paramRecordId = args[1];
         }
 
-        console.time('callAdapter.dealWithFilters');
         // 判断处理工作区权限，公司级权限，owner权限
-        if (this._datasource.enable_space) {
+        if (_.isNull(userSession) || _.isUndefined(userSession) && this._datasource.enable_space) {
             this.dealWithFilters(method, args);
             await this.dealWithMethodPermission(method, args);
         }
-        console.timeEnd('callAdapter.dealWithFilters');
         let returnValue: any;
-        let userSession: SteedosUserSession;
         if (this.isDirectCRUD(method)) {
-            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
-            console.time('callAdapter.directCRUD');
             returnValue = await adapterMethod.apply(this._datasource, args);
-            console.timeEnd('callAdapter.directCRUD');
         } else {
-            console.time('callAdapter.notDirectCRUD-1');
-            userSession = args[args.length - 1]
-            console.time('callAdapter.notDirectCRUD-1.1');
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
-            console.timeEnd('callAdapter.notDirectCRUD-1.1');
             if (paramRecordId) {
                 beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
             }
-            console.time('callAdapter.notDirectCRUD-1.2');
             await this.runBeforeTriggers(method, beforeTriggerContext)
-            console.timeEnd('callAdapter.notDirectCRUD-1.2');
-            console.time('callAdapter.notDirectCRUD-1.3');
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
-            console.timeEnd('callAdapter.notDirectCRUD-1.3');
-            console.time('callAdapter.notDirectCRUD-1.4');
             let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
-            console.timeEnd('callAdapter.notDirectCRUD-1.4');
-            console.time('callAdapter.notDirectCRUD-1.5');
             if (paramRecordId) {
                 afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
             }
             let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
-            console.timeEnd('callAdapter.notDirectCRUD-1.5');
-            console.timeEnd('callAdapter.notDirectCRUD-1');
 
-            console.time('callAdapter.notDirectCRUD-2');
             returnValue = await adapterMethod.apply(this._datasource, args);
-            console.timeEnd('callAdapter.notDirectCRUD-2');
-            console.time('callAdapter.notDirectCRUD-3');
             if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
                 let values = returnValue || {}
                 if (method === 'count') {
@@ -1689,7 +1709,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 await this.runAfterTriggers(method, afterTriggerContext)
             }
             if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
-                console.timeEnd('callAdapter.notDirectCRUD-3');
                 if (_.isEmpty(afterTriggerContext.data) || (_.isEmpty(afterTriggerContext.data.values) && !_.isNumber(afterTriggerContext.data.values))) {
                     return returnValue
                 } else {
@@ -1713,10 +1732,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 await this.runRecordFormula(method, objectName, recordId, doc, userSession);
                 await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
             }
-            console.timeEnd('callAdapter.notDirectCRUD-3');
-            console.time('callAdapter.notDirectCRUD-4');
             await brokeEmitEvents(objectName, method, afterTriggerContext);
-            console.timeEnd('callAdapter.notDirectCRUD-4');
         }
         return returnValue
     };

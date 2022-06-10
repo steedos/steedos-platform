@@ -213,9 +213,7 @@ module.exports = {
 		 * @returns {Promise}
 		 */
 		async authenticate(ctx, route, req, res) {
-			console.time('-------authenticate--------');
 			let user = await steedosAuth.auth(req, res);
-			console.timeEnd('-------authenticate--------');
 			if (user && user.userId) {
 				return user;
 			} else {

@@ -145,37 +145,22 @@ function getSpaceBootStrap(req, res) {
                 if (!userSession) {
                     return res.status(500).send();
                 }
-                console.time('-------------getSpaceBootStrap----------------');
                 let urlParams = req.params;
                 const { userId, language: lng } = userSession;
                 let spaceId = req.headers['x-space-id'] || urlParams.spaceId;
-                console.time('getSpaceBootStrap.getSpace----Creator.Collections');
-                let spaceC = Creator.Collections["spaces"].findOne({ _id: spaceId }, { fields: { name: 1 } });
-                console.timeEnd('getSpaceBootStrap.getSpace----Creator.Collections');
-                if (false) {
-                    console.log(spaceC);
-                }
-                console.time('getSpaceBootStrap.getSpace');
                 let space = yield (0, objectql_1.getObject)("spaces").findOne(spaceId, { fields: ['name'] });
-                console.timeEnd('getSpaceBootStrap.getSpace');
-                console.time('getSpaceBootStrap.getAllPermissions');
                 //TODO 无需再从getAllPermissions中获取用户的对象权限
                 let result = Creator.getAllPermissions(spaceId, userId);
-                console.timeEnd('getSpaceBootStrap.getAllPermissions');
-                console.time('getSpaceBootStrap.translationObjects');
                 steedosI18n.translationObjects(lng, result.objects);
-                console.timeEnd('getSpaceBootStrap.translationObjects');
                 result.user = userSession;
                 result.space = space;
                 result.dashboards = clone(Creator.Dashboards);
-                console.time('getSpaceBootStrap.getUserDashboards');
                 result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId);
                 result.object_listviews = yield getUserObjectsListViews(userId, spaceId);
                 // result.apps = clone(Creator.Apps)
                 result.apps = yield (0, objectql_1.getAppConfigs)(spaceId);
                 result.assigned_apps = yield (0, objectql_1.getAssignedApps)(userSession);
                 let datasources = Creator.steedosSchema.getDataSources();
-                console.timeEnd('getSpaceBootStrap.getUserDashboards');
                 // for (const datasourceName in datasources) {
                 //     if(datasourceName != 'default'){
                 //         let datasource = datasources[datasourceName];
@@ -190,27 +175,17 @@ function getSpaceBootStrap(req, res) {
                 //         }
                 //     }
                 // }
-                console.time('getSpaceBootStrap.getObjectLayouts');
                 const spaceProcessDefinition = yield (0, objectql_1.getObject)("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] });
                 const spaceObjectsProcessDefinition = _.groupBy(spaceProcessDefinition, 'object_name');
                 const dbListViews = yield (0, objectql_1.getObject)("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] });
                 const dbObjectsListViews = _.groupBy(dbListViews, 'object_name');
                 const layouts = yield (0, objectql_1.getObjectLayouts)(userSession.profile, spaceId);
                 const objectsLayouts = _.groupBy(layouts, 'object_name');
-                console.timeEnd('getSpaceBootStrap.getObjectLayouts');
-                console.time('getSpaceBootStrap.getObjectsFieldsPermissionGroupRole');
                 const objectsFieldsPermissionGroupRole = yield objectql_1.FieldPermission.getObjectsFieldsPermissionGroupRole();
-                console.timeEnd('getSpaceBootStrap.getObjectsFieldsPermissionGroupRole');
-                console.time('getSpaceBootStrap.getAllRelationsInfo');
                 const allRelationsInfo = yield (0, objectql_1.getAllRelationsInfo)();
-                console.timeEnd('getSpaceBootStrap.getAllRelationsInfo');
-                console.time('getSpaceBootStrap.datasources.forEach');
                 for (const datasourceName in datasources) {
                     let datasource = datasources[datasourceName];
-                    console.time(`getSpaceBootStrap.datasources.${datasourceName}.getObjects`);
                     const datasourceObjects = yield datasource.getObjects();
-                    console.timeEnd(`getSpaceBootStrap.datasources.${datasourceName}.getObjects`);
-                    console.time(`getSpaceBootStrap.datasources.${datasourceName}.forEach`);
                     for (const object of datasourceObjects) {
                         const objectConfig = object.metadata;
                         if (!result.objects[objectConfig.name] || objectConfig.name.endsWith("__c")) {
@@ -251,18 +226,13 @@ function getSpaceBootStrap(req, res) {
                             }
                         }
                     }
-                    console.timeEnd(`getSpaceBootStrap.datasources.${datasourceName}.forEach`);
                 }
-                console.timeEnd('getSpaceBootStrap.datasources.forEach');
-                // _.each(Creator.steedosSchema.getDataSources(), function(datasource, name){
-                //     result.apps = _.extend(result.apps, clone(datasource.getAppsConfig()))
-                //     result.dashboards = _.extend(result.dashboards, datasource.getDashboardsConfig())
-                // })
-                console.time('getSpaceBootStrap.apps');
-                var _dbApps = yield (0, objectql_1.getObject)("apps").directFind({ filters: [['space', '=', spaceId], ['is_creator', '=', true], ['visible', '=', true]] });
+                var _dbApps = yield (0, objectql_1.getObject)("apps").directFind({ filters: [['space', '=', spaceId], ['is_creator', '=', true]] });
                 let dbApps = {};
                 _.each(_dbApps, function (dbApp) {
-                    return dbApps[dbApp._id] = dbApp;
+                    if (dbApp.visible) {
+                        return dbApps[dbApp._id] = dbApp;
+                    }
                 });
                 result.apps = _.extend(result.apps || {}, dbApps);
                 var _dbDashboards = yield (0, objectql_1.getObject)("dashboard").directFind({ filters: [['space', '=', spaceId]] });
@@ -282,9 +252,10 @@ function getSpaceBootStrap(req, res) {
                     }
                     _Apps[app._id] = app;
                 });
-                var invisibleApps = yield (0, objectql_1.getObject)("apps").directFind({ filters: [['space', '=', spaceId], ['is_creator', '=', true], ['visible', '=', false]] });
-                _.each(invisibleApps, function (invisibleApp) {
-                    delete _Apps[invisibleApp.code];
+                _.each(_dbApps, function (dbApp) {
+                    if (dbApp.visible === false) {
+                        delete _Apps[dbApp.code];
+                    }
                 });
                 steedosI18n.translationApps(lng, _Apps);
                 result.apps = _Apps;
@@ -300,17 +271,13 @@ function getSpaceBootStrap(req, res) {
                 });
                 result.dashboards = _Dashboards;
                 result.plugins = core_1.getPlugins ? (0, core_1.getPlugins)() : null;
-                console.timeEnd('getSpaceBootStrap.apps');
-                console.time('getSpaceBootStrap.getUserObjects');
                 yield getUserObjects(userId, spaceId, result.objects);
                 // TODO object layout 是否需要控制审批记录显示？
-                console.timeEnd('getSpaceBootStrap.getUserObjects');
                 _.each(spaceProcessDefinition, function (item) {
                     if (result.objects[item.object_name]) {
                         result.objects[item.object_name].enable_process = true;
                     }
                 });
-                console.time('getSpaceBootStrap.result.objects.forEach');
                 for (const key in result.objects) {
                     if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                         const objectConfig = result.objects[key];
@@ -336,8 +303,6 @@ function getSpaceBootStrap(req, res) {
                         }
                     }
                 }
-                console.timeEnd('getSpaceBootStrap.result.objects.forEach');
-                console.timeEnd('-------------getSpaceBootStrap----------------');
                 return res.status(200).send(result);
             });
         }).run();

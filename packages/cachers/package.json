@@ -1,21 +1,17 @@
 {
-  "name": "@steedos/i18n",
+  "name": "@steedos/cachers",
   "private": false,
-  "version": "2.2.40",
+  "version": "2.2.39",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "compile": "tsc",
-    "prepare": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/cachers": "^2.2.39",
-    "i18next": "^19.3.4",
-    "i18next-sprintf-postprocessor": "^0.2.2",
-    "i18next-xhr-backend": "^3.2.2"
+    "lru-cache": "^7.10.1"
   },
   "devDependencies": {
     "typescript": "3.5.3"

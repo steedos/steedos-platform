@@ -38,7 +38,7 @@ module.exports = {
 		},
 		built_in_plugins: [
 			"@steedos/service-ui",
-			"@steedos/service-translations",
+			"@steedos/service-cachers-manager",
 			"@steedos/workflow",
 			"@steedos/accounts",
 			"@steedos/plugin-enterprise",

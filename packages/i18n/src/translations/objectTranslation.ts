@@ -4,9 +4,9 @@ import { _t, exists, addResourceBundle } from '../index';
 import { convertObject } from './index';
 import { fallbackKeys } from '../i18n/i18n';
 const crypto = require('crypto')
-import { getCacher } from './cacher';
+import { getCacher } from '@steedos/cachers';
 
-const Cacher = getCacher('objects');
+const Cacher = getCacher('lru.translations.objects');
 
 function getMD5(data){
     let md5 = crypto.createHash('md5');
