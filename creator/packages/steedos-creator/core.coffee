@@ -272,25 +272,28 @@ Creator.getAppObjectNames = (app_id)->
 				objects.push v
 	return objects
 
+Creator.getUrlWithToken = (url, expressionFormData) ->
+	# 给url时拼接当前用户token相关信息用于登录验证，支持配置表达式
+	params = {};
+	params["X-Space-Id"] = Steedos.spaceId()
+	params["X-User-Id"] = Steedos.userId();
+	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
+	params["X-Auth-Token"] = Accounts._storedLoginToken();
+	if Steedos.isExpression(url)
+		url = Steedos.parseSingleExpression(url, expressionFormData, "#", Creator.USER_CONTEXT)
+	# 外部链接地址中可能会带有#号，比如/builder/?p_ids=619383545b2e9a72ec0558b3#/page/public/test
+	# 此时url中已经在#号前面出现了一个?号，这个问号不可以被识别为url参数，只有#号后面的?号才应该被识别为url参数
+	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
+	linkStr = if hasQuerySymbol then "&" else "?"
+	return "#{url}#{linkStr}#{$.param(params)}"
+
 Creator.getAppMenu = (app_id, menu_id)->
 	menus = Creator.getAppMenus(app_id)
 	return menus && menus.find (menu)-> return menu.id == menu_id
 
 Creator.getAppMenuUrlForInternet = (menu)->
 	# 当tabs类型为url时，按外部链接处理，支持配置表达式并加上统一的url参数
-	params = {};
-	params["X-Space-Id"] = Steedos.spaceId()
-	params["X-User-Id"] = Steedos.userId();
-	params["X-Company-Ids"] = Steedos.getUserCompanyIds();
-	# params["X-Auth-Token"] = Accounts._storedLoginToken();
-	url = menu.path
-	if Steedos.isExpression(url)
-		url = Steedos.parseSingleExpression(url, menu, "#", Creator.USER_CONTEXT)
-	# 外部链接地址中可能会带有#号，比如/builder/?p_ids=619383545b2e9a72ec0558b3#/page/public/test
-	# 此时url中已经在#号前面出现了一个?号，这个问号不可以被识别为url参数，只有#号后面的?号才应该被识别为url参数
-	hasQuerySymbol = /(\#.+\?)|(\?[^#]*$)/g.test(url)
-	linkStr = if hasQuerySymbol then "&" else "?"
-	return "#{url}#{linkStr}#{$.param(params)}"
+	return Creator.getUrlWithToken menu.path, menu
 
 Creator.getAppMenuUrl = (menu)->
 	url = menu.path

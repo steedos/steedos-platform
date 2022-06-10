@@ -6,7 +6,7 @@ Template.creator_app_iframe.helpers
 		app = Creator.getApp(app_id)
 		# 有脚本时不把url设置到iframe的src属性中，由脚本自动变更，这样可以处理单点登录问题
 		if app and !app.on_click and app.url
-			return app.url
+			return Creator.getUrlWithToken app.url, app
 		else
 			return ""
 
