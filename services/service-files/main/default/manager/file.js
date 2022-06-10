@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-09 19:23:54
+ * @LastEditTime: 2022-06-10 11:39:52
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -51,10 +51,10 @@ class File {
     }
 
     /**
-     * @param {(arg0: any) => void} name
+     * @returns {String}
      */
-    set name(name) {
-        this._name = name;
+    get name() {
+        return this._name;
     }
 
     /**
@@ -227,6 +227,9 @@ class File {
 
                 S3.upload(params, function (err, data) {
                     console.log(err, data);
+                    // 删除临时文件
+                    fs.unlinkSync(tempFilePath);
+
                     callback(err, data);
                 });
 

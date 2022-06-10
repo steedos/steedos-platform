@@ -125,7 +125,7 @@ Package.onUse(function (api) {
 	api.addFiles('server/lib/permission_manager.coffee', 'server');
 	api.addFiles('server/lib/uuflowManagerForInitApproval.coffee', 'server');
 
-	api.addFiles('server/routes/s3.coffee', 'server');
+	// api.addFiles('server/routes/s3.coffee', 'server');
 	api.addFiles('server/routes/api_workflow_drafts.coffee', 'server');
 
 	api.addFiles('client/listview.coffee', "client");

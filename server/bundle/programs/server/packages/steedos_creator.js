@@ -3889,7 +3889,7 @@ require("/node_modules/meteor/steedos:creator/server/publications/contacts_no_fo
 require("/node_modules/meteor/steedos:creator/server/publications/space_need_to_confirm.coffee");
 require("/node_modules/meteor/steedos:creator/server/lib/permission_manager.coffee");
 require("/node_modules/meteor/steedos:creator/server/lib/uuflowManagerForInitApproval.coffee");
-require("/node_modules/meteor/steedos:creator/server/routes/s3.coffee");
+// require("/node_modules/meteor/steedos:creator/server/routes/s3.coffee");
 require("/node_modules/meteor/steedos:creator/server/routes/api_workflow_drafts.coffee");
 
 /* Exports */

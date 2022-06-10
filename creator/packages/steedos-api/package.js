@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:56
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-10 11:32:06
+ * @Description: 
+ */
 Package.describe({
 	name: 'steedos:api',
 	version: '0.0.1',
@@ -50,7 +57,7 @@ Package.onUse(function(api) {
 	api.addFiles('steedos/space_users.coffee', 'server');
 	api.addFiles('steedos/organizations.coffee', 'server');
 
-	api.addFiles('routes/s3.coffee', 'server');
+	// api.addFiles('routes/s3.coffee', 'server');
 	api.addFiles('routes/push.coffee', 'server');
 	api.addFiles('routes/aliyun_push.coffee', 'server');
 	// api.addFiles('routes/import.coffee', 'server');

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-09 15:19:22
+ * @LastEditTime: 2022-06-10 10:57:13
  * @Description: 
  */
 const express = require("express");
@@ -11,7 +11,8 @@ const core = require('@steedos/core');
 const formidable = require('formidable');
 const {
     getCollection,
-    File
+    File,
+    formatFileName
 } = require('../manager');
 const FS_COLLECTION_NAME = 'instances';
 const DB_COLLECTION_NAME = 'cfs.instances.filerecord';
@@ -57,26 +58,7 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
 
                 const collection = getCollection(DB_COLLECTION_NAME);
 
-
-                const newFile = new File({ name:originalFilename, size, mimetype, fsCollectionName: FS_COLLECTION_NAME});
-
-                let filename = originalFilename;
-
-                if (["image.jpg", "image.gif", "image.jpeg", "image.png"].includes(filename.toLowerCase())) {
-                    filename = "image-" + moment(new Date()).format('YYYYMMDDHHmmss') + "." + filename.split('.').pop();
-                }
-
-                try {
-                    if (upload_from === "IE" || upload_from === "node") {
-                        filename = decodeURIComponent(filename);
-                    }
-                } catch (error) {
-                    console.error(filename);
-                    console.error(error);
-                    filename = filename.replace(/%/g, "-");
-                }
-
-                newFile.name = filename;
+                const newFile = new File({ name: formatFileName(originalFilename, upload_from), size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
 
                 let parentId = '';
                 const metadata = {
