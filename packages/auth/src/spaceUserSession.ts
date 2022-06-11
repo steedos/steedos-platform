@@ -112,13 +112,13 @@ export async function getSpaceUserSession(spaceId, userId) {
             spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
             spaceSession.spaceId = userSpaceId;
             spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name', 'admins']);
-            spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._Id === userSpaceId });
+            spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._id === userSpaceId });
             
             spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
-            spaceSession.company = _.find(spaceSession.companies, (record)=>{ return record._Id === su.company_id });
+            spaceSession.company = _.find(spaceSession.companies, (record)=>{ return record._id === su.company_id });
             
             spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
-            spaceSession.organization = _.find(spaceSession.organizations, (record)=>{ return record._Id === su.organization });
+            spaceSession.organization = _.find(spaceSession.organizations, (record)=>{ return record._id === su.organization });
 
             if (spaceSession.space && spaceSession.space.admins) {
                 spaceSession.is_space_admin = spaceSession.space.admins.indexOf(userId) > -1;

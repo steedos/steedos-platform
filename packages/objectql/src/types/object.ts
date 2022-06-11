@@ -1628,7 +1628,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('Adapted does not support "' + method + '" method');
         }
         const userSession: SteedosUserSession = args[args.length - 1];
-        if(_.isNull(userSession) || _.isUndefined(userSession)){
+        if(!_.isEmpty(userSession)){
             let allow = await this.allow(method, userSession)
             if (!allow) {
                 throw new Error('not find permission')
@@ -1655,7 +1655,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        if (_.isNull(userSession) || _.isUndefined(userSession) && this._datasource.enable_space) {
+        if (!_.isEmpty(userSession) && this._datasource.enable_space) {
             this.dealWithFilters(method, args);
             await this.dealWithMethodPermission(method, args);
         }
