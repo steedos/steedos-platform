@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:56
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-13 14:55:37
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-11 09:29:54
  * @Description: 
  */
 import { Mongo } from 'meteor/mongo'
@@ -43,6 +43,3 @@ if (Meteor.isServer) {
 
 	Mongo.setConnectionOptions(mongoOptions);
 }
-
-
-Meteor.autorun = Tracker.autorun
