@@ -753,6 +753,15 @@ TemplateHelpers =
 		false
 
 	cordovaDownload: (url, filename, rev, length) ->
+		# 文件下载增加认证参数
+		authObject = { authToken : Accounts._storedLoginToken() }
+		token = window.btoa(JSON.stringify(authObject))
+		# 如果url已经有参数则拼接token
+		if url.indexOf('?') > 0
+			url = url + '&token=' + token
+		else
+			url = url + '?token=' + token
+
 		if not cordova?.plugins?.fileOpener2
 			window.open(url, '_blank', 'EnableViewPortScale=yes')
 			return

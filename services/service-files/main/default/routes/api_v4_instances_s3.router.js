@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 17:52:26
+ * @LastEditTime: 2022-06-11 14:33:18
  * @Description: 
  */
 const express = require("express");
@@ -22,6 +22,9 @@ const DB_COLLECTION_NAME = 'cfs.instances.filerecord';
  */
 router.post('/api/v4/instances/s3/', core.requireAuthentication, async function (req, res) {
     try {
+
+        const userSession = req.user;
+        const userId = userSession.userId;
 
         const form = formidable({});
 

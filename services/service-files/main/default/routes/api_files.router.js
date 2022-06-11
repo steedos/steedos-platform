@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 18:21:31
+ * @LastEditTime: 2022-06-11 16:52:42
  * @Description: 
  */
 
@@ -13,15 +13,69 @@ const {
     getCollection,
     createFileReadStream
 } = require('../manager');
+const steedosAuth = require('@steedos/auth');
 
 /**
  * 下载文件
+ * 增加环境变量 FILE_DOWNLOAD_NEED_AUTH 判断下载是否需要认证，如果此变量值为'false'则无需认证，否则需要认证
  */
-router.get('/api/files/:collectionName/:id', core.requireAuthentication, async function (req, res) {
+
+/**
+ * 增加认证中间件
+ * token为authObject base64之后的字符串
+ * authObject为{
+ *  "authToken": "", 必填
+ *  "expiration": 时间戳, 选填
+ * }
+ * token生成算法：
+ * var authObject = { authToken : x-auth-token }
+ * var token = window.btoa(JSON.stringify(authObject))
+ * token作为url参数传给下载接口，如 '/api/files/instances/xxx/?token=' + token
+ */
+
+const authMiddleWare = async (req, res, next) => {
+    try {
+        const {
+            token
+        } = req.query;
+        if (token) {
+            const authObject = JSON.parse(Buffer.from(token, 'base64').toString());
+            if (!authObject.authToken) {
+                throw new Error('authToken is required');
+            }
+            const {
+                authToken,
+                expiration
+            } = authObject;
+
+            if (expiration && expiration < Date.now()) {
+                throw new Error('authToken is expired');
+            }
+            // 让auth包做统一认证
+            req.headers['x-auth-token'] = authToken;
+        }
+
+        next();
+    }
+    catch (error) {
+        res.status(401).send(error.message);
+    }
+}
+
+router.get('/api/files/:collectionName/:id', authMiddleWare,  async function (req, res) {
     try {
 
-        const userSession = req.user;
-        const userId = userSession.userId;
+        if (process.env.FILE_DOWNLOAD_NEED_AUTH !== 'false') {
+            // 手动认证
+            let user = await steedosAuth.auth(req, res);
+            if (user.userId) {
+                req.user = user;
+            }
+            if (!req.user) {
+                res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
+                return;
+            }
+        }
 
         const { download } = req.query;
 
@@ -80,7 +134,7 @@ router.get('/api/files/:collectionName/:id', core.requireAuthentication, async f
             res.end();
         });
         req.on('aborted', function () {
-            
+
         });
 
         readStream.pipe(res);

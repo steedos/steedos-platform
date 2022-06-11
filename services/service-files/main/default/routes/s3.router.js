@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 17:52:40
+ * @LastEditTime: 2022-06-11 10:11:05
  * @Description: 
  */
 
@@ -24,6 +24,9 @@ const DB_COLLECTION_NAME = 'cfs.files.filerecord';
  */
 router.post('/s3/', core.requireAuthentication, async function (req, res) {
     try {
+
+        const userSession = req.user;
+        const userId = userSession.userId;
 
         const form = formidable({});
 
@@ -88,7 +91,7 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
                             extention: extention,
                             size: size,
                             modified: new Date(),
-                            modified_by: owner
+                            modified_by: userId
                         },
                         $push: {
                             versions: {
@@ -113,9 +116,9 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
                         owner: owner,
                         space: space,
                         created: new Date(),
-                        created_by: owner,
+                        created_by: userId,
                         modified: new Date(),
-                        modified_by: owner
+                        modified_by: userId
                     });
                     await collection.updateOne({
                         _id: newFile.id
