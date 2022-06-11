@@ -1501,7 +1501,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private async appendRecordPermission(records, userSession) {
         const _ids = _.pluck(records, '_id');
-        const objPm = await this.getUserObjectPermission(userSession);
+        const objPm = await this.getUserObjectPermission(userSession, false);
         const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
         if (_.isEmpty(permissionFilters)) {
             return;
@@ -1558,7 +1558,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (!userSession) {
             return
         }
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         let userObjectUnreadableFields = userObjectPermission.unreadable_fields
         if (userObjectUnreadableFields.length > 0) {
             let queryFields = [];
@@ -1803,7 +1803,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (userSession) {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
-            let objPm = await this.getUserObjectPermission(userSession);
+            let objPm = await this.getUserObjectPermission(userSession, false);
             if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
                 if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
