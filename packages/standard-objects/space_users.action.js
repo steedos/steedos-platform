@@ -277,7 +277,6 @@ module.exports = {
     return false;
   },
   setPassword: function (object_name, record_id) {
-    console.log('setPassword', this);
     var organization = Session.get("organization");
     var isAdmin = Creator.isSpaceAdmin();
     if (!isAdmin) {
