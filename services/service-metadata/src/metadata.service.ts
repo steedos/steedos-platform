@@ -1,7 +1,6 @@
 "use strict";
-
-"use strict";
-import { ActionHandlers, started, stopped } from './actionsHandler';
+import { started, stopped } from '@steedos/metadata-registrar';
+import { ActionHandlers } from './actionsHandler';
 import * as _ from 'underscore';
 const SERVICE_NAME = 'metadata';
 

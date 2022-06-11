@@ -1,4 +1,7 @@
 "use strict";
+
+import { Register } from '@steedos/metadata-registrar';
+
 import { ActionHandlers } from './actionsHandler';
 import { MasterDetailActionHandler } from './master-detail/masterDetailActionHandler'
 import { FormulaActionHandler } from './formula/formulaActionHandler';
@@ -182,7 +185,8 @@ module.exports = {
                 const mastersInfo = this.masterDetailActionHandler.getMastersInfoKey(objectApiName);
                 const lookupDetailsInfo = this.lookupActionHandler.getDetailsInfoKey(objectApiName);
 
-                const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                // const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                const results = await Register.mfilter(ctx.broker, [detailsInfoKey, mastersInfo, lookupDetailsInfo])
                 return {
                     details: _.compact(_.map(results[0], 'metadata.key')),
                     masters: _.compact(_.map(results[1], 'metadata.key')),
@@ -197,7 +201,8 @@ module.exports = {
                 const mastersInfo = this.masterDetailActionHandler.getMastersInfoKey(objectApiName);
                 const lookupDetailsInfo = this.lookupActionHandler.getDetailsInfoKey(objectApiName);
 
-                const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                // const results = await ctx.broker.call('metadata.mfilter', { keys: [detailsInfoKey, mastersInfo, lookupDetailsInfo] });
+                const results = await Register.mfilter(ctx.broker, [detailsInfoKey, mastersInfo, lookupDetailsInfo])
                 return {
                     details: _.compact(_.map(results[0], 'metadata')),
                     masters: _.compact(_.map(results[1], 'metadata')),

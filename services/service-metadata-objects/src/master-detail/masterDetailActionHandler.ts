@@ -1,3 +1,4 @@
+import { Register } from '@steedos/metadata-registrar';
 import _ = require('lodash')
 
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
@@ -86,7 +87,8 @@ export class MasterDetailActionHandler{
                 return;
             }
             await this.deleteObjectMasterDetails(objectConfig.name);
-            await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey('*', objectConfig.name, '*')}, {meta: {}});
+            // await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey('*', objectConfig.name, '*')}, {meta: {}});
+            await Register.fuzzyDelete(this.broker, this.getDetailKey('*', objectConfig.name, '*'));
             return true;
         } catch (error) {
             this.broker.logger.error(error);
@@ -220,7 +222,8 @@ export class MasterDetailActionHandler{
     }
     async getMastersInfo(objectApiName: string){
         const mastersInfo = [];
-        let records = (await this.broker.call('metadata.filter', { key: this.getMasterKey(objectApiName, "*") }, { meta: {} })) || {};
+        // let records = (await this.broker.call('metadata.filter', { key: this.getMasterKey(objectApiName, "*") }, { meta: {} })) || {};
+        let records: any = (await Register.filter(this.broker, this.getMasterKey(objectApiName, "*"))) || {};
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
@@ -232,13 +235,15 @@ export class MasterDetailActionHandler{
 
     async addMaster(objectApiName: any, masterObjectApiName: string, field: any){
         const masterFullName = `${masterObjectApiName}.${field.name}`
-        await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName, masterFullName), data: {type: 'master', objectName: objectApiName, key: masterFullName}}, {meta: {}})
+        // await this.broker.call('metadata.add', {key: this.getMasterKey(objectApiName, masterFullName), data: {type: 'master', objectName: objectApiName, key: masterFullName}}, {meta: {}})
+        await Register.add(this.broker, {key: this.getMasterKey(objectApiName, masterFullName), data: {type: 'master', objectName: objectApiName, key: masterFullName}}, {})
         return true;
     }
 
     async removeMaster(objectApiName: any, masterObjectApiName: string, masterFieldName: any){
         const masterFullName = `${masterObjectApiName}.${masterFieldName}`
-        await this.broker.call('metadata.delete', { key: this.getMasterKey(objectApiName, masterFullName) }, { meta: {} })
+        // await this.broker.call('metadata.delete', { key: this.getMasterKey(objectApiName, masterFullName) }, { meta: {} })
+        await Register.delete(this.broker, this.getMasterKey(objectApiName, masterFullName))
         return true;
     }
 
@@ -266,7 +271,8 @@ export class MasterDetailActionHandler{
 
     async getDetailsInfo(objectApiName: string){
         const detailsInfo = [];
-        let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*", "*") }, { meta: {} })) || {};
+        // let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*", "*") }, { meta: {} })) || {};
+        let records: any = (await Register.filter(this.broker, this.getDetailKey(objectApiName, "*", "*"))) || {}
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
@@ -278,13 +284,15 @@ export class MasterDetailActionHandler{
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any){
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: {type: 'detail', objectName: objectApiName, key: detailFullName}}, {meta: {}})
+        // await this.broker.call('metadata.add', {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: {type: 'detail', objectName: objectApiName, key: detailFullName}}, {meta: {}})
+        await Register.add(this.broker, {key: this.getDetailKey(objectApiName, detailObjectApiName, detailField.name), data: {type: 'detail', objectName: objectApiName, key: detailFullName}}, {})
         this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
         return true;
     }
     
     async removeDetail(objectApiName: any, detailObjectApiName: string, detailFieldName: any){
-        await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailObjectApiName, detailFieldName)}, { meta: {} })
+        // await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailObjectApiName, detailFieldName)}, { meta: {} })
+        await Register.delete(this.broker, this.getDetailKey(objectApiName, detailObjectApiName, detailFieldName))
         return true;
     }
 
@@ -354,8 +362,10 @@ export class MasterDetailActionHandler{
     }
 
     async deleteObjectMasterDetails(objectApiName: string){
-        await this.broker.call('metadata.fuzzyDelete', {key: this.getMasterKey(objectApiName, '*')}, {meta: {}});
-        await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey(objectApiName, '*', '*')}, {meta: {}});
+        // await this.broker.call('metadata.fuzzyDelete', {key: this.getMasterKey(objectApiName, '*')}, {meta: {}});
+        await Register.fuzzyDelete(this.broker, this.getMasterKey(objectApiName, '*'));
+        // await this.broker.call('metadata.fuzzyDelete', {key: this.getDetailKey(objectApiName, '*', '*')}, {meta: {}});
+        await Register.fuzzyDelete(this.broker, this.getDetailKey(objectApiName, '*', '*'));
         return true;
     }
 }

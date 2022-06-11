@@ -1,3 +1,5 @@
+import { Register } from '@steedos/metadata-registrar';
+
 import _ = require('lodash')
 
 export class LookupActionHandler {
@@ -91,7 +93,8 @@ export class LookupActionHandler {
 
     async getDetailsInfo(objectApiName: string){
         const detailsInfo = [];
-        let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*") }, { meta: {} })) || {};
+        // let records = (await this.broker.call('metadata.filter', { key: this.getDetailKey(objectApiName, "*") }, { meta: {} })) || {};
+        let records: any = (await Register.filter(this.broker, this.getDetailKey(objectApiName, "*"))) || {};
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
@@ -103,13 +106,15 @@ export class LookupActionHandler {
 
     async removeDetail(objectApiName: any, detailObjectApiName: string, detailField: any) {
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailFullName) }, { meta: {} });
+        // await this.broker.call('metadata.delete', { key: this.getDetailKey(objectApiName, detailFullName) }, { meta: {} });
+        await Register.delete(this.broker, this.getDetailKey(objectApiName, detailFullName));
         return true;
     }
 
     async addDetail(objectApiName: any, detailObjectApiName: string, detailField: any) {
         const detailFullName = `${detailObjectApiName}.${detailField.name}`
-        await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName, detailFullName), data: {type: 'detail', objectName: objectApiName, key: detailFullName} }, { meta: {} })
+        // await this.broker.call('metadata.add', { key: this.getDetailKey(objectApiName, detailFullName), data: {type: 'detail', objectName: objectApiName, key: detailFullName} }, { meta: {} })
+        await Register.add(this.broker, { key: this.getDetailKey(objectApiName, detailFullName), data: {type: 'detail', objectName: objectApiName, key: detailFullName} }, {});
         this.broker.broadcast(`@${objectApiName}.detailsChanged`, { objectApiName, detailObjectApiName, detailFieldName: detailField.name, detailFieldReferenceToFieldName: detailField.reference_to_field });
         return true;
     }
@@ -124,7 +129,8 @@ export class LookupActionHandler {
     // }
 
     async deleteObjectLookups(objectApiName: string) {
-        await this.broker.call('metadata.fuzzyDelete', { key: this.getDetailKey(objectApiName, '*') }, { meta: {} });
+        await Register.fuzzyDelete(this.broker, this.getDetailKey(objectApiName, '*'));
+        // await this.broker.call('metadata.fuzzyDelete', { key: this.getDetailKey(objectApiName, '*') }, { meta: {} });
         return true;
     }
 }
