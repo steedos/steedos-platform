@@ -126,7 +126,7 @@ export const ActionHandlers = {
     },
 
     async getAll(ctx: any): Promise<any> {
-        return await ctx.broker.call('metadata.filter', { keys: cacherKey('*', '*', '*') });
+        return await ctx.broker.call('metadata.filter', { key: cacherKey('*', '*', '*') });
     },
 
     async filter(ctx: any): Promise<Array<MetadataObject>> {
@@ -155,7 +155,9 @@ export const ActionHandlers = {
     },
     async delete(ctx: any): Promise<boolean> {
         const data = ctx.params.data;
-        return await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
+        await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
+        await ctx.broker.emit(`${METADATA_TYPE}.change`, data);
+        return true
     },
     async verify(ctx: any): Promise<boolean> {
         console.log("verify");
@@ -171,6 +173,7 @@ export const ActionHandlers = {
                     ctx.broker.logger.info(error.message)
                 }
             }
+            await ctx.broker.emit(`${METADATA_TYPE}.change`, {});
         }
     }
 }

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-10 17:38:33
+ * @LastEditTime: 2022-06-11 16:46:51
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -27,6 +27,14 @@ module.exports = {
 	 * Dependencies
 	 */
 	dependencies: [],
+	methods: {
+		loadActionTriggers: async function (broker) {
+			const cache = cachers.getCacher('action-triggers');
+			broker.call('triggers.getAll').then((res)=>{
+				cache.set('triggerActions', res);
+			})
+		}
+	},
 
 	/**
 	 * Events
@@ -46,10 +54,7 @@ module.exports = {
 		},
 		"triggers.change": {
 			handler(ctx){
-				const cache = cachers.getCacher('action-triggers');
-				ctx.broker.call('triggers.getAll').then((res)=>{
-					cache.set('triggerActions', res);
-				})
+				this.loadActionTriggers(ctx.broker);
 			}
 		}
 	},
@@ -57,5 +62,6 @@ module.exports = {
 	async started() {
 		core.loadTranslations();
 		core.loadObjectTranslations();
+		this.loadActionTriggers(this.broker);
 	},
 };
