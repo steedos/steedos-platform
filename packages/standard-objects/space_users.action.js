@@ -338,6 +338,7 @@ module.exports = {
       type: 'password',
       placeholder: t("new_password_placeholder"),
       autoComplete: "new-password",
+      className: "ant-input",
       ref: inputRef,
       onKeyDown: (event) => {
         // 禁用ctrlKey/metaKey+c/v/a，复制、剪切、粘贴、全选，其中metaKey是mac系统中相关操作的辅助键
