@@ -1,4 +1,4 @@
-image: ecr.aws.steedos.cn/dockerhub/steedos/gitpod-workspace-base:2.1.1
+image: ecr.aws.steedos.cn/dockerhub/steedos/gitpod-workspace-base:2.2.2
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
@@ -28,6 +28,9 @@ tasks:
   - name: Redis
     command: |
       redis-server --protected-mode no --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
+  - name: Steedos-cli
+    command: |
+      npm i steedos-cli@2.2.37 --global
   - name: Steedos
     init: |
       yarn install

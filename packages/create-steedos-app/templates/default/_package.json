@@ -5,7 +5,7 @@
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
   "engines": {
-    "node": "^12.22.0"
+    "node": ">=12.22"
   },
   "scripts": {
     "start": "yarn start:community",
@@ -24,14 +24,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "^2.2.26",
-    "@steedos/service-enterprise": "^2.2.26"
+    "@steedos/service-community": "^2.2",
+    "@steedos/service-enterprise": "^2.2"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
     "jest": "^26.4.2",
     "jest-cli": "^26.4.2",
-    "moleculer-repl": "^0.6.4",
+    "moleculer-cli": "^0.8.0",
+    "moleculer-repl": "^0.7.1",
     "nodemon": "^2.0.7"
   },
   "homepage": "https://www.steedos.com",
@@ -50,7 +51,8 @@
     "**/fibers": "^4.0.3",
     "**/cookies": "0.6.2",
     "**/@babel/runtime": "7.12.0",
-    "**/graphql": "^15.3.0"
+    "**/graphql": "^15.3.0",
+    "**/pass-stream": "1.0.0"
   },
   "publishConfig": {
     "access": "public"
