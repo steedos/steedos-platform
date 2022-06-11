@@ -11,8 +11,8 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/core": "^2.2.40",
-        "@steedos/objectql": "^2.2.40"
+        "@steedos/core": "2.2.40",
+        "@steedos/objectql": "2.2.40"
     },
     "license": "MIT",
     "private": false,
