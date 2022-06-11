@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-cachers-manager",
-  "version": "2.2.41",
+  "version": "2.2.42",
   "main": "index.js",
   "license": "MIT",
   "private": false,
