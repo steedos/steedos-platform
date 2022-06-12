@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-11 16:52:42
+ * @LastEditTime: 2022-06-12 16:37:40
  * @Description: 
  */
 
@@ -62,7 +62,7 @@ const authMiddleWare = async (req, res, next) => {
     }
 }
 
-router.get('/api/files/:collectionName/:id', authMiddleWare,  async function (req, res) {
+router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req, res) {
     try {
 
         if (process.env.FILE_DOWNLOAD_NEED_AUTH !== 'false') {
@@ -127,11 +127,13 @@ router.get('/api/files/:collectionName/:id', authMiddleWare,  async function (re
         // Last modified header (updatedAt from file info) 
         res.setHeader('Last-Modified', updatedAt.toUTCString());
 
-        const readStream = createFileReadStream(FS_COLLECTION_NAME, key);
+        const readStream = await createFileReadStream(FS_COLLECTION_NAME, key);
 
         readStream.on('error', function (err) {
             console.log(err);
-            res.end();
+            res.removeHeader('Content-Type');
+            res.removeHeader('Content-Disposition');
+            res.status(500).send({ error: err.message });
         });
         req.on('aborted', function () {
 
@@ -140,7 +142,10 @@ router.get('/api/files/:collectionName/:id', authMiddleWare,  async function (re
         readStream.pipe(res);
     } catch (error) {
         console.error(error);
-        res.status(error.statusCode || 500).send({ error: error.message });
+        // 防止文件不存在时仍然下载0字节文件
+        res.removeHeader('Content-Type');
+        res.removeHeader('Content-Disposition');
+        res.status(error.statusCode || 500).send({ error: error.message|| error.code });
     }
 
 });

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 17:52:32
+ * @LastEditTime: 2022-06-12 16:36:25
  * @Description: 
  */
 
@@ -35,8 +35,8 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
                     throw new Error(err);
                 }
 
-                console.log(fields);
-                console.log(files);
+                // console.log(fields);
+                // console.log(files);
 
                 const {
                     filepath: tempFilePath,

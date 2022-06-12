@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 10:47:47
+ * @LastEditTime: 2022-06-12 16:26:16
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -248,7 +248,7 @@ class File {
  * @param {*} fileKey 
  * @returns stream
  */
-function createFileReadStream(fsCollectionName, fileKey) {
+async function createFileReadStream(fsCollectionName, fileKey) {
     const storeName = getStoreName();
     if (LOCAL_STORE === storeName) {
         const filePath = fileStoreFullPath(fsCollectionName, fileKey);
@@ -268,6 +268,9 @@ function createFileReadStream(fsCollectionName, fileKey) {
             Bucket: bucket,
             Key: folder + fileKey
         };
+        // 校验文件是否存在
+        await S3Client.headObject(params).promise();
+
         return S3Client.getObject(params).createReadStream();
     }
     else if (STEEDOSCLOUD_STORE === storeName) {
@@ -283,6 +286,13 @@ function createFileReadStream(fsCollectionName, fileKey) {
         };
 
         const apikey = getCloudApikey();
+
+        // 校验文件是否存在
+        const metaDataReq = SteedosCloudClient.headObject(params);
+        metaDataReq.on('build', function () {
+            metaDataReq.httpRequest.headers['apikey'] = apikey;
+        });
+        await metaDataReq.promise();
 
         const req = SteedosCloudClient.getObject(params);
         req.on('build', function () {

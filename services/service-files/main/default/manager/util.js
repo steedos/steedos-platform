@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 11:20:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 11:16:56
+ * @LastEditTime: 2022-06-12 13:58:08
  * @Description: 
  */
 
@@ -83,11 +83,20 @@ function fileStoreFullPath(fsCollectionName, fileKey) {
 
 /**
  * 
+ * @returns S3或者OSS 配置
+ */
+function getS3Options() {
+    const config = objectql.getSteedosConfig();
+    const options = config.cfs.aws || config.cfs.aliyun || {};
+    return options;
+}
+
+/**
+ * 
  * @returns folder (key prefix) 
  */
 function getS3FoldOption() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.aws || {};
+    const options = getS3Options();
 
     // Determine which folder (key prefix) in the bucket to use
     let folder = options.folder;
@@ -109,8 +118,7 @@ function getS3FoldOption() {
  * @returns bucket
  */
 function getS3BucketOption() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.aws || {};
+    const options = getS3Options();
     return options.bucket;
 }
 
@@ -119,8 +127,7 @@ function getS3BucketOption() {
  * @returns serviceParams 用于初始化S3Client
  */
 function getS3ServiceParams() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.aws || {};
+    const options = getS3Options();
 
     const bucket = options.bucket;
     if (!bucket)
@@ -128,9 +135,17 @@ function getS3ServiceParams() {
 
     const defaultAcl = options.ACL || 'private';
 
+    // 如果配置了region并且store是OSS则使用region生成endpoint，否则使用默认endpoint
+    const storeName = getStoreName();
+    const region = options.region;
+    if (region && storeName === 'OSS') {
+        options.endpoint = 'http://' + region + '.aliyuncs.com';
+        delete options.region;
+    }
+
     const serviceParams = Object.assign({
         Bucket: bucket,
-        region: null, //required
+        region: null,
         accessKeyId: null, //required
         secretAccessKey: null, //required
         ACL: defaultAcl
@@ -141,11 +156,20 @@ function getS3ServiceParams() {
 
 /**
  * 
+ * @returns STEEDOSCLOUD配置
+ */
+ function getCloudOptions() {
+    const config = objectql.getSteedosConfig();
+    const options = config.cfs.steedosCloud || {};
+    return options;
+}
+
+/**
+ * 
  * @returns folder (key prefix) 
  */
 function getCloudFoldOption() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.steedosCloud || {};
+    const options = getCloudOptions();
 
     // Determine which folder (key prefix) in the bucket to use
     let folder = options.folder;
@@ -174,8 +198,7 @@ function getCloudFoldOption() {
  * @returns bucket
  */
 function getCloudBucketOption() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.steedosCloud || {};
+    const options = getCloudOptions();
     return options.steedosBucket || 's3-kong-servie';;
 }
 
@@ -184,9 +207,8 @@ function getCloudBucketOption() {
  * @returns serviceParams 用于初始化S3Client
  */
 function getCloudServiceParams() {
-    const config = objectql.getSteedosConfig();
     const options = {
-        ...(config.cfs.steedosCloud || {})
+        ...getCloudOptions()
     };
 
     options.s3ForcePathStyle = true;
@@ -200,7 +222,7 @@ function getCloudServiceParams() {
 
     var serviceParams = Object.assign({
         Bucket: steedosBucket,
-        region: null, //required
+        region: null,
         accessKeyId: null, //required
         secretAccessKey: null, //required
         ACL: defaultAcl
@@ -213,8 +235,7 @@ function getCloudServiceParams() {
  * @returns apikey
  */
 function getCloudApikey() {
-    const config = objectql.getSteedosConfig();
-    const options = config.cfs.steedosCloud || {};
+    const options = getCloudOptions();
     return options.secretAccessKey;
 }
 

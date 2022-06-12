@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-11 14:33:18
+ * @LastEditTime: 2022-06-12 16:36:19
  * @Description: 
  */
 const express = require("express");
@@ -34,8 +34,8 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                     throw new Error(err);
                 }
 
-                console.log(fields);
-                console.log(files);
+                // console.log(fields);
+                // console.log(files);
 
                 const {
                     approve,
