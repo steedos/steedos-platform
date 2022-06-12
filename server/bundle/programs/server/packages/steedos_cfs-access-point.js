@@ -11,16 +11,16 @@ var EJSON = Package.ejson.EJSON;
 var HTTP = Package['steedos:cfs-http-methods'].HTTP;
 
 /* Package-scope variables */
-var rootUrlPathPrefix, baseUrl, getHeaders, getHeadersByCollection, _existingMountPoints, mountUrls;
+var rootUrlPathPrefix, baseUrl, getHeaders, getHeadersByCollection, _existingMountPoints, mountUrls, Images;
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                     //
-// packages/steedos_cfs-access-point/access-point-common.js                                                            //
-//                                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                       //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// packages/steedos_cfs-access-point/access-point-common.js                                                           //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
 rootUrlPathPrefix = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX || "";
 // Adjust the rootUrlPathPrefix if necessary
 if (rootUrlPathPrefix.length > 0) {
@@ -196,7 +196,7 @@ FS.File.prototype.url = function(options) {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -207,12 +207,12 @@ FS.File.prototype.url = function(options) {
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                     //
-// packages/steedos_cfs-access-point/access-point-handlers.js                                                          //
-//                                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                       //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// packages/steedos_cfs-access-point/access-point-handlers.js                                                         //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
 getHeaders = [];
 getHeadersByCollection = {};
 
@@ -520,7 +520,7 @@ FS.HTTP.Handlers.PutUpdate = function httpPutUpdateHandler(ref) {
   return { _id: ref.file._id, chunk: chunk };
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
@@ -531,12 +531,12 @@ FS.HTTP.Handlers.PutUpdate = function httpPutUpdateHandler(ref) {
 
 (function(){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                     //
-// packages/steedos_cfs-access-point/access-point-server.js                                                            //
-//                                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                       //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                    //
+// packages/steedos_cfs-access-point/access-point-server.js                                                           //
+//                                                                                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                      //
 
 HTTP.publishFormats({
   fileRecordFormat: function (input) {
@@ -818,11 +818,12 @@ mountUrls = function mountUrls() {
   // We unmount first in case we are calling this a second time
   FS.HTTP.unmount();
 
-  FS.HTTP.mount([
-    baseUrl + '/files/:collectionName/:id/:filename',
-    baseUrl + '/files/:collectionName/:id',
-    baseUrl + '/files/:collectionName'
-  ]);
+  // 下载路由在platform service-files实现，故这里注释
+  // FS.HTTP.mount([
+  //   baseUrl + '/files/:collectionName/:id/:filename',
+  //   baseUrl + '/files/:collectionName/:id',
+  //   baseUrl + '/files/:collectionName'
+  // ]);
 };
 
 // Returns the userId from URL token
@@ -890,10 +891,10 @@ FS.HTTP.now = function() {
 
 // Start up the basic mount points
 Meteor.startup(function () {
-  // mountUrls();
+  mountUrls();
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 

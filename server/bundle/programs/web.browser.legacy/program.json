@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "688e5c521756fe3012709595d624f4dae90bac5f.js",
+      "path": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/688e5c521756fe3012709595d624f4dae90bac5f.js?meteor_js_resource=true",
-      "size": 15211491,
-      "hash": "688e5c521756fe3012709595d624f4dae90bac5f",
-      "sri": "SCkB2JPeoAf6kJz/vdHrc4Xpk/W/0rc1Mmt7Sn5hlyO7t8AuoW8sxR3jYODssZeIRsEaJoEN1wSL89K6dXpoDw=="
+      "url": "/0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.js?meteor_js_resource=true",
+      "size": 15211673,
+      "hash": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936",
+      "sri": "AFjGxk95TtSEjLs5Fu1TREp2uy1T11YhhuR+idRPVSGoJT1HPVJZ+r2sFmOsyFMFrL+6vD7WJh+QRn9et09lqw=="
     },
     {
-      "path": "688e5c521756fe3012709595d624f4dae90bac5f.stats.json",
+      "path": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/688e5c521756fe3012709595d624f4dae90bac5f.stats.json?meteor_js_resource=true",
+      "url": "/0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.stats.json?meteor_js_resource=true",
       "size": 311833,
-      "hash": "8f4eda897d903500aff2c9c60c0163efa96e11f7",
-      "sri": "OV/FZCYDO4gF6uNvg1WTv6xUk1g/oANfe1GvLV8HeI9ynv1qEvVehYimne/xL3fOkHS3IHJSStxelN1ZDCLnyA=="
+      "hash": "097e713fbec77190db3816dece7df0135a1505e9",
+      "sri": "Z8iLozDnkzUAgJmI6kQiSim5GS4+CTMuPv4gXg5gt/GFevEzP5eqa/+ZdBpPMnUEu+KcCoYoJ8TdJgicVBQ/yg=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3968,8 +3968,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
@@ -4707,8 +4707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/nw_core.js",
-      "size": 3100,
-      "hash": "9ddd444852f8be8213ed76e7bb1c4c7e9865ec11",
+      "size": 3428,
+      "hash": "5cb38f961e274cb5b009850a00ff0c4a3f84e1e7",
       "sri": null
     },
     {
