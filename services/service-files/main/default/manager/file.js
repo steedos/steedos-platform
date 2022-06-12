@@ -167,8 +167,18 @@ class File {
             const fileKey = this._fileKey;
             if (LOCAL_STORE === storeName) {
                 const fileStorePath = fileStoreFullPath(fsCollectionName, fileKey);
-                fs.renameSync(tempFilePath, fileStorePath);
-                callback(null);
+                // fs.renameSync(tempFilePath, fileStorePath); // EXDEV: cross-device link not permitted
+                const readStream=fs.createReadStream(tempFilePath);
+                const writeStream=fs.createWriteStream(fileStorePath);
+                readStream.pipe(writeStream);
+                readStream.on('end',function(){
+                    fs.unlinkSync(tempFilePath);
+                    callback(null);
+                });
+                readStream.on('error',function(err){
+                    fs.unlinkSync(tempFilePath);
+                    callback(err);
+                });
             }
             else if (OSS_STORE === storeName || S3_STORE === storeName) {
                 // 将文件保存到OSS或S3

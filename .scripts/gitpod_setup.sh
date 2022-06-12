@@ -1,7 +1,7 @@
-### project-community ###
+### project-template ###
 
 # create .env.local
-cp steedos-projects/project-community/.env steedos-projects/project-community/.env.local
+cp steedos-projects/project-template/.env steedos-projects/project-template/.env.local
 
 ### creator ###
 
