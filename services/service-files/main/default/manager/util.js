@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 11:20:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 19:59:01
+ * @LastEditTime: 2022-06-12 11:16:56
  * @Description: 
  */
 
@@ -138,6 +138,86 @@ function getS3ServiceParams() {
     return serviceParams;
 }
 
+
+/**
+ * 
+ * @returns folder (key prefix) 
+ */
+function getCloudFoldOption() {
+    const config = objectql.getSteedosConfig();
+    const options = config.cfs.steedosCloud || {};
+
+    // Determine which folder (key prefix) in the bucket to use
+    let folder = options.folder;
+    if (typeof folder === "string" && folder.length) {
+        if (folder.slice(0, 1) === "/") {
+            folder = folder.slice(1);
+        }
+        if (folder.slice(-1) !== "/") {
+            folder += "/";
+        }
+    } else {
+        folder = "";
+    }
+
+    var bucket = options.bucket;
+    if (!bucket)
+        throw new Error('未指定bucket');
+
+    // 拼接folder
+    folder = path.join(bucket, folder, '/');
+
+    return folder;
+}
+
+/**
+ * @returns bucket
+ */
+function getCloudBucketOption() {
+    const config = objectql.getSteedosConfig();
+    const options = config.cfs.steedosCloud || {};
+    return options.steedosBucket || 's3-kong-servie';;
+}
+
+/**
+ * 
+ * @returns serviceParams 用于初始化S3Client
+ */
+function getCloudServiceParams() {
+    const config = objectql.getSteedosConfig();
+    const options = {
+        ...(config.cfs.steedosCloud || {})
+    };
+
+    options.s3ForcePathStyle = true;
+
+    const steedosBucket = getCloudBucketOption();
+
+    options.folder = getCloudFoldOption();
+    delete options.bucket;
+
+    const defaultAcl = options.ACL || 'private';
+
+    var serviceParams = Object.assign({
+        Bucket: steedosBucket,
+        region: null, //required
+        accessKeyId: null, //required
+        secretAccessKey: null, //required
+        ACL: defaultAcl
+    }, options);
+    return serviceParams;
+}
+
+/**
+ * 
+ * @returns apikey
+ */
+function getCloudApikey() {
+    const config = objectql.getSteedosConfig();
+    const options = config.cfs.steedosCloud || {};
+    return options.secretAccessKey;
+}
+
 module.exports = {
     getCollection,
     _makeNewID,
@@ -147,5 +227,9 @@ module.exports = {
     fileStoreFullPath,
     getS3ServiceParams,
     getS3FoldOption,
-    getS3BucketOption
+    getS3BucketOption,
+    getCloudFoldOption,
+    getCloudBucketOption,
+    getCloudServiceParams,
+    getCloudApikey
 }

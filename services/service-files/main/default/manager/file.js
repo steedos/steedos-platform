@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 20:04:50
+ * @LastEditTime: 2022-06-12 10:47:47
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -17,7 +17,11 @@ const {
     storageBasePath,
     fileStoreFullPath,
     getS3FoldOption,
-    getS3BucketOption
+    getS3BucketOption,
+    getCloudFoldOption,
+    getCloudBucketOption,
+    getCloudServiceParams,
+    getCloudApikey,
 } = require('./util');
 const {
     LOCAL_STORE,
@@ -192,7 +196,35 @@ class File {
 
             }
             else if (STEEDOSCLOUD_STORE === storeName) {
-                // TODO
+                // 将文件保存到STEEDOSCLOUD
+                const { SteedosCloudClient } = require('./steedoscloudclient');
+
+                const stream = fs.createReadStream(tempFilePath);
+
+                const folder = getCloudFoldOption();
+                const bucket = getCloudBucketOption();
+
+                const params = {
+                    Bucket: bucket,
+                    Key: folder + fileKey,
+                    Body: stream
+                };
+
+                const apikey = getCloudApikey();
+
+                const req = SteedosCloudClient.putObject(params);
+                req.on('build', function () {
+                    req.httpRequest.headers['apikey'] = apikey;
+                });
+                req.send(function (err, data) {
+                    console.log(err, data);
+                    // 删除临时文件
+                    fs.unlinkSync(tempFilePath);
+
+                    callback(err, data);
+                });
+
+
             }
             else {
                 throw new Error(`Unsupported store name: ${storeName}`);
@@ -239,7 +271,24 @@ function createFileReadStream(fsCollectionName, fileKey) {
         return S3Client.getObject(params).createReadStream();
     }
     else if (STEEDOSCLOUD_STORE === storeName) {
-        // TODO
+
+        const { SteedosCloudClient } = require('./steedoscloudclient');
+
+        const folder = getCloudFoldOption();
+        const bucket = getCloudBucketOption();
+
+        const params = {
+            Bucket: bucket,
+            Key: folder + fileKey,
+        };
+
+        const apikey = getCloudApikey();
+
+        const req = SteedosCloudClient.getObject(params);
+        req.on('build', function () {
+            req.httpRequest.headers['apikey'] = apikey;
+        });
+        return req.createReadStream();
     }
     else {
         throw new Error(`Unsupported store name: ${storeName}`);
