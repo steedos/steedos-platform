@@ -752,7 +752,7 @@ TemplateHelpers =
 			return true
 		false
 
-	cordovaDownload: (url, filename, rev, length) ->
+	addTokenTodownloadUrl: (url) ->
 		# 文件下载增加认证参数
 		authObject = { authToken : Accounts._storedLoginToken() }
 		token = window.btoa(JSON.stringify(authObject))
@@ -761,6 +761,10 @@ TemplateHelpers =
 			url = url + '&token=' + token
 		else
 			url = url + '?token=' + token
+		return url
+
+	cordovaDownload: (url, filename, rev, length) ->
+		url = Steedos.addTokenTodownloadUrl(url)
 
 		if not cordova?.plugins?.fileOpener2
 			window.open(url, '_blank', 'EnableViewPortScale=yes')

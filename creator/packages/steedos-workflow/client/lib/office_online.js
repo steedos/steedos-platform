@@ -314,5 +314,7 @@ OfficeOnline.downloadFile = function(file_url, download_dir, filename, arg) {
 		}
 	}
 
+	file_url = Steedos.addTokenTodownloadUrl(file_url);
+
 	return OfficeOnline[window.location.protocol.replace(":", "")].downloadFile(file_url, download_dir, filename, arg);
 }

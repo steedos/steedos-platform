@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-05-28 11:07:58
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-12 18:31:20
+ * @Description: 
+ */
 try {
     Meteor.startup(function () {
         if (Steedos.isNode()) {
@@ -23,7 +30,7 @@ try {
                 $('.loading-text').text(t("workflow_attachment_downloading", file_name));
 
                 var filePath = path.join(process.env.USERPROFILE, "Steedos", file_name);
-                var file_url = new URL(Steedos.absoluteUrl("/api/files/files/" + file_id), window.location.origin);
+                var file_url = new URL(Steedos.addTokenTodownloadUrl(Steedos.absoluteUrl("/api/files/files/" + file_id)), window.location.origin);
                 // console.log("file_url: ", file_url);
                 var request = https;
 

@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.js",
+      "path": "b98cc624f7356f4656acf462fae8bc9da72ad722.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.js?meteor_js_resource=true",
-      "size": 15211673,
-      "hash": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936",
-      "sri": "AFjGxk95TtSEjLs5Fu1TREp2uy1T11YhhuR+idRPVSGoJT1HPVJZ+r2sFmOsyFMFrL+6vD7WJh+QRn9et09lqw=="
+      "url": "/b98cc624f7356f4656acf462fae8bc9da72ad722.js?meteor_js_resource=true",
+      "size": 15211794,
+      "hash": "b98cc624f7356f4656acf462fae8bc9da72ad722",
+      "sri": "/0hYYEw8ILwHIgGEvOBr75MrN9RrldRrkc0I3b07pCwYh7+CdRMKElt1Ncke0gEi11JSx+dNWhumVycAqmx+PQ=="
     },
     {
-      "path": "0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.stats.json",
+      "path": "b98cc624f7356f4656acf462fae8bc9da72ad722.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/0c2c79a1b0354b3e666a770fdf3d0f6f69faa936.stats.json?meteor_js_resource=true",
+      "url": "/b98cc624f7356f4656acf462fae8bc9da72ad722.stats.json?meteor_js_resource=true",
       "size": 311833,
-      "hash": "097e713fbec77190db3816dece7df0135a1505e9",
-      "sri": "Z8iLozDnkzUAgJmI6kQiSim5GS4+CTMuPv4gXg5gt/GFevEzP5eqa/+ZdBpPMnUEu+KcCoYoJ8TdJgicVBQ/yg=="
+      "hash": "fb9d339c7fa48d4ae4c8dc3842193b93b1438f34",
+      "sri": "DsK0RAUYyvJa/VKe/yZapzvcXJAXfsDkUIc8KVLQb1Snema2vYdG6F2P3kXRr1hPh1LSOEoRFbkSeSFxWwP2CQ=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3968,8 +3968,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
-      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
+      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
+      "sri": null
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
