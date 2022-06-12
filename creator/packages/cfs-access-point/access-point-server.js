@@ -279,11 +279,12 @@ mountUrls = function mountUrls() {
   // We unmount first in case we are calling this a second time
   FS.HTTP.unmount();
 
-  FS.HTTP.mount([
-    baseUrl + '/files/:collectionName/:id/:filename',
-    baseUrl + '/files/:collectionName/:id',
-    baseUrl + '/files/:collectionName'
-  ]);
+  // 下载路由在platform service-files实现，故这里注释
+  // FS.HTTP.mount([
+  //   baseUrl + '/files/:collectionName/:id/:filename',
+  //   baseUrl + '/files/:collectionName/:id',
+  //   baseUrl + '/files/:collectionName'
+  // ]);
 };
 
 // Returns the userId from URL token
@@ -351,5 +352,5 @@ FS.HTTP.now = function() {
 
 // Start up the basic mount points
 Meteor.startup(function () {
-  // mountUrls(); 下载路由在platform service-files实现
+  mountUrls();
 });
