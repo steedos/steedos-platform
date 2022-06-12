@@ -44,7 +44,7 @@ Creator.getRecordPermissions = (object_name, record, userId, spaceId)->
 	permissions = _.clone(Creator.getPermissions(object_name, spaceId, userId))
 
 	if record
-		if record.record_permissions
+		if !_.isEmpty(record.record_permissions)
 			return record.record_permissions
 
 		isOwner = record.owner == userId || record.owner?._id == userId

@@ -285,7 +285,6 @@ requestLicense = (spaceId)->
 		return
 	userId = Meteor.userId()
 	authToken = Accounts._storedLoginToken()
-	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
 	headers = {}
 	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
 	headers['X-User-Id'] = userId

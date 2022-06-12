@@ -1,6 +1,7 @@
 import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue } from './type';
 import { pickFormulaVars } from './core';
 // import { isCodeObject } from '../util'; TODO
+import { Register } from '@steedos/metadata-registrar';
 
 import _ = require('lodash')
 const clone = require('clone')
@@ -29,7 +30,8 @@ export class FormulaActionHandler{
                 return;
             }
             // console.log(`deleteAll formula`, `${this.cacherKey(objectConfig.name)}.*`)
-            await this.broker.call('metadata.fuzzyDelete', {key: `${this.cacherKey(objectConfig.name)}.*`}, {meta: {}})
+            // await this.broker.call('metadata.fuzzyDelete', {key: `${this.cacherKey(objectConfig.name)}.*`}, {meta: {}})
+            await Register.fuzzyDelete(this.broker, `${this.cacherKey(objectConfig.name)}.*`)
             return true
         } catch (error) {
             this.broker.logger.error(error);
@@ -191,7 +193,8 @@ export class FormulaActionHandler{
                     throw new Error(`computeFormulaVarAndQuotes:Can't find the object reference_to '${tempFieldConfig.reference_to}' by the field '${tempFieldConfig.name}' for the formula var '${formulaVar}'`);
                 }
                 else{
-                    await this.broker.call('metadata.add', {key: this.cacherKey(getDynamicCalcMapCacherKey(tempFieldConfig.reference_to, objectConfig.name)), data: {objectApiName: objectConfig.name}}, {meta: {}})
+                    // await this.broker.call('metadata.add', {key: this.cacherKey(getDynamicCalcMapCacherKey(tempFieldConfig.reference_to, objectConfig.name)), data: {objectApiName: objectConfig.name}}, {meta: {}})
+                    await Register.add(this.broker, {key: this.cacherKey(getDynamicCalcMapCacherKey(tempFieldConfig.reference_to, objectConfig.name)), data: {objectApiName: objectConfig.name}}, {});
                     return;
                 }
             }
@@ -280,7 +283,8 @@ export class FormulaActionHandler{
 
     async getFormulaReferenceMaps(broker: any): Promise<any>{
         const maps = [];
-        let records = (await broker.call('metadata.filter', { key: this.cacherKey(`${refMapName}.*`) }, { meta: {} })) || {};
+        // let records = (await broker.call('metadata.filter', { key: this.cacherKey(`${refMapName}.*`) }, { meta: {} })) || {};
+        let records: any = (await Register.filter(this.broker, this.cacherKey(`${refMapName}.*`))) || {};
         for await (const item of records) {
             const metadata = item?.metadata;
             if(metadata){
@@ -304,8 +308,8 @@ export class FormulaActionHandler{
         // //checkData
         this.checkRefMapData(maps, data);
         // maps.push(data);
-        
-        await broker.call('metadata.add', {key: this.cacherKey(`${refMapName}.${key}.${value}`), data: data}, {meta: {}})
+        await Register.add(this.broker, {key: this.cacherKey(`${refMapName}.${key}.${value}`), data: data}, {});
+        // await broker.call('metadata.add', {key: this.cacherKey(`${refMapName}.${key}.${value}`), data: data}, {meta: {}})
     }
 
     async addFormulaMetadata(config: any, datasource: string){
@@ -314,13 +318,15 @@ export class FormulaActionHandler{
             for await (const quote of fieldFormula.quotes) {
                 await this.addFormulaReferenceMaps(this.broker, `${fieldFormula._id}`, `${quote.object_name}.${quote.field_name}`);
             }
-            await this.broker.call('metadata.add', {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {meta: {}})
+            await Register.add(this.broker, {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {});
+            // await this.broker.call('metadata.add', {key: this.cacherKey(fieldFormula._id), data: fieldFormula}, {meta: {}})
         }
         return true;
     }
 
     async getObjectDynamicCalcFormulaMap(objectApiName){
-        return await this.broker.call('metadata.filter', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectApiName, '*'))}, {meta: {}});
+        return await Register.filter(this.broker, this.cacherKey(getDynamicCalcMapCacherKey(objectApiName, '*')))
+        // return await this.broker.call('metadata.filter', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectApiName, '*'))}, {meta: {}});
     }
 
     async recalcObjectsFormulaMap(objectConfig){
@@ -340,7 +346,8 @@ export class FormulaActionHandler{
             if (Object.prototype.hasOwnProperty.call(recalcObjects, objectName)) {
                 const recalcObjectConfig = recalcObjects[objectName];
                 await this.addFormulaMetadata(recalcObjectConfig, recalcObjectConfig.datasource);
-                await this.broker.call('metadata.delete', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectConfig.name, objectName))}, {meta: {}})
+                await Register.delete(this.broker, this.cacherKey(getDynamicCalcMapCacherKey(objectConfig.name, objectName)))
+                // await this.broker.call('metadata.delete', {key: this.cacherKey(getDynamicCalcMapCacherKey(objectConfig.name, objectName))}, {meta: {}})
             }
         }
     }
@@ -365,7 +372,8 @@ export class FormulaActionHandler{
         }
         const key = this.cacherKey(`${objectApiName}.${fieldApiName}`)
         const configs = [];
-        const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        // const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        const res = await Register.filter(this.broker, key);
         _.forEach(res, (item)=>{
             configs.push(item?.metadata)
         })
@@ -375,7 +383,8 @@ export class FormulaActionHandler{
     async get(ctx){
         let {fieldApiFullName} = ctx.params;
         const key = this.cacherKey(fieldApiFullName)
-        const res = await this.broker.call('metadata.get', {key: key}, {meta: {}});
+        // const res = await this.broker.call('metadata.get', {key: key}, {meta: {}});
+        const res = await Register.get(this.broker, key)
         return res?.metadata;
     }
 

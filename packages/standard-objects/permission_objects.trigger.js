@@ -137,6 +137,11 @@ module.exports = {
         }
 
         await initPermissionSet(doc, this.userId, this.spaceId);
+
+        const permissionSet = await objectql.getObject('permission_set').findOne(doc.permission_set_id)
+        if(_.isEmpty(doc.name)){
+            doc.name = `${doc.object_name}.${permissionSet.name}`
+        }
     },
     beforeUpdate: async function () {
         let oldDoc = Creator.getCollection("permission_objects").direct.findOne({_id: this.id})

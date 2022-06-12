@@ -1,7 +1,6 @@
 "use strict";
-
-"use strict";
-import { ActionHandlers, started, stopped } from './actionsHandler';
+import { started, stopped } from '@steedos/metadata-registrar';
+import { ActionHandlers } from './actionsHandler';
 import * as _ from 'underscore';
 const SERVICE_NAME = 'metadata';
 
@@ -29,8 +28,8 @@ module.exports = {
 		clearPackageServices:async function (ctx) {
 			const { offlinePackageServicesName } = ctx.params;
 			// console.log(`$metadata.clearPackageServices`, offlinePackageServicesName)
-			await ActionHandlers.clearPackageServices(ctx, offlinePackageServicesName);
-			await ActionHandlers.clearPackageServicesMetadatas(ctx, offlinePackageServicesName);
+			await ActionHandlers.clearPackageServices(ctx.broker, offlinePackageServicesName);
+			await ActionHandlers.clearPackageServicesMetadatas(ctx.broker, offlinePackageServicesName);
 		}
 	},
 

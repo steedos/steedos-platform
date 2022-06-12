@@ -110,12 +110,13 @@ async function registerTrigger(broker, data, meta){
     }
     for (const item of when) {
         if(isPatternTrigger(data)){
-            await registerPatternTrigger(broker, data, meta, item)
+            await registerPatternTrigger(broker, Object.assign({isPattern: true}, data), meta, item)
         }else{
             await broker.call('metadata.addServiceMetadata', {data: data}, {meta: Object.assign({}, meta, {metadataType: METADATA_TYPE, metadataApiName: `${data.listenTo}.${item}.${data.name}`})})
             await broker.call('metadata.add', {key: cacherKey(data.listenTo, item, data.name), data: data}, {meta: meta});
         }
     }
+    broker.emit(`${METADATA_TYPE}.change`, data);
     return true
 }
 
@@ -123,6 +124,11 @@ export const ActionHandlers = {
     async get(ctx: any): Promise<MetadataObject> {
         return ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.objectApiName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta})
     },
+
+    async getAll(ctx: any): Promise<any> {
+        return await ctx.broker.call('metadata.filter', { key: cacherKey('*', '*', '*') });
+    },
+
     async filter(ctx: any): Promise<Array<MetadataObject>> {
         const result = await ctx.broker.call('metadata.filter', {key: cacherKey(ctx.params.objectApiName, ctx.params.when, ctx.params.name)}, {meta: ctx.meta});
         //get Pattern Triggers
@@ -149,7 +155,9 @@ export const ActionHandlers = {
     },
     async delete(ctx: any): Promise<boolean> {
         const data = ctx.params.data;
-        return await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
+        await ctx.broker.call('metadata.delete', {key: cacherKey(data.listenTo, data.when, data.name)}, {meta: ctx.meta})
+        await ctx.broker.emit(`${METADATA_TYPE}.change`, data);
+        return true
     },
     async verify(ctx: any): Promise<boolean> {
         console.log("verify");
@@ -165,6 +173,7 @@ export const ActionHandlers = {
                     ctx.broker.logger.info(error.message)
                 }
             }
+            await ctx.broker.emit(`${METADATA_TYPE}.change`, {});
         }
     }
 }

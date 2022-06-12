@@ -6,14 +6,9 @@ version: 2
 fields:
   name:
     label: Name
-    type: formula
+    type: text
     is_wide: true
-    data_type: text
-    formula: object_name.label + '.' + permission_set_id.label
-    searchable: true
-    index: true
-    required: false
-    name: name
+    visible_on: "{{false}}"
   permission_set_id:
     label: Permission Set
     type: master_detail
@@ -360,10 +355,10 @@ list_views:
 actions:
   customize:
     label: Customize
-    on: record
+    on: record_only
   resetFieldPermissions:
     label: 重置字段权限
-    on: record
+    on: record_only
 relatedList:
   - objectName: permission_fields
     columns:

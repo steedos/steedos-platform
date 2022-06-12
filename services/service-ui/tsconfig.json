@@ -1,0 +1,37 @@
+{   
+  "compilerOptions": {
+      "outDir": "./main/default/routes",
+      "target": "es6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "importHelpers": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": false,
+      "declarationMap": false,
+      "noImplicitAny": false,
+      "declaration": false,
+      "noFallthroughCasesInSwitch": true,
+      //"noImplicitReturns": true,
+      "stripInternal": true,
+      "pretty": true,
+      "noUnusedLocals": true,
+      "downlevelIteration": true,
+      "strictNullChecks": false,
+      "skipLibCheck": true,
+      "lib": [
+        "es5",
+        "es6",
+        "es2015",
+        "es2016",
+        "es2017",
+        "esnext"
+      ],
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "../../node_modules/"
+  ]
+}

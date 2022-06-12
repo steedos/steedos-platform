@@ -1,6 +1,6 @@
 {
   "name": "@steedos/unpkg",
-  "version": "2.2.39",
+  "version": "2.2.42",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -9,12 +9,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@salesforce-ux/design-system": "^2.17.5",
     "@steedos-builder/react": "^0.2.23",
     "@steedos-ui/amis": "^2.2.20",
     "@steedos-ui/builder-community": "^2.2.20",
     "@steedos-ui/builder-widgets": "^2.2.20",
     "@steedos-ui/design-system": "^2.2.20",
-    "amis": "^1.9.1-beta.17",
+    "amis": "1.10.1",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
     "d3": "^3.5.17",

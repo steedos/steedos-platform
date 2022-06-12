@@ -123,11 +123,14 @@ export class SteedosDataSourceType implements Dictionary {
         return this._driver;
     }
 
-    async getObjects() {
+    async getObjects(useCache = true) {
         // if(!this.schema.metadataRegister){
         //     return this._objects
         // }
         // return await this.schema.metadataRegister.getObjectsConfig(this.name);
+        if(useCache === false){
+            await this.flushCacheObjects();
+        }
         return this.getCacheObjects();
     }
 

@@ -30,10 +30,11 @@ Template.creator_app_list_modal.helpers
 	app_url: ()->
 		app = Creator.getApp(this.id)
 		if app?.url
-			if /^http(s?):\/\//.test(app.url)
-				return app.url
+			url = Creator.getUrlWithToken(app.url, app)
+			if /^http(s?):\/\//.test(url)
+				return url
 			else
-				return Creator.getRelativeUrl(app.url);
+				return Creator.getRelativeUrl(url)
 		else if this.id
 			return Creator.getRelativeUrl("/app/#{this.id}/");
 	

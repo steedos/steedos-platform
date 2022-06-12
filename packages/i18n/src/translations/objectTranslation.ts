@@ -3,6 +3,19 @@ import { SteedosTranslationPrefixKeys } from './';
 import { _t, exists, addResourceBundle } from '../index';
 import { convertObject } from './index';
 import { fallbackKeys } from '../i18n/i18n';
+const crypto = require('crypto')
+import { getCacher } from '@steedos/cachers';
+
+const Cacher = getCacher('lru.translations.objects');
+
+function getMD5(data){
+    let md5 = crypto.createHash('md5');
+    return md5.update(data).digest('hex');
+}
+
+const getCacherKey = function(lng, objectConfig){
+    return `${lng}_${objectConfig.name}_${getMD5(JSON.stringify(objectConfig))}`
+}
 
 const clone = require("clone");
 
@@ -123,7 +136,7 @@ const getListviewLabelKey = function(objectName, name){
     return [prefix, objectName, name].join(KEYSEPARATOR);
 }
 
-const translationObjectLabel = function(lng, name, def){
+export const translationObjectLabel = function(lng, name, def){
     let key = getObjectLabelKey(name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectLabelKey(name);
@@ -247,6 +260,12 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
 }
 
 export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean){
+    const cacheKey = getCacherKey(lng, object);
+    const fromCacher = Cacher.get(cacheKey);
+    if(fromCacher){
+        return Object.assign(object, fromCacher);
+    }
+
     if(convert){
         convertObject(object);
     }
@@ -281,6 +300,8 @@ export const translationObject = function(lng: string, objectName: string, objec
     _.each(object.list_views, function(list_view, viewName){
         list_view.label = translationListviewLabel(lng, objectName, viewName, list_view.label, object.datasource);
     })
+
+    Cacher.set(cacheKey, object)
 }
 
 export const translationObjects = function(lng: string, objects: StringMap){

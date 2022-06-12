@@ -19,6 +19,7 @@ import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getPatternListeners } from '../dynamic-load';
+import { getCacher } from '@steedos/cachers';
 
 const clone = require('clone')
 
@@ -393,12 +394,55 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
     }
 
+    getTriggerActions(when: string){
+
+        const triggers = [];
+
+        const cache = getCacher('action-triggers');
+        const triggerActions = cache.get('triggerActions');
+
+        if(!_.isEmpty(triggerActions)){
+            _.map(triggerActions, (item)=>{
+                if(item && item.metadata){
+                    const { metadata } = item
+                    if(metadata.isPattern){
+                        try {
+                            if(metadata.listenTo === '*'){
+                                triggers.push(item);
+                            }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
+                                triggers.push(item);
+                            }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
+                                triggers.push(item);
+                            }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                                try {
+                                    if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
+                                        triggers.push(item);
+                                    }
+                                } catch (error) {
+                                }
+                            }
+                        } catch (error) {
+                            console.log(`error`, error);
+                        }
+                    }else{
+                        if(metadata.when === when && metadata.listenTo === this.name){
+                            triggers.push(item);
+                        }
+                    }
+                    
+                }
+            })
+        }
+
+        return triggers;
+    }
+
     async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
-        let triggers = await this._schema.metadataBroker.call('triggers.filter', { objectApiName: this.name, when: when })
+        let triggers = this.getTriggerActions(when);
         if (_.isEmpty(triggers)) {
             return;
         }
-
+        
         for (const trigger of triggers) {
             let params = generateActionParams(when, context); //参考sf
             await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
@@ -646,6 +690,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return globalPermission
     }
 
+
+    /**
+     * @description: 
+     * @param {SteedosUserSession} userSession
+     * @param {any} rolesFieldsPermission: 如果为false, 则不计算字段集权限,提交计算效率.
+     * @return {*}
+     */
     async getUserObjectPermission(userSession: SteedosUserSession, rolesFieldsPermission?: any) {
 
         if (!userSession) {
@@ -686,8 +737,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('not find user permission');
         }
 
-        if (!rolesFieldsPermission) {
-            rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+        if(rolesFieldsPermission === false){
+            rolesFieldsPermission = {};
+        }else{
+            if (!rolesFieldsPermission) {
+                rolesFieldsPermission = await FieldPermission.getObjectFieldsPermissionGroupRole(this.name);
+            }
         }
 
         roles.forEach((role) => {
@@ -781,10 +836,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return userObjectPermission;
     }
 
-    private async allowFind(userSession: SteedosUserSession) {
+    async allowRead(userSession: SteedosUserSession) {
         if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         if (userObjectPermission.allowRead) {
             return true
         } else {
@@ -792,10 +847,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowInsert(userSession: SteedosUserSession) {
+    async allowInsert(userSession: SteedosUserSession) {
         if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         if (userObjectPermission.allowCreate) {
             return true
         } else {
@@ -803,10 +858,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowUpdate(userSession: SteedosUserSession) {
+    async allowUpdate(userSession: SteedosUserSession) {
         if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         if (userObjectPermission.allowEdit) {
             return true
         } else {
@@ -814,10 +869,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async allowDelete(userSession: SteedosUserSession) {
+    async allowDelete(userSession: SteedosUserSession) {
         if (!userSession)
             return true
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         if (userObjectPermission.allowDelete) {
             return true
         } else {
@@ -827,35 +882,41 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async find(query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('find', this.table_name, clonedQuery, userSession)
     }
 
     // 此函数支持driver: MeteorMongo
     async aggregate(query: SteedosQueryOptions, externalPipeline, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('aggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
     // 此函数支持driver: MeteorMongo
     async directAggregate(query: SteedosQueryOptions, externalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregate', this.table_name, clonedQuery, externalPipeline, userSession)
     }
 
     // 此函数支持driver: MeteorMongo，类似于aggregate，其参数externalPipeline放在最前面而已
     async directAggregatePrefixalPipeline(query: SteedosQueryOptions, prefixalPipeline: any[], userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
         return await this.callAdapter('directAggregatePrefixalPipeline', this.table_name, clonedQuery, prefixalPipeline, userSession)
     }
 
     async findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession) {
         let clonedQuery = Object.assign({}, query);
-        await this.processUnreadableField(userSession, clonedQuery);
-        return await this.callAdapter('findOne', this.table_name, id, clonedQuery, userSession)
+        if(userSession)
+            await this.processUnreadableField(userSession, clonedQuery);
+        const result = await this.callAdapter('findOne', this.table_name, id, clonedQuery, userSession);
+        return result
     }
 
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
@@ -865,21 +926,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
     }
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
     }
     // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedQueryFilters = queryFilters;
         return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
     }
@@ -902,7 +963,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        await this.processUneditableFields(userSession, doc)
+        // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('directUpdate', this.table_name, clonedId, doc, userSession)
     }
@@ -1150,21 +1211,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return accessFields;
     }
 
-    async getRecordView(userSession, context?: any) {
-        let objectConfig;
-        let layouts;
-        let spaceProcessDefinition;
-        let dbListViews;
-        let rolesFieldsPermission;
-
-        if (context) {
-            objectConfig = context.objectConfig;
-            layouts = context.layouts;
-            spaceProcessDefinition = context.spaceProcessDefinition;
-            dbListViews = context.dbListViews;
-            rolesFieldsPermission = context.rolesFieldsPermission;
-        }
-
+    async getRecordView(userSession, context: any = {}) {
+        let { objectConfig, layouts, spaceProcessDefinition, dbListViews, rolesFieldsPermission, relationsInfo} = context;
         const lng = userSession.language;
         if (!objectConfig) {
             const objectMetadataConfig: any = await this.callMetadataObjectServiceAction('get', { objectApiName: this.name });
@@ -1173,69 +1221,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
         objectConfig.name = this.name
         objectConfig.datasource = this.datasource.name;
         objectConfig.permissions = await this.getUserObjectPermission(userSession, rolesFieldsPermission);
-        const relationsInfo = await this.getRelationsInfo();
+        if(!relationsInfo){
+            relationsInfo = await this.getRelationsInfo();
+        }
         objectConfig.details = relationsInfo.details;
         objectConfig.masters = relationsInfo.masters;
         objectConfig.lookup_details = relationsInfo.lookup_details;
         delete objectConfig.db
-
         translationObject(lng, objectConfig.name, objectConfig, true);
         if (!layouts) {
             layouts = await getObjectLayouts(userSession.profile, userSession.spaceId, this.name);
         }
 
-        // let layoutHiddenFields = [];
         let objectLayout = null
         if(layouts && layouts.length > 0){
             objectLayout = layouts[0];
-            // let _fields = {};
-            // let sort_no = 1;
-            // _.each(layout.fields, function(_item){
-            //     _fields[_item.field_name] = objectConfig.fields[_item.field_name]
-            //     if(_fields[_item.field_name]){
-            //         if(_.has(_item, 'group')){
-            //             _fields[_item.field_name].group = _item.group
-            //         }
-                    
-            //         if(_item.is_required){
-            //             _fields[_item.field_name].readonly = false
-            //             _fields[_item.field_name].disabled = false
-            //             _fields[_item.field_name].required = true
-            //         }else if(_item.is_readonly){
-            //             _fields[_item.field_name].readonly = true
-            //             _fields[_item.field_name].disabled = true
-            //             _fields[_item.field_name].required = false
-            //         }
-
-            //         if(_item.visible_on){
-            //             _fields[_item.field_name].visible_on = _item.visible_on
-            //         }
-
-            //         // TODO 按新字段权限规则, 调整此部分代码
-            //         if(['created','created_by','modified','modified_by'].indexOf(_item.field_name) < 0){
-            //             _fields[_item.field_name].omit = false;
-            //             _fields[_item.field_name].hidden = false;
-            //         }
-
-            //         _fields[_item.field_name].sort_no = sort_no;
-            //         sort_no++;
-            //     }
-            // })
-
-            // const layoutFieldKeys = _.keys(_fields);
-            // const objectFieldKeys = _.keys(objectConfig.fields);
-
-            // layoutHiddenFields = _.difference(objectFieldKeys, layoutFieldKeys);
-
-            // _.each(layoutFieldKeys, function(fieldApiName){
-            //     objectConfig.fields[fieldApiName] = _fields[fieldApiName];
-            // })
-            
-            // _.each(layoutHiddenFields, function(fieldApiName){
-            //     objectConfig.fields[fieldApiName].hidden = true;
-            //     objectConfig.fields[fieldApiName].sort_no = 99999;
-            // })
-
             _.each(objectLayout.buttons, function(button){
                 const action = objectConfig.actions[button.button_name];
                 if(action){
@@ -1252,8 +1252,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     action._visible = function(){return false}.toString()
                 }
             })
-            // _object.allow_customActions = userObjectLayout.custom_actions || []
-            // _object.exclude_actions = userObjectLayout.exclude_actions || []
             objectConfig.related_lists = objectLayout.related_lists || []
             _.each(objectConfig.related_lists, (related_list)=>{
                 if(related_list.sort_field_name && _.isArray(related_list.sort_field_name) && related_list.sort_field_name.length > 0){
@@ -1264,62 +1262,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
         }
-
-        
-        // _.each(objectConfig.fields, (field)=>{
-        //     if(field){
-        //         const fieldPermission = objectConfig.permissions.field_permissions[field.name];
-        //         const {read, edit} = fieldPermission || {read: !field.hidden, edit: !field.hidden && !field.readonly}
-        //         //不可查看: 配置了字段权限且不可查看; 没有配置字段权限，字段的hidden为true
-        //         if(read === false){
-        //             delete objectConfig.fields[field.name];
-        //             return;
-        //         }
-
-        //         //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
-        //         if(read === true && edit === false){
-        //             objectConfig.fields[field.name].hidden = false;
-        //             objectConfig.fields[field.name].readonly = true;
-        //             objectConfig.fields[field.name].disabled = true;
-        //             return;
-        //         }
-                
-        //         //可查看可编辑: 配置了字段权限可查看可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为false
-        //         if(read === true && edit === true){
-        //             objectConfig.fields[field.name].hidden = false;
-        //             objectConfig.fields[field.name].readonly = false;
-        //             objectConfig.fields[field.name].disabled = false;
-        //             return;
-        //         }
-        //         console.error('字段权限处理异常', field, read, edit);
-        //     }
-        // })
-
-        // _.each(objectConfig.permissions.field_permissions, (field_permission, field) => {
-        //     const { read, edit } = field_permission;
-        //     if (userObjectFields[field] && !_.include(layoutHiddenFields, field)) {
-        //         if (read) {
-        //             userObjectFields[field].hidden = false;
-        //             userObjectFields[field].omit = true;
-        //             userObjectFields[field].readonly = true;
-        //             userObjectFields[field].disabled = true;
-        //         }
-        //         if (edit) {
-        //             userObjectFields[field].omit = false;
-        //             userObjectFields[field].hidden = false;
-        //             userObjectFields[field].readonly = false;
-        //             userObjectFields[field].disabled = false;
-        //         }
-        //         if (!read && !edit) {
-        //             delete userObjectFields[field]
-        //         }
-        //     }
-        // })
-
-        // objectConfig.fields = userObjectFields
-
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
-
         // TODO object layout 是否需要控制审批记录显示？
         if (!spaceProcessDefinition) {
             spaceProcessDefinition = await getObject("process_definition").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] })
@@ -1327,9 +1270,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
         }
-
         //清理数据
-
         _.each(objectConfig.triggers, function(trigger, key){
             if(trigger?.on != 'client'){
                 delete objectConfig.triggers[key];
@@ -1352,7 +1293,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return objectConfig;
     }
 
-    async getDefaulRecordView(userSession){
+    async getDefaultRecordView(userSession){
         const object_name = this.name;
         const type = 'record';
         const buttons = [];
@@ -1456,12 +1397,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    async createDefaulRecordView(userSession){
+    async createDefaultRecordView(userSession){
         const name = 'default';
         const label = 'Default';
         const profiles = ['user'];
         try {
-            let defaultRecordView = await this.getDefaulRecordView(userSession);
+            let defaultRecordView = await this.getDefaultRecordView(userSession);
             return await getObject('object_layouts').insert(Object.assign({},defaultRecordView, {name, label, profiles}), userSession)
         } catch (error) {
             return {error: error.message}
@@ -1531,7 +1472,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return true
         }
         if (method === 'find' || method === 'findOne' || method === 'count' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
-            return await this.allowFind(userSession)
+            return await this.allowRead(userSession)
         } else if (method === 'insert') {
             return await this.allowInsert(userSession)
         } else if (method === 'update' || method === 'updateOne' || method === 'updateMany') {
@@ -1560,7 +1501,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     private async appendRecordPermission(records, userSession) {
         const _ids = _.pluck(records, '_id');
-        const objPm = await this.getUserObjectPermission(userSession);
+        const objPm = await this.getUserObjectPermission(userSession, false);
         const permissionFilters = this.getObjectEditPermissionFilters(objPm, userSession);
         if (_.isEmpty(permissionFilters)) {
             return;
@@ -1617,7 +1558,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (!userSession) {
             return
         }
-        let userObjectPermission = await this.getUserObjectPermission(userSession)
+        let userObjectPermission = await this.getUserObjectPermission(userSession, false)
         let userObjectUnreadableFields = userObjectPermission.unreadable_fields
         if (userObjectUnreadableFields.length > 0) {
             let queryFields = [];
@@ -1652,25 +1593,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
     }
 
-    private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
-        // 后台直接去掉uneditable_fields相关判断逻辑
-        // [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
-        // if (!userSession) {
-        //     return
-        // }
+    // private async processUneditableFields(userSession: SteedosUserSession, doc: JsonMap) {
+    //     后台直接去掉uneditable_fields相关判断逻辑
+    //     [签约对象同时配置了company_ids必填及uneditable_fields造成部分用户新建签约对象时报错 #192](https://github.com/steedos/steedos-project-dzug/issues/192)
+    //     if (!userSession) {
+    //         return
+    //     }
 
-        // let userObjectPermission = await this.getUserObjectPermission(userSession)
-        // let userObjectUneditableFields = userObjectPermission.uneditable_fields
+    //     let userObjectPermission = await this.getUserObjectPermission(userSession)
+    //     let userObjectUneditableFields = userObjectPermission.uneditable_fields
 
-        // let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
-        // if (intersection.length > 0) {
-        //     throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
-        // }
+    //     let intersection = _.intersection(userObjectUneditableFields, _.keys(doc))
+    //     if (intersection.length > 0) {
+    //         throw new Error(`no permissions to edit fields ${intersection.join(', ')}`)
+    //     }
 
-        // // _.each(userObjectUneditableFields, (name: string)=>{
-        // //     delete doc[name]
-        // // })
-    }
+    //     // _.each(userObjectUneditableFields, (name: string)=>{
+    //     //     delete doc[name]
+    //     // })
+    // }
 
     private formatRecord(doc: JsonMap) {
         let adapterFormat = this._datasource["formatRecord"];
@@ -1686,9 +1627,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');
         }
-        let allow = await this.allow(method, args[args.length - 1])
-        if (!allow) {
-            throw new Error('not find permission')
+        const userSession: SteedosUserSession = args[args.length - 1];
+        if(!_.isEmpty(userSession)){
+            let allow = await this.allow(method, userSession)
+            if (!allow) {
+                throw new Error('not find permission')
+            }
         }
 
         let objectName = args[0], recordId: string, doc: JsonMap;
@@ -1711,32 +1655,28 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        if (this._datasource.enable_space) {
+        if (!_.isEmpty(userSession) && this._datasource.enable_space) {
             this.dealWithFilters(method, args);
             await this.dealWithMethodPermission(method, args);
         }
-
         let returnValue: any;
-        let userSession: SteedosUserSession;
         if (this.isDirectCRUD(method)) {
-            userSession = args[args.length - 1]
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
-            userSession = args[args.length - 1]
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             if (paramRecordId) {
                 beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
             }
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
-
             let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
             if (paramRecordId) {
                 afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
             }
             let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
+
             returnValue = await adapterMethod.apply(this._datasource, args);
             if (method === 'find' || method == 'findOne' || method == 'count' || method == 'aggregate' || method == 'aggregatePrefixalPipeline') {
                 let values = returnValue || {}
@@ -1863,7 +1803,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (userSession) {
             let spaceId = userSession.spaceId;
             let userId = userSession.userId;
-            let objPm = await this.getUserObjectPermission(userSession);
+            let objPm = await this.getUserObjectPermission(userSession, false);
             if (method === 'find' || method === 'count' || method === 'findOne' || method === 'aggregate' || method === 'aggregatePrefixalPipeline') {
                 let query = args[args.length - 2];
                 if (method === 'aggregate' || method === 'aggregatePrefixalPipeline') {

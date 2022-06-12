@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "4598f99304a8551305e1a67926712396b0b6c800.js",
+      "path": "53612fad8f9236c3b490c6362e46eb6eb904291e.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/4598f99304a8551305e1a67926712396b0b6c800.js?meteor_js_resource=true",
-      "size": 15256397,
-      "hash": "4598f99304a8551305e1a67926712396b0b6c800",
-      "sri": "aTVdSTwizm8OvHXZcWCcJO5n7Gr+DtXRi5QKE8q3Mk1yfamTW8rHfiU2cOcAnzMcCrI6X02rM3iZntzDG37xuQ=="
+      "url": "/53612fad8f9236c3b490c6362e46eb6eb904291e.js?meteor_js_resource=true",
+      "size": 6293998,
+      "hash": "53612fad8f9236c3b490c6362e46eb6eb904291e",
+      "sri": "m0VcLocIdkhan9Gt46+yPEnCLFvbEFV/3aBdbnnB3jwf5bLzvUa5pa/sPYFI0sCs9YYnAgw/B/Eegr7UVXZLtA=="
     },
     {
-      "path": "4598f99304a8551305e1a67926712396b0b6c800.stats.json",
+      "path": "53612fad8f9236c3b490c6362e46eb6eb904291e.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/4598f99304a8551305e1a67926712396b0b6c800.stats.json?meteor_js_resource=true",
-      "size": 315148,
-      "hash": "bfe4a298c90597e2521199bc5f0f1fede80e1a46",
-      "sri": "Z+ESew4QR172JE+Yb4CAS4jZ8uFyM+HHwirI9JP1KpY2OtHM4wQ1s2/sc9ufK77ivn4IiwUw7Vu3x2DCax7lkQ=="
+      "url": "/53612fad8f9236c3b490c6362e46eb6eb904291e.stats.json?meteor_js_resource=true",
+      "size": 130595,
+      "hash": "dc6d0e29c6d0059f61073d1319cbe3491483b818",
+      "sri": "/XmToivlxae0xk61voN8kcUFzPb2O0WK9P4HUTrcTFfh4x6km+A237Do72rxKxrcRsO2+QWRWU2aLyE1vIFzlw=="
     },
     {
       "path": "dynamic/node_modules/simplemde/package.json",
@@ -3432,14 +3432,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "963b730cda32baa83052625be1d7befbdb101f97.css",
+      "path": "1baf1657946c39a96fdb34309672e3c33ba7c5a2.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/963b730cda32baa83052625be1d7befbdb101f97.css?meteor_css_resource=true",
-      "size": 1648430,
-      "hash": "963b730cda32baa83052625be1d7befbdb101f97",
-      "sri": "wLDF07nKJtIvD31MdVY8/xNAJyWXqo59enwAXqB6q7iBh/ObUxPDJGK8OSjKl95rKKO7nXp5CmJiFmh8uLJfmQ=="
+      "url": "/1baf1657946c39a96fdb34309672e3c33ba7c5a2.css?meteor_css_resource=true",
+      "size": 1644648,
+      "hash": "1baf1657946c39a96fdb34309672e3c33ba7c5a2",
+      "sri": "ZTZ3Ht4oritZP+XJnzZBjKR46aZ+pvavr9/8aInJxywquPIMopw2WmXxrNKiVYYkgHHAk1AF5/Bf9NsRZGHARQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -3968,8 +3968,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
@@ -4002,34 +4002,14 @@
       "sri": "PXW6rXgvLGkRAkl6HA1FOqcphvEtkt2bhzcVC4dBffhvefDJtJ1xJKUga46vVeGo0Ri1Jo9zImfa9JSYZDP31Q=="
     },
     {
-      "path": "packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/banner-brand-default.png",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/banner-brand-default.png",
-      "size": 28146,
-      "hash": "7304929696ebdd905cf47afcc54b15f539dc18e4",
-      "sri": "tlOztS6ura981nkmlUriZCSSz8yUulgkKUB96u2LmJxE4ydJF8cX/O+Hi60YikVepnX0U3a8nA39yTZ9DLgjTQ=="
-    },
-    {
-      "path": "packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png",
-      "size": 3040,
-      "hash": "c4872dd3b83d16cb461d5305a484dfdf7a0b6767",
-      "sri": "GQ7sBVgtSK+E5gRlGzQhM6smUYRH3UIs5AyqXFLeqYAyAnFxn+Vu+YuglSjDySUSDEpSSMdZw9ksUBZXq6UP6A=="
-    },
-    {
       "path": "packages/steedos_creator/assets/logo-square.png",
       "where": "client",
       "type": "asset",
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -4038,8 +4018,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
@@ -4147,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/customize.css",
-      "size": 672,
-      "hash": "6184e35623415e90a81a464c036b0e695d9b6b03",
+      "size": 652,
+      "hash": "466516164a13b475cd02a78eb619f792fb5620e4",
       "sri": null
     },
     {
@@ -4707,8 +4687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/js/nw_core.js",
-      "size": 3428,
-      "hash": "5cb38f961e274cb5b009850a00ff0c4a3f84e1e7",
+      "size": 3100,
+      "hash": "9ddd444852f8be8213ed76e7bb1c4c7e9865ec11",
       "sri": null
     },
     {
@@ -5095,7 +5075,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "3edb309f4bd69421f688322baeb664d4edbacd84"
+      "hash": "203dfff2d62196288e3450be2c802f00460fec2a"
     }
   ]
 }

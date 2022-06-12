@@ -58,7 +58,7 @@ async function getObjectDataByIds(objectName: string, ids: string[], fields?: st
         query['fields'] = fields;
     }
 
-    return await getSteedosSchema().getObject(objectName).find(query)
+    return await getSteedosSchema().getObject(objectName).directFind(query)
 }
 
 async function getUserPermissionShares(spaceUser) {
@@ -94,12 +94,13 @@ export async function getSpaceUserSession(spaceId, userId) {
         let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
         let su = null;
         let suFields = ['_id', 'space', 'company_id', 'company_ids', 'organization', 'organizations', 'organizations_parents', 'user'];
-        let spaceUser = await getSteedosSchema().getObject('space_users').find({ filters: `(space eq '${spaceId}') and (user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
+        
         // 如果spaceid和user不匹配，则取用户的第一个工作区
-        let spaceUsers = await getSteedosSchema().getObject('space_users').find({ filters: `(user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
-        if (spaceUser && spaceUser[0]) {
-            su = spaceUser[0];
-        } else {
+        let spaceUsers = await getSteedosSchema().getObject('space_users').directFind({ filters: `(user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
+        const findSpaceUser = _.find(spaceUsers, (spaceUser)=>{ return spaceUser.space === spaceId })
+        if(findSpaceUser){
+            su = findSpaceUser;
+        }else{
             su = spaceUsers[0];
         }
 
@@ -110,12 +111,15 @@ export async function getSpaceUserSession(spaceId, userId) {
             let profile = await getSpaceUserProfile(userId, userSpaceId);
             spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
             spaceSession.spaceId = userSpaceId;
-            spaceSession.space = (await getObjectDataByIds('spaces', [userSpaceId], ['name', 'admins']))[0];
-            spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name']);
-            spaceSession.company = (await getObjectDataByIds('company', [su.company_id], ['name', 'organization']))[0];
+            spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name', 'admins']);
+            spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._id === userSpaceId });
+            
             spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
-            spaceSession.organization = (await getObjectDataByIds('organizations', [su.organization], ['name', 'fullname', 'company_id']))[0];
+            spaceSession.company = _.find(spaceSession.companies, (record)=>{ return record._id === su.company_id });
+            
             spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
+            spaceSession.organization = _.find(spaceSession.organizations, (record)=>{ return record._id === su.organization });
+
             if (spaceSession.space && spaceSession.space.admins) {
                 spaceSession.is_space_admin = spaceSession.space.admins.indexOf(userId) > -1;
             }

@@ -44,7 +44,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
         await broker._restartService(service)
     }
 
-    await regist(broker, actions, serviceName, packageServiceName);
+    await register(broker, actions, serviceName, packageServiceName);
 }
 
 function generateAction(trigger: Trigger): Action {
@@ -73,7 +73,7 @@ function generateAction(trigger: Trigger): Action {
 }
 
 
-async function regist(broker: any, actions: object, serviceName: string, packageServiceName: string) {
+async function register(broker: any, actions: object, serviceName: string, packageServiceName: string) {
     for (const key in actions) {
         if (Object.hasOwnProperty.call(actions, key)) {
             let action = actions[key];

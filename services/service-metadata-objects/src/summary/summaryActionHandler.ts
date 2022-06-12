@@ -1,3 +1,4 @@
+import { Register } from '@steedos/metadata-registrar';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryDataTypeValue, SupportedSummaryFieldTypes } from './type';
 import { isFormulaFieldQuotingObjectAndFields } from '../formula/core';
 import _ = require('lodash')
@@ -22,7 +23,8 @@ export class SummaryActionHandler {
                 return;
             }
             // console.log(`deleteAll summary`, this.cacherKey(objectConfig.name, '*'))
-            await this.broker.call('metadata.fuzzyDelete', {key: this.cacherKey(objectConfig.name, '*')}, {meta: {}})
+            // await this.broker.call('metadata.fuzzyDelete', {key: this.cacherKey(objectConfig.name, '*')}, {meta: {}})
+            await Register.fuzzyDelete(this.broker, this.cacherKey(objectConfig.name, '*'));
             return true
         } catch (error) {
             this.broker.logger.error(error);
@@ -182,11 +184,13 @@ export class SummaryActionHandler {
     async addSummaryMetadata(config: any, datasource: string){
         const fieldsSummaryConfig = await this.getObjectFieldsSummaryConfig(config, datasource);
         for await (const fieldSummary of fieldsSummaryConfig) {
-            await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
+            // await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
+            await Register.add(this.broker, {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {});
         }
         const quoteMineSummaryConfigs = await this.getQuoteMineSummaryConfigs(config);
         for await (const fieldSummary of quoteMineSummaryConfigs) {
-            await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
+            // await this.broker.call('metadata.add', {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {meta: {}})
+            await Register.add(this.broker, {key: this.cacherKey(fieldSummary._id, fieldSummary.summary_object), data: fieldSummary}, {});
         }
         return true;
     }
@@ -204,7 +208,8 @@ export class SummaryActionHandler {
     async filterSummaryConfig(fieldApiFullName, summaryObjectApiName?){
         const key = this.cacherKey(fieldApiFullName, summaryObjectApiName)
         const configs = [];
-        const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        // const res = await this.broker.call('metadata.filter', {key: key}, {meta: {}})
+        const res = await Register.filter(this.broker, key)
         _.forEach(res, (item)=>{
             configs.push(item.metadata)
         })

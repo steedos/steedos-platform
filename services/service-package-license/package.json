@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-license",
-  "version": "2.2.39",
+  "version": "2.2.42",
   "description": "",
   "main": "package.service.js",
   "scripts": {

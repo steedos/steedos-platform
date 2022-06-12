@@ -1,10 +1,16 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-10 09:51:51
+ * @Description: 
+ */
 import * as _ from 'underscore';
 
 export * from './objectTranslation';
 export * from './translation';
 export * from './templates/objectTranslation';
 export * from './templates/translation';
-
 
 const getOption = function (option) {
     var foo;

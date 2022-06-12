@@ -137,6 +137,11 @@ module.exports = {
                 return await ActionHandlers.get(ctx);
             }
         },
+		getAll: {
+            async handler(ctx) {
+                return await ActionHandlers.getAll(ctx);
+            }
+        },
 		filter: {
 			params: {
 				objectApiName: "string",

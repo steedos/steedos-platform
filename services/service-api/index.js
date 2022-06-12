@@ -34,9 +34,9 @@ module.exports = {
 			// API Gateway route options
 			routeOptions: {
 				path: "/graphql",
-				// cors: true, //会导致response返回 access-control-allow-origin: *, 并进一步导致客户端请求时withCredentials: true参数带来的跨越错误
+				// cors: true, //会导致response返回 access-control-allow-origin: *, 并进一步导致客户端请求时withCredentials: true参数带来的跨域错误
 				whitelist: [
-					"**"
+					"graphql"
 				],
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 				use: [],
