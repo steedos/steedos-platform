@@ -172,7 +172,7 @@ class File {
                 // 使用clamdscan扫描病毒
                 if (VIRUS_SCAN_SCAN_COMMAND) {
                     try {
-                        await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { filePath: tempFilePath})
+                        await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { command: VIRUS_SCAN_SCAN_COMMAND, filePath: tempFilePath})
                     } catch (error) {
                         fs.unlinkSync(tempFilePath);
                         console.error(error);

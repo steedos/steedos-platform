@@ -40,14 +40,16 @@ module.exports = {
     actions: {
         execScanCommand: {
             params: {
+                command: {
+                    type: 'string'
+                },
                 filePath: {
                     type: 'string'
                 }
             },
             handler: function (ctx) {
-                const { filePath } = ctx.params;
-                const VIRUS_SCAN_SCAN_COMMAND = process.env.VIRUS_SCAN_SCAN_COMMAND;
-                execSync(`${VIRUS_SCAN_SCAN_COMMAND} ${filePath}`);
+                const { command, filePath } = ctx.params;
+                execSync(`${command} ${filePath}`);
             }
         }
     },
