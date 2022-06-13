@@ -311,6 +311,11 @@ module.exports = {
         const dbDoc = objectql.wrapAsync(async function(){
           return await objectql.getObject(object_name).findOne(id)
         })
+
+        if(doc && _.has(doc, 'multiple') && doc.multiple != dbDoc.multiple){
+            throw new Error('禁止单选、多选切换')
+        }
+
         let oldReferenceTo = dbDoc.type === "master_detail" && dbDoc.reference_to;
         await checkFormulaInfiniteLoop(doc, dbDoc.name);
         await checkMasterDetailTypeField(doc, oldReferenceTo);
