@@ -1,0 +1,30 @@
+
+.btn-instance-submit .record-edit-text{
+    color: #ffffff;
+}
+.btn-instance-submit .record-edit-text:hover{
+    color: #ffffff;
+}
+.btn-instance-submit .record-edit-text:focus{
+    color: #ffffff;
+}
+
+.instance-wrapper .border-b{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.relative {
+    position: relative!important;
+}
+.flex-1 {
+    flex: 1 1 0%!important;
+}
+
+.flex-col {
+    flex-direction: column!important;
+}
+.flex {
+    display: flex!important;
+}
