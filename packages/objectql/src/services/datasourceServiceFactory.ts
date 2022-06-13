@@ -41,7 +41,7 @@ export async function createDataSourceService(broker, dataSource) {
                         } catch (error) {
                             console.error(error)
                         }
-                    }, 1000 * 1);
+                    }, 1000 * 0.1);
                 }
             },
         }
