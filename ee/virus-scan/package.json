@@ -1,14 +1,11 @@
 {
   "name": "@steedos/ee_virus-scan",
-  "version": "2.2.42",
+  "version": "2.2.43",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
   "private": false,
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-
   }
 }

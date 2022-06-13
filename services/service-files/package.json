@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-files",
-  "version": "2.2.39",
+  "version": "2.2.43",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
