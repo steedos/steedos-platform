@@ -32,5 +32,7 @@ module.exports = {
         // this.broker.createService(require("@steedos/service-sidecar"));
         // 字段级加密服务
         // this.broker.createService(require("@steedos/ee_plugin-field-encryption"));
+        // 附件病毒扫描
+        this.broker.createService(require("@steedos/ee_virus-scan"));
     }
 }

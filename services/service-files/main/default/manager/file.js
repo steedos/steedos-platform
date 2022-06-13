@@ -28,9 +28,9 @@ const {
     S3_STORE,
     STEEDOSCLOUD_STORE
 } = require('./consts');
-const { execSync } = require('child_process');
 // 扫描病毒的命令，如未配置则认为无需扫描
 const VIRUS_SCAN_SCAN_COMMAND = process.env.VIRUS_SCAN_SCAN_COMMAND;
+const objectql = require('@steedos/objectql')
 
 class File {
 
@@ -162,7 +162,7 @@ class File {
      * @param {*} tempFilePath 
      * @param {*} callback 
      */
-    save(tempFilePath, callback) {
+    async save(tempFilePath, callback) {
         try {
             const storeName = getStoreName();
             const fsCollectionName = this._fsCollectionName;
@@ -172,7 +172,7 @@ class File {
                 // 使用clamdscan扫描病毒
                 if (VIRUS_SCAN_SCAN_COMMAND) {
                     try {
-                        execSync(`${VIRUS_SCAN_SCAN_COMMAND} ${tempFilePath}`);
+                        await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { filePath: tempFilePath})
                     } catch (error) {
                         fs.unlinkSync(tempFilePath);
                         console.error(error);
