@@ -55,24 +55,29 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
                     ...fields,
                     owner: userId,
                 };
-                await collection.insertOne(newFile.insertDoc());
-                
                 // 保存文件
                 newFile.save(tempFilePath, async function (err, result) {
+                    if (err) {
+                        res.status(500).send({ error: { message: err.message } });
+                        return;
+                    }
+
+                    await collection.insertOne(newFile.insertDoc());
+
                     const fileDoc = await collection.findOne({ _id: newFile.id });
                     res.status(200).send(fileDoc);
                 })
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ error: error.message });
+                res.status(500).send({ error: { message: error.message } });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: error.message });
+        res.status(500).send({ error: { message: err.message } });
     }
 
 });

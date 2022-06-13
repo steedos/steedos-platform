@@ -65,7 +65,7 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
                 const newFile = new File({ name: formatFileName(originalFilename, upload_from), size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
 
                 const filename = newFile.name;
-                
+
                 const name_split = filename.split('.');
                 const extention = name_split.pop();
 
@@ -80,57 +80,63 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
                     metadata.parent = parent;
                 }
                 newFile.metadata = metadata;
-                await collection.insertOne(newFile.insertDoc());
-
-                if (parent) {
-                    await fileCollection.updateOne({
-                        _id: parent
-                    }, {
-                        $set: {
-                            name: filename,
-                            extention: extention,
-                            size: size,
-                            modified: new Date(),
-                            modified_by: userId
-                        },
-                        $push: {
-                            versions: {
-                                $each: [newFile.id],
-                                $position: 0
-                            }
-                        }
-                    });
-                } else {
-                    const newFileObjId = _makeNewID();
-                    await fileCollection.insertOne({
-                        _id: newFileObjId,
-                        name: filename,
-                        description: description,
-                        extention: extention,
-                        size: size,
-                        versions: [newFile.id],
-                        parent: {
-                            o: object_name,
-                            ids: [record_id]
-                        },
-                        owner: owner,
-                        space: space,
-                        created: new Date(),
-                        created_by: userId,
-                        modified: new Date(),
-                        modified_by: userId
-                    });
-                    await collection.updateOne({
-                        _id: newFile.id
-                    }, {
-                        $set: {
-                            'metadata.parent': newFileObjId
-                        }
-                    });
-                }
 
                 // 保存文件
-                newFile.save(tempFilePath, function (err, result) {
+                newFile.save(tempFilePath, async function (err, result) {
+                    if (err) {
+                        res.send({ errors: [{ errorMessage: err.message }] });
+                        return;
+                    }
+
+                    await collection.insertOne(newFile.insertDoc());
+
+                    if (parent) {
+                        await fileCollection.updateOne({
+                            _id: parent
+                        }, {
+                            $set: {
+                                name: filename,
+                                extention: extention,
+                                size: size,
+                                modified: new Date(),
+                                modified_by: userId
+                            },
+                            $push: {
+                                versions: {
+                                    $each: [newFile.id],
+                                    $position: 0
+                                }
+                            }
+                        });
+                    } else {
+                        const newFileObjId = _makeNewID();
+                        await fileCollection.insertOne({
+                            _id: newFileObjId,
+                            name: filename,
+                            description: description,
+                            extention: extention,
+                            size: size,
+                            versions: [newFile.id],
+                            parent: {
+                                o: object_name,
+                                ids: [record_id]
+                            },
+                            owner: owner,
+                            space: space,
+                            created: new Date(),
+                            created_by: userId,
+                            modified: new Date(),
+                            modified_by: userId
+                        });
+                        await collection.updateOne({
+                            _id: newFile.id
+                        }, {
+                            $set: {
+                                'metadata.parent': newFileObjId
+                            }
+                        });
+                    }
+
                     const resp = {
                         version_id: newFile._id,
                         size: size
@@ -141,14 +147,14 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ error: error.message });
+                res.send({ errors: [{ errorMessage: err.message }] });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: error.message });
+        res.send({ errors: [{ errorMessage: err.message }] });
     }
 
 });

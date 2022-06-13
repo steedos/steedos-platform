@@ -76,56 +76,65 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                     current: true
                 };
 
-                if (is_private && is_private.toLocaleLowerCase() === "true") {
-                    metadata.is_private = true;
-                } else {
-                    metadata.is_private = false;
-                }
-                if (main === "true") {
-                    metadata.main = true;
-                }
-                if (isAddVersion && parent) {
-                    parentId = parent;
-                }
-
-                if (parentId) {
-                    const r = await collection.updateOne({
-                        'metadata.parent': parentId,
-                        'metadata.current': true
-                    }, {
-                        $unset: {
-                            'metadata.current': ''
-                        }
-                    });
-                    if (r) {
-                        metadata.parent = parentId;
-                        if (locked_by && locked_by_name) {
-                            metadata.locked_by = locked_by;
-                            metadata.locked_by_name = locked_by_name;
-                        }
-                        newFile.metadata = metadata;
-                        await collection.insertOne(newFile.insertDoc());
-                        // 删除同一个申请单同一个步骤同一个人上传的重复的文件
-                        if (overwrite && overwrite.toLocaleLowerCase() === "true") {
-                            await collection.deleteMany({
-                                'metadata.instance': instance,
-                                'metadata.parent': parentId,
-                                'metadata.owner': owner,
-                                'metadata.approve': approve,
-                                'metadata.current': {
-                                    $ne: true
-                                }
-                            });
-                        }
-                    }
-                } else {
-                    metadata.parent = newFile.id;
-                    newFile.metadata = metadata;
-                    await collection.insertOne(newFile.insertDoc());
-                }
+                newFile.metadata = metadata;
 
                 // 保存文件
-                newFile.save(tempFilePath, function (err, result) {
+                newFile.save(tempFilePath, async function (err, result) {
+                    if (err) {
+                        res.send({ errors: [{ errorMessage: err.message }] });
+                        return;
+                    }
+
+                    if (is_private && is_private.toLocaleLowerCase() === "true") {
+                        metadata.is_private = true;
+                    } else {
+                        metadata.is_private = false;
+                    }
+                    if (main === "true") {
+                        metadata.main = true;
+                    }
+                    if (isAddVersion && parent) {
+                        parentId = parent;
+                    }
+
+                    if (parentId) {
+                        const r = await collection.updateOne({
+                            'metadata.parent': parentId,
+                            'metadata.current': true
+                        }, {
+                            $unset: {
+                                'metadata.current': ''
+                            }
+                        });
+                        if (r) {
+                            metadata.parent = parentId;
+                            if (locked_by && locked_by_name) {
+                                metadata.locked_by = locked_by;
+                                metadata.locked_by_name = locked_by_name;
+                            }
+                            newFile.metadata = metadata;
+                            await collection.insertOne(newFile.insertDoc());
+                            // 删除同一个申请单同一个步骤同一个人上传的重复的文件
+                            if (overwrite && overwrite.toLocaleLowerCase() === "true") {
+                                await collection.deleteMany({
+                                    'metadata.instance': instance,
+                                    'metadata.parent': parentId,
+                                    'metadata.owner': owner,
+                                    'metadata.approve': approve,
+                                    'metadata.current': {
+                                        $ne: true
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        metadata.parent = newFile.id;
+                        newFile.metadata = metadata;
+                        await collection.insertOne(newFile.insertDoc());
+                    }
+
+
+
                     const resp = {
                         version_id: newFile._id,
                         size: size
@@ -136,14 +145,14 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
 
             } catch (error) {
                 console.error(error);
-                res.status(500).send({ error: error.message });
+                res.send({ errors: [{ errorMessage: error.message }] });
             }
 
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: error.message });
+        res.send({ errors: [{ errorMessage: error.message }] });
     }
 
 });

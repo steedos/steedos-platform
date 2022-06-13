@@ -20,7 +20,6 @@ const {
     getS3BucketOption,
     getCloudFoldOption,
     getCloudBucketOption,
-    getCloudServiceParams,
     getCloudApikey,
 } = require('./util');
 const {
@@ -29,6 +28,9 @@ const {
     S3_STORE,
     STEEDOSCLOUD_STORE
 } = require('./consts');
+const { execSync } = require('child_process');
+// 扫描病毒的命令，如未配置则认为无需扫描
+const VIRUS_SCAN_SCAN_COMMAND = process.env.VIRUS_SCAN_SCAN_COMMAND;
 
 class File {
 
@@ -167,6 +169,24 @@ class File {
             const fileKey = this._fileKey;
             if (LOCAL_STORE === storeName) {
                 const fileStorePath = fileStoreFullPath(fsCollectionName, fileKey);
+                // 使用clamdscan扫描病毒
+                if (VIRUS_SCAN_SCAN_COMMAND) {
+                    try {
+                        execSync(`${VIRUS_SCAN_SCAN_COMMAND} ${tempFilePath}`);
+                    } catch (error) {
+                        fs.unlinkSync(tempFilePath);
+                        console.error(error);
+                        // 根据status判断是否是被感染文件
+                        if (error.status === 1) {
+                            error.message = '文件内容存在安全隐患，终止上传，请确认。';
+                            console.error('[virus scan]');
+                            console.error(error.stdout.toString());
+                        }
+                        callback(error);
+                        return;
+                    }
+                }
+
                 // fs.renameSync(tempFilePath, fileStorePath); // EXDEV: cross-device link not permitted
                 const readStream=fs.createReadStream(tempFilePath);
                 const writeStream=fs.createWriteStream(fileStorePath);
