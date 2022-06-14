@@ -402,8 +402,9 @@ export class Mongo implements DatabaseInterface {
     const id = this.options.convertUserIdToMongoObjectId
       ? toMongoID(userId)
       : userId;
+    const encryptedMobile = (await this.getEncryptedSpaceUserFieldValue(newMobile, 'mobile')) || newMobile;
     let existed = await this.collection
-      .find({ _id: { $ne: id }, mobile: newMobile })
+      .find({ _id: { $ne: id }, mobile: encryptedMobile })
       .count();
     if (existed > 0) {
       throw new Error("该手机号已被其他用户注册");
@@ -417,11 +418,11 @@ export class Mongo implements DatabaseInterface {
         { _id: id },
         {
           $set: {
-            mobile: newMobile,
+            mobile: encryptedMobile,
             [this.options.timestamps.updatedAt]: this.options.dateProvider(),
           },
           $pull: {
-            "services.mobile.verificationTokens": { mobile: newMobile },
+            "services.mobile.verificationTokens": { mobile: encryptedMobile },
           },
         }
       );
@@ -429,7 +430,7 @@ export class Mongo implements DatabaseInterface {
         { user: id },
         {
           $set: {
-            mobile: newMobile,
+            mobile: encryptedMobile,
             modified: this.options.dateProvider(),
             modified_by: id,
           },
