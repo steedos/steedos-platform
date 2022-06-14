@@ -166,6 +166,15 @@ fields:
         if(object.enable_files){
             relatedLists.push("cms_files.parent")
         }
+        /*
+        object.details是一个字符串，形如：testb__c.testa__c
+        object.lookup_details是一个对象，格式如下：
+        {
+          key: "testd__c.testa__c",
+          objectName: "testa__c",
+          type: "detail",
+        }
+        */
         relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
 
         if(object.enable_tasks){
@@ -188,6 +197,11 @@ fields:
         }
 
         _.each(relatedLists, function(related){
+          if (!related) return;
+          /*related可能是一个lookup_details，它是对象而不是字符串，从中取出key值*/
+          if(typeof related !== "string"){
+            related = related.key;
+          }
           if (!related) return;
           let foo = related.split('.');
           let rObjectName = foo[0];
