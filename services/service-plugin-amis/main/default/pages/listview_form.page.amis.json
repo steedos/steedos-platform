@@ -100,7 +100,7 @@
                                     "$value": "$filter_scope._id",
                                     "rfield": "${object_name}"
                                 },
-                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replaceAll('{__filters}', filters).replace('{__top}', top);\n        return api;\n    ",
+                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
                                 "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n        var _options;\n\n        _options = [{\n          label: \"我的\",\n          value: \"mine\",\n          icon: \"user\"\n        }, {\n          label: \"工作区\",\n          value: \"space\",\n          icon: \"groups\"\n        }];\n        return _options;\n      \n})(api.data);\n        return payload;\n        "
                             },
                             "value": "space",

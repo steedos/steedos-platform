@@ -2,7 +2,8 @@ import path = require('path')
 import _ = require('lodash')
 import {loadJsonFiles} from '../util'
 import { addAppConfigFiles } from './app';
-import { addObjectConfigFiles, addClientScriptFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
+import { addObjectConfigFiles, addServerScriptFiles, addObjectDataFiles, addRouterFiles } from '.';
+import { loadPackageClientScripts } from '../dynamic-load/client_script';
 import { addTranslationsFiles, addObjectTranslationsFiles } from '../dynamic-load'
 import { registerPackageCharts } from '../dynamic-load/chart';
 import { registerPackageQueries } from '../dynamic-load/query';
@@ -136,7 +137,7 @@ export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName
     await registerPackageShareRules(filePath, serviceName);
     await registerPackageRestrictionRules(filePath, serviceName);
     
-    addClientScriptFiles(filePath);
+    loadPackageClientScripts(serviceName, filePath);
     addServerScriptFiles(filePath);
     // addObjectI18nFiles(filePath);
     await addTranslationsFiles(filePath);

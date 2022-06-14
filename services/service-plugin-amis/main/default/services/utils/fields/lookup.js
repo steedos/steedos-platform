@@ -101,7 +101,7 @@ function lookupToAmisPicker(field, readonly){
                 }
             })
         }
-        api.data.query = api.data.query.replaceAll('{__filters}', JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());
+        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());
         return api;
     `
 
@@ -172,7 +172,7 @@ function lookupToAmisSelect(field, readonly){
         }else if(api.data.$value){
             filters = '["_id", "=", "'+ api.data.$value +'"]';
         }
-        api.data.query = api.data.query.replaceAll('{__filters}', filters).replace('{__top}', top);
+        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);
         return api;
     `
     let labelField = referenceTo ? referenceTo.labelField.name : '';

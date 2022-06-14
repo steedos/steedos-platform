@@ -18,3 +18,4 @@ export * from './approval_process'
 export * from './workflow'
 export * from "./tabs"
 export * from "./package"
+export * from './client_script'

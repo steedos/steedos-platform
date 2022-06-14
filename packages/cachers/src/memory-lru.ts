@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-10 09:33:03
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-10 10:41:29
+ * @LastEditTime: 2022-06-14 19:01:42
  * @Description: 
  */
 import { defaultsDeep } from 'lodash';
@@ -36,11 +36,19 @@ export class MemoryLRUCacher {
         return this.cache.set(key, data, opt);
     }
 
-    del(key: string){
-        return this.cache.del(key);
+    delete(key: string){
+        return this.cache.delete(key);
     }
     
     clear(){
         return this.cache.clear();
+    }
+
+    keys(){
+        return this.cache.keys();
+    }
+
+    values(){
+        return this.cache.values();
     }
 }

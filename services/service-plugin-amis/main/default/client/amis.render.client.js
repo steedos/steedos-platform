@@ -16,7 +16,7 @@
         console.error(error)
     };
 
-    import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
+    // import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
 
         Promise.all([
             waitForThing(window, 'assetsLoaded'),
@@ -136,6 +136,16 @@
             };
 
             const initMonaco = ()=>{
+
+                const { detect } = require('detect-browser');
+
+                const browser = detect();
+
+                // 低于86版的chrome 不支持code类型字段及功能
+                if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
+                    return Promise.resolve(true)
+                }
+
                 // 手机版暂不支持code类型字段.
                 if(Meteor.isCordova){
                     return Promise.resolve(true)
@@ -158,6 +168,6 @@
                 });
             });
         });
-    });
+    // });
 
 })();

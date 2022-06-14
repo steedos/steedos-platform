@@ -37,14 +37,17 @@ const extendSimpleSchema = () => {
 export const loadClientScripts = ()=>{
     try {
         let clientCodes = getClientBaseObject();
-        let clientScripts = objectql.getClientScripts();
+        let clientScripts = objectql.getClientScriptsFiles();
         _.each(clientScripts, function (scriptFile) {
             let code = fs.readFileSync(scriptFile, 'utf8');
             clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
         });
+
+        clientCodes = clientCodes + objectql.getClientScripts();
+
         WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
     } catch (error) {
-        
+        console.log(`loadClientScripts error: ${error}`);
     }
 }
 

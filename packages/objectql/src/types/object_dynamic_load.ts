@@ -168,7 +168,7 @@ export const addClientScriptFiles = (filePath: string) => {
   });
 };
 
-export const getClientScripts = () => {
+export const getClientScriptsFiles = () => {
     return _.uniq(_clientScripts);
 }
 

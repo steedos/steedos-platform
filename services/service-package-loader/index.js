@@ -213,6 +213,9 @@ module.exports = {
                 this.logger.errorr(error);
             }
         }
+
+        objectql.deletePackageClientScripts(this.name);
+        core.loadClientScripts();
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{
             name: this.name,

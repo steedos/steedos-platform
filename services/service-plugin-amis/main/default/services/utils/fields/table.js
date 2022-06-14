@@ -118,7 +118,7 @@ exports.getTableApi = function(mainObject, fields){
                 }
             })
         }
-        api.data.query = api.data.query.replaceAll('{__filters}', JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());
+        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());
         return api;
     `
     api.adaptor = `
