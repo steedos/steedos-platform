@@ -8,7 +8,6 @@ import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from 'odata-v4-mongodb';
 import _ = require("underscore");
 import { wrapAsync } from '../util';
-import { ClientEncryption } from "mongodb-client-encryption";
 import { SteedosFieldEncryptionSharedConsts } from './field-encrytion';
 import { formatRecord } from './format';
 
@@ -77,6 +76,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     async connect() {
         if (!this._client) {
             if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
+                const { ClientEncryption } = require("mongodb-client-encryption");
                 const { keyVaultNamespace, getKMSProviders } = SteedosFieldEncryptionSharedConsts;
                 const kmsProvider = await getKMSProviders();
                 this._client = await MongoClient.connect(this._url, {
