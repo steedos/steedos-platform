@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-accounts",
-  "version": "2.2.43",
+  "version": "2.2.44",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
