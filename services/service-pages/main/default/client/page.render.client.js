@@ -428,10 +428,7 @@
                 let referenceTo = objectFields[fieldName].reference_to;
                 const refObject = Creator.getObject(referenceTo)
                 if(!refObject){
-                    SteedosUI.Modal.error({
-                        title: "出错了",
-                        content: `未找到对象“${referenceTo}”，请检查是否该对象依赖的软件包未安装。`
-                    })
+                    console.error(`未找到对象“${referenceTo}”，请检查是否该对象依赖的软件包未安装。`);
                     return;
                 }
                 if(_.includes(fieldsName, fieldName)){
