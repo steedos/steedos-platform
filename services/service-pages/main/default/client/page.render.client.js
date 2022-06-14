@@ -425,7 +425,15 @@
                 if(objectApiName === 'space_users' && fieldName === 'company_ids'){
                     spaceUsersCompanyIdsExpand = ',name,admins'
                 }
-                const refObject = Creator.getObject(objectFields[fieldName].reference_to)
+                let referenceTo = objectFields[fieldName].reference_to;
+                const refObject = Creator.getObject(referenceTo)
+                if(!refObject){
+                    SteedosUI.Modal.error({
+                        title: "出错了",
+                        content: `未找到对象“${referenceTo}”，请检查是否该对象依赖的软件包未安装。`
+                    })
+                    return;
+                }
                 if(_.includes(fieldsName, fieldName)){
                     fieldsName[_.indexOf(fieldsName, fieldName)] = `${fieldName}:${fieldName}__expand{_id, _NAME_FIELD_VALUE:${refObject.NAME_FIELD_KEY}${spaceUsersCompanyIdsExpand}}`
                 }else{
