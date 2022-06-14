@@ -135,8 +135,19 @@
                 return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name}, Object.assign({}, AmisEnv, env))));
             };
 
+            const initMonaco = ()=>{
+                // 手机版暂不支持code类型字段.
+                if(Meteor.isCordova){
+                    return Promise.resolve(true)
+                }else{
+                    return Builder.initMonaco()
+                }
+            }
+
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
-            Builder.initMonaco().then(()=>{
+            initMonaco().catch((err)=>{
+                console.error(`Builder.initMonaco error: ${err}`);
+            }).finally(()=>{
                 Builder.registerComponent(AmisRender, {
                     name: 'Amis',
                     inputs: [
