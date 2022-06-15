@@ -9,6 +9,5 @@
     "access": "public"
   },
   "dependencies": {
-    "@builder.io/react": "^1.1.50"
   }
 }
