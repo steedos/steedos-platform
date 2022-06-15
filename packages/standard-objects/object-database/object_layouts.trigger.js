@@ -55,8 +55,9 @@ module.exports = {
         let id = this.id
         let record = Creator.getCollection("object_layouts").findOne({_id: id}) || {};
         check(doc.object_name || record.object_name, doc.profiles || record.profiles, id);
-
-        await util.checkAPIName(this.object_name, 'name', this.doc.name, this.id, [['is_system','!=', true], ['object_name','=', doc.object_name || record.object_name]]);
+        if (_.has(doc, 'name')) {
+            await util.checkAPIName(this.object_name, 'name', doc.name, this.id, [['is_system','!=', true], ['object_name','=', doc.object_name || record.object_name]]);
+        }
 
         if(doc.fields){
             _.each(doc.fields, function(field){
