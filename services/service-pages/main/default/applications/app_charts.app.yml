@@ -12,7 +12,7 @@ admin_menus:
     permission_sets:
       - admin
   - _id: pages
-    name: 页面
+    name: 微页面
     object_name: pages
     parent: user_interface
     sort: 300
