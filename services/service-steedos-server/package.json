@@ -19,7 +19,6 @@
     "@steedos/service-fields-indexs": "2.2.44",
     "@steedos/service-files": "2.2.44",
     "@steedos/service-meteor-package-loader": "2.2.44",
-    "@steedos/service-node-red": "2.2.44",
     "@steedos/service-pages": "2.2.44",
     "@steedos/service-plugin-amis": "2.2.44",
     "@steedos/service-ui": "2.2.44",
@@ -35,7 +34,6 @@
     "moleculer-db-adapter-mongo": "^0.4.7",
     "moleculer-web": "^0.10.4",
     "nats": "^1.4.12",
-    "node-red": "^1.2.9",
     "steedos-server": "2.2.44"
   },
   "private": false,
