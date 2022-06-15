@@ -2,7 +2,18 @@ import { SteedosObjectType } from '../types/object';
 import { getDataSource, SteedosDatabaseDriverType } from '../types/datasource';
 import { getObjectConfig } from '../types/object_dynamic_load';
 import _ = require('underscore');
-import { generateActionGraphqlProp, generateSettingsGraphql, RELATED_PREFIX, _getRelatedType, correctName, getGraphqlActions, getRelatedResolver, dealWithRelatedFields, getLocalService } from './helpers';
+import {
+    generateActionGraphqlProp,
+    generateSettingsGraphql,
+    RELATED_PREFIX,
+    _getRelatedType,
+    correctName,
+    getGraphqlActions,
+    getRelatedResolver,
+    dealWithRelatedFields,
+    getLocalService,
+    getQueryFields
+} from './helpers/graphql'; 
 // generateActionRestProp, 
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../util/convert';
@@ -175,22 +186,22 @@ function getObjectServiceMethodsSchema() {
                 return await this.object.refreshIndexes();
             }
         },
-        allowRead:{
+        allowRead: {
             async handler(userSession) {
                 return await this.object.allowRead(userSession);
             }
         },
-        allowInsert:{
+        allowInsert: {
             async handler(userSession) {
                 return await this.object.allowInsert(userSession);
             }
         },
-        allowUpdate:{
+        allowUpdate: {
             async handler(userSession) {
                 return await this.object.allowUpdate(userSession);
             }
         },
-        allowDelete:{
+        allowDelete: {
             async handler(userSession) {
                 return await this.object.allowDelete(userSession);
             }
@@ -217,7 +228,7 @@ function getObjectServiceActionsSchema() {
             }
         },
         // meteor、default database 默认不返回is_deleted = true的数据
-        graphqlFind:{
+        graphqlFind: {
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
@@ -227,30 +238,38 @@ function getObjectServiceActionsSchema() {
             },
             async handler(ctx) {
                 //TODO filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
-                if(this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo ||  this.object.datasource.driver === SteedosDatabaseDriverType.Mongo){
+                if (this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || this.object.datasource.driver === SteedosDatabaseDriverType.Mongo) {
                     const { filters } = ctx.params;
                     if (filters) {
-                        if(_.isString(filters)){
-                            if(filters.indexOf('(is_deleted eq true)') < 0){
-                                ctx.params.filters =  `(${filters}) and (is_deleted ne true)`;
+                        if (_.isString(filters)) {
+                            if (filters.indexOf('(is_deleted eq true)') < 0) {
+                                ctx.params.filters = `(${filters}) and (is_deleted ne true)`;
                             }
                         }
-                        if(_.isArray(filters)){
+                        if (_.isArray(filters)) {
                             const filtersStr = formatFiltersToODataQuery(filters);
-                            if(filtersStr.indexOf('(is_deleted eq true)') < 0){
+                            if (filtersStr.indexOf('(is_deleted eq true)') < 0) {
                                 ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
                             }
                         }
-                    }else{
+                    } else {
                         ctx.params.filters = '(is_deleted ne true)'
                     }
                 }
+                if (_.isEmpty(ctx.params.fields)) {
+                    const { resolveInfo } = ctx.meta;
 
+                    const fieldNames = getQueryFields(resolveInfo);
+
+                    if (!_.isEmpty(fieldNames)) {
+                        ctx.params.fields = fieldNames;
+                    }
+                }
                 const userSession = ctx.meta.user;
                 return this.find(ctx.params, userSession)
             }
         },
-        graphqlCount:{
+        graphqlCount: {
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
@@ -260,21 +279,21 @@ function getObjectServiceActionsSchema() {
             },
             async handler(ctx) {
                 //TODO filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
-                if(this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo ||  this.object.datasource.driver === SteedosDatabaseDriverType.Mongo){
+                if (this.object.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || this.object.datasource.driver === SteedosDatabaseDriverType.Mongo) {
                     const { filters } = ctx.params;
                     if (filters) {
-                        if(_.isString(filters)){
-                            if(filters.indexOf('(is_deleted eq true)') < 0){
-                                ctx.params.filters =  `(${filters}) and (is_deleted ne true)`;
+                        if (_.isString(filters)) {
+                            if (filters.indexOf('(is_deleted eq true)') < 0) {
+                                ctx.params.filters = `(${filters}) and (is_deleted ne true)`;
                             }
                         }
-                        if(_.isArray(filters)){
+                        if (_.isArray(filters)) {
                             const filtersStr = formatFiltersToODataQuery(filters);
-                            if(filtersStr.indexOf('(is_deleted eq true)') < 0){
+                            if (filtersStr.indexOf('(is_deleted eq true)') < 0) {
                                 ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
                             }
                         }
-                    }else{
+                    } else {
                         ctx.params.filters = '(is_deleted ne true)'
                     }
                 }
@@ -565,7 +584,7 @@ function getObjectServiceActionsSchema() {
             // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                if(!userSession.is_space_admin){
+                if (!userSession.is_space_admin) {
                     throw new Error('no permission.')
                 }
                 return await this.createDefaultRecordView(userSession);
@@ -578,7 +597,7 @@ function getObjectServiceActionsSchema() {
             // },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
-                if(!userSession.is_space_admin){
+                if (!userSession.is_space_admin) {
                     throw new Error('no permission.')
                 }
                 return await this.getDefaultRecordView(userSession);
@@ -623,7 +642,7 @@ function getObjectServiceActionsSchema() {
             }
         }
     };
-    _.each(actions, function(action){
+    _.each(actions, function (action) {
         delete action.params;
     });
     return actions;
@@ -681,24 +700,24 @@ module.exports = {
         }
     },
     events: {
-		"metadata.objects.deleted": {
+        "metadata.objects.deleted": {
             async handler(ctx) {
                 const { objectApiName } = ctx.params
                 const { onDestroyObjectService, objectConfig } = this.settings
-				if(objectApiName === this.object.name){
-                    _.each(objectConfig.fields, (field, name)=>{
-                        if( (field.type === 'lookup' || field.type === 'master_detail') && (field.reference_to && _.isString(field.reference_to)) ){
+                if (objectApiName === this.object.name) {
+                    _.each(objectConfig.fields, (field, name) => {
+                        if ((field.type === 'lookup' || field.type === 'master_detail') && (field.reference_to && _.isString(field.reference_to))) {
                             ctx.broker.emit(`${getObjectServiceName(field.reference_to)}.refresh`, {});
                         }
                     })
                     // console.log(`ctx.broker.destroyService`, this.object.name);
                     await ctx.broker.destroyService(this);
-                    if(onDestroyObjectService && _.isFunction(onDestroyObjectService)){
+                    if (onDestroyObjectService && _.isFunction(onDestroyObjectService)) {
                         onDestroyObjectService(objectApiName);
                     }
                     // 给localservice的settings赋值deleted=true，用于标记服务已删除
                     let localService = getLocalService(objectApiName);
-                    if(localService){
+                    if (localService) {
                         localService.settings.deleted = true;
                     }
                     // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
@@ -764,35 +783,35 @@ module.exports = {
         schema.events[`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`] = {
             handler: async function (ctx) {
                 let objectConfig = ctx.params.data;
-               // console.log(`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`);
+                // console.log(`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`);
                 // 对象发生变化时，重新创建Steedos Object 对象
                 const datasource = getDataSource(objectConfig.datasource);
                 if (datasource) {
                     const localObjectConfig = getObjectConfig(objectConfig.name);
-                    if(localObjectConfig){
-                        objectConfig.listeners = localObjectConfig.listeners; 
-                        objectConfig.methods = localObjectConfig.methods; 
+                    if (localObjectConfig) {
+                        objectConfig.listeners = localObjectConfig.listeners;
+                        objectConfig.methods = localObjectConfig.methods;
                     }
                     const object = new SteedosObjectType(objectConfig.name, datasource, objectConfig)
                     datasource.setLocalObject(objectConfig.name, object);
                     this.object = object;
 
                     if (
-                      datasource.name != "meteor" &&
-                      datasource.name != "default"
+                        datasource.name != "meteor" &&
+                        datasource.name != "default"
                     ) {
-                      await datasource.init();
+                        await datasource.init();
                     }
 
                     if (datasource.name === 'meteor' && Creator.Objects[objectConfig.name]) {
                         jsonToObject(objectConfig);
                         const localTriggers = (localObjectConfig as any).triggers;
-                        if(localTriggers){
-                            objectConfig.triggers = localTriggers; 
+                        if (localTriggers) {
+                            objectConfig.triggers = localTriggers;
                         }
                         extend(objectConfig, { triggers: Creator.Objects[objectConfig.name].triggers }, { triggers: (localObjectConfig as any)._baseTriggers })
                         Creator.Objects[objectConfig.name] = objectConfig;
-                        
+
                         await Future.task(() => {
                             try {
                                 Creator.loadObjects(objectConfig, objectConfig.name);
@@ -802,7 +821,7 @@ module.exports = {
                         }).promise();
                     }
                 }
-                
+
                 let gobj = generateSettingsGraphql(objectConfig);
                 this.settings.graphql = gobj;
                 dealWithRelatedFields(objectConfig, this.settings.graphql);
@@ -815,7 +834,7 @@ module.exports = {
         schema.events[`${getObjectServiceName(objectConfig.name)}.refresh`] = {
             handler: async function (ctx) {
                 const _objectConfig = getObjectConfig(objectConfig.name);
-                if(_objectConfig){
+                if (_objectConfig) {
                     let gobj = generateSettingsGraphql(_objectConfig);
                     this.settings.graphql = gobj;
                     dealWithRelatedFields(_objectConfig, this.settings.graphql);

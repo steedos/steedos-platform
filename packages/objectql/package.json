@@ -8,9 +8,9 @@
     "start": "nodemon server.js",
     "watch": "tsc --watch",
     "debug": "nodemon --inspect server.js",
-    "compile": "tsc",
+    "compile": "yarn prepare",
     "test": "mocha test/unit/**/*.ts",
-    "prepare": "tsc"
+    "prepare": "rm -rf ./lib && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +33,7 @@
     "express": "^4.15.4",
     "fibers": "^4.0.3",
     "globby": "^9.1.0",
+    "graphql-parse-resolve-info": "4.12.0",
     "jsen": "^0.6.6",
     "lodash": "^4.17.15",
     "mingo": "^6.0.5",

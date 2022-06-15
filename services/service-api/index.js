@@ -251,7 +251,7 @@ module.exports = {
 		 * @param {String} actionName
 		 * @param {Object?} def
 		 */
-		createActionResolver(actionName, def = {}) {
+		 createActionResolver(actionName, def = {}) {
 			const {
 				dataLoader: useDataLoader = false,
 				nullIfError = false,
@@ -261,7 +261,7 @@ module.exports = {
 			} = def;
 			const rootKeys = Object.keys(rootParams);
 
-			return async (root, args, context) => {
+			return async (root, args, context, resolveInfo) => {
 				try {
 					if (useDataLoader) {
 						const dataLoaderMapKey = this.getDataLoaderMapKey(
@@ -353,7 +353,7 @@ module.exports = {
 							);
 						}
 
-						return await context.ctx.call(actionName, mergedParams);
+						return await context.ctx.call(actionName, mergedParams, { meta: {resolveInfo} });
 					}
 				} catch (err) {
 					if (nullIfError) {
