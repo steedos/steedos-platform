@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_virus-scan",
-  "version": "2.2.45",
+  "version": "2.2.46",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-mongodb-server",
-  "version": "2.2.45",
+  "version": "2.2.46",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {

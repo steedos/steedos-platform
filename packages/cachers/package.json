@@ -1,7 +1,7 @@
 {
   "name": "@steedos/cachers",
   "private": false,
-  "version": "2.2.45",
+  "version": "2.2.46",
   "description": "",
   "main": "lib/index.js",
   "scripts": {

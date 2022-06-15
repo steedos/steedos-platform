@@ -1,6 +1,6 @@
 {
   "name": "@steedos/formula",
-  "version": "2.2.45",
+  "version": "2.2.46",
   "description": "Salesforce Formula Parser",
   "main": "lib/formulon.js",
   "files": [
