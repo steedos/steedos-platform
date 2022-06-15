@@ -2,9 +2,7 @@
 
 const Future = require('fibers/future');
 const path = require('path');
-const RED = require("node-red");
 const MetadataService = require("@steedos/service-metadata-server");
-const NodeRedService = require('@steedos/service-node-red');
 const APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const objectql = require('@steedos/objectql');
