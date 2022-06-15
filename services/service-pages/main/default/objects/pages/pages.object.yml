@@ -16,7 +16,7 @@ enable_workflow: false
 hidden: true
 icon: contract
 is_enable: true
-label: 页面
+label: 微页面
 version: 2
 form:
  afterView: !!js/function |
