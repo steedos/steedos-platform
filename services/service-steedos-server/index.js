@@ -249,7 +249,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-		this.RED = RED;
+		// this.RED = RED;
 		// this.MetadataService = this.broker.createService(MetadataService);
 	},
 
