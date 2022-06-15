@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "private": false,
+  "dependencies": {
+    "@steedos/cachers": "2.2.44"
+  },
   "publishConfig": {
     "access": "public"
   }
