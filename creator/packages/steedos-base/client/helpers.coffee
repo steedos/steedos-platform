@@ -754,19 +754,8 @@ TemplateHelpers =
 
 	cordovaDownload: (url, filename, rev, length) ->
 		if not cordova?.plugins?.fileOpener2
-			# window.open(url, '_blank', 'EnableViewPortScale=yes')
-			return window.postMessage(
-				{
-					type: 'fileOpen',
-					props: {
-						url: url, 
-						filename: filename, 
-						rev: rev, 
-						length: length
-					}
-				},
-				'*'
-			);
+			window.open(url, '_blank', 'EnableViewPortScale=yes')
+			return
 
 		$(document.body).addClass 'loading'
 		# fileName = rev + '-' + filename
