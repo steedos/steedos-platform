@@ -2,6 +2,7 @@ name: process_instance_history
 label: Approval History
 hidden: true
 icon: approval
+version: 2
 # paging:
 #   enabled: false
 fields:
@@ -38,19 +39,23 @@ fields:
     type: lookup
     label: Assigned To
     reference_to: users
+    sort_no: 100
   actor:
     type: lookup
     label: Actual Approver
     reference_to: users
+    sort_no: 200
   target_object:
     type: lookup
     label: Approval Details
     is_wide: true
+    sort_no: 300
     reference_to: !!js/function
       function(){
         return ['contracts']
       }
   comments:
+    sort_no: 400
     type: textarea
     label: Comments
     is_wide: true
@@ -135,14 +140,14 @@ form:
       $("div", $(".crm-header-title")).css("display", "inline");
       switch (step_status) {
         case 'approved':
-            $(".crm-header-title").append('<span class="slds-badge slds-theme_success">'+TAPi18n.__("process_instance_history_field_step_status_options_approved")+'</span>')
+            $(".crm-header-title").append('<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">'+TAPi18n.__("process_instance_history_field_step_status_options_approved")+'</span>')
             break;
         case 'rejected':
-            $(".crm-header-title").append('<span class="slds-badge slds-theme_error">'+TAPi18n.__("process_instance_history_field_step_status_options_rejected")+'</span>')
+            $(".crm-header-title").append('<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">'+TAPi18n.__("process_instance_history_field_step_status_options_rejected")+'</span>')
             break;
         default:
-            $(".crm-header-title").append('<span class="slds-badge" style="background-color: #706e6b;color: #fff;">'+TAPi18n.__("process_instance_history_field_step_status_options_"+step_status)+'</span>')
+            $(".crm-header-title").append('<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-gray-200 text-gray-700 rounded">'+TAPi18n.__("process_instance_history_field_step_status_options_"+step_status)+'</span>')
             break;
       }
-      $("#creator-quick-form [for=field_target_object] .creator_table_cell.field-lookup a.link-detail").attr("target", "_blank");
+      // $(".object-form [fieldname=target_object] a.link-detail").attr("target", "_blank");
     }
