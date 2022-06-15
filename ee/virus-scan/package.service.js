@@ -10,7 +10,8 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 
-const { execSync } = require('child_process');
+const ClamAV = require('./clamav')
+const clamAVClient = new ClamAV(process.env.VIRUS_SCAN_HOST, process.env.VIRUS_SCAN_PORT || 3310)
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -47,9 +48,23 @@ module.exports = {
                     type: 'string'
                 }
             },
-            handler: function (ctx) {
-                const { command, filePath } = ctx.params;
-                execSync(`${command} ${filePath}`);
+            handler: async function (ctx) {
+                const { filePath } = ctx.params;
+                const result = { success: true, message: '', stdout: '', stderr: '' };
+                try {
+                    const data = await clamAVClient.scanFile(filePath);
+                    if (data.threat) {
+                        result.success = false;
+                        result.message = '文件内容存在安全隐患，终止上传，请确认。';
+                        result.stdout = data.threat;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    result.success = false;
+                    result.message = error.message;
+                }
+                return result;
+
             }
         }
     },

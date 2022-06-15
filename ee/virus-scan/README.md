@@ -12,8 +12,8 @@
 
 ## 如何使用
 
-1、`.evn.local` 配置环境变量 `VIRUS_SCAN_SCAN_COMMAND=clamdscan`
+1、`.evn.local` 配置环境变量 `VIRUS_SCAN_HOST` 和 `VIRUS_SCAN_PORT`(可选，默认3310)
 
-2、系统安装此软件包
+2、系统启用此软件包
 
-环境变量配置扫描病毒的命令，如未配置则认为无需扫描
+环境变量配置扫描病毒的命令，如未配置`VIRUS_SCAN_HOST`则认为无需扫描

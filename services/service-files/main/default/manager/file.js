@@ -29,7 +29,7 @@ const {
     STEEDOSCLOUD_STORE
 } = require('./consts');
 // 扫描病毒的命令，如未配置则认为无需扫描
-const VIRUS_SCAN_SCAN_COMMAND = process.env.VIRUS_SCAN_SCAN_COMMAND;
+const VIRUS_SCAN_HOST = process.env.VIRUS_SCAN_HOST;
 const objectql = require('@steedos/objectql')
 
 class File {
@@ -169,19 +169,15 @@ class File {
             const fileKey = this._fileKey;
             if (LOCAL_STORE === storeName) {
                 const fileStorePath = fileStoreFullPath(fsCollectionName, fileKey);
-                // 使用clamdscan扫描病毒
-                if (VIRUS_SCAN_SCAN_COMMAND) {
+                // 扫描病毒
+                if (VIRUS_SCAN_HOST) {
                     try {
-                        await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { command: VIRUS_SCAN_SCAN_COMMAND, filePath: tempFilePath})
+                        const result = await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { filePath: tempFilePath})
+                        if (!result.success) {
+                            throw new Error(result.message);
+                        }
                     } catch (error) {
                         fs.unlinkSync(tempFilePath);
-                        console.error(error);
-                        // 根据status判断是否是被感染文件
-                        if (error.status === 1) {
-                            error.message = '文件内容存在安全隐患，终止上传，请确认。';
-                            console.error('[virus scan]');
-                            console.error(error.stdout.toString());
-                        }
                         callback(error);
                         return;
                     }
