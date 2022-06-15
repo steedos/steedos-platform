@@ -35,7 +35,8 @@ export const ActionHandlers = {
     async filter(ctx: any): Promise<any>{
         let {objectApiName, spaceId, profileApiName} = ctx.params;
         const layouts = await ctx.broker.call('metadata.filter', {key: cacherKey("*", "*")}, {meta: ctx.meta});
-        const configs = _.filter(layouts, function(item){
+
+        const configs = _.filter(_.sortBy(layouts, function(item) { return _.startsWith(item?.service?.name, '~database-') ? 0 : 1}), function(item){
             const layout = item.metadata;
             let rev = true;
             if(objectApiName){
