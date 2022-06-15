@@ -15,8 +15,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.8.4",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
+    "@steedos/cachers": "2.2.44",
     "@steedos/filters": "2.2.44",
     "@steedos/formula": "2.2.44",
     "@steedos/metadata-core": "2.2.44",
