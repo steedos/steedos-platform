@@ -1,8 +1,8 @@
 name: label
 index: true
 label: 名称
-required: false
+required: true
 searchable: true
 sort_no: 120
-is_name: false
+is_name: true
 type: text
