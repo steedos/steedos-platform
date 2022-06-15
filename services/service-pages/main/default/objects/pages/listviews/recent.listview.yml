@@ -1,7 +1,7 @@
 name: recent
 columns:
-  - field: name
   - field: label
+  - field: name
   - field: render_engine
   - field: type
   - field: is_active
