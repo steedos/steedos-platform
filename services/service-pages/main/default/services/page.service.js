@@ -1,5 +1,5 @@
 const objectql = require('@steedos/objectql');
-
+const metadataAPI = require('@steedos/metadata-api');
 const _ = require('lodash');
 
 module.exports = {
@@ -151,7 +151,57 @@ module.exports = {
 
                 return {}
             }
-        }
+        },
+        customPage: {
+            rest: {
+                method: "POST",
+                path: "/customPage"
+            },
+            params: {
+                pageId: { type: 'string' }
+            },
+            handler: async function (ctx) {
+                const userSession = ctx.meta.user;
+                if(!userSession.is_space_admin){
+                    throw new Error('Permission denied')
+                }
+                const { pageId } = ctx.params;
+                const page = await objectql.getObject('pages').findOne(pageId);
+                const records = await objectql.getObject('pages').find({filters: [['name', '=', page.name]]});
+                const dbManager = new metadataAPI.DbManager(userSession);
+                let result = {};
+                if(records && records.length > 0 && records[0]._id != pageId){
+                    result = {_id: records[0]._id}
+                    return result
+                }
+                try {
+                    await dbManager.connect();
+                    var session = await dbManager.startSession();
+                    const transactionOptions = {
+                        readPreference: 'primary',
+                        readConcern: { level: 'majority' },
+                        writeConcern: { w: 'majority' }
+                    };
+                    try {
+                        await session.withTransaction(async () => {
+                            const pageCollection = new metadataAPI.PageCollection();
+                            delete page.is_system
+                            delete page.record_permissions
+                            const info = await pageCollection.save(dbManager, page);
+                            result._id = info.insertedId;
+                        }, transactionOptions);
+                    } catch(err) {
+                        throw err
+                    }
+                }catch (err) {
+                    throw new Error(err.message)  // 重新整理错误信息,否则会导致 service-api 无法处理错误信息导致接口挂起.
+                }finally{
+                    await dbManager.endSession();
+                    await dbManager.close();
+                }
+                return result;
+            }
+        } 
     },
 
     /**
