@@ -8,7 +8,9 @@ const {
 	// GraphQLDate,
 	// GraphQLTime,
 	GraphQLDateTime
-  } = require('graphql-iso-date'); 
+} = require('graphql-iso-date');
+
+const _ = require('lodash');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -178,7 +180,7 @@ module.exports = {
 				onError(req, res, err) {
 					res.setHeader("Content-Type", "application/json; charset=utf-8");
 					res.writeHead(err.code || 500);
-					res.end(JSON.stringify({error: err.message}));
+					res.end(JSON.stringify({ error: err.message }));
 				}
 			}
 		],
@@ -241,7 +243,130 @@ module.exports = {
 			// if (req.$action.auth == "required" && !user) {
 			// 	throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
 			// }
-		}
+		},
+
+		/**
+		 * Create resolver for action
+		 *
+		 * @param {String} actionName
+		 * @param {Object?} def
+		 */
+		createActionResolver(actionName, def = {}) {
+			const {
+				dataLoader: useDataLoader = false,
+				nullIfError = false,
+				params: staticParams = {},
+				rootParams = {},
+				fileUploadArg = null,
+			} = def;
+			const rootKeys = Object.keys(rootParams);
+
+			return async (root, args, context) => {
+				try {
+					if (useDataLoader) {
+						const dataLoaderMapKey = this.getDataLoaderMapKey(
+							actionName,
+							staticParams,
+							args
+						);
+						// if a dataLoader batching parameter is specified, then all root params can be data loaded;
+						// otherwise use only the primary rootParam
+						const primaryDataLoaderRootKey = rootKeys[0]; // for dataloader, use the first root key only
+						const dataLoaderBatchParam = this.dataLoaderBatchParams.get(actionName);
+						const dataLoaderUseAllRootKeys = dataLoaderBatchParam != null;
+
+						// check to see if the DataLoader has already been added to the GraphQL context; if not then add it for subsequent use
+						let dataLoader;
+						if (context.dataLoaders.has(dataLoaderMapKey)) {
+							dataLoader = context.dataLoaders.get(dataLoaderMapKey);
+						} else {
+							const batchedParamKey =
+								dataLoaderBatchParam || rootParams[primaryDataLoaderRootKey];
+
+							dataLoader = this.buildDataLoader(
+								context.ctx,
+								actionName,
+								batchedParamKey,
+								staticParams,
+								args,
+								{ hashCacheKey: dataLoaderUseAllRootKeys } // must hash the cache key if not loading scalar
+							);
+							context.dataLoaders.set(dataLoaderMapKey, dataLoader);
+						}
+
+						let dataLoaderKey;
+						if (dataLoaderUseAllRootKeys) {
+							if (root && rootKeys) {
+								dataLoaderKey = {};
+
+								rootKeys.forEach(key => {
+									_.set(dataLoaderKey, rootParams[key], _.get(root, key));
+								});
+							}
+						} else {
+							dataLoaderKey = root && _.get(root, primaryDataLoaderRootKey);
+						}
+
+						if (dataLoaderKey == null) {
+							return null;
+						}
+
+						return Array.isArray(dataLoaderKey)
+							? await dataLoader.loadMany(dataLoaderKey)
+							: await dataLoader.load(dataLoaderKey);
+					} else if (fileUploadArg != null && args[fileUploadArg] != null) {
+						const additionalArgs = _.omit(args, [fileUploadArg]);
+
+						if (Array.isArray(args[fileUploadArg])) {
+							return await Promise.all(
+								args[fileUploadArg].map(async uploadPromise => {
+									const { createReadStream, ...$fileInfo } =
+										await uploadPromise;
+									const stream = createReadStream();
+									return context.ctx.call(actionName, stream, {
+										meta: { $fileInfo, $args: additionalArgs },
+									});
+								})
+							);
+						}
+
+						const { createReadStream, ...$fileInfo } = await args[fileUploadArg];
+						const stream = createReadStream();
+						return await context.ctx.call(actionName, stream, {
+							meta: { $fileInfo, $args: additionalArgs },
+						});
+					} else {
+						const params = {};
+						if (root && rootKeys) {
+							rootKeys.forEach(key => {
+								_.set(params, rootParams[key], _.get(root, key));
+							});
+						}
+
+						let mergedParams = _.defaultsDeep({}, args, params, staticParams);
+
+						if (this.prepareContextParams) {
+							mergedParams = await this.prepareContextParams(
+								mergedParams,
+								actionName,
+								context
+							);
+						}
+
+						return await context.ctx.call(actionName, mergedParams);
+					}
+				} catch (err) {
+					if (nullIfError) {
+						return null;
+					}
+					/* istanbul ignore next */
+					if (err && err.ctx) {
+						err.ctx = null; // Avoid circular JSON in Moleculer <= 0.13
+					}
+					throw err;
+				}
+			};
+		},
 
 	}
 };
