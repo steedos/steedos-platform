@@ -4,7 +4,7 @@
 			{{#if isPrint}}
 				<a href="{{getUrl this._id}}" class="ins_attach_href" target="_parent">{{this.name}}</a>
 			{{else}}
-				{{#if isCordova}}
+				{{#if canCordovaDownloadFile}}
 					<a href="#" data-downloadurl="{{getUrl this._id}}" name="ins_attach_mobile">{{this.name}}</a>
 				{{else}}
 					{{#if isNode}}
@@ -148,7 +148,7 @@
 									{{/if}}
 									<tr>
 										<td class="ins-attach-version-view">
-											{{#if isCordova}}
+											{{#if canCordovaDownloadFile}}
 												<a href="#" data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_mobile">{{this.name}} {{_ "Current Version"}}</a>
 											{{else}}
 												<a href="{{getUrl this._id}}" style="cursor: pointer" class="ins_attach_href" target="_parent" >{{this.name}} {{_ "Current Version"}}</a>
@@ -195,7 +195,7 @@
 								{{else}}
 									<tr>
 										<td class="ins-attach-version-view">
-											{{#if isCordova}}
+											{{#if canCordovaDownloadFile}}
 												<a href="#" data-downloadurl="{{getUrl this._id}}" style="cursor: pointer" name="ins_attach_mobile">{{this.name}}</a>
 											{{else}}
 												<a href="{{getUrl this._id}}" style="cursor: pointer" class="ins_attach_href" target="_parent" >{{this.name}}</a>

@@ -101,7 +101,7 @@ actions:
         }
         fileId = record_id;
         if (fileId) {
-          if (Meteor.isCordova) {
+          if (Meteor.isCordova || window.inAppBrowser) {
             url = Steedos.absoluteUrl("/api/files/files/" + fileId);
             filename = file != null ? (ref = file.original) != null ? ref.name : void 0 : void 0;
             rev = fileId;
