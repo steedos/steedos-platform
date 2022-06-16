@@ -140,19 +140,21 @@ export const initCreator = async () => {
 }
 
 const getClientBaseObject = () => {
-    let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
-        if (typeof val === 'function') {
-            return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
-        }
-        if(key === 'listeners'){
-            return 'null';
-        }
-        return val;
-    });
-    let code = "Creator.baseObject=" + baseObject;
-    code = code.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
-    code = code + ";\r\n";
-    return code;
+    if( typeof Creator !== 'undefined'){
+        let baseObject = JSON.stringify(Creator.baseObject, function (key, val) {
+            if (typeof val === 'function') {
+                return "$FS$" + val.toString().replace(/\"/g, "'")+"$FE$";
+            }
+            if(key === 'listeners'){
+                return 'null';
+            }
+            return val;
+        });
+        let code = "Creator.baseObject=" + baseObject;
+        code = code.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
+        code = code + ";\r\n";
+        return code;
+    }
 }
 
 export class Core {
