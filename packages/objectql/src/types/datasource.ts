@@ -31,6 +31,8 @@ import { SteedosDriverConfig } from '../driver';
 import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
 import path = require('path');
 let Fiber = require('fibers');
+const defaultDatasourceName = 'default';
+// const meteorDatasourceName = 'meteor';
 declare var Creator: any;
 export enum SteedosDatabaseDriverType {
     Mongo = 'mongo',
@@ -290,7 +292,7 @@ export class SteedosDataSourceType implements Dictionary {
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
         }else{
-            if(this._driver == SteedosDatabaseDriverType.MeteorMongo || this._driver == SteedosDatabaseDriverType.Mongo){
+            if(this._driver == SteedosDatabaseDriverType.MeteorMongo || (this._driver == SteedosDatabaseDriverType.Mongo && this.name === defaultDatasourceName)){
                 this._enable_space = true
             }else{
                 this._enable_space = false

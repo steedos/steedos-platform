@@ -7,6 +7,8 @@ var permissionCore = require('./permission_objects.core.js');
 
 const DB_OBJECT_SERVICE_NAME = '~database-objects';
 
+const _ = require('underscore');
+
 function canLoadObject(name, datasource) {
     // if(!datasource || datasource === defaultDatasourceName){
     //     if(!name.endsWith('__c')){
