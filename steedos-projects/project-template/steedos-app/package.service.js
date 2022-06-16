@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-05-28 11:07:58
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-16 17:10:37
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
@@ -23,7 +30,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['~packages-standard-objects'],
 
 	/**
 	 * Actions
