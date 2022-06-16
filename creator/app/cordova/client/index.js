@@ -43,7 +43,16 @@ Meteor.startup(function () {
 					console.error(e.message);
 				},
 				message: function (e) {
-					console.log(e.message);
+					try {
+						var message = e.message;
+						var data = JSON.parse(message);
+						if (data.type === 'fileOpen' && data.props) {
+							const { url, filename, rev, length } = data.props;
+							Steedos.cordovaDownload(url, filename, rev, length);
+						}
+					} catch (error) {
+						console.log(e.message, error);
+					}
 				}
 			});
 		};
