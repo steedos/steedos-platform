@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-community",
-  "version": "2.2.47",
+  "version": "2.2.48",
   "private": false,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -25,9 +25,9 @@
   "license": "ISC",
   "dependencies": {
     "@steedos/ee_service-plugin-license": "^2.2.2",
-    "@steedos/service-community": "2.2.47",
-    "@steedos/service-plugin-amis": "2.2.47",
-    "@steedos/webapp-accounts": "2.2.47"
+    "@steedos/service-community": "2.2.48",
+    "@steedos/service-plugin-amis": "2.2.48",
+    "@steedos/webapp-accounts": "2.2.48"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
