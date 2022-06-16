@@ -97,14 +97,41 @@ Steedos.Helpers =
 		unless pwd
 			valid = false
 
-		passworPolicy = Meteor.settings.public?.password?.policy
-		passworPolicyError = Meteor.settings.public?.password?.policyError || Meteor.settings.public?.password?.policyerror || "密码不符合规则"
-		if passworPolicy
-			if !(new RegExp(passworPolicy)).test(pwd || '')
-				reason = passworPolicyError
+		passwordConfig = Meteor.settings?.public?.password
+
+		passwordPolicy = passwordConfig?.policy
+
+		passwordPolicyError = passwordConfig?.policyError || passwordConfig?.policyerror || "密码不符合规则"
+
+		passworPolicies = passwordConfig?.policies
+
+		policyFunction = passwordConfig?.policyFunction
+
+		if valid && passwordPolicy
+			if !(new RegExp(passwordPolicy)).test(pwd || '')
+				reason = passwordPolicyError
 				valid = false
 			else
 				valid = true
+
+		if valid && passworPolicies
+			for item in passworPolicies
+				if valid
+					if !(new RegExp(item.policy)).test(pwd || '')
+						reason = item.policyError || '密码不符合规则'
+						valid = false
+					else
+						valid = true
+
+		if valid && policyFunction
+			try
+				window.eval("var fun = " + policyFunction);
+				fun(pwd);
+				valid = true
+			catch e
+				valid = false
+				reason = e.message
+			
 #		else
 #			unless /\d+/.test(pwd)
 #				valid = false
