@@ -67,6 +67,7 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
         if(field.column_name){
             (columns as any)[fieldName]["name"] = field.column_name
         }
+        // 为方便前端使用外部数据源对象，故统一规则，前台始终认为_id为主键，无需根据对象所属数据源单独判断查找主键字段；服务端增加_id字段统一代理主键字段处理查询
         if (field.primary) {
             (columns as any)['_id'] = {
                 ...columns[fieldName],
