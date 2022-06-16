@@ -289,6 +289,7 @@ export class SteedosDataSourceType implements Dictionary {
         this._driver = config.driver
         this._logging = config.logging
         this._locale = config.locale
+        // TODO 非默认数据源开启enable_space:true，功能有问题，暂时关闭
         if(_.has(config, 'enable_space')){
             this._enable_space = config.enable_space
         }else{
