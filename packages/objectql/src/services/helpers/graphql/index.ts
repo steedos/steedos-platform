@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-15 19:43:54
+ * @LastEditTime: 2022-06-16 16:20:37
  * @Description: 
  */
 
@@ -15,6 +15,7 @@ import { translationObject } from '@steedos/i18n';
 const { moleculerGql: gql } = require("moleculer-apollo-server");
 import { getSteedosSchema, getUserLocale } from '../../..';
 import { getQueryFields } from "./getQueryFields";
+import { getPrimaryFieldType } from "./getPrimaryFieldType";
 const BASIC_TYPE_MAPPING = {
     'text': 'String',
     'textarea': 'String',
@@ -94,10 +95,8 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
 export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let objectName = objectConfig.name;
     let fields = objectConfig.fields;
-    let type = `type ${objectName} { _id: String `;
-    if (_.has(fields, "_id")) {
-        type = `type ${objectName} { `;
-    }
+    const primaryFieldType = getPrimaryFieldType(objectConfig);
+    let type = `type ${objectName} { ${primaryFieldType} `;
     let resolvers = {};
     resolvers[objectName] = {};
     _.each(fields, (field, name) => {

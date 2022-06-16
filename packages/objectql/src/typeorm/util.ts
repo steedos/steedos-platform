@@ -67,6 +67,14 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
         if(field.column_name){
             (columns as any)[fieldName]["name"] = field.column_name
         }
+        if (field.primary) {
+            (columns as any)['_id'] = {
+                ...columns[fieldName],
+                name: field.column_name || fieldName,
+                generated: false,
+                primary: false,
+            };
+        }
     }
     if (!primaryColumnCount){
         return null;
