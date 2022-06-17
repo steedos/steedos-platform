@@ -83,6 +83,15 @@ jobs:
           git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
           git push
 
+      - name: Lerna publish latest
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish from-package --yes
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      
       - name: Lerna publish next
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
@@ -91,7 +100,7 @@ jobs:
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      
+          
       - name: Update master branch
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
