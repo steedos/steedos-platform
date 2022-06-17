@@ -12,6 +12,15 @@ jobs:
         node-version: [14.x]
 
     steps:
+    
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
+
+      - name: Check valid tag format
+        if: steps.version.outputs.is_valid == 'false'
+        run: exit 1
 
       - name: Get branch names
         id: branch-name
@@ -26,7 +35,7 @@ jobs:
           echo "current_branch: ${{ steps.branch-name.outputs.current_branch }}"
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
-      - name: Check valid tag format
+      - name: Check valid branch
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1')  }}
         run: exit 1
 
