@@ -1,6 +1,6 @@
 {
     "name": "@steedos/metadata-api",
-    "version": "2.1.112",
+    "version": "2.1.113",
     "description": "",
     "main": "lib/index.js",
     "files": [
@@ -23,8 +23,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@steedos/core": "2.1.112",
-        "@steedos/metadata-core": "2.1.112",
+        "@steedos/core": "2.1.113",
+        "@steedos/metadata-core": "2.1.113",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
@@ -36,7 +36,7 @@
     },
     "devDependencies": {
         "@salesforce/dev-config": "^2.0.0",
-        "@steedos/service-meteor-package-loader": "2.1.112",
+        "@steedos/service-meteor-package-loader": "2.1.113",
         "javascript-obfuscator": "^2.9.1",
         "mocha": "^5",
         "nodemon": "^2.0.2",
