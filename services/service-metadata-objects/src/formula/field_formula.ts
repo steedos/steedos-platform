@@ -1,10 +1,3 @@
-/*
- * @Author: yinlianghui@steedos.com
- * @Date: 2022-04-13 10:31:04
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-17 13:09:52
- * @Description: 
- */
 // import { getConfigs, getConfig } from '../types';
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { sortFieldFormulaConfigs, isFieldFormulaConfigQuotingObjectAndFields } from './util';
@@ -61,9 +54,9 @@ export const getObjectFieldFormulaConfigs = (objectName: string, fieldName?: str
  *  删除记录的时候传入true可以解决因为记录被删除doc为null运行公式报错的问题，同时避免不必要的公式计算
  *  见issue: 删除包含公式字段的记录时报错 #3427
  */
- export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>, options?: JsonMap): Promise<SteedosQuotedByFieldFormulasTypeConfig> => {
+export const getObjectQuotedByFieldFormulaConfigs = (objectName: string, fieldNames?: Array<string>, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>, options?: JsonMap): SteedosQuotedByFieldFormulasTypeConfig => {
     const { onlyForOwn, withoutCurrent } = options || {};
-    const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
+    const configs = getFieldFormulaConfigs();
     let configsOnCurrentObject = [];
     let configsOnOtherObjects = [];
     configs.forEach((config: SteedosFieldFormulaTypeConfig) => {
