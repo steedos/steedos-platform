@@ -401,7 +401,11 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     formatRecord(doc: Dictionary<any>, objectConfig: SteedosObjectType) {
-        return this._adapter.formatRecord(doc, objectConfig)
+        const formatRecord = this._adapter.formatRecord
+        if (typeof formatRecord === 'function') {
+            return formatRecord(doc, objectConfig) 
+        }
+        return doc
     }
 
     async count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType) {
