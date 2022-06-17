@@ -96,5 +96,5 @@ jobs:
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           git checkout master
-          git merge release/2.2
+          git merge 2.2
           git push origin master
