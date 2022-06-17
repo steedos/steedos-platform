@@ -71,10 +71,11 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add . 
-          git commit -m action build ${{ steps.branch-name.outputs.tag }}
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
           git push
 
-      - name: Lerna publish
+      - name: Lerna publish next
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           lerna publish from-package --yes --dist-tag next
