@@ -1751,8 +1751,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
                 // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946
-                const isOnlyForCurrentObject = method === "insert";
-                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { isOnlyForCurrentObject });
+                const onlyForOwn = method === "insert";
+                // 删除记录时需要考虑其他对象记录中的公式字段引用了被删除的记录，其公式需要重新计算，但是不可以再重新计算自身公式字段，因为记录被删除了会报错
+                // 见issue：删除记录时并不会触发公式字段重新计算，需要评估考虑加上 #2375 删除包含公式字段的记录时报错 #3427
+                const withoutCurrent = method === "delete";
+                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent });
             }
         }
     }

@@ -291,12 +291,13 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     fieldNames?: Array<string>,
     escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>,
     quotedByConfigs?: SteedosQuotedByFieldFormulasTypeConfig,
-    isOnlyForCurrentObject?: boolean
+    onlyForOwn?: boolean,
+    withoutCurrent?: boolean
 } = {}) {
     let currentUserId = userSession ? userSession.userId : undefined;
-    let { fieldNames, escapeConfigs, quotedByConfigs, isOnlyForCurrentObject } = options;
+    let { fieldNames, escapeConfigs, quotedByConfigs, onlyForOwn, withoutCurrent } = options;
     if (!quotedByConfigs) {
-        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs, isOnlyForCurrentObject);
+        quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs, { onlyForOwn, withoutCurrent});
         // console.log("runQuotedByObjectFieldFormulas===objectName, fieldNames, escapeConfigs===", objectName, fieldNames, escapeConfigs);
         // console.log("runQuotedByObjectFieldFormulas===quotedByConfigs===", quotedByConfigs);
     }
