@@ -22,7 +22,9 @@ jobs:
       - name: Get the current tag
         if: steps.branch-name.outputs.is_tag == 'true'  # Replaces: startsWith(github.ref, 'refs/tags/')
         run: |
-          echo "${{ steps.branch-name.outputs.tag }}"
+          echo "tag: ${{ steps.branch-name.outputs.tag }}"
+          echo "current_branch: ${{ steps.branch-name.outputs.current_branch }}"
+          echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid tag format
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1')  }}
