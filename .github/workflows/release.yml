@@ -1,0 +1,88 @@
+name: Build and publish
+
+on:
+  push:
+    tags:
+     - 'v**'
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5.2
+        with: 
+          strip_tag_prefix: v
+
+      - name: Get the current tag
+        if: steps.branch-name.outputs.is_tag == 'true'  # Replaces: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "${{ steps.branch-name.outputs.tag }}"
+
+      - name: Check valid tag format
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1')  }}
+        run: exit 1
+
+      # checkout branch 2.2
+      - uses: actions/checkout@v2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
+        with: 
+          ref: '2.2'
+      
+      # checkout branch 2.1
+      - uses: actions/checkout@v2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }} 
+        with: 
+          ref: '2.1'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Lerna version
+        run: |
+          lerna version ${{ steps.branch-name.outputs.tag }} --no-git-tag-version --force-publish --exact --yes
+
+      - run: yarn --frozen-lockfile
+
+      - name: Bootstrap platform
+        run: |
+          yarn bootstrap
+
+      - name: Build platform
+        env:
+          CI: false
+        run: |
+          npx browserslist@latest --update-db
+          npm install -g mkdirp
+          yarn build
+
+      - name: Create commits & Push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add . 
+          git commit -m action build ${{ steps.branch-name.outputs.tag }}
+          git push
+
+      - name: Lerna publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish from-package --yes --dist-tag next
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      
+      - name: Update master branch
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
+        run: |
+          git checkout master
+          git merge release/2.2
+          git push origin master
