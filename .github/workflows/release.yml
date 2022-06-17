@@ -40,13 +40,15 @@ jobs:
         run: exit 1
 
       # checkout branch 2.2
-      - uses: actions/checkout@v2
+      - name: Checkout branch 2.2
+        uses: actions/checkout@v2
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         with: 
           ref: '2.2'
       
       # checkout branch 2.1
-      - uses: actions/checkout@v2
+      - name: Checkout branch 2.1
+        uses: actions/checkout@v2
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }} 
         with: 
           ref: '2.1'
@@ -83,7 +85,7 @@ jobs:
           git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
           git push
 
-      - name: Lerna publish latest
+      - name: Lerna publish 2.1
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
@@ -92,7 +94,7 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       
-      - name: Lerna publish next
+      - name: Lerna publish 2.2
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
@@ -101,7 +103,7 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
-      - name: Update master branch
+      - name: Merge 2.2 to master branch
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           git checkout master
