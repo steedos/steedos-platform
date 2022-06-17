@@ -74,6 +74,9 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
                 name: field.column_name || fieldName,
                 generated: false,
                 primary: false,
+                nullable: true,
+                insert: false,
+                update: false
             };
         }
     }
