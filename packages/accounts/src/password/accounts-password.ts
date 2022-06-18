@@ -628,7 +628,8 @@ export default class AccountsPassword implements AuthenticationService {
       if (!this.options.validatePassword(user.password)) {
         throw new Error(this.options.errors.invalidPassword);
       }
-      user.password = await this.hashAndBcryptPassword(user.password);
+      // user.password = await this.hashAndBcryptPassword(user.password);
+      user.password = await await bcryptPassword((user.password as any));
     }
 
     if (user.verifyCode) {
