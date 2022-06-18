@@ -17,10 +17,11 @@ const _ = require("underscore");
 const globby = require("globby");
 var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
-let STEEDOSCONFIG:any = {};
+let STEEDOS_CONFIG:any = {};
 const configName = 'steedos-config.yml'
 const licenseName = '.license'
 import { getObjectConfig } from '../types'
+import { defaultsDeep } from 'lodash';
 export const StandardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 export * from './transform'
 export * from './permission_shares'
@@ -690,13 +691,19 @@ function calcSteedosConfig(config: JsonMap){
         }else{
             config[k] = calcString(v)
         }
-    })
+    });
+
+    if(config){
+        (config as any).setTenant = (tenant)=>{
+            config.tenant = defaultsDeep(tenant, config.tenant);
+        }
+    }
     return config
 }
 
 export function getSteedosConfig(){
-    if(!_.isEmpty(STEEDOSCONFIG)){
-        return STEEDOSCONFIG;
+    if(!_.isEmpty(STEEDOS_CONFIG)){
+        return STEEDOS_CONFIG;
     }
     let config: any;
     let configPath = path.join(getBaseDirectory(), configName)
@@ -721,11 +728,11 @@ export function getSteedosConfig(){
                 process.env["MAIL_FROM"] = calcString(emailConfig.from);
             }
         }
-        STEEDOSCONFIG = calcSteedosConfig(config);
+        STEEDOS_CONFIG = calcSteedosConfig(config);
     // }else{
     //     throw new Error('Config file not found: ' + configPath);
     }
-    return STEEDOSCONFIG;
+    return STEEDOS_CONFIG;
 }
 
 export function getLicense(){

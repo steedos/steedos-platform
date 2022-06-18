@@ -11,8 +11,9 @@ const ini = require('ini')
 // const randomstring = require("randomstring");
 const project = require('./package.json');
 const packageName = project.name;
+const validator = require('validator');
 
-let initing = false;
+let Initializing = false;
 
 function saveLocalEnv(localEnv) {
 	var localEnvPath = getLocalEnvPath()
@@ -44,7 +45,8 @@ module.exports = {
 		STEEDOS_HELP_URL: process.env.STEEDOS_HELP_URL ? process.env.STEEDOS_HELP_URL : 'https://www.steedos.com',
 		STEEDOS_CLOUD_URL: process.env.STEEDOS_CLOUD_URL ? process.env.STEEDOS_CLOUD_URL : 'https://console.steedos.cn',
 		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
-		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY
+		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY,
+		STEEDOS_TENANT_ENABLE_ACTIVATION: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_ACTIVATION || 'false', true) 
 	},
 	methods: {
 		hashAndBcryptPassword: async function (password, algorithm) {
@@ -104,7 +106,10 @@ module.exports = {
 			}
 			return result.data.info;
 		},
-		allowInit: async function () {
+		allowInit: async function (spaces) {
+			if(spaces && spaces.length > 0){
+				return false;
+			}
 			// 查询库中工作区记录，如果有工作区记录则不初始化
 			const spaceObj = objectql.getObject('spaces');
 			let spacesCount = await spaceObj.count({});
@@ -255,13 +260,19 @@ module.exports = {
 	events: {
 		'steedos-server.started': async function (ctx) {
 			// console.log(chalk.blue('steedos-server.started'));
-
-			const allowInit = await this.allowInit();
+			const records = await objectql.getObject('spaces').directFind({top: 1, fields: ['_id'], sort: {created: -1}});
+			const steedosConfig = objectql.getSteedosConfig();
+			if(records.length > 0){
+				steedosConfig.setTenant({_id: records[0]._id});
+			}else{
+				steedosConfig.setTenant({enable_create_tenant : true, enable_register: true});
+			}
+			const allowInit = await this.allowInit(records);
 			if (!allowInit) {
-				initing = false;
+				Initializing = false;
 				return;
 			}
-			initing = true;
+			Initializing = true;
 			try {
 				// 获取环境变量中工作区信息
 				const settings = this.settings;
@@ -271,7 +282,7 @@ module.exports = {
 			} catch (error) {
 				console.log(chalk.red(error.message));
 			}finally{
-				initing = false;
+				Initializing = false;
 			}
 
 		}
@@ -363,7 +374,7 @@ module.exports = {
 					const settings = this.settings;
 					const allowInit = await this.allowInit();
 					return {
-						allow_init: allowInit && !initing,
+						allow_init: settings.STEEDOS_TENANT_ENABLE_ACTIVATION && allowInit && !Initializing,
 						cloud_url: settings.STEEDOS_CLOUD_URL,
 						help_url: `${settings.STEEDOS_HELP_URL}/docs/deploy/deploy-activate`
 					};
@@ -384,13 +395,13 @@ module.exports = {
 					 * 2 调用初始化action
 					*/
 					const allowInit = await this.allowInit();
-					if (!allowInit || initing) {
+					if (!allowInit || Initializing) {
 						return { success: true };
 					}
 
 					const settings = this.settings;
 
-					initing = true;
+					Initializing = true;
 
 					//consoleUrl
 					const { spaceId, apiKey } = ctx.params;
@@ -421,10 +432,10 @@ module.exports = {
 					} catch (error) {
 						// console.error(error);
 					}
-					initing = false;
+					Initializing = false;
 					return { success: true };
 				} catch (error) {
-					initing = false;
+					Initializing = false;
 					return { success: false, error: error.message };
 				}
 			}
