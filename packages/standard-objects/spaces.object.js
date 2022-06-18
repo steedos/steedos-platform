@@ -3,6 +3,7 @@ const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const _ = require("lodash");
 const steedosLicense = require("@steedos/license");
+const validator = require('validator');
 db.spaces = core.newCollection('spaces');
 
 db.spaces.helpers({
@@ -36,6 +37,14 @@ db.spaces.helpers({
 });
 
 function onCreateSpace(spaceDoc){
+
+    // 创建第一个space时, 更新Tenant配置
+    const spaces = db.spaces.direct.find({}).count();
+    if(spaces === 1){
+        const config = objectql.getSteedosConfig();
+        config.setTenant({_id: spaceDoc._id, enable_create_tenant : validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_REGISTER || 'false', true) , enable_register: spaceDoc.enable_register});
+    }
+
     let spaceName = spaceDoc.name;
     let spaceId = spaceDoc._id;
     let userId = spaceDoc.owner;
@@ -145,7 +154,7 @@ if (Meteor.isServer) {
         doc.modified_by = userId;
         doc.modified = new Date();
         doc.is_deleted = false;
-        doc.enable_register = true;
+        doc.enable_register = false;
         doc.services = doc.services || {};
         if (!userId) {
             throw new Meteor.Error(400, "spaces_error_login_required");

@@ -1,14 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-18 10:36:17
+ * @Description: 
+ */
 import { getSteedosSchema } from '../types/schema';
 import path = require('path');
 import * as _ from 'underscore';
+import { map, defaultsDeep, each, filter, reverse } from 'lodash';
 var util = require('../util');
-
-const brokeEmitEvents = async(filePath)=>{
-    let schema = getSteedosSchema();
-    await schema.broker?.emit(`translations.object.change`, {
-        filePath
-    });
-}
 
 // const addObjectsTranslation = async (objectApiName, data)=>{
 //     return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslation', {
@@ -36,14 +37,25 @@ export const addObjectTranslationsFiles = async (filePath: string)=>{
     //     }
     // }
     if (objectTranslations && objectTranslations.length > 0) {
-        await addObjectTranslations(objectTranslations)
-        await brokeEmitEvents(filePath)
+        await addObjectTranslations(objectTranslations);
     }
 }
 
 export const getObjectTranslations = async ()=>{
-    return await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations')
-    // if(metadataObjectTranslations){
-    //     return _.pluck(metadataObjectTranslations, 'metadata')
-    // }
+    const objectsTranslations = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations');
+    const objectTranslationsTemplates = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslationTemplates');
+
+    const results = [];
+
+    map(objectTranslationsTemplates, ({metadata: defaultTranslation})=>{
+        each(['zh-CN', 'en'], (lng)=>{
+            let objectTranslation = {};
+            const objectTranslations: Array<any> = filter(objectsTranslations, {lng: lng, objectApiName: defaultTranslation.objectApiName});
+            if(objectTranslations.length > 0){
+                objectTranslation = defaultsDeep(objectTranslation, ...(reverse(objectTranslations)))
+            }
+            results.push(defaultsDeep({ lng: lng }, objectTranslation, defaultTranslation));
+        })
+    });
+    return results;
 }   

@@ -70,9 +70,11 @@ function getFieldGroupsTemplate(fields, tFields){
     return template;
 }
 
-export const getObjectMetadataTranslationTemplate = function(lng: string , objectName: string, _object: StringMap){
+export const getObjectMetadataTranslationTemplate = function(lng: string , objectName: string, _object: StringMap, ignoreBase = false){
     let object = clone(_object);
-    translationObject(lng, objectName, object, true);
+    if( ignoreBase != true){
+        translationObject(lng, objectName, object, true, ignoreBase);
+    }
     let template = Object.assign({}, getObjectTranslationTemplate(object));
     template = Object.assign({}, template, {fields: getFieldsTranslationTemplate(object.fields)});
     const groupsTemplate = getFieldGroupsTemplate(_object.fields, object.fields);

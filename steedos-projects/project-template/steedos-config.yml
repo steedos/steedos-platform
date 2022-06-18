@@ -19,6 +19,8 @@ public:
     unpkgUrl: ${STEEDOS_PUBLIC_PAGE_UNPKGURL}
 cfs:
   store: ${STEEDOS_CFS_STORE}
+  local:
+    folder: ${STEEDOS_STORAGE_DIR}
   aliyun:
     region: ${STEEDOS_CFS_ALIYUN_REGION}
     bucket: ${STEEDOS_CFS_ALIYUN_BUCKET}
@@ -40,15 +42,18 @@ cfs:
 tenant:
   _id: ${STEEDOS_CLOUD_SPACE_ID}
   name: 华炎魔方
-  logo_url: ${STEEDOS_CLOUD_LOGO_URL}
-  logo_square_url: ${STEEDOS_CLOUD_LOGO_SQUARE_URL}
-  background_url:
-  enable_register: ${STEEDOS_TENANT_CONFIG_ENABLE_REGISTER} # 启用注册功能 true / false
-  enable_forget_password: false
-  enable_create_tenant: false
-  enable_password_login: true
-  enable_bind_email: false
-  enable_bind_mobile: false
+  logo_url: ${STEEDOS_TENANT_LOGO_URL}
+  logo_square_url: ${STEEDOS_TENANT_LOGO_SQUARE_URL}
+  background_url: ${STEEDOS_TENANT_BACKGROUND_URL}
+  enable_activation: ${STEEDOS_TENANT_ENABLE_ACTIVATION} # 启用初始化向导
+  enable_register: ${STEEDOS_TENANT_ENABLE_REGISTER} # 启用注册功能 true / false
+  enable_forget_password: ${STEEDOS_TENANT_ENABLE_FORGET_PASSWORD}
+  enable_create_tenant: ${STEEDOS_TENANT_ENABLE_CREATE_TENANT}
+  enable_password_login: ${STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN}
+  enable_mobile_code_login: ${STEEDOS_TENANT_ENABLE_MOBILE_CODE_LOGIN}
+  enable_email_code_login: ${STEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN}
+  enable_bind_email: ${STEEDOS_TENANT_ENABLE_BIND_EMAIL}
+  enable_bind_mobile: ${STEEDOS_TENANT_ENABLE_BIND_MOBILE}
 sms:
   qcloud:
     smsqueue_interval: 1000
@@ -64,6 +69,9 @@ cron:
   mailqueue_interval: 10000
   # push_interval: 1000
   webhookqueue_interval: 1000
+  build_index: "0 0 * * * *"
+instances_stat:
+  schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
 dingtalk:
   api_Key: ${APIKEY}
   log_path: ${DING_LOGPATH}
