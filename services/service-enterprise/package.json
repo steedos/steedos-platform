@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "index.js",
-  "version": "2.2.50-beta.7",
+  "version": "2.2.50",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,10 +11,10 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_plugin-field-encryption": "2.2.50-beta.7",
+    "@steedos/ee_plugin-field-encryption": "2.2.50",
     "@steedos/ee_service-plugin-license": "^2.2.2",
-    "@steedos/ee_virus-scan": "2.2.50-beta.7",
-    "@steedos/service-community": "2.2.50-beta.7",
+    "@steedos/ee_virus-scan": "2.2.50",
+    "@steedos/service-community": "2.2.50",
     "mongodb-client-encryption": "2.1.0"
   },
   "homepage": "https://www.steedos.com",
