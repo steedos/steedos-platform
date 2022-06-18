@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-17 11:36:55
+ * @LastEditTime: 2022-06-18 10:38:02
  * @Description: 
  */
 import { Register } from '@steedos/metadata-registrar';
@@ -45,14 +45,12 @@ export const ActionHandlers = {
         // return await ctx.broker.call('metadata.filterList', { key: getObjectCacherKey("*") }, { meta: ctx.meta })
     },
     async getObjectTranslationTemplates(ctx: any): Promise<any> {
-        return await Register.filterList(ctx.broker, { key: getObjectTemplateCacherKey("*") })
+        return await Register.filter(ctx.broker, getObjectTemplateCacherKey("*"))
         // return await ctx.broker.call('metadata.filterList', { key: getObjectCacherKey("*") }, { meta: ctx.meta })
     },
     async addObjectTranslationTemplates(ctx: any): Promise<any>{
         const { data } = ctx.params;
-        for (const item of data) {
-            await Register.rpush(ctx.broker, { key: getObjectTemplateCacherKey(item.objectApiName), data: [item] })
-        }
+        await Register.add(ctx.broker, {key: getObjectTemplateCacherKey(data.objectApiName), data: data}, ctx.meta)
     },
     async addObjectTranslation(ctx: any): Promise<boolean>{
         const { objectApiName, data } = ctx.params;

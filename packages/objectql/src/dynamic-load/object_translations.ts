@@ -2,13 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-17 18:54:16
+ * @LastEditTime: 2022-06-18 10:36:17
  * @Description: 
  */
 import { getSteedosSchema } from '../types/schema';
 import path = require('path');
 import * as _ from 'underscore';
-import { map, defaultsDeep, each, find } from 'lodash';
+import { map, defaultsDeep, each, filter, reverse } from 'lodash';
 var util = require('../util');
 
 // const addObjectsTranslation = async (objectApiName, data)=>{
@@ -42,14 +42,18 @@ export const addObjectTranslationsFiles = async (filePath: string)=>{
 }
 
 export const getObjectTranslations = async ()=>{
-    const objectTranslations = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations');
+    const objectsTranslations = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations');
     const objectTranslationsTemplates = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslationTemplates');
 
     const results = [];
 
-    map(objectTranslationsTemplates, (defaultTranslation)=>{
+    map(objectTranslationsTemplates, ({metadata: defaultTranslation})=>{
         each(['zh-CN', 'en'], (lng)=>{
-            const objectTranslation = find(objectTranslations, {lng: lng, objectApiName: defaultTranslation.objectApiName});
+            let objectTranslation = {};
+            const objectTranslations: Array<any> = filter(objectsTranslations, {lng: lng, objectApiName: defaultTranslation.objectApiName});
+            if(objectTranslations.length > 0){
+                objectTranslation = defaultsDeep(objectTranslation, ...(reverse(objectTranslations)))
+            }
             results.push(defaultsDeep({ lng: lng }, objectTranslation, defaultTranslation));
         })
     });
