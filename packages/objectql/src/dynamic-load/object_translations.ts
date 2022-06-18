@@ -1,14 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-17 18:54:16
+ * @Description: 
+ */
 import { getSteedosSchema } from '../types/schema';
 import path = require('path');
 import * as _ from 'underscore';
+import { map, defaultsDeep, each, find } from 'lodash';
 var util = require('../util');
-
-const brokeEmitEvents = async(filePath)=>{
-    let schema = getSteedosSchema();
-    await schema.broker?.emit(`translations.object.change`, {
-        filePath
-    });
-}
 
 // const addObjectsTranslation = async (objectApiName, data)=>{
 //     return await getSteedosSchema().metadataBroker?.call('translations.addObjectTranslation', {
@@ -36,14 +37,21 @@ export const addObjectTranslationsFiles = async (filePath: string)=>{
     //     }
     // }
     if (objectTranslations && objectTranslations.length > 0) {
-        await addObjectTranslations(objectTranslations)
-        await brokeEmitEvents(filePath)
+        await addObjectTranslations(objectTranslations);
     }
 }
 
 export const getObjectTranslations = async ()=>{
-    return await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations')
-    // if(metadataObjectTranslations){
-    //     return _.pluck(metadataObjectTranslations, 'metadata')
-    // }
+    const objectTranslations = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslations');
+    const objectTranslationsTemplates = await getSteedosSchema().metadataBroker.call('translations.getObjectTranslationTemplates');
+
+    const results = [];
+
+    map(objectTranslationsTemplates, (defaultTranslation)=>{
+        each(['zh-CN', 'en'], (lng)=>{
+            const objectTranslation = find(objectTranslations, {lng: lng, objectApiName: defaultTranslation.objectApiName});
+            results.push(defaultsDeep({ lng: lng }, objectTranslation, defaultTranslation));
+        })
+    });
+    return results;
 }   

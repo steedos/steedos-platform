@@ -101,7 +101,8 @@ module.exports = {
                     _routers.push(element)
                 });
                 core.loadRouters(_routers);
-                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo})
+                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
+                await this.broker.emit(`translations.object.change`, {});
                 return;
             }).promise();
         },

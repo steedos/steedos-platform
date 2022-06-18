@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-10 23:40:20
+ * @LastEditTime: 2022-06-17 11:36:55
  * @Description: 
  */
 import { Register } from '@steedos/metadata-registrar';
@@ -15,11 +15,11 @@ function getMD5(data){
 }
 
 function getObjectCacherKey(objectApiName: string): string {
-    // let suffix = "*";
-    // if(data){
-    //     suffix = getMD5(JSON.stringify(data));    
-    // }
     return `$steedos.#translations-object.${objectApiName}`
+}
+
+function getObjectTemplateCacherKey(objectApiName: string): string {
+    return `$steedos.#translations-object-template.${objectApiName}`
 }
 
 function getCacherKey(key: string, data?): string{
@@ -43,6 +43,16 @@ export const ActionHandlers = {
     async getObjectTranslations(ctx: any): Promise<any> {
         return await Register.filterList(ctx.broker, { key: getObjectCacherKey("*") })
         // return await ctx.broker.call('metadata.filterList', { key: getObjectCacherKey("*") }, { meta: ctx.meta })
+    },
+    async getObjectTranslationTemplates(ctx: any): Promise<any> {
+        return await Register.filterList(ctx.broker, { key: getObjectTemplateCacherKey("*") })
+        // return await ctx.broker.call('metadata.filterList', { key: getObjectCacherKey("*") }, { meta: ctx.meta })
+    },
+    async addObjectTranslationTemplates(ctx: any): Promise<any>{
+        const { data } = ctx.params;
+        for (const item of data) {
+            await Register.rpush(ctx.broker, { key: getObjectTemplateCacherKey(item.objectApiName), data: [item] })
+        }
     },
     async addObjectTranslation(ctx: any): Promise<boolean>{
         const { objectApiName, data } = ctx.params;

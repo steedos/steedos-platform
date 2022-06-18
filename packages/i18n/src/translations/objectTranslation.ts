@@ -151,7 +151,7 @@ const translationObjectDescription = function(lng, name, def){
     return translation(key, lng) || def || ''
 }
 
-const translationFieldLabel = function(lng, objectName, name, def, datasource?){
+const translationFieldLabel = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getFieldLabelKey(objectName, name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectFieldLabelKey(objectName, name);
@@ -159,7 +159,7 @@ const translationFieldLabel = function(lng, objectName, name, def, datasource?){
         keys.push(fallbackKey);
     }
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationFieldLabel(lng, baseObjectName, name, def, datasource)
@@ -168,7 +168,7 @@ const translationFieldLabel = function(lng, objectName, name, def, datasource?){
     return label || def || ''
 }
 
-const translationFieldHelp = function(lng, objectName, name, def, datasource?){
+const translationFieldHelp = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getFieldHelpKey(objectName, name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectFieldInlineHelpTextLabelKey(objectName, name);
@@ -176,7 +176,7 @@ const translationFieldHelp = function(lng, objectName, name, def, datasource?){
         keys.push(fallbackKey);
     }
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationFieldHelp(lng, baseObjectName, name, def, datasource)
@@ -185,11 +185,11 @@ const translationFieldHelp = function(lng, objectName, name, def, datasource?){
     return label || def || ''
 }
 
-const translationFieldDescription = function(lng, objectName, name, def, datasource?){
+const translationFieldDescription = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getFieldDescriptionKey(objectName, name);
     let keys = [key];
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationFieldDescription(lng, baseObjectName, name, def, datasource)
@@ -208,7 +208,7 @@ const translationFieldGroup = function(lng, objectName, name, def){
     return translation(keys, lng) || def || ''
 }
 
-const translationFieldOptionsLabel = function(lng, objectName, name, value, def, datasource?){
+const translationFieldOptionsLabel = function(lng, objectName, name, value, def, datasource?, ignoreBase?){
     let key = getFieldOptionsLabelKey(objectName, name, value);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectFieldOptionsLabelKey(objectName, name, value);
@@ -216,7 +216,7 @@ const translationFieldOptionsLabel = function(lng, objectName, name, value, def,
         keys.push(fallbackKey);
     }
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationFieldOptionsLabel(lng, baseObjectName, name, value, def, datasource)
@@ -225,7 +225,7 @@ const translationFieldOptionsLabel = function(lng, objectName, name, value, def,
     return label || def || ''
 }
 
-const translationActionLabel = function(lng, objectName, name, def, datasource?){
+const translationActionLabel = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getActionLabelKey(objectName, name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectActionLabelKey(objectName, name);
@@ -233,7 +233,7 @@ const translationActionLabel = function(lng, objectName, name, def, datasource?)
         keys.push(fallbackKey);
     }
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationActionLabel(lng, baseObjectName, name, def, datasource)
@@ -242,7 +242,7 @@ const translationActionLabel = function(lng, objectName, name, def, datasource?)
     return label || def || ''
 }
 
-const translationListviewLabel = function(lng, objectName, name, def, datasource?){
+const translationListviewLabel = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getListviewLabelKey(objectName, name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectListviewLabelKey(objectName, name);
@@ -250,7 +250,7 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
         keys.push(fallbackKey);
     }
     let label = translation(keys, lng);
-    if(!label){
+    if(ignoreBase != true && !label){
         let baseObjectName = getBaseObjectName(datasource);
         if(baseObjectName && objectName!= BASE_OBJECT && objectName != CORE_OBJECT){
             label = translationListviewLabel(lng, baseObjectName, name, def, datasource)
@@ -259,7 +259,7 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
     return label || def || ''
 }
 
-export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean){
+export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean, ignoreBase = false){
     const cacheKey = getCacherKey(lng, object);
     const fromCacher = Cacher.get(cacheKey);
     if(fromCacher){
@@ -272,9 +272,9 @@ export const translationObject = function(lng: string, objectName: string, objec
     object.label = translationObjectLabel(lng, objectName, object.label);
     object.description = translationObjectDescription(lng, objectName, object.description);
     _.each(object.fields, function(field, fieldName){
-        field.label = translationFieldLabel(lng, objectName, fieldName, field.label, object.datasource);
+        field.label = translationFieldLabel(lng, objectName, fieldName, field.label, object.datasource, ignoreBase);
         if(field.inlineHelpText){
-            field.inlineHelpText = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource)
+            field.inlineHelpText = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource, ignoreBase)
         }
         if(field.group){
             field.group = translationFieldGroup(lng, objectName, field.group, field.group);
@@ -283,7 +283,7 @@ export const translationObject = function(lng: string, objectName: string, objec
             let _options = [];
             _.each(field.options, function(op){
                 if(_.has(op, 'value')){
-                    let _label = translationFieldOptionsLabel(lng, objectName, fieldName, op.value, op.label, object.datasource) 
+                    let _label = translationFieldOptionsLabel(lng, objectName, fieldName, op.value, op.label, object.datasource, ignoreBase) 
                     _options.push(_.extend({}, op, {label: _label}))
                 }else{
                     _options.push(op)
@@ -294,11 +294,11 @@ export const translationObject = function(lng: string, objectName: string, objec
     })
 
     _.each(object.actions, function(action, actionName){
-        action.label = translationActionLabel(lng, objectName, actionName, action.label, object.datasource);
+        action.label = translationActionLabel(lng, objectName, actionName, action.label, object.datasource, ignoreBase);
     })
 
     _.each(object.list_views, function(list_view, viewName){
-        list_view.label = translationListviewLabel(lng, objectName, viewName, list_view.label, object.datasource);
+        list_view.label = translationListviewLabel(lng, objectName, viewName, list_view.label, object.datasource, ignoreBase);
     })
 
     Cacher.set(cacheKey, object)
