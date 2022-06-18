@@ -20,7 +20,7 @@
     "@steedos/i18n": "^2.2.18",
     "@steedos/react": "^2.2.18",
     "aliyun-sdk": "^1.12.3",
-    "aws-sdk": "2.0.23",
+    "aws-sdk": "2.814.0",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
