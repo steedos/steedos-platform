@@ -104,7 +104,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
       - name: Create Docker Release
-        if: steps.version.outputs.is_stable == 'true'
+        # if: steps.version.outputs.is_stable == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:
