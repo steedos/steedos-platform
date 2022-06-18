@@ -112,13 +112,14 @@ jobs:
         with:
           owner: steedos
           repo: docker
+          commitish: main
           tag_name: v${{ steps.branch-name.outputs.tag }}
           release_name: Release v${{ steps.branch-name.outputs.tag }}
           draft: false
           prerelease: false
 
       - name: Merge 2.2 to master branch
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
+        if: ${{ false && startsWith(steps.branch-name.outputs.tag, '2.2') && steps.version.outputs.is_stable == 'true'}}
         run: |
           git checkout master
           git merge 2.2
