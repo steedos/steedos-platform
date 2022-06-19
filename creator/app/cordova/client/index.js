@@ -32,6 +32,14 @@ Meteor.startup(function () {
 			for (var callbackName in callbacks) {
 				popup.addEventListener(callbackName, callbacks[callbackName]);
 			}
+			popup.addEventListener('loadstart', function(){
+				popup.executeScript({
+					code: `(() => {
+					  window.inAppBrowser = true;
+					})()`
+				  });
+			})
+
 			popup.show = function () {
 			};
 			return popup;
@@ -42,12 +50,18 @@ Meteor.startup(function () {
 				loaderror: function (e) {
 					console.error(e.message);
 				},
-				message: function (e) {
-					console.log(e.message);
+				message: function (args) {
+					try {
+						var data = args.data;
+						if (data.type === 'fileOpen' && data.props) {
+							const { url, filename, rev, length } = data.props;
+							Steedos.cordovaDownload(url, filename, rev, length);
+						}
+					} catch (error) {
+						console.log(args, error);
+					}
 				}
 			});
 		};
 	}
 });
-
-

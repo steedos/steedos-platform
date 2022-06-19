@@ -792,10 +792,23 @@ TemplateHelpers =
 
 	cordovaDownload: (url, filename, rev, length) ->
 		url = Steedos.addTokenTodownloadUrl(url)
-
+		
 		if not cordova?.plugins?.fileOpener2
-			window.open(url, '_blank', 'EnableViewPortScale=yes')
-			return
+			# window.open(url, '_blank', 'EnableViewPortScale=yes')
+			fileUrl = url;
+			if !url.startsWith('http://') && !url.startsWith('https://')
+				fileUrl = Meteor.absoluteUrl(url);
+			return webkit.messageHandlers.cordova_iab.postMessage(
+				JSON.stringify({
+					type: 'fileOpen',
+					props: {
+						url: fileUrl,
+						filename: filename, 
+						rev: rev, 
+						length: length
+					}
+				})
+			);
 
 		$(document.body).addClass 'loading'
 		# fileName = rev + '-' + filename
@@ -866,6 +879,12 @@ TemplateHelpers =
 	isCordova: ()->
 		return Meteor.isCordova
 
+	inAppBrowser: ()->
+		return window.inAppBrowser
+
+	canCordovaDownloadFile: ()->
+		return Meteor.isCordova || window.inAppBrowser
+	
 _.extend Steedos, TemplateHelpers
 
 Template.registerHelpers TemplateHelpers
