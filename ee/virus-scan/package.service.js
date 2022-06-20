@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-13 14:35:47
+ * @LastEditTime: 2022-06-20 11:02:38
  * @Description: 
  */
 "use strict";
@@ -41,9 +41,6 @@ module.exports = {
     actions: {
         execScanCommand: {
             params: {
-                command: {
-                    type: 'string'
-                },
                 filePath: {
                     type: 'string'
                 }
