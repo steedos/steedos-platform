@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:50:29
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-20 19:32:42
+ * @LastEditTime: 2022-06-20 19:36:20
  * @Description: 根据query的请求体解析出查询的字段
  */
 import { GraphQLResolveInfo } from 'graphql';
@@ -42,7 +42,7 @@ export function getQueryFields(resolveInfo: GraphQLResolveInfo) {
             if (name.startsWith(RELATED_PREFIX)) {
                 continue
             }
-            fieldsName.push(fields[key].name)
+            fieldsName.push(name)
         }
     }
     // console.log(fieldsName);
