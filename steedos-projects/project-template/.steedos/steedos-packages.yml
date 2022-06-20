@@ -37,9 +37,3 @@ steedos-community-default-package:
   local: false
   path: .steedos/node_modules/@steedos-labs/project
   url: null
-'@steedos-test/metadata-test':
-  enable: true
-  version: 1.0.0
-  description: steedos package
-  local: true
-  path: steedos-packages/metadata-test
