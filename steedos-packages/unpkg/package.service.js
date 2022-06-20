@@ -105,14 +105,13 @@ module.exports = {
 			try {
 				const router = express.Router();
 				const cacheTime = 86400000 * 1; // one day
-				this.settings.local_packages.forEach(packageName => {	
+				this.settings.local_packages.forEach(packageName => {		
 					var packageDir = path.join(process.cwd(), 'node_modules', packageName);
 					if (!fs.existsSync(packageDir)) {
 						try {
 							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
 						} catch (e) {}
 					} 
-					console.log(packageDir)	
 					if (fs.existsSync(packageDir)) {
 						router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));
 						// 内置模块，统一跳转到无版本号URL，防止浏览器端重复加载。
@@ -123,9 +122,16 @@ module.exports = {
 							return
 						})
 					} else {
-						this.logger.warn(`Local package not found: ${packageName}, use cdn.`)
+						this.logger.warn(`Package not found: ${packageName}, you should add to you project.`)
 					}
 				});
+				if (this.settings.unpkgUrl) {
+					router.get('/unpkg.com/*', (req, res) => {
+						const packageUrl = req.path.split('/unpkg.com')[1]
+						res.redirect(this.settings.unpkgUrl + packageUrl);
+						return
+					})
+				}
 				
 				WebApp.connectHandlers.use(router);
 			} catch (error) {
