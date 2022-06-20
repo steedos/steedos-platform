@@ -31,6 +31,8 @@ export * from './field'
 export * from './function_expression'
 export * from './convert'
 
+const validator = require('validator');
+
 exports.loadJSONFile = (filePath: string)=>{
     return JSON.parse(fs.readFileSync(filePath, 'utf8').normalize('NFC'));
 }
@@ -686,10 +688,16 @@ function calcSteedosConfig(config: JsonMap){
             if(isJsonMap(_d)){
                 config[k] = calcSteedosConfig(clone(_d))
             }else{
-                config[k] = calcString(v)
+                config[k] = calcString(v);
+                if(k && _.isString(k) && k.startsWith('enable_') && config[k] && _.isString(config[k])){
+                    config[k] = validator.toBoolean(config[k], true);
+                }
             }
         }else{
             config[k] = calcString(v)
+            if(k && _.isString(k) && k.startsWith('enable_') && config[k] && _.isString(config[k])){
+                config[k] = validator.toBoolean(config[k], true);
+            }
         }
     });
 

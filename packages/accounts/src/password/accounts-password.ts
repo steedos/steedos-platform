@@ -624,6 +624,10 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.emailAlreadyExists);
     }
 
+    if(!user.password && !user.verifyCode){
+      throw new Error(this.options.errors.invalidVerifyParam);
+    }
+
     if (user.password) {
       if (!this.options.validatePassword(user.password)) {
         throw new Error(this.options.errors.invalidPassword);
@@ -643,7 +647,7 @@ export default class AccountsPassword implements AuthenticationService {
       if (user.mobile)
         user.mobile_verified = true
     }
-
+    
     // // If user does not provide the validate function only allow some fields
     // user = this.options.validateNewUser
     //   ? await this.options.validateNewUser(user)

@@ -3,7 +3,7 @@ import * as express from 'express';
 import { AccountsServer } from '../../../server';
 import { sendError } from '../../utils/send-error';
 import { errors } from '../../../password/errors';
-import { canRegister } from '../../../core';
+import { canRegister, loginWithCode } from '../../../core';
 import { setAuthCookies } from '../../utils/steedos-auth';
 import { db } from '../../../db';
 declare var Creator;
@@ -24,6 +24,11 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
 
     if(!(await canRegister(spaceId, 'signupAccount'))){
       throw new Error('accounts.unenableRegister');
+    }
+
+    let codeRequired = await loginWithCode(spaceId);
+    if(codeRequired && !req.body.verifyCode){
+      throw new Error('accounts.codeRequired');
     }
     
     const password: any = accountsServer.getServices().password;

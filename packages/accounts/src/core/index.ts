@@ -101,6 +101,15 @@ export const canRegister = async (spaceId, action)=>{
     return tenant.enable_register;
 }
 
+export const loginWithCode = async (spaceId)=>{
+  let loginWithCode = false;
+  const tenant: any = await getMergedTenant(spaceId);
+  if(tenant.enable_mobile_code_login || tenant.enable_email_code_login){
+    loginWithCode = true;
+  }
+  return loginWithCode;
+}
+
 export const canPasswordLogin = async ()=>{
   const tenant: any = await getMergedTenant();
   return tenant.enable_password_login;

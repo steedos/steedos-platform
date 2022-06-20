@@ -27,4 +27,5 @@ export const errors: ErrorMessages = {
   emailOrMobileRequired: 'accounts.emailOrMobileRequired',
   emailRequired: 'accounts.emailOrMobileRequired',
   invalidVerifyCode: 'accounts.invalidVerifyCode',
+  invalidVerifyParam: 'accounts.invalidVerifyParam'
 };
