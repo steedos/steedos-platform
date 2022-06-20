@@ -49,12 +49,12 @@ module.exports = {
 			"@steedos/service-pages",
 			"@steedos/service-cloud-init",
 			"@steedos/service-workflow",
-			"@steedos/unpkg",
 			"@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
 			"@steedos/service-files",
 		],
 		plugins: [
+			"@steedos/unpkg",
 			"@steedos/webapp-accounts",
 			"@steedos/plugin-dingtalk",
 			"@steedos/plugin-qywx",
