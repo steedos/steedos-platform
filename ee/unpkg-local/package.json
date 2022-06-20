@@ -15,7 +15,7 @@
     "@steedos-ui/builder-community": "^2.2.24",
     "@steedos-ui/builder-widgets": "^2.2.24",
     "@steedos-ui/design-system": "^2.2.24",
-    "amis": "1.10.1",
+    "amis": "1.10.2",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
     "d3": "^3.5.17",
