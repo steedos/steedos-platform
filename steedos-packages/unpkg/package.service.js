@@ -30,23 +30,6 @@ module.exports = {
 			isPackage: false
 		},
 		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.com',
-		local_packages: [
-			'd3',
-			'react',
-			'react-dom',
-			'prop-types',
-			'lodash',
-			'moment',
-			'monaco-editor',
-			'amis',
-			'@steedos-builder/react',
-			'@steedos-ui/amis',
-			'@steedos-ui/builder-community',
-			'@steedos-ui/design-system',
-			'@steedos-ui/builder-widgets',
-			'@salesforce-ux/design-system',
-			'axios'
-		],
 	},
 
 	/**
@@ -73,65 +56,15 @@ module.exports = {
 	 */
 	methods: {
 
-		parsePackagePathname: function(pathname) {
-
-			const packagePathnameFormat = /^\/((?:@[^/@]+\/)?[^/@]+)(?:@([^/]+))?(\/.*)?$/;
-		
-			try {
-				pathname = decodeURIComponent(pathname);
-			} catch (error) {
-				return null;
-			}
-		
-			const match = packagePathnameFormat.exec(pathname);
-		
-			// Disallow invalid pathnames.
-			if (match == null) return null;
-		
-			const packageName = match[1];
-			const packageVersion = match[2] || 'latest';
-			const filename = (match[3] || '').replace(/\/\/+/g, '/');
-		
-			return {
-				// If the pathname is /@scope/name@version/file.js:
-				packageName, // @scope/name
-				packageVersion, // version
-				packageSpec: `${packageName}@${packageVersion}`, // @scope/name@version
-				filename // /file.js
-			};
-		},
-		
 		loadUnpkgRoutes: function() {
 			try {
 				const router = express.Router();
-				const cacheTime = 86400000 * 1; // one day
-				this.settings.local_packages.forEach(packageName => {		
-					var packageDir = path.join(process.cwd(), 'node_modules', packageName);
-					if (!fs.existsSync(packageDir)) {
-						try {
-							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
-						} catch (e) {}
-					} 
-					if (fs.existsSync(packageDir)) {
-						router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));
-						// 内置模块，统一跳转到无版本号URL，防止浏览器端重复加载。
-						router.get(`/unpkg.com/${packageName}@*`, (req, res) => {
-							const packageUrl = req.path.split('/unpkg.com')[1]
-							const parsed = this.parsePackagePathname(packageUrl)
-							res.redirect(`/unpkg.com/${parsed.packageName}${parsed.filename}`);
-							return
-						})
-					} else {
-						this.logger.warn(`Package not found: ${packageName}, you should add to you project.`)
-					}
-				});
-				if (this.settings.unpkgUrl) {
-					router.get('/unpkg.com/*', (req, res) => {
-						const packageUrl = req.path.split('/unpkg.com')[1]
-						res.redirect(this.settings.unpkgUrl + packageUrl);
-						return
-					})
-				}
+				
+				router.get('/unpkg.com/*', (req, res) => {
+					const packageUrl = req.path.split('/unpkg.com')[1]
+					res.redirect(this.settings.unpkgUrl + packageUrl);
+					return
+				})
 				
 				WebApp.connectHandlers.use(router);
 			} catch (error) {
