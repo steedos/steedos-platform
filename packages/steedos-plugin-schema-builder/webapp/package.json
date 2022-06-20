@@ -1,0 +1,59 @@
+{
+    "name": "@steedos/steedos-plugin-schema-builder",
+    "version": "2.2.50",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "debug": "nodemon server.js",
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "fe-build": "rm -rf public/schema-builder && cross-env  NODE_ENV=production webpack --config ./webapp/webconfig.config.js --mode production  --colors --max_old_space_size=1024 && rm -rf docker/public  ",
+        "fe-watch": "webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development",
+        "fe-server": " scp public/schema-builder/** root@$SERVER_IP:/root/docker-yml/steedos/docker-volumes/steedos/public/schema-builder",
+        "fe-publish": "npm run fe-build &&  npm run fe-server",
+        "os": "cp -r F:/GitHub/steedos-platform/packages/* node_modules/@steedos/ && cp -r F:/GitHub/steedos-platform/server/* node_modules/steedos-server/",
+        "pub": "npm publish --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/steedos-plugin-schema-builder",
+        "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/steedos-plugin-schema-builder",
+        "linkToDevPlatform": "node .scripts/npm-postinstall.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@antv/g6": "^3.6.0",
+        "@iarna/rtf-to-html": "^1.1.0",
+        "@steedos/accounts": "2.2.50",
+        "@steedos/steedos-plugin-workflow": "^2.0.8",
+        "@types/react": "^16.9.22",
+        "@types/react-dom": "^16.8.4",
+        "ahooks": "^2.4.0",
+        "ak-webpack": "^1.0.9",
+        "antd": "^4.3.5",
+        "classnames": "^2.2.6",
+        "cross-env": "^7.0.2",
+        "dotenv-flow": "^3.1.0",
+        "dva": "^2.6.0-beta.14",
+        "immer": "^4.0.0",
+        "nodemon": "^1.19.1",
+        "react": "^16.8.6",
+        "react-custom-scrollbars": "^4.2.1",
+        "react-dnd": "^9.3.4",
+        "react-dnd-html5-backend": "^9.3.4",
+        "react-dom": "^16.9.0",
+        "react-scrollbars-custom": "^4.0.21",
+        "stats": "^1.0.0",
+        "stats.js": "^0.17.0",
+        "steedos-server": "2.2.50",
+        "typescript": "^3.8.2",
+        "unstated-next": "^1.1.0",
+        "with-dnd-context": "^1.0.4",
+        "xml2js": "^0.4.23"
+    },
+    "homepage": "https://developer.steedos.com",
+    "resolutions": {
+        "**/mongodb": "3.5.10"
+    }
+}
