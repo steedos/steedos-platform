@@ -200,7 +200,6 @@ steedos:sso@0.0.4
 steedos:theme@0.0.30
 steedos:toastr@2.1.3
 steedos:ui@0.0.1
-steedos:users-import@0.0.1
 steedos:webhookqueue@0.0.2
 steedos:webkit-notification@0.0.1
 steedos:workflow@0.0.1

@@ -60,7 +60,6 @@
     "negotiator": "^0.6.1",
     "node-rsa": "1.0.0",
     "node-schedule": "^1.3.1",
-    "node-xlsx": "^0.15.0",
     "oauth2-server": "2.4.1",
     "odata-v4-mongodb": "^0.1.12",
     "odata-v4-parser": "^0.1.29",
@@ -111,8 +110,7 @@
     "lodash.memoize": "^4.1.2",
     "moleculer": "^0.14.12",
     "push.js": "^1.0.12",
-    "react-highlighter": "^0.4.3",
-    "xlsx": "0.10.6"
+    "react-highlighter": "^0.4.3"
   },
   "resolutions": {
     "**/lodash": "^4.17.15",

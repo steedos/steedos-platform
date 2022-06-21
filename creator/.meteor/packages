@@ -163,8 +163,6 @@ steedos:app-chat
 # steedos:app-portal
 # steedos:app-mailbase
 
-steedos:users-import
-
 
 # steedos:version
 steedos:formbuilder
