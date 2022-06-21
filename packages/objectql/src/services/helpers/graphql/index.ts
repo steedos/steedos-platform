@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-20 19:04:27
+ * @LastEditTime: 2022-06-21 18:50:27
  * @Description: 
  */
 
@@ -324,7 +324,7 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
                 selector.fields = fieldNames;
             }
 
-            return obj.directFind(selector);
+            return obj.find(selector);
         },
     };
     actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`] = {
@@ -343,7 +343,7 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
                 selector.fields = fieldNames;
             }
 
-            return (await obj.directFind(selector))[0];
+            return (await obj.find(selector))[0];
         },
     };
 
@@ -432,7 +432,7 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
                     selector.fields = fieldNames;
                 }
             }
-            let doc = (await obj.directFind(selector))[0];
+            let doc = (await obj.find(selector))[0];
             let result = await translateToDisplay(objectName, doc, userSession);
             return result;
         },
@@ -571,14 +571,14 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let refObj = steedosSchema.getObject(refTo);
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
-                        let refRecords = await refObj.directFind({
+                        let refRecords = await refObj.find({
                             filters: [`_id`, "in", refValue],
                             fields: [nameFieldKey],
                         });
                         lookupLabel = _.pluck(refRecords, nameFieldKey).join(",");
                     } else {
                         let refRecord = (
-                            await refObj.directFind({
+                            await refObj.find({
                                 filters: [`_id`, "=", refValue],
                                 fields: [nameFieldKey],
                             })
@@ -598,14 +598,14 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let refObj = steedosSchema.getObject(refTo);
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
-                        let refRecords = await refObj.directFind({
+                        let refRecords = await refObj.find({
                             filters: [`_id`, "in", refValue],
                             fields: [nameFieldKey],
                         });
                         masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(",");
                     } else {
                         let refRecord = (
-                            await refObj.directFind({
+                            await refObj.find({
                                 filters: [`_id`, "=", refValue],
                                 fields: [nameFieldKey],
                             })
