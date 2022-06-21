@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-node-red",
-  "version": "2.2.51-beta.4",
+  "version": "2.2.51-beta.5",
   "main": "index.js",
   "scripts": {
     "start": "moleculer-runner --repl --hot ./index.js"
