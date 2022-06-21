@@ -57,9 +57,9 @@ steedos:autoform-bs-minicolors
 steedos:autoform-file
 steedos:autoform-lookup
 steedos:autoform-tags
-perak:markdown
-q42:autoform-markdown
-steedos:markdown@0.0.1
+# perak:markdown
+# q42:autoform-markdown
+# steedos:markdown@0.0.1
 steedos:autoform-dx-date-box
 
 vazco:universe-autoform-select

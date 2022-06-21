@@ -3124,18 +3124,6 @@ code-point-at@^1.0.0:
   resolved "https://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codemirror-spell-checker@*:
-  version "1.1.2"
-  resolved "https://registry.npm.taobao.org/codemirror-spell-checker/download/codemirror-spell-checker-1.1.2.tgz#1c660f9089483ccb5113b9ba9ca19c3f4993371e"
-  integrity sha1-HGYPkIlIPMtRE7m6nKGcP0mTNx4=
-  dependencies:
-    typo-js "*"
-
-codemirror@*:
-  version "5.57.0"
-  resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.57.0.tgz?cache=0&sync_timestamp=1597910665451&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcodemirror%2Fdownload%2Fcodemirror-5.57.0.tgz#d26365b72f909f5d2dbb6b1209349ca1daeb2d50"
-  integrity sha1-0mNlty+Qn10tu2sSCTScodrrLVA=
-
 codepage@~1.14.0:
   version "1.14.0"
   resolved "https://registry.npm.taobao.org/codepage/download/codepage-1.14.0.tgz#8cbe25481323559d7d307571b0fff91e7a1d2f99"
@@ -6407,11 +6395,6 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@*:
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/marked/download/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
-  integrity sha1-5dYbaYQiENXfV7BYVuDJFXJwPmo=
-
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.npm.taobao.org/md5.js/download/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -8719,15 +8702,6 @@ simple-get@^4.0.0:
     once "^1.3.1"
     simple-concat "^1.0.0"
 
-simplemde@1.11.2:
-  version "1.11.2"
-  resolved "https://registry.npm.taobao.org/simplemde/download/simplemde-1.11.2.tgz#a23a35d978d2c40ef07dec008c92f070d8e080e3"
-  integrity sha1-ojo12XjSxA7wfewAjJLwcNjggOM=
-  dependencies:
-    codemirror "*"
-    codemirror-spell-checker "*"
-    marked "*"
-
 slash@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
@@ -9552,11 +9526,6 @@ typeorm@^0.2.16:
     xml2js "^0.4.23"
     yargs "^17.0.1"
     zen-observable-ts "^1.0.0"
-
-typo-js@*:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/typo-js/download/typo-js-1.1.0.tgz#a5a9f592bcb453666bf70c9694da58705d025ed8"
-  integrity sha1-pan1kry0U2Zr9wyWlNpYcF0CXtg=
 
 ua-parser-js@^0.7.30:
   version "0.7.31"

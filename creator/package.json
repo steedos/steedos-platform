@@ -112,7 +112,6 @@
     "moleculer": "^0.14.12",
     "push.js": "^1.0.12",
     "react-highlighter": "^0.4.3",
-    "simplemde": "1.11.2",
     "xlsx": "0.10.6"
   },
   "resolutions": {

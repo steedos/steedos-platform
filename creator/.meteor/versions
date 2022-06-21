@@ -104,10 +104,8 @@ npm-mongo@3.6.0
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 peppelg:bootstrap-3-modal@1.0.4
-perak:markdown@1.0.5
 percolate:migrations@0.9.8
 promise@0.11.2
-q42:autoform-markdown@1.0.0
 raix:eventemitter@0.1.3
 raix:eventstate@0.0.4
 raix:handlebar-helpers@0.2.5
@@ -187,7 +185,6 @@ steedos:jstree@3.3.2
 steedos:loaders-css@0.1.3
 steedos:logger@0.0.4
 steedos:mailqueue@0.0.1
-steedos:markdown@0.0.1
 steedos:meteor-fix@0.0.1
 steedos:oauth2-server@0.0.7
 steedos:object-database@0.0.2
