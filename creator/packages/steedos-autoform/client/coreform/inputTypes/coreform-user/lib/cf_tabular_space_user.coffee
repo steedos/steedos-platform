@@ -80,5 +80,5 @@ Meteor.startup ()->
 #scrollY:        '400px',
 #scrollCollapse: true,
 		pagingType: "numbers"
-
+		displayStart: 0
 	});
