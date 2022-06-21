@@ -9,6 +9,7 @@ fields:
     index: true
     defaultValue: "{userId}"
     hidden: true
+    sort_no: 1000
   space:
     type: lookup
     label: Space
@@ -119,6 +120,7 @@ fields:
     label: Locked
     type: boolean
     hidden: true
+    sort_no: 1100
   company_id:
     label: Division
     type: lookup
@@ -134,6 +136,7 @@ fields:
         return Steedos.StandardObjects.Base.Fields.companyId.optionsFunction.apply(this, arguments)
       }
     hidden: true
+    sort_no: 1200
   company_ids:
     label: All Divisions
     type: lookup
@@ -150,6 +153,7 @@ fields:
         return Steedos.StandardObjects.Base.Fields.companyIds.optionsFunction.apply(this, arguments)
       }
     hidden: true
+    sort_no: 1300
   instance_state:
     label: Instance State
     type: select
@@ -167,6 +171,7 @@ fields:
       - label: Terminated
         value: terminated
     hidden: true
+    sort_no: 1400
   process_state:
     label: Process State
     type: select
@@ -186,6 +191,7 @@ fields:
       - label: Terminated
         value: terminated
     hidden: true
+    sort_no: 1500
   _table:
     label: Object Workflow Related Form Table Item Info
     type: object
