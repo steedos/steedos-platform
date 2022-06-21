@@ -32,6 +32,7 @@ try
 				"@steedos/service-package-registry",
 				"@steedos/standard-process",
 				"@steedos/webapp-accounts",
+				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
 			],
 			plugins: config.plugins
