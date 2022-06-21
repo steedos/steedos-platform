@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-ui",
-    "version": "2.2.51-beta.7",
+    "version": "2.2.51",
     "keywords": [
         "steedos"
     ],
@@ -10,8 +10,8 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/core": "2.2.51-beta.7",
-        "@steedos/objectql": "2.2.51-beta.7"
+        "@steedos/core": "2.2.51",
+        "@steedos/objectql": "2.2.51"
     },
     "license": "MIT",
     "private": false,
