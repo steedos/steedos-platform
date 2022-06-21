@@ -7,6 +7,7 @@
 ; (function () {
         
     try {
+        // 加载Amis css
         let amisStyle = document.createElement("link");
         amisStyle.setAttribute("rel", "stylesheet");
         amisStyle.setAttribute("type", "text/css");
@@ -15,7 +16,18 @@
     } catch (error) {
         console.error(error)
     };
+    
+    try {
+        // 加载Amis SDK: 如果直接放到body中会导致meteor 编译后的 cordova.js 加载报错
+        let amisSDKScript = document.createElement("script");
+        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js'));
+        document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
+    } catch (error) {
+        console.error(error)
+    };
 
+
+    // 此处不能使用import, client js 编译时会将import 转为require, 导致加载失败
     // import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
 
         Promise.all([
