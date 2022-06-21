@@ -10,7 +10,7 @@ import MongoDBInterface from './database-mongo';
 // import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { getSteedosConfig, getSteedosSchema, SteedosFieldEncryptionSharedConsts } from '@steedos/objectql'
+import { getSteedosConfig, getSteedosSchema, getMongoFieldEncryptionConsts } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS } from './core';
@@ -34,7 +34,7 @@ function getAccountsServer() {
   let mailSignname = emailConfig.signname || "华炎魔方";
 
   if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
-    const { keyVaultNamespace, getKMSProviders } = SteedosFieldEncryptionSharedConsts;
+    const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
     const kmsProvider = getKMSProviders();
     mongoose.connect(mongoUrl, {
       useNewUrlParser: true,

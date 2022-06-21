@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:56
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-11 09:29:54
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-21 15:33:53
  * @Description: 
  */
 import { Mongo } from 'meteor/mongo'
@@ -25,8 +25,8 @@ if (Meteor.isServer) {
 	}
 
 	if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
-		const { SteedosFieldEncryptionSharedConsts } = require('@steedos/objectql');
-		const { keyVaultNamespace, getKMSProviders } = SteedosFieldEncryptionSharedConsts;
+		const { getMongoFieldEncryptionConsts } = require('@steedos/objectql');
+		const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
 		const kmsProvider = getKMSProviders();
 		const encryptionOptions = {
 			useNewUrlParser: true,

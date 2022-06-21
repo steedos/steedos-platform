@@ -77,6 +77,8 @@ actions:
     label: 导入许可证
   copySpaceId:
     label: 复制魔方ID
+  upgrade:
+    label: 升级
 CustomLabels:
   license_action_sync: 同步许可证
   license_action_changeSpaceLicense: 导入许可证

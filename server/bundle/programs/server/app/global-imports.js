@@ -28,7 +28,6 @@ Push = Package['raix:push'].Push;
 Tabular = Package['aldeed:tabular'].Tabular;
 SimpleSchema = Package['aldeed:simple-schema'].SimpleSchema;
 MongoObject = Package['aldeed:simple-schema'].MongoObject;
-Markdown = Package['perak:markdown'].Markdown;
 FlowRouter = Package['kadira:flow-router'].FlowRouter;
 BlazeLayout = Package['kadira:blaze-layout'].BlazeLayout;
 moment = Package['momentjs:moment'].moment;

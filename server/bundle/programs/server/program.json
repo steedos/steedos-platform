@@ -418,25 +418,10 @@
       "path": "packages/steedos_autoform-tags.js"
     },
     {
-      "path": "packages/perak_markdown.js"
-    },
-    {
-      "path": "packages/q42_autoform-markdown.js"
-    },
-    {
-      "path": "packages/steedos_markdown.js"
-    },
-    {
       "path": "packages/steedos_autoform-dx-date-box.js"
     },
     {
       "path": "packages/vazco_universe-autoform-select.js"
-    },
-    {
-      "path": "packages/summernote_summernote.js"
-    },
-    {
-      "path": "packages/mpowaga_autoform-summernote.js"
     },
     {
       "path": "packages/steedos_devexpress.js"
@@ -690,13 +675,6 @@
     {
       "sourceMap": "packages/steedos_app-chat.js.map",
       "path": "packages/steedos_app-chat.js"
-    },
-    {
-      "sourceMap": "packages/steedos_users-import.js.map",
-      "path": "packages/steedos_users-import.js",
-      "assets": {
-        "server/ejs/export_space_users.ejs": "assets/packages/steedos_users-import/server/ejs/export_space_users.ejs"
-      }
     },
     {
       "path": "packages/steedos_formbuilder.js"
