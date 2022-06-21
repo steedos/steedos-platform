@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "405b85f7fa0da92e48444fad3a79f968ed656023.js",
+      "path": "75fec4c6b404a8360eff41e82527f203d05751ef.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/405b85f7fa0da92e48444fad3a79f968ed656023.js?meteor_js_resource=true",
-      "size": 9608292,
-      "hash": "405b85f7fa0da92e48444fad3a79f968ed656023",
-      "sri": "e0H8Ijvks625H2NvnIdj8wzPPYCmf7XBNnIWMuYbfFFc/DdI0EdPuM01sMD0etEY4MUrZMs+SDamWAqJDUa1hQ=="
+      "url": "/__cordova/75fec4c6b404a8360eff41e82527f203d05751ef.js?meteor_js_resource=true",
+      "size": 9608331,
+      "hash": "75fec4c6b404a8360eff41e82527f203d05751ef",
+      "sri": "a/5hbmAtxeKhgXE5z9JEBfnYMPy8MUPGyppk8izKvHvjC21/mtLAULzoCss6so6b44OGD3CffuLNo8nu7hnezg=="
     },
     {
-      "path": "405b85f7fa0da92e48444fad3a79f968ed656023.stats.json",
+      "path": "75fec4c6b404a8360eff41e82527f203d05751ef.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/405b85f7fa0da92e48444fad3a79f968ed656023.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/75fec4c6b404a8360eff41e82527f203d05751ef.stats.json?meteor_js_resource=true",
       "size": 137800,
-      "hash": "66683f78331d00424d03909cc3a3d56d9f1e547f",
-      "sri": "7LBg9433GyWaH0z/c50O3P/TooChjYv3Q9/70AxdLY8Qf23C24wtxCDaohIByxIk9X2au58jctOVF9SfHQ3bvw=="
+      "hash": "b3c5dc1283280bcd3cf9aed311aa7f035afa581f",
+      "sri": "ikfKis9ZGSK56w0TDT1SfkSBg/24uVJdj5Za2ws3kWyBF/c2JARZCKMe/3UQ0OoRcZMW/0AgxhKxVVRKTKI2OQ=="
     },
     {
       "path": "1baf1657946c39a96fdb34309672e3c33ba7c5a2.css",
@@ -1078,8 +1078,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_base/client/images/default-avatar.png",
@@ -1088,8 +1088,8 @@
       "cacheable": false,
       "url": "/packages/steedos_base/client/images/default-avatar.png",
       "size": 216568,
-      "hash": "dd9b071f9d3183d35f6288b4532f5bfcb547e69a",
-      "sri": null
+      "hash": "907a88225a7d248d94fe0397ef3a93ccf2df4122",
+      "sri": "nCyfkrQxcr/UF80rhzFT59tZsAYLJ+7mwvmFwM4KveRN67vwyG2wwAo4rjOQjmbzhrGJnQLsHtiv7SorHKwoLQ=="
     },
     {
       "path": "packages/steedos_jstree/jstree/32px.png",
@@ -3295,7 +3295,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "370932f44f88fce8fb234e13e652722943477da4"
+      "hash": "5f99823005d447f07e9b4addadaeeecf21280d16"
     }
   ],
   "cordovaCompatibilityVersions": {
