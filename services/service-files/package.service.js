@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-10 19:25:52
+ * @LastEditTime: 2022-06-21 10:07:00
  * @Description: 
  */
 "use strict";
@@ -61,7 +61,10 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		// 如果STEEDOS_CFS_DOWNLOAD_PUBLIC为空则默认为avatars
+		if (!process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC) {
+			process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC = 'avatars';
+		}
 	},
 
 	/**
