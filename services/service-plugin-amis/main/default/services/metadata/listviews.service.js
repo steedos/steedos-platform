@@ -288,6 +288,21 @@ module.exports = {
                                     operators: getFieldOperators(field.type)
                                 });
                                 break;
+                            case 'boolean':
+                            case 'toggle':
+                                fields.push({
+                                    label: field.label,
+                                    type: "select",
+                                    name: field.name,
+                                    options: [
+                                        {label: "是", value: true},
+                                        {label: "否", value: false}
+                                    ],
+                                    operators: [
+                                      "equal",
+                                      "not_equal"
+                                    ]
+                                  });
                             default:
                                 break;
                         }
