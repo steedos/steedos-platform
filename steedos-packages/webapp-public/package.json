@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-public",
-  "version": "2.2.51-beta.6",
+  "version": "2.2.51-beta.7",
   "main": "package.service.js",
   "description": "public assets for steedos",
   "scripts": {},
