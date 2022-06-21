@@ -20,7 +20,6 @@
     "connect": "3.6.5",
     "cookie-parser": "1.4.3",
     "cookies": "0.6.1",
-    "core-js": "2.5.7",
     "decimal.js": "^10.0.2",
     "errorhandler": "1.5.0",
     "es5-shim": "4.5.10",
