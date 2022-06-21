@@ -41,8 +41,8 @@ Package.onUse(function (api) {
 	api.use('steedos:bootstrap3-datetimepicker@4.17.47');
 	api.use('steedos:autoform-bs-minicolors@1.0.0');
 
-	api.use('summernote:summernote@0.8.1');
-	api.use('mpowaga:autoform-summernote@0.4.3');
+	// api.use('summernote:summernote@0.8.1');
+	// api.use('mpowaga:autoform-summernote@0.4.3');
 
 	api.use('meteorhacks:ssr@2.2.0');
 	api.use('meteorhacks:subs-manager@1.6.4');
@@ -107,7 +107,6 @@ Package.onUse(function (api) {
 	api.addFiles('server/methods/report_data.coffee', 'server');
 	api.addFiles('server/methods/user_tabular_settings.coffee', 'server');
 	api.addFiles('server/methods/object_export2xml.coffee', 'server');
-	api.addFiles('server/methods/object_import_jobs.coffee', 'server');
 	api.addFiles('server/methods/related_objects_records.coffee', 'server');
 	api.addFiles('server/methods/pending_space.coffee', 'server');
 

@@ -93,7 +93,6 @@ mongo-decimal@0.1.1
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
 mongo-livedata@1.0.12
-mpowaga:autoform-summernote@0.4.4
 mpowaga:jquery-fileupload@9.11.2
 mpowaga:jquery-ui-widget@1.11.4
 mpowaga:string-template@0.1.0
@@ -105,10 +104,8 @@ npm-mongo@3.6.0
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 peppelg:bootstrap-3-modal@1.0.4
-perak:markdown@1.0.5
 percolate:migrations@0.9.8
 promise@0.11.2
-q42:autoform-markdown@1.0.0
 raix:eventemitter@0.1.3
 raix:eventstate@0.0.4
 raix:handlebar-helpers@0.2.5
@@ -188,7 +185,6 @@ steedos:jstree@3.3.2
 steedos:loaders-css@0.1.3
 steedos:logger@0.0.4
 steedos:mailqueue@0.0.1
-steedos:markdown@0.0.1
 steedos:meteor-fix@0.0.1
 steedos:oauth2-server@0.0.7
 steedos:object-database@0.0.2
@@ -204,13 +200,10 @@ steedos:sso@0.0.4
 steedos:theme@0.0.30
 steedos:toastr@2.1.3
 steedos:ui@0.0.1
-steedos:users-import@0.0.1
 steedos:webhookqueue@0.0.2
 steedos:webkit-notification@0.0.1
 steedos:workflow@0.0.1
 steedos:workflow-chart@0.0.1
-summernote:standalone@0.8.1
-summernote:summernote@0.8.1
 tap:i18n@1.9.1
 templating@1.3.2
 templating-compiler@1.3.3

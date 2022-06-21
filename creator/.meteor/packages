@@ -57,15 +57,15 @@ steedos:autoform-bs-minicolors
 steedos:autoform-file
 steedos:autoform-lookup
 steedos:autoform-tags
-perak:markdown
-q42:autoform-markdown
-steedos:markdown@0.0.1
+# perak:markdown
+# q42:autoform-markdown
+# steedos:markdown@0.0.1
 steedos:autoform-dx-date-box
 
 vazco:universe-autoform-select
 
-summernote:summernote@0.8.1
-mpowaga:autoform-summernote@0.4.4
+# summernote:summernote@0.8.1
+# mpowaga:autoform-summernote@0.4.4
 
 steedos:devexpress
 
@@ -162,8 +162,6 @@ steedos:app-chat
 # steedos:app-tableau
 # steedos:app-portal
 # steedos:app-mailbase
-
-steedos:users-import
 
 
 # steedos:version

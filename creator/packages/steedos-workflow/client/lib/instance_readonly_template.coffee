@@ -304,7 +304,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			value = InstanceReadOnlyTemplate.formatDate(value, utcOffset);
 		when 'input'
 			if field.is_textarea
-				value = Spacebars.SafeString(Markdown(value))
+				value = Spacebars.SafeString(marked.parse(value))
 		when 'number'
 			if value or value == 0
 				value = Steedos.numberToString value, field.digits

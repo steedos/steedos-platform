@@ -224,10 +224,6 @@ Steedos OAuth2包，将Creator项目作为一个OAuth认证服务器。管理员
 
 该包实现了上一代华炎魔方很多样式皮肤功能。
 
-## steedos-users-import
-
-该包实现了上一代华炎魔方用户导入功能，已作废，新版华炎魔方支持了统一的数据导入功能。
-
 ## steedos-webkit-notification
 
 该包实现了华炎魔方桌面客户端消息推送功能。

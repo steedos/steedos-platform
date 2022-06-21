@@ -159,10 +159,10 @@ InstanceSignText.helpers =
 
 	markDownToHtml: (markDownString)->
 		if markDownString
-			renderer = new Markdown.Renderer();
-			renderer.link = (href, title, text) ->
-				return "<a target='_blank' href='#{href}' title='#{title}'>#{text}</a>"
-			return Spacebars.SafeString(Markdown(markDownString, {renderer: renderer}))
+			# renderer = new Markdown.Renderer();
+			# renderer.link = (href, title, text) ->
+			# 	return "<a target='_blank' href='#{href}' title='#{title}'>#{text}</a>"
+			return Spacebars.SafeString(marked.parse(markDownString))
 
 	steps: (field_formula, step, only_cc_opinion, image_sign)->
 		steps = []
