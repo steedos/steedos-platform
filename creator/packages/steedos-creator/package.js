@@ -384,9 +384,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/theme.less', 'client');
 	api.addFiles('client/i18n.coffee', 'client');
 
-	// api.addAssets('assets/logo.png', 'client');
-	api.addAssets('assets/logo-square.png', 'client');
-	api.addAssets('assets/logo-square.en-us.png', 'client');
 
 	api.addFiles('client/views/detail_realted_object_list.html', 'client');
 	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');

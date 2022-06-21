@@ -15,9 +15,9 @@ Template.creatorHeader.helpers
 			avatar_url = settings?.logo_square_url;
 		
 		if !avatar_url || !settings
-			avatar_url = "/packages/steedos_creator/assets/logo-square.png"
+			avatar_url = "/images/logo_platform.png"
 			if(Meteor.user()?.locale != 'zh-cn')
-				avatar_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
+				avatar_url = "/images/logo_platform.en-us.png"
 		
 		return Steedos.absoluteUrl(avatar_url)
 	
