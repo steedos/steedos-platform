@@ -4,8 +4,7 @@
   "main": "lib/index.js",
   "repository": "https://github.com/steedos/steedos-platform.git",
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

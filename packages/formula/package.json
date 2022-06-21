@@ -16,9 +16,7 @@
     "test:integration": "mocha --require @babel/register --recursive --grep @integration",
     "lint": "eslint --ignore-path .gitignore .",
     "commitlint": "commitlint",
-    "semantic-release": "semantic-release",
-    "compile": "yarn build",
-    "prepare": "yarn build"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",

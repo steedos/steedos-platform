@@ -5,8 +5,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

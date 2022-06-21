@@ -5,8 +5,7 @@
         "steedos"
     ],
     "scripts": {
-        "compile": "tsc",
-        "prepare": "tsc"
+        "build": "tsc"
     },
     "description": "steedos package",
     "repository": {},

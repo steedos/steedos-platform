@@ -9,8 +9,7 @@
     "test": "test"
   },
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

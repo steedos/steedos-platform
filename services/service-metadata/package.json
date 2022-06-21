@@ -4,8 +4,8 @@
   "description": "",
   "main": "lib/metadata.service.js",
   "scripts": {
-    "start": "yarn compile && moleculer-runner lib/*.service.js",
-    "dev": "yarn compile && moleculer-runner --repl --hot lib/*.service.js",
+    "start": "yarn build && moleculer-runner lib/*.service.js",
+    "dev": "yarn build && moleculer-runner --repl --hot lib/*.service.js",
     "cli": "moleculer connect redis://127.0.0.1:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",
@@ -13,8 +13,7 @@
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down",
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "author": "",
   "license": "MIT",

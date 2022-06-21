@@ -4,9 +4,8 @@
   "main": "package.service.js",
   "license": "MIT",
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc",
-    "start": "yarn compile && moleculer-runner --repl --hot lib/index.js"
+    "build": "tsc",
+    "start": "yarn build && moleculer-runner --repl --hot lib/index.js"
   },
   "dependencies": {
     "dotenv-flow": "^3.1.0",

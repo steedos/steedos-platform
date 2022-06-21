@@ -5,7 +5,7 @@
   "main": "lib/permissionsets.service.js",
   "scripts": {
     "dev": "moleculer-runner --repl --hot lib/services/**/*.service.js",
-    "start": "yarn compile && moleculer-runner --repl --hot lib/permissionsets.service.js",
+    "start": "yarn build && moleculer-runner --repl --hot lib/permissionsets.service.js",
     "cli": "moleculer connect redis://192.168.3.17:6379",
     "ci": "jest --watch",
     "test": "jest --coverage",
@@ -14,8 +14,7 @@
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down",
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "author": "",
   "license": "MIT",

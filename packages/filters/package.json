@@ -9,9 +9,8 @@
   ],
   "license": "Apache",
   "scripts": {
-    "test": "yarn compile && mocha test/**/*.js",
-    "compile": "babel -d lib src/",
-    "prepare": "yarn compile"
+    "test": "yarn build && mocha test/**/*.js",
+    "build": "babel -d lib src/"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.4",

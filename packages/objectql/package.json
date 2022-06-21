@@ -8,9 +8,8 @@
     "start": "nodemon server.js",
     "watch": "tsc --watch",
     "debug": "nodemon --inspect server.js",
-    "compile": "yarn prepare",
     "test": "mocha test/unit/**/*.ts",
-    "prepare": "rm -rf ./lib && tsc"
+    "build": "rm -rf ./lib && tsc"
   },
   "author": "",
   "license": "ISC",

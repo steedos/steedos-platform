@@ -45,7 +45,7 @@ steedos run --help
 - 示例: `steedos i18n zh-CN -s D:\GitHub\steedos-project-saas`
 - 示例：`steedos i18n zh-CN -s . -p ./steedos-app`
 
-- 开发环境运行方式: 进行cli项目, 执行 `yarn prepare` 后， 再进入**bin**文件夹下执行（示例）: `.\run i18n zh-CN -s D:\GitHub\steedos-project-saas`
+- 开发环境运行方式: 进行cli项目, 执行 `yarn build` 后， 再进入**bin**文件夹下执行（示例）: `.\run i18n zh-CN -s D:\GitHub\steedos-project-saas`
 
 ### source
 - 需要配置环境变量: METADATA_SERVER、METADATA_APIKEY，可以通过项目的env文件进行配置。

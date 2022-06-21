@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "@steedos/service-metadata": "2.2.51-beta.1",

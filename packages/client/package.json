@@ -6,8 +6,7 @@
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
-    "compile": "tsc",
-    "prepare": "tsc",
+    "build": "tsc",
     "test": "mocha test/unit/*.ts"
   },
   "devDependencies": {

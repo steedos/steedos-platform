@@ -4,8 +4,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "tsc",
-    "prepare": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "@steedos/core": "2.2.51-beta.1",

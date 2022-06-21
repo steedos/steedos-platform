@@ -5,9 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "watch": "tsc --watch",
-    "compile": "rm -rf lib && tsc",
     "test": "mocha test/**/*.ts",
-    "prepare": "rm -rf lib && tsc"
+    "build": "rm -rf lib && tsc"
   },
   "license": "MIT",
   "publishConfig": {

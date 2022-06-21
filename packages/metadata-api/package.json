@@ -11,10 +11,8 @@
     "scripts": {
         "start": "node server.js",
         "watch": "tsc --watch",
-        "compile": "tsc",
-        "prepare": "tsc",
-        "uploadZip": "mocha test/unit/uploadfiles.ts --opts test/mocha.opts",
-        "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/metadata-api"
+        "build": "tsc",
+        "uploadZip": "mocha test/unit/uploadfiles.ts --opts test/mocha.opts"
     },
     "author": "",
     "license": "MIT",

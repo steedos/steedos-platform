@@ -21,7 +21,6 @@
     "server": "cross-env NODE_ENV=development nodemon -w src -x ts-node server.ts",
     "build": "tsc",
     "compile": "tsc",
-    "prepare": "tsc",
     "pubNext": "npm publish --tag next --registry https://registry.npmjs.org"
   },
   "dependencies": {
