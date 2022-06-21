@@ -12,6 +12,8 @@ try
 		config = objectql.getSteedosConfig();
 		settings = {
 			built_in_plugins: [
+				"@steedos/service-ui",
+				"@steedos/service-cachers-manager",
 				"@steedos/unpkg",
 				"@steedos/workflow",
 				"@steedos/accounts",
