@@ -421,38 +421,11 @@ FlowversionAPI =
 					<meta charset="utf-8">
 					<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
 					<title>#{title}</title>
-					<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
-					<link rel="manifest" href="/favicons/manifest.json">
 					<meta name="mobile-web-app-capable" content="yes">
 					<meta name="theme-color" content="#000">
 					<meta name="application-name">
-					<link rel="apple-touch-icon" sizes="57x57" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-57x57.png")}">
-					<link rel="apple-touch-icon" sizes="60x60" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-60x60.png")}">
-					<link rel="apple-touch-icon" sizes="72x72" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-72x72.png")}">
-					<link rel="apple-touch-icon" sizes="76x76" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-76x76.png")}">
-					<link rel="apple-touch-icon" sizes="114x114" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-114x114.png")}">
-					<link rel="apple-touch-icon" sizes="120x120" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-120x120.png")}">
-					<link rel="apple-touch-icon" sizes="144x144" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-144x144.png")}">
-					<link rel="apple-touch-icon" sizes="152x152" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-152x152.png")}">
-					<link rel="apple-touch-icon" sizes="180x180" href="#{@getAbsoluteUrl("/favicons/apple-touch-icon-180x180.png")}">
-					<meta name="apple-mobile-web-app-capable" content="yes">
-					<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-					<meta name="apple-mobile-web-app-title">
-					<link rel="icon" type="image/png" sizes="228x228" href="#{@getAbsoluteUrl("/favicons/coast-228x228.png")}">
-					<link rel="icon" type="image/png" sizes="16x16" href="#{@getAbsoluteUrl("/favicons/favicon-16x16.png")}">
-					<link rel="icon" type="image/png" sizes="32x32" href="#{@getAbsoluteUrl("/favicons/favicon-32x32.png")}">
-					<link rel="icon" type="image/png" sizes="96x96" href="#{@getAbsoluteUrl("/favicons/favicon-96x96.png")}">
-					<link rel="icon" type="image/png" sizes="230x230" href="#{@getAbsoluteUrl("/favicons/favicon-230x230.png")}">
-					<link rel="shortcut icon" href="#{@getAbsoluteUrl("/favicons/favicon.ico")}">
-					<link rel="yandex-tableau-widget" href="#{@getAbsoluteUrl("/favicons/yandex-browser-manifest.json")}">
-					<meta name="msapplication-TileColor" content="#fff">
-					<meta name="msapplication-TileImage" content="#{@getAbsoluteUrl("/favicons/mstile-144x144.png")}">
-					<meta name="msapplication-config" content="#{@getAbsoluteUrl("/favicons/browserconfig.xml")}">
-					<meta property="twitter:image" content="#{@getAbsoluteUrl("/favicons/twitter.png")}">
-					<meta property="og:image" content="#{@getAbsoluteUrl("/favicons/open-graph.png")}">
-					<link rel="stylesheet" href="#{@getAbsoluteUrl("/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.css")}"/>
-					<script type="text/javascript" src="#{@getAbsoluteUrl("/lib/jquery/jquery-1.11.2.min.js")}"></script>
-					<script type="text/javascript" src="#{@getAbsoluteUrl("/packages/steedos_workflow-chart/assets/mermaid/dist/mermaid.min.js")}"></script>
+					<script type="text/javascript" src="/unpkg.com/jquery@1.11.2/dist/jquery.min.js"></script>
+					<script type="text/javascript" src="/unpkg.com/mermaid@9.1.2/dist/mermaid.min.js"></script>
 					<style>
 						body { 
 							font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
