@@ -2,224 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "303caa13a866893c58ae12da4909749c4e6d6372.js",
+      "path": "2b436f06bf3e55ed8023230a6ab95bf3e6a3aa83.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/303caa13a866893c58ae12da4909749c4e6d6372.js?meteor_js_resource=true",
-      "size": 6295446,
-      "hash": "303caa13a866893c58ae12da4909749c4e6d6372",
-      "sri": "MD4qs+qIilkHE4uLmTLE7/r3jkYchDKLK651W8cvnbFlNJkgbAAyMeUrADydBoPMZg83fyOBfEljJ0MtQY5smQ=="
+      "url": "/2b436f06bf3e55ed8023230a6ab95bf3e6a3aa83.js?meteor_js_resource=true",
+      "size": 6067062,
+      "hash": "2b436f06bf3e55ed8023230a6ab95bf3e6a3aa83",
+      "sri": "Omy6afwPUgLHynGDX67XIcuusiQKPYthHtmRnWchFLSwM9+NMgNtCDW/CSl/12eUv6vFsjCHCEKQIpHb606AIg=="
     },
     {
-      "path": "303caa13a866893c58ae12da4909749c4e6d6372.stats.json",
+      "path": "2b436f06bf3e55ed8023230a6ab95bf3e6a3aa83.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/303caa13a866893c58ae12da4909749c4e6d6372.stats.json?meteor_js_resource=true",
-      "size": 130596,
-      "hash": "21fdccf94fc31d3f6e8ace63c7688910c0a15897",
-      "sri": "2EonGg/vEfdTv0eYJ8aSOAwhmVV0Oz/ziI9UNv9vcZoPnRj6ZMJDx/zsbNiuedW7cKVt03Zmujg7qdNB92ddHg=="
-    },
-    {
-      "path": "dynamic/node_modules/simplemde/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/simplemde/package.json?hash=8c47e951f46536741973a527302e1d8d66165c45",
-      "size": 100,
-      "hash": "8c47e951f46536741973a527302e1d8d66165c45",
-      "sri": "PHlogBWq5UQn8JjzOAM0DZSsw1gnt1a81HejtF9APhgrafQU/QoMQylOShF6WvS68B3pZn1+XiYoxmwHT20kHg=="
-    },
-    {
-      "path": "dynamic/node_modules/simplemde/src/js/simplemde.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/simplemde/src/js/simplemde.js?hash=37c8fee9a8fab4f4f2f20f96ece1514caa3fae3f",
-      "size": 27708,
-      "hash": "37c8fee9a8fab4f4f2f20f96ece1514caa3fae3f",
-      "sri": "q9Bud8WgN8gRvmt1H5liD9QDgiXNVDon/Jhuzr33LHxUBoc5KbgFhkd4ZTFuONGGm3CjrcLCipsy+qV+7wa26Q=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/package.json?hash=ad19bcd96dedac8637b16be4c62050603af2d58c",
-      "size": 97,
-      "hash": "ad19bcd96dedac8637b16be4c62050603af2d58c",
-      "sri": "I4uvNLEcu1viV1ldL6OQ0vmoP/qeqcU7qVpnfuSyQ+JC9Yi8RoyCGnAM/zB68Y6vK78FIY4gnnhOb1RlXUu4vA=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/lib/codemirror.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/lib/codemirror.js?hash=191dd7f58f393be7dff5e0ef8d2980a1a95f0187",
-      "size": 171922,
-      "hash": "191dd7f58f393be7dff5e0ef8d2980a1a95f0187",
-      "sri": "x6T+NJp8vj5gR6ygVbaJayhswTAPPvQGaXONTY3aR2/9N+ZfQOzEfgsD8Ae/ZKq4M6ceUMwZEgKT+rWtz38z9Q=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/addon/edit/continuelist.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/addon/edit/continuelist.js?hash=f026491542343d105cb9d3b00381e405e9d56cf6",
-      "size": 1524,
-      "hash": "f026491542343d105cb9d3b00381e405e9d56cf6",
-      "sri": "aZ1/n8uEMSDixboRP4n29TL19U3WUCDFmxizHBwB4sGu3LfYXR06VJYPIJkwkcwFmGRHPNDgZsTkiS9xqZlSuQ=="
-    },
-    {
-      "path": "dynamic/node_modules/simplemde/src/js/codemirror/tablist.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/simplemde/src/js/codemirror/tablist.js?hash=2b6e715ea31a6c7cda55a30a640fa8fb9b88ed8c",
-      "size": 618,
-      "hash": "2b6e715ea31a6c7cda55a30a640fa8fb9b88ed8c",
-      "sri": "ki9DwM5iLdcIrvk06b4NyiF4qGL7UnCU6NhUdpoopso6rZtsNROJxnIQgljKWHprf9DTGxTh9DiHjm0/cUYgig=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/addon/display/fullscreen.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/addon/display/fullscreen.js?hash=3f1d545bb1e82995a31a74e7d35d5677392304c2",
-      "size": 896,
-      "hash": "3f1d545bb1e82995a31a74e7d35d5677392304c2",
-      "sri": "TUKdYGnc6aP86l35q0O9S9wvxb+I+C8/V3q7MwAMyTKcX4ppvH6DXv8udbK1WWVmwFwlXdpCMg2C6HKAGifqfg=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/mode/markdown/markdown.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/markdown/markdown.js?hash=e473b5a5056bbb8db7f093cede18dabe158faf83",
-      "size": 14997,
-      "hash": "e473b5a5056bbb8db7f093cede18dabe158faf83",
-      "sri": "FmCvrItIKtoKKLysaGgitHgzVb5GgKgDBwcHbsr3BC+p1aZGazmTgMUYSbMLEl9I65sIjI0mPVdZnTVTWduYbA=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/mode/xml/xml.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/xml/xml.js?hash=a22aaef356d2f01e387105950737f379918debfd",
-      "size": 6009,
-      "hash": "a22aaef356d2f01e387105950737f379918debfd",
-      "sri": "15OtpMk9KSPG1X/5+Gfp/YcuhCtoMLcNXd1IAR3542FHRCTiMZJBwtspnJUd2Qjqq1QGRG2ZauKC3bXDMe+v+w=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/mode/meta.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/meta.js?hash=bd1112fd40ef874cf3ee887b40f80a0b2f6c4717",
-      "size": 12728,
-      "hash": "bd1112fd40ef874cf3ee887b40f80a0b2f6c4717",
-      "sri": "1y50+1aQkRZPlqTM3DoAD//9M3LZ58sQV2+G2UjoWaRJT7yFXa9avn7n1CVOjuLo5zC5I0wejB8v/kyrzrVxQg=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/addon/mode/overlay.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/addon/mode/overlay.js?hash=ff27d51317780500664b7fdb6fe40a0b45c88f85",
-      "size": 1325,
-      "hash": "ff27d51317780500664b7fdb6fe40a0b45c88f85",
-      "sri": "rFR5tA/zsYtJHFT0/Tlo3TeSxDonB2725GfQyxkNoDDdNG+XkeqrHBAMV8xxxiS2IbGcgHptvNY8z7D647hxEg=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/addon/display/placeholder.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/addon/display/placeholder.js?hash=a207726a5628985e49f74de806feca0430b53d84",
-      "size": 1260,
-      "hash": "a207726a5628985e49f74de806feca0430b53d84",
-      "sri": "WoLnwKrLqUPf7ErQttINKdi74Uvp8hAhGrRde/gvxxyMXmAFh/Mn9MbLqngIHpFrwWXFCGFW7cdjTueBWD3pgQ=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/addon/selection/mark-selection.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/addon/selection/mark-selection.js?hash=1a7c91cd0fd688bd62b0c4addbfa08a1d9e462ad",
-      "size": 1785,
-      "hash": "1a7c91cd0fd688bd62b0c4addbfa08a1d9e462ad",
-      "sri": "pB/JzpxO/HTCPeDgSYDS8c+iuiW9nXvKmM79VsNCj0QicNdeRxoBYTyhJ6YmAduxN9hSlkdR4kCSsODpkgnRnQ=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror/mode/gfm/gfm.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror/mode/gfm/gfm.js?hash=4158c3ca0783924ce553b773b98263654f24c783",
-      "size": 2747,
-      "hash": "4158c3ca0783924ce553b773b98263654f24c783",
-      "sri": "g2TvuCjkecejpkXN5jH3PlprR7yc1lKNVKsxepxGBYg9polIaX2lsl+Wewq6pzg6BNzL2s3CR+Olu8MlhGcs7w=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror-spell-checker/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror-spell-checker/package.json?hash=3aad42d279e9e3a3cf0b5e31079e2d2d5ffbbea1",
-      "size": 118,
-      "hash": "3aad42d279e9e3a3cf0b5e31079e2d2d5ffbbea1",
-      "sri": "Ijfp0aez0h7AKf8Pg7fQJVbkjInRqSMtodx6sFBbUnmN5eBfzDDNyT1zV5evCQDMDHngUkwGJEgArT5C4ypFMw=="
-    },
-    {
-      "path": "dynamic/node_modules/codemirror-spell-checker/src/js/spell-checker.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/codemirror-spell-checker/src/js/spell-checker.js?hash=918b090c3ac9d670a7b49675abe72310337f382d",
-      "size": 1589,
-      "hash": "918b090c3ac9d670a7b49675abe72310337f382d",
-      "sri": "3MssSZWYhJE0mSPZ/GOxzJ5uiGqkF+8EFatq/zFVlGwy8xRQLvb32IMKW2Ug9knwMr7z8+BLVPaYLd3/SBypHA=="
-    },
-    {
-      "path": "dynamic/node_modules/typo-js/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/typo-js/package.json?hash=f4dc5203862b02a6481e0710ca92a9ad9ec0017b",
-      "size": 99,
-      "hash": "f4dc5203862b02a6481e0710ca92a9ad9ec0017b",
-      "sri": "nfvLGdqQ8JY8xC6AcdtuJfnLbMzg5EEi0OMLa1+U8aw/lpLizxo7v2ohlDOv/F9fbrxGSI/QsRYSHsB2IaYsQw=="
-    },
-    {
-      "path": "dynamic/node_modules/typo-js/typo.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/typo-js/typo.js?hash=40cdae7b5e06abd7235e4228dbdd5169710995ca",
-      "size": 7569,
-      "hash": "40cdae7b5e06abd7235e4228dbdd5169710995ca",
-      "sri": "BXk4CiGY1BNFL2J2uimBepPmX9fMJnhrtTGjPkt7f6oOvE0q1CCF6NMIZeZ1gNRRSByzYNKLiSKX73jkg9a8bw=="
-    },
-    {
-      "path": "dynamic/node_modules/marked/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/marked/package.json?hash=09e73c9154e9d7d2c86804896836918b7bf06699",
-      "size": 116,
-      "hash": "09e73c9154e9d7d2c86804896836918b7bf06699",
-      "sri": "k7TbmQ3o2XcuKbofMbi0tj0WAwAQIqMIXAKxl2HTHLFxjPrqSLnMUn2ep2CaZMFH8d4pdsnQ2hlPa5dVnkOSTA=="
-    },
-    {
-      "path": "dynamic/node_modules/marked/lib/marked.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/marked/lib/marked.js?hash=5064c762d915c14cd085ae4d67c15fa875a4dae9",
-      "size": 35223,
-      "hash": "5064c762d915c14cd085ae4d67c15fa875a4dae9",
-      "sri": "vrACRyDw2t2XLHZ2R56oJ0PHtlY2LpZaDFhb73YhQGnp/J5nzbhgrOIdrIwLSY6uEBCmsst0ASFlGQiYQd0pvA=="
+      "url": "/2b436f06bf3e55ed8023230a6ab95bf3e6a3aa83.stats.json?meteor_js_resource=true",
+      "size": 127722,
+      "hash": "bc38a106c534bcff2dd4e99a360ff725ea43914a",
+      "sri": "ATBsBkERHAjM5Px+HukK/HnuKvy/M9TQF4Jb1px/OV2RUvNgpmp1mlnzUeVtUdseUu+Dd0roX9CPVzeLCK5V/Q=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
@@ -3372,46 +3172,6 @@
       "sri": "9tPoUalaMlUeVHT1EvzL5/z841q3GuLqI2yYHpKwbXRbu19UTfMNkPxfcDm6GqEZoz16cR+JinIE6c/UDZQ7Gg=="
     },
     {
-      "path": "dynamic/node_modules/xlsx/package.json",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/xlsx/package.json?hash=15bbc702ec573b6ca224ee85edcd57236e4c4d57",
-      "size": 135,
-      "hash": "15bbc702ec573b6ca224ee85edcd57236e4c4d57",
-      "sri": "oRSBEGO/O4QT/SqwBBts4/TuS57N0Md8jY2HBPTMDLRSuTAkbfWa8iEI0V8+UpxK38NjxwIvDEWAI2ONhkzNXA=="
-    },
-    {
-      "path": "dynamic/node_modules/xlsx/xlsx.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/xlsx/xlsx.js?hash=1cd84ada461436a52c82fb0c49e88b297971fa9f",
-      "size": 329293,
-      "hash": "1cd84ada461436a52c82fb0c49e88b297971fa9f",
-      "sri": "6yCtB1pwJJB8MIJqMO4r2ji94IDvCM9V7cmBGnuXj5ie7PFfLpm7D64ABThizqouhaNHkOHCfkUkZc1V6YXLdw=="
-    },
-    {
-      "path": "dynamic/node_modules/xlsx/dist/cpexcel.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/xlsx/dist/cpexcel.js?hash=472b297c8ea1dfe19061fcbf97b1ca930f650217",
-      "size": 442079,
-      "hash": "472b297c8ea1dfe19061fcbf97b1ca930f650217",
-      "sri": "5wZcp4mkLRgOp2Bs3QvKCiEaF/5E0KNhWpn84RS75C8YpP4sL4Gl0Dh4UcJakm0GsKM5f/DX1hp497W91JDncg=="
-    },
-    {
-      "path": "dynamic/node_modules/xlsx/jszip.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/xlsx/jszip.js?hash=6672d68f50a790557d9235100b6e8e429a9900c5",
-      "size": 75834,
-      "hash": "6672d68f50a790557d9235100b6e8e429a9900c5",
-      "sri": "5Rco3fXuwZ6LvWRtDKGqwcvQgfalUxoGJJbxg8Vf6A+ikcCDW1XrH8R0mBcWzfCXcr5AfpP/PCnUf7lE/UDPMA=="
-    },
-    {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
       "where": "client",
       "type": "dynamic js",
@@ -3432,14 +3192,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "1baf1657946c39a96fdb34309672e3c33ba7c5a2.css",
+      "path": "a89c69fb077ad8e6063b14d6ac9483a11f53e5f0.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/1baf1657946c39a96fdb34309672e3c33ba7c5a2.css?meteor_css_resource=true",
-      "size": 1644648,
-      "hash": "1baf1657946c39a96fdb34309672e3c33ba7c5a2",
-      "sri": "ZTZ3Ht4oritZP+XJnzZBjKR46aZ+pvavr9/8aInJxywquPIMopw2WmXxrNKiVYYkgHHAk1AF5/Bf9NsRZGHARQ=="
+      "url": "/a89c69fb077ad8e6063b14d6ac9483a11f53e5f0.css?meteor_css_resource=true",
+      "size": 1617475,
+      "hash": "a89c69fb077ad8e6063b14d6ac9483a11f53e5f0",
+      "sri": "RBasVT5SSyHhinPzijGYS0RwnQdUheTinDwxZN+tOb86gEW+khRcDkYGw+klJjV9dOX3R00hJlXDX50RpmPDTw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -3582,116 +3342,6 @@
       "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
     },
     {
-      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
-      "size": 20127,
-      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
-      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
-    },
-    {
-      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
-      "size": 108738,
-      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
-      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
-    },
-    {
-      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
-      "size": 45404,
-      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
-      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
-    },
-    {
-      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
-      "size": 23424,
-      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
-      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
-    },
-    {
-      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
-      "size": 18028,
-      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
-      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
-    },
-    {
-      "path": "packages/summernote_summernote/dist/font/summernote.eot",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_summernote/dist/font/summernote.eot",
-      "size": 13238,
-      "hash": "5f1e6815c671797ee4acf489a2a9c1b84be4b757",
-      "sri": "swjAgDSjXBBclYZWLNG25CTs6DWixJno+7y/aFFgHVeVxlVOhtT5InKdxBSVtbxO54gQGwUGMuazVCSInKc/gg=="
-    },
-    {
-      "path": "packages/summernote_summernote/dist/font/summernote.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_summernote/dist/font/summernote.ttf",
-      "size": 13052,
-      "hash": "b8914e913bfc0b84dcdae4e31c20896859e98902",
-      "sri": "sDfZDnYHS9Vp0QKUZ0rVg/96MzaFaYWLnrALvLoyjLhYrvMWVIIVZN9uI1Z41FggyEUVkxsjyACcIVjQ+vWN+A=="
-    },
-    {
-      "path": "packages/summernote_summernote/dist/font/summernote.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_summernote/dist/font/summernote.woff",
-      "size": 8332,
-      "hash": "0f64029e1e5d49cbce0f4c53a5980431b578ff09",
-      "sri": "BsJcOlivELrLflwQ1X+FdeTlMMsPrytp55ETMvCW2ymvEFNdXlJam6WSpnKkWSd/tSEsfq42D3Czug3dOTX8+w=="
-    },
-    {
-      "path": "packages/summernote_standalone/dist/font/summernote.eot",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_standalone/dist/font/summernote.eot",
-      "size": 13238,
-      "hash": "5f1e6815c671797ee4acf489a2a9c1b84be4b757",
-      "sri": "swjAgDSjXBBclYZWLNG25CTs6DWixJno+7y/aFFgHVeVxlVOhtT5InKdxBSVtbxO54gQGwUGMuazVCSInKc/gg=="
-    },
-    {
-      "path": "packages/summernote_standalone/dist/font/summernote.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_standalone/dist/font/summernote.ttf",
-      "size": 13052,
-      "hash": "b8914e913bfc0b84dcdae4e31c20896859e98902",
-      "sri": "sDfZDnYHS9Vp0QKUZ0rVg/96MzaFaYWLnrALvLoyjLhYrvMWVIIVZN9uI1Z41FggyEUVkxsjyACcIVjQ+vWN+A=="
-    },
-    {
-      "path": "packages/summernote_standalone/dist/font/summernote.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/summernote_standalone/dist/font/summernote.woff",
-      "size": 8332,
-      "hash": "0f64029e1e5d49cbce0f4c53a5980431b578ff09",
-      "sri": "BsJcOlivELrLflwQ1X+FdeTlMMsPrytp55ETMvCW2ymvEFNdXlJam6WSpnKkWSd/tSEsfq42D3Czug3dOTX8+w=="
-    },
-    {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.ttf",
       "where": "client",
       "type": "asset",
@@ -3780,6 +3430,56 @@
       "size": 16376,
       "hash": "465f0d5236a35cdbbd7069247e9d9be8f61df468",
       "sri": "6K3xF3+O3cpO1rJPDy2czeHwJbPgyrNuNJy1GdcE70S18+PYJlHDIGRvfV/0fdDLImEzAsiCIEoRArEXcbcGcQ=="
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "size": 20127,
+      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
+      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "size": 108738,
+      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
+      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "size": 45404,
+      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
+      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "size": 23424,
+      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
+      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "size": 18028,
+      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
+      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
     },
     {
       "path": "packages/steedos_ionicons/fonts/ionicons.eot",
@@ -4008,8 +3708,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.png",
       "size": 11690,
-      "hash": "64004a554239896538cb4b92a9272b4255086b4f",
-      "sri": "tBt0KSmXEPbOXAP8mPgdp+Zbsf1h8+DCkyTMFaN9AR9ohnpuddjGHCi/HmPr/DZMzL8SGt/CAoGkqBGeGNhp0w=="
+      "hash": "9afd1a12da882436af1e8b57d647dd6587bc9dad",
+      "sri": null
     },
     {
       "path": "packages/steedos_creator/assets/logo-square.en-us.png",
@@ -4018,18 +3718,8 @@
       "cacheable": false,
       "url": "/packages/steedos_creator/assets/logo-square.en-us.png",
       "size": 15294,
-      "hash": "563568609e446146f3ddc44368bcad43de10165f",
-      "sri": "FHY37rVUVS3d6DRq2ImEQQTJKTIpFNa8LObnx0Jvk9fDkMatx/6opYCIIT1Rm2FEQJroHeu2wQciQhRQGRha/Q=="
-    },
-    {
-      "path": "packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_users-import/assets/excel/steedos_import_users_simple.xls",
-      "size": 32768,
-      "hash": "b3966ec3756c739ace11ca7a75e5f8e05de21456",
-      "sri": "3t8EMJ4ps9yWnKWB2/QUZqFQdptkuUeFbM9f8I8ewHvo5D2xH7y2xUh4V8epDK3o+dI0SS6dwGjgBRx2CoWR0Q=="
+      "hash": "e256fab7ec953bf744be35fed594fb44e60c51e7",
+      "sri": null
     },
     {
       "path": "packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
@@ -4139,66 +3829,6 @@
       "url": "/workflow.html",
       "size": 1219,
       "hash": "03841ec2e5a9713755f9f0dbc23518296c5fcfab",
-      "sri": null
-    },
-    {
-      "path": "app/built/global.css",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/built/global.css",
-      "size": 4234,
-      "hash": "4b63b2f3c03346ea77bc8179d4f54b55a98a7b76",
-      "sri": null
-    },
-    {
-      "path": "app/built/global.css.map",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/built/global.css.map",
-      "size": 9811,
-      "hash": "c916ca78b5144309d7351a0f4c5cfb6684967176",
-      "sri": null
-    },
-    {
-      "path": "app/built/screen.css",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/built/screen.css",
-      "size": 35137,
-      "hash": "d53d588356acd6d28991faee8a12e139562e6b3c",
-      "sri": null
-    },
-    {
-      "path": "app/built/screen.css.map",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/built/screen.css.map",
-      "size": 72724,
-      "hash": "f28c7842d6dd7f5a12db73492ec4128f6b80d284",
-      "sri": null
-    },
-    {
-      "path": "app/built/screen_extend.css",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/built/screen_extend.css",
-      "size": 375,
-      "hash": "7c6b2d7189bf0f2a1e2429757e7a7723ea5787b4",
-      "sri": null
-    },
-    {
-      "path": "app/cab/OfficeControl.cab",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/cab/OfficeControl.cab",
-      "size": 213792,
-      "hash": "2b87d50f54eb0ded3b8795f930f10146001d16e1",
       "sri": null
     },
     {
@@ -4962,106 +4592,6 @@
       "sri": null
     },
     {
-      "path": "assets/icons/action-sprite/svg/symbols-rtl.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/action-sprite/svg/symbols-rtl.svg",
-      "size": 110839,
-      "hash": "10e60d6ad26f3ea80244d87a9c18d89456495006",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/action-sprite/svg/symbols.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/action-sprite/svg/symbols.svg",
-      "size": 111051,
-      "hash": "fdb5666580b905075f6606c4a760f1f34c93198e",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/custom-sprite/svg/symbols-rtl.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/custom-sprite/svg/symbols-rtl.svg",
-      "size": 68139,
-      "hash": "1d9779ea3cc4e24e62a173e4ecf780ed8deef5b6",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/custom-sprite/svg/symbols.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
-      "size": 68171,
-      "hash": "d2eac8beda04646faa5f42b3c6fe3534724ab411",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/doctype-sprite/svg/symbols-rtl.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/doctype-sprite/svg/symbols-rtl.svg",
-      "size": 44164,
-      "hash": "76c27e54036fee96d768768585f5445d0d2ee273",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
-      "size": 45027,
-      "hash": "3b2557cc49c483bfcd9b97978061d363a4d8c686",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/standard-sprite/svg/symbols-rtl.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/standard-sprite/svg/symbols-rtl.svg",
-      "size": 257971,
-      "hash": "36ff7539c6d0ffeb255baa97d1404b729fa111b3",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/standard-sprite/svg/symbols.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
-      "size": 257518,
-      "hash": "45c446936a1e33b5749572740c9f7b75d2149de1",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
-      "size": 263480,
-      "hash": "d4b60c1eac267626eeb150f492d4b8b3edf8144a",
-      "sri": null
-    },
-    {
-      "path": "assets/icons/utility-sprite/svg/symbols.svg",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
-      "size": 263630,
-      "hash": "5cf1a9cfd567c6bd43d85c63ca85cf9f7a68f15f",
-      "sri": null
-    },
-    {
       "path": "app/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
       "where": "client",
       "type": "asset",
@@ -5075,7 +4605,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "5f99823005d447f07e9b4addadaeeecf21280d16"
+      "hash": "f3009061c9754f6fc85724f9de68bc490e4767e6"
     }
   ]
 }

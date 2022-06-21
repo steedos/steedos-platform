@@ -35,6 +35,7 @@ cfs:
     s3ForcePathStyle: ${STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE}
     signatureVersion: ${STEEDOS_CFS_AWS_S3_SIGNATURE_VERSION}
   steedosCloud:
+    region: ${STEEDOS_CFS_CLOUD_REGION}
     bucket: ${STEEDOS_CFS_CLOUD_BUCKET}
     endpoint: ${STEEDOS_CFS_CLOUD_ENDPOINT}
     accessKeyId: ${STEEDOS_CFS_CLOUD_ACCESSKEYID}

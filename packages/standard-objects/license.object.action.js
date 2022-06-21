@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@hotoa.com
+ * @Date: 2022-05-28 11:07:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-21 10:57:38
+ * @Description: 
+ */
 module.exports = {
   apply: function (object_name, record_id, fields) {
     var licenseServer = 'https://huayan.my.steedos.com:8443';
@@ -47,5 +54,9 @@ module.exports = {
       backdrop: 'static',
       keyboard: true
     })
+  },
+  upgrade: function () {
+    const { authToken, userId, spaceId } = Creator.USER_CONTEXT.user;
+    window.open(`https://www.steedos.cn/products/platform-enterprise?X-User-Id=${userId}&X-Space-Id=${spaceId}&X-Auth-Token=${authToken}`);
   }
 }

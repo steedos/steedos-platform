@@ -77,6 +77,8 @@ actions:
     label: Update License
   copySpaceId:
     label: Copy Space ID
+  upgrade:
+    label: Upgrade
 CustomLabels:
   license_action_sync: 
   license_action_changeSpaceLicense: Update License
