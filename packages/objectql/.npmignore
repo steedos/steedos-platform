@@ -2,3 +2,4 @@ tsconfig.json
 package-lock.json
 test
 steedos-config.yml
+src

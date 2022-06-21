@@ -1,2 +1,4 @@
-tsconfig.json
+src
+*.ts
 test
+tsconfig.json

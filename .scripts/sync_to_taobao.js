@@ -28,7 +28,6 @@ const packages = [
     "@steedos/plugin-dingtalk",
     "@steedos/plugin-qywx",
     "@steedos/steedos-plugin-schema-builder",
-    "@steedos/tailwind",
     "@steedos/webapp",
     "@steedos/workflow",
     "steedos-server",
