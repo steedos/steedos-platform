@@ -38,7 +38,6 @@ AjaxCollection = Package['steedos:base'].AjaxCollection;
 SteedosDataManager = Package['steedos:base'].SteedosDataManager;
 SteedosOffice = Package['steedos:base'].SteedosOffice;
 billingManager = Package['steedos:base'].billingManager;
-Theme = Package['steedos:theme'].Theme;
 Sortable = Package['rubaxa:sortable'].Sortable;
 CollectionHooks = Package['matb33:collection-hooks'].CollectionHooks;
 E164 = Package['steedos:e164-phones-countries'].E164;
