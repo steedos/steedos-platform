@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 16:26:16
+ * @LastEditTime: 2022-06-21 16:39:49
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -172,7 +172,7 @@ class File {
                 // 扫描病毒
                 if (VIRUS_SCAN_HOST) {
                     try {
-                        const result = await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { filePath: tempFilePath})
+                        const result = await objectql.getSteedosSchema().broker.call('~packages-@steedos/ee_virus-scan.execScanCommand', { filePath: tempFilePath })
                         if (!result.success) {
                             throw new Error(result.message);
                         }
@@ -184,14 +184,14 @@ class File {
                 }
 
                 // fs.renameSync(tempFilePath, fileStorePath); // EXDEV: cross-device link not permitted
-                const readStream=fs.createReadStream(tempFilePath);
-                const writeStream=fs.createWriteStream(fileStorePath);
+                const readStream = fs.createReadStream(tempFilePath);
+                const writeStream = fs.createWriteStream(fileStorePath);
                 readStream.pipe(writeStream);
-                readStream.on('end',function(){
+                readStream.on('end', function () {
                     fs.unlinkSync(tempFilePath);
                     callback(null);
                 });
-                readStream.on('error',function(err){
+                readStream.on('error', function (err) {
                     fs.unlinkSync(tempFilePath);
                     callback(err);
                 });
@@ -212,8 +212,8 @@ class File {
                     Body: stream
                 };
 
-                S3Client.upload(params, function (err, data) {
-                    console.log(err, data);
+                S3Client.putObject(params, function (err, data) {
+                    // console.log(err, data);
                     // 删除临时文件
                     fs.unlinkSync(tempFilePath);
 
@@ -243,7 +243,7 @@ class File {
                     req.httpRequest.headers['apikey'] = apikey;
                 });
                 req.send(function (err, data) {
-                    console.log(err, data);
+                    // console.log(err, data);
                     // 删除临时文件
                     fs.unlinkSync(tempFilePath);
 
@@ -295,8 +295,23 @@ async function createFileReadStream(fsCollectionName, fileKey) {
             Key: folder + fileKey
         };
         // 校验文件是否存在
-        await S3Client.headObject(params).promise();
-
+        const metaDataReq = S3Client.headObject(params);
+        await new Promise((resolve, reject) => {
+            metaDataReq.on('complete', function (resp) {
+                if (resp.error) {
+                    reject(resp.error);
+                } else {
+                    // define $response property so that it is not enumerable
+                    // this prevents circular reference errors when stringifying the JSON object
+                    resolve(Object.defineProperty(
+                        resp.data || {},
+                        '$response',
+                        { value: resp }
+                    ));
+                }
+            });
+            metaDataReq.send();
+        })
         return S3Client.getObject(params).createReadStream();
     }
     else if (STEEDOSCLOUD_STORE === storeName) {
@@ -318,7 +333,22 @@ async function createFileReadStream(fsCollectionName, fileKey) {
         metaDataReq.on('build', function () {
             metaDataReq.httpRequest.headers['apikey'] = apikey;
         });
-        await metaDataReq.promise();
+        await new Promise((resolve, reject) => {
+            metaDataReq.on('complete', function (resp) {
+                if (resp.error) {
+                    reject(resp.error);
+                } else {
+                    // define $response property so that it is not enumerable
+                    // this prevents circular reference errors when stringifying the JSON object
+                    resolve(Object.defineProperty(
+                        resp.data || {},
+                        '$response',
+                        { value: resp }
+                    ));
+                }
+            });
+            metaDataReq.send();
+        })
 
         const req = SteedosCloudClient.getObject(params);
         req.on('build', function () {

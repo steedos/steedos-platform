@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 11:20:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 13:58:08
+ * @LastEditTime: 2022-06-21 17:08:39
  * @Description: 
  */
 
@@ -148,7 +148,8 @@ function getS3ServiceParams() {
         region: null,
         accessKeyId: null, //required
         secretAccessKey: null, //required
-        ACL: defaultAcl
+        ACL: defaultAcl,
+        signatureVersion: 'v4'
     }, options);
     return serviceParams;
 }
@@ -225,7 +226,8 @@ function getCloudServiceParams() {
         region: null,
         accessKeyId: null, //required
         secretAccessKey: null, //required
-        ACL: defaultAcl
+        ACL: defaultAcl,
+        signatureVersion: 'v4'
     }, options);
     return serviceParams;
 }
