@@ -210,13 +210,16 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         if (!element.extend) {
             element.isMain = true;
         }
-        let startNo = 10;
-        _.each(element.fields, function (field) {
-            if (!_.has(field, 'sort_no')) {
-                field.sort_no = startNo;
-                startNo = startNo + 10;
-            }
-        })
+        if(!_.has(element, 'extend')){
+            let startNo = 10;
+            _.each(element.fields, function (field) {
+                if (!_.has(field, 'sort_no')) {
+                    field.sort_no = startNo;
+                    startNo = startNo + 10;
+                }
+            })
+        }
+        
         if (!element.fields) {
             element.fields = {}
         }
