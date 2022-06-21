@@ -15,7 +15,8 @@
     "@steedos/ee_service-plugin-license": "^2.2.2",
     "@steedos/ee_unpkg-local": "2.2.51-beta.1",
     "@steedos/ee_virus-scan": "2.2.51-beta.1",
-    "@steedos/service-community": "2.2.51-beta.1"
+    "@steedos/service-community": "2.2.51-beta.1",
+    "nats": "^1.4.12"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {

@@ -31,9 +31,7 @@
     "dotenv-flow": "^3.2.0",
     "moleculer": "^0.14.10",
     "moleculer-db": "^0.8.4",
-    "moleculer-db-adapter-mongo": "^0.4.7",
     "moleculer-web": "^0.10.4",
-    "nats": "^1.4.12",
     "steedos-server": "2.2.51-beta.1"
   },
   "private": false,
