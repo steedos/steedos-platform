@@ -31,7 +31,7 @@ Template.steedos_record_chat_messages.helpers
 	ownerAvatarUrl: (owner)->
 		avatarUrl = Creator.getCollection("users").findOne(owner)?.avatarUrl
 		if !avatarUrl
-			return Creator.getRelativeUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
+			return Creator.getRelativeUrl("/images/default-avatar.png")
 		return Steedos.absoluteUrl avatarUrl
 
 	permissions: ()->

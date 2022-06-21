@@ -64,7 +64,7 @@ Meteor.startup ->
 				</svg>
 			"""
 			res.write svg
-#			res.setHeader "Location", Steedos.absoluteUrl("/packages/steedos_base/client/images/default-avatar.png")
+#			res.setHeader "Location", Steedos.absoluteUrl("/images/default-avatar.png")
 #			res.writeHead 302
 			res.end()
 			return

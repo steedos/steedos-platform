@@ -197,8 +197,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/steedos/views/404.html', 'client');
 	api.addFiles('client/steedos/views/404.coffee', 'client');
 
-	api.addAssets('client/images/default-avatar.png', 'client');
-
 	api.addFiles('client/iframe/master.html', 'client');
 	api.addFiles('client/iframe/master.coffee', 'client');
 	api.addFiles('client/iframe/master.less', 'client');
