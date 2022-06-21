@@ -2336,14 +2336,6 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@2.0.23:
-  version "2.0.23"
-  resolved "https://registry.nlark.com/aws-sdk/download/aws-sdk-2.0.23.tgz#be21cab88609918699e79b380e060e02f4c89ba9"
-  integrity sha1-viHKuIYJkYaZ55s4DgYOAvTIm6k=
-  dependencies:
-    xml2js "0.2.6"
-    xmlbuilder "0.4.2"
-
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.npm.taobao.org/aws-sign2/download/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -8482,11 +8474,6 @@ saslprep@^1.0.0:
   dependencies:
     sparse-bitfield "^3.0.3"
 
-sax@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.npm.taobao.org/sax/download/sax-0.4.2.tgz#39f3b601733d6bec97105b242a2a40fd6978ac3c"
-  integrity sha1-OfO2AXM9a+yXEFskKipA/Wl4rDw=
-
 sax@0.6.x:
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/sax/download/sax-0.6.1.tgz#563b19c7c1de892e09bfc4f2fc30e3c27f0952b9"
@@ -9196,11 +9183,6 @@ subscriptions-transport-ws@^0.9.18, subscriptions-transport-ws@^0.9.19:
     iterall "^1.2.1"
     symbol-observable "^1.0.4"
     ws "^5.2.0 || ^6.0.0 || ^7.0.0"
-
-summernote@^0.8.11:
-  version "0.8.18"
-  resolved "https://registry.npm.taobao.org/summernote/download/summernote-0.8.18.tgz#be5c368b1c92de8a05039a9976157bdea7aae386"
-  integrity sha1-vlw2ixyS3ooFA5qZdhV73qeq44Y=
 
 superagent@^3.5.2:
   version "3.8.3"
@@ -10030,13 +10012,6 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.npm.taobao.org/xml-name-validator/download/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha1-auc+Bt5NjG5H+fsYH3jWSK1FfGo=
 
-xml2js@0.2.6:
-  version "0.2.6"
-  resolved "https://registry.nlark.com/xml2js/download/xml2js-0.2.6.tgz#d209c4e4dda1fc9c452141ef41c077f5adfdf6c4"
-  integrity sha1-0gnE5N2h/JxFIUHvQcB39a399sQ=
-  dependencies:
-    sax "0.4.2"
-
 xml2js@0.4.4:
   version "0.4.4"
   resolved "https://registry.npm.taobao.org/xml2js/download/xml2js-0.4.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fxml2js%2Fdownload%2Fxml2js-0.4.4.tgz#3111010003008ae19240eba17497b57c729c555d"
@@ -10052,11 +10027,6 @@ xml2js@^0.4.19, xml2js@^0.4.23:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
-
-xmlbuilder@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.nlark.com/xmlbuilder/download/xmlbuilder-0.4.2.tgz#1776d65f3fdbad470a08d8604cdeb1c4e540ff83"
-  integrity sha1-F3bWXz/brUcKCNhgTN6xxOVA/4M=
 
 xmlbuilder@>=1.0.0:
   version "15.1.1"

@@ -64,8 +64,8 @@ steedos:autoform-dx-date-box
 
 vazco:universe-autoform-select
 
-summernote:summernote@0.8.1
-mpowaga:autoform-summernote@0.4.4
+# summernote:summernote@0.8.1
+# mpowaga:autoform-summernote@0.4.4
 
 steedos:devexpress
 

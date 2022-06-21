@@ -113,7 +113,6 @@
     "push.js": "^1.0.12",
     "react-highlighter": "^0.4.3",
     "simplemde": "1.11.2",
-    "summernote": "^0.8.11",
     "xlsx": "0.10.6"
   },
   "resolutions": {
