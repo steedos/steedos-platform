@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 16:37:40
+ * @LastEditTime: 2022-06-21 10:07:10
  * @Description: 
  */
 
@@ -65,7 +65,11 @@ const authMiddleWare = async (req, res, next) => {
 router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req, res) {
     try {
 
-        if (process.env.FILE_DOWNLOAD_NEED_AUTH !== 'false') {
+        const { download } = req.query;
+
+        const { collectionName: FS_COLLECTION_NAME, id } = req.params;
+
+        if (!(process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC).split(',').includes(FS_COLLECTION_NAME)) {
             // 手动认证
             let user = await steedosAuth.auth(req, res);
             if (user.userId) {
@@ -77,9 +81,6 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
             }
         }
 
-        const { download } = req.query;
-
-        const { collectionName: FS_COLLECTION_NAME, id } = req.params;
         const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
 
         const collection = getCollection(DB_COLLECTION_NAME);
@@ -145,7 +146,7 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
         // 防止文件不存在时仍然下载0字节文件
         res.removeHeader('Content-Type');
         res.removeHeader('Content-Disposition');
-        res.status(error.statusCode || 500).send({ error: error.message|| error.code });
+        res.status(error.statusCode || 500).send({ error: error.message || error.code });
     }
 
 });

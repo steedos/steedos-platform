@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-16 16:20:37
+ * @LastEditTime: 2022-06-20 19:04:27
  * @Description: 
  */
 
@@ -16,24 +16,8 @@ const { moleculerGql: gql } = require("moleculer-apollo-server");
 import { getSteedosSchema, getUserLocale } from '../../..';
 import { getQueryFields } from "./getQueryFields";
 import { getPrimaryFieldType } from "./getPrimaryFieldType";
-const BASIC_TYPE_MAPPING = {
-    'text': 'String',
-    'textarea': 'String',
-    'html': 'String',
-    'url': 'String',
-    'email': 'String',
-    'date': 'Date',
-    'datetime': 'Date',
-    'time': 'Date',
-    'number': 'Float',
-    'currency': 'Float',
-    'boolean': 'Boolean'
-};
-const EXPAND_SUFFIX = '__expand';
-const DISPLAY_PREFIX = '_display';
-export const RELATED_PREFIX = '_related';
-const GRAPHQL_ACTION_PREFIX = 'graphql_';
 
+import { BASIC_TYPE_MAPPING, EXPAND_SUFFIX, DISPLAY_PREFIX, RELATED_PREFIX, GRAPHQL_ACTION_PREFIX } from "./consts";
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -679,3 +663,4 @@ export function getLocalService(objectApiName: string) {
 }
 
 export * from './getQueryFields';
+export * from './consts';
