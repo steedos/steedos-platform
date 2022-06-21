@@ -20,6 +20,8 @@
     "crypto-js": "^4.1.1",
     "d3": "^3.5.17",
     "lodash": "^4.17.21",
+    "marked": "^4.0.17",
+    "mermaid": "^9.1.2",
     "moment": "^2.24.0",
     "monaco-editor": "^0.33.0",
     "prop-types": "^15.7.2",

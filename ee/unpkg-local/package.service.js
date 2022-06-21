@@ -45,7 +45,9 @@ module.exports = {
 			'@steedos-ui/design-system',
 			'@steedos-ui/builder-widgets',
 			'@salesforce-ux/design-system',
-			'axios'
+			'axios',
+			'mermaid',
+			'marked'
 		],
 	},
 
