@@ -121,7 +121,8 @@ function lookupToAmisPicker(field, readonly){
         pickerSchema: Table.getTableSchema(tableFields, {
             top:  top
         }),
-        joinValues: false
+        joinValues: false,
+        extractValue: true
     }
     if(field.multiple){
         data.multiple = true
