@@ -49,7 +49,16 @@ function lookupToAmisPicker(field, readonly){
     const tableFields = [referenceTo.valueField];
     let i = 0;
     const searchableFields = [];
-    _.each(refObjectConfig.fields,function(field){
+
+
+    const fieldsArr = [];
+	_.each(refObjectConfig.fields , (field, field_name)=>{
+		if(!_.has(field, "name")){
+			field.name = field_name
+        }
+		fieldsArr.push(field)
+    })
+    _.each(_.sortBy(fieldsArr, "sort_no"),function(field){
         if(i < 5){
             if(!_.find(tableFields, function(f){
                 return f.name === field.name
@@ -69,7 +78,9 @@ function lookupToAmisPicker(field, readonly){
     };
 
     _.each(tableFields, (tableField)=>{
-        fields[tableField.name] = tableField;
+        if(!tableField.hidden){
+            fields[tableField.name] = tableField;
+        }
     });
 
     const source = getApi({
@@ -214,7 +225,7 @@ function getApi(object, recordId, fields, options){
     return {
         method: "post",
         url: graphql.getApi(),
-        data: graphql.getFindQuery(object, recordId, fields, Object.assign(options, {expand: false}))
+        data: graphql.getFindQuery(object, recordId, fields, Object.assign(options, {expand: true}))
     }
 }
 

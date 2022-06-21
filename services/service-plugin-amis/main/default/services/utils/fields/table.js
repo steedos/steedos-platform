@@ -33,7 +33,7 @@ function getOperation(fields){
 function getDetailColumn(){}
 
 function getTableColumns(fields){
-    const columns = [{name: '_index',type: 'text', width: 32}];
+    const columns = [{name: '_index',type: 'text', width: 32, placeholder: ""}];
     _.each(fields, function(field){
 
         const tpl = Tpl.getFieldTpl(field);
