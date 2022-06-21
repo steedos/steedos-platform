@@ -22,13 +22,14 @@ module.exports = {
             mixins: [SteedosService],
             settings: {
                 plugins: [
+                    '@steedos/ee_unpkg-local',
                     "@steedos/webapp-accounts",
                     "@steedos/plugin-dingtalk",
                     "@steedos/plugin-qywx",
                 ]
             }
         });
-        this.broker.createService(require('@steedos/ee_unpkg-local'));
+        // this.broker.createService(require('@steedos/ee_unpkg-local'));
         // 启动 sidecar服务: steedos services 跨语言访问
         // this.broker.createService(require("@steedos/service-sidecar"));
         // 字段级加密服务
