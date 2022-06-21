@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "index.js",
-  "version": "2.2.51-beta.2",
+  "version": "2.2.51-beta.4",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,11 +11,11 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_plugin-field-encryption": "2.2.51-beta.2",
+    "@steedos/ee_plugin-field-encryption": "2.2.51-beta.4",
     "@steedos/ee_service-plugin-license": "^2.2.2",
-    "@steedos/ee_unpkg-local": "2.2.51-beta.2",
-    "@steedos/ee_virus-scan": "2.2.51-beta.2",
-    "@steedos/service-community": "2.2.51-beta.2",
+    "@steedos/ee_unpkg-local": "2.2.51-beta.4",
+    "@steedos/ee_virus-scan": "2.2.51-beta.4",
+    "@steedos/service-community": "2.2.51-beta.4",
     "nats": "^1.4.12"
   },
   "homepage": "https://www.steedos.com",
