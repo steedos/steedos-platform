@@ -10,7 +10,7 @@ Template.adminMenu.helpers
 		if avatar
 			return Steedos.absoluteUrl("avatar/#{Meteor.userId()}?avatar=#{avatar}")
 		else
-			return Creator.getRelativeUrl("/packages/steedos_lightning-design-system/client/images/themes/oneSalesforce/lightning_lite_profile_avatar_96.png")
+			return Creator.getRelativeUrl("/images/default-avatar.png")
 
 	name: ()->
 		return Creator.getCollection("users").findOne()?.name
