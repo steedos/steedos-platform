@@ -12,6 +12,7 @@ try
 		config = objectql.getSteedosConfig();
 		settings = {
 			built_in_plugins: [
+				"@steedos/webapp-public",
 				"@steedos/service-ui",
 				"@steedos/service-cachers-manager",
 				"@steedos/unpkg",

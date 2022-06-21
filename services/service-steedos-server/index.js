@@ -35,6 +35,7 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
+			"@steedos/webapp-public",
 			"@steedos/service-ui",
 			"@steedos/service-cachers-manager",
 			"@steedos/workflow",

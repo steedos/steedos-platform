@@ -21,6 +21,7 @@
     "@steedos/service-meteor-package-loader": "2.2.51-beta.6",
     "@steedos/service-pages": "2.2.51-beta.6",
     "@steedos/service-plugin-amis": "2.2.51-beta.6",
+    "@steedos/webapp-public": "2.2.51-beta.6",
     "@steedos/service-ui": "2.2.51-beta.6",
     "@steedos/service-workflow": "2.2.51-beta.6",
     "@steedos/standard-process": "2.2.51-beta.6",
