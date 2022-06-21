@@ -18,9 +18,32 @@
     };
     
     try {
+        window['attrAccept'] = function (file, acceptedFiles) {
+            if (file && acceptedFiles) {
+              var acceptedFilesArray = Array.isArray(acceptedFiles) ? acceptedFiles : acceptedFiles.split(',');
+              var fileName = file.name || '';
+              var mimeType = (file.type || '').toLowerCase();
+              var baseMimeType = mimeType.replace(/\/.*$/, '');
+              return acceptedFilesArray.some(function (type) {
+                var validType = type.trim().toLowerCase();
+          
+                if (validType.charAt(0) === '.') {
+                  return fileName.toLowerCase().endsWith(validType);
+                } else if (validType.endsWith('/*')) {
+                  // This is something like a image/* mime type
+                  return baseMimeType === validType.replace(/\/.*$/, '');
+                }
+          
+                return mimeType === validType;
+              });
+            }
+          
+            return true;
+          }
+
         // 加载Amis SDK: 如果直接放到body中会导致meteor 编译后的 cordova.js 加载报错
         let amisSDKScript = document.createElement("script");
-        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js'));
+        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis@2.2.26/dist/amis-sdk.umd.min.js'));
         document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
