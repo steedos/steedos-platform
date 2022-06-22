@@ -701,11 +701,6 @@ function calcSteedosConfig(config: JsonMap){
         }
     });
 
-    if(config){
-        (config as any).setTenant = (tenant)=>{
-            config.tenant = defaultsDeep(tenant, config.tenant);
-        }
-    }
     return config
 }
 
@@ -737,6 +732,12 @@ export function getSteedosConfig(){
             }
         }
         STEEDOS_CONFIG = calcSteedosConfig(config);
+
+        if(STEEDOS_CONFIG){
+            (STEEDOS_CONFIG as any).setTenant = (tenant)=>{
+                STEEDOS_CONFIG.tenant = defaultsDeep(tenant, STEEDOS_CONFIG.tenant);
+            }
+        }
     // }else{
     //     throw new Error('Config file not found: ' + configPath);
     }
