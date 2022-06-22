@@ -13,7 +13,7 @@ function getFieldsTemplate(fields, expand){
                 const NAME_FIELD_KEY = objectql.getObject(field.reference_to).NAME_FIELD_KEY;
                 fieldsName.push(`${field.name}:${field.name}__expand{_id,${NAME_FIELD_KEY}}`)
             }else{
-                fieldsName.push(field.name)
+                fieldsName.push( field.alias ? `${field.alias}:${field.name}` : field.name)
             }
 
             if(field.type === 'date' || field.type == 'datetime' || field.type == 'boolean'){

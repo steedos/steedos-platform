@@ -85,7 +85,7 @@ function lookupToAmisPicker(field, readonly){
 
     const source = getApi({
         name: referenceTo.objectName
-    }, null, fields, {alias: 'rows', queryOptions: `filters: {__filters}, top: {__top}, skip: {__skip}, sort: "{__sort}"`});
+    }, null, fields, {expand: true, alias: 'rows', queryOptions: `filters: {__filters}, top: {__top}, skip: {__skip}, sort: "{__sort}"`});
     source.data.$term = "$term";
     source.data.$self = "$$";
    
@@ -156,9 +156,9 @@ function lookupToAmisSelect(field, readonly){
         apiInfo = getApi({
             name: referenceTo.objectName
         }, null, {
-            [referenceTo.labelField.name]: referenceTo.labelField,
-            [referenceTo.valueField.name]: referenceTo.valueField
-        }, {alias: 'options', queryOptions: `filters: {__filters}, top: {__top}`})
+            [referenceTo.labelField.name]: Object.assign({}, referenceTo.labelField, {alias: 'label'}),
+            [referenceTo.valueField.name]: Object.assign({}, referenceTo.valueField, {alias: 'value'})
+        }, {expand: false, alias: 'options', queryOptions: `filters: {__filters}, top: {__top}`})
     }else{
         apiInfo = {
             method: "post",
@@ -225,7 +225,7 @@ function getApi(object, recordId, fields, options){
     return {
         method: "post",
         url: graphql.getApi(),
-        data: graphql.getFindQuery(object, recordId, fields, Object.assign(options, {expand: true}))
+        data: graphql.getFindQuery(object, recordId, fields, options)
     }
 }
 
