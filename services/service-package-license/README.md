@@ -30,3 +30,10 @@
     }
 }
 ```
+## client js 中判断软件包许可证及软件包功能点:
+- Steedos.hasProduct(packageName, spaceId): 是否有软件包的许可证
+- Steedos.getProduct(packageName, spaceId): 获取软件包的许可证详细信息
+
+- Steedos.hasFeature(packageFeatureName, spaceId): 许可证中是否有指定的功能点
+- Steedos.getFeature(packageFeatureName, spaceId): 获取许可证中功能点详细信息
+
