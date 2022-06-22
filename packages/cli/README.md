@@ -8,7 +8,6 @@ npm i steedos-cli -g
 
 ### install from src
 ```
-git clone https://github/steedos/cli
 cd cli
 npm i -g
 ```
