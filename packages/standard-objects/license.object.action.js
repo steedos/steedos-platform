@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-05-28 11:07:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 10:57:38
+ * @LastEditTime: 2022-06-22 14:21:04
  * @Description: 
  */
 module.exports = {
@@ -56,7 +56,6 @@ module.exports = {
     })
   },
   upgrade: function () {
-    const { authToken, userId, spaceId } = Creator.USER_CONTEXT.user;
-    window.open(`https://www.steedos.cn/products/platform-enterprise?X-User-Id=${userId}&X-Space-Id=${spaceId}&X-Auth-Token=${authToken}`);
+    window.open(`https://www.steedos.com/products/platform-enterprise`);
   }
 }
