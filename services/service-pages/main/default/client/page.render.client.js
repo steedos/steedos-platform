@@ -344,11 +344,7 @@
             afterInsert: function (result) {
                 if (result.length > 0) {
                     var record = result[0];
-                    setTimeout(function () {
-                        var url = `/app/${appId}/${objectApiName}/view/${record._id}`
-                        FlowRouter.go(url)
-                    }
-                        , 1);
+                    SteedosUI.router.go({objectName: objectApiName, recordId: record._id, type: 'new'});
                     return true;
                 }
             }
