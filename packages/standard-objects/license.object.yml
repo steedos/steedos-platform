@@ -81,10 +81,10 @@ actions:
     label: Copy space id
     on: list
     visible: false
-  upgrade:
-    label: Upgrade
-    on: list
-    visible: true
+  # upgrade:
+  #   label: Upgrade
+  #   on: list
+  #   visible: true
 list_views:
   all:
     label: Al
