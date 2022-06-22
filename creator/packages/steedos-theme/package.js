@@ -23,7 +23,9 @@ Package.onUse(function(api) {
     'client/style.less',
     'client/sweetalert.less',
     'client/status.less',
-    'client/jstree.less'
+    'client/jstree.less',
+    'client/weui.css',
+    'client/weui.less'
   ], "client");
 
   
