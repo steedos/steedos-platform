@@ -21,29 +21,31 @@ export async function CliLogic(lng, packageDir) {
 
 async function translationPackage(lng, packageDir){
     const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
-    const core = require(require.resolve('@steedos/core/lib/init/i18n', {paths: [process.cwd()]}));
+    // const core = require(require.resolve('@steedos/core/lib/init/i18n', {paths: [process.cwd()]}));
     const I18n = require(require.resolve('@steedos/i18n', {paths: [process.cwd()]}));
-    const I18nInit = require(require.resolve('@steedos/i18n/lib/core_i18n', {paths: [process.cwd()]}));
+    // const I18nInit = require(require.resolve('@steedos/i18n/lib/core_i18n', {paths: [process.cwd()]}));
     const I18nExport = require(require.resolve('@steedos/i18n/lib/export_object_i18n', {paths: [process.cwd()]}));
-    var steedosSchema = objectql.getSteedosSchema();
-    objectql.loadStandardBaseObjects();
-    for (let dataSource in steedosSchema.getDataSources()) {
-        if(dataSource !='meteor'){
-            await steedosSchema.getDataSource(dataSource).loadFiles()
-            await steedosSchema.getDataSource(dataSource).init();
-        }
-    }
-    I18nInit.InitCoreI18n();
+    // var steedosSchema = objectql.getSteedosSchema();
+    // objectql.loadStandardBaseObjects();
+    // for (let dataSource in steedosSchema.getDataSources()) {
+    //     if(dataSource !='meteor'){
+    //         await steedosSchema.getDataSource(dataSource).loadFiles()
+    //         await steedosSchema.getDataSource(dataSource).init();
+    //     }
+    // }
+    // I18nInit.InitCoreI18n();
     
-    core.InitObjectI18n();
-    const objectConfigs = objectql.getOriginalObjectConfigs();
+    // core.InitObjectI18n();
+
     if(!path.isAbsolute(packageDir)){
         packageDir = path.join(process.cwd(), packageDir)
     }
+    await objectql.loadStandardBaseObjects(null);
+    await objectql.loadPackageMetadatas(path.join(packageDir, '**'), 'default');
+    const objectConfigs = objectql.getOriginalObjectConfigs();
     updateObjectsI18n(lng, packageDir, objectConfigs, {I18n, I18nExport, objectql});
 
-    const appConfigs = objectql.getAppConfigs();
-
+    const appConfigs = objectql.getConfigsFormFiles('app', path.join(packageDir, '**'));
     updateAppsI18n(lng, packageDir, appConfigs, {I18n, I18nExport, objectql});
 }
 

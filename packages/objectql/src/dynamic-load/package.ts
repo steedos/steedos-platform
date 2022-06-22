@@ -243,73 +243,75 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         _.each(getLazyLoadPermissions(element.name), function (permission) {
             util.extend(element.permission_set, {[permission.name]: permission})
         })
-
         addObjectConfig(element, datasource, null);
     }
 
-    loadObjectTriggers(packagePath, serviceName);
-    //此功能不支持微服务模式
-    loadObjectMethods(packagePath); 
+    if(getSteedosSchema().metadataBroker){
 
-    await addObjectConfigs(getSteedosSchema().metadataBroker, serviceName, packageObjects);
-    if (serviceName) {
-        for await (const packageField of packageFields) {
-            if (packageField && !_.includes(packageObjectApiNames, packageField.object_name)) {
+        loadObjectTriggers(packagePath, serviceName);
+        //此功能不支持微服务模式
+        loadObjectMethods(packagePath);
 
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageField.object_name }, {
-                    fields: {
-                        [packageField.name]: packageField
-                    }
-                }));
+        await addObjectConfigs(getSteedosSchema().metadataBroker, serviceName, packageObjects);
+        if (serviceName) {
+            for await (const packageField of packageFields) {
+                if (packageField && !_.includes(packageObjectApiNames, packageField.object_name)) {
+
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageField.object_name }, {
+                        fields: {
+                            [packageField.name]: packageField
+                        }
+                    }));
+                }
+            }
+
+            for await (const packageListview of packageListviews) {
+                if (packageListview && !_.includes(packageObjectApiNames, packageListview.object_name)) {
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageListview.object_name }, {
+                        list_views: {
+                            [packageListview.name]: packageListview
+                        }
+                    }));
+                }
+            }
+
+            for await (const packageButton of packageButtons) {
+                if (packageButton && !_.includes(packageObjectApiNames, packageButton.object_name)) {
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageButton.object_name }, {
+                        actions: {
+                            [packageButton.name]: packageButton
+                        }
+                    }));
+                }
+            }
+
+            for await (const packageAction of packageActions) {
+                if (packageAction && !_.includes(packageObjectApiNames, packageAction.object_name)) {
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageAction.object_name }, {
+                        actions: packageAction.actions
+                    }));
+                }
+            }
+
+            for await (const packageActionScript of packageActionScripts) {
+                if (packageActionScript && !_.includes(packageObjectApiNames, packageActionScript.object_name)) {
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageActionScript.object_name }, {
+                        actions: packageActionScript.actions
+                    }));
+                }
+            }
+
+            for await (const permission of packagePermissions) {
+                if (permission && !_.includes(packageObjectApiNames, permission.object_name)) {
+                    await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: permission.object_name }, {
+                        permission_set: {
+                            [permission.name]: permission
+                        }
+                    }));
+                }
             }
         }
 
-        for await (const packageListview of packageListviews) {
-            if (packageListview && !_.includes(packageObjectApiNames, packageListview.object_name)) {
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageListview.object_name }, {
-                    list_views: {
-                        [packageListview.name]: packageListview
-                    }
-                }));
-            }
-        }
-
-        for await (const packageButton of packageButtons) {
-            if (packageButton && !_.includes(packageObjectApiNames, packageButton.object_name)) {
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageButton.object_name }, {
-                    actions: {
-                        [packageButton.name]: packageButton
-                    }
-                }));
-            }
-        }
-
-        for await (const packageAction of packageActions) {
-            if (packageAction && !_.includes(packageObjectApiNames, packageAction.object_name)) {
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageAction.object_name }, {
-                    actions: packageAction.actions
-                }));
-            }
-        }
-
-        for await (const packageActionScript of packageActionScripts) {
-            if (packageActionScript && !_.includes(packageObjectApiNames, packageActionScript.object_name)) {
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: packageActionScript.object_name }, {
-                    actions: packageActionScript.actions
-                }));
-            }
-        }
-
-        for await (const permission of packagePermissions) {
-            if (permission && !_.includes(packageObjectApiNames, permission.object_name)) {
-                await getSteedosSchema().metadataRegister.addObjectConfig(serviceName, Object.assign({ extend: permission.object_name }, {
-                    permission_set: {
-                        [permission.name]: permission
-                    }
-                }));
-            }
-        }
+        await registerPackageFieldPermissions(packagePath, getSteedosSchema().metadataBroker, packagePath)
     }
-
-    await registerPackageFieldPermissions(packagePath, getSteedosSchema().metadataBroker, packagePath)
 }
