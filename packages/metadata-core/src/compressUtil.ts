@@ -292,11 +292,11 @@ class ZipDescription{
             }
 
             //profile必须要有license参数
-            if(metadataName == TypeInfoKeys.Profile){
-                if(typeof fileContent['license'] == 'undefined' || fileContent['license'] == null){
-                    throw new Error('Profile requires attribute "license".\n Path:' + filePath)
-                }
-            }
+            // if(metadataName == TypeInfoKeys.Profile){
+            //     if(typeof fileContent['license'] == 'undefined' || fileContent['license'] == null){
+            //         throw new Error('Profile requires attribute "license".\n Path:' + filePath)
+            //     }
+            // }
             if(inDeploy == true && metadataName == TypeInfoKeys.Listview){
                 if(typeof fileContent['filters'] != 'undefined' && typeof fileContent['filters'] == 'function'){
                     throw new Error('type of [filters] in file should not be function .\n Path:' + filePath)
