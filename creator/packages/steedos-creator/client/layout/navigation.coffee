@@ -181,6 +181,9 @@ Template.creatorNavigation.helpers
 			isActive = FlowRouter.current().path == obj.url
 
 		if isActive
+			Steedos.setDocumentTitle({
+				tabName: if obj.is_temp then obj.label else obj.name
+			})
 			return "slds-is-active"
 
 	object_url: ()->

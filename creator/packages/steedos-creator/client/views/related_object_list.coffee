@@ -15,7 +15,10 @@ getRelateObj = ()->
 
 getListviewName = ()->
 	return "related_listview_" + Session.get("object_name") + '_' + Session.get("related_object_name") + '_' + getRelatedFieldName()
-
+getRecordName = ()->
+	object_name = Session.get "object_name"
+	name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
+	return Template.instance()?.record.get()[name_field_key]
 Template.related_object_list.helpers
 	related_object_name: ()->
 		return Session.get("related_object_name")
@@ -23,7 +26,11 @@ Template.related_object_list.helpers
 	related_object_label: ()->
 		related_object_name = Session.get("related_object_name")
 		relatedObj = getRelateObj()
-		return relatedObj?.label || Creator.getObject(related_object_name).label
+		label = relatedObj?.label || Creator.getObject(related_object_name).label
+		Steedos.setDocumentTitle({
+			pageName: [label, getRecordName()]
+		})
+		return label;
 
 	is_file: ()->
 		return Session.get("related_object_name") == "cms_files"
@@ -33,9 +40,7 @@ Template.related_object_list.helpers
 		return Creator.getObject(object_name).label
 	
 	record_name: ()->
-		object_name = Session.get "object_name"
-		name_field_key = Creator.getObject(object_name).NAME_FIELD_KEY
-		return Template.instance()?.record.get()[name_field_key]
+		return getRecordName();
 
 	record_url: ()->
 		object_name = Session.get "object_name"

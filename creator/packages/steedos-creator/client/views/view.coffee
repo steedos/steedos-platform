@@ -310,6 +310,9 @@ Template.creator_view.helpers
 		if record and name_field_key
 			record_name = record.label || record[name_field_key]
 			Session.set('record_name', record_name)
+		Steedos.setDocumentTitle({
+			pageName: record_name
+		})
 		return record_name;
 
 	backUrl: ()->

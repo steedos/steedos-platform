@@ -159,6 +159,9 @@ Template.creator_list_wrapper.helpers
 				Session.set("list_view_id", list_view._id)
 			else
 				Session.set("list_view_id", list_view.name)
+		Steedos.setDocumentTitle({
+			pageName: list_view.label || list_view.name 
+		})
 		return list_view
 
 	list_view_url: (list_view)->

@@ -1,4 +1,11 @@
 moment = require('meteor/momentjs:moment').moment;
+DOCUMENT_TITLE_SUFFIX = "Steedos";
+DOCUMENT_TITLE_PROPS = {
+	suffix: DOCUMENT_TITLE_SUFFIX,
+	separator: " | ",
+	tabName: '',
+	pageName: ''
+}
 Steedos.Helpers =
 
 	isPad: ()->
@@ -50,6 +57,24 @@ Steedos.Helpers =
 	setAppTitle: (title)->
 		Session.set("app_title", title);
 		document.title = title;
+
+	setDocumentTitle: (props)->
+		if _.has(props, 'tabName') && DOCUMENT_TITLE_PROPS.tabName != props.tabName
+			props.pageName = ''
+		DOCUMENT_TITLE_PROPS = Object.assign(DOCUMENT_TITLE_PROPS, props);
+		titles = [];
+		if DOCUMENT_TITLE_PROPS.pageName
+			if _.isArray(DOCUMENT_TITLE_PROPS.pageName)
+				_.each(DOCUMENT_TITLE_PROPS.pageName, (_pageName)->
+					titles.push _pageName
+				)
+			else
+				titles.push DOCUMENT_TITLE_PROPS.pageName
+		if DOCUMENT_TITLE_PROPS.tabName
+			titles.push DOCUMENT_TITLE_PROPS.tabName
+		if DOCUMENT_TITLE_PROPS.suffix
+			titles.push DOCUMENT_TITLE_PROPS.suffix
+		Steedos.setAppTitle(titles.join(DOCUMENT_TITLE_PROPS.separator));
 
 	getLocale: ()->
 		return Session.get("steedos-locale")
