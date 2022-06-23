@@ -22,6 +22,7 @@
     "git_version": "node .scripts/.git_push_version.js",
     "git_tag": "node .scripts/git_tag.js",
     "build": "lerna run build",
+    "i18n_cn": "lerna run i18n_cn",
     "clean": "lerna clean",
     "changed": "lerna changed",
     "git": "git config core.autocrlf true && git config core.filemode false",
