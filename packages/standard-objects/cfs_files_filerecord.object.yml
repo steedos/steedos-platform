@@ -69,6 +69,13 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true 
+  customer:
+    allowCreate: false
+    allowDelete: true
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
 
 actions:
   online_preview:
