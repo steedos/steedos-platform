@@ -75,10 +75,6 @@ fields:
     label: 允许添加留言
     help: 
     description: 
-  enable_audit:
-    label: 记录字段历史
-    help: 
-    description: 
   enable_inline_edit:
     label: 允许编辑单个字段
     help: 
