@@ -1,0 +1,100 @@
+name: pages
+label: 微页面
+description: 
+fields:
+  dashboard_filters_enabled:
+    label: Use Dashboard Level Filters
+    help: 
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  is_active:
+    label: 状态
+    help: 
+    description: 
+  is_archived:
+    label: 已归档
+    help: 
+    description: 
+  is_draft:
+    label: is_draft
+    help: 
+    description: 
+  is_favorite:
+    label: is_favorite
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  label:
+    label: 名称
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  render_engine:
+    label: 渲染器
+    help: 
+    options:
+      - label: Amis
+        value: amis
+      - label: Redash
+        value: redash
+    description: 
+  schema:
+    label: 
+    help: 
+    description: 
+  slug:
+    label: slug
+    help: 
+    description: 
+  type:
+    label: 类型
+    help: 
+    options:
+      - label: 应用程序页面
+        value: app
+      - label: 记录页面
+        value: record
+      - label: 列表页面
+        value: list
+      - label: 表单
+        value: form
+    description: 
+  version:
+    label: 版本号
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
+actions:
+  customPage:
+    label: 自定义
+  deploy:
+    label: 发布
+  disable:
+    label: 禁用
+  enable:
+    label: 启用
+  resetSchema:
+    label: 重置
+  showDesign:
+    label: 设计器

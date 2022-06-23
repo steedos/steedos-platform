@@ -1,0 +1,48 @@
+name: page_assignments
+label: 页面分配
+description: 
+fields:
+  app:
+    label: 应用
+    help: 
+    description: 
+  desktop:
+    label: 桌面端
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  mobile:
+    label: 移动端
+    help: 
+    description: 
+  page:
+    label: 页面
+    help: 
+    description: 
+  profile:
+    label: 简档
+    help: 
+    description: 
+  record_type:
+    label: 记录类型
+    help: 
+    description: 
+  type:
+    label: 授权类型
+    help: 
+    options:
+      - label: 组织默认设置
+        value: orgDefault
+      - label: 应用程序默认设置
+        value: appDefault
+      - label: 应用程序和简档
+        value: appRecordProfile
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
