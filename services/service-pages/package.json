@@ -3,7 +3,9 @@
   "version": "2.2.52-beta.1",
   "main": "package.service.js",
   "scripts": {
-    "i18n_cn": "steedos i18n zh-CN -s ./../../steedos-projects/project-template -p ./../../services/service-pages"
+    "i18n": "concurrently yarn:i18n:*",
+    "i18n:cn": "steedos i18n zh-CN -s ./../../steedos-projects/project-template -p ./../../services/service-pages",
+    "i18n:en": "steedos i18n en -s ./../../steedos-projects/project-template -p ./../../services/service-pages"
   },
   "license": "MIT",
   "private": false,
