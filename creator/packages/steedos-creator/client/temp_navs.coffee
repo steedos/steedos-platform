@@ -212,7 +212,6 @@ Meteor.startup ()->
             return
         if !menus or !menus.length
             return
-        record = Creator.getObjectRecord()
         # objectNames = Creator.getAppObjectNames()
         record_name = Session.get('record_name')
         menuNames = _.pluck(menus, "id")
@@ -228,6 +227,7 @@ Meteor.startup ()->
             unless object
                 return
             if recordId
+                record = Creator.getObjectRecord()  # 此代码存在性能问题, 先调整调用位置,只有在需要时才调用. 剩余问题是如果需要显示就回多查询一次数据, 如果要彻底解决,需要重构临时导航项功能.
                 unless record
                     return
                 url = Creator.getObjectUrl(objectName, recordId)
