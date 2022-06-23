@@ -515,7 +515,7 @@ exports.workflowPush = async function (options, spaceId, oauthUrl) {
     // 获取申请单
     let instanceId = options.payload.instance;
     let insObj = steedosSchema.getObject("instances");
-    let instance = await insObj.findOne({ _id: instanceId });
+    let instance = await insObj.findOne(instanceId);
 
     let inboxUrl = oauthUrl + '/workflow/space/' + spaceId + '/inbox/' + options.payload.instance;
 
