@@ -111,6 +111,12 @@ async function updateObjectsI18n(lng, packageDir, configs, content){
         if(filename && filename.indexOf("node_modules") < 0){
             let objectName = config.name;
             let ranslationsFolder = path.join(path.dirname(filename), '../../', OBJECT_TRANSLATIONS);
+
+            // 兼容standard_object文件夹结构
+            if(!fs.existsSync(path.join(path.dirname(filename), '../../', 'objects'))){
+                ranslationsFolder = path.join(path.dirname(filename),  OBJECT_TRANSLATIONS)
+            }
+
             if(!mkdirsSync(ranslationsFolder)){
                 console.info(`${colors.red('Failed to create folder: ')} ${ranslationsFolder}`);
                 return
@@ -231,6 +237,11 @@ async function updateAppsI18n(lng, packageDir, configs, content){
         if(filename && filename.indexOf("node_modules") < 0){
             let appName = config._id;
             let ranslationsFolder = path.join(path.dirname(filename), '../', TRANSLATIONS);
+
+            // 兼容standard_object文件夹结构
+            if(!fs.existsSync(path.join(path.dirname(filename), '../', 'applications'))){
+                ranslationsFolder = path.join(path.dirname(filename), TRANSLATIONS);
+            }
             if(!mkdirsSync(ranslationsFolder)){
                 console.info(`${colors.red('Failed to create folder: ')} ${ranslationsFolder}`);
                 return
