@@ -154,6 +154,6 @@ module.exports = {
             throw new Error("此对象已有权限对象记录")
         }
 
-        await initPermissionSet(doc, this.userId, this.spaceId);
+        await initPermissionSet(Object.assign({permission_set_id: permission_set_id}, doc), this.userId, this.spaceId);
     }
 }
