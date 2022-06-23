@@ -20,6 +20,10 @@ export async function CliLogic(lng, packageDir) {
 }
 
 async function translationPackage(lng, packageDir){
+    require('dotenv-flow').config({
+        silent: true,
+        path: process.cwd()
+    });
     const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
     // const core = require(require.resolve('@steedos/core/lib/init/i18n', {paths: [process.cwd()]}));
     const I18n = require(require.resolve('@steedos/i18n', {paths: [process.cwd()]}));
@@ -107,6 +111,12 @@ async function updateObjectsI18n(lng, packageDir, configs, content){
         if(filename && filename.indexOf("node_modules") < 0){
             let objectName = config.name;
             let ranslationsFolder = path.join(path.dirname(filename), '../../', OBJECT_TRANSLATIONS);
+
+            // 兼容standard_object文件夹结构
+            if(!fs.existsSync(path.join(path.dirname(filename), '../../', 'objects'))){
+                ranslationsFolder = path.join(path.dirname(filename),  OBJECT_TRANSLATIONS)
+            }
+
             if(!mkdirsSync(ranslationsFolder)){
                 console.info(`${colors.red('Failed to create folder: ')} ${ranslationsFolder}`);
                 return
@@ -170,18 +180,30 @@ async function updateObjectsI18n(lng, packageDir, configs, content){
                 })
 
                 _.each(newFieldKeys, function(key){
+                    if(!_translationData.fields){
+                        _translationData.fields = {}
+                    }
                     _translationData.fields[key] = data.fields[key]
                 })
 
                 _.each(newGroupKeys, function(key){
+                    if(!_translationData.groups){
+                        _translationData.groups = {}
+                    }
                     _translationData.groups[key] = data.groups[key]
                 })
 
                 _.each(newListviewKeys, function(key){
+                    if(!_translationData.listviews){
+                        _translationData.listviews = {}
+                    }
                     _translationData.listviews[key] = data.listviews[key]
                 })
 
                 _.each(newActionKeys, function(key){
+                    if(!_translationData.actions){
+                        _translationData.actions = {}
+                    }
                     _translationData.actions[key] = data.actions[key]
                 })
 
@@ -215,6 +237,11 @@ async function updateAppsI18n(lng, packageDir, configs, content){
         if(filename && filename.indexOf("node_modules") < 0){
             let appName = config._id;
             let ranslationsFolder = path.join(path.dirname(filename), '../', TRANSLATIONS);
+
+            // 兼容standard_object文件夹结构
+            if(!fs.existsSync(path.join(path.dirname(filename), '../', 'applications'))){
+                ranslationsFolder = path.join(path.dirname(filename), TRANSLATIONS);
+            }
             if(!mkdirsSync(ranslationsFolder)){
                 console.info(`${colors.red('Failed to create folder: ')} ${ranslationsFolder}`);
                 return

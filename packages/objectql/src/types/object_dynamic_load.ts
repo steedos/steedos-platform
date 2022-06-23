@@ -232,7 +232,6 @@ export const addObjectConfig = async (objectConfig: SteedosObjectTypeConfig, dat
     _.remove(_objectConfigs, {name: object_name, datasource: datasource});
     delete config.__filename
     perfectObjectConfig(config)
-    if(object_name === 'objects' && datasource==='default'){throw new Error(`debug error`)}
     _objectConfigs.push(config);
     const delayLoadQueue = clone(delayLoadExtendObjectConfigQueue[object_name]);
     if(delayLoadQueue && delayLoadQueue.length > 0){
