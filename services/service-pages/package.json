@@ -3,7 +3,7 @@
   "version": "2.2.52-beta.1",
   "main": "package.service.js",
   "scripts": {
-    "i18n_cn": "env-cmd -f ./../../steedos-projects/project-template/.env.local steedos i18n zh-CN -s ./../../steedos-projects/project-template -p ."
+    "i18n_cn": "steedos i18n zh-CN -s ./../../steedos-projects/project-template -p ./../../services/service-pages"
   },
   "license": "MIT",
   "private": false,
