@@ -20,6 +20,10 @@ export async function CliLogic(lng, packageDir) {
 }
 
 async function translationPackage(lng, packageDir){
+    require('dotenv-flow').config({
+        silent: true,
+        path: process.cwd()
+    });
     const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
     // const core = require(require.resolve('@steedos/core/lib/init/i18n', {paths: [process.cwd()]}));
     const I18n = require(require.resolve('@steedos/i18n', {paths: [process.cwd()]}));
