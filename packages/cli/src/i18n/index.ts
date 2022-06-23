@@ -170,18 +170,30 @@ async function updateObjectsI18n(lng, packageDir, configs, content){
                 })
 
                 _.each(newFieldKeys, function(key){
+                    if(!_translationData.fields){
+                        _translationData.fields = {}
+                    }
                     _translationData.fields[key] = data.fields[key]
                 })
 
                 _.each(newGroupKeys, function(key){
+                    if(!_translationData.groups){
+                        _translationData.groups = {}
+                    }
                     _translationData.groups[key] = data.groups[key]
                 })
 
                 _.each(newListviewKeys, function(key){
+                    if(!_translationData.listviews){
+                        _translationData.listviews = {}
+                    }
                     _translationData.listviews[key] = data.listviews[key]
                 })
 
                 _.each(newActionKeys, function(key){
+                    if(!_translationData.actions){
+                        _translationData.actions = {}
+                    }
                     _translationData.actions[key] = data.actions[key]
                 })
 
