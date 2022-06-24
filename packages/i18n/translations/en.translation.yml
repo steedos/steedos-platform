@@ -157,6 +157,9 @@ CustomLabels:
   steedos_info: >-
     Steedos Platform is an open source low code development platform. You can easily create intelligent and mobile enterprise applications by clicking the mouse.
   steedos_version: Version
+  steedos_platform_enterprise_product: Product
+  steedos_platform_enterprise_usernumber: User Count
+  steedos_platform_enterprise_expiredata: Expire At
   steedos_commit_date: Commit Date
   steedos_build_date: Build Date
   steedos_company: Company
