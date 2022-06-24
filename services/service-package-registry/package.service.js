@@ -10,13 +10,13 @@ const packageLicense = require('@steedos/service-package-license');
 const axios = require('axios');
 const _ = require(`lodash`);
 const path = require(`path`);
-const objectql = require('@steedos/objectql');
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./main/default/manager/util');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const { MoleculerError } = require("moleculer").Errors;
-
+const validator = require('validator');
+const npa = require("npm-package-arg");
 const login = require('./main/default/manager/login');
 
 const HEADER_AUTH = 'Authorization';
@@ -75,6 +75,8 @@ module.exports = {
 		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
 		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY,
 		STEEDOS_REGISTRY_URL: process.env.STEEDOS_REGISTRY_URL ? process.env.STEEDOS_REGISTRY_URL : 'https://registry.steedos.cn/',
+		STEEDOS_CLOUD_SYNC_PACKAGES: validator.toBoolean(process.env.STEEDOS_CLOUD_SYNC_PACKAGES || 'false', true),
+		STEEDOS_INITIAL_PACKAGES: process.env.STEEDOS_INITIAL_PACKAGES
 	},
 
 	/**
@@ -92,13 +94,6 @@ module.exports = {
                 path: "/getProjectNodes"
             },
             async handler(ctx) {
-                // let schema = objectql.getSteedosSchema();
-				// let broker = schema.broker;
-				// const serviceList = broker.registry.getServiceList({ withActions: false });
-				// const services = _.filter(serviceList, (_service)=>{
-				// 	return _service.name == this.name;
-				// })
-				// return services;
 				const data = await ctx.broker.call('metadata.filter', {key: `#package_install_node.*`}, {meta: ctx.meta})
 				const nodes = [];
 				_.each(data,(item)=>{
@@ -236,21 +231,29 @@ module.exports = {
 					} catch (error) {
 						console.error(`login steedos registry fail: `, error.message);
 					}
-					const result = await this.getCloudSaasPurchasedPackages();
+					const settings = this.settings;
+					const syncCloudPackages = settings.STEEDOS_CLOUD_SYNC_PACKAGES;
+					let result = null;
+					if(syncCloudPackages){
+						result = await this.getCloudSaasPurchasedPackages();
+					}
 					//同步软件包许可证
 					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
-					for (const _package of result.packages) {
-						try {
-							const { name, version, label, description } = _package
-							let enable = true; //安装已购买的软件包时先默认启用
-							//TODO 处理 registry_url
-							const packageInfo = await this.installPackage(name, version, label, description, enable, ctx.broker);
-							installPackages.push(packageInfo)
-						} catch (error) {
-							if(error.stderr){
-								installErrors[_package.name] = error.stderr
-							}else{
-								installErrors[_package.name] = error.message
+					if(result){
+						for (const _package of result.packages) {
+							try {
+								const { name, version, label, description } = _package
+								let enable = true; //安装已购买的软件包时先默认启用
+								//TODO 处理 registry_url
+								// 安装最新版
+								const packageInfo = await this.installPackage(name, null, label, description, enable, ctx.broker);
+								installPackages.push(packageInfo)
+							} catch (error) {
+								if(error.stderr){
+									installErrors[_package.name] = error.stderr
+								}else{
+									installErrors[_package.name] = error.message
+								}
 							}
 						}
 					}
@@ -317,6 +320,11 @@ module.exports = {
 					}
 					throw new MoleculerError(errorInfo, 500, "ERR_SOMETHING");
 				}
+			}
+		},
+		initialPackages: {
+			async handler(ctx) {
+				return await this.initialPackages();
 			}
 		}
 	},
@@ -562,6 +570,55 @@ module.exports = {
 				// }
 				await login.loginToRegistry(adminPhone, apiKey, `${adminPhone}@steedos.com`, registryUrl, undefined);
 				login.setYarnrcScopes(scopes, registryUrl);
+			}
+		},
+		initialPackages: {
+			async handler(){
+				const settings = this.settings;
+				const packages = settings.STEEDOS_INITIAL_PACKAGES;
+				if(_.isString(packages)){
+					for (const packageName of packages.split(',')) {
+						try {
+							const parsed = npa(packageName);
+							const installProps = {
+								url: null,
+								name: null,
+								version: null
+							};
+							switch (parsed.type) {
+								case "tag":
+									installProps.name = parsed.name;
+									installProps.version = parsed.rawSpec;
+									break;
+								case "version":
+									installProps.name = parsed.name;
+									installProps.version = parsed.rawSpec;
+									break;
+								case "range":
+									installProps.name = parsed.name;
+									installProps.version = parsed.rawSpec;
+									break;
+								case "directory":
+								case "remote":
+								case "file":
+								case "git":
+									installProps.url = parsed.rawSpec;
+									break;
+								case "alias":
+									throw new Error(`not support ${parsed.type}`);
+							}
+							if(installProps.url){
+								//module, version, url, auth, enable, registry_url, broker
+								await this.installPackageFromUrl(installProps.url, installProps.version, installProps.url, null, true, null, this.broker);
+							}else{
+								//module, version, label, description, enable, broker
+								await this.installPackage(installProps.name, installProps.version, null, null, true, this.broker);
+							}
+						} catch (error) {
+							this.broker.logger.error(`initialPackages: ${packageName}. ${error.message}`);
+						}
+					}
+				}
 			}
 		}
 	},

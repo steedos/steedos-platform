@@ -282,9 +282,14 @@ module.exports = {
 			} catch (error) {
 				console.log(chalk.red(error.message));
 			}finally{
-				Initializing = false;
+				try {
+					await ctx.broker.call('~packages-project-server.initialPackages', {}, {});
+				} catch (error) {
+					console.error(`工作区初始化失败：installPurchasedPackages error`, error)
+				}finally{
+					Initializing = false;
+				}
 			}
-
 		}
 	},
 	actions: {
