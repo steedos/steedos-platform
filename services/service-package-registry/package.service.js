@@ -581,7 +581,7 @@ module.exports = {
 			await this.loginSteedosRegistry();
 			console.info(`login steedos registry success`);
 		} catch (error) {
-			console.error(`login steedos registry fail: `, error.message);
+			// console.error(`login steedos registry fail: `, error.message);
 		}
 
 		await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
