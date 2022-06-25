@@ -83,7 +83,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --force-publish --exact --yes
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-push --no-git-tag-version --force-publish --exact --yes
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --force-publish --exact --yes --dist-tag next
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-push --no-git-tag-version --force-publish --exact --yes --dist-tag next
           
         env:
           CI: false
