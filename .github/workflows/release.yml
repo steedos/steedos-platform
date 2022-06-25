@@ -59,9 +59,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
-      - name: Lerna version
-        run: |
-          lerna version ${{ steps.branch-name.outputs.tag }} --no-git-tag-version --force-publish --exact --yes
+      # - name: Lerna version
+      #   run: |
+      #     lerna version ${{ steps.branch-name.outputs.tag }} --no-git-tag-version --force-publish --exact --yes
 
       - run: yarn --frozen-lockfile
 
@@ -77,19 +77,11 @@ jobs:
           npm install -g mkdirp
           yarn build
 
-      - name: Create commits & Push
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
-          git push
-
       - name: Lerna publish 2.1
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish --yes
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --force-publish --exact --yes
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
@@ -98,11 +90,19 @@ jobs:
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish --yes --dist-tag next
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --force-publish --exact --yes --dist-tag next
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
+      - name: Create commits & Push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add . 
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git push
+
       - name: Create Docker Release
         # if: steps.version.outputs.is_stable == 'true'
         id: create_release
