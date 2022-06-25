@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-node-red-app",
-  "version": "2.2.52-beta.11",
+  "version": "2.2.52-beta.20",
   "keywords": [
     "steedos",
     "node-red"
@@ -30,9 +30,10 @@
   },
   "dependencies": {
     "@geek/spinner": "1.0.0",
-    "@steedos/node-red-app-template": "2.2.52-beta.11",
+    "@steedos/node-red-app-template": "2.2.52-beta.20",
     "chalk": "3.0.0",
     "commander": "4.1.0",
     "fs-extra": "8.1.0"
-  }
+  },
+  "gitHead": "dc227d1e170135f54c30bd445d0fd1de46b64a24"
 }
