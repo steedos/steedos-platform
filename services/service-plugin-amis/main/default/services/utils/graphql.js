@@ -67,7 +67,18 @@ function getSaveQuery(object, recordId, fields, options){
     }
 }
 
-function getSaveDataTpl(){
+function getSaveDataTpl(fields){
+    let imgFieldsKeys = [];
+    let imgFields = {};
+    fields.forEach((item)=>{
+        if(item.type === 'image'){
+            imgFieldsKeys.push(item.name);
+            imgFields[item.name] = {
+                name: item.name,
+                multiple: item.multiple
+            };
+        }
+    })
     return `
         const formData = api.data.$;
         const objectName = api.data.objectName;
@@ -76,6 +87,26 @@ function getSaveDataTpl(){
         delete formData.created_by;
         delete formData.modified;
         delete formData.modified_by;
+
+        let imgFieldsKeys = ${JSON.stringify(imgFieldsKeys)};
+        let imgFields = ${JSON.stringify(imgFields)};
+        imgFieldsKeys.forEach((item)=>{
+            let imgFieldValue = formData[item];
+            if(imgFieldValue && imgFieldValue.length){
+                // 因为表单初始化接口的接收适配器中为image字段值添加了url前缀（为了字段编辑时正常显示图片），所以保存时移除（为了字段值保存时正常保存id,而不是url）。
+                if(imgFields[item].multiple){
+                    if(imgFieldValue instanceof Array){
+                        formData[item] = imgFieldValue.map((value)=>{ 
+                            let itemValue = value?.split('/');
+                            return itemValue[itemValue.length - 1];
+                        });
+                    }
+                }else{
+                    let imgValue = imgFieldValue.split('/');
+                    formData[item] = imgValue[imgValue.length - 1];
+                }
+            }
+        })
 
         let query = \`mutation{record: \${objectName}__insert(doc: {__saveData}){_id}}\`;
         if(formData.recordId){
@@ -86,9 +117,9 @@ function getSaveDataTpl(){
     `
 }
 
-function getSaveRequestAdaptor(){
+function getSaveRequestAdaptor(fields){
     return `
-        ${getSaveDataTpl()}
+        ${getSaveDataTpl(fields)}
         api.data = {query: query.replace('{__saveData}', __saveData)};
         return api;
     `

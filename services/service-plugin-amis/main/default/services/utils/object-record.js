@@ -79,6 +79,41 @@ function getConvertDataScriptStr(fields){
     return scriptStr;
 }
 
+/*
+    img字段值添加URL前缀使其在amis中正常显示图片。
+*/
+function getAddUrlPrefixForImgFieldsFun(fields){
+    let imgFieldsKeys = [];
+    let imgFields = {};
+    let rootUrl = Meteor.absoluteUrl('/api/files/images/');
+    fields.forEach((item)=>{
+        if(item.type === 'image'){
+            imgFieldsKeys.push(item.name);
+            imgFields[item.name] = {
+                name: item.name,
+                multiple: item.multiple
+            };
+        }
+    })
+    return `
+                let imgFieldsKeys = ${JSON.stringify(imgFieldsKeys)};
+                let imgFields = ${JSON.stringify(imgFields)};
+                let rootUrl = ${JSON.stringify(rootUrl)};
+                imgFieldsKeys.forEach((item)=>{
+                    let imgFieldValue = data[item];
+                    if(imgFieldValue && imgFieldValue.length){
+                        if(imgFields[item].multiple){
+                            if(imgFieldValue instanceof Array){
+                                data[item] = imgFieldValue.map((value)=>{ return rootUrl + value});
+                            }
+                        }else{
+                            data[item] = rootUrl + imgFieldValue;
+                        }
+                    }
+                })
+    `
+}
+
 function getEditFormInitApi(object, recordId, fields){
     return {
         method: "post",
@@ -89,6 +124,8 @@ function getEditFormInitApi(object, recordId, fields){
             var data = payload.data.data[0];
             if(data){
                 ${getConvertDataScriptStr(fields)}
+                // image字段值添加URL前缀
+                ${getAddUrlPrefixForImgFieldsFun(fields)}
             };
             payload.data = data;
             delete payload.extensions;
@@ -103,7 +140,7 @@ function getSaveApi(object, recordId, fields, options){
         method: 'post',
         url: graphql.getApi(),
         data: graphql.getSaveQuery(object, recordId, fields, options),
-        requestAdaptor: graphql.getSaveRequestAdaptor(),
+        requestAdaptor: graphql.getSaveRequestAdaptor(fields),
         responseData: {
             "recordId": "${record._id}"
         },

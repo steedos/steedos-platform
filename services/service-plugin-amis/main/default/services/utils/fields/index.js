@@ -5,6 +5,7 @@ const Lookup = require('./lookup');
 const AmisFormInputs = [
     'text',
     'date',
+    'image',
     'datetime',
     'time',
     'number',
@@ -313,7 +314,35 @@ function convertSFieldToAmisField(field, readonly) {
             }
             break;
         case 'image':
-            //TODO
+            rootUrl = Meteor.absoluteUrl('/api/files/images/');
+            convertData = {
+                type: getAmisStaticFieldType('image', readonly),
+                receiver: {
+                    method: "post",
+                    url: "${context.rootUrl}/s3/images",
+                    adaptor: `
+var rootUrl = ${JSON.stringify(rootUrl)};
+payload = {
+    status: response.status == 200 ? 0 : response.status,
+    msg: response.statusText,
+    data: {
+        value: payload._id,
+        filename: payload.original.name,
+        url: rootUrl + payload._id,
+    }
+}
+return payload;
+                    `,
+                    headers: {
+                        Authorization: "Bearer ${context.tenantId},${context.authToken}"
+                    }
+                }
+            }
+            if(field.multiple){
+                convertData.multiple = true;
+                convertData.joinValues = false;
+                convertData.extractValue = true;
+            }
             break;
         case 'formula':
             //TODO
