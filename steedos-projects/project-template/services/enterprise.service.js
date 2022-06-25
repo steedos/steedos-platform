@@ -36,5 +36,7 @@ module.exports = {
         // this.broker.createService(require("@steedos/ee_plugin-field-encryption"));
         // 附件病毒扫描
         // this.broker.createService(require("@steedos/ee_virus-scan"));
+        // 记录审计日志
+        // this.broker.createService(require("@steedos/ee_audit-records"));
     }
 }
