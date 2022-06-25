@@ -86,6 +86,8 @@ actions:
     label: 新建
   invite_space_users:
     label: 邀请注册
+  upgrade:
+    label: 升级
 CustomLabels:
   spaces_action_pay_records: 订单
   spaces_action_upgrade: 升级

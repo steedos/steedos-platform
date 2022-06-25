@@ -86,6 +86,8 @@ actions:
     label: New
   invite_space_users:
     label: Invite Users
+  upgrade:
+    label: Upgrade
 CustomLabels:
   spaces_action_pay_records: 
   spaces_action_upgrade: 
