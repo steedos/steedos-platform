@@ -59,7 +59,8 @@ const loadPackages = async ()=>{
                         paths: [path.join(userDir, 'node_modules')]
                     }))
                     if(packagePath){
-                        await loadPackage(packageName);
+                        const packageInfo = await loadPackage(packageName);
+                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     }
                 } catch (error) {
                     try {
@@ -76,12 +77,10 @@ const loadPackages = async ()=>{
                     packagePath = path.resolve(process.cwd(), packagePath)
                 }
                 if(packagePath){
-                    await loadPackage(packageName, packagePath);
+                    const packageInfo = await loadPackage(packageName, packagePath);
+                    appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
                 }
             }
-
-            
-
         }
     }
 }

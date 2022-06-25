@@ -120,7 +120,7 @@ router.post('/api/nodes/enable', core.requireAuthentication, async function (req
 router.get('/api/nodes/versions', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
-    console.log(`req.query`, req.query)
+    // console.log(`req.query`, req.query)
     const body = req.query;
     const { module } = body || {};
     if(!module){

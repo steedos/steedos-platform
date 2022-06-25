@@ -1,0 +1,37 @@
+name: widgets
+label: 部件
+description: 
+fields:
+  label:
+    label: 名称
+    help: 
+    description: 
+  name:
+    label: API Name
+    help: 
+    description: 
+  options:
+    label: options
+    help: 
+    description: 
+  owner:
+    label: 所有者
+    help: 
+    description: 
+  page:
+    label: page
+    help: 
+    description: 
+  type:
+    label: type
+    help: 
+    description: 
+  visualization:
+    label: visualization
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看

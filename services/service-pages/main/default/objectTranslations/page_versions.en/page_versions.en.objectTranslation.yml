@@ -1,0 +1,40 @@
+name: page_versions
+label: 页面版本
+description: 
+fields:
+  description:
+    label: 描述
+    help: 
+    description: 
+  is_active:
+    label: 已发布
+    help: 
+    description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
+  page:
+    label: 页面
+    help: 
+    description: 
+  schema:
+    label: 
+    help: 
+    description: 
+  version:
+    label: 版本号
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
+actions:
+  standard_delete:
+    label: standard_delete
+  standard_delete_many:
+    label: standard_delete_many
+  standard_new:
+    label: standard_new

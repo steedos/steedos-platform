@@ -1,11 +1,21 @@
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.lib.js');
+var _ = require('lodash');
 
 function loadObjectPermission(doc){
     var dbObject = objectCore.getObjectFromDB(doc.object_name);
     var objectDataSourceName = objectCore.getDataSourceName(dbObject);
     try {
-        doc.name = Creator.getCollection("permission_set").findOne(doc.permission_set_id).name;
+        if(_.includes(['admin', 'user', 'customer', 'supplier'], doc.permission_set_id)){
+            doc.name = doc.permission_set_id
+        }else{
+            const record = Creator.getCollection("permission_set").findOne(doc.permission_set_id);
+            if(record){
+                doc.name = record.name;
+            }else{
+                throw new Error(`Not found permission_set: ${doc.permission_set_id}`);
+            }
+        }
         objectql.addPermissionConfig(doc.object_name, doc);
     } catch (error) {
         console.error(error)

@@ -1,12 +1,12 @@
 {
   "name": "@steedos/standard-objects",
   "private": false,
-  "version": "2.2.52-beta.1",
+  "version": "2.2.52-beta.3",
   "description": "Standard objects for steedos",
   "main": "index.js",
   "license": "Apache",
   "scripts": {
-    "i18n": "concurrently yarn:i18n:*",
+    "i18n-": "concurrently yarn:i18n:*",
     "i18n:cn": "steedos i18n zh-CN -s ./../../steedos-projects/project-template -p ./../../packages/standard-objects",
     "i18n:en": "steedos i18n en -s ./../../steedos-projects/project-template -p ./../../packages/standard-objects"
   },
