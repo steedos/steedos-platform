@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-13 14:35:47
+ * @LastEditTime: 2022-06-25 10:03:27
  * @Description: 
  */
 "use strict";
@@ -10,6 +10,8 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const { initKey } = require('./main/default/helpers/initKey');
+const chalk = require('chalk');
+const { NEED_CONFIG_MASTER_KEY } = require('./main/default/helpers/consts')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -55,11 +57,7 @@ module.exports = {
     },
 
     merged(schema) {
-        // 检查依赖的环境变量是否配置，如未配置则不应加载此软件包
-        if (!process.env.STEEDOS_CSFLE_MASTER_KEY
-        ) {
-            throw new Error(`字段级加密软件包未启用，因为环境变量STEEDOS_CSFLE_MASTER_KEY未配置。`);
-        }
+
     },
 
     /**
@@ -73,6 +71,12 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        // 检查依赖的环境变量是否配置
+        if (!process.env.STEEDOS_CSFLE_MASTER_KEY) {
+            console.log(chalk.yellow(NEED_CONFIG_MASTER_KEY));
+            return;
+        }
+
         // 初始化密钥
         await initKey();
     },
