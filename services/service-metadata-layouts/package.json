@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-layouts",
-  "version": "2.2.52-beta.8",
+  "version": "2.2.52-beta.9",
   "description": "",
   "main": "lib/layouts.service.js",
   "scripts": {
