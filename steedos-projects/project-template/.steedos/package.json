@@ -5,7 +5,10 @@
     "license": "MIT",
     "author": "",
     "dependencies": {
-        "@steedos-labs/oa": "2.1",
-        "@steedos-labs/project": "2.1.63"
+        "@steedos-labs/contract": "2.1.64",
+        "@steedos-labs/master": "2.1.63",
+        "@steedos-labs/oa": "2.1.64",
+        "@steedos-labs/project": "2.1.63",
+        "@steedos-labs/workflow": "2.1.62"
     }
 }
