@@ -89,7 +89,7 @@ jobs:
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.1') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish from-package --yes
+          lerna publish from-git --yes
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
@@ -98,7 +98,7 @@ jobs:
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish from-package --yes --dist-tag next
+          lerna publish from-git --yes --dist-tag next
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
