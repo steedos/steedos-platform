@@ -111,10 +111,6 @@ fields:
     type: boolean
     label: Enable Chatter
     group: Switch
-  enable_audit:
-    type: boolean
-    label: Enable Audit
-    group: Switch
   enable_inline_edit:
     type: boolean
     defaultValue: true

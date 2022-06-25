@@ -78,10 +78,6 @@ fields:
     label: Enable Chatter
     help: 
     description: 
-  enable_audit:
-    label: Enable Audit
-    help: 
-    description: 
   enable_inline_edit:
     label: Enable Single Field Edit
     help: 

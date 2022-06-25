@@ -153,6 +153,9 @@ CustomLabels:
   steedos_about: 关于
   steedos_info: 华炎魔方，创新的使用配置文件描述业务模型和业务功能，开发人员只需要编写简单的配置文件就可以构建自定义应用程序，并部署到电脑、平板、手机三个平台。
   steedos_version: 版本
+  steedos_platform_enterprise_product: 产品
+  steedos_platform_enterprise_usernumber: 用户数
+  steedos_platform_enterprise_expiredata: 续费日期
   steedos_commit_date: 修订日期
   steedos_build_date: 发布日期
   steedos_company: 技术支持

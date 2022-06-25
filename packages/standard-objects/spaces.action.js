@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-25 10:22:31
+ * @Description: 
+ */
 module.exports = {
     invite_space_users: function(object_name, record_id, fields){
         var inviteToken = Steedos.getInviteToken();
@@ -82,5 +89,8 @@ module.exports = {
     //         toastr.error(err);
     //         $("body").removeClass("loading");
     //     }
-    // }
+    // },
+    upgrade: function () {
+        window.open(`https://www.steedos.com/products/platform-enterprise`);
+    }
   }

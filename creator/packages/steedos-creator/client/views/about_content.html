@@ -1,3 +1,10 @@
+<!--
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:56
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-24 10:18:02
+ * @Description: 
+-->
 <template name="creator_about_content">
 	<div class="creator-about-content">
 		<div class="form-group">
@@ -16,6 +23,32 @@
 						<span class="weui_input">{{steedosInfoVersion}}</span>
 					</div>
 				</div>
+				{{#with platformEnterPriseInfo}}
+					<div class="weui_cell">
+						<div class="weui_cell_hd">
+							<span class="weui_label" style="cursor: default;">{{_ "steedos_platform_enterprise_product"}}</span>
+						</div>
+						<div class="weui_cell_bd weui_cell_primary text-muted">
+							<span class="weui_input">{{product_label}}</span>
+						</div>
+					</div>
+					<div class="weui_cell">
+						<div class="weui_cell_hd">
+							<span class="weui_label" style="cursor: default;">{{_ "steedos_platform_enterprise_usernumber"}}</span>
+						</div>
+						<div class="weui_cell_bd weui_cell_primary text-muted">
+							<span class="weui_input">{{user_number}}</span>
+						</div>
+					</div>
+					<div class="weui_cell">
+						<div class="weui_cell_hd">
+							<span class="weui_label" style="cursor: default;">{{_ "steedos_platform_enterprise_expiredata"}}</span>
+						</div>
+						<div class="weui_cell_bd weui_cell_primary text-muted">
+							<span class="weui_input">{{ dateFormat end_date }}</span>
+						</div>
+					</div>
+				{{/with}}
 				<div class="weui_cell">
 					<div class="weui_cell_hd">
 						<span class="weui_label" style="cursor: default;">{{_ "steedos_company"}}</span>

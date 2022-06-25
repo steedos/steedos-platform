@@ -2,11 +2,15 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 19:46:49
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-13 14:47:59
+ * @LastEditTime: 2022-06-25 10:09:11
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
+const {
+    NEED_CONFIG_MASTER_KEY,
+    NEED_PLATFORM_ENTERPRISE
+} = require('./consts')
 
 /**
  * 获取需要加密的字段
@@ -50,7 +54,35 @@ async function encryptFieldValue(objectName, doc) {
     }
 }
 
+/**
+ * 对象开启字段级加密功能时校验许可证，是否是企业版，如不是企业版则提示
+ * @param {string} spaceId 工作区ID/魔方ID
+ */
+async function checkIsEnterprise(triggerContext) {
+    const { doc, spaceId } = triggerContext;
+    if (doc.enable_encryption) {
+        const allow = await objectql.isPlatformEnterPrise(spaceId)
+        if (!allow) {
+            throw new Error(NEED_PLATFORM_ENTERPRISE);
+        }
+    }
+}
+
+/**
+ * 检查依赖的环境变量是否配置
+ */
+function checkMasterKey(triggerContext) {
+    const { doc } = triggerContext;
+    if (doc.enable_encryption) {
+        if (!process.env.STEEDOS_CSFLE_MASTER_KEY) {
+            throw new Error(NEED_CONFIG_MASTER_KEY)
+        }
+    }
+}
+
 module.exports = {
     getRequireEncryptionFields,
-    encryptFieldValue
+    encryptFieldValue,
+    checkIsEnterprise,
+    checkMasterKey
 }

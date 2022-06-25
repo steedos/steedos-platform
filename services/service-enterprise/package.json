@@ -11,6 +11,7 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
+    "@steedos/ee_audit-records": "2.2.52-beta.3",
     "@steedos/ee_plugin-field-encryption": "2.2.52-beta.3",
     "@steedos/ee_service-plugin-license": "^2.2.2",
     "@steedos/ee_unpkg-local": "2.2.52-beta.3",

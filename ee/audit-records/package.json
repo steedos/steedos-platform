@@ -1,0 +1,11 @@
+{
+  "name": "@steedos/ee_audit-records",
+  "version": "2.2.52-beta.1",
+  "main": "package.service.js",
+  "scripts": {},
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,4 @@
+name: enable_audit
+type: boolean
+label: Enable Audit
+group: Switch

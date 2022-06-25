@@ -1,0 +1,6 @@
+name: object_fields
+fields:
+  enable_encryption:
+    label: Encrypt
+    help:
+    description:
