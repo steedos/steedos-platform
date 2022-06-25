@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-pages",
-  "version": "2.2.52-beta.9",
+  "version": "2.2.52-beta.10",
   "main": "package.service.js",
   "scripts": {
     "i18n": "concurrently yarn:i18n:*",

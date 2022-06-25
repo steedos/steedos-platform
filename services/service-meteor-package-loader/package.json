@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.2.52-beta.9",
+  "version": "2.2.52-beta.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/objectql": "2.2.52-beta.9",
+    "@steedos/objectql": "2.2.52-beta.10",
     "clone": "^2.1.2",
     "globby": "^11.0.2",
     "moleculer": "^0.14.12",
