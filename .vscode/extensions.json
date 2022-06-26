@@ -1,5 +1,5 @@
 {
     "recommendations": [
-        "redhat.vscode-yaml", "mongodb.mongodb-vscode", "gruntfuggly.todo-tree", "Arjun.swagger-viewer"
+        "redhat.vscode-yaml", "cweijan.vscode-mysql-client2", "gruntfuggly.todo-tree"
     ]
 }
