@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 18:50:27
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-06-27 13:47:23
  * @Description: 
  */
 
@@ -625,8 +625,36 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "summary") {
                     displayObj[name] = doc[name] || "";
-                } else if (fType == "image") {
-                    displayObj[name] = doc[name] || "";
+                }  else if (fType == "image" || fType == "file") {
+                    let fileLabel = "";
+                    let value = doc[name];
+                    if (!value) {
+                        continue;
+                    }
+                    let fileObjectName = fType == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+                    let fileObject = steedosSchema.getObject(fileObjectName);
+                    const fileNameFieldKey = "original.name";
+                    if (field.multiple) {
+                        let fileRecords = await fileObject.find({
+                            filters: [`_id`, "in", value],
+                            fields: [fileNameFieldKey],
+                        });
+                        fileLabel = _.map(fileRecords, (fileRecord)=>{
+                            return fileRecord.original?.name;
+                        }).join(",");
+                    } else {
+                        let fileRecord = (
+                            await fileObject.find({
+                                filters: [`_id`, "=", value],
+                                fields: [fileNameFieldKey],
+                            })
+                        )[0];
+                        console.log("==fileRecord==", fileRecord);
+                        if (fileRecord) {
+                            fileLabel = fileRecord["original"]["name"];
+                        }
+                    }
+                    displayObj[name] = fileLabel;
                 } else {
                     console.error(
                         `Graphql Display: need to handle new field type ${field.type} for ${objectName}.`
