@@ -67,7 +67,10 @@ function getSaveQuery(object, recordId, fields, options){
     }
 }
 
-function getSaveDataTpl(fields){
+/*
+    img字段值移除URL前缀使其保存时正常保存id,而不是url。
+*/
+function getScriptForRemoveUrlPrefixForImgFields(fields){
     let imgFieldsKeys = [];
     let imgFields = {};
     fields.forEach((item)=>{
@@ -79,15 +82,10 @@ function getSaveDataTpl(fields){
             };
         }
     })
-    return `
-        const formData = api.data.$;
-        const objectName = api.data.objectName;
-        const fieldsName = Object.keys(formData);
-        delete formData.created;
-        delete formData.created_by;
-        delete formData.modified;
-        delete formData.modified_by;
-
+    if(!imgFieldsKeys.length){
+        return '';
+    }
+    return  `
         let imgFieldsKeys = ${JSON.stringify(imgFieldsKeys)};
         let imgFields = ${JSON.stringify(imgFields)};
         imgFieldsKeys.forEach((item)=>{
@@ -107,7 +105,19 @@ function getSaveDataTpl(fields){
                 }
             }
         })
+    `
+}
 
+function getSaveDataTpl(fields){
+    return `
+        const formData = api.data.$;
+        const objectName = api.data.objectName;
+        const fieldsName = Object.keys(formData);
+        delete formData.created;
+        delete formData.created_by;
+        delete formData.modified;
+        delete formData.modified_by;
+        ${getScriptForRemoveUrlPrefixForImgFields(fields)}
         let query = \`mutation{record: \${objectName}__insert(doc: {__saveData}){_id}}\`;
         if(formData.recordId){
             query = \`mutation{record: \${objectName}__update(id: "\${formData.recordId}", doc: {__saveData}){_id}}\`;

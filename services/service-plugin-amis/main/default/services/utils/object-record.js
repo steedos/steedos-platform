@@ -82,7 +82,7 @@ function getConvertDataScriptStr(fields){
 /*
     img字段值添加URL前缀使其在amis中正常显示图片。
 */
-function getAddUrlPrefixForImgFieldsFun(fields){
+function getScriptForAddUrlPrefixForImgFields(fields){
     let imgFieldsKeys = [];
     let imgFields = {};
     let rootUrl = Meteor.absoluteUrl('/api/files/images/');
@@ -95,7 +95,11 @@ function getAddUrlPrefixForImgFieldsFun(fields){
             };
         }
     })
+    if(!imgFieldsKeys.length){
+        return '';
+    }
     return `
+                // image字段值添加URL前缀
                 let imgFieldsKeys = ${JSON.stringify(imgFieldsKeys)};
                 let imgFields = ${JSON.stringify(imgFields)};
                 let rootUrl = ${JSON.stringify(rootUrl)};
@@ -124,8 +128,7 @@ function getEditFormInitApi(object, recordId, fields){
             var data = payload.data.data[0];
             if(data){
                 ${getConvertDataScriptStr(fields)}
-                // image字段值添加URL前缀
-                ${getAddUrlPrefixForImgFieldsFun(fields)}
+                ${getScriptForAddUrlPrefixForImgFields(fields)}
             };
             payload.data = data;
             delete payload.extensions;
