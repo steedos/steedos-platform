@@ -111,6 +111,12 @@ function getScriptForRemoveUrlPrefixForImgFields(fields){
 function getSaveDataTpl(fields){
     return `
         const formData = api.data.$;
+        for (key in formData){
+            // image、select等字段清空值后保存的空字符串转换为null。
+            if(formData[key] === ''){
+                formData[key] = null;
+            }
+        }
         const objectName = api.data.objectName;
         const fieldsName = Object.keys(formData);
         delete formData.created;

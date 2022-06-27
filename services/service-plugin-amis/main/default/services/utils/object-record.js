@@ -129,6 +129,12 @@ function getEditFormInitApi(object, recordId, fields){
             if(data){
                 ${getConvertDataScriptStr(fields)}
                 ${getScriptForAddUrlPrefixForImgFields(fields)}
+                //初始化接口返回的字段移除字段值为null的字段
+                for (key in data){
+                    if(data[key] === null){
+                        delete data[key];
+                    }
+                }
             };
             payload.data = data;
             delete payload.extensions;
