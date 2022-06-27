@@ -96,7 +96,8 @@
 				_visible = action?._visible
 				if _visible
 					try
-						_visible = _visible.trim()
+						if _.isString(_visible)
+							_visible = _visible.trim()
 						if Steedos.isExpression(_visible)
 							# 支持页面布局中写visible_on函数表达式，页面布局按钮的显示条件不生效 #3340
 							action.visible = (object_name, record_id, record_permissions, record) ->
