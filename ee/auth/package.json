@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_auth",
-  "version": "2.2.52-beta.3",
+  "version": "2.2.52-beta.20",
   "main": "package.service.js",
   "scripts": {
     "build": "tsc"
