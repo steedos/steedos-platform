@@ -206,6 +206,7 @@ function convertSFieldToAmisField(field, readonly) {
                 joinValues: false,
                 options: getSelectFieldOptions(field),
                 extractValue: true,
+                clearable: true,
                 labelField: 'label',
                 valueField: 'value',
                 tpl: readonly ? Tpl.getSelectTpl(field) : null
