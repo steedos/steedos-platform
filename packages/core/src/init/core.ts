@@ -16,6 +16,16 @@ import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
 
+const session = require('express-session')
+
+routersApp.use(session({
+    secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 800000 },
+    name: 'ivan'
+}))
+
 export const sha1 = (contents) => {
     var hash = createHash('sha1');
     hash.update(contents);

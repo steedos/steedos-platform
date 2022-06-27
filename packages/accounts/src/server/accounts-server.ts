@@ -96,6 +96,14 @@ export class AccountsServer {
     return () => this.hooks.off(eventName, callback);
   }
 
+  public async getUserProfile(userId, serviceName = 'password'){
+    const service = this.services[serviceName];
+    if(!service){
+      throw new Error(`Service ${serviceName} not found`);
+    }
+    return await service.getUserProfile(userId);
+  }
+
   public async loginWithService(
     serviceName: string,
     params: any,

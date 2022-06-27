@@ -1,0 +1,18 @@
+{
+  "name": "@steedos/ee_auth",
+  "version": "2.2.52-beta.3",
+  "main": "package.service.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@techpass/passport-openidconnect": "^0.3.2",
+    "passport": "^0.6.0",
+    "node-fetch": "^2.x"
+  }
+}

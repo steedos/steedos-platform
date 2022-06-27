@@ -1,0 +1,124 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-24 17:03:59
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-27 18:07:03
+ * @Description: 
+ */
+"use strict";
+const project = require('./package.json');
+const packageName = project.name;
+const packageLoader = require('@steedos/service-package-loader');
+const objectql = require('@steedos/objectql');
+const authController = require("./main/default/routes/auth");
+const core = require("./main/default/routes/core");
+
+const { passport } = core.auth;
+/**
+ * @typedef {import('moleculer').Context} Context Moleculer's Context
+ */
+module.exports = {
+    name: packageName,
+    namespace: "steedos",
+    mixins: [packageLoader],
+    /**
+     * Settings
+     */
+    settings: {
+        packageInfo: {
+            path: __dirname,
+            name: packageName
+        },
+        SSO_KEYCLOAK_CONFIG_URL: process.env.SSO_KEYCLOAK_CONFIG_URL,
+        SSO_KEYCLOAK_CLIENT_ID: process.env.SSO_KEYCLOAK_CLIENT_ID,
+        SSO_KEYCLOAK_CLIENT_SECRET: process.env.SSO_KEYCLOAK_CLIENT_SECRET,
+        SSO_KEYCLOAK_NAME: process.env.SSO_KEYCLOAK_NAME || 'Steedos',
+        SSO_KEYCLOAK_LOGO: process.env.SSO_KEYCLOAK_LOGO || '/images/logo.png'
+    },
+
+    /**
+     * Dependencies
+     */
+    dependencies: ['~packages-standard-objects'],
+
+    /**
+     * Actions
+     */
+    actions: {
+        
+    },
+
+    /**
+     * Events
+     */
+    events: {
+
+    },
+
+    /**
+     * Methods
+     */
+    methods: {
+
+    },
+
+    merged(schema) {
+
+    },
+
+    /**
+     * Service created lifecycle event handler
+     */
+    async created() {
+
+    },
+
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
+        
+        try {
+
+            // 检查环境变量
+            const settings = this.settings;
+
+            if (!settings.SSO_KEYCLOAK_CONFIG_URL) {
+                throw new Error("请配置 SSO_KEYCLOAK_CONFIG_URL 环境变量");
+            }
+
+            if(!settings.SSO_KEYCLOAK_CLIENT_ID) {
+                throw new Error("请配置 SSO_KEYCLOAK_CLIENT_ID 环境变量");
+            }
+
+            if(!settings.SSO_KEYCLOAK_CLIENT_SECRET){
+                throw new Error("请配置 SSO_KEYCLOAK_CLIENT_SECRET 环境变量");
+            }
+
+            const strategy = await authController.oidcStrategyFactory();
+
+            passport.use("oidc", strategy);
+
+            objectql.getSteedosConfig().setTenant({
+                sso_providers: {
+                    oidc: {
+                        name: settings.SSO_KEYCLOAK_NAME,
+                        title: settings.SSO_KEYCLOAK_NAME,
+                        logo: settings.SSO_KEYCLOAK_LOGO,
+                        url: '/api/global/auth/oidc/config'
+                    }
+                }
+            });
+        } catch (error) {
+            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            throw error;
+        }
+    },
+
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
+        objectql.getSteedosConfig().setTenant({sso_providers: { oidc : false }})
+    }
+};

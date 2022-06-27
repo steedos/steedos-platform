@@ -20,6 +20,8 @@ import oauth2Login from './oauth2/login';
 import oauth2Logout from './oauth2/logout';
 import initServer from './rest-express/endpoints/initServer';
 export { hydraAdmin } from './oauth2/config';
+export { setAuthCookies, clearAuthCookies } from './rest-express/utils/steedos-auth';
+export { getMergedTenant } from './core';
 
 declare var WebApp;
 
