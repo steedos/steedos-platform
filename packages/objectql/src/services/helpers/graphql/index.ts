@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-27 13:55:48
+ * @LastEditTime: 2022-06-27 22:14:12
  * @Description: 
  */
 
@@ -92,15 +92,17 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             type += `${name}: JSON `;
             return;
         }
+        let isLookup = (field.type == "lookup" || field.type == "master_detail") &&
+            field.reference_to && _.isString(field.reference_to);
+        let isFile = field.type == "image" || field.type == "file";
         if (BASIC_TYPE_MAPPING[field.type]) {
             type += `${name}: ${BASIC_TYPE_MAPPING[field.type]} `;
-        } else if (
-            (field.type == "lookup" || field.type == "master_detail") &&
-            field.reference_to &&
-            _.isString(field.reference_to)
-        ) {
-            let refTo = field.reference_to;
-            // 判断能否根据refTo找到对象，如果找到则说明对象已加载，否则return
+        } else if (isLookup || isFile) {
+            let refTo = field.reference_to as string;
+            if(isFile){
+                // TODO: cfs_images_filerecord对象不存在，需要额外处理
+                refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+            }
             let objMetaData = getLocalService(refTo);
             if (refTo != objectName && (!objMetaData || objMetaData.settings.deleted)) {
                 return;
@@ -631,6 +633,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     if (!value) {
                         continue;
                     }
+                    // TODO: cfs_images_filerecord对象不存在，需要额外处理
                     let fileObjectName = fType == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
                     let fileObject = steedosSchema.getObject(fileObjectName);
                     const fileNameFieldKey = "original.name";
