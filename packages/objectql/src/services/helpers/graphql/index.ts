@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-27 13:47:23
+ * @LastEditTime: 2022-06-27 13:55:48
  * @Description: 
  */
 
@@ -649,7 +649,6 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                                 fields: [fileNameFieldKey],
                             })
                         )[0];
-                        console.log("==fileRecord==", fileRecord);
                         if (fileRecord) {
                             fileLabel = fileRecord["original"]["name"];
                         }
