@@ -2,6 +2,7 @@ name: flow_positions
 icon: person_account
 label: Workflow Position
 hidden: true
+version: 2
 fields:
   role:
     type: master_detail
