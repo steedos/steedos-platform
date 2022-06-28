@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-27 22:14:12
+ * @LastEditTime: 2022-06-28 15:19:22
  * @Description: 
  */
 
@@ -543,13 +543,17 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                         displayObj[name] = "";
                     }
                 } else if (fType == "date") {
-                    displayObj[name] = moment(doc[name])
-                        .utcOffset(utcOffset)
+                    // 注意日期类型存的是utc0点，不需要执行utcOffset
+                    displayObj[name] = moment.utc(doc[name])
                         .format("YYYY-MM-DD");
                 } else if (fType == "datetime") {
                     displayObj[name] = moment(doc[name])
                         .utcOffset(utcOffset)
-                        .format("YYYY-MM-DD H:mm");
+                        .format("YYYY-MM-DD HH:mm");
+                }  else if (fType == "time") {
+                    // 注意时间类型走的是utc时间，不需要执行utcOffset
+                    displayObj[name] = moment.utc(doc[name])
+                        .format("HH:mm");
                 } else if (fType == "number") {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "currency") {
