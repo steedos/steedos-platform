@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_sso",
-  "version": "2.2.52-beta.20",
+  "version": "2.2.52-beta.21",
   "main": "package.service.js",
   "scripts": {
     "build": "tsc"
@@ -11,11 +11,12 @@
     "access": "public"
   },
   "dependencies": {
+    "@steedos/accounts": "2.2.52-beta.21",
+    "@steedos/objectql": "2.2.52-beta.21",
+    "@steedos/service-package-loader": "2.2.52-beta.21",
     "@techpass/passport-openidconnect": "^0.3.2",
-    "@steedos/accounts": "2.2.52-beta.20",
-    "@steedos/objectql": "2.2.52-beta.20",
-    "@steedos/service-package-loader": "2.2.52-beta.20",
-    "passport": "^0.6.0",
-    "node-fetch": "^2.x"
-  }
+    "node-fetch": "^2.x",
+    "passport": "^0.6.0"
+  },
+  "gitHead": "b31ea478616a5ab135da0e9582ed370be20fb167"
 }
