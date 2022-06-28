@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.strategyFactory = exports.buildVerifyFn = void 0;
 const tslib_1 = require("tslib");
 const node_fetch_1 = require("node-fetch");
+const context_1 = require("../../../context");
 const OIDCStrategy = require("@techpass/passport-openidconnect").Strategy;
 const { authenticateThirdParty } = require("./third-party-common");
 const buildVerifyFn = saveUserFn => {
@@ -30,8 +31,8 @@ const buildVerifyFn = saveUserFn => {
                 refreshToken: refreshToken,
             },
         };
-        return authenticateThirdParty(thirdPartyUser, false, // don't require local accounts to exist
-        done, saveUserFn);
+        const config = (0, context_1.getOidcConfig)();
+        return authenticateThirdParty(thirdPartyUser, config.requireLocalAccount, done, saveUserFn);
     });
 };
 exports.buildVerifyFn = buildVerifyFn;
