@@ -11,7 +11,7 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_auth": "2.2.52-beta.20",
+    "@steedos/ee_sso": "2.2.52-beta.20",
     "@steedos/ee_audit-records": "2.2.52-beta.20",
     "@steedos/ee_plugin-field-encryption": "2.2.52-beta.20",
     "@steedos/ee_service-plugin-license": "^2.2.3",

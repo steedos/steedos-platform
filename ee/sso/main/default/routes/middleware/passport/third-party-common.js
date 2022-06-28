@@ -37,7 +37,7 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
         }
     }
     // exit early if there is still no user and auto creation is disabled
-    if (false && !dbUser && requireLocalAccount) {
+    if (!dbUser && requireLocalAccount) {
         return authError(done, "Email does not yet exist. You must set up your local budibase account first.");
     }
     // first time creation

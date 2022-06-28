@@ -2,6 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.oidcPreAuth = exports.oidcAuth = exports.oidcStrategyFactory = exports.oidcCallbackUrl = void 0;
 const tslib_1 = require("tslib");
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-24 18:15:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-28 10:48:46
+ * @Description:
+ */
 const core = require("./core");
 const { oidc } = require("./middleware");
 const context_1 = require("../context");
@@ -26,11 +33,7 @@ const oidcCallbackUrl = (config) => {
 };
 exports.oidcCallbackUrl = oidcCallbackUrl;
 function oidcStrategyFactory() {
-    const chosenConfig = {
-        clientID: process.env.SSO_KEYCLOAK_CLIENT_ID,
-        clientSecret: process.env.SSO_KEYCLOAK_CLIENT_SECRET,
-        configUrl: process.env.SSO_KEYCLOAK_CONFIG_URL,
-    };
+    const chosenConfig = (0, context_1.getOidcConfig)();
     let callbackUrl = (0, exports.oidcCallbackUrl)(chosenConfig);
     return oidc.strategyFactory(chosenConfig, callbackUrl, users_1.User.save);
 }

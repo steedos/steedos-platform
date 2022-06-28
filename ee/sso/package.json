@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/ee_auth",
+  "name": "@steedos/ee_sso",
   "version": "2.2.52-beta.20",
   "main": "package.service.js",
   "scripts": {
@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@techpass/passport-openidconnect": "^0.3.2",
+    "@steedos/accounts": "2.2.52-beta.20",
+    "@steedos/objectql": "2.2.52-beta.20",
+    "@steedos/service-package-loader": "2.2.52-beta.20",
     "passport": "^0.6.0",
     "node-fetch": "^2.x"
   }

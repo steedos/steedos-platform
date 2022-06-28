@@ -1,8 +1,14 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-24 18:15:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-28 10:48:46
+ * @Description: 
+ */
 const core = require("./core")
 const { oidc } = require("./middleware")
 
-
-import { getScopedConfig, getTenantId, isMultiTenant } from "../context";
+import { getOidcConfig, getScopedConfig, getTenantId, isMultiTenant } from "../context";
 
 import { User } from "../collections/users";
 import { Account } from "./account";
@@ -31,14 +37,8 @@ export const oidcCallbackUrl = (config: any) => {
 }
 
 export function oidcStrategyFactory() {
-
-  const chosenConfig = {
-    clientID: process.env.SSO_KEYCLOAK_CLIENT_ID, 
-    clientSecret: process.env.SSO_KEYCLOAK_CLIENT_SECRET, 
-    configUrl: process.env.SSO_KEYCLOAK_CONFIG_URL, 
-  }
+  const chosenConfig = getOidcConfig()
   let callbackUrl = oidcCallbackUrl(chosenConfig)
-
   return oidc.strategyFactory(chosenConfig, callbackUrl, User.save)
 }
 

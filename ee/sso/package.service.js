@@ -29,11 +29,11 @@ module.exports = {
             path: __dirname,
             name: packageName
         },
-        SSO_KEYCLOAK_CONFIG_URL: process.env.SSO_KEYCLOAK_CONFIG_URL,
-        SSO_KEYCLOAK_CLIENT_ID: process.env.SSO_KEYCLOAK_CLIENT_ID,
-        SSO_KEYCLOAK_CLIENT_SECRET: process.env.SSO_KEYCLOAK_CLIENT_SECRET,
-        SSO_KEYCLOAK_NAME: process.env.SSO_KEYCLOAK_NAME || 'Steedos',
-        SSO_KEYCLOAK_LOGO: process.env.SSO_KEYCLOAK_LOGO || '/images/logo.png'
+        SSO_OIDC_CONFIG_URL: process.env.SSO_OIDC_CONFIG_URL,
+        SSO_OIDC_CLIENT_ID: process.env.SSO_OIDC_CLIENT_ID,
+        SSO_OIDC_CLIENT_SECRET: process.env.SSO_OIDC_CLIENT_SECRET,
+        SSO_OIDC_NAME: process.env.SSO_OIDC_NAME || 'Steedos',
+        SSO_OIDC_LOGO: process.env.SSO_OIDC_LOGO || '/images/logo.png'
     },
 
     /**
@@ -74,16 +74,16 @@ module.exports = {
             // 检查环境变量
             const settings = this.settings;
 
-            if (!settings.SSO_KEYCLOAK_CONFIG_URL) {
-                throw new Error("请配置 SSO_KEYCLOAK_CONFIG_URL 环境变量");
+            if (!settings.SSO_OIDC_CONFIG_URL) {
+                throw new Error("请配置 SSO_OIDC_CONFIG_URL 环境变量");
             }
 
-            if(!settings.SSO_KEYCLOAK_CLIENT_ID) {
-                throw new Error("请配置 SSO_KEYCLOAK_CLIENT_ID 环境变量");
+            if(!settings.SSO_OIDC_CLIENT_ID) {
+                throw new Error("请配置 SSO_OIDC_CLIENT_ID 环境变量");
             }
 
-            if(!settings.SSO_KEYCLOAK_CLIENT_SECRET){
-                throw new Error("请配置 SSO_KEYCLOAK_CLIENT_SECRET 环境变量");
+            if(!settings.SSO_OIDC_CLIENT_SECRET){
+                throw new Error("请配置 SSO_OIDC_CLIENT_SECRET 环境变量");
             }
 
             const strategy = await authController.oidcStrategyFactory();
@@ -93,9 +93,9 @@ module.exports = {
             objectql.getSteedosConfig().setTenant({
                 sso_providers: {
                     oidc: {
-                        name: settings.SSO_KEYCLOAK_NAME,
-                        title: settings.SSO_KEYCLOAK_NAME,
-                        logo: settings.SSO_KEYCLOAK_LOGO,
+                        name: settings.SSO_OIDC_NAME,
+                        title: settings.SSO_OIDC_NAME,
+                        logo: settings.SSO_OIDC_LOGO,
                         url: '/api/global/auth/oidc/config'
                     }
                 }

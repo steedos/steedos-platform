@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { getOidcConfig } from '../../../context';
 const OIDCStrategy = require("@techpass/passport-openidconnect").Strategy
 const { authenticateThirdParty } = require("./third-party-common")
 
@@ -37,9 +38,10 @@ export const buildVerifyFn = saveUserFn => {
         refreshToken: refreshToken,
       },
     }
+    const config = getOidcConfig();
     return authenticateThirdParty(
       thirdPartyUser,
-      false, // don't require local accounts to exist
+      config.requireLocalAccount,
       done,
       saveUserFn
     )
