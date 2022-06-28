@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 18:14:40
+ * @LastEditTime: 2022-06-27 18:46:06
  * @Description:
  */
 const accounts_1 = require("@steedos/accounts");
@@ -25,7 +25,7 @@ class Account {
             const { user, err } = options;
             if (err || !user) {
                 console.error(`err`, err);
-                return res.redirect("/api/global/auth/oidc/error-callback?err=" + encodeURIComponent(err));
+                return res.redirect("/api/global/auth/oidc/error-callback");
             }
             let userAgent = getUserAgent(req) || '';
             const ip = requestIp.getClientIp(req);

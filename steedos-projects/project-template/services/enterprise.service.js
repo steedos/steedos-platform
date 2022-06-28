@@ -17,6 +17,7 @@ module.exports = {
         this.broker.createService(require("@steedos/ee_service-plugin-license"));
 
         this.broker.createService(require("@steedos/ee_auth"));
+        
         // 启动 meteor服务
         this.broker.createService({
             name: "steedos-server",

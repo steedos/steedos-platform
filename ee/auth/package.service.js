@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 18:07:03
+ * @LastEditTime: 2022-06-28 09:27:11
  * @Description: 
  */
 "use strict";
@@ -70,16 +70,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     async created() {
-
-    },
-
-    /**
-     * Service started lifecycle event handler
-     */
-    async started() {
-        
         try {
-
             // 检查环境变量
             const settings = this.settings;
 
@@ -111,8 +102,15 @@ module.exports = {
             });
         } catch (error) {
             this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
-            throw error;
+            await this.broker.destroyService(this);
         }
+    },
+
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
+        
     },
 
     /**

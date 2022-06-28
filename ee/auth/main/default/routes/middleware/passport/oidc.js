@@ -88,7 +88,6 @@ const strategyFactory = function (config, callbackUrl, saveUserFn) {
             }, verify);
         }
         catch (err) {
-            console.error(err);
             throw new Error("Error constructing OIDC authentication strategy" + err.message);
         }
     });

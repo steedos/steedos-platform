@@ -8,7 +8,7 @@
     "node": ">=12"
   },
   "scripts": {
-    "start": "yarn start:community",
+    "start": "yarn start:enterprise",
     "start:community": "yarn flushCacherDB && moleculer-runner services/community.service.js",
     "start:enterprise": "yarn flushCacherDB && moleculer-runner services/enterprise.service.js",
     "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",

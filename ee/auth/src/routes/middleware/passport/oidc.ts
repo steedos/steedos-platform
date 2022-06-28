@@ -122,7 +122,6 @@ export const strategyFactory = async function (config, callbackUrl, saveUserFn) 
       verify
     )
   } catch (err: any) {
-    console.error(err)
     throw new Error("Error constructing OIDC authentication strategy" + err.message)
   }
 }
