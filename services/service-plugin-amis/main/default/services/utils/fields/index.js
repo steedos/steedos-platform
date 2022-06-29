@@ -5,6 +5,7 @@ const Lookup = require('./lookup');
 const AmisFormInputs = [
     'text',
     'date',
+    'file',
     'image',
     'datetime',
     'time',
@@ -329,6 +330,37 @@ payload = {
     data: {
         value: payload._id,
         filename: payload.original.name,
+        url: rootUrl + payload._id,
+    }
+}
+return payload;
+                    `,
+                    headers: {
+                        Authorization: "Bearer ${context.tenantId},${context.authToken}"
+                    }
+                }
+            }
+            if(field.multiple){
+                convertData.multiple = true;
+                convertData.joinValues = false;
+                convertData.extractValue = true;
+            }
+            break;
+        case 'file':
+            rootUrl = Meteor.absoluteUrl('/api/files/files/');
+            convertData = {
+                type: getAmisStaticFieldType('file', readonly),
+                receiver: {
+                    method: "post",
+                    url: "${context.rootUrl}/s3/files",
+                    adaptor: `
+var rootUrl = ${JSON.stringify(rootUrl)};
+payload = {
+    status: response.status == 200 ? 0 : response.status,
+    msg: response.statusText,
+    data: {
+        value: payload._id,
+        name: payload.original.name,
         url: rootUrl + payload._id,
     }
 }

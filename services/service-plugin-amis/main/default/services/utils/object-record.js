@@ -118,6 +118,58 @@ function getScriptForAddUrlPrefixForImgFields(fields){
     `
 }
 
+/*
+    file字段值重写使其在amis中正常显示附件名、点击附件名下载文件。
+*/
+function getScriptForRewriteValueForFileFields(fields){
+    let fileFieldsKeys = [];
+    let fileFields = {};
+    let fileRootUrl = Meteor.absoluteUrl('/api/files/files/');
+    fields.forEach((item)=>{
+        if(item.type === 'file'){
+            fileFieldsKeys.push(item.name);
+            fileFields[item.name] = {
+                name: item.name,
+                multiple: item.multiple
+            };
+        }
+    })
+    if(!fileFieldsKeys.length){
+        return '';
+    }
+    return `
+                // file字段值重写以便编辑时正常显示附件名、点击附件名正常下载附件
+                let fileFieldsKeys = ${JSON.stringify(fileFieldsKeys)};
+                let fileFields = ${JSON.stringify(fileFields)};
+                let fileRootUrl = ${JSON.stringify(fileRootUrl)};
+                fileFieldsKeys.forEach((item)=>{
+                    let fileFieldValue = data[item];
+                    if(fileFieldValue && fileFieldValue.length){
+                        const fileFieldNames = data._display[item].split(',');
+                        if(fileFields[item].multiple){
+                            if(fileFieldValue instanceof Array){
+                                data[item] = fileFieldValue.map((value, index)=>{ 
+                                    return {
+                                        value: value,
+                                        name: fileFieldNames[index],
+                                        url: fileRootUrl + value + "?download=true",
+                                        state: "uploaded"
+                                    }
+                                });
+                            }
+                        }else{
+                            data[item] = {
+                                value: fileFieldValue,
+                                name: fileFieldNames[0],
+                                url: fileRootUrl + fileFieldValue + "?download=true",
+                                state: "uploaded"
+                            };
+                        }
+                    }
+                })
+    `
+}
+
 function getEditFormInitApi(object, recordId, fields){
     return {
         method: "post",
@@ -129,6 +181,7 @@ function getEditFormInitApi(object, recordId, fields){
             if(data){
                 ${getConvertDataScriptStr(fields)}
                 ${getScriptForAddUrlPrefixForImgFields(fields)}
+                ${getScriptForRewriteValueForFileFields(fields)}
                 //初始化接口返回的字段移除字段值为null的字段
                 for (key in data){
                     if(data[key] === null){
