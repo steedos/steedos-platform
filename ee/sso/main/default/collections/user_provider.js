@@ -3,7 +3,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-29 10:48:48
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 17:54:00
+ * @LastEditTime: 2022-06-29 18:09:45
  * @Description:
  */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -15,7 +15,6 @@ class UserProvider {
     static link(user) {
         var _a, _b, _c, _d;
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            console.log('link user', user);
             const { thirdPartyUser, _id } = user;
             const { params } = thirdPartyUser;
             const collection = (0, objectql_1.getObject)('user_providers');
