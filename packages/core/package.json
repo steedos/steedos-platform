@@ -23,6 +23,7 @@
     "@steedos/process": "2.2.52-beta.21",
     "@steedos/standard-objects": "2.2.52-beta.21",
     "@steedos/steedos-plugin-schema-builder": "2.2.52-beta.21",
+    "express-session": "1.17.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "chai": "^4.2.0",
