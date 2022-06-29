@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-28 15:19:22
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-29 11:42:19
  * @Description: 
  */
 
@@ -108,7 +108,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                 return;
             }
             if (field.multiple) {
-                type += `${name}: [String] `;
+                type += `${name}: [JSON] `;
                 type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
                 resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
                     action: `${getObjectServiceName(
@@ -122,7 +122,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                     },
                 };
             } else {
-                type += `${name}: String `;
+                type += `${name}: JSON `;
                 type += `${name}${EXPAND_SUFFIX}: ${refTo} `;
                 resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
                     action: `${getObjectServiceName(
