@@ -166,6 +166,7 @@ function getSaveDataTpl(fields){
         delete formData.created_by;
         delete formData.modified;
         delete formData.modified_by;
+        delete formData._display;
         ${getScriptForRemoveUrlPrefixForImgFields(fields)}
         ${getScriptForSimplifiedValueForFileFields(fields)}
         let query = \`mutation{record: \${objectName}__insert(doc: {__saveData}){_id}}\`;
