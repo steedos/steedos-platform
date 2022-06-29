@@ -12,9 +12,10 @@ fields:
     name: role
     filterable: true
   users:
-    type: lookup
+    type: master_detail
     label: Users
-    reference_to: users
+    reference_to: space_users
+    reference_to_field: user
     multiple: true
     required: true
     name: users

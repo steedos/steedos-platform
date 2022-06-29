@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 13:34:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 15:39:59
+ * @LastEditTime: 2022-06-29 18:07:31
  * @Description: 
  */
 import { getObject } from '@steedos/objectql';
@@ -20,7 +20,9 @@ export class User {
                 email: user.email,
                 email_verified: user.thirdPartyProfile.email_verified,
                 name: user.thirdPartyProfile.name,
-                locale: 'zh-cn'
+                locale: 'zh-cn',
+                created: new Date(),
+                modified: new Date()
             })
 
             const tenantId = getTenantId();

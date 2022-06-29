@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.strategyFactory = exports.buildVerifyFn = void 0;
+exports.strategyFactory = exports.getEmail = exports.buildVerifyFn = void 0;
 const tslib_1 = require("tslib");
 const node_fetch_1 = require("node-fetch");
 const context_1 = require("../../../context");
@@ -21,6 +21,9 @@ const buildVerifyFn = saveUserFn => {
     return (issuer, sub, profile, jwtClaims, accessToken, refreshToken, idToken, params, done) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
         const thirdPartyUser = {
             // store the issuer info to enable sync in future
+            idToken: idToken,
+            params: params,
+            sub: sub,
             provider: issuer,
             providerType: "oidc",
             userId: profile.id,
@@ -56,6 +59,7 @@ function getEmail(profile, jwtClaims) {
     }
     throw new Error(`Could not determine user email from profile ${JSON.stringify(profile)} and claims ${JSON.stringify(jwtClaims)}`);
 }
+exports.getEmail = getEmail;
 function validEmail(value) {
     return (value &&
         !!value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/));
@@ -78,7 +82,7 @@ const strategyFactory = function (config, callbackUrl, saveUserFn) {
             }
             const body = yield response.json();
             const verify = (0, exports.buildVerifyFn)(saveUserFn);
-            return new OIDCStrategy({
+            const strategyConfig = {
                 issuer: body.issuer,
                 authorizationURL: body.authorization_endpoint,
                 tokenURL: body.token_endpoint,
@@ -86,7 +90,11 @@ const strategyFactory = function (config, callbackUrl, saveUserFn) {
                 clientID: clientID,
                 clientSecret: clientSecret,
                 callbackURL: callbackUrl,
-            }, verify);
+            };
+            return {
+                strategy: new OIDCStrategy(strategyConfig, verify),
+                config: strategyConfig
+            };
         }
         catch (err) {
             throw new Error("Error constructing OIDC authentication strategy" + err.message);

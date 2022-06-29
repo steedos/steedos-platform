@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-28 09:27:11
+ * @LastEditTime: 2022-06-28 16:26:16
  * @Description: 
  */
 "use strict";
@@ -87,7 +87,6 @@ module.exports = {
             }
 
             const strategy = await authController.oidcStrategyFactory();
-
             passport.use("oidc", strategy);
 
             objectql.getSteedosConfig().setTenant({

@@ -6,11 +6,12 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 18:46:06
+ * @LastEditTime: 2022-06-29 17:12:48
  * @Description:
  */
 const accounts_1 = require("@steedos/accounts");
 const requestIp = require("request-ip");
+const user_provider_1 = require("../collections/user_provider");
 const getUserAgent = (req) => {
     let userAgent = req.headers['user-agent'] || '';
     if (req.headers['x-ucbrowser-ua']) {
@@ -20,7 +21,7 @@ const getUserAgent = (req) => {
     return userAgent;
 };
 class Account {
-    static ssoLogin(req, res, options = { user: null, err: null }) {
+    static ssoLogin(req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             const { user, err } = options;
             if (err || !user) {
@@ -45,6 +46,8 @@ class Account {
                     userProfile.phone_login_expiration_in_days;
                 space = userProfile.space;
             }
+            // 更新user_providers
+            const provider = yield user_provider_1.UserProvider.link(user);
             const loginResult = yield accounts_1.accountsServer.loginWithUser(user, Object.assign({}, {
                 ip,
                 userAgent
@@ -54,9 +57,16 @@ class Account {
                 phone_logout_other_clients,
                 phone_login_expiration_in_days,
                 space,
+                provider: provider._id,
+                // jwtToken: options.accessToken  // 如果使用jwt token 会导致cookie太大
             }));
             (0, accounts_1.setAuthCookies)(req, res, loginResult.user._id, loginResult.token, loginResult.tokens.accessToken);
-            res.redirect(`/accounts/a/?uid=${loginResult.user._id}`);
+            if (options.redirect) {
+                res.redirect(`/accounts/a/?uid=${loginResult.user._id}`);
+            }
+            else {
+                return loginResult;
+            }
         });
     }
 }

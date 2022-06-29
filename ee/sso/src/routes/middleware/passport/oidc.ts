@@ -28,6 +28,9 @@ export const buildVerifyFn = saveUserFn => {
   ) => {
     const thirdPartyUser = {
       // store the issuer info to enable sync in future
+      idToken: idToken,
+      params: params,
+      sub: sub,
       provider: issuer,
       providerType: "oidc",
       userId: profile.id,
@@ -52,7 +55,7 @@ export const buildVerifyFn = saveUserFn => {
  * @param {*} profile The structured profile created by passport using the user info endpoint
  * @param {*} jwtClaims The claims returned in the id token
  */
-function getEmail(profile, jwtClaims) {
+export function getEmail(profile, jwtClaims) {
   // profile not guaranteed to contain email e.g. github connected azure ad account
   if (profile._json.email) {
     return profile._json.email
@@ -111,18 +114,19 @@ export const strategyFactory = async function (config, callbackUrl, saveUserFn) 
     const body: any = await response.json()
 
     const verify = buildVerifyFn(saveUserFn)
-    return new OIDCStrategy(
-      {
-        issuer: body.issuer,
-        authorizationURL: body.authorization_endpoint,
-        tokenURL: body.token_endpoint,
-        userInfoURL: body.userinfo_endpoint,
-        clientID: clientID,
-        clientSecret: clientSecret,
-        callbackURL: callbackUrl,
-      },
-      verify
-    )
+    const strategyConfig = {
+      issuer: body.issuer,
+      authorizationURL: body.authorization_endpoint,
+      tokenURL: body.token_endpoint,
+      userInfoURL: body.userinfo_endpoint,
+      clientID: clientID,
+      clientSecret: clientSecret,
+      callbackURL: callbackUrl,
+    }
+    return {
+      strategy: new OIDCStrategy(strategyConfig, verify),
+      config: strategyConfig
+    }
   } catch (err: any) {
     throw new Error("Error constructing OIDC authentication strategy" + err.message)
   }

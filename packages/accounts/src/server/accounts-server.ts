@@ -211,6 +211,8 @@ export class AccountsServer {
       phone_logout_other_clients,
       phone_login_expiration_in_days,
       space,
+      provider,
+      jwtToken,
     } = infos;
 
     let is_phone = false;
@@ -251,7 +253,7 @@ export class AccountsServer {
       //3 清理用户所有session 缓存
       removeUserSessionsCacheByUserId(user.id, is_phone);
     }
-    const token = generateRandomToken();
+    const token = jwtToken || generateRandomToken();
     const sessionId = await this.db.createSession(user.id, token, {
       ip,
       userAgent,
@@ -260,6 +262,7 @@ export class AccountsServer {
       is_phone,
       is_tablet,
       space,
+      provider
     });
 
     const { accessToken, refreshToken } = this.createTokens({

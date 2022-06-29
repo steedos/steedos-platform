@@ -70,7 +70,7 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
         userId: dbUser._id,
         sessionId,
     }, environment_1.default.JWT_SECRET);
-    return done(null, Object.assign({}, dbUser, { id: dbUser._id }));
+    return done(null, Object.assign({}, dbUser, { id: dbUser._id, thirdPartyUser: thirdPartyUser }));
 });
 exports.authenticateThirdParty = authenticateThirdParty;
 function syncProfilePicture(user, thirdPartyUser) {

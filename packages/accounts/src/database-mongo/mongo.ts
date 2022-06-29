@@ -593,6 +593,7 @@ export class Mongo implements DatabaseInterface {
     let is_phone = connection.is_phone;
     let is_tablet = connection.is_tablet;
     let space = connection.space;
+    let provider = connection.provider;
     if (userAgent) {
       const foo = userAgent.split(" Space/");
       if (foo.length > 1) {
@@ -613,6 +614,7 @@ export class Mongo implements DatabaseInterface {
         is_phone,
         is_tablet,
         login_expiration_in_days,
+        user_provider: provider
       };
     }
 
@@ -622,6 +624,7 @@ export class Mongo implements DatabaseInterface {
       is_phone,
       is_tablet,
       login_expiration_in_days,
+      user_provider: provider
     };
   }
 

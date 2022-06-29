@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-24 17:15:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-28 16:19:51
+ * @Description: 
+ */
 import * as express from "express";
 const ejs = require('ejs');
 const authController = require("./auth");
@@ -18,5 +25,6 @@ router
           res.send(str);
       });
   })
+  .post('/api/global/auth/oidc/login', authController.oidcLogin)
 
 exports.default = router;

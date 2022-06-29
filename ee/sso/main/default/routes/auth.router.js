@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-24 17:15:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-06-28 16:19:51
+ * @Description:
+ */
 const express = require("express");
 const ejs = require('ejs');
 const authController = require("./auth");
@@ -20,5 +27,6 @@ authController.oidcPreAuth)
             res.send(str);
         });
     });
-});
+})
+    .post('/api/global/auth/oidc/login', authController.oidcLogin);
 exports.default = router;

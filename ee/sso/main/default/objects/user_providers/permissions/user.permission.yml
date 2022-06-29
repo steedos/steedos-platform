@@ -1,0 +1,10 @@
+name: 用户
+allowCreate: false
+allowDelete: false
+allowEdit: false
+allowRead: false
+modifyAllRecords: false
+modifyCompanyRecords: false
+permission_set_id: user
+viewAllRecords: false
+viewCompanyRecords: false

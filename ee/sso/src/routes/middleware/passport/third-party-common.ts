@@ -83,7 +83,7 @@ export const authenticateThirdParty = async (
     try {
         await saveUserFn(dbUser, false, false)
     } catch (err) {
-      console.log(`err`, err)
+        console.log(`err`, err)
         return authError(done, err)
     }
 
@@ -103,7 +103,7 @@ export const authenticateThirdParty = async (
         env.JWT_SECRET,
     )
 
-    return done(null, Object.assign({}, dbUser, { id: dbUser._id }));
+    return done(null, Object.assign({}, dbUser, { id: dbUser._id, thirdPartyUser: thirdPartyUser }));
 };
 
 

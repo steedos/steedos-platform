@@ -2,12 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 18:46:06
+ * @LastEditTime: 2022-06-29 17:12:48
  * @Description: 
  */
 import { accountsServer, setAuthCookies } from '@steedos/accounts';
 
 import * as requestIp from 'request-ip';
+import { UserProvider } from '../collections/user_provider';
 
 const getUserAgent = (req: any) => {
     let userAgent: string = (req.headers['user-agent'] as string) || '';
@@ -19,7 +20,7 @@ const getUserAgent = (req: any) => {
   };
 
 export class Account {
-    static async ssoLogin(req, res, options = { user: null, err: null }) {
+    static async ssoLogin(req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
         const { user , err } = options;
         if (err || !user) { 
             console.error(`err`, err)
@@ -45,6 +46,11 @@ export class Account {
                 userProfile.phone_login_expiration_in_days;
             space = userProfile.space;
         }
+
+        // 更新user_providers
+
+        const provider = await UserProvider.link(user)
+
         const loginResult = await accountsServer.loginWithUser(
             user,
             Object.assign({}, {
@@ -56,9 +62,16 @@ export class Account {
                 phone_logout_other_clients,
                 phone_login_expiration_in_days,
                 space,
+                provider: provider._id,
+                // jwtToken: options.accessToken  // 如果使用jwt token 会导致cookie太大
             })
         );
         setAuthCookies(req, res, loginResult.user._id, loginResult.token, loginResult.tokens.accessToken);
-        res.redirect(`/accounts/a/?uid=${loginResult.user._id}`);
+        
+        if(options.redirect){
+            res.redirect(`/accounts/a/?uid=${loginResult.user._id}`);
+        }else{
+            return loginResult;
+        }
     }
 }

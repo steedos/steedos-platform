@@ -1,0 +1,5 @@
+name: provider
+label: 提供者
+type: text
+sort_no: 130
+is_name: true

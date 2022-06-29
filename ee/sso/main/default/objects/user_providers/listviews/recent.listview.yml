@@ -1,0 +1,12 @@
+name: recent
+columns:
+  - field: provider
+  - field: type
+  - field: user
+filter_scope: space
+filters: []
+label: 最近查看
+scrolling_mode: standard
+shared: true
+sort_no: 100
+type: grid

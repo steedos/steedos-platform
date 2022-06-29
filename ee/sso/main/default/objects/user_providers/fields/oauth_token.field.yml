@@ -1,0 +1,4 @@
+name: oauth_token
+type: text
+sort_no: 230
+group: 令牌

@@ -1,0 +1,5 @@
+name: refresh_token
+type: text
+sort_no: 220
+is_wide: true
+group: 令牌
