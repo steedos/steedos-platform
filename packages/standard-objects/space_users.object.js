@@ -1244,7 +1244,7 @@ let methods = {
                 res.status(400).send({
                     success: false,
                     error: {
-                        reason: "The object updateOne return nothing."
+                        reason: "user not find."
                     }
                 });
             }
