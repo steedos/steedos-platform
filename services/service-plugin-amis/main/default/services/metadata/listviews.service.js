@@ -252,8 +252,9 @@ module.exports = {
                                     operators: getFieldOperators(field.type)
                                 });
                                 break;
+                            //  以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
                             case 'date':
-                                // amins的format不支持Z后缀，只能用+offset格式
+                                // amins的format不支持Z后缀，只能用+offset格式 . 
                                 // 华炎魔方中日期字段存的是utc的0点
                                 fields.push({
                                     label: field.label,
