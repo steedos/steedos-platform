@@ -4001,10 +4001,10 @@
   dependencies:
     axios "^0.21.4"
 
-"@steedos/license@2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.4.tgz#7667c749f074746321366b6546dc6bdc14e5f7f0"
-  integrity sha512-DUBnuFBWqqGW7PqH90p8izOU92odU2YKtsVKTjSR2XsA8aw5EgKVRyQp9QRPHt4qTXOhYthOX+ZHcHJmDeSQCA==
+"@steedos/license@2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.5.tgz#9d797a85491227b10da80841582b07c8733abdb0"
+  integrity sha512-YXMCURD1Ll4eeN6n8ftKDpK1+TZ4cN/bnF07papLSyfhMd2gTHyjQH627ZYx56vqxUiDJr/wMLW4oFHFJAUwXQ==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
