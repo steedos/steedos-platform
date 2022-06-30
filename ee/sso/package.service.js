@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-28 16:26:16
+ * @LastEditTime: 2022-06-30 10:51:37
  * @Description: 
  */
 "use strict";
@@ -27,7 +27,8 @@ module.exports = {
     settings: {
         packageInfo: {
             path: __dirname,
-            name: packageName
+            name: packageName,
+            isPackage: false
         },
         SSO_OIDC_CONFIG_URL: process.env.SSO_OIDC_CONFIG_URL,
         SSO_OIDC_CLIENT_ID: process.env.SSO_OIDC_CLIENT_ID,
