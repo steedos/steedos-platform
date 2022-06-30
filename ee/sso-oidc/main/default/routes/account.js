@@ -6,12 +6,14 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 17:12:48
+ * @LastEditTime: 2022-06-30 13:59:03
  * @Description:
  */
 const accounts_1 = require("@steedos/accounts");
 const requestIp = require("request-ip");
 const user_provider_1 = require("../collections/user_provider");
+const objectql_1 = require("@steedos/objectql");
+const context_1 = require("../context");
 const getUserAgent = (req) => {
     let userAgent = req.headers['user-agent'] || '';
     if (req.headers['x-ucbrowser-ua']) {
@@ -23,9 +25,13 @@ const getUserAgent = (req) => {
 class Account {
     static ssoLogin(req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-            const { user, err } = options;
+            let { user, err } = options;
+            const allow = yield (0, objectql_1.isPlatformEnterPrise)((0, context_1.getTenantId)());
+            if (!allow) {
+                err = '请购买企业版许可证，以使用oidc sso功能。';
+            }
             if (err || !user) {
-                console.error(`err`, err);
+                (0, objectql_1.getSteedosSchema)().broker.logger.error(`oidc sso login error: ${err}`);
                 return res.redirect("/api/global/auth/oidc/error-callback");
             }
             let userAgent = getUserAgent(req) || '';

@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/ee_sso",
+  "name": "@steedos/ee_sso-oidc",
   "version": "2.2.52-beta.22",
   "main": "package.service.js",
   "scripts": {

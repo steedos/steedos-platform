@@ -227,7 +227,9 @@ export class Core {
     private static initRouters(){
         let routers = objectql.getRouters()
         _.each(routers, (router)=>{
-            routersApp.use('', router.router.default)
+            if(router.router.default){
+                routersApp.use('', router.router.default)
+            }
         })
         WebApp.connectHandlers.use(routersApp);
     }
@@ -235,7 +237,9 @@ export class Core {
 
 export const loadRouters = (routers)=>{
     _.each(routers, (router)=>{
-        routersApp.use('', router.router.default)
+        if(router.router.default){
+            routersApp.use('', router.router.default)
+        }
     })
     try {
         WebApp.connectHandlers.use(routersApp);

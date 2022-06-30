@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-30 10:51:37
+ * @LastEditTime: 2022-06-30 13:54:43
  * @Description: 
  */
 "use strict";
@@ -40,7 +40,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['~packages-standard-objects'],
+    dependencies: ['steedos-server'],
 
     /**
      * Actions
@@ -89,7 +89,6 @@ module.exports = {
 
             const strategy = await authController.oidcStrategyFactory();
             passport.use("oidc", strategy);
-
             objectql.getSteedosConfig().setTenant({
                 sso_providers: {
                     oidc: {
