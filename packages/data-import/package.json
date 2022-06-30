@@ -1,14 +1,14 @@
 {
   "name": "@steedos/data-import",
-  "version": "2.2.52-beta.21",
+  "version": "2.2.52-beta.22",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
-    "@steedos/core": "2.2.52-beta.21",
-    "@steedos/objectql": "2.2.52-beta.21",
+    "@steedos/core": "2.2.52-beta.22",
+    "@steedos/objectql": "2.2.52-beta.22",
     "dotenv-flow": "^3.1.0",
     "node-xlsx": "^0.16.1"
   },
@@ -24,5 +24,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b31ea478616a5ab135da0e9582ed370be20fb167"
+  "gitHead": "52619e601e001d519b3690c0d9dc36737bc20ae0"
 }

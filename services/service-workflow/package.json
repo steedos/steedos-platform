@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.2.52-beta.21",
+  "version": "2.2.52-beta.22",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
@@ -11,5 +11,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b31ea478616a5ab135da0e9582ed370be20fb167"
+  "gitHead": "52619e601e001d519b3690c0d9dc36737bc20ae0"
 }
