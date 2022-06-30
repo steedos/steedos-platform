@@ -253,14 +253,19 @@ module.exports = {
                                 });
                                 break;
                             case 'date':
+                                // amins的format不支持Z后缀，只能用+offset格式
+                                // 华炎魔方中日期字段存的是utc的0点
                                 fields.push({
                                     label: field.label,
                                     type: field.type,
                                     name: field.name,
+                                    format: "YYYY-MM-DDT00:00:00+00:00",
                                     operators: getFieldOperators(field.type)
                                 });
                                 break;
                             case 'datetime':
+                                // 这里不需要配置format，因为日期时间是记时区的，amins中日期时间控件输出本地时间值的
+                                // 即amins中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
                                 fields.push({
                                     label: field.label,
                                     type: field.type,
@@ -269,10 +274,13 @@ module.exports = {
                                 });
                                 break;
                             case 'time':
+                                //amins的format不支持Z后缀，只能用+offset格式
+                                // 华炎魔方中时间字段存的是1970-01-01的utc时间
                                 fields.push({
                                     label: field.label,
                                     type: field.type,
                                     name: field.name,
+                                    format: "1970-01-01THH:mm+00:00",
                                     operators: getFieldOperators(field.type)
                                 });
                                 break;
