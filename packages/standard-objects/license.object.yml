@@ -76,7 +76,7 @@ actions:
   changeSpaceLicense:
     label: 更新许可证
     on: list
-    visible: false
+    visible: true
   copySpaceId:
     label: Copy space id
     on: list
