@@ -160,7 +160,14 @@ export default class AccountsPassword implements AuthenticationService {
   }
 
   public async authenticate(params: any): Promise<User> {
-    const { user, password, token, locale } = params;
+    let { user, password, token, locale } = params;
+
+    const passwordUnencrypted = params['password-unencrypted'];
+    let isHashPassword = true;
+    if(passwordUnencrypted && !password ){
+      password = passwordUnencrypted;
+      isHashPassword = false;
+    }
 
     if(user && token){
       return await this.codeAuthenticator(user, token, locale);
@@ -174,7 +181,7 @@ export default class AccountsPassword implements AuthenticationService {
       throw new Error(this.options.errors.matchFailed);
     }
 
-    const foundUser = await this.passwordAuthenticator(user, password);
+    const foundUser = await this.passwordAuthenticator(user, password, isHashPassword);
 
     // // If user activated two factor authentication try with the code
     // if (getUserTwoFactorService(foundUser)) {
@@ -686,7 +693,8 @@ export default class AccountsPassword implements AuthenticationService {
 
   public async passwordAuthenticator(
     user: string | LoginUserIdentity,
-    password: PasswordType
+    password: PasswordType,
+    isHashPassword = true
   ): Promise<User> {
     const { username, email, id, mobile } = isString(user)
       ? this.toMobileAndEmail({ user })
@@ -735,8 +743,12 @@ export default class AccountsPassword implements AuthenticationService {
       }
     }
     const hashAlgorithm = this.options.passwordHashAlgorithm;
-    // const pass: any = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
-    const pass: any = password;
+    let pass = null;
+    if(isHashPassword){
+      pass = password;
+    }else{
+      pass = hashAlgorithm ? hashPassword(password, hashAlgorithm) : password;
+    }
     const isPasswordValid = await verifyPassword(pass, hash);
 
     if (!isPasswordValid) {
