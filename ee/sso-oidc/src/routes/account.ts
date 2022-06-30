@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-30 13:59:03
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-06-30 14:20:07
  * @Description: 
  */
 import { accountsServer, setAuthCookies } from '@steedos/accounts';
@@ -10,8 +10,9 @@ import { accountsServer, setAuthCookies } from '@steedos/accounts';
 import * as requestIp from 'request-ip';
 import { UserProvider } from '../collections/user_provider';
 
-import { isPlatformEnterPrise, getSteedosSchema } from '@steedos/objectql';
+import { getSteedosSchema } from '@steedos/objectql';
 import { getTenantId } from '../context';
+import { isPlatformEnterPrise } from '@steedos/license';
 
 const getUserAgent = (req: any) => {
     let userAgent: string = (req.headers['user-agent'] as string) || '';

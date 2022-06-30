@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 19:46:49
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-25 10:09:11
+ * @LastEditTime: 2022-06-30 13:55:09
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -11,6 +11,7 @@ const {
     NEED_CONFIG_MASTER_KEY,
     NEED_PLATFORM_ENTERPRISE
 } = require('./consts')
+const { isPlatformEnterPrise } = require('@steedos/license')
 
 /**
  * 获取需要加密的字段
@@ -61,7 +62,7 @@ async function encryptFieldValue(objectName, doc) {
 async function checkIsEnterprise(triggerContext) {
     const { doc, spaceId } = triggerContext;
     if (doc.enable_encryption) {
-        const allow = await objectql.isPlatformEnterPrise(spaceId)
+        const allow = await isPlatformEnterPrise(spaceId)
         if (!allow) {
             throw new Error(NEED_PLATFORM_ENTERPRISE);
         }
