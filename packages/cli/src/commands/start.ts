@@ -41,7 +41,7 @@ const logger = {
 	}
 };
 
-class RunnerCommand extends Command {
+class StartCommand extends Command {
 
 	/**
 	 * Load environment variables from '.env' file
@@ -452,17 +452,15 @@ class RunnerCommand extends Command {
 	}
 
   async run() {
-    const { args, flags} = this.parse(RunnerCommand);
-    console.log(flags)
-    console.log(args)
+    const { args, flags} = this.parse(StartCommand);
 
-		this.watchFolders = [];
-		this.flags = null;
-		this.configFile = null;
-		this.config = null;
-		this.servicePaths = null;
-		this.broker = null;
-		this.worker = null;
+	this.watchFolders = [];
+	this.flags = null;
+	this.configFile = null;
+	this.config = null;
+	this.servicePaths = null;
+	this.broker = null;
+	this.worker = null;
 
     this.flags = flags;
     this.servicePaths = Object.values(args)
@@ -477,17 +475,18 @@ class RunnerCommand extends Command {
   }
 }
 
-RunnerCommand.args = [
+StartCommand.args = [
 	{
 		name:        'servicePaths',
-		required:    true,
+		required:    false,
+		default:     'services',
 		description: 'service files or directories or glob masks',
 	}
 ];
 
-RunnerCommand.description = `run steedos projects`
+StartCommand.description = `run steedos projects`
 
-RunnerCommand.flags = {
+StartCommand.flags = {
     repl: flags.boolean({char: 'r', default: false, description: 'If true, it switches to REPL mode after broker started.'}),
     silent: flags.boolean({char: 's', default: false, description: 'Disable the broker logger. It prints nothing to the console.'}),
     hot: flags.boolean({char:'h', default: false, description: 'Hot reload services when they change.'}),
@@ -497,4 +496,4 @@ RunnerCommand.flags = {
     instances: flags.string({char: 'i', description: 'Launch [number] node instances or max for all cpu cores (with cluster module)'})
 } 
 
-module.exports = RunnerCommand
+module.exports = StartCommand

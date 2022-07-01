@@ -1,6 +1,5 @@
 "use strict";
 
-require('dotenv-flow').config(process.cwd());
 
 /**
  * Moleculer ServiceBroker configuration file
