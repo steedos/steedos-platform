@@ -15,7 +15,6 @@ ports:
     visibility: public
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - init: sh ./.scripts/gitpod_setup.sh
   - name: Mongo
     init: |
       mkdir -p /workspace/mongodb/data/db
@@ -32,12 +31,14 @@ tasks:
     init: |
       yarn
       yarn bootstrap
-      yarn build
     command: |
-      sh ./.scripts/gitpod_env.sh
+      rm creator/.env.local
+      cp creator/.env creator/.env.local
+      sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
+      yarn lerna run gitpod:init
+      yarn build
       gp await-port 27017
       gp await-port 6379
-      export ROOT_URL=$(gp url 5100)
       yarn start
 vscode:
   extensions:

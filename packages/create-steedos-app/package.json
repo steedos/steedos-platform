@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.25",
   "keywords": [
     "react",
     "steedos"
@@ -21,10 +21,8 @@
   ],
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/",
-    "prerelease": "rimraf ./dist/",
-    "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "prepublishOnly": "cd ../../ && turbo run build",
-    "build-x": "pnpm release"
+    "prebuild": "rimraf ./dist/",
+    "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.2",
@@ -49,5 +47,6 @@
   },
   "engines": {
     "node": ">=12.22.0"
-  }
+  },
+  "gitHead": "8889080266abf6385004c39529e6fee97735333e"
 }

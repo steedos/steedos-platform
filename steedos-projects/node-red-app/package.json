@@ -1,6 +1,6 @@
 {
   "name": "steedos-node-red",
-  "version": "0.0.0",
+  "version": "2.2.52-beta.25",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,6 @@
     "validator": "^13.6.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "8889080266abf6385004c39529e6fee97735333e"
 }

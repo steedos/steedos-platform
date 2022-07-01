@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-community",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.25",
   "private": true,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -9,10 +9,10 @@
   },
   "scripts": {
     "start": "yarn start:community",
-    "start:community": "yarn flushCacherDB && moleculer-runner services/community.service.js",
-    "start:enterprise": "yarn flushCacherDB && moleculer-runner services/enterprise.service.js",
-    "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
-    "flushCacherDB": "node .scripts/flush_cacher_db.js",
+    "start:community": "steedos start services/community.service.js",
+    "start:enterprise": "steedos start services/enterprise.service.js",
+    "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./steedos.config.js",
+    "gitpod:init": "echo \"ROOT_URL=$(gp url 5000)\" >> .env.local && echo \"METADATA_SERVER=$(gp url 5000)\" >> .env.local",
     "postinstall": "cd .steedos && yarn"
   },
   "keywords": [
@@ -25,9 +25,9 @@
   "license": "ISC",
   "dependencies": {
     "@steedos/ee_service-plugin-license": "^2.2.5",
-    "@steedos/service-community": "2.2.52-beta.22",
-    "@steedos/service-plugin-amis": "2.2.52-beta.22",
-    "@steedos/webapp-accounts": "2.2.52-beta.22"
+    "@steedos/service-community": "2.2.52-beta.25",
+    "@steedos/service-plugin-amis": "2.2.52-beta.25",
+    "@steedos/webapp-accounts": "2.2.52-beta.25"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

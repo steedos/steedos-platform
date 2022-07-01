@@ -194,11 +194,12 @@ export const getFormulaVarPathsAggregateLookups = (paths: Array<SteedosFormulaVa
         else{
             tempLookupAs = `__lookup__${currentPath.field_name}`;
         }
+        let foreignField = currentPath.reference_to_field ? currentPath.reference_to_field : '_id';
         lookups.push({
             $lookup: {
                 from: nextPath.reference_from,
                 localField: tempLookupLocalField,
-                foreignField: '_id',
+                foreignField,
                 as: tempLookupAs
             }
         });
