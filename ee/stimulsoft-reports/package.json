@@ -1,6 +1,6 @@
 {
     "name": "@steedos/ee_stimulsoft-reports",
-    "version": "2.2.52-beta.25",
+    "version": "2.2.52-beta.26",
     "description": "",
     "main": "package.service.js",
     "scripts": {},
@@ -11,7 +11,7 @@
         "access": "public"
     },
     "homepage": "https://developer.steedos.com",
-    "gitHead": "8889080266abf6385004c39529e6fee97735333e",
+    "gitHead": "2b297f58c1f1be52bf2290f7b7d8ea5db5c903fc",
     "dependencies": {
         "stimulsoft-reports-js": "^2021.4.3-b",
         "stream-to-string": "^1.2.0"

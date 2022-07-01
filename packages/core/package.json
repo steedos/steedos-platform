@@ -1,7 +1,7 @@
 {
   "name": "@steedos/core",
   "private": false,
-  "version": "2.2.52-beta.25",
+  "version": "2.2.52-beta.26",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -14,15 +14,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/auth": "2.2.52-beta.25",
-    "@steedos/i18n": "2.2.52-beta.25",
+    "@steedos/auth": "2.2.52-beta.26",
+    "@steedos/i18n": "2.2.52-beta.26",
     "@steedos/license": "2.2.5",
-    "@steedos/metadata-core": "2.2.52-beta.25",
-    "@steedos/migrate": "2.2.52-beta.25",
-    "@steedos/objectql": "2.2.52-beta.25",
-    "@steedos/process": "2.2.52-beta.25",
-    "@steedos/standard-objects": "2.2.52-beta.25",
-    "@steedos/steedos-plugin-schema-builder": "2.2.52-beta.25",
+    "@steedos/metadata-core": "2.2.52-beta.26",
+    "@steedos/migrate": "2.2.52-beta.26",
+    "@steedos/objectql": "2.2.52-beta.26",
+    "@steedos/process": "2.2.52-beta.26",
+    "@steedos/standard-objects": "2.2.52-beta.26",
+    "@steedos/steedos-plugin-schema-builder": "2.2.52-beta.26",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "chai": "^4.2.0",
@@ -49,7 +49,7 @@
     "@salesforce/dev-scripts": "0.3.12",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/meteor-bundle-runner": "2.2.52-beta.25",
+    "@steedos/meteor-bundle-runner": "2.2.52-beta.26",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",
     "@types/express": "^4.16.1",
@@ -69,5 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8889080266abf6385004c39529e6fee97735333e"
+  "gitHead": "2b297f58c1f1be52bf2290f7b7d8ea5db5c903fc"
 }
