@@ -55,6 +55,7 @@ tenant:
   enable_email_code_login: ${STEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN}
   enable_bind_email: ${STEEDOS_TENANT_ENABLE_BIND_EMAIL}
   enable_bind_mobile: ${STEEDOS_TENANT_ENABLE_BIND_MOBILE}
+  tokenSecret: 
 sms:
   qcloud:
     smsqueue_interval: 1000
@@ -108,5 +109,3 @@ sso:
     name: ${SSO_OIDC_NAME}
     logo: ${SSO_OIDC_LOGO}
     require_local_account: ${SSO_OIDC_REQUIRE_LOCAL_ACCOUNT}
-  jwt:
-    secret: ${SSO_JWT_SECRET}
