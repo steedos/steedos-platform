@@ -122,7 +122,12 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                         return reslut;
                     }
                     reslut = wrapAsync(function () {
-                        return getSteedosSchema().getObject(next.reference_from).findOne(<any>reslut, { fields: [next.field_name] })
+                        if(next.reference_to_field){
+                            return getSteedosSchema().getObject(next.reference_from).findOne({ filters: [next.reference_to_field, "=", reslut] }, { fields: [next.field_name] });
+                        }
+                        else{
+                            return getSteedosSchema().getObject(next.reference_from).findOne(<any>reslut, { fields: [next.field_name] });
+                        }
                     }, {});
                     if (reslut) {
                         return reslut[next.field_name]
