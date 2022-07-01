@@ -32,12 +32,12 @@ tasks:
     init: |
       yarn
       yarn bootstrap
-      yarn build
     command: |
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
       yarn lerna run gitpod:init
+      yarn build
       gp await-port 27017
       gp await-port 6379
       yarn start
