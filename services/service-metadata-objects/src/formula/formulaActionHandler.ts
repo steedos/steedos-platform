@@ -104,7 +104,6 @@ export class FormulaActionHandler{
             }
         }
         let tempObjectConfig = objectConfig;
-        let lastReferenceToField;
         let i = -1;
         for await (let varItem of varItems) {
             i++;
@@ -144,9 +143,6 @@ export class FormulaActionHandler{
                 if (isFormulaType) {
                     tempFieldFormulaVarPath.is_formula = true;
                 }
-                if(lastReferenceToField){
-                    tempFieldFormulaVarPath.reference_to_field = lastReferenceToField;
-                }
                 // 当是$user时，不需要把第一个path记录下来，只需要记录其后续的路径即可
                 paths.push(tempFieldFormulaVarPath);
             }
@@ -166,7 +162,6 @@ export class FormulaActionHandler{
                 }
                 this.addFieldFormulaQuotesConfig(tempFieldFormulaQuote, quotes);
             }
-            lastReferenceToField = null;
             if (tempFieldConfig.type === "lookup" || tempFieldConfig.type === "master_detail") {
                 // 引用类型字段
                 if (tempFieldConfig.multiple) {
@@ -177,7 +172,9 @@ export class FormulaActionHandler{
                     // 引用类型字段后面必须继续引用该字段的相关属性，否则直接报错
                     throw new Error(`computeFormulaVarAndQuotes:The field '${tempFieldConfig.name}' for the formula var '${formulaVar}' is a ${tempFieldConfig.type} type, so you must add more property after it.`);
                 }
-                lastReferenceToField = tempFieldConfig.reference_to_field;
+                if(tempFieldConfig.reference_to_field && paths.length){
+                    paths[paths.length - 1].reference_to_field = tempFieldConfig.reference_to_field;
+                }
             }
             else {
                 // 不是引用类型字段，则直接退出

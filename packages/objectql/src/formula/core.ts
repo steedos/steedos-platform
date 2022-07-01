@@ -94,8 +94,10 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                 });
                 continue;
             }
+            var lastReferenceToField = null;
             tempValue = _.reduce(paths, (reslut, next, index) => {
                 if (index === 0) {
+                    lastReferenceToField = next.reference_to_field;
                     if (isUserVar) {
                         // $user变量也要按查相关表记录的方式取值，第一个path为根据id取出对应的space_users记录
                         const sus = wrapAsync(function () {
@@ -122,13 +124,14 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                         return reslut;
                     }
                     reslut = wrapAsync(function () {
-                        if(next.reference_to_field){
-                            return getSteedosSchema().getObject(next.reference_from).findOne({ filters: [next.reference_to_field, "=", reslut] }, { fields: [next.field_name] });
+                        if(lastReferenceToField && lastReferenceToField !== "_id"){
+                            return getSteedosSchema().getObject(next.reference_from).findOne({ filters: [lastReferenceToField, "=", reslut] }, { fields: [next.field_name] });
                         }
                         else{
                             return getSteedosSchema().getObject(next.reference_from).findOne(<any>reslut, { fields: [next.field_name] });
                         }
                     }, {});
+                    lastReferenceToField = next.reference_to_field;
                     if (reslut) {
                         return reslut[next.field_name]
                     }
@@ -380,6 +383,8 @@ export const runManyCurrentObjectFieldFormulas = async function (objectName: str
 export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, recordId: string, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any, escapeConfigs?: Array<SteedosFieldFormulaTypeConfig> | Array<string>) => {
     // console.log("===updateQuotedByObjectFieldFormulaValue===", objectName, recordId, JSON.stringify(fieldFormulaConfig));
     const { vars, object_name: fieldFormulaObjectName } = fieldFormulaConfig;
+    const currentObject = getSteedosSchema().getObject(objectName);
+    const fieldFormulaObject = getSteedosSchema().getObject(fieldFormulaObjectName);
     let toAggregatePaths: Array<Array<SteedosFormulaVarPathTypeConfig>> = [];
     for (let varItem of vars) {
         // vars格式如：[{"key":"account.website","paths":[{"field_name":"account","reference_from":"contacts"},{"field_name":"website","reference_from":"accounts"}]}]
@@ -408,27 +413,44 @@ export const updateQuotedByObjectFieldFormulaValue = async (objectName: string, 
     // 则toAggregatePaths为[[{"field_name":"account","reference_from":"contacts"},{"field_name":"modified_by","reference_from":"accounts"},{"field_name":"company_id","reference_from":"users"}]]
     const formulaVarFields = pickFieldFormulaVarFields(fieldFormulaConfig);
     for (let toAggregatePathsItem of toAggregatePaths) {
+        // console.log("===toAggregatePathsItem====", toAggregatePathsItem);
         if (toAggregatePathsItem.length < 3) {
             // 引用关系只有一层时，可以直接查出哪些记录需要更新重算公式字段值
             let tempPath = toAggregatePathsItem[0];
             // if (tempPath.is_formula && fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
             if (fieldFormulaObjectName === objectName && tempPath.reference_from === objectName) {
                 // 如果修改的是当前对象本身的公式字段值时，只需要更新当前记录的公式字段值就行
-                let doc = await getSteedosSchema().getObject(fieldFormulaObjectName).findOne(recordId, { fields: formulaVarFields })
+                let doc = await fieldFormulaObject.findOne(recordId, { fields: formulaVarFields })
                 await updateDocsFieldFormulaValue(doc, fieldFormulaConfig, userSession, escapeConfigs);
             }
             else {
                 // 修改的是其他对象上的字段值（包括修改的是其他对象上的公式字段值），则需要按recordId值查出哪些记录需要更新重算公式字段值
-                let docs = await getSteedosSchema().getObject(fieldFormulaObjectName).find({ filters: [[tempPath.field_name, "=", recordId]], fields: formulaVarFields })
+                // console.log("===tempPath====", tempPath);
+                let referenceToValue = recordId;
+                if(tempPath.reference_to_field && tempPath.reference_to_field !== "_id"){
+                    // 当lookup字段配置了reference_to_field属性的话，级联公式计算时应该取其reference_to_field字段值作为关联记录查询时的过滤条件而不能直接使用recordId
+                    let record = await currentObject.findOne(recordId, { fields: [tempPath.reference_to_field] });
+                    referenceToValue = record && record[tempPath.reference_to_field]
+                }
+                let docs = await fieldFormulaObject.find({ filters: [[tempPath.field_name, "=", referenceToValue]], fields: formulaVarFields });
                 await updateDocsFieldFormulaValue(docs, fieldFormulaConfig, userSession, escapeConfigs);
             }
         }
         else {
             // 引用关系超过一层时，需要使用aggregate来查出哪些记录需要更新重算公式字段值
+            // console.log("===toAggregatePathsItem====", toAggregatePathsItem);
             let aggregateLookups = getFormulaVarPathsAggregateLookups(toAggregatePathsItem);
-            let lastLookupAs = aggregateLookups[aggregateLookups.length - 1]["$lookup"].as;
-            let aggregateFilters = [[`${lastLookupAs}._id`, "=", recordId]];
-            const docs = await getSteedosSchema().getObject(fieldFormulaObjectName).directAggregatePrefixalPipeline({
+            // console.log("===aggregateLookups====", aggregateLookups);
+            let lastLookup = aggregateLookups[aggregateLookups.length - 1]["$lookup"];
+            let referenceToValue = recordId;
+            if(lastLookup.foreignField && lastLookup.foreignField !== "_id"){
+                // 当lookup字段配置了reference_to_field属性的话，级联公式计算时应该取其reference_to_field字段值作为关联记录查询时的过滤条件而不能直接使用recordId
+                let record = await currentObject.findOne(recordId, { fields: [lastLookup.foreignField] });
+                referenceToValue = record && record[lastLookup.foreignField]
+            }
+            let aggregateFilters = [[`${lastLookup.as}.${lastLookup.foreignField}`, "=", referenceToValue]];
+            // console.log("===aggregateFilters====", aggregateFilters);
+            const docs = await fieldFormulaObject.directAggregatePrefixalPipeline({
                 filters: aggregateFilters,
                 fields: formulaVarFields
             }, aggregateLookups);
@@ -442,12 +464,16 @@ export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig:
     if (!_.isArray(docs)) {
         docs = [docs];
     }
+    if(!docs.length){
+        return;
+    }
+    const fieldFormulaObject = getSteedosSchema().getObject(fieldFormulaObjectName);
     let currentUserId = userSession ? userSession.userId : undefined;
     for (let doc of docs) {
         let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
         let setDoc = {};
         setDoc[fieldFormulaConfig.field_name] = value;
-        await getSteedosSchema().getObject(fieldFormulaObjectName).directUpdate(doc._id, setDoc);
+        await fieldFormulaObject.directUpdate(doc._id, setDoc);
     }
     // 这里特意重新遍历一次docs而不是直接在当前函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
     await updateQuotedByDocsForFormulaType(docs, fieldFormulaConfig, userSession, escapeConfigs);
@@ -457,6 +483,9 @@ export const updateQuotedByDocsForFormulaType = async (docs: any, fieldFormulaCo
     const { object_name: fieldFormulaObjectName } = fieldFormulaConfig;
     if (!_.isArray(docs)) {
         docs = [docs];
+    }
+    if(!docs.length){
+        return;
     }
     const fieldNames = [fieldFormulaConfig.field_name];
     const formulaQuotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(fieldFormulaObjectName, fieldNames, escapeConfigs);
