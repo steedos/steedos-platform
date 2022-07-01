@@ -23,7 +23,6 @@
     "dev": "ncc build ./index.ts -w -o dist/",
     "prerelease": "rimraf ./dist/",
     "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "prepublishOnly": "cd ../../ && turbo run build",
     "build-x": "pnpm release"
   },
   "devDependencies": {
