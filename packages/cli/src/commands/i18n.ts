@@ -24,7 +24,7 @@ I18nCommand.args = [
 	}
 ];
 
-I18nCommand.description = `Create steedos project object i18n`
+I18nCommand.description = `sync i18n resources`
 
 I18nCommand.flags = {
     serverDir: flags.string({char: 's', description: 'Steedos Server Dir'}),
