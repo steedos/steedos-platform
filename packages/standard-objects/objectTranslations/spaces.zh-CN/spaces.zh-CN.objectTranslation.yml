@@ -6,32 +6,12 @@ fields:
     label: 名称
     help: 
     description: 
-  avatar:
-    label: Logo
-    help: 
-    description: 
-  avatar_square:
-    label: 正方形Logo
-    help: 
-    description: 
-  avatar_dark:
-    label: 深色Logo
-    help: 
-    description: 
   owner:
     label: 所有者
     help: 
     description: 
   admins:
     label: 管理员
-    help: 
-    description: 
-  account_logo:
-    label: Logo
-    help: 
-    description: 
-  background:
-    label: 登录页背景图
     help: 
     description: 
   enable_register:
@@ -75,7 +55,6 @@ fields:
     help: 
     description: 
 groups:
-  logon: 登录界面
   register_account: 用户自助注册
   developer: 华炎云
 listviews:

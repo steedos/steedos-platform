@@ -44,6 +44,8 @@ module.exports = {
         // 附件病毒扫描
         // this.broker.createService(require("@steedos/ee_virus-scan"));
         // 记录审计日志
-        // this.broker.createService(require("@steedos/ee_audit-records"));
+        this.broker.createService(require("@steedos/ee_audit-records"));
+        // 自定义品牌
+        this.broker.createService(require("@steedos/ee_branding"));
     }
 }

@@ -6,32 +6,12 @@ fields:
     label: Name
     help: 
     description: 
-  avatar:
-    label: Logo
-    help: 
-    description: 
-  avatar_square:
-    label: Square Logo
-    help: 
-    description: 
-  avatar_dark:
-    label: Dark Logo
-    help: 
-    description: 
   owner:
     label: Space Owner
     help: 
     description: 
   admins:
     label: Admins
-    help: 
-    description: 
-  account_logo:
-    label: Account logo
-    help: 
-    description: 
-  background:
-    label: Background
     help: 
     description: 
   enable_register:
@@ -75,7 +55,6 @@ fields:
     help: 
     description: 
 groups:
-  logon: Logon
   register_account: Register account
   developer: Developer
 listviews:

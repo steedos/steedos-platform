@@ -1,0 +1,14 @@
+{
+  "name": "@steedos/ee_branding",
+  "version": "2.2.52-beta.22",
+  "main": "package.service.js",
+  "scripts": {},
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@steedos/license": "2.2.5"
+  }
+}
