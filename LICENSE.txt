@@ -6,9 +6,8 @@ To determine under which license you may use a file from the Steedos source code
 please resort to the header of that file.
 
 If the file has no header, the following rules apply
-1. project templates are licensed under MIT, see License.MIT.txt
-2. enterprise features are licensed under Steedos Enterprise Terms, see License.enterprise.txt
-3. source code that is neither (1) nor (2) is licensed under AGPL, see License.AGPL.txt
+1. enterprise features are licensed under Steedos Enterprise Terms, see License.enterprise.txt
+2. source code that is neither (1) is licensed under MIT, see https://opensource.org/licenses/MIT
 
 On request, licenses under different terms are available.
 
