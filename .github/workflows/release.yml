@@ -129,7 +129,7 @@ jobs:
           prerelease: false
 
       - name: Merge 2.2 to master branch
-        if: ${{ false && startsWith(steps.branch-name.outputs.tag, '2.2') && steps.version.outputs.is_stable == 'true'}}
+        if: ${{ true && startsWith(steps.branch-name.outputs.tag, '2.2') && steps.version.outputs.is_stable == 'true'}}
         run: |
           git checkout master
           git merge 2.2
