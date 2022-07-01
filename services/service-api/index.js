@@ -105,6 +105,14 @@ module.exports = {
 
 		routes: [
 			{
+				aliases: {
+					"GET /api/health"(req, res){
+						res.writeHead(200, { 'Content-Type': 'application/json' });
+						res.end(JSON.stringify({ status: 'ok' }));
+					}
+				}
+			},
+			{
 				path: "/service/api",
 
 				whitelist: [
