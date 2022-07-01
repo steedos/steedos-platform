@@ -13,7 +13,7 @@
   "dependencies": {
     "@steedos/ee_audit-records": "2.2.52-beta.22",
     "@steedos/ee_plugin-field-encryption": "2.2.52-beta.22",
-    "@steedos/ee_service-plugin-license": "^2.2.3",
+    "@steedos/ee_service-plugin-license": "^2.2.4",
     "@steedos/ee_sso-oidc": "2.2.52-beta.22",
     "@steedos/ee_unpkg-local": "2.2.52-beta.22",
     "@steedos/ee_virus-scan": "2.2.52-beta.22",

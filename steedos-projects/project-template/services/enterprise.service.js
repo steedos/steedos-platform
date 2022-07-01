@@ -16,7 +16,11 @@ module.exports = {
         // 许可证服务
         this.broker.createService(require("@steedos/ee_service-plugin-license"));
 
+        // 启动 oidc sso 服务
         this.broker.createService(require("@steedos/ee_sso-oidc"));
+
+        // 启动 报表服务
+        this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
         
         // 启动 meteor服务
         this.broker.createService({

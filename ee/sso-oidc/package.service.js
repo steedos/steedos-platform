@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-30 13:54:43
+ * @LastEditTime: 2022-07-01 13:53:55
  * @Description: 
  */
 "use strict";
@@ -12,6 +12,7 @@ const packageLoader = require('@steedos/service-package-loader');
 const objectql = require('@steedos/objectql');
 const authController = require("./main/default/routes/auth");
 const core = require("./main/default/routes/core");
+const license = require('@steedos/license');
 
 const { passport } = core.auth;
 /**
@@ -21,6 +22,8 @@ module.exports = {
     name: packageName,
     namespace: "steedos",
     mixins: [packageLoader],
+    __stop: false,  // 在created中销毁服务后,服务还是会被启动. 借助此参数控制服务的启动和销毁
+    __stop_message: '',
     /**
      * Settings
      */
@@ -40,7 +43,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['steedos-server'],
+    dependencies: ['~packages-@steedos/ee_service-plugin-license'],
 
     /**
      * Actions
@@ -60,17 +63,25 @@ module.exports = {
      * Methods
      */
     methods: {
-
+        setError(error){
+            this.__stop = true;
+            this.__stop_message = error.message;
+        },
+        async errorHandler(error) {
+            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            return await this.broker.destroyService(this);
+        },
     },
 
     merged(schema) {
 
     },
 
+
     /**
      * Service created lifecycle event handler
      */
-    async created() {
+    created() {
         try {
             // 检查环境变量
             const settings = this.settings;
@@ -87,21 +98,24 @@ module.exports = {
                 throw new Error("请配置 SSO_OIDC_CLIENT_SECRET 环境变量");
             }
 
-            const strategy = await authController.oidcStrategyFactory();
-            passport.use("oidc", strategy);
-            objectql.getSteedosConfig().setTenant({
-                sso_providers: {
-                    oidc: {
-                        name: settings.SSO_OIDC_NAME,
-                        title: settings.SSO_OIDC_NAME,
-                        logo: settings.SSO_OIDC_LOGO,
-                        url: '/api/global/auth/oidc/config'
+            authController.oidcStrategyFactory().then((strategy)=>{
+                passport.use("oidc", strategy);
+                objectql.getSteedosConfig().setTenant({
+                    sso_providers: {
+                        oidc: {
+                            name: settings.SSO_OIDC_NAME,
+                            title: settings.SSO_OIDC_NAME,
+                            logo: settings.SSO_OIDC_LOGO,
+                            url: '/api/global/auth/oidc/config'
+                        }
                     }
-                }
-            });
+                });
+            }).catch(err=>{
+                this.setError(err);
+            })
+            
         } catch (error) {
-            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
-            await this.broker.destroyService(this);
+            this.setError(error);
         }
     },
 
@@ -109,7 +123,17 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        
+        try {
+            if(this.__stop) {
+                throw new Error(this.__stop_message);
+            }
+            const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
+            if(!allow){
+                throw new Error('请购买企业版许可证，以使用「oidc sso」功能。')
+            }
+        } catch (error) {
+            return await this.errorHandler(error);
+        }
     },
 
     /**

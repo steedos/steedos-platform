@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-30 14:20:07
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-01 11:13:58
  * @Description: 
  */
 import { accountsServer, setAuthCookies } from '@steedos/accounts';
@@ -11,8 +11,6 @@ import * as requestIp from 'request-ip';
 import { UserProvider } from '../collections/user_provider';
 
 import { getSteedosSchema } from '@steedos/objectql';
-import { getTenantId } from '../context';
-import { isPlatformEnterPrise } from '@steedos/license';
 
 const getUserAgent = (req: any) => {
     let userAgent: string = (req.headers['user-agent'] as string) || '';
@@ -26,11 +24,6 @@ const getUserAgent = (req: any) => {
 export class Account {
     static async ssoLogin(req, res, options = { user: null, err: null, redirect: true, accessToken: null }) {
         let { user , err } = options;
-        const allow = await isPlatformEnterPrise(getTenantId())
-        if(!allow){
-            err = '请购买企业版许可证，以使用oidc sso功能。';
-        }
-
         if (err || !user) { 
             getSteedosSchema().broker.logger.error(`oidc sso login error: ${err}`);
             return res.redirect("/api/global/auth/oidc/error-callback");
