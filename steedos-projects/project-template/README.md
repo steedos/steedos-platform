@@ -24,10 +24,6 @@
 
 - **.vscode**：该文件夹中保存的是vscode编辑器的配置文件，其中setting.json文件中定义了低代码开发时，编写yaml配置文件需要符合的schemas规范。
 
-- **jsreport-app**：这是一个独立的 [JsReport](https://jsreport.net/) 项目，用于设计各种报表。详情请参考 [JsReport报表开发向导](https://www.steedos.cn/docs/developer/jsreport)。
-
-- **node-red-app**：这是一个独立的 [Node-Red](https://nodered.org/) 项目，可以通过可视化开发方式，连接SAP、用友、金蝶等主流业务系统及各种数据库，实现各种集成业务需求。详情请参考 [与现有业务系统整合](https://www.steedos.cn/docs/developer/node-red)。
-
 - **services**：该文件夹内存放的是华炎魔方微服务相关配置文件，目前内置三个微服务，另外每个软件包都要求以微服务形式加入到华炎魔方。
 
 - **steedos-app**：这是每个魔方项目内置的默认软件包文件夹，华炎魔方启动时会自动加载每个软件包中的元数据和相关代码。

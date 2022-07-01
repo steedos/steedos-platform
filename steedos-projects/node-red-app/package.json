@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "1.0.5",
+  "name": "steedos-node-red",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

@@ -8,7 +8,6 @@
 - [client](/packages/client)：此包用于创建客户端连接，方便对数据执行数据库操作。
 - [core](/packages/core)：华炎魔方内核功能包，该包中实现了元数据、元数据国际化资源、插件、Creator等内核功能的初始化，还有OData接口，Bootstrap接口等内核功能也是在该包中实现的。
 - [create-steedos-app](/packages/create-steedos-app)：该包中实现了 `npx create-steedos-app` 相关命令行功能，用于创建一个华炎魔方项目，创建出来的是一个模板项目，而不是空的魔方项目，华炎魔方模板项目说明请参考文档 [华炎魔方模板项目](https://github.com/steedos/steedos-platform/blob/2.1/steedos-projects/project-template/README.md)。
-- [create-steedos-node-red-app](/packages/create-steedos-node-red-app)：该包中实现了 `npx create-steedos-node-red-app` 相关命令行功能，用于创建一个Node-Red项目，使用说明请参考文档 [与现有业务系统整合](https://www.steedos.cn/docs/developer/node-red)。
 - [data-import](/packages/data-import)：该包中实现了数据导入相关服务端接口功能，使用说明请参考文档 [如何导入对象数据](https://www.steedos.cn/docs/admin/import)。
 - [design-system-react](/packages/design-system-react)：该包把开源前端组件包`design-system-react`本地化了。
 - [filters](/packages/filters)：该包实现了华炎魔方数组格式的过滤条件规范，可以把数组格式的过滤条件转换为OData字符串格式的过滤条件，它适用于华炎魔方ObjectQL,GrqphQL等需要过滤数据的地方，使用方法请参考文档 [ObjectQL服务端语法说明](https://www.steedos.cn/docs/developer/objectql)，[GraphQL API 向导](https://www.steedos.cn/docs/developer/graphql-api)，。
@@ -20,7 +19,6 @@
 - [meteor-bundle-runner](/packages/meteor-bundle-runner)：该包中定义了华炎魔方[meteor](https://www.meteor.com/) 运行时。
 - [migrate](/packages/migrate)：该包用来编写数据库升级脚本。
 - [mongodb-bi-connector](/packages/mongodb-bi-connector)：将系统对象转换为mongodb bi schema ，允许用户使用SQL创建查询，并使用Tableau， MicroStrategy和 Qlik等现有的关系商业智能工具可视化，图形化和报告其MongoDB数据。[MongoDB BI Connector](https://www.mongodb.com/zh-cn/products/bi-connector)
-- [node-red-app-template](/packages/node-red-app-template)：该包是运行`npx create-steedos-node-red-app`命令时创建的Node-Red项目的模板。
 - [objectql](/packages/objectql)：该包是华炎魔方实现对象模型相关功能的内核包，包括对象数据的增删改查、各种元数据注册及动态加载、公式运算、工作流规则、GraphQL接口、连接MongoDB、My SQL等各种数据库驱动等功能都是在该包中实现的，使用说明请参考文档 [ObjectQL服务端语法说明](https://www.steedos.cn/docs/developer/objectql)。
 - [plugin-enterprise](/packages/plugin-enterprise)：企业版华炎魔方才能使用的插件包。
 - [process](/packages/process)：该包实现了批准过程相关功能，使用说明请参考文档 [批准过程](https://www.steedos.cn/docs/admin/auto_process#%E6%89%B9%E5%87%86%E8%BF%87%E7%A8%8B)。

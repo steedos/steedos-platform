@@ -61,7 +61,6 @@ ee/**/node_modules/**
 packages/cli/dist/**
 
 docker-volumes
-packages/node-red-app-template/yarn.lock
 
 steedos-projects/project-dev/**
 
