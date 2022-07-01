@@ -12,7 +12,7 @@
 
 .DS_Store
 
-storage/**
+storage
 
 .env.local
 

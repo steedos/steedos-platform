@@ -24,10 +24,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/ee_service-plugin-license": "^2.2.5",
     "@steedos/service-community": "2.2.52-beta.25",
-    "@steedos/service-plugin-amis": "2.2.52-beta.25",
-    "@steedos/webapp-accounts": "2.2.52-beta.25"
+    "@steedos/service-enterprise": "2.2.52-beta.25"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
@@ -47,7 +45,7 @@
     "**/bcrypt": "3.0.6",
     "**/samlp": "3.4.1",
     "**/xmldom": "0.2.1",
-    "**/tslib": "1.11.2",
+    "**/tslib": "2.3.1",
     "**/fibers": "^4.0.3",
     "**/cookies": "0.6.2",
     "**/@babel/runtime": "7.12.0",
