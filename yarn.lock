@@ -4498,29 +4498,12 @@
     preact-context "^1.1.3"
     prop-types "^15.7.2"
 
-"@steedos/client@2.1.114":
-  version "2.1.114"
-  resolved "https://registry.yarnpkg.com/@steedos/client/-/client-2.1.114.tgz#483380c5adfed3ba3aba1aa5179b6f497c6f6232"
-  integrity sha512-+hglwVNArzO/4lohPaxIWJI5zB/Xb5lJ5a0rZikubYXo8dCM9vluVwl91i+UpoUhtujsDkr/m+cAmH2LblpN7A==
-  dependencies:
-    "@steedos/filters" "2.1.114"
-    node-fetch "^2.6.1"
-
 "@steedos/ee_service-plugin-license@^2.2.5":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@steedos/ee_service-plugin-license/-/ee_service-plugin-license-2.2.5.tgz#4ad564648ddb955f80362fe5bddc7cc976f39c08"
   integrity sha512-2ECPCMY+lDtheFdSAJ0g24XNLFfoRGX8j/Tk1W+ORmeEOirm8XOONFquU5nHHZOllqrN292gqxtrYqY1q+I55g==
   dependencies:
     axios "^0.21.4"
-
-"@steedos/filters@2.1.114":
-  version "2.1.114"
-  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.1.114.tgz#9e8ee37cc885964579d724a6a834b867b8860061"
-  integrity sha512-oAZDPDjvNJYtnG0Cs5g2QBb7aZyY5RoP/NSMgMG4HFHH0X1Vwzf+ADFCIdz9mYuXb0yqYi/fb7Ekpy9P4UtnFg==
-  dependencies:
-    "@babel/runtime" "^7.5.4"
-    moment "^2.24.0"
-    underscore "^1.9.1"
 
 "@steedos/license@2.2.5":
   version "2.2.5"
@@ -4531,24 +4514,6 @@
     crypto "^1.0.1"
     node-fetch "^2.6.0"
     systeminformation "5.9.17"
-
-"@steedos/metadata-core@2.1.114":
-  version "2.1.114"
-  resolved "https://registry.yarnpkg.com/@steedos/metadata-core/-/metadata-core-2.1.114.tgz#631c7d6c8d86f7d36068f7a8ea0846b992b5a492"
-  integrity sha512-aaUoebhuRr1al9kzn7RqgwNY6mUUZohUDbMZJPsT3jcs3t+9CyKenXPpS6ODkBavz3v70a4MwnBQHFyFGiyG0g==
-  dependencies:
-    "@steedos/client" "2.1.114"
-    archiver "^5.1.0"
-    chalk "^4.1.0"
-    clone "^2.1.2"
-    compressing "^1.5.1"
-    dotenv-flow "^3.2.0"
-    eval "^0.1.4"
-    glob "^7.1.6"
-    ini "^2.0.0"
-    js-beautify "^1.13.1"
-    js-yaml "^3.14.0"
-    underscore "^1.11.0"
 
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
@@ -24142,37 +24107,6 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha512-ZnWpYnYugiOVEY5GkcuJK1io5V8QmNYChG62gSit9pQVGErXtrKuPC55ITaVSukmMta5qpMU7vqLt2Lnni4f/g==
-
-steedos-cli@^2.1.114:
-  version "2.1.114"
-  resolved "https://registry.yarnpkg.com/steedos-cli/-/steedos-cli-2.1.114.tgz#ab8b0f5c0cf5e7e761481bb2d7b46261e52150c9"
-  integrity sha512-60HTWDugWcrndpV+ILKAoIyUJC8IVF59/7p+hchkV6xnkgXhng5tMk98gdO+4halYlcxfqCJXYwVf8tFF7QLlA==
-  dependencies:
-    "@geek/spinner" "1.0.0"
-    "@oclif/command" "^1.5.10"
-    "@oclif/config" "^1.12.8"
-    "@oclif/plugin-help" "^2.1.6"
-    "@steedos/metadata-core" "2.1.114"
-    archiver "^5.0.2"
-    chalk "2.4.2"
-    change-case "^3.1.0"
-    colors "^1.3.3"
-    compressing "^1.5.1"
-    dotenv-flow "^3.2.0"
-    fibers "^4.0.3"
-    fs-extra "^7.0.1"
-    glob "^7.1.6"
-    inquirer "^6.2.2"
-    js-yaml "^3.13.1"
-    latest-version "^5.1.0"
-    readline-sync "^1.4.10"
-    reflect-metadata "^0.1.13"
-    request "^2.88.2"
-    request-promise "^4.2.5"
-    underscore "^1.11.0"
-    validator "^13.5.2"
-    yargs "^13.2.1"
-    yn "^2.0.0"
 
 step@0.0.x:
   version "0.0.6"

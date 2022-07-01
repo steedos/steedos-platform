@@ -48,7 +48,7 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "steedos-cli": "^2.1.114",
+    "steedos-cli": "2.2.52-beta.26",
     "tslib": "^2.4.0",
     "winston": "^3.3.3",
     "winston-loki": "^6.0.1"
