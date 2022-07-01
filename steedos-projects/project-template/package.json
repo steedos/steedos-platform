@@ -13,6 +13,7 @@
     "start:enterprise": "yarn flushCacherDB && moleculer-runner services/enterprise.service.js",
     "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
     "flushCacherDB": "node .scripts/flush_cacher_db.js",
+    "gitpod:init": "echo \"ROOT_URL=$(gp url 5000)\" >> .env.local && echo \"METADATA_SERVER=$(gp url 5000)\" >> .env.local",
     "postinstall": "cd .steedos && yarn"
   },
   "keywords": [
