@@ -21,9 +21,8 @@
   ],
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/",
-    "prerelease": "rimraf ./dist/",
-    "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "build-x": "pnpm release"
+    "prebuild": "rimraf ./dist/",
+    "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.2",
