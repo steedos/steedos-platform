@@ -33,7 +33,7 @@ module.exports = {
 	actions: {
 		refreshIndexes: {
 			async handler(ctx) {
-				console.log(`refreshIndexes start`);
+				this.logger.debug(`refreshIndexes start`);
 				const objects = await ctx.call(`objects.getAll`, {});
 				for await(const object of objects) {
 					const objectAPIName = object.metadata.name;
@@ -59,9 +59,9 @@ module.exports = {
 						console.error(`refresh indexe error: ${matchedPath}`, error);
 					}
 				});
-				console.log(`refreshIndexes end`);
+				this.logger.debug(`refreshIndexes end`);
 				return 'success'
-            }
+			}
 		}
 	},
 

@@ -198,7 +198,7 @@ module.exports = {
         await this.loadPackageMetadataServices(_path);
 
         await this.loadPackagePublicFiles(_path);
-
+        this.started = true;
         console.timeEnd(`service ${this.name} started`)
         // console.log(`service ${this.name} started`);
     },
@@ -207,6 +207,9 @@ module.exports = {
      * Service stopped lifecycle event handler
      */
     async stopped() {
+        if(!this.started){
+            return ;
+        }
         for await (const packageService of this.packageServices) {
             try {
                 await this.broker.destroyService(packageService);

@@ -42,7 +42,7 @@ function onCreateSpace(spaceDoc){
     const spaces = db.spaces.direct.find({}).count();
     if(spaces === 1){
         const config = objectql.getSteedosConfig();
-        config.setTenant({_id: spaceDoc._id, enable_create_tenant : validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_REGISTER || 'false', true) , enable_register: spaceDoc.enable_register});
+        config.setTenant({_id: spaceDoc._id, enable_create_tenant : validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_CREATE_TENANT || 'false', true) , enable_register: spaceDoc.enable_register});
     }
 
     let spaceName = spaceDoc.name;

@@ -53,8 +53,8 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
     }
     let utcOffset = userContext.user ? userContext.user.utcOffset : 0;
     userContext = extendUserContext(userContext, utcOffset);
-    // 2019-03-23T01:00:33.524Z或2019-03-23T01:00:33Z这种格式
-    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}(\:\d{1,2}(\.\d{1,3})?)?(Z)?$/;
+    // 2019-03-23T01:00:33.524Z、2019-03-23T01:00:33Z、2022-06-11T00:00:00.444+08:00这种格式
+    var regDate = /^\d{4}-\d{1,2}-\d{1,2}(T|\s)\d{1,2}\:\d{1,2}(\:\d{1,2}(\.\d{1,3})?)?(Z|((\+|\-)\d{1,2}\:\d{1,2}))?$/;
     var filtersLooper, selector;
     if (!_.isFunction(filters) && !filters.length) {
         return;

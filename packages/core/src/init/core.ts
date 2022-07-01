@@ -16,6 +16,16 @@ import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
 
+const session = require('express-session')
+
+routersApp.use(session({
+    secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 800000 },
+    name: 'ivan'
+}))
+
 export const sha1 = (contents) => {
     var hash = createHash('sha1');
     hash.update(contents);
@@ -217,7 +227,9 @@ export class Core {
     private static initRouters(){
         let routers = objectql.getRouters()
         _.each(routers, (router)=>{
-            routersApp.use('', router.router.default)
+            if(router.router.default){
+                routersApp.use('', router.router.default)
+            }
         })
         WebApp.connectHandlers.use(routersApp);
     }
@@ -225,7 +237,9 @@ export class Core {
 
 export const loadRouters = (routers)=>{
     _.each(routers, (router)=>{
-        routersApp.use('', router.router.default)
+        if(router.router.default){
+            routersApp.use('', router.router.default)
+        }
     })
     try {
         WebApp.connectHandlers.use(routersApp);

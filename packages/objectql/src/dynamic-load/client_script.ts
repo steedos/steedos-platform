@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-14 18:43:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-14 19:08:42
+ * @LastEditTime: 2022-06-28 18:28:57
  * @Description: 
  */
 import _ = require('lodash')
@@ -43,6 +43,7 @@ export const loadPackageClientScripts = (packageName, packageDir)=>{
         try {
             cacher.set(packageName, babel.transformSync(packageClientScripts, { 
                 sourceType: "script", //移除安全模式
+                comments: false,
                 presets: [
                     [
                       "@babel/preset-env"

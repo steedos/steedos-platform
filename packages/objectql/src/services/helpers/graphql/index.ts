@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 18:50:27
+ * @LastEditTime: 2022-06-29 11:42:19
  * @Description: 
  */
 
@@ -92,21 +92,23 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             type += `${name}: JSON `;
             return;
         }
+        let isLookup = (field.type == "lookup" || field.type == "master_detail") &&
+            field.reference_to && _.isString(field.reference_to);
+        let isFile = field.type == "image" || field.type == "file";
         if (BASIC_TYPE_MAPPING[field.type]) {
             type += `${name}: ${BASIC_TYPE_MAPPING[field.type]} `;
-        } else if (
-            (field.type == "lookup" || field.type == "master_detail") &&
-            field.reference_to &&
-            _.isString(field.reference_to)
-        ) {
-            let refTo = field.reference_to;
-            // 判断能否根据refTo找到对象，如果找到则说明对象已加载，否则return
+        } else if (isLookup || isFile) {
+            let refTo = field.reference_to as string;
+            if(isFile){
+                // TODO: cfs_images_filerecord对象不存在，需要额外处理
+                refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+            }
             let objMetaData = getLocalService(refTo);
             if (refTo != objectName && (!objMetaData || objMetaData.settings.deleted)) {
                 return;
             }
             if (field.multiple) {
-                type += `${name}: [String] `;
+                type += `${name}: [JSON] `;
                 type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
                 resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
                     action: `${getObjectServiceName(
@@ -120,7 +122,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                     },
                 };
             } else {
-                type += `${name}: String `;
+                type += `${name}: JSON `;
                 type += `${name}${EXPAND_SUFFIX}: ${refTo} `;
                 resolvers[objectName][`${name}${EXPAND_SUFFIX}`] = {
                     action: `${getObjectServiceName(
@@ -541,13 +543,17 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                         displayObj[name] = "";
                     }
                 } else if (fType == "date") {
-                    displayObj[name] = moment(doc[name])
-                        .utcOffset(utcOffset)
+                    // 注意日期类型存的是utc0点，不需要执行utcOffset
+                    displayObj[name] = moment.utc(doc[name])
                         .format("YYYY-MM-DD");
                 } else if (fType == "datetime") {
                     displayObj[name] = moment(doc[name])
                         .utcOffset(utcOffset)
-                        .format("YYYY-MM-DD H:mm");
+                        .format("YYYY-MM-DD HH:mm");
+                }  else if (fType == "time") {
+                    // 注意时间类型走的是utc时间，不需要执行utcOffset
+                    displayObj[name] = moment.utc(doc[name])
+                        .format("HH:mm");
                 } else if (fType == "number") {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "currency") {
@@ -625,8 +631,36 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "summary") {
                     displayObj[name] = doc[name] || "";
-                } else if (fType == "image") {
-                    displayObj[name] = doc[name] || "";
+                }  else if (fType == "image" || fType == "file") {
+                    let fileLabel = "";
+                    let value = doc[name];
+                    if (!value) {
+                        continue;
+                    }
+                    // TODO: cfs_images_filerecord对象不存在，需要额外处理
+                    let fileObjectName = fType == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+                    let fileObject = steedosSchema.getObject(fileObjectName);
+                    const fileNameFieldKey = "original.name";
+                    if (field.multiple) {
+                        let fileRecords = await fileObject.find({
+                            filters: [`_id`, "in", value],
+                            fields: [fileNameFieldKey],
+                        });
+                        fileLabel = _.map(fileRecords, (fileRecord)=>{
+                            return fileRecord.original?.name;
+                        }).join(",");
+                    } else {
+                        let fileRecord = (
+                            await fileObject.find({
+                                filters: [`_id`, "=", value],
+                                fields: [fileNameFieldKey],
+                            })
+                        )[0];
+                        if (fileRecord) {
+                            fileLabel = fileRecord["original"]["name"];
+                        }
+                    }
+                    displayObj[name] = fileLabel;
                 } else {
                     console.error(
                         `Graphql Display: need to handle new field type ${field.type} for ${objectName}.`

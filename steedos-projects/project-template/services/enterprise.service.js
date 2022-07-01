@@ -15,6 +15,13 @@ module.exports = {
         this.broker.createService(require("@steedos/service-package-registry"));
         // 许可证服务
         this.broker.createService(require("@steedos/ee_service-plugin-license"));
+
+        // 启动 oidc sso 服务
+        this.broker.createService(require("@steedos/ee_sso-oidc"));
+
+        // 启动 报表服务
+        this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
+        
         // 启动 meteor服务
         this.broker.createService({
             name: "steedos-server",
@@ -37,6 +44,8 @@ module.exports = {
         // 附件病毒扫描
         // this.broker.createService(require("@steedos/ee_virus-scan"));
         // 记录审计日志
-        // this.broker.createService(require("@steedos/ee_audit-records"));
+        this.broker.createService(require("@steedos/ee_audit-records"));
+        // 自定义品牌
+        this.broker.createService(require("@steedos/ee_branding"));
     }
 }

@@ -1,0 +1,6 @@
+name: user
+type: lookup
+reference_to: space_users
+reference_to_field: user
+sort_no: 100
+label: 用户

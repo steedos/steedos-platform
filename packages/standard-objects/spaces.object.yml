@@ -13,18 +13,6 @@ fields:
     required: true
     searchable: true
     index: true
-  avatar:
-    label: Logo
-    type: avatar
-  avatar_square:
-    label: Square Logo
-    type: avatar
-    hidden: true
-  avatar_dark:
-    # avatar_dark旧版本的wokflow中在用，所以隐藏掉，暂时不能删除
-    label: Dark Logo
-    type: avatar
-    hidden: true
   owner:
     label: Owner
     type: lookup
@@ -39,14 +27,6 @@ fields:
     index: true
     multiple: true
     filterable: true
-  account_logo:
-    label: Account logo
-    type: avatar
-    group: Logon
-  background:
-    label: Background
-    type: avatar
-    group: Logon
   enable_register:
     label: Enable User Registration
     type: boolean

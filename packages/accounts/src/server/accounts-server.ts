@@ -28,7 +28,7 @@ import isMobile from "ismobilejs";
 
 const defaultOptions = {
   ambiguousErrorMessages: true,
-  tokenSecret: "secret",
+  tokenSecret: generateRandomToken(),
   tokenConfigs: {
     accessToken: {
       expiresIn: "90m",
@@ -94,6 +94,14 @@ export class AccountsServer {
     this.hooks.on(eventName, callback);
 
     return () => this.hooks.off(eventName, callback);
+  }
+
+  public async getUserProfile(userId, serviceName = 'password'){
+    const service = this.services[serviceName];
+    if(!service){
+      throw new Error(`Service ${serviceName} not found`);
+    }
+    return await service.getUserProfile(userId);
   }
 
   public async loginWithService(
@@ -203,6 +211,8 @@ export class AccountsServer {
       phone_logout_other_clients,
       phone_login_expiration_in_days,
       space,
+      provider,
+      jwtToken,
     } = infos;
 
     let is_phone = false;
@@ -243,7 +253,7 @@ export class AccountsServer {
       //3 清理用户所有session 缓存
       removeUserSessionsCacheByUserId(user.id, is_phone);
     }
-    const token = generateRandomToken();
+    const token = jwtToken || generateRandomToken();
     const sessionId = await this.db.createSession(user.id, token, {
       ip,
       userAgent,
@@ -252,11 +262,14 @@ export class AccountsServer {
       is_phone,
       is_tablet,
       space,
+      provider
     });
 
     const { accessToken, refreshToken } = this.createTokens({
       token,
       userId: user.id,
+      name: user.name,
+      email: user.email
     });
 
     return {
@@ -357,6 +370,8 @@ export class AccountsServer {
         token: newSessionId,
         isImpersonated: true,
         userId: user.id,
+        name: user.name,
+        email: user.email,
       });
       const impersonationResult = {
         authorized: true,
@@ -426,6 +441,8 @@ export class AccountsServer {
         const tokens = this.createTokens({
           token: sessionToken,
           userId: user.id,
+          name: user.name,
+          email: user.email
         });
         await this.db.updateSession(session.id, { ip, userAgent });
 
@@ -459,16 +476,22 @@ export class AccountsServer {
     token,
     isImpersonated = false,
     userId,
+    name,
+    email
   }: {
     token: string;
     isImpersonated?: boolean;
     userId: string;
+    name: string,
+    email: string
   }): Tokens {
     const { tokenSecret, tokenConfigs } = this.options;
     const jwtData: JwtData = {
-      token,
+      // token,
       isImpersonated,
       userId,
+      name,
+      email
     };
     const accessToken = generateAccessToken({
       data: jwtData,

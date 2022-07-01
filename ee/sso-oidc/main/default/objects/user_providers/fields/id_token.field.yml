@@ -1,0 +1,5 @@
+name: id_token
+type: text
+is_wide: true
+sort_no: 250
+group: 令牌

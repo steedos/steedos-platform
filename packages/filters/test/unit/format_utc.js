@@ -21,6 +21,48 @@ describe("date/datetime's utc format filter to odata query", () => {
         console.log("odata filters query result:", result);
         expect(result).to.be.eq("(created le 2019-05-25T06:44:44Z)");
     });
+    it('utc date string with time offset', async () => {
+        let filters1 = [
+            ["created", "<=", "2019-05-25T06:44:44.000+00:00"]
+        ];
+        let result1 = formatFiltersToODataQuery(filters1);
+        console.log("odata filters query result1:", result1);
+        let filters2 = [
+            ["created", "<=", "2019-05-25T06:44:44.000Z"]
+        ];
+        let result2 = formatFiltersToODataQuery(filters2);
+        console.log("odata filters query result2:", result2);
+        expect(result1).to.be.eq("(created le 2019-05-25T06:44:44Z)");
+        expect(result1).to.be.eq(result2);
+    });
+    it('utc date string with time offset again', async () => {
+        let filters1 = [
+            ["created", "<=", "2019-05-25T06:44:44.000+08:00"]
+        ];
+        let result1 = formatFiltersToODataQuery(filters1);
+        console.log("odata filters query result1:", result1);
+        let filters2 = [
+            ["created", "<=", "2019-05-24T22:44:44.000Z"]
+        ];
+        let result2 = formatFiltersToODataQuery(filters2);
+        console.log("odata filters query result2:", result2);
+        expect(result1).to.be.eq("(created le 2019-05-24T22:44:44Z)");
+        expect(result1).to.be.eq(result2);
+    });
+    it('utc date string with time offset again again', async () => {
+        let filters1 = [
+            ["created", "<=", "2019-05-25T06:44:44.000+08:00"]
+        ];
+        let result1 = formatFiltersToODataQuery(filters1);
+        console.log("odata filters query result1:", result1);
+        let filters2 = [
+            ["created", "<=", "2019-05-25T06:44:44.000"]
+        ];
+        let result2 = formatFiltersToODataQuery(filters2);
+        console.log("odata filters query result2:", result2);
+        expect(result1).to.be.eq("(created le 2019-05-24T22:44:44Z)");
+        expect(result1).to.be.eq(result2);
+    });
     it('utc date object with out millisecond', async () => {
         let filters = [
             ["created", "<=", new Date("2019-05-25T06:44:44Z")]

@@ -22,6 +22,7 @@ export type SteedosFieldFormulaQuoteTypeConfig = {
 export type SteedosFormulaVarPathTypeConfig = {
     field_name: string,
     reference_from: string,
+    reference_to_field?: string,//lookup字段上配置的reference_to_field
     is_formula?: boolean
 }
 
