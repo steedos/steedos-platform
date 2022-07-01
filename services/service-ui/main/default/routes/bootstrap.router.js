@@ -13,7 +13,7 @@ const _ = require('underscore');
 var express = require('express');
 const bootStrapExpress = express.Router();
 function getUserProfileObjectsLayout(userId, spaceId, objectName) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         let spaceUser;
         let spaceUsers = yield (0, objectql_1.getObject)("space_users").directFind({ filters: [['space', '=', spaceId], ['user', '=', userId]] });
         if (spaceUsers.length > 0) {
@@ -31,7 +31,7 @@ function getUserProfileObjectsLayout(userId, spaceId, objectName) {
 }
 ;
 function getUserObjects(userId, spaceId, objects) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const objectsLayout = yield getUserProfileObjectsLayout(userId, spaceId);
         for (const objectName in objects) {
             // objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
@@ -51,7 +51,7 @@ function getUserObjects(userId, spaceId, objects) {
     });
 }
 function getUserObject(userId, spaceId, object, layout) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         if (!layout) {
             const layouts = yield getUserProfileObjectsLayout(userId, spaceId, object.name);
             if (layouts && layouts.length > 0) {
@@ -138,9 +138,9 @@ function getUserObject(userId, spaceId, object, layout) {
     });
 }
 function getSpaceBootStrap(req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Fiber(function () {
-            return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+            return tslib_1.__awaiter(this, void 0, void 0, function* () {
                 let userSession = req.user;
                 if (!userSession) {
                     return res.status(500).send();
@@ -310,7 +310,7 @@ function getSpaceBootStrap(req, res) {
 }
 exports.getSpaceBootStrap = getSpaceBootStrap;
 function getObjectConfig(objectName, spaceId, userSession) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         let objectConfig = {};
         try {
             let object = (0, objectql_1.getObject)(objectName);
@@ -338,7 +338,7 @@ function getObjectConfig(objectName, spaceId, userSession) {
     });
 }
 function getUserObjectsListViews(userId, spaceId) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const listViews = {};
         const objectsViews = yield (0, objectql_1.getObject)("object_listviews").find({ filters: [['space', '=', spaceId], [["owner", "=", userId], "or", ["shared", "=", true]]] });
         let objectNames = _.pluck(objectsViews, 'object_name');
@@ -374,9 +374,9 @@ function getUserObjectsListViews(userId, spaceId) {
 //     return _user_object_list_views;
 // }
 function getSpaceObjectBootStrap(req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Fiber(function () {
-            return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+            return tslib_1.__awaiter(this, void 0, void 0, function* () {
                 let userSession = req.user;
                 let userId = userSession.userId;
                 let urlParams = req.params;

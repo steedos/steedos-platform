@@ -14,7 +14,7 @@ const context_1 = require("../context");
 class UserProvider {
     static link(user) {
         var _a, _b, _c, _d;
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const { thirdPartyUser, _id } = user;
             const { params } = thirdPartyUser;
             const collection = (0, objectql_1.getObject)('user_providers');
@@ -60,7 +60,7 @@ class UserProvider {
         });
     }
     static findByProvider(thirdPartyUser) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const collection = (0, objectql_1.getObject)('user_providers');
             const records = yield collection.find({ filters: [[
                         'provider', '=', thirdPartyUser.providerType,

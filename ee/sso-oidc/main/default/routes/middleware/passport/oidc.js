@@ -18,7 +18,7 @@ const buildVerifyFn = saveUserFn => {
      * @param {*} params The response body from requesting an access_token
      * @param {*} done The passport callback: err, user, info
      */
-    return (issuer, sub, profile, jwtClaims, accessToken, refreshToken, idToken, params, done) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+    return (issuer, sub, profile, jwtClaims, accessToken, refreshToken, idToken, params, done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         const thirdPartyUser = {
             // store the issuer info to enable sync in future
             idToken: idToken,
@@ -70,7 +70,7 @@ function validEmail(value) {
  * @returns Dynamically configured Passport OIDC Strategy
  */
 const strategyFactory = function (config, callbackUrl, saveUserFn) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         try {
             const { clientID, clientSecret, configUrl } = config;
             if (!clientID || !clientSecret || !callbackUrl || !configUrl) {

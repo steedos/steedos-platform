@@ -15,7 +15,7 @@ const space_users_1 = require("./space_users");
 const context_2 = require("../context");
 class User {
     static save(user, opts) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             let dbUser = yield User.findByEmail(user.email);
             if (!dbUser) {
                 dbUser = yield (0, objectql_1.getObject)('users').directInsert({
@@ -43,7 +43,7 @@ class User {
         });
     }
     static findByEmail(email) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const records = yield (0, objectql_1.getObject)('users').find({ filters: [['email', '=', email]] });
             if (records.length === 0) {
                 return null;
@@ -54,7 +54,7 @@ class User {
         });
     }
     static findById(id) {
-        return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield (0, objectql_1.getObject)('users').findOne(id);
         });
     }

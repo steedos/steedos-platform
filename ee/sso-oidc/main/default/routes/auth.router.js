@@ -18,7 +18,7 @@ router
 authController.oidcPreAuth)
     .get("/api/global/auth/oidc/callback", authController.oidcAuth)
     .get("/api/global/auth/oidc/error-callback", function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const filename = path.join(__dirname, '..', '..', '..', 'ejs', 'error-callback.ejs');
         const data = {};
         const options = {};

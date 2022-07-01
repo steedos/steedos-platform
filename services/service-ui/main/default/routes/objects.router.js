@@ -13,13 +13,13 @@ const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
 const callObjectServiceAction = function (actionName, userSession, data) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const broker = (0, objectql_1.getSteedosSchema)().broker;
         return broker.call(actionName, data, { meta: { user: userSession } });
     });
 };
 router.get('/service/api/:objectServiceName/fields', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
@@ -32,7 +32,7 @@ router.get('/service/api/:objectServiceName/fields', core.requireAuthentication,
     });
 });
 router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
@@ -45,7 +45,7 @@ router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requi
     });
 });
 router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName, recordId } = req.params;
@@ -60,7 +60,7 @@ router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.r
     });
 });
 router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
@@ -73,7 +73,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     });
 });
 router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
@@ -86,7 +86,7 @@ router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentic
     });
 });
 router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
@@ -99,7 +99,7 @@ router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthe
     });
 });
 router.get('/service/api/:objectServiceName/relateds', core.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;

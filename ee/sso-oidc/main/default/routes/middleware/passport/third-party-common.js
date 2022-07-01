@@ -14,7 +14,7 @@ const authError = function (done, message, err = null) {
 const createASession = function (userId, session) {
     return Object.assign(Object.assign({ createdAt: new Date().toISOString(), lastAccessedAt: new Date().toISOString() }, session), { userId });
 };
-const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done, saveUserFn) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done, saveUserFn) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     if (!saveUserFn) {
         throw new Error("Save user function must be provided");
     }
@@ -74,7 +74,7 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
 });
 exports.authenticateThirdParty = authenticateThirdParty;
 function syncProfilePicture(user, thirdPartyUser) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const pictureUrl = thirdPartyUser.profile._json.picture;
         if (pictureUrl) {
             const response = yield (0, node_fetch_1.default)(pictureUrl, {});
@@ -92,7 +92,7 @@ function syncProfilePicture(user, thirdPartyUser) {
  * @returns a user that has been sync'd with third party information
  */
 function syncUser(user, thirdPartyUser) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         // provider
         user.provider = thirdPartyUser.provider;
         user.providerType = thirdPartyUser.providerType;

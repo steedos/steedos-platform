@@ -35,7 +35,7 @@ const oidcCallbackUrl = (config) => {
 };
 exports.oidcCallbackUrl = oidcCallbackUrl;
 function oidcStrategyFactory() {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const chosenConfig = (0, context_1.getOidcConfig)();
         let callbackUrl = (0, exports.oidcCallbackUrl)(chosenConfig);
         oidcStrategy = yield oidc.strategyFactory(chosenConfig, callbackUrl, users_1.User.save);
@@ -43,19 +43,19 @@ function oidcStrategyFactory() {
     });
 }
 exports.oidcStrategyFactory = oidcStrategyFactory;
-const oidcAuth = (req, res, next) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
-    return passport.authenticate('oidc', (err, user) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+const oidcAuth = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    return passport.authenticate('oidc', (err, user) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         return yield account_1.Account.ssoLogin(req, res, { err, user, redirect: true, accessToken: user.thirdPartyUser.oauth2.accessToken });
     }))(req, res, next);
 });
 exports.oidcAuth = oidcAuth;
-const oidcPreAuth = (req, res, next) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+const oidcPreAuth = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     return passport.authenticate('oidc', {
         scope: ["profile", "email"],
     })(req, res, next);
 });
 exports.oidcPreAuth = oidcPreAuth;
-const oidcLogin = (req, res, next) => (0, tslib_1.__awaiter)(void 0, void 0, void 0, function* () {
+const oidcLogin = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const { accessToken } = req.body;
     const oauth2 = oidcStrategy.strategy._getOAuth2Client(oidcStrategy.config);
     const userInfoURL = oidcStrategy.config.userInfoURL;

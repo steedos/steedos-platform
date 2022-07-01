@@ -13,7 +13,7 @@ const core_1 = require("@steedos/core");
 const objectql_1 = require("@steedos/objectql");
 const router = express.Router();
 router.get('/service/api/apps/menus', core_1.requireAuthentication, function (req, res) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+    return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const result = yield (0, objectql_1.getSteedosSchema)().broker.call('apps.getMenus', {}, { meta: { user: userSession } });
