@@ -232,22 +232,9 @@ module.exports = {
 
 	// Called after broker created.
 	async created(broker) {
-		const MongoDBService = require('@steedos/service-mongodb-server');
-		const path = require('path');
-		let mongodbServerConfig = {
-			enabled: !process.env.MONGO_URL,
-			debug: true,
-			port: process.env.MONGO_PORT || 27018,
-			dbPath: process.env.MONGO_DBPATH || path.join(process.cwd(), 'db'),
-		};
-		if (mongodbServerConfig && mongodbServerConfig.enabled) {
-			let mongodbService = broker.createService({
-				name: "mongodb-server",
-				mixins: [MongoDBService],
-				settings: mongodbServerConfig
-			});
-			await mongodbService.startMongo();
-		}
+		// Clear all cache entries
+		broker.logger.warn('Clear all cache entries on startup.')
+		broker.cacher.clean();
 	},
 
 	// Called after broker started.
