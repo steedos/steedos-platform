@@ -13,21 +13,8 @@
     "start": "cd steedos-projects && cd project-template && yarn start:community",
     "start:ee": "cd steedos-projects && cd project-template && yarn start:enterprise",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
-    "lerna-link": "lerna clean --yes && lerna link --force-local",
-    "buildPackages": "lerna run buildPackage",
-    "upgrade-template": "node .scripts/copy_template.js && node .scripts/.git_push_upgrade_template.js",
     "build": "lerna run build",
-    "i18n": "lerna run i18n",
-    "clean": "lerna clean",
-    "changed": "lerna changed",
-    "git": "git config core.autocrlf true && git config core.filemode false",
-    "update-yarn": "curl --compressed -o- -L https://yarnpkg.com/install.sh | bash",
-    "sync-to-taobao": "node .scripts/sync_to_taobao.js",
-    "build_image": "node .scripts/build_image.js",
-    "build_creator": "cd creator && yarn run build",
-    "create_dev_project": "node .scripts/create_dev_project.js",
-    "start-dev": "yarn create_dev_project && cd steedos-projects && cd project-dev && yarn start",
-    "create-project-template-release": "node .scripts/create_project_template_release.js"
+    "i18n": "lerna run i18n"
   },
   "resolutions": {
     "@babel/runtime": "7.12.0",
