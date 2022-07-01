@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
-import { AccountsServer } from './server';
+import { AccountsServer, generateRandomToken } from './server';
 import { AccountsPassword } from './password';
 import { errors } from './password/errors';
 import accountsExpress from './rest-express';
@@ -28,9 +28,9 @@ declare var WebApp;
 const config = getSteedosConfig();
 
 function getAccountsServer() {
-  let accountsConfig = config.accounts || {};
+  let accountsConfig = config.tenant || {};
   let emailConfig = config.email || {};
-  let tokenSecret = accountsConfig.tokenSecret || "secret";
+  let tokenSecret = accountsConfig.tokenSecret || generateRandomToken();
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";

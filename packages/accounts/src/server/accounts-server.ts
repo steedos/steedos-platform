@@ -28,7 +28,7 @@ import isMobile from "ismobilejs";
 
 const defaultOptions = {
   ambiguousErrorMessages: true,
-  tokenSecret: "secret",
+  tokenSecret: generateRandomToken(),
   tokenConfigs: {
     accessToken: {
       expiresIn: "90m",
@@ -268,6 +268,8 @@ export class AccountsServer {
     const { accessToken, refreshToken } = this.createTokens({
       token,
       userId: user.id,
+      name: user.name,
+      email: user.email
     });
 
     return {
@@ -368,6 +370,8 @@ export class AccountsServer {
         token: newSessionId,
         isImpersonated: true,
         userId: user.id,
+        name: user.name,
+        email: user.email,
       });
       const impersonationResult = {
         authorized: true,
@@ -437,6 +441,8 @@ export class AccountsServer {
         const tokens = this.createTokens({
           token: sessionToken,
           userId: user.id,
+          name: user.name,
+          email: user.email
         });
         await this.db.updateSession(session.id, { ip, userAgent });
 
@@ -470,16 +476,22 @@ export class AccountsServer {
     token,
     isImpersonated = false,
     userId,
+    name,
+    email
   }: {
     token: string;
     isImpersonated?: boolean;
     userId: string;
+    name: string,
+    email: string
   }): Tokens {
     const { tokenSecret, tokenConfigs } = this.options;
     const jwtData: JwtData = {
-      token,
+      // token,
       isImpersonated,
       userId,
+      name,
+      email
     };
     const accessToken = generateAccessToken({
       data: jwtData,
