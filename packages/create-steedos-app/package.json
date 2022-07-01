@@ -2,38 +2,52 @@
   "name": "create-steedos-app",
   "version": "2.2.52-beta.20",
   "keywords": [
+    "react",
     "steedos"
   ],
-  "description": "Create steedos apps with no build configuration.",
+  "description": "Create steedos apps with one command",
   "repository": {
     "type": "git",
-    "url": "https://github.com/steedos/steedos-platform.git",
-    "directory": "packages/create-steedos-app"
+    "url": "https://github.com/steedos/steedos-platform",
+    "directory": "packages/create-next-app"
   },
+  "author": "Steedos Team <support@steedos.com>",
   "license": "MIT",
-  "engines": {
-    "node": ">=12"
-  },
-  "bugs": {
-    "url": "https://github.com/steedos/steedos-platform/issues"
+  "bin": {
+    "create-steedos-app": "./dist/index.js"
   },
   "files": [
-    "index.js",
-    "templates/**",
-    "createSteedosApp.js"
+    "dist"
   ],
-  "bin": {
-    "create-steedos-app": "./index.js"
+  "scripts": {
+    "dev": "ncc build ./index.ts -w -o dist/",
+    "prerelease": "rimraf ./dist/",
+    "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
+    "prepublishOnly": "cd ../../ && turbo run build",
+    "build-x": "pnpm release"
   },
-  "dependencies": {
-    "@geek/spinner": "1.0.0",
-    "chalk": "3.0.0",
-    "commander": "4.1.0",
+  "devDependencies": {
+    "@types/async-retry": "1.4.2",
+    "@types/cross-spawn": "6.0.0",
+    "@types/node": "^12.6.8",
+    "@types/prompts": "2.0.1",
+    "@types/rimraf": "3.0.0",
+    "@types/tar": "4.0.3",
+    "@types/validate-npm-package-name": "3.0.0",
+    "@vercel/ncc": "0.33.4",
+    "async-retry": "1.3.1",
+    "chalk": "2.4.2",
+    "commander": "2.20.0",
     "cpy": "7.3.0",
-    "fs-extra": "8.1.0"
+    "cross-spawn": "6.0.5",
+    "got": "10.7.0",
+    "prompts": "2.1.0",
+    "rimraf": "3.0.2",
+    "tar": "4.4.10",
+    "update-check": "1.5.4",
+    "validate-npm-package-name": "3.0.0"
   },
-  "resolutions": {
-    "**/chalk": "3.0.0"
-  },
-  "gitHead": "dc227d1e170135f54c30bd445d0fd1de46b64a24"
+  "engines": {
+    "node": ">=12.22.0"
+  }
 }
