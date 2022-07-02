@@ -11,12 +11,12 @@ const STEEDOS_PROJECT_JSON = 'steedos-config.yml';
 const STEEDOS_PROJECT_JS = 'steedos.config.js';
 const STEEDOS_PACKAGE_FOLDER_NAME = 'steedos-packages';
 
-function traverseForFileSync(dir: string, file: string) {
+function traverseForFileSync(dir: string, file: string, file2: string) {
   let foundProjectDir: string | null = null;
   let nowDir: string | null = dir;
   let nextDir: string | null = null;
 
-  while(!fs.existsSync( path.join(nowDir, file) )){
+  while(!fs.existsSync( path.join(nowDir, file) ) && !fs.existsSync( path.join(nowDir, file2) )){
     nextDir = path.resolve(nowDir, '..');
     if (nextDir == nowDir) {
       break;
@@ -28,22 +28,19 @@ function traverseForFileSync(dir: string, file: string) {
 }
 
 export function resolveProjectPathSync(dir: string = process.cwd()): string | null {
-  let projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JSON);
-  if(!projectPath){
-    projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JS);
-  }
+  let projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JSON, STEEDOS_PROJECT_JS);
   if (!projectPath) {
     throw new Error('InvalidProjectWorkspace');
   }
   return projectPath;
 }
 
-function traverseForAppSync(dir: string, file: string) {
+function traverseForAppSync(dir: string, file: string, file2: string) {
   let foundAppDir: string | null = null;
   let nowDir: string | null = dir;
   let nextDir: string | null = null;
 
-  while(!fs.existsSync( path.join(nowDir, '..', file) )){
+  while(!fs.existsSync( path.join(nowDir, '..', file) ) && !fs.existsSync( path.join(nowDir, '..', file2) )){
     nextDir = path.resolve(nowDir, '..');
     if (nextDir == nowDir) {
       break;
@@ -55,10 +52,7 @@ function traverseForAppSync(dir: string, file: string) {
 }
 
 export function resolveAppNameSync(dir: string = process.cwd()): string | null {
-  let appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JSON);
-  if(!appPath){
-    appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JS);
-  }
+  let appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JSON, STEEDOS_PROJECT_JS);
   if (!appPath) {
     throw new Error('InvalidAppWorkspace');
   }
