@@ -55,7 +55,9 @@ tenant:
   enable_email_code_login: ${STEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN}
   enable_bind_email: ${STEEDOS_TENANT_ENABLE_BIND_EMAIL}
   enable_bind_mobile: ${STEEDOS_TENANT_ENABLE_BIND_MOBILE}
-  tokenSecret: 
+  tokenSecret: ${STEEDOS_TENANT_TOKEN_SECRET} # 默认值 43位字符串, 每次重启服务时生成新的值
+  accessTokenExpiresIn: ${STEEDOS_TENANT_ACCESS_TOKEN_EXPIRES_IN} # 默认值 90d
+  refreshTokenExpiresIn: ${STEEDOS_TENANT_REFRESH_TOKEN_EXPIRES_IN} # 默认值 7d
 sms:
   qcloud:
     smsqueue_interval: 1000

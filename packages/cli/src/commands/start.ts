@@ -4,10 +4,10 @@ import {ServiceBroker, Utils as utils} from "moleculer";
 import fs from "fs";
 import glob from "glob";
 import _ from "lodash";
-import Args from "args";
 import os from "os";
 import cluster from "cluster";
 import kleur from "kleur";
+import { Start } from "../start";
 
 const stopSignals = [
 	"SIGHUP",
@@ -97,6 +97,9 @@ class StartCommand extends Command {
 			filePath = path.isAbsolute(this.flags.config)
 				? this.flags.config
 				: path.resolve(process.cwd(), this.flags.config);
+			if(!fs.existsSync(filePath)){
+				filePath = null;
+			}
 		}
 		if (!filePath && fs.existsSync(path.resolve(process.cwd(), "moleculer.config.mjs"))) {
 			filePath = path.resolve(process.cwd(), "moleculer.config.mjs");
@@ -107,7 +110,6 @@ class StartCommand extends Command {
 		if (!filePath && fs.existsSync(path.resolve(process.cwd(), "moleculer.config.json"))) {
 			filePath = path.resolve(process.cwd(), "moleculer.config.json");
 		}
-
 		if (filePath) {
 			if (!fs.existsSync(filePath))
 				return Promise.reject(new Error(`Config file not found: ${filePath}`));
@@ -122,7 +124,8 @@ class StartCommand extends Command {
 					let content = mod.default;
 
 					if (utils.isFunction(content)) content = await content.call(this);
-					this.configFile = content;
+
+					this.configFile = await Start.mergeConfig(content) ;
 					break;
 				}
 				default:
@@ -463,7 +466,7 @@ class StartCommand extends Command {
 	this.worker = null;
 
     this.flags = flags;
-    this.servicePaths = Object.values(args)
+    this.servicePaths = _.compact(Object.values(args))
 
 
     if (this.flags.instances !== undefined && cluster.isMaster) {
@@ -479,7 +482,7 @@ StartCommand.args = [
 	{
 		name:        'servicePaths',
 		required:    false,
-		default:     'services',
+		default:     '', //services
 		description: 'service files or directories or glob masks',
 	}
 ];
