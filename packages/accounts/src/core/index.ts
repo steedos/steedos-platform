@@ -191,7 +191,7 @@ export const sendMail = async (mail: any): Promise<void> => {
   //如果没有配置发送邮件服务，则打印log
   console.log(chalk.green(`MAIL: ${to}, ${subject}`))
   if(!canSend){
-      console.log(chalk.red("ERROR sending mail, please set email configs in steedos-config.yml"));
+      console.log(chalk.red("ERROR sending mail, please set email configs in steedos.config.js"));
       return;
   }else{
       MailQueue.send({
@@ -208,7 +208,7 @@ export const sendSMS = async (sms: any): Promise<void> => {
   let canSend = canSendSMS();
   console.log(chalk.green(`SMS: ${mobile}, ${message}`))
   if(!canSend){
-      console.log(chalk.red("ERROR sending sms, Please set sms configs in steedos-config.yml"))
+      console.log(chalk.red("ERROR sending sms, Please set sms configs in steedos.config.js"))
       return;
   }else{
       SMSQueue.send({

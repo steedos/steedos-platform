@@ -8,15 +8,15 @@ export const sendMail = async ({from, subject, to, text, html}) => {
 
     const config = getSteedosConfig().email
     if (!config) {
-        console.log("Please set email configs in steedos-config.yml")
+        console.log("Please set email configs in steedos.config.js")
         return
     }
     if (!config.from) {
-        console.log("Please set email configs in steedos-config.yml")
+        console.log("Please set email configs in steedos.config.js")
         return
     }
     if (!config.url && (!config.host || !config.port || !config.username || !config.password)) {
-        console.log("Please set email configs in steedos-config.yml")
+        console.log("Please set email configs in steedos.config.js")
         return
     }
 

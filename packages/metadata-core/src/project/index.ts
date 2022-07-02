@@ -8,6 +8,7 @@ const compressing = require("compressing");
 import { deleteFolderRecursive } from '../folderUtil';
 
 const STEEDOS_PROJECT_JSON = 'steedos-config.yml';
+const STEEDOS_PROJECT_JS = 'steedos.config.js';
 const STEEDOS_PACKAGE_FOLDER_NAME = 'steedos-packages';
 
 function traverseForFileSync(dir: string, file: string) {
@@ -27,7 +28,10 @@ function traverseForFileSync(dir: string, file: string) {
 }
 
 export function resolveProjectPathSync(dir: string = process.cwd()): string | null {
-  const projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JSON);
+  let projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JSON);
+  if(!projectPath){
+    projectPath = traverseForFileSync(dir, STEEDOS_PROJECT_JS);
+  }
   if (!projectPath) {
     throw new Error('InvalidProjectWorkspace');
   }
@@ -51,7 +55,10 @@ function traverseForAppSync(dir: string, file: string) {
 }
 
 export function resolveAppNameSync(dir: string = process.cwd()): string | null {
-  const appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JSON);
+  let appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JSON);
+  if(!appPath){
+    appPath = traverseForAppSync(dir, STEEDOS_PROJECT_JS);
+  }
   if (!appPath) {
     throw new Error('InvalidAppWorkspace');
   }
