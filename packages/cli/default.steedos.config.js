@@ -33,7 +33,7 @@ require('dotenv-flow').config(
  */
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
-	namespace: "{steedos-project-template}",
+	namespace: "steedos",
 	// Unique node identifier. Must be unique in a namespace.
 	nodeID: process.env.NODEID,
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
