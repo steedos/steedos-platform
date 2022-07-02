@@ -1,6 +1,6 @@
 {
   "name": "nextjs-amis",
-  "version": "2.2.52-beta.27",
+  "version": "2.2.52-beta.30",
   "private": true,
   "scripts": {
     "dev": "node server",

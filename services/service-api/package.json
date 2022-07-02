@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-api",
-  "version": "2.2.52-beta.27",
+  "version": "2.2.52-beta.30",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.2.52-beta.27",
+    "@steedos/auth": "2.2.52-beta.30",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
     "moleculer-apollo-server": "^0.3.3",
@@ -14,5 +14,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3fee0ae0bcd922285d23f685072f9d7562e1b54a"
+  "gitHead": "bc2c2bc4fb5d851c5bdeb88a38e2e81369cbc566"
 }
