@@ -128,11 +128,14 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Merge 2.2 to master branch
+      - name: Checkout master branch
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: actions/checkout@v2
         with: 
           ref: 'master'
+        
+      - name: Merge 2.2 to master branch
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
         run: |
           git merge 2.2
           git push origin 
