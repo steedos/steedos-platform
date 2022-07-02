@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-objects",
-  "version": "2.2.52-beta.27",
+  "version": "2.2.52-beta.31",
   "description": "",
   "main": "lib/objects.service.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/formula": "2.2.52-beta.27",
-    "@steedos/metadata-registrar": "2.2.52-beta.27",
+    "@steedos/formula": "2.2.52-beta.31",
+    "@steedos/metadata-registrar": "2.2.52-beta.31",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -41,5 +41,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3fee0ae0bcd922285d23f685072f9d7562e1b54a"
+  "gitHead": "217f9905da76ab086460c559486cae5bae77dd6f"
 }

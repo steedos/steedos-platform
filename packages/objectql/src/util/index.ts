@@ -22,6 +22,7 @@ const configName = 'steedos-config.yml'
 const licenseName = '.license'
 import { getObjectConfig } from '../types'
 import { defaultsDeep } from 'lodash';
+import { broker } from '..';
 export const StandardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 export * from './transform'
 export * from './permission_shares'
@@ -732,14 +733,14 @@ export function getSteedosConfig(){
             }
         }
         STEEDOS_CONFIG = calcSteedosConfig(config);
-
-        if(STEEDOS_CONFIG){
-            (STEEDOS_CONFIG as any).setTenant = (tenant)=>{
-                STEEDOS_CONFIG.tenant = defaultsDeep(tenant, STEEDOS_CONFIG.tenant);
-            }
-        }
     // }else{
     //     throw new Error('Config file not found: ' + configPath);
+    }
+    STEEDOS_CONFIG = defaultsDeep(broker.getSettings(), STEEDOS_CONFIG) ;
+    if(STEEDOS_CONFIG){
+        (STEEDOS_CONFIG as any).setTenant = (tenant)=>{
+            STEEDOS_CONFIG.tenant = defaultsDeep(tenant, STEEDOS_CONFIG.tenant);
+        }
     }
     return STEEDOS_CONFIG;
 }

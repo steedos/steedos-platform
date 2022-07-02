@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-community",
-  "version": "2.2.52-beta.27",
+  "version": "2.2.52-beta.31",
   "private": true,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -9,8 +9,7 @@
   },
   "scripts": {
     "start": "yarn start:community",
-    "start:community": "steedos start services/community.service.js",
-    "start:enterprise": "steedos start services/enterprise.service.js",
+    "start:community": "steedos start",
     "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./steedos.config.js",
     "gitpod:init": "echo \"ROOT_URL=$(gp url 5000)\" >> .env.local && echo \"METADATA_SERVER=$(gp url 5000)\" >> .env.local",
     "postinstall": "cd .steedos && yarn"
@@ -24,8 +23,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.27",
-    "@steedos/service-enterprise": "2.2.52-beta.27"
+    "@steedos/service-community": "2.2.52-beta.31",
+    "@steedos/service-enterprise": "2.2.52-beta.31"
   },
   "devDependencies": {
     "eslint": "^7.7.0",

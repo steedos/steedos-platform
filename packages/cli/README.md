@@ -57,5 +57,31 @@ steedos run --help
 - export: 从服务器获取数据生成本地文件。 比如 `steedos data:export -o accounts`或`steedos data:export -o accounts -p`
 - import: 将本地文件部署到服务器。 比如 `steedos data:import -f accounts.json`或`steedos data:import -p account-plan.json`
 
-## 功能说明
-- 此包用于生成steedos命令
+
+## 检索内置对象的扩展属性
+
+### 方式1: 使用package.yml
+1 新增package.yml
+```
+# 例如同步部门的自定义字段、按钮. 新增`steedos-app/package.yml`
+CustomAction:
+  - organizations.*
+CustomActionScript:
+  - organizations.*
+CustomField:
+  - organizations.*
+```
+
+2 在项目跟路径下执行命令
+```
+steedos source:retrieve -y ./steedos-app/package.yml
+```
+### 方式2: retrieve -m 命令
+示例1: 同步部门的自定义按钮`btn1`
+```
+steedos source:retrieve -m CustomAction:organizations.btn1
+```
+示例2: 同步部门所有自定义按钮
+```
+steedos source:retrieve -m CustomAction:organizations.*
+```

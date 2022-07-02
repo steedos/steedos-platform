@@ -3,8 +3,11 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 5100
+  - port: 5000
     onOpen: open-browser
+    visibility: public
+  - port: 3000
+    onOpen: ignore
     visibility: public
   - port: 6379
     onOpen: ignore
@@ -32,6 +35,7 @@ tasks:
       yarn
       yarn bootstrap
     command: |
+      git config pull.rebase false
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local

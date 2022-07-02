@@ -1,8 +1,10 @@
+import { Broker } from './broker'
+
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-30 16:45:51
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-02 14:17:05
  * @Description: 
  */
 export * from './types'
@@ -22,3 +24,5 @@ export * from './metadata-register/restrictionRules'
 export * from './metadata-register/permissionFields'
 export * from './metadata-register/process'
 export * from './metadata-register/processTrigger'
+
+export const broker = new Broker();
