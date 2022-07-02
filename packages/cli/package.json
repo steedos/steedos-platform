@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "2.2.52-beta.31",
+  "version": "2.2.52-beta.34",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -25,12 +25,20 @@
     "url": "https://github.com/steedos/cli/issues"
   },
   "homepage": "https://github.com/steedos/cli#readme",
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/default.steedos.config.js",
+    "/default.steedos.settings.yml",
+    "/dist"
+  ],
   "dependencies": {
     "@geek/spinner": "1.0.0",
     "@oclif/command": "^1.5.10",
     "@oclif/config": "^1.12.8",
     "@oclif/plugin-help": "^2.1.6",
-    "@steedos/metadata-core": "2.2.52-beta.31",
+    "@steedos/metadata-core": "2.2.52-beta.34",
     "archiver": "^5.0.2",
     "chalk": "2.4.2",
     "change-case": "^3.1.0",
@@ -102,5 +110,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "217f9905da76ab086460c559486cae5bae77dd6f"
+  "gitHead": "e78b09a4275adac07aa43db576e30c001f6bd11d"
 }
