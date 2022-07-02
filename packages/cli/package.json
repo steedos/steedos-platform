@@ -25,12 +25,6 @@
     "url": "https://github.com/steedos/cli/issues"
   },
   "homepage": "https://github.com/steedos/cli#readme",
-  "files": [
-    "/bin",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json",
-    "/dist"
-  ],
   "dependencies": {
     "@geek/spinner": "1.0.0",
     "@oclif/command": "^1.5.10",
