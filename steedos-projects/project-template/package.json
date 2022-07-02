@@ -1,6 +1,6 @@
 {
   "name": "@steedos/steedos-project-community",
-  "version": "2.2.52-beta.31",
+  "version": "2.2.52-beta.34",
   "private": true,
   "repository": "https://github.com/steedos/steedos-project-template.git",
   "description": "",
@@ -22,8 +22,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.31",
-    "@steedos/service-enterprise": "2.2.52-beta.31"
+    "@steedos/service-community": "2.2.52-beta.34",
+    "@steedos/service-enterprise": "2.2.52-beta.34"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
