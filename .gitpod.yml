@@ -3,8 +3,11 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 5100
+  - port: 5000
     onOpen: open-browser
+    visibility: public
+  - port: 3000
+    onOpen: ignore
     visibility: public
   - port: 6379
     onOpen: ignore
