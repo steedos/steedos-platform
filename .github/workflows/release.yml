@@ -137,6 +137,6 @@ jobs:
       - name: Merge 2.2 to master branch
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
         run: |
-          git merge 2.2
+          git merge origin/2.2
           git push origin 
         
