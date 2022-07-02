@@ -35,6 +35,7 @@ tasks:
       yarn
       yarn bootstrap
     command: |
+      git config pull.rebase false
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
