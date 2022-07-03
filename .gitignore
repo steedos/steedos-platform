@@ -51,22 +51,17 @@ services/service-metadata-translations/.env.local
 services/service-metadata-apps/.env.local
 services/service-metadata-permissionsets/.env.local
 services/service-metadata/.env.local
-steedos-projects/project-template/logs/**
-steedos-projects/project-template/storage/**
-steedos-projects/project-template/.env.local
+
 services/service-metadata-layouts/.env.local
 steedos-packages/**/node_modules/**
-steedos-projects/**/node_modules/**
 ee/**/node_modules/**
 packages/cli/dist/**
 
 docker-volumes
 
-steedos-projects/project-dev/**
 
 .npmrc
 .yarnrc
 
 .rpt2_cache
 
-steedos-projects/project-template/steedos-packages/metadata-test/**

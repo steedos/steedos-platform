@@ -11,8 +11,6 @@ If the file has no header, the following rules apply
 
 On request, licenses under different terms are available.
 
-Project templates can be found in the folders steedos-projects/
-
 Source code of enterprise features are files that
 * are in folders named "ee" or start with "ee_", or in subfolders of such folders.
 * contain the strings "ee_" in its filename name.

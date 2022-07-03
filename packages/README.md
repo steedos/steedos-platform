@@ -7,7 +7,7 @@
 - [cli](/packages/cli)：steedos-cli相关功能都是在该npm包中实现的，华炎魔方DX，即用于同步代码的Visual Studio Code 插件依赖了该包中相关功能。
 - [client](/packages/client)：此包用于创建客户端连接，方便对数据执行数据库操作。
 - [core](/packages/core)：华炎魔方内核功能包，该包中实现了元数据、元数据国际化资源、插件、Creator等内核功能的初始化，还有OData接口，Bootstrap接口等内核功能也是在该包中实现的。
-- [create-steedos-app](/packages/create-steedos-app)：该包中实现了 `npx create-steedos-app` 相关命令行功能，用于创建一个华炎魔方项目，创建出来的是一个模板项目，而不是空的魔方项目，华炎魔方模板项目说明请参考文档 [华炎魔方模板项目](https://github.com/steedos/steedos-platform/blob/2.1/steedos-projects/project-template/README.md)。
+- [create-steedos-app](/packages/create-steedos-app)：该包中实现了 `npx create-steedos-app` 相关命令行功能，用于创建一个华炎魔方项目。
 - [data-import](/packages/data-import)：该包中实现了数据导入相关服务端接口功能，使用说明请参考文档 [如何导入对象数据](https://www.steedos.cn/docs/admin/import)。
 - [design-system-react](/packages/design-system-react)：该包把开源前端组件包`design-system-react`本地化了。
 - [filters](/packages/filters)：该包实现了华炎魔方数组格式的过滤条件规范，可以把数组格式的过滤条件转换为OData字符串格式的过滤条件，它适用于华炎魔方ObjectQL,GrqphQL等需要过滤数据的地方，使用方法请参考文档 [ObjectQL服务端语法说明](https://www.steedos.cn/docs/developer/objectql)，[GraphQL API 向导](https://www.steedos.cn/docs/developer/graphql-api)，。
