@@ -150,7 +150,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
-    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name, reference_to_field_reference_to } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -159,7 +159,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
     // console.log("===updateReferenceTosFieldSummaryValue====aggregateGroups==", aggregateGroups);
     for (let referenceToId of referenceToIds) {
         if(typeof referenceToId !== "string"){
-            referenceToId = <string>referenceToId._id;
+            referenceToId = <string>referenceToId[reference_to_field_reference_to || "_id"];
         }
         let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
         let aggregateFilters:any = referenceToFilters;
@@ -210,9 +210,19 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 }
 
 export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
-    const { field_name, object_name } = fieldSummaryConfig;
+    const { field_name, object_name, reference_to_field_reference_to } = fieldSummaryConfig;
     let setDoc = {};
     setDoc[field_name] = value;
+    if(reference_to_field_reference_to && reference_to_field_reference_to !== "_id") {
+        const referenceToRecords = await getSteedosSchema().getObject(object_name).directFind({ filters: [ reference_to_field_reference_to, "=", referenceToId ] });
+        if(referenceToRecords && referenceToRecords.length){
+            referenceToId = referenceToRecords[0]["_id"];
+        }
+        else{
+            // 如果没找到关联记录，说明可能关联到的主表记录的reference_to_field属性值被修改了，无法更新统计结果
+            return;
+        }
+    }
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
 }
 

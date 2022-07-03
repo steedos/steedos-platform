@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:03
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-03 11:12:59
+ * @Description: 
+ */
 import { SteedosObjectTypeConfig, getObjectConfigs } from '../types';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryDataTypeValue, SupportedSummaryFieldTypes } from './type';
 import { isCodeObject } from '../util';
@@ -37,6 +44,7 @@ export const initSummaryConfig = async(summaryConfig: SteedosFieldSummaryTypeCon
         throw new Error(`Can't fount a master_detail type field that reference_to the master object '${object_name}' on the summary_object '${summary_object}'.`);
     }
     summaryConfig.reference_to_field = referenceToField.name;
+    summaryConfig.reference_to_field_reference_to = referenceToField.reference_to_field;
     if(!summaryConfig.data_type){
         throw new Error(`Invalid field type summary '${field_name}' on the object '${object_name}', miss data_type property.`);
     }

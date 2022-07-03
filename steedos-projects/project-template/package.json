@@ -1,38 +1,19 @@
 {
-  "name": "@steedos/steedos-project-community",
-  "version": "2.2.52-beta.34",
+  "name": "steedos-app",
+  "version": "0.1.0",
   "private": true,
-  "repository": "https://github.com/steedos/steedos-project-template.git",
-  "description": "",
-  "engines": {
-    "node": ">=12"
-  },
   "scripts": {
     "start": "steedos start",
-    "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./steedos.config.js",
+    "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./steedos.config.js",
     "gitpod:init": "echo \"ROOT_URL=$(gp url 5000)\" >> .env.local && echo \"METADATA_SERVER=$(gp url 5000)\" >> .env.local",
     "postinstall": "cd .steedos && yarn"
   },
-  "keywords": [
-    "steedos",
-    "low-code",
-    "microservices",
-    "moleculer"
-  ],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.34",
-    "@steedos/service-enterprise": "2.2.52-beta.34"
+    "@steedos/service-community": "2.2.52-beta.34"
   },
   "devDependencies": {
-    "eslint": "^7.7.0",
-    "jest": "^26.4.2",
-    "jest-cli": "^26.4.2",
-    "moleculer-repl": "^0.6.4",
-    "nodemon": "^2.0.7"
+    "moleculer-repl": "^0.6.4"
   },
-  "homepage": "https://www.steedos.com",
   "resolutions": {
     "typeorm": "0.2.28",
     "**/lodash": "^4.17.15",
@@ -48,8 +29,5 @@
     "**/cookies": "0.6.2",
     "**/@babel/runtime": "7.12.0",
     "**/graphql": "15.5.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

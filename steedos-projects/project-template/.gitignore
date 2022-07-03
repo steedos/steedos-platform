@@ -1,31 +1,17 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 **/.DS_Store
-**/.idea
 
 **/node_modules
-**/package-lock.json
 
+.npmrc
+.yarnrc
 **/npm-error.log
 **/yarn-error.log
 **/lerna-debug.log
 
-**/lib
-
-.DS_Store
-
 storage
-
-.env.local
-
-bin/mongodb
-bin/nodejs
-db
 dist
-docker-volumes
-.ossutil_checkpoint
-# steedos-packages/**/**
-!/steedos-packages/*.package
-server.log
 logs
 
-.npmrc
-.yarnrc
+.env.local

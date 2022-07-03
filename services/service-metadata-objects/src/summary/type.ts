@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:04
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-03 11:10:58
+ * @Description: 
+ */
 export type SteedosQueryFilters = any
 
 /**
@@ -13,7 +20,8 @@ export type SteedosFieldSummaryTypeConfig = {
     data_type: string, //数据类型，summary_type为count则为number，其他类型则关联到summary_field的数据类型
     summary_field?: string, //要聚合的字段，只能是数值、金额、日期、日期时间字段类型
     summary_filters?: SteedosQueryFilters, //要汇总的子表记录的过滤条件
-    reference_to_field?: string //子表上的master_detail关联到主表对象的字段，必须能找到且只能找到一个
+    reference_to_field?: string, //子表上的master_detail关联到主表对象的字段，必须能找到且只能找到一个
+    reference_to_field_reference_to?: string //子表上的master_detail关联到主表对象的字段上配置的reference_to_field属性值，默认为_id
 }
 
 /**

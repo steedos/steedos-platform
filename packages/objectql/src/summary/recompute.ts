@@ -1,11 +1,19 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-04-13 10:31:03
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-03 14:28:50
+ * @Description: 
+ */
 import { getSteedosSchema } from '../index';
 import { SteedosFieldSummaryTypeConfig } from './type';
 import { getFieldSummaryConfig } from './field_summary';
 import { updateReferenceTosFieldSummaryValue } from './core';
 
 const runCurrentFieldSummary = async function (fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) {
-    const { object_name: objectName } = fieldSummaryConfig;
-    const docs = await getSteedosSchema().getObject(objectName).find({ filters: [], fields: ["_id"] })
+    const { object_name: objectName, reference_to_field_reference_to } = fieldSummaryConfig;
+    const fieldName = reference_to_field_reference_to || "_id";
+    const docs = await getSteedosSchema().getObject(objectName).find({ filters: [], fields: [fieldName] })
     await updateReferenceTosFieldSummaryValue(docs, fieldSummaryConfig, userSession);
 }
 

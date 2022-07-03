@@ -10,8 +10,7 @@
     "steedos-packages/*"
   ],
   "scripts": {
-    "start": "cd steedos-projects && cd project-template && yarn start:community",
-    "start:ee": "cd steedos-projects && cd project-template && yarn start:enterprise",
+    "start": "cd steedos-projects && cd project-template && yarn start",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
     "build": "lerna run build",
     "i18n": "lerna run i18n"
