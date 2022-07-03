@@ -68,25 +68,7 @@ Gitpod 启动远程开发环境时会自动分配远程服务器资源，安装�
 
 在浏览器中打开项目后，会自动在项目根目录执行`yarn`指令安装项目依赖项，并自动执行`yarn start`指令运行项目。
 
-需要注意的是，平台源码项目根目录运行的是源码项目内的模板项目，该项目路径为 `steedos-projects/project-template`，执行npx create-steedos-app命令创建的模板项目也是来自于这个文件夹。
-
-第一次运行项目项目会在控制台看到提示“请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY”，但是我们也可以看到项目运行起来后自动打开了一个浏览器窗口访问运行好的华炎魔方，只是因为没有激活华炎魔方所以没有账户可以登录使用。
-
-请参考文档 [激活华炎魔方](https://www.steedos.cn/docs/deploy/deploy-activate#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F) 在路径为steedos-projects/project-template的模板项目中配置这两个环境变量，配置好后重启项目即可使用私有部署的华炎魔方初始账户登录使用。
-
-```sh
-# saas初始化工作区信息
-STEEDOS_CLOUD_API_KEY=
-STEEDOS_CLOUD_SPACE_ID=
-```
-
-如果项目根目录中没有`.env.local`文件的话，请创建一个，然后在该文件中配置好以上环境变量值。
-
-### 访问平台模板项目
-
-如果项目运行完成后没有自动打开浏览器窗口访问项目的话，可以手动在浏览器中输入Gitpod-Workspaces访问地址并加上要访问的项目端口号`5000-`作为前缀即可访问它。
-
-比如假设之前开启的远程开发环境打开的Workspaces访问地址为`https://white-silverfish-e5vy4oyh.ws-us25.gitpod.io`，我们只要输入地址 `https://5000-white-silverfish-e5vy4oyh.ws-us25.gitpod.io`即可访问刚运行起来的项目。
+需要注意的是，平台源码项目根目录运行的是源码项目内的模板项目，该项目路径为 `examples/project-template`，执行npx create-steedos-app命令创建的模板项目也是来自于这个文件夹。
 
 ### 运行Creator项目
 

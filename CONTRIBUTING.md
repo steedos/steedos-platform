@@ -32,19 +32,9 @@ If you need to deploy the development environment locally, you can refer to the 
 
 ## Run Project
 
-- Run `yarn start` on the command line to start the template project in the folder `/steedos-projects/project-community`
+- Run `yarn start` on the command line to start the template project in the folder `/examples/project-template`
 
 - Use your browser to access `http://localhost:5000`.
-
-You will see the initialization page for activating the steedos project after starting the project for the first time.
-
-> You do not need to run `yarn` on command line in the folder `/steedos-projects/project-community` to install the dependent NPM packages, because all of the dependence are linked to the souce code or the node_modules of the parent folder.
-
-> Here you are using our source code as the development tool, you do not need to install [Meteor](https://www.meteor.com/).
-
-## Activate Steedos
-
-Sign up for an account at [Steedos Customer Portal](https://console.steedos.cn/) and then refer to [this document](https://www.steedos.cn/docs/deploy/deploy-activate) to activate Steedos.
 
 ## Run The Source Code Of Meteor Bundle
 
