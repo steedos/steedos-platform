@@ -210,9 +210,21 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 }
 
 export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
-    const { field_name, object_name } = fieldSummaryConfig;
+    console.log("updateReferenceToFieldSummaryValue: referenceToId, value:", referenceToId, value);
+    const { field_name, object_name, reference_to_field_reference_to } = fieldSummaryConfig;
+    console.log("updateReferenceToFieldSummaryValue: fieldSummaryConfig=", fieldSummaryConfig);
     let setDoc = {};
     setDoc[field_name] = value;
+    if(reference_to_field_reference_to && reference_to_field_reference_to !== "_id") {
+        const referenceToRecords = await getSteedosSchema().getObject(object_name).directFind({ filters: [ reference_to_field_reference_to, "=", referenceToId ] });
+        if(referenceToRecords && referenceToRecords.length){
+            referenceToId = referenceToRecords[0]["_id"];
+        }
+        else{
+            // 如果没找到关联记录，说明可能关联到的主表记录的reference_to_field属性值被修改了，无法更新统计结果
+            return;
+        }
+    }
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
 }
 

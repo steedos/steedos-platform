@@ -58,6 +58,7 @@ export class SummaryActionHandler {
             return ;
         }
         summaryConfig.reference_to_field = referenceToField.name;
+        summaryConfig.reference_to_field_reference_to = referenceToField.reference_to_field;
         if (!summaryConfig.data_type) {
             throw new Error(`Invalid field type summary '${field_name}' on the object '${object_name}', miss data_type property.`);
         }
