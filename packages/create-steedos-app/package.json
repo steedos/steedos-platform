@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.1.114",
+  "version": "2.1.115",
   "keywords": [
     "steedos"
   ],
@@ -34,5 +34,6 @@
   },
   "resolutions": {
     "**/chalk": "3.0.0"
-  }
+  },
+  "gitHead": "2b88bab27c7c392f82fe6fb610372bb376351e1a"
 }
