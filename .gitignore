@@ -65,4 +65,4 @@ docker-volumes
 
 .rpt2_cache
 
-.yarn.lock
+yarn.lock
