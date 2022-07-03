@@ -150,7 +150,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  */
 export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
-    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name } = fieldSummaryConfig;
+    const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name, reference_to_field_reference_to } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];
     }
@@ -159,7 +159,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
     // console.log("===updateReferenceTosFieldSummaryValue====aggregateGroups==", aggregateGroups);
     for (let referenceToId of referenceToIds) {
         if(typeof referenceToId !== "string"){
-            referenceToId = <string>referenceToId._id;
+            referenceToId = <string>referenceToId[reference_to_field_reference_to || "_id"];
         }
         let referenceToFilters:any = [[reference_to_field, "=", referenceToId]];
         let aggregateFilters:any = referenceToFilters;
