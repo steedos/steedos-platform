@@ -210,9 +210,7 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
 }
 
 export const updateReferenceToFieldSummaryValue = async (referenceToId: string, value: any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
-    console.log("updateReferenceToFieldSummaryValue: referenceToId, value:", referenceToId, value);
     const { field_name, object_name, reference_to_field_reference_to } = fieldSummaryConfig;
-    console.log("updateReferenceToFieldSummaryValue: fieldSummaryConfig=", fieldSummaryConfig);
     let setDoc = {};
     setDoc[field_name] = value;
     if(reference_to_field_reference_to && reference_to_field_reference_to !== "_id") {
