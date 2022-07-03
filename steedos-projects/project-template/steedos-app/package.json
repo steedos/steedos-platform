@@ -1,9 +1,6 @@
 {
-  "name": "steedos-community-default-package",
+  "name": "my-steedos-package",
   "version": "2.2.25",
-  "description": "A Steedos App",
   "main": "package.service.js",
-  "license": "MIT",
-  "private": true,
-  "scripts": {}
+  "private": true
 }
