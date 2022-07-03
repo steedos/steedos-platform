@@ -1,12 +1,12 @@
 {
   "name": "steedos-app",
-  "version": "0.1.0",
+  "version": "2.2.52-beta.36",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.34"
+    "@steedos/service-community": "2.2.52-beta.36"
   },
   "devDependencies": {
     "moleculer-repl": "^0.6.4"
