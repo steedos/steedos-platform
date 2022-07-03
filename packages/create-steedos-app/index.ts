@@ -128,7 +128,7 @@ async function run(): Promise<void> {
     ? 'pnpm'
     : getPkgManager()
 
-  const example = typeof program.example === 'string'? program.example.trim() : 'project-template'
+  const example = typeof program.example === 'string'? program.example.trim() : undefined//'project-template'
   try {
     await createApp({
       appPath: resolvedProjectPath,
