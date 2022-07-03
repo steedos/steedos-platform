@@ -37,7 +37,7 @@ export async function createApp({
   typescript?: boolean
 }): Promise<void> {
   let repoInfo: RepoInfo | undefined
-  const template = typescript ? 'typescript' : 'default'
+  const template =  'default' //typescript ? 'typescript' : 'default'
 
   if (example) {
     let repoUrl: URL | undefined
@@ -210,10 +210,7 @@ export async function createApp({
       version: '0.1.0',
       private: true,
       scripts: {
-        dev: 'next dev',
-        build: 'next build',
-        start: 'next start',
-        lint: 'next lint',
+        start: 'steedos start'
       },
     }
     /**
@@ -230,20 +227,20 @@ export async function createApp({
     /**
      * Default dependencies.
      */
-    const dependencies = ['react', 'react-dom', 'next']
+    const dependencies = ['@steedos/service-community']
     /**
      * Default devDependencies.
      */
-    const devDependencies = ['eslint', 'eslint-config-next']
+    const devDependencies = ['eslint']
     /**
      * TypeScript projects will have type definitions and other devDependencies.
      */
     if (typescript) {
       devDependencies.push(
         'typescript',
-        '@types/react',
-        '@types/node',
-        '@types/react-dom'
+        // '@types/react',
+        // '@types/node',
+        // '@types/react-dom'
       )
     }
     /**
