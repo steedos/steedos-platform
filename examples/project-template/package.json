@@ -12,7 +12,6 @@
     "moleculer-repl": "^0.6.4"
   },
   "resolutions": {
-    "typeorm": "0.2.28",
     "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
