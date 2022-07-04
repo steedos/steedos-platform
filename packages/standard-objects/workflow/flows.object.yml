@@ -886,10 +886,10 @@ actions:
             swal.showInputError('您输入的名称不正确');
             return false;
           }
-          $("body").addClass("loading");
+          window.$("body").addClass("loading");
           var userSession = Creator.USER_CONTEXT;
           var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
-          $.ajax({
+          window.$.ajax({
             type: "POST",
             url: Steedos.absoluteUrl("/am/forms?methodOverride=DELETE"),
             data: JSON.stringify({ 'Forms': [{ 'id': formId }] }),
@@ -900,10 +900,10 @@ actions:
               XHR.setRequestHeader('Authorization', authorization);
             },
             success: function (data) {
-              $("body").removeClass("loading");
+              window.$("body").removeClass("loading");
               toastr.success("操作已成功！");
               var gridObjectNameClass = object_name.replace(/\./g,"-");
-              var gridContainer = $(`.gridContainer.${gridObjectNameClass}`);
+              var gridContainer = window.$(`.gridContainer.${gridObjectNameClass}`);
               var dxDataGridInstance, isOpenerRemove;
               if (!(gridContainer != null ? gridContainer.length : void 0)) {
                 if (window.opener) {
@@ -931,7 +931,7 @@ actions:
               }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-              $("body").removeClass("loading");
+              window.$("body").removeClass("loading");
               toastr.error(XMLHttpRequest.responseJSON);
             }
           });
