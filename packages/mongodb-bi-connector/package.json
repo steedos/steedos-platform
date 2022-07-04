@@ -15,7 +15,7 @@
   "devDependencies": {
     "mocha": "^5",
     "nodemon": "^2.0.2",
-    "typescript": "^3.9.3"
+    "typescript": "4.6.3"
   },
   "private": false,
   "publishConfig": {

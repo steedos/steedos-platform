@@ -69,7 +69,7 @@
     "pg": "^7.10.0",
     "sinon-chai": "^3.3.0",
     "ts-node": "^8.0.3",
-    "typescript": "3.5.3"
+    "typescript": "4.6.3"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

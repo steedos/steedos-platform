@@ -28,7 +28,7 @@
         "express": "^4.17.1",
         "jsdom": "^16.2.2",
         "jshashes": "^1.0.8",
-        "node-fetch": "2.6.1",
+        "node-fetch": "^2.6.7",
         "ts-node": "^8.4.1",
         "wechat-crypto": "^0.0.2",
         "wx-ding-aes": "^0.0.10"
