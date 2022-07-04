@@ -459,6 +459,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     toConfig() {
         let config: JsonMap = {
+            idFieldName: this.idFieldName,
             name: this.name,
             fields: {}
         }

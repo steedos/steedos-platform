@@ -18,7 +18,18 @@ module.exports = {
             return toastr.warning("请先启动数据源");
         }
     }
-    window.open(Creator.getRelativeUrl("/app/-/" + record.name));
+
+    window.stores.API.client.sobject("mysql_t1_c1").getConfig().then((res)=>{
+        if(res.idFieldName){
+            window.open(Creator.getRelativeUrl("/app/-/" + record.name));
+        }else{
+            return toastr.error("请配置主键字段");
+        }
+    }).catch(function(err){
+        return window.toastr.error(err.message);
+    })
+
+    
 
     // var allViews = Creator.odata.query('object_listviews', { $select: '_id', $filter: `((object_name eq '${record.name}') and (name eq 'all'))` }, true);
     // if(allViews && allViews.length > 0){
