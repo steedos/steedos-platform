@@ -28,7 +28,6 @@
     "**/cookies": "0.6.2",
     "**/cross-env": "5.2.1",
     "**/globby": "9.2.0",
-    "**/graphql": "15.5.0",
     "**/pass-stream": "1.0.0"
   },
   "devDependencies": {
