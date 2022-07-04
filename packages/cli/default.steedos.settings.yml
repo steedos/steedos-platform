@@ -109,5 +109,6 @@ sso:
     client_id: ${SSO_OIDC_CLIENT_ID}
     client_secret: ${SSO_OIDC_CLIENT_SECRET}
     name: ${SSO_OIDC_NAME}
+    label: ${SSO_OIDC_LABEL}
     logo: ${SSO_OIDC_LOGO}
     require_local_account: ${SSO_OIDC_REQUIRE_LOCAL_ACCOUNT}
