@@ -44,6 +44,7 @@ module.exports = {
 	logger: [{
 		type: "Console",
 		options: {
+			level: "warn",
 			// Using colors on the output
 			colors: true,
 			// Print module names with different colors (like docker-compose for containers)
