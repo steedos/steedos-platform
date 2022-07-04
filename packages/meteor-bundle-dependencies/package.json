@@ -42,7 +42,7 @@
     "promise": "8.0.2",
     "qs-middleware": "1.0.3",
     "reify": "0.17.3",
-    "request": "2.83.0",
+    "request": "2.88.2",
     "semver": "5.4.1",
     "send": "0.16.1",
     "sha256": "0.2.0",
