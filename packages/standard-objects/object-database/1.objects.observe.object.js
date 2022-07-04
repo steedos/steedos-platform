@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-23 17:58:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-04 15:44:22
+ * @Description: 
+ */
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
 
@@ -12,7 +19,7 @@ Meteor.startup(function () {
     };
     var _removeServerObjects = function (document) {
         try {
-            objectCore.removeObject(document, false, true);
+            objectCore.removeObject(document);
         } catch (error) {
             throw error
         }

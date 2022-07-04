@@ -239,6 +239,11 @@ export async function refreshObject(ctx, objectApiName) {
         return o.isMain ? 1 : -1;
     }))
 
+    if(objectDatasource == "default" || objectDatasource == "meteor"){
+        objectConfig.idFieldName = '_id';
+        objectConfig.idFieldNames = ['_id'];
+    }
+
     _.each(objectConfig.fields, function(field, field_name) {
         if (objectDatasource != "default" && objectDatasource != "meteor") {
             if (field.primary) {

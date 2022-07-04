@@ -1,0 +1,6 @@
+{
+  "name": "my-steedos-package",
+  "version": "0.1.0",
+  "main": "package.service.js",
+  "private": true
+}

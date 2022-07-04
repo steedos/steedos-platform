@@ -247,7 +247,6 @@ export class ActionHandlers {
     async handleDeleteObject(ctx, objectApiName): Promise<boolean>{
         // const { metadata } = (await ctx.broker.call("metadata.get", { key: cacherKey(objectApiName) }, { meta: ctx.meta })) || {};
         const { metadata } = (await Register.get(ctx.broker, cacherKey(objectApiName))) || {};
-
         // await ctx.broker.call('metadata.delete', {key: cacherKey(objectApiName)}, {meta: ctx.meta})
         await Register.delete(ctx.broker, cacherKey(objectApiName));
         try {
@@ -272,7 +271,9 @@ export class ActionHandlers {
             await this.onDestroy(metadata)
         }
         await ctx.broker.broadcast("metadata.objects.deleted", {objectApiName: objectApiName, isDelete: true, objectConfig: metadata});
-        await ctx.broker.broadcast(`${metadata.datasource}.@${objectApiName}.metadata.objects.deleted`, { objectApiName: objectApiName, data: metadata });
+        if(metadata){
+            await ctx.broker.broadcast(`${metadata.datasource}.@${objectApiName}.metadata.objects.deleted`, { objectApiName: objectApiName, data: metadata });
+        }
         return true;
     }
 }

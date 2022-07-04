@@ -148,6 +148,14 @@ async function getObject(id, userId){
     try {
         let lng = await getLng(userId);
         let _object = objectql.getObject(id);
+
+        const records = await objectql.getObject('objects').directFind({filters: [['name', '=', id]]});
+        if(records.length > 0){
+            if(!records[0].is_enable){
+                return null;
+            }
+        }
+
         let objectConfig = await _object.toConfig();
         let object = clone(objectConfig);
         object._id = object.name;

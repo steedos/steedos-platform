@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.2.52-beta.36",
+  "version": "2.2.52-beta.37",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -18,18 +18,18 @@
     "start": "node server"
   },
   "dependencies": {
-    "@babel/runtime": "7.12.0",
-    "@steedos/accounts": "2.2.52-beta.36",
-    "@steedos/auth": "2.2.52-beta.36",
-    "@steedos/core": "2.2.52-beta.36",
-    "@steedos/filters": "2.2.52-beta.36",
-    "@steedos/i18n": "2.2.52-beta.36",
+    "@babel/runtime": "7.12.18",
+    "@steedos/accounts": "2.2.52-beta.37",
+    "@steedos/auth": "2.2.52-beta.37",
+    "@steedos/core": "2.2.52-beta.37",
+    "@steedos/filters": "2.2.52-beta.37",
+    "@steedos/i18n": "2.2.52-beta.37",
     "@steedos/license": "2.2.5",
-    "@steedos/meteor-bundle-dependencies": "2.2.52-beta.36",
-    "@steedos/meteor-bundle-runner": "2.2.52-beta.36",
-    "@steedos/objectql": "2.2.52-beta.36",
-    "@steedos/process": "2.2.52-beta.36",
-    "@steedos/standard-objects": "2.2.52-beta.36",
+    "@steedos/meteor-bundle-dependencies": "2.2.52-beta.37",
+    "@steedos/meteor-bundle-runner": "2.2.52-beta.37",
+    "@steedos/objectql": "2.2.52-beta.37",
+    "@steedos/process": "2.2.52-beta.37",
+    "@steedos/standard-objects": "2.2.52-beta.37",
     "@steedos/webapp": "2.2.25",
     "basic-auth": "^2.0.1",
     "bcrypt": "3.0.6",
@@ -59,7 +59,7 @@
     "md5": "^2.2.1",
     "meteor-node-stubs": "^0.4.1",
     "mime": "^2.0.2",
-    "mkdirp": "^0.3.5",
+    "mkdirp": "1.0.4",
     "mongodb": "^3.1.13",
     "negotiator": "^0.6.1",
     "node-rsa": "1.0.0",
@@ -73,8 +73,8 @@
     "phone": "^1.0.12",
     "qs": "^6.6.0",
     "querystring": "^0.2.0",
-    "request": "2.81.0",
-    "requestretry": "1.12.2",
+    "request": "2.88.2",
+    "requestretry": "7.1.0",
     "sha256": "^0.2.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
@@ -91,11 +91,5 @@
     "@salesforce-ux/design-system": "^2.11.0",
     "@steedos/steedos-plugin-workflow": "^1.9.1"
   },
-  "resolutions": {
-    "**/lodash": "^4.17.12",
-    "**/handlebars": "^4.3.0",
-    "**/debug": "^3.1.0",
-    "**/hoek": "^5.0.3"
-  },
-  "gitHead": "a6f8fe7b378a50270ddf7999259e26d2da3d42de"
+  "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
 }

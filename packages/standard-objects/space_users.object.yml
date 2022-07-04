@@ -144,6 +144,7 @@ fields:
     create: false
     reference_to: permission_set
     reference_to_field: name
+    visible_on: "{{global.user.is_space_admin}}"
     optionsFunction: !!js/function |
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);

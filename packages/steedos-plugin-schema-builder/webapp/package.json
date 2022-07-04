@@ -47,7 +47,7 @@
         "stats": "^1.0.0",
         "stats.js": "^0.17.0",
         "steedos-server": "2.2.50",
-        "typescript": "^3.8.2",
+        "typescript": "4.6.3",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",
         "xml2js": "^0.4.23"

@@ -1,6 +1,6 @@
 {
     "name": "@steedos/metadata-api",
-    "version": "2.2.52-beta.36",
+    "version": "2.2.52-beta.37",
     "description": "",
     "main": "lib/index.js",
     "files": [
@@ -21,39 +21,27 @@
         "access": "public"
     },
     "dependencies": {
-        "@steedos/core": "2.2.52-beta.36",
-        "@steedos/metadata-core": "2.2.52-beta.36",
+        "@steedos/core": "2.2.52-beta.37",
+        "@steedos/metadata-core": "2.2.52-beta.37",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
         "form-data": "^3.0.0",
         "js-yaml": "^3.14.0",
         "mongodb": "^3.6.10",
-        "node-fetch": "^2.6.1",
+        "node-fetch": "^2.6.7",
         "underscore": "^1.11.0"
     },
     "devDependencies": {
         "@salesforce/dev-config": "^2.0.0",
-        "@steedos/service-meteor-package-loader": "2.2.52-beta.36",
+        "@steedos/service-meteor-package-loader": "2.2.52-beta.37",
         "javascript-obfuscator": "^2.9.1",
         "mocha": "^5",
         "nodemon": "^2.0.2",
         "ts-node": "^8.0.3",
-        "typescript": "^3.9.3",
+        "typescript": "4.6.3",
         "uglify-es": "^3.3.9",
         "uglify-js": "^3.10.0"
     },
-    "resolutions": {
-        "**/lodash": "^4.17.15",
-        "**/handlebars": "^4.3.0",
-        "**/debug": "^3.1.0",
-        "**/hoek": "^5.0.3",
-        "**/cryptiles": "^4.1.2",
-        "**/bcrypt": "3.0.6",
-        "**/samlp": "3.4.1",
-        "**/xmldom": "0.2.1",
-        "**/tslib": "1.11.2",
-        "**/fibers": "^4.0.3"
-    },
-    "gitHead": "a6f8fe7b378a50270ddf7999259e26d2da3d42de"
+    "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
 }

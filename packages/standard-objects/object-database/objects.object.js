@@ -292,9 +292,9 @@ let objectTriggers = {
                 throw new Meteor.Error(500, "对象名称不能重复");
             }
             doc.fields_serial_number = 100;
-            if(isRelationalDatabase(doc)){
-                doc.is_enable = false;
-            }
+            // if(isRelationalDatabase(doc)){
+            //     doc.is_enable = false;
+            // }
 
             doc.custom = true;
         }
@@ -374,7 +374,7 @@ let objectTriggers = {
                     fields = Creator.getCollection("object_fields").find({space: doc.space, object: doc.name}).fetch();
                 }
                 if(!canEnable({fields: fields, datasource: modifier.$set.datasource || doc.datasource})){
-                    throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
+                   //  throw new Meteor.Error(500, "不能启用对象，请先配置主键字段");
                 }
             }
 
@@ -492,10 +492,12 @@ let objectTriggers = {
                 space: doc.space
             });
 
-            Creator.getCollection("process").direct.remove({
-                object_name: doc.name,
-                space: doc.space
-            });
+            if(Creator.getCollection("process")){
+                Creator.getCollection("process").direct.remove({
+                    object_name: doc.name,
+                    space: doc.space
+                });
+            }
 
             Creator.getCollection("pages").direct.remove({
                 object_name: doc.name,

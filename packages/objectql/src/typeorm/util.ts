@@ -113,13 +113,13 @@ export function getEntities(objects: Dictionary<SteedosObjectType>, databaseType
     for (let name in objects) {
         let object = objects[name];
         let primaryKeys = object.idFieldNames;
-        if (primaryKeys.length === 1) {
+        if (primaryKeys?.length === 1) {
             let entitySchema = getEntity(object, databaseType);
             if (entitySchema) {
                 entities[object.table_name] = entitySchema;
             }
         }
-        else if (primaryKeys.length > 1) {
+        else if (primaryKeys?.length > 1) {
             primaryColumnMultiErrorTables.push(object.table_name);
         }
         else{
@@ -127,10 +127,10 @@ export function getEntities(objects: Dictionary<SteedosObjectType>, databaseType
         }
     }
     if (primaryColumnEmptyErrorTables.length) {
-        console.error(`These tables: "${primaryColumnEmptyErrorTables.join(",")}" does not have a primary column. Primary column is not required in DB, but is required in yml object file.`);
+        console.warn(`These tables: "${primaryColumnEmptyErrorTables.join(",")}" does not have a primary column. Primary column is not required in DB, but is required in yml object file.`);
     }
     if (primaryColumnMultiErrorTables.length) {
-        console.error(`These tables: "${primaryColumnMultiErrorTables.join(",")}" have multi primary columns. it is not supported yet.`);
+        console.warn(`These tables: "${primaryColumnMultiErrorTables.join(",")}" have multi primary columns. it is not supported yet.`);
     }
     return entities;
 }
