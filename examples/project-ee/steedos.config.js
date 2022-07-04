@@ -11,6 +11,13 @@ module.exports = {
 		broker.createService(require("@steedos/service-metadata-server"));
 		// 启动 软件包 服务
 		broker.createService(require("@steedos/service-package-registry"));
+
+        // 启动 oidc sso 服务
+        // broker.createService(require("@steedos/ee_sso-oidc"));
+
+        // 启动 报表服务
+        broker.createService(require("@steedos/ee_stimulsoft-reports"));
+
         // 启动 steedos-server 服务
         broker.createService({
             name: "steedos-server",
