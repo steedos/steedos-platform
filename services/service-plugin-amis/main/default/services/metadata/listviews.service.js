@@ -252,9 +252,8 @@ module.exports = {
                                     operators: getFieldOperators(field.type)
                                 });
                                 break;
-                            //  以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
+                            // 以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
                             case 'date':
-                                // amins的format不支持Z后缀，只能用+offset格式 . 
                                 // 华炎魔方中日期字段存的是utc的0点
                                 fields.push({
                                     label: field.label,
@@ -265,8 +264,7 @@ module.exports = {
                                 });
                                 break;
                             case 'datetime':
-                                // 这里不需要配置format，因为日期时间是记时区的，amins中日期时间控件输出本地时间值的
-                                // 即amins中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
+                                // 即amis中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
                                 fields.push({
                                     label: field.label,
                                     type: field.type,
@@ -275,7 +273,6 @@ module.exports = {
                                 });
                                 break;
                             case 'time':
-                                //amins的format不支持Z后缀，只能用+offset格式
                                 // 华炎魔方中时间字段存的是1970-01-01的utc时间
                                 fields.push({
                                     label: field.label,
