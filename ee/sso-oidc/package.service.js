@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-01 13:53:55
+ * @LastEditTime: 2022-07-04 11:44:19
  * @Description: 
  */
 "use strict";
@@ -13,6 +13,7 @@ const objectql = require('@steedos/objectql');
 const authController = require("./main/default/routes/auth");
 const core = require("./main/default/routes/core");
 const license = require('@steedos/license');
+const _ = require('lodash');
 
 const { passport } = core.auth;
 /**
@@ -37,6 +38,7 @@ module.exports = {
         SSO_OIDC_CLIENT_ID: process.env.SSO_OIDC_CLIENT_ID,
         SSO_OIDC_CLIENT_SECRET: process.env.SSO_OIDC_CLIENT_SECRET,
         SSO_OIDC_NAME: process.env.SSO_OIDC_NAME || 'Steedos',
+        SSO_OIDC_LABEL: process.env.SSO_OIDC_LABEL || 'Steedos ID',
         SSO_OIDC_LOGO: process.env.SSO_OIDC_LOGO || '/images/logo.png'
     },
 
@@ -101,10 +103,11 @@ module.exports = {
             authController.oidcStrategyFactory().then((strategy)=>{
                 passport.use("oidc", strategy);
                 objectql.getSteedosConfig().setTenant({
+                    disabled_account_register: true,
                     sso_providers: {
                         oidc: {
                             name: settings.SSO_OIDC_NAME,
-                            title: settings.SSO_OIDC_NAME,
+                            label: settings.SSO_OIDC_LABEL,
                             logo: settings.SSO_OIDC_LOGO,
                             url: '/api/global/auth/oidc/config'
                         }

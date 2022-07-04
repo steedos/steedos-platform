@@ -96,9 +96,9 @@ export const canRegister = async (spaceId, action)=>{
     }else if(action === 'mobileSignupAccount' && !tenant.enable_mobile_code_login){
       return false
     }else if(action === 'withPassword'){
-      return tenant.enable_register && tenant.enable_password_login
+      return tenant.enable_register && tenant.enable_password_login && tenant.disabled_account_register != true
     }
-    return tenant.enable_register;
+    return tenant.enable_register && tenant.disabled_account_register != true;
 }
 
 export const loginWithCode = async (spaceId)=>{
