@@ -19,7 +19,7 @@ module.exports = {
         }
     }
 
-    window.stores.API.client.sobject("mysql_t1_c1").getConfig().then((res)=>{
+    window.stores.API.client.sobject(record.name).getConfig().then((res)=>{
         if(res.idFieldName){
             window.open(Creator.getRelativeUrl("/app/-/" + record.name));
         }else{

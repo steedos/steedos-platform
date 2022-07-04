@@ -487,7 +487,7 @@ form:
   afterView: !!js/function |
     function(){
       $("div", $(".crm-header-title")).css("display", "inline");
-      window.stores.API.client.sobject("mysql_t1_c1").getConfig().then((res)=>{
+      window.stores.API.client.sobject(this.doc.name).getConfig().then((res)=>{
           if(!res.idFieldName){
             return $(".crm-header-title").append('<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-600 text-white rounded">'+TAPi18n.__("请配置主键字段")+'</span>')
           }
