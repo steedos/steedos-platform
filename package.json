@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "start": "cd examples && cd project-template && yarn start",
+    "start:ee": "cd examples && cd project-ee && yarn start",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
     "build": "lerna run build",
     "i18n": "lerna run i18n"
