@@ -64,3 +64,5 @@ docker-volumes
 .yarnrc
 
 .rpt2_cache
+examples/project-template/steedos-packages/**
+examples/project-template/steedos-pro.config.js
