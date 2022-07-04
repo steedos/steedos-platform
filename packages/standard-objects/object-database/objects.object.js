@@ -492,10 +492,12 @@ let objectTriggers = {
                 space: doc.space
             });
 
-            Creator.getCollection("process").direct.remove({
-                object_name: doc.name,
-                space: doc.space
-            });
+            if(Creator.getCollection("process")){
+                Creator.getCollection("process").direct.remove({
+                    object_name: doc.name,
+                    space: doc.space
+                });
+            }
 
             Creator.getCollection("pages").direct.remove({
                 object_name: doc.name,
