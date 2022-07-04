@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-runner",
-  "version": "2.2.52-beta.36",
+  "version": "2.2.52-beta.37",
   "description": "Run meteor bundles and inject your own nodejs code.",
   "main": "index.js",
   "private": false,
@@ -14,9 +14,9 @@
   "author": "Jack Zhuang",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/node-pre-gyp": "1.0.9",
     "fibers": "4.0.3",
     "meteor-promise": "0.8.5",
-    "@mapbox/node-pre-gyp": "1.0.9",
     "open": "^7.3.0",
     "promise": "8.0.1",
     "semver": "5.3.0",
@@ -26,5 +26,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a6f8fe7b378a50270ddf7999259e26d2da3d42de"
+  "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
 }
