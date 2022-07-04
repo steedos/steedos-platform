@@ -378,6 +378,7 @@ relatedList:
   - objectName: object_layouts
     columns:
       - label
+      - name
       - object_name
       - profiles
   - permission_objects
