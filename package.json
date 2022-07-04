@@ -17,6 +17,7 @@
     "i18n": "lerna run i18n"
   },
   "resolutions": {
+    "@babel/runtime": "7.12.18",
     "**/js-yaml": "3.14.0",
     "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
