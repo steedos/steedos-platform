@@ -41,11 +41,13 @@ tasks:
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
       echo "ROOT_URL=$(gp url 5000)" >> examples/project-template/.env.local 
       echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-template/.env.local
+      echo "ROOT_URL=$(gp url 5000)" >> examples/project-ee/.env.local 
+      echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-ee/.env.local
       yarn lerna run gitpod:init
       yarn build
       gp await-port 27017
       gp await-port 6379
-      yarn start
+      yarn start-ee
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
