@@ -13,7 +13,7 @@
     "build": "babel -d lib src/"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.4",
+    "@babel/runtime": "7.12.0",
     "moment": "^2.24.0",
     "underscore": "^1.9.1"
   },
