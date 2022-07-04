@@ -43,17 +43,5 @@
         "uglify-es": "^3.3.9",
         "uglify-js": "^3.10.0"
     },
-    "resolutions": {
-        "**/lodash": "^4.17.15",
-        "**/handlebars": "^4.3.0",
-        "**/debug": "^3.1.0",
-        "**/hoek": "^5.0.3",
-        "**/cryptiles": "^4.1.2",
-        "**/bcrypt": "3.0.6",
-        "**/samlp": "3.4.1",
-        "**/xmldom": "0.2.1",
-        "**/tslib": "1.11.2",
-        "**/fibers": "^4.0.3"
-    },
     "gitHead": "a6f8fe7b378a50270ddf7999259e26d2da3d42de"
 }

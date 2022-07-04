@@ -16,25 +16,6 @@
     "build": "lerna run build",
     "i18n": "lerna run i18n"
   },
-  "resolutions": {
-    "@babel/runtime": "7.12.0",
-    "**/js-yaml": "3.14.0",
-    "**/lodash": "^4.17.15",
-    "**/handlebars": "^4.3.0",
-    "**/debug": "^3.1.0",
-    "**/hoek": "^5.0.3",
-    "**/tslib": "2.3.1",
-    "**/cryptiles": "^4.1.2",
-    "**/typescript": "4.6.3",
-    "**/odata-v4-parser": "^0.1.29",
-    "**/cookies": "0.6.2",
-    "**/cross-env": "5.2.1",
-    "**/globby": "9.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.10.2",
-    "**/graphql": "15.5.0",
-    "**/pass-stream": "1.0.0"
-  },
   "devDependencies": {
     "@octokit/core": "^3.5.1",
     "cpy": "7.3.0",

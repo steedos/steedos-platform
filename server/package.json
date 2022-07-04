@@ -91,11 +91,5 @@
     "@salesforce-ux/design-system": "^2.11.0",
     "@steedos/steedos-plugin-workflow": "^1.9.1"
   },
-  "resolutions": {
-    "**/lodash": "^4.17.12",
-    "**/handlebars": "^4.3.0",
-    "**/debug": "^3.1.0",
-    "**/hoek": "^5.0.3"
-  },
   "gitHead": "a6f8fe7b378a50270ddf7999259e26d2da3d42de"
 }
