@@ -8,3 +8,49 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+actions:
+  standard_query:
+    label: Search
+    on: list
+    todo: "standard_query"
+    visible: !!js/function |
+      function () {
+          return Steedos.StandardObjects.Base.Actions.standard_query.visible.apply(this, arguments)
+      }
+  standard_new:
+    label: New
+    on: list
+    todo: "standard_new"
+    visible: !!js/function |
+      function () {
+          return Steedos.StandardObjects.Base.Actions.standard_new.visible.apply(this, arguments)
+      }
+  standard_edit:
+    label: Edit
+    on: record
+    todo: "standard_edit"
+    visible: !!js/function |
+      function () {
+          return Steedos.StandardObjects.Base.Actions.standard_edit.visible.apply(this, arguments)
+      }
+  standard_delete:
+    label: Delete
+    on: record_more
+    todo: "standard_delete"
+    visible: !!js/function |
+      function () {
+          return Steedos.StandardObjects.Base.Actions.standard_delete.visible.apply(this, arguments)
+      }
+  standard_delete_many:
+    label: Delete
+    on: list
+    todo: "standard_delete_many"
+    visible: !!js/function |
+      function (object_name, record_id, record_permissions) {
+          var currentListView = Creator.getListView();
+          var isCalendar = currentListView && currentListView.type === "calendar";
+          if(Steedos.isMobile() || isCalendar){
+              return false;
+          }
+          return Steedos.StandardObjects.Base.Actions.standard_delete_many.visible.apply(this, arguments)
+      }
