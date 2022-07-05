@@ -33,7 +33,7 @@
         "ak-webpack": "^1.0.9",
         "antd": "^4.3.5",
         "classnames": "^2.2.6",
-        "cross-env": "^7.0.2",
+        "cross-env": "^7.0.3",
         "dotenv-flow": "^3.1.0",
         "dva": "^2.6.0-beta.14",
         "immer": "^4.0.0",
@@ -52,8 +52,5 @@
         "with-dnd-context": "^1.0.4",
         "xml2js": "^0.4.23"
     },
-    "homepage": "https://developer.steedos.com",
-    "resolutions": {
-        "**/mongodb": "3.5.10"
-    }
+    "homepage": "https://developer.steedos.com"
 }

@@ -109,7 +109,6 @@ steedos:cfs-ui
 steedos:e164-phones-countries
 steedos:i18n-iso-countries
 steedos:qcloud-smsqueue
-steedos:oauth2-server
 
 smoral:sweetalert@1.1.1
 

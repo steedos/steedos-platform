@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-dependencies",
-  "version": "2.2.52-beta.37",
+  "version": "2.2.52-beta.44",
   "description": "",
   "main": "index.js",
   "private": false,
@@ -19,7 +19,7 @@
     "compression": "1.7.1",
     "connect": "3.6.5",
     "cookie-parser": "1.4.3",
-    "cookies": "0.6.1",
+    "cookies": "^0.8.0",
     "decimal.js": "^10.0.2",
     "errorhandler": "1.5.0",
     "es5-shim": "4.5.10",
@@ -31,7 +31,7 @@
     "meteor-babel-helpers": "0.0.3",
     "meteor-deque": "2.1.0",
     "meteor-promise": "0.8.7",
-    "mongodb": "3.1.6",
+    "mongodb": "^3.7.3",
     "mongodb-uri": "0.9.7",
     "node-fetch": "^2.6.7",
     "node-gcm": "0.14.4",
@@ -49,13 +49,12 @@
     "sockjs": "0.3.20",
     "stream-buffers": "0.2.5",
     "stream-to-string": "1.1.0",
-    "uglify-js": "3.4.9",
     "useragent": "2.3.0",
-    "uuid": "3.3.2",
+    "uuid": "^8.3.2",
     "whatwg-fetch": "2.0.4"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
+  "gitHead": "e36bf9fe1065e7511f35ed6927f33b845b70ae45"
 }

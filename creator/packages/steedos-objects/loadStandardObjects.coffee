@@ -19,7 +19,7 @@ try
 				"@steedos/workflow",
 				"@steedos/accounts",
 				# "@steedos/steedos-plugin-schema-builder",
-				"@steedos/plugin-enterprise",
+				"@steedos/plugin-company",
 				# "@steedos/plugin-jsreport",
 				# "@steedos/word-template",
 				"@steedos/metadata-api",

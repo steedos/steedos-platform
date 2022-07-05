@@ -1,10 +1,17 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-05 15:13:45
+ * @Description: 
+ */
 import { SteedosFieldDBType } from "./index";
 import { ConnectionOptions, EntitySchema } from "typeorm";
 import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver } from "../typeorm";
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType } from "../types";
-import { SQLLang } from 'odata-v4-sql';
+import { SQLLang } from '@steedos/odata-v4-sql';
 import { getEntities } from "../typeorm";
 
 export class SteedosSqlServerDriver extends SteedosTypeormDriver {

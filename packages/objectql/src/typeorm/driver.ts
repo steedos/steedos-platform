@@ -5,7 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery, executeCountQuery, SqlOptions } from '@steedos/odata-v4-typeorm';
-import { SQLLang } from 'odata-v4-sql';
+import { SQLLang } from '@steedos/odata-v4-sql';
 import { getPrimaryKeys } from "../typeorm";
 
 import _ = require("underscore");
@@ -183,21 +183,7 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         let queryOptions = Object.assign(filterQuery, projection, sort, topAndSkip);
         let sqlOptions: SqlOptions = { alias: tableName, type: this.sqlLang, version: this.databaseVersion };
         let result = await executeQuery(queryBuilder, queryOptions, sqlOptions);
-        return result.map((item:any)=>{
-            if (primaryKeys){
-                if (primaryKeys.length === 1){
-                    let key = primaryKeys[0];
-                    item['_id'] = item[key] ? item[key].toString() : "";
-                }
-                else if (primaryKeys.length > 1){
-                    item['_ids'] = {};
-                    primaryKeys.forEach((key) => {
-                        item['_ids'][key] = item[key] ? item[key].toString() : "";
-                    });
-                }
-            }
-            return item;
-        });
+        return result
     }
 
     async count(tableName: string, query: SteedosQueryOptions) {
@@ -228,19 +214,6 @@ export abstract class SteedosTypeormDriver implements SteedosDriver {
         // 因为sqlserver/sqlite3不兼容
         let result = await executeQuery(queryBuilder, Object.assign(filterQuery, projection), { alias: tableName, type: this.sqlLang });
         if (result && result[0]){
-            // result[0]['_id'] = result[0][primaryKey] ? result[0][primaryKey].toString() : "";
-            if (primaryKeys){
-                if (primaryKeys.length === 1){
-                    let key = primaryKeys[0];
-                    result[0]['_id'] = result[0][key] ? result[0][key].toString() : "";
-                }
-                else if (primaryKeys.length > 1){
-                    result[0]['_ids'] = {};
-                    primaryKeys.forEach((key) => {
-                        result[0]['_ids'][key] = result[0][key] ? result[0][key].toString() : "";
-                    });
-                }
-            }
             return result[0];
         }
         else{

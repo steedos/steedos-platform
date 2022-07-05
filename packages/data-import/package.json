@@ -1,14 +1,14 @@
 {
   "name": "@steedos/data-import",
-  "version": "2.2.52-beta.37",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
-    "@steedos/core": "2.2.52-beta.37",
-    "@steedos/objectql": "2.2.52-beta.37",
+    "@steedos/core": "2.2.52-beta.44",
+    "@steedos/objectql": "2.2.52-beta.44",
     "dotenv-flow": "^3.1.0",
     "node-xlsx": "^0.16.1"
   },
@@ -16,13 +16,11 @@
     "mocha": "^5",
     "nodemon": "^2.0.2",
     "ts-node": "^8.0.3",
-    "typescript": "4.6.3",
-    "uglify-es": "^3.3.9",
-    "uglify-js": "^3.10.0"
+    "typescript": "4.6.3"
   },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
+  "gitHead": "e36bf9fe1065e7511f35ed6927f33b845b70ae45"
 }

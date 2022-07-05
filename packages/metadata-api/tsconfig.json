@@ -6,7 +6,7 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "declaration": false,
+      "declaration": true,
       "noFallthroughCasesInSwitch": true,
       "noImplicitReturns": true,
       "stripInternal": true,
