@@ -52,7 +52,7 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "@salesforce/dev-config": "^1.4.4",
+    "@salesforce/dev-config": "^2.1.3",
     "@steedos/meteor-bundle-runner": "2.2.52-beta.37",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "7.1.0",

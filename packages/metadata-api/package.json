@@ -33,7 +33,7 @@
         "underscore": "^1.11.0"
     },
     "devDependencies": {
-        "@salesforce/dev-config": "^2.0.0",
+        "@salesforce/dev-config": "^2.1.3",
         "@steedos/service-meteor-package-loader": "2.2.52-beta.37",
         "javascript-obfuscator": "^2.9.1",
         "mocha": "^5",
