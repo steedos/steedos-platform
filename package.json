@@ -21,7 +21,7 @@
     "**/pass-stream": "1.0.0"
   },
   "devDependencies": {
-    "lerna": "^5.1.6"
+    "lerna": "^4.0.0"
   },
   "peerDependencies": {
     "steedos-server": "2.x"
