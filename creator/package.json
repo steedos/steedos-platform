@@ -114,7 +114,6 @@
     "react-highlighter": "^0.4.3"
   },
   "resolutions": {
-    "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
     "**/cryptiles": "^4.1.2",
     "**/fibers": "^4.0.3",

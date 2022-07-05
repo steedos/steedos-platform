@@ -12,7 +12,6 @@
     "moleculer-repl": "^0.6.4"
   },
   "resolutions": {
-    "**/debug": "^3.1.0",
     "**/cryptiles": "^4.1.2",
     "**/bcrypt": "3.0.6",
     "**/samlp": "3.4.1",
