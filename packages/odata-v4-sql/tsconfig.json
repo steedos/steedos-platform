@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "outDir": "lib"
+  }
+}

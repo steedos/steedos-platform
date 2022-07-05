@@ -1,8 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-05 15:13:38
+ * @Description: 
+ */
 import { SteedosFieldDBType } from "./index";
 import { ConnectionOptions, EntitySchema } from "typeorm";
 import { SteedosDriverConfig } from "./driver";
 import { SteedosTypeormDriver, getEntities } from "../typeorm";
-import { SQLLang } from 'odata-v4-sql';
+import { SQLLang } from '@steedos/odata-v4-sql';
 import { Dictionary } from "@salesforce/ts-types";
 import { SteedosObjectType } from "../types";
 

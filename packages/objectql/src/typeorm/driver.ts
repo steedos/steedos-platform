@@ -5,7 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { executeQuery, executeCountQuery, SqlOptions } from '@steedos/odata-v4-typeorm';
-import { SQLLang } from 'odata-v4-sql';
+import { SQLLang } from '@steedos/odata-v4-sql';
 import { getPrimaryKeys } from "../typeorm";
 
 import _ = require("underscore");

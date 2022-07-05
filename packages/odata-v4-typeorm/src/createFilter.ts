@@ -1,8 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-05 15:14:45
+ * @Description: 
+ */
 import {TypeOrmVisitor as Visitor} from './visitor';
 import {Token} from 'odata-v4-parser/lib/lexer';
 import {SqlOptions} from './sqlOptions';
 import {filter} from 'odata-v4-parser';
-import {SQLLang} from 'odata-v4-sql';
+import {SQLLang} from '@steedos/odata-v4-sql';
 
 /**
  * Creates an SQL WHERE clause from an OData filter expression string

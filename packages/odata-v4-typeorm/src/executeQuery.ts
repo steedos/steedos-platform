@@ -1,6 +1,6 @@
 import { createQuery } from './createQuery';
 import { SqlOptions } from './sqlOptions';
-import { SQLLang } from 'odata-v4-sql';
+import { SQLLang } from '@steedos/odata-v4-sql';
 const _ = require("underscore");
 
 const mapToObject = (aMap) => {

@@ -1,6 +1,6 @@
 import {Token} from 'odata-v4-parser/lib/lexer';
 import {Literal} from 'odata-v4-literal';
-import {SQLLiteral, SQLLang, Visitor} from 'odata-v4-sql/lib/visitor';
+import {SQLLiteral, SQLLang, Visitor} from '@steedos/odata-v4-sql/lib/visitor';
 // import {SqlOptions} from './index';
 
 export class TypeOrmVisitor extends Visitor {
