@@ -18017,12 +18017,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==
 
-pass-stream@~0.1.0:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/pass-stream/-/pass-stream-0.1.5.tgz#9e3afa4d5825cdd1376075bdb56de36dfb33649f"
-  integrity sha512-pGa0s6MkFFPNs9tN3tYbZTaelRX8YIvsb/qmaJ3zjoMd5IJwOvy+sMvdieUDV03MF0O+dklnwG3hJBb2RYbxFA==
-  dependencies:
-    readable-stream "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz"
+pass-stream@1.0.0, pass-stream@~0.1.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pass-stream/-/pass-stream-1.0.0.tgz#72850ad6b20ff7a2724a780f50e2506200b61e82"
+  integrity sha512-hqejLFE/hk60iSdC1ucocFL7dufoUO7W6H4l5247LJu8e+vjjvrQdVDuL2zKqwK6ohdz8HsvA63Ny05kJVIO7Q==
 
 passport-http-bearer@1.0.1:
   version "1.0.1"
@@ -19536,10 +19534,6 @@ readable-stream@3, readable-stream@^3.0.0, readable-stream@^3.0.1, readable-stre
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
-"readable-stream@https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz":
-  version "1.0.2"
-  resolved "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2-ret-self.tar.gz#129e553a773186632e8b58939c58e6f607542b63"
-
 readable-stream@~2.1.5:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
@@ -19835,10 +19829,10 @@ repeat-string@^1.6.1:
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==
 
-request-ip@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/request-ip/-/request-ip-3.0.2.tgz#d99e759e79ad4b6cac6bc80674ddbdcdd4e8b39e"
-  integrity sha512-uH2rCq8yug89KD1r59obP6n2PySNmXKtqzUgYlR+7b3njx9QM2e7mG+P5PMWp3ipUH4XjidUjZbjPnQRY+QdpA==
+request-ip@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/request-ip/-/request-ip-2.2.0.tgz#8dbf53de6c5eb9a7da63a4f9f8991c1ea968a099"
+  integrity sha512-Hn4zUAr+XHbUs2RrfHur62t7+UhvtevqK32ordFewguEfNHUkhSdYgbG7PDGmXZEzqEXll9bei0+VMe6gkmuUQ==
   dependencies:
     is_js "^0.9.0"
 
@@ -22361,15 +22355,10 @@ typeorm@0.2.28:
     yargonaut "^1.1.2"
     yargs "^16.0.3"
 
-typescript@4.6.3:
+typescript@4.6.3, typescript@^2.5.1:
   version "4.6.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
   integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
-
-typescript@^2.5.1:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-  integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
 
 ua-parser-js@^0.7.30:
   version "0.7.31"
