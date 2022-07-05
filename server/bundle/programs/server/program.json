@@ -602,14 +602,6 @@
       "path": "packages/steedos_qcloud-smsqueue.js"
     },
     {
-      "path": "packages/meteorhacks_async.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/steedos_oauth2-server/node_modules",
-      "sourceMap": "packages/steedos_oauth2-server.js.map",
-      "path": "packages/steedos_oauth2-server.js"
-    },
-    {
       "path": "packages/smoral_sweetalert.js"
     },
     {

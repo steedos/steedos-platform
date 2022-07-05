@@ -229,8 +229,6 @@ install("dburles:mongo-collection-instances");
 install("rubaxa:sortable");
 install("steedos:datatables-extensions");
 install("steedos:qcloud-smsqueue");
-install("meteorhacks:async");
-install("steedos:oauth2-server");
 install("smoral:sweetalert");
 install("peppelg:bootstrap-3-modal");
 install("steedos:odata");
@@ -468,7 +466,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js"
 };
 
@@ -495,7 +493,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js"
 };
 
@@ -522,7 +520,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "index.js"
 };
 
@@ -549,7 +547,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "index.js"
 };
 
@@ -576,7 +574,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "index.js"
 };
 
@@ -603,7 +601,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "package.service.js"
 };
 
@@ -630,7 +628,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js"
 };
 
@@ -657,7 +655,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js"
 };
 
@@ -684,7 +682,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "lib/index.js"
 };
 
@@ -711,7 +709,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-workflow",
-  "version": "2.2.52-beta.22",
+  "version": "2.2.52-beta.44",
   "main": "package.service.js"
 };
 
@@ -919,7 +917,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "request",
-  "version": "2.81.0",
+  "version": "2.88.2",
   "main": "index.js"
 };
 
@@ -1000,8 +998,8 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "mkdirp",
-  "version": "0.3.5",
-  "main": "./index"
+  "version": "1.0.4",
+  "main": "index.js"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1334,24 +1332,23 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "cookies",
-  "version": "0.6.2",
-  "main": "./lib/cookies"
+  "version": "0.8.0"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"lib":{"cookies.js":function module(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/cookies/lib/cookies.js                                                                //
+// node_modules/cookies/index.js                                                                      //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"express":{"package.json":function module(require,exports,module){
+}},"express":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
@@ -1558,7 +1555,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "requestretry",
-  "version": "1.12.2",
+  "version": "7.1.0",
   "main": "index.js"
 };
 
