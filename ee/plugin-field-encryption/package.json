@@ -11,8 +11,8 @@
   "dependencies": {
     "chalk": "4.1.2",
     "lodash": "^4.17.21",
-    "mongodb": "4.5.0",
-    "mongodb-client-encryption": "2.1.0",
+    "mongodb": "^4.7.0",
+    "mongodb-client-encryption": "^2.1.0",
     "mongodb-uri": "0.9.7"
   },
   "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"

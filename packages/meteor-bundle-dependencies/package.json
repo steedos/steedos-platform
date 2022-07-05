@@ -31,7 +31,7 @@
     "meteor-babel-helpers": "0.0.3",
     "meteor-deque": "2.1.0",
     "meteor-promise": "0.8.7",
-    "mongodb": "3.1.6",
+    "mongodb": "^4.7.0",
     "mongodb-uri": "0.9.7",
     "node-fetch": "^2.6.7",
     "node-gcm": "0.14.4",

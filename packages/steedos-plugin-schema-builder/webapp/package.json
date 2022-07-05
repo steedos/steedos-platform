@@ -52,8 +52,5 @@
         "with-dnd-context": "^1.0.4",
         "xml2js": "^0.4.23"
     },
-    "homepage": "https://developer.steedos.com",
-    "resolutions": {
-        "**/mongodb": "3.5.10"
-    }
+    "homepage": "https://developer.steedos.com"
 }
