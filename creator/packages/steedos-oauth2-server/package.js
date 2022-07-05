@@ -5,7 +5,6 @@ Package.describe({
 });
 
 Npm.depends({
-	'cookies': "0.6.1",
 	"express": "4.13.4",
 	"body-parser": "1.14.2",
 	"oauth2-server": "2.4.1",

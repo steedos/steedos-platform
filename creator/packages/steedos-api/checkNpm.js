@@ -2,7 +2,6 @@ import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions';
 checkNpmVersions({
 	'aliyun-sdk': '>=1.9.2',
 	busboy: ">=0.2.13",
-	cookies: ">=0.6.2",
 	'csv': ">=5.1.2",
 	'url': '>=0.10.0',
 	'request': '>=2.81.0',
