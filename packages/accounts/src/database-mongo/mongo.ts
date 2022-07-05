@@ -7,7 +7,7 @@ import {
   User,
 } from '../types';
 import { get, merge, trim, map } from 'lodash';
-import { Collection, Db, ObjectID } from 'mongodb';
+import { Collection, Db, ObjectId } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
 import { getSessionByUserId, hashStampedToken } from '@steedos/auth';
@@ -17,9 +17,9 @@ import { getDataSource } from '@steedos/objectql';
 
 const moment = require("moment");
 
-const toMongoID = (objectId: string | ObjectID) => {
+const toMongoID = (objectId: string | ObjectId) => {
   if (typeof objectId === "string") {
-    return new ObjectID(objectId);
+    return new ObjectId(objectId);
   }
   return objectId;
 };

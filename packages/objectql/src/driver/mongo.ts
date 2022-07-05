@@ -86,7 +86,7 @@ export class SteedosMongoDriver implements SteedosDriver {
                         kmsProviders: kmsProvider,
                         bypassAutoEncryption: true,
                     }
-                })
+                } as any)
                 this._encryption = new ClientEncryption(this._client, {
                     keyVaultNamespace: keyVaultNamespace,
                     kmsProviders: kmsProvider,
