@@ -91,7 +91,7 @@ try {
     path = require('path');
     config = objectql.getSteedosConfig();
     settings = {
-      built_in_plugins: ["@steedos/webapp-public", "@steedos/service-ui", "@steedos/service-cachers-manager", "@steedos/unpkg", "@steedos/workflow", "@steedos/accounts", "@steedos/plugin-enterprise", "@steedos/metadata-api", "@steedos/data-import", "@steedos/service-accounts", "@steedos/service-charts", "@steedos/service-pages", "@steedos/service-cloud-init", "@steedos/service-package-registry", "@steedos/webapp-accounts", "@steedos/service-workflow", "@steedos/service-plugin-amis"],
+      built_in_plugins: ["@steedos/webapp-public", "@steedos/service-ui", "@steedos/service-cachers-manager", "@steedos/unpkg", "@steedos/workflow", "@steedos/accounts", "@steedos/plugin-company", "@steedos/metadata-api", "@steedos/data-import", "@steedos/service-accounts", "@steedos/service-charts", "@steedos/service-pages", "@steedos/service-cloud-init", "@steedos/service-package-registry", "@steedos/webapp-accounts", "@steedos/service-workflow", "@steedos/service-plugin-amis"],
       plugins: config.plugins
     };
     Meteor.startup(function () {

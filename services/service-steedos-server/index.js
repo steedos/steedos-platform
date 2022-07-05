@@ -40,7 +40,7 @@ module.exports = {
 			"@steedos/service-cachers-manager",
 			"@steedos/workflow",
 			"@steedos/accounts",
-			"@steedos/plugin-enterprise",
+			"@steedos/plugin-company",
 			// "@steedos/word-template",
 			"@steedos/metadata-api",
 			"@steedos/data-import",
