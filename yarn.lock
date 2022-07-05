@@ -18966,7 +18966,12 @@ odata-v4-mongodb@^0.1.12:
     odata-v4-literal "^0.1.0"
     odata-v4-parser "^0.1.18"
 
-odata-v4-parser@0.1.13, odata-v4-parser@^0.1.18, odata-v4-parser@^0.1.29:
+odata-v4-parser@0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/odata-v4-parser/-/odata-v4-parser-0.1.13.tgz#4b5cfef0381cc39c1ca0d53c0bbc825cc655b492"
+  integrity sha512-JjgP/Dt18zpS0uLozcqGGVOcmfSPrsLuDj/r1UQ4siyY2KiIZ2h++0tVwefLKcLMKWF/50UVF5qRfVXPfzCkcg==
+
+odata-v4-parser@^0.1.18, odata-v4-parser@^0.1.29:
   version "0.1.29"
   resolved "https://registry.yarnpkg.com/odata-v4-parser/-/odata-v4-parser-0.1.29.tgz#49e466037dbc4fc088572a2deae822fc14e6c137"
   integrity sha512-7ZsqxcMbGAqKSBme0+lul7g9K52RadGYU3WvYwDdduJNfnduSL59w4OEskvEzWHZMcPRqPnD9XtuO7Rpl+B3jA==
