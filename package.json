@@ -17,6 +17,7 @@
     "i18n": "lerna run i18n"
   },
   "resolutions": {
+    "**/js-yaml": "3.14.0",
     "**/typescript": "4.6.3",
     "**/pass-stream": "1.0.0"
   },
