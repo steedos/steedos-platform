@@ -98,7 +98,7 @@
   "devDependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
-    "cross-env": "^6.0.0",
+    "cross-env": "^7.0.3",
     "datatables": "^1.10.18",
     "detect-browser": "^5.0.0",
     "devextreme": "^18.2.6",
