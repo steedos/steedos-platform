@@ -254,7 +254,7 @@ groups:
   script: Script
   distribution: Distribution
   others: Others
-  FlowBindObject: Flow Bind Object
+  flowbindobject: Flow Bind Object
 listviews:
   all:
     label: All Workflows
