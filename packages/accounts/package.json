@@ -40,7 +40,7 @@
     "csurf": "^1.11.0",
     "express": "4.17.1",
     "ismobilejs": "^1.1.1",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^4.1.0",
     "mem": "^5.1.1",
     "mongoose": "5.13.14",
     "nodemailer": "^6.3.0",
