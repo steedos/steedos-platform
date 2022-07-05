@@ -32,7 +32,7 @@
     "express-session": "1.17.1",
     "fibers": "^4.0.3",
     "globby": "^11.1.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^3.14.1",
     "jsen": "^0.6.6",
     "json2xls": "^0.1.2",
     "mongodb": "^3.7.3",

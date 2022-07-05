@@ -46,7 +46,7 @@
     "gridfs-stream": "^1.1.1",
     "immer": "^9.0.6",
     "invariant": "^2.2.4",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^3.14.1",
     "jszip": "^3.7.0",
     "knockout": "^3.4.2",
     "length-stream": "^0.1.1",

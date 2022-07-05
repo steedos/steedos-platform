@@ -49,7 +49,7 @@
     "fs-extra": "^7.0.1",
     "glob": "^7.1.6",
     "inquirer": "^6.2.2",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^3.14.1",
     "latest-version": "^5.1.0",
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
