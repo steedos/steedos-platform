@@ -250,8 +250,8 @@ function loadObject(doc, oldDoc) {
     }
 }
 
-function removeObject(doc) {
-    if (!objectql.hasObjectSuffix(doc.name, doc.space) && !doc.datasource) {
+function removeObject(doc, enforce) {
+    if (!enforce && !objectql.hasObjectSuffix(doc.name, doc.space) && !doc.datasource) {
         console.warn('warn: Not deleted. Invalid custom object -> ', doc.name);
         return;
     }
