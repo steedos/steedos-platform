@@ -74,16 +74,16 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		try {
-            const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
-			if(!allow){
-				throw new Error('请购买企业版许可证，以使用「报表」功能。')
-			}
-			this.loadWebapp();
-        } catch (error) {
-            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
-            return await this.broker.destroyService(this);
-        }
+		// try {
+        //     const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
+		// 	if(!allow){
+		// 		throw new Error('请购买企业版许可证，以使用「报表」功能。')
+		// 	}
+		// 	this.loadWebapp();
+        // } catch (error) {
+        //     this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+        //     return await this.broker.destroyService(this);
+        // }
 	},
 
 	/**

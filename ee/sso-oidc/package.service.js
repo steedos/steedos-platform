@@ -88,34 +88,26 @@ module.exports = {
             // 检查环境变量
             const settings = this.settings;
 
-            if (!settings.SSO_OIDC_CONFIG_URL) {
-                throw new Error("请配置 SSO_OIDC_CONFIG_URL 环境变量");
-            }
+            if (settings.SSO_OIDC_CONFIG_URL && settings.SSO_OIDC_CLIENT_ID && settings.SSO_OIDC_CLIENT_SECRET) {
 
-            if(!settings.SSO_OIDC_CLIENT_ID) {
-                throw new Error("请配置 SSO_OIDC_CLIENT_ID 环境变量");
-            }
-
-            if(!settings.SSO_OIDC_CLIENT_SECRET){
-                throw new Error("请配置 SSO_OIDC_CLIENT_SECRET 环境变量");
-            }
-
-            authController.oidcStrategyFactory().then((strategy)=>{
-                passport.use("oidc", strategy);
-                objectql.getSteedosConfig().setTenant({
-                    disabled_account_register: true,
-                    sso_providers: {
-                        oidc: {
-                            name: settings.SSO_OIDC_NAME,
-                            label: settings.SSO_OIDC_LABEL,
-                            logo: settings.SSO_OIDC_LOGO,
-                            url: '/api/global/auth/oidc/config'
+                authController.oidcStrategyFactory().then((strategy)=>{
+                    passport.use("oidc", strategy);
+                    objectql.getSteedosConfig().setTenant({
+                        disabled_account_register: true,
+                        sso_providers: {
+                            oidc: {
+                                name: settings.SSO_OIDC_NAME,
+                                label: settings.SSO_OIDC_LABEL,
+                                logo: settings.SSO_OIDC_LOGO,
+                                url: '/api/global/auth/oidc/config'
+                            }
                         }
-                    }
-                });
-            }).catch(err=>{
-                this.setError(err);
-            })
+                    });
+                }).catch(err=>{
+                    this.setError(err);
+                })
+            }
+
             
         } catch (error) {
             this.setError(error);
@@ -126,17 +118,17 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        try {
-            if(this.__stop) {
-                throw new Error(this.__stop_message);
-            }
-            const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
-            if(!allow){
-                throw new Error('请购买企业版许可证，以使用「oidc sso」功能。')
-            }
-        } catch (error) {
-            return await this.errorHandler(error);
-        }
+        // try {
+        //     if(this.__stop) {
+        //         throw new Error(this.__stop_message);
+        //     }
+        //     const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
+        //     if(!allow){
+        //         throw new Error('请购买企业版许可证，以使用「oidc sso」功能。')
+        //     }
+        // } catch (error) {
+        //     return await this.errorHandler(error);
+        // }
     },
 
     /**
