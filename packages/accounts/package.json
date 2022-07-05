@@ -42,6 +42,7 @@
     "mongoose": "5.13.14",
     "nodemailer": "^6.3.0",
     "pug": "^3.0.2",
+    "request-ip": "^3.0.2",
     "tslib": "^2.4.0",
     "url-join": "^4.0.1",
     "validator": "^13.6.0"
