@@ -29,7 +29,7 @@
     "bunyan-sfdx-no-dtrace": "^1.8.2",
     "chai": "^4.2.0",
     "clone": "^2.1.2",
-    "cookies": "^0.6.1",
+    "cookies": "^0.8.0",
     "eval": "^0.1.4",
     "express": "^4.15.4",
     "fibers": "^4.0.3",
