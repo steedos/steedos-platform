@@ -43,7 +43,7 @@ function getAccountsServer() {
       }
     } as any);
   } else {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(mongoUrl);
   }
   const connection = mongoose.connection;
 

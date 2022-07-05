@@ -1,5 +1,4 @@
 import * as _ from 'underscore';
-import { InsertOneWriteOpResult, WithId } from 'mongodb';
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName } from '@steedos/metadata-core';
 import {deleteCommonAttribute, sortAttribute} from '../../util/attributeUtil'
 
@@ -106,7 +105,7 @@ export class ProcessCollection extends MetadataBaseCollection {
       if(dbObject) {
         throw new Error(`process api_name already exists: ${process.name}`); 
       }
-      const { insertedId } = await dbManager.insert(collection_name, process) as InsertOneWriteOpResult<WithId<any>>
+      const { insertedId } = await dbManager.insert(collection_name, process) as any
       return insertedId;
     } else {
       await dbManager.update(collection_name, filter, process);
