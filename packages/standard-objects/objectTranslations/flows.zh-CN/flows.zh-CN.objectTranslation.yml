@@ -251,7 +251,7 @@ groups:
   script: 脚本
   distribution: 分发
   others: 高级
-  FlowBindObject: 流程绑定对象
+  flowbindobject: 流程绑定对象
 listviews:
   all:
     label: 所有
