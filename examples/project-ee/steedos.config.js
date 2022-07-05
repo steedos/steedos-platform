@@ -38,6 +38,12 @@ module.exports = {
         // broker.createService(require("@steedos/service-sidecar"));
         // 字段级加密服务
         // broker.createService(require("@steedos/ee_plugin-field-encryption"));
+        // 附件病毒扫描
+        // broker.createService(require("@steedos/ee_virus-scan"));
+        // 记录审计日志
+        broker.createService(require("@steedos/ee_audit-records"));
+        // 自定义品牌
+        broker.createService(require("@steedos/ee_branding"));
 	},
 
 };

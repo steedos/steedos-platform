@@ -23,7 +23,8 @@
         "*"
       ]
     },
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "declaration": true
   },
   "include": [
     "next-env.d.ts",

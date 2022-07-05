@@ -9,6 +9,7 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
+        "declaration": true,
         "lib": [
           "es5",
           "es6",

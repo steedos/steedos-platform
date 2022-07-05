@@ -21,7 +21,8 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules":false,
-    "preserveSymlinks":true
+    "preserveSymlinks":true,
+    "declaration": true
   }
   
 }

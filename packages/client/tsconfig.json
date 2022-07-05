@@ -26,7 +26,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true
   },
   "include": [
     "src",
