@@ -21,11 +21,7 @@
     "**/pass-stream": "1.0.0"
   },
   "devDependencies": {
-    "@octokit/core": "^3.5.1",
-    "cpy": "7.3.0",
-    "lerna": "4.0.0",
-    "mkdirp": "^1.0.4",
-    "node-stream-zip": "1.15.0"
+    "lerna": "^5.1.6"
   },
   "peerDependencies": {
     "steedos-server": "2.x"
