@@ -10,7 +10,7 @@
       "sourceMap": false,
       "declarationMap": false,
       "noImplicitAny": false,
-      "declaration": false,
+      "declaration": true,
       "noFallthroughCasesInSwitch": true,
       //"noImplicitReturns": true,
       "stripInternal": true,
