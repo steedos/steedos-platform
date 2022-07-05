@@ -15,11 +15,7 @@ import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS } from './core';
 
-import oauth2Consent from './oauth2/consent';
-import oauth2Login from './oauth2/login';
-import oauth2Logout from './oauth2/logout';
 import initServer from './rest-express/endpoints/initServer';
-export { hydraAdmin } from './oauth2/config';
 export { setAuthCookies, clearAuthCookies } from './rest-express/utils/steedos-auth';
 export { getMergedTenant } from './core';
 
@@ -178,13 +174,5 @@ export function init(context) {
 
     context.app.use("/initServer", initServer);
 
-    context.app.use("/oauth2/consent", userLoader(accountsServer), oauth2Consent);
-    context.app.use("/oauth2/login", userLoader(accountsServer), oauth2Login);
-    context.app.use("/oauth2/logout", oauth2Logout);
-    // if (typeof WebApp !== 'undefined'){
-    //   const app = express();
-    //   app.use("/accounts", bodyParser.urlencoded({ extended: false }), bodyParser.json(), accountsRouter)
-    //   WebApp.rawConnectHandlers.use(app)
-    // }
   })
 }
