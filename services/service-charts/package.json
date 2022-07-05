@@ -23,7 +23,7 @@
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",
-    "moleculer": "^0.14.12"
+    "moleculer": "^0.14.21"
   },
   "author": "",
   "license": "ISC",
