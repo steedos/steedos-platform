@@ -54,7 +54,7 @@
     "meteor-node-stubs": "^0.4.1",
     "migrate": "^1.6.2",
     "mime": "^2.0.2",
-    "mkdirp": "1.0.4",
+    "mkdirp": "^1.0.4",
     "mongodb": "^3.1.13",
     "mongodb-client-encryption": "^2.1.0",
     "negotiator": "^0.6.1",
@@ -96,6 +96,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "handlebars": "^4.7.7",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^7.0.3",
@@ -113,7 +114,6 @@
     "react-highlighter": "^0.4.3"
   },
   "resolutions": {
-    "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
     "**/cryptiles": "^4.1.2",

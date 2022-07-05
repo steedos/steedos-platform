@@ -17,7 +17,6 @@
     "i18n": "lerna run i18n"
   },
   "resolutions": {
-    "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/cryptiles": "^4.1.2",
     "**/typescript": "4.6.3",
@@ -28,7 +27,7 @@
     "@octokit/core": "^3.5.1",
     "cpy": "7.3.0",
     "lerna": "4.0.0",
-    "mkdirp": "1.0.4",
+    "mkdirp": "^1.0.4",
     "node-stream-zip": "1.15.0"
   },
   "peerDependencies": {

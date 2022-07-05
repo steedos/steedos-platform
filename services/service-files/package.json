@@ -11,7 +11,7 @@
   "dependencies": {
     "aws-sdk": "2.0.23",
     "formidable": "2.0.1",
-    "mkdirp": "1.0.4",
+    "mkdirp": "^1.0.4",
     "moment": "^2.29.1"
   },
   "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
