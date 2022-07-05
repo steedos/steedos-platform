@@ -8,7 +8,7 @@
     "start": "yarn build && moleculer-runner --repl --hot lib/index.js"
   },
   "dependencies": {
-    "mongodb": "^4.7.0",
+    "mongodb": "^3.7.3",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "moleculer": "^0.14.21"

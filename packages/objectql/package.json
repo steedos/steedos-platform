@@ -43,7 +43,7 @@
     "moleculer": "^0.14.21",
     "moleculer-apollo-server": "^0.3.3",
     "moment": "^2.29.1",
-    "mongodb": "^4.7.0",
+    "mongodb": "^3.7.3",
     "mongodb-uri": "^0.9.7",
     "odata-v4-mongodb": "^0.1.12",
     "reflect-metadata": "^0.1.10",

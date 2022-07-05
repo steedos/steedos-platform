@@ -11,7 +11,7 @@
   "dependencies": {
     "chalk": "4.1.2",
     "lodash": "^4.17.21",
-    "mongodb": "^4.7.0",
+    "mongodb": "^3.7.3",
     "mongodb-client-encryption": "^2.1.0",
     "mongodb-uri": "0.9.7"
   },

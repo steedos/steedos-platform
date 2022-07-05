@@ -35,7 +35,7 @@
     "js-yaml": "^4.1.0",
     "jsen": "^0.6.6",
     "json2xls": "^0.1.2",
-    "mongodb": "^4.7.0",
+    "mongodb": "^3.7.3",
     "odata-v4-mongodb": "^0.1.12",
     "pg": "^7.8.2",
     "reflect-metadata": "^0.1.10",

@@ -55,7 +55,7 @@
     "migrate": "^1.6.2",
     "mime": "^2.0.2",
     "mkdirp": "^1.0.4",
-    "mongodb": "^3.1.13",
+    "mongodb": "^3.7.3",
     "mongodb-client-encryption": "^2.1.0",
     "negotiator": "^0.6.1",
     "node-rsa": "1.0.0",
