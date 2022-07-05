@@ -46,7 +46,6 @@
   },
   "devDependencies": {
     "@salesforce/dev-config": "^1.4.4",
-    "@salesforce/dev-scripts": "0.3.12",
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
     "@steedos/meteor-bundle-runner": "2.2.52-beta.37",
