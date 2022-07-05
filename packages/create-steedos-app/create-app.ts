@@ -227,7 +227,7 @@ export async function createApp({
     /**
      * Default dependencies.
      */
-    const dependencies = ['@steedos/service-community']
+    const dependencies = ['@steedos/service-community@next']
     /**
      * Default devDependencies.
      */
@@ -279,6 +279,7 @@ export async function createApp({
       cwd: path.join(__dirname, 'templates', template),
       rename: (name) => {
         switch (name) {
+          case 'env':
           case 'gitignore':
           case 'eslintrc.json': {
             return '.'.concat(name)
