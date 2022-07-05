@@ -84,7 +84,6 @@
     "superagent": "^3.5.2",
     "temp": "^0.7.0",
     "ts-odata-client": "^1.0.2",
-    "uglify-js": "^3.4.9",
     "underscore": "^1.13.1",
     "unpipe": "1.0.0",
     "url": "^0.11.0",

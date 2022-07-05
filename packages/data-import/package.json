@@ -16,9 +16,7 @@
     "mocha": "^5",
     "nodemon": "^2.0.2",
     "ts-node": "^8.0.3",
-    "typescript": "4.6.3",
-    "uglify-es": "^3.3.9",
-    "uglify-js": "^3.10.0"
+    "typescript": "4.6.3"
   },
   "private": false,
   "publishConfig": {
