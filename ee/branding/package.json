@@ -9,7 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/license": "2.2.6"
+    "@steedos/license": "2.2.7"
   },
   "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
 }
