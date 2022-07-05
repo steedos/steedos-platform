@@ -1,6 +1,6 @@
 {
   "name": "@steedos/odata-v4-sql",
-  "version": "2.2.52-beta.37",
+  "version": "2.2.52-beta.44",
   "description": "OData to SQL query compiler",
   "main": "lib/index.js",
   "typings": "lib/index",
@@ -41,5 +41,6 @@
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
     "typescript": "^2.5.1"
-  }
+  },
+  "gitHead": "e36bf9fe1065e7511f35ed6927f33b845b70ae45"
 }

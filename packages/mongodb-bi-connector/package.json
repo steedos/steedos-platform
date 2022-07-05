@@ -1,6 +1,6 @@
 {
   "name": "@steedos/mongodb-bi-connector",
-  "version": "2.2.52-beta.37",
+  "version": "2.2.52-beta.44",
   "main": "package.service.js",
   "license": "MIT",
   "scripts": {
@@ -8,10 +8,10 @@
     "start": "yarn build && moleculer-runner --repl --hot lib/index.js"
   },
   "dependencies": {
-    "mongodb": "^3.7.3",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
-    "moleculer": "^0.14.21"
+    "moleculer": "^0.14.21",
+    "mongodb": "^3.7.3"
   },
   "devDependencies": {
     "mocha": "^5",
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "91707bf9995658f5b0da642c6ce9dcf956bd3931"
+  "gitHead": "e36bf9fe1065e7511f35ed6927f33b845b70ae45"
 }

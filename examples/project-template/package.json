@@ -1,12 +1,12 @@
 {
   "name": "project-template",
-  "version": "2.2.52-beta.37",
+  "version": "2.2.52-beta.44",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.37"
+    "@steedos/service-community": "2.2.52-beta.44"
   },
   "devDependencies": {
     "moleculer-repl": "^0.6.4"
