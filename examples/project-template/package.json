@@ -12,7 +12,6 @@
     "moleculer-repl": "^0.6.4"
   },
   "resolutions": {
-    "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/cryptiles": "^4.1.2",

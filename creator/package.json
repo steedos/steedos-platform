@@ -113,7 +113,6 @@
     "react-highlighter": "^0.4.3"
   },
   "resolutions": {
-    "**/lodash": "^4.17.15",
     "**/handlebars": "^4.3.0",
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3",
