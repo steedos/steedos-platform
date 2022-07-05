@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-23 17:58:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-04 15:44:22
+ * @LastEditTime: 2022-07-05 11:26:24
  * @Description: 
  */
 var objectql = require('@steedos/objectql');
@@ -19,7 +19,7 @@ Meteor.startup(function () {
     };
     var _removeServerObjects = function (document) {
         try {
-            objectCore.removeObject(document);
+            objectCore.removeObject(document, false, true);
         } catch (error) {
             throw error
         }

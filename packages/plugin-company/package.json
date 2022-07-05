@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/plugin-enterprise",
+  "name": "@steedos/plugin-company",
   "private": false,
   "version": "2.2.52-beta.37",
   "description": "Enterprise plugin for steedos",

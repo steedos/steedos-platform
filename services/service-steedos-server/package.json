@@ -9,7 +9,7 @@
     "@steedos/data-import": "2.2.52-beta.37",
     "@steedos/metadata-api": "2.2.52-beta.37",
     "@steedos/plugin-dingtalk": "2.2.52-beta.37",
-    "@steedos/plugin-enterprise": "2.2.52-beta.37",
+    "@steedos/plugin-company": "2.2.52-beta.37",
     "@steedos/plugin-qywx": "2.2.52-beta.37",
     "@steedos/service-accounts": "2.2.52-beta.37",
     "@steedos/service-api": "2.2.52-beta.37",

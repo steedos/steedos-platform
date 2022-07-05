@@ -9,7 +9,7 @@ public:
       folder: "./storage"
   templateSpaceId: template
 plugins:
-  - "@steedos/plugin-enterprise"
+  - "@steedos/plugin-company"
 enable_holidays: true
 STEEDOS_STORAGE_DIR: "./storage"
 tenant:
