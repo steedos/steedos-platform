@@ -1,21 +1,14 @@
 {
   "name": "project-template",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52-beta.46",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.52-beta.45"
+    "@steedos/service-community": "2.2.52-beta.46"
   },
   "devDependencies": {
     "moleculer-repl": "^0.6.4"
-  },
-  "resolutions": {
-    "**/bcrypt": "3.0.6",
-    "**/samlp": "3.4.1",
-    "**/xmldom": "0.2.1",
-    "**/tslib": "2.3.1",
-    "**/fibers": "^4.0.3"
   }
 }

@@ -259,6 +259,13 @@ module.exports = {
 	},
 	events: {
 		'steedos-server.started': async function (ctx) {
+			// 获取环境变量中工作区信息
+			const settings = this.settings;
+			const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
+			const apiKey = settings.STEEDOS_CLOUD_API_KEY;
+			// 未配置环境变量时，不执行初始化，也不报错
+			if (!spaceId || !apiKey)
+				return;
 			// console.log(chalk.blue('steedos-server.started'));
 			const records = await objectql.getObject('spaces').directFind({top: 1, fields: ['_id'], sort: {created: -1}});
 			const steedosConfig = objectql.getSteedosConfig();
@@ -274,10 +281,6 @@ module.exports = {
 			}
 			Initializing = true;
 			try {
-				// 获取环境变量中工作区信息
-				const settings = this.settings;
-				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
-				const apiKey = settings.STEEDOS_CLOUD_API_KEY;
 				await this.initProject(ctx, spaceId, apiKey);
 			} catch (error) {
 				console.log(chalk.red(error.message));

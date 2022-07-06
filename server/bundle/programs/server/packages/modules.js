@@ -466,7 +466,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "lib/index.js"
 };
 
@@ -493,7 +493,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "lib/index.js"
 };
 
@@ -520,7 +520,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "index.js"
 };
 
@@ -547,7 +547,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "index.js"
 };
 
@@ -574,7 +574,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "index.js"
 };
 
@@ -601,7 +601,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "package.service.js"
 };
 
@@ -628,7 +628,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "lib/index.js"
 };
 
@@ -655,7 +655,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "lib/index.js"
 };
 
@@ -682,7 +682,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "lib/index.js"
 };
 
@@ -709,7 +709,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-workflow",
-  "version": "2.2.52-beta.44",
+  "version": "2.2.52-beta.45",
   "main": "package.service.js"
 };
 
@@ -720,33 +720,6 @@ module.exports = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
 // node_modules/@steedos/service-workflow/package.service.js                                          //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"length-stream":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/length-stream/package.json                                                            //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "length-stream",
-  "version": "0.1.1",
-  "main": "lib/length-stream"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"length-stream.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/length-stream/lib/length-stream.js                                                    //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
@@ -1332,23 +1305,24 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "cookies",
-  "version": "0.8.0"
+  "version": "0.6.2",
+  "main": "./lib/cookies"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"index.js":function module(require,exports,module){
+},"lib":{"cookies.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/cookies/index.js                                                                      //
+// node_modules/cookies/lib/cookies.js                                                                //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"express":{"package.json":function module(require,exports,module){
+}}},"express":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
