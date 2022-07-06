@@ -2,7 +2,9 @@
   "name": "@steedos/service-plugin-amis",
   "version": "2.2.52-beta.50",
   "main": "package.service.js",
-  "scripts": {},
+  "scripts": {
+    "build": "node .scripts/build.tailwind.js"
+  },
   "license": "MIT",
   "private": false,
   "publishConfig": {
