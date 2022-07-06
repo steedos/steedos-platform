@@ -19,7 +19,7 @@ server.Fiber(function () {
         server.Profile.run("Server startup", function () {
             server.loadServerBundles();
 
-            initConfig.built_in_plugins = ["@steedos/steedos-plugin-workflow"]
+            initConfig.built_in_plugins = []
 
             steedos.init();
 

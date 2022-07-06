@@ -86,8 +86,6 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@salesforce-ux/design-system": "^2.11.0",
-    "@steedos/steedos-plugin-workflow": "^1.9.1"
   },
   "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
 }
