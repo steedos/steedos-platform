@@ -79,7 +79,7 @@
     "stream-buffers": "^0.2.5",
     "strip-json-comments": "2.0.1",
     "styled-components": "^5.3.0",
-    "superagent": "^3.5.2",
+    "superagent": "^7.1.5",
     "temp": "^0.7.0",
     "ts-odata-client": "^1.0.2",
     "underscore": "^1.13.1",
