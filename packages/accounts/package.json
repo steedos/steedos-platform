@@ -39,7 +39,7 @@
     "ismobilejs": "^1.1.1",
     "js-yaml": "^3.14.1",
     "mem": "^5.1.1",
-    "mongoose": "5.13.14",
+    "mongoose": "^6.4.3",
     "nodemailer": "^6.3.0",
     "pug": "^3.0.2",
     "request-ip": "^2.2.0",
