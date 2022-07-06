@@ -14,7 +14,7 @@
     "mongodb": "^3.7.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.19",
     "typescript": "4.6.3"
   },
   "private": false,
