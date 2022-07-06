@@ -1,6 +1,6 @@
 {
   "name": "@steedos/node-red-app-template",
-  "version": "2.1.115",
+  "version": "2.1.116",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,5 @@
     "access": "public"
   },
   "private": false,
-  "gitHead": "2b88bab27c7c392f82fe6fb610372bb376351e1a"
+  "gitHead": "8cc07b8ffeb81d75f27b8c6eedc89d2e00bd2eaa"
 }

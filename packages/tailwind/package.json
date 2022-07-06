@@ -1,7 +1,7 @@
 {
   "name": "@steedos/tailwind",
   "private": false,
-  "version": "2.1.115",
+  "version": "2.1.116",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -27,5 +27,5 @@
   "dependencies": {
     "cssnano": "^4.1.10"
   },
-  "gitHead": "2b88bab27c7c392f82fe6fb610372bb376351e1a"
+  "gitHead": "8cc07b8ffeb81d75f27b8c6eedc89d2e00bd2eaa"
 }
