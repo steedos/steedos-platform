@@ -17,7 +17,6 @@
     "i18n": "lerna run i18n"
   },
   "resolutions": {
-    "**/cookies": "0.6.2",
     "**/typescript": "4.6.3"
   },
   "devDependencies": {
