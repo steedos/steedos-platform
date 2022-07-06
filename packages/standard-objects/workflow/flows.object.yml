@@ -521,7 +521,6 @@ actions:
             title: '新建流程',
             objectSchema: objectSchema,
             onFinish: async (values = {}) => {
-                debugger;
                 $(document.body).addClass('loading');
                 let url = "/am/forms?sync_token=" + (new Date()).getTime() / 1000;
                 let newFormId = Creator.getCollection("flows")._makeNewID();
