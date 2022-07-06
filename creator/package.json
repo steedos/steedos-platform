@@ -49,7 +49,6 @@
     "js-yaml": "^3.14.1",
     "jszip": "^3.7.0",
     "knockout": "^3.4.2",
-    "length-stream": "^0.1.1",
     "md5": "^2.2.1",
     "meteor-node-stubs": "^0.4.1",
     "migrate": "^1.6.2",

@@ -14126,13 +14126,6 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-length-stream@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/length-stream/-/length-stream-0.1.1.tgz#e724b1be2e3a961d4c4313437e49656910fae6d6"
-  integrity sha512-fIv+BPCqej2l9u7+vyfpGgTiRNT77oiNHzglX/whEIAg8lm+V07+lapcCUerA2wyuEU6/ySHOpMvUDV/x7DInQ==
-  dependencies:
-    pass-stream "~0.1.0"
-
 lerna@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-4.0.0.tgz#b139d685d50ea0ca1be87713a7c2f44a5b678e9e"
@@ -17650,11 +17643,6 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==
-
-pass-stream@1.0.0, pass-stream@~0.1.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/pass-stream/-/pass-stream-1.0.0.tgz#72850ad6b20ff7a2724a780f50e2506200b61e82"
-  integrity sha512-hqejLFE/hk60iSdC1ucocFL7dufoUO7W6H4l5247LJu8e+vjjvrQdVDuL2zKqwK6ohdz8HsvA63Ny05kJVIO7Q==
 
 passport-http-bearer@1.0.1:
   version "1.0.1"
