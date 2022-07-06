@@ -80,6 +80,7 @@ export class SteedosMongoDriver implements SteedosDriver {
                 const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
                 const kmsProvider = await getKMSProviders();
                 this._client = await MongoClient.connect(this._url, {
+                    useNewUrlParser: true, useUnifiedTopology: true,
                     monitorCommands: true,
                     autoEncryption: {
                         keyVaultNamespace: keyVaultNamespace,
@@ -92,7 +93,7 @@ export class SteedosMongoDriver implements SteedosDriver {
                     kmsProviders: kmsProvider,
                 });
             } else {
-                this._client = await MongoClient.connect(this._url, { });
+                this._client = await MongoClient.connect(this._url, {useNewUrlParser: true, useUnifiedTopology: true });
             }
             return true;
         }

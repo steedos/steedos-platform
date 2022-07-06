@@ -21,7 +21,7 @@ export class DbManager {
 
     constructor(userSession?) {
         this.url = getSteedosConfig().datasources.default.connection.url;
-        this.client = new MongoClient(this.url)
+        this.client = new MongoClient(this.url, {useNewUrlParser: true, useUnifiedTopology: true})
         this.setUserSession(userSession);
     }
     
