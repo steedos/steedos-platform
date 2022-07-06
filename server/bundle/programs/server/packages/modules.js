@@ -1305,23 +1305,24 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "cookies",
-  "version": "0.8.0"
+  "version": "0.6.2",
+  "main": "./lib/cookies"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"index.js":function module(require,exports,module){
+},"lib":{"cookies.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/cookies/index.js                                                                      //
+// node_modules/cookies/lib/cookies.js                                                                //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"express":{"package.json":function module(require,exports,module){
+}}},"express":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
