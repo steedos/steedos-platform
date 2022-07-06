@@ -1,7 +1,6 @@
 let i18next = require("i18next");
 const sprintf  = require("i18next-sprintf-postprocessor");
 const _ = require("underscore");
-// const XHR = require('i18next-xhr-backend');
 
 const loadResources = {};
 

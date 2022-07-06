@@ -81,10 +81,10 @@ fields:
     label: 引用对象
     help: 
     description: 
-  reference_to_field:
-    label: 关联字段
-    help: 
-    description: 
+  # reference_to_field:
+  #   label: 关联字段
+  #   help: 
+  #   description: 
   filtersFunction:
     label: 过滤器函数
     help: 

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-objects",
-  "version": "2.2.52-beta.46",
+  "version": "2.2.52-beta.50",
   "description": "",
   "main": "lib/objects.service.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/formula": "2.2.52-beta.46",
-    "@steedos/metadata-registrar": "2.2.52-beta.46",
+    "@steedos/formula": "2.2.52-beta.50",
+    "@steedos/metadata-registrar": "2.2.52-beta.50",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -28,18 +28,11 @@
     "moleculer-web": "^0.10.4"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/chai-as-promised": "7.1.0",
-    "@types/mocha": "^5.2.6",
-    "jslint": "^0.12.1",
-    "moleculer-repl": "^0.6.4",
-    "nodemon": "^1.18.10",
-    "ts-node": "^8.0.3",
     "typescript": "4.6.3"
   },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
+  "gitHead": "7f4c08f68a7835a05456c7f56935e630b965dc66"
 }

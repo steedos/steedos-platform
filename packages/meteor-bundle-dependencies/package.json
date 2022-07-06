@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-dependencies",
-  "version": "2.2.52-beta.46",
+  "version": "2.2.52-beta.50",
   "description": "",
   "main": "index.js",
   "private": false,
@@ -46,7 +46,7 @@
     "semver": "5.4.1",
     "send": "0.16.1",
     "sha256": "0.2.0",
-    "sockjs": "0.3.20",
+    "sockjs": "^0.3.24",
     "stream-buffers": "0.2.5",
     "stream-to-string": "1.1.0",
     "useragent": "2.3.0",
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
+  "gitHead": "7f4c08f68a7835a05456c7f56935e630b965dc66"
 }

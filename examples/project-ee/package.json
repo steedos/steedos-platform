@@ -1,14 +1,11 @@
 {
   "name": "project-ee",
-  "version": "2.2.52-beta.46",
+  "version": "2.2.52-beta.50",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-enterprise": "2.2.52-beta.46"
-  },
-  "devDependencies": {
-    "moleculer-repl": "^0.6.4"
+    "@steedos/service-enterprise": "2.2.52-beta.50"
   }
 }

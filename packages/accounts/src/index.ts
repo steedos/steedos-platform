@@ -35,7 +35,8 @@ function getAccountsServer() {
     const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
     const kmsProvider = getKMSProviders();
     mongoose.connect(mongoUrl, {
-      useNewUrlParser: true, useUnifiedTopology: true.valueOf,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
       monitorCommands: true,
       autoEncryption: {
         keyVaultNamespace: keyVaultNamespace,

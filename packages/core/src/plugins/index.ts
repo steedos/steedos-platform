@@ -35,10 +35,7 @@ export function getPlugins(): JsonMap {
     const plugins = [
         "@steedos/core",
         "@steedos/objectql",
-        "@steedos/accounts",
-        "@steedos/steedos-plugin-workflow",
-        "@steedos/plugin-jsreport",
-        "@steedos/plugin-stimulsoft-report"];
+        "@steedos/accounts"];
     fetchPlugins(plugins, results);
     return results;
 }

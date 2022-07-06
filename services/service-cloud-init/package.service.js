@@ -263,9 +263,7 @@ module.exports = {
 			const settings = this.settings;
 			const spaceId = settings.STEEDOS_CLOUD_SPACE_ID;
 			const apiKey = settings.STEEDOS_CLOUD_API_KEY;
-			// 未配置环境变量时，不执行初始化，也不报错
-			if (!spaceId || !apiKey)
-				return;
+			
 			// console.log(chalk.blue('steedos-server.started'));
 			const records = await objectql.getObject('spaces').directFind({top: 1, fields: ['_id'], sort: {created: -1}});
 			const steedosConfig = objectql.getSteedosConfig();
@@ -274,6 +272,9 @@ module.exports = {
 			}else{
 				steedosConfig.setTenant({enable_create_tenant : true, enable_register: true});
 			}
+			// 未配置环境变量时，不执行初始化，也不报错
+			if (!spaceId || !apiKey)
+				return;
 			const allowInit = await this.allowInit(records);
 			if (!allowInit) {
 				Initializing = false;

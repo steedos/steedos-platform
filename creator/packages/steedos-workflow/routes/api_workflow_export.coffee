@@ -68,14 +68,14 @@ Meteor.startup ->
 			str = Assets.getText('server/ejs/export_instances.ejs')
 
 			# 检测是否有语法错误
-			ejsLint = require('ejs-lint')
-			if ejsLint.lint
-				error_obj = ejsLint.lint(str, {})
-			else
-				error_obj = ejsLint(str, {})
-			if error_obj
-				console.error "===/api/workflow/export:"
-				console.error error_obj
+			# ejsLint = require('ejs-lint')
+			# if ejsLint.lint
+			# 	error_obj = ejsLint.lint(str, {})
+			# else
+			# 	error_obj = ejsLint(str, {})
+			# if error_obj
+			# 	console.error "===/api/workflow/export:"
+			# 	console.error error_obj
 
 			template = ejs.compile(str)
 

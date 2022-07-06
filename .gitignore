@@ -1,12 +1,7 @@
 **/.DS_Store
 **/.idea
 .temp
-/services/**/node_modules
-/packages/**/node_modules
-/apps/**/node_modules
-/apps/contracts
-/server/node_modules
-/node_modules
+**/node_modules
 
 **/package-lock.json
 
@@ -14,55 +9,17 @@
 **/yarn-error.log
 **/lerna-debug.log
 
-/packages/**/lib
-/services/**/lib
-
 **/.vscode/launch.*
-!packages/project-template-empty/.vscode/launch.*
-settings.yml
-
-
-lib/core/metadata.js
-lib/core/MetadataBlog.js
-
-website/translated_docs
-website/build/
-website/node_modules
-website/i18n/*
-packages/objectql/test/**/*.db
-packages/objectql/test/**/*.db-journal
 
 .migrate
-.history/*
-apps/contracts/.env.local
-apps/contracts/storage/**
-
-.yalc
-**/.yalc
-**/yalc.lock
-yalc.lock
-packages/project-template-empty/.env.local
-apps/contracts/src/_test/**
-packages/accounts/webapp/build/**
-packages/react/.env.local
-services/service-metadata-objects/.env.local
-services/service-metadata-triggers/.env.local
-services/service-metadata-translations/.env.local
-services/service-metadata-apps/.env.local
-services/service-metadata-permissionsets/.env.local
-services/service-metadata/.env.local
-
-services/service-metadata-layouts/.env.local
-steedos-packages/**/node_modules/**
-ee/**/node_modules/**
-packages/cli/dist/**
-
-docker-volumes
-
 
 .npmrc
 .yarnrc
 
 .rpt2_cache
-examples/project-template/steedos-packages/**
-examples/project-template/steedos-pro.config.js
+
+**/dist
+**/logs
+
+/packages/**/lib
+/services/**/lib

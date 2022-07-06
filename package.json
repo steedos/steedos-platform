@@ -17,10 +17,11 @@
     "i18n": "lerna run i18n"
   },
   "resolutions": {
-    "**/typescript": "4.6.3"
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.8.2"
   },
   "peerDependencies": {
     "steedos-server": "2.x"

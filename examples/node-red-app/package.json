@@ -1,6 +1,6 @@
 {
   "name": "steedos-node-red",
-  "version": "2.2.52-beta.46",
+  "version": "2.2.52-beta.50",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,11 +17,11 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongoose": "^5.12.13",
-    "node-red": "^1.3.5",
+    "node-red": "^2.2.2",
     "node-red-contrib-redis": "^1.3.9",
     "validator": "^13.6.0"
   },
   "author": "",
   "license": "ISC",
-  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
+  "gitHead": "7f4c08f68a7835a05456c7f56935e630b965dc66"
 }
