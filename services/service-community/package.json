@@ -35,7 +35,6 @@
     "md5": "^2.3.0",
     "moleculer": "^0.14.21",
     "moment": "^2.29.1",
-    "mssql": "^8.1.2",
     "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",
     "node-xlsx": "^0.16.1",
@@ -47,9 +46,7 @@
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
     "steedos-cli": "2.2.52-beta.46",
-    "tslib": "^2.4.0",
-    "winston": "^3.3.3",
-    "winston-loki": "^6.0.1"
+    "tslib": "^2.4.0"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {

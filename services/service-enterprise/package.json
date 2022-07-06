@@ -22,7 +22,10 @@
     "@steedos/service-community": "2.2.52-beta.46",
     "mongodb": "^3.7.3",
     "mongodb-client-encryption": "2.1.0",
-    "nats": "^1.4.12"
+    "mssql": "^8.1.2",
+    "nats": "^1.4.12",
+    "winston": "^3.3.3",
+    "winston-loki": "^6.0.1"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {
