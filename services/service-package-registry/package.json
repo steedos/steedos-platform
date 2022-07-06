@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-registry",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52-beta.46",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/service-package-license": "2.2.52-beta.45",
-    "@steedos/service-package-loader": "2.2.52-beta.45",
+    "@steedos/service-package-license": "2.2.52-beta.46",
+    "@steedos/service-package-loader": "2.2.52-beta.46",
     "fs-extra": "8.1.0",
     "i18next": "20.3.2",
     "json-stringify-safe": "5.0.1",
@@ -28,5 +28,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd088c1c21f8c9a496c7125c60813f61efb98e92"
+  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
 }
