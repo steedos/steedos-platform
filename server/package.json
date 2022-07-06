@@ -79,7 +79,7 @@
     "socket.io-client": "^2.3.0",
     "stream-buffers": "^0.2.5",
     "strip-json-comments": "2.0.1",
-    "superagent": "^7.1.5",
+    "superagent": "^8.0.0",
     "temp": "^0.7.0",
     "unpipe": "1.0.0",
     "url-search-params-polyfill": "^7.0.0",
