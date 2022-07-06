@@ -32,8 +32,6 @@
     "@types/mocha": "^5.2.6",
     "jslint": "^0.12.1",
     "moleculer-repl": "^0.6.4",
-    "nodemon": "^1.18.10",
-    "ts-node": "^8.0.3",
     "typescript": "4.6.3"
   },
   "private": false,
