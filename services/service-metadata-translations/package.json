@@ -27,11 +27,6 @@
     "moleculer-web": "^0.10.4"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/chai-as-promised": "7.1.0",
-    "@types/mocha": "^5.2.6",
-    "jslint": "^0.12.1",
-    "moleculer-repl": "^0.6.4",
     "typescript": "4.6.3"
   },
   "private": false,

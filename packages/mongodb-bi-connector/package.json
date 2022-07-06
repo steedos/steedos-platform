@@ -14,7 +14,6 @@
     "mongodb": "^3.7.3"
   },
   "devDependencies": {
-    "mocha": "^5",
     "nodemon": "^2.0.2",
     "typescript": "4.6.3"
   },
