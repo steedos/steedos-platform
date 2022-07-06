@@ -8,5 +8,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
+  "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd",
+  "dependencies": {
+    "ejs": "^3.1.8"
+  }
 }
