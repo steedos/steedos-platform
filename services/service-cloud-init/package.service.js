@@ -267,6 +267,7 @@ module.exports = {
 			// console.log(chalk.blue('steedos-server.started'));
 			const records = await objectql.getObject('spaces').directFind({top: 1, fields: ['_id'], sort: {created: -1}});
 			const steedosConfig = objectql.getSteedosConfig();
+			
 			if(records.length > 0){
 				steedosConfig.setTenant({_id: records[0]._id});
 			}else{
@@ -383,7 +384,7 @@ module.exports = {
 					const settings = this.settings;
 					const allowInit = await this.allowInit();
 					return {
-						allow_init: settings.STEEDOS_TENANT_ENABLE_ACTIVATION && allowInit && !Initializing,
+						allow_init: false, // settings.STEEDOS_TENANT_ENABLE_ACTIVATION && allowInit && !Initializing,
 						cloud_url: settings.STEEDOS_CLOUD_URL,
 						help_url: `${settings.STEEDOS_HELP_URL}/docs/deploy/deploy-activate`
 					};

@@ -2,6 +2,7 @@ import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../db';
 import * as _ from 'lodash';
 import chalk from 'chalk';
+const clone = require('clone');
 
 declare var MailQueue;
 declare var SMSQueue;
@@ -43,8 +44,14 @@ export const getSettings = async ()=>{
         }
       }
 
+      const _tenant = clone(tenant);
+
+      delete _tenant['tokenSecret'];
+      delete _tenant['accessTokenExpiresIn']
+      delete _tenant['refreshTokenExpiresIn']
+
       return {
-        tenant: tenant,
+        tenant: _tenant,
         password: config.password?config.password:{},
         root_url: process.env.ROOT_URL
       }
