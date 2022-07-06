@@ -19,6 +19,7 @@
 .rpt2_cache
 
 **/dist
+**/logs
 
 /packages/**/lib
 /services/**/lib
