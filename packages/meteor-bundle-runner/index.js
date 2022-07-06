@@ -133,7 +133,7 @@ if (!process.env.STEEDOS_STORAGE_DIR ) {
 __steedos_bootstrap__ = {
     projectDir: projectDir,
     serverDir: serverDir,
-    storageDir: steedosStorageDir,
+    storageDir: process.env.STEEDOS_STORAGE_DIR,
     rootUrl: rootUrl,
     mongoUrl: mongoUrl,
     verbose: false
@@ -152,7 +152,7 @@ console.log(`*  MONGO_URL: ${process.env.MONGO_URL}`);
 console.log(`*  PROJECT_DIR: ${projectDir}`);
 var ref, ref1;
 if ((typeof settings !== "undefined" && settings !== null ? (ref2 = settings["public"]) != null ? (ref3 = ref2.cfs) != null ? ref3.store : void 0 : void 0 : void 0) === 'local') {
-  console.log(`*  STORAGE_DIR: ${steedosStorageDir}`);
+  console.log(`*  STORAGE_DIR: ${__steedos_bootstrap__.storageDir}`);
 }
 console.log("*")
 console.log("*******************************************************************");
