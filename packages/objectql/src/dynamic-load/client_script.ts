@@ -9,7 +9,7 @@ import _ = require('lodash')
 import path = require('path')
 import fs = require('fs')
 const globby = require('globby');
-const babel = require("@babel/core");
+// const babel = require("@babel/core");
 
 const { getCacher } = require('@steedos/cachers');
 
@@ -40,22 +40,23 @@ export const loadPackageClientScripts = (packageName, packageDir)=>{
     });
 
     if(packageClientScripts){
-        try {
-            cacher.set(packageName, babel.transformSync(packageClientScripts, { 
-                sourceType: "script", //移除安全模式
-                comments: false,
-                presets: [
-                    [
-                      "@babel/preset-env"
-                    ]
-                ], 
-                targets: {
-                    chrome: "73",
-                }
-            }).code)
-        } catch (error) {
-            console.error(`loadPackageClientScripts:${packageName}, Error:`, error)
-        }
+        // try {
+        //     cacher.set(packageName, babel.transformSync(packageClientScripts, { 
+        //         sourceType: "script", //移除安全模式
+        //         comments: false,
+        //         presets: [
+        //             [
+        //               "@babel/preset-env"
+        //             ]
+        //         ], 
+        //         targets: {
+        //             chrome: "73",
+        //         }
+        //     }).code)
+        // } catch (error) {
+        //     console.error(`loadPackageClientScripts:${packageName}, Error:`, error)
+        // }
+        cacher.set(packageName, packageClientScripts);
     }
 }
 
