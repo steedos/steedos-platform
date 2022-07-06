@@ -10,12 +10,5 @@
   },
   "devDependencies": {
     "moleculer-repl": "^0.6.4"
-  },
-  "resolutions": {
-    "**/bcrypt": "3.0.6",
-    "**/samlp": "3.4.1",
-    "**/xmldom": "0.2.1",
-    "**/tslib": "2.3.1",
-    "**/fibers": "^4.0.3"
   }
 }
