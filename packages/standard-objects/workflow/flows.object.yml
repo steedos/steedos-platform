@@ -571,7 +571,7 @@ actions:
                 FlowRouter.go(`/app/admin/flows/view/${newFlow._id}`)
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.error(XMLHttpRequest.responseJSON);
+                        console.error(XMLHttpRequest.responseText);
                         toastr.error(XMLHttpRequest.responseText);
                         $(document.body).removeClass('loading');
                     }
