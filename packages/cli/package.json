@@ -51,6 +51,7 @@
     "inquirer": "^6.2.2",
     "js-yaml": "^3.14.1",
     "latest-version": "^5.1.0",
+    "moleculer": "^0.14.21",
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
@@ -62,6 +63,7 @@
     "yn": "^2.0.0"
   },
   "devDependencies": {
+    "moleculer-repl": "^0.7.1",
     "@oclif/dev-cli": "^1.26.10",
     "@oclif/test": "^2.1.0"
   },

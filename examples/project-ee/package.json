@@ -9,6 +9,5 @@
     "@steedos/service-enterprise": "2.2.52-beta.46"
   },
   "devDependencies": {
-    "moleculer-repl": "^0.6.4"
   }
 }
