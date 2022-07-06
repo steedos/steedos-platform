@@ -572,7 +572,7 @@ actions:
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         console.error(XMLHttpRequest.responseJSON);
-                        toastr.error(jqXHR.responseText);
+                        toastr.error(XMLHttpRequest.responseText);
                         $(document.body).removeClass('loading');
                     }
                 };
