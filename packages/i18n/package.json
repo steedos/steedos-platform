@@ -13,8 +13,7 @@
   "dependencies": {
     "@steedos/cachers": "2.2.52-beta.46",
     "i18next": "^19.3.4",
-    "i18next-sprintf-postprocessor": "^0.2.2",
-    "i18next-xhr-backend": "^3.2.2"
+    "i18next-sprintf-postprocessor": "^0.2.2"
   },
   "devDependencies": {
     "typescript": "4.6.3"
