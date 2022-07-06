@@ -84,10 +84,10 @@ fields:
     label: Reference to
     help: 
     description: 
-  reference_to_field:
-    label: Reference to field
-    help: 
-    description: 
+  # reference_to_field:
+  #   label: Reference to field
+  #   help: 
+  #   description: 
   filtersFunction:
     label: filters Function
     help: 

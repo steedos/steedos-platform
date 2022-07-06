@@ -129,23 +129,23 @@ fields:
     visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['master_detail'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 180
-  reference_to_field:
-    type: lookup
-    label: Reference to field
-    reference_to: object_fields
-    reference_to_field: name
-    visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
-    depend_on:
-      - reference_to
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-      function (filters, values) {
-        if(values && values.reference_to){
-          return ['object', '=', values.reference_to]
-        }else{
-          return ['_id', '=', 'no']
-        }
-      }
-    sort_no: 182
+  # reference_to_field:
+  #   type: lookup
+  #   label: Reference to field
+  #   reference_to: object_fields
+  #   reference_to_field: name
+  #   visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
+  #   depend_on:
+  #     - reference_to
+  #   filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  #     function (filters, values) {
+  #       if(values && values.reference_to){
+  #         return ['object', '=', values.reference_to]
+  #       }else{
+  #         return ['_id', '=', 'no']
+  #       }
+  #     }
+  #   sort_no: 182
   multiple:
     type: boolean
     label: Multiple
