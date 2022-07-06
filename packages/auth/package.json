@@ -21,7 +21,6 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "ts-node": "^10.8.2",
     "typescript": "4.6.3"
   },
   "gitHead": "3436a74d79514a2b570baf30c89a1ca6b94bc9cd"
