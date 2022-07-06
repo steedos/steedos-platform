@@ -1,4 +1,5 @@
 import("./browser");
+require("./tailwind.css");
 require("./theme.less");
 
 import("./main.html");
