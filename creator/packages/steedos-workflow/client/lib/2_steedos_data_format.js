@@ -346,9 +346,11 @@ var s_autoform = function (schema, field) {
         var afoptions = new Array();
 
         for (var s = 0; s < optionsArr.length; s++) {
+            optionItem = optionsArr[s]
+            itemSplits = optionItem.split(":");
             afoptions.push({
-                label: optionsArr[s],
-                value: optionsArr[s]
+                label: itemSplits.length > 1 ? itemSplits[0] : optionsArr[s],
+                value: itemSplits.length > 1 ? itemSplits[1] : optionsArr[s]
             });
         }
 

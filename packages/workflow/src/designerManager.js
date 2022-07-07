@@ -463,7 +463,9 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'select':
             if (_.isArray(objField.options)) {
                 formField.type = objField.multiple ? "multiSelect" : "select";
-                formField.options = _.pluck(objField.options, 'value').join('\n')
+                formField.options = _.map(objField.options, function(optionItem){
+                    return optionItem.label + ":"  + optionItem.value;
+                }).join('\n');
             }
             break;
         case 'boolean':
