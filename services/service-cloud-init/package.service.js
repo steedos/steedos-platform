@@ -273,9 +273,6 @@ module.exports = {
 			}else{
 				steedosConfig.setTenant({enable_create_tenant : true, enable_register: true});
 			}
-			// 未配置环境变量时，不执行初始化，也不报错
-			if (!spaceId || !apiKey)
-				return;
 			const allowInit = await this.allowInit(records);
 			if (!allowInit) {
 				Initializing = false;
@@ -283,7 +280,9 @@ module.exports = {
 			}
 			Initializing = true;
 			try {
-				await this.initProject(ctx, spaceId, apiKey);
+				if (spaceId && apiKey){
+					await this.initProject(ctx, spaceId, apiKey);
+				}
 			} catch (error) {
 				console.log(chalk.red(error.message));
 			}finally{
