@@ -2,7 +2,18 @@
 module.exports = {
     // 添加字段，包括主表字段和子表字段
     addFormFields: function (object_name, record_id, fields) {
-        const record = Creator.getObjectRecord();
+        // const record = Creator.getObjectRecord();
+        var queryResult = Steedos.authRequest("/graphql", {
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                query: "{record:flows__findOne(id: \"" + record_id + "\"){_id, object_name, form, instance_fields, instance_table_fields}}"
+            }),
+            type: 'POST',
+            contentType: 'application/json',
+            error: function () { }
+        });
+        var record = queryResult && queryResult.data && queryResult.data.record;
         const objectName = _.isObject(record.object_name) ? record.object_name.name : record.object_name;
         var formId = _.isObject(record.form) ? record.form._id : record.form;
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
@@ -71,7 +82,7 @@ module.exports = {
                                                 return [['object', '=', objectName], ['name', '!=', selectedAll.concat(baseFieldKeys)]]
                                             }
                                         }
-                                        return [['object', '=', objectName],['name', '!=', baseFieldKeys]]
+                                        return [['object', '=', objectName], ['name', '!=', baseFieldKeys]]
                                     } else {
                                         return ['_id', '=', 'no']
                                     }

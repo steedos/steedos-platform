@@ -657,18 +657,7 @@ actions:
   designForm:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions) {
-              var queryResult = Steedos.authRequest("/graphql", {
-                type: 'POST',
-                async:false,
-                data: JSON.stringify({
-                    query: "{record:flows__findOne(id: \"" + record_id + "\"){object_name}}"
-                }),
-                type: 'POST',
-                contentType: 'application/json',
-                error: function () { }
-              });
-              var record = queryResult && queryResult.data && queryResult.data.record;
+      function (object_name, record_id, record_permissions, record) {
               if (record && record.object_name){
                 return false;
               };
