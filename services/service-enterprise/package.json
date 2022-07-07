@@ -23,9 +23,7 @@
     "mongodb": "^3.7.3",
     "mongodb-client-encryption": "2.1.0",
     "mssql": "^8.1.2",
-    "nats": "^1.4.12",
-    "winston": "^3.3.3",
-    "winston-loki": "^6.0.1"
+    "nats": "^1.4.12"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {
