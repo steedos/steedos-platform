@@ -191,7 +191,20 @@ module.exports = {
         }, null, { iconPath: '/assets/icons' })
     },
     addFormFieldsVisible: function (object_name, record_id, record_permissions, record) {
-        return record && record.object_name;
+        // TODO: 待graphql查询接口正常了， record中自定义对象的object_name有值后可以移除这块代码。
+        var queryResult = Steedos.authRequest("/graphql", {
+            type: 'POST',
+            async:false,
+            data: JSON.stringify({
+                query: "{record:flows__findOne(id: \"" + record_id + "\"){object_name}}"
+            }),
+            type: 'POST',
+            contentType: 'application/json',
+            error: function () { }
+          });
+        var object_record= queryResult && queryResult.data && queryResult.data.record;
+        return object_record && object_record.object_name;
+        // return record && record.object_name;
     },
     // 因为删除流程需要输入流程名称进行二次确认，故这里不显示列表批量删除按钮
     standard_delete_manyVisible: function () {
