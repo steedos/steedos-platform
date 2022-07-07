@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-07 15:47:10
+ * @LastEditTime: 2022-07-07 16:19:08
  * @Description: 
  */
 
@@ -100,7 +100,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
         } else if (isLookup || isFile) {
             let refTo = field.reference_to as string;
             const referenceToField = field.reference_to_field
-            if(isFile){
+            if (isFile) {
                 // TODO: cfs_images_filerecord对象不存在，需要额外处理
                 refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
             }
@@ -165,9 +165,9 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     // define _display type
     let _display_type = _getDisplayType(_display_type_name, fields);
     type = gql`
-    ${_display_type}
-    ${type}
-  `;
+        ${_display_type}
+        ${type}
+    `;
 
     // _related
     if (objectConfig.enable_files) {
@@ -318,7 +318,7 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
             if (_.isEmpty(ids)) {
                 return null;
             }
-            let filters = [[ referenceToField || "_id", "in", ids]];
+            let filters = [[referenceToField || "_id", "in", ids]];
             const selector: any = { filters: filters };
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
@@ -341,7 +341,7 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
 
-            const selector: any = { filters: [[ referenceToField || "_id", "=", id]] };
+            const selector: any = { filters: [[referenceToField || "_id", "=", id]] };
             const { resolveInfo } = ctx.meta;
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
@@ -545,15 +545,15 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     } else {
                         displayObj[name] = "";
                     }
-                } else if (fType == "date") {
+                } else if (fType == "date" && doc[name]) {
                     // 注意日期类型存的是utc0点，不需要执行utcOffset
                     displayObj[name] = moment.utc(doc[name])
                         .format("YYYY-MM-DD");
-                } else if (fType == "datetime") {
+                } else if (fType == "datetime" && doc[name]) {
                     displayObj[name] = moment(doc[name])
                         .utcOffset(utcOffset)
                         .format("YYYY-MM-DD HH:mm");
-                }  else if (fType == "time") {
+                } else if (fType == "time" && doc[name]) {
                     // 注意时间类型走的是utc时间，不需要执行utcOffset
                     displayObj[name] = moment.utc(doc[name])
                         .format("HH:mm");
@@ -634,7 +634,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "summary") {
                     displayObj[name] = doc[name] || "";
-                }  else if (fType == "image" || fType == "file") {
+                } else if (fType == "image" || fType == "file") {
                     let fileLabel = "";
                     let value = doc[name];
                     if (!value) {
@@ -649,7 +649,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                             filters: [`_id`, "in", value],
                             fields: [fileNameFieldKey],
                         });
-                        fileLabel = _.map(fileRecords, (fileRecord)=>{
+                        fileLabel = _.map(fileRecords, (fileRecord) => {
                             return fileRecord.original?.name;
                         }).join(",");
                     } else {
