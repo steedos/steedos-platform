@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-community",
   "main": "index.js",
-  "version": "2.2.52-beta.50",
+  "version": "2.2.52-beta.51",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,14 +11,14 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/service-charts": "2.2.52-beta.50",
-    "@steedos/service-metadata-server": "2.2.52-beta.50",
-    "@steedos/service-mongodb-server": "2.2.52-beta.50",
-    "@steedos/service-package-loader": "2.2.52-beta.50",
-    "@steedos/service-package-registry": "2.2.52-beta.50",
-    "@steedos/service-pages": "2.2.52-beta.50",
-    "@steedos/service-sidecar": "2.2.52-beta.50",
-    "@steedos/service-steedos-server": "2.2.52-beta.50",
+    "@steedos/service-charts": "2.2.52-beta.51",
+    "@steedos/service-metadata-server": "2.2.52-beta.51",
+    "@steedos/service-mongodb-server": "2.2.52-beta.51",
+    "@steedos/service-package-loader": "2.2.52-beta.51",
+    "@steedos/service-package-registry": "2.2.52-beta.51",
+    "@steedos/service-pages": "2.2.52-beta.51",
+    "@steedos/service-sidecar": "2.2.52-beta.51",
+    "@steedos/service-steedos-server": "2.2.52-beta.51",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
     "axios": "^0.21.1",
@@ -45,12 +45,12 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "steedos-cli": "2.2.52-beta.50",
+    "steedos-cli": "2.2.52-beta.51",
     "tslib": "^2.4.0"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7f4c08f68a7835a05456c7f56935e630b965dc66"
+  "gitHead": "faf494614414a0c7320278f713e65b724ff75cf6"
 }

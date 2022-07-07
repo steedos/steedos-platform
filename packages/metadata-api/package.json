@@ -1,6 +1,6 @@
 {
     "name": "@steedos/metadata-api",
-    "version": "2.2.52-beta.50",
+    "version": "2.2.52-beta.51",
     "description": "",
     "main": "lib/index.js",
     "files": [
@@ -21,8 +21,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@steedos/core": "2.2.52-beta.50",
-        "@steedos/metadata-core": "2.2.52-beta.50",
+        "@steedos/core": "2.2.52-beta.51",
+        "@steedos/metadata-core": "2.2.52-beta.51",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
@@ -34,9 +34,9 @@
     },
     "devDependencies": {
         "@salesforce/dev-config": "^2.1.3",
-        "@steedos/service-meteor-package-loader": "2.2.52-beta.50",
+        "@steedos/service-meteor-package-loader": "2.2.52-beta.51",
         "javascript-obfuscator": "^2.9.1",
         "typescript": "4.6.3"
     },
-    "gitHead": "7f4c08f68a7835a05456c7f56935e630b965dc66"
+    "gitHead": "faf494614414a0c7320278f713e65b724ff75cf6"
 }
