@@ -466,7 +466,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "lib/index.js"
 };
 
@@ -493,7 +493,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "lib/index.js"
 };
 
@@ -520,7 +520,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "index.js"
 };
 
@@ -547,7 +547,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "index.js"
 };
 
@@ -574,7 +574,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "index.js"
 };
 
@@ -601,7 +601,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "package.service.js"
 };
 
@@ -628,7 +628,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "lib/index.js"
 };
 
@@ -655,7 +655,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "lib/index.js"
 };
 
@@ -682,7 +682,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "lib/index.js"
 };
 
@@ -709,7 +709,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-workflow",
-  "version": "2.2.52-beta.45",
+  "version": "2.2.52",
   "main": "package.service.js"
 };
 
@@ -944,8 +944,8 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "superagent",
-  "version": "3.8.3",
-  "main": "./lib/node/index.js"
+  "version": "8.0.0",
+  "main": "lib/node/index.js"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1691,17 +1691,17 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "socket.io",
-  "version": "2.3.0",
-  "main": "./lib/index"
+  "version": "4.5.1",
+  "main": "./dist/index.js"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"lib":{"index.js":function module(require,exports,module){
+},"dist":{"index.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/socket.io/lib/index.js                                                                //
+// node_modules/socket.io/dist/index.js                                                               //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
@@ -1745,7 +1745,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "ejs",
-  "version": "2.7.4",
+  "version": "3.1.8",
   "main": "./lib/ejs.js"
 };
 
@@ -1762,34 +1762,7 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"ejs-lint":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/ejs-lint/package.json                                                                 //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "ejs-lint",
-  "version": "0.2.0",
-  "main": "index.js"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"index.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/ejs-lint/index.js                                                                     //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}}},{
+}}}}},{
   "extensions": [
     ".js",
     ".json",
