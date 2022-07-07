@@ -937,6 +937,7 @@ actions:
                   FlowRouter.go(`/app/${appid}/${object_name}/grid/${list_view_id}`);
                 }
               }
+              window.refreshGrid();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
               window.$("body").removeClass("loading");
