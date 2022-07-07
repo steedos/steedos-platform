@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 18:15:05
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 18:06:00
+ * @LastEditTime: 2022-07-07 09:39:42
  * @Description:
  */
 const core = require("./core");
@@ -45,7 +45,8 @@ function oidcStrategyFactory() {
 exports.oidcStrategyFactory = oidcStrategyFactory;
 const oidcAuth = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     return passport.authenticate('oidc', (err, user) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        return yield account_1.Account.ssoLogin(req, res, { err, user, redirect: true, accessToken: user.thirdPartyUser.oauth2.accessToken });
+        var _a, _b;
+        return yield account_1.Account.ssoLogin(req, res, { err, user, redirect: true, accessToken: (_b = (_a = user === null || user === void 0 ? void 0 : user.thirdPartyUser) === null || _a === void 0 ? void 0 : _a.oauth2) === null || _b === void 0 ? void 0 : _b.accessToken });
     }))(req, res, next);
 });
 exports.oidcAuth = oidcAuth;
