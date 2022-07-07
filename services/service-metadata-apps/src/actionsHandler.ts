@@ -262,7 +262,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
                     return config && config.metadata.name === objectApiName
                 });
                 if(!objectMetadata){
-                    throw new Error(`${objectApiName} is not found in the objects of app ${app.code} `)
+                    ctx.broker.logger.error(`${objectApiName} is not found in the objects of app ${app.code} `)
+                    continue;
                 }
                 const allowRead = await objectAllowRead(objectApiName, userSession);
                 if(!allowRead){
