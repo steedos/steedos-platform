@@ -170,3 +170,18 @@ export async function setRequestUser(
 export function removeUserSessionsCacheByUserId(userId, is_phone) {
   return removeUserTokens(userId, is_phone);
 }
+
+/**
+ * 判断属性值是否已变更，转字符串比对
+ * @param newDoc 
+ * @param oldDoc 
+ * @returns true/false
+ */
+export function isPropValueChanged (newDoc: any, oldDoc: any, props: string[]): boolean {
+  for (const key of props) {
+      if ((newDoc[key] + '') !== (oldDoc[key] + '')) {
+          return true
+      }
+  }
+  return false
+}

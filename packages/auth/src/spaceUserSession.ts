@@ -1,10 +1,16 @@
-import { getSteedosSchema, addConfig, getConfig, removeConfig } from '@steedos/objectql';
+import { getSteedosSchema, addConfig, getConfig, removeConfig, getObject } from '@steedos/objectql';
 import { isExpried } from './utils'
-const _ = require('underscore');
+import { getCacher } from '@steedos/cachers'
+import { isPropValueChanged } from './session';
+import { removeUserSessionFromCache } from './userSession';
+import _ = require('underscore');
 const sessionCacheInMinutes = 10;
 const SPACEUSERCACHENAME = 'space_users_cache';
 
 const internalProfiles = ['admin', 'user', 'supplier', 'customer']
+
+// 使用@steedos/cacher缓存工作区信息
+const SPACES_CACHER_NAME = 'lru.spaces'
 
 async function getSpaceUserProfile(userId: string, spaceId: string) {
     let filters = `(space eq '${spaceId}') and (user eq '${userId}')`;
@@ -87,6 +93,14 @@ export function addSpaceSessionToCache(spaceId, userId, spaceUserSession) {
     addConfig(SPACEUSERCACHENAME, spaceUserSession);
 }
 
+/**
+ * 清除缓存
+ * @param spaceId 
+ * @param userId 
+ */
+export function removeSpaceUserSessionFromCache(spaceId: string, userId: string): void {
+    removeConfig(SPACEUSERCACHENAME, { _id: `${spaceId}-${userId}` })
+}
 
 export async function getSpaceUserSession(spaceId, userId) {
     let spaceSession: any = getSpaceSessionFromCache(spaceId, userId);
@@ -111,7 +125,7 @@ export async function getSpaceUserSession(spaceId, userId) {
             let profile = await getSpaceUserProfile(userId, userSpaceId);
             spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
             spaceSession.spaceId = userSpaceId;
-            spaceSession.spaces = await getObjectDataByIds('spaces', userSpaceIds, ['name', 'admins']);
+            spaceSession.spaces = await getSpaces(userSpaceIds)
             spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._id === userSpaceId });
             
             spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
@@ -120,9 +134,6 @@ export async function getSpaceUserSession(spaceId, userId) {
             spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
             spaceSession.organization = _.find(spaceSession.organizations, (record)=>{ return record._id === su.organization });
 
-            if (spaceSession.space && spaceSession.space.admins) {
-                spaceSession.is_space_admin = spaceSession.space.admins.indexOf(userId) > -1;
-            }
             if (spaceSession.company) {
                 spaceSession.company_id = spaceSession.company._id;
             }
@@ -131,10 +142,12 @@ export async function getSpaceUserSession(spaceId, userId) {
             }
             spaceSession.permission_shares = await getUserPermissionShares(su);
             addSpaceSessionToCache(spaceId, userId, spaceSession);
-            return spaceSession;
         } else {
             spaceSession = { roles: ['guest'], expiredAt: expiredAt };
         }
+    }
+    if (spaceSession.space && spaceSession.space.admins) {
+        spaceSession.is_space_admin = spaceSession.space.admins.indexOf(userId) > -1;
     }
     return spaceSession;
 }
@@ -146,4 +159,83 @@ export async function updateSpaceUserSessionRolesCache(spaceId, userId) {
         return true;
     }
     return false;
+}
+
+/**
+ * 获取用户所属工作区记录，优先从缓存获取
+ * @param userSpaceIds 
+ * @returns 工作区记录
+ */
+async function getSpaces(userSpaceIds: string[]) {
+    const cacher = getCacher(SPACES_CACHER_NAME)
+    const spaces = []
+    
+    for (const sId of userSpaceIds) {
+        let cacheDoc = cacher.get(sId)
+        if (!cacheDoc) {
+            cacheDoc = (await getObject('spaces').directFind({ filters: [ ['_id', '=', sId] ], fields: ['_id', 'name', 'admins'] }))[0]
+            cacher.set(sId, cacheDoc)
+        }
+        spaces.push(cacheDoc)
+    }
+    if (_.isEmpty(spaces)) {
+        console.log(userSpaceIds)
+    }
+    return spaces
+}
+
+/**
+ * userSession支持实时更新
+ * 当space_users属性发生变更后清除userSession缓存
+ */
+export function deleteSpaceUserSessionCacheByChangedProp (newDoc: any, oldDoc: any): void {
+    const { space: spaceId, user: userId } = oldDoc
+    // 由于space_users和users是单独缓存，故这里分别判断清除
+    // space_users session
+    const suProps = [
+        'company_id',    // 主分部
+        'company_ids',   // 所属公司
+        'organization',  // 主部门
+        'organizations', // 所属部门
+        'profile',       // 简档
+    ]
+    const suChanged = isPropValueChanged(newDoc, oldDoc, suProps)
+    if (suChanged) {
+        removeSpaceUserSessionFromCache(spaceId, userId)
+    }
+    // user session
+    const uProps = [
+        'locale',        // 语言
+        'mobile',        // 手机号
+        'name',          // 姓名
+        'username',      // 用户名
+        'email'          // 邮箱
+    ]
+    const uChanged = isPropValueChanged(newDoc, oldDoc, uProps)
+    if (uChanged) {
+        removeUserSessionFromCache(userId)
+    }
+}
+
+/**
+ * userSession支持实时更新
+ * 当spaces属性发生变更后清除spaces缓存
+ */
+ export function deleteSpaceCacheByChangedProp (newDoc: any, oldDoc: any): void {
+    const { _id: spaceId } = oldDoc
+    const props = [
+        'name',         // 工作区名称
+        'admins',       // 管理员
+    ]
+    const changed = isPropValueChanged(newDoc, oldDoc, props)
+    if (changed) {
+        // 清除spaces缓存
+        const cacher = getCacher(SPACES_CACHER_NAME)
+        cacher.delete(spaceId)
+        // 如果admins发生了变化，则需要清除变化的人员的缓存
+        const changeAdmins = <string[]> _.difference(newDoc.admins, oldDoc.admins).concat(_.difference(oldDoc.admins, newDoc.admins))
+        for (const userId of changeAdmins) {
+            removeSpaceUserSessionFromCache(spaceId, userId)
+        }
+    }
 }

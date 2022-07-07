@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-06-03 15:11:52
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-07 10:19:52
+ * @Description: 
+ */
 import { getSteedosSchema, addConfig, getConfig, removeConfig } from '@steedos/objectql';
 import { isExpried } from './utils'
 const sessionCacheInMinutes = 10;
@@ -18,6 +25,14 @@ export function getSessionFromCache(userId) {
 export function addSessionToCache(userId, userSession) {
     userSession._id = userId
     addConfig(USERCACHENAME, userSession);
+}
+
+/**
+ * 清除缓存
+ * @param userId 
+ */
+export function removeUserSessionFromCache(userId: string): void {
+    removeConfig(USERCACHENAME, { _id: userId })
 }
 
 async function getUser(userId) {
