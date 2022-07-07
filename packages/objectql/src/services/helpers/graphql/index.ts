@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-29 11:42:19
+ * @LastEditTime: 2022-07-07 15:47:10
  * @Description: 
  */
 
@@ -99,6 +99,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             type += `${name}: ${BASIC_TYPE_MAPPING[field.type]} `;
         } else if (isLookup || isFile) {
             let refTo = field.reference_to as string;
+            const referenceToField = field.reference_to_field
             if(isFile){
                 // TODO: cfs_images_filerecord对象不存在，需要额外处理
                 refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
@@ -119,6 +120,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                     },
                     params: {
                         objectName: refTo,
+                        referenceToField
                     },
                 };
             } else {
@@ -133,6 +135,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
                     },
                     params: {
                         objectName: refTo,
+                        referenceToField
                     },
                 };
             }
@@ -311,11 +314,11 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
 
     actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`] = {
         handler: async function (ctx) {
-            let { ids, objectName } = ctx.params;
+            let { ids, objectName, referenceToField } = ctx.params;
             if (_.isEmpty(ids)) {
                 return null;
             }
-            let filters = [["_id", "in", ids]];
+            let filters = [[ referenceToField || "_id", "in", ids]];
             const selector: any = { filters: filters };
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
@@ -331,14 +334,14 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
     };
     actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`] = {
         handler: async function (ctx) {
-            let { id, objectName } = ctx.params;
+            let { id, objectName, referenceToField } = ctx.params;
             if (!id) {
                 return;
             }
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
 
-            const selector: any = { filters: [["_id", "=", id]] };
+            const selector: any = { filters: [[ referenceToField || "_id", "=", id]] };
             const { resolveInfo } = ctx.meta;
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
