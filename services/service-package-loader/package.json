@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-loader",
-  "version": "2.2.52-beta.52",
+  "version": "2.2.52",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/core": "2.2.52-beta.52",
-    "@steedos/metadata-core": "2.2.52-beta.52",
-    "@steedos/objectql": "2.2.52-beta.52",
+    "@steedos/core": "2.2.52",
+    "@steedos/metadata-core": "2.2.52",
+    "@steedos/objectql": "2.2.52",
     "clone": "^2.1.2",
     "globby": "^11.1.0",
     "moleculer": "^0.14.21",
@@ -25,5 +25,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c1dcb3e83d8bff64c8ad014bf725e6769f803b72"
+  "gitHead": "1447c9ca4fb57a49233704f50a7d757aff0c5027"
 }
