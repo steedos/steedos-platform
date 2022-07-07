@@ -5,8 +5,6 @@ import { getSteedosConfig } from '@steedos/objectql'
 import { db } from '../../../db';
 import {getSteedosService } from '../../../core'
 
-const config = getSteedosConfig();
-
 export const getTenant = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response

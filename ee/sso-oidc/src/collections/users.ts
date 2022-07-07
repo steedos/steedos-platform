@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 13:34:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 18:07:31
+ * @LastEditTime: 2022-07-06 18:31:07
  * @Description: 
  */
 import { getObject } from '@steedos/objectql';
@@ -17,6 +17,7 @@ export class User {
         if (!dbUser) {
             dbUser = await getObject('users').directInsert({
                 _id: user._id,
+                steedos_id: user._id,
                 email: user.email,
                 email_verified: user.thirdPartyProfile.email_verified,
                 name: user.thirdPartyProfile.name,
@@ -25,6 +26,9 @@ export class User {
                 modified: new Date()
             })
 
+        } 
+        const spaceUser = await SpaceUsers.findByUserId(dbUser._id);
+        if(!spaceUser){
             const tenantId = getTenantId();
             if (tenantId) {
                 const tenantConfig = await getTenantConfig(tenantId);
@@ -33,10 +37,8 @@ export class User {
                     await SpaceUsers.insert(tenantId, dbUser._id, { user_accepted: true });
                 }
             }
-            return dbUser;
-        } else {
-            return dbUser;
         }
+        return dbUser;
     }
 
     static async findByEmail(email) {

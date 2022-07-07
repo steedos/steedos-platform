@@ -17,7 +17,7 @@ function classNames(...classes) {
 
 const defaultAvatar = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
 
-export function Navbar({  }) {
+export function Navbar({ navigation }) {
   const { data: session } = useSession()
 
   const user = session? {
@@ -150,10 +150,10 @@ export function Navbar({  }) {
               </div>
             </div>
             <nav className="hidden lg:py-2 lg:flex lg:space-x-8 px-2 sm:px-4 lg:px-8" aria-label="Global">
-              {navigation.map((item) => (
+              {navigation?.map((item) => (
                 <a
-                  key={item.name}
-                  href={item.href}
+                  key={item.id}
+                  href={item.path}
                   className={classNames(
                     item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
                     'rounded-md py-2 px-3 inline-flex items-center text-sm font-medium'
@@ -168,11 +168,11 @@ export function Navbar({  }) {
 
           <Disclosure.Panel as="nav" className="lg:hidden" aria-label="Global">
             <div className="pt-2 pb-3 px-2 space-y-1">
-              {navigation.map((item) => (
+              {navigation?.map((item) => (
                 <Disclosure.Button
-                  key={item.name}
+                  key={item.id}
                   as="a"
-                  href={item.href}
+                  href={item.path}
                   className={classNames(
                     item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
                     'block rounded-md py-2 px-3 text-base font-medium'

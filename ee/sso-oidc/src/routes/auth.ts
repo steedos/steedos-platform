@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 18:15:05
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 18:06:00
+ * @LastEditTime: 2022-07-07 09:39:42
  * @Description: 
  */
 const core = require("./core")
@@ -49,7 +49,7 @@ export async function oidcStrategyFactory() {
 
 export const oidcAuth = async (req: any, res: any, next: any) => {
   return passport.authenticate('oidc', async (err, user) => {
-    return await Account.ssoLogin(req, res, { err, user, redirect: true, accessToken: user.thirdPartyUser.oauth2.accessToken })
+    return await Account.ssoLogin(req, res, { err, user, redirect: true, accessToken: user?.thirdPartyUser?.oauth2?.accessToken })
   }
   )(req, res, next)
 }

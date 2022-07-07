@@ -1,12 +1,27 @@
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-
+import React, { useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar'
 
+import { getApps } from '@/lib/apps';
+
 export default function Apps() {
+  const [apps, setApps] = useState(null)
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    getApps()
+      .then((data) => {
+        setApps(data)
+        setLoading(false)
+      })
+  }, []);
+  if (isLoading) return <p>Loading...</p>
+  if (!apps) return <p>No profile data</p>
   return (
     <>
-      <Navbar/>
+      <Navbar navigation={apps}/>
       <div></div>
     </>
   )

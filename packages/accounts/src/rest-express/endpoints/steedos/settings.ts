@@ -1,9 +1,18 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-06 18:19:28
+ * @Description: 
+ */
 import * as express from 'express';
 import * as _ from 'lodash';
 import { AccountsServer } from '../../../server';
 import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
+
+const clone = require('clone');
 
 const config = getSteedosConfig();
 
@@ -59,9 +68,14 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   const broker = getSteedosSchema().broker;
   const serverInitInfo = await broker.call(`@steedos/service-cloud-init.serverInitInfo`, {});
 
+  const _tenant = clone(tenant);
+
+  delete _tenant['tokenSecret'];
+  delete _tenant['accessTokenExpiresIn']
+  delete _tenant['refreshTokenExpiresIn']
 
   res.json({
-    tenant: tenant,
+    tenant: _tenant,
     password: config.password ? config.password : ( config.public?.password ? config.public?.password : {} ),
     root_url: process.env.ROOT_URL,
     already_mail_service: already_mail_service,

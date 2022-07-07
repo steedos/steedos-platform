@@ -36,6 +36,40 @@ export function getImageSrc(fileId){
 }
 
 
+export function getTenantId(){
+    try {
+        let spaceId = localStorage.getItem('steedos:spaceId');
+
+        if (window.location.search && !spaceId) {
+            var searchParams = new URLSearchParams(window.location.search);
+            spaceId = searchParams.get('X-Space-Id');
+        }
+        if (!spaceId) {
+            return null;
+        }
+        return spaceId;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export function getAuthToken(){
+    try {
+        let token = localStorage.getItem('steedos:token');
+
+        if (window.location.search  && !token) {
+            var searchParams = new URLSearchParams(window.location.search);
+            token = searchParams.get('X-Auth-Token');
+        }
+        if (!token) {
+            return null;
+        }
+        return token;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export function getAuthorization(){
     try {
         let spaceId = localStorage.getItem('steedos:spaceId');

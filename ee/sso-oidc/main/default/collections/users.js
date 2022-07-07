@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 13:34:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 18:07:31
+ * @LastEditTime: 2022-07-06 18:31:07
  * @Description:
  */
 const objectql_1 = require("@steedos/objectql");
@@ -20,6 +20,7 @@ class User {
             if (!dbUser) {
                 dbUser = yield (0, objectql_1.getObject)('users').directInsert({
                     _id: user._id,
+                    steedos_id: user._id,
                     email: user.email,
                     email_verified: user.thirdPartyProfile.email_verified,
                     name: user.thirdPartyProfile.name,
@@ -27,6 +28,9 @@ class User {
                     created: new Date(),
                     modified: new Date()
                 });
+            }
+            const spaceUser = yield space_users_1.SpaceUsers.findByUserId(dbUser._id);
+            if (!spaceUser) {
                 const tenantId = (0, context_1.getTenantId)();
                 if (tenantId) {
                     const tenantConfig = yield (0, context_2.getTenantConfig)(tenantId);
@@ -35,11 +39,8 @@ class User {
                         yield space_users_1.SpaceUsers.insert(tenantId, dbUser._id, { user_accepted: true });
                     }
                 }
-                return dbUser;
             }
-            else {
-                return dbUser;
-            }
+            return dbUser;
         });
     }
     static findByEmail(email) {

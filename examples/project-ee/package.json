@@ -1,11 +1,11 @@
 {
   "name": "project-ee",
-  "version": "2.2.52-beta.50",
+  "version": "2.2.52-beta.51",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-enterprise": "2.2.52-beta.50"
+    "@steedos/service-enterprise": "2.2.52-beta.51"
   }
 }

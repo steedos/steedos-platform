@@ -818,7 +818,7 @@ export class Mongo implements DatabaseInterface {
       }
 
       let result = await this.codeCollection.insertOne(doc);
-      record = result;
+      record = result.ops[0];;
     }
     return record;
   }
