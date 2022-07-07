@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-qywx",
-    "version": "2.2.52-beta.51",
+    "version": "2.2.52-beta.52",
     "private": false,
     "description": "",
     "publishConfig": {
@@ -20,7 +20,7 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@steedos/service-meteor-package-loader": "2.2.52-beta.51",
+        "@steedos/service-meteor-package-loader": "2.2.52-beta.52",
         "bcrypt": "^5.0.1",
         "bootstrap": "^3.3.7",
         "cookies": "^0.8.0",
@@ -33,11 +33,11 @@
         "xml2js": "0.4.23"
     },
     "devDependencies": {
-        "@steedos/accounts": "2.2.52-beta.51",
+        "@steedos/accounts": "2.2.52-beta.52",
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
-        "steedos-server": "2.2.52-beta.51"
+        "steedos-server": "2.2.52-beta.52"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
-    "gitHead": "faf494614414a0c7320278f713e65b724ff75cf6"
+    "gitHead": "c1dcb3e83d8bff64c8ad014bf725e6769f803b72"
 }
