@@ -15,7 +15,7 @@ Meteor.methods
 
         ows = Creator.getCollection('object_workflows').find({ space: spaceId, $or: [{ sync_direction: { $exists: false }}, { sync_direction: { $in: ['both', 'obj_to_ins']}}] }, { fields: { object_name: 1, flow_id: 1, space: 1 } }).fetch()
         _.each ows,(o) ->
-            fl = Creator.getCollection('flows').findOne(o.flow_id, { fields: { name: 1, perms: 1 } })
+            fl = Creator.getCollection('flows').findOne({_id: o.flow_id, state: 'enabled'}, { fields: { name: 1, perms: 1 } })
             if fl
                 o.flow_name = fl.name
                 o.can_add = false
