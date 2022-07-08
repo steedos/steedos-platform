@@ -147,6 +147,14 @@ Template.related_object_list.helpers
 		recordsTotal = Template.instance().recordsTotal
 		return (event)->
 			recordsTotal?.set(event.api.getDisplayedRowCount())
+	onUpdated: ()->
+		return (objectApiName, ids)->
+			params = FlowRouter.current().params;
+			if params.object_name && params.related_object_name
+					# ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
+					SteedosUI.reloadRecord(params.object_name, params.record_id)
+			FlowRouter.reload();
+
 isCalendarView = ()->
 	view = Creator.getListView(Session.get "related_object_name", Session.get("list_view_id"))
 	return view?.type == 'calendar'
