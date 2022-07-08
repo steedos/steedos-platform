@@ -325,7 +325,6 @@
     };
 
     Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues, options) {
-        console.log("===Steedos.Page.Form.StandardNew.render===", appId, objectApiName, title, initialValues, options);
         const page = Steedos.Page.getPage('form', appId, objectApiName);
         if (page && page.schema) {
             // const elementId = getModalElement(`${objectApiName}-standard_new`);
@@ -343,7 +342,6 @@
             title: title,
             initialValues: initialValues,
             afterInsert: function (result) {
-                console.log("===afterInsert===", result);
                 if (result.length > 0) {
                     var record = result[0];
                     SteedosUI.router.go({objectName: objectApiName, recordId: record._id, type: 'new'});
