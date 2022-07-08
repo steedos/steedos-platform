@@ -325,6 +325,7 @@
     };
 
     Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues, options) {
+        console.log("===Steedos.Page.Form.StandardNew.render===", appId, objectApiName, title, initialValues, options);
         const page = Steedos.Page.getPage('form', appId, objectApiName);
         if (page && page.schema) {
             // const elementId = getModalElement(`${objectApiName}-standard_new`);
@@ -342,6 +343,7 @@
             title: title,
             initialValues: initialValues,
             afterInsert: function (result) {
+                console.log("===afterInsert===", result);
                 if (result.length > 0) {
                     var record = result[0];
                     SteedosUI.router.go({objectName: objectApiName, recordId: record._id, type: 'new'});
@@ -370,12 +372,15 @@
             title: title,
             afterUpdate: function () {
                 setTimeout(function () {
-                    if (FlowRouter.current().route.path.endsWith("/:record_id")) {
-                        let params = FlowRouter.current().params;
-                        if(params.object_name !== objectApiName){
-                            // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
+                    if(["/app/:app_id/:object_name/view/:record_id", "/app/:app_id/:object_name/:record_id/:related_object_name/grid"].indexOf(FlowRouter.current().route.pathDef) > -1){
+                        // 记录详细界面编辑子表记录，或相关子表列表界面编辑子表记录
+                        var params = FlowRouter.current().params;
+                        if(params.record_id !== recordId){
+                            // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新主表记录
                             SteedosUI.reloadRecord(params.object_name, params.record_id)
                         }
+                    }
+                    if (FlowRouter.current().route.path.endsWith("/:record_id")) {
                         FlowRouter.reload()
                     } else {
                         window.refreshDxSchedulerInstance()
