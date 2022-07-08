@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-04 11:24:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 13:02:03
+ * @LastEditTime: 2022-07-08 16:28:37
  * @Description: 
  */
 import dynamic from 'next/dynamic'
@@ -55,6 +55,10 @@ export default function Record({ }) {
                     {
                         theme: 'antd',
                         jumpTo: (to, action) => {
+                            console.log(`jumpTo====================>`, to, action)
+                            if(action.type === 'submit' && router.asPath === to){
+                                setIsEditing(false);
+                            }
                             if (to === 'goBack') {
                                 return window.history.back();
                             }
@@ -95,7 +99,7 @@ export default function Record({ }) {
 
     const editRecord = () => {
         if(tab_id && record_id){
-            getFormSchema(tab_id, record_id)
+            getFormSchema(tab_id, {recordId: record_id, tabId: tab_id, appId: app_id})
             .then((data) => {
                 setSchema(data)
             })

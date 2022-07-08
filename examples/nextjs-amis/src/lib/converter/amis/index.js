@@ -100,7 +100,7 @@ function getFilter(){
 }
 
 export function getObjectList(objectSchema, fields, options){
-    const table = getTableSchema(fields, Object.assign({idFieldName: objectSchema.idFieldName}, options));
+    const table = getTableSchema(fields, Object.assign({idFieldName: objectSchema.idFieldName, labelFieldName: objectSchema.NAME_FIELD_KEY || 'name'}, options));
     delete table.mode;
     const bulkActions = getBulkActions()
     return {
@@ -116,7 +116,8 @@ export function getObjectList(objectSchema, fields, options){
 
 
 
-export function getObjectForm(objectSchema, recordId){
+export function getObjectForm(objectSchema, ctx){
+    const { recordId, tabId, appId } = ctx;
     const fields = _.values(objectSchema.fields);
     return {
         type: 'page',
@@ -144,7 +145,7 @@ export function getObjectForm(objectSchema, recordId){
                 panelClassName:'m-0 rounded-lg',
                 bodyClassName: 'p-4',
                 className: 'steedos-amis-form',
-                reload: 'window'
+                redirect: `/app/${appId}/${tabId}/view/${recordId}`
             }
         ]
     }
@@ -175,7 +176,7 @@ export function getObjectDetail(objectSchema, recordId){
                 panelClassName:'m-0 rounded-lg',
                 bodyClassName: 'p-4',
                 className: 'steedos-amis-form',
-                submitText: '' //不显示提交按钮
+                actions: [] // 不显示表单默认的提交按钮
             }
         ]
     }

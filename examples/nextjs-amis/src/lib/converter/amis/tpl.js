@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-23 09:53:08
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 16:00:55
+ * @LastEditTime: 2022-07-08 16:32:18
  * @Description: 
  */
 export function getCreatedInfoTpl(){
@@ -34,7 +34,7 @@ export function getSelectTpl(field){
 }
 
 export function getNameTpl(field, ctx){
-    return `<a href="/app/${ctx.appName}/${ctx.objectName}/view/\${${ctx.idFieldName}}">\${${field.name}}</a>`
+    return `<a href="/app/${ctx.appId}/${ctx.tabId}/view/\${${ctx.idFieldName}}">\${${field.name}}</a>`
 }
 
 export function getLookupTpl(field){
@@ -68,7 +68,7 @@ export function getPasswordTpl(field){
 
 
 export function getFieldTpl (field, options){
-    if(field.is_name){
+    if(field.is_name || field.name === options.labelFieldName){
         return getNameTpl(field, options)
     }
     switch (field.type) {
