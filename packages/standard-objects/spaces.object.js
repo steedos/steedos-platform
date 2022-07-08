@@ -145,8 +145,7 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
     }
 
     // TODO 如果开发环境且创建第一条space_users记录时, 自动生成api key 并写入.env.local 文件
-    console.log(`process.env.NODE_ENV`, process.env.NODE_ENV)
-    if(process.env.NODE_ENV === 'development' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
+    if(process.env.NODE_ENV != 'production' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
         // 创建api key
         objectql.getObject('api_keys').insert({
             api_key: Random.secret(),
