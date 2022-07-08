@@ -61,5 +61,10 @@ Template.detail_realted_object_list.helpers
 	sort: ()->
 		return this.related_list_item_props?.sort
 	onUpdated: ()->
-		return ()->
+		return (objectApiName, ids)->
+			if FlowRouter.current().route.path.endsWith("/:record_id")
+				params = FlowRouter.current().params;
+				if params.object_name != objectApiName
+					# ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
+					SteedosUI.reloadRecord(params.object_name, params.record_id)
 			FlowRouter.reload();
