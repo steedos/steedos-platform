@@ -172,7 +172,7 @@ export class MasterDetailActionHandler{
                     if (field.reference_to && _.isString(field.reference_to)) {
                         if (field.reference_to === objectApiName) {
                             field.type = "lookup";//强行变更为最接近的类型
-                            throw new Error(`Can't set a master-detail field that reference to self on the object '${objectApiName}'.`);
+                            throw new Error(`load field 「${field.name}」 error: Can't set a master-detail field that reference to self on the object 「${objectApiName}」.`);
                         }
                         const addSuc = await this.addMaster(objectApiName, field.reference_to, field);
 
