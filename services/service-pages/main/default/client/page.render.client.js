@@ -371,9 +371,12 @@
             afterUpdate: function () {
                 setTimeout(function () {
                     if (FlowRouter.current().route.path.endsWith("/:record_id")) {
+                        let params = FlowRouter.current().params;
+                        if(params.object_name !== objectApiName){
+                            // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
+                            SteedosUI.reloadRecord(params.object_name, params.record_id)
+                        }
                         FlowRouter.reload()
-                        // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新表单数据
-                        SteedosUI.reloadRecord(objectApiName, recordId)
                     } else {
                         window.refreshDxSchedulerInstance()
                         window.refreshGrid(options.gridName);
