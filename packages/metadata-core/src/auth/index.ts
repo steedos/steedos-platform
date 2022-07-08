@@ -122,7 +122,10 @@ export function getMetadataConfig(workspace?: string){
     if(metadata){
         return metadata;
     }else{
-        return {}
+        return {
+            METADATA_SERVER: process.env.METADATA_SERVER,
+            METADATA_APIKEY: process.env.METADATA_APIKEY
+        }
     }
 
 }

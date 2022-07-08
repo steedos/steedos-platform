@@ -3,6 +3,7 @@ const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const _ = require("lodash");
 const steedosLicense = require("@steedos/license");
+const metadataCore = require('@steedos/metadata-core');
 const validator = require('validator');
 db.spaces = core.newCollection('spaces');
 
@@ -141,6 +142,40 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
 
     if(Creator.isSpaceAdmin(spaceId, userId)){
         spaceUsersDB.direct.update({user: userId, space: spaceId}, {$set: {profile: 'admin'}})
+    }
+
+    // TODO 如果开发环境且创建第一条space_users记录时, 自动生成api key 并写入.env.local 文件
+    console.log(`process.env.NODE_ENV`, process.env.NODE_ENV)
+    if(process.env.NODE_ENV === 'development' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
+        // 创建api key
+        objectql.getObject('api_keys').insert({
+            api_key: Random.secret(),
+            space: spaceId,
+            owner: userId,
+            active: true
+        }).then(function(record){
+            // 写入.env.local 文件
+            let rootUrl = metadataCore.getRootUrl();
+            if(!rootUrl){
+                rootUrl = process.env.ROOT_URL
+            }
+            if(!rootUrl){
+                rootUrl = 'http://localhost:5000'
+            }
+            let server = rootUrl
+            if(!server.startsWith('http')){
+                server = `http://${server}`
+            }
+            if(server.endsWith('/')){
+                server = server.substring(0, server.length-1);
+            }
+            metadataCore.saveSourceConfig({
+                server: server,
+                apikey: record.api_key
+            })
+        }).catch(function(error){
+            console.log(error)
+        })
     }
 }
 
