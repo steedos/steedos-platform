@@ -1,12 +1,42 @@
-const Tpl = require('./tpl');
-const _ = require('underscore');
-const graphql = require('./graphql');
+const Tpl = require('../tpl');
+const Fields = require('./index');
+const _ = require('lodash');
+const graphql = require('../graphql');
+function getOperation(fields){
+    const controls = [];
+    _.each(fields, function(field){
+        controls.push(Fields.convertSFieldToAmisField(field, true));
+    })
+    return {
+        "type": "operation",
+        "label": "操作",
+        "width": 100,
+        fixed: "right",
+        "buttons": [
+          {
+            "type": "button",
+            "icon": "fa fa-eye",
+            "actionType": "dialog",
+            "tooltip": "查看",
+            "dialog": {
+              "title": "查看",
+              "body": {
+                "type": "form",
+                "controls": controls
+              }
+            }
+        }]
+    }
+}
 
-function getTableColumns(fields){
+//获取name字段，如果没有，则_index字段添加链接
+function getDetailColumn(){}
+
+function getTableColumns(fields, options){
     const columns = [{name: '_index',type: 'text', width: 32, placeholder: ""}];
     _.each(fields, function(field){
 
-        const tpl = Tpl.getFieldTpl(field);
+        const tpl = Tpl.getFieldTpl(field, options);
 
         let type = 'text';
         if(tpl){
@@ -47,10 +77,12 @@ exports.getTableSchema = function(fields, options){
         name: "thelist",
         draggable: false,
         headerToolbar: ['switch-per-page', 'reload'],
-        // defaultParams: getDefaultParams(options),
-        columns: getTableColumns(fields),
+        defaultParams: getDefaultParams(options),
+        columns: getTableColumns(fields, options),
         syncLocation: false,
-        keepItemSelectionOnPageChange: true
+        keepItemSelectionOnPageChange: true,
+        checkOnItemClick: true,
+        labelTpl: `\${name}`, //TODO 获取name字段
     }
 }
 

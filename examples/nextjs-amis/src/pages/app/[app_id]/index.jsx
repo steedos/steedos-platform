@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-05 16:25:16
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-05 16:32:12
+ * @LastEditTime: 2022-07-08 11:43:04
  * @Description: 
  */
 import { unstable_getServerSession } from "next-auth/next"
@@ -15,7 +15,6 @@ import { useRouter } from 'next/router'
 import { getApp } from '@/lib/apps';
 
 export default function App() {
-
   const router = useRouter()
   const { app_id } = router.query
   const [app, setApp] = useState(null)

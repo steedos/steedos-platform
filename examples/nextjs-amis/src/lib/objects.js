@@ -2,30 +2,80 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-05 15:55:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-06 11:43:04
+ * @LastEditTime: 2022-07-08 16:02:53
  * @Description: 
  */
 import { fetchAPI } from './steedos.client';
-import { getObjectList } from './converter/amis/index';
+import { getObjectList, getObjectDetail, getObjectForm } from './converter/amis/index';
 
 const _ = require('lodash');
 
+const UI_SCHEMA_CACHE = {};
+
+const setUISchemaCache = (key, value)=>{
+    UI_SCHEMA_CACHE[key] = value;
+}
+
+const getUISchemaCache = (key)=>{
+    return _.cloneDeep(UI_SCHEMA_CACHE[key]);
+}
+
+const hasUISchemaCache = (key)=>{
+    return _.has(UI_SCHEMA_CACHE, key);
+}
+
 export async function getUISchema(objectName){
-    console.log(`getUISchema: ${objectName}`);
+    if(hasUISchemaCache(objectName)){
+        return getUISchemaCache(objectName);
+    }
     const url = `/service/api/@${objectName.replace(/\./g, "_")}/uiSchema`;
-    const uiSchema = await fetchAPI(url, {method: 'get'});
-    return uiSchema ;
+    let uiSchema = null;
+    try {
+        uiSchema = await fetchAPI(url, {method: 'get'});
+        setUISchemaCache(objectName, uiSchema);
+        for(const fieldName in uiSchema.fields){
+            if(uiSchema.fields){
+                const field = uiSchema.fields[fieldName];
+
+                if(field.reference_to ==='users'){
+                    field.reference_to = 'space_users';
+                    field.reference_to_field = 'user';
+                }
+
+                if((field.type === 'lookup' || field.type === 'master_detail') && field.reference_to){
+                    const refUiSchema = await getUISchema(field.reference_to);
+                    if(!refUiSchema){
+                        delete uiSchema.fields[fieldName];
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error(`getUISchema`, objectName, error);
+        setUISchemaCache(objectName, null);
+    }
+    return getUISchemaCache(objectName) ;
 }
 
-export async function getFormSchema(objectName){
-
+export async function getFormSchema(objectName, recordId){
+    const uiSchema = await getUISchema(objectName);
+    const amisSchema = getObjectForm(uiSchema, recordId);
+    return {
+        uiSchema,
+        amisSchema
+    }
 }
 
-export async function getViewSchema(objectName){
-
+export async function getViewSchema(objectName, recordId){
+    const uiSchema = await getUISchema(objectName);
+    const amisSchema = getObjectDetail(uiSchema, recordId);
+    return {
+        uiSchema,
+        amisSchema
+    }
 }
 
-export async function getListSchema(objectName, listViewName = 'all'){
+export async function getListSchema(appName, objectName, listViewName = 'all'){
     const uiSchema = await getUISchema(objectName);
 
     const listView = _.find(uiSchema.list_views, listView => listView.name === listViewName);
@@ -35,7 +85,6 @@ export async function getListSchema(objectName, listViewName = 'all'){
     }
     let fields = uiSchema.fields;
     const listViewFields = [];
-    console.log('listView', listView)
     if(listView && listView.columns){
         _.each(listView.columns, function(column){
             if(uiSchema.fields[column.field]){
@@ -48,5 +97,9 @@ export async function getListSchema(objectName, listViewName = 'all'){
         })
     }
     fields = listViewFields;
-    return await getObjectList(uiSchema, fields);
+    const amisSchema = await getObjectList(uiSchema, fields, {objectName: objectName, appName: appName});
+    return {
+        uiSchema,
+        amisSchema
+    }
 }

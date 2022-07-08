@@ -1,5 +1,6 @@
 const _ = require('lodash');
-function getFieldsTemplate(fields, expand){
+
+export function getFieldsTemplate(fields, expand){
     if(expand != false){
         expand = true;
     }
@@ -35,10 +36,11 @@ function getFieldsTemplate(fields, expand){
     return `${fieldsName.join(' ')}`
 }
 
-function getFindOneQuery(object, recordId, fields, options){
+export function getFindOneQuery(object, recordId, fields, options){
     let queryOptions = "";
+    
     if(recordId){
-        queryOptions = `(filters:["_id", "=", "${recordId}"])`;
+        queryOptions = `(filters:["${object.idFieldName}", "=", "${recordId}"])`;
     }
     let alias = "data";
     if(options){
@@ -58,7 +60,7 @@ function getFindOneQuery(object, recordId, fields, options){
     }
 }
 
-function getSaveQuery(object, recordId, fields, options){
+export function getSaveQuery(object, recordId, fields, options){
     return {
         objectName: "${objectName}",
         $: "$$",
@@ -70,7 +72,7 @@ function getSaveQuery(object, recordId, fields, options){
 /*
     img字段值移除URL前缀使其保存时正常保存id,而不是url。
 */
-function getScriptForRemoveUrlPrefixForImgFields(fields){
+export function getScriptForRemoveUrlPrefixForImgFields(fields){
     let imgFieldsKeys = [];
     let imgFields = {};
     fields.forEach((item)=>{
@@ -111,7 +113,7 @@ function getScriptForRemoveUrlPrefixForImgFields(fields){
 /*
     file字段值重写使其保存时正常保存id。
 */
-function getScriptForSimplifiedValueForFileFields(fields){
+export function getScriptForSimplifiedValueForFileFields(fields){
     let fileFieldsKeys = [];
     let fileFields = {};
     fields.forEach((item)=>{
@@ -151,7 +153,7 @@ function getScriptForSimplifiedValueForFileFields(fields){
     `
 }
 
-function getSaveDataTpl(fields){
+export function getSaveDataTpl(fields){
     return `
         const formData = api.data.$;
         for (key in formData){
@@ -171,14 +173,14 @@ function getSaveDataTpl(fields){
         ${getScriptForSimplifiedValueForFileFields(fields)}
         let query = \`mutation{record: \${objectName}__insert(doc: {__saveData}){_id}}\`;
         if(formData.recordId){
-            query = \`mutation{record: \${objectName}__update(id: "\${formData.recordId}", doc: {__saveData}){_id}}\`;
+            query = \`mutation{record: \${objectName}__update(id: "\${formData._id}", doc: {__saveData}){_id}}\`;
         };
         delete formData._id;
         let __saveData = JSON.stringify(JSON.stringify(formData));
     `
 }
 
-function getSaveRequestAdaptor(fields){
+export function getSaveRequestAdaptor(fields){
     return `
         ${getSaveDataTpl(fields)}
         api.data = {query: query.replace('{__saveData}', __saveData)};
@@ -186,7 +188,7 @@ function getSaveRequestAdaptor(fields){
     `
 }
 
-function getFindQuery(object, recordId, fields, options){
+export function getFindQuery(object, recordId, fields, options){
     let limit = options.limit || 10;
     let queryOptions = `(top: ${limit})`;
     if(recordId){
@@ -213,13 +215,8 @@ function getFindQuery(object, recordId, fields, options){
         query: `{${alias}:${object.name}${queryOptions}{${getFieldsTemplate(fields, options.expand)}},count:${object.name}__count(filters:{__filters})}`
     }
 }
-exports.getFindQuery = getFindQuery;
-exports.getFindOneQuery = getFindOneQuery;
-exports.getSaveQuery = getSaveQuery;
-exports.getSaveRequestAdaptor = getSaveRequestAdaptor;
 
-
-exports.getApi = function(isMobile){
+export function getApi (isMobile){
     if(isMobile){
         //TODO 返回 绝对路径
     }else{

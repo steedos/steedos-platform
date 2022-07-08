@@ -16,6 +16,7 @@ export default class MyDocument extends Document {
   
           <meta name="theme-color" content="#ffffff" />
           <script src="https://unpkg.com/amis@2.0.0-rc.20/sdk/sdk.js"></script>
+          <link rel="stylesheet" href="/amis.css" />
         </Head>
         <body className='flex h-full flex-col'>
           <link rel="stylesheet" href="https://unpkg.com/amis@2.0.0-rc.20/lib/themes/antd.css" />

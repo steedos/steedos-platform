@@ -88,3 +88,7 @@ export function getAuthorization(){
         console.error(error)
     }
 }
+
+export function absoluteUrl(url){
+    return `${ROOT_URL}${url}`
+}

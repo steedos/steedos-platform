@@ -1,0 +1,24 @@
+.antd-Collapse .antd-Form--normal{
+    display: grid!important;
+    grid-template-columns: repeat(2,minmax(0,1fr))!important;
+    grid-row-gap: 1rem!important;
+    row-gap: 1rem!important;
+    grid-column-gap: 1.5rem!important;
+    -moz-column-gap: 1.5rem!important;
+    column-gap: 1.5rem!important;
+}
+
+.antd-Collapse .antd-Form--horizontal{
+    display: grid!important;
+    grid-template-columns: repeat(2,minmax(0,1fr))!important;
+    grid-row-gap: 1rem!important;
+    row-gap: 1rem!important;
+    grid-column-gap: 1.5rem!important;
+    -moz-column-gap: 1.5rem!important;
+    column-gap: 1.5rem!important;
+}
+
+.amis-scope svg.icon{
+    display: inline !important;
+    vertical-align: initial !important;
+}

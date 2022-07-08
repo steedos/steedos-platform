@@ -4,6 +4,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { Logo } from '@/components/Logo'
+import { useRouter } from 'next/router'
 
 const navigation = [
   { name: 'Dashboard', href: '/app/default/Dashboard', current: true },
@@ -18,6 +19,7 @@ function classNames(...classes) {
 const defaultAvatar = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
 
 export function Navbar({ navigation }) {
+  const router = useRouter()
   const { data: session } = useSession()
 
   const user = session? {
@@ -46,6 +48,11 @@ export function Navbar({ navigation }) {
       onClick: () => signIn()
     })
 
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push(e.target.href)
   }
   
   return (
@@ -149,11 +156,12 @@ export function Navbar({ navigation }) {
                 </Menu>
               </div>
             </div>
-            <nav className="hidden lg:py-2 lg:flex lg:space-x-8 px-2 sm:px-4 lg:px-8" aria-label="Global">
+            {navigation?.length > 0 && <nav className="hidden lg:py-2 lg:flex lg:space-x-8 px-2 sm:px-4 lg:px-8" aria-label="Global">
               {navigation?.map((item) => (
                 <a
                   key={item.id}
                   href={item.path}
+                  onClick={handleClick}
                   className={classNames(
                     item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
                     'rounded-md py-2 px-3 inline-flex items-center text-sm font-medium'
@@ -164,6 +172,7 @@ export function Navbar({ navigation }) {
                 </a>
               ))}
             </nav>
+            }
           </div>
 
           <Disclosure.Panel as="nav" className="lg:hidden" aria-label="Global">
