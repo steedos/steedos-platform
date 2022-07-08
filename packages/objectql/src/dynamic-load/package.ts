@@ -217,6 +217,12 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
                     field.sort_no = startNo;
                     startNo = startNo + 10;
                 }
+                if((field.type === 'lookup' || field.type === 'master_detail') && field.reference_to ==='users'){
+                    if(element.name != 'space_users' && field.name != 'user'){
+                        field.reference_to = 'space_users';
+                        field.reference_to_field = 'user';
+                    }
+                }
             })
         }
         
