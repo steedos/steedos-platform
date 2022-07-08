@@ -116,7 +116,7 @@ export function getObjectList(objectSchema, fields, options){
 
 
 
-export function getObjectForm(objectSchema, ctx){
+export async function getObjectForm(objectSchema, ctx){
     const { recordId, tabId, appId } = ctx;
     const fields = _.values(objectSchema.fields);
     return {
@@ -141,7 +141,7 @@ export function getObjectForm(objectSchema, ctx){
                 api: getSaveApi(objectSchema, recordId, fields, {}),
                 initApi: getEditFormInitApi(objectSchema, recordId, fields),
                 initFetch: true,
-                body: getFormBody(fields, objectSchema),
+                body: await getFormBody(fields, objectSchema),
                 panelClassName:'m-0 rounded-lg',
                 bodyClassName: 'p-4',
                 className: 'steedos-amis-form',
@@ -151,7 +151,7 @@ export function getObjectForm(objectSchema, ctx){
     }
 }
 
-export function getObjectDetail(objectSchema, recordId){
+export async function getObjectDetail(objectSchema, recordId){
     const fields = _.values(objectSchema.fields);
     return {
         type: 'page',
@@ -172,7 +172,7 @@ export function getObjectDetail(objectSchema, recordId){
                 name: `form_readonly_${recordId}`,
                 debug: false,
                 title: "",
-                body: getFormBody(map(fields, (field)=>{field.readonly = true;}), objectSchema),
+                body: await getFormBody(map(fields, (field)=>{field.readonly = true;}), objectSchema),
                 panelClassName:'m-0 rounded-lg',
                 bodyClassName: 'p-4',
                 className: 'steedos-amis-form',

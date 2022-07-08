@@ -1,3 +1,4 @@
+import { lookupToAmis } from './lookup';
 const Tpl = require('../tpl');
 const _ = require('lodash');
 export const OMIT_FIELDS = ['created', 'created_by', 'modified', 'modified_by'];
@@ -172,7 +173,7 @@ export function getSelectFieldOptions(field){
     return options;
 }
 
-export function convertSFieldToAmisField(field, readonly) {
+export async function convertSFieldToAmisField(field, readonly) {
     // 创建人和修改人、创建时间和修改时间不显示
     if(_.includes(OMIT_FIELDS, field.name)){
         return;
@@ -297,10 +298,10 @@ export function convertSFieldToAmisField(field, readonly) {
             }
             break;
         case 'lookup':
-            // convertData = Lookup.lookupToAmis(field, readonly) //TODO
+            convertData = await lookupToAmis(field, readonly) //TODO
             break;
         case 'master_detail':
-            // convertData = Lookup.lookupToAmis(field, readonly) //TODO
+            convertData = await lookupToAmis(field, readonly) //TODO
             break;
         case 'autonumber':
             //TODO

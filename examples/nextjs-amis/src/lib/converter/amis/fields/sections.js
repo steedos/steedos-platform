@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-26 16:02:08
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 10:04:00
+ * @LastEditTime: 2022-07-08 17:09:53
  * @Description: 
  */
 const Fields = require('../fields');
@@ -39,7 +39,7 @@ const getFieldSchemaArray = (mergedSchema)=>{
   return fieldSchemaArray;
 }
 
-const getSection = (permissionFields, fieldSchemaArray, sectionName) => {
+const getSection = async (permissionFields, fieldSchemaArray, sectionName) => {
   const sectionFields = lodash.filter(fieldSchemaArray, { 'group': sectionName });
   if(sectionFields.length == lodash.filter(sectionFields, ['hidden', true]).length){
     return ;
@@ -47,20 +47,20 @@ const getSection = (permissionFields, fieldSchemaArray, sectionName) => {
 
   const fieldSetBody = [];
 
-  _.each(sectionFields, (perField)=>{
-      let field = perField;
+  for (const perField of sectionFields) {
+    let field = perField;
       if(perField.type === 'grid'){
-          field = Fields.getGridFieldSubFields(perField, permissionFields);
+          field = await Fields.getGridFieldSubFields(perField, permissionFields);
       }else if(perField.type === 'object'){
-          field = Fields.getObjectFieldSubFields(perField, permissionFields);
+          field = await Fields.getObjectFieldSubFields(perField, permissionFields);
       }
       if(field.name.indexOf(".") < 0){
-          const amisField = Fields.convertSFieldToAmisField(field, field.readonly);
+          const amisField = await Fields.convertSFieldToAmisField(field, field.readonly);
           if(amisField){
               fieldSetBody.push(amisField)
           }
       }
-  });
+  }
 
   return {
       "type": "fieldSet",
@@ -70,15 +70,15 @@ const getSection = (permissionFields, fieldSchemaArray, sectionName) => {
   }
 }
 
-export const getSections = (permissionFields, mergedSchema) => {
+export const getSections = async (permissionFields, mergedSchema) => {
   const fieldSchemaArray = getFieldSchemaArray(mergedSchema)
   const _sections = lodash.groupBy(fieldSchemaArray, 'group');
   const sections = [];
-  lodash.forEach(_sections, (value, key) => {
-    const section = getSection(permissionFields, fieldSchemaArray, key);
+  for (const key in _sections) {
+    const section = await getSection(permissionFields, fieldSchemaArray, key);
     if(section.body.length > 0){
       sections.push(section)
     }
-  })
+  }
   return sections;
 }

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-05 15:55:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 16:19:19
+ * @LastEditTime: 2022-07-08 17:11:53
  * @Description: 
  */
 import { fetchAPI } from './steedos.client';
@@ -25,6 +25,9 @@ const hasUISchemaCache = (key)=>{
 }
 
 export async function getUISchema(objectName){
+    if(!objectName){
+        return ;
+    }
     if(hasUISchemaCache(objectName)){
         return getUISchemaCache(objectName);
     }
@@ -59,7 +62,7 @@ export async function getUISchema(objectName){
 
 export async function getFormSchema(objectName, ctx){
     const uiSchema = await getUISchema(objectName);
-    const amisSchema = getObjectForm(uiSchema, ctx);
+    const amisSchema = await getObjectForm(uiSchema, ctx);
     return {
         uiSchema,
         amisSchema
@@ -68,7 +71,7 @@ export async function getFormSchema(objectName, ctx){
 
 export async function getViewSchema(objectName, recordId){
     const uiSchema = await getUISchema(objectName);
-    const amisSchema = getObjectDetail(uiSchema, recordId);
+    const amisSchema = await getObjectDetail(uiSchema, recordId);
     return {
         uiSchema,
         amisSchema

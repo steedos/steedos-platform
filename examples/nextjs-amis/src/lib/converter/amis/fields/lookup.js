@@ -1,51 +1,43 @@
+import { getUISchema } from '../../../objects';
 const _ = require('lodash');
-const objectql = require('@steedos/objectql');
-const steedosI18n = require("@steedos/i18n");
 const graphql = require('../graphql');
-const clone = require('clone');
 const Tpl = require('../tpl');
 const Field = require('./index');
 const Table = require('./table');
 
-const getReferenceTo = (field)=>{
+
+const getReferenceTo = async (field)=>{
     let referenceTo = field.reference_to;
     if(!referenceTo){
         return ;
     }
-    if(referenceTo === 'users'){
-        referenceTo = 'space_users';
-    }
-    const refObject = objectql.getObject(referenceTo);
-    const refObjectConfig = clone(refObject.toConfig());
+    const refObjectConfig = await getUISchema(referenceTo);
+    let valueField = null;
     let valueFieldName = field.reference_to_field;
     if(!valueFieldName){
-        if(referenceTo === 'space_users'){
-            valueFieldName = 'user';
-        }else{
-            valueFieldName = refObject.key_field || '_id';
-        }
+        valueFieldName = refObjectConfig.idFieldName || '_id';
     }
+    console.log(`valueFieldName`, field, valueFieldName)
     if(valueFieldName === '_id'){
         valueField = {name: '_id', label: 'ID', type: 'text', toggled: false};
     }else{
-        valueField = refObjectConfig.fields[valueFieldName];
+        valueField = refObjectConfig.fields[valueFieldName] || {name: valueFieldName};
     }
     return {
         objectName: referenceTo,
         valueField: valueField,
-        labelField: refObjectConfig.fields[refObject.NAME_FIELD_KEY || 'name']
+        labelField: refObjectConfig.fields[refObjectConfig.NAME_FIELD_KEY || 'name']
     }
 }
 
 
-function lookupToAmisPicker(field, readonly){
-    let referenceTo = getReferenceTo(field);
+export async function lookupToAmisPicker(field, readonly){
+    let referenceTo = await getReferenceTo(field);
     if(!referenceTo){
         return ;
     }
-    const refObject = objectql.getObject(referenceTo.objectName);
-    const refObjectConfig = clone(refObject.toConfig());
-    steedosI18n.translationObject('zh-CN', refObjectConfig.name, refObjectConfig)
+    const refObjectConfig = await getUISchema(referenceTo.objectName);
+    console.log(`referenceTo`, referenceTo)
     const tableFields = [referenceTo.valueField];
     let i = 0;
     const searchableFields = [];
@@ -102,7 +94,7 @@ function lookupToAmisPicker(field, readonly){
         if(api.data.$term){
             filters = [["name", "contains", "'+ api.data.$term +'"]];
         }else if(selfData.op === 'loadOptions' && selfData.value){
-            filters = [["${valueField.name}", "=", selfData.value]];
+            filters = [["${referenceTo.valueField.name}", "=", selfData.value]];
         }
         if(allowSearchFields){
             allowSearchFields.forEach(function(key){
@@ -147,8 +139,8 @@ function lookupToAmisPicker(field, readonly){
     return data;
 }
 
-function lookupToAmisSelect(field, readonly){
-    let referenceTo = getReferenceTo(field);
+export async function lookupToAmisSelect(field, readonly){
+    let referenceTo = await getReferenceTo(field);
 
     let apiInfo;
 
@@ -225,24 +217,24 @@ function getApi(object, recordId, fields, options){
     return {
         method: "post",
         url: graphql.getApi(),
-        data: graphql.getFindQuery(object, recordId, fields, options)
+        data: graphql.getFindQuery(object, recordId, fields, options),
+        headers: {
+            Authorization: "Bearer ${context.tenantId},${context.authToken}"
+        }
     }
 }
 
-exports.lookupToAmis = (field, readonly)=>{
-    let referenceTo = getReferenceTo(field);
+export async function lookupToAmis(field, readonly){
+    let referenceTo = await getReferenceTo(field);
     if(!referenceTo){
-        return lookupToAmisSelect(field, readonly);
+        return await lookupToAmisSelect(field, readonly);
     }
-    const refObject = objectql.getObject(referenceTo.objectName);
+    const refObject = await getUISchema(referenceTo.objectName);
 
     // 此处不参考 steedos 的 enable_enhanced_lookup 规则. 如果默认是开启弹出选择,用户选择过程操作太繁琐, 所以默认是关闭弹出选择.
     if(refObject.enable_enhanced_lookup == true){
-        return lookupToAmisPicker(field, readonly);
+        return await lookupToAmisPicker(field, readonly);
     }else{
-        return lookupToAmisSelect(field, readonly);
+        return await lookupToAmisSelect(field, readonly);
     }
 }
-
-exports.lookupToAmisPicker = lookupToAmisPicker;
-exports.lookupToAmisSelect = lookupToAmisSelect;
