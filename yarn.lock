@@ -4181,47 +4181,37 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^2.2.28", "@steedos-ui/amis@^2.2.33":
+"@steedos-ui/amis@^2.2.28":
   version "2.2.33"
   resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.33.tgz#73395d993e76256df2133bf60a503a9a30b3a6cb"
   integrity sha512-259tsFvVklI23Sacs8gaTPhOoVAwxhAfSUz5UF5qjc2ctRMnVy076TuC+brfJ8hCV3Bk8d8NowcvM1oloDPNKg==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
 
-"@steedos-ui/builder-community@^2.2.33":
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.33.tgz#78327a2a90cbc5c93b125be0ffe2207d9ae669fe"
-  integrity sha512-e+X+93V/SvAPjjdIEpjq1NnyUpLqCenjs9HypACk9djNVFbADKphk4DO9bGGwAkryOGpD4LEbKNoWiHFf8Orpg==
+"@steedos-ui/amis@^2.2.34":
+  version "2.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.34.tgz#9cef356bc0a4c8a3fd143be9a2b4a226f3606fe3"
+  integrity sha512-CfHaujlqZMNerSIswPppe1GjQG8wYqSTgLrVsG/foiSlC7uxPD8HiXp0aQoik+sLmXqYtBt9iVHAiEBMYz073g==
+  dependencies:
+    "@types/path-to-regexp" "^1.7.0"
+    path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-widgets@^2.2.33":
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.33.tgz#c767513573fe8333e701210baa150ae91f705006"
-  integrity sha512-Xb0jLjeHGcKKx6STshPWiDJJ6IYsfXPeZfegn7Wer9yK12tPPvanH1iykcwwvmt00LJzqnNAvDie+G4ePL8lng==
-  optionalDependencies:
-    create-inferno-context "^0.2.4"
-    create-react-context "^0.2.3"
-    inferno "^7.1.9"
-    inferno-compat "^7.1.9"
-    preact "^8.4.2"
-    preact-compat "^3.18.4"
-    preact-context "^1.1.3"
-    prop-types "^15.7.2"
+"@steedos-ui/builder-community@^2.2.34":
+  version "2.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.34.tgz#f74818b6c67684523f0ca936b7537bc86c75a83f"
+  integrity sha512-R3claonqNmDJvgYmxiDjffalg7lglSgPjAYzFy/Uz5W9HFXjU/LrEHdZXd7lE+8YkACml2PekDoDAzGyVZBWHA==
 
-"@steedos-ui/design-system@^2.2.33":
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.33.tgz#67b70f8694b41099a954c422c7cf026e274bb176"
-  integrity sha512-t8idtdwc45DCtsTk/SQdo5fVR3wFZLo0rG3ZF4n2ElfuGau524cP1H6fID5Ah0Zrb1zn0H9Xvu+m51bGI7Z8RA==
+"@steedos-ui/builder-widgets@^2.2.34":
+  version "2.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.34.tgz#d60f8aab309746a6cf6f1be9956e4205a4db949c"
+  integrity sha512-6Ml/G3/GH+QV5XPNZwe2FhiLB5v72hkBOOPxeDkYX1iDk5S56vOEXjBT2mor8CswAhebQaEa6j9vza3ij0R5Ig==
+
+"@steedos-ui/design-system@^2.2.34":
+  version "2.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.34.tgz#9dd5316e0467cb9e7707ca11fa27fb775c299d5b"
+  integrity sha512-+AExtmYP9ZLqz6+r3H+Yc0jTBzp5xz7HNT9b5m0oyOJk89+Zn7aNFCaDM18Sn4go9LM9SqgSvt5rLWJmdrQr+A==
   dependencies:
     react-required-if "^1.0.3"
-  optionalDependencies:
-    create-inferno-context "^0.2.4"
-    create-react-context "^0.2.3"
-    inferno "^7.1.9"
-    inferno-compat "^7.1.9"
-    preact "^8.4.2"
-    preact-compat "^3.18.4"
-    preact-context "^1.1.3"
-    prop-types "^15.7.2"
 
 "@steedos/ee_service-plugin-license@^2.2.5":
   version "2.2.5"
@@ -8144,14 +8134,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
-
-create-inferno-context@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/create-inferno-context/-/create-inferno-context-0.2.4.tgz#c8f8f8548183013ef104b25b7d365888f84b653f"
-  integrity sha512-Qdo9CLtKe6CcGymFX5yVVU1RumQd9AliphlwbOg0n8PUruWLArUT6p0gRQtjhdY3BuzqBXaZ5n1y96rROuR3yg==
-  dependencies:
-    fbjs "^0.8.0"
-    gud "^1.0.0"
 
 create-react-context@^0.2.3:
   version "0.2.3"
@@ -12187,13 +12169,6 @@ immediate@~3.0.5:
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
 
-immutability-helper@^2.7.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.9.1.tgz#71c423ba387e67b6c6ceba0650572f2a2a6727df"
-  integrity sha512-r/RmRG8xO06s/k+PIaif2r5rGc3j4Yhc01jSBfwPCXDLYZwp/yxralI37Df1mwmuzcCsen/E/ITKcTEvc1PQmQ==
-  dependencies:
-    invariant "^2.2.0"
-
 immutability-helper@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.1.1.tgz#2b86b2286ed3b1241c9e23b7b21e0444f52f77b7"
@@ -12246,64 +12221,6 @@ infer-owner@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/infer-owner/-/infer-owner-1.0.4.tgz#c4cefcaa8e51051c2a40ba2ce8a3d27295af9467"
   integrity sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==
-
-inferno-clone-vnode@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-clone-vnode/-/inferno-clone-vnode-7.4.11.tgz#1bcce4ff6ac9ea2986766b17aee1d1a22b158558"
-  integrity sha512-6/newyzWO/lrwcA9q5DBAfslccPWqhpgrDQg/wWiHKZwRBe1kJjtiALsR+/1wLq1Z+YO3L1MPnlEnFu+nltUbA==
-  dependencies:
-    inferno "7.4.11"
-
-inferno-compat@^7.1.9:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-compat/-/inferno-compat-7.4.11.tgz#fc12813b0abd1ae3fbacb2adbeac82fbce109f79"
-  integrity sha512-gaF5yL6CpN1DckVzMN/eiPZqlkWIMjWtr6BCBJbpUF+hXE5bJ60xNrtTFNsu2ChbYtO96UPqUNfC2VBRMz+k9Q==
-  dependencies:
-    inferno "7.4.11"
-    inferno-clone-vnode "7.4.11"
-    inferno-create-class "7.4.11"
-    inferno-create-element "7.4.11"
-    inferno-extras "7.4.11"
-
-inferno-create-class@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-create-class/-/inferno-create-class-7.4.11.tgz#5330a4b1752f2a866f59543a99442c79aa36fd41"
-  integrity sha512-03Z3Az7xOnMHq39QxMqns0NwOt8b7gW+fu50iKK4bRkgEy8Zaa5TH8hYDJ7dAwzDR6BbQ6kCyTXfVPPeQShdvA==
-  dependencies:
-    inferno "7.4.11"
-
-inferno-create-element@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-create-element/-/inferno-create-element-7.4.11.tgz#1690b3ad28b61be93765b11b409dc9a9a35bf63a"
-  integrity sha512-kE6XIx2hPAd5qpDli2iGjNXgubvuyxdLvoiW71WnSzIIxA+Uxa/s8lY8m03VyHHVypFV3n329ZY5dFvKc7UQMg==
-  dependencies:
-    inferno "7.4.11"
-
-inferno-extras@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-extras/-/inferno-extras-7.4.11.tgz#f0afdf0fe235c10c5205143fab84c2a367135d98"
-  integrity sha512-JS/irXQozH98zVDx7TEdhzPoRxVBrNFrDjZwQeZMV4wKEh1fqwSh4OBjlhBX6J4u+7UhZoGxx0KqlH1nky+fNQ==
-  dependencies:
-    inferno "7.4.11"
-
-inferno-shared@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-shared/-/inferno-shared-7.4.11.tgz#6e06e0668c4dad5f8b1fd4c688e1072faa6f1e87"
-  integrity sha512-pN725bDSTxkQmRS3e/3H02/xAqgHl+xgddCMjPm8M0etRdRcVCisi3NGPhzSbDDmiftrxhY31exs7+dwsngcDA==
-
-inferno-vnode-flags@7.4.11:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno-vnode-flags/-/inferno-vnode-flags-7.4.11.tgz#642a835a8dde514f244296b27c176a2b8704fbac"
-  integrity sha512-L7lslEQCq3IfwgT/b9zhuMf8fv6KXCNXXHZevk/WYxnqJsOWGDcKpJn0zkzXfvmj0otbB149iLUQVBq3oe2sfA==
-
-inferno@7.4.11, inferno@^7.1.9:
-  version "7.4.11"
-  resolved "https://registry.yarnpkg.com/inferno/-/inferno-7.4.11.tgz#fcee308cf0e4a2f6066d96da74e3b425583bfc66"
-  integrity sha512-N+cs33ESWI8fdToCd98yMRYl7jkLnCkJskxov3FKKlaKOvk3PRlAttbhmUaYdWXlRvt2WeXi+J4MbzNj3V6G0w==
-  dependencies:
-    inferno-shared "7.4.11"
-    inferno-vnode-flags "7.4.11"
-    opencollective-postinstall "^2.0.3"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -12421,7 +12338,7 @@ into-stream@^6.0.0:
     from2 "^2.3.0"
     p-is-promise "^3.0.0"
 
-invariant@^2.2.0, invariant@^2.2.4:
+invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -16177,11 +16094,6 @@ open@^8.0.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-opencollective-postinstall@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
-  integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
-
 opener@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
@@ -16758,7 +16670,7 @@ path-parse@^1.0.7:
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
   integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
-path-to-regexp@*:
+path-to-regexp@*, path-to-regexp@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
   integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
@@ -17091,30 +17003,6 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-preact-compat@^3.18.4:
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.19.0.tgz#a71457b6a3bf051690a4411603bc2085aa061c2f"
-  integrity sha512-f83A4hIhH8Uzhb9GbIcGk8SM19ffWlwP9mDaYwQdRnMdekZwcCA7eIAbeV4EMQaV9C0Yuy8iKgBAtyTKPZQt/Q==
-  dependencies:
-    immutability-helper "^2.7.1"
-    preact-context "^1.1.3"
-    preact-render-to-string "^3.8.2"
-    preact-transition-group "^1.1.1"
-    prop-types "^15.6.2"
-    standalone-react-addons-pure-render-mixin "^0.1.1"
-
-preact-context@^1.1.3:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/preact-context/-/preact-context-1.1.4.tgz#866ebd35bef5788f73fc453f06f01b03ddf8f4ff"
-  integrity sha512-gcCjPJ65R0MiW9hDu8W/3WAmyTElIvwLyEO6oLQiM6/TbLKLxCpBCWV8GJjx52TTEyUr60HLDcmoCXZlslelzQ==
-
-preact-render-to-string@^3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-3.8.2.tgz#bd72964d705a57da3a9e72098acaa073dd3ceff9"
-  integrity sha512-przuZPajiurStGgxMoJP0EJeC4xj5CgHv+M7GfF3YxAdhGgEWAkhOSE0xympAFN20uMayntBZpttIZqqLl77fw==
-  dependencies:
-    pretty-format "^3.5.1"
-
 preact-render-to-string@^5.1.19:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.2.0.tgz#3d3c4f9c570229b76d33353ed02ce662bd13dec1"
@@ -17122,20 +17010,10 @@ preact-render-to-string@^5.1.19:
   dependencies:
     pretty-format "^3.8.0"
 
-preact-transition-group@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/preact-transition-group/-/preact-transition-group-1.1.1.tgz#f0a49327ea515ece34ea2be864c4a7d29e5d6e10"
-  integrity sha512-v89XLodCvylf5lMrhI+LqIhDsAjWfiDKV4keAU+L5yDtxmqn8uvjZXn+haKMEG0x0PZz81own19SuNJD5NlOFQ==
-
 preact@^10.1.0, preact@^10.6.3:
   version "10.8.2"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.8.2.tgz#b8a614f5cc8ab0cd9e63337a3d60dc80410f4ed4"
   integrity sha512-AKGt0BsDSiAYzVS78jZ9qRwuorY2CoSZtf1iOC6gLb/3QyZt+fLT09aYJBjRc/BEcRc4j+j3ggERMdNE43i1LQ==
-
-preact@^8.4.2:
-  version "8.5.3"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-8.5.3.tgz#78c2a5562fcecb1fed1d0055fa4ac1e27bde17c1"
-  integrity sha512-O3kKP+1YdgqHOFsZF2a9JVdtqD+RPzCQc3rP+Ualf7V6rmRDchZ9MJbiGTT7LuyqFKZqlHSOyO/oMFmI2lVTsw==
 
 prebuild-install@^7.0.1:
   version "7.1.1"
@@ -17185,7 +17063,7 @@ pretty-bytes@^5.6.0:
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 
-pretty-format@^3.5.1, pretty-format@^3.8.0:
+pretty-format@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-3.8.0.tgz#bfbed56d5e9a776645f4b1ff7aa1a3ac4fa3c385"
   integrity sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==
@@ -19544,11 +19422,6 @@ stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
   integrity sha512-KGzahc7puUKkzyMt+IqAep+TVNbKP+k2Lmwhub39m1AsTSkaDutx56aDCo+HLDzf/D26BIHTJWNiTG1KAJiQCg==
-
-standalone-react-addons-pure-render-mixin@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/standalone-react-addons-pure-render-mixin/-/standalone-react-addons-pure-render-mixin-0.1.1.tgz#3c7409f4c79c40de9ac72c616cf679a994f37551"
-  integrity sha512-HFkwqpJmvz4vxHyzdeUcjtsp8Am+NauLXdU2/YXT1/InPbszaRo1cLPAy/58H7oOPNNjteqHcv04JEw+d9C+Xw==
 
 standard-as-callback@^2.1.0:
   version "2.1.0"
