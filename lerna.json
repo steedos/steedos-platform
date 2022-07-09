@@ -8,6 +8,6 @@
     "server"
   ],
   "useWorkspaces": true,
-  "npmClient": "yarn",
-  "version": "2.2.52"
+  "npmClient": "pnpm",
+  "version": "workspace:*"
 }
