@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lru-cache": "^7.10.1"
+    "lru-cache": "^7.10.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "typescript": "4.6.3"

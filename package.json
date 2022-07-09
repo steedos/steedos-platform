@@ -14,19 +14,18 @@
     "build": "pnpm run -r build",
     "i18n": "pnpm run -r i18n"
   },
-  "resolutions": {
-  },
+  "resolutions": {},
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@types/node": "18.0.3",
     "lerna": "^4.0.0",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "typescript": "4.6.3"
   },
   "peerDependencies": {
     "steedos-server": "2.x"
   },
-  "dependencies": {},
-  "pnpm": {
-    "overrides": {
-      "typescript": "4.6.3"
-    }
+  "dependencies": {
+    "tslib": "^2.4.0"
   }
 }

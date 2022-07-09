@@ -23,7 +23,8 @@
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
     "moleculer": "^0.14.21",
-    "moleculer-web": "^0.10.4"
+    "moleculer-web": "^0.10.4",
+    "underscore": "1.13.4"
   },
   "devDependencies": {
     "typescript": "4.6.3"

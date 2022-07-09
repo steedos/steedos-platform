@@ -24,6 +24,7 @@
     "ini": "^2.0.0",
     "js-beautify": "^1.13.1",
     "js-yaml": "^3.14.1",
+    "lodash": "^4.17.21",
     "underscore": "^1.11.0"
   },
   "devDependencies": {
