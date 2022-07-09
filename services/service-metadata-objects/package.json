@@ -19,6 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@salesforce/ts-types": "^1.1.1",
     "@steedos/formula": "2.2.52",
     "@steedos/i18n": "2.2.52",
     "@steedos/metadata-registrar": "2.2.52",
