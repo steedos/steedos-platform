@@ -11,6 +11,7 @@
     "repository": {},
     "dependencies": {
         "@steedos/core": "2.2.52",
+        "@steedos/i18n": "2.2.52",
         "@steedos/objectql": "2.2.52"
     },
     "license": "MIT",

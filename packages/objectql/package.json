@@ -19,6 +19,7 @@
     "@steedos/cachers": "2.2.52",
     "@steedos/filters": "2.2.52",
     "@steedos/formula": "2.2.52",
+    "@steedos/i18n": "2.2.52",
     "@steedos/metadata-core": "2.2.52",
     "@steedos/odata-v4-sql": "2.2.52",
     "@steedos/odata-v4-typeorm": "2.2.52",

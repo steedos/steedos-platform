@@ -21,8 +21,10 @@
         "access": "public"
     },
     "dependencies": {
+        "@steedos/auth": "2.2.52",
         "@steedos/core": "2.2.52",
         "@steedos/metadata-core": "2.2.52",
+        "@steedos/objectql": "2.2.52",
         "chalk": "^4.1.0",
         "compressing": "^1.5.1",
         "dotenv-flow": "^3.1.0",
