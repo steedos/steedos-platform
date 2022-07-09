@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "jaeger": "docker run -d --rm --name jaeger -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:latest",
+    "start:jaeger": "docker run -d --rm --name jaeger -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:latest",
     "start": "steedos start"
   },
   "dependencies": {

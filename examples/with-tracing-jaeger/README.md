@@ -5,8 +5,7 @@ This is a [Steedos](https://www.steedos.com/) project bootstrapped with [`create
 First, run the development server:
 
 ```bash
-npm run start
-# or
+yarn start:jaeger
 yarn start
 ```
 
