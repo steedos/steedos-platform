@@ -46,8 +46,9 @@ tasks:
       echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-template/.env.local
       echo "ROOT_URL=$(gp url 5000)" >> examples/project-ee/.env.local 
       echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-ee/.env.local
-      yarn lerna run gitpod:init
-      yarn build
+      npm i steedos-cli@next --global 
+      pnpm lerna run gitpod:init
+      pnpm build
       gp await-port 27017
       gp await-port 6379
       yarn start:ee

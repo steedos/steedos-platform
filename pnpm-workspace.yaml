@@ -2,6 +2,7 @@ packages:
   - 'packages/*'
   - 'services/*'
   - 'steedos-packages/*'
+  - 'examples/*'
   - 'server'
   - 'ee/*'
   # exclude packages that are inside test directories

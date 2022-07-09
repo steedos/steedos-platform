@@ -6,7 +6,6 @@
     "services/*",
     "ee/*",
     "server",
-    "examples/*",
     "steedos-packages/*"
   ],
   "scripts": {
@@ -19,11 +18,15 @@
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "nodemon": "^2.0.19",
-    "ts-node": "^10.8.2"
+    "nodemon": "^2.0.19"
   },
   "peerDependencies": {
     "steedos-server": "2.x"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "pnpm": {
+    "overrides": {
+      "typescript": "4.6.3"
+    }
+  }
 }
