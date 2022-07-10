@@ -1,5 +1,4 @@
 {
-  "extends": "../../../node_modules/@salesforce/dev-config/tsconfig",
   "include": ["unit/**/*.ts", "../node_modules/@types/**/*.d.ts"],
   "compilerOptions": {
     "noEmit": true,

@@ -17,6 +17,8 @@
     "@steedos/objectql": "2.2.52",
     "cookies": "^0.8.0",
     "express": "^4.16.4",
+    "express-serve-static-core": "0.1.1",
+    "ismobilejs": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "sha256": "^0.2.0",
     "underscore": "^1.9.1"

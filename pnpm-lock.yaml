@@ -299,6 +299,8 @@ importers:
       '@steedos/objectql': 2.2.52
       cookies: ^0.8.0
       express: ^4.16.4
+      express-serve-static-core: 0.1.1
+      ismobilejs: ^1.1.1
       jsonwebtoken: ^8.5.1
       sha256: ^0.2.0
       typescript: 4.6.3
@@ -308,6 +310,8 @@ importers:
       '@steedos/objectql': link:../objectql
       cookies: 0.8.0
       express: 4.18.1
+      express-serve-static-core: 0.1.1
+      ismobilejs: 1.1.1
       jsonwebtoken: 8.5.1
       sha256: 0.2.0
       underscore: 1.13.4
@@ -12234,6 +12238,10 @@ packages:
     resolution: {integrity: sha512-FYWDfi0tMZacKUUx2+0m64WYBqGgdNnfX+Z8yGwE5qMeViD14vQ+Kcn2DYhF0W4cP085Hjyl/cgaDp/F9REeXQ==}
     dependencies:
       async: 2.6.4
+    dev: false
+
+  /express-serve-static-core/0.1.1:
+    resolution: {integrity: sha512-phQFPo1vVwBLOjDq+EspUY6PpWZIs/s62Lvu6QuReViQ9j9ANBnMqPBRwdxs3zxNmpMJ9KBKrmMqCjMwHnGRyQ==}
     dev: false
 
   /express-session/1.17.1:
