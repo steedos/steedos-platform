@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { getReocrdProcessInstance } from './process_manager'
 import * as core from "express-serve-static-core";
 import { allowRecall, allowApprover, allowSubmit } from './permission_manager';
@@ -7,7 +6,7 @@ interface Request extends core.Request {
     user: any;
 }
 
-export const allowRecallByProcessInstance = async (req: Request, res: express.Response) => {
+export const allowRecallByProcessInstance = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;
@@ -26,7 +25,7 @@ export const allowRecallByProcessInstance = async (req: Request, res: express.Re
     }
 }
 
-export const allowApproverByInstanceHistoryId = async (req: Request, res: express.Response) => {
+export const allowApproverByInstanceHistoryId = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
         // const objectName = urlParams.objectName;
@@ -42,7 +41,7 @@ export const allowApproverByInstanceHistoryId = async (req: Request, res: expres
     }
 }
 
-export const allowObjectSubmit = async(req: Request, res: express.Response)=>{
+export const allowObjectSubmit = async(req: Request, res: core.Response)=>{
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;
