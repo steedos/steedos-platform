@@ -12,8 +12,8 @@
     "pnpm:install": "rm -rf node_modules && pnpm install",
     "start": "cd examples && cd project-template && steedos start",
     "start:ee": "cd examples && cd project-ee && steedos start",
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
+    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
+    "build": "yarn bootstrap && lerna run build",
     "i18n": "lerna run i18n"
   },
   "resolutions": {},
