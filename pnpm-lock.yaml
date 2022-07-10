@@ -5,15 +5,39 @@ importers:
   .:
     specifiers:
       '@babel/core': ^7.8.4
+      '@steedos/metadata-api': workspace:2.2.52
+      '@steedos/meteor-bundle-runner': workspace:2.2.52
+      '@steedos/objectql': 2.2.52
+      '@steedos/service-community': 2.2.52
+      '@steedos/service-enterprise': 2.2.52
+      '@steedos/service-metadata-server': workspace:2.2.52
+      '@steedos/service-package-loader': workspace:2.2.52
+      '@steedos/standard-objects': workspace:2.2.52
+      '@types/express-serve-static-core': ~4.17.29
       '@types/node': 18.0.3
+      create-steedos-app: 2.2.52
       lerna: ^4.0.0
       nodemon: ^2.0.19
+      steedos-cli: 2.2.52
+      steedos-server: workspace:2.2.52
       tslib: ^2.4.0
       typescript: 4.6.3
     dependencies:
+      '@steedos/metadata-api': link:packages/metadata-api
+      '@steedos/meteor-bundle-runner': link:packages/meteor-bundle-runner
+      '@steedos/objectql': link:packages/objectql
+      '@steedos/service-community': link:services/service-community
+      '@steedos/service-enterprise': link:services/service-enterprise
+      '@steedos/service-metadata-server': link:services/service-metadata-server
+      '@steedos/service-package-loader': link:services/service-package-loader
+      '@steedos/standard-objects': link:packages/standard-objects
+      create-steedos-app: link:packages/create-steedos-app
+      steedos-cli: link:packages/cli
+      steedos-server: link:server
       tslib: 2.4.0
     devDependencies:
       '@babel/core': 7.18.6
+      '@types/express-serve-static-core': 4.17.29
       '@types/node': 18.0.3
       lerna: 4.0.0
       nodemon: 2.0.19
@@ -315,7 +339,6 @@ importers:
       '@steedos/objectql': 2.2.52
       cookies: ^0.8.0
       express: ^4.16.4
-      express-serve-static-core: 0.1.1
       ismobilejs: ^1.1.1
       jsonwebtoken: ^8.5.1
       sha256: ^0.2.0
@@ -326,7 +349,6 @@ importers:
       '@steedos/objectql': link:../objectql
       cookies: 0.8.0
       express: 4.18.1
-      express-serve-static-core: 0.1.1
       ismobilejs: 1.1.1
       jsonwebtoken: 8.5.1
       sha256: 0.2.0
@@ -637,12 +659,14 @@ importers:
   packages/i18n:
     specifiers:
       '@steedos/cachers': 2.2.52
+      '@steedos/objectql': 2.2.52
       i18next: ^19.3.4
       i18next-sprintf-postprocessor: ^0.2.2
       typescript: 4.6.3
       underscore: 1.13.4
     dependencies:
       '@steedos/cachers': link:../cachers
+      '@steedos/objectql': link:../objectql
       i18next: 19.9.2
       i18next-sprintf-postprocessor: 0.2.2
       underscore: 1.13.4
@@ -1023,7 +1047,18 @@ importers:
     specifiers: {}
 
   packages/standard-objects:
-    specifiers: {}
+    specifiers:
+      '@steedos/auth': workspace:2.2.52
+      '@steedos/core': workspace:2.2.52
+      '@steedos/filters': workspace:2.2.52
+      '@steedos/i18n': workspace:2.2.52
+      '@steedos/metadata-core': workspace:2.2.52
+    dependencies:
+      '@steedos/auth': link:../auth
+      '@steedos/core': link:../core
+      '@steedos/filters': link:../filters
+      '@steedos/i18n': link:../i18n
+      '@steedos/metadata-core': link:../metadata-core
 
   packages/steedos-plugin-dingtalk:
     specifiers:
@@ -1561,6 +1596,7 @@ importers:
 
   services/service-metadata-server:
     specifiers:
+      '@steedos/objectql': 2.2.52
       '@steedos/service-metadata': 2.2.52
       '@steedos/service-metadata-apps': 2.2.52
       '@steedos/service-metadata-layouts': 2.2.52
@@ -1574,6 +1610,7 @@ importers:
       typescript: 4.6.3
       underscore: 1.13.4
     dependencies:
+      '@steedos/objectql': link:../../packages/objectql
       '@steedos/service-metadata': link:../service-metadata
       '@steedos/service-metadata-apps': link:../service-metadata-apps
       '@steedos/service-metadata-layouts': link:../service-metadata-layouts
@@ -1703,6 +1740,10 @@ importers:
 
   services/service-package-registry:
     specifiers:
+      '@steedos/auth': workspace:2.2.52
+      '@steedos/core': 2.2.52
+      '@steedos/metadata-core': 2.2.52
+      '@steedos/objectql': 2.2.52
       '@steedos/service-package-license': 2.2.52
       '@steedos/service-package-loader': 2.2.52
       fs-extra: 8.1.0
@@ -1718,6 +1759,10 @@ importers:
       radwag-mass: ~1.0.5
       validator: ^13.5.2
     dependencies:
+      '@steedos/auth': link:../../packages/auth
+      '@steedos/core': link:../../packages/core
+      '@steedos/metadata-core': link:../../packages/metadata-core
+      '@steedos/objectql': link:../../packages/objectql
       '@steedos/service-package-license': link:../service-package-license
       '@steedos/service-package-loader': link:../service-package-loader
       fs-extra: 8.1.0
@@ -3412,7 +3457,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.3.1_@babel+core@7.18.6
       babel-plugin-polyfill-corejs3: 0.5.2_@babel+core@7.18.6
       babel-plugin-polyfill-regenerator: 0.3.1_@babel+core@7.18.6
-      core-js-compat: 3.23.3
+      core-js-compat: 3.23.4
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -3464,7 +3509,7 @@ packages:
     resolution: {integrity: sha512-cOu5wH2JFBgMjje+a+fz2JNIWU4GzYpl05oSob3UDvBEh6EuIn+TXFHMmBbhSb+k/4HMzgKCQfEEDArAWNF9Cw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      core-js-pure: 3.23.3
+      core-js-pure: 3.23.4
       regenerator-runtime: 0.13.9
     dev: true
 
@@ -3584,7 +3629,7 @@ packages:
       '@commitlint/load': 11.0.0
       '@commitlint/read': 11.0.0
       chalk: 4.1.0
-      core-js: 3.23.3
+      core-js: 3.23.4
       get-stdin: 8.0.0
       lodash: 4.17.21
       resolve-from: 5.0.0
@@ -6730,7 +6775,7 @@ packages:
   /@types/accepts/1.3.5:
     resolution: {integrity: sha512-jOdnI/3qTpHABjM5cx1Hc0sKsPoYCp+DP/GJRGtDlPd7fiV9oXGGIcjW/ZOxLIvjGz8MA+uMZI9metHlgqbgwQ==}
     dependencies:
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/async-retry/1.4.2:
@@ -6743,7 +6788,7 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
 
   /@types/bson/4.0.5:
     resolution: {integrity: sha512-vVLwMUqhYJSQ/WKcE60eFqcyuWse5fGH+NMAXHuKrUAPoryq3ATxk5o4bgYNtg5aOM4APVg7Hnb3ASqUYG0PKg==}
@@ -6786,7 +6831,7 @@ packages:
       '@types/connect': 3.4.35
       '@types/express': 4.17.13
       '@types/keygrip': 1.0.2
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/cors/2.8.12:
@@ -6827,7 +6872,7 @@ packages:
   /@types/fs-capacitor/2.0.0:
     resolution: {integrity: sha512-FKVPOCFbhCvZxpVAMhdBdTfVfXUpsh15wFHgqOKxh9N9vzWZVuWCSijZ5T4U34XYNnuj2oduh6xcs1i+LPI+BQ==}
     dependencies:
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/glob/7.2.0:
@@ -6894,7 +6939,7 @@ packages:
       '@types/http-errors': 1.8.2
       '@types/keygrip': 1.0.2
       '@types/koa-compose': 3.2.5
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/lodash/4.14.182:
@@ -7029,7 +7074,7 @@ packages:
     resolution: {integrity: sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==}
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
 
   /@types/sinon/10.0.12:
     resolution: {integrity: sha512-uWf4QJ4oky/GckJ1MYQxU52cgVDcXwBhDkpvLbi4EKoLPqLE4MOH6T/ttM33l3hi0oZ882G6oIzWv/oupRYSxQ==}
@@ -7085,13 +7130,13 @@ packages:
   /@types/websocket/1.0.2:
     resolution: {integrity: sha512-B5m9aq7cbbD/5/jThEr33nUY8WEfVi6A2YKCTOvw5Ldy7mtsOkqRvGjnzy6g7iMMDsgu7xREuCzqATLDLQVKcQ==}
     dependencies:
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/ws/7.4.7:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
-      '@types/node': 11.15.54
+      '@types/node': 18.0.3
     dev: false
 
   /@types/zen-observable/0.8.3:
@@ -7587,7 +7632,7 @@ packages:
     peerDependencies:
       graphql: ^14.2.1 || ^15.0.0
     dependencies:
-      core-js-pure: 3.23.3
+      core-js-pure: 3.23.4
       graphql: 15.8.0
       lodash.sortby: 4.7.0
       sha.js: 2.4.11
@@ -8071,7 +8116,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.1
-      caniuse-lite: 1.0.30001363
+      caniuse-lite: 1.0.30001364
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -8289,7 +8334,7 @@ packages:
     dependencies:
       '@babel/core': 7.18.6
       '@babel/helper-define-polyfill-provider': 0.3.1_@babel+core@7.18.6
-      core-js-compat: 3.23.3
+      core-js-compat: 3.23.4
     transitivePeerDependencies:
       - supports-color
 
@@ -8834,7 +8879,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001363
+      caniuse-lite: 1.0.30001364
       electron-to-chromium: 1.4.185
       node-releases: 2.0.6
       update-browserslist-db: 1.0.4_browserslist@4.21.1
@@ -9146,8 +9191,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /caniuse-lite/1.0.30001363:
-    resolution: {integrity: sha512-HpQhpzTGGPVMnCjIomjt+jvyUu8vNFo3TaDiZ/RcoTrlOq/5+tC8zHdsbgFB6MxmaY+jCpsH09aD80Bb4Ow3Sg==}
+  /caniuse-lite/1.0.30001364:
+    resolution: {integrity: sha512-9O0xzV3wVyX0SlegIQ6knz+okhBB5pE0PC40MNdwcipjwpxoUEHL24uJ+gG42cgklPjfO5ZjZPme9FTSN3QT2Q==}
 
   /cardinal/2.1.1:
     resolution: {integrity: sha512-JSr5eOgoEymtYHBjNWyjrMqet9Am2miJhlfKNdqLp6zoeAh0KN5dRAcxlecj5mAJrmQomgiOBj35xHLrFjqBpw==}
@@ -10072,14 +10117,14 @@ packages:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
     engines: {node: '>=0.10.0'}
 
-  /core-js-compat/3.23.3:
-    resolution: {integrity: sha512-WSzUs2h2vvmKsacLHNTdpyOC9k43AEhcGoFlVgCY4L7aw98oSBKtPL6vD0/TqZjRWRQYdDSLkzZIni4Crbbiqw==}
+  /core-js-compat/3.23.4:
+    resolution: {integrity: sha512-RkSRPe+JYEoflcsuxJWaiMPhnZoFS51FcIxm53k4KzhISCBTmaGlto9dTIrYuk0hnJc3G6pKufAKepHnBq6B6Q==}
     dependencies:
       browserslist: 4.21.1
       semver: 7.0.0
 
-  /core-js-pure/3.23.3:
-    resolution: {integrity: sha512-XpoouuqIj4P+GWtdyV8ZO3/u4KftkeDVMfvp+308eGMhCrA3lVDSmAxO0c6GGOcmgVlaKDrgWVMo49h2ab/TDA==}
+  /core-js-pure/3.23.4:
+    resolution: {integrity: sha512-lizxkcgj3XDmi7TUBFe+bQ1vNpD5E4t76BrBWI3HdUxdw/Mq1VF4CkiHzIKyieECKtcODK2asJttoofEeUKICQ==}
     requiresBuild: true
 
   /core-js/1.2.7:
@@ -10094,8 +10139,8 @@ packages:
     requiresBuild: true
     dev: true
 
-  /core-js/3.23.3:
-    resolution: {integrity: sha512-oAKwkj9xcWNBAvGbT//WiCdOMpb9XQG92/Fe3ABFM/R16BsHgePG00mFOgKf7IsCtfj8tA1kHtf/VwErhriz5Q==}
+  /core-js/3.23.4:
+    resolution: {integrity: sha512-vjsKqRc1RyAJC3Ye2kYqgfdThb3zYnx9CrqoCcjMOENMtQPC7ZViBvlDxwYU/2z2NI/IPuiXw5mT4hWhddqjzQ==}
     requiresBuild: true
     dev: true
 
@@ -11563,7 +11608,6 @@ packages:
 
   /encoding/0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
-    requiresBuild: true
     dependencies:
       iconv-lite: 0.6.3
     optional: true
@@ -12265,10 +12309,6 @@ packages:
     resolution: {integrity: sha512-FYWDfi0tMZacKUUx2+0m64WYBqGgdNnfX+Z8yGwE5qMeViD14vQ+Kcn2DYhF0W4cP085Hjyl/cgaDp/F9REeXQ==}
     dependencies:
       async: 2.6.4
-    dev: false
-
-  /express-serve-static-core/0.1.1:
-    resolution: {integrity: sha512-phQFPo1vVwBLOjDq+EspUY6PpWZIs/s62Lvu6QuReViQ9j9ANBnMqPBRwdxs3zxNmpMJ9KBKrmMqCjMwHnGRyQ==}
     dev: false
 
   /express-session/1.17.1:
@@ -17377,7 +17417,7 @@ packages:
     dependencies:
       '@next/env': 12.2.2
       '@swc/helpers': 0.4.2
-      caniuse-lite: 1.0.30001363
+      caniuse-lite: 1.0.30001364
       postcss: 8.4.5
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0

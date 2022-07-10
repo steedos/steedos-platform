@@ -9,11 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "pretest": "npm run build",
-    "test": "mocha",
-    "pretdd": "npm run build",
-    "tdd": "mocha -w",
-    "prepare": "npm run build"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

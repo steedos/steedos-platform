@@ -70,6 +70,7 @@ module.exports = {
      */
     methods: {
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
+            this.broker.logger.debug(`Loading package from ${packagePath}`)
             await Future.task(async () => {
                 if (!datasourceName) {
                     datasourceName = 'default';

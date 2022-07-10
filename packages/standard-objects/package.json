@@ -9,5 +9,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1447c9ca4fb57a49233704f50a7d757aff0c5027"
+  "gitHead": "1447c9ca4fb57a49233704f50a7d757aff0c5027",
+  "dependencies": {
+    "@steedos/auth": "workspace:2.2.52",
+    "@steedos/core": "workspace:2.2.52",
+    "@steedos/filters": "workspace:2.2.52",
+    "@steedos/i18n": "workspace:2.2.52",
+    "@steedos/metadata-core": "workspace:2.2.52"
+  }
 }

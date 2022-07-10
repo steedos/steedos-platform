@@ -17,15 +17,24 @@
   "resolutions": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@types/express-serve-static-core": "~4.17.29",
     "@types/node": "18.0.3",
     "lerna": "^4.0.0",
     "nodemon": "^2.0.19",
     "typescript": "4.6.3"
   },
-  "peerDependencies": {
-    "steedos-server": "2.x"
-  },
   "dependencies": {
+    "@steedos/metadata-api": "workspace:2.2.52",
+    "@steedos/meteor-bundle-runner": "workspace:2.2.52",
+    "@steedos/objectql": "2.2.52",
+    "@steedos/service-community": "2.2.52",
+    "@steedos/service-enterprise": "2.2.52",
+    "@steedos/service-metadata-server": "workspace:2.2.52",
+    "@steedos/service-package-loader": "workspace:2.2.52",
+    "@steedos/standard-objects": "workspace:2.2.52",
+    "create-steedos-app": "2.2.52",
+    "steedos-cli": "2.2.52",
+    "steedos-server": "workspace:2.2.52",
     "tslib": "^2.4.0"
   }
 }

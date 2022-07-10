@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@steedos/auth": "workspace:2.2.52",
+    "@steedos/core": "2.2.52",
+    "@steedos/metadata-core": "2.2.52",
+    "@steedos/objectql": "2.2.52",
     "@steedos/service-package-license": "2.2.52",
     "@steedos/service-package-loader": "2.2.52",
     "fs-extra": "8.1.0",

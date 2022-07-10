@@ -7,6 +7,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@steedos/objectql": "2.2.52",
     "@steedos/service-metadata": "2.2.52",
     "@steedos/service-metadata-apps": "2.2.52",
     "@steedos/service-metadata-layouts": "2.2.52",
