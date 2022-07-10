@@ -2,6 +2,7 @@ import * as express from 'express';
 const Fiber = require('fibers');
 import { getSteedosSchema } from '@steedos/objectql';
 import { translationObject } from '@steedos/i18n';
+import * as core from "express-serve-static-core";
 import Util from '../util';
 const clone = require("clone");
 
@@ -60,7 +61,7 @@ const callback = (res: any, returnUrl: string, error?: string)=>{
     }
 }
 
-export const postObjectWebForm = async (req: express.Request, res: express.Response) => {
+export const postObjectWebForm = async (req: core.Request, res: express.Response) => {
     let urlParams = req.params;
     let bodyParams = req.body;
     const formId = bodyParams.steedos_form_id;
