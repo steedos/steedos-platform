@@ -55,7 +55,7 @@ const getListenTo = function(json: SteedosActionTypeConfig){
 
     let listenTo: string = '';
 
-    if (_.isString(json.listenTo)) {
+    if (typeof json.listenTo == 'string') {
         listenTo = json.listenTo
     } else if (_.isFunction(json.listenTo)) {
         listenTo = json.listenTo()

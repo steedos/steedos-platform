@@ -127,7 +127,7 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
  * 当currentUserId为空时，确认参数configs中没有引用$user变量
  * @param configs
  */
-export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>) => {
+export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig> | any) => {
     if (!_.isArray(configs)) {
         configs = [configs];
     }

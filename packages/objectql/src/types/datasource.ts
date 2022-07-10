@@ -240,7 +240,7 @@ export class SteedosDataSourceType implements Dictionary {
                     throw new Error(`the driver ${this.config.driver} is not supported`)
             }
         } else {
-            this._adapter = this.config.driver
+            this._adapter = this.config.driver as any
         }
     }
 
