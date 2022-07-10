@@ -148,7 +148,7 @@ Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id
     if(process.env.NODE_ENV != 'production' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
         // 创建api key
         objectql.getObject('api_keys').insert({
-            api_key: Random.secret(),
+            api_key: process.env.STEEDOS_INITIAL_API_KEY || Random.secret(),
             space: spaceId,
             owner: userId,
             active: true
