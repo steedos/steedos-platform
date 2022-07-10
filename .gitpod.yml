@@ -36,7 +36,6 @@ tasks:
   - name: Steedos
     init: |
       yarn
-      yarn bootstrap
     command: |
       git config pull.rebase false
       rm creator/.env.local
