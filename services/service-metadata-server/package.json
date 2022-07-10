@@ -15,7 +15,9 @@
     "@steedos/service-metadata-tabs": "2.2.52",
     "@steedos/service-metadata-translations": "2.2.52",
     "@steedos/service-metadata-triggers": "2.2.52",
-    "@steedos/service-packages": "2.2.52"
+    "@steedos/service-packages": "2.2.52",
+    "lodash": "^4.17.21",
+    "underscore": "1.13.4"
   },
   "devDependencies": {
     "typescript": "4.6.3"
