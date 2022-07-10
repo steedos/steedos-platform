@@ -25,8 +25,10 @@ importers:
       '@steedos/service-metadata-server': 2.2.52
       '@steedos/service-meteor-package-loader': 2.2.52
       '@steedos/service-package-loader': 2.2.52
+      '@steedos/service-package-registry': 2.2.52
       '@steedos/service-pages': 2.2.52
       '@steedos/service-plugin-amis': 2.2.52
+      '@steedos/service-steedos-server': workspace:2.2.52
       '@steedos/service-ui': 2.2.52
       '@steedos/service-workflow': 2.2.52
       '@steedos/standard-objects': 2.2.52
@@ -66,8 +68,10 @@ importers:
       '@steedos/service-metadata-server': link:services/service-metadata-server
       '@steedos/service-meteor-package-loader': link:services/service-meteor-package-loader
       '@steedos/service-package-loader': link:services/service-package-loader
+      '@steedos/service-package-registry': link:services/service-package-registry
       '@steedos/service-pages': link:services/service-pages
       '@steedos/service-plugin-amis': link:services/service-plugin-amis
+      '@steedos/service-steedos-server': link:services/service-steedos-server
       '@steedos/service-ui': link:services/service-ui
       '@steedos/service-workflow': link:services/service-workflow
       '@steedos/standard-objects': link:packages/standard-objects
@@ -705,14 +709,12 @@ importers:
   packages/i18n:
     specifiers:
       '@steedos/cachers': 2.2.52
-      '@steedos/objectql': 2.2.52
       i18next: ^19.3.4
       i18next-sprintf-postprocessor: ^0.2.2
       typescript: 4.6.3
       underscore: 1.13.4
     dependencies:
       '@steedos/cachers': link:../cachers
-      '@steedos/objectql': link:../objectql
       i18next: 19.9.2
       i18next-sprintf-postprocessor: 0.2.2
       underscore: 1.13.4
