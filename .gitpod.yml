@@ -48,9 +48,9 @@ tasks:
       echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-ee/.env.local
       npm i steedos-cli@next --global 
       npm i --global pnpm
-      pnpm install
-      pnpm lerna run gitpod:init
-      pnpm build
+      yarn install
+      yarn lerna run gitpod:init
+      yarn build
       gp await-port 27017
       gp await-port 6379
       yarn start:ee

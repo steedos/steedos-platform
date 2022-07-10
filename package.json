@@ -9,10 +9,10 @@
     "steedos-packages/*"
   ],
   "scripts": {
-    "start": "cd examples && cd project-template && pnpm run start",
-    "start:ee": "cd examples && cd project-ee && pnpm run start",
-    "build": "pnpm run -r build",
-    "i18n": "pnpm run -r i18n"
+    "start": "cd examples && cd project-template && steedos start",
+    "start:ee": "cd examples && cd project-ee && steedos start",
+    "build": "lerna run build",
+    "i18n": "lerna run i18n"
   },
   "resolutions": {},
   "devDependencies": {
