@@ -5,32 +5,78 @@ importers:
   .:
     specifiers:
       '@babel/core': ^7.8.4
-      '@steedos/metadata-api': workspace:2.2.52
-      '@steedos/meteor-bundle-runner': workspace:2.2.52
+      '@steedos/accounts': 2.2.52
+      '@steedos/auth': 2.2.52
+      '@steedos/core': 2.2.52
+      '@steedos/data-import': 2.2.52
+      '@steedos/i18n': 2.2.52
+      '@steedos/metadata-api': 2.2.52
       '@steedos/objectql': 2.2.52
-      '@steedos/service-community': 2.2.52
-      '@steedos/service-enterprise': 2.2.52
-      '@steedos/service-metadata-server': workspace:2.2.52
-      '@steedos/service-package-loader': workspace:2.2.52
-      '@steedos/standard-objects': workspace:2.2.52
+      '@steedos/plugin-company': 2.2.52
+      '@steedos/plugin-dingtalk': 2.2.52
+      '@steedos/plugin-qywx': 2.2.52
+      '@steedos/service-accounts': 2.2.52
+      '@steedos/service-api': 2.2.52
+      '@steedos/service-cachers-manager': 2.2.52
+      '@steedos/service-charts': 2.2.52
+      '@steedos/service-cloud-init': 2.2.52
+      '@steedos/service-fields-indexs': 2.2.52
+      '@steedos/service-files': 2.2.52
+      '@steedos/service-metadata-server': 2.2.52
+      '@steedos/service-meteor-package-loader': 2.2.52
+      '@steedos/service-package-loader': 2.2.52
+      '@steedos/service-pages': 2.2.52
+      '@steedos/service-plugin-amis': 2.2.52
+      '@steedos/service-ui': 2.2.52
+      '@steedos/service-workflow': 2.2.52
+      '@steedos/standard-objects': 2.2.52
+      '@steedos/standard-process': 2.2.52
+      '@steedos/steedos-plugin-schema-builder': 2.2.52
+      '@steedos/unpkg': 2.2.52
+      '@steedos/webapp-accounts': 2.2.52
+      '@steedos/webapp-public': 2.2.52
+      '@steedos/workflow': 2.2.52
       '@types/express-serve-static-core': ~4.17.29
       '@types/node': 18.0.3
       create-steedos-app: 2.2.52
       lerna: ^4.0.0
       nodemon: ^2.0.19
       steedos-cli: 2.2.52
-      steedos-server: workspace:2.2.52
+      steedos-server: 2.2.52
       tslib: ^2.4.0
       typescript: 4.6.3
     dependencies:
+      '@steedos/accounts': link:packages/accounts
+      '@steedos/auth': link:packages/auth
+      '@steedos/core': link:packages/core
+      '@steedos/data-import': link:packages/data-import
+      '@steedos/i18n': link:packages/i18n
       '@steedos/metadata-api': link:packages/metadata-api
-      '@steedos/meteor-bundle-runner': link:packages/meteor-bundle-runner
       '@steedos/objectql': link:packages/objectql
-      '@steedos/service-community': link:services/service-community
-      '@steedos/service-enterprise': link:services/service-enterprise
+      '@steedos/plugin-company': link:packages/plugin-company
+      '@steedos/plugin-dingtalk': link:packages/steedos-plugin-dingtalk
+      '@steedos/plugin-qywx': link:packages/steedos-plugin-qywx
+      '@steedos/service-accounts': link:services/service-accounts
+      '@steedos/service-api': link:services/service-api
+      '@steedos/service-cachers-manager': link:services/service-cachers-manager
+      '@steedos/service-charts': link:services/service-charts
+      '@steedos/service-cloud-init': link:services/service-cloud-init
+      '@steedos/service-fields-indexs': link:services/service-fields-indexs
+      '@steedos/service-files': link:services/service-files
       '@steedos/service-metadata-server': link:services/service-metadata-server
+      '@steedos/service-meteor-package-loader': link:services/service-meteor-package-loader
       '@steedos/service-package-loader': link:services/service-package-loader
+      '@steedos/service-pages': link:services/service-pages
+      '@steedos/service-plugin-amis': link:services/service-plugin-amis
+      '@steedos/service-ui': link:services/service-ui
+      '@steedos/service-workflow': link:services/service-workflow
       '@steedos/standard-objects': link:packages/standard-objects
+      '@steedos/standard-process': link:steedos-packages/standard-process
+      '@steedos/steedos-plugin-schema-builder': link:packages/steedos-plugin-schema-builder
+      '@steedos/unpkg': link:steedos-packages/unpkg
+      '@steedos/webapp-accounts': link:steedos-packages/webapp-accounts
+      '@steedos/webapp-public': link:steedos-packages/webapp-public
+      '@steedos/workflow': link:packages/workflow
       create-steedos-app: link:packages/create-steedos-app
       steedos-cli: link:packages/cli
       steedos-server: link:server
@@ -1048,11 +1094,11 @@ importers:
 
   packages/standard-objects:
     specifiers:
-      '@steedos/auth': workspace:2.2.52
-      '@steedos/core': workspace:2.2.52
-      '@steedos/filters': workspace:2.2.52
-      '@steedos/i18n': workspace:2.2.52
-      '@steedos/metadata-core': workspace:2.2.52
+      '@steedos/auth': 2.2.52
+      '@steedos/core': 2.2.52
+      '@steedos/filters': 2.2.52
+      '@steedos/i18n': 2.2.52
+      '@steedos/metadata-core': 2.2.52
     dependencies:
       '@steedos/auth': link:../auth
       '@steedos/core': link:../core
@@ -1740,7 +1786,7 @@ importers:
 
   services/service-package-registry:
     specifiers:
-      '@steedos/auth': workspace:2.2.52
+      '@steedos/auth': 2.2.52
       '@steedos/core': 2.2.52
       '@steedos/metadata-core': 2.2.52
       '@steedos/objectql': 2.2.52
@@ -1808,6 +1854,7 @@ importers:
       '@steedos/core': 2.2.52
       '@steedos/data-import': 2.2.52
       '@steedos/metadata-api': 2.2.52
+      '@steedos/meteor-bundle-runner': 2.2.52
       '@steedos/plugin-company': 2.2.52
       '@steedos/plugin-dingtalk': 2.2.52
       '@steedos/plugin-qywx': 2.2.52
@@ -1839,6 +1886,7 @@ importers:
       '@steedos/core': link:../../packages/core
       '@steedos/data-import': link:../../packages/data-import
       '@steedos/metadata-api': link:../../packages/metadata-api
+      '@steedos/meteor-bundle-runner': link:../../packages/meteor-bundle-runner
       '@steedos/plugin-company': link:../../packages/plugin-company
       '@steedos/plugin-dingtalk': link:../../packages/steedos-plugin-dingtalk
       '@steedos/plugin-qywx': link:../../packages/steedos-plugin-qywx

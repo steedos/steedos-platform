@@ -8,6 +8,7 @@
     "@steedos/core": "2.2.52",
     "@steedos/data-import": "2.2.52",
     "@steedos/metadata-api": "2.2.52",
+    "@steedos/meteor-bundle-runner": "2.2.52",
     "@steedos/plugin-company": "2.2.52",
     "@steedos/plugin-dingtalk": "2.2.52",
     "@steedos/plugin-qywx": "2.2.52",
