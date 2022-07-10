@@ -52,16 +52,20 @@ importers:
       '@steedos/objectql': 2.2.52
       '@steedos/service-package-loader': 2.2.52
       '@techpass/passport-openidconnect': ^0.3.2
+      express: 4.18.1
       node-fetch: ^2.6.7
       passport: ^0.6.0
+      request-ip: ^2.2.0
     dependencies:
       '@steedos/accounts': link:../../packages/accounts
       '@steedos/license': 2.2.7
       '@steedos/objectql': link:../../packages/objectql
       '@steedos/service-package-loader': link:../../services/service-package-loader
       '@techpass/passport-openidconnect': 0.3.2
+      express: 4.18.1
       node-fetch: 2.6.7
       passport: 0.6.0
+      request-ip: 2.2.0
 
   ee/stimulsoft-reports:
     specifiers:
@@ -227,6 +231,7 @@ importers:
       '@accounts/mongo': ^0.19.0
       '@accounts/server': ^0.19.0
       '@accounts/two-factor': ^0.20.1
+      '@accounts/types': 0.20.1
       '@babel/runtime': ^7.12.18
       '@steedos/auth': 2.2.52
       '@steedos/meteor-bundle-runner': 2.2.52
@@ -237,16 +242,21 @@ importers:
       bcryptjs: ^2.4.3
       body-parser: 1.19.0
       chalk: ^2.4.2
+      cookie-parser: 1.4.3
       cookies: ^0.8.0
       cors: 2.8.5
       cross-env: ^7.0.3
       csurf: ^1.11.0
       dotenv: ^8.2.0
       dotenv-flow: ^3.1.0
+      emittery: 0.11.0
       express: 4.17.1
       ismobilejs: ^1.1.1
       js-yaml: ^3.14.1
+      jsonwebtoken: ^8.5.1
+      lodash: ^4.17.21
       mem: ^5.1.1
+      mongodb: ^3.7.3
       mongoose: ^5.12.13
       nodemailer: ^6.3.0
       nodemon: ^2.0.19
@@ -261,18 +271,24 @@ importers:
       '@accounts/mongo': 0.19.0
       '@accounts/server': 0.19.0
       '@accounts/two-factor': 0.20.1
+      '@accounts/types': 0.20.1
       '@babel/runtime': 7.18.6
       app-root-path: 2.2.1
       bcryptjs: 2.4.3
       body-parser: 1.19.0
       chalk: 2.4.2
+      cookie-parser: 1.4.3
       cookies: 0.8.0
       cors: 2.8.5
       csurf: 1.11.0
+      emittery: 0.11.0
       express: 4.17.1
       ismobilejs: 1.1.1
       js-yaml: 3.14.1
+      jsonwebtoken: 8.5.1
+      lodash: 4.17.21
       mem: 5.1.1
+      mongodb: 3.7.3
       mongoose: 5.13.14
       nodemailer: 6.7.7
       pug: 3.0.2
@@ -551,12 +567,14 @@ importers:
       '@steedos/core': 2.2.52
       '@steedos/objectql': 2.2.52
       dotenv-flow: ^3.1.0
+      lodash: ^4.17.21
       node-xlsx: ^0.16.1
       typescript: 4.6.3
     dependencies:
       '@steedos/core': link:../core
       '@steedos/objectql': link:../objectql
       dotenv-flow: 3.2.0
+      lodash: 4.17.21
       node-xlsx: 0.16.2
     devDependencies:
       typescript: 4.6.3
@@ -1808,10 +1826,12 @@ importers:
       '@steedos/core': 2.2.52
       '@steedos/i18n': 2.2.52
       '@steedos/objectql': 2.2.52
+      express: 4.18.1
     dependencies:
       '@steedos/core': link:../../packages/core
       '@steedos/i18n': link:../../packages/i18n
       '@steedos/objectql': link:../../packages/objectql
+      express: 4.18.1
 
   services/service-workflow:
     specifiers:
@@ -11505,6 +11525,11 @@ packages:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
+    dev: false
+
+  /emittery/0.11.0:
+    resolution: {integrity: sha512-S/7tzL6v5i+4iJd627Nhv9cLFIo5weAIlGccqJFpnBoDB8U1TF2k5tez4J/QNuxyyhWuFqHg1L84Kd3m7iXg6g==}
+    engines: {node: '>=12'}
     dev: false
 
   /emittery/0.4.1:
