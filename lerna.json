@@ -1,13 +1,13 @@
 {
   "packages": [
-    "packages/**",
-    "examples/**",
-    "steedos-packages/**",
-    "services/**",
+    "packages/*",
+    "examples/*",
+    "steedos-packages/*",
+    "services/*",
     "ee/**",
     "server"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "version": "2.2.53-beta.2"
+  "version": "2.2.53-beta.3"
 }

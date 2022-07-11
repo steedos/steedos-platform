@@ -3,7 +3,7 @@ import { getCreator } from '../index';
 import { getODataManager } from './server';
 
 import querystring = require('querystring');
-import odataV4Mongodb = require('odata-v4-mongodb');
+import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express-serve-static-core';
 import * as core from "express-serve-static-core";

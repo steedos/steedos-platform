@@ -1,4 +1,4 @@
-import {Token} from 'odata-v4-parser/lib/lexer';
+import {Token} from '@steedos/odata-v4-parser/lib/lexer';
 import {Literal} from 'odata-v4-literal';
 import {SQLLiteral, SQLLang, Visitor} from '@steedos/odata-v4-sql/lib/visitor';
 // import {SqlOptions} from './index';
@@ -137,6 +137,21 @@ export class TypeOrmVisitor extends Visitor {
     }
   }
 
+	protected VisitInExpression(node:any, context:any){
+    this.Visit(node.value.left, context);
+    this.where += ' in ';
+    this.Visit(node.value.right, context);
+    if (this.options.useParameters && context.literal == null) {
+      this.where = this.where.replace(/= :p\d*$/, 'IS NULL')
+        .replace(new RegExp(`\\:p\\d* = ${context.identifier}$`),
+          `${context.identifier} IS NULL`);
+    } else if (context.literal == 'NULL') {
+      this.where = this.where.replace(/= NULL$/, 'IS NULL')
+        .replace(new RegExp(`NULL = ${context.identifier}$`), `${context.identifier} IS NULL`);
+    }
+  };
+
+
   protected VisitNotEqualsExpression(node: Token, context: any) {
     this.Visit(node.value.left, context);
     this.where += ' <> ';
@@ -152,7 +167,8 @@ export class TypeOrmVisitor extends Visitor {
   }
 
   protected VisitLiteral(node: Token, context: any) {
-    if (this.options.useParameters) {
+    // 如果是in 查询,则使用 += 拼接where条件
+    if (this.options.useParameters && node.value != 'Edm.Array') {
       let name = `p${this.parameterSeed++}`;
       let value = Literal.convert(node.value, node.raw);
       context.literal = value;

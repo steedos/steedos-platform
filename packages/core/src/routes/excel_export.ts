@@ -1,5 +1,5 @@
 import querystring = require('querystring');
-import odataV4Mongodb = require('odata-v4-mongodb');
+import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import steedosI18n = require("@steedos/i18n");
 import { requireAuthentication } from './';
 const express = require("express");

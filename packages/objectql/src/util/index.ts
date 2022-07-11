@@ -7,7 +7,7 @@
 
 import { isJsonMap, JsonMap } from '@salesforce/ts-types';
 import { Validators, loadCoreValidators } from '../validators';
-const odataMongodb = require("odata-v4-mongodb");
+const odataMongodb = require("@steedos/odata-v4-mongodb");
 const Future  = require('fibers/future');
 const crypto = require('crypto')
 const yaml = require('js-yaml');

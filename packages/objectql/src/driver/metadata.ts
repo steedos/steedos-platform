@@ -5,7 +5,7 @@ import { SteedosDriverConfig } from "./driver";
 import { SteedosFieldDBType } from "./fieldDBType";
 import mingo = require('mingo');
 import steedosFilters = require('@steedos/filters');
-import odataV4Mongodb = require('odata-v4-mongodb');
+import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import clone = require("clone");
 import _ = require('underscore');
 

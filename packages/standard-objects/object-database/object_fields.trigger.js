@@ -1,6 +1,6 @@
 const InternalData = require('../core/internalData');
 var _ = require("underscore");
-const odataMongodb = require("odata-v4-mongodb");
+const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require('clone');
 var objectCore = require('./objects.core.js');
 const objectql = require('@steedos/objectql');

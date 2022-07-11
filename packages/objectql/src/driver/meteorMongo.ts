@@ -4,8 +4,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { createFilter } from 'odata-v4-mongodb';
-import { createQuery } from 'odata-v4-mongodb';
+import { createFilter, createQuery } from '@steedos/odata-v4-mongodb';
 import _ = require("underscore");
 import { SteedosFieldDBType } from "./fieldDBType";
 import { ObjectId } from "mongodb";
@@ -56,7 +55,9 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         if (!odataQuery) {
             return emptyFilters;
         }
+        console.log(`meteorMongo=====>odataQuery`, odataQuery)
         let query: JsonMap = createFilter(odataQuery);
+        console.log(`meteorMongo=====>query`, JSON.stringify(query))
         return query;
     }
 

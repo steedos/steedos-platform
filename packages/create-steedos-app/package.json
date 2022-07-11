@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.2.53-beta.2",
+  "version": "2.2.53-beta.3",
   "keywords": [
     "react",
     "steedos"
@@ -25,7 +25,7 @@
     "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
-    "@types/async-retry": "1.4.2",
+    "@types/async-retry": "1.4.4",
     "@types/cross-spawn": "6.0.0",
     "@types/node": "^12.6.8",
     "@types/prompts": "2.0.1",
@@ -48,5 +48,5 @@
   "engines": {
     "node": ">=12.22.0"
   },
-  "gitHead": "d6d2230d72af49a72fc546093b553463cd2f0e9d"
+  "gitHead": "5782f1171133c05cce158adef71e527d970ef50e"
 }

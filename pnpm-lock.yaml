@@ -5,46 +5,46 @@ importers:
   .:
     specifiers:
       '@babel/core': ^7.8.4
-      '@steedos/accounts': 2.2.52
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/data-import': 2.2.52
-      '@steedos/i18n': 2.2.52
-      '@steedos/metadata-api': 2.2.52
-      '@steedos/objectql': 2.2.52
-      '@steedos/plugin-company': 2.2.52
-      '@steedos/plugin-dingtalk': 2.2.52
-      '@steedos/plugin-qywx': 2.2.52
-      '@steedos/service-accounts': 2.2.52
-      '@steedos/service-api': 2.2.52
-      '@steedos/service-cachers-manager': 2.2.52
-      '@steedos/service-charts': 2.2.52
-      '@steedos/service-cloud-init': 2.2.52
-      '@steedos/service-fields-indexs': 2.2.52
-      '@steedos/service-files': 2.2.52
-      '@steedos/service-metadata-server': 2.2.52
-      '@steedos/service-meteor-package-loader': 2.2.52
-      '@steedos/service-package-loader': 2.2.52
-      '@steedos/service-package-registry': 2.2.52
-      '@steedos/service-pages': 2.2.52
-      '@steedos/service-plugin-amis': 2.2.52
-      '@steedos/service-steedos-server': workspace:2.2.52
-      '@steedos/service-ui': 2.2.52
-      '@steedos/service-workflow': 2.2.52
-      '@steedos/standard-objects': 2.2.52
-      '@steedos/standard-process': 2.2.52
-      '@steedos/steedos-plugin-schema-builder': 2.2.52
-      '@steedos/unpkg': 2.2.52
-      '@steedos/webapp-accounts': 2.2.52
-      '@steedos/webapp-public': 2.2.52
-      '@steedos/workflow': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/data-import': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/metadata-api': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/plugin-company': 2.2.53-beta.2
+      '@steedos/plugin-dingtalk': 2.2.53-beta.2
+      '@steedos/plugin-qywx': 2.2.53-beta.2
+      '@steedos/service-accounts': 2.2.53-beta.2
+      '@steedos/service-api': 2.2.53-beta.2
+      '@steedos/service-cachers-manager': 2.2.53-beta.2
+      '@steedos/service-charts': 2.2.53-beta.2
+      '@steedos/service-cloud-init': 2.2.53-beta.2
+      '@steedos/service-fields-indexs': 2.2.53-beta.2
+      '@steedos/service-files': 2.2.53-beta.2
+      '@steedos/service-metadata-server': 2.2.53-beta.2
+      '@steedos/service-meteor-package-loader': 2.2.53-beta.2
+      '@steedos/service-package-loader': 2.2.53-beta.2
+      '@steedos/service-package-registry': 2.2.53-beta.2
+      '@steedos/service-pages': 2.2.53-beta.2
+      '@steedos/service-plugin-amis': 2.2.53-beta.2
+      '@steedos/service-steedos-server': workspace:2.2.53-beta.2
+      '@steedos/service-ui': 2.2.53-beta.2
+      '@steedos/service-workflow': 2.2.53-beta.2
+      '@steedos/standard-objects': 2.2.53-beta.2
+      '@steedos/standard-process': 2.2.53-beta.2
+      '@steedos/steedos-plugin-schema-builder': 2.2.53-beta.2
+      '@steedos/unpkg': 2.2.53-beta.2
+      '@steedos/webapp-accounts': 2.2.53-beta.2
+      '@steedos/webapp-public': 2.2.53-beta.2
+      '@steedos/workflow': 2.2.53-beta.2
       '@types/express-serve-static-core': ~4.17.29
       '@types/node': 18.0.3
-      create-steedos-app: 2.2.52
+      create-steedos-app: 2.2.53-beta.2
       lerna: ^4.0.0
       nodemon: ^2.0.19
-      steedos-cli: 2.2.52
-      steedos-server: 2.2.52
+      steedos-cli: 2.2.53-beta.2
+      steedos-server: 2.2.53-beta.2
       tslib: ^2.4.0
       typescript: 4.6.3
     dependencies:
@@ -121,10 +121,10 @@ importers:
 
   ee/sso-oidc:
     specifiers:
-      '@steedos/accounts': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
       '@steedos/license': 2.2.7
-      '@steedos/objectql': 2.2.52
-      '@steedos/service-package-loader': 2.2.52
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/service-package-loader': 2.2.53-beta.2
       '@techpass/passport-openidconnect': ^0.3.2
       express: 4.18.1
       node-fetch: ^2.6.7
@@ -281,19 +281,19 @@ importers:
 
   examples/project-ee:
     specifiers:
-      '@steedos/service-enterprise': 2.2.52
+      '@steedos/service-enterprise': 2.2.53-beta.2
     dependencies:
       '@steedos/service-enterprise': link:../../services/service-enterprise
 
   examples/project-template:
     specifiers:
-      '@steedos/service-community': 2.2.52
+      '@steedos/service-community': 2.2.53-beta.2
     dependencies:
       '@steedos/service-community': link:../../services/service-community
 
   examples/with-tracing-jaeger:
     specifiers:
-      '@steedos/service-community': 2.2.52
+      '@steedos/service-community': 2.2.53-beta.2
       jaeger-client: ^3.19.0
     dependencies:
       '@steedos/service-community': link:../../services/service-community
@@ -307,9 +307,9 @@ importers:
       '@accounts/two-factor': ^0.20.1
       '@accounts/types': 0.20.1
       '@babel/runtime': ^7.12.18
-      '@steedos/auth': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       '@types/dotenv-flow': ^3.0.0
       '@types/node': 12.6.8
       app-root-path: ^2.2.1
@@ -336,7 +336,7 @@ importers:
       nodemon: ^2.0.19
       pug: ^3.0.2
       request-ip: ^2.2.0
-      steedos-server: 2.2.52
+      steedos-server: 2.2.53-beta.2
       tslib: ^2.4.0
       typescript: 4.6.3
       url-join: ^4.0.1
@@ -385,8 +385,8 @@ importers:
 
   packages/auth:
     specifiers:
-      '@steedos/cachers': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/cachers': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       cookies: ^0.8.0
       express: ^4.16.4
       ismobilejs: ^1.1.1
@@ -425,7 +425,7 @@ importers:
       '@oclif/dev-cli': ^1.26.10
       '@oclif/plugin-help': ^5.1.12
       '@oclif/test': ^2.1.0
-      '@steedos/metadata-core': 2.2.52
+      '@steedos/metadata-core': 2.2.53-beta.2
       archiver: ^5.0.2
       chalk: 2.4.2
       change-case: ^3.1.0
@@ -490,7 +490,7 @@ importers:
 
   packages/client:
     specifiers:
-      '@steedos/filters': 2.2.52
+      '@steedos/filters': 2.2.53-beta.2
       node-fetch: ^2.6.7
       typescript: 4.6.3
     dependencies:
@@ -503,16 +503,16 @@ importers:
     specifiers:
       '@salesforce/kit': ^1.0.4
       '@salesforce/ts-types': ^1.1.1
-      '@steedos/auth': 2.2.52
-      '@steedos/i18n': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
       '@steedos/license': 2.2.7
-      '@steedos/metadata-core': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/migrate': 2.2.52
-      '@steedos/objectql': 2.2.52
-      '@steedos/process': 2.2.52
-      '@steedos/standard-objects': 2.2.52
-      '@steedos/steedos-plugin-schema-builder': 2.2.52
+      '@steedos/metadata-core': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/migrate': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/process': 2.2.53-beta.2
+      '@steedos/standard-objects': 2.2.53-beta.2
+      '@steedos/steedos-plugin-schema-builder': 2.2.53-beta.2
       '@types/express': ^4.16.1
       '@types/node': ^11.10.4
       '@types/underscore': ^1.8.13
@@ -636,8 +636,8 @@ importers:
 
   packages/data-import:
     specifiers:
-      '@steedos/core': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       dotenv-flow: ^3.1.0
       lodash: ^4.17.21
       node-xlsx: ^0.16.1
@@ -708,7 +708,7 @@ importers:
 
   packages/i18n:
     specifiers:
-      '@steedos/cachers': 2.2.52
+      '@steedos/cachers': 2.2.53-beta.2
       i18next: ^19.3.4
       i18next-sprintf-postprocessor: ^0.2.2
       typescript: 4.6.3
@@ -723,11 +723,11 @@ importers:
 
   packages/metadata-api:
     specifiers:
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/metadata-core': 2.2.52
-      '@steedos/objectql': 2.2.52
-      '@steedos/service-meteor-package-loader': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/metadata-core': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/service-meteor-package-loader': 2.2.53-beta.2
       chalk: ^4.1.0
       compressing: ^1.5.1
       dotenv-flow: ^3.1.0
@@ -758,7 +758,7 @@ importers:
 
   packages/metadata-core:
     specifiers:
-      '@steedos/client': 2.2.52
+      '@steedos/client': 2.2.53-beta.2
       '@types/glob': ^7.1.3
       '@types/node': ^14.14.10
       archiver: ^5.1.0
@@ -799,7 +799,7 @@ importers:
 
   packages/metadata-registrar:
     specifiers:
-      '@steedos/client': 2.2.52
+      '@steedos/client': 2.2.53-beta.2
       '@types/glob': ^7.1.3
       '@types/node': ^14.14.10
       archiver: ^5.1.0
@@ -973,16 +973,16 @@ importers:
     specifiers:
       '@salesforce/kit': ^1.0.4
       '@salesforce/ts-types': ^1.1.1
-      '@steedos/cachers': 2.2.52
-      '@steedos/filters': 2.2.52
-      '@steedos/formula': 2.2.52
-      '@steedos/i18n': 2.2.52
-      '@steedos/metadata-core': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/odata-v4-sql': 2.2.52
-      '@steedos/odata-v4-typeorm': 2.2.52
-      '@steedos/schemas': 2.2.52
-      '@steedos/standard-objects': 2.2.52
+      '@steedos/cachers': 2.2.53-beta.2
+      '@steedos/filters': 2.2.53-beta.2
+      '@steedos/formula': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/metadata-core': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/odata-v4-sql': 2.2.53-beta.2
+      '@steedos/odata-v4-typeorm': 2.2.53-beta.2
+      '@steedos/schemas': 2.2.53-beta.2
+      '@steedos/standard-objects': 2.2.53-beta.2
       '@types/express': ^4.16.1
       '@types/node': ^11.10.4
       '@types/underscore': ^1.8.13
@@ -1067,7 +1067,7 @@ importers:
 
   packages/odata-v4-typeorm:
     specifiers:
-      '@steedos/odata-v4-sql': 2.2.52
+      '@steedos/odata-v4-sql': 2.2.53-beta.2
       odata-v4-literal: ^0.1.0
       odata-v4-parser: ^0.1.29
     dependencies:
@@ -1080,8 +1080,8 @@ importers:
 
   packages/process:
     specifiers:
-      '@steedos/auth': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       express: 4.18.1
       typescript: 4.6.3
     dependencies:
@@ -1096,11 +1096,11 @@ importers:
 
   packages/standard-objects:
     specifiers:
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/filters': 2.2.52
-      '@steedos/i18n': 2.2.52
-      '@steedos/metadata-core': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/filters': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/metadata-core': 2.2.53-beta.2
     dependencies:
       '@steedos/auth': link:../auth
       '@steedos/core': link:../core
@@ -1110,8 +1110,8 @@ importers:
 
   packages/steedos-plugin-dingtalk:
     specifiers:
-      '@steedos/accounts': 2.2.52
-      '@steedos/service-meteor-package-loader': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
+      '@steedos/service-meteor-package-loader': 2.2.53-beta.2
       babel-runtime: ^6.23.0
       bcrypt: ^5.0.1
       bootstrap: ^3.3.7
@@ -1122,7 +1122,7 @@ importers:
       jshashes: ^1.0.8
       node-fetch: ^2.6.7
       nodemon: ^2.0.19
-      steedos-server: 2.2.52
+      steedos-server: 2.2.53-beta.2
       wechat-crypto: ^0.0.2
       wx-ding-aes: ^0.0.10
     dependencies:
@@ -1145,8 +1145,8 @@ importers:
 
   packages/steedos-plugin-qywx:
     specifiers:
-      '@steedos/accounts': 2.2.52
-      '@steedos/service-meteor-package-loader': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
+      '@steedos/service-meteor-package-loader': 2.2.53-beta.2
       babel-runtime: ^6.23.0
       bcrypt: ^5.0.1
       bootstrap: ^3.3.7
@@ -1157,7 +1157,7 @@ importers:
       jsdom: ^16.2.2
       jshashes: ^1.0.8
       nodemon: ^2.0.19
-      steedos-server: 2.2.52
+      steedos-server: 2.2.53-beta.2
       wechat-crypto: ^0.0.2
       xml2js: 0.4.23
     dependencies:
@@ -1183,14 +1183,14 @@ importers:
 
   packages/workflow:
     specifiers:
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       '@steedos/steedos-plugin-workflow': ^2.1.3
       body-parser: ^1.19.0
       express: ^4.17.1
-      steedos-server: 2.2.52
+      steedos-server: 2.2.53-beta.2
       underscore: ^1.9.1
     dependencies:
       '@steedos/auth': link:../auth
@@ -1207,17 +1207,17 @@ importers:
   server:
     specifiers:
       '@babel/runtime': 7.12.18
-      '@steedos/accounts': 2.2.52
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/filters': 2.2.52
-      '@steedos/i18n': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/filters': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
       '@steedos/license': 2.2.7
-      '@steedos/meteor-bundle-dependencies': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/objectql': 2.2.52
-      '@steedos/process': 2.2.52
-      '@steedos/standard-objects': 2.2.52
+      '@steedos/meteor-bundle-dependencies': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/process': 2.2.53-beta.2
+      '@steedos/standard-objects': 2.2.53-beta.2
       '@steedos/webapp': 2.2.25
       basic-auth: ^2.0.1
       bcrypt: ^5.0.1
@@ -1348,7 +1348,7 @@ importers:
 
   services/service-api:
     specifiers:
-      '@steedos/auth': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
       graphql: ^15.8.0
       graphql-iso-date: ^3.6.1
       graphql-type-json: ^0.3.2
@@ -1366,15 +1366,15 @@ importers:
 
   services/service-cachers-manager:
     specifiers:
-      '@steedos/cachers': 2.2.52
+      '@steedos/cachers': 2.2.53-beta.2
     dependencies:
       '@steedos/cachers': link:../../packages/cachers
 
   services/service-charts:
     specifiers:
-      '@steedos/service-metadata-server': 2.2.52
-      '@steedos/service-package-loader': 2.2.52
-      '@steedos/service-steedos-server': 2.2.52
+      '@steedos/service-metadata-server': 2.2.53-beta.2
+      '@steedos/service-package-loader': 2.2.53-beta.2
+      '@steedos/service-steedos-server': 2.2.53-beta.2
       cross-env: ^7.0.3
       dotenv-flow: ^3.2.0
       duration: ^0.2.2
@@ -1401,7 +1401,7 @@ importers:
 
   services/service-cloud-init:
     specifiers:
-      '@steedos/objectql': 2.2.52
+      '@steedos/objectql': 2.2.53-beta.2
       axios: ^0.21.4
       bcryptjs: ^2.4.3
       chalk: ^4.1.2
@@ -1413,14 +1413,14 @@ importers:
 
   services/service-community:
     specifiers:
-      '@steedos/service-charts': 2.2.52
-      '@steedos/service-metadata-server': 2.2.52
-      '@steedos/service-mongodb-server': 2.2.52
-      '@steedos/service-package-loader': 2.2.52
-      '@steedos/service-package-registry': 2.2.52
-      '@steedos/service-pages': 2.2.52
-      '@steedos/service-sidecar': 2.2.52
-      '@steedos/service-steedos-server': 2.2.52
+      '@steedos/service-charts': 2.2.53-beta.2
+      '@steedos/service-metadata-server': 2.2.53-beta.2
+      '@steedos/service-mongodb-server': 2.2.53-beta.2
+      '@steedos/service-package-loader': 2.2.53-beta.2
+      '@steedos/service-package-registry': 2.2.53-beta.2
+      '@steedos/service-pages': 2.2.53-beta.2
+      '@steedos/service-sidecar': 2.2.53-beta.2
+      '@steedos/service-steedos-server': 2.2.53-beta.2
       aliyun-sdk: 1.12.3
       async-retry: ^1.3.1
       axios: ^0.21.1
@@ -1447,7 +1447,7 @@ importers:
       randomcolor: ^0.6.2
       randomstring: ^1.2.1
       redlock: ^4.2.0
-      steedos-cli: 2.2.52
+      steedos-cli: 2.2.53-beta.2
       tslib: ^2.4.0
       winston: ^3.3.3
       winston-loki: ^6.0.1
@@ -1493,15 +1493,15 @@ importers:
 
   services/service-enterprise:
     specifiers:
-      '@steedos/ee_audit-records': 2.2.52
-      '@steedos/ee_branding': 2.2.52
-      '@steedos/ee_plugin-field-encryption': 2.2.52
+      '@steedos/ee_audit-records': 2.2.53-beta.2
+      '@steedos/ee_branding': 2.2.53-beta.2
+      '@steedos/ee_plugin-field-encryption': 2.2.53-beta.2
       '@steedos/ee_service-plugin-license': ^2.2.5
-      '@steedos/ee_sso-oidc': 2.2.52
-      '@steedos/ee_stimulsoft-reports': 2.2.52
-      '@steedos/ee_unpkg-local': 2.2.52
-      '@steedos/ee_virus-scan': 2.2.52
-      '@steedos/service-community': 2.2.52
+      '@steedos/ee_sso-oidc': 2.2.53-beta.2
+      '@steedos/ee_stimulsoft-reports': 2.2.53-beta.2
+      '@steedos/ee_unpkg-local': 2.2.53-beta.2
+      '@steedos/ee_virus-scan': 2.2.53-beta.2
+      '@steedos/service-community': 2.2.53-beta.2
       mongodb: ^3.7.3
       mongodb-client-encryption: 2.1.0
       mssql: ^8.1.2
@@ -1541,7 +1541,7 @@ importers:
 
   services/service-metadata:
     specifiers:
-      '@steedos/metadata-registrar': 2.2.52
+      '@steedos/metadata-registrar': 2.2.53-beta.2
       dotenv-flow: ^3.1.0
       ioredis: ^4.22.0
       lodash: ^4.17.21
@@ -1562,8 +1562,8 @@ importers:
 
   services/service-metadata-apps:
     specifiers:
-      '@steedos/i18n': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       dotenv-flow: ^3.1.0
       ioredis: ^4.22.0
       lodash: ^4.17.21
@@ -1603,9 +1603,9 @@ importers:
   services/service-metadata-objects:
     specifiers:
       '@salesforce/ts-types': ^1.1.1
-      '@steedos/formula': 2.2.52
-      '@steedos/i18n': 2.2.52
-      '@steedos/metadata-registrar': 2.2.52
+      '@steedos/formula': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/metadata-registrar': 2.2.53-beta.2
       dotenv-flow: ^3.1.0
       ioredis: ^4.22.0
       lodash: ^4.17.21
@@ -1644,16 +1644,16 @@ importers:
 
   services/service-metadata-server:
     specifiers:
-      '@steedos/objectql': 2.2.52
-      '@steedos/service-metadata': 2.2.52
-      '@steedos/service-metadata-apps': 2.2.52
-      '@steedos/service-metadata-layouts': 2.2.52
-      '@steedos/service-metadata-objects': 2.2.52
-      '@steedos/service-metadata-permissionsets': 2.2.52
-      '@steedos/service-metadata-tabs': 2.2.52
-      '@steedos/service-metadata-translations': 2.2.52
-      '@steedos/service-metadata-triggers': 2.2.52
-      '@steedos/service-packages': 2.2.52
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/service-metadata': 2.2.53-beta.2
+      '@steedos/service-metadata-apps': 2.2.53-beta.2
+      '@steedos/service-metadata-layouts': 2.2.53-beta.2
+      '@steedos/service-metadata-objects': 2.2.53-beta.2
+      '@steedos/service-metadata-permissionsets': 2.2.53-beta.2
+      '@steedos/service-metadata-tabs': 2.2.53-beta.2
+      '@steedos/service-metadata-translations': 2.2.53-beta.2
+      '@steedos/service-metadata-triggers': 2.2.53-beta.2
+      '@steedos/service-packages': 2.2.53-beta.2
       lodash: ^4.17.21
       typescript: 4.6.3
       underscore: 1.13.4
@@ -1692,7 +1692,7 @@ importers:
 
   services/service-metadata-translations:
     specifiers:
-      '@steedos/metadata-registrar': 2.2.52
+      '@steedos/metadata-registrar': 2.2.53-beta.2
       dotenv-flow: ^3.1.0
       ioredis: ^4.22.0
       lodash: ^4.17.21
@@ -1730,7 +1730,7 @@ importers:
 
   services/service-meteor-package-loader:
     specifiers:
-      '@steedos/objectql': 2.2.52
+      '@steedos/objectql': 2.2.53-beta.2
       clone: ^2.1.2
       globby: ^11.1.0
       moleculer: ^0.14.21
@@ -1767,9 +1767,9 @@ importers:
 
   services/service-package-loader:
     specifiers:
-      '@steedos/core': 2.2.52
-      '@steedos/metadata-core': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/metadata-core': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       clone: ^2.1.2
       globby: ^11.1.0
       moleculer: ^0.14.21
@@ -1788,12 +1788,12 @@ importers:
 
   services/service-package-registry:
     specifiers:
-      '@steedos/auth': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/metadata-core': 2.2.52
-      '@steedos/objectql': 2.2.52
-      '@steedos/service-package-license': 2.2.52
-      '@steedos/service-package-loader': 2.2.52
+      '@steedos/auth': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/metadata-core': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
+      '@steedos/service-package-license': 2.2.53-beta.2
+      '@steedos/service-package-loader': 2.2.53-beta.2
       fs-extra: 8.1.0
       i18next: 20.3.2
       json-stringify-safe: 5.0.1
@@ -1852,37 +1852,37 @@ importers:
 
   services/service-steedos-server:
     specifiers:
-      '@steedos/accounts': 2.2.52
-      '@steedos/core': 2.2.52
-      '@steedos/data-import': 2.2.52
-      '@steedos/metadata-api': 2.2.52
-      '@steedos/meteor-bundle-runner': 2.2.52
-      '@steedos/plugin-company': 2.2.52
-      '@steedos/plugin-dingtalk': 2.2.52
-      '@steedos/plugin-qywx': 2.2.52
-      '@steedos/service-accounts': 2.2.52
-      '@steedos/service-api': 2.2.52
-      '@steedos/service-cachers-manager': 2.2.52
-      '@steedos/service-charts': 2.2.52
-      '@steedos/service-cloud-init': 2.2.52
-      '@steedos/service-fields-indexs': 2.2.52
-      '@steedos/service-files': 2.2.52
-      '@steedos/service-meteor-package-loader': 2.2.52
-      '@steedos/service-pages': 2.2.52
-      '@steedos/service-plugin-amis': 2.2.52
-      '@steedos/service-ui': 2.2.52
-      '@steedos/service-workflow': 2.2.52
-      '@steedos/standard-process': 2.2.52
-      '@steedos/steedos-plugin-schema-builder': 2.2.52
-      '@steedos/unpkg': 2.2.52
-      '@steedos/webapp-accounts': 2.2.52
-      '@steedos/webapp-public': 2.2.52
-      '@steedos/workflow': 2.2.52
+      '@steedos/accounts': 2.2.53-beta.2
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/data-import': 2.2.53-beta.2
+      '@steedos/metadata-api': 2.2.53-beta.2
+      '@steedos/meteor-bundle-runner': 2.2.53-beta.2
+      '@steedos/plugin-company': 2.2.53-beta.2
+      '@steedos/plugin-dingtalk': 2.2.53-beta.2
+      '@steedos/plugin-qywx': 2.2.53-beta.2
+      '@steedos/service-accounts': 2.2.53-beta.2
+      '@steedos/service-api': 2.2.53-beta.2
+      '@steedos/service-cachers-manager': 2.2.53-beta.2
+      '@steedos/service-charts': 2.2.53-beta.2
+      '@steedos/service-cloud-init': 2.2.53-beta.2
+      '@steedos/service-fields-indexs': 2.2.53-beta.2
+      '@steedos/service-files': 2.2.53-beta.2
+      '@steedos/service-meteor-package-loader': 2.2.53-beta.2
+      '@steedos/service-pages': 2.2.53-beta.2
+      '@steedos/service-plugin-amis': 2.2.53-beta.2
+      '@steedos/service-ui': 2.2.53-beta.2
+      '@steedos/service-workflow': 2.2.53-beta.2
+      '@steedos/standard-process': 2.2.53-beta.2
+      '@steedos/steedos-plugin-schema-builder': 2.2.53-beta.2
+      '@steedos/unpkg': 2.2.53-beta.2
+      '@steedos/webapp-accounts': 2.2.53-beta.2
+      '@steedos/webapp-public': 2.2.53-beta.2
+      '@steedos/workflow': 2.2.53-beta.2
       dotenv-flow: ^3.2.0
       moleculer: ^0.14.21
       moleculer-db: ^0.8.4
       moleculer-web: ^0.10.4
-      steedos-server: 2.2.52
+      steedos-server: 2.2.53-beta.2
     dependencies:
       '@steedos/accounts': link:../../packages/accounts
       '@steedos/core': link:../../packages/core
@@ -1918,9 +1918,9 @@ importers:
 
   services/service-ui:
     specifiers:
-      '@steedos/core': 2.2.52
-      '@steedos/i18n': 2.2.52
-      '@steedos/objectql': 2.2.52
+      '@steedos/core': 2.2.53-beta.2
+      '@steedos/i18n': 2.2.53-beta.2
+      '@steedos/objectql': 2.2.53-beta.2
       express: 4.18.1
     dependencies:
       '@steedos/core': link:../../packages/core

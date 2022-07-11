@@ -2,13 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-05 15:14:45
+ * @LastEditTime: 2022-07-10 15:53:44
  * @Description: 
  */
 import {TypeOrmVisitor as Visitor} from './visitor';
-import {Token} from 'odata-v4-parser/lib/lexer';
+import {Token} from '@steedos/odata-v4-parser/lib/lexer';
 import {SqlOptions} from './sqlOptions';
-import {filter} from 'odata-v4-parser';
+import {filter} from '@steedos/odata-v4-parser';
 import {SQLLang} from '@steedos/odata-v4-sql';
 
 /**

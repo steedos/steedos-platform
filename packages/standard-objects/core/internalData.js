@@ -1,6 +1,6 @@
 const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
-const odataMongodb = require("odata-v4-mongodb");
+const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require("clone");
 const auth = require("@steedos/auth");
 const getLng = async function(userId){
