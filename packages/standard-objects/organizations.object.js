@@ -539,7 +539,7 @@ if (Meteor.isServer) {
                     });
                 added_space_users.forEach(function (su) {
                     var orgs;
-                    orgs = su.organizations;
+                    orgs = su.organizations || [];
                     orgs.push(doc._id);
                     db.space_users.direct.update({
                         _id: su._id
