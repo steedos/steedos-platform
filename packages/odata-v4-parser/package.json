@@ -1,0 +1,23 @@
+{
+  "name": "@steedos/odata-v4-parser",
+  "version": "2.2.52",
+  "description": "OData v4 Parser",
+  "main": "lib/parser.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jaystack/odata-v4-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaystack/odata-v4-parser/issues"
+  },
+  "homepage": "https://github.com/jaystack/odata-v4-parser#readme",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -25,7 +25,7 @@
     "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register"
   },
   "devDependencies": {
-    "@types/async-retry": "1.4.2",
+    "@types/async-retry": "1.4.4",
     "@types/cross-spawn": "6.0.0",
     "@types/node": "^12.6.8",
     "@types/prompts": "2.0.1",

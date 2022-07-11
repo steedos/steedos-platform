@@ -30,7 +30,7 @@
   "homepage": "https://github.com/steedos/odata-v4-typeorm#readme",
   "dependencies": {
     "@steedos/odata-v4-sql": "2.2.52",
-    "odata-v4-parser": "^0.1.29"
+    "@steedos/odata-v4-parser": "2.2.52"
   },
   "publishConfig": {
     "access": "public"

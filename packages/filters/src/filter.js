@@ -166,7 +166,8 @@ class SteedosFilter {
                 "contains": this.createStringFuncFormatter("contains"),
                 "notcontains": this.createStringFuncFormatter("not contains"),
                 "notstartswith": this.createStringFuncFormatter("not startswith"),
-                "notendswith": this.createStringFuncFormatter("not endswith")
+                "notendswith": this.createStringFuncFormatter("not endswith"),
+                "in": this.createBinaryOperationFormatter("in")
             }
         };
     }
@@ -250,7 +251,7 @@ class SteedosFilter {
 
         return formatter(
             DevExpressOData.serializePropName(fieldName),
-            DevExpressOData.serializeValue(value, this.protocolVersion)
+            op === 'in' ? value : DevExpressOData.serializeValue(value, this.protocolVersion)
         );
     }
 

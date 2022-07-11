@@ -166,9 +166,10 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                         });
                         if (["=", "in"].indexOf(option) > -1) {
                             if(value.length){
-                                _.each(value, function (v) {
-                                    return sub_selector.push([field, "=", v], "or");
-                                });
+                                sub_selector.push([field, "in", `(${JSON.stringify(value).replace(/\"/g, "'").slice(1).slice(0, -1)})`], "and")
+                                // _.each(value, function (v) {
+                                //     return sub_selector.push([field, "=", v], "or");
+                                // });
                             }
                             else{
                                 // 空数组返回空值

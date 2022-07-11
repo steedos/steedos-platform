@@ -5,7 +5,7 @@ import { SteedosQueryOptions, SteedosQueryFilters } from "../types/query";
 import { SteedosIDType, SteedosObjectType } from "../types";
 import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
-import { createFilter, createQuery } from 'odata-v4-mongodb';
+import { createFilter, createQuery } from '@steedos/odata-v4-mongodb';
 import _ = require("underscore");
 import { wrapAsync } from '../util';
 import { getMongoFieldEncryptionConsts } from './field-encrytion';
@@ -119,7 +119,9 @@ export class SteedosMongoDriver implements SteedosDriver {
         if(!odataQuery){
             return emptyFilters;
         }
+        console.log(`=====>odataQuery`, odataQuery)
         let query: JsonMap = createFilter(odataQuery);
+        console.log(`=====>query`, JSON.stringify(query))
         return query;
     }
 

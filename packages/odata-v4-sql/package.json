@@ -24,7 +24,7 @@
     "V4",
     "sql"
   ],
-  "author": "JayStack",
+  "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jaystack/odata-v4-sql/issues"
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/jaystack/odata-v4-sql#readme",
   "dependencies": {
     "odata-v4-literal": "^0.1.0",
-    "odata-v4-parser": "^0.1.29"
+    "@steedos/odata-v4-parser": "2.2.52"
   },
   "publishConfig": {
     "access": "public"

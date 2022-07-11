@@ -1,7 +1,14 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-05 15:03:38
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-10 15:53:06
+ * @Description: 
+ */
 import { Visitor, SQLLang } from "./visitor";
 export { SQLLang } from "./visitor";
-import { filter, query } from "odata-v4-parser";
-import { Token } from "odata-v4-parser/lib/lexer";
+import { filter, query } from "@steedos/odata-v4-parser";
+import { Token } from "@steedos/odata-v4-parser/lib/lexer";
 
 export interface SqlOptions{
     useParameters?:boolean

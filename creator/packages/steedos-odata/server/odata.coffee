@@ -14,7 +14,7 @@ Meteor.startup ->
 			otherApp.use("/api/odata/#{name}", ODataRouter);
 			WebApp.connectHandlers.use(otherApp);
 
-# 	odataV4Mongodb = require 'odata-v4-mongodb'
+# 	odataV4Mongodb = require '@steedos/odata-v4-mongodb'
 # 	querystring = require 'querystring'
 
 # 	handleError = (e)->
