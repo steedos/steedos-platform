@@ -1,6 +1,6 @@
 import { getCreator } from "../index";
 import _ = require('underscore');
-import { Response } from "express";
+import { Response } from 'express-serve-static-core';
 import { JsonMap } from '@salesforce/ts-types';
 
 export class ODataManager {

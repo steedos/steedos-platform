@@ -696,7 +696,7 @@ export default class AccountsPassword implements AuthenticationService {
     password: PasswordType,
     isHashPassword = true
   ): Promise<User> {
-    const { username, email, id, mobile } = isString(user)
+    const { username, email, id, mobile } = typeof user == 'string'
       ? this.toMobileAndEmail({ user })
       : this.toMobileAndEmail({ ...user });
 

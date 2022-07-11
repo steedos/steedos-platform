@@ -25,7 +25,7 @@ export const pickFormulaVars = (formula: string): Array<string> => {
  * 根据公式内容，取出其中{}中的变量，并进一步取出这些变量中引用了当前对象的哪些字段
  * @param fieldFormulaConfig 
  */
-export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig>): Array<string> => {
+export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig> | any): Array<string> => {
     if (!_.isArray(fieldFormulaConfigs)) {
         fieldFormulaConfigs = [fieldFormulaConfigs];
     }

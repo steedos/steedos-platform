@@ -8,13 +8,11 @@
 **/npm-error.log
 **/yarn-error.log
 **/lerna-debug.log
+**/pnpm-debug.log
 
 **/.vscode/launch.*
 
 .migrate
-
-.npmrc
-.yarnrc
 
 .rpt2_cache
 

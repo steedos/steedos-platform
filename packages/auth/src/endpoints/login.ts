@@ -1,13 +1,13 @@
 
-import * as express from 'express';
 const SHA256 = require("sha256");
 const bcrypt = require('bcryptjs');
 import { getSession } from '../session';
 import { setAuthCookies, generateStampedLoginToken, hashStampedToken, insertHashedLoginToken } from '../utils';
+import { Request, Response } from 'express-serve-static-core';
 
 declare var Meteor;
 
-export const login = async (req: express.Request, res: express.Response) => {
+export const login = async (req: Request, res: Response) => {
     let username = req.body["username"];
     let password = req.body["password"];
     let spaceId = req.body["spaceId"]; // 需要登录的工作区Id，如果不传入，自动选中第一个工作区

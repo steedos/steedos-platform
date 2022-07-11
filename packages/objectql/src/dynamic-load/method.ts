@@ -36,10 +36,10 @@ export const addObjectMethodConfig = (json: JsonMap)=>{
 
     let object_name = '';
 
-    if (_.isString(json.listenTo)) {
+    if (typeof json.listenTo == 'string') {
         object_name = json.listenTo
     } else if (_.isFunction(json.listenTo)) {
-        object_name = json.listenTo()
+        object_name = (json.listenTo as any)()
     }
 
     let object = getObjectConfig(object_name);

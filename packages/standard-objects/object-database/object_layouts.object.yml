@@ -195,6 +195,9 @@ fields:
         if(object.enable_process){
             relatedLists.push("process_instance_history.target_object")
         }
+        if(object.enable_audit){
+            relatedLists.push("audit_records.related_to")
+        }
 
         _.each(relatedLists, function(related){
           if (!related) return;

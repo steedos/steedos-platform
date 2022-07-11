@@ -56,6 +56,7 @@ export function Navbar({ navigation }) {
   }
   
   return (
+    // @ts-ignore
     <Disclosure as="header" className="bg-white shadow">
       {({ open }) => (
         <>

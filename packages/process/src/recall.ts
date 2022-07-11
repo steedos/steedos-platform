@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { processInstanceWorkitemRemovebyInstance, getReocrdProcessInstance } from './process_manager'
 import * as core from "express-serve-static-core";
 import { allowRecall } from './permission_manager';
@@ -7,7 +6,7 @@ interface Request extends core.Request {
     user: any;
 }
 
-export const recall = async (req: Request, res: express.Response) => {
+export const recall = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;

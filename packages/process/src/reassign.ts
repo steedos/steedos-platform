@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { getProcessInstanceWorkitem, processInstanceWorkitemReassign } from './process_manager'
 import { allowApprover } from './permission_manager';
 import * as core from "express-serve-static-core";
@@ -8,7 +7,7 @@ interface Request extends core.Request {
     user: any;
 }
 
-export const reassign = async (req: Request, res: express.Response) => {
+export const reassign = async (req: Request, res: core.Response) => {
 
     try {
         const urlParams = req.params;

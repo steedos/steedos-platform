@@ -1,5 +1,5 @@
 import { setRequestUser } from "./session";
-import { Response } from 'express';
+import { Response } from 'express-serve-static-core';
 import * as core from "express-serve-static-core";
 interface Request extends core.Request {
     user: any;

@@ -6,25 +6,62 @@
     "services/*",
     "ee/*",
     "server",
-    "examples/*",
     "steedos-packages/*"
   ],
   "scripts": {
-    "start": "cd examples && cd project-template && yarn start",
-    "start:ee": "cd examples && cd project-ee && yarn start",
+    "pnpm:install": "rm -rf node_modules && pnpm install",
+    "start": "cd examples && cd project-template && steedos start",
+    "start:ee": "cd examples && cd project-ee && steedos start",
     "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
-    "build": "lerna run build",
+    "build": "yarn bootstrap && lerna run build",
     "i18n": "lerna run i18n"
   },
-  "resolutions": {
-  },
+  "resolutions": {},
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@types/express-serve-static-core": "~4.17.29",
+    "@types/node": "18.0.3",
     "lerna": "^4.0.0",
     "nodemon": "^2.0.19",
-    "ts-node": "^10.8.2"
+    "typescript": "4.6.3"
   },
-  "peerDependencies": {
-    "steedos-server": "2.x"
-  },
-  "dependencies": {}
+  "dependencies": {
+    "@steedos/accounts": "2.2.52",
+    "@steedos/auth": "2.2.52",
+    "@steedos/core": "2.2.52",
+    "@steedos/data-import": "2.2.52",
+    "@steedos/i18n": "2.2.52",
+    "@steedos/metadata-api": "2.2.52",
+    "@steedos/objectql": "2.2.52",
+    "@steedos/plugin-company": "2.2.52",
+    "@steedos/plugin-dingtalk": "2.2.52",
+    "@steedos/plugin-qywx": "2.2.52",
+    "@steedos/service-accounts": "2.2.52",
+    "@steedos/service-api": "2.2.52",
+    "@steedos/service-cachers-manager": "2.2.52",
+    "@steedos/service-charts": "2.2.52",
+    "@steedos/service-cloud-init": "2.2.52",
+    "@steedos/service-fields-indexs": "2.2.52",
+    "@steedos/service-files": "2.2.52",
+    "@steedos/service-metadata-server": "2.2.52",
+    "@steedos/service-meteor-package-loader": "2.2.52",
+    "@steedos/service-package-loader": "2.2.52",
+    "@steedos/service-package-registry": "2.2.52",
+    "@steedos/service-pages": "2.2.52",
+    "@steedos/service-plugin-amis": "2.2.52",
+    "@steedos/service-steedos-server": "2.2.52",
+    "@steedos/service-ui": "2.2.52",
+    "@steedos/service-workflow": "2.2.52",
+    "@steedos/standard-objects": "2.2.52",
+    "@steedos/standard-process": "2.2.52",
+    "@steedos/steedos-plugin-schema-builder": "2.2.52",
+    "@steedos/unpkg": "2.2.52",
+    "@steedos/webapp-accounts": "2.2.52",
+    "@steedos/webapp-public": "2.2.52",
+    "@steedos/workflow": "2.2.52",
+    "create-steedos-app": "2.2.52",
+    "steedos-cli": "2.2.52",
+    "steedos-server": "2.2.52",
+    "tslib": "^2.4.0"
+  }
 }

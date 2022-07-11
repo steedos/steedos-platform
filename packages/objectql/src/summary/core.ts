@@ -148,7 +148,7 @@ export const updateQuotedByObjectFieldSummaryValue = async (objectName: string, 
  * @param fieldSummaryConfig 
  * @param userSession 
  */
-export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
+export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<string> | Array<JsonMap> | any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     // console.log("===updateReferenceTosFieldSummaryValue====referenceToIds, fieldSummaryConfig==", referenceToIds, fieldSummaryConfig);
     const { reference_to_field, summary_type, summary_field, summary_object, object_name, summary_filters, field_name, reference_to_field_reference_to } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
@@ -226,7 +226,7 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
     await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
 }
 
-export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: Array<string> | Array<JsonMap>, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
+export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: Array<string> | Array<JsonMap> | any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {
     const { field_name, object_name } = fieldSummaryConfig;
     if (!_.isArray(referenceToIds)) {
         referenceToIds = [referenceToIds];

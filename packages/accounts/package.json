@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "2.2.52",
+  "version": "2.2.53-beta.2",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -27,18 +27,24 @@
     "@accounts/mongo": "^0.19.0",
     "@accounts/server": "^0.19.0",
     "@accounts/two-factor": "^0.20.1",
+    "@accounts/types": "0.20.1",
     "@babel/runtime": "^7.12.18",
     "app-root-path": "^2.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
     "chalk": "^2.4.2",
+    "cookie-parser": "1.4.3",
     "cookies": "^0.8.0",
     "cors": "2.8.5",
     "csurf": "^1.11.0",
+    "emittery": "0.11.0",
     "express": "4.17.1",
     "ismobilejs": "^1.1.1",
     "js-yaml": "^3.14.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mem": "^5.1.1",
+    "mongodb": "^3.7.3",
     "mongoose": "^5.12.13",
     "nodemailer": "^6.3.0",
     "pug": "^3.0.2",
@@ -48,20 +54,20 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@steedos/auth": "2.2.52",
-    "@steedos/meteor-bundle-runner": "2.2.52",
-    "@steedos/objectql": "2.2.52",
+    "@steedos/auth": "2.2.53-beta.2",
+    "@steedos/meteor-bundle-runner": "2.2.53-beta.2",
+    "@steedos/objectql": "2.2.53-beta.2",
     "@types/dotenv-flow": "^3.0.0",
     "@types/node": "12.6.8",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.1.0",
     "nodemon": "^2.0.19",
-    "steedos-server": "2.2.52",
+    "steedos-server": "2.2.53-beta.2",
     "typescript": "4.6.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1447c9ca4fb57a49233704f50a7d757aff0c5027"
+  "gitHead": "d6d2230d72af49a72fc546093b553463cd2f0e9d"
 }

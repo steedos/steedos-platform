@@ -1,4 +1,3 @@
-import * as express from 'express';
 import { getObjectProcessDefinition, recordSubmit } from './process_manager'
 import * as core from "express-serve-static-core";
 import { SteedosError, sendError } from '@steedos/objectql'
@@ -6,7 +5,7 @@ interface Request extends core.Request {
     user: any;
 }
 
-export const submit = async (req: Request, res: express.Response) => {
+export const submit = async (req: Request, res: core.Response) => {
     try {
         const urlParams = req.params;
         const objectName = urlParams.objectName;
