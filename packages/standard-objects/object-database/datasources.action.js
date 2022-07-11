@@ -1,6 +1,6 @@
 module.exports = {
     testConnection: function(object_name, record_id, fields){
-        $("body").addClass("loading");
+        window.$("body").addClass("loading");
         var userSession = Creator.USER_CONTEXT;
         var spaceId = userSession.spaceId;
         var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
@@ -15,7 +15,7 @@ module.exports = {
                 name: 'Authorization',
                 value: authorization
             }];
-            $.ajax({
+            window.$.ajax({
                 type: "get",
                 url: url,
                 dataType: "json",
@@ -28,12 +28,12 @@ module.exports = {
                     }
                 },
                 success: function (data) {
-                    $("body").removeClass("loading");
+                    window.$("body").removeClass("loading");
                     toastr.success(t('_datasources_testConnection_ok'));
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.error(XMLHttpRequest.responseJSON);
-                    $("body").removeClass("loading");
+                    window.$("body").removeClass("loading");
                     if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
                         toastr.error(t(XMLHttpRequest.responseJSON.error.replace(/:/g, '：')))
                     }
@@ -45,7 +45,7 @@ module.exports = {
         } catch (err) {
             console.error(err);
             toastr.error(err);
-            $("body").removeClass("loading");
+            window.$("body").removeClass("loading");
         }
     }
   }
