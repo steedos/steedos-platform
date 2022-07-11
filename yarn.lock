@@ -4059,10 +4059,10 @@
   dependencies:
     axios "^0.21.4"
 
-"@steedos/license@2.2.7":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.7.tgz#5ca29f6a1aa7010ccab26d16a900e252d5181bb8"
-  integrity sha512-V9xf8Cw3K51XPQYk1hwXlSRRurh+qySca9TUPuBxMkHFKXDta5sHWdshRVqEdtl5pnTXhzMmFJmiLS8cGQNwJA==
+"@steedos/license@2.2.8":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.8.tgz#6933c932dc809c3b0c85cf35d2045d035d6a2969"
+  integrity sha512-GNx5P0eLJiHTqd9xxyWcSXgmpdNluWOdt6mqtIGg9JJx0/6oGEWub4UKtniliwB6l2hWPyJDGtuzFMdUAwAH/Q==
   dependencies:
     abort-controller "^3.0.0"
     crypto "^1.0.1"
@@ -4151,10 +4151,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/async-retry@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@types/async-retry/-/async-retry-1.4.2.tgz#7f910188cd3893b51e32df51765ee8d5646053e3"
-  integrity sha512-GUDuJURF0YiJZ+CBjNQA0+vbP/VHlJbB0sFqkzsV7EcOPRfurVonXpXKAt3w8qIjM1TEzpz6hc6POocPvHOS3w==
+"@types/async-retry@1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/async-retry/-/async-retry-1.4.4.tgz#3304ce1e64f8757723f166518fc4c4b68df4fe66"
+  integrity sha512-IGT+yESLPYje0MV8MfOpT5V5oH9lAKLwlosQRyq75tYJmntkkWcfEThHLxsgYjGmYXJEY7ZZkYPb4xuW+NA6GA==
   dependencies:
     "@types/retry" "*"
 
@@ -15056,19 +15056,6 @@ odata-v4-metadata@^0.1.2:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/odata-v4-metadata/-/odata-v4-metadata-0.1.5.tgz#e044900de724a35a869f91cf9acbf51f2b28f9c8"
   integrity sha512-EKESasm7rFR+KtRePjvhfoc8FFj2ymSdPuOFFYcWUeuikfAv6nSw+VGuu4UWxcE+ZPoWZU9Wdi6o3cEzvnC1EQ==
-
-odata-v4-mongodb@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/odata-v4-mongodb/-/odata-v4-mongodb-0.1.12.tgz#dfd7517c0a3b573453d4c70e873323a14d103d51"
-  integrity sha512-XMR/+U3Xow+oWmK1815iNStoFEJuiQNICrBETSrpZe3A5V9dZ+/UVW/fytxD4qQ6VddCZe0gi07OuAh4EBJ1Yw==
-  dependencies:
-    odata-v4-literal "^0.1.0"
-    odata-v4-parser "^0.1.18"
-
-odata-v4-parser@^0.1.18, odata-v4-parser@^0.1.29:
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/odata-v4-parser/-/odata-v4-parser-0.1.29.tgz#49e466037dbc4fc088572a2deae822fc14e6c137"
-  integrity sha512-7ZsqxcMbGAqKSBme0+lul7g9K52RadGYU3WvYwDdduJNfnduSL59w4OEskvEzWHZMcPRqPnD9XtuO7Rpl+B3jA==
 
 odata-v4-service-document@0.0.3:
   version "0.0.3"
