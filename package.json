@@ -2,6 +2,7 @@
   "name": "steedos-platform",
   "private": true,
   "workspaces": [
+    "examples/*",
     "packages/*",
     "services/*",
     "ee/*",
