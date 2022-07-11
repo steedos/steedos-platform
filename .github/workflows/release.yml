@@ -73,8 +73,6 @@ jobs:
         env:
           CI: false
         run: |
-          npx browserslist@latest --update-db
-          npm install -g mkdirp
           yarn build
 
       - name: Lerna publish 2.1
