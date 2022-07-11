@@ -241,6 +241,17 @@ export class Visitor{
         delete context.literal;
     };
 
+	protected VisitNotInExpression(node:any, context:any){
+        this.Visit(node.value.left, context);
+        this.Visit(node.value.right, context);
+        if (context.identifier)
+            context.query[context.identifier] = {
+                $nin: JSON.parse(`[${node.value.right.raw.replace(/\'/g, "\"").slice(1).slice(0, -1)}]`)
+            };
+        delete context.identifier;
+        delete context.literal;
+    };
+
 	protected VisitLesserThanExpression(node:any, context:any){
 		this.Visit(node.value.left, context);
 		this.Visit(node.value.right, context);

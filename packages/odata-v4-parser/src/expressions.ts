@@ -54,6 +54,7 @@ export namespace Expressions {
             gtExpr(value, token.next) ||
             geExpr(value, token.next) ||
             hasExpr(value, token.next) ||
+            notInExpr(value, token.next) || 
             inExpr(value, token.next)
             ;
 
@@ -154,6 +155,26 @@ export namespace Expressions {
         // return leftRightExpr(value, index, "in", Lexer.TokenType.InExpression); 
         const expr: string = 'in';
         const tokenType: Lexer.TokenType = Lexer.TokenType.InExpression;
+        let rws = Lexer.RWS(value, index);
+        if (rws === index) return;
+        let start = index;
+        index = rws;
+        if (!Utils.equals(value, index, expr)) return;
+        index += expr.length;
+        rws = Lexer.RWS(value, index);
+        if (rws === index) return;
+        index = rws;
+        let token = boolCommonExpr(value, index);
+        if (!token) return;
+
+        return Lexer.tokenize(value, start, index, token.value, tokenType);
+    }
+
+    export function notInExpr(value: Utils.SourceArray, index: number): Lexer.Token { 
+        // return leftRightExpr(value, index, "in", Lexer.TokenType.InExpression); 
+        if (!Utils.equals(value, index+1, "notin")) return;
+        const expr: string = 'notin';
+        const tokenType: Lexer.TokenType = Lexer.TokenType.NotInExpression;
         let rws = Lexer.RWS(value, index);
         if (rws === index) return;
         let start = index;

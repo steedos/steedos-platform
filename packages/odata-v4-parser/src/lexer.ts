@@ -161,7 +161,8 @@ export enum TokenType {
     Batch = "Batch",
     Entity = "Entity",
     Metadata = "Metadata",
-    InExpression= "InExpression",
+    InExpression = "InExpression",
+    NotInExpression = "NotInExpression",
 }
 
 export const LexerTokenType = TokenType;

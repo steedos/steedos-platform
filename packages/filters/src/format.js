@@ -176,9 +176,10 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                 sub_selector.push([field, "=", "__badQueryForEmptyArray"], "and");
                             }
                         } else if (["<>", "notin"].indexOf(option) > -1) {
-                            _.each(value, function (v) {
-                                return sub_selector.push([field, "<>", v], "and");
-                            });
+                            sub_selector.push([field, "notin", `(${JSON.stringify(value).replace(/\"/g, "'").slice(1).slice(0, -1)})`], "and")
+                            // _.each(value, function (v) {
+                            //     return sub_selector.push([field, "<>", v], "and");
+                            // });
                         } else if (["notcontains", "notstartswith", "notendswith"].indexOf(option) > -1) {
                             _.each(value, function (v) {
                                 return sub_selector.push([field, option, v], "and");

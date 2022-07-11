@@ -174,7 +174,7 @@ export namespace PrimitiveLiteral {
 
 
     export function arrayValue(value: Utils.SourceArray, index: number): Lexer.Token {
-        if (!Utils.equals(value, index, "(") || !Utils.equals(value, index-3, "in")) return;
+        if (!Utils.equals(value, index, "(") || !(Utils.equals(value, index-3, "in") || Utils.equals(value, index-3, "notin"))) return;
         let start = index;
         let squote = Lexer.OPEN(value, start);
         if (squote) {
