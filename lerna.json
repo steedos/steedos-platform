@@ -9,5 +9,5 @@
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "version": "workspace:*"
+  "version": "2.2.53-beta.2"
 }
