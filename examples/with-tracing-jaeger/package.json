@@ -7,7 +7,7 @@
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.52"
+    "@steedos/service-community": "2.2.53-beta.2"
   },
   "devDependencies": {
     "jaeger-client": "^3.19.0"

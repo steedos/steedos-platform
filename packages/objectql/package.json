@@ -44,7 +44,7 @@
     "moment": "^2.29.1",
     "mongodb": "^3.7.3",
     "mongodb-uri": "^0.9.7",
-    "@steedos/odata-v4-mongodb": "2.2.52",
+    "@steedos/odata-v4-mongodb": "2.2.53-beta.2",
     "reflect-metadata": "^0.1.10",
     "routing-controllers": "^0.7.7",
     "typeorm": "0.2.28",
