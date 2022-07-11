@@ -1,7 +1,7 @@
 {
   "name": "steedos-node-red",
-  "version": "2.2.53-beta.2",
-  "description": "",
+  "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node --max-old-space-size=160 index.js --settings ./settings.js -v"

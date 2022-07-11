@@ -1,6 +1,6 @@
 {
   "name": "project-template",
-  "version": "2.2.53-beta.2",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "steedos start"
