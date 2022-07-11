@@ -6,6 +6,6 @@
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-enterprise": "2.2.53-beta.2"
+    "@steedos/service-enterprise": "2.2.53-beta.3"
   }
 }
