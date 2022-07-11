@@ -119,9 +119,7 @@ export class SteedosMongoDriver implements SteedosDriver {
         if(!odataQuery){
             return emptyFilters;
         }
-        console.log(`=====>odataQuery`, odataQuery)
         let query: JsonMap = createFilter(odataQuery);
-        console.log(`=====>query`, JSON.stringify(query))
         return query;
     }
 
