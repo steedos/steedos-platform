@@ -16,7 +16,7 @@
   "dependencies": {
     "@steedos/auth": "2.2.53-beta.2",
     "@steedos/i18n": "2.2.53-beta.2",
-    "@steedos/license": "2.2.7",
+    "@steedos/license": "2.2.8",
     "@steedos/odata-v4-mongodb": "2.2.52",
     "@steedos/metadata-core": "2.2.53-beta.2",
     "@steedos/migrate": "2.2.53-beta.2",
