@@ -8,7 +8,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((status eq 'closed') or (status eq 'open'))");
+        expect(result).to.be.eq("((status in ('closed','open')))");
     });
     it('ne <> array', async () => {
         let filters = [
@@ -16,7 +16,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((status ne 'closed') and (status ne 'open'))");
+        expect(result).to.be.eq("((status notin ('closed','open')))");
     });
     it('ne != array', async () => {
         let filters = [
@@ -24,7 +24,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((status ne 'closed') and (status ne 'open'))");
+        expect(result).to.be.eq("((status notin ('closed','open')))");
     });
     it('in array', async () => {
         let filters = [
@@ -32,7 +32,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((status eq 'closed') or (status eq 'open'))");
+        expect(result).to.be.eq("((status in ('closed','open')))");
     });
     it('notin array', async () => {
         let filters = [
@@ -40,7 +40,7 @@ describe('advanced format filter to odata query', () => {
         ];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((status ne 'closed') and (status ne 'open'))");
+        expect(result).to.be.eq("((status notin ('closed','open')))");
     });
     it('contains array', async () => {
         let filters = [
@@ -192,7 +192,7 @@ describe('advanced format filter to odata query', () => {
         }];
         let result = formatFiltersToODataQuery(filters);
         console.log("odata filters query result:", result);
-        expect(result).to.be.eq("((object_name eq 'project_issues') or (object_name eq 'tasks'))");
+        expect(result).to.be.eq("((object_name in ('project_issues','tasks')))");
     });
     it(`filter item is a json object and it's value is a function`, async () => {
         let filters = [{
