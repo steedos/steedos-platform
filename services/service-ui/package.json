@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-ui",
-    "version": "2.2.53-beta.3",
+    "version": "2.2.53-beta.6",
     "keywords": [
         "steedos"
     ],
@@ -10,9 +10,9 @@
     "description": "steedos package",
     "repository": {},
     "dependencies": {
-        "@steedos/core": "2.2.53-beta.3",
-        "@steedos/i18n": "2.2.53-beta.3",
-        "@steedos/objectql": "2.2.53-beta.3",
+        "@steedos/core": "2.2.53-beta.6",
+        "@steedos/i18n": "2.2.53-beta.6",
+        "@steedos/objectql": "2.2.53-beta.6",
         "express": "4.18.1"
     },
     "license": "MIT",
@@ -20,5 +20,5 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "5782f1171133c05cce158adef71e527d970ef50e"
+    "gitHead": "a5fc50e25b6bba366a26de36ebcf5eff66272efe"
 }
