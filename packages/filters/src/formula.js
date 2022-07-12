@@ -25,4 +25,5 @@ let evaluateFormula = (formula, context) => {
     }
 };
 
-exports.evaluateFormula = evaluateFormula;
+const _evaluateFormula = evaluateFormula;
+export { _evaluateFormula as evaluateFormula };

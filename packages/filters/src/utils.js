@@ -1,5 +1,4 @@
-const moment = require('moment');
-const _ = require('underscore');
+import moment from 'moment';
 
 let t = (key) => {
     return key;
@@ -375,11 +374,13 @@ let isBetweenFilterOperation = (operation) => {
     return operation === "between";
 }
 
-exports.getMonthDays = getMonthDays;
-exports.getQuarterStartMonth = getQuarterStartMonth;
-exports.getLastMonthFirstDay = getLastMonthFirstDay;
-exports.getLastQuarterFirstDay = getLastQuarterFirstDay;
-exports.getNextQuarterFirstDay = getNextQuarterFirstDay;
-exports.getBetweenBuiltinValueItem = getBetweenBuiltinValueItem;
-exports.getBetweenTimeBuiltinValueItem = getBetweenTimeBuiltinValueItem;
-exports.isBetweenFilterOperation = isBetweenFilterOperation;
+export {
+    getMonthDays,
+    getQuarterStartMonth,
+    getLastMonthFirstDay,
+    getLastQuarterFirstDay,
+    getNextQuarterFirstDay,
+    getBetweenBuiltinValueItem,
+    getBetweenTimeBuiltinValueItem,
+    isBetweenFilterOperation
+};

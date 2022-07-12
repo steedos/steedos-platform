@@ -9,8 +9,10 @@
   ],
   "license": "Apache",
   "scripts": {
-    "test": "yarn build && mocha test/**/*.js",
-    "build": "babel -d lib src/"
+    "test": "yarn build-babel && mocha test/**/*.js",
+    "build": "yarn build-babel && yarn build-rollup",
+    "build-babel": "babel -d lib src/",
+    "build-rollup": "rollup -c rollup.config.js"
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",

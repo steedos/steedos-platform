@@ -1,7 +1,7 @@
 // const DevExpress = require("devextreme/bundles/modules/core");
 // const DevExpressData = require("devextreme/bundles/modules/data");
 // const DevExpressOData = require("devextreme/bundles/modules/data.odata");
-const getLDMLFormatter = require("./date.formatter").getFormatter;
+import { getFormatter as getLDMLFormatter } from "./date.formatter";
 // const Guid = require("devextreme/core/guid");
 // const EdmLiteral = require("devextreme/data/odata/utils").EdmLiteral;
 
@@ -24,7 +24,7 @@ const DevExpressData = {
 }
 
 // const defaultDateNames = DevExpress.localization.date;
-const defaultDateNames = require("./default_date_names");
+import defaultDateNames from "./default_date_names";
 
 const DevExpressOData = {
     pad(text, length, right) {
@@ -279,5 +279,5 @@ class SteedosFilter {
     }
 }
 
-module.exports = SteedosFilter;
+export default SteedosFilter;
 
