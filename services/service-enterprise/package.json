@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-enterprise",
-  "main": "index.js",
+  "main": "package.service.js",
   "version": "2.2.53-beta.3",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
