@@ -58,8 +58,17 @@ module.exports = {
 		this.broker.createService(require("@steedos/service-metadata-server"));
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
-		// 启动 meteor服务
-		this.broker.createService(require("@steedos/service-steedos-server"));
+		// 启动 steedos-server 服务
+        this.broker.createService({
+            name: "steedos-server",
+            namespace: "steedos",
+            mixins: [require("@steedos/service-steedos-server")],
+            settings: {
+                plugins: [
+                    "@steedos/ee_unpkg-local",
+                ]
+            }
+        });
 	},
 
 	/**
