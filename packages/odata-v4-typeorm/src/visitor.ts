@@ -151,6 +151,19 @@ export class TypeOrmVisitor extends Visitor {
     }
   };
 
+  protected VisitNotInExpression(node:any, context:any){
+    this.Visit(node.value.left, context);
+    this.where += ' not in ';
+    this.Visit(node.value.right, context);
+    if (this.options.useParameters && context.literal == null) {
+      this.where = this.where.replace(/= :p\d*$/, 'IS NULL')
+        .replace(new RegExp(`\\:p\\d* = ${context.identifier}$`),
+          `${context.identifier} IS NULL`);
+    } else if (context.literal == 'NULL') {
+      this.where = this.where.replace(/= NULL$/, 'IS NULL')
+        .replace(new RegExp(`NULL = ${context.identifier}$`), `${context.identifier} IS NULL`);
+    }
+  };
 
   protected VisitNotEqualsExpression(node: Token, context: any) {
     this.Visit(node.value.left, context);

@@ -34,12 +34,12 @@ module.exports = {
             name: packageName,
             isPackage: false
         },
-        SSO_OIDC_CONFIG_URL: process.env.SSO_OIDC_CONFIG_URL,
-        SSO_OIDC_CLIENT_ID: process.env.SSO_OIDC_CLIENT_ID,
-        SSO_OIDC_CLIENT_SECRET: process.env.SSO_OIDC_CLIENT_SECRET,
-        SSO_OIDC_NAME: process.env.SSO_OIDC_NAME || 'Steedos',
-        SSO_OIDC_LABEL: process.env.SSO_OIDC_LABEL || 'Steedos ID',
-        SSO_OIDC_LOGO: process.env.SSO_OIDC_LOGO || '/images/logo.png'
+        STEEDOS_IDENTITY_OIDC_CONFIG_URL: process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
+        STEEDOS_IDENTITY_OIDC_CLIENT_ID: process.env.STEEDOS_IDENTITY_OIDC_CLIENT_ID,
+        STEEDOS_IDENTITY_OIDC_CLIENT_SECRET: process.env.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET,
+        STEEDOS_IDENTITY_OIDC_NAME: process.env.STEEDOS_IDENTITY_OIDC_NAME || 'Steedos',
+        STEEDOS_IDENTITY_OIDC_LABEL: process.env.STEEDOS_IDENTITY_OIDC_LABEL || 'Steedos ID',
+        STEEDOS_IDENTITY_OIDC_LOGO: process.env.STEEDOS_IDENTITY_OIDC_LOGO || '/images/logo.png'
     },
 
     /**
@@ -88,7 +88,7 @@ module.exports = {
             // 检查环境变量
             const settings = this.settings;
 
-            if (settings.SSO_OIDC_CONFIG_URL && settings.SSO_OIDC_CLIENT_ID && settings.SSO_OIDC_CLIENT_SECRET) {
+            if (settings.STEEDOS_IDENTITY_OIDC_CONFIG_URL && settings.STEEDOS_IDENTITY_OIDC_CLIENT_ID && settings.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET) {
 
                 authController.oidcStrategyFactory().then((strategy)=>{
                     passport.use("oidc", strategy);
@@ -96,9 +96,9 @@ module.exports = {
                         disabled_account_register: true,
                         sso_providers: {
                             oidc: {
-                                name: settings.SSO_OIDC_NAME,
-                                label: settings.SSO_OIDC_LABEL,
-                                logo: settings.SSO_OIDC_LOGO,
+                                name: settings.STEEDOS_IDENTITY_OIDC_NAME,
+                                label: settings.STEEDOS_IDENTITY_OIDC_LABEL,
+                                logo: settings.STEEDOS_IDENTITY_OIDC_LOGO,
                                 url: '/api/global/auth/oidc/config'
                             }
                         }

@@ -7,12 +7,7 @@ module.exports = {
 
 	// Called after broker started.
 	started(broker) {
-		// 启动 元数据服务
-		broker.createService(require("@steedos/service-metadata-server"));
-		// 启动 加载软件包服务
-		broker.createService(require("@steedos/service-package-registry"));
-		// 启动 meteor服务
-		broker.createService(require("@steedos/service-steedos-server"));
+		broker.createService(require("@steedos/service-community"));
 	},
 
 };
