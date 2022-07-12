@@ -666,6 +666,7 @@ Template.instance_button.events
 				if err
 					toastr.error TAPi18n.__(err.reason)
 				if result == true
+					Session.set("instance_change", false)
 					FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 					toastr.success(TAPi18n.__('instance_return_success'));
 				return
