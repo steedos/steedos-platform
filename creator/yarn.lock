@@ -1320,10 +1320,10 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/builder-community@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.1.tgz#5832b605bed2e157247e4cbaf09b23d4cca60cca"
-  integrity sha512-4B8YNc8d0TT8xGiGi4jxFRst+uVHre1STGZUCHJX4cxsldQLMZz2b8iiS350Cqs0TDuvv7p6vAJ0lxqhzSFCiA==
+"@steedos-ui/builder-community@^2.2.35":
+  version "2.2.35"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.35.tgz#fc0568ec950dfb857abd87f670deafe80d87979e"
+  integrity sha512-edCaCTrN4obVlIYic2EL6poF2fytQYbbYjcgUC28AqSwd2izoSSLDAvVVFOeVD95LaJbObIi4LBDsB1v1C/zSA==
 
 "@steedos-widgets/design-system@^0.2.5":
   version "0.2.5"
@@ -6707,7 +6707,7 @@ odata-v4-parser@0.1.13:
   resolved "https://registry.yarnpkg.com/odata-v4-parser/-/odata-v4-parser-0.1.13.tgz#4b5cfef0381cc39c1ca0d53c0bbc825cc655b492"
   integrity sha1-S1z+8Dgcw5wcoNU8C7yCXMZVtJI=
 
-odata-v4-parser@^0.1.18, odata-v4-parser@^0.1.29:
+odata-v4-parser@^0.1.18:
   version "0.1.29"
   resolved "https://registry.npm.taobao.org/odata-v4-parser/download/odata-v4-parser-0.1.29.tgz#49e466037dbc4fc088572a2deae822fc14e6c137"
   integrity sha1-SeRmA328T8CIVyot6ugi/BTmwTc=
