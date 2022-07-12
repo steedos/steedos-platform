@@ -35,10 +35,10 @@ const getOidcConfig = () => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const config = (0, objectql_1.getSteedosConfig)();
     return {
-        configUrl: ((_b = (_a = config.sso) === null || _a === void 0 ? void 0 : _a.oidc) === null || _b === void 0 ? void 0 : _b.config_url) || process.env.SSO_OIDC_CONFIG_URL,
-        clientID: ((_d = (_c = config.sso) === null || _c === void 0 ? void 0 : _c.oidc) === null || _d === void 0 ? void 0 : _d.client_id) || process.env.SSO_OIDC_CLIENT_ID,
-        clientSecret: ((_f = (_e = config.sso) === null || _e === void 0 ? void 0 : _e.oidc) === null || _f === void 0 ? void 0 : _f.client_secret) || process.env.SSO_OIDC_CLIENT_SECRET,
-        requireLocalAccount: validator.toBoolean(((_h = (_g = config.sso) === null || _g === void 0 ? void 0 : _g.oidc) === null || _h === void 0 ? void 0 : _h.require_local_account) || 'false', true) || validator.toBoolean(process.env.SSO_OIDC_REQUIRE_LOCAL_ACCOUNT || 'false', true) || false,
+        configUrl: ((_b = (_a = config.sso) === null || _a === void 0 ? void 0 : _a.oidc) === null || _b === void 0 ? void 0 : _b.config_url) || process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
+        clientID: ((_d = (_c = config.sso) === null || _c === void 0 ? void 0 : _c.oidc) === null || _d === void 0 ? void 0 : _d.client_id) || process.env.STEEDOS_IDENTITY_OIDC_CLIENT_ID,
+        clientSecret: ((_f = (_e = config.sso) === null || _e === void 0 ? void 0 : _e.oidc) === null || _f === void 0 ? void 0 : _f.client_secret) || process.env.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET,
+        requireLocalAccount: validator.toBoolean(((_h = (_g = config.sso) === null || _g === void 0 ? void 0 : _g.oidc) === null || _h === void 0 ? void 0 : _h.require_local_account) || 'false', true) || validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT || 'false', true) || false,
     };
 };
 exports.getOidcConfig = getOidcConfig;

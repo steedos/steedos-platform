@@ -32,9 +32,9 @@ export const isMultiTenant = () => {
 export const getOidcConfig = () => {
     const config = getSteedosConfig();
     return {
-        configUrl: config.sso?.oidc?.config_url || process.env.SSO_OIDC_CONFIG_URL,
-        clientID: config.sso?.oidc?.client_id || process.env.SSO_OIDC_CLIENT_ID,
-        clientSecret: config.sso?.oidc?.client_secret || process.env.SSO_OIDC_CLIENT_SECRET,
-        requireLocalAccount: validator.toBoolean(config.sso?.oidc?.require_local_account || 'false', true) || validator.toBoolean(process.env.SSO_OIDC_REQUIRE_LOCAL_ACCOUNT || 'false', true) || false,
+        configUrl: config.sso?.oidc?.config_url || process.env.STEEDOS_IDENTITY_OIDC_CONFIG_URL,
+        clientID: config.sso?.oidc?.client_id || process.env.STEEDOS_IDENTITY_OIDC_CLIENT_ID,
+        clientSecret: config.sso?.oidc?.client_secret || process.env.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET,
+        requireLocalAccount: validator.toBoolean(config.sso?.oidc?.require_local_account || 'false', true) || validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT || 'false', true) || false,
     }
 }
