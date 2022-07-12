@@ -68,12 +68,14 @@ module.exports = {
                     "@steedos/ee_unpkg-local",
                     "@steedos/webapp-accounts",
                     "@steedos/plugin-dingtalk",
-                    "@steedos/plugin-qywx",
-					"@steedos/service-sentry"
+                    "@steedos/plugin-qywx"
                 ]
             }
         });
 
+		// if (process.env.NODE_ENV === 'development' && process.env.STEEDOS_TRACING_ENABLED) {
+			this.broker.createService(require("@steedos/service-sentry"));
+		// }
 	},
 
 	/**

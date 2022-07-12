@@ -24,7 +24,8 @@ module.exports = {
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: serviceName
+			name: serviceName,
+			isPackage: false
 		},
 		/** @type {Object?} Sentry configuration wrapper. */
 		sentry: {
@@ -37,13 +38,6 @@ module.exports = {
 		  /** @type {String?} Name of the meta containing user infos. */
 		  userMetaKey: null,
 		},
-		scope: {
-		  /**
-		   * @deprecated
-		   * @type {String?} Name of the meta containing user infos
-		   */
-		  user: null
-		}
 	},
 	
 
@@ -102,11 +96,6 @@ module.exports = {
         return this.settings.sentry.userMetaKey
       }
 
-      // fallback to old approach
-      if (this.settings.scope && this.settings.scope.user) {
-        return this.settings.scope.user
-      }
-
       return null
     },
 
@@ -142,6 +131,8 @@ module.exports = {
         scope.setTag('span', this.getSpanName(metric))
         scope.setTag('type', metric.error.type)
         scope.setTag('code', metric.error.code)
+        scope.setTag('root_url', process.env.ROOT_URL)
+        scope.setTag('steedos_version', require("steedos-server/package.json").version)
 
         if (metric.error.data) {
           scope.setExtra('data', metric.error.data)
@@ -188,6 +179,7 @@ module.exports = {
     const options = this.settings.sentry.options
 
     if (dsn) {
+      this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
       Sentry.init({ dsn, ...options })
     }
   },
