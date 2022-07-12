@@ -54,33 +54,18 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
-		// 启动 元数据 服务
-		this.broker.createService(require("@steedos/service-metadata-server"));
-		// 启动 软件包 服务
-		this.broker.createService(require("@steedos/service-package-registry"));
+		// 启动 社区版 服务
+		this.broker.createService(require("@steedos/service-community"));
 
+        // 启动 企业版许可证服务
+        this.broker.createService(require("@steedos/ee_service-plugin-license"));
+		
         // 启动 OIDC SSO 服务
         this.broker.createService(require("@steedos/ee_sso-oidc"));
 
         // 启动 报表服务
         this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
 
-        // 启动 steedos-server 服务
-        this.broker.createService({
-            name: "steedos-server",
-            namespace: "steedos",
-            mixins: [require("@steedos/service-steedos-server")],
-            settings: {
-                plugins: [
-                    "@steedos/ee_unpkg-local",
-                    "@steedos/webapp-accounts",
-                    "@steedos/plugin-dingtalk",
-                    "@steedos/plugin-qywx",
-                ]
-            }
-        });
-        // 启动 企业版许可证服务
-        this.broker.createService(require("@steedos/ee_service-plugin-license"));
         // 启动 sidecar服务: steedos services 跨语言访问
         // broker.createService(require("@steedos/service-sidecar"));
         // 字段级加密服务

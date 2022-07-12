@@ -29,7 +29,7 @@ module.exports = {
 		/** @type {Object?} Sentry configuration wrapper. */
 		sentry: {
 		  /** @type {String} DSN given by sentry. */
-		  dsn: process.env.STEEDOS_SENTRY_DSN,
+		  dsn: process.env.STEEDOS_SENTRY_DSN ? process.env.STEEDOS_SENTRY_DSN : 'https://dcbd110ff4d646598c0bd9751cfc8c20@o1314957.ingest.sentry.io/6566429',
 		  /** @type {String} Name of event fired by "Event" exported in tracing. */
 		  tracingEventName: '$tracing.spans',
 		  /** @type {Object} Additional options for `Sentry.init`. */

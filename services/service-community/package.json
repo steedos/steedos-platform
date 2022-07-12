@@ -11,6 +11,7 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
+    "@steedos/ee_unpkg-local": "2.2.53-beta.3",
     "@steedos/service-charts": "2.2.53-beta.3",
     "@steedos/service-metadata-server": "2.2.53-beta.3",
     "@steedos/service-mongodb-server": "2.2.53-beta.3",
