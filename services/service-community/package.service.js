@@ -47,7 +47,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-
+		process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS='https://unpkg.com/@steedos-ui/builder-widgets@2.2.32/dist/assets.json'
 	},
 
 	/**
