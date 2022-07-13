@@ -1,6 +1,6 @@
 
 import SteedosFilter from "./filter";
-import { isNull, isUndefined, isFunction, isArray, isObject, include, isString, each, intersection } from 'underscore';
+import { isNull, isUndefined, isFunction, isArray, isObject, includes, isString, each, intersection } from 'lodash';
 import { isBetweenFilterOperation, getBetweenBuiltinValueItem } from "./utils";
 import { evaluateFormula } from "./formula";
 // 正则包括encodeURIComponent函数编码的11个特殊符号;/?:@&=+$,#
@@ -98,7 +98,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
             });
         } else if (filters_loop.length === 3) {
             // 只有三个元素，可能中间是"or","and"连接符也可能是普通数组，区别对待解析
-            if (include(["or", "and"], filters_loop[1])) {
+            if (includes(["or", "and"], filters_loop[1])) {
                 // 中间有"or","and"连接符，则循环filters_loop，依次用filtersLooper解析其过虑条件
                 // 最后生成的结果格式：tempFilters = [filtersLooper(filters_loop[0]), filters_loop[1], filtersLooper(filters_loop[2]), ...]
                 // 因要判断filtersLooper(filters_loop[0])及filtersLooper(filters_loop[2])是否为空
@@ -106,7 +106,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                 tempFilters = [];
                 i = 0;
                 while (i < filters_loop.length) {
-                    if (include(["or", "and"], filters_loop[i])) {
+                    if (includes(["or", "and"], filters_loop[i])) {
                         i++;
                         continue;
                     }
@@ -121,7 +121,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     tempFilters.push(tempLooperResult);
                     i++;
                 }
-                if (include(["or", "and"], tempFilters[0])) {
+                if (includes(["or", "and"], tempFilters[0])) {
                     tempFilters.shift();
                 }
             } else {
@@ -260,7 +260,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                 tempFilters = [];
                 i = 0;
                 while (i < filters_loop.length) {
-                    if (include(["or", "and"], filters_loop[i])) {
+                    if (includes(["or", "and"], filters_loop[i])) {
                         i++;
                         continue;
                     }
@@ -275,7 +275,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     tempFilters.push(tempLooperResult);
                     i++;
                 }
-                if (include(["or", "and"], tempFilters[0])) {
+                if (includes(["or", "and"], tempFilters[0])) {
                     tempFilters.shift();
                 }
             } else {

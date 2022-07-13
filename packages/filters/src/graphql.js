@@ -1,4 +1,4 @@
-import { reduce, map, isEmpty, isString } from 'underscore';
+import { reduce, map, isEmpty, isString } from 'lodash';
 import { formatFiltersToODataQuery } from "./format";
 
 // 把"a.b.c"这种字符fieldName转换为{"a":{"b":{"c":{}}}}这种json

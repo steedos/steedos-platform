@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
-    "moment": "^2.24.0",
-    "underscore": "^1.9.1"
+    "lodash": "4.17.21",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
