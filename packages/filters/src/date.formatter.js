@@ -139,4 +139,5 @@ var getFormatter = function(format, dateParts) {
     };
 };
 
-module.exports.getFormatter = getFormatter;
+const _getFormatter = getFormatter;
+export { _getFormatter as getFormatter };

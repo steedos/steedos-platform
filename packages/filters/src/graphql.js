@@ -1,9 +1,9 @@
-const _ = require('underscore');
-const { formatFiltersToODataQuery } = require("./format");
+import { reduce, map, isEmpty, isString } from 'lodash';
+import { formatFiltersToODataQuery } from "./format";
 
 // 把"a.b.c"这种字符fieldName转换为{"a":{"b":{"c":{}}}}这种json
 let expandFieldName = (initial, fieldName) => {
-    _.reduce(fieldName.split("."),function(m, k){
+    reduce(fieldName.split("."),function(m, k){
         if(!m[k]){
             m[k] = {};
         }
@@ -43,9 +43,9 @@ let reduceGraphqlFieldsQuery = (fields, indentsCount) => {
     let itemQuery;
     return ` {
 ${
-    _.map(fields, (fieldValue, fieldKey) => {
+    map(fields, (fieldValue, fieldKey) => {
         itemQuery = generateIndents(indentsCount) + generateIndents(1) + fieldKey;
-        if(_.isEmpty(fieldValue)){
+        if(isEmpty(fieldValue)){
             itemQuery += "\n"
         }
         else{
@@ -60,7 +60,7 @@ ${
 }
 
 let formatFieldsToGraphqlQuery = (fields) => {
-    if(_.isString(fields)){
+    if(isString(fields)){
         fields = fields.split(",");
     }
     let expandedFields = expandFieldNames(fields);
@@ -90,7 +90,7 @@ let formatFieldsToGraphqlQuery = (fields) => {
  * @param {*} fields ,请求的字段，支持["a.b.c","m","n"]或"a.b.c,m,n"这种语法
  */
 let formatFiltersToGraphqlQuery = (objectName, filters, fields, userContext, odataProtocolVersion, forceLowerCase) => {
-    if(!_.isString(filters)){
+    if(!isString(filters)){
         filters = formatFiltersToODataQuery(filters, userContext, odataProtocolVersion, forceLowerCase);
     }
     let filtersWrap  = filters ? `(filters:"${filters}")` : "";
@@ -103,4 +103,5 @@ let formatFiltersToGraphqlQuery = (objectName, filters, fields, userContext, oda
     return graphqlQuery;
 };
 
-exports.formatFiltersToGraphqlQuery = formatFiltersToGraphqlQuery;
+const _formatFiltersToGraphqlQuery = formatFiltersToGraphqlQuery;
+export { _formatFiltersToGraphqlQuery as formatFiltersToGraphqlQuery };

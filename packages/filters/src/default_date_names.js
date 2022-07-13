@@ -15,17 +15,22 @@ var cutCaptions = function(captions, format) {
     });
 };
 
-module.exports = {
-    getMonthNames: function(format) {
-        return cutCaptions(MONTHS, format);
-    },
-    getDayNames: function(format) {
-        return cutCaptions(DAYS, format);
-    },
-    getQuarterNames: function(format) {
-        return QUARTERS;
-    },
-    getPeriodNames: function(format) {
-        return PERIODS;
-    }
+export function getMonthNames(format) {
+    return cutCaptions(MONTHS, format);
+}
+export function getDayNames(format) {
+    return cutCaptions(DAYS, format);
+}
+export function getQuarterNames(format) {
+    return QUARTERS;
+}
+export function getPeriodNames(format) {
+    return PERIODS;
+}
+
+export default {
+    getMonthNames,
+    getDayNames,
+    getQuarterNames,
+    getPeriodNames
 };

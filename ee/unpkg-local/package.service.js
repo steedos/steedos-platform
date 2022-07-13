@@ -32,6 +32,8 @@ module.exports = {
 		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.com',
 		local_packages: [
 			'd3',
+			'echarts',
+			'echarts-stat',
 			'react',
 			'react-dom',
 			'prop-types',
@@ -40,6 +42,7 @@ module.exports = {
 			'monaco-editor',
 			'amis',
 			'@steedos-builder/react',
+			'@steedos/filters',
 			'@steedos-ui/amis',
 			'@steedos-ui/builder-community',
 			'@steedos-ui/design-system',
@@ -48,6 +51,7 @@ module.exports = {
 			'axios',
 			'mermaid',
 			'marked',
+			'crypto-js',
 			'@steedos-builder/fiddle'
 		],
 	},
@@ -122,17 +126,17 @@ module.exports = {
 						router.get(`/unpkg.com/${packageName}@*`, (req, res) => {
 							const packageUrl = req.path.split('/unpkg.com')[1]
 							const parsed = this.parsePackagePathname(packageUrl)
-							res.redirect(`/unpkg.com/${parsed.packageName}${parsed.filename}`);
+							res.redirect(301, `/unpkg.com/${parsed.packageName}${parsed.filename}`);
 							return
 						})
 					} else {
-						this.logger.warn(`Package not found: ${packageName}, you should add to you project.`)
+						this.logger.warn(301, `Package not found: ${packageName}, you should add to you project.`)
 					}
 				});
 				if (this.settings.unpkgUrl) {
 					router.get('/unpkg.com/*', (req, res) => {
 						const packageUrl = req.path.split('/unpkg.com')[1]
-						res.redirect(this.settings.unpkgUrl + packageUrl);
+						res.redirect(301, his.settings.unpkgUrl + packageUrl);
 						return
 					})
 				}

@@ -1,7 +1,7 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "2.2.54-beta.2",
+  "version": "2.2.54-beta.3",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
@@ -9,13 +9,16 @@
   ],
   "license": "Apache",
   "scripts": {
-    "test": "yarn build && mocha test/**/*.js",
-    "build": "babel -d lib src/"
+    "test": "yarn build-babel && mocha test/**/*.js",
+    "build": "yarn build-babel && yarn build-rollup && yarn build-uglifyjs",
+    "build-babel": "babel -d lib src/",
+    "build-rollup": "rollup -c rollup.config.js",
+    "build-uglifyjs": "yarn uglifyjs dist/steedos-filters.umd.js -o dist/steedos-filters.umd.min.js"
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
-    "moment": "^2.24.0",
-    "underscore": "^1.9.1"
+    "lodash": "4.17.21",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -31,5 +34,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "221d7d830c2b307d7e1e5ba23d9969c55bcf78bf"
+  "gitHead": "e83b0f819481cfc1e98ec8b67a2e29e70a520f68"
 }

@@ -4247,28 +4247,28 @@
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/amis@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.35.tgz#d642e7ae7a296401c8a60b7986620460c6bc25d3"
-  integrity sha512-HGKw+CHPf6FH/G/Z8ijB0S2AmcS5nqz8UotJmJbWqYoNeL90O6uPC4utp0xXfSupF61kx+lnHLVqTVrcBNtz9g==
+"@steedos-ui/amis@^2.2.36":
+  version "2.2.36"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.36.tgz#23b0651cdfd40a45d1c58a504a1f369b1b474064"
+  integrity sha512-5mrj81glTkovL+wkeNSTy8Lsq9pHZMuWsyViiLjAtTEZ5/3YO5yvdlUAsDinc+Kq6natnKeyVmJnKyfufJsCmg==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.35.tgz#fc0568ec950dfb857abd87f670deafe80d87979e"
-  integrity sha512-edCaCTrN4obVlIYic2EL6poF2fytQYbbYjcgUC28AqSwd2izoSSLDAvVVFOeVD95LaJbObIi4LBDsB1v1C/zSA==
+"@steedos-ui/builder-community@^2.2.36":
+  version "2.2.36"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.36.tgz#8448312de285e55fcd6ab5ea67065d7f1ca9c520"
+  integrity sha512-kXpOQoIDhGXNjjRvgloPrG1n+UtS/uPP5LUzLLbug0r/E5IMQsIxLO3fPJbEDdul+JPwzhGJhXqqy5nV1rXHUg==
 
-"@steedos-ui/builder-widgets@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.35.tgz#5aefcf7ef6cc839f5ea532c719db9e8d04485239"
-  integrity sha512-TfIxIc+W34SQ4/46lt8dDorEbutl5Tq7grpI4m0mlBNtv4m+NjfoBjOt/QDfyqa00RIZnsRdOD3lA1uO0f1DHA==
+"@steedos-ui/builder-widgets@^2.2.36":
+  version "2.2.36"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.36.tgz#a37a4fa2b66cec06f38209d84a63a7190399f6fd"
+  integrity sha512-dYfqviuZV4zxJshtxT9aouwYclgZ6LsmN8S9dLm0G5IXJXdt+pOKJ6Ii7eLeRGdQVqUG3DyqGpLmGIkiqERxcA==
 
-"@steedos-ui/design-system@^2.2.35":
-  version "2.2.35"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.35.tgz#801e9f846cd2302e7d49029d7952cf5d2196c0db"
-  integrity sha512-S+5nfd1uE3dTayL1vdKBDKGvIjdYgwkk3V4B5ZgwFMpyQ46vsmfNlm8j4lwek4s/qBvKuaD39mQomnHa4dVijw==
+"@steedos-ui/design-system@^2.2.36":
+  version "2.2.36"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.36.tgz#b95ba347d422899735355cc56d35a09c9f2137df"
+  integrity sha512-qfs0GpvhUk4+4iWrR2DDH86ot2WMLt+NVj9fwYgkCcnyfBSop2H/WdLeIdGu41ncCIj/J54e2fcPCWnDac+9ag==
   dependencies:
     react-required-if "^1.0.3"
 
@@ -4278,6 +4278,15 @@
   integrity sha512-2ECPCMY+lDtheFdSAJ0g24XNLFfoRGX8j/Tk1W+ORmeEOirm8XOONFquU5nHHZOllqrN292gqxtrYqY1q+I55g==
   dependencies:
     axios "^0.21.4"
+
+"@steedos/filters@^2.2.53":
+  version "2.2.53"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.2.53.tgz#b3d274c18c096584a67608bd0d67d81c64de16d4"
+  integrity sha512-mhFxwQ2EFu/oQR10/llC/Hc/HJP4ORHr4jiIJmcPSB4YI/hzNtxOC0L6tDdqSV8UfzDN0ypDuJE85zcJvLlEhw==
+  dependencies:
+    "@babel/runtime" "7.12.18"
+    moment "^2.24.0"
+    underscore "^1.9.1"
 
 "@steedos/license@2.2.8":
   version "2.2.8"
@@ -9537,7 +9546,7 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-echarts-stat@^1.2.0:
+echarts-stat@1.2.0, echarts-stat@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/echarts-stat/-/echarts-stat-1.2.0.tgz#d1e7a05d1827724c5cde81f76ee1d75a901746a2"
   integrity sha512-zLd7Kgs+tuTSeaK0VQEMNmnMivEkhvHIk1gpBtLzpRerfcIQ+Bd5XudOMmtwpaTc1WDZbA7d1V//iiBccR46Qg==
@@ -9546,6 +9555,14 @@ echarts@5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.1.tgz#709e03aaf8c7a4439788272ee5c500cf0dce7e5b"
   integrity sha512-nWdlbgX3OVY0hpqncSvp0gDt1FRSKWn7lsWEH+PHmfCuvE0QmSw17pczQvm8AvawnLEkmf1Cts7YwQJZNC0AEQ==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.1"
+
+echarts@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.2.tgz#0a7b3be8c48a48b2e7cb1b82121df0c208d42d2c"
+  integrity sha512-LWCt7ohOKdJqyiBJ0OGBmE9szLdfA9sGcsMEi+GGoc6+Xo75C+BkcT/6NNGRHAWtnQl2fNow05AQjznpap28TQ==
   dependencies:
     tslib "2.3.0"
     zrender "5.3.1"
@@ -17631,7 +17648,7 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-randomstring@^1.2.1:
+randomstring@1.2.2, randomstring@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/randomstring/-/randomstring-1.2.2.tgz#61b3d42624c7b1fcaaaba161c53452eb3d8fef1c"
   integrity sha512-9FByiB8guWZLbE+akdQiWE3I1I6w7Vn5El4o4y7o5bWQ6DWPcEOp+aLG7Jezc8BVRKKpgJd2ppRX0jnKu1YCfg==
