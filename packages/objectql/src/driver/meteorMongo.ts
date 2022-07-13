@@ -55,9 +55,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
         if (!odataQuery) {
             return emptyFilters;
         }
-        console.log(`meteorMongo=====>odataQuery`, odataQuery)
         let query: JsonMap = createFilter(odataQuery);
-        console.log(`meteorMongo=====>query`, JSON.stringify(query))
         return query;
     }
 

@@ -65,9 +65,14 @@ sms:
     appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
     signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
 email:
-  from: ${MAIL_FROM}
-  url: ${MAIL_URL}
-  signname: ${MAIL_SIGNNAME}
+  from: ${STEEDOS_EMAIL_FROM}
+  url: ${STEEDOS_EMAIL_URL}
+  host: ${STEEDOS_EMAIL_HOST}
+  port: ${STEEDOS_EMAIL_PORT}
+  username: ${STEEDOS_EMAIL_USERNAME}
+  password: ${STEEDOS_EMAIL_PASSWORD}
+  secure: ${STEEDOS_EMAIL_PASSWORD}
+  signname: ${STEEDOS_EMAIL_SIGNNAME}
 cron:
   instancerecordqueue_interval: 10000
   mailqueue_interval: 10000
@@ -105,10 +110,10 @@ pay:
     partner_key: ${PAY_WEIXIN_PARTNER_KEY}
 sso:
   oidc:
-    config_url: ${SSO_OIDC_CONFIG_URL}
-    client_id: ${SSO_OIDC_CLIENT_ID}
-    client_secret: ${SSO_OIDC_CLIENT_SECRET}
-    name: ${SSO_OIDC_NAME}
-    label: ${SSO_OIDC_LABEL}
-    logo: ${SSO_OIDC_LOGO}
-    require_local_account: ${SSO_OIDC_REQUIRE_LOCAL_ACCOUNT}
+    config_url: ${STEEDOS_IDENTITY_OIDC_CONFIG_URL}
+    client_id: ${STEEDOS_IDENTITY_OIDC_CLIENT_ID}
+    client_secret: ${STEEDOS_IDENTITY_OIDC_CLIENT_SECRET}
+    name: ${STEEDOS_IDENTITY_OIDC_NAME}
+    label: ${STEEDOS_IDENTITY_OIDC_LABEL}
+    logo: ${STEEDOS_IDENTITY_OIDC_LOGO}
+    require_local_account: ${STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT}

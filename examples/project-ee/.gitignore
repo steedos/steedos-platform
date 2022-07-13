@@ -16,3 +16,5 @@ logs
 
 .env.local
 .steedos
+
+yarn.lock

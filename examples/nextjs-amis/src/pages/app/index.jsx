@@ -1,7 +1,13 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-04 11:24:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-13 11:23:55
+ * @Description: 
+ */
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import React, { useState, useEffect } from 'react';
-import { Navbar } from '@/components/Navbar'
 import { useRouter } from 'next/router'
 
 import { getApps } from '@/lib/apps';
@@ -26,7 +32,6 @@ export default function Apps() {
   if (!apps) return <p>No profile data</p>
   return (
     <>
-      <Navbar />
       <div className="max-w-3xl mx-auto px-4 py-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
           {apps.map((app) => (

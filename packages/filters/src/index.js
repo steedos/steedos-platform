@@ -1,9 +1,10 @@
 
-const SteedosFilter = require("./filter");
-const format = require('./format');
-const utils = require('./utils');
-const formula = require('./formula');
-const graphql = require('./graphql');
+export * as SteedosFilter from "./filter";
+export * from './format';
+export * from './utils';
+export * from './formula';
+export * from './graphql';
 
-exports.SteedosFilter = SteedosFilter;
-Object.assign(exports, utils, formula, format, graphql);
+// const _SteedosFilter = SteedosFilter;
+// export { _SteedosFilter as SteedosFilter };
+// Object.assign(exports, utils, formula, format, graphql);

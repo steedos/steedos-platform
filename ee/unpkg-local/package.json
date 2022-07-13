@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_unpkg-local",
-  "version": "2.2.53-beta.3",
+  "version": "2.2.54-beta.4",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -10,15 +10,19 @@
   },
   "dependencies": {
     "@salesforce-ux/design-system": "^2.17.5",
+    "@steedos-builder/fiddle": "^0.0.5",
     "@steedos-builder/react": "^0.2.23",
-    "@steedos-ui/amis": "^2.2.34",
-    "@steedos-ui/builder-community": "^2.2.34",
-    "@steedos-ui/builder-widgets": "^2.2.34",
-    "@steedos-ui/design-system": "^2.2.34",
+    "@steedos-ui/amis": "^2.2.36",
+    "@steedos-ui/builder-community": "^2.2.36",
+    "@steedos-ui/builder-widgets": "^2.2.36",
+    "@steedos-ui/design-system": "^2.2.36",
+    "@steedos/filters": "2.2.54-beta.4",
     "amis": "1.10.2",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
     "d3": "^3.5.17",
+    "echarts": "5.3.2",
+    "echarts-stat": "1.2.0",
     "lodash": "^4.17.21",
     "marked": "^4.0.17",
     "mermaid": "^9.1.2",
@@ -28,5 +32,5 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "gitHead": "5782f1171133c05cce158adef71e527d970ef50e"
+  "gitHead": "f68c327098f378d5e3d8dc5b12508e31ad368947"
 }

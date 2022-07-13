@@ -94,7 +94,7 @@ async function run(): Promise<void> {
           '<project-directory>'
         )}\n` +
         'For example:\n' +
-        `  ${chalk.cyan(program.name())} ${chalk.green('my-next-app')}\n\n` +
+        `  ${chalk.cyan(program.name())} ${chalk.green('my-steedos-app')}\n\n` +
         `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
     )
     process.exit(1)

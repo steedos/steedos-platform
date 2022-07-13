@@ -1,0 +1,11 @@
+{
+  "packages": [
+    {
+      "package": "@steedos/filters",
+      "urls": [
+        "https://unpkg.com/@steedos/filters@2.2.54-beta.4/dist/steedos-filters.umd.min.js"
+      ],
+      "library": "SteedosFilters"
+    }
+  ]
+}
