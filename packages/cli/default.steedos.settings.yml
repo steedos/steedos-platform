@@ -65,9 +65,14 @@ sms:
     appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
     signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
 email:
-  from: ${MAIL_FROM}
-  url: ${MAIL_URL}
-  signname: ${MAIL_SIGNNAME}
+  from: ${STEEDOS_EMAIL_FROM}
+  url: ${STEEDOS_EMAIL_URL}
+  host: ${STEEDOS_EMAIL_HOST}
+  port: ${STEEDOS_EMAIL_PORT}
+  username: ${STEEDOS_EMAIL_USERNAME}
+  password: ${STEEDOS_EMAIL_PASSWORD}
+  secure: ${STEEDOS_EMAIL_PASSWORD}
+  signname: ${STEEDOS_EMAIL_SIGNNAME}
 cron:
   instancerecordqueue_interval: 10000
   mailqueue_interval: 10000
