@@ -22,3 +22,24 @@
     display: inline !important;
     vertical-align: initial !important;
 }
+
+.ant-modal-root .amis-scope .antd-Panel-footerWrap{
+    position: sticky;
+    width: 100%;
+    bottom: 0px;
+    background: #ffffff
+}
+
+.amis-scope .antd-Modal-content{
+    max-height: calc(100vh - 100px);
+}
+
+.amis-scope .antd-Modal-content .antd-Modal-body{
+    height: calc(100% - 108px);
+    overflow: auto;
+}
+
+.amis-scope .antd-Select-option > label {
+    display: block;
+    min-width: 100px;
+}
