@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-dingtalk",
-    "version": "2.2.54-beta.4",
+    "version": "2.2.54-beta.5",
     "private": false,
     "description": "",
     "publishConfig": {
@@ -20,7 +20,7 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@steedos/service-meteor-package-loader": "2.2.54-beta.4",
+        "@steedos/service-meteor-package-loader": "2.2.54-beta.5",
         "bcrypt": "^5.0.1",
         "bootstrap": "^3.3.7",
         "cookies": "^0.8.0",
@@ -33,11 +33,11 @@
         "wx-ding-aes": "^0.0.10"
     },
     "devDependencies": {
-        "@steedos/accounts": "2.2.54-beta.4",
+        "@steedos/accounts": "2.2.54-beta.5",
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
-        "steedos-server": "2.2.54-beta.4"
+        "steedos-server": "2.2.54-beta.5"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
-    "gitHead": "f68c327098f378d5e3d8dc5b12508e31ad368947"
+    "gitHead": "e249662002a82b461c8f4260acee6f0f4dd63ed3"
 }

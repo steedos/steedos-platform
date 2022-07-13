@@ -1,6 +1,6 @@
 {
   "name": "contract-home",
-  "version": "0.1.0",
+  "version": "2.2.54-beta.5",
   "private": true,
   "scripts": {
     "start": "steedos start"
