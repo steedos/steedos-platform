@@ -1,0 +1,7 @@
+name: cost
+desktop: true
+icon: announcement
+label: 费用看板
+mobile: true
+page: cost_contral_home
+type: page

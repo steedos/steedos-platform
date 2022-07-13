@@ -1,0 +1,21 @@
+name: paid__c
+defaultValue: 待支付
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 支付状态
+multiple: false
+options:
+  - label: 待支付
+    value: 待支付
+    color: FBC858
+  - label: 已支付
+    value: 已支付
+    color: 91CC75
+primary: false
+required: false
+sort_no: 9999
+sortable: false
+type: select

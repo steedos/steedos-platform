@@ -1,0 +1,67 @@
+name: 日常费用报销.管理员
+allowCreate: true
+allowCreateFiles: true
+allowDelete: true
+allowDeleteFiles: true
+allowEdit: true
+allowEditFiles: true
+allowRead: true
+allowReadFiles: true
+modifyAllFiles: true
+modifyAllRecords: true
+permission_set_id: admin
+viewAllFiles: true
+viewAllRecords: true
+field_permissions:
+  - field: name
+    readable: true
+    editable: true
+  - field: owner
+    readable: false
+    editable: false
+  - field: created
+    readable: true
+    editable: false
+  - field: created_by
+    readable: true
+    editable: false
+  - field: modified
+    readable: true
+    editable: false
+  - field: modified_by
+    readable: true
+    editable: false
+  - field: locked
+    readable: false
+    editable: false
+  - field: company_id
+    readable: false
+    editable: false
+  - field: company_ids
+    readable: false
+    editable: false
+  - field: paid__c
+    readable: true
+    editable: true
+  - field: autonumber__c
+    readable: true
+    editable: true
+  - field: applicant__c
+    readable: true
+    editable: true
+  - field: company__c
+    readable: true
+    editable: true
+  - field: department__c
+    readable: true
+    editable: true
+  - field: remark__c
+    readable: true
+    editable: true
+  - field: amount__c
+    readable: true
+    editable: true
+  - field: apply_date__c
+    readable: true
+    editable: true
+    

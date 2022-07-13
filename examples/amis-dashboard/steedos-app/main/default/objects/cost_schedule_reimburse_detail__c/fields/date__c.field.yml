@@ -1,0 +1,12 @@
+name: date__c
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 费用日期
+primary: false
+required: true
+sort_no: 130
+sortable: false
+type: date
