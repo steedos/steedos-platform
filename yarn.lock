@@ -7023,9 +7023,9 @@ camelcase@^6.1.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001332, caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001359:
-  version "1.0.30001365"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001365.tgz"
-  integrity sha512-VDQZ8OtpuIPMBA4YYvZXECtXbddMCUFJk1qu8Mqxfm/SZJNSr1cy4IuLCOL7RJ/YASrvJcYg1Zh+UEUQ5m6z8Q==
+  version "1.0.30001366"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001366.tgz"
+  integrity sha512-yy7XLWCubDobokgzudpkKux8e0UOOnLHE6mlNJBzT3lZJz6s5atSEzjoL+fsCPkI0G8MP5uVdDx1ur/fXEWkZA==
 
 cardinal@^2.1.1:
   version "2.1.1"
@@ -17631,7 +17631,7 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-randomstring@^1.2.1:
+randomstring@1.2.2, randomstring@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/randomstring/-/randomstring-1.2.2.tgz#61b3d42624c7b1fcaaaba161c53452eb3d8fef1c"
   integrity sha512-9FByiB8guWZLbE+akdQiWE3I1I6w7Vn5El4o4y7o5bWQ6DWPcEOp+aLG7Jezc8BVRKKpgJd2ppRX0jnKu1YCfg==

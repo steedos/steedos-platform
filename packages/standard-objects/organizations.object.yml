@@ -18,7 +18,7 @@ fields:
     label: Fullname
     type: text
     omit: true
-    hidden: true
+    visible_on: "{{false}}"
     is_name: true
     name: fullname
     searchable: true
