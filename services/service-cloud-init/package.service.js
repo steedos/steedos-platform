@@ -260,8 +260,8 @@ module.exports = {
 				throw new Error('初始化参数错误，请重新配置');
 			}
 
-			if (!spaceName || !adminName || !adminPhone) {
-				throw new Error('缺少初始化工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
+			if (!spaceName || !adminName) {
+				throw new Error('缺少初始化工作区信息 工作区名称、管理员姓名，请检查');
 			}
 			const initInfo = {
 				spaceName: spaceName,
