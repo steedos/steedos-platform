@@ -35,6 +35,7 @@ try
 				"@steedos/webapp-accounts",
 				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
+				"@steedos/ee_unpkg-local"
 			],
 			plugins: config.plugins
 		}
