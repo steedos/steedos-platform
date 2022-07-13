@@ -32,6 +32,8 @@ module.exports = {
 		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.com',
 		local_packages: [
 			'd3',
+			'echarts',
+			'echarts-stat',
 			'react',
 			'react-dom',
 			'prop-types',
