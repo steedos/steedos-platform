@@ -12,7 +12,7 @@ export function getFieldsTemplate(fields, expand){
             if(expand && (field.type == 'lookup' || field.type == 'master_detail') && field.reference_to){
                 //TODO 获取相关表名称字段
                 const NAME_FIELD_KEY = 'name';
-                fieldsName.push(`${field.name}:${field.name}__expand{_id,${NAME_FIELD_KEY}}`)
+                fieldsName.push(`${field.name}:${field.name}__expand{_id,${NAME_FIELD_KEY}${field.reference_to_field ? `,${field.reference_to_field}`:''}}`);
             }else{
                 fieldsName.push( field.alias ? `${field.alias}:${field.name}` : field.name)
             }
@@ -172,7 +172,7 @@ export function getSaveDataTpl(fields){
         ${getScriptForRemoveUrlPrefixForImgFields(fields)}
         ${getScriptForSimplifiedValueForFileFields(fields)}
         let query = \`mutation{record: \${objectName}__insert(doc: {__saveData}){_id}}\`;
-        if(formData.recordId){
+        if(formData.recordId && formData.recordId !='new'){
             query = \`mutation{record: \${objectName}__update(id: "\${formData._id}", doc: {__saveData}){_id}}\`;
         };
         delete formData._id;
