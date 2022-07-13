@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 11:20:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 17:08:39
+ * @LastEditTime: 2022-07-13 19:14:26
  * @Description: 
  */
 
@@ -10,6 +10,8 @@ const objectql = require('@steedos/objectql');
 const path = require('path');
 const {
     LOCAL_STORE,
+    S3_STORE,
+    OSS_STORE
 } = require('./consts');
 
 /**
@@ -86,8 +88,15 @@ function fileStoreFullPath(fsCollectionName, fileKey) {
  * @returns S3或者OSS 配置
  */
 function getS3Options() {
+    const storeName = getStoreName();
     const config = objectql.getSteedosConfig();
-    const options = config.cfs.aws || config.cfs.aliyun || {};
+    let options = {};
+    if (storeName === OSS_STORE) {
+        options = config.cfs.aliyun
+    }
+    else if (storeName === S3_STORE) {
+        options = config.cfs.aws
+    }
     return options;
 }
 
@@ -159,7 +168,7 @@ function getS3ServiceParams() {
  * 
  * @returns STEEDOSCLOUD配置
  */
- function getCloudOptions() {
+function getCloudOptions() {
     const config = objectql.getSteedosConfig();
     const options = config.cfs.steedosCloud || {};
     return options;
