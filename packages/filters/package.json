@@ -5,15 +5,17 @@
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "license": "Apache",
   "scripts": {
     "test": "yarn build-babel && mocha test/**/*.js",
-    "build": "yarn build-babel && yarn build-rollup && yarn build-uglifyjs",
+    "build": "yarn build-babel && yarn build-rollup && yarn build-uglifyjs && yarn build-assets",
     "build-babel": "babel -d lib src/",
     "build-rollup": "rollup -c rollup.config.js",
-    "build-uglifyjs": "yarn uglifyjs dist/steedos-filters.umd.js -o dist/steedos-filters.umd.min.js"
+    "build-uglifyjs": "yarn uglifyjs dist/steedos-filters.umd.js -o dist/steedos-filters.umd.min.js",
+    "build-assets": "cp src/assets.json dist"
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
