@@ -278,6 +278,28 @@ module.exports = {
 		// 从环境变量初始化
 		initSteedos: async function ({ iUsername, iPassword, iName, iEmail, iMobile, iTenantID, iTenantName, iApiKey }) {
 			console.log(chalk.blue('开始初始化工作区'));
+			// 校验用户名格式
+			if (iUsername && !/^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$/.test(iUsername)) {
+				throw new Error(`用户名 ${iUsername} 格式错误，用户名支持字母、数字、减号(-)、点(.)、下划线(_)及中文，请确认。`)
+			}
+			// 校验邮箱格式
+			if (iEmail && !validator.isEmail(iEmail)) {
+				throw new Error(`邮箱 ${iEmail} 格式错误，请确认。`)
+			}
+			// 校验手机号格式
+			if (iMobile && !validator.isMobilePhone(iMobile)) {
+				throw new Error(`手机号 ${iMobile} 格式错误，请确认。`)
+			}
+			// 校验tenantid格式
+			if (iTenantID) {
+				if (!/^[a-zA-Z0-9]+$/.test(iTenantID) || (iTenantID.length != 17 && iTenantID.length != 24)) {
+					throw new Error(`魔方ID ${iTenantID} 格式错误，魔方ID值由字母、数字组成且长度为17或24。`)
+				}
+			}
+			// 校验apikey格式
+			if (iApiKey && !/^[a-zA-Z0-9-_]+$/.test(iApiKey) || (iApiKey.length != 43)) {
+				throw new Error(`ApiKey ${iApiKey} 格式错误，ApiKey由字母、数字组成且长度为43。`)
+			}
 			const spaceObj = objectql.getObject('spaces')
 			const initInfo = {
 				spaceName: iTenantName || '我的公司',
