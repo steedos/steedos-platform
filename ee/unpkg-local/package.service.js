@@ -136,7 +136,7 @@ module.exports = {
 				if (this.settings.unpkgUrl) {
 					router.get('/unpkg.com/*', (req, res) => {
 						const packageUrl = req.path.split('/unpkg.com')[1]
-						res.redirect(301, his.settings.unpkgUrl + packageUrl);
+						res.redirect(301, this.settings.unpkgUrl + packageUrl);
 						return
 					})
 				}
