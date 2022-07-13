@@ -10,9 +10,10 @@
   "license": "Apache",
   "scripts": {
     "test": "yarn build-babel && mocha test/**/*.js",
-    "build": "yarn build-babel && yarn build-rollup",
+    "build": "yarn build-babel && yarn build-rollup && yarn build-uglifyjs",
     "build-babel": "babel -d lib src/",
-    "build-rollup": "rollup -c rollup.config.js"
+    "build-rollup": "rollup -c rollup.config.js",
+    "build-uglifyjs": "yarn uglifyjs dist/steedos-filters.umd.js -o dist/steedos-filters.umd.min.js"
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
