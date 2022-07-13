@@ -48,6 +48,7 @@ module.exports = {
 			'axios',
 			'mermaid',
 			'marked',
+			'crypto-js',
 			'@steedos-builder/fiddle'
 		],
 	},
