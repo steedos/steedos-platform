@@ -127,7 +127,6 @@ exports.getTableApi = function(mainObject, fields){
     _.each(payload.data.rows, function(item, index){
         item._index = index + 1;
     })
-    console.log('payload.data', payload.data);
     return payload;
     `;
     return api;
