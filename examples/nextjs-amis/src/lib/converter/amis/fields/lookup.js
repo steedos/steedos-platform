@@ -17,7 +17,6 @@ const getReferenceTo = async (field)=>{
     if(!valueFieldName){
         valueFieldName = refObjectConfig.idFieldName || '_id';
     }
-    console.log(`valueFieldName`, field, valueFieldName)
     if(valueFieldName === '_id'){
         valueField = {name: '_id', label: 'ID', type: 'text', toggled: false};
     }else{
@@ -37,18 +36,18 @@ export async function lookupToAmisPicker(field, readonly){
         return ;
     }
     const refObjectConfig = await getUISchema(referenceTo.objectName);
-    console.log(`referenceTo`, referenceTo)
-    const tableFields = [referenceTo.valueField];
+    const tableFields = [];
     let i = 0;
     const searchableFields = [];
 
-
     const fieldsArr = [];
 	_.each(refObjectConfig.fields , (field, field_name)=>{
-		if(!_.has(field, "name")){
-			field.name = field_name
+        if(field_name != '_id' && !field.hidden){
+            if(!_.has(field, "name")){
+                field.name = field_name
+            }
+            fieldsArr.push(field)
         }
-		fieldsArr.push(field)
     })
     _.each(_.sortBy(fieldsArr, "sort_no"),function(field){
         if(i < 5){
@@ -108,7 +107,7 @@ export async function lookupToAmisPicker(field, readonly){
         return api;
     `
 
-    let top = 50;
+    let top = 20;
 
     if(refObjectConfig.paging && refObjectConfig.paging.enabled === false){
         top = 1000;

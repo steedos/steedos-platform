@@ -2,48 +2,62 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-04 11:24:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 16:03:36
+ * @LastEditTime: 2022-07-13 10:14:49
  * @Description: 
  */
 import dynamic from 'next/dynamic'
 import Document, { Script, Head, Main, NextScript } from 'next/document'
 import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router'
-import { Navbar } from '@/components/Navbar'
-import { getApp } from '@/lib/apps';
 import { getListSchema } from '@/lib/objects';
 
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { values } from 'lodash';
+const normalizeLink = (to, location = window.location) => {
+  to = to || '';
 
+  if (to && to[0] === '#') {
+    to = location.pathname + location.search + to;
+  } else if (to && to[0] === '?') {
+    to = location.pathname + to;
+  }
+
+  const idx = to.indexOf('?');
+  const idx2 = to.indexOf('#');
+  let pathname = ~idx
+    ? to.substring(0, idx)
+    : ~idx2
+    ? to.substring(0, idx2)
+    : to;
+  let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
+  let hash = ~idx2 ? to.substring(idx2) : location.hash;
+
+  if (!pathname) {
+    pathname = location.pathname;
+  } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
+    let relativeBase = location.pathname;
+    const paths = relativeBase.split('/');
+    paths.pop();
+    let m;
+    while ((m = /^\.\.?\//.exec(pathname))) {
+      if (m[0] === '../') {
+        paths.pop();
+      }
+      pathname = pathname.substring(m[0].length);
+    }
+    pathname = paths.concat(pathname).join('/');
+  }
+
+  return pathname + search + hash;
+};
 export default function Page ({}) {
   const [selected, setSelected] = useState();
   const router = useRouter()
   const { app_id, tab_id } = router.query
-  const [app, setApp] = useState(null)
-
   const [schema, setSchema] = useState(null);
 
-  const [isLoading, setLoading] = useState(false);
-
   useEffect(() => {
-    setLoading(true)
-    if(!app_id) return ;
-    getApp(app_id)
-      .then((data) => {
-        data?.children?.forEach((item)=>{
-          if(item.id === tab_id){
-            item.current = true;
-          }
-        })
-        setApp(data)
-        setLoading(false)
-      })
-  }, [app_id, tab_id]);
-
-  useEffect(() => {
-    setLoading(true)
     if(!tab_id) return ;
     getListSchema(app_id, tab_id, selected?.name)
       .then((data) => {
@@ -51,7 +65,6 @@ export default function Page ({}) {
           setSelected(values(data.uiSchema?.list_views).length > 0 ? values(data.uiSchema.list_views)[0] : null)
         }
         setSchema(data)
-        setLoading(false)
       })
   }, [tab_id, selected]);
 
@@ -59,14 +72,12 @@ export default function Page ({}) {
     (function () {
       let amis = amisRequire('amis/embed');
       if(document.getElementById("amis-root") && schema?.amisSchema){
-        console.log(`schema.amisSchema===========>`, schema.amisSchema)
         let amisScoped = amis.embed('#amis-root', 
         schema.amisSchema, 
         {}, 
         {
           theme: 'antd',
           jumpTo: (to, action) => {
-            console.log(`jumpTo====>`, to, action)
             if (to === 'goBack') {
                 return window.history.back();
             }
@@ -104,14 +115,20 @@ export default function Page ({}) {
     }
   }
 
+  const newRecord = ()=>{
+    router.push('/app/'+app_id+'/'+tab_id+'/view/new')
+  }
+
   return (
     <>
-      <Navbar navigation={app?.children}/>
       <div className="relative z-10 p-4 pb-0">
               <div className="space-y-4">
                   <div className="pointer-events-auto w-full rounded-lg bg-white p-4 text-[0.8125rem] leading-5 shadow-xl shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
                       <div className="flex justify-between">
                           <div className="font-medium text-slate-900 text-base">{schema?.uiSchema?.label}</div>
+                          <div className="ml-6 fill-slate-400">
+                          <button onClick={newRecord} className="py-0.5 px-3 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-lg shadow focus:outline-none">新建</button>
+                            </div>
                       </div>
                       <Listbox value={selected} onChange={setSelected}>
                         <div className="relative mt-1">

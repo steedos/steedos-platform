@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-05 15:55:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-08 17:11:53
+ * @LastEditTime: 2022-07-12 17:52:14
  * @Description: 
  */
 import { fetchAPI } from './steedos.client';
@@ -39,11 +39,6 @@ export async function getUISchema(objectName){
         for(const fieldName in uiSchema.fields){
             if(uiSchema.fields){
                 const field = uiSchema.fields[fieldName];
-
-                if(field.reference_to ==='users'){
-                    field.reference_to = 'space_users';
-                    field.reference_to_field = 'user';
-                }
 
                 if((field.type === 'lookup' || field.type === 'master_detail') && field.reference_to){
                     const refUiSchema = await getUISchema(field.reference_to);

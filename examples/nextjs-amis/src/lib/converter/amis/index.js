@@ -140,12 +140,12 @@ export async function getObjectForm(objectSchema, ctx){
                 title: "",
                 api: getSaveApi(objectSchema, recordId, fields, {}),
                 initApi: getEditFormInitApi(objectSchema, recordId, fields),
-                initFetch: true,
+                initFetch: recordId != 'new',
                 body: await getFormBody(fields, objectSchema),
                 panelClassName:'m-0 rounded-lg',
                 bodyClassName: 'p-4',
                 className: 'steedos-amis-form',
-                redirect: `/app/${appId}/${tabId}/view/${recordId}`
+                redirect: `/app/${appId}/${tabId}/view/\${recordId}`
             }
         ]
     }
