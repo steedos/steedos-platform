@@ -1,0 +1,340 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "form",
+            "title": "",
+            "body": [
+                {
+                    "label": "统计期间",
+                    "type": "input-datetime-range",
+                    "name": "datetime",
+                    "id": "u:de60dc7f7766",
+                    "ranges": [
+                        "today",
+                        "yesterday",
+                        "prevweek",
+                        "thisweek",
+                        "prevmonth",
+                        "thismonth",
+                        "lastYear",
+                        "thisyear",
+                        "7daysago"
+                    ],
+                    "inputClassName": "w-xxs",
+                    "mode": "normal",
+                    "inputFormat": "YYYY-MM-DD HH:SS",
+                    "minDate": "",
+                    "maxDate": "",
+                    "format": "YYYY-MM-DD HH:mm",
+                    "embed": false,
+                    "utc": false,
+                    "className": "bg-white p r",
+                    "clearable": false,
+                    "value": "-6month, now"
+                },
+                {
+                    "type": "grid",
+                    "columns": [
+                        {
+                            "body": [
+                                {
+                                    "type": "grid",
+                                    "columns": [
+                                        {
+                                            "body": [
+                                                {
+                                                    "type": "service",
+                                                    "body": [
+                                                        {
+                                                            "type": "grid",
+                                                            "id": "u:5f326ed9a36c",
+                                                            "columns": [
+                                                                {
+                                                                    "body": [
+                                                                        {
+                                                                            "type": "panel",
+                                                                            "title": "日常费用报销金额",
+                                                                            "body": [
+                                                                                {
+                                                                                    "type": "tpl",
+                                                                                    "tpl": "<div class=\"body-row-auto scrollbox\" >\n<div class=\"visualization-renderer\">\n<div class=\"visualization-renderer-wrapper\">\n<div class=\"counter-visualization-container\">\n<div class=\"counter-visualization-content\">\n<div style=\"transform: scale(0.65);\">\n<div class=\"counter-visualization-value\" title=\"${total_amount}\">￥${amount__c}</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
+                                                                                    "inline": false,
+                                                                                    "style": {
+                                                                                        "marginTop": "",
+                                                                                        "marginBottom": ""
+                                                                                    },
+                                                                                    "affixFooter": false,
+                                                                                    "className": ".h"
+                                                                                }
+                                                                            ],
+                                                                            "id": "u:73871fecf5f8",
+                                                                            "affixFooter": false,
+                                                                            "actions": [],
+                                                                            "headerClassName": "p p-b-xs font-bold r",
+                                                                            "inline": false,
+                                                                            "className": "Panel--default r no-border ",
+                                                                            "bodyClassName": "h-56"
+                                                                        }
+                                                                    ],
+                                                                    "columnClassName": ".h"
+                                                                }
+                                                            ],
+                                                            "className": ".h"
+                                                        }
+                                                    ],
+                                                    "id": "u:29bd9dde1d4a",
+                                                    "messages": {},
+                                                    "api": {
+                                                        "method": "post",
+                                                        "url": "${context.rootUrl}/service/api/~packages-@steedos/service-charts/queries/cost_daily_expense_reimburse/results?datetime=${datetime}",
+                                                        "sendOn": "this.datetime",
+                                                        "requestAdaptor": "\nvar datetime = api.data.datetime;\nvar start_and_end;\nif (datetime) {\n  start_and_end = datetime.split(',');\n} else {\n  start_and_end = ['', ''];\n}\napi.data.parameters = {\n  datetime: {\n    start: start_and_end[0],\n    end: start_and_end[1]\n  }\n}",
+                                                        "adaptor": "\nvar rows = payload?.query_result?.data?.rows;\nif (rows.length) {\n  rows = rows[0]\n} else {\n  rows = { amount__c: 0 }\n}\npayload.data = {\n  amount__c: rows.amount__c\n};\n// console.log('payload ==>', payload)\nreturn payload;\n",
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
+                                                    },
+                                                    "affixFooter": false,
+                                                    "className": ".h"
+                                                }
+                                            ],
+                                            "columnClassName": ".h",
+                                            "valign": "middle",
+                                            "md": 6
+                                        },
+                                        {
+                                            "body": [
+                                                {
+                                                    "type": "panel",
+                                                    "title": "付款情况",
+                                                    "body": [
+                                                        {
+                                                            "type": "chart",
+                                                            "config": {
+                                                                "tooltip": {
+                                                                    "trigger": "item"
+                                                                },
+                                                                "legend": {
+                                                                    "left": "center",
+                                                                    "top": "5%"
+                                                                },
+                                                                "series": [
+                                                                    {
+                                                                        "name": "Access From",
+                                                                        "type": "pie",
+                                                                        "data": "${data}",
+                                                                        "label": {
+                                                                            "show": false,
+                                                                            "position": "center"
+                                                                        },
+                                                                        "radius": [
+                                                                            "10%",
+                                                                            "30%"
+                                                                        ],
+                                                                        "avoidLabelOverlap": false,
+                                                                        "emphasis": {
+                                                                            "label": {
+                                                                                "show": true,
+                                                                                "fontSize": 40,
+                                                                                "fontWeight": "bold"
+                                                                            }
+                                                                        },
+                                                                        "labelLine": {
+                                                                            "show": false
+                                                                        },
+                                                                        "top": -50
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "replaceChartOption": true,
+                                                            "id": "u:ce347521004c",
+                                                            "api": {
+                                                                "method": "post",
+                                                                "url": "${context.rootUrl}/service/api/~packages-@steedos/service-charts/queries/paid_daily_expense_reimburse/results?datetime=${datetime}",
+                                                                "sendOn": "this.datetime",
+                                                                "requestAdaptor": "\nvar datetime = api.data.datetime;\nvar start_and_end;\nif (datetime) {\n  start_and_end = datetime.split(',');\n} else {\n  start_and_end = ['', ''];\n}\napi.data.parameters = {\n  datetime: {\n    start: start_and_end[0],\n    end: start_and_end[1]\n  }\n}",
+                                                                "adaptor": "\nvar rows = payload?.query_result?.data?.rows;\nif (rows.length) {\n  rows = rows[0]\n} else {\n  rows = { totalAmount: 0, paidAmount: 0 }\n}\nvar data = [\n  { value: rows.totalAmount, name: '总金额' },\n  { value: rows.paidAmount, name: '支付金额' }\n];\npayload.data = {\n  data\n};\nreturn payload;\n",
+                                                                "headers": {
+                                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                }
+                                                            },
+                                                            "affixFooter": false,
+                                                            "className": ".h",
+                                                            "style": {
+                                                                "height": "200px"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "id": "u:73871fecf5f8",
+                                                    "affixFooter": false,
+                                                    "actions": [],
+                                                    "headerClassName": "p p-b-xs font-bold r",
+                                                    "inline": false,
+                                                    "className": "Panel--default r no-border ",
+                                                    "subFormMode": "",
+                                                    "footerClassName": "",
+                                                    "bodyClassName": "h-56"
+                                                }
+                                            ],
+                                            "affixFooter": false,
+                                            "columnClassName": ".h"
+                                        }
+                                    ],
+                                    "id": "u:ee34d8731ce2",
+                                    "className": ".h"
+                                }
+                            ],
+                            "columnClassName": ".h"
+                        },
+                        {
+                            "body": [
+                                {
+                                    "type": "panel",
+                                    "title": "费用明细",
+                                    "body": [
+                                        {
+                                            "type": "steedos-provider",
+                                            "label": "华炎魔方容器",
+                                            "body": [
+                                                {
+                                                    "type": "steedos-object-listview",
+                                                    "label": "列表视图",
+                                                    "objectApiName": "cost_daily_expense_reimburse__c",
+                                                    "listName": "all",
+                                                    "id": "u:3d0d2a1a2962"
+                                                }
+                                            ],
+                                            "rootUrl": "${context.rootUrl}",
+                                            "userId": "${context.userId}",
+                                            "authToken": "${context.authToken}",
+                                            "tenantId": "${context.tenantId}",
+                                            "id": "u:db4b2f98a0f5"
+                                        }
+                                    ],
+                                    "id": "u:73871fecf5f8",
+                                    "affixFooter": false,
+                                    "actions": [],
+                                    "headerClassName": "p p-b-xs font-bold r",
+                                    "inline": false,
+                                    "className": "Panel--default r no-border",
+                                    "bodyClassName": "h-56",
+                                    "listName": "all"
+                                }
+                            ],
+                            "affixFooter": false,
+                            "columnClassName": "",
+                            "md": 7
+                        }
+                    ],
+                    "id": "u:4d4c871e362f",
+                    "className": "m-b .h",
+                    "subFormMode": "",
+                    "valign": "top"
+                },
+                {
+                    "type": "panel",
+                    "title": "付款趋势图",
+                    "body": [
+                        {
+                            "type": "chart",
+                            "config": {
+                                "xAxis": {
+                                    "type": "category",
+                                    "data": "${time_arr}",
+                                    "boundaryGap": false
+                                },
+                                "yAxis": {
+                                    "type": "value"
+                                },
+                                "series": [
+                                    {
+                                        "data": "${entity_num_arr}",
+                                        "type": "line",
+                                        "name": "待支付"
+                                    },
+                                    {
+                                        "name": "已支付",
+                                        "type": "line",
+                                        "data": "${fictitious_num_arr}"
+                                    }
+                                ],
+                                "tooltip": {
+                                    "trigger": "axis"
+                                },
+                                "legend": {
+                                    "data": [
+                                        "待支付",
+                                        "已支付"
+                                    ],
+                                    "top": "10"
+                                },
+                                "grid": {
+                                    "left": "3%",
+                                    "right": "4%",
+                                    "bottom": "3%",
+                                    "containLabel": true
+                                },
+                                "toolbox": {
+                                    "feature": {
+                                        "saveAsImage": {}
+                                    }
+                                }
+                            },
+                            "replaceChartOption": true,
+                            "id": "u:ce347521004c",
+                            "api": {
+                                "method": "post",
+                                "url": "${context.rootUrl}/service/api/~packages-@steedos/service-charts/queries/paid_amount/results?datetime=${datetime}",
+                                "sendOn": "this.datetime",
+                                "requestAdaptor": "\nvar datetime = api.data.datetime;\nvar start_and_end;\nif (datetime) {\n  start_and_end = datetime.split(',');\n} else {\n  start_and_end = ['', ''];\n}\napi.data.parameters = {\n  datetime: {\n    start: start_and_end[0],\n    end: start_and_end[1]\n  }\n}",
+                                "adaptor": "var rows = payload?.query_result?.data?.rows;\n\nvar time_arr = [];\nvar entity_num_arr = [];\nvar fictitious_num_arr = [];\nvar data = [];\nif (rows.length) {\n  data = rows.forEach((item) => {\n    if (time_arr.indexOf(item.time) < 0) {\n      time_arr.push(item.time)\n    }\n    if (item._id.substring(8) === '待支付') {\n      entity_num_arr.push(item.total_amount)\n    } else if (item._id.substring(8) === '已支付') {\n      fictitious_num_arr.push(item.total_amount)\n    }\n  })\n}\npayload.data = {\n  time_arr,\n  entity_num_arr,\n  fictitious_num_arr\n};\nconsole.log(payload.data);\n\nreturn payload;",
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            },
+                            "affixFooter": false,
+                            "className": "bg-white",
+                            "listName": "all"
+                        }
+                    ],
+                    "id": "u:73871fecf5f8",
+                    "affixFooter": false,
+                    "actions": [],
+                    "headerClassName": "p p-b-xs font-bold r",
+                    "inline": false,
+                    "className": "Panel--default r no-border h-full m-xs p-xs",
+                    "subFormMode": "",
+                    "footerClassName": "m-b-sm"
+                }
+            ],
+            "id": "u:7903f0712271",
+            "className": "no-border p",
+            "target": "contracts_received,contracts_paid",
+            "actions": [],
+            "wrapWithPanel": false
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "recordId": "",
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {
+            "rootUrl": "https://5000-emerald-lobster-s0uyjr2a.ws.vscode.steedos.cn"
+        }
+    },
+    "messages": {},
+    "style": {
+        "backgroundColor": "#e1effe",
+        "opacity": 1
+    },
+    "initApi": "",
+    "className": "absolute",
+    "bodyClassName": "p-none",
+    "asideClassName": ""
+}

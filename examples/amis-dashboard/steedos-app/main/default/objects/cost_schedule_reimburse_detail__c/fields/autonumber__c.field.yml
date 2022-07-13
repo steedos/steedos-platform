@@ -1,0 +1,12 @@
+name: autonumber__c
+filterable: false
+formula: '{YYYY}-{00000}'
+generated: false
+index: false
+is_name: true
+is_wide: false
+label: 日常费用明细编号
+primary: false
+sort_no: 100
+sortable: false
+type: autonumber

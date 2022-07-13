@@ -1,0 +1,21 @@
+name: group__c
+data_type: text
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 所属分组
+multiple: false
+options:
+  - label: 费用类
+    value: 费用类
+    color: 73C0DE
+  - label: 补助类
+    value: 补助类
+    color: F4A460
+primary: false
+required: false
+sort_no: 120
+sortable: false
+type: select

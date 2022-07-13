@@ -1,0 +1,14 @@
+name: expend_type__c
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 费用类别
+multiple: false
+primary: false
+reference_to: cost_type__c
+required: true
+sort_no: 110
+sortable: false
+type: lookup

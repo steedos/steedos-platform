@@ -1,0 +1,393 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "grid",
+            "columns": [
+                {
+                    "body": [
+                        {
+                            "type": "service",
+                            "body": [
+                                {
+                                    "type": "panel",
+                                    "title": "待审核文件",
+                                    "id": "u:fb552cdf2fd3",
+                                    "affixFooter": false,
+                                    "body": [
+                                        {
+                                            "type": "table",
+                                            "columns": [
+                                                {
+                                                    "type": "tpl",
+                                                    "tpl": "<span class='slds-icon_container slds-icon-standard-task'><svg aria-hidden='true' class='slds-icon slds-icon_small' viewBox='0 0 100 100' name='task'><path d='M46.6 23.7l-2.1-2.1c-.6-.6-1.5-.6-2.1 0L29.2 34.8l-5.3-5.3c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l7.4 7.4c.6.6 1.4.9 2.1.9.8 0 1.5-.3 2.1-.9l15.3-15.3c.5-.5.5-1.5 0-2.1zM77 38H51c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h26c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM77 56H45c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h32c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM33 56h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM33 74h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM77 74H45c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h32c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2z'></path></svg></span>",
+                                                    "width": "2rem"
+                                                },
+                                                {
+                                                    "label": "",
+                                                    "type": "link",
+                                                    "placeholder": "-",
+                                                    "body": "${name}",
+                                                    "href": "/app/-/instances/view/${_id}",
+                                                    "blank": false
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "name": "submitter_name",
+                                                    "label": "",
+                                                    "placeholder": "-"
+                                                },
+                                                {
+                                                    "type": "datetime",
+                                                    "label": "",
+                                                    "name": "modified",
+                                                    "placeholder": "-",
+                                                    "format": "YYYY-MM-DD HH:mm",
+                                                    "width": "8rem"
+                                                }
+                                            ],
+                                            "id": "u:27b821298d58",
+                                            "affixFooter": false,
+                                            "source": "${rows}",
+                                            "placeholder": "您没有待审核文件。",
+                                            "tableClassName": "border-b-0"
+                                        }
+                                    ],
+                                    "headerClassName": "p-t p-l text-xl font-bold",
+                                    "className": "Panel--default slds-card"
+                                }
+                            ],
+                            "id": "u:df52eae986a8",
+                            "messages": {},
+                            "api": {
+                                "method": "post",
+                                "url": "${context.rootUrl}/graphql",
+                                "data": {
+                                    "query": "{ rows: instances( top: 5,filters: [[[\"inbox_users\", \"=\", \"{userId}\"],\"or\",[\"cc_users\", \"=\", \"{userId}\"]]],sort: \"modified desc\") { _id, name, submitter_name, modified }}"
+                                },
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            },
+                            "affixFooter": false
+                        },
+                        {
+                            "type": "service",
+                            "body": [
+                                {
+                                    "type": "service",
+                                    "id": "u:0f6224a0836f",
+                                    "affixFooter": false,
+                                    "body": [
+                                        {
+                                            "type": "panel",
+                                            "id": "u:e162ec06b709",
+                                            "affixFooter": false,
+                                            "title": "应用",
+                                            "body": [
+                                                {
+                                                    "type": "each",
+                                                    "name": "items",
+                                                    "source": "${items}",
+                                                    "items": {
+                                                        "type": "tpl",
+                                                        "tpl": "<a class='slds-app-launcher__tile slds-text-link_reset ' role='button' tabindex='0' href='${path}'><div class='slds-app-launcher__tile-figure'><span class='slds-icon_container slds-icon-standard-approval'><img class='slds-icon slds-icon_container slds-icon-standard-${icon}' src='${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/assets/icons/standard/${icon}.svg'><span class='slds-assistive-text'>${name}</span></span></div><div class='slds-app-launcher__tile-body'><span class='slds-link text-blue-600 font-bold'><span title='${name}'>${name}</span></span><div style='display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;'><span title='${description}'>${description}</span></div></div></a>",
+                                                        "inline": true,
+                                                        "style": {},
+                                                        "className": "slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
+                                                    },
+                                                    "id": "u:a0f163ed207f",
+                                                    "className": "slds-grid slds-wrap slds-grid_pull-padded"
+                                                }
+                                            ],
+                                            "headerClassName": "p-t p-l font-bold",
+                                            "placeholder": "暂无数据",
+                                            "showHeader": false,
+                                            "className": "Panel--default slds-card",
+                                            "visibleOn": "",
+                                            "clearValueOnHidden": false
+                                        }
+                                    ],
+                                    "className": "",
+                                    "visibleOn": "",
+                                    "clearValueOnHidden": false,
+                                    "visible": true,
+                                    "messages": {},
+                                    "api": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/apps/menus",
+                                        "data": null,
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                    },
+                                    "__visibleOn": ""
+                                }
+                            ],
+                            "id": "u:0f6224a0836f",
+                            "affixFooter": false,
+                            "messages": {},
+                            "api": {
+                                "method": "get",
+                                "url": "${context.rootUrl}/service/api/apps/menus",
+                                "data": null,
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            },
+                            "visibleOn": "",
+                            "clearValueOnHidden": false
+                        },
+                        {
+                            "type": "service",
+                            "id": "u:077aa9d21382",
+                            "body": [
+                                {
+                                    "type": "panel",
+                                    "title": "本周公告",
+                                    "body": [
+                                        {
+                                            "type": "table",
+                                            "columns": [
+                                                {
+                                                    "type": "tpl",
+                                                    "tpl": "<span class='slds-icon_container slds-icon-standard-announcement'><svg aria-hidden='true' class='slds-icon slds-icon_small' viewBox='0 0 100 100' name='announcement'><g><path d='M46 74.3L44.4 73c-1.8-1.2-1.8-3.7-1.8-5v-3.6c0-1-.9-1.9-1.9-1.9h-7.5c-1 0-1.9.9-1.9 1.9V74c0 3.4 2 6 5.1 6h6.2c3.6 0 3.9-2.5 3.9-2.5s.6-2.2-.5-3.2zM74 40.1v-17-.1c0-3-3.8-3.9-5.8-1.9L57 31.6c-1.8 1.5-4 2.1-6.3 2.1h-19c-6.6.1-11.7 5.7-11.7 12.2v.2c0 6.5 5.1 11.4 11.7 11.4h19.1c2.4 0 4.6 1 6.4 2.5l11 10.7c2 2 5.8 1.2 5.8-1.7V52c3.8 0 6-2.6 6-6 0-3.3-2.3-5.9-6-5.9z'></path></g></svg></span>",
+                                                    "name": "icon",
+                                                    "width": "2rem",
+                                                    "placeholder": "-"
+                                                },
+                                                {
+                                                    "label": "",
+                                                    "type": "link",
+                                                    "href": "/app/-/announcements/view/${_id}",
+                                                    "body": "${name}",
+                                                    "blank": false
+                                                },
+                                                {
+                                                    "label": "",
+                                                    "name": "created",
+                                                    "type": "datetime",
+                                                    "placeholder": "-",
+                                                    "format": "YYYY-MM-DD HH:mm",
+                                                    "width": "8rem"
+                                                }
+                                            ],
+                                            "id": "u:97642b268d03",
+                                            "affixFooter": false,
+                                            "source": "${rows}",
+                                            "placeholder": "本周没有新公告。",
+                                            "tableClassName": "border-b-0"
+                                        }
+                                    ],
+                                    "id": "u:4581e6513a59",
+                                    "affixFooter": false,
+                                    "actions": [
+                                        {
+                                            "type": "flex",
+                                            "items": [
+                                                {
+                                                    "type": "button",
+                                                    "label": "查看全部",
+                                                    "actionType": "url",
+                                                    "url": "/app/-/announcements",
+                                                    "level": "link",
+                                                    "block": true,
+                                                    "className": "",
+                                                    "blank": false
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "headerClassName": "p-t p-l font-bold",
+                                    "className": "Panel--default slds-card"
+                                }
+                            ],
+                            "messages": {},
+                            "api": {
+                                "method": "post",
+                                "url": "${context.rootUrl}/graphql",
+                                "data": {
+                                    "query": "{  rows: announcements(    top: 5,filters: [[[\"owner\", \"=\", \"{userId}\"],\"or\",[\"members\", \"=\", \"{userId}\"]],[\"created\", \"between\", \"last_7_days\"]]    sort: \"created desc\"  ) {    _id, name, created  }}"
+                                },
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            },
+                            "affixFooter": false
+                        }
+                    ],
+                    "md": 8
+                },
+                {
+                    "body": [
+                        {
+                            "type": "service",
+                            "body": [
+                                {
+                                    "type": "panel",
+                                    "title": "今日任务",
+                                    "body": [
+                                        {
+                                            "type": "table",
+                                            "id": "u:af9e9d2c34e1",
+                                            "affixFooter": false,
+                                            "source": "${rows}",
+                                            "placeholder": "您今天没有待办任务。",
+                                            "columns": [
+                                                {
+                                                    "type": "tpl",
+                                                    "tpl": "<span class='slds-icon_container slds-icon-standard-timesheet-entry'><svg aria-hidden='true' class='slds-icon slds-icon_small' viewBox='0 0 100 100' name='timesheet_entry'><path d='M70.9 20H29.1c-4.3 0-7.8 3.5-7.8 7.8v44.3c0 4.3 3.5 7.8 7.8 7.8h41.7c4.3 0 7.8-3.5 7.8-7.8V27.8c.1-4.3-3.4-7.8-7.7-7.8zm-2.6 47c0 1.4-1.2 2.6-2.6 2.6H34.3c-1.4 0-2.6-1.2-2.6-2.6v-2.6c0-1.4 1.2-2.6 2.6-2.6h31.3c1.4 0 2.6 1.2 2.6 2.6V67zM40.9 50l1.4-1.4c.4-.4 1-.4 1.4 0l3.6 3.6 9-9c.4-.4 1-.4 1.4 0l1.4 1.4c.3.4.3 1.1 0 1.4L48.8 56.5c-.4.4-.9.6-1.4.6-.5 0-1-.2-1.4-.6l-5-5c-.5-.5-.5-1.1-.1-1.5zm27.4-14.3c0 1.4-1.2 2.6-2.6 2.6H34.3c-1.4 0-2.6-1.2-2.6-2.6V33c0-1.4 1.2-2.6 2.6-2.6h31.3c1.4 0 2.6 1.2 2.6 2.6v2.7z'></path></svg></span>",
+                                                    "width": "1.5rem"
+                                                },
+                                                {
+                                                    "type": "link",
+                                                    "href": "/app/-/tasks/view/${_id}",
+                                                    "body": "${name}",
+                                                    "blank": false,
+                                                    "label": ""
+                                                }
+                                            ],
+                                            "tableClassName": "border-b-0"
+                                        }
+                                    ],
+                                    "id": "u:4ba9b8860462",
+                                    "actions": [
+                                        {
+                                            "type": "flex",
+                                            "items": [
+                                                {
+                                                    "type": "button",
+                                                    "label": "查看全部",
+                                                    "actionType": "url",
+                                                    "url": "/app/-/tasks",
+                                                    "level": "link",
+                                                    "block": true,
+                                                    "className": "",
+                                                    "blank": false
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "affixFooter": false,
+                                    "bodyClassName": "",
+                                    "subFormMode": "",
+                                    "subFormHorizontal": {
+                                        "leftFixed": "normal"
+                                    },
+                                    "className": "Panel--default slds-card",
+                                    "headerClassName": "p-t p-l font-bold"
+                                }
+                            ],
+                            "id": "u:f7bfe3bd702f",
+                            "affixFooter": false,
+                            "messages": {},
+                            "api": {
+                                "method": "post",
+                                "url": "${context.rootUrl}/graphql",
+                                "data": {
+                                    "query": "{ rows: tasks(top: 5,filters: [[\"assignees\", \"=\", \"{userId}\"], [\"state\", \"<>\", \"completed\"],[\"due_date\", \"between\", \"last_30_days\"]], sort: \"due_date asc\"  ) { _id, name }}"
+                                },
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            }
+                        },
+                        {
+                            "type": "service",
+                            "body": [
+                                {
+                                    "type": "panel",
+                                    "title": "今日日程",
+                                    "body": [
+                                        {
+                                            "type": "table",
+                                            "columns": [
+                                                {
+                                                    "type": "tpl",
+                                                    "tpl": "<span class='slds-icon_container slds-icon-standard-event'><svg aria-hidden='true' class='slds-icon slds-icon_small' viewBox='0 0 100 100' name='event'><path d='M76 42H24c-1.1 0-2 .9-2 2v30c0 3.3 2.7 6 6 6h44c3.3 0 6-2.7 6-6V44c0-1.1-.9-2-2-2zM40 70c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm0-14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm14 14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm0-14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm14 14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm0-14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zM72 26h-5v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2H41v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2h-5c-3.3 0-6 2.7-6 6v2c0 1.1.9 2 2 2h52c1.1 0 2-.9 2-2v-2c0-3.3-2.7-6-6-6z'></path></svg></span>",
+                                                    "width": "1.5rem"
+                                                },
+                                                {
+                                                    "label": "",
+                                                    "type": "link",
+                                                    "href": "/app/-/events/view/${_id}",
+                                                    "body": "${name}",
+                                                    "blank": false
+                                                }
+                                            ],
+                                            "id": "u:0ed418a59c41",
+                                            "source": "${rows}",
+                                            "placeholder": "您今天没有日程。",
+                                            "footable": false,
+                                            "tableClassName": "border-b-0",
+                                            "affixFooter": false
+                                        }
+                                    ],
+                                    "id": "u:5944f1ff09a0",
+                                    "actions": [
+                                        {
+                                            "type": "flex",
+                                            "items": [
+                                                {
+                                                    "type": "button",
+                                                    "label": "查看全部",
+                                                    "actionType": "url",
+                                                    "url": "/app/-/events",
+                                                    "level": "link",
+                                                    "block": true,
+                                                    "className": "",
+                                                    "blank": false
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "affixFooter": false,
+                                    "headerClassName": "p-t p-l font-bold",
+                                    "className": "Panel--default slds-card",
+                                    "bodyClassName": ""
+                                }
+                            ],
+                            "id": "u:5027041eb2e1",
+                            "messages": {},
+                            "api": {
+                                "method": "post",
+                                "url": "${context.rootUrl}/graphql",
+                                "data": {
+                                    "query": "{ rows: events(top: 5,filters: [[[\"owner\", \"=\", \"{userId}\"],\"or\",[\"assignees\", \"=\", \"{userId}\"]],[[\"end\", \"between\", \"today\"],\"or\",[\"start\", \"between\", \"today\"]]],sort: \"start desc, end asc\") { _id, name }}"
+                                },
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                }
+                            },
+                            "affixFooter": false
+                        }
+                    ]
+                }
+            ],
+            "id": "u:77d38fedd5b4"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "recordId": "",
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {
+            "rootUrl": "https://5000-blush-cuckoo-g0g7hl05.ws.vscode.steedos.cn"
+        }
+    },
+    "style": {
+        "paddingTop": "0.5rem",
+        "paddingRight": "0.5rem",
+        "paddingBottom": "0.5rem",
+        "paddingLeft": "0.5rem",
+        "backgroundColor": "#e1effe"
+    },
+    "affixFooter": false,
+    "messages": {},
+    "className": "absolute"
+}

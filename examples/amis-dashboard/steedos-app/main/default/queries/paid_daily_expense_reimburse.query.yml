@@ -1,0 +1,120 @@
+name: paid_daily_expense_reimburse
+datasource: default
+label: 已支付日常费用报销金额
+options:
+  parameters:
+    - title: Datetime
+      name: datetime
+      type: datetime-range
+      locals: []
+      value: d_this_month
+  apply_auto_limit: false
+query: |-
+  {
+      "collection": "cost_daily_expense_reimburse__c",
+      "aggregate": [
+          {
+              "$project": {
+                  "is_deleted": "$is_deleted",
+                  "amount__c": "$amount__c",
+                  "paid__c": "$paid__c",
+                  "created": {
+                      "$dateToString": {
+                          "format": "%Y-%m-%d %H:%M",
+                          "date": "$apply_date__c",
+                          "timezone": "+00"
+                      }
+                  }
+              }
+          },
+          {
+              "$facet": {
+                  "paid": [
+                      {
+                          "$match": {
+                              "paid__c": {
+                                  "$eq": "已支付"
+                              },
+                              "is_deleted": {
+                                  "$ne": true
+                              },
+                              "$and": [{
+                                  "created": {
+                                      "$gte": "{{ datetime.start }}"
+                                  }
+                              },
+                              {
+                                  "created": {
+                                      "$lte": "{{ datetime.end }}"
+                                  }
+                              }
+                              ]
+                          }
+                      },
+                      {
+                          "$group": {
+                              "_id": "",
+                              "paidAmount": {
+                                  "$sum": "$amount__c"
+                              }
+                          }
+                      }
+                  ],
+
+              "all": [
+                  {
+                      "$match": {
+                          "is_deleted": {
+                              "$ne": true
+                          },
+                          "$and": [{
+                              "created": {
+                                  "$gte": "{{ datetime.start }}"
+                              }
+                          },
+                          {
+                              "created": {
+                                  "$lte": "{{ datetime.end }}"
+                              }
+                          }
+                          ]
+                      }
+                  },
+                  {
+                      "$group": {
+                          "_id": "",
+                          "totalAmount": {
+                              "$sum": "$amount__c"
+                          }
+                      }
+                  }
+              ]
+          }
+      },
+
+      {
+          "$unwind": "$paid"
+      },
+
+      {
+          "$unwind": "$all"
+      },
+
+      {
+          "$addFields": {
+              "_id": "",
+              "totalAmount": "$all.totalAmount",
+              "paidAmount": "$paid.paidAmount"
+          }
+      },
+
+      {
+          "$project": {
+              "_id": 1,
+              "totalAmount": 1,
+              "paidAmount": 1
+          }
+      }
+
+  ]
+  }

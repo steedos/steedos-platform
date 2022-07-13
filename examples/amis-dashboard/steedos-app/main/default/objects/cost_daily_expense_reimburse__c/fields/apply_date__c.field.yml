@@ -1,0 +1,13 @@
+name: apply_date__c
+defaultValue: '{now}'
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 申请日期
+primary: false
+required: false
+sort_no: 9999
+sortable: false
+type: date

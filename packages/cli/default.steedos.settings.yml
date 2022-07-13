@@ -28,6 +28,7 @@ cfs:
     accessKeyId: ${STEEDOS_CFS_ALIYUN_ACCESSKEYID}
     secretAccessKey: ${STEEDOS_CFS_ALIYUN_SECRETACCESSKEY}
   aws:
+    region: ${STEEDOS_CFS_AWS_S3_REGION}
     endpoint: ${STEEDOS_CFS_AWS_S3_ENDPOINT}
     bucket: ${STEEDOS_CFS_AWS_S3_BUCKET}
     accessKeyId: ${STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID}

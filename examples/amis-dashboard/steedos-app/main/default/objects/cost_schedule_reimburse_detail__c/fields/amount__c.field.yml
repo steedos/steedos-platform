@@ -1,0 +1,14 @@
+name: amount__c
+filterable: false
+generated: false
+index: false
+is_name: false
+is_wide: false
+label: 费用金额
+precision: 18
+primary: false
+required: true
+scale: 2
+sort_no: 120
+sortable: false
+type: currency

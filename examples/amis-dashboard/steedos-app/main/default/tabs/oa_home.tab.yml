@@ -1,0 +1,7 @@
+name: oa_home
+desktop: true
+icon: home
+label: 主页
+mobile: true
+page: oa_home
+type: page

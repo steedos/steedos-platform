@@ -1,0 +1,9 @@
+name: oa_home
+__filename: >-
+  /workspace/steedos-apps/steedos-packages/app-oa/main/default/pages/oa_home.page.yml
+is_active: true
+label: 主页
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

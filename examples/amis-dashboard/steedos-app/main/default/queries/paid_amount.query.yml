@@ -1,0 +1,7 @@
+name: paid_amount
+datasource: default
+label: 付款折线图
+options:
+  parameters: []
+  apply_auto_limit: false
+query: "{\n\t\"collection\": \"cost_daily_expense_reimburse__c\",\n\t\"aggregate\": [\n\t    {\n\t\t    \"$unwind\": \"$paid__c\"\n\t    },\n\t    {\n\t\t    \"$project\": {\n    \t\t\t\"_id\": \"$_id\",\n    \t\t\t\"paid__c\": \"$paid__c\",\n                \"amount\": \"$amount__c\",\n    \t\t\t\"apply_date__c\": {\n    \t\t\t    \"$dateToString\": {\n        \t\t\t    \"format\": \"%Y-%m-%d\",\n                        \"date\": \"$apply_date__c\",\n                        \"timezone\": \"+00\"\n    \t\t\t    }\n    \t\t\t},\n    \t\t\t\"apply_time_month\": {\n                  \"$dateToString\": {\n                      \"format\": \"%Y-%m\",\n                      \"date\": \"$apply_date__c\",\n                      \"timezone\": \"+00\"\n                  }\n                }\n\t\t    }\n\t    },\n\t    {\n            \"$addFields\": {\n                \"time_key\":  { \"$concat\": [ \"$apply_time_month\", \"-\", \"$paid__c\" ] }\n            }\n        },\n\n\t     {\n            \"$group\": {\n                \"_id\": \"$time_key\",\n                \"paid__c\": {\n                    \"$sum\": 1\n                },\n                \"total_amount\": {\n                    \"$sum\": \"$amount\"\n                }\n            }\n        },\n        {\n            \"$addFields\": {\n                \"time\":  { \"$substr\": [ \"$_id\", 0, 7 ] }\n            }\n        },\n         {\n            \"$sort\" : { \"_id\" : 1 }\n        }\n\t]\n}"
