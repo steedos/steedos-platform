@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_unpkg-local",
-  "version": "2.2.54-beta.2",
+  "version": "2.2.54-beta.3",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -12,11 +12,11 @@
     "@salesforce-ux/design-system": "^2.17.5",
     "@steedos-builder/fiddle": "^0.0.5",
     "@steedos-builder/react": "^0.2.23",
-    "@steedos/filters": "^2.2.53",
     "@steedos-ui/amis": "^2.2.36",
     "@steedos-ui/builder-community": "^2.2.36",
     "@steedos-ui/builder-widgets": "^2.2.36",
     "@steedos-ui/design-system": "^2.2.36",
+    "@steedos/filters": "^2.2.53",
     "amis": "1.10.2",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
@@ -32,5 +32,5 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "gitHead": "221d7d830c2b307d7e1e5ba23d9969c55bcf78bf"
+  "gitHead": "e83b0f819481cfc1e98ec8b67a2e29e70a520f68"
 }

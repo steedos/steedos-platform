@@ -9546,7 +9546,7 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-echarts-stat@^1.2.0:
+echarts-stat@1.2.0, echarts-stat@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/echarts-stat/-/echarts-stat-1.2.0.tgz#d1e7a05d1827724c5cde81f76ee1d75a901746a2"
   integrity sha512-zLd7Kgs+tuTSeaK0VQEMNmnMivEkhvHIk1gpBtLzpRerfcIQ+Bd5XudOMmtwpaTc1WDZbA7d1V//iiBccR46Qg==
@@ -9555,6 +9555,14 @@ echarts@5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.1.tgz#709e03aaf8c7a4439788272ee5c500cf0dce7e5b"
   integrity sha512-nWdlbgX3OVY0hpqncSvp0gDt1FRSKWn7lsWEH+PHmfCuvE0QmSw17pczQvm8AvawnLEkmf1Cts7YwQJZNC0AEQ==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.1"
+
+echarts@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.2.tgz#0a7b3be8c48a48b2e7cb1b82121df0c208d42d2c"
+  integrity sha512-LWCt7ohOKdJqyiBJ0OGBmE9szLdfA9sGcsMEi+GGoc6+Xo75C+BkcT/6NNGRHAWtnQl2fNow05AQjznpap28TQ==
   dependencies:
     tslib "2.3.0"
     zrender "5.3.1"
