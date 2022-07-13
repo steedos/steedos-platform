@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-translations",
-  "version": "2.2.54-beta.1",
+  "version": "2.2.54-beta.2",
   "description": "",
   "main": "lib/translations.service.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-registrar": "2.2.54-beta.1",
+    "@steedos/metadata-registrar": "2.2.54-beta.2",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -33,5 +33,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "33d42e2b70998387ed3979314f18dd1194840735"
+  "gitHead": "221d7d830c2b307d7e1e5ba23d9969c55bcf78bf"
 }
