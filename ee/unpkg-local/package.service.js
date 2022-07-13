@@ -47,7 +47,8 @@ module.exports = {
 			'@salesforce-ux/design-system',
 			'axios',
 			'mermaid',
-			'marked'
+			'marked',
+			'@steedos-builder/fiddle'
 		],
 	},
 
