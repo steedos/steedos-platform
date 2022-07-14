@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-license",
-  "version": "2.2.54-beta.5",
+  "version": "2.2.54-beta.6",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -15,5 +15,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e249662002a82b461c8f4260acee6f0f4dd63ed3"
+  "gitHead": "42049eee94baa827da1bf943f3736328a42ed308"
 }

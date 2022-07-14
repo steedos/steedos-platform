@@ -1,6 +1,6 @@
 {
   "name": "amis-dashboard",
-  "version": "0.0.1",
+  "version": "2.2.54-beta.6",
   "private": true,
   "scripts": {
     "start": "steedos start"
