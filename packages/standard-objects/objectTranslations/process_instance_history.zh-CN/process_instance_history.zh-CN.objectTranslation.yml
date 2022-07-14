@@ -54,7 +54,7 @@ fields:
     help: 
     description: 
   comments:
-    label: 备注
+    label: 意见
     help: 
     description: 
   step_node:

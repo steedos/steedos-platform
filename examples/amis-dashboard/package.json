@@ -1,12 +1,12 @@
 {
-  "name": "contract-home",
-  "version": "2.2.54-beta.5",
+  "name": "amis-dashboard",
+  "version": "2.2.54-beta.6",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.53-beta.3"
+    "@steedos/service-community": "^2.2"
   },
   "devDependencies": {
     "eslint": "8.19.0"

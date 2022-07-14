@@ -20,10 +20,8 @@ const exportRecordData = async function (req, res) {
         if (!filename) {
             filename = "导出"
         }
-        let spaceId = userSession.spaceId;
         
         const objectName = urlParams.objectName
-        let key = urlParams.objectName;
         
         const collection = await objectql.getObject(objectName);
         if (!collection) {
@@ -70,8 +68,7 @@ const exportRecordData = async function (req, res) {
                 if (queryParams.$orderby) {
                     query['sort'] = queryParams.$orderby;
                 }
-                let externalPipeline = makeAggregateLookup(createQuery, key, spaceId, userSession);
-                entities = await collection.aggregate(query, externalPipeline, userSession);
+                entities = await collection.find(query, userSession);
             }
             if (entities) {
 
@@ -151,54 +148,6 @@ const handleError = function (e: any) {
     };
 }
 
-const makeAggregateLookup = function (createQuery: any, key: string, spaceId: string, userSession: object) {
-
-    if (_.isEmpty(createQuery.includes)) {
-        return [];
-    }
-    let obj = objectql.getObject(key);
-    let pipeline: any = [];
-
-    for (let i = 0; i < createQuery.includes.length; i++) {
-        let navigationProperty = createQuery.includes[i].navigationProperty;
-        navigationProperty = navigationProperty.replace('/', '.')
-        let field = obj.fields[navigationProperty].toConfig();
-        if (field && (field.type === 'lookup' || field.type === 'master_detail')) {
-            let foreignFieldName = field.reference_to_field || '_id';
-
-            if (_.isFunction(field.reference_to)) {
-                field.reference_to = field.reference_to();
-            }
-            if (_.isString(field.reference_to)) {
-                let refFieldName = field.name;
-                let lookup = {
-                    from: field.reference_to,
-                    localField: refFieldName,
-                    foreignField: foreignFieldName,
-                    as: `${refFieldName}_$lookup`
-                };
-
-                pipeline.push({ $lookup: lookup });
-
-            } else if (_.isArray(field.reference_to)) {
-                _.each(field.reference_to, function (relatedObjName) {
-                    let refFieldName = field.name;
-                    let lookup = {
-                        from: relatedObjName,
-                        localField: refFieldName + '.ids',
-                        foreignField: foreignFieldName,
-                        as: `${refFieldName}` + '_$lookup' + `_${relatedObjName}`
-                    };
-
-                    pipeline.push({ $lookup: lookup });
-                })
-
-            }
-        }
-    };
-
-    return pipeline;
-}
 const removeInvalidMethod = function (queryParams: any) {
     if (queryParams.$filter && queryParams.$filter.indexOf('tolower(') > -1) {
         let removeMethod = function ($1: string) {

@@ -41,8 +41,7 @@ fields:
         if(!Steedos.isSpaceAdmin()){
           var userId = Steedos.userId();
           queryFilters = ["admins", "=", userId];
-          var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
           options.$filter = odataFilter;
         }
         sites = Creator.odata.query(siteObjectName, options, true);
@@ -77,8 +76,7 @@ fields:
           $select: 'name'
         };
         queryFilters = ["site", "=", values.site];
-        var steedosFilters = require("@steedos/filters");
-        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
         options.$filter = odataFilter;
         parents = Creator.odata.query(values._object_name, options, true);
         parents.forEach(function (item) {
@@ -124,8 +122,7 @@ list_views:
           };
           var userId = Steedos.userId();
           queryFilters = ["admins", "=", userId];
-          var steedosFilters = require("@steedos/filters");
-          var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+          var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
           options.$filter = odataFilter;
           var sites = Creator.odata.query(siteObjectName, options, true);
           return [["site", "in", _.pluck(sites, "_id")]];
