@@ -2,7 +2,7 @@ CustomLabels:
   process_notification_pending_title: "{$submitter} 正在请求批准 {$recordName}"
   process_notification_approved_title: "您的申请已被核准 {$recordName}"
   process_notification_rejected_title: "您的申请已被驳回 {$recordName}"
-  process_approval_comment: 评论
+  process_approval_comment: 意见
   process_approval_title_reassign: 转签核批准请求
   process_approval_approver_label_reassign: 转签核处理人
   process_approval_confirmBtnText_reassign: 转签核
