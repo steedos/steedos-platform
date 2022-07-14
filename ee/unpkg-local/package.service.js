@@ -126,8 +126,8 @@ module.exports = {
 						router.get(`/unpkg.com/${packageName}@*`, (req, res) => {
 							const packageUrl = req.path.split('/unpkg.com')[1]
 							const parsed = this.parsePackagePathname(packageUrl)
-							res.redirect(301, `/unpkg.com/${parsed.packageName}${parsed.filename}`);
-							return
+							// res.redirect(301, `/unpkg.com/${parsed.packageName}${parsed.filename}`);
+							return res.sendFile(path.join(packageDir, parsed.filename), { maxAge: cacheTime });
 						})
 					} else {
 						this.logger.warn(301, `Package not found: ${packageName}, you should add to you project.`)
