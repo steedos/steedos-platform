@@ -468,11 +468,7 @@ class StartCommand extends Command {
     this.flags = flags;
     this.servicePaths = _.compact(Object.values(args))
 
-	const assetUrls = [
-		"https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json"
-	];
-
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS=assetUrls.join(",");
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS="https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json";
 
     if (this.flags.instances !== undefined && cluster.isMaster) {
       this.instances = Number.parseInt(this.flags.instances) ? Number.parseInt(this.flags.instances):'max'
