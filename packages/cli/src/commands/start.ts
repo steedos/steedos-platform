@@ -469,7 +469,6 @@ class StartCommand extends Command {
     this.servicePaths = _.compact(Object.values(args))
 
 	const assetUrls = [
-		"https://unpkg.com/@steedos/filters@2.2.54-beta.4/dist/assets.json",
 		"https://unpkg.com/@steedos-ui/builder-widgets@2.2.36/dist/assets.json"
 	];
 
