@@ -62,7 +62,10 @@ module.exports = {
                     }, 10 * 1000)
                 }
             }
-        }
+        },
+        // "space.initialized": {
+
+        // }
     },
 
     /**
@@ -154,6 +157,9 @@ module.exports = {
         },
         async errorHandler(error) {
             this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            await await this.broker.call(`~packages-project-server.disablePackage`, {
+                module: this.schema.packageName
+            })
             return await this.broker.destroyService(this);
         }
     },
@@ -167,6 +173,7 @@ module.exports = {
     },
 
     merged(schema) {
+        schema.packageName = schema.name;
         schema.name = `~packages-${schema.name}`;
     },
 
