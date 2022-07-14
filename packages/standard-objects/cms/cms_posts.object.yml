@@ -96,8 +96,7 @@ fields:
           site = site._id;
         }
         queryFilters = ["site", "=", site];
-        var steedosFilters = require("@steedos/filters");
-        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
         options.$filter = odataFilter;
         companys = Creator.odata.query(objectName, options, true);
         companys.forEach(function (item) {

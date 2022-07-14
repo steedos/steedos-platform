@@ -25,8 +25,7 @@ Meteor.autorun(function(){
         };
         queryFilters = ["admins", "=", userId];
         var siteObjectName = "cms_sites";
-        var steedosFilters = require("@steedos/filters");
-        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
         options.$filter = odataFilter;
         var sites = Creator.odata.query(siteObjectName, options, true);
         return sites && sites.length;

@@ -331,8 +331,7 @@ Steedos.StandardObjects = {
                         queryFilters = [queryFilters, 'or', ["_id", "=", _value]];
                     }
                     if(!_.isEmpty(queryFilters)){
-                        var steedosFilters = require("@steedos/filters");
-                        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+                        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
                         options.$filter = odataFilter;
                     }
                     companys = Creator.odata.query('company', options, true);
@@ -411,8 +410,7 @@ Steedos.StandardObjects = {
                         queryFilters = [queryFilters, 'or', ["_id", "in", _value]];
                     }
                     if(!_.isEmpty(queryFilters)){
-                        var steedosFilters = require("@steedos/filters");
-                        var odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters);
+                        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
                         options.$filter = odataFilter;
                     }
                     companys = Creator.odata.query('company', options, true);
