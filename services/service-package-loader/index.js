@@ -151,6 +151,10 @@ module.exports = {
                     this.settings.loadedPackagePublicFiles = false;
                 }
             }
+        },
+        async errorHandler(error) {
+            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            return await this.broker.destroyService(this);
         }
     },
 
@@ -170,6 +174,14 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        if(this.beforeStart){
+            try {
+                await this.beforeStart()
+            } catch (error) {
+                return await this.errorHandler(error);
+            }
+        }
+
         console.time(`service ${this.name} started`)
         let packageInfo = this.settings.packageInfo;
         if (!packageInfo) {
@@ -201,7 +213,13 @@ module.exports = {
         await this.loadPackagePublicFiles(_path);
         this.started = true;
         console.timeEnd(`service ${this.name} started`)
-        // console.log(`service ${this.name} started`);
+        if(this.afterStart){
+            try {
+                await this.afterStart();
+            } catch (error) {
+                this.broker.logger.error(`[${this.name}]: ${error.message}`);
+            }
+        }
     },
 
     /**
