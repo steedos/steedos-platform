@@ -4,7 +4,6 @@ fields:
     label: 企业ID(CorpId)
     type: text
     group: 企业微信
-    unique: true
     hidden: false
     sort_no: 30
   qywx_agent_id:
