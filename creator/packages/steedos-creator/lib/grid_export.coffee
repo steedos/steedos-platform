@@ -1,4 +1,3 @@
-Filters = require("@steedos/filters")
 @ObjectGrid = {}
 @GridExport = {}
 
@@ -77,7 +76,7 @@ GridExport.excel = (object_name, list_view_id, is_related, related_object_name, 
 	defaultFilters = Creator.getListViewFilters(object_name, list_view_id, is_related, related_object_name, record_id, relatedList)
 	userFilters = filterModelToOdataFilters(grid.api.getFilterModel());
 	filters = _.compact([].concat(defaultFilters).concat(userFilters))
-	$filter = Filters.formatFiltersToODataQuery(filters)
+	$filter = SteedosFilters.formatFiltersToODataQuery(filters)
 	if is_related
 		filename = mainRecordName + "-" + Creator.getObject(related_object_name).label
 	else

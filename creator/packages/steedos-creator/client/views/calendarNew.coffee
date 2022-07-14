@@ -1,5 +1,4 @@
 dxSchedulerInstance = null
-Filters = require("@steedos/filters")
 _getSelect = (options)->
 	select = ['_id', 'owner', 'name']
 
@@ -56,7 +55,7 @@ _dataSource = (options) ->
 			beforeSend: (request, b, c) ->
 				filters = Creator.getODataFilter(Session.get("list_view_id"), Session.get('object_name'))
 				if filters
-					odataFilters = Filters.formatFiltersToODataQuery(filters)
+					odataFilters = SteedosFilters.formatFiltersToODataQuery(filters)
 					request.params.$filter = "(#{odataFilters}) and (#{request.params.$filter})"
 				else
 					request.params.$filter = "#{request.params.$filter}"

@@ -474,7 +474,6 @@ options参数：
 	extend为true时，后端需要额外传入userId及spaceId用于抓取Creator.USER_CONTEXT对应的值
 ###
 Creator.formatFiltersToDev = (filters, object_name, options)->
-	steedosFilters = require("@steedos/filters");
 	unless filters.length
 		return
 	if options?.is_logic_or
@@ -485,7 +484,7 @@ Creator.formatFiltersToDev = (filters, object_name, options)->
 			logicTempFilters.push("or")
 		logicTempFilters.pop()
 		filters = logicTempFilters
-	selector = steedosFilters.formatFiltersToDev(filters, Creator.USER_CONTEXT)
+	selector = SteedosFilters.formatFiltersToDev(filters, Creator.USER_CONTEXT)
 	return selector
 
 ###

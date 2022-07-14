@@ -119,8 +119,7 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 				return null
 			# 权限筛选，只显示当前有权限的组织本身及其所有子组织和孙组织（包括任意深度的子孙组织）
 			filters = [["_id", "=", orgIds], "or", ["parents", "=", orgIds]]
-			steedosFilters = require("@steedos/filters")
-			filters = steedosFilters.formatFiltersToDev(filters)
+			filters = SteedosFilters.formatFiltersToDev(filters)
 		if spaceId and userId
 			url = "/api/odata/v4/#{spaceId}/#{object_name}"
 			dxOptions = 
