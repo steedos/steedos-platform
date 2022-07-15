@@ -107,8 +107,7 @@ export class Start{
 			if (!fs.existsSync(filePath))
 				return Promise.reject(new Error(`Config file not found: ${filePath}`));
 
-			const mod = await import(filePath.startsWith("/") ? filePath : "/" + filePath);
-            return mod.default;
+            return require(filePath);
 		}
     }
 

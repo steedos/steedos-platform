@@ -120,8 +120,9 @@ class StartCommand extends Command {
 				case ".js":
 				case ".mjs":
 				case ".ts": {
-					const mod = await import(filePath.startsWith("/") ? filePath : "/" + filePath);
-					let content = mod.default;
+					// const mod = await import(filePath.startsWith("/") ? filePath : "/" + filePath);
+					let content = require(filePath);
+					// let content = mod.default;
 
 					if (utils.isFunction(content)) content = await content.call(this);
 
