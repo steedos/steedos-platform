@@ -4,8 +4,8 @@ const serviceName = project.name;
 const objectql = require("@steedos/objectql");
 const schedule = require('node-schedule');
 const path = require('path');
-const globby = require('globby');
 const Fiber = require("fibers");
+const metaDataCore = require('@steedos/metadata-core');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -45,7 +45,7 @@ module.exports = {
 				const filePatten = [
 					path.join(__dirname, 'meteor-collection-indexs', "*.object.js")
 				];
-				const matchedPaths = globby.sync(filePatten);
+				const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
 				_.each(matchedPaths, (matchedPath) => {
 					try {
 						Fiber(function () {

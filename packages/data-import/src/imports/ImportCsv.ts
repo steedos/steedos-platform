@@ -1,7 +1,7 @@
 import ImportJson from './ImportJson';
 const csv = require('csvtojson')
 const path = require('path');
-const globby = require("globby");
+import { syncMatchFiles } from '@steedos/metadata-core';
 
 export default class ImportCsv extends ImportJson {
 
@@ -15,7 +15,7 @@ export default class ImportCsv extends ImportJson {
             path.join(filePath, "**", "*.data.csv"),
             "!" + path.join(filePath, "node_modules"),
         ]
-        const matchedPaths: [string] = globby.sync(filePatten);
+        const matchedPaths: [string] = syncMatchFiles(filePatten);
         for (const matchedPath of matchedPaths) {
             let records = await csv().fromFile(matchedPath);
             let objectName = path.basename(matchedPath).split('.')[0];

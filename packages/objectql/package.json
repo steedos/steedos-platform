@@ -34,7 +34,6 @@
     "eval": "^0.1.4",
     "express": "^4.15.4",
     "fibers": "^4.0.3",
-    "globby": "^11.1.0",
     "graphql": "^15.8.0",
     "graphql-parse-resolve-info": "^4.12.3",
     "jsen": "^0.6.6",

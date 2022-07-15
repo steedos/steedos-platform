@@ -23,6 +23,7 @@ export * from './project/index'
 export * from './output'
 export * from './util/function';
 export * from './load';
+export * from './util/match_files';
 
 //TODO 待完善
 //record是数据库里的记录

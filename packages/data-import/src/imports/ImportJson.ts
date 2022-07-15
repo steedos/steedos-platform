@@ -2,8 +2,8 @@ import _, { each, includes, isArray, keys } from 'lodash';
 import { Base } from './Base';
 import { DbManager } from '@steedos/metadata-api/lib/util/dbManager'
 import { ObjectId } from "mongodb";
+import { syncMatchFiles } from '@steedos/metadata-core';
 const path = require('path');
-const globby = require("globby");
 const fs = require("fs");
 import { EJSON } from 'bson'
 import { preCreateCollection } from '..';
@@ -44,7 +44,7 @@ export default class ImportJson implements Base {
             "!" + path.join(filePath, "**", "*.flow.data.json"),
             "!" + path.join(filePath, "node_modules")];
 
-        const matchedPaths: [string] = globby.sync(filePatten);
+        const matchedPaths: [string] = syncMatchFiles(filePatten);
         each(matchedPaths, (matchedPath: string) => {
             let records = JSON.parse(fs.readFileSync(matchedPath, 'utf8').normalize('NFC'));
             let objectName = path.basename(matchedPath).split('.')[0];

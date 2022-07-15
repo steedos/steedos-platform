@@ -5,7 +5,7 @@
  */
 // import { getAllPackages, uncompressPackages } from '@steedos/metadata-core';
 import * as _ from 'underscore';
-const globby = require("globby");
+import { syncMatchFiles } from '@steedos/metadata-core';
 // import * as path from 'path';
 const path = require("path");
 import { getSteedosSchema, loadService } from '@steedos/objectql';
@@ -26,7 +26,7 @@ import { getSteedosSchema, loadService } from '@steedos/objectql';
 //             const filePatten = [
 //                 path.join(packagePath, "**", "package.service.js")
 //             ]
-//             const matchedPaths:[string] = globby.sync(filePatten);
+//             const matchedPaths:[string] = syncMatchFiles(filePatten);
 //             for await (const serviceFilePath of matchedPaths) {
 //                 const service = broker.loadService(serviceFilePath);
 //                 if (!broker.started) { //如果broker未启动则手动启动service
@@ -45,7 +45,7 @@ export async function loadPackage(packagePath){
           path.join(packagePath, "**", "package.service.js"),
           "!" + path.join(packagePath, "**", "node_modules"),
         ];
-        const matchedPaths:[string] = globby.sync(filePatten);
+        const matchedPaths:[string] = syncMatchFiles(filePatten);
         for await (const serviceFilePath of matchedPaths) {
             const service = loadService(broker, serviceFilePath);
             if (!broker.started) { //如果broker未启动则手动启动service

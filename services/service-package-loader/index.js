@@ -12,6 +12,7 @@ const _ = require('lodash');
 const globby = require("globby");
 const express = require('express');
 const fs = require("fs");
+const metaDataCore = require('@steedos/metadata-core');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -116,7 +117,7 @@ module.exports = {
                 path.join(packagePath, 'main', 'default', 'services', "**", `*.service.js`),
                 "!" + path.join(packagePath, "**", "node_modules"),
             ];
-            const matchedPaths = globby.sync(filePatten);
+            const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
             for await (const serviceFilePath of matchedPaths) {
                 try {
                     const service = objectql.loadService(this.broker, serviceFilePath);
