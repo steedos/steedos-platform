@@ -100,7 +100,7 @@ module.exports = {
 								space = db.spaces.findOne()
 							}
 							if(!space){
-								this.logger.warn(`import flow ${flow.name} fail. not find space in db`);
+								this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
 								return ;
 							}
 							if(!flow.api_name){
