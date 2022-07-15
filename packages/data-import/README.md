@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-10-21 09:57:01
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-15 14:02:03
+ * @LastEditTime: 2022-07-15 14:18:13
  * @Description: 
 -->
 ## 功能说明
@@ -17,20 +17,20 @@ const { importData } = require('@steedos/data-import')
 const path = require('path')
 module.exports = {
     /**
-	 * Events
-	 */
-	events: {
+     * Events
+     */
+    events: {
         // 系统初始化成功
-		'service-cloud-init.succeeded': async function (ctx) {
-			await importData(path.join(__dirname, 'main', 'default', 'data'));
-		}
-	},
-	/**
-	 * Service started lifecycle event handler
-	 */
-	 async started() {
-		await importData(path.join(__dirname, 'main', 'default', 'data'));
-	},
+        'service-cloud-init.succeeded': async function (ctx) {
+            await importData(path.join(__dirname, 'main', 'default', 'data'));
+        }
+    },
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
+        await importData(path.join(__dirname, 'main', 'default', 'data'));
+    },
 };
 ```
 
