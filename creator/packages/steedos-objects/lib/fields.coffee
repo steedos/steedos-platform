@@ -132,6 +132,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.type = [Object]
 		else if field.type == "html"
 			fs.type = String
+			if Meteor.isClient
+				fs.autoform.type = 'steedosHtml';
 			# if Meteor.isClient
 			# 	locale = Steedos.locale()
 			# 	if locale == "zh-cn" || locale == "zh-CN"

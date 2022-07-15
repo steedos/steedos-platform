@@ -310,9 +310,10 @@ var s_autoform = function (schema, field) {
             schema.type = String;
             autoform.readonly = (permission === 'readonly');
             autoform.disabled = (permission === 'readonly');
-            if(permission == 'readonly'){
-                autoform.type = 'steedosHtml';
-            }
+            autoform.type = 'steedosHtml';
+            // if(permission == 'readonly'){
+            //     autoform.type = 'steedosHtml';
+            // }
             // else{
             //     var locale = Steedos.locale();
             //     if (locale === "zh-cn" || locale === "zh-CN") {
