@@ -1,4 +1,9 @@
-This is a [Steedos](https://www.steedos.com/) project bootstrapped with [`create-steedos-app`](https://github.com/steedos/steedos-platform/tree/master/packages/create-steedos-app).
+Steedos OIDC Provider
+===
+
+- https://github.com/panva/node-oidc-provider
+- https://github.com/panva/node-oidc-provider-example
+
 
 ## Getting Started
 
@@ -17,16 +22,9 @@ yarn start
 
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
 
-## Learn More
+## View 
 
-To learn more about Steedos Platform, take a look at the following resources:
-
-- [Steedos Documentation](https://www.steedos.com/docs) - learn about Steedos features and API.
-
-You can check out [the Steedos GitHub repository](https://github.com/steedos/steedos-platform/) - your feedback and contributions are welcome!
-
-## Deploy your project
-
-The easiest way to deploy your Steedos app is to use the [Docker Template](https://github.com/steedos/docker).
-
-Check out our [Steedos deployment documentation](https://www.steedos.com/docs/deploy/getting-started) for more details.
+```bash
+open '/oidc/.well-known/openid-configuration' # to see your openid-configuration  
+open '/oidc/auth?client_id=foo&response_type=id_token&redirect_uri=https%3A%2F%2Fjwt.io&scope=openid&nonce=foobar' # to start your first Authentication Request
+```

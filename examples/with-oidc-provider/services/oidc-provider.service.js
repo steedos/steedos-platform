@@ -10,14 +10,6 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-		// ... see the available options in Configuration options section
-		clients: [{
-		  client_id: 'steedos',
-		  client_secret: 'steedos',
-		  redirect_uris: ['https://www.steedos.cn'],
-		  // + other client properties
-		}],
-		// ...
 	},
 
 	/**
@@ -79,10 +71,26 @@ module.exports = {
 	async started() {
 
 		this.oidc = new Provider(process.env.ROOT_URL, {
-			clients: this.settings.clients,
-			findAccount: this.findAccount
+			// ... see the available options in Configuration options section
+			clients: [{
+			  client_id: 'foo',
+			  client_secret: 'foo',
+			  redirect_uris: ['https://jwt.io'],
+			  response_types: ['id_token'],
+			  grant_types: ['implicit'],
+			  token_endpoint_auth_method: 'none',
+			  // + other client properties
+			}],
+			// ...
+			findAccount: this.findAccount,
+			cookies: {
+			//   keys: process.env.SECURE_KEY.split(','),
+			},
 		});
 		
+		// Gitpod has a proxy in front that terminates ssl, you should trust the proxy.
+		this.oidc.proxy = true;
+
 		// express/nodejs style application callback (req, res, next) for use with express apps, see /examples/express.js
 		WebApp.connectHandlers.use('/oidc', this.oidc.callback());
 		
