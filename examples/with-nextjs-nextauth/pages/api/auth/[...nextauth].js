@@ -11,4 +11,7 @@ export default NextAuth({
         name: 'Steedos ID'
     })
   ],
+  session: {
+    strategy: "jwt",
+  }
 })
