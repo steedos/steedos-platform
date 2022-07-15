@@ -1,7 +1,6 @@
 Creator.actionsByName = {}
 
 if Meteor.isClient
-	steedosFilters = require("@steedos/filters");
 	# 定义全局 actions 函数	
 	Creator.actions = (actions)->
 		_.each actions, (todo, action_name)->
@@ -13,7 +12,7 @@ if Meteor.isClient
 				filters = ['_id', '=', record_id]
 			else
 				filters = ObjectGrid.getFilters(object_name, list_view_id, false, null, null)
-			url = "/api/v4/word_templates/" + action.word_template + "/print" + "?filters=" + steedosFilters.formatFiltersToODataQuery(filters);
+			url = "/api/v4/word_templates/" + action.word_template + "/print" + "?filters=" + SteedosFilters.formatFiltersToODataQuery(filters);
 			url = Steedos.absoluteUrl(url);
 			return window.open(url);
 

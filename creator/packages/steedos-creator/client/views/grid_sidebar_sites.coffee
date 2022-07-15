@@ -27,8 +27,7 @@ loadCategories = ()->
 	selects = _.union(baseExtraFields, ["name", "parent", "site"])
 	options = $select: selects.toString()
 	queryFilters = [["site", "in", _.pluck(sites, "_id")]];
-	steedosFilters = require('@steedos/filters')
-	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
+	odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters)
 	options.$filter = odataFilter
 	options.$orderby = "order,name"
 	Creator.odata.query("cms_categories", options, true, (result)->
@@ -41,8 +40,7 @@ loadSites = ()->
 	selects = _.union(baseExtraFields, ["name", "admins", "visibility", "enable_post_permissions"])
 	options = $select: selects.toString()
 	queryFilters = [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
-	steedosFilters = require('@steedos/filters')
-	odataFilter = steedosFilters.formatFiltersToODataQuery(queryFilters)
+	odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters)
 	options.$filter = odataFilter
 	options.$orderby = "order,name"
 	Creator.odata.query("cms_sites", options, true, (result)->
@@ -104,8 +102,7 @@ getDataSource = ()->
 			userId = Meteor.userId()
 			options = {}
 			options.$select = ["name", "admins", "visibility", "enable_post_permissions"].toString()
-			steedosFilters = require("@steedos/filters")
-			dxFilter = steedosFilters.formatFiltersToODataQuery [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
+			dxFilter = SteedosFilters.formatFiltersToODataQuery [["visibility","<>","private"], "or", ["owner","=",userId], "or", ["admins","=",userId]]
 			options.$filter = dxFilter
 			Creator.odata.query("cms_sites", options, true, (result)->
 				d.resolve result

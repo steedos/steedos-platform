@@ -1,5 +1,3 @@
-
-
 export class Broker{
     broker: any;
 
@@ -20,5 +18,9 @@ export class Broker{
             throw new Error("broker is not initialized");
         }
         return await this.broker.call(method, ...args);
+    }
+
+    async emit(name, ...args){
+        return await this.broker.emit(name, ...args);
     }
 }

@@ -120,8 +120,9 @@ class StartCommand extends Command {
 				case ".js":
 				case ".mjs":
 				case ".ts": {
-					const mod = await import(filePath.startsWith("/") ? filePath : "/" + filePath);
-					let content = mod.default;
+					// const mod = await import(filePath.startsWith("/") ? filePath : "/" + filePath);
+					let content = require(filePath);
+					// let content = mod.default;
 
 					if (utils.isFunction(content)) content = await content.call(this);
 
@@ -468,11 +469,7 @@ class StartCommand extends Command {
     this.flags = flags;
     this.servicePaths = _.compact(Object.values(args))
 
-	const assetUrls = [
-		"https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json"
-	];
-
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS=assetUrls.join(",");
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS="https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json";
 
     if (this.flags.instances !== undefined && cluster.isMaster) {
       this.instances = Number.parseInt(this.flags.instances) ? Number.parseInt(this.flags.instances):'max'

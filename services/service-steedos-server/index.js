@@ -100,7 +100,7 @@ module.exports = {
 								space = db.spaces.findOne()
 							}
 							if(!space){
-								this.logger.warn(`import flow ${flow.name} fail. not find space in db`);
+								this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
 								return ;
 							}
 							if(!flow.api_name){
@@ -267,8 +267,14 @@ module.exports = {
 
 			this.startAPIService();
 			console.log('耗时：', new Date().getTime() - time);
-			this.broker.emit("steedos-server.started"); //  **已经移除了waitForServices, 此事件可以作废了, 可使用 dependencies: ['steedos-server']** ; 此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件;
-		// });
+			//  **已经移除了waitForServices, 此事件可以作废了, 可使用 dependencies: ['steedos-server']** ; 此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件;
+			
+			// 此处需要延时处理,否则监听此事件的函数中如果调用了此服务中的aciton, 可能会出现action未注册的情况.
+			setTimeout(()=>{
+				this.broker.emit("steedos-server.started");
+			}, 1000)
+		
+			// });
 
 	},
 

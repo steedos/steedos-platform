@@ -84,7 +84,9 @@ function onCreateSpace(spaceDoc){
     }
     orgDB.direct.insert(orgDoc);
     
-    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id)
+    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id);
+
+    objectql.broker.emit(`space.initialized`, spaceDoc);
 }
 
 Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
@@ -484,36 +486,36 @@ if (Meteor.isServer) {
 }
 
 //仅考虑mongo-db数据源的对象数据
-function initSpaceData(spaceId, userId){
-    let spacesCollection = Creator.getCollection("spaces")
-    let datas = objectql.getAllObjectData();
-    let now = new Date();
-    let insertMap = {};
-    try {
-        for(let objectName in datas){
-            let records = datas[objectName];
-            if(_.indexOf(["spaces"], objectName) < 0){
-                for(let record of records){
-                    if(Creator.getCollection(objectName)){
-                        let docId = Creator.getCollection(objectName).direct.insert(Object.assign({}, record, {_id: record._id || spacesCollection._makeNewID(), space: spaceId, owner: userId, created: now, modified: now, created_by: userId, modified_by: userId}));
-                        if(insertMap[objectName]){
-                            insertMap[objectName].push(docId)
-                        }else{
-                            insertMap[objectName] = []
-                            insertMap[objectName].push(docId)
-                        }
-                        // await objectql.getObject(objectName).directInsert(Object.assign({}, record, {_id: spacesCollection._makeNewID(), space: spaceId}));
-                    }
-                }
-            }
-        }
-    } catch (error) {
-        _.each(insertMap, function(_ids,objectName){
-            Creator.getCollection(objectName).direct.remove({_id: {$in: _ids}})
-        })
-        throw new Error("初始化数据失败");
-    }
-}
+// function initSpaceData(spaceId, userId){
+//     let spacesCollection = Creator.getCollection("spaces")
+//     let datas = objectql.getAllObjectData();
+//     let now = new Date();
+//     let insertMap = {};
+//     try {
+//         for(let objectName in datas){
+//             let records = datas[objectName];
+//             if(_.indexOf(["spaces"], objectName) < 0){
+//                 for(let record of records){
+//                     if(Creator.getCollection(objectName)){
+//                         let docId = Creator.getCollection(objectName).direct.insert(Object.assign({}, record, {_id: record._id || spacesCollection._makeNewID(), space: spaceId, owner: userId, created: now, modified: now, created_by: userId, modified_by: userId}));
+//                         if(insertMap[objectName]){
+//                             insertMap[objectName].push(docId)
+//                         }else{
+//                             insertMap[objectName] = []
+//                             insertMap[objectName].push(docId)
+//                         }
+//                         // await objectql.getObject(objectName).directInsert(Object.assign({}, record, {_id: spacesCollection._makeNewID(), space: spaceId}));
+//                     }
+//                 }
+//             }
+//         }
+//     } catch (error) {
+//         _.each(insertMap, function(_ids,objectName){
+//             Creator.getCollection(objectName).direct.remove({_id: {$in: _ids}})
+//         })
+//         throw new Error("初始化数据失败");
+//     }
+// }
 
 Creator.Objects['spaces'].methods = {
     "tenant": function (req, res) {
@@ -556,9 +558,9 @@ Creator.Objects['spaces'].methods = {
                         name: spaceName, 
                         owner: userId
                     }
-                    if(!tenant.saas){
-                        initSpaceData(spaceId, userId);
-                    }
+                    // if(!tenant.saas){
+                    //     initSpaceData(spaceId, userId);
+                    // }
                     let newSpaceId = db.spaces.insert(spaceDoc);
                     let newSpace = db.spaces.findOne(newSpaceId);
                     return res.send(newSpace);

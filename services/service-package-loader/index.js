@@ -45,22 +45,13 @@ module.exports = {
      */
     events: {
         "steedos-server.started": {
-            handler() {
-                let packageInfo = this.settings.packageInfo;
-                if (!packageInfo) {
-                    return;
-                }
-                const { path : _path } = packageInfo;
-
-                this.loadPackagePublicFiles(_path);
-
-                if(_path){
-                    //此处延迟10秒加载流程文件，防止工作区初始化未完成
-                    setTimeout(() => {
-                        sendPackageFlowToDb(this.broker, _path)
-                        processLoader.sendPackageProcessToDb(_path);
-                    }, 10 * 1000)
-                }
+            async handler() {
+                await this.loadDataOnServiceStarted();
+            }
+        },
+        "space.initialized": {
+            async handler() {
+                await this.loadDataOnServiceStarted();
             }
         }
     },
@@ -69,6 +60,19 @@ module.exports = {
      * Methods
      */
     methods: {
+        loadDataOnServiceStarted: async function(){
+            let packageInfo = this.settings.packageInfo;
+            if (!packageInfo) {
+                return;
+            }
+            const { path : _path } = packageInfo;
+
+            this.loadPackagePublicFiles(_path);
+            if(_path){
+                sendPackageFlowToDb(this.broker, _path)
+                processLoader.sendPackageProcessToDb(_path);
+            }
+        },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
             this.broker.logger.debug(`Loading package from ${packagePath}`)
             await Future.task(async () => {
@@ -151,6 +155,13 @@ module.exports = {
                     this.settings.loadedPackagePublicFiles = false;
                 }
             }
+        },
+        async errorHandler(error) {
+            this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
+            await await this.broker.call(`~packages-project-server.disablePackage`, {
+                module: this.schema.packageName
+            })
+            return await this.broker.destroyService(this);
         }
     },
 
@@ -163,6 +174,7 @@ module.exports = {
     },
 
     merged(schema) {
+        schema.packageName = schema.name;
         schema.name = `~packages-${schema.name}`;
     },
 
@@ -170,6 +182,14 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        if(this.beforeStart){
+            try {
+                await this.beforeStart()
+            } catch (error) {
+                return await this.errorHandler(error);
+            }
+        }
+
         console.time(`service ${this.name} started`)
         let packageInfo = this.settings.packageInfo;
         if (!packageInfo) {
@@ -182,8 +202,7 @@ module.exports = {
             return;
         }
         this.broker.waitForServices("steedos-server").then(async () => {
-            sendPackageFlowToDb(this.broker, _path, this.name)
-            processLoader.sendPackageProcessToDb(_path);
+            await this.loadDataOnServiceStarted()
         });
         
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
@@ -198,10 +217,16 @@ module.exports = {
 
         await this.loadPackageMetadataServices(_path);
 
-        await this.loadPackagePublicFiles(_path);
+        // await this.loadPackagePublicFiles(_path);
         this.started = true;
         console.timeEnd(`service ${this.name} started`)
-        // console.log(`service ${this.name} started`);
+        if(this.afterStart){
+            try {
+                await this.afterStart();
+            } catch (error) {
+                this.broker.logger.error(`[${this.name}]: ${error.message}`);
+            }
+        }
     },
 
     /**
