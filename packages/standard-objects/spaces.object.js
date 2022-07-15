@@ -84,7 +84,9 @@ function onCreateSpace(spaceDoc){
     }
     orgDB.direct.insert(orgDoc);
     
-    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id)
+    Creator.addSpaceUsers(spaceId, userId, true, orgDoc._id);
+
+    objectql.broker.emit(`space.initialized`, spaceDoc);
 }
 
 Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
