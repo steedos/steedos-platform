@@ -6,8 +6,8 @@
 import { getMetadataTypeInfo } from '../typeInfo';
 import { loadFile } from '../loadFile'
 import _ from 'underscore';
+import { syncMatchFiles } from '../util/match_files';
 const path = require('path');
-const globby = require('globby');
 
 import { checkNameEquals } from '../util/check_name_equals'
 
@@ -28,7 +28,7 @@ export class BaseLoadMetadataFile{
             "!" + path.join(filePath, "node_modules"),
         ];
         
-        let matchedPaths = globby.sync(filePatten);
+        let matchedPaths = syncMatchFiles(filePatten);
         let metadatasJSON = {};
         for (let k=0; k<matchedPaths.length; k++) {
             let matchedPath = matchedPaths[k];

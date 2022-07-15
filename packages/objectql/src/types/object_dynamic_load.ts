@@ -6,10 +6,9 @@ import { Dictionary } from '@salesforce/ts-types';
 import { addObjectListenerConfig, loadObjectLayouts, loadSourceProfiles, loadSourcePermissionset, loadObjectValidationRules, loadSourceRoles, loadSourceFlowRoles, loadSourceApprovalProcesses, loadSourceWorkflows, loadStandardProfiles, loadStandardPermissionsets, preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields, loadPackageMetadatas } from '../dynamic-load'
 import { transformListenersToTriggers } from '..';
 import { getSteedosSchema } from './schema';
-
+import { syncMatchFiles } from '@steedos/metadata-core';
 var util = require('../util')
 var clone = require('clone')
-var globby = require('globby');
 
 export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
 export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
@@ -117,7 +116,7 @@ export const addServerScriptFiles = (filePath: string) => {
     path.join(filePath, "*.object.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     _serverScripts.push(matchedPath);
   });
@@ -161,7 +160,7 @@ export const addClientScriptFiles = (filePath: string) => {
     path.join(filePath, "*.client.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  let matchedPaths: Array<string> = globby.sync(filePatten);
+  let matchedPaths: Array<string> = syncMatchFiles(filePatten);
   matchedPaths = _.sortBy(matchedPaths);
   _.each(matchedPaths, (matchedPath) => {
     _clientScripts.push(matchedPath);

@@ -14,12 +14,12 @@ const yaml = require('js-yaml');
 const fs = require("fs");
 const path = require("path");
 const _ = require("underscore");
-const globby = require("globby");
 var clone = require("clone")
 import { has, getJsonMap } from '@salesforce/ts-types';
 let STEEDOS_CONFIG:any = {};
 const configName = 'steedos-config.yml'
 const licenseName = '.license'
+import { syncMatchFiles } from '@steedos/metadata-core'
 import { getObjectConfig } from '../types'
 import { defaultsDeep } from 'lodash';
 import { broker } from '..';
@@ -77,7 +77,7 @@ export const loadObjects = (filePath: string) => {
     path.join(filePath, "*.object.json"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     try {
@@ -133,7 +133,7 @@ export const loadI18n = (filePath: string) => {
     path.join(filePath, "*.i18n.json"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     let lng = getI18nLng(matchedPath);
@@ -150,7 +150,7 @@ export const loadObjectTranslations = (filePath: string) => {
     path.join(filePath, "*.objectTranslation.yml"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     let lng = getI18nLng(matchedPath);
@@ -173,7 +173,7 @@ export const loadTranslations = (filePath: string) => {
     path.join(filePath, "*.translation.yml"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     let lng = getI18nLng(matchedPath);
@@ -219,7 +219,7 @@ export const loadRouters = (filePath: string) => {
     path.join(filePath, "*.router.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     delete require.cache[require.resolve(matchedPath)];
     let router = loadFile(matchedPath);
@@ -236,7 +236,7 @@ export const loadTriggers = (filePath: string) => {
     path.join(filePath, "*.trigger.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     delete require.cache[require.resolve(matchedPath)];
     let json = loadFile(matchedPath);
@@ -254,7 +254,7 @@ export const loadProcessTriggers = (filePath: string) => {
         path.join(filePath, "*.processTrigger.js"),
         "!" + path.join(filePath, "node_modules"),
     ];
-    const matchedPaths: [string] = globby.sync(filePatten);
+    const matchedPaths: [string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath: string) => {
         delete require.cache[require.resolve(matchedPath)];
         let json = loadFile(matchedPath);
@@ -272,7 +272,7 @@ export const loadActions = (filePath: string) => {
     path.join(filePath, "*.action.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     delete require.cache[require.resolve(matchedPath)];
     let json = loadFile(matchedPath);
@@ -290,7 +290,7 @@ export const loadMethods = (filePath: string) => {
     path.join(filePath, "*.function.js"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     delete require.cache[require.resolve(matchedPath)];
     let json = loadFile(matchedPath);
@@ -308,7 +308,7 @@ export const loadFields = (filePath: string) => {
     path.join(filePath, "*.field.yml"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     if (!json.name) {
@@ -330,7 +330,7 @@ export const loadLayouts = (filePath: string) => {
     path.join(filePath, "*.layout.yml"),
     "!" + path.join(filePath, "node_modules"),
   ];
-  const matchedPaths: [string] = globby.sync(filePatten);
+  const matchedPaths: [string] = syncMatchFiles(filePatten);
   _.each(matchedPaths, (matchedPath: string) => {
     let json = loadFile(matchedPath);
     let names = path.basename(matchedPath).split(".");
@@ -352,7 +352,7 @@ export const loadValidationRules = (filePath: string)=>{
         path.join(filePath, "*.validationRule.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let names = path.basename(matchedPath).split('.');
@@ -374,7 +374,7 @@ export const loadRoles = (filePath: string)=>{
         path.join(filePath, "*.role.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let names = path.basename(matchedPath).split('.');
@@ -393,7 +393,7 @@ export const loadFlowRoles = (filePath: string)=>{
         path.join(filePath, "*.flowRole.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let names = path.basename(matchedPath).split('.');
@@ -412,7 +412,7 @@ export const loadApprovalProcesses = (filePath: string)=>{
         path.join(filePath, "*.approvalProcess.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let names = path.basename(matchedPath).split('.');
@@ -431,7 +431,7 @@ export const loadWorkflows = (filePath: string)=>{
         path.join(filePath, "*.workflow.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         let names = path.basename(matchedPath).split('.');
@@ -450,7 +450,7 @@ export const loadListViews = (filePath: string)=>{
         path.join(filePath, "*.listview.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         if(!json.name){
@@ -470,7 +470,7 @@ export const loadButtons = (filePath: string)=>{
         path.join(filePath, "*.button.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         if(!json.name){
@@ -490,7 +490,7 @@ export const loadButtonScripts = (filePath: string)=>{
         path.join(filePath, "*.button.js"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         delete require.cache[require.resolve(matchedPath)]
         let json = loadFile(matchedPath);
@@ -508,7 +508,7 @@ export const loadPermissions = (filePath: string)=>{
         path.join(filePath, "*.permission.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         if(!_.has(json, 'object_name')){
@@ -526,7 +526,7 @@ export const loadProfiles = (filePath: string)=>{
         path.join(filePath, "*.profile.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         json.name = path.basename(matchedPath).split('.')[0];
@@ -543,7 +543,7 @@ export const loadPermissionsets = (filePath: string)=>{
         path.join(filePath, "*.permissionset.yml"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         json.name = path.basename(matchedPath).split('.')[0];
@@ -556,7 +556,7 @@ export const loadPermissionsets = (filePath: string)=>{
 
 export const loadJsonFiles = (filePatten: Array<string>)=>{
     let results = []
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let json = loadFile(matchedPath);
         if(json){
@@ -577,7 +577,7 @@ export const loadApps = (filePath: string)=>{
             path.join(filePath, "*.app.js"),
             "!" + path.join(filePath, "node_modules"),
         ]
-        const matchedPaths:[string] = globby.sync(filePatten);
+        const matchedPaths:[string] = syncMatchFiles(filePatten);
         _.each(matchedPaths, (matchedPath:string)=>{
             let json = loadFile(matchedPath);
             results.push(json)
@@ -644,7 +644,7 @@ export function loadObjectDataFiles(filePath: string){
         path.join(filePath, "*.data.json"),
         "!" + path.join(filePath, "node_modules"),
     ]
-    const matchedPaths:[string] = globby.sync(filePatten);
+    const matchedPaths:[string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath:string)=>{
         let records = loadFile(matchedPath);
         let objectName = path.basename(matchedPath).split('.')[0];

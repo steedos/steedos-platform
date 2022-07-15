@@ -1,10 +1,9 @@
 import { DbManager } from '@steedos/metadata-api/lib/util/dbManager'
 import { flowsToDb } from '@steedos/metadata-api/lib/metadata/collection/flow'
 // import { checkNameEquals } from '@steedos/metadata-api/lib/util/check_name_equals'
-import { loadFile } from '@steedos/metadata-core';
+import { loadFile, syncMatchFiles } from '@steedos/metadata-core';
 import { Base } from './Base';
 const path = require('path');
-const globby = require("globby");
 const _ = require('underscore');
 
 const transactionOptions: any = {
@@ -26,7 +25,7 @@ export default class ImportFlow implements Base {
             path.join(filePath, "**", "*.flow.data.json"),
             "!" + path.join(filePath, "node_modules"),
         ]
-        const matchedPaths: [string] = globby.sync(filePatten);
+        const matchedPaths: [string] = syncMatchFiles(filePatten);
         let flows = {};
         for (let k = 0; k < matchedPaths.length; k++) {
             let matchedPath = matchedPaths[k];

@@ -2,13 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-14 18:43:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-06 17:00:09
+ * @LastEditTime: 2022-07-15 17:52:55
  * @Description: 
  */
 import _ = require('lodash')
 import path = require('path')
 import fs = require('fs')
-const globby = require('globby');
+import { syncMatchFiles } from '@steedos/metadata-core';
 // const babel = require("@babel/core");
 
 const { getCacher } = require('@steedos/cachers');
@@ -32,7 +32,7 @@ export const loadPackageClientScripts = (packageName, packageDir)=>{
         "!" + path.join(packageDir, "node_modules"),
     ];
     let packageClientScripts = "";
-    let matchedPaths: Array<string> = globby.sync(filePatten);
+    let matchedPaths: Array<string> = syncMatchFiles(filePatten);
     matchedPaths = _.sortBy(matchedPaths);
     _.each(matchedPaths, (matchedPath) => {
         let code = fs.readFileSync(matchedPath, 'utf8');
