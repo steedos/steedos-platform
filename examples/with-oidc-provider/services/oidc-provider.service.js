@@ -92,9 +92,9 @@ module.exports = {
 		this.oidc.proxy = true;
 
 		// express/nodejs style application callback (req, res, next) for use with express apps, see /examples/express.js
-		WebApp.connectHandlers.use('/identity/oidc', this.oidc.callback());
+		WebApp.connectHandlers.use('/oidc', this.oidc.callback());
 		
-		this.logger.warn(`service started, check ${process.env.ROOT_URL}/identity/oidc/.well-known/openid-configuration`);
+		this.logger.warn(`service started, check ${process.env.ROOT_URL}/oidc/.well-known/openid-configuration`);
 	},
 
 	/**

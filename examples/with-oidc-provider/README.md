@@ -25,6 +25,6 @@ Open [http://localhost:5000](http://localhost:5000) with your browser to see the
 ## View 
 
 ```bash
-open '/identity/oidc/.well-known/openid-configuration' # to see your openid-configuration  
-open '/identity/oidc/auth?client_id=foo&response_type=id_token&redirect_uri=https%3A%2F%2Fjwt.io&scope=openid&nonce=foobar' # to start your first Authentication Request
+open '/oidc/.well-known/openid-configuration' # to see your openid-configuration  
+open '/oidc/auth?client_id=foo&response_type=id_token&redirect_uri=https%3A%2F%2Fjwt.io&scope=openid&nonce=foobar' # to start your first Authentication Request
 ```
