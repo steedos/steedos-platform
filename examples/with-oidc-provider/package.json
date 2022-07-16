@@ -1,0 +1,15 @@
+{
+  "name": "with-oidc-provider",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "steedos start"
+  },
+  "dependencies": {
+    "@steedos/service-community": "2.2.54-beta.8",
+    "oidc-provider": "7.11.4"
+  },
+  "devDependencies": {
+    "eslint": "8.19.0"
+  }
+}
