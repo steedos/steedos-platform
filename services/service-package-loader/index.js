@@ -32,7 +32,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server'],
+    dependencies: ['metadata-server', '~packages-project-server'],
 
     /**
      * Actions
