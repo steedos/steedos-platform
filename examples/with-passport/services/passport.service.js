@@ -83,7 +83,7 @@ module.exports = {
     const app = WebApp.connectHandlers;
 
 		// express/nodejs style application callback (req, res, next) for use with express apps, see /examples/express.js
-		app.use(passport.authenticate('jwt'));
+		app.use('/api/global/auth/jwt', passport.authenticate('jwt'));
 		app.use(session(sessionOptions));
     app.use(passport.authenticate('session'));
 
