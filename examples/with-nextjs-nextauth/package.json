@@ -1,6 +1,6 @@
 {
   "name": "with-nextjs-nextauth",
-  "version": "0.1.0",
+  "version": "2.2.54-beta.10",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,5 @@
     "next-auth": "4.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
-  },
-  "devDependencies": {}
+  }
 }
