@@ -88,7 +88,7 @@ module.exports = {
             // 检查环境变量
             const settings = this.settings;
 
-            if (settings.STEEDOS_IDENTITY_OIDC_CONFIG_URL && settings.STEEDOS_IDENTITY_OIDC_CLIENT_ID && settings.STEEDOS_IDENTITY_OIDC_CLIENT_SECRET) {
+            if (settings.STEEDOS_IDENTITY_OIDC_CONFIG_URL && settings.STEEDOS_IDENTITY_OIDC_CLIENT_ID) {
 
                 authController.oidcStrategyFactory().then((strategy)=>{
                     passport.use("oidc", strategy);
