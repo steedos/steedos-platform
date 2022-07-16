@@ -1,6 +1,0 @@
-name: name
-index: true
-label: 费用类型名称
-required: true
-sort_no: 100
-type: text

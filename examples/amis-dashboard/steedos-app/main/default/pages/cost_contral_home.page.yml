@@ -1,9 +1,0 @@
-name: cost_contral_home
-__filename: >-
-  /workspace/steedos-project-template/steedos-packages/amis-dashboard/main/default/pages/cost_contral_home.page.yml
-is_active: true
-label: 费用管理首页
-pageAssignments: []
-render_engine: amis
-type: app
-widgets: []

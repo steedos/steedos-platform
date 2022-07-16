@@ -16842,7 +16842,7 @@ passport-http-bearer@1.0.1:
   dependencies:
     passport-strategy "1.x.x"
 
-passport-jwt@4.0.0:
+passport-jwt@4.0.0, passport-jwt@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/passport-jwt/-/passport-jwt-4.0.0.tgz#7f0be7ba942e28b9f5d22c2ebbb8ce96ef7cf065"
   integrity sha512-BwC0n2GP/1hMVjR4QpnvqA61TxenUMlmfNjYNgK0ZAs0HK4SOQkHcSv4L328blNTLtHq7DbmvyNJiH+bn6C5Mg==
