@@ -1,7 +1,0 @@
-{
-  "name": "amis-dashboard",
-  "version": "0.1.0",
-  "description": "Examples of amis pages",
-  "main": "package.service.js",
-  "private": true
-}

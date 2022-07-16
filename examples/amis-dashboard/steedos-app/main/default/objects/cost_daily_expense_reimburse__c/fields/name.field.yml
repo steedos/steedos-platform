@@ -1,7 +1,0 @@
-name: name
-index: true
-is_wide: true
-label: 标题
-required: true
-sort_no: 100
-type: text
