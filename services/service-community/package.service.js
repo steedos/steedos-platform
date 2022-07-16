@@ -18,7 +18,7 @@ module.exports = {
 			name: serviceName
 		},
 		jwt: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_SECRET || 'false', true),
+			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLE || 'false', true),
 		}
 	},
 
@@ -60,7 +60,6 @@ module.exports = {
 		this.broker.createService(require("@steedos/service-metadata-server"));
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
-		
 		if(this.settings.jwt.enable){
 			this.broker.createService(require("@steedos/service-sso-jwt"));
 		}
