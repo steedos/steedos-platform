@@ -22,6 +22,7 @@ Open [http://localhost:5000](http://localhost:5000) with your browser to see the
 To learn more about Steedos Platform, take a look at the following resources:
 
 - [Steedos Documentation](https://www.steedos.com/docs) - learn about Steedos features and API.
+- [Steedos Examples](https://github.com/steedos/steedos-examples) - Enjoy our selection of steedos examples to learn from or incorporate into your project.
 
 You can check out [the Steedos GitHub repository](https://github.com/steedos/steedos-platform/) - your feedback and contributions are welcome!
 
