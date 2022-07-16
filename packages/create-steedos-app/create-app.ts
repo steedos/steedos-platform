@@ -227,7 +227,7 @@ export async function createApp({
     /**
      * Default dependencies.
      */
-    const dependencies = ['@steedos/service-community@next']
+    const dependencies = ['@steedos/service-community']
     /**
      * Default devDependencies.
      */
