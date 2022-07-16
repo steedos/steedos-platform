@@ -1,0 +1,15 @@
+{
+  "name": "with-passport",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "steedos start"
+  },
+  "dependencies": {
+    "@steedos/service-community": "2.2.54-beta.8",
+    "passport": "0.6.0",
+    "passport-jwt": "4.0.0",
+    "passport-session": "1.0.2"
+  },
+  "devDependencies": {}
+}

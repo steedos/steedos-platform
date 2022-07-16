@@ -13391,7 +13391,7 @@ jsonparse@^1.2.0, jsonparse@^1.3.1:
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==
 
-jsonwebtoken@8.5.1, jsonwebtoken@^8.5.1:
+jsonwebtoken@8.5.1, jsonwebtoken@^8.2.0, jsonwebtoken@^8.5.1:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
   integrity sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==
@@ -16842,10 +16842,25 @@ passport-http-bearer@1.0.1:
   dependencies:
     passport-strategy "1.x.x"
 
+passport-jwt@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/passport-jwt/-/passport-jwt-4.0.0.tgz#7f0be7ba942e28b9f5d22c2ebbb8ce96ef7cf065"
+  integrity sha512-BwC0n2GP/1hMVjR4QpnvqA61TxenUMlmfNjYNgK0ZAs0HK4SOQkHcSv4L328blNTLtHq7DbmvyNJiH+bn6C5Mg==
+  dependencies:
+    jsonwebtoken "^8.2.0"
+    passport-strategy "^1.0.0"
+
 passport-oauth2-client-password@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/passport-oauth2-client-password/-/passport-oauth2-client-password-0.1.2.tgz#4f378b678b92d16dbbd233a6c706520093e561ba"
   integrity sha512-GHQH4UtaEZvCLulAxGKHYoSsPRoPRmGsdmaZtMh5nmz80yMLQbdMA9Bg2sp4/UW3PIxJH/143hVjPTiXaNngTQ==
+  dependencies:
+    passport-strategy "1.x.x"
+
+passport-session@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/passport-session/-/passport-session-1.0.2.tgz#28abf357b0958e7c704164a3f539bd08cb9851db"
+  integrity sha512-VhSl6JYZf+cbERfjrVFrLvaGn5Y54Gw61IdpxmSRdxDuFkbafYmC0rfTJ46K+vlKyoDmVRT/uFP6piAAjOXytQ==
   dependencies:
     passport-strategy "1.x.x"
 
@@ -16862,7 +16877,7 @@ passport@0.5.2:
     passport-strategy "1.x.x"
     pause "0.0.1"
 
-passport@^0.6.0:
+passport@0.6.0, passport@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/passport/-/passport-0.6.0.tgz#e869579fab465b5c0b291e841e6cc95c005fac9d"
   integrity sha512-0fe+p3ZnrWRW74fe8+SvCyf4a3Pb2/h7gFkQ8yTJpAO50gDzlfjZUZTO1k5Eg9kUct22OxHLqDZoKUWRHOh9ug==
