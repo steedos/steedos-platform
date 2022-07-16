@@ -61,7 +61,7 @@ module.exports = {
         
 		const jwtOptions = {
       secretOrKey: this.settings.jwt.secret,
-      jwtFromRequest: function (ctx) {
+      jwtFromRequest: (ctx) => {
         return ctx.cookies.get(this.settings.jwt.cookieName)
       },
     }
