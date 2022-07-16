@@ -1,6 +1,7 @@
 "use strict";
 const passport = require('passport');
 const JwtStrategy = require("passport-jwt").Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const session = require('express-session');
 
 /**
@@ -15,7 +16,6 @@ module.exports = {
 	settings: {
     jwt: {
       secret: process.env.STEEDOS_IDENTITY_JWT_SECRET,
-      cookieName: process.env.STEEDOS_IDENTITY_JWT_COOKIE_NAME
     },
     session: {
       secret: process.env.STEEDOS_IDENTITY_SESSION_SECRET,
@@ -61,9 +61,7 @@ module.exports = {
         
 		const jwtOptions = {
       secretOrKey: this.settings.jwt.secret,
-      jwtFromRequest: (ctx) => {
-        return ctx.cookies.get(this.settings.jwt.cookieName)
-      },
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     }
     const jwtAuthenticate = async function (jwt, done) {
       try {
