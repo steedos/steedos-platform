@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-11 18:09:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-16 16:14:50
+ * @LastEditTime: 2022-07-16 18:24:42
  * @Description: 
  */
 "use strict";
@@ -89,16 +89,19 @@ module.exports = {
 				
 				const jwtAuthenticate = function (jwt_payload, done) {
 					try {
-						const { sub } = jwt_payload;
-						objectql.getObject('users').find({filters: [['email', '=', sub]], fields: ['_id', 'name', 'email']}).then((records)=>{
-							if(records.length > 0){
-								const user = records[0];
-								return done(null, Object.assign({}, user, {id: user._id}))
-							}else{
-								return done('user not find', null)
-							}
-						})
-						
+						const { profile } = jwt_payload;
+						if(profile && profile._json && profile._json.email){
+							objectql.getObject('users').find({filters: [['email', '=', profile._json.email]], fields: ['_id', 'name', 'email', 'username']}).then((records)=>{
+								if(records.length > 0){
+									const user = records[0];
+									return done(null, Object.assign({}, user, {id: user._id}))
+								}else{
+									return done('user not find', null)
+								}
+							})
+						}else{
+							return done('JWT invalid', null)
+						}
 					} catch (err) {
 						return authError(done, "JWT invalid", err)
 					}
