@@ -18,7 +18,7 @@ module.exports = {
 			name: serviceName
 		},
 		jwt: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLE || 'false', true),
+			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLED || 'false', true),
 		}
 	},
 

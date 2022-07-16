@@ -18,7 +18,7 @@ module.exports = {
 			name: serviceName
 		},
 		oidc: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLE || 'false', true),
+			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
 		}
 	},
 
