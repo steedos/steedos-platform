@@ -1,7 +1,7 @@
 "use strict";
 const project = require('./package.json');
 const serviceName = project.name;
-
+const validator = require('validator');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -16,6 +16,9 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: serviceName
+		},
+		oidc: {
+			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLE || 'false', true),
 		}
 	},
 
@@ -61,7 +64,9 @@ module.exports = {
         this.broker.createService(require("@steedos/ee_service-plugin-license"));
 		
         // 启动 OIDC SSO 服务
-        this.broker.createService(require("@steedos/ee_sso-oidc"));
+		if(this.settings.oidc.enable){
+			this.broker.createService(require("@steedos/ee_sso-oidc"));
+		}
 
         // 启动 报表服务
         this.broker.createService(require("@steedos/ee_stimulsoft-reports"));

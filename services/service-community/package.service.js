@@ -1,7 +1,7 @@
 "use strict";
 const project = require('./package.json');
 const serviceName = project.name;
-
+const validator = require('validator');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -16,6 +16,9 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: serviceName
+		},
+		jwt: {
+			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_SECRET || 'false', true),
 		}
 	},
 
@@ -57,6 +60,10 @@ module.exports = {
 		this.broker.createService(require("@steedos/service-metadata-server"));
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
+		
+		if(this.settings.jwt.enable){
+			this.broker.createService(require("@steedos/service-sso-jwt"));
+		}
 		// 启动 steedos-server 服务
         this.broker.createService({
             name: "steedos-server",
