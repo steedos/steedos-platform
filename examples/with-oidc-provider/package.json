@@ -1,12 +1,12 @@
 {
   "name": "with-oidc-provider",
-  "version": "2.2.54-beta.10",
+  "version": "2.2.54",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.54-beta.10",
+    "@steedos/service-community": "2.2.54",
     "oidc-provider": "7.11.4"
   },
   "devDependencies": {
