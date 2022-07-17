@@ -1,6 +1,6 @@
 {
   "name": "@steedos/odata-v4-mongodb",
-  "version": "2.2.54-beta.10",
+  "version": "2.2.54",
   "description": "Service OData requests from a MongoDB data store",
   "main": "lib/index.js",
   "directories": {
@@ -26,12 +26,12 @@
   },
   "homepage": "https://github.com/jaystack/odata-v4-mongodb#readme",
   "dependencies": {
-    "@steedos/odata-v4-parser": "2.2.54-beta.10",
+    "@steedos/odata-v4-parser": "2.2.54",
     "odata-v4-literal": "^0.1.0"
   },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a9abdeb7aaaaf8eee1cecc28efc6cd89ba65a9fe"
+  "gitHead": "c3c4c95a7010fd3a1af0cd41d999bff14718da1b"
 }
