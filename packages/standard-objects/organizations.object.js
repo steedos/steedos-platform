@@ -582,7 +582,7 @@ if (Meteor.isServer) {
                             });
                         db.space_users.update_organizations_parents(su._id, [rootOrg._id]);
                         // db.space_users.update_company_ids(su._id, su);
-                        return db.space_users.update_company(su._id, rootOrg._id);
+                        // return db.space_users.update_company(su._id, rootOrg._id);
                     } else if (orgs.length > 1) {
                         new_orgs = _.filter(orgs, function (org_id) {
                             return org_id !== doc._id;
