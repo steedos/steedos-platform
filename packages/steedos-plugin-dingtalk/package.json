@@ -20,7 +20,6 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@steedos/service-meteor-package-loader": "2.2.54",
         "bcrypt": "^5.0.1",
         "bootstrap": "^3.3.7",
         "cookies": "^0.8.0",
@@ -33,7 +32,6 @@
         "wx-ding-aes": "^0.0.10"
     },
     "devDependencies": {
-        "@steedos/accounts": "2.2.54",
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
         "steedos-server": "2.2.54"
