@@ -61,7 +61,7 @@ module.exports = {
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
 		if(this.settings.jwt.enable){
-			this.broker.createService(require("@steedos/service-sso-jwt"));
+			this.broker.createService(require("@steedos/service-identity-jwt"));
 		}
 		// 启动 steedos-server 服务
         this.broker.createService({
@@ -72,8 +72,6 @@ module.exports = {
                 plugins: [
                     "@steedos/ee_unpkg-local",
                     "@steedos/webapp-accounts",
-                    "@steedos/plugin-dingtalk",
-                    "@steedos/plugin-qywx"
                 ]
             }
         });

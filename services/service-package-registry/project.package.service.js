@@ -576,7 +576,7 @@ module.exports = {
 			async handler(){
 				const settings = this.settings;
 				const packages = settings.STEEDOS_INITIAL_PACKAGES;
-				if(_.isString(packages)){
+				if(_.isString(packages) && packages){
 					for (const packageName of packages.split(',')) {
 						try {
 							const parsed = npa(packageName);

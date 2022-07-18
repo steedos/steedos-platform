@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-04-10 14:27:24
- * @LastEditors: baozhoutao@hotoa.com
- * @LastEditTime: 2022-05-18 16:49:40
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-18 13:43:29
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -24,7 +24,8 @@ async function getAll(){
             page: item._id,
             schema: item.schema,
             version: 1,
-            record_permissions: item.record_permissions
+            record_permissions: item.record_permissions,
+            is_system: item.is_system || false,
         });
     })
     return versions;

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-11 18:09:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-16 18:24:42
+ * @LastEditTime: 2022-07-18 09:34:32
  * @Description: 
  */
 "use strict";
@@ -90,8 +90,8 @@ module.exports = {
 				const jwtAuthenticate = function (jwt_payload, done) {
 					try {
 						const { profile } = jwt_payload;
-						if(profile && profile._json && profile._json.email){
-							objectql.getObject('users').find({filters: [['email', '=', profile._json.email]], fields: ['_id', 'name', 'email', 'username']}).then((records)=>{
+						if(profile && profile.email){
+							objectql.getObject('users').find({filters: [['email', '=', profile.email]], fields: ['_id', 'name', 'email', 'username']}).then((records)=>{
 								if(records.length > 0){
 									const user = records[0];
 									return done(null, Object.assign({}, user, {id: user._id}))
