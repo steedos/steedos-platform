@@ -2,8 +2,6 @@
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-const path = require('path');
-const init = require('.').init;
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -17,14 +15,15 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-            path: path.join(__dirname, 'src/objects')
+            path: __dirname,
+			name: packageName
         }
     },
 
     /**
      * Dependencies
      */
-    dependencies: [],
+    dependencies: ['steedos-server'],
 
     /**
      * Actions
@@ -44,9 +43,7 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-            init(context);
-        }
+
     },
 
     /**

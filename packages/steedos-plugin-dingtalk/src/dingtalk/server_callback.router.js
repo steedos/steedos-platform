@@ -16,12 +16,6 @@ const fetch = require('node-fetch');
 
 //钉钉文档：http://ddtalk.github.io/dingTalkDoc/?spm=a3140.7785475.0.0.p5bAUd#2-回调接口（分为五个回调类型）
 
-let config = {
-    token: "steedos",
-    encodingAESKey: "vr8r85bhgaruo482zilcyf6uezqwpxpf88w77t70dow",
-    suiteKey: "suitedjcpb8olmececers"
-}
-
 //suite4xxxxxxxxxxxxxxx 是钉钉默认测试suiteid 
 // let newCrypt = new WXBizMsgCrypt(config.token, config.encodingAESKey, config.suiteKey || 'suite4xxxxxxxxxxxxxxx');
 // let TICKET_EXPIRES_IN = config.ticket_expires_in || 1000 * 60 * 20 //20分钟
@@ -568,4 +562,4 @@ router.get('/api/sync/dingtalkId', async function (req, res) {
 
 });
 
-exports.router = router;
+exports.default = router;

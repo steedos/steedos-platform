@@ -638,5 +638,4 @@ parseXML = (xml) => new Promise((resolve, reject) => {
     xml2js.parseString(xml, opt, (err, res) => err ? reject(new Error('XMLDataError')) : resolve(res || {}));
 });
 
-
-module.exports.router = router;
+exports.default = router;
