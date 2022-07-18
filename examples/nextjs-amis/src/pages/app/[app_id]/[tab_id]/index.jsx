@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-04 11:24:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-13 10:14:49
+ * @LastEditTime: 2022-07-18 14:44:06
  * @Description: 
  */
 import dynamic from 'next/dynamic'
@@ -10,47 +10,14 @@ import Document, { Script, Head, Main, NextScript } from 'next/document'
 import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router'
 import { getListSchema } from '@/lib/objects';
+import { unstable_getServerSession } from "next-auth/next"
+import { AmisRender } from '@/components/AmisRender'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { values } from 'lodash';
-const normalizeLink = (to, location = window.location) => {
-  to = to || '';
 
-  if (to && to[0] === '#') {
-    to = location.pathname + location.search + to;
-  } else if (to && to[0] === '?') {
-    to = location.pathname + to;
-  }
-
-  const idx = to.indexOf('?');
-  const idx2 = to.indexOf('#');
-  let pathname = ~idx
-    ? to.substring(0, idx)
-    : ~idx2
-    ? to.substring(0, idx2)
-    : to;
-  let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
-  let hash = ~idx2 ? to.substring(idx2) : location.hash;
-
-  if (!pathname) {
-    pathname = location.pathname;
-  } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
-    let relativeBase = location.pathname;
-    const paths = relativeBase.split('/');
-    paths.pop();
-    let m;
-    while ((m = /^\.\.?\//.exec(pathname))) {
-      if (m[0] === '../') {
-        paths.pop();
-      }
-      pathname = pathname.substring(m[0].length);
-    }
-    pathname = paths.concat(pathname).join('/');
-  }
-
-  return pathname + search + hash;
-};
 export default function Page ({}) {
   const [selected, setSelected] = useState();
   const router = useRouter()
@@ -68,60 +35,13 @@ export default function Page ({}) {
       })
   }, [tab_id, selected]);
 
-  useEffect(() => {
-    (function () {
-      let amis = amisRequire('amis/embed');
-      if(document.getElementById("amis-root") && schema?.amisSchema){
-        let amisScoped = amis.embed('#amis-root', 
-        schema.amisSchema, 
-        {}, 
-        {
-          theme: 'antd',
-          jumpTo: (to, action) => {
-            if (to === 'goBack') {
-                return window.history.back();
-            }
-
-            to = normalizeLink(to);
-
-            if (action && action.actionType === 'url') {
-                action.blank === false ? (window.location.href = to) : window.open(to);
-                return;
-            }
-
-            // 主要是支持 nav 中的跳转
-            if (action && to && action.target) {
-                window.open(to, action.target);
-                return;
-            }
-            console.log(`to`, to)
-            if (/^https?:\/\//.test(to)) {
-                window.location.replace(to);
-            } else {
-                router.push(to);
-            }
-        }
-        }
-      );
-      }
-    })();
-  }, [schema]);
-
-
-  const amisRootClick = (e)=>{
-    if(e.target.nodeName.toLocaleLowerCase() === 'a' && e.target.href){
-      e.preventDefault();
-      router.push(e.target.href)
-    }
-  }
-
   const newRecord = ()=>{
     router.push('/app/'+app_id+'/'+tab_id+'/view/new')
   }
 
   return (
     <>
-      <div className="relative z-10 p-4 pb-0">
+      <div className="z-10 p-4 pb-0">
               <div className="space-y-4">
                   <div className="pointer-events-auto w-full rounded-lg bg-white p-4 text-[0.8125rem] leading-5 shadow-xl shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
                       <div className="flex justify-between">
@@ -131,8 +51,8 @@ export default function Page ({}) {
                             </div>
                       </div>
                       <Listbox value={selected} onChange={setSelected}>
-                        <div className="relative mt-1">
-                          <Listbox.Button className="relative min-w-[6rem] w-auto cursor-default py-2 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                        <div className="mt-1">
+                          <Listbox.Button className="min-w-[6rem] w-auto cursor-default py-2 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                             <span className="block truncate">{selected?.label}</span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                               <SelectorIcon
@@ -152,7 +72,7 @@ export default function Page ({}) {
                                 <Listbox.Option
                                   key={personIdx}
                                   className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                    `cursor-default select-none py-2 pl-10 pr-4 ${
                                       active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                                     }`
                                   }
@@ -183,7 +103,24 @@ export default function Page ({}) {
                   </div>
               </div>
           </div>
-      <div id="amis-root" className="app-wrapper" onClick={amisRootClick}></div>
+      <AmisRender id={`${app_id}-${tab_id}`} schema={schema?.amisSchema || {}} router={router}></AmisRender>
     </>
   )
+}
+
+
+export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login?callbackUrl=/app',
+        permanent: false,
+      },
+    }
+  }
+  return {
+    props: { },
+  }
 }

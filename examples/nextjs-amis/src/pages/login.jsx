@@ -31,7 +31,6 @@ export default function Login({providers={}, csrfToken}) {
   const router = useRouter();
   const { callbackUrl = '/', error } = router.query
   
-  
   if (typeof window !== 'undefined' && session && callbackUrl) {
     router.push(callbackUrl);
   }

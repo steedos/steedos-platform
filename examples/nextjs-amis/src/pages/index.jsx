@@ -2,10 +2,9 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-04 11:24:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-13 11:21:50
+ * @LastEditTime: 2022-07-18 13:28:52
  * @Description: 
  */
-import { Navbar } from '@/components/Navbar'
 import { CallToAction } from '@/components/home/CallToAction'
 import { Faqs } from '@/components/home/Faqs'
 import { Hero } from '@/components/home/Hero'

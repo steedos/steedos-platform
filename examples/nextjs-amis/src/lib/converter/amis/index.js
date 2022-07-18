@@ -108,7 +108,7 @@ export function getObjectList(objectSchema, fields, options){
         bodyClassName: 'm-4 bg-white rounded-lg',
         name: `page_list_${objectSchema.name}`,
         data: {context: {rootUrl: ROOT_URL, tenantId: getTenantId(), authToken: getAuthToken()}},
-        body: Object.assign({}, table, {type: 'crud',  primaryField: '_id', keepItemSelectionOnPageChange: true, api: getTableApi(objectSchema, fields)}, {toolbar: getToolbar(), footerToolbar: footerToolbar(), headerToolbar: getHeaderToolbar(objectSchema), "bulkActions": bulkActions, filter: getFilter()})
+        body: Object.assign({}, table, {type: 'crud',  primaryField: '_id', keepItemSelectionOnPageChange: true, api: getTableApi(objectSchema, fields, options)}, {toolbar: getToolbar(), footerToolbar: footerToolbar(), headerToolbar: getHeaderToolbar(objectSchema), "bulkActions": bulkActions, filter: getFilter()})
     }
     return 
 }

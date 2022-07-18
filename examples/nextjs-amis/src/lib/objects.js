@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-05 15:55:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-12 17:52:14
+ * @LastEditTime: 2022-07-13 18:13:17
  * @Description: 
  */
 import { fetchAPI } from './steedos.client';
@@ -73,10 +73,10 @@ export async function getViewSchema(objectName, recordId){
     }
 }
 
-export async function getListSchema(appName, objectName, listViewName = 'all'){
+export async function getListSchema(appName, objectName, listViewName = 'all', options = {}){
     const uiSchema = await getUISchema(objectName);
 
-    const listView = _.find(uiSchema.list_views, listView => listView.name === listViewName);
+    const listView = _.find(uiSchema.list_views, (listView, name) => name === listViewName);
 
     if(!listView){
         return {};
@@ -95,9 +95,46 @@ export async function getListSchema(appName, objectName, listViewName = 'all'){
         })
     }
     fields = listViewFields;
-    const amisSchema = await getObjectList(uiSchema, fields, {tabId: objectName, appId: appName});
+    const amisSchema = await getObjectList(uiSchema, fields, {tabId: objectName, appId: appName, ...options});
     return {
         uiSchema,
         amisSchema
     }
+}
+
+export async function getField(objectName, fieldName){
+    const uiSchema = await getUISchema(objectName);
+    return uiSchema?.fields[fieldName];
+}
+
+export async function getObjectRelateds(appName, objectName, recordId){
+    const uiSchema = await getUISchema(objectName);
+
+    const related = [];
+
+    const details = [].concat(uiSchema.details || [])
+
+    if(uiSchema.enable_files){
+        details.push(`cms_files.parent`)
+    }
+
+    for (const detail of details) {
+        const arr = detail.split('.');
+
+        let filter = null;
+        const refField = await getField(arr[0], arr[1]);
+        if(refField._reference_to || (refField.reference_to && !_.isString(refField.reference_to))){
+            filter =  [[`${arr[1]}/o`, '=', objectName], [`${arr[1]}/ids`, 'eq', recordId]];
+        }else{
+            filter = [`${arr[1]}`, '=', recordId] ;
+        }
+
+        related.push({
+            object_name: arr[0], 
+            foreign_key: arr[1],
+            schema: await getListSchema(appName, arr[0], 'all', {filter: filter})
+        })
+    }
+    console.log(related);
+    return related;
 }

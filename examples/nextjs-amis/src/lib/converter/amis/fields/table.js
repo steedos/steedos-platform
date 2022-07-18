@@ -86,8 +86,9 @@ exports.getTableSchema = function(fields, options){
     }
 }
 
-exports.getTableApi = function(mainObject, fields){
+exports.getTableApi = function(mainObject, fields, options){
     const searchableFields = [];
+    const { filter } = options;
     _.each(fields,function(field){
         if(field.searchable){
             searchableFields.push(field.name);
@@ -99,7 +100,7 @@ exports.getTableApi = function(mainObject, fields){
     api.data.$self = "$$";
     api.requestAdaptor = `
         const selfData = JSON.parse(JSON.stringify(api.data.$self));
-        var filters = [];
+        var filters = [${JSON.stringify(filter)}];
         var pageSize = api.data.pageSize || 10;
         var pageNo = api.data.pageNo || 1;
         var skip = (pageNo - 1) * pageSize;
