@@ -63,9 +63,9 @@ Template.creatorSidebarLeft.helpers
 		else if settings && avatar_url
 			return Steedos.absoluteUrl(avatar_url)
 		else
-			logo_url = "/packages/steedos_creator/assets/logo-square.png"
+			logo_url = "/images/logo_platform.png"
 			if(Meteor.user()?.locale != 'zh-cn')
-				logo_url = "/packages/steedos_creator/assets/logo-square.en-us.png"
+				logo_url = "/images/logo_platform.en-us.png"
 			return Creator.getRelativeUrl(logo_url)
 		
 
