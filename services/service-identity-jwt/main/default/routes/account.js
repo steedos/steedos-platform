@@ -6,7 +6,7 @@ const tslib_1 = require("tslib");
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 15:17:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-16 12:01:45
+ * @LastEditTime: 2022-07-18 13:30:25
  * @Description:
  */
 const accounts_1 = require("@steedos/accounts");
@@ -65,7 +65,7 @@ class Account {
                 res.redirect(`/accounts/a/?uid=${loginResult.user._id}`);
             }
             else {
-                return loginResult;
+                return Object.assign({}, loginResult, { space: space });
             }
         });
     }
