@@ -802,7 +802,8 @@ textarea {
           border-left: 0px !important;
         }
 
-        th:last-child, td:last-child{
+        th:nth-last-child(-1n+2), td:nth-last-child(-1n+2){
+          /*这里不能写last-child，因为最后一列是一个hidden的_id字段，只能取最后两列*/
           border-right: 0px !important;
         }
         .panel-heading{

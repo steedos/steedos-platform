@@ -1,3 +1,5 @@
+marked = require("marked")
+
 InstanceReadOnlyTemplate = {};
 
 

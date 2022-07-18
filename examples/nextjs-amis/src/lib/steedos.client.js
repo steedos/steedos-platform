@@ -1,4 +1,18 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-04 11:24:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-18 13:38:31
+ * @Description: 
+ */
 const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL
+
+const STEEDOS_AUTH = {};
+
+export const setSteedosAuth = (space, token) => {
+    STEEDOS_AUTH.space = space;
+    STEEDOS_AUTH.token = token;
+}
 
 export async function fetchAPI(api, options = { credentials: 'include' }) {
     const headers = { 'Content-Type': 'application/json' }
@@ -55,12 +69,7 @@ export function getTenantId(){
 
 export function getAuthToken(){
     try {
-        let token = localStorage.getItem('steedos:token');
-
-        if (window.location.search  && !token) {
-            var searchParams = new URLSearchParams(window.location.search);
-            token = searchParams.get('X-Auth-Token');
-        }
+        let token = STEEDOS_AUTH.token;
         if (!token) {
             return null;
         }
@@ -72,14 +81,9 @@ export function getAuthToken(){
 
 export function getAuthorization(){
     try {
-        let spaceId = localStorage.getItem('steedos:spaceId');
-        let token = localStorage.getItem('steedos:token');
-
-        if (window.location.search && !spaceId && !token) {
-            var searchParams = new URLSearchParams(window.location.search);
-            spaceId = searchParams.get('X-Space-Id');
-            token = searchParams.get('X-Auth-Token');
-        }
+        let spaceId = STEEDOS_AUTH.space;
+        let token = STEEDOS_AUTH.token;
+        
         if (!spaceId || !token) {
             return null;
         }

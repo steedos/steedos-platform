@@ -2,52 +2,22 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-04 11:24:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-13 10:14:59
+ * @LastEditTime: 2022-07-18 14:45:26
  * @Description: 
  */
 import dynamic from 'next/dynamic'
 import Document, { Script, Head, Main, NextScript } from 'next/document'
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import { getViewSchema, getFormSchema } from '@/lib/objects';
+import { getViewSchema, getFormSchema, getObjectRelateds } from '@/lib/objects';
+import { AmisRender } from '@/components/AmisRender'
+import { unstable_getServerSession } from "next-auth/next"
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { Tab } from '@headlessui/react'
 
-const normalizeLink = (to, location = window.location) => {
-    to = to || '';
-  
-    if (to && to[0] === '#') {
-      to = location.pathname + location.search + to;
-    } else if (to && to[0] === '?') {
-      to = location.pathname + to;
-    }
-  
-    const idx = to.indexOf('?');
-    const idx2 = to.indexOf('#');
-    let pathname = ~idx
-      ? to.substring(0, idx)
-      : ~idx2
-      ? to.substring(0, idx2)
-      : to;
-    let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
-    let hash = ~idx2 ? to.substring(idx2) : location.hash;
-  
-    if (!pathname) {
-      pathname = location.pathname;
-    } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
-      let relativeBase = location.pathname;
-      const paths = relativeBase.split('/');
-      paths.pop();
-      let m;
-      while ((m = /^\.\.?\//.exec(pathname))) {
-        if (m[0] === '../') {
-          paths.pop();
-        }
-        pathname = pathname.substring(m[0].length);
-      }
-      pathname = paths.concat(pathname).join('/');
-    }
-  
-    return pathname + search + hash;
-  };
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
 export default function Record({ }) {
 
@@ -55,6 +25,7 @@ export default function Record({ }) {
     const { app_id, tab_id, record_id } = router.query
     const [isEditing, setIsEditing] = useState(false);
     const [schema, setSchema] = useState(null);
+    const [relateds, setRelateds] = useState(null);
 
     useEffect(() => {
         setIsEditing(false)
@@ -76,49 +47,14 @@ export default function Record({ }) {
         }
     }, [tab_id, record_id, isEditing]);
 
-    useEffect(() => {
-        (function () {
-            let amis = amisRequire('amis/embed');
-            if (document.getElementById("amis-root") && schema) {
-                let amisScoped = amis.embed('#amis-root',
-                    schema.amisSchema,
-                    {},
-                    {
-                        theme: 'antd',
-                        jumpTo: (to, action) => {
-                            if (to === 'goBack') {
-                                return window.history.back();
-                            }
-            
-                            to = normalizeLink(to);
-            
-                            if (action && action.actionType === 'url') {
-                                action.blank === false ? (window.location.href = to) : window.open(to);
-                                return;
-                            }
-            
-                            // 主要是支持 nav 中的跳转
-                            if (action && to && action.target) {
-                                window.open(to, action.target);
-                                return;
-                            }
-                            if (/^https?:\/\//.test(to)) {
-                                window.location.replace(to);
-                            } else {
-                                router.push(to);
-                            }
-                        }
-                    }
-                );
-            }
-        })();
-    }, [schema]);
-
     const viewRecord = (tab_id, record_id)=>{
         if(tab_id && record_id){
             getViewSchema(tab_id, record_id)
             .then((data) => {
                 setSchema(data)
+            });
+            getObjectRelateds(app_id, tab_id, record_id).then((data)=>{
+                setRelateds(data)
             })
         }
     }
@@ -146,7 +82,7 @@ export default function Record({ }) {
 
     return (
         <>
-            <div className="relative z-10 p-4 pb-0">
+            <div className="z-10 p-4 pb-0">
                 <div className="space-y-4">
                     <div className="pointer-events-auto w-full rounded-lg bg-white p-4 text-[0.8125rem] leading-5 shadow-xl shadow-black/5 hover:bg-slate-50 ring-1 ring-slate-700/10">
                         <div className=''>
@@ -162,7 +98,54 @@ export default function Record({ }) {
                     </div>
                 </div>
             </div>
-            <div id="amis-root" className="app-wrapper"></div>
+            <AmisRender id={`${app_id}-${tab_id}-${record_id}`} schema={schema?.amisSchema || {}} router={router}></AmisRender>
+            <div className="z-10 p-4 pb-0">
+                <Tab.Group>
+                    <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+                        {relateds?.map((related)=>{
+                            return (<Tab
+                                className={({ selected }) =>
+                                    classNames(
+                                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+                                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                                    selected
+                                        ? 'bg-white shadow'
+                                        : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                                    )
+                                }
+                            >{related?.schema?.uiSchema?.label}</Tab>)
+                        })}
+                    </Tab.List>
+                    <Tab.Panels className="mt-2">
+                        {relateds?.map((related)=>{
+                            return (
+                                <Tab.Panel className={classNames(
+                                    'rounded-xl bg-white p-3',
+                                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                                  )}>
+                                    <AmisRender id={`amis-root-related-${related.object_name}-${related.foreign_key}`} schema={related?.schema.amisSchema || {}} router={router}></AmisRender>
+                                </Tab.Panel>
+                            )
+                        })}
+                    </Tab.Panels>
+                </Tab.Group>
+            </div>
         </>
     )
 }
+
+export async function getServerSideProps(context) {
+    const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/login?callbackUrl=/app',
+          permanent: false,
+        },
+      }
+    }
+    return {
+      props: { },
+    }
+  }

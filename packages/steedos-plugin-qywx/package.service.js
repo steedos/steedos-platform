@@ -1,16 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-27 10:56:26
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-18 16:36:18
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-const path = require('path');
-const init = require('.').init;
+const qywxPush = require('./src/qywx/notifications');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -24,14 +23,15 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-            path: path.join(__dirname, 'main')
+            path: __dirname,
+            name: packageName
         }
     },
 
     /**
      * Dependencies
      */
-    dependencies: [],
+    dependencies: ['steedos-server'],
 
     /**
      * Actions
@@ -51,9 +51,7 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-            init(context);
-        }
+
     },
 
     /**
@@ -67,7 +65,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-
+        qywxPush.notify();
     },
 
     /**
