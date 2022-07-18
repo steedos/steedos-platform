@@ -10,8 +10,6 @@
     "@steedos/metadata-api": "2.2.54",
     "@steedos/meteor-bundle-runner": "2.2.54",
     "@steedos/plugin-company": "2.2.54",
-    "@steedos/plugin-dingtalk": "2.2.54",
-    "@steedos/plugin-qywx": "2.2.54",
     "@steedos/service-accounts": "2.2.54",
     "@steedos/service-api": "2.2.54",
     "@steedos/service-cachers-manager": "2.2.54",

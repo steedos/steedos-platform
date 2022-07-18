@@ -57,8 +57,6 @@ module.exports = {
 		plugins: [
 			"@steedos/unpkg",
 			"@steedos/webapp-accounts",
-			"@steedos/plugin-dingtalk",
-			"@steedos/plugin-qywx",
 		]
 	},
 

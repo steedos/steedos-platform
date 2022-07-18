@@ -23,7 +23,6 @@ try
 				# "@steedos/plugin-jsreport",
 				# "@steedos/word-template",
 				"@steedos/metadata-api",
-				# "@steedos/plugin-dingtalk",
 				"@steedos/data-import",
 				# "@steedos/service-fields-indexs",
 				"@steedos/service-accounts",
