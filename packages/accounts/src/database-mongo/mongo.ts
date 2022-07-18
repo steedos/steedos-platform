@@ -970,19 +970,9 @@ export class Mongo implements DatabaseInterface {
     hashedToken.created = new Date();
     hashedToken.is_phone = is_phone;
     hashedToken.is_tablet = is_tablet;
-    let _user = await this.collection.findOne({ _id: userId });
-    if (!_user["services"]) {
-      _user["services"] = {};
-    }
-    if (!_user["services"]["resume"]) {
-      _user["services"]["resume"] = { loginTokens: [] };
-    }
-    if (!_user["services"]["resume"]["loginTokens"]) {
-      _user["services"]["resume"]["loginTokens"] = [];
-    }
-    _user["services"]["resume"]["loginTokens"].push(hashedToken);
-    let data = { services: _user["services"] };
-    await this.collection.updateOne({ _id: userId }, { $set: data });
+    await this.collection.updateOne({ _id: userId }, { $push: {
+      "services.resume.loginTokens": hashedToken
+    } });
     return true;
   }
 
