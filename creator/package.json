@@ -49,6 +49,7 @@
     "js-yaml": "^3.14.1",
     "jszip": "^3.7.0",
     "knockout": "^3.4.2",
+    "marked": "4.0.18",
     "md5": "^2.2.1",
     "meteor-node-stubs": "^0.4.1",
     "migrate": "^1.6.2",
@@ -91,7 +92,6 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "handlebars": "^4.7.7",
     "bootstrap": "^3.3.7",
     "bootstrap-tagsinput": "0.7.1",
     "cross-env": "^7.0.3",
@@ -100,6 +100,7 @@
     "devextreme": "^18.2.6",
     "dotenv": "^8.1.0",
     "dotenv-flow": "^3.1.0",
+    "handlebars": "^4.7.7",
     "ioredis": "^4.22.0",
     "jquery": "^2.2.4",
     "jquery-ui-sortable": "^1.0.0",
