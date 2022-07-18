@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-04-10 14:34:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-10 15:24:17
+ * @LastEditTime: 2022-07-18 13:42:57
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -23,11 +23,12 @@ async function getAll() {
                     _id: assignment._id,
                     app: assignment.app,
                     desktop: assignment.desktop,
-                    is_system: assignment.is_system || false,
+                    is_system: item.is_system || false,
                     mobile: assignment.mobile,
                     page: item._id,
                     profile: assignment.profile,
                     record_type: assignment.record_type,
+                    type: assignment.type
                 });
             }
         }
