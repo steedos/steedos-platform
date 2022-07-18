@@ -66,7 +66,7 @@ Template.creatorSidebarLeft.helpers
 			logo_url = "/images/logo_platform.png"
 			if(Meteor.user()?.locale != 'zh-cn')
 				logo_url = "/images/logo_platform.en-us.png"
-			return Creator.getRelativeUrl(logo_url)
+			return Steedos.absoluteUrl(logo_url)
 		
 
 Template.creatorSidebarLeft.events
