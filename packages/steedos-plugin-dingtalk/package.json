@@ -21,7 +21,6 @@
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.0.1",
-        "bootstrap": "^3.3.7",
         "cookies": "^0.8.0",
         "dotenv-flow": "^3.1.0",
         "express": "^4.17.1",
@@ -32,9 +31,6 @@
         "wx-ding-aes": "^0.0.10"
     },
     "devDependencies": {
-        "babel-runtime": "^6.23.0",
-        "nodemon": "^2.0.19",
-        "steedos-server": "2.2.54"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
     "gitHead": "c3c4c95a7010fd3a1af0cd41d999bff14718da1b"
