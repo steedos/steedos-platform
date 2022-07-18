@@ -27,7 +27,7 @@ Package.onUse(function(api) {
     'client/weui.css',
     'client/weui.less'
   ], "client");
-  console.log('api==>',api)
+
   
 });
 
