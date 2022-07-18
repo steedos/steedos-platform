@@ -13,7 +13,7 @@ Package.onUse(function(api) {
   api.use('blaze-html-templates');
 
   api.use('flemay:less-autoprefixer@1.2.0');
-
+  api.addFiles("client/lib/weui.css", "client");
   api.addFiles([
     'client/core.less',
     'client/bootstrap.less',
@@ -27,7 +27,7 @@ Package.onUse(function(api) {
     'client/weui.css',
     'client/weui.less'
   ], "client");
-
+  console.log('api==>',api)
   
 });
 
