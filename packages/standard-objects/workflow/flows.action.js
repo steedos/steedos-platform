@@ -157,9 +157,10 @@ module.exports = {
                                     if (rowValue) {
                                         relatedFieldFullname = rowValue.detail_field_fullname
                                     }
+                                    const baseFieldKeys = Object.keys(Creator.getObject('base').fields)
                                     if (relatedFieldFullname) {
                                         const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
-                                        return ['object', '=', objectName]
+                                        return [['object', '=', objectName], ['type', '!=', 'master_detail'], ['name', '!=', baseFieldKeys]]
                                     } else {
                                         return ['_id', '=', 'no']
                                     }
