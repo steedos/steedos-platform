@@ -27,7 +27,7 @@ try
 				# "@steedos/service-fields-indexs",
 				"@steedos/service-accounts",
 				"@steedos/service-charts",
-				"@steedos/service-pages",
+				# "@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
 				# "@steedos/standard-process",
@@ -107,6 +107,14 @@ try
 				apiService = broker.createService({
 					name: "api",
 					mixins: [APIService],
+					settings: {
+						port: null
+					} 
+				});
+
+				pageService = broker.createService({
+					name: "@steedos/service-pages",
+					mixins: [require('@steedos/service-pages')],
 					settings: {
 						port: null
 					} 
