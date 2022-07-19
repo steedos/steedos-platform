@@ -642,17 +642,31 @@ module.exports = {
 		}
 
 		await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
-
+ 
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
 		}
 		packages.maintainSystemFiles()
+		// 兼容旧版单包路径steedos-app
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			if(fs.existsSync(packagePath)){
 				const packageInfo = require(path.join(packagePath, 'package.json'));
 				loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+			}
+		} catch (error) {
+			console.log(`started error`, error)
+		}
+
+		// 新版单包项目加载
+		try {
+			if(fs.existsSync(path.join(process.cwd(), 'package.service.js'))){
+				const packagePath = process.cwd(); 
+				if(fs.existsSync(packagePath)){
+					const packageInfo = require(path.join(packagePath, 'package.json'));
+					loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+				}
 			}
 		} catch (error) {
 			console.log(`started error`, error)

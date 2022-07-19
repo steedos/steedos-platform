@@ -11,7 +11,7 @@ import { Table } from './output';
 import { loadFile } from './loadFile';
 import { deleteFolderRecursive } from './folderUtil';
 import { getFileinfoByFilename, hasChild, hasParent, getFullName, SteedosMetadataTypeInfoKeys as TypeInfoKeys,
-     getFileExt, getFolderPath, getParentFolder, getPackagePath, getPackagePaths, resolveProjectPathSync } from './';
+     getFileExt, getFolderPath, getParentFolder, getPackagePath, getPackagePaths, resolveProjectPathSync, getProjectWorkPath } from './';
 /**
  * 
  * @param sourceDir 需要压缩的文件/文件夹路径
@@ -253,12 +253,6 @@ class ZipDescription{
         if(archive){
             archive.file(filePath, {name: zipFileName});
         }
-        
-        // filePath: C:\steedos-app\main\default\objects\test_object\test_object.object.yml
-        // fileName: main\default\objects\test_object\test_object.object.yml
-        
-        
-        
         
         var itemName = fileinfo.itemName
         var parentName = fileinfo.parentName
@@ -509,8 +503,8 @@ export async function decompressAndDeploy(zipBuffer, projectDir){
                         fs.writeFileSync(path.join(destFile, jsFileName), buffer);
                     }
                 }
-                //TODO 优化获取相对路径算法
-                var relativePath = path.join(getPackagePath(), _.last((path.join(destFile , fullFileName)).split(getPackagePath())))
+
+                var relativePath = path.relative(getProjectWorkPath(), path.join(destFile , fullFileName))
                 rows.push({name: `${fullnamePrefix}${_.first(fileName.split('.'))}`, type: metadata, path: relativePath})
                 if (pageRow) {
                     rows.push(pageRow);
