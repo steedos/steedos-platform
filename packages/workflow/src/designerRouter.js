@@ -97,8 +97,10 @@ router.post('/am/forms', async function (req, res) {
         for (let i = 0; i < data['Forms'].length; i++) {
             let form = data['Forms'][i];
             let objectName = form["object_name"];
+            const instance_table_fields = form['instance_table_fields'] || []
             const instanceFields = await designerManager.getBusinessFields(objectName)
             const formFields = await designerManager.transformObjectFieldsToFormFields(instanceFields);
+            const tables = await designerManager.transformObjectDetailFieldsToFormTableFields(instance_table_fields)
             // 执行者的身份校验
             await designerManager.checkSpaceUserBeforeUpdate(form['space'], userId, req.user.roles)
 
@@ -143,7 +145,7 @@ router.post('/am/forms', async function (req, res) {
                             fields: form["current"]["fields"]
                         };
                         if (objectName) {
-                            current.fields = Object.values(formFields);
+                            current.fields = Object.values(formFields).concat(tables);
                         }
                         newForm.current = current;
                         newForm.historys = [];
@@ -178,6 +180,7 @@ router.post('/am/forms', async function (req, res) {
                         if (objectName) {
                             flow.object_name = objectName;
                             flow.instance_fields = instanceFields
+                            flow.instance_table_fields = instance_table_fields
                         }
                         let flowPerms = {
                             _id: flowCollection._makeNewID()
@@ -1105,32 +1108,12 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
         const formFieldsMap = await designerManager.transformObjectFieldsToFormFields(fields);
         const fFields = Object.values(formFieldsMap);
 
-
-        const tables = [];
-        for (const tf of instance_table_fields) {
-            let detailFieldFullname = tf.detail_field_fullname;
-            let detailObjName = detailFieldFullname.split('.')[0];
-            const detailObj = objectql.getObject(detailObjName);
-            const detailObjConfig = await detailObj.toConfig();
-            let tLabel = tf.label || detailObjConfig.label;
-            let tableFields = designerManager.getObjectFieldsByNames(tf.field_names, detailObjConfig.fields);
-            const tFieldsMap = await designerManager.transformObjectFieldsToFormFields(tableFields, `${detailObjName}_`);
-            const tFields = Object.values(tFieldsMap);
-            tables.push({
-                "type": "table",
-                "name": tLabel,
-                "code": detailObjName,
-                "is_wide": true,
-                "is_required": false,
-                "fields": tFields,
-                "_id": await formObj._makeNewID()
-            });
-        }
+        const tables = await designerManager.transformObjectDetailFieldsToFormTableFields(instance_table_fields)
 
         formDoc.current.fields = fFields.concat(tables);
         await designerManager.updateForm(formDoc._id, formDoc, updatedForms, updatedFlows, userId);
         // 重新设置流程开始节点的字段编辑权限为可编辑
-        await designerManager.updateStartStepPermission(updatedFlows[0],updatedForms[0].current.fields);
+        await designerManager.updateStartStepPermission(updatedFlows[0], updatedForms[0].current.fields);
 
         // 更新对象流程映射
         const flowDoc = (await flowObj.find({ filters: [['form', '=', formId]] }))[0];
