@@ -483,6 +483,9 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'datetime':
             formField.type = "dateTime";
             break;
+        case 'time':
+            formField.type = "input";
+            break;
         case 'number':
             formField.type = "number";
             formField.digits = objField.scale;
@@ -519,9 +522,13 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'email':
             formField.type = "email";
             break;
-        case 'image':
+        case 'code':
+            formField.type = "input";
+            formField.is_textarea = true;
             break;
+        case 'image':
         case 'file':
+            formField.type = "input";
             break;
         case 'formula':
             switch (objField.data_type) {
@@ -554,7 +561,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             }
             break;
         case 'summary':
-            // TODO
+            formField.type = "input";
             break;
         default:
             break;
