@@ -87,7 +87,18 @@ Steedos.StandardObjects = {
                     if (!object_workflow) {
                         return false;
                     }
-                    if (record && record.instances && record.instances.length > 0) {
+                    var queryResult = Steedos.authRequest("/graphql", {
+                        type: 'POST',
+                        async: false,
+                        data: JSON.stringify({
+                            query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
+                        }),
+                        type: 'POST',
+                        contentType: 'application/json',
+                        error: function () { }
+                    });
+                    var recordDoc = queryResult && queryResult.data && queryResult.data.record;
+                    if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
                         return false;
                     }
                     return true;
@@ -106,7 +117,18 @@ Steedos.StandardObjects = {
                         return false;
                     }
                     var record;
-                    record = Creator.getObjectRecord(object_name, record_id);
+                    // record = Creator.getObjectRecord(object_name, record_id);
+                    var queryResult = Steedos.authRequest("/graphql", {
+                        type: 'POST',
+                        async: false,
+                        data: JSON.stringify({
+                            query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
+                        }),
+                        type: 'POST',
+                        contentType: 'application/json',
+                        error: function () { }
+                    });
+                    record = queryResult && queryResult.data && queryResult.data.record;
                     if (record && !_.isEmpty(record.instances)) {
                         return true;
                     }
