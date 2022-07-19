@@ -120,6 +120,19 @@ try
 					} 
 				});
 
+				steedosService = broker.createService({
+					name: "steedos-server",
+					mixins: [],
+					settings: {
+						port: null
+					},
+					started: ()->
+						setTimeout ->
+							broker.emit 'steedos-server.started'
+							return
+						, 1000
+				});
+
 				objectql.getSteedosSchema(broker);
 				standardObjectsDir = objectql.StandardObjectsPath;
 				standardObjectsPackageLoaderService = broker.createService({
