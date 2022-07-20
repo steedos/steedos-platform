@@ -26,7 +26,7 @@ export * from './load';
 export * from './util/match_files';
 
 const DEFAULT_PACKAGE_PATH_OLD = 'steedos-app';
-const DEFAULT_PACKAGE_PATH = '.';
+// const DEFAULT_PACKAGE_PATH = '.';
 
 //TODO 待完善
 //record是数据库里的记录
@@ -295,17 +295,19 @@ export function getFileExt(metadataName) {
 export function getPackagePath(dir?: string) {
     const defaultPackagePath = getDefaultPackagePath(dir);
 
-    if(defaultPackagePath){
-        return defaultPackagePath;
-    }
+    return defaultPackagePath ? defaultPackagePath : DEFAULT_PACKAGE_PATH_OLD
 
-    const projectDir = getProjectWorkPath();
+    // if(defaultPackagePath){
+    //     return defaultPackagePath;
+    // }
 
-    if(fs.existsSync(path.join(projectDir, 'package.service.js'))){
-        return DEFAULT_PACKAGE_PATH;
-    }else{
-        return DEFAULT_PACKAGE_PATH_OLD;
-    }
+    // const projectDir = getProjectWorkPath();
+
+    // if(fs.existsSync(path.join(projectDir, 'package.service.js'))){
+    //     return DEFAULT_PACKAGE_PATH;
+    // }else{
+    //     return DEFAULT_PACKAGE_PATH_OLD;
+    // }
 }
 
 export function getPackageDirectoryPaths(workspace){
