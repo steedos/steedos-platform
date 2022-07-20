@@ -172,7 +172,7 @@ export class ActionHandlers {
 
             const objectConfig = await refreshObject(ctx, metadataApiName);
             if (!objectConfig) {
-                console.error(`not find extend object ${metadataApiName}, Please check 「${ctx.meta.metadataServiceName}」 package.service.js for dependencies`);
+                ctx.broker.logger.error(`not find extend object ${metadataApiName}, Please check 「${ctx.meta.metadataServiceName}」 package.service.js for dependencies`);
                 break;
             }
             const objectServiceName = getObjectServiceName(metadataApiName);
