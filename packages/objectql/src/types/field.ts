@@ -142,8 +142,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
         this.setDBType()
 
         if(this.generated){
-            this.omit = true
-            this.properties.push('omit')
+            this.readonly = true
+            this.properties.push('readonly')
         }
     }
 
