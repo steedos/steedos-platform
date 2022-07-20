@@ -21,9 +21,6 @@ class ConvertCommand extends convertOclif.Command {
         // if(!targetPath){
         //     throw new Error('需要传入新文件生成的绝对路径,参数-t')
         // }
-        //测试本地旧文件路径
-        // oldFilesPath = path.join("C:/clonefile/steedos-app-crm", "src");
-        
         let steedosPackageJson = await loadOldFileToJson(oldFilesPath);
         if(!targetPath){
             targetPath = oldFilesPath
@@ -33,11 +30,8 @@ class ConvertCommand extends convertOclif.Command {
             throw new Error('请传入新文件生成的绝对路径,参数-t')
         }
 
-        targetPath = path.join(targetPath, 'steedos-app', 'main', 'default');
+        targetPath = path.join(targetPath, 'main', 'default');
         mkdirsSync(targetPath);
-        //测试新文件目标路径
-        // targetPath = path.join("C:/clonefile/steedos-app-crm","steedos-app/main/default");
-
         await filesTolocalJson(steedosPackageJson, targetPath);
     }
 }

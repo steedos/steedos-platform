@@ -14,7 +14,7 @@ import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
-import { sortBy, forEach } from 'lodash';
+import { sortBy, forEach, isNil } from 'lodash';
 import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
@@ -1165,6 +1165,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         readonly: true,
                         disabled: true
                     })
+                    if(isNil(field.visible_on) && field.generated){
+                        accessFields[field.name]['visible_on'] = "{{global.mode ==='read' ? true : false}}";
+                    }
                     return;
                 }
                 

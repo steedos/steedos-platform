@@ -5,7 +5,7 @@ const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
 const Fiber = require('fibers');
 
-exports.getByAdminSpaceIds = async function getByAdminSpaceIds(spaceIds, companyId, isCompanyAdmin) {
+async function getByAdminSpaceIds(spaceIds, companyId, isCompanyAdmin) {
     let filters = _makeInFilters('space', spaceIds);
     let spaceFilters = filters;
     if (isCompanyAdmin && companyId) {
@@ -104,7 +104,7 @@ exports.getByAdminSpaceIds = async function getByAdminSpaceIds(spaceIds, company
 }
 
 
-exports.checkSpaceUserBeforeUpdate = async function checkSpaceUserBeforeUpdate(spaceId, userId, roles) {
+async function checkSpaceUserBeforeUpdate(spaceId, userId, roles) {
     let space = await steedosSchema.getObject('spaces').findOne(spaceId);
     if (!space) {
         throw new Error('该工作区不存在或已经被删除');
@@ -128,7 +128,7 @@ exports.checkSpaceUserBeforeUpdate = async function checkSpaceUserBeforeUpdate(s
 };
 
 // 更新表单，包括子表
-exports.updateForm = async function updateForm(formId, form, forms, flows, currentUserId) {
+async function updateForm(formId, form, forms, flows, currentUserId) {
     await new Promise(function (resolve, reject) {
         Fiber(function () {
             try {
@@ -257,7 +257,7 @@ exports.updateForm = async function updateForm(formId, form, forms, flows, curre
 }
 
 
-exports.checkBeforeFlow = async function checkBeforeFlow(spaceId, formId) {
+async function checkBeforeFlow(spaceId, formId) {
     if (await steedosSchema.getObject('spaces').count({
         filters: `(_id eq '${spaceId}')`
     }) === 0) {
@@ -271,7 +271,7 @@ exports.checkBeforeFlow = async function checkBeforeFlow(spaceId, formId) {
     }
 }
 
-exports.getFlow = async function getFlow(flowId) {
+async function getFlow(flowId) {
     let flow = await steedosSchema.getObject('flows').findOne(flowId);
     if (!flow) {
         throw new Error('流程不存在')
@@ -279,7 +279,7 @@ exports.getFlow = async function getFlow(flowId) {
     return flow;
 }
 
-exports.getForm = async function getForm(formId) {
+async function getForm(formId) {
     let form = await steedosSchema.getObject('forms').findOne(formId);
     if (!form) {
         throw new Error('表单不存在')
@@ -287,7 +287,7 @@ exports.getForm = async function getForm(formId) {
     return form;
 }
 
-exports.getSpaceUser = async function getSpaceUser(userId, spaceId) {
+async function getSpaceUser(userId, spaceId) {
     let spaceUser = (await steedosSchema.getObject('space_users').find({
         filters: `(space eq '${spaceId}') and (user eq '${userId}')`
     }))[0];
@@ -300,7 +300,7 @@ exports.getSpaceUser = async function getSpaceUser(userId, spaceId) {
     return spaceUser;
 }
 
-exports.isSpaceAdmin = async function isSpaceAdmin(spaceId, userId, roles) {
+async function isSpaceAdmin(spaceId, userId, roles) {
     let space = await steedosSchema.getObject('spaces').findOne(spaceId);
     if (!space) {
         throw new Error('未找到工作区');
@@ -312,7 +312,7 @@ exports.isSpaceAdmin = async function isSpaceAdmin(spaceId, userId, roles) {
 
 }
 
-exports.makeSteps = function (userId, fields = []) {
+function makeSteps(userId, fields = []) {
     let flowCollection = Creator.getCollection('flows');
     let user = Creator.getCollection('users').findOne(userId);
     let language = user.locale;
@@ -336,6 +336,11 @@ exports.makeSteps = function (userId, fields = []) {
     p["__form"] = "editable";
     for (const f of fields) {
         p[f.code] = 'editable'
+        if (f.type == 'table') {
+            for (const tf of (f.fields || [])) {
+                p[tf.code] = 'editable';
+            }
+        }
     }
     start_step.permissions = p;
     let lines = [];
@@ -423,9 +428,7 @@ function _formatFieldsID(fields) {
     return fields;
 }
 
-exports.formatFieldsID = _formatFieldsID;
-
-exports.transformObjectFieldsToFormFields = async function (objFields, codePrefix) {
+async function transformObjectFieldsToFormFields(objFields, codePrefix) {
     let formFieldsMap = {};
     for (const f of objFields) {
         const formField = await _transformObjectFieldToFormField(f, codePrefix);
@@ -463,8 +466,8 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'select':
             if (_.isArray(objField.options)) {
                 formField.type = objField.multiple ? "multiSelect" : "select";
-                formField.options = _.map(objField.options, function(optionItem){
-                    return optionItem.label + ":"  + optionItem.value;
+                formField.options = _.map(objField.options, function (optionItem) {
+                    return optionItem.label + ":" + optionItem.value;
                 }).join('\n');
             }
             break;
@@ -479,6 +482,9 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             break;
         case 'datetime':
             formField.type = "dateTime";
+            break;
+        case 'time':
+            formField.type = "input";
             break;
         case 'number':
             formField.type = "number";
@@ -496,25 +502,15 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             formField.type = "password";
             break;
         case 'lookup':
-            let lookupObjName = objField.reference_to;
-            if (_.isString(lookupObjName)) {
-                const refObj = objectql.getObject(lookupObjName);
-                const nameFieldKey = await refObj.getNameFieldKey();
-                formField.type = "odata";
-                formField.url = `/api/v4/${lookupObjName}?$top=20`;
-                formField.search_field = nameFieldKey;
-                formField.formula = `{${objField.name}.${nameFieldKey}}`;
-            }
-            break;
         case 'master_detail':
-            let masterDetailObjName = objField.reference_to;
-            if (_.isString(masterDetailObjName)) {
-                const refObj = objectql.getObject(masterDetailObjName);
+            let refObjName = objField.reference_to;
+            if (_.isString(refObjName)) {
+                const refObj = objectql.getObject(refObjName);
                 const nameFieldKey = await refObj.getNameFieldKey();
                 formField.type = "odata";
-                formField.url = `/api/v4/${masterDetailObjName}?$top=20`;
+                formField.url = `/api/v4/${refObjName}?$top=20`;
                 formField.search_field = nameFieldKey;
-                formField.formula = `{${objField.name}.${nameFieldKey}}`;
+                formField.formula = `{${formField.code}.${nameFieldKey}}`;
             }
             break;
         case 'autonumber':
@@ -526,9 +522,13 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'email':
             formField.type = "email";
             break;
-        case 'image':
+        case 'code':
+            formField.type = "input";
+            formField.is_textarea = true;
             break;
+        case 'image':
         case 'file':
+            formField.type = "input";
             break;
         case 'formula':
             switch (objField.data_type) {
@@ -561,7 +561,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             }
             break;
         case 'summary':
-            // TODO
+            formField.type = "input";
             break;
         default:
             break;
@@ -580,7 +580,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
  * @param objFieldsMap {} 对象字段
  * @returns []
  */
-exports.transformObjectFields = function (fields, objFieldsMap) {
+function transformObjectFields(fields, objFieldsMap) {
     let newFields = [];
     for (const f of fields) {
         let field = objFieldsMap[f.name];
@@ -599,7 +599,7 @@ exports.transformObjectFields = function (fields, objFieldsMap) {
  * @param objFieldsMap {} 对象字段
  * @returns []
  */
-exports.getObjectFieldsByNames = function (fieldNames = [], objFieldsMap = {}) {
+function getObjectFieldsByNames(fieldNames = [], objFieldsMap = {}) {
     let newFields = [];
     for (const fName of fieldNames) {
         let field = objFieldsMap[fName];
@@ -616,7 +616,7 @@ exports.getObjectFieldsByNames = function (fieldNames = [], objFieldsMap = {}) {
  * 剔除掉系统字段，base对象的字段？
  * @param {*} objectName 
  */
-exports.getBusinessFields = async function (objectName) {
+async function getBusinessFields(objectName) {
     if (!objectName) {
         return []
     }
@@ -640,14 +640,14 @@ exports.getBusinessFields = async function (objectName) {
  * @param {Object} flowDoc 流程
  * @param {Array} formFields 表单字段
  */
-exports.updateStartStepPermission = async function (flowDoc, formFields = []) {
+async function updateStartStepPermission(flowDoc, formFields = []) {
     if (!flowDoc) {
         return;
     }
     const flowObj = objectql.getObject('flows');
     for (const s of flowDoc.current.steps) {
         if (s.step_type == 'start') {
-            let perms = {};
+            let perms = { "__form": "editable" };
             for (const f of formFields) {
                 perms[f.code] = 'editable';
                 if (f.type == 'table') {
@@ -660,4 +660,52 @@ exports.updateStartStepPermission = async function (flowDoc, formFields = []) {
             await flowObj.directUpdate(flowDoc._id, { 'current.steps': flowDoc.current.steps })
         }
     }
+}
+
+/**
+ * 将选择的对象子表类型字段转为表单表格类型字段
+ * @param {*} instance_table_fields 
+ */
+async function transformObjectDetailFieldsToFormTableFields(instance_table_fields) {
+    const tables = [];
+    const formObj = objectql.getObject('forms');
+    for (const tf of instance_table_fields) {
+        let detailFieldFullname = tf.detail_field_fullname;
+        let detailObjName = detailFieldFullname.split('.')[0];
+        const detailObj = objectql.getObject(detailObjName);
+        const detailObjConfig = await detailObj.toConfig();
+        let tLabel = tf.label || detailObjConfig.label;
+        let tableFields = getObjectFieldsByNames(tf.field_names, detailObjConfig.fields);
+        const tFieldsMap = await transformObjectFieldsToFormFields(tableFields, `${detailObjName}_`);
+        const tFields = Object.values(tFieldsMap);
+        tables.push({
+            "type": "table",
+            "name": tLabel,
+            "code": detailObjName,
+            "is_wide": true,
+            "is_required": false,
+            "fields": tFields,
+            "_id": await formObj._makeNewID()
+        });
+    }
+    return tables
+}
+
+module.exports = {
+    getByAdminSpaceIds,
+    checkSpaceUserBeforeUpdate,
+    updateForm,
+    checkBeforeFlow,
+    getFlow,
+    getForm,
+    getSpaceUser,
+    isSpaceAdmin,
+    makeSteps,
+    formatFieldsID: _formatFieldsID,
+    transformObjectFieldsToFormFields,
+    transformObjectFields,
+    getObjectFieldsByNames,
+    getBusinessFields,
+    updateStartStepPermission,
+    transformObjectDetailFieldsToFormTableFields
 }

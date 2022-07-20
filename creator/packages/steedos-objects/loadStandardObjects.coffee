@@ -27,7 +27,7 @@ try
 				# "@steedos/service-fields-indexs",
 				"@steedos/service-accounts",
 				"@steedos/service-charts",
-				"@steedos/service-pages",
+				# "@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
 				# "@steedos/standard-process",
@@ -110,6 +110,27 @@ try
 					settings: {
 						port: null
 					} 
+				});
+
+				pageService = broker.createService({
+					name: "@steedos/service-pages",
+					mixins: [require('@steedos/service-pages')],
+					settings: {
+						port: null
+					} 
+				});
+
+				steedosService = broker.createService({
+					name: "steedos-server",
+					mixins: [],
+					settings: {
+						port: null
+					},
+					started: ()->
+						setTimeout ->
+							broker.emit 'steedos-server.started'
+							return
+						, 1000
 				});
 
 				objectql.getSteedosSchema(broker);

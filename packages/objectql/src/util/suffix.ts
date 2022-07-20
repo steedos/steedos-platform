@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-05-28 11:07:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-20 14:10:40
+ * @Description: 
+ */
 const validator = require('validator');
 //TODO 将此代码转移到license项目
 const customObjectNameSuffix = '__c';
@@ -5,7 +12,7 @@ const customFieldNameSuffix = '__c';
 declare var Steedos: any;
 
 function standardObject(spaceId){
-    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true) && Steedos.hasFeatureSync('platform_ee.standard_object', spaceId);
+    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true) && Steedos.hasFeatureSync('platform-enterprise.standard_object', spaceId);
 }
 
 export const getObjectSuffix = (spaceId: string, internal?: boolean)=>{

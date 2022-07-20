@@ -409,7 +409,6 @@ function loadObjectActionJs(filePath){
 // }
 
 export async function loadOldFileToJson(filePath){
-    //let filePath = path.join("C:/clonefile","steedos-app/main/default");
     let matchedPaths = glob.sync(path.join(filePath, '**', '*.*'));
     scanAllFilesJson = matchedPaths;
     // let root = '';

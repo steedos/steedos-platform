@@ -506,80 +506,160 @@ actions:
     'on': list
     todo: !<tag:yaml.org,2002:js/function> |-
       function () {
-        const fields = Creator.getObject("flows").fields;
-        const objectSchema = {
-            fields: {
-                category: Object.assign(fields.category, {sort_no: 100, group: null, is_wide: true, readonly: false, disabled: false}),
-                name: Object.assign(fields.name, {required: true, sort_no: 110, group: null, is_wide: true,readonly: false, disabled: false}),
-                company_id: Object.assign(fields.company_id, {sort_no: 120, group: null, is_wide: true,readonly: false, disabled: false}),
-                object_name: Object.assign(fields.object_name, {sort_no: 130, group: null, is_wide: true,readonly: false, disabled: false})
-            }
-        };
+          const fields = Creator.getObject("flows").fields;
+          const objectSchema = {
+              fields: {
+                  category: Object.assign(fields.category, { sort_no: 100, group: null, is_wide: true, readonly: false, disabled: false }),
+                  name: Object.assign(fields.name, { required: true, sort_no: 110, group: null, is_wide: true, readonly: false, disabled: false }),
+                  company_id: Object.assign(fields.company_id, { sort_no: 120, group: null, is_wide: true, readonly: false, disabled: false }),
+                  object_name: Object.assign(fields.object_name, { sort_no: 130, group: null, is_wide: true, readonly: false, disabled: false }),
+                  instance_table_fields: { 
+                      sort_no: 140, group: null, readonly: false, disabled: false,
+                      "inlineHelpText": "如果选择了子表则按照子表内容生成对应的表单表格类型字段。",
+                      "label": "相关子表",
+                      "type": "grid",
+                      "blackbox": true,
+                      "is_wide": true,
+                      "depend_on": [
+                          "object_name"
+                      ],
+                      "visible_on": "{{formData.object_name ? true : false}}",
+                      "sub_fields": {
+                          "detail_field_fullname": {
+                              "type": "lookup",
+                              "label": "子表名称",
+                              "optionsFunction": function (values) {
+                                  if (!(values != null ? values.object_name : void 0)) {
+                                      return [];
+                                  }
+                                  const objectName = _.isObject(values.object_name) ? values.object_name.name : values.object_name;
 
-        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-            name: "new_flow_form",
-            title: '新建流程',
-            objectSchema: objectSchema,
-            onFinish: async (values = {}) => {
-                $(document.body).addClass('loading');
-                let url = "/am/forms?sync_token=" + (new Date()).getTime() / 1000;
-                let newFormId = Creator.getCollection("flows")._makeNewID();
+                                  const options = [];
 
-            let form = {
-              id: newFormId,
-              name: values.name,
-              space: Steedos.getSpaceId(),
-              is_valid: true,
-              app: "workflow",
-              current: {
-                id: Creator.getCollection("flows")._makeNewID(),
-              }
-            }
+                                  const { detailsInfo } = Steedos.authRequest('/am/forms/getDetailsInfo', {
+                                      type: 'post',
+                                      async: false,
+                                      data: JSON.stringify({
+                                          objectName
+                                      })
+                                  });
 
-            if(values.category){
-              form.category = values.category
-                }
-
-            let companyId = values.company_id
-            if(companyId){
-              form.company_id = companyId
-                }
-
-            if(values.object_name){
-              form.object_name = values.object_name
-                }
-
-            let data = {
-              "Forms": [form]
-            }
-                let options = {
-                    type: 'post',
-                    async: false,
-                    data: JSON.stringify(data),
-                    success: function (data) {
-                        toastr.success('创建成功');
-                        Modal.hide();
-                        $(document.body).removeClass('loading');
-                        let flows = data.ChangeSet.inserts.Flows;
-
-                let newFlow = _.find(flows, function(flow){
-                            return flow.form == newFormId
-                        })
-                if (!newFlow.object_name){
-                  WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
-                        }
-                FlowRouter.go(`/app/admin/flows/view/${newFlow._id}`)
+                                  _.each(detailsInfo, function (related) {
+                                      let foo = related.split('.');
+                                      let rObjectName = foo[0];
+                                      let rFieldName = foo[1];
+                                      let rObjectLable = Creator.getObject(rObjectName).label;
+                                      let rObjectFieldLable = (_.find(Creator.getObject(rObjectName).fields, function (field) { return field.name === rFieldName }) || {}).label;
+                                      options.push({ label: `${rObjectLable}.${rObjectFieldLable}`, value: related })
+                                  })
+                                  return options;
+                              }
+                          },
+                          "label": {
+                              "label": "显示标题",
+                              "type": "text",
+                          },
+                          "field_names": {
+                              "label": "显示的字段",
+                              "type": "lookup",
+                              "create": false,
+                              "multiple": true,
+                              "reference_to": "object_fields",
+                              "reference_to_field": "name",
+                              "depend_on": [
+                                  "object_name",
+                                  "instance_table_fields"
+                              ],
+                              "filtersFunction": function (filters, values) {
+                                  let relatedFieldFullname = null;
+                                  const rowValue = _.find(values.instance_table_fields, function (item) {
+                                      return item._id === values._grid_row_id
+                                  })
+                                  if (rowValue) {
+                                      relatedFieldFullname = rowValue.detail_field_fullname
+                                  }
+                                  const baseFieldKeys = Object.keys(Creator.getObject('base').fields)
+                                  if (relatedFieldFullname) {
+                                      const objectName = relatedFieldFullname.substring(0, relatedFieldFullname.indexOf("."))
+                                      return [['object', '=', objectName], ['type', '!=', 'master_detail'], ['name', '!=', baseFieldKeys]]
+                                  } else {
+                                      return ['_id', '=', 'no']
+                                  }
+                              }
+                          }
+                      }
                     },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.error(XMLHttpRequest.responseText);
-                        toastr.error(XMLHttpRequest.responseText);
-                        $(document.body).removeClass('loading');
-                    }
-                };
-                Steedos.authRequest(url, options);
-                return true;
-            }
-        }, null, { iconPath: '/assets/icons' })
+              }
+          };
+
+          SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+              name: "new_flow_form",
+              title: '新建流程',
+              objectSchema: objectSchema,
+              onFinish: async (values = {}) => {
+                  $(document.body).addClass('loading');
+                  let url = "/am/forms?sync_token=" + (new Date()).getTime() / 1000;
+                  let newFormId = Creator.getCollection("flows")._makeNewID();
+
+                  let form = {
+                      id: newFormId,
+                      name: values.name,
+                      space: Steedos.getSpaceId(),
+                      is_valid: true,
+                      app: "workflow",
+                      current: {
+                          id: Creator.getCollection("flows")._makeNewID(),
+                      }
+                  }
+
+                  if (values.category) {
+                      form.category = values.category
+                  }
+
+                  let companyId = values.company_id
+                  if (companyId) {
+                      form.company_id = companyId
+                  }
+
+                  if (values.object_name) {
+                      form.object_name = values.object_name
+                  }
+
+                  if (values.instance_table_fields) {
+                      form.instance_table_fields = values.instance_table_fields
+                  }
+
+                  let data = {
+                      "Forms": [form]
+                  }
+                  let options = {
+                      type: 'post',
+                      async: false,
+                      data: JSON.stringify(data),
+                      success: function (data) {
+                          toastr.success('创建成功');
+                          Modal.hide();
+                          $(document.body).removeClass('loading');
+                          let flows = data.ChangeSet.inserts.Flows;
+
+                          let newFlow = _.find(flows, function (flow) {
+                              return flow.form == newFormId
+                          })
+                          if (!newFlow.object_name) {
+                              WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId())
+                          }
+                          FlowRouter.go(`/app/admin/flows/view/${newFlow._id}`)
+                      },
+                      error: function (XMLHttpRequest, textStatus, errorThrown) {
+                          console.error(XMLHttpRequest.responseText);
+                          toastr.error(XMLHttpRequest.responseText);
+                          $(document.body).removeClass('loading');
+                      }
+                  };
+                  Steedos.authRequest(url, options);
+                  return true;
+              }
+          }, null, { iconPath: '/assets/icons' })
 
       }
   standard_new_by_template:

@@ -9,7 +9,7 @@ const packageLicense = require('@steedos/service-package-license');
 const axios = require('axios');
 const _ = require(`lodash`);
 const path = require(`path`);
-const metadataApi = require('@steedos/metadata-api');
+
 const util = require('./main/default/manager/util');
 const fetch = require('node-fetch');
 const fs = require('fs');
@@ -20,38 +20,6 @@ const login = require('./main/default/manager/login');
 
 const HEADER_AUTH = 'Authorization';
 const AUTH_TYPE = 'Bearer';
-
-const getPackageMetadata = async (packagePath)=>{
-	const packageMetadata = [];
-	const result = await metadataApi.loadFileToJson(packagePath, {
-		CustomApplication: '*',
-		CustomPermissionset: '*',
-		CustomProfile: '*',
-		CustomObject: '*',
-		Layout: '*',
-		CustomReport: '*',
-		Workflow: '*',
-		Flow: '*',
-		ApprovalProcess: '*',
-		Role: '*',
-		FlowRole: '*',
-		Query: '*',
-		Chart: '*',
-		Page: '*',
-		Tab: '*',
-	});
-
-	_.each(result, (metadataItems, metadataType)=>{
-		_.each(metadataItems, (metadata, apiName)=>{
-			packageMetadata.push({
-				label: metadata.label || metadata.name,
-				type: metadataType,
-				api_name: apiName
-			})
-		})
-	})
-	return packageMetadata;
-}
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -141,7 +109,7 @@ module.exports = {
 								packagePath = path.resolve(process.cwd(), packagePath)
 							}
 							await loader.loadPackage(module, packagePath);
-							const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+							const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 							await ctx.broker.call(`@steedos/service-packages.install`, {
 								serviceInfo: Object.assign({}, Object.assign({}, packageConfig, { name: module }), {
 									nodeID: ctx.broker.nodeID,
@@ -167,7 +135,7 @@ module.exports = {
 				const { module } = ctx.params
                 const packageConfig = await loader.disablePackage(module);
 				if(packageConfig.path){
-					const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+					const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 					await ctx.broker.call(`@steedos/service-packages.install`, {
 						serviceInfo: Object.assign({}, packageConfig, {
 							nodeID: ctx.broker.nodeID, 
@@ -183,7 +151,7 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packageConfig = await loader.enablePackage(module);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
 						nodeID: ctx.broker.nodeID, 
@@ -229,7 +197,7 @@ module.exports = {
 						await this.loginSteedosRegistry();
 						console.info(`login steedos registry success`);
 					} catch (error) {
-						console.error(`login steedos registry fail: `, error.message);
+						// console.error(`login steedos registry fail: `, error.message);
 					}
 					const settings = this.settings;
 					const syncCloudPackages = settings.STEEDOS_CLOUD_SYNC_PACKAGES;
@@ -295,7 +263,7 @@ module.exports = {
 						await this.loginSteedosRegistry();
 						console.info(`login steedos registry success`);
 					} catch (error) {
-						console.error(`login steedos registry fail: `, error.message);
+						// console.error(`login steedos registry fail: `, error.message);
 					}
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
@@ -342,32 +310,7 @@ module.exports = {
 	methods: {
 		installPackage: {
 			async handler(module, version, label, description, enable, broker) {
-                const packagePath = await registry.installModule(module, version)
-				if(enable){
-					const packageInfo = await loader.loadPackage(module, packagePath);
-				}else{
-					enable = false;
-				}
-				const packageConfig = {
-					label: label, 
-					version: version, 
-					description: description || '', 
-					local: false, 
-					enable: enable,
-					path: util.getPackageRelativePath(process.cwd(), packagePath)
-				}
-				loader.appendToPackagesConfig(module, packageConfig);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
-				await broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: Object.assign({}, packageConfig, {
-						name: module,
-						enable: enable, 
-						nodeID: broker.nodeID, 
-						instanceID: broker.instanceID,
-						metadata: metadata
-					})
-				})
-				return packageConfig;
+				return await loader.installPackage(broker, {module, version, label, description, enable})
             }
 		},
 		getCloudSaasPurchasedPackages:{
@@ -432,7 +375,7 @@ module.exports = {
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
 				const newConfig = loader.appendToPackagesConfig(module, packageConfig);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
 				await this.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, newConfig, {
 						name: module,
@@ -508,7 +451,7 @@ module.exports = {
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
 				loader.appendToPackagesConfig(packageName, packageConfig);
-				const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
 				await broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
 						name: packageName,
@@ -642,21 +585,35 @@ module.exports = {
 		}
 
 		await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
-
+ 
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
 			await this.broker.call('metadata.add', {key: `#package_install_node.${this.broker.nodeID}`, data: {nodeID: PACKAGE_INSTALL_NODE}}, {meta: {}}) 
 		}
 		packages.maintainSystemFiles()
+		// 单包路径steedos-app
 		try {
 			const packagePath = path.join(process.cwd(), 'steedos-app');
 			if(fs.existsSync(packagePath)){
 				const packageInfo = require(path.join(packagePath, 'package.json'));
-				loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+				loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description || '', local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
 			}
 		} catch (error) {
 			console.log(`started error`, error)
 		}
+
+		// 新版单包项目加载
+		// try {
+		// 	if(fs.existsSync(path.join(process.cwd(), 'package.service.js'))){
+		// 		const packagePath = process.cwd(); 
+		// 		if(fs.existsSync(packagePath)){
+		// 			const packageInfo = require(path.join(packagePath, 'package.json'));
+		// 			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
+		// 		}
+		// 	}
+		// } catch (error) {
+		// 	console.log(`started error`, error)
+		// }
 
 		await metadata.uncompressPackages(process.cwd());
 		const mPackages = metadata.getAllPackages(process.cwd());
@@ -675,7 +632,7 @@ module.exports = {
 		for (const name in installPackages) {
 			if (Object.hasOwnProperty.call(installPackages, name)) {
 				const _packageInfo = installPackages[name];
-				const metadata = await getPackageMetadata(_packageInfo.path);
+				const metadata = await loader.getPackageMetadata(_packageInfo.path);
 				await this.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: {
 						name: name, 

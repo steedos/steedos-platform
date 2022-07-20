@@ -46,7 +46,7 @@ const uploadMetadata = async function (req, res) {
     // console.log(tempDir);
     fs.writeFileSync(zipDir, dataBuffer);
     var resMsg = {
-        status: '', 
+        status: 200, 
         msg: '',
     };
     
@@ -94,11 +94,11 @@ const uploadMetadata = async function (req, res) {
         var session = await dbManager.startSession();
         await jsonToDb(SteedosPackage, dbManager, session);
         
-        resMsg.status = "200";
+        resMsg.status = 200;
         resMsg.msg = "deploy success!";
         
     } catch (err) {
-        resMsg.status = "500";
+        resMsg.status = 500;
         resMsg.msg = err.message;
     }finally{
         await dbManager.endSession();
