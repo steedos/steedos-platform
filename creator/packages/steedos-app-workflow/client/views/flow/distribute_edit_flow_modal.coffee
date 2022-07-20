@@ -2,12 +2,18 @@ Template.distribute_edit_flow_modal.helpers
 	user_context: ()->
 		users = this.flow?.distribute_optional_users || []
 		users_id = _.pluck(users, "id")
+		suDocs = SteedosDataManager.getFormulaUserObjects(Session.get('spaceId'), users_id)
+		validateSuDocs = []
+		suDocs.forEach (s) -> 
+			if s
+				validateSuDocs.push s
+		userIds = _.pluck(validateSuDocs, "user")
 		data = {
-			value: users
+			value: validateSuDocs
 			dataset: {
 				showOrg: true,
 				multiple: true,
-				values: users_id.toString()
+				values: userIds.toString()
 			},
 			name: 'distribute_edit_flow_select_users',
 			atts: {
