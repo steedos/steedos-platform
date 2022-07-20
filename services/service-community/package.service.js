@@ -56,29 +56,28 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
+
 		// 启动 元数据服务
 		this.broker.createService(require("@steedos/service-metadata-server"));
+
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
+
 		if(this.settings.jwt.enable){
 			this.broker.createService(require("@steedos/service-identity-jwt"));
 		}
-		// 启动 steedos-server 服务
-        this.broker.createService({
-            name: "steedos-server",
-            namespace: "steedos",
-            mixins: [require("@steedos/service-steedos-server")],
-            settings: {
-                plugins: [
-                    "@steedos/ee_unpkg-local",
-                    "@steedos/webapp-accounts",
-                ]
-            }
-        });
 
-		// if (process.env.NODE_ENV === 'development' && process.env.STEEDOS_TRACING_ENABLED) {
-			this.broker.createService(require("@steedos/service-sentry"));
-		// }
+		// 启动 steedos-server 服务
+        this.broker.createService(require("@steedos/service-steedos-server"));
+
+        // 启动 本地 CDN
+        this.broker.createService(require("@steedos/ee_unpkg-local"));
+
+        // 启动 登录页面
+        this.broker.createService(require("@steedos/webapp-accounts"));
+
+        // 故障报告服务
+		this.broker.createService(require("@steedos/service-sentry"));
 	},
 
 	/**

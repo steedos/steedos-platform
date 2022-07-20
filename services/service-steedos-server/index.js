@@ -55,8 +55,6 @@ module.exports = {
 			"@steedos/service-files",
 		],
 		plugins: [
-			"@steedos/unpkg",
-			"@steedos/webapp-accounts",
 		]
 	},
 
