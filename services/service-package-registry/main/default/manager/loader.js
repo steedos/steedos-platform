@@ -7,7 +7,8 @@ const objectql = require('@steedos/objectql');
 const registry = require('./registry');
 const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
-
+const metadataApi = require('@steedos/metadata-api');
+const util = require('./util');
 const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
 }
@@ -111,6 +112,36 @@ const destroyExistThePackageService = async (packageInfo)=>{
     }
 }
 
+const loadDependency = async (dependencyName, dependencyVersion)=>{
+    let schema = objectql.getSteedosSchema();
+    let broker = schema.broker;
+    let packageInfo = null;
+    const packageConfig = getPackageConfig(dependencyName);
+    if(packageConfig){
+        if(packageConfig.enable){
+            return ;
+        }else{
+            await enablePackage(dependencyName)
+        }
+    }else{
+        try {
+            const packagePath = path.dirname(require.resolve(`${dependencyName}/package.json`, {
+                paths: [path.join(userDir, 'node_modules')]
+            }))
+            packageInfo = require(path.join(packagePath, 'package.json'));
+        } catch (error) {
+            // console.log(`loadDependency`, error.message)
+        }
+        if(packageInfo){
+            await enablePackage(dependencyName)
+        }else{
+            await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+        }
+        // 如果steedos package yml 中没有该依赖，则直接安装
+        // await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+    }
+}
+
 const loadPackage = async (packageName, packagePath)=>{
     try {
         if(!packagePath){
@@ -120,7 +151,14 @@ const loadPackage = async (packageName, packagePath)=>{
         }
         const packageInfo = require(path.join(packagePath, 'package.json'));
         await destroyExistThePackageService(packageInfo);
-        await steedos.loadPackage(packagePath)
+        await steedos.loadPackage(packagePath);
+
+        if(packageInfo.dependencies){
+            for (const dependencyName in packageInfo.dependencies) {
+                const dependencyVersion = packageInfo.dependencies[dependencyName];
+                await loadDependency(dependencyName, dependencyVersion);
+            }
+        }   
         return Object.assign({packagePath: packagePath}, packageInfo);
     } catch (error) {
         console.error(error)
@@ -162,13 +200,17 @@ const removePackage = async (packageName)=>{
     fs.writeFileSync(packagesFilePath, data);
 }
 
-const enablePackage = async (packageName)=>{
+const getPackageConfig = (packageName)=>{
     const packages = loadPackagesConfig();
-    let packagePath = null;
-    const package = _.find(packages, (info, name)=>{
+    return _.find(packages, (info, name)=>{
         return packageName == name
-    })
-    if(package.local){
+    });
+}
+
+const enablePackage = async (packageName)=>{
+    let packagePath = null;
+    let package = getPackageConfig(packageName);
+    if(package && package.local){
         if(path.isAbsolute(package.path)){
             packagePath = package.path
         }else{
@@ -180,18 +222,85 @@ const enablePackage = async (packageName)=>{
         }))
     }
     await steedos.loadPackage(packagePath)
-    let packageInfo = {};
-    _.map(packages, (package, name)=>{
-        if(packageName == name){
-            package.enable = true;
-            packageInfo = Object.assign({}, package, {name: packageName});
+    
+    if(package){
+        package.enable = true;
+    }else{
+        const packageJSON = require(path.join(packagePath, 'package.json'));
+        package = {
+            label: '', 
+            version: packageJSON.version, 
+            description: packageJSON.description || '', 
+            local: false, 
+            enable: true,
+            path: util.getPackageRelativePath(process.cwd(), packagePath)
         }
-    })
-    let data = yaml.dump(packages);
-    fs.writeFileSync(packagesFilePath, data);
+    }
+    appendToPackagesConfig(packageName, package);
+    let packageInfo = Object.assign({}, package, {name: packageName});
     return packageInfo;
 }
+const installPackage = async (broker, options)=>{
+    let {module, version, label, description, enable} = options;
+    const packagePath = await registry.installModule(module, version)
+    if(enable){
+        await loadPackage(module, packagePath);
+    }else{
+        enable = false;
+    }
+    const packageConfig = {
+        label: label || '', 
+        version: version, 
+        description: description || '', 
+        local: false, 
+        enable: enable,
+        path: util.getPackageRelativePath(process.cwd(), packagePath)
+    }
+    appendToPackagesConfig(module, packageConfig);
+    const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+    await broker.call(`@steedos/service-packages.install`, {
+        serviceInfo: Object.assign({}, packageConfig, {
+            name: module,
+            enable: enable, 
+            nodeID: broker.nodeID, 
+            instanceID: broker.instanceID,
+            metadata: metadata
+        })
+    })
+    return packageConfig;
+}
 
+const getPackageMetadata = async (packagePath)=>{
+	const packageMetadata = [];
+	const result = await metadataApi.loadFileToJson(packagePath, {
+		CustomApplication: '*',
+		CustomPermissionset: '*',
+		CustomProfile: '*',
+		CustomObject: '*',
+		Layout: '*',
+		CustomReport: '*',
+		Workflow: '*',
+		Flow: '*',
+		ApprovalProcess: '*',
+		Role: '*',
+		FlowRole: '*',
+		Query: '*',
+		Chart: '*',
+		Page: '*',
+		Tab: '*',
+	});
+
+	_.each(result, (metadataItems, metadataType)=>{
+		_.each(metadataItems, (metadata, apiName)=>{
+			packageMetadata.push({
+				label: metadata.label || metadata.name,
+				type: metadataType,
+				api_name: apiName
+			})
+		})
+	})
+	return packageMetadata;
+}
 
 module.exports = {
     loadPackages,
@@ -201,5 +310,7 @@ module.exports = {
     disablePackage,
     enablePackage,
     removePackage,
-    getPackageInfo
+    getPackageInfo,
+    getPackageMetadata,
+    installPackage
 }

@@ -6,7 +6,7 @@ const objectql = require('@steedos/objectql');
 const packageJson = require('./package-json');
 const _ = require('lodash');
 const login = require('./login');
-
+const metadataApi = require('@steedos/metadata-api');
 function registryUrl(scope) {
     try {
         const result = login.getYarnrcScopes();
