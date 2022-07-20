@@ -28,6 +28,10 @@ Creator.Objects['datasources'].methods = {
                     datasourceCore.checkDriver(doc.driver);
                     let datasourceName =  `${recordId}_${spaceId}_${doc.name}__test`
                     doc.name = datasourceName
+                    if (doc.mssql_options) {
+                        doc.options = JSON.parse(doc.mssql_options)
+                        delete doc.mssql_options
+                    }
                     datasource = schema.addDataSource(doc.name, doc, true); 
                     if(doc.driver === 'mongo'){
                         await datasource._adapter.connect();
