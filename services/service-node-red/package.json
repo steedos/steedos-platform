@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-node-red",
-  "version": "2.2.55-beta.3",
+  "version": "2.2.55-beta.4",
   "main": "index.js",
   "scripts": {
     "start": "moleculer-runner --repl --hot ./index.js"
@@ -14,5 +14,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cf9ffd7d4f7de88c5b0bbb6c1c269afbeb2268a1"
+  "gitHead": "a63fa9114ae4782cd60fc605af832b804f579563"
 }
