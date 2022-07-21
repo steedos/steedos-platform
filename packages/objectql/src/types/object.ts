@@ -1157,6 +1157,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return;
                 }
 
+                // 自增字段移除omit属性，添加visible_on属性。
+                if(field.generated){
+                    delete field.omit;
+                    if(isNil(field.visible_on)){
+                        field.visible_on = "{{false}}"
+                    }
+                }
+
                 //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
                 if(read === true && edit === false){
                     accessFields[field.name] = Object.assign({}, field, {
@@ -1165,9 +1173,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         readonly: true,
                         disabled: true
                     })
-                    if(isNil(field.visible_on) && field.generated){
-                        accessFields[field.name]['visible_on'] = "{{global.mode ==='read' ? true : false}}";
-                    }
                     return;
                 }
                 
