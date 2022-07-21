@@ -268,7 +268,7 @@ export async function refreshObject(ctx, objectApiName) {
             }
 
             if (field.generated) {
-                field.readonly = true;
+                field.omit = true;
             }
         }
         if (field.is_name) {

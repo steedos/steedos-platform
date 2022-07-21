@@ -112,6 +112,17 @@ const destroyExistThePackageService = async (packageInfo)=>{
     }
 }
 
+const isPackage = (name)=>{
+    try {
+        const packagePath = path.dirname(require.resolve(`${name}/package.json`, {
+            paths: [path.join(userDir, 'node_modules')]
+        }))
+        return fs.existsSync(path.join(packagePath, 'package.service.js'));
+    } catch (error) {
+        return false;
+    }
+}
+
 const loadDependency = async (dependencyName, dependencyVersion)=>{
     let schema = objectql.getSteedosSchema();
     let broker = schema.broker;
@@ -132,10 +143,14 @@ const loadDependency = async (dependencyName, dependencyVersion)=>{
         } catch (error) {
             // console.log(`loadDependency`, error.message)
         }
-        if(packageInfo){
+        if(packageInfo && isPackage(dependencyName)){
             await enablePackage(dependencyName)
         }else{
-            await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+            try {
+                await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+            } catch (error) {
+                
+            }
         }
         // 如果steedos package yml 中没有该依赖，则直接安装
         // await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
@@ -221,7 +236,7 @@ const enablePackage = async (packageName)=>{
             paths: [path.join(userDir, 'node_modules')]
         }))
     }
-    await steedos.loadPackage(packagePath)
+    await loadPackage(packageName, packagePath)
     
     if(package){
         package.enable = true;
@@ -242,7 +257,7 @@ const enablePackage = async (packageName)=>{
 }
 const installPackage = async (broker, options)=>{
     let {module, version, label, description, enable} = options;
-    const packagePath = await registry.installModule(module, version)
+    const packagePath = await registry.installModule(module, version);
     if(enable){
         await loadPackage(module, packagePath);
     }else{
