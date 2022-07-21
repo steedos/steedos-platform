@@ -213,7 +213,6 @@ async function installModule(module, version, url, registry_url) {
                 activePromise = Promise.resolve(packagePath);
                 return activePromise;
             } catch (error) {
-                console.log(`error`, error)
                 throw new Error(`${module} is not steedos package`)
             }
 
