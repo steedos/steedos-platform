@@ -44,7 +44,7 @@ module.exports = {
 	logger: [{
 		type: "Console",
 		options: {
-			level: "warn",
+			// level: "warn",
 			// Using colors on the output
 			colors: true,
 			// Print module names with different colors (like docker-compose for containers)
@@ -61,7 +61,7 @@ module.exports = {
 		type: "File",
 		options: {
 			// Logging level
-			level: "warn",
+			// level: "warn",
 			// Folder path to save files. You can use {nodeID} & {namespace} variables.
 			folder: "./logs",
 			// Filename template. You can use {date}, {nodeID} & {namespace} variables.
