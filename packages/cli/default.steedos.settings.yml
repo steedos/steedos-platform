@@ -17,6 +17,9 @@ public:
   page:
     assetUrls: ${STEEDOS_PUBLIC_PAGE_ASSETURLS}
     unpkgUrl: ${STEEDOS_PUBLIC_PAGE_UNPKGURL}
+  analytics:
+    baidu:
+      id: ${STEEDOS_PUBLIC_ANALYTICS_BAIDU_ID}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:
