@@ -8,6 +8,7 @@
 
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
+const Tracing = require("@sentry/tracing");
 const project = require('./package.json');
 const serviceName = project.name;
 
@@ -16,35 +17,53 @@ const serviceName = project.name;
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: serviceName,
-	namespace: "steedos",
-	/**
-	 * Settings
-	 */
-	settings: {
-		packageInfo: {
-			path: __dirname,
-			name: serviceName,
-			isPackage: false
-		},
-		/** @type {Object?} Sentry configuration wrapper. */
-		sentry: {
-		  /** @type {String} DSN given by sentry. */
-		  dsn: process.env.STEEDOS_SENTRY_DSN, // ? process.env.STEEDOS_SENTRY_DSN : 'https://dcbd110ff4d646598c0bd9751cfc8c20@o1314957.ingest.sentry.io/6566429',
-		  /** @type {String} Name of event fired by "Event" exported in tracing. */
-		  tracingEventName: '$tracing.spans',
-		  /** @type {Object} Additional options for `Sentry.init`. */
-		  options: {},
-		  /** @type {String?} Name of the meta containing user infos. */
-		  userMetaKey: null,
-		},
-	},
-	
+  name: serviceName,
+  namespace: "steedos",
+
+  /**
+   * Dependencies
+   */
+  dependencies: [
+    'steedos-server'
+  ],
+
+  /**
+   * Settings
+   */
+  settings: {
+    packageInfo: {
+      path: __dirname,
+      name: serviceName,
+      isPackage: false
+    },
+    /** @type {Object?} Sentry configuration wrapper. */
+    sentry: {
+      /** @type {String} DSN given by sentry. */
+      dsn: process.env.STEEDOS_SENTRY_DSN, // ? process.env.STEEDOS_SENTRY_DSN : 'https://dcbd110ff4d646598c0bd9751cfc8c20@o1314957.ingest.sentry.io/6566429',
+      /** @type {String} Name of event fired by "Event" exported in tracing. */
+      tracingEventName: '$tracing.spans',
+      /** @type {Object} Additional options for `Sentry.init`. */
+      options: {
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        // We recommend adjusting this value in production
+        tracesSampleRate: 1.0,
+        maxBreadcrumbs: 100,
+        debug: process.env.NODE_ENV !== 'production',
+        environment: process.env.NODE_ENV || "development",
+        release: "steedos-platform@" + require("steedos-server/package.json").version,
+        autoSessionTracking: true
+      },
+      /** @type {String?} Name of the meta containing user infos. */
+      userMetaKey: null,
+    },
+  },
+
 
   /**
    * Events
    */
-   events: {
+  events: {
     // bind event listeners
     '**'(payload, sender, event) {
       // only listen to specifig tracing event
@@ -182,7 +201,22 @@ module.exports = {
 
     if (dsn) {
       this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
-      Sentry.init({ dsn, ...options })
+      Sentry.init({
+        dsn,
+        ...options,
+        integrations: [
+          // enable HTTP calls tracing
+          new Sentry.Integrations.Http({ tracing: true }),
+          // enable Express.js middleware tracing
+          new Tracing.Integrations.Express({
+            // to trace all requests to the default router
+            app: WebApp.connectHandlers,
+            // alternatively, you can specify the routes you want to trace:
+            // router: someRouter,
+          }),
+        ],
+      })
+      Sentry.setTag('spaceId', process.env.STEEDOS_CLOUD_SPACE_ID)
     }
   },
 
