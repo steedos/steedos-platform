@@ -194,47 +194,64 @@ module.exports = {
 	metrics: {
 		enabled: false,
 		// Available built-in reporters: "Console", "CSV", "Event", "Prometheus", "Datadog", "StatsD"
-		reporter: {
-			type: "Prometheus",
-			options: {
-				// HTTP port
-				port: 3030,
-				// HTTP URL path
-				path: "/metrics",
-				// Default labels which are appended to all metrics labels
-				defaultLabels: registry => ({
-					namespace: registry.broker.namespace,
-					nodeID: registry.broker.nodeID
-				})
+		reporter: [
+			{
+				type: "Prometheus",
+				options: {
+					// HTTP port
+					port: 3030,
+					// HTTP URL path
+					path: "/metrics",
+					// Default labels which are appended to all metrics labels
+					defaultLabels: registry => ({
+						namespace: registry.broker.namespace,
+						nodeID: registry.broker.nodeID
+					})
+				}
+			},
+			{
+				type: "Event",
+				options: {
+					// Event name
+					eventName: "$metrics.snapshot",
+					// Broadcast or emit
+					broadcast: false,
+					// Event groups
+					groups: null,
+					// Send only changed metrics
+					onlyChanges: true,
+					// Sending interval in seconds
+					interval: 10,
+				}
 			}
-		}
+		]
 	},
 
 
-    tracing: {
-        enabled: true,
-        exporter: {
-            type: "Event",
-            options: {
-                // Name of event
-                eventName: "$tracing.spans",
-                // Send event when a span started
-                sendStartSpan: false,
-                // Send event when a span finished
-                sendFinishSpan: true,
-                // Broadcast or emit event
-                broadcast: false,
-                // Event groups
-                groups: null,
-                // Sending time interval in seconds
-                interval: 5,
-                // Custom span object converter before sending
-                spanConverter: null,
-                // Default tags. They will be added into all span tags.
-                defaultTags: null
-            }
-        }
-    },
+	tracing: {
+		enabled: true,
+		exporter: {
+			type: "Event",
+			options: {
+				// Name of event
+				eventName: "$tracing.spans",
+				// Send event when a span started
+				sendStartSpan: false,
+				// Send event when a span finished
+				sendFinishSpan: true,
+				// Broadcast or emit event
+				broadcast: false,
+				// Event groups
+				groups: null,
+				// Sending time interval in seconds
+				interval: 5,
+				// Custom span object converter before sending
+				spanConverter: null,
+				// Default tags. They will be added into all span tags.
+				defaultTags: null
+			}
+		}
+	},
 
 	// Register custom middlewares
 	middlewares: [],

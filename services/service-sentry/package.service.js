@@ -75,6 +75,31 @@ module.exports = {
         return
       this.onTracingEvent(payload)
     },
+
+    '$metrics.snapshot': {
+      handler(ctx) {
+        // console.log("Payload:", ctx.params);
+        // console.log("Sender:", ctx.nodeID);
+        // console.log("Metadata:", ctx.meta);
+        // console.log("The called event name:", ctx.eventName);
+        if (this.isSentryReady()) {
+          const payload = ctx.params
+          Sentry.withScope((scope) => {
+            scope.setTag('sender', ctx.nodeID)
+            scope.setTag('span', ctx.eventName)
+            scope.setTag('root_url', process.env.ROOT_URL)
+
+            scope.setExtra('data', JSON.stringify(payload))
+
+            Sentry.captureEvent({
+              message: ctx.eventName,
+              level: 'info'
+            })
+          })
+        }
+
+      }
+    }
   },
 
   /**
