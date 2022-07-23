@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-22 09:50:56
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-23 15:03:12
+ * @LastEditTime: 2022-07-23 15:15:17
  * @Description: 
  */
 (function () {
@@ -37,11 +37,7 @@
           });
           window.posthog.people.set({
             id: user.userId,
-            name: user.name,
-            mobile: user.mobile,
-            email: user.email,
-            spaceId: user.space._id,
-            spaceName: user.space.name
+            spaceId: user.space._id
           });
         }
       });
