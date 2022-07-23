@@ -20,6 +20,9 @@ public:
   analytics:
     baidu:
       id: ${STEEDOS_PUBLIC_ANALYTICS_BAIDU_ID}
+    posthog:
+      id: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_ID}
+      api_host: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_API_HOST}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:
