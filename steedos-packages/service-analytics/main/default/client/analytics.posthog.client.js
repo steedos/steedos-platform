@@ -2,10 +2,9 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-22 09:50:56
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-22 18:10:47
+ * @LastEditTime: 2022-07-23 15:03:12
  * @Description: 
  */
-// var posthog = posthog || {};
 (function () {
   try {
     var analyticsConfig = Meteor.settings.public.analytics;
@@ -28,6 +27,24 @@
       if (!window.posthog.capture) {
         return;
       }
+      Tracker.autorun(function () {
+        if (Creator.bootstrapLoaded.get()) {
+          var user = Creator.USER_CONTEXT.user;
+          window.posthog.identify(user.userId);
+          // 分组统计需要升级付费
+          window.posthog.group('space', 'id:' + user.space._id, {
+            name: user.space.name
+          });
+          window.posthog.people.set({
+            id: user.userId,
+            name: user.name,
+            mobile: user.mobile,
+            email: user.email,
+            spaceId: user.space._id,
+            spaceName: user.space.name
+          });
+        }
+      });
       Tracker.autorun(function () {
         FlowRouter.watchPathChange();
         if (FlowRouter.current().path) {
