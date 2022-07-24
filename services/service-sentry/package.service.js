@@ -52,7 +52,7 @@ module.exports = {
         maxBreadcrumbs: 100,
         debug: process.env.NODE_ENV !== 'production',
         environment: process.env.NODE_ENV || "development",
-        release: require("@steedos/service-community/package.json").version,
+        release: project.version,
         autoSessionTracking: true
       },
       /** @type {String?} Name of the meta containing user infos. */
@@ -179,7 +179,7 @@ module.exports = {
         scope.setTag('type', metric.error.type)
         scope.setTag('code', metric.error.code)
         scope.setTag('root_url', process.env.ROOT_URL)
-        scope.setTag('steedos_version', require("steedos-server/package.json").version)
+        scope.setTag('version', project.version)
 
         if (metric.error.data) {
           scope.setExtra('data', metric.error.data)
