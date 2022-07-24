@@ -38,8 +38,9 @@ module.exports = {
     },
     /** @type {Object?} Sentry configuration wrapper. */
     sentry: {
+      enabled: process.env.STEEDOS_SENTRY_ENABLED != 'false',
       /** @type {String} DSN given by sentry. */
-      dsn: process.env.STEEDOS_SENTRY_DSN, // ? process.env.STEEDOS_SENTRY_DSN : 'https://dcbd110ff4d646598c0bd9751cfc8c20@o1314957.ingest.sentry.io/6566429',
+      dsn: process.env.STEEDOS_SENTRY_DSN ? process.env.STEEDOS_SENTRY_DSN : 'https://f87268cdc3cd4b58a25852c46b79d6b8@sentry.steedos.cn/3',
       /** @type {String} Name of event fired by "Event" exported in tracing. */
       tracingEventName: '$tracing.spans',
       /** @type {Object} Additional options for `Sentry.init`. */
@@ -51,7 +52,7 @@ module.exports = {
         maxBreadcrumbs: 100,
         debug: process.env.NODE_ENV !== 'production',
         environment: process.env.NODE_ENV || "development",
-        release: "steedos-platform@" + require("steedos-server/package.json").version,
+        release: require("@steedos/service-community/package.json").version,
         autoSessionTracking: true
       },
       /** @type {String?} Name of the meta containing user infos. */
@@ -224,7 +225,7 @@ module.exports = {
     const dsn = this.settings.sentry.dsn
     const options = this.settings.sentry.options
 
-    if (dsn) {
+    if (this.settings.sentry.enabled && dsn) {
       this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
       Sentry.init({
         dsn,
