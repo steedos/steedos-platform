@@ -48,7 +48,7 @@ module.exports = {
         // Set tracesSampleRate to 1.0 to capture 100%
         // of transactions for performance monitoring.
         // We recommend adjusting this value in production
-        tracesSampleRate: 1.0,
+        tracesSampleRate: 0.2,
         maxBreadcrumbs: 100,
         debug: process.env.NODE_ENV == 'development',
         environment: process.env.NODE_ENV || "development",
