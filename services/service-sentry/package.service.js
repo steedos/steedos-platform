@@ -50,7 +50,7 @@ module.exports = {
         // We recommend adjusting this value in production
         tracesSampleRate: 1.0,
         maxBreadcrumbs: 100,
-        debug: process.env.NODE_ENV !== 'production',
+        debug: process.env.NODE_ENV == 'development',
         environment: process.env.NODE_ENV || "development",
         release: project.version,
         autoSessionTracking: true
