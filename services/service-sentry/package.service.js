@@ -53,7 +53,13 @@ module.exports = {
         debug: process.env.NODE_ENV == 'development',
         environment: process.env.NODE_ENV || "development",
         release: project.version,
-        autoSessionTracking: true
+        autoSessionTracking: true,
+        initialScope: {
+          tags: {
+            "spaceId": process.env.STEEDOS_CLOUD_SPACE_ID || ''
+          },
+          // user: { id: 42, email: "john.doe@example.com" },
+        },
       },
       /** @type {String?} Name of the meta containing user infos. */
       userMetaKey: null,
@@ -242,7 +248,6 @@ module.exports = {
           }),
         ],
       })
-      Sentry.setTag('spaceId', process.env.STEEDOS_CLOUD_SPACE_ID)
     }
   },
 
