@@ -60,7 +60,8 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
             type: fieldType,
             nullable: nullable,
             primary: field.primary,
-            generated: field.generated,
+            // TODO: 临时处理方案
+            generated: field.primary as any,
             precision: field.precision ? field.precision : (field.scale ? 18 : undefined),
             scale: field.scale
         };

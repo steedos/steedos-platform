@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-07-20 21:31:37
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-22 13:03:24
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
 const serviceName = project.name;
@@ -78,6 +85,9 @@ module.exports = {
 
         // 故障报告服务
 		this.broker.createService(require("@steedos/service-sentry"));
+
+        // 产品分析
+        this.broker.createService(require("@steedos/service-analytics"));
 	},
 
 	/**

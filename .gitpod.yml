@@ -19,6 +19,9 @@ ports:
   - port: 16686 # Jaeger UI
     onOpen: open-browser
     visibility: public
+  - port: 5432
+    onOpen: ignore
+    visibility: public
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - name: Mongo

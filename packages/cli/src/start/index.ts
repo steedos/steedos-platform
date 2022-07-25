@@ -133,7 +133,7 @@ export class Start{
                     }
                 }
             } else {
-                res[key] = defaultsDeep(mods[key], res[key]);
+                res[key] = defaultsDeep({[key]: mods[key]}, {[key]: res[key]})[key];
             }
         })
 

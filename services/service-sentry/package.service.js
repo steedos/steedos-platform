@@ -8,60 +8,99 @@
 
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
+const Tracing = require("@sentry/tracing");
+const objectql = require('@steedos/objectql')
 const project = require('./package.json');
 const serviceName = project.name;
 
+const DSN = {
+  'development': 'https://460c67b9796e47d0952bccdff25fb934@sentry.steedos.cn/3',
+  'production': 'https://8a195c563c2a4997926387058cddedd2@sentry.steedos.cn/4'
+}
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: serviceName,
-	namespace: "steedos",
-	/**
-	 * Settings
-	 */
-	settings: {
-		packageInfo: {
-			path: __dirname,
-			name: serviceName,
-			isPackage: false
-		},
-		/** @type {Object?} Sentry configuration wrapper. */
-		sentry: {
-		  /** @type {String} DSN given by sentry. */
-		  dsn: process.env.STEEDOS_SENTRY_DSN, // ? process.env.STEEDOS_SENTRY_DSN : 'https://dcbd110ff4d646598c0bd9751cfc8c20@o1314957.ingest.sentry.io/6566429',
-		  /** @type {String} Name of event fired by "Event" exported in tracing. */
-		  tracingEventName: '$tracing.spans',
-		  /** @type {Object} Additional options for `Sentry.init`. */
-		  options: {},
-		  /** @type {String?} Name of the meta containing user infos. */
-		  userMetaKey: null,
-		},
-	},
-	
+  name: serviceName,
+  namespace: "steedos",
+
+  /**
+   * Dependencies
+   */
+  dependencies: [],
+
+  /**
+   * Settings
+   */
+  settings: {
+    packageInfo: {
+      path: __dirname,
+      name: serviceName,
+      isPackage: false
+    },
+    /** @type {Object?} Sentry configuration wrapper. */
+    sentry: {
+      enabled: process.env.STEEDOS_SENTRY_ENABLED != 'false',
+      /** @type {String} DSN given by sentry. */
+      dsn: process.env.STEEDOS_SENTRY_DSN,
+      /** @type {String} Name of event fired by "Event" exported in tracing. */
+      tracingEventName: '$tracing.spans',
+      /** @type {Object} Additional options for `Sentry.init`. */
+      options: {
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        // We recommend adjusting this value in production
+        tracesSampleRate: 0.2,
+        maxBreadcrumbs: 100,
+        debug: process.env.NODE_ENV == 'development',
+        environment: process.env.NODE_ENV || "development",
+        release: project.version,
+      },
+      /** @type {String?} Name of the meta containing user infos. */
+      userMetaKey: null,
+      masterSpaceId: null,
+    },
+  },
+
 
   /**
    * Events
    */
-   events: {
+  events: {
     // bind event listeners
-    '**'(payload, sender, event) {
+    '$tracing.spans'(ctx) {
       // only listen to specifig tracing event
-      if (event !== this.settings.sentry.tracingEventName) {
+      if (ctx.eventName !== this.settings.sentry.tracingEventName) {
         return
       }
 
-      if (!this.settings.sentry.dsn)
+      if (!this.settings.sentry.enabled)
         return
-      this.onTracingEvent(payload)
+
+      this.onTracingEvent(ctx.params)
     },
+
+    async 'steedos-server.started'(ctx) {
+      await this.setSpaceId()
+    },
+    async 'service-cloud-init.succeeded'(ctx) {
+      await this.setSpaceId()
+    }
   },
 
   /**
    * Methods
    */
   methods: {
+    // 设置魔方Id，为报错提供基础信息
+    async setSpaceId() {
+      const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], sort: 'created desc' }))[0]
+      if (spaceDoc) {
+        this.settings.masterSpaceId = spaceDoc._id
+        Sentry.setTag('masterSpaceId', spaceDoc._id)
+      }
+    },
     /**
      * Get service name from metric event (Imported from moleculer-jaeger)
      *
@@ -134,7 +173,10 @@ module.exports = {
         scope.setTag('type', metric.error.type)
         scope.setTag('code', metric.error.code)
         scope.setTag('root_url', process.env.ROOT_URL)
-        scope.setTag('steedos_version', require("steedos-server/package.json").version)
+        scope.setTag('version', project.version)
+        if (metric.tags.meta && metric.tags.meta.user && metric.tags.meta.user.userId) {
+          scope.setUser({ 'id': metric.tags.meta.user.userId })
+        }
 
         if (metric.error.data) {
           scope.setExtra('data', metric.error.data)
@@ -176,14 +218,22 @@ module.exports = {
   },
 
   started() {
-    // ToDo: remove deprecated dsn and options from settings with next version
-    const dsn = this.settings.sentry.dsn
-    const options = this.settings.sentry.options
-
-    if (dsn) {
-      this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
-      Sentry.init({ dsn, ...options })
+    let { enabled, dsn, options } = this.settings.sentry
+    if (enabled) {
+      // 如果配置了dsn则使用配置的dsn，如未配置则根据NODE_ENV和isPlatformEnterPrise指定
+      if (!dsn) {
+        const nodeEnv = process.env.NODE_ENV || 'development'
+        dsn = DSN[nodeEnv]
+      }
+      if (dsn) {
+        this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
+        Sentry.init({
+          dsn,
+          ...options,
+        })
+      }
     }
+
   },
 
   async stopped() {
