@@ -216,16 +216,7 @@ module.exports = {
 				if (!this.broker.started) {
 					this.broker._restartService(this.apiService)
 				}
-				// RequestHandler creates a separate execution context using domains, so that every
-				// transaction/span/breadcrumb is attached to its own Hub instance
-				this.WebApp.connectHandlers.use(Sentry.Handlers.requestHandler());
-				// TracingHandler creates a trace for every incoming request
-				this.WebApp.connectHandlers.use(Sentry.Handlers.tracingHandler());
-
-				// the rest of your app
 				this.WebApp.connectHandlers.use("/", this.apiService.express());
-
-				this.WebApp.connectHandlers.use(Sentry.Handlers.errorHandler());
 			}
 
 		},

@@ -6,7 +6,8 @@
   "dependencies": {
     "@sentry/node": "7.7.0",
     "@sentry/tracing": "7.7.0",
-    "@sentry/utils": "7.7.0"
+    "@sentry/utils": "7.7.0",
+    "@steedos/objectql": "2.2.55-beta.4"
   },
   "private": false,
   "publishConfig": {

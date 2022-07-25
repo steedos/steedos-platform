@@ -9,9 +9,14 @@
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
 const Tracing = require("@sentry/tracing");
+const objectql = require('@steedos/objectql')
 const project = require('./package.json');
 const serviceName = project.name;
 
+const DSN = {
+  'development': 'https://460c67b9796e47d0952bccdff25fb934@sentry.steedos.cn/3',
+  'production': 'https://8a195c563c2a4997926387058cddedd2@sentry.steedos.cn/4'
+}
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -23,9 +28,7 @@ module.exports = {
   /**
    * Dependencies
    */
-  dependencies: [
-    'steedos-server'
-  ],
+  dependencies: [],
 
   /**
    * Settings
@@ -40,7 +43,7 @@ module.exports = {
     sentry: {
       enabled: process.env.STEEDOS_SENTRY_ENABLED != 'false',
       /** @type {String} DSN given by sentry. */
-      dsn: process.env.STEEDOS_SENTRY_DSN ? process.env.STEEDOS_SENTRY_DSN : 'https://f87268cdc3cd4b58a25852c46b79d6b8@sentry.steedos.cn/3',
+      dsn: process.env.STEEDOS_SENTRY_DSN,
       /** @type {String} Name of event fired by "Event" exported in tracing. */
       tracingEventName: '$tracing.spans',
       /** @type {Object} Additional options for `Sentry.init`. */
@@ -53,16 +56,10 @@ module.exports = {
         debug: process.env.NODE_ENV == 'development',
         environment: process.env.NODE_ENV || "development",
         release: project.version,
-        autoSessionTracking: true,
-        initialScope: {
-          tags: {
-            "spaceId": process.env.STEEDOS_CLOUD_SPACE_ID || ''
-          },
-          // user: { id: 42, email: "john.doe@example.com" },
-        },
       },
       /** @type {String?} Name of the meta containing user infos. */
       userMetaKey: null,
+      masterSpaceId: null,
     },
   },
 
@@ -72,40 +69,23 @@ module.exports = {
    */
   events: {
     // bind event listeners
-    '**'(payload, sender, event) {
+    '$tracing.spans'(ctx) {
       // only listen to specifig tracing event
-      if (event !== this.settings.sentry.tracingEventName) {
+      if (ctx.eventName !== this.settings.sentry.tracingEventName) {
         return
       }
 
-      if (!this.settings.sentry.dsn)
+      if (!this.settings.sentry.enabled)
         return
-      this.onTracingEvent(payload)
+
+      this.onTracingEvent(ctx.params)
     },
 
-    '$metrics.snapshot': {
-      handler(ctx) {
-        // console.log("Payload:", ctx.params);
-        // console.log("Sender:", ctx.nodeID);
-        // console.log("Metadata:", ctx.meta);
-        // console.log("The called event name:", ctx.eventName);
-        if (this.isSentryReady()) {
-          const payload = ctx.params
-          Sentry.withScope((scope) => {
-            scope.setTag('sender', ctx.nodeID)
-            scope.setTag('span', ctx.eventName)
-            scope.setTag('root_url', process.env.ROOT_URL)
-
-            scope.setExtra('data', JSON.stringify(payload))
-
-            Sentry.captureEvent({
-              message: ctx.eventName,
-              level: 'info'
-            })
-          })
-        }
-
-      }
+    async 'steedos-server.started'(ctx) {
+      await this.setSpaceId()
+    },
+    async 'service-cloud-init.succeeded'(ctx) {
+      await this.setSpaceId()
     }
   },
 
@@ -113,6 +93,14 @@ module.exports = {
    * Methods
    */
   methods: {
+    // 设置魔方Id，为报错提供基础信息
+    async setSpaceId() {
+      const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], sort: 'created desc' }))[0]
+      if (spaceDoc) {
+        this.settings.masterSpaceId = spaceDoc._id
+        Sentry.setTag('masterSpaceId', spaceDoc._id)
+      }
+    },
     /**
      * Get service name from metric event (Imported from moleculer-jaeger)
      *
@@ -186,6 +174,9 @@ module.exports = {
         scope.setTag('code', metric.error.code)
         scope.setTag('root_url', process.env.ROOT_URL)
         scope.setTag('version', project.version)
+        if (metric.tags.meta && metric.tags.meta.user && metric.tags.meta.user.userId) {
+          scope.setUser({ 'id': metric.tags.meta.user.userId })
+        }
 
         if (metric.error.data) {
           scope.setExtra('data', metric.error.data)
@@ -227,28 +218,22 @@ module.exports = {
   },
 
   started() {
-    // ToDo: remove deprecated dsn and options from settings with next version
-    const dsn = this.settings.sentry.dsn
-    const options = this.settings.sentry.options
-
-    if (this.settings.sentry.enabled && dsn) {
-      this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
-      Sentry.init({
-        dsn,
-        ...options,
-        integrations: [
-          // enable HTTP calls tracing
-          new Sentry.Integrations.Http({ tracing: true }),
-          // enable Express.js middleware tracing
-          new Tracing.Integrations.Express({
-            // to trace all requests to the default router
-            app: WebApp.connectHandlers,
-            // alternatively, you can specify the routes you want to trace:
-            // router: someRouter,
-          }),
-        ],
-      })
+    let { enabled, dsn, options } = this.settings.sentry
+    if (enabled) {
+      // 如果配置了dsn则使用配置的dsn，如未配置则根据NODE_ENV和isPlatformEnterPrise指定
+      if (!dsn) {
+        const nodeEnv = process.env.NODE_ENV || 'development'
+        dsn = DSN[nodeEnv]
+      }
+      if (dsn) {
+        this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
+        Sentry.init({
+          dsn,
+          ...options,
+        })
+      }
     }
+
   },
 
   async stopped() {

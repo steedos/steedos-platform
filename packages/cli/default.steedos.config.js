@@ -208,21 +208,6 @@ module.exports = {
 						nodeID: registry.broker.nodeID
 					})
 				}
-			},
-			{
-				type: "Event",
-				options: {
-					// Event name
-					eventName: "$metrics.snapshot",
-					// Broadcast or emit
-					broadcast: false,
-					// Event groups
-					groups: null,
-					// Send only changed metrics
-					onlyChanges: true,
-					// Sending interval in seconds
-					interval: 10,
-				}
 			}
 		]
 	},
@@ -230,6 +215,12 @@ module.exports = {
 
 	tracing: {
 		enabled: true,
+		tags: {
+            action: {
+                // Add `user.userId` value from `ctx.meta`
+                meta: ["user.userId"],
+            },
+        },
 		exporter: {
 			type: "Event",
 			options: {
