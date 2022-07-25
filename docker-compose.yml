@@ -1,58 +1,27 @@
-version: "3"
+# Use root/example as user/password credentials
+version: '3.1'
 
 services:
-  steedos:
-    image: steedos/steedos-project-template:latest
+
+  db:
+    platform: linux/x86_64
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
-    ports:
-      - "3000:3000"
-    volumes:
-      - "./docker-volumes/steedos/storage:/app/storage"
-      - "./.steedos:/app/.steedos"
     environment:
-      - PORT=3000
-      - ROOT_URL=http://localhost:3000
-      - MONGO_URL=mongodb://mongo:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-      - STEEDOS_CFS_STORE=local
-      - STEEDOS_STORAGE_DIR=/app/storage
-      - TRANSPORTER=redis://redis:6379
-      - CACHER=redis://redis/2
-    depends_on:
-      - mongo
-      - redis
-  
-  redis:
-    image: redis:6.2.4
-    restart: always
-    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
+      MYSQL_ROOT_PASSWORD: example
     ports:
-      - "6389:6379"
-
-  mongo:
-    image: mongo:4.2
-    restart: always
+      - "3306:3306"
     volumes:
-      - "./docker-volumes/mongo/data/db:/data/db"
-    command: mongod --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all
-    ports:
-      - "27018:27017"
+      - mysql_db_data:/var/lib/mysql
 
-  # this container's job is just run the command to initialize the replica set.
-  # it will run the command and remove himself (it will not stay running)
-  mongo-init-replica:
-    image: mongo:4.2
-    command: >
-      bash -c
-        "for i in `seq 1 30`; do
-          mongo mongo/steedos --eval \"
-            rs.initiate({
-              _id: 'rs0',
-              version: 1,
-              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
-          s=$$? && break || s=$$?;
-          echo \"Tried $$i times. Waiting 5 secs...\";
-          sleep 5;
-        done; (exit $$s)"
-    depends_on:
-      - mongo
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mysql_db_data:

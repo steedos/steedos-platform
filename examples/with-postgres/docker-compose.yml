@@ -25,18 +25,5 @@ services:
     volumes:
       - 'steedos-mongo-data:/bitnami'
 
-  postgres:
-    image: postgres:11
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB:-keycloak}
-      - POSTGRES_USER=${POSTGRES_USER:-keycloak}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-keycloak}
-    volumes:
-      - 'postgres_data:/var/lib/postgresql/data'
-
 volumes:
   steedos-mongo-data:
-  postgres_data:
-      driver: local
