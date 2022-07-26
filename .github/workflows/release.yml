@@ -39,12 +39,21 @@ jobs:
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1')  }}
         run: exit 1
 
-      # checkout branch 2.2
-      - name: Checkout branch 2.2
+      - name: Merge 2.2 -> master
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: 2.2
+          target_branch: master
+          github_token: ${{ github.token }}
+
+      # checkout branch master
+      - name: Checkout branch master
         uses: actions/checkout@v2
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
         with: 
-          ref: '2.2'
+          ref: 'master'
       
       # checkout branch 2.1
       - name: Checkout branch 2.1
@@ -117,14 +126,6 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
-      # - name: Create commits & Push
-      #   run: |
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git add . 
-      #     git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
-      #     git push
-
       - name: Create Docker Release
         # if: steps.version.outputs.is_stable == 'true'
         id: create_release
@@ -139,12 +140,3 @@ jobs:
           release_name: Release v${{ steps.branch-name.outputs.tag }}
           draft: false
           prerelease: false
-
-      - name: Merge 2.2 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: 2.2
-          target_branch: master
-          github_token: ${{ github.token }}
