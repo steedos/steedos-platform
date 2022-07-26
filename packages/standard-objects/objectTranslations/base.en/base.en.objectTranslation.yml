@@ -158,4 +158,4 @@ actions:
   standard_import_data:
     label: Import Data
 groups:
-  systemInformation: System Information
+  system_information: System Information
