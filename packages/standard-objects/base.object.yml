@@ -23,7 +23,7 @@ fields:
     readonly: true
     sortable: true
     index: true
-    group: 系统信息
+    group: System Information
     sort_no: 9999
   created_by:
     label: Created by
@@ -32,7 +32,7 @@ fields:
     reference_to: users
     disabled: true
     index: true
-    group: 系统信息
+    group: System Information
     sort_no: 9999
   modified:
     label: Modification Time
@@ -40,7 +40,7 @@ fields:
     readonly: true
     sortable: true
     index: true
-    group: 系统信息
+    group: System Information
     sort_no: 9999
   modified_by:
     label: Modified by
@@ -49,7 +49,7 @@ fields:
     reference_to: users
     disabled: true
     index: true
-    group: 系统信息
+    group: System Information
     sort_no: 9999
   is_deleted:
     type: boolean
