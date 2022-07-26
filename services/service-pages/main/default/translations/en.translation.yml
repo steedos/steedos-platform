@@ -2,3 +2,6 @@ CustomApplications:
   apps_pages:
     name: Apps
     description: null
+CustomLabels:
+  menu_user_interface: User Interface
+  menu_pages: Mini Page
