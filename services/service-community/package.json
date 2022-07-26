@@ -42,7 +42,6 @@
     "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",
     "node-xlsx": "^0.16.1",
-    "pg": "^7.8.2",
     "promise-queue": "^2.2.5",
     "qrcode": "^1.4.4",
     "query-string": "^7.0.0",
