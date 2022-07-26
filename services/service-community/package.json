@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-community",
   "main": "package.service.js",
-  "version": "2.2.55-beta.5",
+  "version": "2.2.55-beta.6",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,18 +11,18 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_unpkg-local": "2.2.55-beta.5",
-    "@steedos/service-analytics": "2.2.55-beta.5",
-    "@steedos/service-charts": "2.2.55-beta.5",
-    "@steedos/service-identity-jwt": "2.2.55-beta.5",
-    "@steedos/service-metadata-server": "2.2.55-beta.5",
-    "@steedos/service-mongodb-server": "2.2.55-beta.5",
-    "@steedos/service-package-loader": "2.2.55-beta.5",
-    "@steedos/service-package-registry": "2.2.55-beta.5",
-    "@steedos/service-pages": "2.2.55-beta.5",
-    "@steedos/service-sentry": "2.2.55-beta.5",
-    "@steedos/service-sidecar": "2.2.55-beta.5",
-    "@steedos/service-steedos-server": "2.2.55-beta.5",
+    "@steedos/ee_unpkg-local": "2.2.55-beta.6",
+    "@steedos/service-analytics": "2.2.55-beta.6",
+    "@steedos/service-charts": "2.2.55-beta.6",
+    "@steedos/service-identity-jwt": "2.2.55-beta.6",
+    "@steedos/service-metadata-server": "2.2.55-beta.6",
+    "@steedos/service-mongodb-server": "2.2.55-beta.6",
+    "@steedos/service-package-loader": "2.2.55-beta.6",
+    "@steedos/service-package-registry": "2.2.55-beta.6",
+    "@steedos/service-pages": "2.2.55-beta.6",
+    "@steedos/service-sentry": "2.2.55-beta.6",
+    "@steedos/service-sidecar": "2.2.55-beta.6",
+    "@steedos/service-steedos-server": "2.2.55-beta.6",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
     "axios": "^0.21.1",
@@ -48,7 +48,7 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "steedos-cli": "2.2.55-beta.5",
+    "steedos-cli": "2.2.55-beta.6",
     "tslib": "^2.4.0",
     "validator": "^13.6.0",
     "winston": "^3.3.3",
@@ -58,5 +58,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ab16a9162d1c2ef61b47056e139ddd4d69a5919b"
+  "gitHead": "8cbd922fc597d7618dd4bb76a8cd20fadcded144"
 }
