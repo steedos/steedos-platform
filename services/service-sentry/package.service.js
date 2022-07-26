@@ -56,6 +56,9 @@ module.exports = {
         debug: process.env.NODE_ENV == 'development',
         environment: process.env.NODE_ENV || "development",
         release: project.version,
+        initialScope: {
+          tags: { "root_url": process.env.ROOT_URL },
+        },
       },
       /** @type {String?} Name of the meta containing user infos. */
       userMetaKey: null,
@@ -95,7 +98,7 @@ module.exports = {
   methods: {
     // 设置魔方Id，为报错提供基础信息
     async setSpaceId() {
-      const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], sort: 'created desc' }))[0]
+      const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], fields: ['_id'], sort: 'created desc' }))[0]
       if (spaceDoc) {
         this.settings.spaceId = spaceDoc._id
         Sentry.setTag('spaceId', spaceDoc._id)
@@ -166,15 +169,18 @@ module.exports = {
      * @param {Object} metric
      */
     sendSentryError(metric) {
+      // console.log(metric)
       Sentry.withScope((scope) => {
-        scope.setTag('id', metric.requestID)
+        scope.setTag('id', metric.id)
         scope.setTag('service', this.getServiceName(metric))
         scope.setTag('span', this.getSpanName(metric))
         scope.setTag('type', metric.error.type)
         scope.setTag('code', metric.error.code)
-        scope.setTag('root_url', process.env.ROOT_URL)
-        if (metric.tags.meta && metric.tags.meta.user && metric.tags.meta.user.userId) {
+        scope.setTag('nodeId', metric.tags.nodeID)
+        scope.setTag('callerNodeID', metric.tags.callerNodeID)
+        if (metric.tags.meta && metric.tags.meta.user && metric.tags.meta.user.userId && metric.tags.meta.user.spaceId) {
           scope.setUser({ 'id': metric.tags.meta.user.userId })
+          scope.setTag('spaceId', metric.tags.meta.user.spaceId)
         }
 
         if (metric.error.data) {

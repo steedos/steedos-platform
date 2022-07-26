@@ -216,11 +216,11 @@ module.exports = {
 	tracing: {
 		enabled: true,
 		tags: {
-            action: {
-                // Add `user.userId` value from `ctx.meta`
-                meta: ["user.userId"],
-            },
-        },
+			action: {
+				// Add `user.userId` value from `ctx.meta`
+				meta: ["user.userId", "user.spaceId"],
+			},
+		},
 		exporter: {
 			type: "Event",
 			options: {
