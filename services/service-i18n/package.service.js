@@ -1,24 +1,30 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-07-26 11:45:49
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-26 15:05:15
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
-const serviceName = project.name;
-const validator = require('validator');
+const packageName = project.name;
+const packageLoader = require('@steedos/service-package-loader');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: serviceName,
+	name: packageName,
 	namespace: "steedos",
+	mixins: [packageLoader],
 	/**
 	 * Settings
 	 */
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: serviceName
-		},
-		oidc: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
+			name: packageName,
+			isPackage: false
 		}
 	},
 
@@ -26,10 +32,12 @@ module.exports = {
 	 * Dependencies
 	 */
 	dependencies: [],
+
 	/**
 	 * Actions
 	 */
 	actions: {
+
 	},
 
 	/**
@@ -56,37 +64,14 @@ module.exports = {
 	/**
 	 * Service started lifecycle event handler
 	 */
-	async started(ctx) {
-		// 启动 社区版 服务
-		this.broker.createService(require("@steedos/service-community"));
+	async started() {
 
-        // 启动 企业版许可证服务
-        this.broker.createService(require("@steedos/ee_service-plugin-license"));
-		
-        // 启动 OIDC SSO 服务
-		if(this.settings.oidc.enable){
-			this.broker.createService(require("@steedos/ee_sso-oidc"));
-		}
-
-        // 启动 报表服务
-        this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
-
-        // 启动 sidecar服务: steedos services 跨语言访问
-        // broker.createService(require("@steedos/service-sidecar"));
-        // 字段级加密服务
-        // broker.createService(require("@steedos/ee_plugin-field-encryption"));
-        // 附件病毒扫描
-        // broker.createService(require("@steedos/ee_virus-scan"));
-        // 记录审计日志
-        this.broker.createService(require("@steedos/ee_audit-records"));
-        // 自定义品牌
-        this.broker.createService(require("@steedos/ee_branding"));
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-		
+
 	}
 };
