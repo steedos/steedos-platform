@@ -66,7 +66,7 @@ export function existsInRepo(nameOrUrl: string): Promise<boolean> {
     return isUrlOk(url.href)
   } catch {
     return isUrlOk(
-      `https://api.github.com/repos/steedos/steedos-platform/contents/examples/${encodeURIComponent(
+      `https://api.github.com/repos/steedos/steedos-examples/contents/${encodeURIComponent(
         nameOrUrl
       )}`
     )
@@ -97,7 +97,7 @@ export function downloadAndExtractExample(
   }
 
   return pipeline(
-    got.stream('https://codeload.github.com/steedos/steedos-platform/tar.gz/master'),
-    tar.extract({ cwd: root, strip: 3 }, [`steedos-platform-master/examples/${name}`])
+    got.stream('https://codeload.github.com/steedos/steedos-examples/tar.gz/main'),
+    tar.extract({ cwd: root, strip: 2 }, [`steedos-examples-main/${name}`])
   )
 }
