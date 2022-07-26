@@ -49,6 +49,17 @@
         console.error(error)
     };
 
+    const getAmisLng = ()=>{
+        locale = Creator.USER_CONTEXT.user.language
+        if(locale){
+            locale = locale.replace('_', '-');
+            locale = locale === 'en' ? 'en-US' : locale;
+            locale = locale === 'zh' ? 'zh-CN' : locale;
+            locale = locale === 'cn' ? 'zh-CN' : locale;
+            return locale
+        }
+        return 'zh-CN'
+    }
 
     // 此处不能使用import, client js 编译时会将import 转为require, 导致加载失败
     // import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
@@ -167,7 +178,7 @@
                         }
                     }, env);
                 }
-                return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name}, Object.assign({}, AmisEnv, env))));
+                return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))));
             };
 
             const initMonaco = ()=>{
@@ -193,14 +204,18 @@
             initMonaco().catch((err)=>{
                 console.error(`Builder.initMonaco error: ${err}`);
             }).finally(()=>{
-                Builder.registerComponent(AmisRender, {
-                    name: 'Amis',
-                    inputs: [
-                        { name: 'schema', type: 'object' },
-                        { name: 'data', type: 'object' },
-                        { name: 'name', type: 'string' }
-                    ]
-                });
+                const language = getAmisLng()
+                axios.get(`/translations/amis/${language}.json`).then((res)=>{
+                    AmisSDK.amis.registerLocale(`${language}`, res.data)
+                    Builder.registerComponent(AmisRender, {
+                        name: 'Amis',
+                        inputs: [
+                            { name: 'schema', type: 'object' },
+                            { name: 'data', type: 'object' },
+                            { name: 'name', type: 'string' }
+                        ]
+                    });
+                })
             });
         });
     // });

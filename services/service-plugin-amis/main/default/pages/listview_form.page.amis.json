@@ -43,6 +43,9 @@
                 {
                     "type": "fieldSet",
                     "title": "通用",
+                    "en-US": {
+                        "title": "Common"
+                    },
                     "collapsable": true,
                     "body": [
                         {
@@ -51,7 +54,10 @@
                             "required": true,
                             "type": "input-text",
                             "className": "m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "Label"
+                            }
                         },
                         {
                             "name": "name",
@@ -60,7 +66,11 @@
                             "required": true,
                             "type": "input-text",
                             "className": "m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "API Name",
+                                "labelRemark": "Can only contain lowercase letters and numbers, must start with a letter,cannot end with an underscore character or contain two consecutive underscore characters"
+                            }
                         },
                         {
                             "name": "object_name",
@@ -79,6 +89,9 @@
                             "source": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/options"
+                            },
+                            "en-US": {
+                                "label": "Object"
                             }
                         },
                         {
@@ -90,22 +103,30 @@
                             "extractValue": true,
                             "labelField": "label",
                             "valueField": "value",
-                            "autoComplete": {
-                                "method": "post",
-                                "url": "/graphql",
-                                "data": {
-                                    "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                                    "$": "$$",
-                                    "$term": "$term",
-                                    "$value": "$filter_scope._id",
-                                    "rfield": "${object_name}"
+                            "options": [
+                                {
+                                    "label": "我的",
+                                    "value": "mine",
+                                    "en-US": {
+                                        "label": "Mine"
+                                    }
+                                    
                                 },
-                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n        var _options;\n\n        _options = [{\n          label: \"我的\",\n          value: \"mine\",\n          icon: \"user\"\n        }, {\n          label: \"工作区\",\n          value: \"space\",\n          icon: \"groups\"\n        }];\n        return _options;\n      \n})(api.data);\n        return payload;\n        "
-                            },
+                                {
+                                    "label": "工作区",
+                                    "value": "space",
+                                    "en-US": {
+                                        "label": "Space"
+                                    }
+                                }
+                            ],
                             "value": "space",
                             "className": "m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "Filter Scope"
+                            }
+                            
                         },
                         {
                             "name": "shared",
@@ -113,7 +134,10 @@
                             "tpl": null,
                             "className": "m-0",
                             "labelClassName": "text-left",
-                            "option": "共享视图到工作区"
+                            "option": "共享视图到工作区",
+                            "en-US": {
+                                "option": "Shared to All Users"
+                            }
                         },
                         {
                             "name": "show_count",
@@ -121,7 +145,10 @@
                             "tpl": null,
                             "className": "m-0",
                             "labelClassName": "text-left",
-                            "option": "显示条目数"
+                            "option": "显示条目数",
+                            "en-US": {
+                                "option": "Show Record Count"
+                            }
                         },
                         {
                             "label": "显示的列",
@@ -145,7 +172,10 @@
                             "searchable": true,
                             "sortable": true,
                             "joinValues": false,
-                            "extractValue": true
+                            "extractValue": true,
+                            "en-US": {
+                                "label": "Columns"
+                            }
                         },
                         {
                             "name": "sort_no",
@@ -153,7 +183,10 @@
                             "type": "input-number",
                             "precision": 0,
                             "className": "m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "Sort NO."
+                            }
                         }
                     ]
                 },
@@ -181,7 +214,10 @@
                             "searchable": true,
                             "sortable": true,
                             "joinValues": false,
-                            "extractValue": true
+                            "extractValue": true,
+                            "en-US": {
+                                "label": "Default Filter Fields"
+                            }
                         },
                         {
                             "type": "radios",
@@ -201,7 +237,11 @@
                             "joinValues": true,
                             "className": "col-span-2 m-0",
                             "language": "javascript",
-                            "visibleOn": "false"
+                            "visibleOn": "false",
+                            "en-US": {
+                                "label": "Controller"
+                            }
+                            
                         },
                         {
                             "type": "condition-builder",
@@ -217,7 +257,10 @@
                             "disabled": false,
                             "className": "col-span-2 m-0",
                             "visibleOn": "!!this.object_name",
-                            "labelClassName": ""
+                            "labelClassName": "",
+                            "en-US": {
+                                "label": "Filters Conditions"
+                            }
                         },
                         {
                             "type": "editor",
@@ -230,7 +273,10 @@
                         }
                     ],
                     "visibleOn": "!!this.object_name",
-                    "collapsed": true
+                    "collapsed": true,
+                    "en-US": {
+                        "title": "Filter"
+                    }
                 },
                 {
                     "type": "fieldSet",
@@ -259,11 +305,18 @@
                             "checkAll": false,
                             "clearValueOnHidden": false,
                             "joinValues": false,
-                            "extractValue": true
+                            "extractValue": true,
+                            "en-US": {
+                                "label": "Default Sort Order"
+                            }
                         }
                     ],
                     "visibleOn": "!!this.object_name",
-                    "collapsed": true
+                    "collapsed": true,
+                    "en-US": {
+                        "title": "Order"
+                    }
+                    
                 },
                 {
                     "type": "fieldSet",
@@ -293,11 +346,17 @@
                                 "sendOn": "!!this.object_name"
                             },
                             "visibleOn": "!!this.object_name",
-                            "className": "col-span-2 m-0"
+                            "className": "col-span-2 m-0",
+                            "en-US": {
+                                "label": "Mobile Columns"
+                            }
                         }
                     ],
                     "collapsed": true,
-                    "visibleOn": "!!this.object_name"
+                    "visibleOn": "!!this.object_name",
+                    "en-US": {
+                        "title": "Mobile"
+                    }
                 }
             ],
             "panelClassName": "m-0",
@@ -309,13 +368,19 @@
                     "actionType": "",
                     "level": "default",
                     "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();"
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "en-US": {
+                        "label": "Cancel"
+                    }
                 },
                 {
                     "type": "button",
                     "label": "保存",
                     "actionType": "submit",
-                    "level": "info"
+                    "level": "info",
+                    "en-US": {
+                        "label": "Save"
+                    }
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",

@@ -18,6 +18,11 @@ fields:
     label: 过滤范围
     help: 
     description: 
+    options:
+      - label: 我的
+        value: mine
+      - label: 工作区
+        value: space
   shared:
     label: 共享视图到工作区
     help: 

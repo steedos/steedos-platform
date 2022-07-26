@@ -155,7 +155,7 @@ if Meteor.isClient
 					initialValues = FormManager.getInitialValues(object_name)
 
 			if object?.version >= 2
-				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, '新建 ' + object.label, initialValues , {gridName: gridName});
+				return Steedos.Page.Form.StandardNew.render(Session.get("app_id"), object_name, t('New') + ' ' + object.label, initialValues , {gridName: gridName});
 			Session.set 'action_object_name', object_name
 			if selectedRows?.length
 				# 列表有选中项时，取第一个选中项，复制其内容到新建窗口中
@@ -178,7 +178,7 @@ if Meteor.isClient
 			if record_id
 				object = Creator.getObject(object_name);
 				if object?.version >= 2
-					return Steedos.Page.Form.StandardEdit.render(Session.get("app_id"), object_name, '编辑 ' + object.label, record_id, {
+					return Steedos.Page.Form.StandardEdit.render(Session.get("app_id"), object_name, t('Edit') + ' ' + object.label, record_id, {
 						gridName: this.action.gridName
 					})
 				if Steedos.isMobile() && false
