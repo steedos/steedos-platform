@@ -59,7 +59,7 @@ module.exports = {
       },
       /** @type {String?} Name of the meta containing user infos. */
       userMetaKey: null,
-      masterSpaceId: null,
+      spaceId: null,
     },
   },
 
@@ -97,8 +97,8 @@ module.exports = {
     async setSpaceId() {
       const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], sort: 'created desc' }))[0]
       if (spaceDoc) {
-        this.settings.masterSpaceId = spaceDoc._id
-        Sentry.setTag('masterSpaceId', spaceDoc._id)
+        this.settings.spaceId = spaceDoc._id
+        Sentry.setTag('spaceId', spaceDoc._id)
       }
     },
     /**
@@ -173,7 +173,6 @@ module.exports = {
         scope.setTag('type', metric.error.type)
         scope.setTag('code', metric.error.code)
         scope.setTag('root_url', process.env.ROOT_URL)
-        scope.setTag('version', project.version)
         if (metric.tags.meta && metric.tags.meta.user && metric.tags.meta.user.userId) {
           scope.setUser({ 'id': metric.tags.meta.user.userId })
         }
@@ -226,7 +225,7 @@ module.exports = {
         dsn = DSN[nodeEnv]
       }
       if (dsn) {
-        this.broker.logger.warn(`Sentry Tracing enabled: ${dsn}`)
+        this.broker.logger.info(`Sentry Tracing enabled: ${dsn}`)
         Sentry.init({
           dsn,
           ...options,
