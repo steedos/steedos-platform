@@ -198,14 +198,23 @@ const translationFieldDescription = function(lng, objectName, name, def, datasou
     return label || def || ''
 }
 
-const translationFieldGroup = function(lng, objectName, name, def){
+const translationFieldGroup = function(lng, objectName, name, def, datasource?, ignoreBase?){
     let key = getFieldGroupKey(objectName, name);
     let keys = [key];
     let fallbackKey = fallbackKeys.getObjectFieldGroupKey(objectName, name);
     if(fallbackKey){
         keys.push(fallbackKey);
     }
-    return translation(keys, lng) || def || ''
+    let label = translation(keys, lng)
+
+    if(ignoreBase != true && !label){
+        let baseObjectName = getBaseObjectName(datasource);
+        if(baseObjectName && objectName != BASE_OBJECT && objectName != CORE_OBJECT){
+            label = translationFieldGroup(lng, baseObjectName, name, def, datasource)
+        }
+    }
+
+    return label || def || ''
 }
 
 const translationFieldOptionsLabel = function(lng, objectName, name, value, def, datasource?, ignoreBase?){
@@ -277,7 +286,7 @@ export const translationObject = function(lng: string, objectName: string, objec
             field.inlineHelpText = translationFieldHelp(lng, objectName, fieldName, field.inlineHelpText, object.datasource, ignoreBase)
         }
         if(field.group){
-            field.group = translationFieldGroup(lng, objectName, field.group, field.group);
+            field.group = translationFieldGroup(lng, objectName, field.group, field.group, object.datasource, ignoreBase);
         }
         if(field.options){
             let _options = [];
@@ -325,7 +334,7 @@ export const getObjectTranslationTemplate = function(lng: string ,objectName: st
             template[getFieldDescriptionKey(objectName, fieldName)] = translationFieldDescription(lng, objectName, fieldName, field.description, object.datasource)
         }
         if(field.group){
-            template[getFieldGroupKey(objectName, field.group)] = translationFieldGroup(lng, objectName, field.group, field.group);
+            template[getFieldGroupKey(objectName, field.group)] = translationFieldGroup(lng, objectName, field.group, field.group, object.datasource);
         }
         if(field.options){
             _.each(field.options, function(op){
