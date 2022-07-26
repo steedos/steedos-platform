@@ -7,12 +7,12 @@ admin_menus:
   #   permission_sets:
   #     - admin
   - _id: user_interface
-    name: 用户界面
+    name: User Interface
     sort: 350
     permission_sets:
       - admin
   - _id: pages
-    name: 微页面
+    name: Mini Pages
     object_name: pages
     parent: user_interface
     sort: 300

@@ -14,6 +14,7 @@ CustomLabels:
   menu_permission_set: 权限集
   menu_profile: 简档
   menu_apps: 应用程序
+  menu_steedos_packages: 软件包
   menu_tabs: 选项卡
   menu_dashboard: 自定义主页
   menu_sessions: 登录会话
