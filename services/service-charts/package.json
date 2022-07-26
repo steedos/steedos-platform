@@ -10,9 +10,9 @@
   },
   "scripts": {
     "start": "moleculer-runner services",
-    "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
-    "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
-    "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
+    "start:steedos": "cross-env STEEDOS_NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
+    "start:app": "cross-env STEEDOS_NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
+    "console": "cross-env STEEDOS_NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
     "buildPackage": "steedos package:build -n admin -p steedos-app",
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/app-admin"
   },
