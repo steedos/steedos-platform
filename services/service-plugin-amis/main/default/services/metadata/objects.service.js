@@ -66,19 +66,21 @@ module.exports = {
             },
             async handler(ctx) {
                 const fieldsOptions = await this.getObjectFieldsOptions(ctx);
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || "zh-CN";
                 const options = [
                     {
-                        label: "正序",
+                        label: steedosI18n.t('asc', {}, lng),
                         searchable: true,
                         children: _.map(fieldsOptions, (opt)=>{
-                            return {label: `${opt.label}(正序)`, value: `${opt.value}:asc`}
+                            return {label: `${opt.label}(${steedosI18n.t('asc', {}, lng)})`, value: `${opt.value}:asc`}
                         })
                     },
                     {
-                        label: "倒序",
+                        label: steedosI18n.t('desc', {}, lng),
                         searchable: true,
                         children: _.map(fieldsOptions, (opt)=>{
-                            return {label: `${opt.label}(倒序)`, value: `${opt.value}:desc`}
+                            return {label: `${opt.label}(${steedosI18n.t('desc', {}, lng)})`, value: `${opt.value}:desc`}
                         })
                     }
                 ];

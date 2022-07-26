@@ -4190,28 +4190,28 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@^2.2.36":
-  version "2.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.36.tgz#23b0651cdfd40a45d1c58a504a1f369b1b474064"
-  integrity sha512-5mrj81glTkovL+wkeNSTy8Lsq9pHZMuWsyViiLjAtTEZ5/3YO5yvdlUAsDinc+Kq6natnKeyVmJnKyfufJsCmg==
+"@steedos-ui/amis@^2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/amis/-/amis-2.2.38.tgz#758a178d7966a8ee979de5cc32caa444c1652205"
+  integrity sha512-mJCLP9uZiR8g2EM8eXLNwHHqbGxfOcVF2nUSLyqHVdjhaun15wZenOfmNVh9hwlt6mXMf+5YXZ5Jp/QRurGxAA==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@^2.2.36":
-  version "2.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.36.tgz#8448312de285e55fcd6ab5ea67065d7f1ca9c520"
-  integrity sha512-kXpOQoIDhGXNjjRvgloPrG1n+UtS/uPP5LUzLLbug0r/E5IMQsIxLO3fPJbEDdul+JPwzhGJhXqqy5nV1rXHUg==
+"@steedos-ui/builder-community@^2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.38.tgz#52bab05a4d82926f99c3204c2239c1c036dfb26e"
+  integrity sha512-A9x92NLmnDeDD6r6o+vm4AVfWVhJkoI/14CrZWQruRNqUgGSQPSyrR9BiKKbI2AOkLIoj2HYPqlbWQdQjwINxA==
 
-"@steedos-ui/builder-widgets@^2.2.36":
-  version "2.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.36.tgz#a37a4fa2b66cec06f38209d84a63a7190399f6fd"
-  integrity sha512-dYfqviuZV4zxJshtxT9aouwYclgZ6LsmN8S9dLm0G5IXJXdt+pOKJ6Ii7eLeRGdQVqUG3DyqGpLmGIkiqERxcA==
+"@steedos-ui/builder-widgets@^2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.38.tgz#5c32f2509edcd7083d300d2adbaeb2508feb5e60"
+  integrity sha512-v3leQOdc5Hu+YIkKKCnY0XF/m9zZ48GIjy/agja4HZOdfq/tc4kn67TGgyKYL8z6mVxiToqGKJTkt4Ez27kXhQ==
 
-"@steedos-ui/design-system@^2.2.36":
-  version "2.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.36.tgz#b95ba347d422899735355cc56d35a09c9f2137df"
-  integrity sha512-qfs0GpvhUk4+4iWrR2DDH86ot2WMLt+NVj9fwYgkCcnyfBSop2H/WdLeIdGu41ncCIj/J54e2fcPCWnDac+9ag==
+"@steedos-ui/design-system@^2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.38.tgz#c87b633040a93ba87036f64d49eb406f9d3a9c35"
+  integrity sha512-5EFI+HOqwgnLVMG8JxgnZYN+940TeUtn79C89btvCpR9R9+NXfMGvSGlahtWCVsrxAkuGiEz52y0FMFr/ASAaw==
   dependencies:
     react-required-if "^1.0.3"
 

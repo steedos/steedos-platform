@@ -17,6 +17,7 @@ CustomLabels:
   menu_permission_set: 
   menu_profile: 
   menu_apps: Apps
+  menu_steedos_packages: Packages
   menu_tabs: Custom Tabs
   menu_dashboard: 
   menu_sessions: 

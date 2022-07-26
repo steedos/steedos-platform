@@ -40,24 +40,14 @@ fields:
             }
   filter_scope:
     label: Filter Scope
-    type: lookup
+    type: select
     defaultValue: space
     required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [{
-                label: "我的",
-                value: "mine",
-                icon: "user"
-              }, {
-                label: "工作区",
-                value: "space",
-                icon: "groups"
-              }];
-              return _options;
-            }
+    options:
+      - label: 我的
+        value: mine
+      - label: 工作区
+        value: space 
   shared:
     label: Shared to All Users
     type: boolean

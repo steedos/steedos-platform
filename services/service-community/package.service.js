@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-22 13:03:24
+ * @LastEditTime: 2022-07-26 15:07:40
  * @Description: 
  */
 "use strict";
@@ -73,6 +73,10 @@ module.exports = {
 		if(this.settings.jwt.enable){
 			this.broker.createService(require("@steedos/service-identity-jwt"));
 		}
+
+
+        // 国际化
+        this.broker.createService(require("@steedos/service-i18n"));
 
 		// 启动 steedos-server 服务
         this.broker.createService(require("@steedos/service-steedos-server"));

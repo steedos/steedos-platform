@@ -8,152 +8,154 @@ const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
 const _ = require("underscore");
 
-const DATE_DATETIME_OPERATORS = [
-    'equal', 
-    'not_equal', 
-    'less', 
-    'less_or_equal', 
-    'greater', 
-    'greater_or_equal', 
-    'between',
-    {
-        "label": "去年",
-        "value": "between:last_year",
-        "values": []
-    },
-    {
-        "label": "今年",
-        "value": "between:this_year",
-        "values": []
-    },
-    {
-        "label": "明年",
-        "value": "between:next_year",
-        "values": []
-    },
-    {
-        "label": "上季度",
-        "value": "between:last_quarter",
-        "values": []
-    },
-    {
-        "label": "本季度",
-        "value": "between:this_quarter",
-        "values": []
-    },
-    {
-        "label": "下季度",
-        "value": "between:next_quarter",
-        "values": []
-    },
-    {
-        "label": "上月",
-        "value": "between:last_month",
-        "values": []
-    },
-    {
-        "label": "本月",
-        "value": "between:this_month",
-        "values": []
-    },
-    {
-        "label": "下月",
-        "value": "between:next_month",
-        "values": []
-    },
-    {
-        "label": "上周",
-        "value": "between:last_week",
-        "values": []
-    },
-    {
-        "label": "本周",
-        "value": "between:this_week",
-        "values": []
-    },
-    {
-        "label": "下周",
-        "value": "between:next_week",
-        "values": []
-    },
-    {
-        "label": "昨天",
-        "value": "between:yestday", // 一个错误的拼写, 待@steedos/filters 修正
-        "values": []
-    },
-    {
-        "label": "今天",
-        "value": "between:today",
-        "values": []
-    },
-    {
-        "label": "明天",
-        "value": "between:tomorrow",
-        "values": []
-    },
-    {
-        "label": "过去7天",
-        "value": "between:last_7_days",
-        "values": []
-    },
-    {
-        "label": "过去30天",
-        "value": "between:last_30_days",
-        "values": []
-    },
-    {
-        "label": "过去60天",
-        "value": "between:last_60_days",
-        "values": []
-    },
-    {
-        "label": "过去90天",
-        "value": "between:last_90_days",
-        "values": []
-    },
-    {
-        "label": "过去120天",
-        "value": "between:last_120_days",
-        "values": []
-    },
-    {
-        "label": "未来7天",
-        "value": "between:next_7_days",
-        "values": []
-    },
-    {
-        "label": "未来30天",
-        "value": "between:next_30_days",
-        "values": []
-    },
-    {
-        "label": "未来60天",
-        "value": "between:next_60_days",
-        "values": []
-    },
-    {
-        "label": "未来90天",
-        "value": "between:next_90_days",
-        "values": []
-    },
-    {
-        "label": "未来120天",
-        "value": "between:next_120_days",
-        "values": []
-    }
-]
+const getDateTimeOperators = (lng)=>{
+    return [
+        'equal', 
+        'not_equal', 
+        'less', 
+        'less_or_equal', 
+        'greater', 
+        'greater_or_equal', 
+        'between',
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_year", {}, lng),
+            "value": "between:last_year",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_this_year", {}, lng),
+            "value": "between:this_year",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_year", {}, lng),
+            "value": "between:next_year",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_quarter", {}, lng),
+            "value": "between:last_quarter",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_this_quarter", {}, lng),
+            "value": "between:this_quarter",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_quarter", {}, lng),
+            "value": "between:next_quarter",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_month", {}, lng),
+            "value": "between:last_month",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_this_month", {}, lng),
+            "value": "between:this_month",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_month", {}, lng),
+            "value": "between:next_month",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_week", {}, lng),
+            "value": "between:last_week",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_this_week", {}, lng),
+            "value": "between:this_week",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_week", {}, lng),
+            "value": "between:next_week",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_yestday", {}, lng),
+            "value": "between:yestday", // 一个错误的拼写, 待@steedos/filters 修正
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_today", {}, lng),
+            "value": "between:today",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_tomorrow", {}, lng),
+            "value": "between:tomorrow",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_7_days", {}, lng),
+            "value": "between:last_7_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_30_days", {}, lng),
+            "value": "between:last_30_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_60_days", {}, lng),
+            "value": "between:last_60_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_90_days", {}, lng),
+            "value": "between:last_90_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_last_120_days", {}, lng),
+            "value": "between:last_120_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_7_days", {}, lng),
+            "value": "between:next_7_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_30_days", {}, lng),
+            "value": "between:next_30_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_60_days", {}, lng),
+            "value": "between:next_60_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_90_days", {}, lng),
+            "value": "between:next_90_days",
+            "values": []
+        },
+        {
+            "label": steedosI18n.t("creator_filter_operation_between_next_120_days", {}, lng),
+            "value": "between:next_120_days",
+            "values": []
+        }
+    ]
+}
 
 
-const getFieldOperators = (type)=>{
+const getFieldOperators = (type, lng)=>{
     switch (type) {
         case 'text':
             return ['equal', 'not_equal', 'like', 'not_like', 'starts_with', 'ends_with']
         case 'number':
             return [ 'equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']
         case 'date':
-            return DATE_DATETIME_OPERATORS
+            return getDateTimeOperators(lng)
         case 'datetime':
-            return DATE_DATETIME_OPERATORS
+            return getDateTimeOperators(lng)
         case 'time':
             return [ 'equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']
         case 'lookup':
@@ -241,7 +243,7 @@ module.exports = {
                                     label: field.label,
                                     type: field.type,
                                     name: field.name,
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             case 'number':
@@ -249,7 +251,7 @@ module.exports = {
                                     label: field.label,
                                     type: field.type,
                                     name: field.name,
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             // 以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
@@ -260,7 +262,7 @@ module.exports = {
                                     type: field.type,
                                     name: field.name,
                                     format: "YYYY-MM-DDT00:00:00+00:00",
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             case 'datetime':
@@ -269,7 +271,7 @@ module.exports = {
                                     label: field.label,
                                     type: field.type,
                                     name: field.name,
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             case 'time':
@@ -279,7 +281,7 @@ module.exports = {
                                     type: field.type,
                                     name: field.name,
                                     format: "1970-01-01THH:mm+00:00",
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             case 'lookup':
@@ -291,7 +293,7 @@ module.exports = {
                                     name: field.name,
                                     source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
                                     searchable: true,
-                                    operators: getFieldOperators(field.type)
+                                    operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
                             case 'boolean':
@@ -301,8 +303,8 @@ module.exports = {
                                     type: "select",
                                     name: field.name,
                                     options: [
-                                        {label: "是", value: true},
-                                        {label: "否", value: false}
+                                        {label: steedosI18n.t("True", {}, lng), value: true},
+                                        {label: steedosI18n.t("False", {}, lng), value: false}
                                     ],
                                     operators: [
                                       "equal",

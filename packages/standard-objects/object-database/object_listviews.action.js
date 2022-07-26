@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-01 18:03:19
+ * @LastEditTime: 2022-07-26 17:21:35
  * @Description: 
  */
 module.exports = {
@@ -85,7 +85,7 @@ module.exports = {
         }
     }
 
-    Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', "复制列表视图", data, {});
+    Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', t("creator_list_copy_list_view"), data, {});
   },
   copyVisible: function(object_name, record_id, record_permissions, record){
     return true;

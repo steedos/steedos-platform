@@ -21,6 +21,11 @@ fields:
     label: Filter Scope
     help: 
     description: 
+    options:
+      - label: Mine
+        value: mine
+      - label: space
+        value: Space
   shared:
     label: Shared to All Users
     help: 

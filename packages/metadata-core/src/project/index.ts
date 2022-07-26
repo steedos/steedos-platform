@@ -4,6 +4,7 @@ import * as path from 'path';
 const fs = require('fs');
 const glob = require('glob');
 const compressing = require("compressing");
+const mkdirp = require('mkdirp')
 
 import { deleteFolderRecursive } from '../folderUtil';
 
@@ -68,14 +69,16 @@ export function getAllPackages(projectPath) {
   
   var packageList:String[] = [];
   var packageFolder = getPackageFolder(projectPath);
-  var members = fs.readdirSync(packageFolder);
-  for(var i=0; i<members.length; i++){
-      var member = path.join(packageFolder, members[i]);
-      var memberStat = fs.lstatSync(member);
-      if(!memberStat.isDirectory()){
-          continue;
-      }
-      packageList.push(member);
+  if (fs.existsSync(packageFolder)) {
+    var members = fs.readdirSync(packageFolder);
+    for(var i=0; i<members.length; i++){
+        var member = path.join(packageFolder, members[i]);
+        var memberStat = fs.lstatSync(member);
+        if(!memberStat.isDirectory()){
+            continue;
+        }
+        packageList.push(member);
+    }
   }
   return packageList;
 }
@@ -84,22 +87,23 @@ export function scanPackages(projectPath) {
   
   var packageList:String[] = [];
   var packageFolder = getPackageFolder(projectPath);
+  if (fs.existsSync(packageFolder)) {
+    var members = fs.readdirSync(packageFolder);
 
-  var members = fs.readdirSync(packageFolder);
+    for(var i=0; i<members.length; i++){
+        
+        var member = path.join(packageFolder, members[i]);
+        var memberStat = fs.lstatSync(member);
+        if(!memberStat.isDirectory()){
+            continue;
+        }
+        var minifestPath = path.join(member, 'package.yml');
 
-  for(var i=0; i<members.length; i++){
-      
-      var member = path.join(packageFolder, members[i]);
-      var memberStat = fs.lstatSync(member);
-      if(!memberStat.isDirectory()){
+        if(!fs.existsSync(minifestPath)){
           continue;
-      }
-      var minifestPath = path.join(member, 'package.yml');
-
-      if(!fs.existsSync(minifestPath)){
-        continue;
-      }
-      packageList.push(member);
+        }
+        packageList.push(member);
+    }
   }
   
   return packageList;
@@ -108,9 +112,9 @@ export function scanPackages(projectPath) {
 function getPackageFolder(projectPath) {
 
   var packageFolder = path.join(projectPath, STEEDOS_PACKAGE_FOLDER_NAME);
-  if(!fs.existsSync(packageFolder)){
-    fs.mkdirSync(packageFolder);
-  }
+  // if(!fs.existsSync(packageFolder)){
+  //   fs.mkdirSync(packageFolder);
+  // }
   return packageFolder;
 }
 export async function uncompressPackages(projectPath) {
@@ -128,7 +132,8 @@ export async function uncompressPackages(projectPath) {
     var folderExists = true;
 
     if(!fs.existsSync(appFolder)){
-      fs.mkdirSync(appFolder);
+      // fs.mkdirSync(appFolder);
+      mkdirp.sync(appFolder)
       folderExists = false;
     }
     if (folderExists) {

@@ -2,18 +2,18 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-20 17:42:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-01 18:26:42
+ * @LastEditTime: 2022-07-26 16:52:16
  * @Description: 提供辅助函数
  */
 (function(){
     const filtersAmisSchema = {
         "type": "page",
-        "title": "过滤器",
+        "title": t("creator_filters"),
         "name": "steedos-filters",
         "body": [
           {
             "type": "form",
-            "title": "过滤器",
+            "title": t("creator_filters"),
             "body": [
               {
                 "label": "",
@@ -84,7 +84,7 @@
         }, Object.assign({drawerName: pageName}, data, {
             objectName: Session.get("object_name"), // TODO 应该传入变量
             filters: window.amisConvert.filtersToConditions(Session.get("filter_items")),
-            title: "过滤器"
+            title: t("creator_filters")
         }), {
             props: {
                 mask: false,
@@ -98,7 +98,7 @@
                             onClick: function(){
                                 SteedosUI.getRef(pageName)?.close();
                             }
-                        } ,'取消'), 
+                        } , t('cancel')), 
                         React.createElement(SteedosUI.components.Button, {
                             onClick: canSave ? function(){
 
@@ -143,7 +143,7 @@
                                 SteedosUI.getRef(pageName)?.close();
                             },
                             type: 'primary'
-                        } , canSave ? '保存': '应用')
+                        } , canSave ? t('save'): t('apply'))
                     ]
                 )
             }
