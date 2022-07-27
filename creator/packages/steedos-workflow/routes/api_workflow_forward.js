@@ -220,10 +220,20 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 				var old_v = old_values[key];
 				if (old_v) {
 					// 校验 单选，多选，下拉框 字段值是否在新表单对应字段的可选值范围内
+					var fieldOptions = field.options && field.options.split && field.options.split("\n").map(function(n){
+						itemSplits = n.split(":");
+						return {
+							label: itemSplits[0],
+							value: itemSplits[1] || n
+						}
+					});
 					if (field.type == 'select' || field.type == 'radio') {
-						var options = field.options.split('\n');
-						if (!options.includes(old_v))
+						var selectedOption = fieldOptions.find(function(item) {
+							return item.value === old_v;
+						});
+						if(!selectedOption){
 							return;
+						}
 					}
 
 					if (field.type == 'multiSelect') {
