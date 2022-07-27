@@ -1,5 +1,4 @@
-console.log(Meteor.settings.public.sentry.dsn)
-if (Meteor.settings.public.sentry.dsn) {
+if (Meteor.settings.public.sentry && Meteor.settings.public.sentry.dsn) {
 
     let sentryScript = document.createElement("script");
     sentryScript.setAttribute("src", Steedos.absoluteUrl('/sentry/sentry.min.js'));

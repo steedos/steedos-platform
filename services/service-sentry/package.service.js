@@ -6,6 +6,7 @@
 
 'use strict'
 
+
 const _ = require('lodash');
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
@@ -17,6 +18,10 @@ const DEFAULT_DSN = {
   'development': 'https://460c67b9796e47d0952bccdff25fb934@sentry.steedos.cn/3',
   'production': 'https://8a195c563c2a4997926387058cddedd2@sentry.steedos.cn/4'
 }
+const DEFAULT_DSN_JS = {
+  'development': 'https://7c2b864b83bf4361a030a7df9d2ace0c@sentry.steedos.cn/7',
+  'production': 'https://8f3f63d02e8140718a6123b10d49ae2f@sentry.steedos.cn/6'
+}
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -24,7 +29,6 @@ const DEFAULT_DSN = {
 module.exports = {
   name: serviceName,
   namespace: "steedos",
-	mixins: [packageLoader],
 
   /**
    * Dependencies
@@ -86,11 +90,13 @@ module.exports = {
 
     async 'steedos-server.started'(ctx) {
       Sentry.setTag('masterSpaceId', __meteor_runtime_config__.masterSpaceId)
-      this.broker.call('steedos-server.setSettings', {
-        PUBLIC_SETTINGS: {
-          sentry: {dsn: this.dsn}
-        }
-      })
+      if (this.dsnJS) {
+        this.broker.call('steedos-server.setSettings', {
+          PUBLIC_SETTINGS: {
+            sentry: {dsn: this.dsnJS}
+          }
+        })
+      }
     },
     async 'service-cloud-init.succeeded'(ctx) {
       Sentry.setTag('masterSpaceId', __meteor_runtime_config__.masterSpaceId)
@@ -218,15 +224,17 @@ module.exports = {
       })
     }
   },
-
+  
   started() {
     let { enabled, dsn, options } = this.settings.sentry
     if (enabled) {
       // 如果配置了dsn则使用配置的dsn，如未配置则根据NODE_ENV和isPlatformEnterPrise指定
       this.dsn = dsn;
+      this.dsnJS = dsn;
       if (!this.dsn) {
         const nodeEnv = process.env.NODE_ENV || 'development'
         this.dsn = DEFAULT_DSN[nodeEnv]
+        this.dsnJS = DEFAULT_DSN_JS[nodeEnv]
       }
       if (this.dsn) {
         this.broker.logger.info(`Sentry Tracing enabled: ${this.dsn}`)

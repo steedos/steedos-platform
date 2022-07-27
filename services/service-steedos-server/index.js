@@ -8,7 +8,7 @@ const packageLoader = require('@steedos/service-meteor-package-loader');
 const objectql = require('@steedos/objectql');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 const _ = require('lodash');
-const Sentry = require('@sentry/node')
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
