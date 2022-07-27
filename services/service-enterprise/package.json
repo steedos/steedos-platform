@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "package.service.js",
-  "version": "2.2.55-beta.13",
+  "version": "2.2.55-beta.14",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,16 +11,16 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_audit-records": "2.2.55-beta.13",
-    "@steedos/ee_branding": "2.2.55-beta.13",
-    "@steedos/ee_mongodb-bi-connector": "2.2.55-beta.13",
-    "@steedos/ee_plugin-field-encryption": "2.2.55-beta.13",
+    "@steedos/ee_audit-records": "2.2.55-beta.14",
+    "@steedos/ee_branding": "2.2.55-beta.14",
+    "@steedos/ee_mongodb-bi-connector": "2.2.55-beta.14",
+    "@steedos/ee_plugin-field-encryption": "2.2.55-beta.14",
     "@steedos/ee_service-plugin-license": "^2.2.5",
-    "@steedos/ee_sso-oidc": "2.2.55-beta.13",
-    "@steedos/ee_stimulsoft-reports": "2.2.55-beta.13",
-    "@steedos/ee_unpkg-local": "2.2.55-beta.13",
-    "@steedos/ee_virus-scan": "2.2.55-beta.13",
-    "@steedos/service-community": "2.2.55-beta.13",
+    "@steedos/ee_sso-oidc": "2.2.55-beta.14",
+    "@steedos/ee_stimulsoft-reports": "2.2.55-beta.14",
+    "@steedos/ee_unpkg-local": "2.2.55-beta.14",
+    "@steedos/ee_virus-scan": "2.2.55-beta.14",
+    "@steedos/service-community": "2.2.55-beta.14",
     "mongodb": "^3.7.3",
     "mongodb-client-encryption": "2.1.0",
     "mssql": "^8.1.2",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "54dfa15f866f40aa6c17eba48aa5b0eb8d71eda5"
+  "gitHead": "6ea4a8267e129038702df46b083a995e52bd472d"
 }
