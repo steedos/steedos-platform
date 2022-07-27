@@ -21,9 +21,9 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
-  url:
-    type: text
-    label: Url
+  # url:
+  #   type: text
+  #   label: Url
   host:
     type: text
     label: Database host
@@ -58,6 +58,7 @@ fields:
   timezone:
     type: text
     label: Timezone
+    group: advanced
   options:
     type: object
     label: Options
@@ -70,9 +71,11 @@ fields:
   locale:
     type: text
     label: Locale
+    group: advanced
   logging:
     type: boolean
     label: Debug
+    group: advanced
   is_enable:
     type: boolean
     label: Enable
