@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 16:39:49
+ * @LastEditTime: 2022-07-27 15:01:27
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -274,7 +274,7 @@ class File {
  * @param {*} fileKey 
  * @returns stream
  */
-async function createFileReadStream(fsCollectionName, fileKey) {
+async function createFileReadStream(fsCollectionName, fileKey, options) {
     const storeName = getStoreName();
     if (LOCAL_STORE === storeName) {
         const filePath = fileStoreFullPath(fsCollectionName, fileKey);
@@ -284,7 +284,7 @@ async function createFileReadStream(fsCollectionName, fileKey) {
             error.statusCode = 404;
             throw error;
         }
-        return fs.createReadStream(filePath);
+        return fs.createReadStream(filePath, options);
     }
     else if (OSS_STORE === storeName || S3_STORE === storeName) {
         const { S3Client } = require('./s3client');

@@ -84,9 +84,10 @@ fields:
     help: 
     description: 
 groups:
-  other_connection_options: 其他连接选项 (请注意，其他连接选项将覆盖从URL设置的参数)
+  other_connection_options: 数据库连接
   mssql: Mssql
   oracle: Oracle
+  advanced: 高级
 listviews:
   all:
     label: 所有

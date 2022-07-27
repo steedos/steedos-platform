@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/mongodb-bi-connector",
+  "name": "@steedos/ee_mongodb-bi-connector",
   "version": "2.2.55-beta.11",
   "main": "package.service.js",
   "license": "MIT",
@@ -11,7 +11,8 @@
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "moleculer": "^0.14.21",
-    "mongodb": "^3.7.3"
+    "mongodb": "^3.7.3",
+    "mongodb-uri": "0.9.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
