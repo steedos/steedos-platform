@@ -9,11 +9,13 @@ fields:
     label: Driver
     options: MongoDB:mongo,SQL Server:sqlserver,PostgreSQL:postgres,Oracle:oracle,MySQL:mysql,Sqlite:sqlite
     required: true
+    sort_no: 30
   label:
     type: text
     label: Label
     required: true
     is_name: true
+    sort_no: 10
   name:
     type: text
     label: Name
@@ -21,6 +23,7 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+    sort_no: 20
   # url:
   #   type: text
   #   label: Url
