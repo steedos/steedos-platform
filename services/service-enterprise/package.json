@@ -13,6 +13,7 @@
   "dependencies": {
     "@steedos/ee_audit-records": "2.2.55-beta.11",
     "@steedos/ee_branding": "2.2.55-beta.11",
+    "@steedos/ee_mongodb-bi-connector": "2.2.55-beta.11",
     "@steedos/ee_plugin-field-encryption": "2.2.55-beta.11",
     "@steedos/ee_service-plugin-license": "^2.2.5",
     "@steedos/ee_sso-oidc": "2.2.55-beta.11",
