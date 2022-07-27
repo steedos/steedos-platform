@@ -57,6 +57,7 @@
     "jszip": "^3.1.5",
     "knockout": "^3.4.2",
     "lodash": "^4.17.21",
+    "marked": "4.0.18",
     "md5": "^2.2.1",
     "meteor-node-stubs": "^0.4.1",
     "mime": "^2.0.2",
