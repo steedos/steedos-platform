@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-public",
-  "version": "2.2.55-beta.12",
+  "version": "2.2.55-beta.13",
   "main": "package.service.js",
   "description": "public assets for steedos",
   "scripts": {},
@@ -12,5 +12,5 @@
   "dependencies": {
     "lodash": "^4.17.21"
   },
-  "gitHead": "6d16931c75f38653b6b40bf7d73cb6e221f127a7"
+  "gitHead": "54dfa15f866f40aa6c17eba48aa5b0eb8d71eda5"
 }
