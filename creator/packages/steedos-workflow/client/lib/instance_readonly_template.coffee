@@ -314,7 +314,9 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 					label: itemSplits[0],
 					value: itemSplits[1] || n
 				}
-			value = fieldOptions.find((item) -> return item.value == value).label
+			selectedOption = fieldOptions.find((item) -> return item.value == value)
+			if selectedOption
+				value = selectedOption.label
 		when 'number'
 			if value or value == 0
 				value = Steedos.numberToString value, field.digits
