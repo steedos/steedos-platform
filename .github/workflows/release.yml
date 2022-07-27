@@ -126,6 +126,15 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
+      - name: Merge master -> 2.2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: master
+          target_branch: 2.2
+          github_token: ${{ github.token }}
+
       - name: Create Docker Release
         # if: steps.version.outputs.is_stable == 'true'
         id: create_release
