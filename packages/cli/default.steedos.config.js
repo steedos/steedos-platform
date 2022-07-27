@@ -1,10 +1,15 @@
 "use strict";
+const _ = require("lodash")
 
 require('dotenv-flow').config(
 	{
 		path: process.cwd(),
 		silent: true
 	});
+
+if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
+	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
+}
 
 /**
  * Steedos ServiceBroker configuration file
