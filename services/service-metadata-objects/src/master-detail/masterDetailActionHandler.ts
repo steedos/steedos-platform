@@ -130,16 +130,18 @@ export class MasterDetailActionHandler{
     }
 
     async checkMasterDetails(objectApiName: string) {
-        const mastersCount = (await this.getMasters(objectApiName)).length;
-        const detailsCount = (await this.getDetails(objectApiName)).length;
-        if (mastersCount > 2) {
-            throw new Error(`There are ${mastersCount} fields of type master_detail on the object '${objectApiName}', but only 2 fields are allowed at most.`);
-        }
-        else if (mastersCount > 1) {
-            if (detailsCount > 0) {
-                throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${objectApiName}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
-            }
-        }
+        // 取消主表子表字段数量限制 #3697
+
+        // const mastersCount = (await this.getMasters(objectApiName)).length;
+        // const detailsCount = (await this.getDetails(objectApiName)).length;
+        // if (mastersCount > 2) {
+        //     throw new Error(`There are ${mastersCount} fields of type master_detail on the object '${objectApiName}', but only 2 fields are allowed at most.`);
+        // }
+        // else if (mastersCount > 1) {
+        //     if (detailsCount > 0) {
+        //         throw new Error(`There are ${mastersCount} fields of type master_detail on the object "${objectApiName}", but only 1 field are allowed at most, because this object is the master object of another object on a master-detail relationship.`);
+        //     }
+        // }
 
         const detailPaths = await this.getDetailPaths(objectApiName);
 
