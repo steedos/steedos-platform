@@ -307,6 +307,14 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 		when 'input'
 			if field.is_textarea
 				value = Spacebars.SafeString(marked.parse(value))
+		when 'select'
+			fieldOptions = field.options.split("\n").map (n)->
+				itemSplits = n.split(":")
+				return {
+					label: itemSplits[0],
+					value: itemSplits[1] || n
+				}
+			value = fieldOptions.find((item) -> return item.value == value).label
 		when 'number'
 			if value or value == 0
 				value = Steedos.numberToString value, field.digits
