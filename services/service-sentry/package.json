@@ -1,17 +1,17 @@
 {
   "name": "@steedos/service-sentry",
-  "version": "2.2.55-beta.6",
+  "version": "2.2.55-beta.7",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
     "@sentry/node": "7.7.0",
     "@sentry/tracing": "7.7.0",
     "@sentry/utils": "7.7.0",
-    "@steedos/objectql": "2.2.55-beta.6"
+    "@steedos/objectql": "2.2.55-beta.7"
   },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8cbd922fc597d7618dd4bb76a8cd20fadcded144"
+  "gitHead": "b1b7e6baca92332ddd815ec6869461751d1d6778"
 }
