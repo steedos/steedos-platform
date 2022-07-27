@@ -7,66 +7,66 @@ const validator = require('validator');
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: serviceName,
-	namespace: "steedos",
-	/**
-	 * Settings
-	 */
-	settings: {
-		packageInfo: {
-			path: __dirname,
-			name: serviceName
-		},
-		oidc: {
-			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
-		}
-	},
+    name: serviceName,
+    namespace: "steedos",
+    /**
+     * Settings
+     */
+    settings: {
+        packageInfo: {
+            path: __dirname,
+            name: serviceName
+        },
+        oidc: {
+            enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
+        }
+    },
 
-	/**
-	 * Dependencies
-	 */
-	dependencies: [],
-	/**
-	 * Actions
-	 */
-	actions: {
-	},
+    /**
+     * Dependencies
+     */
+    dependencies: [],
+    /**
+     * Actions
+     */
+    actions: {
+    },
 
-	/**
-	 * Events
-	 */
-	events: {
+    /**
+     * Events
+     */
+    events: {
 
-	},
+    },
 
-	/**
-	 * Methods
-	 */
-	methods: {
+    /**
+     * Methods
+     */
+    methods: {
 
-	},
+    },
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	async created() {
+    /**
+     * Service created lifecycle event handler
+     */
+    async created() {
 
-	},
+    },
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started(ctx) {
-		// 启动 社区版 服务
-		this.broker.createService(require("@steedos/service-community"));
+    /**
+     * Service started lifecycle event handler
+     */
+    async started(ctx) {
+        // 启动 社区版 服务
+        this.broker.createService(require("@steedos/service-community"));
 
         // 启动 企业版许可证服务
         this.broker.createService(require("@steedos/ee_service-plugin-license"));
-		
+
         // 启动 OIDC SSO 服务
-		if(this.settings.oidc.enable){
-			this.broker.createService(require("@steedos/ee_sso-oidc"));
-		}
+        if (this.settings.oidc.enable) {
+            this.broker.createService(require("@steedos/ee_sso-oidc"));
+        }
 
         // 启动 报表服务
         this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
@@ -81,12 +81,14 @@ module.exports = {
         this.broker.createService(require("@steedos/ee_audit-records"));
         // 自定义品牌
         this.broker.createService(require("@steedos/ee_branding"));
-	},
+        // mongodb bi connector
+        // this.broker.createService(require("@steedos/ee_mongodb-bi-connector"));
+    },
 
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
-		
-	}
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
+
+    }
 };

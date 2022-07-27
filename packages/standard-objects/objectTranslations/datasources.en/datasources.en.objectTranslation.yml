@@ -87,11 +87,10 @@ fields:
     help: 
     description: 
 groups:
-  other_connection_options: >-
-    Other connection options (Please note that other connection options will
-    override parameters set from url.)
+  other_connection_options: Connection options
   mssql: Mssql
   oracle: Oracle
+  advanced: Advanced
 listviews:
   all:
     label: All

@@ -241,7 +241,7 @@ var s_autoform = function (schema, field) {
                 schema.type = String;
             }
             autoform.readonly = (permission == 'readonly');
-            autoform.type = (permission == 'readonly') ? 'text' : 'select';
+            autoform.type = 'select';
             autoform.disabled = (permission == 'readonly');
             break;
         case 'radio':

@@ -3,6 +3,7 @@ const biSchema = require("./lib/biSchema");
 
 const project = require('./package.json');
 const packageName = project.name;
+const { parse } = require('mongodb-uri')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -95,7 +96,9 @@ async function schemaUpdateHandler(ctx) {
         pendingRefresh = false;
     }, 1000 * module.exports.settings.schemaUpdateTimeout);
     const objectConfigs = await ctx.broker.call("objects.getAll");
-    const steedosObjectDatasource = 'steedos-api';
+    // 从MONGO_URL中解析出数据库名
+    const defaultuUriObj = parse(process.env.MONGO_URL);
+    const steedosObjectDatasource = defaultuUriObj.database;
     var steedosBiSchema = new biSchema.SteedosBiSchema();
     steedosBiSchema.append(objectConfigs, steedosObjectDatasource);
     let biSchemaJson = steedosBiSchema.toJson();
