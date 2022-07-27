@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 10:07:10
+ * @LastEditTime: 2022-07-27 14:47:59
  * @Description: 
  */
 
@@ -113,6 +113,23 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
             res.setHeader('Content-Disposition', 'inline');
         }
 
+        // Get the contents range from request
+        var range = requestRange(req, copyInfo.size);
+
+        // Some browsers cope better if the content-range header is
+        // still included even for the full file being returned.
+        res.setHeader('Content-Range', range.unit + ' ' + range.start + '-' + range.end + '/' + range.size);
+
+        // If a chunk/range was requested instead of the whole file, serve that'
+        if (range.partial) {
+            res.status(206);
+        } else {
+            res.status(200);
+        }
+
+        // Inform clients about length (or chunk length in case of ranges)
+        res.setHeader('Content-Length', range.length);
+
         // Inform clients for browser cache
         res.setHeader('cache-control', 'public, max-age=31536000');
 
@@ -128,7 +145,10 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
         // Last modified header (updatedAt from file info) 
         res.setHeader('Last-Modified', updatedAt.toUTCString());
 
-        const readStream = await createFileReadStream(FS_COLLECTION_NAME, key);
+        // Inform clients that we accept ranges for resumable chunked downloads
+        res.setHeader('Accept-Ranges', range.unit);
+
+        const readStream = await createFileReadStream(FS_COLLECTION_NAME, key, { start: range.start, end: range.end });
 
         readStream.on('error', function (err) {
             console.log(err);
@@ -139,7 +159,6 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
         req.on('aborted', function () {
 
         });
-
         readStream.pipe(res);
     } catch (error) {
         console.error(error);
@@ -151,3 +170,84 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
 
 });
 exports.default = router;
+
+/*
+  requestRange will parse the range set in request header - if not possible it
+  will throw fitting errors and autofill range for both partial and full ranges
+
+  throws error or returns the object:
+  {
+    start
+    end
+    length
+    unit
+    partial
+  }
+*/
+function requestRange(req, fileSize) {
+    if (req) {
+        if (req.headers) {
+            var rangeString = req.headers.range;
+
+            // Make sure range is a string
+            if (rangeString === '' + rangeString) {
+
+                // range will be in the format "bytes=0-32767"
+                var parts = rangeString.split('=');
+                var unit = parts[0];
+
+                // Make sure parts consists of two strings and range is of type "byte"
+                if (parts.length == 2 && unit == 'bytes') {
+                    // Parse the range
+                    var range = parts[1].split('-');
+                    var start = Number(range[0]);
+                    var end = Number(range[1]);
+
+                    // Fix invalid ranges?
+                    if (range[0] != start) start = 0;
+                    if (range[1] != end || !end) end = fileSize - 1;
+
+                    // Make sure range consists of a start and end point of numbers and start is less than end
+                    if (start < end) {
+
+                        var partSize = 0 - start + end + 1;
+
+                        // Return the parsed range
+                        return {
+                            start: start,
+                            end: end,
+                            length: partSize,
+                            size: fileSize,
+                            unit: unit,
+                            partial: (partSize < fileSize)
+                        };
+
+                    } else {
+                        throw new Error(416, "Requested Range Not Satisfiable");
+                    }
+
+                } else {
+                    // The first part should be bytes
+                    throw new Error(416, "Requested Range Unit Not Satisfiable");
+                }
+
+            } else {
+                // No range found
+            }
+
+        } else {
+            // throw new Error('No request headers set for _parseRange function');
+        }
+    } else {
+        throw new Error('No request object passed to _parseRange function');
+    }
+
+    return {
+        start: 0,
+        end: fileSize - 1,
+        length: fileSize,
+        size: fileSize,
+        unit: 'bytes',
+        partial: false
+    };
+};
