@@ -4,7 +4,8 @@
             "store": ""
         },
         "workflow": {
-            "instance_attach_can_convert_to_office": true
+            "instance_attach_can_convert_to_office": true,
+            "instance_allow_distribute": true
         }
     },
     "cron": {
