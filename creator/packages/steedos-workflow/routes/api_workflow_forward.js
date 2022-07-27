@@ -221,7 +221,7 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 				if (old_v) {
 					// 校验 单选，多选，下拉框 字段值是否在新表单对应字段的可选值范围内
 					var fieldOptions = field.options && field.options.split && field.options.split("\n").map(function(n){
-						itemSplits = n.split(":");
+						var itemSplits = n.split(":");
 						return {
 							label: itemSplits[0],
 							value: itemSplits[1] || n
@@ -237,9 +237,8 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 					}
 
 					if (field.type == 'multiSelect') {
-						var options = field.options.split('\n');
 						var old_multiSelected = old_v.split(',');
-						var new_multiSelected = _.intersection(options, old_multiSelected);
+						var new_multiSelected = _.intersection(fieldOptions.map(function(n){ return n.value; }), old_multiSelected);
 						old_v = new_multiSelected.join(',');
 					}
 
