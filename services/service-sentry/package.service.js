@@ -6,6 +6,7 @@
 
 'use strict'
 
+
 const _ = require('lodash');
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
@@ -24,7 +25,6 @@ const DEFAULT_DSN = {
 module.exports = {
   name: serviceName,
   namespace: "steedos",
-	mixins: [packageLoader],
 
   /**
    * Dependencies
@@ -218,7 +218,7 @@ module.exports = {
       })
     }
   },
-
+  
   started() {
     let { enabled, dsn, options } = this.settings.sentry
     if (enabled) {
