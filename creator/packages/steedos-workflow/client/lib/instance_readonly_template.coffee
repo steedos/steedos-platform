@@ -255,7 +255,7 @@ getLinkText = (item, label, detail_url)->
 InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 	if !value && value != false
 		return ''
-	if ["select", "multiSelect"].indexOf(field.type) > -1
+	if ["select", "multiSelect", "radio"].indexOf(field.type) > -1
 		fieldOptions = field.options.split("\n").map (n)->
 			itemSplits = n.split(":")
 			return {
@@ -315,6 +315,10 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			if field.is_textarea
 				value = Spacebars.SafeString(marked.parse(value))
 		when 'select'
+			selectedOption = fieldOptions.find((item) -> return item.value == value)
+			if selectedOption
+				value = selectedOption.label
+		when 'radio'
 			selectedOption = fieldOptions.find((item) -> return item.value == value)
 			if selectedOption
 				value = selectedOption.label
