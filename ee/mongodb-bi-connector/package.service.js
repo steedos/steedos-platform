@@ -16,7 +16,7 @@ module.exports = {
      * Settings
      */
     settings: {
-        packageInfo:{},
+        packageInfo: {},
         schemaUpdateInterval: 10 // 刷新的间隔时间(秒)
     },
 
@@ -38,17 +38,17 @@ module.exports = {
     events: {
         "metadata.objects.inserted": {
             async handler(ctx) {
-				await schemaUpdateHandler(ctx);
+                await schemaUpdateHandler(ctx);
             }
         },
-		"metadata.objects.updated": {
+        "metadata.objects.updated": {
             async handler(ctx) {
-				await schemaUpdateHandler(ctx);
+                await schemaUpdateHandler(ctx);
             }
         },
-		"metadata.objects.deleted": {
+        "metadata.objects.deleted": {
             async handler(ctx) {
-				await schemaUpdateHandler(ctx);
+                await schemaUpdateHandler(ctx);
             }
         }
     },
@@ -94,7 +94,7 @@ async function schemaUpdateHandler(ctx) {
     }
     setTimeout(() => {
         pendingRefresh = false;
-    }, 1000 * module.exports.settings.schemaUpdateTimeout);
+    }, 1000 * module.exports.settings.schemaUpdateInterval);
     const objectConfigs = await ctx.broker.call("objects.getAll");
     // 从MONGO_URL中解析出数据库名
     const defaultuUriObj = parse(process.env.MONGO_URL);
