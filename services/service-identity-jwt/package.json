@@ -13,6 +13,7 @@
     "dependencies": {
         "@steedos/accounts": "2.2.55-beta.14",
         "express": "4.18.1",
+        "passport": "^0.6.0",
         "passport-jwt": "^4.0.0"
     },
     "license": "MIT",
