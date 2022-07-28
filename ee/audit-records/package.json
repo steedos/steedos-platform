@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_audit-records",
-  "version": "2.2.55-beta.14",
+  "version": "2.2.55-beta.15",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6ea4a8267e129038702df46b083a995e52bd472d"
+  "gitHead": "43a2df0d15b377b4041a0e2490a927211e55d41f"
 }
