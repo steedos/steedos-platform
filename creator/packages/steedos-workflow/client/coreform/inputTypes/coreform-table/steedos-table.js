@@ -397,6 +397,16 @@ SteedosTable.getTDValue = function (field, value) {
         return td_value
     }
     try {
+        var fieldOptions = [];
+        if(["select", "multiSelect", "radio"].indexOf(field.type) > -1){
+            fieldOptions = field.options.split("\n").map(function(n){
+                var itemSplits = n.split(":")
+                return {
+                    label: itemSplits[0],
+                    value: itemSplits[1] || n
+                }
+            });
+        }
 
         switch (field.type) {
             case 'user':
@@ -502,6 +512,25 @@ SteedosTable.getTDValue = function (field, value) {
                         value = new Date(value)
                     }
                     td_value = $.format.date(value, 'yyyy-MM-dd HH:mm');
+                }
+                break;
+            case 'select':
+                var selectedOption = fieldOptions.find(function(item){ return item.value == value; })
+                if(selectedOption){
+                    td_value = selectedOption.label
+                }
+                break;
+            case 'radio':
+                var selectedOption = fieldOptions.find(function(item){ return item.value == value; })
+                if(selectedOption){
+                    td_value = selectedOption.label
+                }
+                break;
+            case 'multiSelect':
+                var splitedValues = value.split(",");
+                var selectedOptions = fieldOptions.filter(function(item){ return splitedValues.indexOf(item.value) > -1; });
+                if(selectedOptions.length){
+                    td_value = selectedOptions.map(function(item){ return item.label; }).join(",");
                 }
                 break;
             case 'number':
