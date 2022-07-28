@@ -150,17 +150,26 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 						var key = f.code;
 						var old_v = old_values[key];
 						if (old_v) {
+							var fieldOptions = f.options && f.options.split && f.options.split("\n").map(function(n){
+								var itemSplits = n.split(":");
+								return {
+									label: itemSplits[0],
+									value: itemSplits[1] || n
+								}
+							});
 							// 校验 单选，多选，下拉框 字段值是否在新表单对应字段的可选值范围内
 							if (f.type == 'select' || f.type == 'radio') {
-								var options = f.options.split('\n');
-								if (!options.includes(old_v))
+								var selectedOption = fieldOptions.find(function(item) {
+									return item.value === old_v;
+								});
+								if(!selectedOption){
 									return;
+								}
 							}
 
 							if (f.type == 'multiSelect') {
-								var options = f.options.split('\n');
 								var old_multiSelected = old_v.split(',');
-								var new_multiSelected = _.intersection(options, old_multiSelected);
+								var new_multiSelected = _.intersection(fieldOptions.map(function(n){ return n.value; }), old_multiSelected);
 								old_v = new_multiSelected.join(',');
 							}
 
@@ -183,17 +192,26 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 								var key = f.code;
 								var old_v = old_table_row_values[key];
 								if (old_v) {
+									var fieldOptions = f.options && f.options.split && f.options.split("\n").map(function(n){
+										var itemSplits = n.split(":");
+										return {
+											label: itemSplits[0],
+											value: itemSplits[1] || n
+										}
+									});
 									// 校验 单选，多选，下拉框 字段值是否在新表单对应字段的可选值范围内
 									if (f.type == 'select' || f.type == 'radio') {
-										var options = f.options.split('\n');
-										if (!options.includes(old_v))
+										var selectedOption = fieldOptions.find(function(item) {
+											return item.value === old_v;
+										});
+										if(!selectedOption){
 											return;
+										}
 									}
 
 									if (f.type == 'multiSelect') {
-										var options = f.options.split('\n');
 										var old_multiSelected = old_v.split(',');
-										var new_multiSelected = _.intersection(options, old_multiSelected);
+										var new_multiSelected = _.intersection(fieldOptions.map(function(n){ return n.value; }), old_multiSelected);
 										old_v = new_multiSelected.join(',');
 									}
 
