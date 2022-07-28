@@ -135,6 +135,11 @@ jobs:
           target_branch: 2.2
           github_token: ${{ github.token }}
 
+      - name: Sleep 120s, wait for npm cache
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: 120s
+
       - name: Create Docker Release
         # if: steps.version.outputs.is_stable == 'true'
         id: create_release
