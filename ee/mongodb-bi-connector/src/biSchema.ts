@@ -263,7 +263,7 @@ export async function setDefaultBiSchema(biSchema:BiSchema, mongoUrl){
     if(!mongoUrl){
         throw new Error('mongoUrl is required');
     }
-    var client = new MongoClient(mongoUrl)
+    var client = new MongoClient(mongoUrl, { useUnifiedTopology: true })
     await client.connect();
     await client.db().collection('schemas').insertOne(biSchema);
     var filter = {
