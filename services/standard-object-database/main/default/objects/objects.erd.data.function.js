@@ -1,4 +1,11 @@
-const InternalData = require('../core/internalData');
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-07-30 09:20:04
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-29 11:32:40
+ * @Description: 
+ */
+const InternalData = require('@steedos/standard-objects').internalData;
 const clone = require('clone');
 const steedosI18n = require("@steedos/i18n");
 const objectql = require("@steedos/objectql");

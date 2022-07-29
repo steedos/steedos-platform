@@ -1,4 +1,11 @@
-const InternalData = require('../core/internalData');
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-05-28 11:07:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-29 11:26:31
+ * @Description: 
+ */
+const InternalData = require('@steedos/standard-objects').internalData;
 const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
 module.exports = {

@@ -1,5 +1,5 @@
-const InternalData = require('../core/internalData');
-const util = require('../util');
+const InternalData = require('@steedos/standard-objects').internalData;
+const util = require('@steedos/standard-objects').util;
 const objectql = require('@steedos/objectql');
 
 const getInternalListviews = async function(sourceListviews, filters, is_system){

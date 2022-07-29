@@ -23,6 +23,7 @@
     "@steedos/service-ui": "2.2.55-beta.16",
     "@steedos/service-workflow": "2.2.55-beta.16",
     "@steedos/standard-cms": "2.2.55-beta.16",
+    "@steedos/standard-object-database": "2.2.55-beta.16",
     "@steedos/standard-process": "2.2.55-beta.16",
     "@steedos/steedos-plugin-schema-builder": "2.2.55-beta.16",
     "@steedos/unpkg": "2.2.55-beta.16",

@@ -54,7 +54,8 @@ module.exports = {
 			"@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
 			"@steedos/service-files",
-			"@steedos/standard-cms"
+			"@steedos/standard-cms",
+			"@steedos/standard-object-database"
 		],
 		plugins: [
 		]

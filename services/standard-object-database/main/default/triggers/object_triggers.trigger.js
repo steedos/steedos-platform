@@ -1,4 +1,11 @@
-const InternalData = require('../core/internalData');
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-06-03 15:11:52
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-29 11:31:59
+ * @Description: 
+ */
+const InternalData = require('@steedos/standard-objects').internalData;
 
 module.exports = {
     afterFind: async function(){

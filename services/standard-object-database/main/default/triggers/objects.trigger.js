@@ -1,7 +1,7 @@
-const InternalData = require('../core/internalData');
+const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
-const objectTree = require('./objects.tree.js');
+const objectTree = require('../objects/objects.tree.js');
 
 module.exports = {
     afterFind: async function(){

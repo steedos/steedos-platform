@@ -4,7 +4,7 @@
  * @Description: 
  */
 const _ = require("underscore");
-const util = require('../util');
+const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
 const auth = require('@steedos/auth');
 
