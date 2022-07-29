@@ -1,7 +1,7 @@
 const _ = require("underscore");
-const util = require('../util');
+const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
-const InternalData = require('../core/internalData');
+const InternalData = require('@steedos/standard-objects').internalData;
 
 const checkReevaluateParent = (doc)=>{
     if(doc.reevaluate_on_change && doc.target_object && doc.object_name && doc.target_object != doc.object_name){

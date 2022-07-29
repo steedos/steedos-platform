@@ -1,7 +1,14 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-08-30 12:06:41
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-29 16:03:50
+ * @Description: 
+ */
 const _ = require("underscore");
-const util = require('../util');
+const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
-const InternalData = require('../core/internalData');
+const InternalData = require('@steedos/standard-objects').internalData;
 
 const getInternalWorkflowRules = function(sourceWorkflowRules, filters){
     let dbWorkflowRules = Creator.getCollection("workflow_rule").find(filters, {fields:{_id:1, name:1}}).fetch();

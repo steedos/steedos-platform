@@ -1,7 +1,7 @@
 const _ = require("underscore");
-const util = require('../../util');
+const util = require('@steedos/standard-objects').util;
 const objectql = require('@steedos/objectql');
-const InternalData = require('../../core/internalData');
+const InternalData = require('@steedos/standard-objects').internalData;
 
 function setSpaceAndOwner(record, that){
     record['space'] = that.spaceId

@@ -55,7 +55,8 @@ module.exports = {
 			// "@steedos/standard-process"
 			"@steedos/service-files",
 			"@steedos/standard-cms",
-			"@steedos/standard-object-database"
+			"@steedos/standard-object-database",
+			"@steedos/standard-process-approval"
 		],
 		plugins: [
 		]
