@@ -57,7 +57,8 @@ module.exports = {
 			"@steedos/standard-cms",
 			"@steedos/standard-object-database",
 			"@steedos/standard-process-approval",
-			"@steedos/standard-collaboration"
+			"@steedos/standard-collaboration",
+			"@steedos/standard-ui"
 		],
 		plugins: [
 		]

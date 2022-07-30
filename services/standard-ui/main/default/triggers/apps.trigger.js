@@ -3,7 +3,7 @@ const clone = require("clone");
 const objectql = require("@steedos/objectql");
 const i18n = require("@steedos/i18n");
 const auth = require("@steedos/auth");
-const InternalData = require('./core/internalData');
+const InternalData = require('@steedos/standard-objects').internalData;
 const SERVICE_NAME = `~database-apps`;
 const permissions = {
     allowEdit: false,
