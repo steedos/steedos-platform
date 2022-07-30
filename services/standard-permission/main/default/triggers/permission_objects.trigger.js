@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const objectql = require("@steedos/objectql");
-const InternalData = require("./core/internalData");
+const InternalData = require('@steedos/standard-objects').internalData;
 const auth = require("@steedos/auth");
 
 const permissions = {

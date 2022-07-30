@@ -1,8 +1,15 @@
-const util = require('./util');
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-12-27 10:49:33
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-07-30 13:22:15
+ * @Description: 
+ */
+const util = require('@steedos/standard-objects').util;
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
 module.exports = {
-    listenTo: 'restriction_rules',
+    listenTo: 'share_rules',
 
     beforeInsert: async function () {
         const { object_name, doc } = this;

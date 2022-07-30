@@ -25,6 +25,7 @@
     "@steedos/standard-cms": "2.2.55-beta.16",
     "@steedos/standard-collaboration": "2.2.55-beta.16",
     "@steedos/standard-object-database": "2.2.55-beta.16",
+    "@steedos/standard-permission": "2.2.55-beta.16",
     "@steedos/standard-process": "2.2.55-beta.16",
     "@steedos/standard-process-approval": "2.2.55-beta.16",
     "@steedos/standard-ui": "2.2.55-beta.16",
