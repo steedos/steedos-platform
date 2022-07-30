@@ -53,6 +53,7 @@ module.exports = {
 				await objectql.loadStandardMetadata(name, datasourceName);
                 await objectql.addAllConfigFiles(packagePath, datasourceName, name);
 				await triggerLoader.load(this.broker, packagePath, name);
+                await this.broker.emit(`translations.object.change`, {});
 				return;
 			}).promise();
 		}

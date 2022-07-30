@@ -63,5 +63,15 @@ Template.afCheckboxGroupInlineSteedos.helpers({
       return true;
     }
     return false;
+  },
+  readonlyLabel: function readonlyLabel() {
+    var value = this.value;
+    var labels = [];
+    this.selectOptions.forEach(function(item){
+      if(value.indexOf(item.value) > -1){
+        labels.push(item.label);
+      }
+    });
+    return labels.join(",");
   }
 });
