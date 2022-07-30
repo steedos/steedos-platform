@@ -2,7 +2,6 @@ const _ = require('underscore');
 const clone = require("clone");
 const objectql = require("@steedos/objectql");
 const auth = require("@steedos/auth");
-const internalData = require("./core/internalData")
 const permissions = {
     allowEdit: false,
     allowDelete: false,
