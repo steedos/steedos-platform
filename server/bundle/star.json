@@ -36,5 +36,5 @@
   "meteorRelease": "METEOR@1.9.3",
   "nodeVersion": "12.16.1",
   "npmVersion": "6.13.4",
-  "gitCommitHash": "b2c17fbf1dbc37b3478744c8378a875b0a8256fc"
+  "gitCommitHash": "79eab44c421d723c1e923819c1f353aeccbd090c"
 }
