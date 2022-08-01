@@ -22,7 +22,8 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules":false,
     "preserveSymlinks":true,
-    "declaration": true
+    "declaration": true,
+    "removeComments": true
   }
   
 }

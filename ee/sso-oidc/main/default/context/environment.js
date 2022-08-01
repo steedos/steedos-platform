@@ -1,12 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-26 11:16:18
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 13:18:59
- * @Description:
- */
 function isTest() {
     return (process.env.NODE_ENV === "jest" ||
         process.env.NODE_ENV === "cypress" ||
@@ -58,9 +51,7 @@ const env = {
         module.exports[key] = value;
     },
 };
-// clean up any environment variable edge cases
 for (let [key, value] of Object.entries(env)) {
-    // handle the edge case of "0" to disable an environment variable
     if (value === "0") {
         env[key] = 0;
     }

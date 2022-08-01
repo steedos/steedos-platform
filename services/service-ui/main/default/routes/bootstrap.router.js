@@ -5,7 +5,6 @@ const tslib_1 = require("tslib");
 const steedosI18n = require("@steedos/i18n");
 const core_1 = require("@steedos/core");
 const objectql_1 = require("@steedos/objectql");
-//
 require("@steedos/license");
 const Fiber = require('fibers');
 const clone = require("clone");
@@ -20,11 +19,6 @@ function getUserProfileObjectsLayout(userId, spaceId, objectName) {
             spaceUser = spaceUsers[0];
         }
         if (spaceUser && spaceUser.profile) {
-            // let filters = [['space', '=', spaceId],['profiles', '=', spaceUser.profile]];
-            // if(objectName){
-            //     filters.push(['object_name', '=', objectName])
-            // }
-            // return await getObject("object_layouts").directFind({filters: filters})
             return yield (0, objectql_1.getObjectLayouts)(spaceUser.profile, spaceId, objectName);
         }
     });
@@ -34,7 +28,6 @@ function getUserObjects(userId, spaceId, objects) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const objectsLayout = yield getUserProfileObjectsLayout(userId, spaceId);
         for (const objectName in objects) {
-            // objects[objectName].list_views = await getUserObjectListViews(userId, spaceId, objectName)
             let userObjectLayout = null;
             if (objectsLayout) {
                 userObjectLayout = _.find(objectsLayout, function (objectLayout) {
@@ -104,14 +97,12 @@ function getUserObject(userId, spaceId, object, layout) {
                 _object.fields[fieldApiName].hidden = true;
                 _object.fields[fieldApiName].sort_no = 99999;
             });
-            // let _buttons = {};
             _.each(layout.buttons, function (button) {
                 const action = _object.actions[button.button_name];
                 if (action) {
                     if (button.visible_on) {
                         action._visible = button.visible_on;
                     }
-                    // _buttons[button.button_name] = action
                 }
             });
             const layoutButtonsName = _.pluck(layout.buttons, 'button_name');
@@ -121,9 +112,6 @@ function getUserObject(userId, spaceId, object, layout) {
                     action._visible = function () { return false; }.toString();
                 }
             });
-            // _object.actions = _buttons;
-            // _object.allow_customActions = userObjectLayout.custom_actions || []
-            // _object.exclude_actions = userObjectLayout.exclude_actions || []
             _object.related_lists = layout.related_lists || [];
             _.each(_object.related_lists, (related_list) => {
                 if (related_list.sort_field_name && _.isArray(related_list.sort_field_name) && related_list.sort_field_name.length > 0) {
@@ -149,7 +137,6 @@ function getSpaceBootStrap(req, res) {
                 const { userId, language: lng } = userSession;
                 let spaceId = req.headers['x-space-id'] || urlParams.spaceId;
                 let space = yield (0, objectql_1.getObject)("spaces").findOne(spaceId, { fields: ['name'] });
-                //TODO 无需再从getAllPermissions中获取用户的对象权限
                 let result = Creator.getAllPermissions(spaceId, userId);
                 steedosI18n.translationObjects(lng, result.objects);
                 result.user = userSession;
@@ -157,24 +144,9 @@ function getSpaceBootStrap(req, res) {
                 result.dashboards = clone(Creator.Dashboards);
                 result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId);
                 result.object_listviews = yield getUserObjectsListViews(userId, spaceId);
-                // result.apps = clone(Creator.Apps)
                 result.apps = yield (0, objectql_1.getAppConfigs)(spaceId);
                 result.assigned_apps = yield (0, objectql_1.getAssignedApps)(userSession);
                 let datasources = Creator.steedosSchema.getDataSources();
-                // for (const datasourceName in datasources) {
-                //     if(datasourceName != 'default'){
-                //         let datasource = datasources[datasourceName];
-                //         const datasourceObjects = datasource.getObjects();
-                //         for (const objectName in datasourceObjects) {
-                //             const object = datasourceObjects[objectName];
-                //             const _obj = Creator.convertObject(clone(object.toConfig()), spaceId)
-                //             _obj.name = objectName
-                //             _obj.database_name = datasourceName
-                //             _obj.permissions = await object.getUserObjectPermission(userSession)
-                //             result.objects[_obj.name] = _obj
-                //         }
-                //     }
-                // }
                 const spaceProcessDefinition = yield (0, objectql_1.getObject)("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] });
                 const spaceObjectsProcessDefinition = _.groupBy(spaceProcessDefinition, 'object_name');
                 const dbListViews = yield (0, objectql_1.getObject)("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] });
@@ -272,7 +244,6 @@ function getSpaceBootStrap(req, res) {
                 result.dashboards = _Dashboards;
                 result.plugins = core_1.getPlugins ? (0, core_1.getPlugins)() : null;
                 yield getUserObjects(userId, spaceId, result.objects);
-                // TODO object layout 是否需要控制审批记录显示？
                 _.each(spaceProcessDefinition, function (item) {
                     if (result.objects[item.object_name]) {
                         result.objects[item.object_name].enable_process = true;
@@ -282,11 +253,6 @@ function getSpaceBootStrap(req, res) {
                     if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                         const objectConfig = result.objects[key];
                         try {
-                            // const object = getObject(key);
-                            // const relationsInfo = await object.getRelationsInfo();
-                            // objectConfig.details = relationsInfo.details;
-                            // objectConfig.masters = relationsInfo.masters;
-                            // objectConfig.lookup_details = relationsInfo.lookup_details;
                             objectConfig.details = _.map(_.filter(allRelationsInfo.details, { objectName: key }), 'key');
                             objectConfig.masters = _.map(_.filter(allRelationsInfo.masters, { objectName: key }), 'key');
                             objectConfig.lookup_details = _.map(_.filter(allRelationsInfo.lookup_details, { objectName: key }));
@@ -365,14 +331,6 @@ function getUserObjectsListViews(userId, spaceId) {
     });
 }
 ;
-// async function getUserObjectListViews(userId, spaceId, object_name){
-//     const _user_object_list_views = {};
-//     const object_listview = await getObject("object_listviews").find({filters: [['object_name', '=', object_name],['space', '=', spaceId],[ [ "owner", "=", userId ], "or", [ "shared", "=", true ] ]]});
-//     object_listview.forEach(function(listview) {
-//       return _user_object_list_views[listview._id] = listview;
-//     });
-//     return _user_object_list_views;
-// }
 function getSpaceObjectBootStrap(req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         return Fiber(function () {
@@ -424,10 +382,8 @@ function getSpaceObjectBootStrap(req, res) {
                         }
                         if (objectConfig) {
                             delete objectConfig.db;
-                            // objectConfig.list_views = await getUserObjectListViews(userId, spaceId, objectName)
                             steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
                             objectConfig = yield getUserObject(userId, spaceId, objectConfig);
-                            // TODO object layout 是否需要控制审批记录显示？
                             let spaceProcessDefinition = yield (0, objectql_1.getObject)("process_definition").directFind({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['active', '=', true]] });
                             if (spaceProcessDefinition.length > 0) {
                                 objectConfig.enable_process = true;

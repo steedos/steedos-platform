@@ -2,13 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.oidcLogin = exports.oidcPreAuth = exports.oidcAuth = exports.oidcStrategyFactory = exports.oidcCallbackUrl = void 0;
 const tslib_1 = require("tslib");
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-24 18:15:05
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-07 09:39:42
- * @Description:
- */
 const core = require("./core");
 const { oidc } = require("./middleware");
 const context_1 = require("../context");
@@ -18,7 +11,6 @@ const oidc_1 = require("./middleware/passport/oidc");
 const { passport } = core.auth;
 let oidcStrategy = null;
 const ssoCallbackUrl = (config, type) => {
-    // incase there is a callback URL from before
     if (config && config.callbackURL) {
         return config.callbackURL;
     }
@@ -72,9 +64,6 @@ const oidcLogin = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, 
         try {
             var json = JSON.parse(body);
             profile.id = json.sub;
-            // Prior to OpenID Connect Basic Client Profile 1.0 - draft 22, the
-            // "sub" key was named "user_id".  Many providers still use the old
-            // key, so fallback to that.
             if (!profile.id) {
                 profile.id = json.user_id;
             }
@@ -87,7 +76,6 @@ const oidcLogin = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, 
             profile._raw = body;
             profile._json = json;
             const thirdPartyUser = {
-                // store the issuer info to enable sync in future
                 idToken: null,
                 params: null,
                 sub: json.sub,

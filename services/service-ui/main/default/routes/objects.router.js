@@ -1,13 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-09 10:19:47
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-10 15:52:17
- * @Description:
- */
 const objectql_1 = require("@steedos/objectql");
 const express = require("express");
 const router = express.Router();

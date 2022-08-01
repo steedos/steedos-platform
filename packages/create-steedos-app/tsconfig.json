@@ -6,7 +6,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": false,
-    "declaration": true
+    "declaration": true,
+    "removeComments": true
   },
   "exclude": ["templates", "dist"]
 }

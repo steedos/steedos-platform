@@ -1,11 +1,4 @@
 "use strict";
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-29 10:48:48
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 18:09:45
- * @Description:
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserProvider = void 0;
 const tslib_1 = require("tslib");
