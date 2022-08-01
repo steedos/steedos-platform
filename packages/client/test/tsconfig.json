@@ -11,5 +11,6 @@
       "dom.iterable",
       "esnext"
     ],
+    "removeComments": true
   }
 }

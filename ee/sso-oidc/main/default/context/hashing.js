@@ -2,13 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newid = exports.compare = exports.hash = void 0;
 const tslib_1 = require("tslib");
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-26 16:30:53
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-27 14:29:50
- * @Description:
- */
 const bcrypt = require("bcrypt");
 const env = require("./environment");
 const { v4 } = require("uuid");

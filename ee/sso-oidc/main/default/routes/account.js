@@ -2,13 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Account = void 0;
 const tslib_1 = require("tslib");
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-27 15:17:27
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-01 11:13:58
- * @Description:
- */
 const accounts_1 = require("@steedos/accounts");
 const requestIp = require("request-ip");
 const user_provider_1 = require("../collections/user_provider");
@@ -16,7 +9,6 @@ const objectql_1 = require("@steedos/objectql");
 const getUserAgent = (req) => {
     let userAgent = req.headers['user-agent'] || '';
     if (req.headers['x-ucbrowser-ua']) {
-        // special case of UC Browser
         userAgent = req.headers['x-ucbrowser-ua'];
     }
     return userAgent;
@@ -36,7 +28,6 @@ class Account {
             let phone_logout_other_clients = false;
             let phone_login_expiration_in_days = null;
             let space = null;
-            // 获取用户简档
             const userProfile = yield accounts_1.accountsServer.getUserProfile(user.id);
             if (userProfile) {
                 logout_other_clients = userProfile.logout_other_clients || false;
@@ -47,7 +38,6 @@ class Account {
                     userProfile.phone_login_expiration_in_days;
                 space = userProfile.space;
             }
-            // 更新user_providers
             const provider = yield user_provider_1.UserProvider.link(user);
             const loginResult = yield accounts_1.accountsServer.loginWithUser(user, Object.assign({}, {
                 ip,
@@ -59,7 +49,6 @@ class Account {
                 phone_login_expiration_in_days,
                 space,
                 provider: provider._id,
-                // jwtToken: options.accessToken  // 如果使用jwt token 会导致cookie太大
             }));
             (0, accounts_1.setAuthCookies)(req, res, loginResult.user._id, loginResult.token, loginResult.tokens.accessToken);
             if (options.redirect) {
