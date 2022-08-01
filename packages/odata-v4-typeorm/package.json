@@ -1,7 +1,7 @@
 {
   "name": "@steedos/odata-v4-typeorm",
   "private": false,
-  "version": "2.2.55-beta.17",
+  "version": "2.2.55-beta.18",
   "description": "OData to TYPEORM query compiler",
   "main": "lib/index.js",
   "typings": "lib/index",
@@ -29,12 +29,12 @@
   },
   "homepage": "https://github.com/steedos/odata-v4-typeorm#readme",
   "dependencies": {
-    "@steedos/odata-v4-parser": "2.2.55-beta.17",
-    "@steedos/odata-v4-sql": "2.2.55-beta.17",
+    "@steedos/odata-v4-parser": "2.2.55-beta.18",
+    "@steedos/odata-v4-sql": "2.2.55-beta.18",
     "odata-v4-literal": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c0ffc0bfc9546999c7dbef154012e9b198b2eb95"
+  "gitHead": "86d8a9bf583b6aea8da9c3910b1843805bee6f4f"
 }
