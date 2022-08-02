@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 10:29:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-23 15:38:35
+ * @LastEditTime: 2022-08-02 09:17:20
  * @Description: 
  */
 "use strict";
@@ -31,7 +31,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['~packages-standard-objects'],
+    dependencies: ['~packages-@steedos/standard-object-database'],
 
     /**
      * Actions
