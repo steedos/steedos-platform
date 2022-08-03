@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-27 14:47:59
+ * @LastEditTime: 2022-08-03 11:33:08
  * @Description: 
  */
 
@@ -83,7 +83,7 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
 
         const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
 
-        const collection = getCollection(DB_COLLECTION_NAME);
+        const collection = await getCollection(DB_COLLECTION_NAME);
 
         const fileDoc = await collection.findOne({ _id: id });
 

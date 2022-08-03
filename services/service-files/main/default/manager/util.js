@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 11:20:59
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-13 19:14:26
+ * @LastEditTime: 2022-08-03 11:44:42
  * @Description: 
  */
 
@@ -18,8 +18,10 @@ const {
  * 获取对象集合
  * @param {String} name 
  */
-function getCollection(name) {
-    return objectql.getDataSource('default').adapter.collection(name);
+async function getCollection(name) {
+    const adapter = objectql.getDataSource('default').adapter
+    await adapter.connect()
+    return adapter.collection(name)
 }
 
 /**
