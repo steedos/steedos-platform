@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-27 14:47:59
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-08-03 09:56:42
  * @Description: 
  */
 
@@ -98,6 +98,9 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
         }
 
         const { type, name, size, updatedAt, key } = copyInfo;
+
+
+        res.setHeader('Access-Control-Expose-Headers', 'Content-Disposition');
 
         // Set the content type for file
         if (typeof type === "string") {
