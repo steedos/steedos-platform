@@ -4190,28 +4190,28 @@
     systemjs "^6.12.1"
     tslib "^1.10.0"
 
-"@steedos-ui/amis@2.2.40":
-  version "2.2.40"
-  resolved "https://registry.npmmirror.com/@steedos-ui/amis/-/amis-2.2.40.tgz#971e9582e0be9b425d626a0a05fae237d6ed2c77"
-  integrity sha512-onnN3iFja+ke79uscLQl62d+88NIBPD6tv1piO+EwyqE8rxh/RnIap10S+XwXX1hsXpVvRBcAtSTSMWK7VbA8A==
+"@steedos-ui/amis@2.2.42":
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/amis/-/amis-2.2.41.tgz#effefa141281d158ef2f237ed1709ab6f792a1cb"
+  integrity sha512-r0LXYB9J8UxejEM41PLs/BL3lJhOfVBjrl5hYiFe7BDfkr3mR+JuiIflq1Y0TyhEPJWKB/XJpTzCCmVdZiDHfQ==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@2.2.40":
-  version "2.2.40"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-2.2.40.tgz#8a1999f66cf09445feb4e6e1b646a02152ddb9cb"
-  integrity sha512-yHM6Ic86X8UtdodLUPCNrKhPJ/S4AcxV13HMSgagPtx0+X3azSdM7JcZW7ucvbze0rGGUfBEGI9DDR5bp9GFWA==
+"@steedos-ui/builder-community@2.2.42":
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-2.2.41.tgz#93183c46784f55bc5584650e931f22acbd4b6473"
+  integrity sha512-AtUWsUw0Jih5vjmQt1T6WPWo9gUo8IuqQj5kRpghaKthDJF4l7t9NAkR/0j+pdJ1QnIhvcby3ZCwNye1guF4nQ==
 
-"@steedos-ui/builder-widgets@2.2.40":
-  version "2.2.40"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.40.tgz#40c2385a65eb6a78bb2d3797a32780c08df01936"
-  integrity sha512-d0n8il5mXx0gCKmIcjM9sywjtql5N/SjvKWZ/JYR3cQfWvbQMpIJHikKGN35Di9Jnj9LNmiCU4BU00aY6+4o7w==
+"@steedos-ui/builder-widgets@2.2.42":
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.41.tgz#f6c35bb9bbfda740a08805124a9104edbd5475b0"
+  integrity sha512-5nrjCbmRIQjkmxxpFh5ojRM+5hy9Cn3Ynn79MIi4nHTYz3Gd0C3hDHrMX8aBEA9INAe9MX5MIDOaQigNpD7KxQ==
 
-"@steedos-ui/design-system@2.2.40":
-  version "2.2.40"
-  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-2.2.40.tgz#87945b7da6bb772dac72987763c77672bd9aea7e"
-  integrity sha512-mLUphjMfrrQ9VXrP8JvuxzRyWiAAsnCEa4v4b++2TIUQ7WOaej1K047sP9AXJcvcMZkKTMnQ9NdQOzX7nmy7jA==
+"@steedos-ui/design-system@2.2.42":
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-2.2.41.tgz#3d0fcbc6d172a18926cab3a1247529267be8541c"
+  integrity sha512-se54PA0N5K779hA+GI9K7aw7dsfkBkMU4RRXbnFk2eWHSTBtQlAUyCA/m/k972gwec9PFVs+YGzTkl4T66QiNA==
   dependencies:
     react-required-if "^1.0.3"
 
