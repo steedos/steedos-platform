@@ -11,7 +11,8 @@ function getFieldsTemplate(fields, expand){
         if(field.name.indexOf('.') < 0){
             if(expand && (field.type == 'lookup' || field.type == 'master_detail') && field.reference_to){
                 const NAME_FIELD_KEY = objectql.getObject(field.reference_to).NAME_FIELD_KEY;
-                fieldsName.push(`${field.name}:${field.name}__expand{_id,${NAME_FIELD_KEY}}`)
+                const referenceToField = field.reference_to_field || "_id";
+                fieldsName.push(`${field.name}:${field.name}__expand{${referenceToField},${NAME_FIELD_KEY}}`)
             }else{
                 fieldsName.push( field.alias ? `${field.alias}:${field.name}` : field.name)
             }
