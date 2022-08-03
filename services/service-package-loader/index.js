@@ -24,7 +24,7 @@ module.exports = {
      * Settings
      */
     settings: {
-        path: '', // 扫描加载原数据的路径
+        path: '', // 扫描加载元数据的路径
         name: '', // service name
         loadedPackagePublicFiles: false
     },
