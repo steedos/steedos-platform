@@ -31,7 +31,7 @@
                 "cache": 100,
                 "adaptor": "\n            var data = payload.data.data[0];\n            if(data){\n                data.object_name = data.object_name ? data.object_name.name:null;\n                \n                \n                //初始化接口返回的字段移除字段值为null的字段\n                for (key in data){\n                    if(data[key] === null){\n                        delete data[key];\n                    }\n                }\n            };\n            payload.data = data;\n            delete payload.extensions;\n            return payload;\n        ",
                 "data": {
-                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{_id,label},profiles,buttons,fields,related_lists,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
+                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
                 }
             },
             "initFetch": true,
@@ -579,7 +579,8 @@
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",
-            "className": "steedos-amis-form"
+            "className": "steedos-amis-form",
+            "checkAll": false
         }
     ],
     "regions": [
