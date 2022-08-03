@@ -38,7 +38,7 @@
             "body": [
                 {
                     "type": "fieldSet",
-                    "title": "通用22",
+                    "title": "通用",
                     "collapsable": true,
                     "body": [
                         {
@@ -66,25 +66,14 @@
                             "extractValue": true,
                             "labelField": "label",
                             "valueField": "value",
-                            "autoComplete": {
-                                "method": "post",
-                                "url": "${context.rootUrl}/graphql",
-                                "data": {
-                                    "orderBy": "${orderBy}",
-                                    "orderDir": "${orderDir}",
-                                    "pageNo": "${page}",
-                                    "pageSize": "${perPage}",
-                                    "query": "{options:objects(filters: {__filters}, top: {__top}){_id label:label value:name},count:objects__count(filters:{__filters})}",
-                                    "$term": "$term",
-                                    "$value": "$object_name.name",
-                                    "$": "$$",
-                                    "rfield": "${object_name}"
-                                },
-                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n        var _options = [];\n        _.forEach(Creator.objectsByName, function (o, k) {\n          return _options.push({\n            label: o.label,\n            value: k,\n            icon: o.icon\n          });\n        });\n        return _options;\n      \n})(api.data);\n        return payload;\n        "
-                            },
+                            "autoComplete": "get:/service/api/amis-metadata-objects/objects/options",
                             "className": "m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "Object"
+                            },
+                            "checkAll": false,
+                            "searchable": true
                         },
                         {
                             "name": "profiles",
@@ -133,17 +122,11 @@
                                         "labelField": "label",
                                         "valueField": "value",
                                         "autoComplete": {
-                                            "method": "post",
-                                            "url": "${context.rootUrl}/graphql",
-                                            "data": {
-                                                "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                                                "$": "$$",
-                                                "$term": "$term",
-                                                "$value": "$button_name._id",
-                                                "rfield": "${object_name}"
-                                            },
-                                            "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                            "adaptor": "\n        payload.data.options = eval(function anonymous(values\n) {\n\n  if (!(values != null ? values.object_name : void 0)) {\n    values.object_name = Session.get(\"object_name\");\n  }\n  if(values.object_name && !_.isString(values.object_name)){\n    values.object_name = values.object_name.name\n  }\n  const options = [];\n  if(values){\n    var actions = Creator.getObject(values.object_name).actions;\n    _.each(actions, function(action){\n      options.push({label: action.label, value: action.name})\n    })\n  }\n  return options;\n\n})(api.data);\n        return payload;\n        "
+                                            "method": "get",
+                                            "url": "/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
+                                            "data": null,
+                                            "requestAdaptor": "",
+                                            "sendOn": "!!this.object_name"
                                         },
                                         "className": "m-0",
                                         "labelClassName": "text-left"

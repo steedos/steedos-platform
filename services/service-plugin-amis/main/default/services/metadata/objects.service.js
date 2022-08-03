@@ -59,6 +59,16 @@ module.exports = {
                 return { status: 0, data: { options } }
             }
         },
+        getObjectActionsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/actions/options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectActionsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
         getObjectSortFieldsOptions: {
             rest: {
                 method: "GET",
@@ -160,6 +170,37 @@ module.exports = {
                             value: field.name,
                             label: field.label || field.name
                         }
+                    }
+                })));
+            }
+        },
+        getObjectActionsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                // if(objectConfig.enable_workflow){
+                //     try {
+                //         objectConfig.fields.instance_state.hidden = false;
+                //     } catch (error) {
+                //         console.log("error", error)
+                //     }
+                // }
+
+                const actionsArr = [];
+                _.each(objectConfig.actions , (action, action_name)=>{
+                    if(!_.has(action, "name")){
+                        action.name = action_name
+                    }
+                    actionsArr.push(action)
+                })
+                return _.uniq(_.compact(_.map(_.sortBy(actionsArr, "sort"), (action)=>{
+                    return {
+                        value: action.name,
+                        label: action.label || action.name
                     }
                 })));
             }
