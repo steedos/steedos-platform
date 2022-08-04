@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-08-03 11:33:08
+ * @LastEditTime: 2022-08-04 09:58:17
  * @Description: 
  */
 
@@ -62,7 +62,7 @@ const authMiddleWare = async (req, res, next) => {
     }
 }
 
-router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req, res) {
+router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:filename'], authMiddleWare, async function (req, res) {
     try {
 
         const { download } = req.query;
