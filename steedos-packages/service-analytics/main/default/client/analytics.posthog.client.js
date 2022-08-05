@@ -41,7 +41,7 @@
           });
           window.posthog.people.set({
             id: user.userId,
-            name: user.name,
+            name: user.space.name + '/' + user.name,
             spaceId: user.space._id,
             spaceName: user.space.name,
             release: release
