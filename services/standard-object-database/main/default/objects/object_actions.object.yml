@@ -94,6 +94,8 @@ fields:
     options:
       - label: Custom JavaScript
         value: script
+      - label: Action
+        value: action
       # - label: 打印模板(word)
       #   value: word-print
     defaultValue: script
@@ -107,11 +109,19 @@ fields:
     sort_no: 180
     type: code
     language: javascript
-    required: true
+    required: "{{formData.type != 'action' ? true: false}}"
     # omit: true
     # hidden: true
     is_wide: true
-    visible_on: "{{formData.type != 'word-print' ? true: false}}"
+    visible_on: "{{formData.type != 'action' ? true: false}}"
+  actions: 
+    label: Actions
+    sort_no: 180
+    type: code
+    language: json
+    required: "{{formData.type == 'action' ? true: false}}"
+    is_wide: true
+    visible_on: "{{formData.type == 'action' ? true: false}}"
 paging:
   enabled: false
 list_views:
