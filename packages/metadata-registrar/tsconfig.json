@@ -26,6 +26,7 @@
         "es2017",
         "esnext"
       ],
+      "removeComments": true
   },
   "include": [
     "./src/**/*"

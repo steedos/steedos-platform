@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-08-03 09:56:42
+ * @LastEditTime: 2022-08-05 14:18:09
  * @Description: 
  */
 
@@ -62,7 +62,7 @@ const authMiddleWare = async (req, res, next) => {
     }
 }
 
-router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req, res) {
+router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:filename'], authMiddleWare, async function (req, res) {
     try {
 
         const { download } = req.query;
@@ -83,7 +83,7 @@ router.get('/api/files/:collectionName/:id', authMiddleWare, async function (req
 
         const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
 
-        const collection = getCollection(DB_COLLECTION_NAME);
+        const collection = await getCollection(DB_COLLECTION_NAME);
 
         const fileDoc = await collection.findOne({ _id: id });
 

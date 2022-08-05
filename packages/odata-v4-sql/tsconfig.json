@@ -6,6 +6,7 @@
     "declaration": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "removeComments": true
   }
 }

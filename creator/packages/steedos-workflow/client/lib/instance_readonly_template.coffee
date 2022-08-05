@@ -255,6 +255,13 @@ getLinkText = (item, label, detail_url)->
 InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 	if !value && value != false
 		return ''
+	if ["select", "multiSelect", "radio"].indexOf(field.type) > -1
+		fieldOptions = field.options.split("\n").map (n)->
+			itemSplits = n.split(":")
+			return {
+				label: itemSplits[0],
+				value: itemSplits[1] || n
+			}
 	switch field.type
 		when 'email'
 			value = if value then '<a href=\'mailto:' + value + '\'>' + value + '</a>' else ''
@@ -308,13 +315,18 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			if field.is_textarea
 				value = Spacebars.SafeString(marked.parse(value))
 		when 'select'
-			fieldOptions = field.options.split("\n").map (n)->
-				itemSplits = n.split(":")
-				return {
-					label: itemSplits[0],
-					value: itemSplits[1] || n
-				}
-			value = fieldOptions.find((item) -> return item.value == value).label
+			selectedOption = fieldOptions.find((item) -> return item.value == value)
+			if selectedOption
+				value = selectedOption.label
+		when 'radio'
+			selectedOption = fieldOptions.find((item) -> return item.value == value)
+			if selectedOption
+				value = selectedOption.label
+		when 'multiSelect'
+			splitedValues = value.split(",")
+			selectedOptions = fieldOptions.filter((item) -> return splitedValues.indexOf(item.value) > -1)
+			if selectedOptions.length
+				value = selectedOptions.map((item) -> return item.label).join(",")
 		when 'number'
 			if value or value == 0
 				value = Steedos.numberToString value, field.digits

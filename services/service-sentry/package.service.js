@@ -6,16 +6,21 @@
 
 'use strict'
 
+
+const _ = require('lodash');
 const Sentry = require('@sentry/node')
 const SentryUtils = require('@sentry/utils')
-const Tracing = require("@sentry/tracing");
-const objectql = require('@steedos/objectql')
+const packageLoader = require('@steedos/service-package-loader');
 const project = require('./package.json');
 const serviceName = project.name;
 
-const DSN = {
+const DEFAULT_DSN = {
   'development': 'https://460c67b9796e47d0952bccdff25fb934@sentry.steedos.cn/3',
   'production': 'https://8a195c563c2a4997926387058cddedd2@sentry.steedos.cn/4'
+}
+const DEFAULT_DSN_JS = {
+  'development': 'https://7c2b864b83bf4361a030a7df9d2ace0c@sentry.steedos.cn/7',
+  'production': 'https://8f3f63d02e8140718a6123b10d49ae2f@sentry.steedos.cn/6'
 }
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -62,7 +67,6 @@ module.exports = {
       },
       /** @type {String?} Name of the meta containing user infos. */
       userMetaKey: null,
-      spaceId: null,
     },
   },
 
@@ -85,10 +89,17 @@ module.exports = {
     },
 
     async 'steedos-server.started'(ctx) {
-      await this.setSpaceId()
+      Sentry.setTag('masterSpaceId', __meteor_runtime_config__.masterSpaceId)
+      if (this.dsnJS) {
+        this.broker.call('steedos-server.setSettings', {
+          PUBLIC_SETTINGS: {
+            sentry: {dsn: this.dsnJS}
+          }
+        })
+      }
     },
     async 'service-cloud-init.succeeded'(ctx) {
-      await this.setSpaceId()
+      Sentry.setTag('masterSpaceId', __meteor_runtime_config__.masterSpaceId)
     }
   },
 
@@ -96,14 +107,6 @@ module.exports = {
    * Methods
    */
   methods: {
-    // 设置魔方Id，为报错提供基础信息
-    async setSpaceId() {
-      const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], fields: ['_id'], sort: 'created desc' }))[0]
-      if (spaceDoc) {
-        this.settings.spaceId = spaceDoc._id
-        Sentry.setTag('spaceId', spaceDoc._id)
-      }
-    },
     /**
      * Get service name from metric event (Imported from moleculer-jaeger)
      *
@@ -221,19 +224,22 @@ module.exports = {
       })
     }
   },
-
+  
   started() {
     let { enabled, dsn, options } = this.settings.sentry
     if (enabled) {
       // 如果配置了dsn则使用配置的dsn，如未配置则根据NODE_ENV和isPlatformEnterPrise指定
-      if (!dsn) {
+      this.dsn = dsn;
+      this.dsnJS = dsn;
+      if (!this.dsn) {
         const nodeEnv = process.env.NODE_ENV || 'development'
-        dsn = DSN[nodeEnv]
+        this.dsn = DEFAULT_DSN[nodeEnv]
+        this.dsnJS = DEFAULT_DSN_JS[nodeEnv]
       }
-      if (dsn) {
-        this.broker.logger.info(`Sentry Tracing enabled: ${dsn}`)
+      if (this.dsn) {
+        this.broker.logger.info(`Sentry Tracing enabled: ${this.dsn}`)
         Sentry.init({
-          dsn,
+          dsn: this.dsn,
           ...options,
         })
       }

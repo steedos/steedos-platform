@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 09:38:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 16:36:25
+ * @LastEditTime: 2022-08-03 11:33:20
  * @Description: 
  */
 
@@ -47,7 +47,7 @@ router.post('/s3/:collection/', core.requireAuthentication, async function (req,
                     size
                 } = files.file;
 
-                const collection = getCollection(DB_COLLECTION_NAME);
+                const collection = await getCollection(DB_COLLECTION_NAME);
 
                 const newFile = new File({ name: originalFilename, size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
 

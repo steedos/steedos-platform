@@ -178,16 +178,19 @@ module.exports = {
 				// 默认不开启自助注册
 				await spaceObj.directUpdate(spaceId, { enable_register: false });
 
-				// 生成管理员的api_keys
-				const newApiKeyDoc = {
-					_id: apiKey,
-					name: 'admin api key',
-					api_key: apiKey,
-					active: true,
-					space: spaceId,
-					...baseInfo
-				};
-				await apiKeysObj.insert(newApiKeyDoc);
+				const apiKeyCount = await apiKeysObj.count({ filters: [['api_key', '=', apiKey]] })
+				if (apiKeyCount == 0) {
+					// 生成管理员的api_keys
+					const newApiKeyDoc = {
+						_id: apiKey,
+						name: 'admin api key',
+						api_key: apiKey,
+						active: true,
+						space: spaceId,
+						...baseInfo
+					};
+					await apiKeysObj.insert(newApiKeyDoc);
+				}
 
 				// 给工作区添加许可证，调用导入许可证接口
 				// await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
@@ -297,7 +300,7 @@ module.exports = {
 				}
 			}
 			// 校验apikey格式
-			if (iApiKey && !/^[a-zA-Z0-9-_]+$/.test(iApiKey) || (iApiKey.length != 43)) {
+			if (iApiKey && (!/^[a-zA-Z0-9-_]+$/.test(iApiKey) || (iApiKey.length != 43))) {
 				throw new Error(`ApiKey ${iApiKey} 格式错误，ApiKey由字母、数字组成且长度为43。`)
 			}
 			const spaceObj = objectql.getObject('spaces')
@@ -360,6 +363,7 @@ module.exports = {
 			try {
 				await this.initProject(ctx);
 			} catch (error) {
+				console.log(error)
 				console.log(chalk.red(error.message));
 			} finally {
 				try {

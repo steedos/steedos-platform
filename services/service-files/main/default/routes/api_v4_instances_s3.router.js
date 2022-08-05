@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-12 16:36:19
+ * @LastEditTime: 2022-08-03 11:33:16
  * @Description: 
  */
 const express = require("express");
@@ -62,7 +62,7 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                     size
                 } = files.file;
 
-                const collection = getCollection(DB_COLLECTION_NAME);
+                const collection = await getCollection(DB_COLLECTION_NAME);
 
                 const newFile = new File({ name: formatFileName(originalFilename, upload_from), size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
 

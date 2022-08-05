@@ -19,6 +19,7 @@
         ],
         "skipLibCheck": true,
         "esModuleInterop": true,
+        "removeComments": true
     },
     "include": [
         "./src"

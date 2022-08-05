@@ -2,7 +2,7 @@
     <div class="af-checkbox-group" {{dsk}}>
         {{#if isReadOnly}}
             <label class="checkbox-inline fix-indent readonly">
-                {{this.value}}
+                {{readonlyLabel}}
             </label>
             <div style="display: none;">
                 {{#each this.items}}

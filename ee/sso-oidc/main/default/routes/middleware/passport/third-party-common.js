@@ -29,20 +29,16 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
     }
     const userId = thirdPartyUser.userId;
     let dbUser = yield users_1.User.findById(userId);
-    // fallback to loading by email
     if (!dbUser) {
         const userByEmail = yield users_1.User.findByEmail(thirdPartyUser.email);
         if (userByEmail) {
             dbUser = userByEmail;
         }
     }
-    // exit early if there is still no user and auto creation is disabled
     if (!dbUser && requireLocalAccount) {
         return authError(done, "Email does not yet exist. You must set up your local budibase account first.");
     }
-    // first time creation
     if (!dbUser) {
-        // setup a blank user using the third party id
         dbUser = {
             _id: userId,
             email: thirdPartyUser.email,
@@ -50,9 +46,7 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
         };
     }
     dbUser = yield syncUser(dbUser, thirdPartyUser);
-    // never prompt for password reset
     dbUser.forceResetPassword = false;
-    // create or sync the user
     try {
         yield saveUserFn(dbUser, false, false);
     }
@@ -60,9 +54,7 @@ const authenticateThirdParty = (thirdPartyUser, requireLocalAccount = true, done
         console.log(`err`, err);
         return authError(done, err);
     }
-    // now that we're sure user exists, load them from the db
     dbUser = yield users_1.User.findById(dbUser._id);
-    // authenticate
     const sessionId = (0, hashing_1.newid)();
     const tenantId = (0, context_1.getTenantId)();
     yield createASession(dbUser._id, { sessionId, tenantId });
@@ -88,32 +80,24 @@ function syncProfilePicture(user, thirdPartyUser) {
         return user;
     });
 }
-/**
- * @returns a user that has been sync'd with third party information
- */
 function syncUser(user, thirdPartyUser) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        // provider
         user.provider = thirdPartyUser.provider;
         user.providerType = thirdPartyUser.providerType;
         if (thirdPartyUser.profile) {
             const profile = thirdPartyUser.profile;
             if (profile.name) {
                 const name = profile.name;
-                // first name
                 if (name.givenName) {
                     user.firstName = name.givenName;
                 }
-                // last name
                 if (name.familyName) {
                     user.lastName = name.familyName;
                 }
             }
             user = yield syncProfilePicture(user, thirdPartyUser);
-            // profile
             user.thirdPartyProfile = Object.assign({}, profile._json);
         }
-        // oauth tokens for future use
         if (thirdPartyUser.oauth2) {
             user.oauth2 = Object.assign({}, thirdPartyUser.oauth2);
         }

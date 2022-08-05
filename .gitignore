@@ -21,5 +21,6 @@
 
 /packages/**/lib
 /services/**/lib
+/ee/**/lib
 
 .pnpm-lock.yaml

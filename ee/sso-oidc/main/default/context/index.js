@@ -2,13 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOidcConfig = exports.isMultiTenant = exports.getScopedConfig = exports.getTenantConfig = exports.getTenantId = void 0;
 const tslib_1 = require("tslib");
-/*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-06-26 16:31:46
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-06 17:43:45
- * @Description:
- */
 const objectql_1 = require("@steedos/objectql");
 const accounts_1 = require("@steedos/accounts");
 const environment_1 = require("./environment");

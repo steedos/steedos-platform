@@ -64,6 +64,9 @@ module.exports = {
 	 */
 	async started(ctx) {
 
+        // 故障报告服务
+		this.broker.createService(require("@steedos/service-sentry"));
+
 		// 启动 元数据服务
 		this.broker.createService(require("@steedos/service-metadata-server"));
 
@@ -86,9 +89,6 @@ module.exports = {
 
         // 启动 登录页面
         this.broker.createService(require("@steedos/webapp-accounts"));
-
-        // 故障报告服务
-		this.broker.createService(require("@steedos/service-sentry"));
 
         // 产品分析
         this.broker.createService(require("@steedos/service-analytics"));

@@ -5,6 +5,7 @@
     "strict": false,
     "noUnusedLocals": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "removeComments": true
   }
 }
