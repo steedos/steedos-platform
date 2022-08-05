@@ -34,12 +34,17 @@
           var user = Creator.USER_CONTEXT.user;
           window.posthog.identify(user.userId);
           // 分组统计需要升级付费
+          var release = Creator && Creator.Plugins && Creator.Plugins["@steedos/core"] && Creator.Plugins["@steedos/core"]['version']
           window.posthog.group('space', 'id:' + user.space._id, {
-            name: user.space.name
+            name: user.space.name,
+            release: release
           });
           window.posthog.people.set({
             id: user.userId,
-            spaceId: user.space._id
+            name: user.name,
+            spaceId: user.space._id,
+            spaceName: user.space.name,
+            release: release
           });
         }
       });
