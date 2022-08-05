@@ -29,7 +29,7 @@
                 "url": "${context.rootUrl}/graphql",
                 "sendOn": "!!this.recordId",
                 "cache": 100,
-                "adaptor": "\namis.registerFilter('convertDataForFields', function (input) {\n    console.log(\"====convertDataForFields==input==\", input);\n    return {\n        fields: [\n            {\n                field_name: \"aaa\" \n            }\n        ]\n    }\n});\n\nvar data = payload.data.data[0];\nif(data){\n    data.object_name = data.object_name ? data.object_name.name:null;\n    \n    \n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
+                "adaptor": "\n// convertDataForFields 用于把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n    const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n    const superFields = _.keyBy(input.__super.fields, 'field_name');\n    const convertedFields = pickedFields.map(function (field_name) { \n        return superFields[field_name] || {\n            field_name: field_name\n        }\n    });\n    return {\n        fields: convertedFields\n    }\n});\n\nvar data = payload.data.data[0];\nif(data){\n    data.object_name = data.object_name ? data.object_name.name:null;\n    \n    \n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
                 "data": {
                     "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
                 }
@@ -309,7 +309,7 @@
                                             {
                                                 "label": "默认",
                                                 "type": "transfer",
-                                                "name": "fields",
+                                                "name": "picked_fields",
                                                 "options": [
                                                     {
                                                         "label": "诸葛亮",
