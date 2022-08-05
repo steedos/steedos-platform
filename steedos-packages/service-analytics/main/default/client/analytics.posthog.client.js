@@ -46,9 +46,11 @@
       Tracker.autorun(function () {
         FlowRouter.watchPathChange();
         if (FlowRouter.current().path) {
-          window.posthog.capture('_trackPageview', {
-            path: FlowRouter.current().path
-          })
+          setTimeout(function(){
+            window.posthog.capture('$pageview', {
+              path: FlowRouter.current().path
+            });
+          }, 200);
         }
       });
     })
