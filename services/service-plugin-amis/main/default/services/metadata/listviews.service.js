@@ -291,7 +291,15 @@ module.exports = {
                                     label: field.label,
                                     type: 'select',
                                     name: field.name,
-                                    source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
+                                    source: {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
+                                        "dataType": "json",
+                                        "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                      }
+                                    ,
                                     searchable: true,
                                     operators: getFieldOperators(field.type, lng)
                                 });
