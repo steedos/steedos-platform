@@ -178,16 +178,19 @@ module.exports = {
 				// 默认不开启自助注册
 				await spaceObj.directUpdate(spaceId, { enable_register: false });
 
-				// 生成管理员的api_keys
-				const newApiKeyDoc = {
-					_id: apiKey,
-					name: 'admin api key',
-					api_key: apiKey,
-					active: true,
-					space: spaceId,
-					...baseInfo
-				};
-				await apiKeysObj.insert(newApiKeyDoc);
+				const apiKeyCount = await apiKeysObj.count({ filters: [['api_key', '=', apiKey]] })
+				if (apiKeyCount == 0) {
+					// 生成管理员的api_keys
+					const newApiKeyDoc = {
+						_id: apiKey,
+						name: 'admin api key',
+						api_key: apiKey,
+						active: true,
+						space: spaceId,
+						...baseInfo
+					};
+					await apiKeysObj.insert(newApiKeyDoc);
+				}
 
 				// 给工作区添加许可证，调用导入许可证接口
 				// await this.actions.saveLicenses({ spaceId, apiKey, consoleUrl }, { parentCtx: ctx });
