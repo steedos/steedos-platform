@@ -157,7 +157,7 @@
                                             "name": "fields",
                                             "label": "字段",
                                             "required": true,
-                                            "type": "input-table",
+                                            "type": "table",
                                             "strictMode": false,
                                             "affixHeader": false,
                                             "editable": true,
@@ -167,86 +167,7 @@
                                             "columns": [
                                                 {
                                                     "name": "field_name",
-                                                    "label": "字段",
-                                                    "quickEdit": {
-                                                        "required": true,
-                                                        "type": "picker",
-                                                        "labelField": "label",
-                                                        "valueField": "name",
-                                                        "modalMode": "dialog",
-                                                        "source": {
-                                                            "method": "post",
-                                                            "url": "${context.rootUrl}/graphql",
-                                                            "data": {
-                                                                "orderBy": "${orderBy}",
-                                                                "orderDir": "${orderDir}",
-                                                                "pageNo": "${page}",
-                                                                "pageSize": "${perPage}",
-                                                                "query": "{rows:object_fields(filters: {__filters}, top: {__top}, skip: {__skip}, sort: \"{__sort}\"){_id label name},count:object_fields__count(filters:{__filters})}",
-                                                                "$term": "$term",
-                                                                "$self": "$$"
-                                                            },
-                                                            "requestAdaptor": "\n        const selfData = JSON.parse(JSON.stringify(api.data.$self));\n        var filters = [];\n        var pageSize = api.data.pageSize || 10;\n        var pageNo = api.data.pageNo || 1;\n        var skip = (pageNo - 1) * pageSize;\n        var orderBy = api.data.orderBy || '';\n        var orderDir = api.data.orderDir || '';\n        var sort = orderBy + ' ' + orderDir;\n        var allowSearchFields = [];\n        if(api.data.$term){\n            filters = [[\"name\", \"contains\", \"'+ api.data.$term +'\"]];\n        }else if(selfData.op === 'loadOptions' && selfData.value){\n            filters = [[\"name\", \"=\", selfData.value]];\n        }\n        if(allowSearchFields){\n            allowSearchFields.forEach(function(key){\n                const keyValue = selfData[key];\n                if(keyValue){\n                    filters.push([key, \"contains\", keyValue]);\n                }\n            })\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());\n        return api;\n    "
-                                                        },
-                                                        "size": "lg",
-                                                        "pickerSchema": {
-                                                            "mode": "table",
-                                                            "name": "thelist",
-                                                            "draggable": false,
-                                                            "headerToolbar": [
-                                                                "switch-per-page",
-                                                                "pagination"
-                                                            ],
-                                                            "defaultParams": {
-                                                                "perPage": 1000
-                                                            },
-                                                            "columns": [
-                                                                {
-                                                                    "name": "_index",
-                                                                    "type": "text",
-                                                                    "width": 32,
-                                                                    "placeholder": ""
-                                                                },
-                                                                {
-                                                                    "name": "name",
-                                                                    "label": "API Name",
-                                                                    "searchable": true,
-                                                                    "type": "text"
-                                                                },
-                                                                {
-                                                                    "name": "options.$",
-                                                                    "label": "Options",
-                                                                    "type": "text"
-                                                                },
-                                                                {
-                                                                    "name": "options.$.label",
-                                                                    "label": "显示名",
-                                                                    "type": "text"
-                                                                },
-                                                                {
-                                                                    "name": "options.$.value",
-                                                                    "label": "选项值",
-                                                                    "type": "text"
-                                                                },
-                                                                {
-                                                                    "name": "options.$.color",
-                                                                    "label": "背景颜色",
-                                                                    "type": "text"
-                                                                },
-                                                                {
-                                                                    "name": "options.$.description",
-                                                                    "label": "描述",
-                                                                    "type": "text"
-                                                                }
-                                                            ],
-                                                            "syncLocation": false,
-                                                            "keepItemSelectionOnPageChange": true
-                                                        },
-                                                        "joinValues": false,
-                                                        "extractValue": true,
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left"
-                                                    }
+                                                    "label": "字段"
                                                 },
                                                 {
                                                     "name": "is_readonly",
@@ -255,7 +176,22 @@
                                                         "type": "checkbox",
                                                         "tpl": null,
                                                         "className": "m-0",
-                                                        "labelClassName": "text-left"
+                                                        "labelClassName": "text-left",
+                                                        "saveImmediately": true,
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForField:is_readonly}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 {
@@ -265,7 +201,22 @@
                                                         "type": "checkbox",
                                                         "tpl": null,
                                                         "className": "m-0",
-                                                        "labelClassName": "text-left"
+                                                        "labelClassName": "text-left",
+                                                        "saveImmediately": true,
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForField:is_required}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 {
@@ -274,7 +225,22 @@
                                                     "quickEdit": {
                                                         "type": "input-text",
                                                         "className": "m-0",
-                                                        "labelClassName": "text-left"
+                                                        "labelClassName": "text-left",
+                                                        "saveImmediately": true,
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForField:group}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 {
@@ -284,12 +250,30 @@
                                                         "type": "textarea",
                                                         "tpl": "<b><%=data.visible_on%></b>",
                                                         "className": "m-0",
-                                                        "labelClassName": "text-left"
-                                                    }
+                                                        "labelClassName": "text-left",
+                                                        "saveImmediately": true,
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForField:visible_on}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "breakpoint": "*"
                                                 }
                                             ],
                                             "className": "col-span-2 m-0",
-                                            "labelClassName": "text-left"
+                                            "labelClassName": "text-left",
+                                            "source": "${fields}",
+                                            "footable": true
                                         }
                                     ],
                                     "id": "u:acfaf85221b7",
@@ -341,10 +325,11 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "adaptor": "\n// convertDataForFields 用于把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  console.log(\"===convertedFields==4444===\", convertedFields);\n  return {\n    fields: convertedFields\n  }\n});\nconsole.log(\"===payload=11==\", payload);\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nconsole.log(\"===payload=22==\", payload);\nreturn payload;\n",
+                                "adaptor": "\n// convertDataForFields 用于把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  console.log(\"===convertedFields==4444===\", convertedFields);\n  return {\n    fields: convertedFields\n  }\n});\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  console.log(\"===quickEidtSaveForField==input===\", input);\n  console.log(\"===quickEidtSaveForField==prop_name===\", prop_name);\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  console.log(\"===quickEidtSaveForField==currentPropValue===\", currentPropValue);\n  console.log(\"===quickEidtSaveForField==rowValue===\", rowValue);\n  console.log(\"===quickEidtSaveForField==formValue===\", formValue);\n  console.log(\"===quickEidtSaveForField==formValue.fields======\", formValue.fields);\n  rowValue[prop_name] = currentPropValue;\n  console.log(\"===quickEidtSaveForField==rowValue==222====\", rowValue);\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  console.log(\"===newFields==4444===\", newFields);\n  return {\n    fields: newFields\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                 "sendOn": "!!this.object_name"
                             },
-                            "className": "col-span-2 m-0"
+                            "className": "col-span-2 m-0",
+                            "placeholder": "-"
                         },
                         {
                             "name": "related_lists",
