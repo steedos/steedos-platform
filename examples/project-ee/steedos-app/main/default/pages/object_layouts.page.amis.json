@@ -228,11 +228,11 @@
                                                     "name": "group",
                                                     "label": "分组",
                                                     "quickEdit": {
-                                                        "type": "input-text",
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "saveImmediately": true,
                                                         "mode": "inline",
+                                                        "type": "select",
+                                                        "inputClassName": "w-xs",
+                                                        "saveImmediately": true,
+                                                        "className": "m-0",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -245,7 +245,8 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
+                                                        },
+                                                        "source": "${groups|pick:group_name}"
                                                     }
                                                 },
                                                 {
@@ -334,7 +335,8 @@
                                                                 "name": "group_name",
                                                                 "label": "名称"
                                                             }
-                                                        ]
+                                                        ],
+                                                        "value": "${groups}"
                                                     }
                                                 ],
                                                 "onEvent": {
