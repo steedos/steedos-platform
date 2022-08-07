@@ -294,14 +294,9 @@
                                                 "title": "选择字段",
                                                 "body": [
                                                     {
-                                                        "label": "姓名",
-                                                        "type": "input-text",
-                                                        "name": "name"
-                                                    },
-                                                    {
-                                                        "label": "默认",
                                                         "type": "transfer",
                                                         "name": "picked_fields",
+                                                        "sortable": true,
                                                         "source": "${fields_options}",
                                                         "value": "${fields|pick:field_name}"
                                                     }
