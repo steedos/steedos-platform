@@ -167,7 +167,12 @@
                                             "columns": [
                                                 {
                                                     "name": "field_name",
-                                                    "label": "字段"
+                                                    "label": "字段",
+                                                    "quickEdit": {
+                                                        "type": "select",
+                                                        "source": "${fields_options}",
+                                                        "mode": "inline"
+                                                    }
                                                 },
                                                 {
                                                     "name": "is_readonly",
