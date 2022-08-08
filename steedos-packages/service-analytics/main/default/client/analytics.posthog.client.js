@@ -52,8 +52,12 @@
         FlowRouter.watchPathChange();
         if (FlowRouter.current().path) {
           setTimeout(function(){
+            var currentApp = Creator.getApp();
+            var currentObject = Creator.getObject();
             window.posthog.capture('$pageview', {
-              path: FlowRouter.current().path
+              path: FlowRouter.current().path,
+              app: currentApp && currentApp.code,
+              object: currentObject && currentObject.name
             });
           }, 200);
         }
