@@ -154,13 +154,12 @@
                                     "body": [
                                         {
                                             "type": "panel",
-                                            "title": "",
+                                            "title": "字段",
                                             "body": [
                                                 {
                                                     "name": "fields",
-                                                    "label": "字段",
                                                     "required": true,
-                                                    "type": "table",
+                                                    "type": "crud",
                                                     "strictMode": false,
                                                     "affixHeader": false,
                                                     "editable": true,
@@ -170,7 +169,6 @@
                                                     "columns": [
                                                         {
                                                             "name": "field_name",
-                                                            "label": "字段",
                                                             "quickEdit": {
                                                                 "type": "select",
                                                                 "source": "${fields_options}",
@@ -178,7 +176,8 @@
                                                             },
                                                             "affixFooter": false,
                                                             "placeholder": "-",
-                                                            "className": "popOver"
+                                                            "className": "popOver",
+                                                            "label": "字段"
                                                         },
                                                         {
                                                             "name": "is_readonly",
@@ -285,82 +284,82 @@
                                                     "className": "col-span-2 m-0",
                                                     "labelClassName": "text-left",
                                                     "source": "${fields}",
-                                                    "footable": true
+                                                    "footable": true,
+                                                    "headerToolbar": [
+                                                        {
+                                                            "type": "action",
+                                                            "actionType": "dialog",
+                                                            "label": "选择字段",
+                                                            "dialog": {
+                                                                "title": "选择字段",
+                                                                "body": [
+                                                                    {
+                                                                        "type": "transfer",
+                                                                        "name": "picked_fields",
+                                                                        "sortable": true,
+                                                                        "source": "${fields_options}",
+                                                                        "value": "${fields|pick:field_name}"
+                                                                    }
+                                                                ],
+                                                                "onEvent": {
+                                                                    "confirm": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|convertDataForFields}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "action",
+                                                            "actionType": "dialog",
+                                                            "dialog": {
+                                                                "title": "设置分组",
+                                                                "body": [
+                                                                    {
+                                                                        "type": "input-table",
+                                                                        "name": "setting_groups",
+                                                                        "addable": true,
+                                                                        "draggable": true,
+                                                                        "editable": true,
+                                                                        "columns": [
+                                                                            {
+                                                                                "name": "group_name",
+                                                                                "label": "名称"
+                                                                            }
+                                                                        ],
+                                                                        "value": "${field_groups}"
+                                                                    }
+                                                                ],
+                                                                "onEvent": {
+                                                                    "confirm": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|convertDataForGroups}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            "label": "设置分组"
+                                                        }
+                                                    ]
                                                 }
                                             ],
                                             "id": "u:acfaf85221b7",
                                             "inline": false,
                                             "affixFooter": false,
-                                            "className": "Panel--default m-0",
-                                            "actions": [
-                                                {
-                                                    "label": "选择字段",
-                                                    "type": "button",
-                                                    "actionType": "dialog",
-                                                    "dialog": {
-                                                        "title": "选择字段",
-                                                        "body": [
-                                                            {
-                                                                "type": "transfer",
-                                                                "name": "picked_fields",
-                                                                "sortable": true,
-                                                                "source": "${fields_options}",
-                                                                "value": "${fields|pick:field_name}"
-                                                            }
-                                                        ],
-                                                        "onEvent": {
-                                                            "confirm": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|convertDataForFields}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "label": "设置分组",
-                                                    "type": "button",
-                                                    "actionType": "dialog",
-                                                    "dialog": {
-                                                        "title": "设置分组",
-                                                        "body": [
-                                                            {
-                                                                "type": "input-table",
-                                                                "name": "setting_groups",
-                                                                "addable": true,
-                                                                "draggable": true,
-                                                                "editable": true,
-                                                                "columns": [
-                                                                    {
-                                                                        "name": "group_name",
-                                                                        "label": "名称"
-                                                                    }
-                                                                ],
-                                                                "value": "${field_groups}"
-                                                            }
-                                                        ],
-                                                        "onEvent": {
-                                                            "confirm": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|convertDataForGroups}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            ]
+                                            "className": "Panel--default m-0"
                                         }
                                     ],
                                     "id": "u:6f3b35b99743",
