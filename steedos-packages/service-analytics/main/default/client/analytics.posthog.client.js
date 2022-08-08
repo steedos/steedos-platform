@@ -6,8 +6,11 @@
  * @Description: 
  */
 (function () {
+  var analyticsConfig = Meteor.settings.public.analytics;
+  if(analyticsConfig && (analyticsConfig.enabled === false || analyticsConfig.enabled === "false")){
+    return;
+  }
   try {
-    var analyticsConfig = Meteor.settings.public.analytics;
     var defaultId = "phc_Hs5rJpeE5JK3GdR3NWOf75TvjEcnYShmBxNU2Y942HB";
     var defaultApiHost = "https://posthog.steedos.cn";
     var posthogConfig = analyticsConfig && analyticsConfig.posthog || { id: defaultId, api_host: defaultApiHost };
@@ -52,8 +55,12 @@
         FlowRouter.watchPathChange();
         if (FlowRouter.current().path) {
           setTimeout(function(){
+            var currentApp = Creator.getApp();
+            var currentObject = Creator.getObject();
             window.posthog.capture('$pageview', {
-              path: FlowRouter.current().path
+              path: FlowRouter.current().path,
+              app: currentApp && currentApp.code,
+              object: currentObject && currentObject.name
             });
           }, 200);
         }
