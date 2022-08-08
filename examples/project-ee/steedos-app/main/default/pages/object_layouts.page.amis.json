@@ -31,7 +31,7 @@
                 "cache": 100,
                 "adaptor": "var data = payload.data.data[0];\nif(data){\n    data.object_name = data.object_name ? data.object_name.name:null;\n    \n    \n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
                 "data": {
-                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
+                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,field_groups,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
                 }
             },
             "initFetch": true,
@@ -252,7 +252,7 @@
                                                                         ]
                                                                     }
                                                                 },
-                                                                "source": "${groups|pick:group_name}"
+                                                                "source": "${field_groups|pick:group_name}"
                                                             }
                                                         },
                                                         {
@@ -342,7 +342,7 @@
                                                                         "label": "名称"
                                                                     }
                                                                 ],
-                                                                "value": "${groups}"
+                                                                "value": "${field_groups}"
                                                             }
                                                         ],
                                                         "onEvent": {
@@ -368,7 +368,7 @@
                                     "api": {
                                         "method": "get",
                                         "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/groups",
-                                        "adaptor": "// 把字段中配置的group属性加到groups属性中\namis.registerFilter('mixingGroupsFromFields', function (input) {\n  const groupsOptions = input.field_groups_options;\n  const groups = this.data.groups || [];\n  const groupsForMixing = groupsOptions.map(function (item) {\n    return {\n      group_name: item\n    }\n  });\n  const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n  return {\n    groups: mixedGroups\n  }\n});\n\n\nlet data = payload.data;\ndata.field_groups_options = data.options || [];\ndelete data.options\npayload.data = data;\nreturn payload;",
+                                        "adaptor": "// 把字段中配置的group属性加到groups属性中\namis.registerFilter('mixingGroupsFromFields', function (input) {\n  const groupsOptions = input.field_groups_options;\n  const groups = this.data.field_groups || [];\n  const groupsForMixing = groupsOptions.map(function (item) {\n    return {\n      group_name: item\n    }\n  });\n  const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n  return {\n    field_groups: mixedGroups\n  }\n});\n\n\nlet data = payload.data;\ndata.field_groups_options = data.options || [];\ndelete data.options\npayload.data = data;\nreturn payload;",
                                         "sendOn": "!!this.object_name"
                                     },
                                     "onEvent": {
@@ -392,7 +392,7 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "adaptor": "\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                "adaptor": "\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    field_groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                 "sendOn": "!!this.object_name",
                                 "data": null
                             },
