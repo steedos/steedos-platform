@@ -359,7 +359,9 @@
                                             "id": "u:acfaf85221b7",
                                             "inline": false,
                                             "affixFooter": false,
-                                            "className": "Panel--default m-0"
+                                            "className": "m-0",
+                                            "headerClassName": "antd-Panel-heading pl-0",
+                                            "bodyClassName": "antd-Panel-body p-0"
                                         }
                                     ],
                                     "id": "u:6f3b35b99743",
