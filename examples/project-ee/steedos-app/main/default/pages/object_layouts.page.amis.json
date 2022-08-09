@@ -251,7 +251,9 @@
                                                                         ]
                                                                     }
                                                                 },
-                                                                "source": "${field_groups|pick:group_name}"
+                                                                "source": "${field_groups|pick:group_name}",
+                                                                "checkAll": false,
+                                                                "selectFirst": false
                                                             }
                                                         },
                                                         {
@@ -344,6 +346,13 @@
                                                                             {
                                                                                 "actionType": "setValue",
                                                                                 "args": {
+                                                                                    "value": "${event.data|clearFields}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            },
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
                                                                                     "value": "${event.data|convertDataForGroups}"
                                                                                 },
                                                                                 "componentId": "object-layout-form"
@@ -395,7 +404,7 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "adaptor": "// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    field_groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                "adaptor": "// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 清空主表单fields字段值\namis.registerFilter('clearFields', function (input) {\n  return {\n    fields: []\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置fields属性的字段先后次序\n// 因为直接设置fields值有bug，即新值老值会串，所以需要先执行上面的clearFields清除原来的值\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = lodash.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = lodash.compact(lodash.map(convertedGroups,\"group_name\"));\n  const fields = this.data.__super.__super.items;\n  const fieldGroupKey = \"group\";\n  // fields重新按分组排序\n  fields.sort(function(m,n){\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if(!m[fieldGroupKey] || !n[fieldGroupKey]){\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  });\n\n  return {\n    field_groups: convertedGroups, \n    fields: fields\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                 "sendOn": "!!this.object_name",
                                 "data": null
                             },
