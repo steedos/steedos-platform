@@ -24,7 +24,7 @@ export function getDBType(objectName, field) {
         case "html":
             return SteedosFieldDBType.text;
         case "select":
-            if (this.multiple) {
+            if (field.multiple) {
                 return SteedosFieldDBType.array;
             } else {
                 return SteedosFieldDBType.varchar;
@@ -35,16 +35,17 @@ export function getDBType(objectName, field) {
             return SteedosFieldDBType.boolean;
         case "date":
             return SteedosFieldDBType.date;
+        //时间字段按日期时间类型处理
+        case "time":
         case "datetime":
             return SteedosFieldDBType.dateTime;
-        case "time":
-            //时间字段按日期时间类型处理
-            return this.getDBType("datetime");
+        //百分比字段按数值类型处理
+        case "percent":
         case "number":
             return SteedosFieldDBType.number;
         case "currency":
-            if (!this.scale && this.scale != 0) {
-                this.scale = 2;
+            if (!field.scale && field.scale != 0) {
+                field.scale = 2;
             }
             return SteedosFieldDBType.number;
         case "password":
@@ -132,13 +133,10 @@ export function getDBType(objectName, field) {
         case "markdown":
             return SteedosFieldDBType.varchar;
         case "formula":
-            return this.getDBType(this.data_type);
+            return getDBType(objectName, { ...field, type: "datetime" });
         case "summary":
             //汇总不需要check类型
             return SteedosFieldDBType.varchar;
-        case "percent":
-            //百分比字段按数值类型处理
-            return this.getDBType("number");
         default:
             console.log(`field`, field);
             throw new Error(
