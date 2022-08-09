@@ -289,7 +289,6 @@
                                                         {
                                                             "type": "action",
                                                             "actionType": "dialog",
-                                                            "label": "选择字段",
                                                             "dialog": {
                                                                 "title": "选择字段",
                                                                 "body": [
@@ -314,7 +313,8 @@
                                                                         ]
                                                                     }
                                                                 }
-                                                            }
+                                                            },
+                                                            "label": "选择字段"
                                                         },
                                                         {
                                                             "type": "action",
@@ -334,7 +334,8 @@
                                                                                 "label": "名称"
                                                                             }
                                                                         ],
-                                                                        "value": "${field_groups}"
+                                                                        "value": "${field_groups}",
+                                                                        "removable": true
                                                                     }
                                                                 ],
                                                                 "onEvent": {
@@ -349,7 +350,8 @@
                                                                             }
                                                                         ]
                                                                     }
-                                                                }
+                                                                },
+                                                                "type": "dialog"
                                                             },
                                                             "label": "设置分组"
                                                         }
@@ -393,7 +395,7 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "adaptor": "\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    field_groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                "adaptor": "// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    field_groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                 "sendOn": "!!this.object_name",
                                 "data": null
                             },
