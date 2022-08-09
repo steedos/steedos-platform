@@ -9,6 +9,7 @@ const json2xls = require('json2xls');
 const objectql = require('@steedos/objectql')
 const _ = require('lodash')
 export const exportExcelExpress = express.Router();
+import { SteedosDatabaseDriverType } from '@steedos/objectql'
 
 const exportRecordData = async function (req, res) {
     try {
@@ -58,7 +59,9 @@ const exportRecordData = async function (req, res) {
                 fields = _.keys(createQuery.projection)
             }
 
-            filters = excludeDeleted(filters);
+            if (isPlatformDriver(collection.datasource.driver)) {
+                filters = excludeDeleted(filters);
+            }
 
             if (queryParams.$top !== '0') {
                 let query = { filters: filters, fields: fields, top: Number(queryParams.$top) };
@@ -155,6 +158,18 @@ const removeInvalidMethod = function (queryParams: any) {
         };
         queryParams.$filter = queryParams.$filter.replace(/tolower\(([^\)]+)\)/g, removeMethod);
     }
+}
+
+/**
+ * 判断是否是mongo或meteor-mongo驱动
+ * @param driverName 驱动名
+ * @returns 
+ */
+ function isPlatformDriver(driverName: string): boolean {
+    if (driverName == SteedosDatabaseDriverType.Mongo || driverName == SteedosDatabaseDriverType.MeteorMongo) {
+        return true
+    }
+    return false
 }
 
 const excludeDeleted = function (filters: string) {
