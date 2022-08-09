@@ -44,7 +44,10 @@ actions:
   standard_delete_many:
     label: Delete
     on: list
-    todo: "standard_delete_many"
+    todo: !!js/function |
+      function () {
+          return Steedos.StandardObjects.Base.Actions.standard_delete_many.todo.apply(this, arguments)
+      }
     visible: !!js/function |
       function (object_name, record_id, record_permissions) {
           var currentListView = Creator.getListView();

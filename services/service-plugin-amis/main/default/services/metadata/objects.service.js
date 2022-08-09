@@ -59,6 +59,16 @@ module.exports = {
                 return { status: 0, data: { options } }
             }
         },
+        getObjectFieldsGroups: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/fields/groups"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectFieldsGroups(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
         getObjectActionsOptions: {
             rest: {
                 method: "GET",
@@ -170,6 +180,36 @@ module.exports = {
                             value: field.name,
                             label: field.label || field.name
                         }
+                    }
+                })));
+            }
+        },
+        getObjectFieldsGroups: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                if(objectConfig.enable_workflow){
+                    try {
+                        objectConfig.fields.instance_state.hidden = false;
+                    } catch (error) {
+                        console.log("error", error)
+                    }
+                }
+
+                const fieldsArr = [];
+                _.each(objectConfig.fields , (field, field_name)=>{
+                    if(!_.has(field, "name")){
+                        field.name = field_name
+                    }
+                    fieldsArr.push(field)
+                })
+                return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
+                    if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
+                        return field.group
                     }
                 })));
             }

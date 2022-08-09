@@ -31,7 +31,7 @@
                 "cache": 100,
                 "adaptor": "var data = payload.data.data[0];\nif(data){\n    data.object_name = data.object_name ? data.object_name.name:null;\n    \n    \n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
                 "data": {
-                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
+                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,field_groups,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
                 }
             },
             "initFetch": true,
@@ -150,211 +150,243 @@
                             "type": "service",
                             "body": [
                                 {
-                                    "type": "panel",
-                                    "title": "",
+                                    "type": "service",
                                     "body": [
                                         {
-                                            "name": "fields",
-                                            "label": "字段",
-                                            "required": true,
-                                            "type": "table",
-                                            "strictMode": false,
-                                            "affixHeader": false,
-                                            "editable": true,
-                                            "addable": false,
-                                            "removable": true,
-                                            "draggable": true,
-                                            "columns": [
+                                            "type": "panel",
+                                            "title": "字段",
+                                            "body": [
                                                 {
-                                                    "name": "field_name",
-                                                    "label": "字段",
-                                                    "quickEdit": {
-                                                        "type": "select",
-                                                        "source": "${fields_options}",
-                                                        "mode": "inline"
-                                                    }
-                                                },
-                                                {
-                                                    "name": "is_readonly",
-                                                    "label": "只读",
-                                                    "quickEdit": {
-                                                        "type": "checkbox",
-                                                        "tpl": null,
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "saveImmediately": true,
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForField:is_readonly}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
+                                                    "name": "fields",
+                                                    "required": true,
+                                                    "type": "crud",
+                                                    "strictMode": false,
+                                                    "affixHeader": false,
+                                                    "editable": true,
+                                                    "addable": false,
+                                                    "removable": true,
+                                                    "draggable": true,
+                                                    "columns": [
+                                                        {
+                                                            "name": "field_name",
+                                                            "quickEdit": {
+                                                                "type": "select",
+                                                                "source": "${fields_options}",
+                                                                "mode": "inline"
+                                                            },
+                                                            "affixFooter": false,
+                                                            "placeholder": "-",
+                                                            "className": "popOver",
+                                                            "label": "字段"
+                                                        },
+                                                        {
+                                                            "name": "is_readonly",
+                                                            "label": "只读",
+                                                            "quickEdit": {
+                                                                "type": "checkbox",
+                                                                "tpl": null,
+                                                                "className": "m-0",
+                                                                "labelClassName": "text-left",
+                                                                "saveImmediately": true,
+                                                                "mode": "inline",
+                                                                "onEvent": {
+                                                                    "change": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|quickEidtSaveForField:is_readonly}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
                                                                     }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "name": "is_required",
-                                                    "label": "必填",
-                                                    "quickEdit": {
-                                                        "type": "checkbox",
-                                                        "tpl": null,
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "saveImmediately": true,
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForField:is_required}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "name": "group",
-                                                    "label": "分组",
-                                                    "quickEdit": {
-                                                        "mode": "inline",
-                                                        "type": "select",
-                                                        "inputClassName": "w-xs",
-                                                        "saveImmediately": true,
-                                                        "className": "m-0",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForField:group}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
+                                                                }
                                                             }
                                                         },
-                                                        "source": "${groups|pick:group_name}"
-                                                    }
-                                                },
-                                                {
-                                                    "name": "visible_on",
-                                                    "label": "显示条件",
-                                                    "quickEdit": {
-                                                        "type": "textarea",
-                                                        "tpl": "<b><%=data.visible_on%></b>",
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "saveImmediately": true,
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForField:visible_on}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
+                                                        {
+                                                            "name": "is_required",
+                                                            "label": "必填",
+                                                            "quickEdit": {
+                                                                "type": "checkbox",
+                                                                "tpl": null,
+                                                                "className": "m-0",
+                                                                "labelClassName": "text-left",
+                                                                "saveImmediately": true,
+                                                                "mode": "inline",
+                                                                "onEvent": {
+                                                                    "change": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|quickEidtSaveForField:is_required}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
                                                                     }
-                                                                ]
+                                                                }
                                                             }
+                                                        },
+                                                        {
+                                                            "name": "group",
+                                                            "label": "分组",
+                                                            "quickEdit": {
+                                                                "mode": "inline",
+                                                                "type": "select",
+                                                                "inputClassName": "w-xs",
+                                                                "saveImmediately": true,
+                                                                "className": "m-0",
+                                                                "onEvent": {
+                                                                    "change": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|quickEidtSaveForField:group}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "source": "${field_groups|pick:group_name}"
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": "visible_on",
+                                                            "label": "显示条件",
+                                                            "quickEdit": {
+                                                                "type": "textarea",
+                                                                "tpl": "<b><%=data.visible_on%></b>",
+                                                                "className": "m-0",
+                                                                "labelClassName": "text-left",
+                                                                "saveImmediately": true,
+                                                                "mode": "inline",
+                                                                "onEvent": {
+                                                                    "change": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|quickEidtSaveForField:visible_on}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            "breakpoint": "*"
                                                         }
-                                                    },
-                                                    "breakpoint": "*"
+                                                    ],
+                                                    "className": "col-span-2 m-0",
+                                                    "labelClassName": "text-left",
+                                                    "source": "${fields}",
+                                                    "footable": true,
+                                                    "headerToolbar": [
+                                                        {
+                                                            "type": "action",
+                                                            "actionType": "dialog",
+                                                            "dialog": {
+                                                                "title": "选择字段",
+                                                                "body": [
+                                                                    {
+                                                                        "type": "transfer",
+                                                                        "name": "picked_fields",
+                                                                        "sortable": true,
+                                                                        "source": "${fields_options}",
+                                                                        "value": "${fields|pick:field_name}"
+                                                                    }
+                                                                ],
+                                                                "onEvent": {
+                                                                    "confirm": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|convertDataForFields}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            "label": "选择字段"
+                                                        },
+                                                        {
+                                                            "type": "action",
+                                                            "actionType": "dialog",
+                                                            "dialog": {
+                                                                "title": "设置分组",
+                                                                "body": [
+                                                                    {
+                                                                        "type": "input-table",
+                                                                        "name": "setting_groups",
+                                                                        "addable": true,
+                                                                        "draggable": true,
+                                                                        "editable": true,
+                                                                        "columns": [
+                                                                            {
+                                                                                "name": "group_name",
+                                                                                "label": "名称"
+                                                                            }
+                                                                        ],
+                                                                        "value": "${field_groups}",
+                                                                        "removable": true
+                                                                    }
+                                                                ],
+                                                                "onEvent": {
+                                                                    "confirm": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|convertDataForGroups}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "type": "dialog"
+                                                            },
+                                                            "label": "设置分组"
+                                                        }
+                                                    ]
                                                 }
                                             ],
-                                            "className": "col-span-2 m-0",
-                                            "labelClassName": "text-left",
-                                            "source": "${fields}",
-                                            "footable": true
+                                            "id": "u:acfaf85221b7",
+                                            "inline": false,
+                                            "affixFooter": false,
+                                            "className": "m-0",
+                                            "headerClassName": "antd-Panel-heading pl-0",
+                                            "bodyClassName": "antd-Panel-body p-0"
                                         }
                                     ],
-                                    "id": "u:acfaf85221b7",
-                                    "inline": false,
-                                    "affixFooter": false,
-                                    "className": "Panel--default m-0",
-                                    "actions": [
-                                        {
-                                            "label": "选择字段",
-                                            "type": "button",
-                                            "actionType": "dialog",
-                                            "dialog": {
-                                                "title": "选择字段",
-                                                "body": [
-                                                    {
-                                                        "type": "transfer",
-                                                        "name": "picked_fields",
-                                                        "sortable": true,
-                                                        "source": "${fields_options}",
-                                                        "value": "${fields|pick:field_name}"
-                                                    }
-                                                ],
-                                                "onEvent": {
-                                                    "confirm": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|convertDataForFields}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
+                                    "id": "u:6f3b35b99743",
+                                    "messages": {},
+                                    "api": {
+                                        "method": "get",
+                                        "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/groups",
+                                        "adaptor": "// 把字段中配置的group属性加到groups属性中\namis.registerFilter('mixingGroupsFromFields', function (input) {\n  const groupsOptions = input.field_groups_options;\n  const groups = this.data.field_groups || [];\n  const groupsForMixing = groupsOptions.map(function (item) {\n    return {\n      group_name: item\n    }\n  });\n  const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n  return {\n    field_groups: mixedGroups\n  }\n});\n\n\nlet data = payload.data;\ndata.field_groups_options = data.options || [];\ndelete data.options\npayload.data = data;\nreturn payload;",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "onEvent": {
+                                        "fetchInited": {
+                                            "actions": [
+                                                {
+                                                    "actionType": "setValue",
+                                                    "args": {
+                                                        "value": "${event.data|mixingGroupsFromFields}"
+                                                    },
+                                                    "componentId": "object-layout-form"
                                                 }
-                                            }
-                                        },
-                                        {
-                                            "label": "设置分组",
-                                            "type": "button",
-                                            "actionType": "dialog",
-                                            "dialog": {
-                                                "title": "设置分组",
-                                                "body": [
-                                                    {
-                                                        "type": "input-table",
-                                                        "name": "setting_groups",
-                                                        "addable": true,
-                                                        "draggable": true,
-                                                        "editable": true,
-                                                        "columns": [
-                                                            {
-                                                                "name": "group_name",
-                                                                "label": "名称"
-                                                            }
-                                                        ],
-                                                        "value": "${groups}"
-                                                    }
-                                                ],
-                                                "onEvent": {
-                                                    "confirm": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|convertDataForGroups}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            }
+                                            ]
                                         }
-                                    ]
+                                    }
                                 }
                             ],
                             "id": "u:ac5b7818b88f",
@@ -363,8 +395,9 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "adaptor": "\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  console.log(\"===convertedGroups=====\", convertedGroups);\n  return {\n    groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
-                                "sendOn": "!!this.object_name"
+                                "adaptor": "// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\namis.registerFilter('convertDataForFields', function (input) {\n  const pickedFields = input.picked_fields && input.picked_fields.split(\",\") || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  const convertedFields = pickedFields.map(function (field_name) {\n    return superFields[field_name] || {\n      field_name: field_name\n    }\n  });\n  return {\n    fields: convertedFields\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForField', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const field_name = rowValue.field_name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.field_name == field_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  return {\n    fields: newFields\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  });\n  return {\n    field_groups: convertedGroups\n  }\n});\n\nlet data = payload.data;\ndata.fields_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                "sendOn": "!!this.object_name",
+                                "data": null
                             },
                             "className": "col-span-2 m-0",
                             "placeholder": "-"
