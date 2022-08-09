@@ -25,7 +25,7 @@ export function getDBType(objectName, field) {
             return SteedosFieldDBType.text;
         case "select":
             if (field.multiple) {
-                return SteedosFieldDBType.array;
+                return SteedosFieldDBType.varchar;
             } else {
                 return SteedosFieldDBType.varchar;
             }
