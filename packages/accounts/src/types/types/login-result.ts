@@ -5,4 +5,5 @@ export interface LoginResult {
   token: string;
   tokens: Tokens;
   user: any;
+  space?: string;
 }
