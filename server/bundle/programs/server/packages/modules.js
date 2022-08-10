@@ -578,7 +578,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "react",
-  "version": "16.13.1",
+  "version": "16.14.0",
   "main": "index.js"
 };
 
@@ -659,7 +659,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "aliyun-sdk",
-  "version": "1.12.3",
+  "version": "1.12.5",
   "main": "index.js"
 };
 
@@ -739,7 +739,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "qs",
-  "version": "6.9.4",
+  "version": "6.11.0",
   "main": "lib/index.js"
 };
 
@@ -766,7 +766,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "body-parser",
-  "version": "1.19.0"
+  "version": "1.20.0"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -814,7 +814,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/core",
-  "version": "1.23.41",
+  "version": "1.23.42",
   "main": "lib/index.js"
 };
 
@@ -841,7 +841,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "1.23.41",
+  "version": "1.23.42",
   "main": "lib/index.js"
 };
 
@@ -868,7 +868,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "1.23.41",
+  "version": "1.23.42",
   "main": "lib/index.js"
 };
 
@@ -895,7 +895,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "1.23.41",
+  "version": "1.23.42",
   "main": "lib/index.js"
 };
 
@@ -922,7 +922,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "@steedos/filters",
-  "version": "1.23.41",
+  "version": "1.23.42",
   "main": "lib/index.js"
 };
 
@@ -1003,7 +1003,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "moment",
-  "version": "2.28.0",
+  "version": "2.29.4",
   "main": "./moment.js"
 };
 
@@ -1057,7 +1057,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "express",
-  "version": "4.17.1"
+  "version": "4.18.1"
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1137,7 +1137,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "node-schedule",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "main": "./lib/schedule.js"
 };
 
@@ -1402,7 +1402,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "socket.io",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "main": "./lib/index"
 };
 
@@ -1483,7 +1483,7 @@ module.useNode();
                                                                                                     //
 module.exports = {
   "name": "jszip",
-  "version": "3.5.0",
+  "version": "3.10.1",
   "main": "./lib/index"
 };
 
