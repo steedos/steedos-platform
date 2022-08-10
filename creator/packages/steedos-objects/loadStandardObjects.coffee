@@ -34,6 +34,12 @@ try
 				"@steedos/webapp-accounts",
 				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
+				"@steedos/standard-cms",
+				"@steedos/standard-object-database",
+				"@steedos/standard-process-approval",
+				"@steedos/standard-collaboration",
+				"@steedos/standard-ui",
+				"@steedos/standard-permission",
 				"@steedos/ee_unpkg-local"
 			],
 			plugins: config.plugins
