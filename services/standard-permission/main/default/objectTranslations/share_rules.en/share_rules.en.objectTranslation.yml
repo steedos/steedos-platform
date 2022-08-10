@@ -1,0 +1,35 @@
+name: share_rules
+label: Share rules
+description: 
+fields:
+  name:
+    label: Api Name
+    help: 
+    description: 
+  object_name:
+    label: Object name
+    help: 
+    description: 
+  active:
+    label: Actived
+    help: 
+    description: 
+  entry_criteria:
+    label: Entry criteria
+    help: 
+    description: 
+  record_filter:
+    label: Record filter
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+actions:
+  customize:
+    label: Customize
