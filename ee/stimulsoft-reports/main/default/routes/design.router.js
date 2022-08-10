@@ -15,7 +15,7 @@ router.get('/api/reportDesign', core.requireAuthentication, async function (req,
         const userSession = req.user;
 
         const retUrl = __meteor_runtime_config__.ROOT_URL + '/app/admin/stimulsoft_reports/view/' + req.query.reportId
-        const builderHost = `https://builder.steedos.com/stimulsoft?retUrl=${retUrl}`;
+        const builderHost = `https://builder.steedos.cn/stimulsoft?retUrl=${retUrl}`;
 
         const filename = __dirname+'/design.ejs'
         const data = {
