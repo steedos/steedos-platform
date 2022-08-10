@@ -135,7 +135,6 @@ const afterInsertAutoNumber = async function () {
         }
     }
     if (!_.isEmpty(setObj)) {
-        console.log('!!!!!setObj>>>>>>>: ', setObj)
         await objectql.getObject(object_name).directUpdate(doc._id, setObj);
     }
 }
