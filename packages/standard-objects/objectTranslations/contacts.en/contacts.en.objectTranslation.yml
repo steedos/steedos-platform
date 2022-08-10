@@ -1,78 +1,78 @@
 name: contacts
-label: 联系人
+label: contacts
 description: 
 fields:
   name:
-    label: 姓名
+    label: Name
     help: 
     description: 
   owner:
-    label: 我方客户经理
+    label: Owner
     help: 
     description: 
   account:
-    label: 所属客户
-    help: 联系人所链接的客户。输入客户名称、从列表中选择客户或创建客户。
+    label: Business partner
+    help: Business partner associated with the contact
     description: 
   reports_to_id:
-    label: 直属上司
-    help: 联系人管理员的姓名。输入联系人名称，或从列表中选择联系人。
+    label: Immediate Supervisor
+    help: Related direct supervisor
     description: 
   salutation:
-    label: 性别
+    label: Gender
     help: 
     options:
-      - label: 男
+      - label: Male
         value: Male
-      - label: 女
+      - label: Female
         value: Female
     description: 
   title:
-    label: 职务
+    label: Job
     help: 
     description: 
   department:
-    label: 部门
-    help: 关联的业务或组织单元。
+    label: Department
+    help: Related departments
     description: 
   email:
-    label: 邮件
+    label: Email
     help: 
     description: 
   fax:
-    label: 传真
+    label: Fax
     help: 
     description: 
   phone:
-    label: 工作电话
+    label: Phone
     help: 
     description: 
   mobile:
-    label: 手机
+    label: Mobile
     help: 
     description: 
   home_phone:
-    label: 家庭电话
+    label: Home phone
     help: 
     description: 
   birthdate:
-    label: 生日
+    label: Birthdate
     help: 
     description: 
   mailing_address:
-    label: 邮寄地址
+    label: Mailing address
     help: 
     description: 
   user:
-    label: 外部用户
+    label: User
     help: 
     description: 
   hoddy:
-    label: 爱好
+    label: Hobby
     help: 
     description: 
   description:
-    label: 备注
+    label: Description
     help: 
     description: 
   last_save_date:
@@ -149,25 +149,25 @@ fields:
         value: Website
     description: 
 groups:
-  地址信息: 地址信息
+  地址信息: Address information
   其他地址信息: 其他地址信息
 listviews:
   recent:
-    label: 最近查看
+    label: Recently viewed contacts
   all:
-    label: 所有联系人
+    label: All contacts
   mine:
-    label: 我的联系人
+    label: My contacts
 actions:
   createSupplierSpaceUser:
-    label: 创建供应商用户
+    label: Create Supplier SpaceUser
   viewSupplierSpaceUser:
-    label: 查看供应商用户
+    label: View Supplier SpaceUser
   disableSupplierSpaceUser:
-    label: 禁用供应商用户
+    label: Disable Supplier SpaceUser
   createCustomerSpaceUser:
-    label: 创建客户用户
+    label: Create Customer SpaceUser
   viewCustomerSpaceUser:
-    label: 查看客户用户
+    label: View Customer SpaceUser
   disableCustomerSpaceUser:
-    label: 禁用客户用户
+    label: Disable Customer SpaceUser
