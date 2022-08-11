@@ -453,7 +453,6 @@
                                                         "valueField": "value",
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "name": "related_field_fullname",
                                                         "checkAll": false,
                                                         "mode": "inline",
                                                         "source": "${related_lists_options}",
@@ -504,7 +503,6 @@
                                                     "label": "显示的字段",
                                                     "quickEdit": {
                                                         "type": "transfer-picker",
-                                                        "name": "picked_field_names",
                                                         "mode": "inline",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
                                                         "onEvent": {
@@ -529,7 +527,6 @@
                                                     "label": "排序字段",
                                                     "quickEdit": {
                                                         "type": "transfer-picker",
-                                                        "name": "picked_sort_field_name",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
                                                         "mode": "inline",
                                                         "onEvent": {
