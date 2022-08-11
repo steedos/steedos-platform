@@ -165,7 +165,7 @@
                                                     "editable": true,
                                                     "addable": false,
                                                     "removable": true,
-                                                    "draggable": true,
+                                                    "draggable": false,
                                                     "columns": [
                                                         {
                                                             "name": "field_name",
@@ -453,7 +453,7 @@
                                             "editable": true,
                                             "addable": true,
                                             "removable": true,
-                                            "draggable": true,
+                                            "draggable": false,
                                             "columns": [
                                                 {
                                                     "name": "related_field_fullname",
