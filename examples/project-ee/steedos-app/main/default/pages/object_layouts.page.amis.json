@@ -172,7 +172,20 @@
                                                             "quickEdit": {
                                                                 "type": "select",
                                                                 "source": "${fields_options}",
-                                                                "mode": "inline"
+                                                                "mode": "inline",
+                                                                "onEvent": {
+                                                                    "change": {
+                                                                        "actions": [
+                                                                            {
+                                                                                "actionType": "setValue",
+                                                                                "args": {
+                                                                                    "value": "${event.data|quickEidtSaveForField:field_name}"
+                                                                                },
+                                                                                "componentId": "object-layout-form"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
                                                             },
                                                             "affixFooter": false,
                                                             "placeholder": "-",
