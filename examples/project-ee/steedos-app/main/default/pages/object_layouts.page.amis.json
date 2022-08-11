@@ -154,7 +154,7 @@
                                                     "name": "visible_on",
                                                     "label": "显示条件",
                                                     "quickEdit": {
-                                                        "type": "textarea",
+                                                        "type": "input-text",
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
                                                         "mode": "inline",
