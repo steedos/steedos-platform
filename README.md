@@ -28,11 +28,24 @@
 
 作为 Salesforce 开源替代方案，华炎魔方核心解决以下问题：
 
-- 前端低代码：控件、资产包（一组控件）、页面、页面可视化设计工具、页面与服务端的数据交互。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
-- 服务端低代码：模型、权限、规则、流程、报表、连接第三方系统，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)
-- 元数据：可视化工具如何保存元数据，渲染引擎如何调用元数据，元数据如何同步到代码仓库。参考：[Salesforce Metadata API](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)
-- 融合高代码：如何在低代码系统中，如何在前后端融合高代码实现复杂业务逻辑。参考：[Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)
-- 软件包：以上前后端低代码元数据、代码如何组合成为软件包。以及软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)
+### 前端低代码
+
+控件、资产包（一组控件）、页面、页面可视化设计工具、页面与服务端的数据交互。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
+
+### 服务端低代码
+
+模型、权限、规则、流程、报表、连接第三方系统，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)
+### 元数据
+
+可视化工具如何保存元数据，渲染引擎如何调用元数据，元数据如何同步到代码仓库。参考：[Salesforce Metadata API](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)
+
+### 融合高代码
+
+如何在低代码系统中，如何在前后端融合高代码实现复杂业务逻辑。参考：[Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)
+
+### 软件
+
+前后端低代码可视化设计工具生成的元数据，以及自定义的代码如何组合成为软件包。以及软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)
 
 ![华炎魔方项目对象界面](https://steedos.github.io/assets/github/platform/cn/project_object.jpg)
 
