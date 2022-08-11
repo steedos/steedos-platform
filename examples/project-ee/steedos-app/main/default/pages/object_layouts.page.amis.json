@@ -404,7 +404,8 @@
                                                                 "name": "picked_fields",
                                                                 "sortable": true,
                                                                 "source": "${fields_options}",
-                                                                "value": "${fields|pick:field_name}"
+                                                                "value": "${fields|pick:field_name}",
+                                                                "searchable": true
                                                             }
                                                         ],
                                                         "onEvent": {
@@ -593,6 +594,7 @@
                                                         "type": "transfer-picker",
                                                         "mode": "inline",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
+                                                        "searchable": true,
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -617,6 +619,7 @@
                                                         "type": "transfer-picker",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
                                                         "mode": "inline",
+                                                        "searchable": true,
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -766,7 +769,8 @@
                                                                 "name": "picked_related_lists",
                                                                 "sortable": true,
                                                                 "source": "${related_lists_options}",
-                                                                "value": "${related_lists|pick:related_field_fullname}"
+                                                                "value": "${related_lists|pick:related_field_fullname}",
+                                                                "searchable": true
                                                             }
                                                         ],
                                                         "onEvent": {
