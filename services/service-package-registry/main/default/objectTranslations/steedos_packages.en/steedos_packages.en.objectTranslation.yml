@@ -1,0 +1,72 @@
+name: steedos_packages
+label: Software package
+description: 
+fields:
+  metadata:
+    label: Metadata
+    help: 
+    description: 
+  metadata.$.label:
+    label: Label
+    help: 
+    description: 
+  metadata.$.api_name:
+    label: Api Name
+    help: 
+    description: 
+  metadata.$.type:
+    label: Type
+    help: 
+    description: 
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: npm module
+    help: 
+    description: 
+  service_name:
+    label: Service name
+    help: 
+    description: 
+  instance_id:
+    label: Instance id
+    help: 
+    description: 
+  node_id:
+    label: Node id
+    help: 
+    description: 
+  version:
+    label: Version
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+  status:
+    label: Status
+    help: 
+    description: 
+listviews:
+  all:
+    label: All
+actions:
+  disable:
+    label: Disable
+  enable:
+    label: Enable
+  install_purchased_packages:
+    label: Install Purchased Packages
+  installPackageFromUrl:
+    label: Install Package From Url
+  reload:
+    label: Reload
+  show_packages_store:
+    label: Appstore
+  uninstall:
+    label: Uninstall
+  upgradePackage:
+    label: Upgrade Package
