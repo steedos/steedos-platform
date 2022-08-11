@@ -429,283 +429,296 @@
                             "type": "service",
                             "body": [
                                 {
-                                    "name": "related_lists",
-                                    "type": "crud",
-                                    "strictMode": false,
-                                    "affixHeader": false,
-                                    "editable": true,
-                                    "addable": true,
-                                    "removable": true,
-                                    "draggable": true,
-                                    "columns": [
+                                    "type": "panel",
+                                    "title": "子表",
+                                    "body": [
                                         {
-                                            "name": "related_field_fullname",
-                                            "label": "子表名称",
-                                            "quickEdit": {
-                                                "type": "select",
-                                                "joinValues": false,
-                                                "extractValue": true,
-                                                "labelField": "label",
-                                                "valueField": "value",
-                                                "className": "m-0",
-                                                "labelClassName": "text-left",
-                                                "name": "related_field_fullname",
-                                                "checkAll": false,
-                                                "mode": "inline",
-                                                "source": "${related_lists_options}",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:related_field_fullname}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "placeholder": "-",
-                                            "affixFooter": false,
-                                            "className": "popOver"
-                                        },
-                                        {
-                                            "name": "label",
-                                            "label": "显示标题",
-                                            "quickEdit": {
-                                                "labelRemark": "默认为对象名称",
-                                                "type": "input-text",
-                                                "className": "m-0",
-                                                "labelClassName": "text-left",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:label}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "name": "field_names",
-                                            "label": "显示的字段",
-                                            "quickEdit": {
-                                                "type": "transfer-picker",
-                                                "name": "picked_field_names",
-                                                "mode": "inline",
-                                                "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:field_names}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "joinValues": false,
-                                                "extractValue": true
-                                            }
-                                        },
-                                        {
-                                            "name": "sort_field_name",
-                                            "label": "排序字段",
-                                            "quickEdit": {
-                                                "type": "transfer-picker",
-                                                "name": "picked_sort_field_name",
-                                                "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:sort_field_name}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "joinValues": false,
-                                                "extractValue": true
-                                            },
-                                            "breakpoint": "*"
-                                        },
-                                        {
-                                            "name": "sort_order",
-                                            "label": "排序方式",
-                                            "quickEdit": {
-                                                "type": "select",
-                                                "joinValues": false,
-                                                "options": [
-                                                    {
-                                                        "label": "正序",
-                                                        "value": "asc"
-                                                    },
-                                                    {
-                                                        "label": "倒序",
-                                                        "value": "desc"
-                                                    }
-                                                ],
-                                                "extractValue": true,
-                                                "clearable": true,
-                                                "labelField": "label",
-                                                "valueField": "value",
-                                                "tpl": null,
-                                                "value": "\"asc\"",
-                                                "className": "m-0",
-                                                "labelClassName": "text-left",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:sort_order}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "breakpoint": "*"
-                                        },
-                                        {
-                                            "name": "filters",
-                                            "label": "过滤规则",
-                                            "quickEdit": {
-                                                "type": "textarea",
-                                                "tpl": "<b><%=data.filters%></b>",
-                                                "className": "col-span-2 m-0",
-                                                "labelClassName": "text-left",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:filters}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "breakpoint": "*"
-                                        },
-                                        {
-                                            "name": "visible_on",
-                                            "label": "显示条件",
-                                            "quickEdit": {
-                                                "type": "textarea",
-                                                "tpl": "<b><%=data.visible_on%></b>",
-                                                "className": "m-0",
-                                                "labelClassName": "text-left",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:visible_on}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "breakpoint": "*"
-                                        },
-                                        {
-                                            "name": "page_size",
-                                            "label": "每页显示数量",
-                                            "quickEdit": {
-                                                "type": "input-number",
-                                                "precision": 0,
-                                                "className": "m-0",
-                                                "labelClassName": "text-left",
-                                                "mode": "inline",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|quickEidtSaveForRelatedList:page_size}"
-                                                                },
-                                                                "componentId": "object-layout-form"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "breakpoint": "*"
-                                        }
-                                    ],
-                                    "className": "col-span-2 m-0",
-                                    "labelClassName": "text-left",
-                                    "headerToolbar": [
-                                        {
-                                            "type": "action",
-                                            "actionType": "dialog",
-                                            "dialog": {
-                                                "title": "选择子表",
-                                                "body": [
-                                                    {
-                                                        "type": "transfer",
-                                                        "name": "picked_related_lists",
-                                                        "sortable": true,
+                                            "name": "related_lists",
+                                            "type": "crud",
+                                            "strictMode": false,
+                                            "affixHeader": false,
+                                            "editable": true,
+                                            "addable": true,
+                                            "removable": true,
+                                            "draggable": true,
+                                            "columns": [
+                                                {
+                                                    "name": "related_field_fullname",
+                                                    "label": "子表名称",
+                                                    "quickEdit": {
+                                                        "type": "select",
+                                                        "joinValues": false,
+                                                        "extractValue": true,
+                                                        "labelField": "label",
+                                                        "valueField": "value",
+                                                        "className": "m-0",
+                                                        "labelClassName": "text-left",
+                                                        "name": "related_field_fullname",
+                                                        "checkAll": false,
+                                                        "mode": "inline",
                                                         "source": "${related_lists_options}",
-                                                        "value": "${related_lists|pick:related_field_fullname}"
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:related_field_fullname}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "placeholder": "-",
+                                                    "affixFooter": false,
+                                                    "className": "popOver"
+                                                },
+                                                {
+                                                    "name": "label",
+                                                    "label": "显示标题",
+                                                    "quickEdit": {
+                                                        "labelRemark": "默认为对象名称",
+                                                        "type": "input-text",
+                                                        "className": "m-0",
+                                                        "labelClassName": "text-left",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:label}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
                                                     }
-                                                ],
-                                                "onEvent": {
-                                                    "confirm": {
-                                                        "actions": [
+                                                },
+                                                {
+                                                    "name": "field_names",
+                                                    "label": "显示的字段",
+                                                    "quickEdit": {
+                                                        "type": "transfer-picker",
+                                                        "name": "picked_field_names",
+                                                        "mode": "inline",
+                                                        "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:field_names}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "joinValues": false,
+                                                        "extractValue": true
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sort_field_name",
+                                                    "label": "排序字段",
+                                                    "quickEdit": {
+                                                        "type": "transfer-picker",
+                                                        "name": "picked_sort_field_name",
+                                                        "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:sort_field_name}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "joinValues": false,
+                                                        "extractValue": true
+                                                    },
+                                                    "breakpoint": "*"
+                                                },
+                                                {
+                                                    "name": "sort_order",
+                                                    "label": "排序方式",
+                                                    "quickEdit": {
+                                                        "type": "select",
+                                                        "joinValues": false,
+                                                        "options": [
                                                             {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|clearRelatedLists}"
-                                                                },
-                                                                "componentId": "object-layout-form"
+                                                                "label": "正序",
+                                                                "value": "asc"
                                                             },
                                                             {
-                                                                "actionType": "setValue",
-                                                                "args": {
-                                                                    "value": "${event.data|convertDataForRelatedLists}"
-                                                                },
-                                                                "componentId": "object-layout-form"
+                                                                "label": "倒序",
+                                                                "value": "desc"
                                                             }
-                                                        ]
-                                                    }
+                                                        ],
+                                                        "extractValue": true,
+                                                        "clearable": true,
+                                                        "labelField": "label",
+                                                        "valueField": "value",
+                                                        "tpl": null,
+                                                        "value": "\"asc\"",
+                                                        "className": "m-0",
+                                                        "labelClassName": "text-left",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:sort_order}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "breakpoint": "*"
+                                                },
+                                                {
+                                                    "name": "filters",
+                                                    "label": "过滤规则",
+                                                    "quickEdit": {
+                                                        "type": "textarea",
+                                                        "tpl": "<b><%=data.filters%></b>",
+                                                        "className": "col-span-2 m-0",
+                                                        "labelClassName": "text-left",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:filters}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "breakpoint": "*"
+                                                },
+                                                {
+                                                    "name": "visible_on",
+                                                    "label": "显示条件",
+                                                    "quickEdit": {
+                                                        "type": "textarea",
+                                                        "tpl": "<b><%=data.visible_on%></b>",
+                                                        "className": "m-0",
+                                                        "labelClassName": "text-left",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:visible_on}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "breakpoint": "*"
+                                                },
+                                                {
+                                                    "name": "page_size",
+                                                    "label": "每页显示数量",
+                                                    "quickEdit": {
+                                                        "type": "input-number",
+                                                        "precision": 0,
+                                                        "className": "m-0",
+                                                        "labelClassName": "text-left",
+                                                        "mode": "inline",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|quickEidtSaveForRelatedList:page_size}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "breakpoint": "*"
                                                 }
-                                            },
-                                            "label": "选择子表"
+                                            ],
+                                            "className": "col-span-2 m-0",
+                                            "labelClassName": "text-left",
+                                            "headerToolbar": [
+                                                {
+                                                    "type": "action",
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "title": "选择子表",
+                                                        "body": [
+                                                            {
+                                                                "type": "transfer",
+                                                                "name": "picked_related_lists",
+                                                                "sortable": true,
+                                                                "source": "${related_lists_options}",
+                                                                "value": "${related_lists|pick:related_field_fullname}"
+                                                            }
+                                                        ],
+                                                        "onEvent": {
+                                                            "confirm": {
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|clearRelatedLists}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    },
+                                                                    {
+                                                                        "actionType": "setValue",
+                                                                        "args": {
+                                                                            "value": "${event.data|convertDataForRelatedLists}"
+                                                                        },
+                                                                        "componentId": "object-layout-form"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "label": "选择子表"
+                                                }
+                                            ],
+                                            "source": "${related_lists}",
+                                            "footable": true,
+                                            "columnsTogglable": false
                                         }
                                     ],
-                                    "source": "${related_lists}",
-                                    "footable": true
+                                    "id": "u:2d4c3fe14984",
+                                    "inline": false,
+                                    "affixFooter": false,
+                                    "headerClassName": "antd-Panel-heading pl-0",
+                                    "className": "m-0",
+                                    "bodyClassName": "antd-Panel-body p-0"
                                 }
                             ],
                             "id": "u:dbadaff47153",
@@ -715,7 +728,8 @@
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
                                 "sendOn": "!!this.object_name",
                                 "adaptor": "// 把”选择子表“弹出窗口中设置的子表转为主表单related_lists字段值格式\namis.registerFilter('convertDataForRelatedLists', function (input) {\n  let pickedRelateds = input.picked_related_lists || [];\n  const superRelateds = _.keyBy(input.__super.related_lists, 'related_field_fullname');\n  if (typeof pickedRelateds === \"string\") {\n    pickedRelateds = pickedRelateds.split(\",\");\n  }\n  const convertedRelateds = pickedRelateds.map(function (key) {\n    return superRelateds[key] || {\n      related_field_fullname: key\n    }\n  });\n  return {\n    related_lists: convertedRelateds\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForRelatedList', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = this.data;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  return {\n    related_lists: newRelatedLists\n  }\n});\n\n// 清空主表单fields字段值\namis.registerFilter('clearRelatedLists', function (input) {\n  return {\n    related_lists: []\n  }\n});\n\nlet data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n"
-                            }
+                            },
+                            "className": "col-span-2 m-0"
                         }
                     ]
                 }
