@@ -15,7 +15,7 @@ router.get('/api/reportViewer', core.requireAuthentication, async function (req,
         const userSession = req.user;
 
         const retUrl = __meteor_runtime_config__.ROOT_URL + '/app/admin/stimulsoft_reports/view/' + req.query.reportId
-        const builderHost = `https://builder.steedos.com/stimulsoft/viewer?retUrl=${retUrl}`;
+        const builderHost = `https://builder.steedos.cn/stimulsoft/viewer?retUrl=${retUrl}`;
         // const builderHost = `http://127.0.0.1:3000/stimulsoft/viewer?retUrl=${retUrl}`;
         let {  parameters } = req.query;
         if(parameters){

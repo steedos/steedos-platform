@@ -46,6 +46,14 @@ fields:
     label: Modify Division's Records
     help: 
     description: 
+  viewAssignCompanysRecords:
+    label: View specific departments
+    help: 
+    description: 
+  modifyAssignCompanysRecords:
+    label: Modify specific departments
+    help: 
+    description: 
   allowReadFiles:
     label: Allow Read Files
     help: 
@@ -91,7 +99,7 @@ fields:
     help: 
     description: 
   is_system:
-    label: 系统
+    label: System
     help: 
     description: 
 groups:
