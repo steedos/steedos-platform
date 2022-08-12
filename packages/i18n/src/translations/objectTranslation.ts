@@ -3,6 +3,7 @@ import { SteedosTranslationPrefixKeys } from './';
 import { _t, exists, addResourceBundle } from '../index';
 import { convertObject } from './index';
 import { fallbackKeys } from '../i18n/i18n';
+import { cloneDeep } from 'lodash';
 const crypto = require('crypto')
 import { getCacher } from '@steedos/cachers';
 
@@ -270,6 +271,9 @@ const translationListviewLabel = function(lng, objectName, name, def, datasource
 
 export const translationObject = function(lng: string, objectName: string, object: StringMap, convert?: boolean, ignoreBase = false){
     const cacheKey = getCacherKey(lng, object);
+    if(objectName === 'test_obj_layout1'){
+        console.log('translationObject', objectName, cacheKey)
+    }
     const fromCacher = Cacher.get(cacheKey);
     if(fromCacher){
         return Object.assign(object, fromCacher);
@@ -310,7 +314,7 @@ export const translationObject = function(lng: string, objectName: string, objec
         list_view.label = translationListviewLabel(lng, objectName, viewName, list_view.label, object.datasource, ignoreBase);
     })
 
-    Cacher.set(cacheKey, object)
+    Cacher.set(cacheKey, cloneDeep(object))
 }
 
 export const translationObjects = function(lng: string, objects: StringMap){
