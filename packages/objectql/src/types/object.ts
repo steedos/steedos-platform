@@ -1644,7 +1644,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         }
 
-        let objectName = args[0], recordId: string, doc: JsonMap;
+        // let tableName = args[0]
+        let recordId: string, doc: JsonMap;
+        const objectName = this.name
         if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
             // 因下面的代码，比如函数dealWithMethodPermission可能改写args变量，所以需要提前从args取出对应变量值。
             if (method === "insert") {
