@@ -150,6 +150,7 @@ const getFieldOperators = (type, lng)=>{
     switch (type) {
         case 'text':
             return ['equal', 'not_equal', 'like', 'not_like', 'starts_with', 'ends_with']
+        case 'currency':
         case 'number':
             return [ 'equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']
         case 'date':
@@ -246,12 +247,13 @@ module.exports = {
                                     operators: getFieldOperators(field.type, lng)
                                 });
                                 break;
+                            case 'currency':
                             case 'number':
                                 fields.push({
                                     label: field.label,
-                                    type: field.type,
+                                    type: 'number',
                                     name: field.name,
-                                    operators: getFieldOperators(field.type, lng)
+                                    operators: getFieldOperators('number', lng)
                                 });
                                 break;
                             // 以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
@@ -291,7 +293,15 @@ module.exports = {
                                     label: field.label,
                                     type: 'select',
                                     name: field.name,
-                                    source: "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
+                                    source: {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
+                                        "dataType": "json",
+                                        "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                      }
+                                    ,
                                     searchable: true,
                                     operators: getFieldOperators(field.type, lng)
                                 });

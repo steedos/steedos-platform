@@ -4191,27 +4191,27 @@
     tslib "^1.10.0"
 
 "@steedos-ui/amis@2.2.42":
-  version "2.2.42"
-  resolved "https://registry.npmmirror.com/@steedos-ui/amis/-/amis-2.2.42.tgz#a0ba0b2f83fd7aa7edbf0ceabf4c15ba9f5c5cc7"
-  integrity sha512-rKOHGoWsJKFsGnACYU+Wcun7vv81yKeuP7ZGOtrmEyXEuCQtGHNg0+QV7cUddvPBFbDttQBDMEwH7i80vZhm8Q==
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/amis/-/amis-2.2.41.tgz#effefa141281d158ef2f237ed1709ab6f792a1cb"
+  integrity sha512-r0LXYB9J8UxejEM41PLs/BL3lJhOfVBjrl5hYiFe7BDfkr3mR+JuiIflq1Y0TyhEPJWKB/XJpTzCCmVdZiDHfQ==
   dependencies:
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
 "@steedos-ui/builder-community@2.2.42":
-  version "2.2.42"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-2.2.42.tgz#9f77b6caa81338fa8954a2a0c8c66d32f694e4d0"
-  integrity sha512-IlB1TEcvi38PxdupR8Rm6oPkLE9Fo7DQC5k9RZXa2kmK9OAc8L7lFDV7FRyhpYku9kqY8b0YI/6jflcE7fKlBQ==
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-2.2.41.tgz#93183c46784f55bc5584650e931f22acbd4b6473"
+  integrity sha512-AtUWsUw0Jih5vjmQt1T6WPWo9gUo8IuqQj5kRpghaKthDJF4l7t9NAkR/0j+pdJ1QnIhvcby3ZCwNye1guF4nQ==
 
 "@steedos-ui/builder-widgets@2.2.42":
-  version "2.2.42"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.42.tgz#2536362570e9491a431e9e37ff8ef5d76718890a"
-  integrity sha512-0gNBRcqb3sAg5Q6i/Rs3xn38PlnxojvpqnTTSy8OWavG2g/LZ7I95viAFOsB4apA34Q3aztXByVGsM7ZNyg9iA==
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.41.tgz#f6c35bb9bbfda740a08805124a9104edbd5475b0"
+  integrity sha512-5nrjCbmRIQjkmxxpFh5ojRM+5hy9Cn3Ynn79MIi4nHTYz3Gd0C3hDHrMX8aBEA9INAe9MX5MIDOaQigNpD7KxQ==
 
 "@steedos-ui/design-system@2.2.42":
-  version "2.2.42"
-  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-2.2.42.tgz#22ec23010dfed236328cb30f0f40847f65e2cf32"
-  integrity sha512-lWJzgm3ag0srvj5M6wJL6tr+BKFKHnPuYWwrXNMCl/mklI7g8j0lUxWQ1ukEpgdTACGrG1wwbJZNdbibVDDotg==
+  version "2.2.41"
+  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-2.2.41.tgz#3d0fcbc6d172a18926cab3a1247529267be8541c"
+  integrity sha512-se54PA0N5K779hA+GI9K7aw7dsfkBkMU4RRXbnFk2eWHSTBtQlAUyCA/m/k972gwec9PFVs+YGzTkl4T66QiNA==
   dependencies:
     react-required-if "^1.0.3"
 
@@ -17344,7 +17344,7 @@ readdir-glob@^1.0.0:
 
 readdir-scoped-modules@^1.0.0, readdir-scoped-modules@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/readdir-scoped-modules/-/readdir-scoped-modules-1.1.0.tgz#8d45407b4f870a0dcaebc0e28670d18e74514309"
+  resolved "https://registry.yar,npkg.com/readdir-scoped-modules/-/readdir-scoped-modules-1.1.0.tgz#8d45407b4f870a0dcaebc0e28670d18e74514309"
   integrity sha512-asaikDeqAQg7JifRsZn1NJZXo9E+VwlyCfbkZhwyISinqk5zNS6266HS5kah6P0SaQKGF6SkNnZVHUzHFYxYDw==
   dependencies:
     debuglog "^1.0.1"

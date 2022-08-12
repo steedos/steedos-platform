@@ -59,6 +59,46 @@ module.exports = {
                 return { status: 0, data: { options } }
             }
         },
+        getObjectFieldsLayoutOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/fields/layout_options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectFieldsLayoutOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
+        getObjectFieldsGroups: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/fields/groups"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectFieldsGroups(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
+        getObjectActionsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/actions/options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectActionsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
+        getObjectRelatedListsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/relatedLists/options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectRelatedListsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
         getObjectSortFieldsOptions: {
             rest: {
                 method: "GET",
@@ -162,6 +202,157 @@ module.exports = {
                         }
                     }
                 })));
+            }
+        },
+        getObjectFieldsLayoutOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                if(objectConfig.enable_workflow){
+                    try {
+                        objectConfig.fields.instance_state.hidden = false;
+                    } catch (error) {
+                        console.log("error", error)
+                    }
+                }
+
+                const fieldsArr = [];
+                _.each(objectConfig.fields , (field, field_name)=>{
+                    if(!_.has(field, "name")){
+                        field.name = field_name
+                    }
+                    fieldsArr.push(field)
+                })
+                return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
+                    return {
+                        value: field.name,
+                        label: field.label || field.name,
+                        group: field.group,
+                        readonly: field.readonly,
+                        required: field.required
+                    }
+                })));
+            }
+        },
+        getObjectFieldsGroups: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                if(objectConfig.enable_workflow){
+                    try {
+                        objectConfig.fields.instance_state.hidden = false;
+                    } catch (error) {
+                        console.log("error", error)
+                    }
+                }
+
+                const fieldsArr = [];
+                _.each(objectConfig.fields , (field, field_name)=>{
+                    if(!_.has(field, "name")){
+                        field.name = field_name
+                    }
+                    fieldsArr.push(field)
+                })
+                return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
+                    return field.group
+                })));
+            }
+        },
+        getObjectActionsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                const actionsArr = [];
+                _.each(objectConfig.actions , (action, action_name)=>{
+                    if(!_.has(action, "name")){
+                        action.name = action_name
+                    }
+                    actionsArr.push(action)
+                })
+                return _.uniq(_.compact(_.map(_.sortBy(actionsArr, "sort"), (action)=>{
+                    return {
+                        value: action.name,
+                        label: action.label || action.name
+                    }
+                })));
+            }
+        },
+        getObjectRelatedListsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const object = await objectql.getSteedosSchema().getObject(objectName);
+                const objectConfig = object.toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                const options = [];
+                let relatedLists = []
+                if(objectConfig.enable_files){
+                    relatedLists.push("cms_files.parent")
+                }
+                /*
+                    object.details是一个字符串，形如：testb__c.testa__c
+                    object.lookup_details是一个对象，格式如下：
+                    {
+                        key: "testd__c.testa__c",
+                        objectName: "testa__c",
+                        type: "detail",
+                    }
+                */
+                relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+
+                if(objectConfig.enable_tasks){
+                    relatedLists.push("tasks.related_to")
+                }
+                if(objectConfig.enable_notes){
+                    relatedLists.push("notes.related_to")
+                }
+                if(objectConfig.enable_events){
+                    relatedLists.push("events.related_to")
+                }
+                if(objectConfig.enable_instances){
+                    relatedLists.push("instances.record_ids")
+                }
+                if(objectConfig.enable_approvals){
+                    relatedLists.push("approvals.related_to")
+                }
+                if(objectConfig.enable_process){
+                    relatedLists.push("process_instance_history.target_object")
+                }
+                if(objectConfig.enable_audit){
+                    relatedLists.push("audit_records.related_to")
+                }
+
+                _.each(relatedLists, async function(related){
+                    if (!related) return;
+                    /*related可能是一个lookup_details，它是对象而不是字符串，从中取出key值*/
+                    if(typeof related !== "string"){
+                        related = related.key;
+                    }
+                    if (!related) return;
+                    let foo = related.split('.');
+                    let rObjectName = foo[0];
+                    let rFieldName = foo[1];
+                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).toConfig();
+                    steedosI18n.translationObject(lng, rObjectConfig.name, rObjectConfig);
+                    let rObjectLable = rObjectConfig.label;
+                    let rObjectFieldLable = (_.find(rObjectConfig.fields, function(field){return field.name === rFieldName}) || {}).label;
+                    options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
+                })
+                return options;
             }
         }
     }

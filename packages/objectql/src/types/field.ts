@@ -227,7 +227,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                return SteedosFieldDBType.text
            case 'select':
                if(this.multiple){
-                   return SteedosFieldDBType.array
+                   return SteedosFieldDBType.varchar
                }else{
                    return SteedosFieldDBType.varchar
                }

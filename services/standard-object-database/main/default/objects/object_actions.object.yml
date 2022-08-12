@@ -94,6 +94,8 @@ fields:
     options:
       - label: Custom JavaScript
         value: script
+      - label: Amis Action
+        value: amis_action
       # - label: 打印模板(word)
       #   value: word-print
     defaultValue: script
@@ -107,11 +109,19 @@ fields:
     sort_no: 180
     type: code
     language: javascript
-    required: true
+    required: "{{formData.type != 'amis_action' ? true: false}}"
     # omit: true
     # hidden: true
     is_wide: true
-    visible_on: "{{formData.type != 'word-print' ? true: false}}"
+    visible_on: "{{formData.type != 'amis_action' ? true: false}}"
+  amis_actions: 
+    label: Amis Actions
+    sort_no: 180
+    type: code
+    language: json
+    required: "{{formData.type == 'amis_action' ? true: false}}"
+    is_wide: true
+    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
 paging:
   enabled: false
 list_views:

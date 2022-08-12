@@ -279,6 +279,7 @@ export class AccountsServer {
         refreshToken,
         accessToken,
       },
+      space,
       user,
     };
   }

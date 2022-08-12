@@ -65,6 +65,12 @@ export function getTableColumns(fields: Dictionary<SteedosFieldType>, object: St
             precision: field.precision ? field.precision : (field.scale ? 18 : undefined),
             scale: field.scale
         };
+        // 如果是postgres数据库，维护数组属性
+        if (databaseType === "postgres") {
+            if (field.multiple) {
+                columns[fieldName]['array'] = true
+            }
+        }
         if(field.column_name){
             (columns as any)[fieldName]["name"] = field.column_name
         }
