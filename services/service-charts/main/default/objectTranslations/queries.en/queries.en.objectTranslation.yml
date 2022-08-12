@@ -1,0 +1,36 @@
+name: queries
+label: queries
+description: 
+fields:
+  label:
+    label: Label
+    help: 
+    description: 
+  name:
+    label: API name
+    help: 
+    description: 
+  datasource:
+    label: Datasource
+    help: 
+    description: 
+  query:
+    label: Query script
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 
+  description:
+    label: Description
+    help: 
+    description: 
+listviews:
+  all:
+    label: All queries
+  recent:
+    label: Recent queries
+actions:
+  openDesign:
+    label: Open Designer

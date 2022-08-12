@@ -1,4 +1,5 @@
 name: schema
+label: schema
 type: code
 language: json
 is_wide: true
