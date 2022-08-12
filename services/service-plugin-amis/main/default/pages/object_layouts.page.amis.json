@@ -7,7 +7,6 @@
             "persistData": false,
             "promptPageLeave": true,
             "name": "form_edit_${recordId}",
-            "debug": true,
             "title": "",
             "api": {
                 "method": "post",
@@ -142,7 +141,8 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
+                                                        },
+                                                        "searchable": true
                                                     },
                                                     "affixFooter": false,
                                                     "placeholder": "-",
@@ -188,7 +188,8 @@
                                                                 "name": "picked_buttons",
                                                                 "sortable": true,
                                                                 "source": "${buttons_options}",
-                                                                "value": "${buttons|pick:button_name}"
+                                                                "value": "${buttons|pick:button_name}",
+                                                                "searchable": true
                                                             }
                                                         ],
                                                         "onEvent": {
@@ -272,7 +273,8 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
+                                                        },
+                                                        "searchable": true
                                                     },
                                                     "affixFooter": false,
                                                     "placeholder": "-",
@@ -357,7 +359,8 @@
                                                         },
                                                         "source": "${field_groups|pick:group_name}",
                                                         "checkAll": false,
-                                                        "selectFirst": false
+                                                        "selectFirst": false,
+                                                        "searchable": true
                                                     }
                                                 },
                                                 {
@@ -555,7 +558,8 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
+                                                        },
+                                                        "searchable": true
                                                     },
                                                     "placeholder": "-",
                                                     "affixFooter": false,
