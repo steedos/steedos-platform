@@ -83,23 +83,21 @@
                             "joinValues": false,
                             "extractValue": true,
                             "labelField": "label",
-                            "valueField": "value",
-                            "autoComplete": {
+                            "multiple": true,
+                            "className": "m-0",
+                            "labelClassName": "text-left",
+                            "checkAll": true,
+                            "source": {
                                 "method": "post",
                                 "url": "${context.rootUrl}/graphql",
                                 "data": {
-                                    "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                                    "$": "$$",
-                                    "$term": "$term",
-                                    "$value": "$profiles._id",
-                                    "rfield": "${object_name}"
+                                    "query": "{options:permission_set(filters: [\"type\", \"=\", \"profile\"]){name,label}}"
                                 },
-                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n  var profiles = Creator.odata.query('permission_set', {$filter: \"(type eq 'profile')\"}, true);\n  var result = [];\n  profiles.forEach(function (item) {\n    result.push({\n      label: item.label,\n      value: item.name\n    });\n  });\n  return result;\n\n})(api.data);\n        return payload;\n        "
+                                "requestAdaptor": "",
+                                "adaptor": ""
                             },
-                            "multiple": true,
-                            "className": "m-0",
-                            "labelClassName": "text-left"
+                            "valueField": "name",
+                            "searchable": true
                         },
                         {
                             "type": "service",
