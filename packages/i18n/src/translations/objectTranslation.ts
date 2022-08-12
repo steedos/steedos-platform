@@ -276,7 +276,7 @@ export const translationObject = function(lng: string, objectName: string, objec
     }
     const fromCacher = Cacher.get(cacheKey);
     if(fromCacher){
-        return Object.assign(object, fromCacher);
+        return Object.assign(object, cloneDeep(fromCacher));
     }
 
     if(convert){
@@ -313,7 +313,6 @@ export const translationObject = function(lng: string, objectName: string, objec
     _.each(object.list_views, function(list_view, viewName){
         list_view.label = translationListviewLabel(lng, objectName, viewName, list_view.label, object.datasource, ignoreBase);
     })
-
     Cacher.set(cacheKey, cloneDeep(object))
 }
 
