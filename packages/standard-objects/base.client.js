@@ -281,7 +281,11 @@ Steedos.StandardObjects = {
                                             resolve(true);
                                         }
                                         resolve(false);
-                                    })
+                                    }).catch(function(e){
+                                        console.log(e)
+                                        toastr.error(e.message)
+                                        resolve(false);
+                                    }) 
                                 } catch (error) {
                                     console.error(`e2`, error);
                                     reject(false);
