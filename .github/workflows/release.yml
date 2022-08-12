@@ -36,25 +36,32 @@ jobs:
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1')  }}
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.3')  }}
         run: exit 1
 
-      - name: Merge 2.2 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
+      - name: Merge 2.3 -> master
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: 2.2
+          from_branch: 2.3
           target_branch: master
           github_token: ${{ github.token }}
 
-      # checkout branch master
+      # checkout branch master(2.3)
       - name: Checkout branch master
         uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}
         with: 
           ref: 'master'
       
+      # checkout branch 2.2
+      - name: Checkout branch 2.2
+        uses: actions/checkout@v2
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }} 
+        with: 
+          ref: '2.2'
+
       # checkout branch 2.1
       - name: Checkout branch 2.1
         uses: actions/checkout@v2
@@ -112,8 +119,8 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
-      - name: Lerna publish 2.2 beta
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') && steps.version.outputs.is_stable != 'true' }}
+      - name: Lerna publish 2.3
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') && steps.version.outputs.is_stable == 'true' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -126,19 +133,33 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
-      - name: Merge master -> 2.2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.2') }}  # && steps.version.outputs.is_stable == 'true'}}
+      - name: Lerna publish 2.3 beta
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') && steps.version.outputs.is_stable != 'true' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag next
+          git add . 
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git push
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          
+      - name: Merge master -> 2.3
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
           from_branch: master
-          target_branch: 2.2
+          target_branch: 2.3
           github_token: ${{ github.token }}
 
-      - name: Sleep 120s, wait for npm cache
+      - name: Sleep 600s, wait for npm cache
         uses: juliangruber/sleep-action@v1
         with:
-          time: 120s
+          time: 600s
 
       - name: Create Docker Release
         # if: steps.version.outputs.is_stable == 'true'
