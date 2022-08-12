@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-qywx",
-    "version": "2.3.0-beta.3",
+    "version": "2.3.0-beta.4",
     "private": false,
     "description": "",
     "publishConfig": {
@@ -34,8 +34,8 @@
     "devDependencies": {
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
-        "steedos-server": "2.3.0-beta.3"
+        "steedos-server": "2.3.0-beta.4"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
-    "gitHead": "bb746c90035f38b361011e4b10f0993a390e8355"
+    "gitHead": "04dec60fc62988742fcf63181d26f584f5995196"
 }
