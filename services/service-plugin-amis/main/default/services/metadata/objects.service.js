@@ -228,14 +228,12 @@ module.exports = {
                     fieldsArr.push(field)
                 })
                 return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
-                    if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
-                        return {
-                            value: field.name,
-                            label: field.label || field.name,
-                            group: field.group,
-                            readonly: field.readonly,
-                            required: field.required
-                        }
+                    return {
+                        value: field.name,
+                        label: field.label || field.name,
+                        group: field.group,
+                        readonly: field.readonly,
+                        required: field.required
                     }
                 })));
             }
@@ -264,9 +262,7 @@ module.exports = {
                     fieldsArr.push(field)
                 })
                 return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
-                    if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
-                        return field.group
-                    }
+                    return field.group
                 })));
             }
         },
