@@ -7,7 +7,6 @@
             "persistData": false,
             "promptPageLeave": true,
             "name": "form_edit_${recordId}",
-            "debug": true,
             "title": "",
             "api": {
                 "method": "post",
