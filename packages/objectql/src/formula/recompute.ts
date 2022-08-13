@@ -1,16 +1,17 @@
 import { getSteedosSchema } from '../index';
 import { SteedosFieldFormulaTypeConfig } from './type';
-import { checkUserSessionNotRequiredForFieldFormulas } from './util';
+import { checkCurrentUserIdNotRequiredForFieldFormulas } from './util';
 import { getFieldFormulaConfig, getQuotedByFieldFormulaConfigs } from './field_formula';
 import { computeFieldFormulaValue, pickFieldFormulaVarFields, updateQuotedByObjectFieldFormulaValue } from './core';
 import { getQuotedByFieldSummaryConfigs, recomputeFieldSummaryValues } from '../summary';
 
 const runCurrentFieldFormulas = async function (fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) {
+    const currentUserId = userSession ? userSession.userId : undefined;
     const { field_name: fieldName, object_name: objectName } = fieldFormulaConfig;
     const formulaVarFields = pickFieldFormulaVarFields(fieldFormulaConfig);
     const docs = await getSteedosSchema().getObject(objectName).find({ filters: [], fields: formulaVarFields })
     for (const doc of docs) {
-        const value = await computeFieldFormulaValue(doc, fieldFormulaConfig, userSession);
+        const value = await computeFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
         let setDoc = {};
         setDoc[fieldName] = value;
         await getSteedosSchema().getObject(objectName).directUpdate(doc._id, setDoc);
@@ -55,8 +56,9 @@ export const recomputeFormulaValues = async (fieldId: string, userSession: any) 
  * @param fieldFormulaConfig 
  */
 export const recomputeFieldFormulaValues = async (fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) => {
-    if (!userSession) {
-        checkUserSessionNotRequiredForFieldFormulas(fieldFormulaConfig);
+    const currentUserId = userSession ? userSession.userId : undefined;
+    if (!currentUserId) {
+        checkCurrentUserIdNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
     await runCurrentFieldFormulas(fieldFormulaConfig, userSession);
     return true;
