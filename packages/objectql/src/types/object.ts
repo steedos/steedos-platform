@@ -1756,9 +1756,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
             else {
-                let currentUserId = userSession ? userSession.userId : undefined;
                 if(method !== "delete"){
-                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
+                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
                 }
                 // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
                 // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946

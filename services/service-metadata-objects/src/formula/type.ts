@@ -1,4 +1,4 @@
-// 公式内容中表示userSession变量的占位符
+// 公式内容中表示user变量的占位符
 export const FormulaUserKey = "$user";
 
 /**
