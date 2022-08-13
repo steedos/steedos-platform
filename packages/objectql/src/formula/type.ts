@@ -65,6 +65,7 @@ export type SteedosFormulaVarTypeConfig = {
     key: string,
     paths?: Array<SteedosFormulaVarPathTypeConfig>,
     is_user_var?: boolean,
+    is_user_session_var?: boolean,
     is_simple_var?: boolean //当不传入objectApiName时变量上设置该属性表示一个普通的变量，此时paths为空
 }
 

@@ -148,8 +148,8 @@ export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFiel
  * @param configs
  */
 export const isUserSessionRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
-    let required = !!vars.find(({ is_user_var: isUserVar })=>{
-        return isUserVar;
+    let required = !!vars.find(({ is_user_var: isUserVar, is_user_session_var: isUserSessionVar })=>{
+        return isUserVar || isUserSessionVar;
     });
     return required;
 }

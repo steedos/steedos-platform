@@ -65,16 +65,13 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
     const spaceId = userSession?.spaceId;
     const currentUserId = userSession?.userId;
     if (vars && vars.length) {
-        for (let { key, paths, is_user_var: isUserVar, is_simple_var: isSimpleVar } of vars) {
+        for (let { key, paths, is_user_var: isUserVar, is_user_session_var: isUserSessionVar, is_simple_var: isSimpleVar } of vars) {
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
-            if (isUserVar) {
+            if (isUserVar || isUserSessionVar) {
                 if (!userSession) {
                     throw new Error(`computeFormulaParams:The param 'userSession' is required for the formula var key ${key} while running`);
-                }
-                if (!spaceId) {
-                    throw new Error(`computeFormulaParams:The 'space' property is required for the doc of the formula var key ${key} while running`);
                 }
                 // if (!currentUserId) {
                 //     throw new Error(`computeFormulaParams:The param 'currentUserId' is required for the formula var key ${key}`);
@@ -89,6 +86,22 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                 // 普通变量，取参数值时直接取值，而不用走变量上的paths属性。
                 // 注意未传入objectName时，公式中的user var的isSimpleVar为false，还是走下面的paths取值逻辑。
                 tempValue = <any>doc[key];
+                params.push({
+                    key: key,
+                    value: tempValue
+                });
+                continue;
+            }
+            if(isUserSessionVar){
+                // $userSession变量，取参数值时直接提取值，而不用走变量上的paths属性。
+                tempValue = _.reduce(key.split("."), function(reslut, next, index) {
+                    if (index === 0) {
+                        return reslut;
+                    }
+                    else{
+                        return reslut[next];
+                    }
+                }, userSession);
                 params.push({
                     key: key,
                     value: tempValue
