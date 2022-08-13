@@ -1,8 +1,10 @@
 import { SteedosObjectTypeConfig, getObjectConfig, getSteedosSchema } from '../types';
 import { SteedosFormulaOptions } from './type';
 import { computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
-import { isCurrentUserIdRequiredForFormulaVars } from './util';
+import { isUserSessionRequiredForFormulaVars } from './util';
 import { JsonMap } from "@salesforce/ts-types";
+import { getSessionByUserId } from '@steedos/auth';
+import _ = require('lodash')
 
 export * from './type'
 export * from './util'
@@ -34,10 +36,14 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
     const objectConfig = objectName ? getObjectConfig(objectName) : null;
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, objectConfig);
     const vars = varsAndQuotes.vars;
-    if (!currentUserId) {
-        const required = isCurrentUserIdRequiredForFormulaVars(vars);
+    let userSession: any;
+    if(currentUserId && spaceId){
+        userSession = await getSessionByUserId(currentUserId, spaceId);
+    }
+    if (_.isEmpty(userSession)) {
+        const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
-            throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
+            throw new Error(`The param 'userSession' is required for formula ${formula.replace("$", "\\$")}`);
         }
     }
     let doc: any = {};
@@ -51,10 +57,7 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
         }
     }
 
-    if(spaceId){
-        doc.space = spaceId;
-    }
-    let params = await computeFormulaParams(doc, vars, currentUserId);
+    let params = await computeFormulaParams(doc, vars, userSession);
     return runFormula(formula, params, options, {objectName});
 }
 
@@ -64,17 +67,19 @@ async function _computeSimpleFormula(formula: string, data: any, currentUserId?:
     // objectConfig参数值设置为null传入computeFormulaVarsAndQuotes表示计算不带objectConfig参数的普通公式变量
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, null);
     const vars = varsAndQuotes.vars;
-    if (!currentUserId) {
-        const required = isCurrentUserIdRequiredForFormulaVars(vars);
+
+    let userSession: any;
+    if(currentUserId && spaceId){
+        userSession = await getSessionByUserId(currentUserId, spaceId);
+    }
+    if (_.isEmpty(userSession)) {
+        const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
-            throw new Error(`The param 'currentUserId' is required for formula ${formula.replace("$", "\\$")}`);
+            throw new Error(`The param 'userSession' is required for formula ${formula.replace("$", "\\$")}`);
         }
     }
-    if(spaceId){
-        data.space = spaceId;
-    }
 
-    let params = await computeFormulaParams(data, vars, currentUserId);
+    let params = await computeFormulaParams(data, vars, userSession);
     return runFormula(formula, params, options);
 }
 

@@ -67,7 +67,7 @@ export class FormulaActionHandler{
      */
     async computeFormulaVarAndQuotes(formulaVar: string, objectConfig: any,  quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFormulaVarTypeConfig>){
         let isSimpleVar = objectConfig === null;//明确传入null时表示要计算的是普通变量。
-        // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
+        // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是user变量
         let isUserVar = new RegExp(`^${FormulaUserKey.replace("$","\\$")}\\b`).test(formulaVar);
         let varItems = formulaVar.split(".");
         let paths: Array<SteedosFormulaVarPathTypeConfig> = [];
@@ -89,7 +89,7 @@ export class FormulaActionHandler{
             return;
         }
         if (isUserVar) {
-            // 如果是userSession变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
+            // 如果是user变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
             formulaVarItem.is_user_var = true;
             // vars.push(formulaVarItem);
             // return;
