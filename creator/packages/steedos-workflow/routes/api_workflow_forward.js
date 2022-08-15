@@ -265,6 +265,11 @@ JsonRoutes.add('post', '/api/workflow/forward', function (req, res, next) {
 			return step.step_type == 'start';
 		})
 
+		// 流程转发功能修改为，开始节点有编辑权限的字段的值进行复制，无编辑权限的字段值不进行复制 #3748
+		if (action_type === 'forward') {
+			new_values = uuflowManager.getApproveValues(new_values, start_step.permissions, flow.form, flow.current.form_version);
+		}
+
 		// 新建申请单时，instances记录流程名称、流程分类名称 #1313
 		var category_name = "";
 		if (form.category) {
