@@ -1,0 +1,18 @@
+{
+  "/_app": "pages/_app.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/_document": "pages/_document.js",
+  "/app/[app_id]/[tab_id]/[record_id]/[related_object_name]/grid": "pages/app/[app_id]/[tab_id]/[record_id]/[related_object_name]/grid.html",
+  "/_error": "pages/_error.js",
+  "/app/[app_id]/[tab_id]": "pages/app/[app_id]/[tab_id].js",
+  "/app/[app_id]/[tab_id]/view/new": "pages/app/[app_id]/[tab_id]/view/new.js",
+  "/app/[app_id]/[tab_id]/grid/[listview_id]": "pages/app/[app_id]/[tab_id]/grid/[listview_id].js",
+  "/": "pages/index.html",
+  "/salesforce": "pages/salesforce.html",
+  "/app/[app_id]/[tab_id]/view/[record_id]": "pages/app/[app_id]/[tab_id]/view/[record_id].js",
+  "/app/[app_id]": "pages/app/[app_id].js",
+  "/app": "pages/app.js",
+  "/app/[app_id]/page/[page_id]": "pages/app/[app_id]/page/[page_id].js",
+  "/login": "pages/login.js",
+  "/404": "pages/404.html"
+}

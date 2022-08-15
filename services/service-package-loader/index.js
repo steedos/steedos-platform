@@ -25,8 +25,11 @@ module.exports = {
      */
     settings: {
         path: '', // 扫描加载元数据的路径
-        name: '', // service name
-        loadedPackagePublicFiles: false
+        name: '', // service name,
+        loadedPackagePublicFiles: false,
+        packageInfo: {
+            loadPublicFolder: true, // 是否加载public文件夹
+        }
     },
 
     /**
@@ -132,6 +135,9 @@ module.exports = {
         },
         loadPackagePublicFiles: {
             handler(packagePath) {
+                if (!this.settings.packageInfo.loadPublicFolder) {
+                    return;
+                }
                 let publicPath = path.join(packagePath, 'public');
                 try {
                     if (!fs.existsSync(publicPath) ||this.settings.loadedPackagePublicFiles || typeof WebApp == 'undefined') {
