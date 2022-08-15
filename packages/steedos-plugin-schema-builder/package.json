@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "2.1.117",
+    "version": "2.1.118",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -25,7 +25,7 @@
     "devDependencies": {
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
-        "@steedos/accounts": "2.1.117",
+        "@steedos/accounts": "2.1.118",
         "@steedos/steedos-plugin-workflow": "^2.0.8",
         "@types/react": "^16.9.22",
         "@types/react-dom": "^16.8.4",
@@ -46,7 +46,7 @@
         "react-scrollbars-custom": "^4.0.21",
         "stats": "^1.0.0",
         "stats.js": "^0.17.0",
-        "steedos-server": "2.1.117",
+        "steedos-server": "2.1.118",
         "typescript": "^3.8.2",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",
@@ -56,5 +56,5 @@
     "resolutions": {
         "**/mongodb": "3.5.10"
     },
-    "gitHead": "9ba69a4a5782ae1e2da1ee651a0cffec6a705c8c"
+    "gitHead": "4d6a232ba8d01a427979ff1e01283873f0205b66"
 }

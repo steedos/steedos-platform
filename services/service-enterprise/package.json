@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "index.js",
-  "version": "2.1.117",
+  "version": "2.1.118",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,13 +11,13 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/service-charts": "2.1.117",
-    "@steedos/service-metadata-server": "2.1.117",
-    "@steedos/service-mongodb-server": "2.1.117",
-    "@steedos/service-package-loader": "2.1.117",
-    "@steedos/service-package-registry": "2.1.117",
-    "@steedos/service-pages": "2.1.117",
-    "@steedos/service-steedos-server": "2.1.117",
+    "@steedos/service-charts": "2.1.118",
+    "@steedos/service-metadata-server": "2.1.118",
+    "@steedos/service-mongodb-server": "2.1.118",
+    "@steedos/service-package-loader": "2.1.118",
+    "@steedos/service-package-registry": "2.1.118",
+    "@steedos/service-pages": "2.1.118",
+    "@steedos/service-steedos-server": "2.1.118",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
     "aws-sdk": "2.0.23",
@@ -55,5 +55,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9ba69a4a5782ae1e2da1ee651a0cffec6a705c8c"
+  "gitHead": "4d6a232ba8d01a427979ff1e01283873f0205b66"
 }

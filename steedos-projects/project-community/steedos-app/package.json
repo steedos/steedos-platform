@@ -1,6 +1,6 @@
 {
   "name": "steedos-community-default-package",
-  "version": "2.1.117",
+  "version": "2.1.118",
   "description": "A Steedos App",
   "main": "package.service.js",
   "license": "MIT",

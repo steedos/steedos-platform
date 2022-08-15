@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-api",
-  "version": "2.1.117",
+  "version": "2.1.118",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.1.117",
+    "@steedos/auth": "2.1.118",
     "graphql-type-json": "^0.3.2",
     "moleculer-apollo-server": "^0.3.3",
     "moleculer-web": "^0.10.4"
@@ -13,5 +13,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9ba69a4a5782ae1e2da1ee651a0cffec6a705c8c"
+  "gitHead": "4d6a232ba8d01a427979ff1e01283873f0205b66"
 }
