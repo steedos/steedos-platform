@@ -30,29 +30,64 @@ module.exports = {
     const appId = Session.get("app_id");
     const page = Steedos.Page.getPage('form', appId, object_name);
     const title = t('New') + ' ' + object.label;
-    const options = {
-      gridName: gridName
-    };
-    const props = {
-      width: "unset",
-      style: {
-        top: "50px",
-        bottom: "50px",
-        left: "50px",
-        right: "50px",
-        padding: "0px",
-        margin: "0px",
-        width: "unset"
-      }, 
-      className: "absolute"
-    };
-    Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
-      appId: appId,
-      objectName: object_name,
-      title: title,
-      data: initialValues,
-    }), {
-      props: props
-    });
+    if (page && page.schema) {
+      const options = {
+        gridName: gridName
+      };
+      const fullScreenProps = {
+        width: "unset",
+        style: {
+          top: "50px",
+          bottom: "50px",
+          left: "50px",
+          right: "50px",
+          padding: "0px",
+          margin: "0px",
+          width: "unset"
+        }, 
+        className: "absolute"
+      };
+      Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+        appId: appId,
+        objectName: object_name,
+        title: title,
+        data: initialValues,
+      }), {
+        props: fullScreenProps
+      });
+    }
+  },
+  standard_edit: function (object_name, record_id, fields){
+		var object = Creator.getObject(object_name);
+    var gridName = this.action.gridName;
+    const appId = Session.get("app_id");
+    const page = Steedos.Page.getPage('form', appId, object_name, record_id);
+    const title = t('Edit') + ' ' + object.label;
+    if (page && page.schema) {
+      const options = {
+        gridName: gridName
+      };
+      const fullScreenProps = {
+        width: "unset",
+        style: {
+          top: "50px",
+          bottom: "50px",
+          left: "50px",
+          right: "50px",
+          padding: "0px",
+          margin: "0px",
+          width: "unset"
+        }, 
+        className: "absolute"
+      };
+      Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+        appId: appId,
+        objectName: object_name,
+        title: title,
+        recordId: record_id
+      }), {
+        props: fullScreenProps
+      });
+    }
   }
 }
