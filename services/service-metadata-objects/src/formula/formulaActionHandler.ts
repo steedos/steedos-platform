@@ -260,9 +260,9 @@ export class FormulaActionHandler{
             // console.log('key', key);
             // const field = config.fields[key]
             if (field.type === "formula") {
-                if(datasource !== "meteor" && datasource !== "default"){
-                    throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
-                }
+                // if(datasource !== "meteor" && datasource !== "default"){
+                //     throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
+                // }
                 try {
                     // 这里一定要加try catch，否则某个字段报错后，后续其他字段及其他对象就再也没有正常加载了
                     const fieldFormulaConfig = await this.getObjectFieldFormulaConfig(clone(field), config)
