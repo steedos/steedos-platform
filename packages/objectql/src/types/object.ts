@@ -1140,6 +1140,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return ;
                 }
 
+                // 自增字段移除omit属性，添加visible_on属性。
+                if(field.generated){
+                    field.readonly = true
+                    delete field.omit;
+                    if(isNil(field.visible_on)){
+                        field.visible_on = "{{false}}"
+                    }
+                }
+
                 let {read, edit} = fieldPermission || {read: !field.hidden, edit: !field.hidden && !field.readonly};
 
                 // 通用必填字段始终可见、可编辑
@@ -1155,14 +1164,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 //不可查看: 配置了字段权限且不可查看; 没有配置字段权限，字段的hidden为true
                 if(read === false){
                     return;
-                }
-
-                // 自增字段移除omit属性，添加visible_on属性。
-                if(field.generated){
-                    delete field.omit;
-                    if(isNil(field.visible_on)){
-                        field.visible_on = "{{false}}"
-                    }
                 }
 
                 //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
