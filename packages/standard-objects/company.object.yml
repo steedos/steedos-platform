@@ -9,6 +9,7 @@ fields:
   name:
     label: Name
     type: text
+    required: true
   code: 
     label: Code
     type: text
