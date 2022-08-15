@@ -989,11 +989,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(record_id)
             return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
         else{
-            if(object_name === 'meeting'){
-                return absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
-            }else{
-                return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
-            }
+            return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
         }
     }
 

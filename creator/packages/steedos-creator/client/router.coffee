@@ -117,16 +117,13 @@ FlowRouter.route '/app/:app_id/home',
 		Session.set("app_id", app_id)
 		Session.set("admin_template_name", null)
 		Session.set("app_home_active", true)
-		if FlowRouter.getParam("app_id") is "meeting"
-			FlowRouter.go('/app/' + app_id + '/meeting/calendar')
-		else
+		main = 'dashboard'
+		if Steedos.isMobile()
+			Session.set('hidden_header', true)
 			main = 'dashboard'
-			if Steedos.isMobile()
-				Session.set('hidden_header', true)
-				main = 'dashboard'
-			Steedos.setAppTitle([t("Home"), "Steedos"].join(" | "));
-			BlazeLayout.render Creator.getLayout(),
-				main: main
+		Steedos.setAppTitle([t("Home"), "Steedos"].join(" | "));
+		BlazeLayout.render Creator.getLayout(),
+			main: main
 	triggersExit: [(context, redirect) ->
 		Session.set("app_home_active", false);
 		if Steedos.isMobile()
@@ -312,10 +309,7 @@ objectRoutes.route '/',
 				list_view = Creator.getObjectFirstListView(object_name)
 				list_view_id = list_view?._id
 				app_id = context.params.app_id
-				if object_name == "meeting"
-					url = "/app/" + app_id + "/" + object_name + "/calendar/"
-				else
-					url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+				url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
 				redirect(url)
 	 ],
 	action: (params, queryParams)->
