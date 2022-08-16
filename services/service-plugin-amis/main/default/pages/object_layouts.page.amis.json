@@ -124,36 +124,10 @@
                                                     "className": "w-10"
                                                 },
                                                 {
-                                                    "name": "button_name",
+                                                    "name": "button_name_label",
                                                     "label": "名称",
-                                                    "quickEdit": {
-                                                        "type": "select",
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForButton:button_name}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        "joinValues": false,
-                                                        "extractValue": true,
-                                                        "labelField": "label",
-                                                        "valueField": "value",
-                                                        "source": "${buttons_options}",
-                                                        "searchable": true
-                                                    },
-                                                    "affixFooter": false,
-                                                    "placeholder": "-",
-                                                    "className": "popOver"
+                                                    "type": "tpl",
+                                                    "tpl": "${buttons_options|filter:value:equals:button_name|pick:label}"
                                                 },
                                                 {
                                                     "name": "visible_on",
@@ -271,30 +245,10 @@
                                                     "value": "${index + 1}"
                                                 },
                                                 {
-                                                    "name": "field_name",
+                                                    "name": "field_name_label",
                                                     "label": "字段",
-                                                    "quickEdit": {
-                                                        "type": "select",
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForField:field_name}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        "source": "${fields_options}",
-                                                        "searchable": true
-                                                    },
-                                                    "affixFooter": false,
-                                                    "placeholder": "-",
-                                                    "className": "popOver"
+                                                    "type": "tpl",
+                                                    "tpl": "${fields_options|filter:value:equals:field_name|pick:label}"
                                                 },
                                                 {
                                                     "name": "is_readonly",
@@ -555,37 +509,10 @@
                                                     "value": "${index + 1}"
                                                 },
                                                 {
-                                                    "name": "related_field_fullname",
+                                                    "name": "related_field_fullname_label",
                                                     "label": "子表名称",
-                                                    "quickEdit": {
-                                                        "type": "select",
-                                                        "className": "m-0",
-                                                        "labelClassName": "text-left",
-                                                        "mode": "inline",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "setValue",
-                                                                        "args": {
-                                                                            "value": "${event.data|quickEidtSaveForRelatedList:related_field_fullname}"
-                                                                        },
-                                                                        "componentId": "object-layout-form"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        "joinValues": false,
-                                                        "extractValue": true,
-                                                        "labelField": "label",
-                                                        "valueField": "value",
-                                                        "checkAll": false,
-                                                        "source": "${related_lists_options}",
-                                                        "searchable": true
-                                                    },
-                                                    "placeholder": "-",
-                                                    "affixFooter": false,
-                                                    "className": "popOver"
+                                                    "type": "tpl",
+                                                    "tpl": "${related_lists_options|filter:value:equals:related_field_fullname|pick:label}"
                                                 },
                                                 {
                                                     "name": "label",
