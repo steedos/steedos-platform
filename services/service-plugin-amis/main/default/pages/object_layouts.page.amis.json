@@ -751,15 +751,8 @@
                                             "source": "${related_lists}",
                                             "footable": false,
                                             "columnsTogglable": true,
-                                            "perPageAvailable": [
-                                                10
-                                            ],
                                             "messages": {},
-                                            "bodyClassName": "",
-                                            "tableClassName": "min-w-max",
-                                            "headerClassName": "",
-                                            "footerClassName": "",
-                                            "toolbarClassName": ""
+                                            "tableClassName": "min-w-max"
                                         }
                                     ],
                                     "id": "u:2d4c3fe14984",
