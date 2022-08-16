@@ -312,7 +312,10 @@ module.exports = {
                         type: "detail",
                     }
                 */
-                relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+                const relationsInfo = await object.getRelationsInfo();
+                const details = relationsInfo && relationsInfo.details;
+                const lookupDetails = relationsInfo && relationsInfo.lookup_details;
+                relatedLists = relatedLists.concat(_.union(details, lookupDetails));
 
                 if(objectConfig.enable_tasks){
                     relatedLists.push("tasks.related_to")
