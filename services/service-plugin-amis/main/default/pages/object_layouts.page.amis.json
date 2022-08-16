@@ -103,11 +103,11 @@
                             "body": [
                                 {
                                     "type": "panel",
-                                    "title": "操作",
+                                    "title": "按钮",
                                     "body": [
                                         {
                                             "name": "buttons",
-                                            "label": "操作",
+                                            "label": "按钮",
                                             "type": "crud",
                                             "strictMode": false,
                                             "affixHeader": false,
@@ -162,7 +162,7 @@
                                                     "type": "action",
                                                     "actionType": "dialog",
                                                     "dialog": {
-                                                        "title": "选择操作",
+                                                        "title": "选择按钮",
                                                         "body": [
                                                             {
                                                                 "type": "transfer",
@@ -194,7 +194,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "label": "选择操作"
+                                                    "label": "选择按钮"
                                                 }
                                             ],
                                             "source": "${buttons}"
@@ -213,7 +213,7 @@
                             "api": {
                                 "method": "get",
                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
-                                "adaptor": "// 把”选择操作“弹出窗口中设置的操作转为主表单buttons字段值格式\namis.registerFilter('convertDataForButtons', function (input) {\n  let pickedButtons = input.picked_buttons || [];\n  const superButtons = _.keyBy(input.__super.buttons, 'button_name');\n  if (typeof pickedButtons === \"string\") {\n    pickedButtons = pickedButtons.split(\",\");\n  }\n  const convertedButtons = pickedButtons.map(function (key) {\n    return superButtons[key] || {\n      button_name: key\n    }\n  });\n  return {\n    buttons: convertedButtons\n  }\n});\n\n// 操作列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForButton', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const button_name = rowValue.button_name;\n  rowValue[prop_name] = currentPropValue;\n  let newButtons = formValue.buttons.map(function (item) {\n    if (item.button_name == button_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  return {\n    buttons: newButtons\n  }\n});\n\n// 清空主表单buttons字段值\namis.registerFilter('clearButtons', function (input) {\n  return {\n    buttons: []\n  }\n});\n\n\n// 新建页面布局时初始化buttons默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\namis.registerFilter('initDefaultButtons', function (input) {\n  const superValues = this.data.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    buttons: superValues.buttons,\n  }\n});\n\nlet data = payload.data;\ndata.buttons_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                "adaptor": "// 把”选择按钮“弹出窗口中设置的按钮转为主表单buttons字段值格式\namis.registerFilter('convertDataForButtons', function (input) {\n  let pickedButtons = input.picked_buttons || [];\n  const superButtons = _.keyBy(input.__super.buttons, 'button_name');\n  if (typeof pickedButtons === \"string\") {\n    pickedButtons = pickedButtons.split(\",\");\n  }\n  const convertedButtons = pickedButtons.map(function (key) {\n    return superButtons[key] || {\n      button_name: key\n    }\n  });\n  return {\n    buttons: convertedButtons\n  }\n});\n\n// 按钮列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForButton', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const button_name = rowValue.button_name;\n  rowValue[prop_name] = currentPropValue;\n  let newButtons = formValue.buttons.map(function (item) {\n    if (item.button_name == button_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  return {\n    buttons: newButtons\n  }\n});\n\n// 清空主表单buttons字段值\namis.registerFilter('clearButtons', function (input) {\n  return {\n    buttons: []\n  }\n});\n\n\n// 新建页面布局时初始化buttons默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\namis.registerFilter('initDefaultButtons', function (input) {\n  const superValues = this.data.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    buttons: superValues.buttons,\n  }\n});\n\nlet data = payload.data;\ndata.buttons_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                 "sendOn": "!!this.object_name"
                             },
                             "className": "col-span-2 m-0",
