@@ -65,10 +65,11 @@ const setDetailOwner = async function (doc, object_name, userId) {
             }
         };
     }
-    if (masterRecordOwner) {
-        /* masterRecordOwner为空说明子表上未选择关联你父记录，此时owner会默认取当前用户的owner */
-        doc.owner = masterRecordOwner;
-    }
+    // if (masterRecordOwner) {
+    //     /* masterRecordOwner为空说明子表上未选择关联你父记录，此时owner会默认取当前用户的owner */
+    //     doc.owner = masterRecordOwner;
+    // }
+    doc.owner = userId || masterRecordOwner
 }
 
 const beforeInsertMasterDetail = async function () {
