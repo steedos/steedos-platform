@@ -325,7 +325,6 @@
                                                                 ]
                                                             }
                                                         },
-                                                        "inputClassName": "w-xs",
                                                         "source": "${field_groups|pick:group_name}",
                                                         "checkAll": false,
                                                         "selectFirst": false,
@@ -622,6 +621,7 @@
                                                                 "value": "desc"
                                                             }
                                                         ],
+                                                        "defaultValue": "asc",
                                                         "extractValue": true,
                                                         "clearable": true,
                                                         "labelField": "label",
@@ -749,8 +749,17 @@
                                                 }
                                             ],
                                             "source": "${related_lists}",
-                                            "columnsTogglable": false,
-                                            "footable": false
+                                            "footable": false,
+                                            "columnsTogglable": true,
+                                            "perPageAvailable": [
+                                                10
+                                            ],
+                                            "messages": {},
+                                            "bodyClassName": "",
+                                            "tableClassName": "min-w-max",
+                                            "headerClassName": "",
+                                            "footerClassName": "",
+                                            "toolbarClassName": ""
                                         }
                                     ],
                                     "id": "u:2d4c3fe14984",
@@ -837,5 +846,6 @@
     "bodyClassName": "p-0",
     "name": "page_edit_${recordId}",
     "initApi": null,
-    "initFetch": null
+    "initFetch": null,
+    "className": "page-form-object_layouts"
 }
