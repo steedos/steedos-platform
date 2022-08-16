@@ -136,7 +136,6 @@
                                                         "type": "input-text",
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -304,7 +303,6 @@
                                                     "quickEdit": {
                                                         "type": "select",
                                                         "className": "m-0",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -339,7 +337,6 @@
                                                         "tpl": "<b><%=data.visible_on%></b>",
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -543,8 +540,8 @@
                                                     "quickEdit": {
                                                         "type": "transfer-picker",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                        "mode": "inline",
                                                         "searchable": true,
+                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -569,7 +566,6 @@
                                                         "type": "transfer-picker",
                                                         "joinValues": false,
                                                         "extractValue": true,
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -584,7 +580,8 @@
                                                             }
                                                         },
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                        "searchable": true
+                                                        "searchable": true,
+                                                        "mode": "inline"
                                                     },
                                                     "breakpoint": "*"
                                                 },
@@ -596,7 +593,6 @@
                                                         "tpl": null,
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -638,7 +634,6 @@
                                                         "tpl": "<b><%=data.filters%></b>",
                                                         "className": "col-span-2 m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -662,7 +657,6 @@
                                                         "type": "textarea",
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -688,7 +682,6 @@
                                                         "precision": 0,
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [

@@ -12,6 +12,10 @@
                 /*格式内的单元格空白太多*/
                 display: block!important;
             }
+            .page-form-object_layouts .antd-Table .antd-Field--quickEditable .antd-PlainField{
+                /*快速编辑只读状态时编辑按钮不应该换行显示*/
+                display: inline;
+            }
         </style>`);
         $("head").append(styleCss);
     } catch (error) {
