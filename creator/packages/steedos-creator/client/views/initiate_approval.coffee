@@ -40,6 +40,8 @@ Template.initiate_approval.events
                 # 跳转到APPS草稿
                 Steedos.openWindow Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id)
                 Modal.hide(t)
+                SteedosUI.reloadRecord(object_name, record_id)
+                FlowRouter.reload()
                 return
             error: (xhr, msg, ex) ->
                 $(document.body).removeClass 'loading'
