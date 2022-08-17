@@ -306,7 +306,6 @@
                                                         "source": "${field_groups|pick:group_name}",
                                                         "checkAll": false,
                                                         "selectFirst": false,
-                                                        "searchable": true,
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -326,7 +325,9 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
+                                                        },
+                                                        "searchable": true,
+                                                        "clearable": true
                                                     }
                                                 },
                                                 {
