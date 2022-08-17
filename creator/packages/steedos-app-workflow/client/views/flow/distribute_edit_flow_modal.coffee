@@ -59,6 +59,9 @@ Template.distribute_edit_flow_modal.helpers
 	end_notification: ->
 		return this.flow?.distribute_end_notification
 
+	upload_after_being_distributed: ->
+		return this.flow?.upload_after_being_distributed
+
 Template.distribute_edit_flow_modal.events
 	'click #distribute_edit_flow_modal_ok': (event, template)->
 		selected_values = $("#distribute_edit_flow_select_users")[0].dataset.values
@@ -74,7 +77,7 @@ Template.distribute_edit_flow_modal.events
 			step_flows.push({_id: s._id, distribute_optional_flows: AutoForm.getFieldValue("distribute_flows", s._id)})
 
 		$("body").addClass("loading")
-		Meteor.call 'update_distribute_settings', flow_id, selected_users_id, step_flows, $('#distribute_to_self')[0].checked,$('#distribute_end_notification')[0].checked, (err, result)->
+		Meteor.call 'update_distribute_settings', flow_id, selected_users_id, step_flows, $('#distribute_to_self')[0].checked,$('#distribute_end_notification')[0].checked,$('#upload_after_being_distributed')[0].checked, (err, result)->
 			$("body").removeClass("loading")
 			if err
 				toastr.error TAPi18n.__(err.reason)

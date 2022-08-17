@@ -21,6 +21,9 @@
 						<div class="checkbox">
 							<label><input type="checkbox" id="distribute_end_notification" checked="{{#if end_notification}}checked{{/if}}">&nbsp;{{_ 'distribute_end_notification'}}</label>
 						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" id="upload_after_being_distributed" checked="{{#if upload_after_being_distributed}}checked{{/if}}">&nbsp;{{_ 'flows_upload_after_being_distributed'}}</label>
+						</div>
 					</div>
 					{{#each allow_distribute_steps}}
 						<div class="form-group">

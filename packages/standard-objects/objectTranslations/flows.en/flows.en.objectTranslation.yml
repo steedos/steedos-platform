@@ -183,6 +183,10 @@ fields:
     label: Distribute to myself
     help: 
     description: 
+  upload_after_being_distributed:
+    label: Allow upload after being distributed
+    help: 
+    description: 
   name_formula:
     label: Formula of Title
     help: 

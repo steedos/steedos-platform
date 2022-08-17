@@ -183,6 +183,10 @@ fields:
     label: 分发给自己
     help: 
     description: 
+  upload_after_being_distributed:
+    label: 被分发后是否允许上传附件
+    help: 
+    description: 
   name_formula:
     label: 标题公式
     help: 
