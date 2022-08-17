@@ -542,7 +542,6 @@
                                                         "type": "transfer-picker",
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
                                                         "searchable": true,
-                                                        "mode": "inline",
                                                         "onEvent": {
                                                             "change": {
                                                                 "actions": [
@@ -581,8 +580,7 @@
                                                             }
                                                         },
                                                         "source": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                        "searchable": true,
-                                                        "mode": "inline"
+                                                        "searchable": true
                                                     },
                                                     "breakpoint": "*"
                                                 },
@@ -590,8 +588,6 @@
                                                     "name": "sort_order",
                                                     "label": "排序方式",
                                                     "quickEdit": {
-                                                        "type": "select",
-                                                        "tpl": null,
                                                         "className": "m-0",
                                                         "labelClassName": "text-left",
                                                         "onEvent": {
@@ -608,23 +604,17 @@
                                                             }
                                                         },
                                                         "joinValues": false,
-                                                        "options": [
-                                                            {
-                                                                "label": "正序",
-                                                                "value": "asc"
-                                                            },
-                                                            {
-                                                                "label": "倒序",
-                                                                "value": "desc"
-                                                            }
-                                                        ],
                                                         "extractValue": true,
                                                         "clearable": true,
                                                         "labelField": "label",
                                                         "valueField": "value",
-                                                        "mode": "inline"
+                                                        "mode_": "inline",
+                                                        "source": "${sort_order_options}",
+                                                        "type": "select"
                                                     },
-                                                    "breakpoint": "*"
+                                                    "breakpoint": "*",
+                                                    "type": "tpl",
+                                                    "tpl": "${sort_order_options|filter:value:equals:sort_order|pick:label}"
                                                 },
                                                 {
                                                     "name": "filters",
@@ -814,6 +804,18 @@
                         }
                     ]
                 }
+            },
+            "data": {
+                "sort_order_options": [
+                    {
+                        "label": "正序",
+                        "value": "asc"
+                    },
+                    {
+                        "label": "倒序",
+                        "value": "desc"
+                    }
+                ]
             }
         }
     ],
