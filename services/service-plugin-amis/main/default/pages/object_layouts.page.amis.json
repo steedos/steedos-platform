@@ -17,7 +17,7 @@
                     "recordId": "${recordId}",
                     "modalName": "${modalName}"
                 },
-                "requestAdaptor": "\n        \n        const formData = api.data.$;\n        for (key in formData){\n            // image、select等字段清空值后保存的空字符串转换为null。\n            if(formData[key] === ''){\n                formData[key] = null;\n            }\n        }\n        const objectName = api.data.objectName;\n        const fieldsName = Object.keys(formData);\n        delete formData.created;\n        delete formData.created_by;\n        delete formData.modified;\n        delete formData.modified_by;\n        delete formData._display;\n        \n        \n        let query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\n        if(formData.recordId){\n            query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n        };\n        delete formData._id;\n        let __saveData = JSON.stringify(JSON.stringify(formData));\n    \n        api.data = {query: query.replace('{__saveData}', __saveData)};\n        return api;\n    ",
+                "requestAdaptor": "\n        \n        const formData = api.data.$;\n        for (key in formData){\n            // image、select等字段清空值后保存的空字符串转换为null。\n            if(formData[key] === ''){\n                formData[key] = null;\n            }\n        }\n        const objectName = api.data.objectName;\n        const fieldsName = Object.keys(formData);\n        delete formData.created;\n        delete formData.created_by;\n        delete formData.modified;\n        delete formData.modified_by;\n        delete formData._display;\n        delete formData.sort_order_options;\n        delete formData.buttons_options;\n        delete formData.fields_options;\n        delete formData.field_groups_options;\n        delete formData.related_lists_options;\n        delete formData.related_object_fields_options;\n\n        let query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\n        if(formData.recordId){\n            query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n        };\n        delete formData._id;\n        let __saveData = JSON.stringify(JSON.stringify(formData));\n    \n        api.data = {query: query.replace('{__saveData}', __saveData)};\n        return api;\n    ",
                 "responseData": {
                     "recordId": "${record._id}"
                 },
@@ -46,7 +46,8 @@
                             "required": true,
                             "type": "input-text",
                             "className": "col-span-2 m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "id": "u:211102f479e9"
                         },
                         {
                             "name": "label",
@@ -54,7 +55,8 @@
                             "required": true,
                             "type": "input-text",
                             "className": "col-span-2 m-0",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "id": "u:1b3e658c6a5e"
                         },
                         {
                             "name": "object_name",
@@ -72,7 +74,8 @@
                                 "label": "Object"
                             },
                             "checkAll": false,
-                            "searchable": true
+                            "searchable": true,
+                            "id": "u:4e769995f638"
                         },
                         {
                             "name": "profiles",
@@ -96,7 +99,8 @@
                                 "adaptor": ""
                             },
                             "valueField": "name",
-                            "searchable": true
+                            "searchable": true,
+                            "id": "u:3c65447a8a6e"
                         },
                         {
                             "type": "service",
@@ -121,13 +125,15 @@
                                                     "label": "序号",
                                                     "type": "static",
                                                     "value": "${index + 1}",
-                                                    "className": "w-10"
+                                                    "className": "w-10",
+                                                    "id": "u:c59784421c37"
                                                 },
                                                 {
                                                     "name": "button_name_label",
                                                     "label": "名称",
                                                     "type": "tpl",
-                                                    "tpl": "${buttons_options|filter:value:equals:button_name|pick:label}"
+                                                    "tpl": "${buttons_options|filter:value:equals:button_name|pick:label}",
+                                                    "id": "u:302f8fadccd3"
                                                 },
                                                 {
                                                     "name": "visible_on",
@@ -150,7 +156,8 @@
                                                             }
                                                         },
                                                         "tpl": "<b><%=data.visible_on%></b>"
-                                                    }
+                                                    },
+                                                    "id": "u:3c35211aa1a0"
                                                 }
                                             ],
                                             "className": "col-span-2 m-0",
@@ -193,10 +200,12 @@
                                                             }
                                                         }
                                                     },
-                                                    "label": "选择按钮"
+                                                    "label": "选择按钮",
+                                                    "id": "u:1ac8afc8a9bb"
                                                 }
                                             ],
-                                            "source": "${buttons}"
+                                            "source": "${buttons}",
+                                            "id": "u:a5d43b752494"
                                         }
                                     ],
                                     "id": "u:1c6f542c9215",
@@ -241,13 +250,15 @@
                                                     "className": "w-10",
                                                     "label": "序号",
                                                     "type": "static",
-                                                    "value": "${index + 1}"
+                                                    "value": "${index + 1}",
+                                                    "id": "u:d1c2922699d3"
                                                 },
                                                 {
                                                     "name": "field_name_label",
                                                     "label": "字段",
                                                     "type": "tpl",
-                                                    "tpl": "${fields_options|filter:value:equals:field_name|pick:label}"
+                                                    "tpl": "${fields_options|filter:value:equals:field_name|pick:label}",
+                                                    "id": "u:b95c69a1cd84"
                                                 },
                                                 {
                                                     "name": "is_readonly",
@@ -270,8 +281,10 @@
                                                                     }
                                                                 ]
                                                             }
-                                                        }
-                                                    }
+                                                        },
+                                                        "id": "u:8cb44f3db16c"
+                                                    },
+                                                    "id": "u:5081e6e1af55"
                                                 },
                                                 {
                                                     "name": "is_required",
@@ -294,8 +307,10 @@
                                                             }
                                                         },
                                                         "tpl": null,
-                                                        "labelClassName": "text-left"
-                                                    }
+                                                        "labelClassName": "text-left",
+                                                        "id": "u:bbd1c15b6504"
+                                                    },
+                                                    "id": "u:e54afb5cc05c"
                                                 },
                                                 {
                                                     "name": "group",
@@ -328,7 +343,8 @@
                                                         },
                                                         "searchable": true,
                                                         "clearable": true
-                                                    }
+                                                    },
+                                                    "id": "u:e532b1949676"
                                                 },
                                                 {
                                                     "name": "visible_on",
@@ -352,7 +368,8 @@
                                                             }
                                                         }
                                                     },
-                                                    "breakpoint": "*"
+                                                    "breakpoint": "*",
+                                                    "id": "u:e3618b8b4c52"
                                                 }
                                             ],
                                             "className": "col-span-2 m-0",
@@ -396,7 +413,8 @@
                                                             }
                                                         }
                                                     },
-                                                    "label": "选择字段"
+                                                    "label": "选择字段",
+                                                    "id": "u:853b890ab524"
                                                 },
                                                 {
                                                     "type": "action",
@@ -442,9 +460,11 @@
                                                         },
                                                         "type": "dialog"
                                                     },
-                                                    "label": "设置分组"
+                                                    "label": "设置分组",
+                                                    "id": "u:ec9931ea883c"
                                                 }
-                                            ]
+                                            ],
+                                            "id": "u:22121edc42b1"
                                         }
                                     ],
                                     "id": "u:acfaf85221b7",
@@ -503,13 +523,15 @@
                                                     "label": "序号",
                                                     "className": "w-10",
                                                     "type": "static",
-                                                    "value": "${index + 1}"
+                                                    "value": "${index + 1}",
+                                                    "id": "u:a2f05dc83cd4"
                                                 },
                                                 {
                                                     "name": "related_field_fullname_label",
                                                     "label": "子表名称",
                                                     "type": "tpl",
-                                                    "tpl": "${related_lists_options|filter:value:equals:related_field_fullname|pick:label}"
+                                                    "tpl": "${related_lists_options|filter:value:equals:related_field_fullname|pick:label}",
+                                                    "id": "u:5204fc0fbe1c"
                                                 },
                                                 {
                                                     "name": "label",
@@ -532,8 +554,10 @@
                                                         },
                                                         "labelRemark": "默认为对象名称",
                                                         "className": "m-0",
-                                                        "labelClassName": "text-left"
-                                                    }
+                                                        "labelClassName": "text-left",
+                                                        "id": "u:5b30f2a71830"
+                                                    },
+                                                    "id": "u:1267e4351d66"
                                                 },
                                                 {
                                                     "name": "field_names",
@@ -563,7 +587,8 @@
                                                         "extractValue": true
                                                     },
                                                     "type": "tpl",
-                                                    "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>"
+                                                    "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>",
+                                                    "id": "u:ce65d4020107"
                                                 },
                                                 {
                                                     "name": "sort_field_name",
@@ -592,7 +617,8 @@
                                                         },
                                                         "searchable": true
                                                     },
-                                                    "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.sort_field_name && data.sort_field_name.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.sort_field_name%>"
+                                                    "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.sort_field_name && data.sort_field_name.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.sort_field_name%>",
+                                                    "id": "u:3dbee6a855c4"
                                                 },
                                                 {
                                                     "name": "sort_order",
@@ -624,7 +650,8 @@
                                                     },
                                                     "breakpoint": "*",
                                                     "type": "tpl",
-                                                    "tpl": "${sort_order_options|filter:value:equals:sort_order|pick:label}"
+                                                    "tpl": "${sort_order_options|filter:value:equals:sort_order|pick:label}",
+                                                    "id": "u:13cb3d304615"
                                                 },
                                                 {
                                                     "name": "filters",
@@ -648,7 +675,8 @@
                                                             }
                                                         }
                                                     },
-                                                    "breakpoint": "*"
+                                                    "breakpoint": "*",
+                                                    "id": "u:e4c367804b67"
                                                 },
                                                 {
                                                     "name": "visible_on",
@@ -672,7 +700,8 @@
                                                         },
                                                         "tpl": "<b><%=data.visible_on%></b>"
                                                     },
-                                                    "breakpoint": "*"
+                                                    "breakpoint": "*",
+                                                    "id": "u:1e1dc52d7c33"
                                                 },
                                                 {
                                                     "name": "page_size",
@@ -696,7 +725,8 @@
                                                             }
                                                         }
                                                     },
-                                                    "breakpoint": "*"
+                                                    "breakpoint": "*",
+                                                    "id": "u:f9bbd9567bbd"
                                                 }
                                             ],
                                             "className": "col-span-2 m-0",
@@ -738,14 +768,16 @@
                                                             }
                                                         }
                                                     },
-                                                    "label": "选择子表"
+                                                    "label": "选择子表",
+                                                    "id": "u:b9a5d3b611d7"
                                                 }
                                             ],
                                             "source": "${related_lists}",
                                             "footable": false,
                                             "columnsTogglable": true,
                                             "messages": {},
-                                            "tableClassName": "min-w-max"
+                                            "tableClassName": "min-w-max",
+                                            "id": "u:95aea10231d3"
                                         }
                                     ],
                                     "id": "u:2d4c3fe14984",
@@ -767,7 +799,8 @@
                             "className": "col-span-2 m-0",
                             "affixFooter": false
                         }
-                    ]
+                    ],
+                    "id": "u:4b4c1d86aa40"
                 }
             ],
             "panelClassName": "m-0",
@@ -779,13 +812,15 @@
                     "actionType": "",
                     "level": "default",
                     "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();"
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:bf2587b53d64"
                 },
                 {
                     "type": "button",
                     "label": "保存",
                     "actionType": "submit",
-                    "level": "info"
+                    "level": "info",
+                    "id": "u:08afd6e53cab"
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",
@@ -846,5 +881,6 @@
     "name": "page_edit_${recordId}",
     "initApi": null,
     "initFetch": null,
-    "className": "page-form-object_layouts"
+    "className": "page-form-object_layouts",
+    "id": "u:3b0de7e88def"
 }
