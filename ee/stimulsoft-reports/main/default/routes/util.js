@@ -12,7 +12,7 @@ const _ = require('lodash');
  * @param {*} spaceId 
  * @returns 
  */
-const getQueryParameters = async (query, report, params, userId, spaceId) => {
+const getQueryParameters = async (query, report, params, userSession) => {
     const parameters = {};
     const queryDefParameters = {};
     if (query && query.options && query.options.parameters) {
@@ -24,7 +24,7 @@ const getQueryParameters = async (query, report, params, userId, spaceId) => {
         for (const parameter of report.parameters) {
             let value = params && _.has(params, parameter.name) ? params[parameter.name] : queryDefParameters[parameter.name];
             try {
-                value = await objectql.computeSimpleFormula(parameter.value, params, userId, spaceId);
+                value = await objectql.computeSimpleFormula(parameter.value, params, userSession);
             } catch (error) {
 
             }
@@ -34,7 +34,7 @@ const getQueryParameters = async (query, report, params, userId, spaceId) => {
     return parameters;
 }
 
-const getDatabase = async (reportId, userId, spaceId, params) => {
+const getDatabase = async (reportId, userSession, params) => {
     const result = {
         serviceName: '',
         sampleConnectionString: '',
@@ -52,7 +52,7 @@ const getDatabase = async (reportId, userId, spaceId, params) => {
         }
         for (const queryId of queries) {
             const queryRecord = await broker.call('~packages-@steedos/service-charts.getQuery', { recordId: queryId });
-            const parameters = await getQueryParameters(queryRecord, record, params || {}, userId, spaceId);
+            const parameters = await getQueryParameters(queryRecord, record, params || {}, userSession);
             const data = await broker.call('~packages-@steedos/service-charts.queries', { recordId: queryId, parameters, max_age: 10 });
             if (data && data.query_result && data.query_result.query) {
                 const tableId = data.query_result.id || data.query_result._id;
@@ -123,7 +123,7 @@ const getDatabase = async (reportId, userId, spaceId, params) => {
 exports.getDatabase = getDatabase;
 
 
-exports.getReportWithData = async (reportId, userId, spaceId, parameters) => {
+exports.getReportWithData = async (reportId, userSession, parameters) => {
     const record = await objectql.getObject('stimulsoft_reports').findOne(reportId);
 
     Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("Roboto-Black.ttf");
@@ -134,7 +134,7 @@ exports.getReportWithData = async (reportId, userId, spaceId, parameters) => {
 
     report.dictionary.databases.clear();
 
-    const database = await getDatabase(reportId, userId, spaceId, parameters);
+    const database = await getDatabase(reportId, userSession, parameters);
 
     var dataSet = new Stimulsoft.System.Data.DataSet(database.serviceName);
 

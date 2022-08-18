@@ -11,7 +11,7 @@ const getFieldValue = async (action: any, recordId: string, userSession: any)=>{
         case 'literal':
             return action.literal_value
         case 'formula':
-            return await computeFormula(action.formula, action.object_name, recordId, userSession.userId, userSession.spaceId);
+            return await computeFormula(action.formula, action.object_name, recordId, userSession);
         default:
             return;
     }

@@ -35,7 +35,7 @@ module.exports = {
                 const { when, entry_criteria } = lastVersion;
                 if (('AFTER_INSERT' == operationType && 'afterInsert' == when || 'AFTER_UPDATE' == operationType && 'afterUpdate' == when || (['AFTER_INSERT', 'AFTER_UPDATE'].includes(operationType) && 'afterInsertOrUpdate' == when))) {
                     // 执行入口公式
-                    const result = await objectql.computeSimpleFormula(entry_criteria, newDoc, userId, spaceId);
+                    const result = await objectql.computeSimpleFormula(entry_criteria, newDoc, userSession);
                     if (result) {
                         await ctx.broker.call(`${packageName}.start`, {
                             process_id: pDoc._id,
