@@ -1,4 +1,4 @@
-import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, SteedosFormulaBlankValue } from './type';
+import { SteedosFieldFormulaTypeConfig, SteedosFieldFormulaQuoteTypeConfig, SteedosFormulaVarTypeConfig, SteedosFormulaVarPathTypeConfig, FormulaUserKey, FormulaUserSessionKey, SteedosFormulaBlankValue } from './type';
 import { pickFormulaVars } from './core';
 // import { isCodeObject } from '../util'; TODO
 import { Register } from '@steedos/metadata-registrar';
@@ -67,29 +67,36 @@ export class FormulaActionHandler{
      */
     async computeFormulaVarAndQuotes(formulaVar: string, objectConfig: any,  quotes: Array<SteedosFieldFormulaQuoteTypeConfig>, vars: Array<SteedosFormulaVarTypeConfig>){
         let isSimpleVar = objectConfig === null;//明确传入null时表示要计算的是普通变量。
-        // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是userSession变量
+        // 公式变量以FormulaUserSessionKey（即$user）值开头，说明是user变量
         let isUserVar = new RegExp(`^${FormulaUserKey.replace("$","\\$")}\\b`).test(formulaVar);
+        let isUserSessionVar = new RegExp(`^${FormulaUserSessionKey.replace("$","\\$")}\\b`).test(formulaVar);
         let varItems = formulaVar.split(".");
         let paths: Array<SteedosFormulaVarPathTypeConfig> = [];
         let formulaVarItem: SteedosFormulaVarTypeConfig = {
             key: formulaVar,
             paths: paths
         };
-        if (isUserVar) {
+        if (isUserVar || isUserSessionVar) {
             // user var不可以按普通变量处理，因为其变量值依赖paths属性
             isSimpleVar = false;
             objectConfig = "space_users";
         }
         if(isSimpleVar){
             // 只要不是user var则标记为普通变量，后续取参数值时直接通过key取值，而不用走变量上的paths属性。
-            // 普通变量直接跳后后面所有代码即可，因为不需要处理paths和公式关系链等逻辑。
-            // 注意普通公式也是支持$user全局变量的，但是isSimpleVar是false，所以下面所有逻辑
+            // 普通变量直接跳过后面所有代码即可，因为不需要处理paths和公式关系链等逻辑。
+            // 注意普通公式也是支持$user全局变量的，但是isSimpleVar是false，所以走的是后面的逻辑
             formulaVarItem.is_simple_var = true;
             vars.push(formulaVarItem);
             return;
         }
+        if(isUserSessionVar){
+            // $userSession变量直接跳后后面所有代码即可，因为不需要处理paths和公式关系链等逻辑。
+            formulaVarItem.is_user_session_var = true;
+            vars.push(formulaVarItem);
+            return;
+        }
         if (isUserVar) {
-            // 如果是userSession变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
+            // 如果是user变量，则不需要计算quotes引用，但是其paths值需要正常记录下来
             formulaVarItem.is_user_var = true;
             // vars.push(formulaVarItem);
             // return;
@@ -253,9 +260,9 @@ export class FormulaActionHandler{
             // console.log('key', key);
             // const field = config.fields[key]
             if (field.type === "formula") {
-                if(datasource !== "meteor" && datasource !== "default"){
-                    throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
-                }
+                // if(datasource !== "meteor" && datasource !== "default"){
+                //     throw new Error(`The type of the field '${field.name}' on the object '${config.name}' can't be 'formula', because it is not in the default datasource.`);
+                // }
                 try {
                     // 这里一定要加try catch，否则某个字段报错后，后续其他字段及其他对象就再也没有正常加载了
                     const fieldFormulaConfig = await this.getObjectFieldFormulaConfig(clone(field), config)

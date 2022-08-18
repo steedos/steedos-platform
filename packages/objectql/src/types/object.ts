@@ -989,11 +989,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(record_id)
             return absoluteUrl("/app/" + app_id + "/" + object_name + "/view/" + record_id)
         else{
-            if(object_name === 'meeting'){
-                return absoluteUrl("/app/" + app_id + "/" + object_name + "/calendar/")
-            }else{
-                return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
-            }
+            return absoluteUrl("/app/" + app_id + "/" + object_name + "/grid/" + list_view_id)
         }
     }
 
@@ -1140,6 +1136,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     return ;
                 }
 
+                // 自增字段移除omit属性，添加visible_on属性。
+                if(field.generated){
+                    field.readonly = true
+                    delete field.omit;
+                    if(isNil(field.visible_on)){
+                        field.visible_on = "{{false}}"
+                    }
+                }
+
                 let {read, edit} = fieldPermission || {read: !field.hidden, edit: !field.hidden && !field.readonly};
 
                 // 通用必填字段始终可见、可编辑
@@ -1155,14 +1160,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 //不可查看: 配置了字段权限且不可查看; 没有配置字段权限，字段的hidden为true
                 if(read === false){
                     return;
-                }
-
-                // 自增字段移除omit属性，添加visible_on属性。
-                if(field.generated){
-                    delete field.omit;
-                    if(isNil(field.visible_on)){
-                        field.visible_on = "{{false}}"
-                    }
                 }
 
                 //可查看不可编辑: 配置了字段权限可查看不可编辑; 没有配置字段权限 字段的hidden 为false 且字段的readonly为true
@@ -1756,9 +1753,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
             }
             else {
-                let currentUserId = userSession ? userSession.userId : undefined;
                 if(method !== "delete"){
-                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, currentUserId, true);
+                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
                 }
                 // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
                 // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946

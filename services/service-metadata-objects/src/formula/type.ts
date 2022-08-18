@@ -1,5 +1,6 @@
-// 公式内容中表示userSession变量的占位符
+// 公式内容中表示user变量的占位符
 export const FormulaUserKey = "$user";
+export const FormulaUserSessionKey = "$userSession";
 
 /**
  * 记录公式字段中引用的本对象或其他对象上的字段
@@ -65,6 +66,7 @@ export type SteedosFormulaVarTypeConfig = {
     key: string,
     paths: Array<SteedosFormulaVarPathTypeConfig>,
     is_user_var?: boolean,
+    is_user_session_var?: boolean,
     is_simple_var?: boolean //当不传入objectApiName时变量上设置该属性表示一个普通的变量
 }
 

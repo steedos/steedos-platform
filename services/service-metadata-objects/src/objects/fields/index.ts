@@ -133,7 +133,7 @@ export function getDBType(objectName, field) {
         case "markdown":
             return SteedosFieldDBType.varchar;
         case "formula":
-            return getDBType(objectName, { ...field, type: "datetime" });
+            return getDBType(objectName, { ...field, type: field.data_type });
         case "summary":
             //汇总不需要check类型
             return SteedosFieldDBType.varchar;

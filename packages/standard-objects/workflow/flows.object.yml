@@ -439,6 +439,12 @@ fields:
     omit: true
     hidden: true
     name: distribute_to_self
+  upload_after_being_distributed:
+    label: Allow upload after being distributed
+    type: boolean
+    group: Distribution
+    omit: true
+    hidden: true
   name_formula:
     label: Formula of Title
     type: text

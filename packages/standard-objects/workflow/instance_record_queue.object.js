@@ -603,7 +603,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             //         _id: 1
                             //     }
                             // });
-                            var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId],[nameFieldKey, '=', values[fm.workflow_field]]], fields: ['_id'] });
+                            var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId], [nameFieldKey, '=', values[fm.workflow_field]]], fields: ['_id'] });
                             if (referData) {
                                 obj[fm.object_field] = referData._id;
                             }
@@ -976,8 +976,11 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 var setObj = syncValues.mainObjectValue;
 
                 var instance_state = ins.state;
-                if (ins.state === 'completed' && ins.final_decision) {
-                    instance_state = ins.final_decision;
+                if (ins.state === 'completed') {
+                    setObj.locked = false
+                    if (ins.final_decision) {
+                        instance_state = ins.final_decision;
+                    }
                 }
                 setObj['instances.0.state'] = setObj.instance_state = instance_state;
                 // objectUpdateMany(objectName, [['_id', '=', record._id], ['instances._id', '=', insId]], setObj)

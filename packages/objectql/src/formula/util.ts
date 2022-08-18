@@ -124,10 +124,10 @@ export const sortFieldFormulaConfigs = (configs: Array<SteedosFieldFormulaTypeCo
 }
 
 /**
- * 当currentUserId为空时，确认参数configs中没有引用$user变量
+ * 当userSession为空时，确认参数configs中没有引用$user变量
  * @param configs
  */
-export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig> | any) => {
+export const checkUserSessionNotRequiredForFieldFormulas = (configs: SteedosFieldFormulaTypeConfig | Array<SteedosFieldFormulaTypeConfig> | any) => {
     if (!_.isArray(configs)) {
         configs = [configs];
     }
@@ -136,9 +136,9 @@ export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFi
     }
     for(let config of configs){
         let { vars, object_name: objectName, field_name: fieldName, formula } = config;
-        let required = isCurrentUserIdRequiredForFormulaVars(vars);
+        let required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
-            throw new Error(`The param 'currentUserId' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
+            throw new Error(`The param 'userSession' is required while running the formula '${formula.replace("$", "\\$")}' of field '${fieldName}' on the object '${objectName}'`);
         }
     }
 }
@@ -147,9 +147,9 @@ export const checkCurrentUserIdNotRequiredForFieldFormulas = (configs: SteedosFi
  * 当currentUserId为空时，判断参数vars中是否有引用$user变量
  * @param configs
  */
-export const isCurrentUserIdRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
-    let required = !!vars.find(({ is_user_var: isUserVar })=>{
-        return isUserVar;
+export const isUserSessionRequiredForFormulaVars = (vars: Array<SteedosFormulaVarTypeConfig>) => {
+    let required = !!vars.find(({ is_user_var: isUserVar, is_user_session_var: isUserSessionVar })=>{
+        return isUserVar || isUserSessionVar;
     });
     return required;
 }

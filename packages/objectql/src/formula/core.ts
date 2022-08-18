@@ -3,7 +3,7 @@ import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosForm
     FormulaUserKey, SteedosFormulaOptions, SteedosQuotedByFieldFormulasTypeConfig } from './type';
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
-import { checkCurrentUserIdNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
+import { checkUserSessionNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
 import { wrapAsync } from '../util';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
@@ -29,7 +29,7 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
     if (!_.isArray(fieldFormulaConfigs)) {
         fieldFormulaConfigs = [fieldFormulaConfigs];
     }
-    let result = ["space"]; //space字段作为基础字段不能少
+    let result = [];
     fieldFormulaConfigs.forEach((fieldFormulaConfig: SteedosFieldFormulaTypeConfig) => {
         let { vars } = fieldFormulaConfig;
         result = _.union(result, pickFormulaVarFields(vars));
@@ -42,7 +42,7 @@ export const pickFieldFormulaVarFields = (fieldFormulaConfigs: SteedosFieldFormu
  * @param vars 
  */
 export const pickFormulaVarFields = (vars: Array<SteedosFormulaVarTypeConfig>): Array<string> => {
-    let result = ["space"]; //space字段作为基础字段不能少
+    let result = [];
     vars.forEach((varItem: SteedosFormulaVarTypeConfig) => {
         if (varItem.paths.length) {
             // 如果是$user变量则paths肯定为空，所以取paths中第一个，第一个一定是当前对象中的字段
@@ -60,20 +60,18 @@ export const pickFormulaVarFields = (vars: Array<SteedosFormulaVarTypeConfig>): 
  * @param vars 
  * return Array<SteedosFormulaParamTypeConfig>
  */
-export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosFormulaVarTypeConfig>, currentUserId: string) => {
+export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosFormulaVarTypeConfig>, userSession: any) => {
     let params: Array<SteedosFormulaParamTypeConfig> = [];
-    const spaceId = doc.space;
+    const spaceId = userSession?.spaceId;
+    const currentUserId = userSession?.userId;
     if (vars && vars.length) {
-        for (let { key, paths, is_user_var: isUserVar, is_simple_var: isSimpleVar } of vars) {
+        for (let { key, paths, is_user_var: isUserVar, is_user_session_var: isUserSessionVar, is_simple_var: isSimpleVar } of vars) {
             key = key.trim();
             // 如果变量key以$user开头,则解析为userSession,此时paths为空
             let tempValue: any;
-            if (isUserVar) {
-                if (!currentUserId) {
-                    throw new Error(`computeFormulaParams:The param 'currentUserId' is required for the formula var key ${key} while running`);
-                }
-                if (!spaceId) {
-                    throw new Error(`computeFormulaParams:The 'space' property is required for the doc of the formula var key ${key} while running`);
+            if (isUserVar || isUserSessionVar) {
+                if (!userSession) {
+                    throw new Error(`computeFormulaParams:The param 'userSession' is required for the formula var key ${key} while running`);
                 }
                 // if (!currentUserId) {
                 //     throw new Error(`computeFormulaParams:The param 'currentUserId' is required for the formula var key ${key}`);
@@ -88,6 +86,22 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
                 // 普通变量，取参数值时直接取值，而不用走变量上的paths属性。
                 // 注意未传入objectName时，公式中的user var的isSimpleVar为false，还是走下面的paths取值逻辑。
                 tempValue = <any>doc[key];
+                params.push({
+                    key: key,
+                    value: tempValue
+                });
+                continue;
+            }
+            if(isUserSessionVar){
+                // $userSession变量，取参数值时直接提取值，而不用走变量上的paths属性。
+                tempValue = _.reduce(key.split("."), function(reslut, next, index) {
+                    if (index === 0) {
+                        return reslut;
+                    }
+                    else{
+                        return reslut[next];
+                    }
+                }, userSession);
                 params.push({
                     key: key,
                     value: tempValue
@@ -150,12 +164,12 @@ export const computeFormulaParams = async (doc: JsonMap, vars: Array<SteedosForm
     return params;
 }
 
-export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, currentUserId: string) => {
-    if (!currentUserId) {
-        checkCurrentUserIdNotRequiredForFieldFormulas(fieldFormulaConfig);
+export const computeFieldFormulaValue = async (doc: JsonMap, fieldFormulaConfig: SteedosFieldFormulaTypeConfig, userSession: any) => {
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(fieldFormulaConfig);
     }
     const { formula, vars, data_type, formula_blank_value } = fieldFormulaConfig;
-    let params = await computeFormulaParams(doc, vars, currentUserId);
+    let params = await computeFormulaParams(doc, vars, userSession);
     return runFormula(formula, params, {
         returnType: data_type,
         blankValue: formula_blank_value
@@ -290,7 +304,7 @@ const addToAggregatePaths = (varItemToAggregatePaths: Array<SteedosFormulaVarPat
  * 如果当前不是update而是insert则不需要调用该函数，因为这时这条记录不可能存在引用关系
  * @param objectName 
  * @param recordId 
- * @param currentUserId 
+ * @param userSession 
  * @param options.fieldNames 传入该参数时，只查找和处理引用了该对象中这些指定字段的公式字段
  * @param options.escapeConfigs 传入该参数时，将额外跳过这些公式字段配置的运算，提高性能
  * @param options.quotedByConfigs 如果已经根据objectName和fieldNames查过相关配置了，请直接传入，可以避免重复查找，提高性能
@@ -302,7 +316,6 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     onlyForOwn?: boolean,
     withoutCurrent?: boolean
 } = {}) {
-    let currentUserId = userSession ? userSession.userId : undefined;
     let { fieldNames, escapeConfigs, quotedByConfigs, onlyForOwn, withoutCurrent } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = await getObjectQuotedByFieldFormulaConfigs(objectName, fieldNames, escapeConfigs, { onlyForOwn, withoutCurrent});
@@ -312,8 +325,8 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
     if (!quotedByConfigs.allConfigs.length) {
         return;
     }
-    if (!currentUserId) {
-        checkCurrentUserIdNotRequiredForFieldFormulas(quotedByConfigs.allConfigs);
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(quotedByConfigs.allConfigs);
     }
     // 要排除allConfigs中的ownConfigs，因为allConfigs中已经（按依赖关系先后次序）执行过的当前objectName引用自身的公式字段，不需要在下次级联调用runQuotedByObjectFieldFormulas时再次执行
     for (const config of quotedByConfigs.allConfigs) {
@@ -326,19 +339,19 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param objectName 
  * @param recordId 
  * @param doc 
- * @param currentUserId 
+ * @param userSession 
  * @param needRefetchDoc 当doc不可信赖时，需要从数据库中重新抓取doc，请传入true值
  * @param configs 如果已经根据objectName查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, currentUserId: string, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
+export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: any, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
     if (!configs) {
         configs = await getObjectFieldFormulaConfigs(objectName);
     }
     if (!configs.length) {
         return;
     }
-    if (!currentUserId) {
-        checkCurrentUserIdNotRequiredForFieldFormulas(configs);
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
     }
     // needRefetchDoc默认值为true
     if (needRefetchDoc !== false) {
@@ -348,7 +361,7 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     let setDoc = {};
     for (const config of configs) {
         doc = Object.assign({}, doc, setDoc);//setDoc中计算得到的结果应该重新并到doc中支持计算
-        setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, currentUserId);
+        setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);
     }
     await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
 }
@@ -357,20 +370,20 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
  * 找到当前正在update的对象多条记录的公式字段并更新其字段值
  * @param objectName 
  * @param filters 
- * @param currentUserId 
+ * @param userSession 
  */
-export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, currentUserId: string) {
+export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, userSession: any) {
     const configs = await getObjectFieldFormulaConfigs(objectName);
     if (!configs.length) {
         return;
     }
-    if (!currentUserId) {
-        checkCurrentUserIdNotRequiredForFieldFormulas(configs);
+    if (!userSession) {
+        checkUserSessionNotRequiredForFieldFormulas(configs);
     }
     const formulaVarFields = pickFieldFormulaVarFields(configs);
     let docs = await getSteedosSchema().getObject(objectName).find({ filters: filters, fields: formulaVarFields });
     for (const doc of docs) {
-        await runCurrentObjectFieldFormulas(objectName, doc._id, doc, currentUserId, false, configs);
+        await runCurrentObjectFieldFormulas(objectName, doc._id, doc, userSession, false, configs);
     }
 }
 
@@ -468,9 +481,8 @@ export const updateDocsFieldFormulaValue = async (docs: any, fieldFormulaConfig:
         return;
     }
     const fieldFormulaObject = getSteedosSchema().getObject(fieldFormulaObjectName);
-    let currentUserId = userSession ? userSession.userId : undefined;
     for (let doc of docs) {
-        let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, currentUserId);
+        let value = await computeFieldFormulaValue(doc, fieldFormulaConfig, userSession);
         let setDoc = {};
         setDoc[fieldFormulaConfig.field_name] = value;
         await fieldFormulaObject.directUpdate(doc._id, setDoc);
