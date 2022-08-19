@@ -3,7 +3,6 @@ import { SteedosFormulaOptions } from './type';
 import { computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isUserSessionRequiredForFormulaVars } from './util';
 import { JsonMap } from "@salesforce/ts-types";
-import { getSessionByUserId } from '@steedos/auth';
 import _ = require('lodash')
 
 export * from './type'
