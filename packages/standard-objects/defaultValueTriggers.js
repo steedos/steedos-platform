@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
+const auth = require('@steedos/auth');
 
 /**
   把原来的默认值公式表达式转换成新的表达式语法，原来的表达式语法如下所示：
@@ -82,6 +83,7 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
     if (!userId) {
         return;
     }
+    const userSession = await auth.getSessionByUserId(userId, spaceId);
     // console.log("==setDefaultValues=doc===", doc);
     let keys = _.keys(fields);
     // console.log("==setDefaultValues=keys===", keys);
@@ -116,7 +118,7 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                 defaultValue = getCompatibleDefaultValueExpression(defaultValue);
                 // console.log("==setDefaultValues=defaultValue===333=", defaultValue);
                 if(defaultValue){
-                    defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userId, spaceId);
+                    defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userSession);
                     if(field.multiple && !_.isArray(defaultValue)){
                         defaultValue = defaultValue.split(',');
                     }

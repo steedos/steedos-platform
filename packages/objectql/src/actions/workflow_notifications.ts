@@ -41,8 +41,8 @@ export async function runWorkflowNotifyAction(workflowNotification: WorkflowNoti
     let userId = userSession.userId;
     let spaceId = userSession.spaceId;
 
-    let msgName = await computeFormula(workflowNotification.title, objectName, recordId, userId, spaceId);
-    let msgBody = await computeFormula(workflowNotification.body, objectName, recordId, userId, spaceId);
+    let msgName = await computeFormula(workflowNotification.title, objectName, recordId, userSession);
+    let msgBody = await computeFormula(workflowNotification.body, objectName, recordId, userSession);
 
     let message = {
         name: msgName,

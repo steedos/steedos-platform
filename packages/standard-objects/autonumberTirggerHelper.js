@@ -126,9 +126,8 @@ const afterInsertAutoNumber = async function () {
         if (f.type == 'autonumber' && formula) {
             // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
             if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
-                const userId = null;
                 // 先执行公式，返回编码规则
-                rule = await objectql.computeFormula(formula, object_name, doc, userId, spaceId);
+                rule = await objectql.computeFormula(formula, object_name, doc);
             }
             // 再执行编码规则
             setObj[k] = await caculateAutonumber(object_name, k, rule, spaceId);

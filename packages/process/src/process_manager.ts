@@ -173,14 +173,12 @@ const addInstanceNode = async  (instanceId: string, node: any, userSession: any,
 }
 
 const getNextNode = async (nodes: any, index: number = 0, objectName: string, recordId: string, userSession: any)=>{
-    let spaceId = userSession.spaceId;
-    let currentUserId = userSession.userId;
     let node = nodes[index];
     if(node){
         if(node.filtrad){
             return node;
         }else{
-            const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, currentUserId, spaceId);
+            const canEntry = await objectql.computeFormula(node.entry_criteria, objectName, recordId, userSession);
             if(canEntry){
                 return node;
             }else{
@@ -254,7 +252,6 @@ const getPreviousNode = async (instanceId: string, currentNode: any, userSession
 //TODO 处理提交权限
 export const getObjectProcessDefinition = async (objectName: string, recordId: string, userSession: any)=>{
     let spaceId = userSession.spaceId;
-    let currentUserId = userSession.userId;
     let processes = await objectql.getObject('process_definition').find({filters: [['object_name', '=', objectName], ['space', '=', spaceId], ['active', '=', true]], sort: "order asc"})
     if(processes.length < 1){
         return null;
@@ -262,7 +259,7 @@ export const getObjectProcessDefinition = async (objectName: string, recordId: s
     let process = null;
     //计算符合条件的process_definition
     for (const _process of processes) {
-        const canEntry = await objectql.computeFormula(_process.entry_criteria, objectName, recordId, currentUserId, spaceId);
+        const canEntry = await objectql.computeFormula(_process.entry_criteria, objectName, recordId, userSession);
         if(canEntry){
             process = _process
             break;

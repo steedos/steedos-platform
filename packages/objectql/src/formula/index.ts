@@ -3,7 +3,6 @@ import { SteedosFormulaOptions } from './type';
 import { computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isUserSessionRequiredForFormulaVars } from './util';
 import { JsonMap } from "@salesforce/ts-types";
-import { getSessionByUserId } from '@steedos/auth';
 import _ = require('lodash')
 
 export * from './type'
@@ -29,17 +28,13 @@ export async function checkFormula(formula: string, mainObjectName: string){
     await computeFormulaVarsAndQuotes(formula, mainObjectConfig);
 }
 
-async function _computeFormula(formula: string, objectName:string, record: JsonMap, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions)
-async function _computeFormula(formula: string, objectName:string, recordId: string, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions)
-async function _computeFormula(formula: string, objectName:string, data: any, currentUserId: string, spaceId: string, options?: SteedosFormulaOptions) {
+async function _computeFormula(formula: string, objectName:string, record: JsonMap, userSession: any, options?: SteedosFormulaOptions)
+async function _computeFormula(formula: string, objectName:string, recordId: string, userSession: any, options?: SteedosFormulaOptions)
+async function _computeFormula(formula: string, objectName:string, data: any, userSession: any, options?: SteedosFormulaOptions) {
     // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
     const objectConfig = objectName ? getObjectConfig(objectName) : null;
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, objectConfig);
     const vars = varsAndQuotes.vars;
-    let userSession: any;
-    if(currentUserId && spaceId){
-        userSession = await getSessionByUserId(currentUserId, spaceId);
-    }
     if (_.isEmpty(userSession)) {
         const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
@@ -63,15 +58,11 @@ async function _computeFormula(formula: string, objectName:string, data: any, cu
 
 export const computeFormula = _computeFormula 
 
-async function _computeSimpleFormula(formula: string, data: any, currentUserId?: string, spaceId?: string, options?: SteedosFormulaOptions) {
+async function _computeSimpleFormula(formula: string, data: any, userSession: any, options?: SteedosFormulaOptions) {
     // objectConfig参数值设置为null传入computeFormulaVarsAndQuotes表示计算不带objectConfig参数的普通公式变量
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, null);
     const vars = varsAndQuotes.vars;
 
-    let userSession: any;
-    if(currentUserId && spaceId){
-        userSession = await getSessionByUserId(currentUserId, spaceId);
-    }
     if (_.isEmpty(userSession)) {
         const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
