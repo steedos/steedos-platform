@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
+const auth = require('@steedos/auth');
 
 /**
   把原来的默认值公式表达式转换成新的表达式语法，原来的表达式语法如下所示：

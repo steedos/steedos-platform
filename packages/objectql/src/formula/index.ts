@@ -35,10 +35,6 @@ async function _computeFormula(formula: string, objectName:string, data: any, us
     const objectConfig = objectName ? getObjectConfig(objectName) : null;
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, objectConfig);
     const vars = varsAndQuotes.vars;
-    // let userSession: any;
-    // if(currentUserId && spaceId){
-    //     userSession = await getSessionByUserId(currentUserId, spaceId);
-    // }
     if (_.isEmpty(userSession)) {
         const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
@@ -67,10 +63,6 @@ async function _computeSimpleFormula(formula: string, data: any, userSession: an
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, null);
     const vars = varsAndQuotes.vars;
 
-    // let userSession: any;
-    // if(currentUserId && spaceId){
-    //     userSession = await getSessionByUserId(currentUserId, spaceId);
-    // }
     if (_.isEmpty(userSession)) {
         const required = isUserSessionRequiredForFormulaVars(vars);
         if(required){
