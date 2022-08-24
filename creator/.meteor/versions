@@ -163,7 +163,7 @@ steedos:cfs-reactive-list@0.0.9
 steedos:cfs-reactive-property@0.0.4
 steedos:cfs-s3@0.1.4_4
 steedos:cfs-standard-packages@0.5.10_6
-steedos:cfs-steedos-cloud@0.0.5
+steedos:cfs-steedos-cloud@0.0.6
 steedos:cfs-storage-adapter@0.2.3_1
 steedos:cfs-tempstore@0.1.6_3
 steedos:cfs-ui@0.1.4_2

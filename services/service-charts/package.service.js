@@ -369,8 +369,11 @@ module.exports = {
 		getQueryRecord: {
 			async handler(recordId){
 				let queryRecord = await objectql.getObject("queries").findOne(recordId);
-				if(!queryRecord){
-					queryRecord = await getQueries(recordId)
+				if(!queryRecord || _.has(queryRecord, '__filename')){
+					const RecordByName = await getQueries(recordId);
+					if(RecordByName){
+						queryRecord = RecordByName;
+					}
 				}
 				return queryRecord;
 			}
@@ -496,10 +499,7 @@ module.exports = {
 		getQueryInfo: {
 			async handler(queryId, parameters) {
 				let queryInfo = null;
-				let record = await objectql.getObject("queries").findOne(queryId);
-				if (!record) {
-					record = await getQueries(queryId);
-				}
+				let record = await this.getQueryRecord(queryId);
 				if (record) {
 					if (!record.query) {
 						throw new Error(`Invalid query.`)
