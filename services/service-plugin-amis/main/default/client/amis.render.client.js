@@ -43,7 +43,7 @@
 
         // 加载Amis SDK: 如果直接放到body中会导致meteor 编译后的 cordova.js 加载报错
         let amisSDKScript = document.createElement("script");
-        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis@2.2.26/dist/amis-sdk.umd.min.js'));
+        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis@2.2.43/dist/amis-sdk.umd.min.js'));
         document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
