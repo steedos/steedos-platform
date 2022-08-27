@@ -2,3 +2,6 @@ CustomLabels:
   frontend_field_group_generalization: Generalization
   frontend_form_save: Save
   frontend_form_cancel: Cancel
+  frontend_form_new: New
+  frontend_form_select: Select
+  frontend_form_confirm: Confirm
