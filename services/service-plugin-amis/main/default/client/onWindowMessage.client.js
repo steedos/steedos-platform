@@ -8,6 +8,7 @@
 window.addEventListener('message', function (event) {
     const { data } = event;
     if (data.type === 'builder.assetsLoaded') {
+        console.log(`builder.assetsLoaded=====`)
         window.assetsLoaded = true;
     }
 })

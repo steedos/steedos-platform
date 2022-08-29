@@ -1,0 +1,4 @@
+name: f2
+label: F2
+type: text
+visible_on: "{{this.name === 'f2'}}"
