@@ -50,7 +50,7 @@
     };
 
     const getAmisLng = ()=>{
-        locale = Creator.USER_CONTEXT.user.language
+        locale = Creator.USER_CONTEXT?.user?.language
         if(locale){
             locale = locale.replace('_', '-');
             locale = locale === 'en' ? 'en-US' : locale;
