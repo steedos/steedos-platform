@@ -1279,15 +1279,15 @@
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.3.tgz#1185726610acc37317ddab11c3c7f9066966bd20"
   integrity sha512-O3uyB/JbkAEMZaP3YqyHH7TMnex7tWyCbCI4EfJdOCoN6HIhqdJBWTM6aCCiWQ/5f5wxjgU735QAIpJbjDvmzg==
 
-"@steedos-builder/react@^0.2.21":
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.21.tgz#564bd9e586ee3c68f57acdb2cf6b1b652730325b"
-  integrity sha512-QBV4U2ozIOUCYTdvQyxsdu/DG2kLs611hkV3/WMXckqWQ3j+6xps9ZB764vtiRtYy7LIuwG5uc+ih+o9itEKOg==
+"@steedos-builder/react@^0.2.27":
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.27.tgz#1a05c493edd715a73d6258b7ff6678e37f038b7d"
+  integrity sha512-Ti4C3yPA/SV5t5XWUnnsc3mXQn/WUaKAZN61ZwElfIG6ipzHg/H13jTirCmjERpSdIJXeYzLXmXBqpdxhbVpyA==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "^1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "^0.2.21"
+    "@steedos-builder/sdk" "^0.2.27"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -1304,10 +1304,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
   integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
 
-"@steedos-builder/sdk@^0.2.21":
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.21.tgz#f7bbc2bf5487f1707fa5d6889761f14b3fe72dc5"
-  integrity sha512-1hlN2XkySPR15Gcp+FDM53gQas+JROJ2xwUr53Nsr5o/RDzyzlOuDAxeQWpzaHwcDiUu8Acrt+V1IXwtC/4lEg==
+"@steedos-builder/sdk@^0.2.27":
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.27.tgz#c209aba27b15525aa3a738da0778dc8178681233"
+  integrity sha512-7wbdy1QlMXloQ4DuTfSTi3/2Hf8qHwghDnYxI9pM463UzmZ0y4gevdXHqvDV1ZD9eLJFwJds4/0GG+HQoRS9Aw==
   dependencies:
     "@builder.io/sdk" "^1.1.26"
     "@monaco-editor/loader" "^1.3.0"
