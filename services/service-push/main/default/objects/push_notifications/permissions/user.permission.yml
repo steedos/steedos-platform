@@ -1,0 +1,53 @@
+name: push_notifications.用户
+allowCreate: true
+allowCreateFiles: true
+allowDelete: true
+allowDeleteFiles: true
+allowEdit: true
+allowEditFiles: true
+allowRead: true
+allowReadFiles: true
+modifyAllRecords: false
+permission_set_id: user
+viewAllFiles: true
+viewAllRecords: false
+field_permissions:
+  - field: name
+    readable: true
+    editable: true
+  - field: owner
+    readable: false
+    editable: false
+  - field: created
+    readable: true
+    editable: false
+  - field: created_by
+    readable: true
+    editable: false
+  - field: modified
+    readable: true
+    editable: false
+  - field: modified_by
+    readable: true
+    editable: false
+  - field: locked
+    readable: false
+    editable: false
+  - field: company_id
+    readable: false
+    editable: false
+  - field: company_ids
+    readable: false
+    editable: false
+  - field: instance_state
+    readable: false
+    editable: false
+  - field: owner_mobile
+    readable: true
+    editable: true
+  - field: body
+    readable: true
+    editable: true
+  - field: badge
+    readable: true
+    editable: true
