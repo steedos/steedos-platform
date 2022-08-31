@@ -188,7 +188,7 @@ module.exports = {
 				onError(req, res, err) {
 					res.setHeader("Content-Type", "application/json; charset=utf-8");
 					res.writeHead(err.code || 500);
-					res.end(JSON.stringify({ error: err.message }));
+					res.end(JSON.stringify({ error: err.message, detail: err }));
 				}
 			}
 		],
