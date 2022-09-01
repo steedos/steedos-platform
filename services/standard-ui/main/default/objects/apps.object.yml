@@ -54,6 +54,34 @@ fields:
     is_wide: true
     reference_to: tabs
     reference_to_field: name
+    hidden: true
+  tab_groups:
+    type: grid
+    blackbox: true
+    is_wide: true
+    hidden: true
+  tab_groups.$.group_name:
+    type: text
+  tab_items:
+    type: grid
+    is_wide: true
+    required: true
+    group: Business object
+  tab_items.$:
+    label: Tabs
+    blackbox: true
+    type: object
+  tab_items.$.tab_name:
+    label: Tab Name
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: true
+    reference_to: tabs
+    reference_to_field: name
+  tab_items.$.group:
+    label: Group
+    type: text
   objects:
     label: Objects
     type: lookup
