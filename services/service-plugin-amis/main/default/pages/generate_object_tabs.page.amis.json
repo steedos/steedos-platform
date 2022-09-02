@@ -11,10 +11,15 @@
             "api": {
                 "method": "post",
                 "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate/tabs",
-                "data": null,
+                "data": {
+                    "objects": "${objects}"
+                },
                 "requestAdaptor": "",
                 "responseData": null,
-                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nreturn payload;\n        "
+                "adaptor": "console.log(\"===payload==\", payload);\nvar errors = payload.data && payload.data.errors;\nvar noErrors = !(errors && errors.length);\nif (noErrors) { \n  SteedosUI.getRef(api.body.modalName).close();\n}\nreturn payload;\n        ",
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
             },
             "initApi": "",
             "initFetch": true,
@@ -39,7 +44,10 @@
                     "options": [],
                     "id": "u:e224b24aa867",
                     "searchable": true,
-                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options"
+                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
+                    "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    }
                 }
             ],
             "panelClassName": "m-0",
@@ -59,25 +67,44 @@
                     "label": "确定",
                     "actionType": "submit",
                     "level": "info",
-                    "id": "u:08afd6e53cab"
+                    "id": "u:08afd6e53cab",
+                    "feedback": {
+                        "title": "提示",
+                        "body": {
+                            "type": "alert",
+                            "body": {
+                                "type": "list",
+                                "source": "${errors}",
+                                "listItem": {
+                                    "title": "${object}",
+                                    "body": [
+                                        {
+                                            "type": "static",
+                                            "tpl": "${message}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "level": "warning",
+                            "showIcon": true,
+                            "title": "以下对象未能生成选项卡"
+                        },
+                        "actions": [
+                            {
+                                "type": "button",
+                                "actionType": "close",
+                                "label": "关闭"
+                            }
+                        ],
+                        "visibleOn": "this.errors.length"
+                    }
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
             "checkAll": false,
             "id": "object-layout-form",
-            "onEvent": {
-                "inited": {
-                    "actions": [
-                        {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": "${event.data|initDefaultRelatedLists}"
-                            }
-                        }
-                    ]
-                }
-            }
+            "debug": false
         }
     ],
     "regions": [

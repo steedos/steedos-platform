@@ -145,7 +145,7 @@ module.exports = {
             },
             async handler(ctx) {
                 const result = await this.generateTabs(ctx);
-                return { status: 0, data: { result } }
+                return { status: 0, data: result }
             }
         }
     },
@@ -467,14 +467,14 @@ module.exports = {
                         const tab = await objectql.getObject('tabs').insert(doc);
                         if(!tab._id){
                             errors.push({
-                                object: object.label || object.name,
+                                object: (object.label || object.name) + `(${object.name})`,
                                 message: ""
                             });
                         }
                     }
                     catch(ex){
                         errors.push({
-                            object: object.label || object.name,
+                            object: (object.label || object.name) + `(${object.name})`,
                             message: ex.message
                         });
                     }
