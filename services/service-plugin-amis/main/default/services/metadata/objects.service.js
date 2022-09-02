@@ -127,6 +127,16 @@ module.exports = {
 
                 return { status: 0, data: { options } }
             },
+        },
+        generateTabs: {
+            rest: {
+                method: "POST",
+                path: "/objects/generate/tabs"
+            },
+            async handler(ctx) {
+                const result = await this.generateTabs(ctx);
+                return { status: 0, data: { result } }
+            }
         }
     },
 
@@ -356,6 +366,80 @@ module.exports = {
                     options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
                 })
                 return options;
+            }
+        },
+        generateTabs: {
+            async handler(ctx) {
+                let selectedObjects = ctx.params && ctx.params.objects && ctx.params.objects.split(",");
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const spaceId = userSession.spaceId;
+                const userId = userSession.userId;
+                const companyId = userSession.company_id;
+                const companyIds = userSession.company_ids;
+                const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
+                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const query = {
+                    filters: [['name', 'in', selectedObjects]], //['hidden', '!=', true] ,
+                    projection: {
+                        name: 1,
+                        label: 1
+                    }
+                };
+
+                const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+
+                _.each(objects, (object) => {
+                    if (object && object.name) {
+                        steedosI18n.translationObject(lng, object.name, object)
+                    }
+                })
+                const errors = [];
+                for(let i = 0;i < objects.length; i++) {
+                    const object = objects[i];
+                    try{
+                        const existCount = await objectql.getObject('tabs').count({filters: [['object', '=', object.name]]});
+                        if(existCount > 0){
+                            return;
+                        }
+                        const tabLabel = object.label || object.name;
+                        const tabName = object.name; //"object_" + object.name;
+                        const now = new Date();
+                        const doc = {
+                            label: tabLabel, 
+                            name: tabName, 
+                            icon: object.icon,
+                            type: "object", 
+                            mobile: true,
+                            desktop: true,
+                            object: object.name,
+                            space: spaceId,
+                            owner: userId,
+                            created_by: userId,
+                            created: now,
+                            modified_by: userId,
+                            modified: now,
+                            company_id: companyId,
+                            company_ids: companyIds
+                        };
+                        const tab = await objectql.getObject('tabs').insert(doc);
+                        if(!tab._id){
+                            errors.push({
+                                object: object.label || object.name,
+                                message: ""
+                            });
+                        }
+                    }
+                    catch(ex){
+                        errors.push({
+                            object: object.label || object.name,
+                            message: ex.message
+                        });
+                    }
+                };
+                return {
+                    errors: errors
+                }
             }
         }
     }

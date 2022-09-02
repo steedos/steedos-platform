@@ -1,0 +1,104 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "form",
+            "mode": "normal",
+            "persistData": false,
+            "promptPageLeave": true,
+            "name": "form_edit_${recordId}",
+            "title": "",
+            "api": {
+                "method": "post",
+                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate/tabs",
+                "data": null,
+                "requestAdaptor": "",
+                "responseData": null,
+                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nreturn payload;\n        "
+            },
+            "initApi": "",
+            "initFetch": true,
+            "body": [
+                {
+                    "type": "tpl",
+                    "tpl": "请选择需要生成选项卡的对象，点击确定按钮即可为这些对象生成选项卡。",
+                    "inline": false,
+                    "wrapperComponent": "",
+                    "id": "u:42a492333a0f",
+                    "style": {
+                        "fontFamily": "",
+                        "fontSize": 12,
+                        "textAlign": "center"
+                    },
+                    "className": "text-base mb-4"
+                },
+                {
+                    "label": "",
+                    "type": "transfer",
+                    "name": "objects",
+                    "options": [],
+                    "id": "u:e224b24aa867",
+                    "source": {
+                        "method": "post",
+                        "url": "${context.rootUrl}/graphql",
+                        "data": {
+                            "query": "{options:objects(filters:[\"hidden\", \"!=\", \"true\"]){value:name,label}}"
+                        }
+                    },
+                    "searchable": true
+                }
+            ],
+            "panelClassName": "m-0",
+            "bodyClassName": "p-4",
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "取消",
+                    "actionType": "",
+                    "level": "default",
+                    "block": false,
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:bf2587b53d64"
+                },
+                {
+                    "type": "button",
+                    "label": "确定",
+                    "actionType": "submit",
+                    "level": "info",
+                    "id": "u:08afd6e53cab"
+                }
+            ],
+            "actionsClassName": "p-sm b-t b-light text-center",
+            "className": "steedos-amis-form",
+            "checkAll": false,
+            "id": "object-layout-form",
+            "onEvent": {
+                "inited": {
+                    "actions": [
+                        {
+                            "actionType": "setValue",
+                            "args": {
+                                "value": "${event.data|initDefaultRelatedLists}"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800"
+        },
+        "objectName": "object_layouts"
+    },
+    "id": "u:3b0de7e88def",
+    "bodyClassName": "p-0",
+    "name": "page_edit_${recordId}",
+    "initApi": null,
+    "initFetch": null,
+    "className": "page-form-object_layouts"
+}
