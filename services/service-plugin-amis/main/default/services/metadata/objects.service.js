@@ -128,6 +128,16 @@ module.exports = {
                 return { status: 0, data: { options } }
             },
         },
+        getObjectsForGenerateTabsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/generate_tabs_options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectsGenerateTabsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
         generateTabs: {
             rest: {
                 method: "POST",
@@ -366,6 +376,38 @@ module.exports = {
                     options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
                 })
                 return options;
+            }
+        },
+        getObjectsGenerateTabsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const spaceId = userSession.spaceId;
+                const objectTabs = await objectql.getObject('tabs').find({filters: [['type', '=', "object"]]});
+                const tabObjects = _.map(objectTabs, "object");
+                const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
+                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const query = {
+                    filters: [['hidden', '!=', true], ['name', '<>', tabObjects]],
+                    projection: {
+                        name: 1, 
+                        label: 1
+                    }
+                };
+                // 只列出未找到tabs记录的对象清单
+                const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+
+                _.each(objects, (object)=>{
+                    if(object && object.name){
+                        steedosI18n.translationObject(lng, object.name, object)
+                    }
+                })
+                return _.map(objects, (object)=>{
+                    return {
+                        value: object.name,
+                        label: object.label || object.name
+                    }
+                });
             }
         },
         generateTabs: {
