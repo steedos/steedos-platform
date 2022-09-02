@@ -445,7 +445,7 @@ module.exports = {
                             return;
                         }
                         const tabLabel = object.label || object.name;
-                        const tabName = object.name; //"object_" + object.name;
+                        const tabName = object.name.replace(/__c$/, ""); //"object_" + object.name;
                         const now = new Date();
                         const doc = {
                             label: tabLabel, 
