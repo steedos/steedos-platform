@@ -2,192 +2,203 @@
     "type": "page",
     "body": [
         {
-            "type": "form",
-            "mode": "normal",
-            "persistData": false,
-            "promptPageLeave": true,
-            "name": "form_edit_${recordId}",
-            "title": "",
+            "type": "service",
+            "className": "col-span-2 m-0",
+            "id": "u:ac5b7818b88f",
+            "affixFooter": false,
+            "messages": {},
             "api": {
-                "method": "post",
+                "method": "get",
                 "url": "${context.rootUrl}/graphql",
+                "adaptor": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function(groupNames){\n  return function(m,n){\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if(!m[tabGroupKey] || !n[tabGroupKey]){\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单tabs字段值格式\namis.registerFilter('convertDataForTabs', function (input) {\n  let pickedTabs = input.picked_tabs || [];\n  const superTabs = _.keyBy(input.__super.tab_items, 'tab_name');\n  if(typeof pickedTabs === \"string\"){\n    pickedTabs = pickedTabs.split(\",\");\n  }\n  debugger;\n  const tabOptions = lodash.keyBy(this.data.__super.__super.__super.__super.__super.tabs_options, \"value\");\n  const convertedTabs = pickedTabs.map(function (tab_name) {\n    const superTab = superTabs[tab_name];\n    if (superTab) {\n      return superTab;\n    }\n    else {\n      const tabOption = tabOptions[tab_name];\n      return {\n        tab_name: tab_name,\n        group: tabOption.group\n      }\n    }\n  });\n  const tabGroups = this.data.__super.__super.__super.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  convertedTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: convertedTabs\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForTab', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const tab_name = rowValue.tab_name;\n  rowValue[prop_name] = currentPropValue;\n  let newTabs = formValue.tab_items.map(function (item) {\n    if (item.tab_name == tab_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  const tabGroups = this.data.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  newTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: newTabs\n  }\n});\n\n// 清空主表单tabs字段值\namis.registerFilter('clearTabs', function (input) {\n  return {\n    tab_items: []\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = lodash.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = lodash.compact(lodash.map(convertedGroups,\"group_name\"));\n  const tab_items = this.data.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n});\n\nlet data = payload.data;\ndata.tabs_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                "sendOn": "",
                 "data": {
-                    "objectName": "${objectName}",
-                    "$": "$$",
-                    "recordId": "${recordId}",
-                    "modalName": "${modalName}"
-                },
-                "requestAdaptor": "\n\nconst formData = api.data.$;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(formData.recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
-                "responseData": {
-                    "recordId": "${record._id}"
-                },
-                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
-            },
-            "initApi": {
-                "method": "post",
-                "url": "${context.rootUrl}/graphql",
-                "sendOn": "!!this.recordId",
-                "cache": 100,
-                "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n    if (!data.tab_items && data.tabs && data.tabs.length) {\n        data.tab_items = data.tabs.map(function (item) {\n            return { tab_name: item };\n        });\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
-                "data": {
-                    "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
                 }
             },
-            "initFetch": true,
+            "placeholder": "-",
             "body": [
                 {
-                    "type": "tabs",
-                    "id": "u:430a42f742ee",
-                    "tabs": [
+                    "mode": "normal",
+                    "persistData": false,
+                    "promptPageLeave": true,
+                    "name": "form_edit_${recordId}",
+                    "title": "",
+                    "api": {
+                        "method": "post",
+                        "url": "${context.rootUrl}/graphql",
+                        "data": {
+                            "objectName": "${objectName}",
+                            "$": "$$",
+                            "recordId": "${recordId}",
+                            "modalName": "${modalName}"
+                        },
+                        "requestAdaptor": "\n\nconst formData = api.data.$;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(formData.recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
+                        "responseData": {
+                            "recordId": "${record._id}"
+                        },
+                        "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
+                    },
+                    "initApi": {
+                        "method": "post",
+                        "url": "${context.rootUrl}/graphql",
+                        "sendOn": "!!this.recordId",
+                        "cache": 100,
+                        "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n    // if (!data.tab_items) {\n    //     debugger;\n    //     const tabOptions = data.tabs_options || [];\n    //     const tabItems = [];\n    //     // 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\n    //     if (data.tabs && data.tabs.length) { \n    //         data.tabs.forEach(function (item) {\n    //             tabItems.push({ tab_name: item });\n    //         });\n    //     }\n    //     const pushObjectsToTabItems = function (objects) {\n    //         objects.forEach(function (item) {\n    //             // 已经有绑定到指定对象的选项卡就不添加\n    //             let existObjectItem = !!tabItems.find(function (tabItem) {\n    //                 return !!tabOptions.find(function (option) {\n    //                     return option.object === item;\n    //                 });\n    //             });\n    //             if (existObjectItem) {\n    //                 return;\n    //             }\n    //             // 找到指向指定对象的选项卡\n    //             let tempOption = tabOptions.find(function (option) {\n    //                 return option.type === \"object\" && option.object === item;\n    //             });\n    //             if (!tempOption) {\n    //                 return;\n    //             }\n    //             // 选项卡名称如果重复了就不添加\n    //             let existTabItem = !!tabItems.find(function (tabItem) {\n    //                 return tabItem.tab_name === tempOption.value;\n    //             });\n    //             if (existTabItem) {\n    //                 return;\n    //             }\n    //             if (tempOption) {\n    //                 tabItems.push({ tab_name: tempOption.value });\n    //             }\n    //         });\n    //     }\n    //     // 把应用中原来objects属性值添加到新的tab_items属性的默认值中\n    //     if (data.objects && data.objects.length) {\n    //         pushObjectsToTabItems(data.objects);\n    //     }\n    //     // 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\n    //     if (data.mobile_objects && data.mobile_objects.length) {\n    //         pushObjectsToTabItems(data.mobile_objects);\n    //     }\n    //     console.log(\"===tabItems==\", tabItems);\n    //     data.tab_items = tabItems;\n    // }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
+                        "data": {
+                            "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                        }
+                    },
+                    "initFetch": true,
+                    "body": [
                         {
-                            "title": "基本信息",
-                            "body": [
+                            "type": "tabs",
+                            "id": "u:430a42f742ee",
+                            "tabs": [
                                 {
-                                    "type": "wrapper",
-                                    "className": "form-content",
+                                    "title": "基本信息",
                                     "body": [
                                         {
-                                            "type": "input-text",
-                                            "id": "u:9677ac1cc3c5",
-                                            "name": "name",
-                                            "label": "名称",
-                                            "required": true,
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "labelRemark": "",
-                                            "hidden": false
-                                        },
-                                        {
-                                            "name": "code",
-                                            "label": "API 名称",
-                                            "required": true,
-                                            "type": "input-text",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:784ac1e92fbf"
-                                        },
-                                        {
-                                            "name": "icon_slds",
-                                            "label": "图标",
-                                            "type": "select",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:d0724fe17aa7",
-                                            "required": true,
-                                            "joinValues": false,
-                                            "extractValue": true,
-                                            "labelField": "label",
-                                            "valueField": "value",
-                                            "multiple": false,
-                                            "source": {
-                                                "method": "post",
-                                                "url": "${context.rootUrl}/graphql",
-                                                "data": {
-                                                    "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                                                    "$": "$$",
-                                                    "$term": "$term",
-                                                    "$value": "$icon_slds._id",
-                                                    "rfield": "${object_name}"
+                                            "type": "wrapper",
+                                            "className": "form-content",
+                                            "body": [
+                                                {
+                                                    "type": "input-text",
+                                                    "id": "u:9677ac1cc3c5",
+                                                    "name": "name",
+                                                    "label": "名称",
+                                                    "required": true,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "labelRemark": "",
+                                                    "hidden": false
                                                 },
-                                                "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                                "adaptor": "\npayload.data.options = eval(function anonymous() {\n\n  var options;\n  options = [];\n  if (!window.Creator) { \n    return options;\n  }\n  _.forEach(Creator.resources.sldsIcons.standard, function (svg) {\n    return options.push({\n      value: svg,\n      label: svg,\n      icon: svg\n    });\n  });\n\n  return options;\n\n})(api.data);\n\nreturn payload;\n        ",
-                                                "messages": {}
-                                            }
-                                        },
-                                        {
-                                            "name": "sort",
-                                            "label": "排序",
-                                            "type": "input-number",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:fc07a5376a46"
-                                        },
-                                        {
-                                            "name": "objects",
-                                            "label": "桌面主菜单(已作废)",
-                                            "type": "select",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:4e5047e44905",
-                                            "joinValues": false,
-                                            "extractValue": true,
-                                            "labelField": "label",
-                                            "valueField": "value",
-                                            "multiple": true,
-                                            "checkAll": false,
-                                            "searchable": true,
-                                            "autoComplete": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
-                                        },
-                                        {
-                                            "name": "mobile_objects",
-                                            "label": "手机主菜单(已作废)",
-                                            "type": "select",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:cfaeb2f857a8",
-                                            "joinValues": false,
-                                            "extractValue": true,
-                                            "labelField": "label",
-                                            "valueField": "value",
-                                            "multiple": true,
-                                            "checkAll": false,
-                                            "searchable": true,
-                                            "autoComplete": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
-                                        },
-                                        {
-                                            "name": "description",
-                                            "label": "描述",
-                                            "type": "textarea",
-                                            "className": "col-span-2 m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:40d99f2da55a",
-                                            "tpl": "<b><%=data.description%></b>"
-                                        },
-                                        {
-                                            "name": "is_creator",
-                                            "label": "显示在桌面菜单中",
-                                            "type": "checkbox",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:8dc6d3e8521d",
-                                            "tpl": null
-                                        },
-                                        {
-                                            "name": "mobile",
-                                            "label": "显示在手机菜单中",
-                                            "type": "checkbox",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:c9ffb7fd0610",
-                                            "tpl": null
-                                        },
-                                        {
-                                            "name": "visible",
-                                            "label": "启用",
-                                            "type": "checkbox",
-                                            "tpl": null,
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:07a8a4c5f875"
+                                                {
+                                                    "name": "code",
+                                                    "label": "API 名称",
+                                                    "required": true,
+                                                    "type": "input-text",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:784ac1e92fbf"
+                                                },
+                                                {
+                                                    "name": "icon_slds",
+                                                    "label": "图标",
+                                                    "type": "select",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:d0724fe17aa7",
+                                                    "required": true,
+                                                    "joinValues": false,
+                                                    "extractValue": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "multiple": false,
+                                                    "source": {
+                                                        "method": "post",
+                                                        "url": "${context.rootUrl}/graphql",
+                                                        "data": {
+                                                            "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
+                                                            "$": "$$",
+                                                            "$term": "$term",
+                                                            "$value": "$icon_slds._id",
+                                                            "rfield": "${object_name}"
+                                                        },
+                                                        "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
+                                                        "adaptor": "\npayload.data.options = eval(function anonymous() {\n\n  var options;\n  options = [];\n  if (!window.Creator) { \n    return options;\n  }\n  _.forEach(Creator.resources.sldsIcons.standard, function (svg) {\n    return options.push({\n      value: svg,\n      label: svg,\n      icon: svg\n    });\n  });\n\n  return options;\n\n})(api.data);\n\nreturn payload;\n        ",
+                                                        "messages": {}
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sort",
+                                                    "label": "排序",
+                                                    "type": "input-number",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:fc07a5376a46"
+                                                },
+                                                {
+                                                    "name": "objects",
+                                                    "label": "桌面主菜单(已作废)",
+                                                    "type": "select",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:4e5047e44905",
+                                                    "joinValues": false,
+                                                    "extractValue": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "multiple": true,
+                                                    "checkAll": false,
+                                                    "searchable": true,
+                                                    "autoComplete": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
+                                                },
+                                                {
+                                                    "name": "mobile_objects",
+                                                    "label": "手机主菜单(已作废)",
+                                                    "type": "select",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:cfaeb2f857a8",
+                                                    "joinValues": false,
+                                                    "extractValue": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "multiple": true,
+                                                    "checkAll": false,
+                                                    "searchable": true,
+                                                    "autoComplete": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
+                                                },
+                                                {
+                                                    "name": "description",
+                                                    "label": "描述",
+                                                    "type": "textarea",
+                                                    "className": "col-span-2 m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:40d99f2da55a",
+                                                    "tpl": "<b><%=data.description%></b>"
+                                                },
+                                                {
+                                                    "name": "is_creator",
+                                                    "label": "显示在桌面菜单中",
+                                                    "type": "checkbox",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:8dc6d3e8521d",
+                                                    "tpl": null
+                                                },
+                                                {
+                                                    "name": "mobile",
+                                                    "label": "显示在手机菜单中",
+                                                    "type": "checkbox",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:c9ffb7fd0610",
+                                                    "tpl": null
+                                                },
+                                                {
+                                                    "name": "visible",
+                                                    "label": "启用",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:07a8a4c5f875"
+                                                }
+                                            ],
+                                            "id": "u:0b870f195836",
+                                            "size": "none"
                                         }
                                     ],
-                                    "id": "u:0b870f195836",
-                                    "size": "none"
-                                }
-                            ],
-                            "id": "u:b5b8d4915890"
-                        },
-                        {
-                            "title": "选项卡",
-                            "body": [
+                                    "id": "u:b5b8d4915890"
+                                },
                                 {
-                                    "type": "wrapper",
-                                    "className": "form-content",
+                                    "title": "选项卡",
                                     "body": [
                                         {
-                                            "type": "service",
-                                            "className": "col-span-2 m-0",
-                                            "id": "u:ac5b7818b88f",
+                                            "type": "wrapper",
+                                            "className": "form-content",
                                             "body": [
                                                 {
                                                     "name": "tab_items",
@@ -206,6 +217,24 @@
                                                             "type": "tpl",
                                                             "id": "u:b95c69a1cd84",
                                                             "tpl": "${tabs_options|filter:value:equals:tab_name|pick:label}"
+                                                        },
+                                                        {
+                                                            "name": "tab_name_desktop",
+                                                            "label": "桌面",
+                                                            "type": "tpl",
+                                                            "id": "u:b95c69a1cd84",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:desktop|isTrue:'✔':'✘'}",
+                                                            "placeholder": "-",
+                                                            "remark": "显示在桌面菜单中"
+                                                        },
+                                                        {
+                                                            "name": "tab_name_mobile",
+                                                            "label": "手机",
+                                                            "type": "tpl",
+                                                            "id": "u:b95c69a1cd84",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:mobile|isTrue:'✔':'✘'}",
+                                                            "placeholder": "-",
+                                                            "remark": "显示在手机菜单中"
                                                         },
                                                         {
                                                             "name": "group",
@@ -337,129 +366,129 @@
                                                     "id": "u:22121edc42b1"
                                                 }
                                             ],
-                                            "affixFooter": false,
-                                            "messages": {},
-                                            "api": {
-                                                "method": "get",
-                                                "url": "${context.rootUrl}/graphql",
-                                                "adaptor": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function(groupNames){\n  return function(m,n){\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if(!m[tabGroupKey] || !n[tabGroupKey]){\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单tabs字段值格式\namis.registerFilter('convertDataForTabs', function (input) {\n  let pickedTabs = input.picked_tabs || [];\n  const superTabs = _.keyBy(input.__super.tab_items, 'tab_name');\n  if(typeof pickedTabs === \"string\"){\n    pickedTabs = pickedTabs.split(\",\");\n  }\n  const tabOptions = lodash.keyBy(this.data.__super.__super.__super.__super.__super.tabs_options, \"value\");\n  const convertedTabs = pickedTabs.map(function (tab_name) {\n    const superTab = superTabs[tab_name];\n    if (superTab) {\n      return superTab;\n    }\n    else {\n      const tabOption = tabOptions[tab_name];\n      return {\n        tab_name: tab_name,\n        group: tabOption.group\n      }\n    }\n  });\n  const tabGroups = this.data.__super.__super.__super.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  convertedTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: convertedTabs\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\namis.registerFilter('quickEidtSaveForTab', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const tab_name = rowValue.tab_name;\n  rowValue[prop_name] = currentPropValue;\n  let newTabs = formValue.tab_items.map(function (item) {\n    if (item.tab_name == tab_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  const tabGroups = this.data.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  newTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: newTabs\n  }\n});\n\n// 清空主表单tabs字段值\namis.registerFilter('clearTabs', function (input) {\n  return {\n    tab_items: []\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\namis.registerFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = lodash.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = lodash.compact(lodash.map(convertedGroups,\"group_name\"));\n  const tab_items = this.data.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n});\n\n\n// 把字段中配置的group属性加到主表tab_groups属性中\n// amis.registerFilter('mixingGroupsFromTabs', function (input) {\n//   const groupsOptions = input.tab_groups_options;\n//   const groups = this.data.tab_groups || [];\n//   const groupsForMixing = groupsOptions.map(function (item) {\n//     return {\n//       group_name: item\n//     }\n//   });\n//   const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n//   return {\n//     tab_groups: mixedGroups\n//   }\n// });\n\n// 新建页面布局时初始化tabs默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\namis.registerFilter('initDefaultTabs', function (input) {\n  const superValues = this.data.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    tab_items: superValues.tab_items,\n  }\n});\n\nlet data = payload.data;\ndata.tabs_options = data.options;\n//data.tab_groups_options = lodash.uniq(lodash.compact(lodash.map(data.options, \"group\"))) || [];\ndelete data.options\npayload.data = data;\nreturn payload;\n",
-                                                "sendOn": "",
-                                                "data": {
-                                                    "query": "{options:tabs{_id label:label value:name}}"
-                                                }
-                                            },
-                                            "placeholder": "-"
+                                            "id": "u:d5b736e2a2f5",
+                                            "size": "none"
                                         }
                                     ],
-                                    "id": "u:d5b736e2a2f5",
-                                    "size": "none"
-                                }
-                            ],
-                            "id": "u:989a6aa9b805"
-                        },
-                        {
-                            "title": "外接应用",
-                            "body": [
+                                    "id": "u:989a6aa9b805"
+                                },
                                 {
-                                    "type": "wrapper",
-                                    "className": "form-content",
+                                    "title": "外接应用",
                                     "body": [
                                         {
-                                            "name": "url",
-                                            "label": "外部链接",
-                                            "type": "input-url",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:d7116a113670"
-                                        },
-                                        {
-                                            "name": "is_use_ie",
-                                            "label": "使用IE打开(需使用Steedos桌面客户端)",
-                                            "type": "checkbox",
-                                            "tpl": null,
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:44fa8ee006c1"
-                                        },
-                                        {
-                                            "name": "is_use_iframe",
-                                            "label": "使用iframe打开",
-                                            "type": "checkbox",
-                                            "tpl": null,
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:ba806048fa36"
-                                        },
-                                        {
-                                            "name": "is_new_window",
-                                            "label": "在新窗口打开",
-                                            "type": "checkbox",
-                                            "tpl": null,
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:150163f04699"
-                                        },
-                                        {
-                                            "name": "on_click",
-                                            "label": "链接脚本",
-                                            "type": "textarea",
-                                            "tpl": "<b><%=data.on_click%></b>",
-                                            "className": "col-span-2 m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:0fe6df9cc818"
-                                        },
-                                        {
-                                            "name": "auth_name",
-                                            "label": "验证域名",
-                                            "type": "input-text",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:b084c94a8219"
-                                        },
-                                        {
-                                            "name": "secret",
-                                            "label": "API 密钥",
-                                            "type": "input-text",
-                                            "className": "m-0",
-                                            "labelClassName": "text-left",
-                                            "id": "u:8a56de0be5bb"
+                                            "type": "wrapper",
+                                            "className": "form-content",
+                                            "body": [
+                                                {
+                                                    "name": "url",
+                                                    "label": "外部链接",
+                                                    "type": "input-url",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:d7116a113670"
+                                                },
+                                                {
+                                                    "name": "is_use_ie",
+                                                    "label": "使用IE打开(需使用Steedos桌面客户端)",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:44fa8ee006c1"
+                                                },
+                                                {
+                                                    "name": "is_use_iframe",
+                                                    "label": "使用iframe打开",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:ba806048fa36"
+                                                },
+                                                {
+                                                    "name": "is_new_window",
+                                                    "label": "在新窗口打开",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:150163f04699"
+                                                },
+                                                {
+                                                    "name": "on_click",
+                                                    "label": "链接脚本",
+                                                    "type": "textarea",
+                                                    "tpl": "<b><%=data.on_click%></b>",
+                                                    "className": "col-span-2 m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:0fe6df9cc818"
+                                                },
+                                                {
+                                                    "name": "auth_name",
+                                                    "label": "验证域名",
+                                                    "type": "input-text",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:b084c94a8219"
+                                                },
+                                                {
+                                                    "name": "secret",
+                                                    "label": "API 密钥",
+                                                    "type": "input-text",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:8a56de0be5bb"
+                                                }
+                                            ],
+                                            "size": "none",
+                                            "id": "u:09713a014209"
                                         }
                                     ],
-                                    "size": "none",
-                                    "id": "u:09713a014209"
+                                    "id": "u:17ecc1ec4435"
                                 }
                             ],
-                            "id": "u:17ecc1ec4435"
+                            "tabsMode": "line",
+                            "className": "",
+                            "contentClassName": ""
                         }
                     ],
-                    "tabsMode": "line",
-                    "className": "",
-                    "contentClassName": ""
+                    "panelClassName": "m-0 -mt-3",
+                    "actions": [
+                        {
+                            "type": "button",
+                            "label": "取消",
+                            "actionType": "",
+                            "level": "default",
+                            "block": false,
+                            "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                            "id": "u:f2208dc2b4cd"
+                        },
+                        {
+                            "type": "button",
+                            "label": "保存",
+                            "actionType": "submit",
+                            "level": "info",
+                            "id": "u:207386fce204"
+                        }
+                    ],
+                    "actionsClassName": "p-sm b-t b-light text-center",
+                    "className": "steedos-amis-form",
+                    "id": "apps-form",
+                    "affixFooter": false,
+                    "type": "form",
+                    "debug": false,
+                    "onEvent": {
+                        "inited": {
+                            "actions": [
+                                {
+                                    "actionType": "custom",
+                                    "script": "const data = context.props.data;\nconst superData = data.__super;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\ndebugger;\nconst tabOptions = superData.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\nconsole.log(\"===tabItems==\", tabItems);\n// data.tab_items = tabItems;\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
+                                }
+                            ]
+                        }
+                    }
                 }
-            ],
-            "panelClassName": "m-0 -mt-3",
-            "actions": [
-                {
-                    "type": "button",
-                    "label": "取消",
-                    "actionType": "",
-                    "level": "default",
-                    "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                    "id": "u:f2208dc2b4cd"
-                },
-                {
-                    "type": "button",
-                    "label": "保存",
-                    "actionType": "submit",
-                    "level": "info",
-                    "id": "u:207386fce204"
-                }
-            ],
-            "actionsClassName": "p-sm b-t b-light text-center",
-            "className": "steedos-amis-form",
-            "id": "apps-form",
-            "affixFooter": false
+            ]
         }
     ],
     "regions": [
