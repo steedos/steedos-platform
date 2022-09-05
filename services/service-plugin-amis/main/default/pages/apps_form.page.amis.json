@@ -219,24 +219,6 @@
                                                             "tpl": "${tabs_options|filter:value:equals:tab_name|pick:label}"
                                                         },
                                                         {
-                                                            "name": "tab_name_desktop",
-                                                            "label": "桌面",
-                                                            "type": "tpl",
-                                                            "id": "u:b95c69a1cd84",
-                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:desktop|isTrue:'✔':'✘'}",
-                                                            "placeholder": "-",
-                                                            "remark": "显示在桌面菜单中"
-                                                        },
-                                                        {
-                                                            "name": "tab_name_mobile",
-                                                            "label": "手机",
-                                                            "type": "tpl",
-                                                            "id": "u:b95c69a1cd84",
-                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:mobile|isTrue:'✔':'✘'}",
-                                                            "placeholder": "-",
-                                                            "remark": "显示在手机菜单中"
-                                                        },
-                                                        {
                                                             "name": "group",
                                                             "label": "分组",
                                                             "id": "u:e532b1949676",
@@ -269,6 +251,24 @@
                                                                 "searchable": true,
                                                                 "clearable": true
                                                             }
+                                                        },
+                                                        {
+                                                            "name": "tab_name_desktop",
+                                                            "label": "桌面",
+                                                            "type": "tpl",
+                                                            "id": "u:b95c69a1cd84",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:desktop|isTrue:'✔':'✘'}",
+                                                            "placeholder": "-",
+                                                            "remark": "显示在桌面菜单中"
+                                                        },
+                                                        {
+                                                            "name": "tab_name_mobile",
+                                                            "label": "手机",
+                                                            "type": "tpl",
+                                                            "id": "u:b95c69a1cd84",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:mobile|isTrue:'✔':'✘'}",
+                                                            "placeholder": "-",
+                                                            "remark": "显示在手机菜单中"
                                                         }
                                                     ],
                                                     "className": "col-span-2 m-0",
@@ -277,7 +277,25 @@
                                                     "footable": false,
                                                     "headerToolbar": [
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
+                                                            "label": "生成选项卡",
+                                                            "id": "u:a35a2276145d",
+                                                            "tpl": "内容",
+                                                            "actionType": "custom",
+                                                            "onEvent": {
+                                                                "click": {
+                                                                    "actions": [
+                                                                        {
+                                                                            "actionType": "custom",
+                                                                            "script": "const appId = null;\nconst page = Steedos.Page.getPage('app', appId, null, null, \"generate_object_tabs\");\nconst title = \"对象选项卡\";\nif (page && page.schema) {\n  Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, {\n    appId: null,\n    objectName: null,\n    title: title\n  }));\n}"
+                                                                        }
+                                                                    ],
+                                                                    "weight": 0
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "button",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置选项卡",
@@ -285,9 +303,9 @@
                                                                     {
                                                                         "type": "transfer",
                                                                         "name": "picked_tabs",
+                                                                        "value": "${tab_items|pick:tab_name}",
                                                                         "sortable": true,
                                                                         "source": "${tabs_options}",
-                                                                        "value": "${tab_items|pick:tab_name}",
                                                                         "searchable": true
                                                                     }
                                                                 ],
@@ -316,7 +334,9 @@
                                                             "id": "u:853b890ab524"
                                                         },
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
+                                                            "id": "u:ec9931ea883c",
+                                                            "label": "设置分组",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置分组",
@@ -358,12 +378,14 @@
                                                                     }
                                                                 },
                                                                 "type": "dialog"
-                                                            },
-                                                            "label": "设置分组",
-                                                            "id": "u:ec9931ea883c"
+                                                            }
                                                         }
                                                     ],
-                                                    "id": "u:22121edc42b1"
+                                                    "id": "u:22121edc42b1",
+                                                    "perPageAvailable": [
+                                                        10
+                                                    ],
+                                                    "messages": {}
                                                 }
                                             ],
                                             "id": "u:d5b736e2a2f5",
@@ -499,9 +521,9 @@
             "rootUrl": "http://127.0.0.1:5800"
         }
     },
+    "id": "u:953fda4052b6",
     "bodyClassName": "p-0",
     "name": "page_edit_${recordId}",
     "initApi": null,
-    "initFetch": null,
-    "id": "u:953fda4052b6"
+    "initFetch": null
 }
