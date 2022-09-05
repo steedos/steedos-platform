@@ -37,8 +37,8 @@ router.get('/api/pageDesign', core.requireAuthentication, async function (req, r
         // }
 
         const retUrl = __meteor_runtime_config__.ROOT_URL + '/app/admin/pages/view/' + req.query.pageId
-        const builderHost = `https://builder.steedos.cn/amis?${assetUrl}&retUrl=${retUrl}`;
-        // const builderHost = `http://127.0.0.1:3000/amis?${assetUrl}&retUrl=${retUrl}`;
+        const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}&retUrl=${retUrl}`;
 
         // let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
         // res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));

@@ -59,7 +59,8 @@ module.exports = {
 			"@steedos/standard-process-approval",
 			"@steedos/standard-collaboration",
 			"@steedos/standard-ui",
-			"@steedos/standard-permission"
+			"@steedos/standard-permission",
+			"@steedos/steedos-plugin-schema-builder"
 		],
 		plugins: [
 		]

@@ -1,0 +1,96 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "form",
+            "mode": "normal",
+            "persistData": false,
+            "promptPageLeave": true,
+            "name": "form_edit_${recordId}",
+            "title": "",
+            "api": {
+                "method": "post",
+                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate/tabs",
+                "data": {
+                    "objects": "${objects}",
+                    "modalName": "${modalName}"
+                },
+                "requestAdaptor": "",
+                "responseData": null,
+                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nrefreshGrid && refreshGrid();\nreturn payload;\n        ",
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
+            },
+            "initApi": "",
+            "initFetch": true,
+            "body": [
+                {
+                    "label": "",
+                    "type": "transfer",
+                    "name": "objects",
+                    "options": [],
+                    "id": "u:e224b24aa867",
+                    "searchable": true,
+                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
+                    "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    }
+                }
+            ],
+            "panelClassName": "m-0",
+            "bodyClassName": "p-4",
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "取消",
+                    "actionType": "",
+                    "level": "default",
+                    "block": false,
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:bf2587b53d64"
+                },
+                {
+                    "type": "button",
+                    "label": "确定",
+                    "actionType": "submit",
+                    "level": "info",
+                    "id": "u:08afd6e53cab"
+                }
+            ],
+            "actionsClassName": "p-sm b-t b-light text-center",
+            "className": "steedos-amis-form -mt-3",
+            "checkAll": false,
+            "id": "object-layout-form",
+            "debug": false,
+            "messages": {
+                "fetchFailed": "初始化失败",
+                "saveFailed": "保存失败"
+            },
+            "onEvent": {
+                "submitSucc": {
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "const result = event.data.result;\nconst doneCount = result.data && result.data.doneCount || 0;\nconst myMsg = '已成功生成' + doneCount.toString() + \"条选项卡！\";\ndoAction({\n  actionType: 'toast',\n  args: {\n    msg: myMsg,\n    msgType: \"success\"\n  }\n});\nconst errors = result.data && result.data.errors || [];\nif (errors && errors.length) { \n  console.warn(\"以下对象未能生成选项卡：\");\n  console.warn(JSON.stringify(errors));\n}"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800"
+        }
+    },
+    "id": "u:3b0de7e88def",
+    "bodyClassName": "p-0",
+    "name": "page_edit_${recordId}",
+    "initApi": null,
+    "initFetch": null,
+    "className": "page-form-object_layouts"
+}
