@@ -4,8 +4,8 @@ const isAPIName = function(apiName){
     if(!reg.test(apiName)){
         throw new Error("API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符");
     }
-    if(apiName.length > 20){
-        throw new Error("名称长度不能大于20个字符");
+    if(apiName.length > 50){
+        throw new Error("名称长度不能大于50个字符");
     }
     return true
 }
