@@ -13,11 +13,14 @@
                 "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate/tabs",
                 "data": {
                     "objects": "${objects}",
-                    "modalName": "${modalName}"
+                    "modalName": "${modalName}",
+                    "objectName": "${objectName}",
+                    "$": "$$",
+                    "recordId": "${recordId}"
                 },
-                "requestAdaptor": "",
+                "requestAdaptor": "const formData = api.data.$;\napi.data = { objects: formData.objects };\nreturn api;",
                 "responseData": null,
-                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nrefreshGrid && refreshGrid();\nreturn payload;\n        ",
+                "adaptor": "\nSteedosUI.getRef(api.body.modalName).close();\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
