@@ -1,0 +1,7 @@
+name: generate_object_tabs
+is_active: true
+label: 生成对象选项卡
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

@@ -127,6 +127,26 @@ module.exports = {
 
                 return { status: 0, data: { options } }
             },
+        },
+        getObjectsForGenerateTabsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/generate_tabs_options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectsGenerateTabsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
+        generateTabs: {
+            rest: {
+                method: "POST",
+                path: "/objects/generate/tabs"
+            },
+            async handler(ctx) {
+                const result = await this.generateTabs(ctx);
+                return { status: 0, data: result }
+            }
         }
     },
 
@@ -356,6 +376,117 @@ module.exports = {
                     options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
                 })
                 return options;
+            }
+        },
+        getObjectsGenerateTabsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const spaceId = userSession.spaceId;
+                const objectTabs = await objectql.getObject('tabs').find({filters: [['type', '=', "object"]]});
+                const tabObjects = _.map(objectTabs, "object");
+                const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
+                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const query = {
+                    filters: [['hidden', '!=', true], ['name', '<>', tabObjects]],
+                    projection: {
+                        name: 1, 
+                        label: 1
+                    }
+                };
+                // 只列出未找到tabs记录的对象清单
+                const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+
+                _.each(objects, (object)=>{
+                    if(object && object.name){
+                        steedosI18n.translationObject(lng, object.name, object)
+                    }
+                })
+                return _.map(objects, (object)=>{
+                    return {
+                        value: object.name,
+                        label: object.label || object.name
+                    }
+                });
+            }
+        },
+        generateTabs: {
+            async handler(ctx) {
+                let selectedObjects = ctx.params && ctx.params.objects && ctx.params.objects.split(",");
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const spaceId = userSession.spaceId;
+                const userId = userSession.userId;
+                const companyId = userSession.company_id;
+                const companyIds = userSession.company_ids;
+                const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
+                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const query = {
+                    filters: [['name', 'in', selectedObjects]], //['hidden', '!=', true] ,
+                    projection: {
+                        name: 1,
+                        label: 1
+                    }
+                };
+
+                const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+
+                _.each(objects, (object) => {
+                    if (object && object.name) {
+                        steedosI18n.translationObject(lng, object.name, object)
+                    }
+                })
+                const errors = [];
+                let doneCount = 0;
+                for(let i = 0;i < objects.length; i++) {
+                    const object = objects[i];
+                    try{
+                        const existCount = await objectql.getObject('tabs').count({filters: [['object', '=', object.name]]});
+                        if(existCount > 0){
+                            return;
+                        }
+                        const tabLabel = object.label || object.name;
+                        const tabName = "object_" + object.name.replace(/__c$/, "");
+                        const now = new Date();
+                        const doc = {
+                            label: tabLabel, 
+                            name: tabName, 
+                            icon: object.icon,
+                            type: "object", 
+                            mobile: true,
+                            desktop: true,
+                            object: object.name,
+                            space: spaceId,
+                            owner: userId,
+                            created_by: userId,
+                            created: now,
+                            modified_by: userId,
+                            modified: now,
+                            company_id: companyId,
+                            company_ids: companyIds
+                        };
+                        const tab = await objectql.getObject('tabs').insert(doc);
+                        if(tab && tab._id){
+                            doneCount++;
+                        }
+                        else{
+                            errors.push({
+                                object: (object.label || object.name) + `(${object.name})`,
+                                message: ""
+                            });
+                        }
+                    }
+                    catch(ex){
+                        errors.push({
+                            object: (object.label || object.name) + `(${object.name})`,
+                            message: ex.message
+                        });
+                    }
+                };
+                return {
+                    doneCount:doneCount,
+                    errors: errors
+                }
             }
         }
     }
