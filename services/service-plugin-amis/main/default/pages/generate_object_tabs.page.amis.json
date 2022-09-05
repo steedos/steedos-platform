@@ -12,11 +12,12 @@
                 "method": "post",
                 "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate/tabs",
                 "data": {
-                    "objects": "${objects}"
+                    "objects": "${objects}",
+                    "modalName": "${modalName}"
                 },
                 "requestAdaptor": "",
                 "responseData": null,
-                "adaptor": "console.log(\"===payload==\", payload);\nvar errors = payload.data && payload.data.errors;\nvar noErrors = !(errors && errors.length);\nif (noErrors) { \n  SteedosUI.getRef(api.body.modalName).close();\n}\nreturn payload;\n        ",
+                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -24,19 +25,6 @@
             "initApi": "",
             "initFetch": true,
             "body": [
-                {
-                    "type": "tpl",
-                    "tpl": "请选择需要生成选项卡的对象，点击确定按钮即可为这些对象生成选项卡。",
-                    "inline": false,
-                    "wrapperComponent": "",
-                    "id": "u:42a492333a0f",
-                    "style": {
-                        "fontFamily": "",
-                        "fontSize": 12,
-                        "textAlign": "center"
-                    },
-                    "className": "text-base mb-4"
-                },
                 {
                     "label": "",
                     "type": "transfer",
@@ -67,44 +55,28 @@
                     "label": "确定",
                     "actionType": "submit",
                     "level": "info",
-                    "id": "u:08afd6e53cab",
-                    "feedback": {
-                        "title": "提示",
-                        "body": {
-                            "type": "alert",
-                            "body": {
-                                "type": "list",
-                                "source": "${errors}",
-                                "listItem": {
-                                    "title": "${object}",
-                                    "body": [
-                                        {
-                                            "type": "static",
-                                            "tpl": "${message}"
-                                        }
-                                    ]
-                                }
-                            },
-                            "level": "warning",
-                            "showIcon": true,
-                            "title": "以下对象未能生成选项卡"
-                        },
-                        "actions": [
-                            {
-                                "type": "button",
-                                "actionType": "close",
-                                "label": "关闭"
-                            }
-                        ],
-                        "visibleOn": "this.errors.length"
-                    }
+                    "id": "u:08afd6e53cab"
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",
-            "className": "steedos-amis-form",
+            "className": "steedos-amis-form -mt-3",
             "checkAll": false,
             "id": "object-layout-form",
-            "debug": false
+            "debug": false,
+            "messages": {
+                "fetchFailed": "初始化失败",
+                "saveFailed": "保存失败"
+            },
+            "onEvent": {
+                "submitSucc": {
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "const result = event.data.result;\nconst doneCount = result.data && result.data.doneCount || 0;\nconst myMsg = '已成功生成' + doneCount.toString() + \"条选项卡！\";\ndoAction({\n  actionType: 'toast',\n  args: {\n    msg: myMsg,\n    msgType: \"success\"\n  }\n});\nconst errors = result.data && result.data.errors || [];\nif (errors && errors.length) { \n  console.warn(\"以下对象未能生成选项卡：\");\n  console.warn(JSON.stringify(errors));\n}"
+                        }
+                    ]
+                }
+            }
         }
     ],
     "regions": [
@@ -113,8 +85,7 @@
     "data": {
         "context": {
             "rootUrl": "http://127.0.0.1:5800"
-        },
-        "objectName": "object_layouts"
+        }
     },
     "id": "u:3b0de7e88def",
     "bodyClassName": "p-0",

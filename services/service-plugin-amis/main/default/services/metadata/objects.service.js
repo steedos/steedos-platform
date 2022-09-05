@@ -437,6 +437,7 @@ module.exports = {
                     }
                 })
                 const errors = [];
+                let doneCount = 0;
                 for(let i = 0;i < objects.length; i++) {
                     const object = objects[i];
                     try{
@@ -465,7 +466,10 @@ module.exports = {
                             company_ids: companyIds
                         };
                         const tab = await objectql.getObject('tabs').insert(doc);
-                        if(!tab._id){
+                        if(tab && tab._id){
+                            doneCount++;
+                        }
+                        else{
                             errors.push({
                                 object: (object.label || object.name) + `(${object.name})`,
                                 message: ""
@@ -480,6 +484,7 @@ module.exports = {
                     }
                 };
                 return {
+                    doneCount:doneCount,
                     errors: errors
                 }
             }
