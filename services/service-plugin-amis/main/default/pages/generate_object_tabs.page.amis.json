@@ -17,7 +17,7 @@
                 },
                 "requestAdaptor": "",
                 "responseData": null,
-                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nreturn payload;\n        ",
+                "adaptor": "SteedosUI.getRef(api.body.modalName).close();\nrefreshGrid && refreshGrid();\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
