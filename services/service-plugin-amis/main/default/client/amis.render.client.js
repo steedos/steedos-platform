@@ -43,7 +43,7 @@
 
         // 加载Amis SDK: 如果直接放到body中会导致meteor 编译后的 cordova.js 加载报错
         let amisSDKScript = document.createElement("script");
-        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/@steedos-ui/amis@2.2.43/dist/amis-sdk.umd.min.js'));
+        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
         document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
@@ -63,12 +63,10 @@
 
     // 此处不能使用import, client js 编译时会将import 转为require, 导致加载失败
     // import('/unpkg.com/@steedos-ui/amis/dist/amis-sdk.umd.min.js').then(() => {
-
         Promise.all([
             waitForThing(window, 'assetsLoaded'),
-            waitForThing(window, 'AmisSDK'),
+            waitForThing(window, 'amis'),
         ]).then(()=>{
-
             const AmisRenderers = [];
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
@@ -77,14 +75,33 @@
                 const Component = Builder.components.find(item => item.name === comp.componentName);
                 if (Component && !AmisRenderers.includes(comp.amis?.render.type)){
                     try {
+                        let AmisWrapper = Component.class
                         AmisRenderers.push(comp.amis?.render.type);
-                        AmisSDK.amis.Renderer(
+                        if(comp.componentType === 'amisSchema'){
+                            let amisReact = amisRequire('react');
+                            AmisWrapper = function(props){
+                              const { body, render } = props
+                              const [schema, setSchema] = amisReact.useState(null);
+                              amisReact.useEffect(()=>{
+                                const result = Component.class(props);
+                                if(result.then && typeof result.then === 'function'){
+                                  result.then((data)=>{
+                                    setSchema(data);
+                                  })
+                                }else{
+                                  setSchema(result)
+                                }
+                              }, [])
+                              return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
+                            }
+                          }
+                        amisRequire("amis").Renderer(
                             {
                                 type: comp.amis?.render.type,
                                 weight: comp.amis?.render.weight,
                                 autoVar: true,
                             }
-                        )(Component.class);
+                        )(AmisWrapper);
                     } catch(e){console.error(e)}
                 }
             });
@@ -178,7 +195,29 @@
                         }
                     }, env);
                 }
-                return (React.createElement("div", { className: "amis-scope" }, AmisSDK.AmisRender(schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))));
+                schema.scopeRef = (ref) => {
+                    try {
+                      if(!window.amisScopes){
+                        window.amisScopes = {};
+                      }
+                      if(name){
+                        window.amisScopes[name] = ref; 
+                      }
+                    } catch (error) {
+                      console.error('error', error)
+                    }
+                    
+                    return scoped = ref
+                  }
+
+                React.useEffect(()=>{
+                    amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                  }, [])
+                return React.createElement("div", {
+                    className: "amis-scope"
+                  }, React.createElement("div", {
+                    className: `steedos-amis-render-scope-${name}`
+                  }));
             };
 
             const initMonaco = ()=>{
@@ -199,14 +238,13 @@
                     return Builder.initMonaco()
                 }
             }
-
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
             initMonaco().catch((err)=>{
                 console.error(`Builder.initMonaco error: ${err}`);
             }).finally(()=>{
                 const language = getAmisLng()
                 axios.get(`/translations/amis/${language}.json`).then((res)=>{
-                    AmisSDK.amis.registerLocale(`${language}`, res.data)
+                    amisRequire("amis").registerLocale(`${language}`, res.data)
                     Builder.registerComponent(AmisRender, {
                         name: 'Amis',
                         inputs: [

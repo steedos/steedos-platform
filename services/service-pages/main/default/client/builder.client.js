@@ -71,18 +71,27 @@
     
     // window.builder = BuilderReact.builder;
 
-    Builder.set({
-        rootUrl: __meteor_runtime_config__.ROOT_URL, 
-        unpkgUrl: Steedos.absoluteUrl('/unpkg.com')
+    Promise.all([
+        waitForThing(Creator, 'USER_CONTEXT'),
+    ]).then(()=>{
+        Builder.set({
+            rootUrl: __meteor_runtime_config__.ROOT_URL, 
+            unpkgUrl: Steedos.absoluteUrl('/unpkg.com'),
+            context: {
+                rootUrl: __meteor_runtime_config__.ROOT_URL,
+                tenantId: Creator.USER_CONTEXT.spaceId,
+                userId: Creator.USER_CONTEXT.userId,
+                authToken: Creator.USER_CONTEXT.user.authToken
+            }
+        })
+    
+        if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
+            const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
+            Builder.registerRemoteAssets(defaultAssetsUrls)
+        }  
+    
+        window.postMessage({ type: "Builder.loaded" })
     })
-
-    if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
-        const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
-        Builder.registerRemoteAssets(defaultAssetsUrls)
-    }  
-
-    window.postMessage({ type: "Builder.loaded" })
-
 })();
 
 
