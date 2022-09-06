@@ -9,7 +9,7 @@ label: 待办数
 precision: 18
 primary: false
 readonly: false
-required: false
+required: true
 scale: 0
 searchable: false
 sort_no: 130

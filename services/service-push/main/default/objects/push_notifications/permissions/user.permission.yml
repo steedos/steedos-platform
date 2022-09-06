@@ -1,34 +1,34 @@
 name: push_notifications.用户
-allowCreate: true
-allowCreateFiles: true
-allowDelete: true
-allowDeleteFiles: true
-allowEdit: true
-allowEditFiles: true
-allowRead: true
-allowReadFiles: true
+allowCreate: false
+allowCreateFiles: false
+allowDelete: false
+allowDeleteFiles: false
+allowEdit: false
+allowEditFiles: false
+allowRead: false
+allowReadFiles: false
 modifyAllRecords: false
 permission_set_id: user
-viewAllFiles: true
+viewAllFiles: false
 viewAllRecords: false
 field_permissions:
   - field: name
-    readable: true
-    editable: true
+    readable: false
+    editable: false
   - field: owner
     readable: false
     editable: false
   - field: created
-    readable: true
+    readable: false
     editable: false
   - field: created_by
-    readable: true
+    readable: false
     editable: false
   - field: modified
-    readable: true
+    readable: false
     editable: false
   - field: modified_by
-    readable: true
+    readable: false
     editable: false
   - field: locked
     readable: false
@@ -43,11 +43,11 @@ field_permissions:
     readable: false
     editable: false
   - field: owner_mobile
-    readable: true
-    editable: true
+    readable: false
+    editable: false
   - field: body
-    readable: true
-    editable: true
+    readable: false
+    editable: false
   - field: badge
-    readable: true
-    editable: true
+    readable: false
+    editable: false
