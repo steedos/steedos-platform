@@ -89,7 +89,13 @@ isFollowing = ()->
 	return Creator.getCollection("follows")?.findOne({object_name: Session.get("object_name"), owner: Meteor.userId()})
 
 Template.creator_list_wrapper.helpers
-
+	isJsBtn: ()->
+		console.log("isJsBtn ", this)
+		return this.type != 'amis_action'
+	button: ()->
+		return this;
+	buttonClassName: ()->
+		return "slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-"+this.name
 	isCalendarView: ()->
 		return isCalendarView()
 
@@ -336,6 +342,8 @@ transformFilters = (filters)->
 Template.creator_list_wrapper.events
 
 	'click .list-action-custom': (event) ->
+		if this.type == 'amis_action' || this.button.type == 'amis_action'
+			return ;
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
 		collection_name = object.label
