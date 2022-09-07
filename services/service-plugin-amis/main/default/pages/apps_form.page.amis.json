@@ -213,10 +213,18 @@
                                                     "draggable": false,
                                                     "columns": [
                                                         {
+                                                            "name": "index",
+                                                            "label": "序号",
+                                                            "type": "static",
+                                                            "id": "u:c59784421c37",
+                                                            "value": "${index + 1}",
+                                                            "className": "w-10"
+                                                        },
+                                                        {
                                                             "name": "tab_name_label",
                                                             "label": "选项卡",
-                                                            "type": "tpl",
                                                             "id": "u:b95c69a1cd84",
+                                                            "type": "tpl",
                                                             "tpl": "${tabs_options|filter:value:equals:tab_name|pick:label}"
                                                         },
                                                         {
