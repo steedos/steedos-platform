@@ -19,16 +19,16 @@ graphql接口文档参考：https://www.steedos.cn/docs/developer/graphql-api
 // 调用示例
 
 mutation {
-     push_notifications__insert(doc:{ 
+    push_notifications__insert(doc:{ 
       name : "系统管理员为您分配了一个任务1",
       body : "处理次款事务1",
       owner_mobile : "xxxxxxxxxxx", //人员手机号
       app_id : "xxxxxxxxxxxx", //自建第三方应用的appId
-      badge: "1"
-}) {
-        name
-        _id
-      }
+      badge: 1 //待办数
+}){
+      name
+      _id
+  }
 }
 
 
