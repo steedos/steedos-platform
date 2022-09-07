@@ -24,6 +24,12 @@ fields:
     description: 
   tabs: 
     label: Tabs
+  tab_items: 
+    label: Tabs
+  tab_items.$.tab_name:
+    label: Name
+  tab_items.$.group:
+    label: Group
   icon:
     label: Icon
     help: 

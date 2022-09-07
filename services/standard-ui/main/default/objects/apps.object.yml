@@ -63,6 +63,7 @@ fields:
   tab_groups.$.group_name:
     type: text
   tab_items:
+    label: Tabs
     type: grid
     is_wide: true
     required: true

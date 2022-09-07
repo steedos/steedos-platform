@@ -16,6 +16,12 @@ fields:
     description: 
   tabs: 
     label: 选项卡
+  tab_items: 
+    label: 选项卡
+  tab_items.$.tab_name:
+    label: 名称
+  tab_items.$.group:
+    label: 分组
   visible:
     label: 启用
     help: 
