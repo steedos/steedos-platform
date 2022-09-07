@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-06 18:21:40
+ * @LastEditTime: 2022-09-07 10:18:40
  * @Description: 
  */
 
@@ -90,27 +90,42 @@ Template.amis_action.onRendered(()=>{
   var data = tplData.data
   var env = tplData.env
   var rootName = ".steedos-button-"+button.object+"-"+button.name;
-  var amis = amisRequire("amis/embed");
-	schema = {
-        type: "service",
-        bodyClassName: 'p-0',
-        body: [
-            {
-                type: "button",
-                label: button.label,
-                className: `${ inMore ? 'flex w-full items-center border-0 px-2 py-1' : 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent p-0 border-none' } ${className ? className : ''}`,
-                confirmText: button.confirmText ? button.confirmText : null,
-                onEvent: {
-                  click: {
-                    actions: _.isString(button.amis_actions) ? JSON.parse(button.amis_actions) : button.amis_actions,
-                  },
-                }
+  Promise.all([
+    waitForThing(window, 'amis'),
+  ]).then(()=>{
+    var amis = amisRequire("amis/embed");
+    var schema = {
+          type: "service",
+          bodyClassName: 'p-0',
+          body: [
+              {
+                  type: "button",
+                  label: button.label,
+                  className: `${ inMore ? 'flex w-full items-center border-0 px-2 py-1' : 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent p-0 border-none' } ${className ? className : ''}`,
+                  confirmText: button.confirmText ? button.confirmText : null,
+                  onEvent: {
+                    click: {
+                      actions: _.isString(button.amis_actions) ? JSON.parse(button.amis_actions) : button.amis_actions,
+                    },
+                  }
+              }
+          ],
+          regions: [
+            "body"
+          ],
+          data: data
+        };
+    const defData = lodash.defaultsDeep({}, data , {
+        data: {
+            context: {
+                rootUrl: __meteor_runtime_config__.ROOT_URL,
+                tenantId: Creator.USER_CONTEXT.spaceId,
+                userId: Creator.USER_CONTEXT.userId,
+                authToken: Creator.USER_CONTEXT.user.authToken
             }
-        ],
-        regions: [
-          "body"
-        ],
-        data: data
-      };
-	return amis.embed(rootName, schema, data, Object.assign(getEvn(), env));
+        }
+      });
+    schema = lodash.defaultsDeep(defData , schema);
+    return amis.embed(rootName, schema, {}, Object.assign(getEvn(), env));
+  })
 })

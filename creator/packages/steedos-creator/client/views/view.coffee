@@ -164,6 +164,22 @@ Template.creator_view.helpers Creator.helpers
 Template.creator_view.helpers
 	isLoading: ()->
 		return Template.instance().isLoading.get();
+	isJsBtn: ()->
+		return this.type != 'amis_action'
+	button: ()->
+		return this;
+	buttonClassName: ()->
+		return "slds-button slds-button--neutral slds-truncate record-action-custom record-action-custom-"+this.name
+	moreButtonClassName: ()->
+		return "slds-dropdown__item crm-header-menu-item record-action-custom record-action-custom-"+this.name
+	amisButtonData: ()->
+		return {
+			app_id: Session.get("app_id")
+			object_name: Session.get("object_name")
+			reocrd_id: Session.get("record_id")
+			record: Template.instance().__record?.get();
+			permissions: Creator.getRecordPermissions Session.get("object_name"), Template.instance().__record?.get(), Meteor.userId()
+		}
 	form_horizontal: ()->
 		if Session.get("app_id") == "admin"
 			return window.innerWidth > (767 + 250)
@@ -550,7 +566,8 @@ Template.creator_view.helpers
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
-		console.log('click action');
+		if this.type == 'amis_action' || this.button?.type == 'amis_action'
+			return ;
 		record = Creator.getObjectRecord()
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)
