@@ -1,0 +1,7 @@
+name: user
+index: true
+label: user
+required: true
+searchable: true
+sort_no: 100
+type: text
