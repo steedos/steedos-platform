@@ -79,11 +79,15 @@
 							{{/if}}
 							<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
 								{{#each actions}}
-									<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-{{this.name}}">
-										<a href="javascript:void(0);" title="{{this.label}}" class="">
-											<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
-										</a>
-									</li>
+									{{#if isJsBtn}}
+										<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-{{this.name}}">
+											<a href="javascript:void(0);" title="{{this.label}}" class="">
+												<div class="slds-truncate" title="{{this.label}}">{{this.label}}</div>
+											</a>
+										</li>
+									{{else}}
+										{{> amis_action button=button buttonClassName=buttonClassName data=amisButtonData }}
+									{{/if}}
 								{{/each}}
 							</ul>
 						</div>

@@ -388,6 +388,10 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/detail_realted_object_list.html', 'client');
 	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');
 
+	api.addFiles('client/views/amis_action.html', 'client');
+	api.addFiles('client/views/amis_action.js', 'client');
+	api.addFiles('client/views/amis_action.less', 'client');
+
 	api.export(['permissionManagerForInitApproval', 'uuflowManagerForInitApproval'], ['server']);
 
 });
