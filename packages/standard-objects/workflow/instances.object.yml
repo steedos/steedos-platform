@@ -193,6 +193,9 @@ fields:
   #   required: false
   #   omit: false
   #   hidden: false
+  current_step_name:
+    type: text
+    hidden: true
   current_step_auto_submit:
     label: Auto Submit if Time Out
     type: boolean
