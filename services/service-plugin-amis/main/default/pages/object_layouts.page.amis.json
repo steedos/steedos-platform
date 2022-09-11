@@ -162,18 +162,19 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForButton:visible_on}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 按钮列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForButton = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const button_name = rowValue.button_name;\n  rowValue[prop_name] = currentPropValue;\n  let newButtons = formValue.buttons.map(function (item) {\n    if (item.button_name == button_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  return {\n    buttons: newButtons\n  }\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForButton(eventData, \"visible_on\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
-                                                                "tpl": "<b><%=data.visible_on%></b>"
+                                                                "tpl": "<b><%=data.visible_on%></b>",
+                                                                "name": "visible_on",
+                                                                "id": "u:daa771bd34b9",
+                                                                "mode": "popOver"
                                                             },
-                                                            "id": "u:3c35211aa1a0"
+                                                            "id": "u:3c35211aa1a0",
+                                                            "placeholder": "-"
                                                         }
                                                     ],
                                                     "className": "col-span-2 m-0",
@@ -192,29 +193,25 @@
                                                                         "sortable": true,
                                                                         "source": "${buttons_options}",
                                                                         "value": "${buttons|pick:button_name}",
-                                                                        "searchable": true
+                                                                        "searchable": true,
+                                                                        "id": "u:d6e067c40e83"
                                                                     }
                                                                 ],
                                                                 "onEvent": {
                                                                     "confirm": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|clearButtons}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
-                                                                            },
-                                                                            {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|convertDataForButtons}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 清空主表单buttons字段值\nconst clearButtons = function (input) {\n  return {\n    buttons: []\n  }\n}\n\n// 把”选择按钮“弹出窗口中设置的按钮转为主表单buttons字段值格式\nconst convertDataForButtons = function (input) {\n  let pickedButtons = input.picked_buttons || [];\n  const superButtons = _.keyBy(input.__super.buttons, 'button_name');\n  if (typeof pickedButtons === \"string\") {\n    pickedButtons = pickedButtons.split(\",\");\n  }\n  const convertedButtons = pickedButtons.map(function (key) {\n    return superButtons[key] || {\n      button_name: key\n    }\n  });\n  return {\n    buttons: convertedButtons\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearButtons()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForButtons(eventData)\n    }\n  });\n}, 300);\n"
                                                                             }
                                                                         ]
                                                                     }
-                                                                }
+                                                                },
+                                                                "type": "dialog",
+                                                                "id": "u:a0027ac6f8c1",
+                                                                "closeOnEsc": false,
+                                                                "closeOnOutside": false,
+                                                                "showCloseButton": true
                                                             },
                                                             "label": "选择按钮",
                                                             "id": "u:1ac8afc8a9bb"
@@ -410,7 +407,7 @@
                                                                         "actions": [
                                                                             {
                                                                                 "actionType": "custom",
-                                                                                "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 清空主表单fields字段值\nconst clearFields = function (input) { \n  return {\n    fields: []\n  }\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\nconst convertDataForFields = function (input) {\n  let pickedFields = input.picked_fields || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  if (typeof pickedFields === \"string\") {\n    pickedFields = pickedFields.split(\",\");\n  }\n  const fieldOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.fields_options, \"value\");\n  const convertedFields = pickedFields.map(function (field_name) {\n    const superField = superFields[field_name];\n    if (superField) {\n      return superField;\n    }\n    else {\n      const fieldOption = fieldOptions[field_name];\n      return {\n        field_name: field_name,\n        is_readonly: fieldOption.readonly,\n        is_required: fieldOption.required,\n        group: fieldOption.group\n      }\n    }\n  });\n  const fieldGroups = input.__super.__super.__super.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  convertedFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: convertedFields\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearFields()\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: convertDataForFields(eventData)\n  }\n});\n\n"
+                                                                                "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 清空主表单fields字段值\nconst clearFields = function (input) { \n  return {\n    fields: []\n  }\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\nconst convertDataForFields = function (input) {\n  let pickedFields = input.picked_fields || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  if (typeof pickedFields === \"string\") {\n    pickedFields = pickedFields.split(\",\");\n  }\n  const fieldOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.fields_options, \"value\");\n  const convertedFields = pickedFields.map(function (field_name) {\n    const superField = superFields[field_name];\n    if (superField) {\n      return superField;\n    }\n    else {\n      const fieldOption = fieldOptions[field_name];\n      return {\n        field_name: field_name,\n        is_readonly: fieldOption.readonly,\n        is_required: fieldOption.required,\n        group: fieldOption.group\n      }\n    }\n  });\n  const fieldGroups = input.__super.__super.__super.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  convertedFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: convertedFields\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearFields()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForFields(eventData)\n    }\n  });\n}, 300);\n\n"
                                                                             }
                                                                         ]
                                                                     }
