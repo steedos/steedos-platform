@@ -828,22 +828,18 @@
                 "inited": {
                     "actions": [
                         {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": "${event.data|initDefaultButtons}"
-                            }
+                            "actionType": "custom",
+                            "script": "// 新建页面布局时初始化buttons默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultButtons = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    buttons: superValues.buttons,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultButtons(eventData)\n  }\n});\n"
                         },
                         {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": "${event.data|initDefaultFields}"
-                            }
+                            "actionType": "custom",
+                            "script": "// 新建页面布局时初始化fields默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultFields = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    fields: superValues.fields,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultFields(eventData)\n  }\n});\n",
+                            "componentId": "",
+                            "args": {}
                         },
                         {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": "${event.data|initDefaultRelatedLists}"
-                            }
+                            "actionType": "custom",
+                            "script": "// 新建页面布局时初始化related_lists默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultRelatedLists = function (input, rowValue, prop_name) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    related_lists: superValues.related_lists,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultRelatedLists(eventData)\n  }\n});\n"
                         }
                     ]
                 }
