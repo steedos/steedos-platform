@@ -72,7 +72,6 @@
                                             "extractValue": true,
                                             "labelField": "label",
                                             "valueField": "value",
-                                            "autoComplete": "get:/service/api/amis-metadata-objects/objects/options",
                                             "className": "m-0",
                                             "labelClassName": "text-left",
                                             "en-US": {
@@ -80,7 +79,8 @@
                                             },
                                             "checkAll": false,
                                             "searchable": true,
-                                            "id": "u:4e769995f638"
+                                            "id": "u:4e769995f638",
+                                            "source": "get:/service/api/amis-metadata-objects/objects/options"
                                         },
                                         {
                                             "name": "profiles",
