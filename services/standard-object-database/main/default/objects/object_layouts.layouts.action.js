@@ -35,17 +35,8 @@ module.exports = {
         gridName: gridName
       };
       const fullScreenProps = {
-        width: "unset",
-        style: {
-          top: "50px",
-          bottom: "50px",
-          left: "50px",
-          right: "50px",
-          padding: "0px",
-          margin: "0px",
-          width: "unset"
-        }, 
-        className: "absolute"
+        "width": "96%", 
+        className: "!max-w-[96%]"
       };
       Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
         appId: appId,
