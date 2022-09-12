@@ -555,11 +555,8 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:label}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") { \n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, \"label\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -567,9 +564,11 @@
                                                                 "labelRemark": "默认为对象名称",
                                                                 "className": "m-0",
                                                                 "labelClassName": "text-left",
-                                                                "id": "u:5b30f2a71830"
+                                                                "id": "u:5b30f2a71830",
+                                                                "name": "label"
                                                             },
-                                                            "id": "u:1267e4351d66"
+                                                            "id": "u:1267e4351d66",
+                                                            "placeholder": "-"
                                                         },
                                                         {
                                                             "name": "field_names",
@@ -586,21 +585,22 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:field_names}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
                                                                 "joinValues": false,
-                                                                "extractValue": true
+                                                                "extractValue": true,
+                                                                "mode": "popOver",
+                                                                "id": "u:a85f62af394f",
+                                                                "name": "field_names"
                                                             },
                                                             "type": "tpl",
                                                             "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>",
-                                                            "id": "u:ce65d4020107"
+                                                            "id": "u:ce65d4020107",
+                                                            "placeholder": "-"
                                                         },
                                                         {
                                                             "name": "sort_field_name",
@@ -613,11 +613,8 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:sort_field_name}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"sort_field_name\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -627,7 +624,9 @@
                                                                     "url": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
                                                                     "cache": 60000
                                                                 },
-                                                                "searchable": true
+                                                                "searchable": true,
+                                                                "name": "sort_field_name",
+                                                                "id": "u:c1e3daddf92c"
                                                             },
                                                             "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.sort_field_name && data.sort_field_name.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.sort_field_name%>",
                                                             "id": "u:3dbee6a855c4"
@@ -642,11 +641,8 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:sort_order}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"sort_order\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -658,7 +654,10 @@
                                                                 "valueField": "value",
                                                                 "mode_": "inline",
                                                                 "source": "${sort_order_options}",
-                                                                "type": "select"
+                                                                "type": "select",
+                                                                "name": "sort_order",
+                                                                "id": "u:951e05ace916",
+                                                                "multiple": false
                                                             },
                                                             "breakpoint": "*",
                                                             "type": "tpl",
@@ -669,7 +668,7 @@
                                                             "name": "filters",
                                                             "label": "过滤规则",
                                                             "quickEdit": {
-                                                                "type": "textarea",
+                                                                "type": "input-text",
                                                                 "tpl": "<b><%=data.filters%></b>",
                                                                 "className": "col-span-2 m-0",
                                                                 "labelClassName": "text-left",
@@ -677,15 +676,16 @@
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:filters}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"filters\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
-                                                                }
+                                                                },
+                                                                "name": "filters",
+                                                                "id": "u:0436e626f06a",
+                                                                "minRows": 3,
+                                                                "maxRows": 20
                                                             },
                                                             "breakpoint": "*",
                                                             "id": "u:e4c367804b67"
@@ -694,23 +694,24 @@
                                                             "name": "visible_on",
                                                             "label": "显示条件",
                                                             "quickEdit": {
-                                                                "type": "textarea",
+                                                                "type": "input-text",
                                                                 "className": "m-0",
                                                                 "labelClassName": "text-left",
                                                                 "onEvent": {
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:visible_on}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"visible_on\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
-                                                                "tpl": "<b><%=data.visible_on%></b>"
+                                                                "tpl": "<b><%=data.visible_on%></b>",
+                                                                "name": "visible_on",
+                                                                "id": "u:3106cc0f9cc7",
+                                                                "minRows": 3,
+                                                                "maxRows": 20
                                                             },
                                                             "breakpoint": "*",
                                                             "id": "u:1e1dc52d7c33"
@@ -722,20 +723,19 @@
                                                                 "type": "input-number",
                                                                 "precision": 0,
                                                                 "className": "m-0",
-                                                                "labelClassName": "text-left",
+                                                                "labelClassName": "text-number",
                                                                 "onEvent": {
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForRelatedList:page_size}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const related_field_fullname = rowValue.related_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.related_lists.map(function (item) {\n    if (item.related_field_fullname == related_field_fullname) {\n      if (prop_name === \"related_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          related_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    related_lists: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[related_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"page_size\")\n  }\n});\n"
                                                                             }
                                                                         ]
                                                                     }
-                                                                }
+                                                                },
+                                                                "name": "page_size",
+                                                                "id": "u:0e261f265511"
                                                             },
                                                             "breakpoint": "*",
                                                             "id": "u:f9bbd9567bbd"
@@ -756,29 +756,25 @@
                                                                         "sortable": true,
                                                                         "source": "${related_lists_options}",
                                                                         "value": "${related_lists|pick:related_field_fullname}",
-                                                                        "searchable": true
+                                                                        "searchable": true,
+                                                                        "id": "u:ab6a6c9c8677"
                                                                     }
                                                                 ],
                                                                 "onEvent": {
                                                                     "confirm": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|clearRelatedLists}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
-                                                                            },
-                                                                            {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|convertDataForRelatedLists}"
-                                                                                },
-                                                                                "componentId": "object-layout-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "// 清空主表单related_lists字段值\nconst clearRelatedLists = function (input) {\n  return {\n    related_lists: []\n  }\n}\n\n// 把”选择子表“弹出窗口中设置的子表转为主表单related_lists字段值格式\nconst convertDataForRelatedLists = function (input) {\n  let pickedRelateds = input.picked_related_lists || [];\n  const superRelateds = _.keyBy(input.__super.related_lists, 'related_field_fullname');\n  if (typeof pickedRelateds === \"string\") {\n    pickedRelateds = pickedRelateds.split(\",\");\n  }\n  const convertedRelateds = pickedRelateds.map(function (key) {\n    return superRelateds[key] || {\n      related_field_fullname: key,\n      sort_order: \"asc\"\n    }\n  });\n  return {\n    related_lists: convertedRelateds\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearRelatedLists()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForRelatedLists(eventData)\n    }\n  });\n}, 300);\n"
                                                                             }
                                                                         ]
                                                                     }
-                                                                }
+                                                                },
+                                                                "type": "dialog",
+                                                                "id": "u:3663990f226a",
+                                                                "closeOnEsc": false,
+                                                                "closeOnOutside": false,
+                                                                "showCloseButton": true
                                                             },
                                                             "label": "选择子表",
                                                             "id": "u:b9a5d3b611d7"
