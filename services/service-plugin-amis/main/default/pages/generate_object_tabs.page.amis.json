@@ -38,7 +38,10 @@
                     "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
                     "headers": {
                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                    }
+                    },
+                    "validations": {},
+                    "validationErrors": {},
+                    "required": true
                 }
             ],
             "panelClassName": "m-0",

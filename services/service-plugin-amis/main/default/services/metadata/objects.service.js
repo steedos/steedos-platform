@@ -413,6 +413,12 @@ module.exports = {
         generateTabs: {
             async handler(ctx) {
                 let selectedObjects = ctx.params && ctx.params.objects && ctx.params.objects.split(",");
+                if(!selectedObjects || !selectedObjects.length){
+                    return {
+                        doneCount:0,
+                        errors: []
+                    }
+                }
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const spaceId = userSession.spaceId;
