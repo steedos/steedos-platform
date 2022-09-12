@@ -549,7 +549,6 @@
                                                             "label": "显示标题",
                                                             "quickEdit": {
                                                                 "type": "input-text",
-                                                                "mode": "inline",
                                                                 "onEvent": {
                                                                     "change": {
                                                                         "actions": [
@@ -592,7 +591,7 @@
                                                                 },
                                                                 "joinValues": false,
                                                                 "extractValue": true,
-                                                                "mode": "popOver",
+                                                                "mode": "inline",
                                                                 "id": "u:a85f62af394f",
                                                                 "name": "field_names"
                                                             },
@@ -625,7 +624,8 @@
                                                                 },
                                                                 "searchable": true,
                                                                 "name": "sort_field_name",
-                                                                "id": "u:c1e3daddf92c"
+                                                                "id": "u:c1e3daddf92c",
+                                                                "mode": "inline"
                                                             },
                                                             "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.related_field_fullname] ? data.related_object_fields_options[data.related_field_fullname].filter(function(item){ return data.sort_field_name && data.sort_field_name.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.sort_field_name%>",
                                                             "id": "u:3dbee6a855c4"
