@@ -185,7 +185,7 @@
                                                             "type": "action",
                                                             "actionType": "dialog",
                                                             "dialog": {
-                                                                "title": "选择按钮",
+                                                                "title": "设置按钮",
                                                                 "body": [
                                                                     {
                                                                         "type": "transfer",
@@ -202,7 +202,7 @@
                                                                         "actions": [
                                                                             {
                                                                                 "actionType": "custom",
-                                                                                "script": "// 清空主表单buttons字段值\nconst clearButtons = function (input) {\n  return {\n    buttons: []\n  }\n}\n\n// 把”选择按钮“弹出窗口中设置的按钮转为主表单buttons字段值格式\nconst convertDataForButtons = function (input) {\n  let pickedButtons = input.picked_buttons || [];\n  const superButtons = _.keyBy(input.__super.buttons, 'button_name');\n  if (typeof pickedButtons === \"string\") {\n    pickedButtons = pickedButtons.split(\",\");\n  }\n  const convertedButtons = pickedButtons.map(function (key) {\n    return superButtons[key] || {\n      button_name: key\n    }\n  });\n  return {\n    buttons: convertedButtons\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearButtons()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForButtons(eventData)\n    }\n  });\n}, 300);\n"
+                                                                                "script": "// 清空主表单buttons字段值\nconst clearButtons = function (input) {\n  return {\n    buttons: []\n  }\n}\n\n// 把”设置按钮“弹出窗口中设置的按钮转为主表单buttons字段值格式\nconst convertDataForButtons = function (input) {\n  let pickedButtons = input.picked_buttons || [];\n  const superButtons = _.keyBy(input.__super.buttons, 'button_name');\n  if (typeof pickedButtons === \"string\") {\n    pickedButtons = pickedButtons.split(\",\");\n  }\n  const convertedButtons = pickedButtons.map(function (key) {\n    return superButtons[key] || {\n      button_name: key\n    }\n  });\n  return {\n    buttons: convertedButtons\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearButtons()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForButtons(eventData)\n    }\n  });\n}, 300);\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -213,7 +213,7 @@
                                                                 "closeOnOutside": false,
                                                                 "showCloseButton": true
                                                             },
-                                                            "label": "选择按钮",
+                                                            "label": "设置按钮",
                                                             "id": "u:1ac8afc8a9bb"
                                                         }
                                                     ],
@@ -391,7 +391,7 @@
                                                             "type": "action",
                                                             "actionType": "dialog",
                                                             "dialog": {
-                                                                "title": "选择字段",
+                                                                "title": "设置字段",
                                                                 "body": [
                                                                     {
                                                                         "type": "transfer",
@@ -408,7 +408,7 @@
                                                                         "actions": [
                                                                             {
                                                                                 "actionType": "custom",
-                                                                                "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 清空主表单fields字段值\nconst clearFields = function (input) { \n  return {\n    fields: []\n  }\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单fields字段值格式\nconst convertDataForFields = function (input) {\n  let pickedFields = input.picked_fields || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  if (typeof pickedFields === \"string\") {\n    pickedFields = pickedFields.split(\",\");\n  }\n  const fieldOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.fields_options, \"value\");\n  const convertedFields = pickedFields.map(function (field_name) {\n    const superField = superFields[field_name];\n    if (superField) {\n      return superField;\n    }\n    else {\n      const fieldOption = fieldOptions[field_name];\n      return {\n        field_name: field_name,\n        is_readonly: fieldOption.readonly,\n        is_required: fieldOption.required,\n        group: fieldOption.group\n      }\n    }\n  });\n  const fieldGroups = input.__super.__super.__super.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  convertedFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: convertedFields\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearFields()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForFields(eventData)\n    }\n  });\n}, 300);\n\n"
+                                                                                "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 清空主表单fields字段值\nconst clearFields = function (input) { \n  return {\n    fields: []\n  }\n}\n\n// 把”设置字段“弹出窗口中设置的字段转为主表单fields字段值格式\nconst convertDataForFields = function (input) {\n  let pickedFields = input.picked_fields || [];\n  const superFields = _.keyBy(input.__super.fields, 'field_name');\n  if (typeof pickedFields === \"string\") {\n    pickedFields = pickedFields.split(\",\");\n  }\n  const fieldOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.fields_options, \"value\");\n  const convertedFields = pickedFields.map(function (field_name) {\n    const superField = superFields[field_name];\n    if (superField) {\n      return superField;\n    }\n    else {\n      const fieldOption = fieldOptions[field_name];\n      return {\n        field_name: field_name,\n        is_readonly: fieldOption.readonly,\n        is_required: fieldOption.required,\n        group: fieldOption.group\n      }\n    }\n  });\n  const fieldGroups = input.__super.__super.__super.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  convertedFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: convertedFields\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearFields()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForFields(eventData)\n    }\n  });\n}, 300);\n\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -419,7 +419,7 @@
                                                                 "closeOnOutside": false,
                                                                 "showCloseButton": true
                                                             },
-                                                            "label": "选择字段",
+                                                            "label": "设置字段",
                                                             "id": "u:853b890ab524"
                                                         },
                                                         {
@@ -747,7 +747,7 @@
                                                             "type": "action",
                                                             "actionType": "dialog",
                                                             "dialog": {
-                                                                "title": "选择子表",
+                                                                "title": "设置子表",
                                                                 "body": [
                                                                     {
                                                                         "type": "transfer",
@@ -764,7 +764,7 @@
                                                                         "actions": [
                                                                             {
                                                                                 "actionType": "custom",
-                                                                                "script": "// 清空主表单related_lists字段值\nconst clearRelatedLists = function (input) {\n  return {\n    related_lists: []\n  }\n}\n\n// 把”选择子表“弹出窗口中设置的子表转为主表单related_lists字段值格式\nconst convertDataForRelatedLists = function (input) {\n  let pickedRelateds = input.picked_related_lists || [];\n  const superRelateds = _.keyBy(input.__super.related_lists, 'related_field_fullname');\n  if (typeof pickedRelateds === \"string\") {\n    pickedRelateds = pickedRelateds.split(\",\");\n  }\n  const convertedRelateds = pickedRelateds.map(function (key) {\n    return superRelateds[key] || {\n      related_field_fullname: key,\n      sort_order: \"asc\"\n    }\n  });\n  return {\n    related_lists: convertedRelateds\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearRelatedLists()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForRelatedLists(eventData)\n    }\n  });\n}, 300);\n"
+                                                                                "script": "// 清空主表单related_lists字段值\nconst clearRelatedLists = function (input) {\n  return {\n    related_lists: []\n  }\n}\n\n// 把”设置子表“弹出窗口中设置的子表转为主表单related_lists字段值格式\nconst convertDataForRelatedLists = function (input) {\n  let pickedRelateds = input.picked_related_lists || [];\n  const superRelateds = _.keyBy(input.__super.related_lists, 'related_field_fullname');\n  if (typeof pickedRelateds === \"string\") {\n    pickedRelateds = pickedRelateds.split(\",\");\n  }\n  const convertedRelateds = pickedRelateds.map(function (key) {\n    return superRelateds[key] || {\n      related_field_fullname: key,\n      sort_order: \"asc\"\n    }\n  });\n  return {\n    related_lists: convertedRelateds\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: clearRelatedLists()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"object-layout-form\",\n    args: {\n      value: convertDataForRelatedLists(eventData)\n    }\n  });\n}, 300);\n"
                                                                             }
                                                                         ]
                                                                     }
@@ -775,7 +775,7 @@
                                                                 "closeOnOutside": false,
                                                                 "showCloseButton": true
                                                             },
-                                                            "label": "选择子表",
+                                                            "label": "设置子表",
                                                             "id": "u:b9a5d3b611d7"
                                                         }
                                                     ],
