@@ -38,7 +38,10 @@
                     "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
                     "headers": {
                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                    }
+                    },
+                    "validations": {},
+                    "validationErrors": {},
+                    "required": true
                 }
             ],
             "panelClassName": "m-0",
@@ -68,7 +71,8 @@
             "debug": false,
             "messages": {
                 "fetchFailed": "初始化失败",
-                "saveFailed": "保存失败"
+                "saveFailed": "保存失败",
+                "validateFailed": "请先选择需要生成选项卡的对象！"
             },
             "onEvent": {
                 "submitSucc": {

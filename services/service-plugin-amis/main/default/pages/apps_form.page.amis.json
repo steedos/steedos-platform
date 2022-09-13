@@ -2,56 +2,56 @@
     "type": "page",
     "body": [
         {
-            "type": "service",
-            "className": "col-span-2 m-0",
-            "id": "tabs-options-service",
-            "affixFooter": false,
+            "className": "steedos-amis-form",
+            "id": "apps-form",
+            "type": "form",
+            "mode": "normal",
+            "persistData": false,
+            "promptPageLeave": true,
+            "name": "form_edit_${recordId}",
+            "title": "",
             "api": {
-                "method": "get",
+                "method": "post",
                 "url": "${context.rootUrl}/graphql",
-                "adaptor": "const registerFilter = amisRequire('amis').registerFilter;\nconst tabGroupKey = \"group\";\nconst getTabsSortFun = function(groupNames){\n  return function(m,n){\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if(!m[tabGroupKey] || !n[tabGroupKey]){\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\n// 把”选择字段“弹出窗口中设置的字段转为主表单tabs字段值格式\nregisterFilter('convertDataForTabs', function (input) {\n  debugger;\n  let pickedTabs = input.picked_tabs || [];\n  const superTabs = _.keyBy(input.__super.tab_items, 'tab_name');\n  if(typeof pickedTabs === \"string\"){\n    pickedTabs = pickedTabs.split(\",\");\n  }\n  const tabOptions = lodash.keyBy(this.data.__super.__super.__super.__super.__super.tabs_options, \"value\");\n  const convertedTabs = pickedTabs.map(function (tab_name) {\n    const superTab = superTabs[tab_name];\n    if (superTab) {\n      return superTab;\n    }\n    else {\n      const tabOption = tabOptions[tab_name];\n      return {\n        tab_name: tab_name,\n        group: tabOption.group\n      }\n    }\n  });\n  console.log(\"===convertDataForTabs===\", convertedTabs);\n  const tabGroups = this.data.__super.__super.__super.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  convertedTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: convertedTabs\n  }\n});\n\n// 字段列表每一列数据变量时立即同步值到表单中\nregisterFilter('quickEidtSaveForTab', function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const tab_name = rowValue.tab_name;\n  rowValue[prop_name] = currentPropValue;\n  let newTabs = formValue.tab_items.map(function (item) {\n    if (item.tab_name == tab_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else { \n      return item;\n    }\n  });\n  const tabGroups = this.data.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups,\"group_name\"));\n  // tabs重新按分组排序\n  newTabs.sort(getTabsSortFun(groupNames));\n  return {\n    tab_items: newTabs\n  }\n});\n\n// 清空主表单tabs字段值\nregisterFilter('clearTabs', function (input) {\n  return {\n    tab_items: []\n  }\n});\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\nregisterFilter('convertDataForGroups', function (input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = lodash.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = lodash.compact(lodash.map(convertedGroups,\"group_name\"));\n  const tab_items = this.data.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n});\n\nlet data = payload.data;\ndata.tabs_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                 "data": {
-                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
+                    "$": "$$",
+                    "recordId": "${recordId}",
+                    "modalName": "${modalName}",
+                    "objectName": "${objectName}"
                 },
-                "sendOn": ""
+                "requestAdaptor": "\nconst formData = api.data.$;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(formData.recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
+                "responseData": {
+                    "recordId": "${record._id}"
+                },
+                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
             },
-            "messages": {},
-            "placeholder": "-",
+            "initApi": {
+                "method": "post",
+                "url": "${context.rootUrl}/graphql",
+                "sendOn": "!!this.recordId",
+                "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
+                "data": {
+                    "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                }
+            },
+            "initFetch": true,
             "body": [
                 {
-                    "className": "steedos-amis-form",
-                    "id": "apps-form",
-                    "type": "form",
-                    "mode": "normal",
-                    "persistData": false,
-                    "promptPageLeave": true,
-                    "name": "form_edit_${recordId}",
-                    "title": "",
+                    "type": "service",
+                    "className": "col-span-2 m-0",
+                    "id": "tabs-options-service",
+                    "affixFooter": false,
                     "api": {
                         "method": "post",
                         "url": "${context.rootUrl}/graphql",
+                        "adaptor": "let data = payload.data;\ndata.tabs_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                         "data": {
-                            "$": "$$",
-                            "recordId": "${recordId}",
-                            "modalName": "${modalName}",
-                            "objectName": "${objectName}"
+                            "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
                         },
-                        "requestAdaptor": "\nconst formData = api.data.$;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(formData.recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
-                        "responseData": {
-                            "recordId": "${record._id}"
-                        },
-                        "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
+                        "sendOn": ""
                     },
-                    "initApi": {
-                        "method": "post",
-                        "url": "${context.rootUrl}/graphql",
-                        "sendOn": "!!this.recordId",
-                        "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n    // if (!data.tab_items) {\n    //     debugger;\n    //     const tabOptions = data.tabs_options || [];\n    //     const tabItems = [];\n    //     // 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\n    //     if (data.tabs && data.tabs.length) { \n    //         data.tabs.forEach(function (item) {\n    //             tabItems.push({ tab_name: item });\n    //         });\n    //     }\n    //     const pushObjectsToTabItems = function (objects) {\n    //         objects.forEach(function (item) {\n    //             // 已经有绑定到指定对象的选项卡就不添加\n    //             let existObjectItem = !!tabItems.find(function (tabItem) {\n    //                 return !!tabOptions.find(function (option) {\n    //                     return option.object === item;\n    //                 });\n    //             });\n    //             if (existObjectItem) {\n    //                 return;\n    //             }\n    //             // 找到指向指定对象的选项卡\n    //             let tempOption = tabOptions.find(function (option) {\n    //                 return option.type === \"object\" && option.object === item;\n    //             });\n    //             if (!tempOption) {\n    //                 return;\n    //             }\n    //             // 选项卡名称如果重复了就不添加\n    //             let existTabItem = !!tabItems.find(function (tabItem) {\n    //                 return tabItem.tab_name === tempOption.value;\n    //             });\n    //             if (existTabItem) {\n    //                 return;\n    //             }\n    //             if (tempOption) {\n    //                 tabItems.push({ tab_name: tempOption.value });\n    //             }\n    //         });\n    //     }\n    //     // 把应用中原来objects属性值添加到新的tab_items属性的默认值中\n    //     if (data.objects && data.objects.length) {\n    //         pushObjectsToTabItems(data.objects);\n    //     }\n    //     // 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\n    //     if (data.mobile_objects && data.mobile_objects.length) {\n    //         pushObjectsToTabItems(data.mobile_objects);\n    //     }\n    //     console.log(\"===tabItems==\", tabItems);\n    //     data.tab_items = tabItems;\n    // }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
-                        "data": {
-                            "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
-                        }
-                    },
-                    "initFetch": true,
+                    "messages": {},
+                    "placeholder": "-",
                     "body": [
                         {
                             "type": "tabs",
@@ -216,15 +216,15 @@
                                                             "name": "index",
                                                             "label": "序号",
                                                             "type": "static",
-                                                            "id": "u:c59784421c37",
                                                             "value": "${index + 1}",
-                                                            "className": "w-10"
+                                                            "className": "w-10",
+                                                            "id": "u:c59784421c37"
                                                         },
                                                         {
                                                             "name": "tab_name_label",
                                                             "label": "选项卡",
-                                                            "id": "u:b95c69a1cd84",
                                                             "type": "tpl",
+                                                            "id": "u:b95c69a1cd84",
                                                             "tpl": "${tabs_options|filter:value:equals:tab_name|pick:label}"
                                                         },
                                                         {
@@ -233,23 +233,14 @@
                                                             "id": "u:e532b1949676",
                                                             "quickEdit": {
                                                                 "type": "select",
+                                                                "name": "group",
                                                                 "className": "m-0",
                                                                 "onEvent": {
                                                                     "change": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|clearTabs}"
-                                                                                },
-                                                                                "componentId": "apps-form"
-                                                                            },
-                                                                            {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|quickEidtSaveForTab:group}"
-                                                                                },
-                                                                                "componentId": "apps-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\nconst clearTabs = function (input) {\n  return {\n    tab_items: []\n  }\n}\n\n// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForTab = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const tab_name = rowValue.tab_name;\n  rowValue[prop_name] = currentPropValue;\n  delete rowValue.index;\n  let newTabs = formValue.tab_items.map(function (item) {\n    if (item.tab_name == tab_name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  const tabGroups = input.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups, \"group_name\"));\n  if (groupNames && groupNames.length) {\n    // tabs重新按分组排序\n    newTabs.sort(getTabsSortFun(groupNames));\n  }\n  return {\n    tab_items: newTabs\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: clearTabs()\n  }\n});\n\nconst newTabTtemsProp = quickEidtSaveForTab(eventData, \"group\");\n\nsetTimeout(function () { \n  // 不加延时会显示异常\n  doAction({\n    actionType: 'setValue',\n    componentId: \"apps-form\",\n    args: {\n      value: newTabTtemsProp\n    }\n  });\n},300);"
                                                                             }
                                                                         ]
                                                                     }
@@ -258,8 +249,12 @@
                                                                 "checkAll": false,
                                                                 "selectFirst": false,
                                                                 "searchable": true,
-                                                                "clearable": true
-                                                            }
+                                                                "clearable": true,
+                                                                "id": "u:8b3d6979e884",
+                                                                "multiple": false,
+                                                                "mode": "popOver"
+                                                            },
+                                                            "placeholder": "-"
                                                         },
                                                         {
                                                             "name": "tab_name_desktop",
@@ -290,7 +285,6 @@
                                                             "label": "生成选项卡",
                                                             "id": "u:a35a2276145d",
                                                             "tpl": "内容",
-                                                            "actionType": "custom",
                                                             "onEvent": {
                                                                 "click": {
                                                                     "actions": [
@@ -305,8 +299,11 @@
                                                         },
                                                         {
                                                             "type": "button",
+                                                            "label": "设置选项卡",
+                                                            "id": "u:853b890ab524",
                                                             "actionType": "dialog",
                                                             "dialog": {
+                                                                "type": "dialog",
                                                                 "title": "设置选项卡",
                                                                 "body": [
                                                                     {
@@ -315,33 +312,26 @@
                                                                         "value": "${tab_items|pick:tab_name}",
                                                                         "sortable": true,
                                                                         "source": "${tabs_options}",
-                                                                        "searchable": true
+                                                                        "searchable": true,
+                                                                        "id": "u:f2d36873abd1"
                                                                     }
                                                                 ],
                                                                 "onEvent": {
                                                                     "confirm": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|clearTabs}"
-                                                                                },
-                                                                                "componentId": "apps-form"
-                                                                            },
-                                                                            {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|convertDataForTabs}"
-                                                                                },
-                                                                                "componentId": "apps-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\nconst clearTabs = function (input) { \n  return {\n    tab_items: []\n  }\n}\n\nconst convertDataForTabs = function (input) { \n  let pickedTabs = input.picked_tabs || [];\n  const superTabs = _.keyBy(input.__super.tab_items, 'tab_name');\n  if (typeof pickedTabs === \"string\") {\n    pickedTabs = pickedTabs.split(\",\");\n  }\n  const tabOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.tabs_options, \"value\");\n  const convertedTabs = pickedTabs.map(function (tab_name) {\n    const superTab = superTabs[tab_name];\n    if (superTab) {\n      return superTab;\n    }\n    else {\n      const tabOption = tabOptions[tab_name];\n      return {\n        tab_name: tab_name,\n        group: tabOption.group\n      }\n    }\n  });\n  const tabGroups = input.__super.__super.__super.__super.__super.tab_groups;\n  const groupNames = lodash.compact(lodash.map(tabGroups, \"group_name\"));\n  // tabs重新按分组排序\n  if (groupNames && groupNames.length) { \n    convertedTabs.sort(getTabsSortFun(groupNames));\n  }\n  return {\n    tab_items: convertedTabs\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: clearTabs()\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: convertDataForTabs(eventData)\n  }\n});\n\n"
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
-                                                                "size": "lg"
-                                                            },
-                                                            "label": "设置选项卡",
-                                                            "id": "u:853b890ab524"
+                                                                "size": "lg",
+                                                                "id": "u:9c93896a73cf",
+                                                                "closeOnEsc": false,
+                                                                "closeOnOutside": false,
+                                                                "showCloseButton": true
+                                                            }
                                                         },
                                                         {
                                                             "type": "button",
@@ -354,45 +344,41 @@
                                                                     {
                                                                         "type": "input-table",
                                                                         "name": "setting_groups",
+                                                                        "value": "${tab_groups}",
                                                                         "addable": true,
                                                                         "draggable": true,
                                                                         "editable": true,
                                                                         "columns": [
                                                                             {
                                                                                 "name": "group_name",
-                                                                                "label": "名称"
+                                                                                "label": "名称",
+                                                                                "id": "u:383c7744b499"
                                                                             }
                                                                         ],
-                                                                        "value": "${tab_groups}",
-                                                                        "removable": true
+                                                                        "removable": true,
+                                                                        "id": "u:06bbf5c4dc98"
                                                                     }
                                                                 ],
                                                                 "onEvent": {
                                                                     "confirm": {
                                                                         "actions": [
                                                                             {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|clearTabs}"
-                                                                                },
-                                                                                "componentId": "apps-form"
-                                                                            },
-                                                                            {
-                                                                                "actionType": "setValue",
-                                                                                "args": {
-                                                                                    "value": "${event.data|convertDataForGroups}"
-                                                                                },
-                                                                                "componentId": "apps-form"
+                                                                                "actionType": "custom",
+                                                                                "script": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\nconst clearTabs = function (input) {\n  return {\n    tab_items: []\n  }\n}\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\nconst convertDataForGroups = function(input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = lodash.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = lodash.compact(lodash.map(convertedGroups, \"group_name\"));\n  const tab_items = input.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n};\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: clearTabs()\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: convertDataForGroups(eventData)\n  }\n});\n\n"
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
                                                                 "type": "dialog",
-                                                                "size": "lg"
+                                                                "size": "lg",
+                                                                "id": "u:55db530e3f86",
+                                                                "closeOnEsc": false,
+                                                                "closeOnOutside": false,
+                                                                "showCloseButton": true
                                                             }
                                                         }
                                                     ],
-                                                    "id": "u:22121edc42b1",
+                                                    "id": "crud_tab_items",
                                                     "perPageAvailable": [
                                                         10
                                                     ],
@@ -486,41 +472,41 @@
                             "className": "",
                             "contentClassName": ""
                         }
-                    ],
-                    "panelClassName": "m-0 -mt-3",
+                    ]
+                }
+            ],
+            "panelClassName": "m-0 -mt-3",
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "取消",
+                    "actionType": "",
+                    "level": "default",
+                    "block": false,
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:f2208dc2b4cd"
+                },
+                {
+                    "type": "button",
+                    "label": "保存",
+                    "actionType": "submit",
+                    "level": "info",
+                    "id": "u:207386fce204"
+                }
+            ],
+            "actionsClassName": "p-sm b-t b-light text-center",
+            "affixFooter": false,
+            "debug": false,
+            "onEvent": {
+                "inited": {
                     "actions": [
                         {
-                            "type": "button",
-                            "label": "取消",
-                            "actionType": "",
-                            "level": "default",
-                            "block": false,
-                            "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                            "id": "u:f2208dc2b4cd"
-                        },
-                        {
-                            "type": "button",
-                            "label": "保存",
-                            "actionType": "submit",
-                            "level": "info",
-                            "id": "u:207386fce204"
+                            "actionType": "custom",
+                            "script": "const data = context.props.data;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\nconst tabOptions = data.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
                         }
-                    ],
-                    "actionsClassName": "p-sm b-t b-light text-center",
-                    "affixFooter": false,
-                    "debug": false,
-                    "onEvent": {
-                        "inited": {
-                            "actions": [
-                                {
-                                    "actionType": "custom",
-                                    "script": "const data = context.props.data;\nconst superData = data.__super;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\ndebugger;\nconst tabOptions = superData.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\nconsole.log(\"===tabItems==\", tabItems);\n// data.tab_items = tabItems;\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
-                                }
-                            ]
-                        }
-                    }
+                    ]
                 }
-            ]
+            }
         }
     ],
     "regions": [
