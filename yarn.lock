@@ -5180,36 +5180,50 @@ aliyun-sdk@1.12.3:
     xml2js "0.4.4"
     xmlbuilder "^13.0.2"
 
-amis-formula@^1.3.15:
-  version "1.3.15"
-  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-1.3.15.tgz#50ae2fbb998ab81500e87d3345f968fa7aef1d56"
-  integrity sha512-wkRlxpbJJOUEVnpjhCefxWyeEVQvc9fSXQtwAlEOmh+MvXCtUKL7ImlwWDNqvye+yCaOiJGlAge8QCFLKAZxJA==
+amis-core@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/amis-core/-/amis-core-2.2.0.tgz#c9286c41b28dc347ce55f6d8b911de19cd8417cd"
+  integrity sha512-UcGuqQ3m5le/biOUEtGCRZERAwMp17IYgyJ+aEEPHAHZ+rqyminw3WSYHXBzsrzur4Lt9fWVsFbHGfVBUhG7oA==
+  dependencies:
+    amis-formula "^2.1.0"
+    classnames "2.3.1"
+    file-saver "^2.0.2"
+    hoist-non-react-statics "^3.3.2"
+    lodash "^4.17.15"
+    match-sorter "^6.3.1"
+    mobx "^4.5.0"
+    mobx-react "^6.3.1"
+    mobx-state-tree "^3.17.3"
+    moment "^2.19.4"
+    papaparse "^5.3.0"
+    qs "6.9.7"
+    react-json-view "1.21.3"
+    react-visibility-sensor "5.1.1"
+    tslib "^2.3.1"
+    uncontrollable "7.2.1"
+
+amis-formula@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-2.2.0.tgz#e95fbd792d61d3329ab004f58f5d254dde8c6f73"
+  integrity sha512-P6lNUdogoC0cTjXLe95B6VmJ3wv3GJ5y6mX7x62czbRsmTQrGn83mtva/pf7FjJxwyHlkcxdre+iZwnPqWAfBg==
   dependencies:
     lodash "^4.17.15"
-    moment "^2.29.1"
+    moment "^2.29.4"
     tslib "^2.3.1"
 
-amis@1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/amis/-/amis-1.10.2.tgz#3f099b483f95d3b9891bb18a4b45637a008bb43b"
-  integrity sha512-YN0JhKcDzJfygIhkujE3tm9t4uFDNfbJ8yVhBJYw4Yh2MKkT21RUyMxwFQ8+Hx2G6kUmSiW0PfdYoW/2sJGYyg==
+amis-ui@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/amis-ui/-/amis-ui-2.2.0.tgz#91f5b3d8d4bf0ab9bf8db4229e426a2da592dad9"
+  integrity sha512-8ZZ59n6laIRMnYb4XqpQ0i5+80wpFtkL/AH31t9K6tYklco7wj+Vh6PrfyWF7Ya2+prNEReYnJLOHeolUq8thw==
   dependencies:
-    amis-formula "^1.3.15"
-    ansi-to-react "^6.1.6"
-    attr-accept "2.2.2"
-    blueimp-canvastoblob "2.1.0"
+    amis-core "^2.2.0"
+    amis-formula "^2.1.0"
     classnames "2.3.1"
     codemirror "^5.63.0"
     downshift "6.1.7"
-    echarts "5.3.1"
-    echarts-stat "^1.2.0"
-    exceljs "^4.3.0"
-    file-saver "^2.0.2"
+    echarts "5.3.3"
     froala-editor "3.1.1"
-    hls.js "1.1.3"
     hoist-non-react-statics "^3.3.2"
-    hotkeys-js "^3.8.7"
-    immutability-helper "^3.1.1"
     jsbarcode "^3.11.5"
     keycode "^2.2.1"
     lodash "^4.17.15"
@@ -5219,31 +5233,62 @@ amis@1.10.2:
     mobx "^4.5.0"
     mobx-react "^6.3.1"
     mobx-state-tree "^3.17.3"
-    moment "^2.19.3"
+    moment "^2.19.4"
     monaco-editor "0.30.1"
-    mpegts.js "^1.6.10"
-    papaparse "^5.3.0"
     prop-types "^15.6.1"
-    punycode "^2.1.1"
-    qrcode.react "^3.0.0"
-    qs "6.9.7"
     rc-input-number "^7.3.4"
-    rc-overflow "^1.2.4"
     rc-progress "^3.1.4"
     react-color "^2.19.3"
-    react-cropper "^2.1.8"
-    react-dropzone "^11.4.2"
     react-hook-form "7.30.0"
-    react-input-range "1.3.0"
     react-json-view "1.21.3"
     react-overlays "5.1.1"
     react-textarea-autosize "8.3.3"
     react-transition-group "4.4.2"
     react-visibility-sensor "5.1.1"
     sortablejs "1.14.0"
-    tinymce "^5.10.3"
+    tinymce "^6.1.2"
     tslib "^2.3.1"
     uncontrollable "7.2.1"
+
+amis@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/amis/-/amis-2.2.0.tgz#13faef0c23ecad532a3e883ed372b1a3138ed5a3"
+  integrity sha512-VsswW9M6QatEHo7XBwA5buR1LTrp7HzmdNrUsaIvQ6shn0Sjsxk9+dNsarBWyFxuwrjH5nursP7PZBZrW+mcfw==
+  dependencies:
+    amis-core "^2.2.0"
+    amis-ui "^2.2.0"
+    ansi-to-react "^6.1.6"
+    attr-accept "2.2.2"
+    blueimp-canvastoblob "2.1.0"
+    classnames "2.3.1"
+    downshift "6.1.7"
+    echarts "5.3.3"
+    echarts-stat "^1.2.0"
+    exceljs "^4.3.0"
+    file-saver "^2.0.2"
+    hls.js "1.1.3"
+    hoist-non-react-statics "^3.3.2"
+    hotkeys-js "^3.8.7"
+    immutability-helper "^3.1.1"
+    jsbarcode "^3.11.5"
+    keycode "^2.2.1"
+    lodash "^4.17.15"
+    match-sorter "^6.3.1"
+    mobx "^4.5.0"
+    mobx-react "^6.3.1"
+    mobx-state-tree "^3.17.3"
+    moment "^2.19.4"
+    monaco-editor "0.30.1"
+    mpegts.js "^1.6.10"
+    prop-types "^15.6.1"
+    qrcode.react "^3.1.0"
+    rc-overflow "^1.2.4"
+    react-cropper "^2.1.8"
+    react-dropzone "^11.4.2"
+    react-json-view "1.21.3"
+    react-transition-group "4.4.2"
+    sortablejs "1.14.0"
+    tslib "^2.3.1"
     video-react "0.15.0"
 
 anser@^1.4.1:
@@ -5878,11 +5923,6 @@ attr-accept@2.2.2, attr-accept@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
   integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
-
-autobind-decorator@^1.3.4:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-1.4.3.tgz#4c96ffa77b10622ede24f110f5dbbf56691417d1"
-  integrity sha512-FRzT10Vc0lzgDOhMTpm9a2kZF6Q+MMGwd6Y7OGgHigMZwGz7vpN4qH9ifiPTum8mhJQV9UqLPperHxc9yalAAA==
 
 autoprefixer@^10.4.7:
   version "10.4.8"
@@ -9587,14 +9627,6 @@ echarts-stat@1.2.0, echarts-stat@^1.2.0:
   resolved "https://registry.yarnpkg.com/echarts-stat/-/echarts-stat-1.2.0.tgz#d1e7a05d1827724c5cde81f76ee1d75a901746a2"
   integrity sha512-zLd7Kgs+tuTSeaK0VQEMNmnMivEkhvHIk1gpBtLzpRerfcIQ+Bd5XudOMmtwpaTc1WDZbA7d1V//iiBccR46Qg==
 
-echarts@5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.1.tgz#709e03aaf8c7a4439788272ee5c500cf0dce7e5b"
-  integrity sha512-nWdlbgX3OVY0hpqncSvp0gDt1FRSKWn7lsWEH+PHmfCuvE0QmSw17pczQvm8AvawnLEkmf1Cts7YwQJZNC0AEQ==
-  dependencies:
-    tslib "2.3.0"
-    zrender "5.3.1"
-
 echarts@5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.2.tgz#0a7b3be8c48a48b2e7cb1b82121df0c208d42d2c"
@@ -9602,6 +9634,14 @@ echarts@5.3.2:
   dependencies:
     tslib "2.3.0"
     zrender "5.3.1"
+
+echarts@5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.3.tgz#df97b09c4c0e2ffcdfb44acf518d50c50e0b838e"
+  integrity sha512-BRw2serInRwO5SIwRviZ6Xgm5Lb7irgz+sLiFMmy/HOaf4SQ+7oYqxKzRHAKp4xHQ05AuHw1xvoQWJjDQq/FGw==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.2"
 
 editorconfig@^0.15.3:
   version "0.15.3"
@@ -14690,7 +14730,7 @@ moment-timezone@0.5.34, moment-timezone@^0.5.31:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.6, moment@^2.19.3, moment@^2.24.0, moment@^2.29.1, moment@^2.29.2:
+"moment@>= 2.9.0", moment@^2.10.6, moment@^2.19.4, moment@^2.24.0, moment@^2.29.1, moment@^2.29.2, moment@^2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -16976,7 +17016,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.10, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -17219,7 +17259,7 @@ qrcode-terminal@^0.12.0:
   resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz#bb5b699ef7f9f0505092a3748be4464fe71b5819"
   integrity sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==
 
-qrcode.react@^3.0.0:
+qrcode.react@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-3.1.0.tgz#5c91ddc0340f768316fbdb8fff2765134c2aecd8"
   integrity sha512-oyF+Urr3oAMUG/OiOuONL3HXM+53wvuH3mtIWQrYmsXoAq0DkvZp2RYUWFSMFtbdOpuS++9v+WAkzNVkMlNW6Q==
@@ -17898,14 +17938,6 @@ react-hook-form@7.30.0:
   version "7.30.0"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.30.0.tgz#c9e2fd54d3627e43bd94bf38ef549df2e80c1371"
   integrity sha512-DzjiM6o2vtDGNMB9I4yCqW8J21P314SboNG1O0obROkbg7KVS0I7bMtwSdKyapnCPjHgnxc3L7E5PEdISeEUcQ==
-
-react-input-range@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-input-range/-/react-input-range-1.3.0.tgz#f96d001631ab817417f1e26d8f9f9684b4827f59"
-  integrity sha512-G//kJqUHo7zQA5PuGZNKhuzhGcj83FJsv62tcP4Eo61DUC/0usHPYxFfIZ3zOfdMWuWEaduD6N4lNsZMmaOJgw==
-  dependencies:
-    autobind-decorator "^1.3.4"
-    prop-types "^15.5.8"
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
@@ -20381,10 +20413,10 @@ tinycolor2@^1.4.1:
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
 
-tinymce@^5.10.3:
-  version "5.10.5"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.5.tgz#02aef6a67e915f1559e51fa8fb007270d9666778"
-  integrity sha512-nFKtLhmoRtExBxUfv06JlkbQWux5D+d115vxSRAqUmccZdrtpFvOIYwZmikvulLdM9pfEpvO0B+RQ2qFV/+R7w==
+tinymce@^6.1.2:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.2.0.tgz#473aa38af03bf772916f3e1730e6b8d3471203f0"
+  integrity sha512-zLjbFrg0hbtJ6PxmZUjQY6zyIOM/mLrWGTvhBec7XwYwoW1E0xXMQzy2tgMTh3OvJpsclgqf2ZMjmwcv4Cludw==
 
 title-case@^2.1.0:
   version "2.1.1"
@@ -21882,5 +21914,12 @@ zrender@5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/zrender/-/zrender-5.3.1.tgz#fa8e63ac7e719cfd563831fe8c42a9756c5af384"
   integrity sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==
+  dependencies:
+    tslib "2.3.0"
+
+zrender@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/zrender/-/zrender-5.3.2.tgz#f67b11d36d3d020d62411d3bb123eb1c93cccd69"
+  integrity sha512-8IiYdfwHj2rx0UeIGZGGU4WEVSDEdeVCaIg/fomejg1Xu6OifAL1GVzIPHg2D+MyUkbNgPWji90t0a8IDk+39w==
   dependencies:
     tslib "2.3.0"
