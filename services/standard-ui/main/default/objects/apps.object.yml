@@ -38,10 +38,11 @@ fields:
         return options;
       }
     filterable: true
-  visible:
-    label: Visible
-    type: boolean
-    defaultValue: true
+  sort:
+    label: Sort Number
+    type: number
+    defaultValue: 9100
+    sortable: true
   description:
     label: Description
     type: textarea
@@ -67,7 +68,7 @@ fields:
     type: grid
     is_wide: true
     required: true
-    group: Business object
+    group: Tabs
   tab_items.$:
     label: Tabs
     blackbox: true
@@ -84,20 +85,20 @@ fields:
     label: Group
     type: text
   objects:
-    label: Objects
+    label: Desktop Menu(Invalid)
     type: lookup
     multiple: true
-    group: Business object
+    group: Tabs
     optionsFunction: !!js/function |
       function () {
         return Steedos.getObjectsOptions()
       }
     filterable: true
   mobile_objects:
-    label: Mobile Objects
+    label: Mobile Menus(Invalid)
     type: lookup
     multiple: true
-    group: Business object
+    group: Tabs
     optionsFunction: !!js/function |
       function () {
         return Steedos.getObjectsOptions()
@@ -105,23 +106,20 @@ fields:
     filterable: true
   is_creator:
     type: boolean
-    label: Item of Menu  
+    label: Show this app for Desktop
     defaultValue: true
-    group: Business object
   mobile:
     type: boolean
-    label: Mobile App
+    label: Show this app for Mobile
     defaultValue: true
-    group: Business object
   icon:
     label: Icon
     type: text
     hidden: true
-  sort:
-    label: Sort Number
-    type: number
-    defaultValue: 9100
-    sortable: true
+  visible:
+    label: Visible
+    type: boolean
+    defaultValue: true
 
   # members:
   #   type: object

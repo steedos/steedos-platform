@@ -107,10 +107,10 @@ export async function getSpaceUserSession(spaceId, userId) {
     if (!spaceSession) {
         let expiredAt = new Date().getTime() + sessionCacheInMinutes * 60 * 1000;
         let su = null;
-        let suFields = ['_id', 'space', 'company_id', 'company_ids', 'organization', 'organizations', 'organizations_parents', 'user'];
+        // let suFields = ['_id', 'space', 'company_id', 'company_ids', 'organization', 'organizations', 'organizations_parents', 'user'];
         
         // 如果spaceid和user不匹配，则取用户的第一个工作区
-        let spaceUsers = await getSteedosSchema().getObject('space_users').directFind({ filters: `(user eq '${userId}') and (user_accepted eq true)`, fields: suFields });
+        let spaceUsers = await getSteedosSchema().getObject('space_users').directFind({ filters: `(user eq '${userId}') and (user_accepted eq true)` });
         const findSpaceUser = _.find(spaceUsers, (spaceUser)=>{ return spaceUser.space === spaceId })
         if(findSpaceUser){
             su = findSpaceUser;
@@ -123,7 +123,7 @@ export async function getSpaceUserSession(spaceId, userId) {
             let userSpaceIds = _.pluck(spaceUsers, 'space');
             let roles = await getUserRoles(userId, userSpaceId);
             let profile = await getSpaceUserProfile(userId, userSpaceId);
-            spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt };
+            spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt, ...su };
             spaceSession.spaceId = userSpaceId;
             spaceSession.spaces = await getSpaces(userSpaceIds)
             spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._id === userSpaceId });

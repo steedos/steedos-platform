@@ -31,11 +31,11 @@ fields:
     help: 
     description: 
   objects:
-    label: 桌面主菜单
+    label: 桌面主菜单(已作废)
     help: 
     description: 
   mobile_objects:
-    label: 手机主菜单
+    label: 手机主菜单(已作废)
     help: 
     description: 
   icon:
@@ -47,11 +47,11 @@ fields:
     help: 
     description: 
   is_creator:
-    label: 显示在桌面菜单中
+    label: 在桌面中显示此应用
     help: 
     description: 
   mobile:
-    label: 显示在手机菜单中
+    label: 在手机上显示此应用
     help: 
     description: 
   members:
@@ -178,7 +178,7 @@ fields:
     help: 
     description: 
 groups:
-  business_object: 业务对象
+  tabs: 选项卡
   external_application: 外接应用
   oauth2: OAuth2
   saml: SAML
