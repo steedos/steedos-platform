@@ -182,7 +182,7 @@
                                                     "footable": false,
                                                     "headerToolbar": [
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置按钮",
@@ -388,7 +388,7 @@
                                                     "footable": false,
                                                     "headerToolbar": [
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置字段",
@@ -423,7 +423,7 @@
                                                             "id": "u:853b890ab524"
                                                         },
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置分组",
@@ -744,7 +744,7 @@
                                                     "labelClassName": "text-left",
                                                     "headerToolbar": [
                                                         {
-                                                            "type": "action",
+                                                            "type": "button",
                                                             "actionType": "dialog",
                                                             "dialog": {
                                                                 "title": "设置子表",
