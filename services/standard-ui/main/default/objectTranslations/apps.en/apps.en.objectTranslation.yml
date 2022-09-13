@@ -22,6 +22,14 @@ fields:
     label: Description
     help: 
     description: 
+  objects:
+    label: Desktop Menus(Invalid)
+    help: 
+    description: 
+  mobile_objects:
+    label: Mobile Menus(Invalid)
+    help: 
+    description: 
   tabs: 
     label: Tabs
   tab_items: 
@@ -39,11 +47,11 @@ fields:
     help: 
     description: 
   is_creator:
-    label: Item of Menu
+    label: Show this app for Desktop
     help: 
     description: 
   mobile:
-    label: Mobile App
+    label: Show this app for Mobile
     help: 
     description: 
   members:
@@ -163,7 +171,7 @@ fields:
     help: 
     description: 
 groups:
-  business_object: Business object
+  tabs: Tabs
   external_application: External Application
   oauth2: OAuth2
   saml: SAML
