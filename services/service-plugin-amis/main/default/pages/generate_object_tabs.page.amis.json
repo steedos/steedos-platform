@@ -71,7 +71,8 @@
             "debug": false,
             "messages": {
                 "fetchFailed": "初始化失败",
-                "saveFailed": "保存失败"
+                "saveFailed": "保存失败",
+                "validateFailed": "请先选择需要生成选项卡的对象！"
             },
             "onEvent": {
                 "submitSucc": {
