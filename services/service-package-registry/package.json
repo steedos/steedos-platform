@@ -21,7 +21,7 @@
     "jsonata": "1.8.5",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
-    "moment-timezone": "0.5.33",
+    "moment-timezone": "0.5.35",
     "npm-package-arg": "~9.1.0",
     "npm-registry-client": "8.6.0",
     "package-json": "^7.0.0",
