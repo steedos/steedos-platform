@@ -231,6 +231,19 @@ list_views:
       - - outbox_users
         - =
         - '{userId}'
+  draft:
+    label: Draft
+    filter_scope: space
+    filters:
+      - - submitter
+        - =
+        - '{userId}'
+      - - state
+        - =
+        - 'draft'
+      - - is_hidden
+        - <>
+        - true
 permission_set:
   user:
     allowCreate: false
