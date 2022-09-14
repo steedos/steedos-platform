@@ -3,7 +3,6 @@
     "body": [
         {
             "className": "steedos-amis-form",
-            "id": "apps-form",
             "type": "form",
             "mode": "normal",
             "persistData": false,
@@ -163,7 +162,7 @@
                                                 },
                                                 {
                                                     "name": "is_creator",
-                                                    "label": "显示在桌面菜单中",
+                                                    "label": "在桌面中显示此应用",
                                                     "type": "checkbox",
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
@@ -172,7 +171,7 @@
                                                 },
                                                 {
                                                     "name": "mobile",
-                                                    "label": "显示在手机菜单中",
+                                                    "label": "在手机上显示此应用",
                                                     "type": "checkbox",
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
@@ -506,7 +505,8 @@
                         }
                     ]
                 }
-            }
+            },
+            "id": "apps-form"
         }
     ],
     "regions": [
