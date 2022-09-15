@@ -342,12 +342,15 @@ isSkipStep = (instance, step)->
 	return _.contains(instance.skip_steps, step._id)
 
 # 应用场景：此函数用于返回备选的所有下一步的id
-uuflowManager.getNextSteps = (instance, flow, step, judge) ->
+uuflowManager.getNextSteps = (instance, flow, step, judge, values) ->
 	step_type = step.step_type
 	nextSteps = new Array
 	if step_type is "condition"
 		#step的lines中查询出state=submitted且instance.fields满足其条件的line
-		__values = uuflowManager.getUpdatedValues(instance)
+		if values != undefined
+			__values = values
+		else
+			__values = uuflowManager.getUpdatedValues(instance)
 		current_approve = null
 		# 获取当前Approve
 		traces = instance.traces
