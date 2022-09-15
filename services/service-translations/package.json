@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-translations",
-  "version": "2.1.118",
+  "version": "2.1.120",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
@@ -10,5 +10,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4d6a232ba8d01a427979ff1e01283873f0205b66"
+  "gitHead": "2532b08771d1173adeb24231da592f3cb0763258"
 }
