@@ -84,33 +84,33 @@
                                                     "id": "u:784ac1e92fbf"
                                                 },
                                                 {
-                                                    "name": "icon_slds",
-                                                    "label": "图标",
-                                                    "type": "select",
-                                                    "className": "m-0",
-                                                    "labelClassName": "text-left",
-                                                    "id": "u:d0724fe17aa7",
-                                                    "required": true,
-                                                    "joinValues": false,
-                                                    "extractValue": true,
-                                                    "labelField": "label",
-                                                    "valueField": "value",
-                                                    "multiple": false,
-                                                    "source": {
-                                                        "method": "post",
-                                                        "url": "${context.rootUrl}/graphql",
-                                                        "data": {
-                                                            "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                                                            "$": "$$",
-                                                            "$term": "$term",
-                                                            "$value": "$icon_slds._id",
-                                                            "rfield": "${object_name}"
-                                                        },
-                                                        "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                                                        "adaptor": "\npayload.data.options = eval(function anonymous() {\n\n  var options;\n  options = [];\n  if (!window.Creator) { \n    return options;\n  }\n  _.forEach(Creator.resources.sldsIcons.standard, function (svg) {\n    return options.push({\n      value: svg,\n      label: svg,\n      icon: svg\n    });\n  });\n\n  return options;\n\n})(api.data);\n\nreturn payload;\n        ",
-                                                        "messages": {}
-                                                    },
-                                                    "menuTpl": "<span class=\"flex justify-center items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${value|split:_|join:-}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"/assets/icons/standard-sprite/svg/symbols.svg#${icon}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-1.5\">${label}</span>\n</span>"
+                                                    "type": "service",
+                                                    "body": [
+                                                        {
+                                                            "name": "icon_slds",
+                                                            "label": "图标",
+                                                            "type": "select",
+                                                            "className": "m-0",
+                                                            "labelClassName": "text-left",
+                                                            "id": "u:d0724fe17aa7",
+                                                            "required": true,
+                                                            "joinValues": false,
+                                                            "extractValue": true,
+                                                            "labelField": "symbol",
+                                                            "valueField": "symbol",
+                                                            "multiple": false,
+                                                            "source": "${sldsIconsOptions}",
+                                                            "menuTpl": "<span class=\"flex justify-center items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${symbol|split:_|join:-}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"/assets/icons/standard-sprite/svg/symbols.svg#${symbol}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-1.5\">${symbol}</span>\n</span>"
+                                                        }
+                                                    ],
+                                                    "id": "u:420b0162ce2c",
+                                                    "messages": {},
+                                                    "api": {
+                                                        "method": "get",
+                                                        "url": "${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/ui.icons.json",
+                                                        "requestAdaptor": "",
+                                                        "adaptor": "if (payload && payload.length) {\n  let data = {};\n  let sldsStandardIcons = _.find(payload, { name: \"standard\" });\n  sldsStandardIcons = sldsStandardIcons && sldsStandardIcons.icons;\n  data.sldsIconsOptions = sldsStandardIcons;\n  payload.data = data;\n}\nreturn payload;\n"
+                                                    }
                                                 },
                                                 {
                                                     "name": "sort",
