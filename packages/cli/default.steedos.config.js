@@ -13,7 +13,7 @@ if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 
 const pageAsseturls = "https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json";
 if (process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS){
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = pageAsseturls + "," + process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS;
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS;
 }
 else {
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = pageAsseturls;
