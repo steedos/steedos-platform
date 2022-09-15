@@ -17,7 +17,25 @@ const { excuteTriggers } = require('../utils/trigger');
  * body {
  *   Instances: [
  *     {
- *       
+ *       _id: 申请单Id
+        flow: 流程Id
+        inbox_users: 不懂啊 TODO 待确认此属性功能
+        applicant:
+        submitter:
+        traces: [
+            {
+                _id: 
+                step: 
+                approves: [
+                    {
+                        _id:
+                        next_steps: [{ "step": "步骤id", "users": [步骤处理人] }]
+                        description: 意见,
+                        values: {}
+                    }
+                ]
+            }
+        ]
  *     }
  *   ]
  * }
