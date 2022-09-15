@@ -109,7 +109,8 @@
                                                         "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
                                                         "adaptor": "\npayload.data.options = eval(function anonymous() {\n\n  var options;\n  options = [];\n  if (!window.Creator) { \n    return options;\n  }\n  _.forEach(Creator.resources.sldsIcons.standard, function (svg) {\n    return options.push({\n      value: svg,\n      label: svg,\n      icon: svg\n    });\n  });\n\n  return options;\n\n})(api.data);\n\nreturn payload;\n        ",
                                                         "messages": {}
-                                                    }
+                                                    },
+                                                    "menuTpl": "<span class=\"flex justify-center items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${value}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"/assets/icons/standard-sprite/svg/symbols.svg#${value}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-2\">${label}</span>\n</span>"
                                                 },
                                                 {
                                                     "name": "sort",
