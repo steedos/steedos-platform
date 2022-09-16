@@ -148,6 +148,8 @@ listviews:
     label: Inbox
   outbox:
     label: Outbox
+  draft:
+    label: Draft
 actions:
   view_instance:
     label: View Instance

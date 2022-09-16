@@ -197,9 +197,9 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
     switch (fieldConfig.type) {
         case "boolean":
             if (fieldValue) {
-                return '真';
+                return '是';
             } else {
-                return '假';
+                return '否';
             }
         case "select":
             let options = fieldConfig.options;

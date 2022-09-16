@@ -148,6 +148,8 @@ listviews:
     label: 待办文件
   outbox:
     label: 已办文件
+  draft:
+    label: 草稿
 actions:
   view_instance:
     label: 查看审批单
