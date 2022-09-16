@@ -22,7 +22,10 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
+                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
             },
             "initApi": {
                 "method": "post",
@@ -31,6 +34,9 @@
                 "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
                 "data": {
                     "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                },
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
             },
             "initFetch": true,
@@ -47,9 +53,10 @@
                         "data": {
                             "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
                         },
-                        "sendOn": ""
+                        "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        }
                     },
-                    "messages": {},
                     "placeholder": "-",
                     "body": [
                         {
@@ -104,12 +111,14 @@
                                                         }
                                                     ],
                                                     "id": "u:420b0162ce2c",
-                                                    "messages": {},
                                                     "api": {
                                                         "method": "get",
                                                         "url": "${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/ui.icons.json",
                                                         "requestAdaptor": "",
-                                                        "adaptor": "if (payload && payload.length) {\n  let data = {};\n  let sldsStandardIcons = _.find(payload, { name: \"standard\" });\n  sldsStandardIcons = sldsStandardIcons && sldsStandardIcons.icons;\n  data.sldsIconsOptions = sldsStandardIcons;\n  payload.data = data;\n}\nreturn payload;\n"
+                                                        "adaptor": "if (payload && payload.length) {\n  let data = {};\n  let sldsStandardIcons = _.find(payload, { name: \"standard\" });\n  sldsStandardIcons = sldsStandardIcons && sldsStandardIcons.icons;\n  data.sldsIconsOptions = sldsStandardIcons;\n  payload.data = data;\n}\nreturn payload;\n",
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
                                                     }
                                                 },
                                                 {
@@ -134,7 +143,13 @@
                                                     "multiple": true,
                                                     "checkAll": false,
                                                     "searchable": true,
-                                                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
+                                                    "source": {
+                                                        "method": "get",
+                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
+                                                    }
                                                 },
                                                 {
                                                     "name": "mobile_objects",
@@ -150,7 +165,14 @@
                                                     "multiple": true,
                                                     "checkAll": false,
                                                     "searchable": true,
-                                                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/options"
+                                                    "source": {
+                                                        "method": "get",
+                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                                        "messages": {},
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
+                                                    }
                                                 },
                                                 {
                                                     "name": "description",
