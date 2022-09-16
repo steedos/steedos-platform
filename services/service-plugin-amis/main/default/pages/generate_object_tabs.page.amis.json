@@ -35,12 +35,13 @@
                     "options": [],
                     "id": "u:e224b24aa867",
                     "searchable": true,
-                    "source": "get:${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
-                    "headers": {
-                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    "source": {
+                        "method": "get",
+                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",
+                        "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        }
                     },
-                    "validations": {},
-                    "validationErrors": {},
                     "required": true
                 }
             ],
