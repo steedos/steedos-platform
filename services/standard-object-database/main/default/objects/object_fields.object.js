@@ -492,7 +492,7 @@ var triggers = {
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
       if (doc.name === "name" && !canRemoveNameFileld(doc)) {
-        throw new Meteor.Error(500, "不能删除此纪录");
+        throw new Meteor.Error(500, "不能删除此记录");
       }
     }
   }

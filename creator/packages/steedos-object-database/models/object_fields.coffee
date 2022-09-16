@@ -248,6 +248,6 @@ Creator.Objects.object_fields =
 			when: "before.remove"
 			todo: (userId, doc)->
 				if doc.name == "name"
-					throw new Meteor.Error 500, "不能删除此纪录"
+					throw new Meteor.Error 500, "不能删除此记录"
 
 
