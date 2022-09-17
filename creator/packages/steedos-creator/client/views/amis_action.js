@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-17 17:51:50
+ * @LastEditTime: 2022-09-17 17:54:59
  * @Description: 
  */
 
@@ -101,7 +101,7 @@ Template.amis_action.onRendered(()=>{
               {
                   type: "button",
                   label: button.label,
-                  className: `${ inMore ? 'flex w-full items-center border-0 px-2 py-1' : 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent p-0 border-none' } ${className ? className : ''}`,
+                  className: `${ inMore ? 'flex w-full items-center border-0 px-2 py-1' : 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent p-0 border-none' } ${className ? className : ''} ${button.class_name ? button.class_name : ''}`,
                   confirmText: button.confirm_text ? button.confirm_text : null,
                   onEvent: {
                     click: {
