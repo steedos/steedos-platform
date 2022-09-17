@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-07 10:18:40
+ * @LastEditTime: 2022-09-17 17:51:50
  * @Description: 
  */
 
@@ -102,7 +102,7 @@ Template.amis_action.onRendered(()=>{
                   type: "button",
                   label: button.label,
                   className: `${ inMore ? 'flex w-full items-center border-0 px-2 py-1' : 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent p-0 border-none' } ${className ? className : ''}`,
-                  confirmText: button.confirmText ? button.confirmText : null,
+                  confirmText: button.confirm_text ? button.confirm_text : null,
                   onEvent: {
                     click: {
                       actions: _.isString(button.amis_actions) ? JSON.parse(button.amis_actions) : button.amis_actions,
