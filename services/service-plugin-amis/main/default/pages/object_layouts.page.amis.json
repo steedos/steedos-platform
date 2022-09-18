@@ -21,7 +21,10 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        "
+                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
             },
             "initApi": {
                 "method": "post",
@@ -31,6 +34,9 @@
                 "adaptor": "var data = payload.data.data[0];\nif(data){\n    data.object_name = data.object_name ? data.object_name.name:null;\n    \n    \n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
                 "data": {
                     "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,field_groups,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
+                },
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
             },
             "initFetch": true,
@@ -80,7 +86,14 @@
                                             "checkAll": false,
                                             "searchable": true,
                                             "id": "u:4e769995f638",
-                                            "source": "get:/service/api/amis-metadata-objects/objects/options"
+                                            "source": {
+                                                "method": "get",
+                                                "url": "/service/api/amis-metadata-objects/objects/options",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                }
+                                            },
+                                            "multiple": false
                                         },
                                         {
                                             "name": "profiles",
@@ -101,7 +114,10 @@
                                                     "query": "{options:permission_set(filters: [\"type\", \"=\", \"profile\"]){name,label}}"
                                                 },
                                                 "requestAdaptor": "",
-                                                "adaptor": ""
+                                                "adaptor": "",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                }
                                             },
                                             "valueField": "name",
                                             "searchable": true,
@@ -226,7 +242,10 @@
                                                 "method": "get",
                                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
                                                 "adaptor": "let data = payload.data;\ndata.buttons_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
-                                                "sendOn": "!!this.object_name"
+                                                "sendOn": "!!this.object_name",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                }
                                             },
                                             "className": "col-span-2 m-0",
                                             "affixFooter": false,
@@ -478,7 +497,10 @@
                                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options",
                                                 "adaptor": "let data = payload.data;\ndata.fields_options = data.options;\ndata.field_groups_options = lodash.uniq(lodash.compact(lodash.map(data.options, \"group\"))) || [];\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                                 "sendOn": "!!this.object_name",
-                                                "data": null
+                                                "data": null,
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                }
                                             },
                                             "className": "col-span-2 m-0",
                                             "placeholder": "-",
@@ -514,7 +536,10 @@
                                                 "method": "get",
                                                 "url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
                                                 "sendOn": "!!this.object_name",
-                                                "adaptor": "let data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n"
+                                                "adaptor": "let data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                }
                                             },
                                             "className": "col-span-2 m-0",
                                             "affixFooter": false,
@@ -576,7 +601,10 @@
                                                                 "source": {
                                                                     "method": "get",
                                                                     "url": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                                    "cache": 60000
+                                                                    "cache": 60000,
+                                                                    "headers": {
+                                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                    }
                                                                 },
                                                                 "searchable": true,
                                                                 "onEvent": {
@@ -620,7 +648,10 @@
                                                                 "source": {
                                                                     "method": "get",
                                                                     "url": "/service/api/amis-metadata-objects/objects/${related_field_fullname|split:.|first}/fields/options",
-                                                                    "cache": 60000
+                                                                    "cache": 60000,
+                                                                    "headers": {
+                                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                    }
                                                                 },
                                                                 "searchable": true,
                                                                 "name": "sort_field_name",

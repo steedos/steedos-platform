@@ -1,0 +1,52 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-09-15 13:09:51
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-09-17 16:52:33
+ * @Description: 
+ */
+const express = require("express");
+const router = express.Router();
+const core = require('@steedos/core');
+const _ = require('lodash');
+const Fiber = require("fibers");
+
+router.post('/api/workflow/v2/draft', core.requireAuthentication, async function (req, res) {
+    try {
+        let userSession = req.user;
+        const { instance } = req.body;
+        Fiber(async function () {
+            try {
+
+                let new_ins_id = uuflowManager.create_instance(instance, Object.assign({}, userSession, {_id: userSession.userId}));
+                let new_ins = db.instances.findOne({
+                    _id: new_ins_id
+                }, {
+                fields: {
+                    space: 1,
+                    flow: 1,
+                    flow_version: 1,
+                    form: 1,
+                    form_version: 1
+                }
+                });
+                res.status(200).send({
+                    'instance': new_ins
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(200).send({
+                    error: error.message
+                });
+            }
+
+        }).run()
+    
+    } catch (error) {
+        console.error(error);
+        res.status(200).send({
+            error: error.message
+        });
+    }
+});
+exports.default = router;

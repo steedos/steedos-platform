@@ -122,6 +122,20 @@ fields:
     required: "{{formData.type == 'amis_action' ? true: false}}"
     is_wide: true
     visible_on: "{{formData.type == 'amis_action' ? true: false}}"
+  confirm_text:
+    label: 二次确认
+    sort_no: 190
+    type: text
+    required: false
+    is_wide: false
+    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
+  class_name:
+    label: 按钮样式
+    sort_no: 180
+    type: text
+    required: false
+    is_wide: false
+    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
 paging:
   enabled: false
 list_views:
