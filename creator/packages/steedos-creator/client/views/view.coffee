@@ -176,7 +176,7 @@ Template.creator_view.helpers
 		return {
 			app_id: Session.get("app_id")
 			object_name: Session.get("object_name")
-			reocrd_id: Session.get("record_id")
+			record_id: Session.get("record_id")
 			record: Template.instance().__record?.get();
 			permissions: Creator.getRecordPermissions Session.get("object_name"), Template.instance().__record?.get(), Meteor.userId()
 		}

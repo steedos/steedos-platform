@@ -57,7 +57,8 @@
                             "labelClassName": "text-left",
                             "en-US": {
                                 "label": "Label"
-                            }
+                            },
+                            "id": "u:a45229ed29f8"
                         },
                         {
                             "name": "name",
@@ -70,7 +71,8 @@
                             "en-US": {
                                 "label": "API Name",
                                 "labelRemark": "Can only contain lowercase letters and numbers, must start with a letter,cannot end with an underscore character or contain two consecutive underscore characters"
-                            }
+                            },
+                            "id": "u:ff927884ec36"
                         },
                         {
                             "name": "object_name",
@@ -92,7 +94,8 @@
                             },
                             "en-US": {
                                 "label": "Object"
-                            }
+                            },
+                            "id": "u:1427b8edc8f5"
                         },
                         {
                             "name": "filter_scope",
@@ -110,7 +113,6 @@
                                     "en-US": {
                                         "label": "Mine"
                                     }
-                                    
                                 },
                                 {
                                     "label": "工作区",
@@ -125,8 +127,8 @@
                             "labelClassName": "text-left",
                             "en-US": {
                                 "label": "Filter Scope"
-                            }
-                            
+                            },
+                            "id": "u:5f00b15822d5"
                         },
                         {
                             "name": "shared",
@@ -137,7 +139,8 @@
                             "option": "共享视图到工作区",
                             "en-US": {
                                 "option": "Shared to All Users"
-                            }
+                            },
+                            "id": "u:3ba5090f7fd0"
                         },
                         {
                             "name": "show_count",
@@ -148,13 +151,15 @@
                             "option": "显示条目数",
                             "en-US": {
                                 "option": "Show Record Count"
-                            }
+                            },
+                            "id": "u:811f0c5d03ad"
                         },
                         {
                             "label": "显示的列",
                             "type": "transfer",
                             "name": "columns",
                             "options": [],
+                            "multiple": true,
                             "id": "u:92c0b3cccca0",
                             "required": true,
                             "placeholder": "-",
@@ -186,9 +191,11 @@
                             "labelClassName": "text-left",
                             "en-US": {
                                 "label": "Sort NO."
-                            }
+                            },
+                            "id": "u:25a6ee957503"
                         }
-                    ]
+                    ],
+                    "id": "u:7f7b2d3ea064"
                 },
                 {
                     "type": "fieldSet",
@@ -217,7 +224,8 @@
                             "extractValue": true,
                             "en-US": {
                                 "label": "Default Filter Fields"
-                            }
+                            },
+                            "multiple": true
                         },
                         {
                             "type": "radios",
@@ -241,7 +249,6 @@
                             "en-US": {
                                 "label": "Controller"
                             }
-                            
                         },
                         {
                             "type": "condition-builder",
@@ -276,7 +283,8 @@
                     "collapsed": true,
                     "en-US": {
                         "title": "Filter"
-                    }
+                    },
+                    "id": "u:7d4a03469ab2"
                 },
                 {
                     "type": "fieldSet",
@@ -308,15 +316,16 @@
                             "extractValue": true,
                             "en-US": {
                                 "label": "Default Sort Order"
-                            }
+                            },
+                            "multiple": true
                         }
                     ],
                     "visibleOn": "!!this.object_name",
                     "collapsed": true,
                     "en-US": {
                         "title": "Order"
-                    }
-                    
+                    },
+                    "id": "u:82b56e7d9639"
                 },
                 {
                     "type": "fieldSet",
@@ -349,14 +358,16 @@
                             "className": "col-span-2 m-0",
                             "en-US": {
                                 "label": "Mobile Columns"
-                            }
+                            },
+                            "multiple": true
                         }
                     ],
                     "collapsed": true,
                     "visibleOn": "!!this.object_name",
                     "en-US": {
                         "title": "Mobile"
-                    }
+                    },
+                    "id": "u:51174159a42e"
                 }
             ],
             "panelClassName": "m-0",
@@ -371,7 +382,8 @@
                     "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
                     "en-US": {
                         "label": "Cancel"
-                    }
+                    },
+                    "id": "u:2b559c02ad83"
                 },
                 {
                     "type": "button",
@@ -380,12 +392,14 @@
                     "level": "info",
                     "en-US": {
                         "label": "Save"
-                    }
+                    },
+                    "id": "u:a48a8052e83a"
                 }
             ],
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
-            "language": "javascript"
+            "language": "javascript",
+            "id": "u:d951542bb161"
         }
     ],
     "regions": [
@@ -394,11 +408,12 @@
     "data": {
         "objectName": "object_listviews",
         "context": {
-            "rootUrl": "http://127.0.0.1:5000"
+            "rootUrl": "http://127.0.0.1:5800"
         }
     },
     "bodyClassName": "p-0",
     "name": "page_edit_${recordId}",
     "initApi": null,
-    "initFetch": null
+    "initFetch": null,
+    "id": "u:6ada123f9d4a"
 }
