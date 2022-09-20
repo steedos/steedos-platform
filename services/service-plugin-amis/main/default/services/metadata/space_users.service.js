@@ -125,6 +125,7 @@ module.exports = {
                 // 参考 https://aisuda.bce.baidu.com/amis/zh-CN/components/form/select#%E4%BA%BA%E5%91%98%E7%82%B9%E9%80%89
                 const dep = ctx.params.dep;
                 const ref = ctx.params.ref;
+                const valueField = ctx.params.valueField || "user";//user or _id
                 const term = ctx.params.term;
                 if(dep){
                     // 有 dep 值则是懒加载部门树，返回展开后的部门列表
@@ -142,7 +143,7 @@ module.exports = {
                 }
                 else if(ref || term){
                     // 有 ref 值则是懒加载人员，返回按ref值过滤后的人员列表
-                    const fields = "_id,name".split(",");
+                    const fields = "_id,name,user".split(",");
                     const filters = [['space', '=', spaceId], ['user_accepted', '=', true]];
                     if(term){
                         const fieldsForSearch = ["name", "username", "email", "mobile"];
@@ -160,7 +161,7 @@ module.exports = {
                     const sus = await objectql.getObject('space_users').find({filters: filters, fields: fields});
                     const reOptions = _.map(sus, (su)=>{
                         return {
-                            value: su._id,
+                            value: su[valueField],
                             label: su.name
                         }
                     });
