@@ -165,7 +165,7 @@ Template.creator_view.helpers
 	isLoading: ()->
 		return Template.instance().isLoading.get();
 	isJsBtn: ()->
-		return this.type != 'amis_action'
+		return this.type != 'amis_button'
 	button: ()->
 		return this;
 	buttonClassName: ()->
@@ -566,7 +566,7 @@ Template.creator_view.helpers
 Template.creator_view.events
 
 	'click .record-action-custom': (event, template) ->
-		if this.type == 'amis_action' || this.button?.type == 'amis_action'
+		if this.type == 'amis_button' || this.button?.type == 'amis_button'
 			return ;
 		record = Creator.getObjectRecord()
 		objectName = Session.get("object_name")

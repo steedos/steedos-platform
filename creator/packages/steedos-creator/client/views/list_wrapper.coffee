@@ -90,7 +90,7 @@ isFollowing = ()->
 
 Template.creator_list_wrapper.helpers
 	isJsBtn: ()->
-		return this.type != 'amis_action'
+		return this.type != 'amis_button'
 	button: ()->
 		return this;
 	buttonClassName: ()->
@@ -347,7 +347,7 @@ transformFilters = (filters)->
 Template.creator_list_wrapper.events
 
 	'click .list-action-custom': (event) ->
-		if this.type == 'amis_action' || this.button?.type == 'amis_action'
+		if this.type == 'amis_button' || this.button?.type == 'amis_button'
 			return ;
 		objectName = Session.get("object_name")
 		object = Creator.getObject(objectName)

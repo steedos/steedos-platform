@@ -94,8 +94,8 @@ fields:
     options:
       - label: Custom JavaScript
         value: script
-      - label: Amis Action
-        value: amis_action
+      - label: Amis Button
+        value: amis_button
       # - label: 打印模板(word)
       #   value: word-print
     defaultValue: script
@@ -109,35 +109,39 @@ fields:
     sort_no: 180
     type: code
     language: javascript
-    required: "{{formData.type != 'amis_action' ? true: false}}"
+    required: "{{formData.type != 'amis_button' ? true: false}}"
     # omit: true
     # hidden: true
     is_wide: true
-    visible_on: "{{formData.type != 'amis_action' ? true: false}}"
-  amis_actions: 
+    visible_on: "{{formData.type != 'amis_button' ? true: false}}"
+  amis_schema: 
     label: Amis Actions
     sort_no: 180
     type: code
     language: json
-    required: "{{formData.type == 'amis_action' ? true: false}}"
+    required: false
     is_wide: true
-    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
+    visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+  amis_action:
+    type: code
   confirm_text:
     label: 二次确认
     sort_no: 190
     type: text
     required: false
     is_wide: false
-    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
   class_name:
     label: 按钮样式
     sort_no: 180
     type: text
     required: false
     is_wide: false
-    visible_on: "{{formData.type == 'amis_action' ? true: false}}"
 paging:
   enabled: false
+actions: 
+  showDesign: 
+    label: 设计器
+    on: record_only
 list_views:
   all:
     columns:
