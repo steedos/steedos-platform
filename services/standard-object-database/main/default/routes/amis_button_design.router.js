@@ -36,7 +36,7 @@ router.get('/api/amisButtonDesign', core.requireAuthentication, async function (
         //     authToken: userSession.authToken
         // }
 
-        const retUrl = __meteor_runtime_config__.ROOT_URL + '/app/admin/object_actions/view/' + req.query.id
+        const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/objects/${req.query.object}/object_actions/grid?related_field_name=object`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}&retUrl=${retUrl}`;
 

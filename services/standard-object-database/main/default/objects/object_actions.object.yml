@@ -122,20 +122,6 @@ fields:
     required: false
     is_wide: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
-  amis_action:
-    type: code
-  confirm_text:
-    label: 二次确认
-    sort_no: 190
-    type: text
-    required: false
-    is_wide: false
-  class_name:
-    label: 按钮样式
-    sort_no: 180
-    type: text
-    required: false
-    is_wide: false
 paging:
   enabled: false
 actions: 

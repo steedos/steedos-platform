@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-22 11:34:48
+ * @LastEditTime: 2022-09-22 13:24:03
  * @Description: 
  */
 
@@ -105,8 +105,7 @@ Template.amis_action.onRendered(()=>{
           ],
           regions: [
             "body"
-          ],
-          data: data
+          ]
         };
     const defData = lodash.defaultsDeep({}, data , {
         data: {
