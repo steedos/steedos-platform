@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-22 14:57:20
+ * @LastEditTime: 2022-09-22 15:10:22
  * @Description: 
 -->
 <html>
@@ -91,7 +91,13 @@
               schema.data.context = {};
             }
 
-            schema.data.objectName = objectName;
+            schema.data.app_id = '';
+            schema.data.tab_id = '';
+            schema.data.object_name = '';
+            schema.data.dataComponentId = '';
+            schema.data.record_id = '';
+            schema.data.record = {};
+            schema.data.permissions = {};
 
             schema.data.context.rootUrl = rootUrl;
             schema.data.context.tenantId = tenantId;
