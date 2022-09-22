@@ -115,7 +115,7 @@ fields:
     is_wide: true
     visible_on: "{{formData.type != 'amis_button' ? true: false}}"
   amis_schema: 
-    label: Amis Actions
+    label: Amis Schema
     sort_no: 180
     type: code
     language: json
