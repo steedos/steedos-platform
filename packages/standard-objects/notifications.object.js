@@ -164,6 +164,9 @@ function sendPushs(message, from, to){
 }
 
 function sendNotifications(message, from, to){
+    if (_.isEmpty(to)) {
+        return
+    }
     let now = new Date();
     const collection = Creator.getCollection("notifications");
     let bulk = collection.rawCollection().initializeUnorderedBulkOp();
