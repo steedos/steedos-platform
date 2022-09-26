@@ -3,10 +3,19 @@ const _ = require('lodash');
 module.exports = {
   name: "instance",
   actions: {
-    getRelatedInstances: {
+    instances__getRelatedInstances: {
       graphql: {
         query:
-          "getRelatedInstances(flowId: String, state: String, keywords: String, top: Int, skip: Int, sort: String): [instances]",
+          `
+          instances__getRelatedInstances(
+                flowId: String,  //TODO 如何编写注释
+                state: String, 
+                keywords: String, 
+                top: Int, 
+                skip: Int, 
+                sort: String
+            ): [instances]
+          `,
       },
       async handler(ctx) {
         const userSession = ctx.meta.user;
@@ -34,10 +43,10 @@ module.exports = {
         return await objectql.getObject('instances').find(query, null)
       },
     },
-    getRelatedInstances__count: {
+    instances__getRelatedInstances__count: {
         graphql: {
             query:
-            "getRelatedInstances__count(flowId: String, state: String, keywords: String): Int"
+            "instances__getRelatedInstances(flowId: String, state: String, keywords: String): Int"
         },
         async handler(ctx) {
             const userSession = ctx.meta.user;
