@@ -7,14 +7,7 @@ module.exports = {
       graphql: {
         query:
           `
-          instances__getRelatedInstances(
-                flowId: String,
-                state: String, 
-                keywords: String, 
-                top: Int, 
-                skip: Int, 
-                sort: String
-            ): [instances]
+          instances__getRelatedInstances(flowId: String, state: String, keywords: String, top: Int, skip: Int, sort: String): [instances]
           `,
       },
       async handler(ctx) {
@@ -46,7 +39,7 @@ module.exports = {
     instances__getRelatedInstances__count: {
         graphql: {
             query:
-            "instances__getRelatedInstances(flowId: String, state: String, keywords: String): Int"
+            " instances__getRelatedInstances__count(flowId: String, state: String, keywords: String): Int"
         },
         async handler(ctx) {
             const userSession = ctx.meta.user;
