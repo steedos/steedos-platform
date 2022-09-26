@@ -8,7 +8,7 @@ module.exports = {
         query:
           `
           instances__getRelatedInstances(
-                flowId: String,  //TODO 如何编写注释
+                flowId: String,
                 state: String, 
                 keywords: String, 
                 top: Int, 
