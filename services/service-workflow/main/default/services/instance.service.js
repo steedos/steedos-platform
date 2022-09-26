@@ -7,7 +7,20 @@ module.exports = {
       graphql: {
         query:
           `
-          instances__getRelatedInstances(flowId: String, state: String, keywords: String, top: Int, skip: Int, sort: String): [instances]
+          #获取可选取的相关申请单列表
+          instances__getRelatedInstances(
+            #按流程过滤
+            flowId: String,
+            #按状态过滤 
+            state: String,
+            #按关键字过滤 
+            keywords: String,
+            #分页参数: 每次返回的记录数
+            top: Int, 
+            #分页参数: 跳过的记录数
+            skip: Int, 
+            #排序规则
+            sort: String): [instances]
           `,
       },
       async handler(ctx) {
