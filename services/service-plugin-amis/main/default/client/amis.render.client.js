@@ -5,17 +5,23 @@
  */
 
 ; (function () {
-        
+
+  const loadCss = (href)=>{
     try {
-        // 加载Amis css
+      // 加载Amis css
         let amisStyle = document.createElement("link");
         amisStyle.setAttribute("rel", "stylesheet");
         amisStyle.setAttribute("type", "text/css");
-        amisStyle.setAttribute("href", Steedos.absoluteUrl("/amis/amis.css"));
+        amisStyle.setAttribute("href", href);
         document.getElementsByTagName("head")[0].appendChild(amisStyle);
     } catch (error) {
         console.error(error)
     };
+  }
+
+  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/sdk.css"))
+  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
+  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
     
     try {
         window['attrAccept'] = function (file, acceptedFiles) {
