@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.1.121",
+  "version": "2.1.122",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -19,18 +19,18 @@
   },
   "dependencies": {
     "@babel/runtime": "7.12.0",
-    "@steedos/accounts": "2.1.121",
-    "@steedos/auth": "2.1.121",
-    "@steedos/core": "2.1.121",
-    "@steedos/filters": "2.1.121",
-    "@steedos/i18n": "2.1.121",
+    "@steedos/accounts": "2.1.122",
+    "@steedos/auth": "2.1.122",
+    "@steedos/core": "2.1.122",
+    "@steedos/filters": "2.1.122",
+    "@steedos/i18n": "2.1.122",
     "@steedos/license": "2.1.10",
-    "@steedos/meteor-bundle-dependencies": "2.1.121",
-    "@steedos/meteor-bundle-runner": "2.1.121",
-    "@steedos/objectql": "2.1.121",
-    "@steedos/process": "2.1.121",
-    "@steedos/standard-objects": "2.1.121",
-    "@steedos/webapp": "2.1.121",
+    "@steedos/meteor-bundle-dependencies": "2.1.122",
+    "@steedos/meteor-bundle-runner": "2.1.122",
+    "@steedos/objectql": "2.1.122",
+    "@steedos/process": "2.1.122",
+    "@steedos/standard-objects": "2.1.122",
+    "@steedos/webapp": "2.1.122",
     "basic-auth": "^2.0.1",
     "bcrypt": "3.0.6",
     "body-parser": "^1.18.3",
@@ -98,5 +98,5 @@
     "**/debug": "^3.1.0",
     "**/hoek": "^5.0.3"
   },
-  "gitHead": "26ed120d1e6503c360dc508643a86e3499709c22"
+  "gitHead": "0537ca9424ecbabf1443d8cb32c41dc29f53c1cd"
 }

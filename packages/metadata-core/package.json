@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "2.1.121",
+  "version": "2.1.122",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -14,7 +14,7 @@
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/metadata-core"
   },
   "dependencies": {
-    "@steedos/client": "2.1.121",
+    "@steedos/client": "2.1.122",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -41,5 +41,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "26ed120d1e6503c360dc508643a86e3499709c22"
+  "gitHead": "0537ca9424ecbabf1443d8cb32c41dc29f53c1cd"
 }

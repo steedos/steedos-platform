@@ -1,12 +1,12 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.1.121",
+  "version": "2.1.122",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.1.121",
-    "@steedos/objectql": "2.1.121",
-    "@steedos/service-package-loader": "2.1.121",
+    "@steedos/auth": "2.1.122",
+    "@steedos/objectql": "2.1.122",
+    "@steedos/service-package-loader": "2.1.122",
     "node-schedule": "^2.0.0",
     "uuid": "^8.3.2"
   },
@@ -14,5 +14,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "26ed120d1e6503c360dc508643a86e3499709c22"
+  "gitHead": "0537ca9424ecbabf1443d8cb32c41dc29f53c1cd"
 }
