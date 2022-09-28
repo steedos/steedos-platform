@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-08-22 11:49:00
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-09-28 10:13:09
+ * @Description: 
+ */
 import { getObject, computeFormula } from '../index';
 
 import { WorkflowNotification } from './types/workflow_notification';
@@ -13,7 +20,7 @@ declare var Creator: any;
  * @param userSession 
  */
 export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any, userSession: any) {
-    if (_.isEmpty(ids) || _.isEmpty(recordId) || _.isEmpty(userSession)) {
+    if (_.isEmpty(ids) || _.isEmpty(recordId)) {
         return;
     }
     let filters = [['name', 'in', ids],'or', ['_id', 'in', ids]];
@@ -31,15 +38,15 @@ export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any
  * @param userSession 
  */
 export async function runWorkflowNotifyAction(workflowNotification: WorkflowNotification, recordId: any, userSession: any) {
-    if (_.isEmpty(workflowNotification) || _.isEmpty(recordId) || _.isEmpty(userSession)) {
+    if (_.isEmpty(workflowNotification) || _.isEmpty(recordId)) {
         return;
     }
     let record = await getObject(workflowNotification.object_name).findOne(recordId, null);
     let objectName = workflowNotification.object_name;
     let assignedUsers = workflowNotification.assigned_users;
     let assignedUserField = workflowNotification.assigned_user_field;
-    let userId = userSession.userId;
-    let spaceId = userSession.spaceId;
+    let userId = record.owner;
+    let spaceId = record.space;
 
     let msgName = await computeFormula(workflowNotification.title, objectName, recordId, userSession);
     let msgBody = await computeFormula(workflowNotification.body, objectName, recordId, userSession);
