@@ -117,8 +117,14 @@ module.exports = {
 					if (true)  //(!fs.existsSync(packageDir)) 
 					{
 						try {
-							packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
-						} catch (e) {}
+							if(packageName === 'amis'){
+								packageDir = path.dirname(path.dirname(require.resolve(packageName + '/sdk/sdk.js')))
+							}else{
+								packageDir = path.dirname(require.resolve(packageName + '/package.json')).replace('/package.json', '')
+							}
+						} catch (e) {
+							console.log(e)
+						}
 					} 
 					if (fs.existsSync(packageDir)) {
 						router.use(`/unpkg.com/${packageName}/`, express.static(packageDir, { maxAge: cacheTime }));

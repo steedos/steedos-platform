@@ -207,6 +207,12 @@ fields:
     type: lookup
     reference_to: company
     name: applicant_company
+  forward_from_instance:
+    type: text
+    hidden: true
+  cc_users:
+    type: "[text]"
+    hidden: true
 list_views:
   all:
     label: All
