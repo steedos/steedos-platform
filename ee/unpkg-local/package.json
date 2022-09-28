@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_unpkg-local",
-  "version": "2.3.0-beta.19",
+  "version": "2.3.0-beta.20",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -16,7 +16,7 @@
     "@steedos-ui/builder-community": "2.2.47",
     "@steedos-ui/builder-widgets": "2.2.47",
     "@steedos-ui/design-system": "2.2.47",
-    "@steedos/filters": "2.3.0-beta.19",
+    "@steedos/filters": "2.3.0-beta.20",
     "amis": "2.2.0",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
@@ -32,5 +32,5 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "gitHead": "80ce49d0436a902175913e8324c5b5c5c1391e4a"
+  "gitHead": "78e92f69e7fb4ef58a7b9cc4861ec5a58642af95"
 }
