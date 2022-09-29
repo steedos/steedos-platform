@@ -14750,7 +14750,7 @@ mongo-object@^0.1.4:
   resolved "https://registry.yarnpkg.com/mongo-object/-/mongo-object-0.1.4.tgz#950d1d856b85af5f2321b82bb08b67b9c27f9766"
   integrity sha512-QtYk0gupWEn2+iB+DDRt1L+WbcNYvJRaHdih/dcqthOa1DbnREUGSs2WGcW478GNYpElflo/yybZXu0sTiRXHg==
 
-mongodb-client-encryption@2.1.0, mongodb-client-encryption@^2.1.0:
+mongodb-client-encryption@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mongodb-client-encryption/-/mongodb-client-encryption-2.1.0.tgz#afa5c78c1d356ab0fa9ac93eb385622f39c34d01"
   integrity sha512-9HlH2HlvF091SBj4aTV4duPgJzSPPpLc82CFvuMCCp15dP3HKvjMQec/lj1IzTfIH3ydgzteBw3z6PkKuIFujg==
