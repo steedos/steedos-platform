@@ -445,6 +445,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
         for (const trigger of triggers) {
             let params = generateActionParams(when, context); //参考sf
+            // TODO 讨论参数格式
+            // TODO 1、确定action trigger的返回值格式
+            // TODO 2、返回值合并至context
             await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
                 //如果action trigger 下线，则只打印error
                 if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
