@@ -51,7 +51,7 @@ module.exports = {
         getObject: {
             rest: {
                 method: "GET",
-                path: "/object"
+                path: "/object/:objectName"
             },
             async handler(ctx) {
                 return await this.getObject(ctx);
@@ -133,10 +133,10 @@ module.exports = {
                 return objects;
             }
         },
-        /* 复制getObjects函数根据objectApiName筛选下单独的对象信息 */
+        /* 复制getObjects函数根据objectName筛选下单独的对象信息 */
         getObject: {
             async handler(ctx) {
-                const objectApiName = ctx.params.objectApiName;
+                const objectName = ctx.params.objectName;
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const spaceId = userSession.spaceId;
@@ -196,7 +196,7 @@ module.exports = {
                     }
                 })
                 const object = objects.find(function (obj) {
-                    return obj.name === objectApiName;
+                    return obj.name === objectName;
                 });
                 return object;
             }
