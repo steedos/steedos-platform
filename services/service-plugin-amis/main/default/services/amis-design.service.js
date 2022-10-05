@@ -48,6 +48,15 @@ module.exports = {
                 return await this.getObjects(ctx);
             }
         },
+        getRelatedObjects: {
+            rest: {
+                method: "GET",
+                path: "/related_objects/:objectName"
+            },
+            async handler(ctx) {
+                return await this.getRelatedObjects(ctx);
+            }
+        },
         getObject: {
             rest: {
                 method: "GET",
@@ -199,6 +208,77 @@ module.exports = {
                     return obj.name === objectName;
                 });
                 return object;
+            }
+        },
+        getRelatedObjects: {
+            async handler(ctx) {
+                const objectName = ctx.params.objectName;
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const spaceId = userSession.spaceId;
+                const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
+                const allObjects = _.pluck(clone(allMetadataObjects), 'metadata');
+
+                const query = {
+                    filters: [ ['hidden', '!=', true] , ['name', '<>', ExcludeObjectNames]],
+                    projection: {
+                        name: 1, 
+                        label: 1, 
+                        list_views: 1,
+                        fields: 1
+                    }
+                };
+
+                let objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+                objects = objects.filter(function(object){
+                    let relatedFieldKey = _.findKey(object.fields, function(field){
+                        return (field.type === "lookup" || field.type === "master_detail") && field.reference_to === objectName;
+                    });
+                    return !!relatedFieldKey;
+                });
+
+                const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '!=', false]]})
+
+                _.each(objects, (object)=>{
+                    if(object && object.name){
+
+                        steedosI18n.translationObject(lng, object.name, object)
+
+                        if(object.list_views && !_.isEmpty(object.list_views)){
+                            _.each(object.list_views, (list_view, name)=>{
+                                list_view.name = name;
+                                list_view._id = list_view._id || list_view.name;
+                                list_view.label = list_view.label || list_view.name;
+                            })
+                            
+                            object.list_views = objectql.getSteedosSchema().metadataDriver.find(_.values(object.list_views), {
+                                projection: {
+                                    _id: 1, 
+                                    name: 1, 
+                                    label: 1
+                                }
+                            }, spaceId);
+                            
+                        }
+
+                        if(_.isEmpty(object.list_views)){
+                            object.list_views = [];
+                        }
+
+                        const objectListViews = objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
+                            filters: [['object_name', '=', object.name],  ['shared', '=', true] ],
+                            fields: "_id, name, label"
+                        }, spaceId);
+
+                        _.each(object.list_views, (listView)=>{
+                            if(!_.find(objectListViews, (dbListView)=>{ return dbListView.name === listView.name})){
+                                objectListViews.push(listView);
+                            }
+                        })
+                        object.list_views = objectListViews;
+                    }
+                })
+                return objects;
             }
         }
     }
