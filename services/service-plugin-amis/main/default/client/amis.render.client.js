@@ -18,10 +18,10 @@
         console.error(error)
     };
   }
-
-  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/sdk.css"))
+  // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/sdk.css"))
   loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
   loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
+  loadCss(Steedos.absoluteUrl("/amis/amis.css"))
     
     try {
         window['attrAccept'] = function (file, acceptedFiles) {
