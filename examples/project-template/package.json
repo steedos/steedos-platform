@@ -1,11 +1,11 @@
 {
   "name": "project-template",
-  "version": "2.3.0-beta.23",
+  "version": "2.3.0-beta.24",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.3.0-beta.23"
+    "@steedos/service-community": "2.3.0-beta.24"
   }
 }
