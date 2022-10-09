@@ -343,11 +343,17 @@ module.exports = {
                 if(field.type === 'select'){
                     return field.options;
                 }else if(field.reference_to){
-                    const records = await objectql.getObject(field.reference_to).find({filters: [[]]})
+                    let referenceTo = field.reference_to;
+                    let reference_to_field = field.reference_to_field || objectConfig._idFieldName || '_id'
+                    if(referenceTo === 'users'){
+                        referenceTo = 'space_users';
+                        reference_to_field = 'user'
+                    }
+                    const records = await objectql.getObject(referenceTo).find({filters: [[]]})
                     return _.map(records, (record)=>{
                         return {
                             label: record[objectConfig._NAME_FIELD_KEY || 'name'],
-                            value: record[objectConfig._idFieldName || '_id']
+                            value: record[reference_to_field]
                         };
                     })
                 }

@@ -11,7 +11,7 @@ if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
 }
 
-const pageAsseturls = "https://unpkg.com/@steedos-ui/builder-widgets@2.2.37/dist/assets.json";
+const pageAsseturls = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@0.0.1/dist/assets.json";
 if (process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS){
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS;
 }
