@@ -240,7 +240,7 @@ async function converterLookup(
     }
     
     //修复导入单元格为数字式文本问题
-    if (lookupCollection.fields[selectfield]._type == 'varchar') {
+    if (lookupCollection.fields[selectfield]?._type == 'text') {
         cellContent = cellContent.toString();
     }
     
