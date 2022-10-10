@@ -231,6 +231,7 @@ upgradeFlow = (flowCome, userId, flowId)->
 	updateObj.$set.error_message = flowCome['error_message'];
 	updateObj.$set.modified = now;
 	updateObj.$set.modified_by = userId;
+	updateObj.$set.events = flowCome['events'] || '';
 
 	#流程权限保持不变
 #	if (flowCome['perms'])
