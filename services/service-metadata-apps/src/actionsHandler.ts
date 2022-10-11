@@ -135,7 +135,7 @@ function checkAppMobile(app, mobile){
     return isChecked;
 }
 
-async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context){
+async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}){
     try {
         const objectsConfigs = context.objects;
         const tab = await getTab(ctx, tabApiName);
@@ -151,7 +151,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                     id: tab.name,
                     icon: tab.icon,
                     name: `${tab.label}`,
-                    children: []
+                    children: [],
+                    ...props
                 };
                 for (const {metadata: tabChild} of tabChildren) {
                     if(tabChild && tabChild.apiName){
@@ -178,7 +179,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                                 type: tab.type,
                                 icon: objectConfig.icon,
                                 path: `${appPath}/${objectConfig.name}`,
-                                name: `${objectLabel}`
+                                name: `${objectLabel}`,
+                                ...props
                             }
                         )
                     }
@@ -189,7 +191,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         type: tab.type,
                         icon: tab.icon,
                         path: `${tab.url}`,
-                        name: `${tab.label}`
+                        name: `${tab.label}`,
+                        ...props
                     };
                     if(tab.is_new_window){
                         urlMenu.target ='_blank'
@@ -206,7 +209,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                             type: tab.type,
                             page: tab.page,
                             path: `${appPath}/${tab.type}/${tab.page}`,
-                            name: `${tab.label}`
+                            name: `${tab.label}`,
+                            ...props
                         }
                     )
                 }
@@ -243,7 +247,24 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         description: app.description,
         children: []
     }
-    if(_.isArray(app.tabs)){
+    if(app.tab_items){
+        for (const tabApiName in app.tab_items) {
+            try {
+                const props = app.tab_items[tabApiName]
+                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
+            } catch (error) {
+                ctx.broker.logger.info(error.message);
+            }
+        }
+        // app.tab_items is array
+        // for (const item of app.tab_items) {
+        //     try {
+        //         await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
+        //     } catch (error) {
+        //         ctx.broker.logger.info(error.message);
+        //     }
+        // }
+    }else if(_.isArray(app.tabs)){
         for (const tabApiName of app.tabs) {
             try {
                 await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context)
