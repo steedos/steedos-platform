@@ -79,8 +79,8 @@ exports.deptinfoPush = async function (deptId, name, parentid, status = 0) {
 //status = 新增 2:离职
 exports.userinfoPush = async function (userId, status = 0) {
 
-  console.log(userId)
-  console.log(status)
+  console.log('userId: ', userId)
+  console.log('status: ', status)
 
   if (status == 2) {
     userRes = await queryGraphql('{\n  space_users(filters: [[\"qywx_id\", \"=\", \"' + userId + '\"]]) {\n    _id\n    name\n  }\n}');
@@ -112,7 +112,9 @@ exports.userinfoPush = async function (userId, status = 0) {
   deptIdList = [];
   for (let i = 0; i < userinfotRes['department'].length; i++) {
     deptRes = await queryGraphql('{\n  organizations(filters: [[\"qywx_id\", \"=\", \"' + userinfotRes['department'][i] + '\"]]) {\n    _id\n    name\n  }\n}');
-    deptIdList.push(deptRes['organizations'][0]['_id'])
+    if (deptRes['organizations'][0]) {
+      deptIdList.push(deptRes['organizations'][0]['_id'])
+    }
   }
 
   userRes = await queryGraphql('{\n  space_users(filters: [[\"qywx_id\", \"=\", \"' + userId + '\"]]) {\n    _id\n    name\n    profile\n }\n}');
@@ -128,7 +130,7 @@ exports.userinfoPush = async function (userId, status = 0) {
 
   userinfo = {}
   userinfo['name'] = userinfotRes['name'];
-  userinfo['mobile'] = userinfotRes['mobile'];
+  userinfo['mobile'] = userinfotRes['mobile'] || '';
   userinfo['organization'] = deptIdList[0];
   userinfo['email'] = userinfotRes['email'] || "";
   userinfo['job_number'] = userId;

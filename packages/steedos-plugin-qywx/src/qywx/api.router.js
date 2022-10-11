@@ -1,3 +1,5 @@
+// "use strict";
+
 const Cookies = require("cookies");
 const express = require('express');
 const jsdom = require("jsdom");
@@ -316,6 +318,7 @@ router.post("/api/qiyeweixin/push", async function (req, res, next) {
 // 同步数据
 router.get('/api/qiyeweixin/stockData', async function (req, res) {
     let space = await Qiyeweixin.getSpace();
+    let access_token = '';
     // 获取access_token
     if (space.qywx_corp_id && space.qywx_secret){
         let response = await Qiyeweixin.getToken(space.qywx_corp_id, space.qywx_secret);
@@ -325,7 +328,7 @@ router.get('/api/qiyeweixin/stockData', async function (req, res) {
     qywxSync.write("================存量数据开始===================")
     qywxSync.write("access_token:" + access_token)
 
-    deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
+    let deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
     // console.log("before deptListRes",deptListRes);
     deptListRes = await deptListRes.json()
     // console.log("deptListRes: ",deptListRes)
@@ -335,7 +338,7 @@ router.get('/api/qiyeweixin/stockData', async function (req, res) {
         qywxSync.write("部门ID:" + deptListRes[i]['id'])
         await qywxSync.deptinfoPush(deptListRes[i]['id'], deptListRes[i]['name'], deptListRes[i]['parentid'])
 
-        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
+        let userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
         userListRes = await userListRes.json()
         userListRes = userListRes.userlist
         for (let ui = 0; ui < userListRes.length; ui++) {
@@ -633,7 +636,7 @@ let getAbsoluteUrl = function (url) {
     return url;
 };
 
-parseXML = (xml) => new Promise((resolve, reject) => {
+const parseXML = (xml) => new Promise((resolve, reject) => {
     const opt = { trim: true, explicitArray: false, explicitRoot: false };
     xml2js.parseString(xml, opt, (err, res) => err ? reject(new Error('XMLDataError')) : resolve(res || {}));
 });

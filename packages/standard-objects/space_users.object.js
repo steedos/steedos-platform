@@ -79,7 +79,7 @@ Meteor.startup(function () {
                 const steedosConfig = objectql.getSteedosConfig();
                 const config = steedosConfig.accounts || {};
                 if (!doc.email && !doc.mobile) {
-                    throw new Meteor.Error(400, "contact_need_phone_or_email");
+                    // throw new Meteor.Error(400, "contact_need_phone_or_email");
                 }
                 if (doc.email) {
                     if (!validator.isEmail(doc.email)) {
@@ -110,24 +110,27 @@ Meteor.startup(function () {
                         "username": doc.username
                     });
                 }
-                userExist = db.users.find({
-                    $or: selector
-                });
-    
-                if(userExist.count() > 0){
-                    throw new Meteor.Error(400, "space_users_error_user_exists");
-                }
-                spaceUserExisted = db.space_users.find({
-                    space: doc.space,
-                    $or: selector
-                }, {
-                    fields: {
-                        _id: 1
+                if (selector.length > 0) {
+                    userExist = db.users.find({
+                        $or: selector
+                    });
+        
+                    if(userExist.count() > 0){
+                        throw new Meteor.Error(400, "space_users_error_user_exists");
                     }
-                });
+                    spaceUserExisted = db.space_users.find({
+                        space: doc.space,
+                        $or: selector
+                    }, {
+                        fields: {
+                            _id: 1
+                        }
+                    });
+                }
+                
             }
 
-            if (spaceUserExisted.count() > 0) {
+            if (spaceUserExisted && spaceUserExisted.count() > 0) {
                 throw new Meteor.Error(400, "space_users_error_space_user_exists");
             }
         };
@@ -219,7 +222,7 @@ Meteor.startup(function () {
                 doc.modified = new Date();
                 creator = db.users.findOne(userId);
                 doc.locale = doc.locale || creator.locale;
-                if ((!doc.user) && (doc.email || doc.mobile)) {
+                if ((!doc.user)) {
                     if ((doc.is_registered_from_space || doc.is_logined_from_space) || !userObj) {
                         if (!doc.invite_state) {
                             doc.invite_state = "accepted";
