@@ -84,11 +84,10 @@
                 authToken: Creator.USER_CONTEXT.user.authToken
             }
         })
-    
-        if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
-            const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
-            Builder.registerRemoteAssets(defaultAssetsUrls)
-        }  
+        // if(Meteor.settings.public.page && Meteor.settings.public.page.assetUrls){
+        //     const defaultAssetsUrls = Meteor.settings.public.page.assetUrls.split(',')
+        //     Builder.registerRemoteAssets(defaultAssetsUrls)
+        // }  
     
         window.postMessage({ type: "Builder.loaded" })
     })

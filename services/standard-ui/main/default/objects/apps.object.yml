@@ -65,25 +65,27 @@ fields:
     type: text
   tab_items:
     label: Tabs
-    type: grid
-    is_wide: true
-    required: true
-    group: Tabs
-  tab_items.$:
-    label: Tabs
-    blackbox: true
     type: object
-  tab_items.$.tab_name:
-    label: Tab Name
-    type: lookup
-    multiple: false
-    is_wide: false
-    required: true
-    reference_to: tabs
-    reference_to_field: name
-  tab_items.$.group:
-    label: Group
-    type: text
+    blackbox: true
+    is_wide: true
+    required: false
+    group: Tabs
+    visible_on: "{{global.mode ==='read' ? false : true}}"
+  # tab_items.$:
+  #   label: Tabs
+  #   blackbox: true
+  #   type: object
+  # tab_items.$.tab_name:
+  #   label: Tab Name
+  #   type: lookup
+  #   multiple: false
+  #   is_wide: false
+  #   required: true
+  #   reference_to: tabs
+  #   reference_to_field: name
+  # tab_items.$.group:
+  #   label: Group
+  #   type: text
   objects:
     label: Desktop Menu(Invalid)
     type: lookup
