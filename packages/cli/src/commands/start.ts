@@ -349,8 +349,9 @@ class StartCommand extends Command {
 				});
 
 			await Promise.all(_.uniq(serviceFiles).map(async f => {
-				const mod = await import(f.startsWith("/") ? f : "/" + f);
-				const content = mod.default;
+				// const mod = await import(f.startsWith("/") ? f : "/" + f);
+				// const content = mod.default;
+				const content = require(f)
 
 				const svc = this.broker.createService(content);
 				svc.__filename = f;
