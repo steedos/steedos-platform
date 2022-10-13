@@ -222,7 +222,9 @@ class StartCommand extends Command {
 
 		if (this.flags.silent) this.config.logger = false;
 
-		if (this.flags.hot) this.config.hotReload = true;
+		// if (this.flags.hot) this.config.hotReload = true;
+
+		if (this.flags.hot) this.config.steedosHotReload = true;
 
 		// console.log("Merged configuration", this.config);
 	}
@@ -401,6 +403,16 @@ class StartCommand extends Command {
 	}
 
 	/**
+	 * 如果有--hot, 则自动启动热更新服务
+	 */
+	async loadHotReloadService() {
+		if (this.config.steedosHotReload) {
+			const content = require('../start/hotReload');
+			this.broker.createService(content);
+		}
+	}
+
+	/**
 	 * Start Moleculer broker
 	 */
 	async startBroker() {
@@ -417,6 +429,8 @@ class StartCommand extends Command {
 		this.broker.runner = this;
 
 		await this.loadServices();
+
+		await this.loadHotReloadService();
 
 		if (this.watchFolders.length > 0) this.broker.runner.folders = this.watchFolders;
 
