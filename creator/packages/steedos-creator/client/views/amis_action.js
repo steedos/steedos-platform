@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-22 13:24:03
+ * @LastEditTime: 2022-10-13 17:17:19
  * @Description: 
  */
 
@@ -107,7 +107,7 @@ Template.amis_action.onRendered(()=>{
             "body"
           ]
         };
-    const defData = lodash.defaultsDeep({}, data , {
+    const defData = lodash.defaultsDeep({}, {data: data} , {
         data: {
             context: {
                 rootUrl: __meteor_runtime_config__.ROOT_URL,
