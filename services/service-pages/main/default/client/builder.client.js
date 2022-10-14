@@ -59,6 +59,8 @@
         window.define.amd = undefined;
 
     window.ReactDOM = ReactDom;
+    window.React17 = window.React;
+    window.ReactDOM17 = window.ReactDOM;
 
     // const BuilderSDK = BuilderReact;
 
