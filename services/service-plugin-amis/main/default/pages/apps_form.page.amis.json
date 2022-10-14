@@ -22,7 +22,7 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
+                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\nSteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -312,7 +312,7 @@
                                                                     "actions": [
                                                                         {
                                                                             "actionType": "custom",
-                                                                            "script": "const appId = null;\nconst page = Steedos.Page.getPage('app', appId, null, null, \"generate_object_tabs\");\nconst title = \"选择需要生成选项卡的对象\";\nif (page && page.schema) {\n  Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, {\n    appId: null,\n    objectName: \"apps\",\n    title: title\n  }));\n}"
+                                                                            "script": "const appId = null;\nconst page = Steedos.Page.getPage('app', appId, null, null, \"generate_object_tabs\");\nif (page && page.schema) {\n  const pageSchema = JSON.parse(page.schema);\n  let formSchema = pageSchema.body[0];\n  // 设置form的canAccessSuperData属性防止弹出窗口从父级取字段默认值\n  formSchema.canAccessSuperData = false;\n  // 设置form的wrapWithPanel属性隐藏其底部保存取消按钮\n  formSchema.wrapWithPanel = false;\n  formSchema.className = \"steedos-amis-form\";\n  const title = \"选择需要生成选项卡的对象\";\n  doAction({\n    \"actionType\": \"dialog\",\n    \"dialog\": {\n      \"type\": \"dialog\",\n      \"title\": title,\n      \"body\": formSchema,\n      \"size\": \"lg\"\n    }\n  });\n}"
                                                                         }
                                                                     ],
                                                                     "weight": 0
@@ -542,7 +542,7 @@
             "rootUrl": "http://127.0.0.1:5800",
             "tenantId": "hKdnwE55WcnWveYxS",
             "userId": "62ede4f62161e377e35de58c",
-            "authToken": "dd5788a359e3435f46d35fdafc2ea9f82aef1e4e653f9813da81bb403916f1e9801902331c75dcc8cbd5c0"
+            "authToken": "6818f1ebd0fe0da92e0022f6ae59567b634bcb9bd06e0ff848e23c7eff27d06a0d64fc98ed96b80feeb53b"
         }
     },
     "id": "u:953fda4052b6",

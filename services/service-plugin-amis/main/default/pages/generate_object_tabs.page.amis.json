@@ -20,7 +20,7 @@
                 },
                 "requestAdaptor": "const formData = api.data.$;\napi.data = { objects: formData.objects };\nreturn api;",
                 "responseData": null,
-                "adaptor": "\nSteedosUI.getRef(api.body.modalName).close();\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
+                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
