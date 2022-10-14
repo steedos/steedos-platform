@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-13 17:17:19
+ * @LastEditTime: 2022-10-14 17:23:10
  * @Description: 
  */
 
@@ -70,7 +70,7 @@ const getEvn = ()=>{
 Template.amis_action.helpers({
   objectName: ()=>{
     var tplData = Template.instance().data;
-    return tplData.button.object
+    return tplData.button.object || tplData.button.object_name
   },
   name: ()=>{
     var tplData = Template.instance().data;
@@ -89,7 +89,7 @@ Template.amis_action.onRendered(()=>{
   var inMore = tplData.inMore
   var data = tplData.data
   var env = tplData.env
-  var rootName = ".steedos-button-"+button.object+"-"+button.name;
+  var rootName = ".steedos-button-"+ (button.object  || tplData.button.object_name)+"-"+button.name;
   Promise.all([
     waitForThing(window, 'amis'),
   ]).then(()=>{
