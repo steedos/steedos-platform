@@ -6,6 +6,8 @@ checkNpmVersions({
 
 // const React = require('react');
 // const ReactDOM = require('react-dom');
+const React = React17;
+const ReactDOM = ReactDOM17;
 
 // Empty template; logic in `onRendered` below
 Template.React = new Template("Template.React", function () { return []; });
