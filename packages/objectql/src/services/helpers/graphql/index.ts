@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-14 14:21:42
+ * @LastEditTime: 2022-10-14 18:43:25
  * @Description: 
  */
 
@@ -573,7 +573,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                 } else if (fType == "lookup" && _.isString(field.reference_to)) {
                     let refTo = field.reference_to;
 
-                    let refField = '_id' || field.reference_to_field;
+                    let refField = field.reference_to_field || '_id';
 
                     if(refTo === 'users'){
                         refTo = 'space_users';
@@ -615,7 +615,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     }
                 } else if (fType == "master_detail" && _.isString(field.reference_to)) {
                     let refTo = field.reference_to;
-                    let refField = '_id' || field.reference_to_field;
+                    let refField = field.reference_to_field || '_id';
 
                     if(refTo === 'users'){
                         refTo = 'space_users';
