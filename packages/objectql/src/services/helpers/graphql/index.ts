@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-07 16:53:26
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-10-14 14:21:42
  * @Description: 
  */
 
@@ -571,8 +571,15 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                         }
                     }
                 } else if (fType == "lookup" && _.isString(field.reference_to)) {
-                    let lookupLabel = "";
                     let refTo = field.reference_to;
+
+                    let refField = '_id' || field.reference_to_field;
+
+                    if(refTo === 'users'){
+                        refTo = 'space_users';
+                        refField = 'user'
+                    }
+
                     let refValue = doc[name];
                     if (!refValue) {
                         continue;
@@ -581,25 +588,39 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({
-                            filters: [`_id`, "in", refValue],
+                            filters: [refField, "in", refValue],
                             fields: [nameFieldKey],
                         });
-                        lookupLabel = _.pluck(refRecords, nameFieldKey).join(",");
+                        displayObj[name] = _.map(refRecords, (item)=>{
+                            return {
+                                objectName: refTo,
+                                value: item._id,
+                                label: item[nameFieldKey]
+                            }
+                        })
                     } else {
                         let refRecord = (
                             await refObj.find({
-                                filters: [`_id`, "=", refValue],
+                                filters: [refField, "=", refValue],
                                 fields: [nameFieldKey],
                             })
                         )[0];
                         if (refRecord) {
-                            lookupLabel = refRecord[nameFieldKey];
+                            displayObj[name] = {
+                                objectName: refTo,
+                                value: refRecord._id,
+                                label: refRecord[nameFieldKey]
+                            };
                         }
                     }
-                    displayObj[name] = lookupLabel;
                 } else if (fType == "master_detail" && _.isString(field.reference_to)) {
-                    let masterDetailLabel = "";
                     let refTo = field.reference_to;
+                    let refField = '_id' || field.reference_to_field;
+
+                    if(refTo === 'users'){
+                        refTo = 'space_users';
+                        refField = 'user'
+                    }
                     let refValue = doc[name];
                     if (!refValue) {
                         continue;
@@ -608,22 +629,55 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let nameFieldKey = await refObj.getNameFieldKey();
                     if (field.multiple) {
                         let refRecords = await refObj.find({
-                            filters: [`_id`, "in", refValue],
+                            filters: [refField, "in", refValue],
                             fields: [nameFieldKey],
                         });
-                        masterDetailLabel = _.pluck(refRecords, nameFieldKey).join(",");
+                        displayObj[name] = _.map(refRecords, (item)=>{
+                            return {
+                                objectName: refTo,
+                                value: item._id,
+                                label: item[nameFieldKey]
+                            }
+                        })
                     } else {
                         let refRecord = (
                             await refObj.find({
-                                filters: [`_id`, "=", refValue],
+                                filters: [refField, "=", refValue],
                                 fields: [nameFieldKey],
                             })
                         )[0];
                         if (refRecord) {
-                            masterDetailLabel = refRecord[nameFieldKey];
+                            displayObj[name] = {
+                                objectName: refTo,
+                                value: refRecord._id,
+                                label: refRecord[nameFieldKey]
+                            };
                         }
                     }
-                    displayObj[name] = masterDetailLabel;
+                } else if ((fType == "master_detail" || fType == "lookup" ) && field.reference_to && !_.isString(field.reference_to)) {
+                    let refValue = doc[name];
+                    if (!refValue) {
+                        continue;
+                    }
+                    let refTo = refValue.o;
+                    let refValues = refValue.ids;
+                    if(!refTo){
+                        continue;
+                    }
+                    let refObj = steedosSchema.getObject(refTo);
+                    let nameFieldKey = await refObj.getNameFieldKey();
+                    let refRecords = await refObj.find({
+                        filters: [`_id`, "in", refValues],
+                        fields: [nameFieldKey]
+                    });
+
+                    displayObj[name] = _.map(refRecords, (item)=>{
+                        return {
+                            objectName: refTo,
+                            value: item._id,
+                            label: item[nameFieldKey]
+                        }
+                    })
                 } else if (fType == "autonumber") {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "url") {
