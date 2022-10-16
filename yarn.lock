@@ -4324,20 +4324,20 @@
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@2.2.47":
-  version "2.2.47"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-community/-/builder-community-2.2.47.tgz#df5078b2b250b6c0272c121a3b1d82e2750c9262"
-  integrity sha512-SXK4hL0PGlqEtIaxnJZY7a9DVwCleqc/YeDcqFwqUqZQqhT50sJ15rDOF5Wm06YroZGw3LCdD1OEAEqZuyHs2A==
+"@steedos-ui/builder-community@2.2.48":
+  version "2.2.48"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.48.tgz#5918b4ef5dfb24c6d15a81d10460408f1018310e"
+  integrity sha512-Lb0U0++J1MrpppnyjYeQIgnNpki3RKI4R8apadm5LGNnlsyH32JxZ6VQVxzyerJuPHLXx9gtScVrudgTgDTJrA==
 
-"@steedos-ui/builder-widgets@2.2.47":
-  version "2.2.47"
-  resolved "https://registry.npmmirror.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.47.tgz#1dbfe7b0ee8ce4f1cce1d0671811ef20c4e77924"
-  integrity sha512-4m+N+aN7IpxPD2sGci4N4wly50NHO46ZlEwnjvKtf3hM9VQfAtPoKsGtYHQgU793LeqkHqhA/HS9pWpgF6dSaw==
+"@steedos-ui/builder-widgets@2.2.48":
+  version "2.2.48"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.48.tgz#8ce8ef35bd45e7b252c411a99f915b41d1ead084"
+  integrity sha512-Lf+T2WnB9vp079hi8tevY2Gt8wsW4GNQR+5PCN7Nl5DA9p4WknvOelMQJa4Doo+rfnQbB8uqQkvPsEic1djmPA==
 
-"@steedos-ui/design-system@2.2.47":
-  version "2.2.47"
-  resolved "https://registry.npmmirror.com/@steedos-ui/design-system/-/design-system-2.2.47.tgz#53a32dc05433410f3a470e6b393644106a979920"
-  integrity sha512-Tb0fJDoFdAeqeHuEUsfLsW0pfNIzCRI1WxyBfDiHUOLSXmxgpCMhReLL641yWdXspHMhOkVi3eJH/O5G0P+4cQ==
+"@steedos-ui/design-system@2.2.48":
+  version "2.2.48"
+  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.48.tgz#85d14afd7c9ea06d814d72eba9cafead6f47fa53"
+  integrity sha512-0qbjTJQ5raoI8n3/77kKCfqwrXtsxmaCGXsFywlSA0rwYHbsqzKMePT1dkJqizXN6YGdqj5ZlZ1g8qxpVpwhqw==
   dependencies:
     react-required-if "^1.0.3"
 
@@ -7257,7 +7257,7 @@ cheerio@1.0.0-rc.10:
     parse5-htmlparser2-tree-adapter "^6.0.1"
     tslib "^2.2.0"
 
-chokidar@^3.4.0, chokidar@^3.5.2, chokidar@^3.5.3:
+chokidar@3.5.3, chokidar@^3.4.0, chokidar@^3.5.2, chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
   integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
