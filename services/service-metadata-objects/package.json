@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-objects",
-  "version": "2.3.0-beta.28",
+  "version": "2.3.0-beta.29",
   "description": "",
   "main": "lib/objects.service.js",
   "scripts": {
@@ -20,9 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/formula": "2.3.0-beta.28",
-    "@steedos/i18n": "2.3.0-beta.28",
-    "@steedos/metadata-registrar": "2.3.0-beta.28",
+    "@steedos/formula": "2.3.0-beta.29",
+    "@steedos/i18n": "2.3.0-beta.29",
+    "@steedos/metadata-registrar": "2.3.0-beta.29",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -36,5 +36,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ecdeeed5fe062611e2a982071c65b33ae9dbff7f"
+  "gitHead": "323053a611a9705d307ad7f15329b3751cf589a2"
 }
