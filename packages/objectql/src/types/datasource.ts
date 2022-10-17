@@ -30,6 +30,7 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
 import path = require('path');
+const clone = require('clone')
 let Fiber = require('fibers');
 const defaultDatasourceName = 'default';
 // const meteorDatasourceName = 'meteor';
@@ -137,7 +138,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     getCacheObjects() {
-        return this.cacheObjects;
+        return clone(this.cacheObjects);
     }
 
     async flushCacheObjects() {
