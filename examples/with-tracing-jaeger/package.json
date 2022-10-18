@@ -1,13 +1,13 @@
 {
   "name": "with-tracing-jaeger",
-  "version": "2.3.0-beta.27",
+  "version": "2.3.0-beta.30",
   "private": true,
   "scripts": {
     "start:jaeger": "docker run -d --rm --name jaeger -p 6832:6832/udp -p 16686:16686 jaegertracing/all-in-one:latest",
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.3.0-beta.27"
+    "@steedos/service-community": "2.3.0-beta.30"
   },
   "devDependencies": {
     "jaeger-client": "^3.19.0"
