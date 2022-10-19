@@ -2,4 +2,5 @@
 name: favicon
 label: Favicon
 type: avatar
+hidden: true
 group: branding

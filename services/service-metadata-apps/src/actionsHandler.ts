@@ -248,22 +248,25 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         children: []
     }
     if(app.tab_items){
-        for (const tabApiName in app.tab_items) {
-            try {
-                const props = app.tab_items[tabApiName]
-                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
-            } catch (error) {
-                ctx.broker.logger.info(error.message);
+        // app.tab_items is array
+        if(_.isArray(app.tab_items)){
+            for (const item of app.tab_items) {
+                try {
+                    await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
+                } catch (error) {
+                    ctx.broker.logger.info(error.message);
+                }
+            }
+        }else{
+            for (const tabApiName in app.tab_items) {
+                try {
+                    const props = app.tab_items[tabApiName]
+                    await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
+                } catch (error) {
+                    ctx.broker.logger.info(error.message);
+                }
             }
         }
-        // app.tab_items is array
-        // for (const item of app.tab_items) {
-        //     try {
-        //         await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
-        //     } catch (error) {
-        //         ctx.broker.logger.info(error.message);
-        //     }
-        // }
     }else if(_.isArray(app.tabs)){
         for (const tabApiName of app.tabs) {
             try {

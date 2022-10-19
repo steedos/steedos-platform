@@ -29,7 +29,7 @@ module.exports = {
 			name: packageName,
 			isPackage: false
 		},
-		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.com',
+		unpkgUrl: process.env.STEEDOS_UNPKG_URL ? process.env.STEEDOS_UNPKG_URL: 'https://unpkg.steedos.cn',
 		local_packages: [
 			'd3',
 			'echarts',
