@@ -17,7 +17,6 @@
     "@steedos/ee_service-plugin-license": "^2.2.5",
     "@steedos/ee_sso-oidc": "2.3.0-beta.30",
     "@steedos/ee_stimulsoft-reports": "2.3.0-beta.30",
-    "@steedos/ee_unpkg-local": "2.3.0-beta.30",
     "@steedos/ee_virus-scan": "2.3.0-beta.30",
     "@steedos/service-community": "2.3.0-beta.30",
     "mongodb": "^3.7.3",
