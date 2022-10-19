@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-14 18:43:25
+ * @LastEditTime: 2022-10-19 18:04:33
  * @Description: 
  */
 
@@ -496,6 +496,38 @@ function getTranslatedFieldConfig(translatedObject: any, name: string) {
     return translatedObject.fields[name.replace(/__label$/, "")];
 }
 
+const numberToString = (number: number | string, scale: number, notThousands: boolean = false)=>{
+    if (typeof number === "number") {
+      number = number.toString();
+    }
+    if (!number) {
+      return '';
+    }
+    if (number !== "NaN") {
+      if (scale || scale === 0) {
+        number = Number(number).toFixed(scale);
+      }
+      if (!notThousands) {
+        if (!(scale || scale === 0)) {
+          // 没定义scale时，根据小数点位置算出scale值
+          let regDots = number.match(/\.(\d+)/);
+          scale = regDots && regDots[1] && regDots[1].length
+          if (!scale) {
+            scale = 0;
+          }
+        }
+        let reg = /(\d)(?=(\d{3})+\.)/g;
+        if (scale === 0) {
+          reg = /(\d)(?=(\d{3})+\b)/g;
+        }
+        number = number.replace(reg, '$1,');
+      }
+      return number;
+    } else {
+      return "";
+    }
+  }
+
 async function translateToDisplay(objectName, doc, userSession: any) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
@@ -558,9 +590,9 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] ? moment.utc(doc[name])
                         .format("HH:mm") : '';
                 } else if (fType == "number") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
                 } else if (fType == "currency") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
                 } else if (fType == "percent") {
                     displayObj[name] = `${doc[name] * 100}%`;
                 } else if (fType == "password") {
