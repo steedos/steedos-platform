@@ -17,6 +17,11 @@ const reloadPackage = (broker, packagePath) => {
         _.each(_.uniq(_.compact(_changePackages)), (_packagePath) => {
             const packageJson = require(path.join(_packagePath, 'package.json'));
             if (packageJson) {
+                const servicePath = path.join(_packagePath, 'package.service.js')
+                const serviceJson = require(servicePath);
+                if (serviceJson) {
+                    delete require.cache[require.resolve(servicePath)];
+                }
                 broker.call(`~packages-project-server.reloadPackage`, { module: packageJson.name })
             }
         })
