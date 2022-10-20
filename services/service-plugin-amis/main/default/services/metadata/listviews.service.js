@@ -169,6 +169,88 @@ const getFieldOperators = (type, lng)=>{
 
 }
 
+const getField = (objectName, fieldName, type, lng)=>{
+    let field = null;
+    switch (type) {
+        case 'textarea':
+        case 'autonumber':
+        case 'url':
+        case 'email':
+        case 'text':
+            field = {
+                type: 'text',
+                operators: getFieldOperators('text', lng)
+            };
+            break;
+        case 'percent':
+        case 'currency':
+        case 'number':
+            field = {
+                type: 'number',
+                operators: getFieldOperators('number', lng)
+            };
+            break;
+        // 以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
+        case 'date':
+            // 华炎魔方中日期字段存的是utc的0点
+            field = {
+                type: "date",
+                format: "YYYY-MM-DDT00:00:00+00:00",
+                operators: getFieldOperators("date", lng)
+            };
+            break;
+        case 'datetime':
+            // 即amis中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
+            field = {
+                type: "datetime",
+                operators: getFieldOperators("datetime", lng)
+            };
+            break;
+        case 'time':
+            // 华炎魔方中时间字段存的是1970-01-01的utc时间
+            field = {
+                type: "time",
+                format: "1970-01-01THH:mm+00:00",
+                operators: getFieldOperators("time", lng)
+            };
+            break;
+        case 'lookup':
+        case 'master_detail':
+        case 'select':
+            field = {
+                type: 'select',
+                source: {
+                    "method": "get",
+                    "url": "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${fieldName}`,
+                    "dataType": "json",
+                    "headers": {
+                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    }
+                  }
+                ,
+                searchable: true,
+                operators: getFieldOperators("select", lng)
+            };
+            break;
+        case 'boolean':
+        case 'toggle':
+            field = {
+                type: "select",
+                options: [
+                    {label: steedosI18n.t("True", {}, lng), value: true},
+                    {label: steedosI18n.t("False", {}, lng), value: false}
+                ],
+                operators: [
+                  "equal",
+                  "not_equal"
+                ]
+              };
+        default:
+            break;
+    }
+    return field;
+}
+
 module.exports = {
     name: "amis-metadata-listviews",
     mixins: [],
@@ -239,89 +321,19 @@ module.exports = {
                     if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
                         field.label = field.label || field.name
                         switch (field.type) {
-                            case 'text':
+                            case 'formula':
                                 fields.push({
                                     label: field.label,
-                                    type: field.type,
                                     name: field.name,
-                                    operators: getFieldOperators(field.type, lng)
-                                });
+                                    ...getField(objectName, field.name, field.data_type, lng)
+                                })
                                 break;
-                            case 'currency':
-                            case 'number':
-                                fields.push({
-                                    label: field.label,
-                                    type: 'number',
-                                    name: field.name,
-                                    operators: getFieldOperators('number', lng)
-                                });
-                                break;
-                            // 以下date 、datetime、time 不能作为amis 表单项的格式 . filters 对此格式做个特殊兼容,
-                            case 'date':
-                                // 华炎魔方中日期字段存的是utc的0点
-                                fields.push({
-                                    label: field.label,
-                                    type: field.type,
-                                    name: field.name,
-                                    format: "YYYY-MM-DDT00:00:00+00:00",
-                                    operators: getFieldOperators(field.type, lng)
-                                });
-                                break;
-                            case 'datetime':
-                                // 即amis中日期时间控件的format默认值为"YYYY-MM-DDTHH:mm+08:00"正好满足需求
-                                fields.push({
-                                    label: field.label,
-                                    type: field.type,
-                                    name: field.name,
-                                    operators: getFieldOperators(field.type, lng)
-                                });
-                                break;
-                            case 'time':
-                                // 华炎魔方中时间字段存的是1970-01-01的utc时间
-                                fields.push({
-                                    label: field.label,
-                                    type: field.type,
-                                    name: field.name,
-                                    format: "1970-01-01THH:mm+00:00",
-                                    operators: getFieldOperators(field.type, lng)
-                                });
-                                break;
-                            case 'lookup':
-                            case 'master_detail':
-                            case 'select':
-                                fields.push({
-                                    label: field.label,
-                                    type: 'select',
-                                    name: field.name,
-                                    source: {
-                                        "method": "get",
-                                        "url": "${context.rootUrl}" + `/service/api/amis-metadata-listviews/getSelectFieldOptions?objectName=${objectName}&fieldName=${field.name}`,
-                                        "dataType": "json",
-                                        "headers": {
-                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                        }
-                                      }
-                                    ,
-                                    searchable: true,
-                                    operators: getFieldOperators(field.type, lng)
-                                });
-                                break;
-                            case 'boolean':
-                            case 'toggle':
-                                fields.push({
-                                    label: field.label,
-                                    type: "select",
-                                    name: field.name,
-                                    options: [
-                                        {label: steedosI18n.t("True", {}, lng), value: true},
-                                        {label: steedosI18n.t("False", {}, lng), value: false}
-                                    ],
-                                    operators: [
-                                      "equal",
-                                      "not_equal"
-                                    ]
-                                  });
                             default:
+                                fields.push({
+                                    label: field.label,
+                                    name: field.name,
+                                    ...getField(objectName, field.name, field.type, lng)
+                                })
                                 break;
                         }
                     }
