@@ -439,7 +439,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							else if !objectField.multiple && !formField.is_multiselect
 								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 							values[workflow_field] = odataFieldValue
-						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && ['users', 'organizations'].includes(objectLookupField.reference_to)
+						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && (['users', 'organizations'].includes(objectLookupField.reference_to) || ('space_users' == objectLookupField.reference_to && 'user' == objectLookupField.reference_to_field) )
 							if !_.isEmpty(referenceToFieldValue)
 								lookupSelectFieldValue
 								if formField.type == 'user'
@@ -467,7 +467,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				else if !objField.multiple && !formField.is_multiselect
 					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
 				values[workflow_field] = odataFieldValue
-			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && ['users', 'organizations'].includes(objField.reference_to)
+			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && (['users', 'organizations'].includes(objField.reference_to) || ('space_users' == objField.reference_to && 'user' == objField.reference_to_field) )
 				referenceToFieldValue = record[objField.name]
 				if !_.isEmpty(referenceToFieldValue)
 					selectFieldValue
