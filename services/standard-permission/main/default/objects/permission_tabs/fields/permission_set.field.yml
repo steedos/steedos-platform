@@ -1,0 +1,4 @@
+name: permission_set
+label: 所属权限集
+type: master_detail
+reference_to: permission_set

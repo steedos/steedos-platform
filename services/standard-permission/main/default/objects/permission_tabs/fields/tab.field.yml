@@ -1,0 +1,4 @@
+name: tab
+label: 选项卡
+type: lookup
+reference_to: tabs

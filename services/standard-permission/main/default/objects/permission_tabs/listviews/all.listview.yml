@@ -1,0 +1,13 @@
+name: all
+columns:
+  - field: permission_set
+  - field: tab
+  - field: permission
+filter_scope: space
+filters: []
+label: 所有
+mobile_columns: []
+scrolling_mode: standard
+shared: true
+sort_no: 100
+type: grid
