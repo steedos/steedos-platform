@@ -41,12 +41,16 @@ const initPermissionSet = async function(doc, userId, spaceId){
         throw new Error('权限集不能为空')
     }
     
-    const permissionSet = await objectql.getObject('permission_set').findOne(doc.permission_set_id)
+    let permissionSet = null;
+    const permissionSets = await objectql.getObject('permission_set').find({filters: [['name', '=', doc.permission_set_id]]});
+
+    if(permissionSets && permissionSets.length > 0){
+        permissionSet = permissionSets[0];
+    }
     
     if(!permissionSet){
         throw new Error('无效的权限集')
     }
-    
     if(permissionSet._id === permissionSet.name){
         const now = new Date();
         const dbPermissionSet = await objectql.getObject('permission_set').insert({
