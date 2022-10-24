@@ -568,7 +568,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                     console.log('fm.workflow_field: ', fm.workflow_field)
                 }
                 // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oField.type) && ['users', 'organizations'].includes(oField.reference_to)) {
+                if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oField.type) 
+                    && (['users', 'organizations'].includes(oField.reference_to) || ('space_users' == oField.reference_to && 'user' == oField.reference_to_field))) {
                     if (!_.isEmpty(values[fm.workflow_field])) {
                         if (oField.multiple && wField.is_multiselect) {
                             obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], 'id'))
@@ -780,7 +781,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 }
                             }
                             // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                            if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)) {
+                            if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) 
+                                && (['users', 'organizations'].includes(relatedObjectField.reference_to) || ('space_users' == relatedObjectField.reference_to && 'user' == relatedObjectField.reference_to_field)) ) {
                                 if (!_.isEmpty(relatedObjectFieldValue)) {
                                     if (relatedObjectField.multiple && formField.is_multiselect) {
                                         relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, 'id'))

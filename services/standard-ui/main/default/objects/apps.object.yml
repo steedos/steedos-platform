@@ -304,6 +304,10 @@ actions:
     label: 创建 OAuth 应用
     on: list
     sort: 180
+  standard_edit:
+    visible: false
+  standard_new:
+    visible: false
 list_views:
   all:
     label: All Apps

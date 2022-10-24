@@ -21,7 +21,7 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "\n            SteedosUI.getRef(api.body.modalName).close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
+                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
