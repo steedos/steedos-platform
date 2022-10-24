@@ -75,5 +75,11 @@ module.exports = {
     },
     createOAuth2AppVisible: function () {
         return false && Creator.baseObject.actions.standard_new.visible();
+    },
+    standard_editVisible: function(object_name, record_id, record_permissions, record){
+        return false
+    },
+    standard_newVisible: function(object_name, record_id, record_permissions, record){
+        return false
     }
 }

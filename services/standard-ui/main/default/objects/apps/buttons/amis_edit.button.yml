@@ -1,4 +1,4 @@
-name: standard_edit
+name: amis_edit
 amis_schema: |-
   {
       "type": "service",
@@ -43,4 +43,7 @@ is_enable: true
 label: 编辑
 'on': record_only
 type: amis_button
-visible: true
+visible: !!js/function |
+    function (object_name, record_id, record_permissions, record) {
+        return Creator.baseObject.actions.standard_edit.visible() && !record.is_system;
+    }

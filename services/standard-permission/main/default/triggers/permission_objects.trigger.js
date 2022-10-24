@@ -42,7 +42,7 @@ const initPermissionSet = async function(doc, userId, spaceId){
     }
     
     let permissionSet = null;
-    const permissionSets = await objectql.getObject('permission_set').find({filters: [['name', '=', doc.permission_set_id]]});
+    const permissionSets = await objectql.getObject('permission_set').find({filters: [['name', '=', doc.permission_set_id], 'or', ['_id', '=', doc.permission_set_id]]});
 
     if(permissionSets && permissionSets.length > 0){
         permissionSet = permissionSets[0];

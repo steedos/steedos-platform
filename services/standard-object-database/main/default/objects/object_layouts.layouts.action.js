@@ -48,6 +48,7 @@ module.exports = {
       });
     }
   },
+  /*
   standard_edit: function (object_name, record_id, fields){
 		var object = Creator.getObject(object_name);
     var gridName = this.action.gridName;
@@ -72,4 +73,5 @@ module.exports = {
       });
     }
   }
+  */
 }
