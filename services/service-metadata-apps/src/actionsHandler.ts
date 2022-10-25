@@ -87,6 +87,7 @@ async function getContext(ctx: any){
     return {
         tabs: await getAllTabs(ctx),
         objects: await getSteedosSchema().getAllObject(),
+        hiddenTabNames: await getHiddenTabNames(ctx)
     }
 }
 
@@ -133,6 +134,32 @@ function checkAppMobile(app, mobile){
         isChecked = app.is_creator !== false;
     }
     return isChecked;
+}
+
+/**
+ * 根据选项卡权限的配置决定选项卡是否可见，默认可见，关闭的和隐藏的选项卡不可见
+ * @param ctx 
+ * @return ['tabName', ...]
+ */
+async function getHiddenTabNames(ctx) {
+    const userSession = ctx.meta.user
+    if (!userSession) {
+        throw new Error('no permission.')
+    }
+    const { roles, spaceId } = userSession
+    const hiddenTabNames = []
+    const permissionTabs = await _getObject('permission_tabs').find({
+        filters: [
+            ['space', '=', spaceId],
+            ['permission_set', 'in', roles]
+        ]
+    })
+    for (const permissionTab of permissionTabs) {
+        if (permissionTab.permission === 'off' || permissionTab.permission === 'hidden') {
+            hiddenTabNames.push(permissionTab.tab)
+        }
+    }
+    return hiddenTabNames
 }
 
 async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}){
@@ -247,11 +274,13 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         description: app.description,
         children: []
     }
+    const hiddenTabNames = context.hiddenTabNames || []
     if(app.tab_items){
         // app.tab_items is array
         if(_.isArray(app.tab_items)){
             for (const item of app.tab_items) {
                 try {
+                    if (hiddenTabNames.includes(item.tab_name)) continue;
                     await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
                 } catch (error) {
                     ctx.broker.logger.info(error.message);
@@ -260,6 +289,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         }else{
             for (const tabApiName in app.tab_items) {
                 try {
+                    if (hiddenTabNames.includes(tabApiName)) continue;
                     const props = app.tab_items[tabApiName]
                     await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
                 } catch (error) {
@@ -270,6 +300,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
     }else if(_.isArray(app.tabs)){
         for (const tabApiName of app.tabs) {
             try {
+                if (hiddenTabNames.includes(tabApiName)) continue;
                 await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context)
             } catch (error) {
                 ctx.broker.logger.info(error.message);
