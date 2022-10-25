@@ -3,7 +3,7 @@ module.exports = {
 	namespace: "steedos",
 	// Default log level for built-in console logger. It can be overwritten in logger options above.
 	// Available values: trace, debug, info, warn, error, fatal
-	logLevel: "info",
+	logLevel: "warn",
 
 	// Called after broker started.
 	started(broker) {
