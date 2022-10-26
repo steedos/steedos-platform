@@ -15,7 +15,7 @@
       "stripInternal": true,
       "pretty": true,
       "strictNullChecks": false,
-      "noUnusedLocals": true,
+      "noUnusedLocals": false,
       "downlevelIteration": true,
       "skipLibCheck": true,
       "lib": [

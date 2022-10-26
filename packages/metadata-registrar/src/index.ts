@@ -3,69 +3,25 @@ const PACKAGE_SERVICES_KEY = '$PACKAGE-SERVICES';
 const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PREFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
-import { map, filter } from 'lodash';
+import { map, filter, replace } from 'lodash';
+import { caching } from 'cache-manager';
+
 
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;
 
-async function redisScanKeys(redisClient, match, count = 10000): Promise<Array<string>> {
-    if (!useScan) {
-        return await redisClient.keys(match);
-    } else {
-        return await new Promise((resolve, reject) => {
-            if (_.isFunction(redisClient.scanStream)) {
-                var stream = redisClient.scanStream({
-                    // only returns keys following the pattern of `user:*`
-                    match: match,
-                    // returns approximately 100 elements per call
-                    count: count
-                });
+async function redisScanKeys(broker, match, count = 10000): Promise<Array<string>> {
 
-                var keys: any = [];
-                stream.on('data', function (resultKeys: any) {
-                    for (var i = 0; i < resultKeys.length; i++) {
-                        keys.push(resultKeys[i]);
-                    }
-                });
-                stream.on('end', function () {
-                    resolve(keys)
-                });
-            } else {
+    const keys = await (await Register.getCacher(broker)).store.keys();
 
-                let nodes = redisClient.nodes('master');
-                let allPromises: any = [];
-                for (let index = 0; index < nodes.length; index++) {
-                    const node = nodes[index];
-                    allPromises.push(new Promise((res, reject) => {
-                        var keys: any = [];
-                        node.scanStream({
-                            // only returns keys following the pattern of `user:*`
-                            match: match,
-                            // returns approximately 100 elements per call
-                            count: count
-                        }).on('data', resultKeys => {
-                            for (var i = 0; i < resultKeys.length; i++) {
-                                keys.push(resultKeys[i]);
-                            }
-                        }).on('end', () => {
-                            // console.info("scan end, node %s:%d", node.options.host, node.options.port);
-                            res(keys)
-                        });
-                    }));
-
-                }
-                Promise.all(allPromises).then((values) => {
-                    let joinedKeys = [];
-                    for (const keys of values) {
-                        joinedKeys = joinedKeys.concat(keys);
-                    }
-                    resolve(joinedKeys)
-                })
-
-            }
-        })
-    }
+    let filterReg = match;
+    filterReg = replace(filterReg, /\$/g, '\\$')
+    filterReg = replace(filterReg, /\#/g, '\\#')
+    filterReg = replace(filterReg, /\*/g, '[0-9a-zA-Z\\_\\-\\~\\.\\$\\#\\@\\/]+')
+    // console.log(filterReg)
+    const filterdKeys = filter(keys, (item)=>{ return item && item.match(filterReg)});
+    return filterdKeys
 }
 
 function transformMetadata(params, meta) {
@@ -106,7 +62,7 @@ async function addServiceMetadata(broker, params, meta) {
         return;
     }
     const key = getServiceMetadataCacherKey(nodeID, metadataServiceName, metadataType, metadataApiName);
-    await broker.cacher.set(key, {
+    await (await Register.getCacher(broker)).set(key, {
         nodeIds: [nodeID],
         metadataType,
         metadataApiName,
@@ -150,9 +106,9 @@ async function mget(broker, keys) {
         return [];
     }
 
-    const keyPrefix = broker.cacher?.prefix || "";
+    const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
 
-    const values = await broker.cacher.client.mget(...map(keys, (key) => {
+    const values = await (await Register.getCacher(broker)).store.mget(...map(keys, (key) => {
         if (key && !key.startsWith(keyPrefix)) {
             return `${keyPrefix}${key}`
         } else {
@@ -178,33 +134,27 @@ async function mset(broker, data) {
     if (_.isEmpty(data)) {
         return;
     }
-    const keyPrefix = broker.cacher?.prefix || "";
+    const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
     const mdata = {};
-    _.map(data, (v, k) => {
-        mdata[`${keyPrefix}${k}`] = JSON.stringify(v)
+    _.map(data, async (v, k) => {
+        mdata[`${keyPrefix}${k}`] = v
+        // console.log(`=== mset: ${keyPrefix}${k} => ${v}`)
+        await (await Register.getCacher(broker)).set(`${keyPrefix}${k}`, JSON.stringify(v));
     })
-    return await broker.cacher.client.mset(mdata);
+
+    return true;
 }
 
 // 这里需要更改
 async function query(broker, queryKey) {
     try {
-        // const s = new Date().getTime();
-        const keyPrefix = broker.cacher?.prefix || "";
-        // const sk = new Date().getTime();
-        const keys = await redisScanKeys(broker.cacher.client, `${keyPrefix}${queryKey}`) //broker.cacher.client.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
-        // const dk = new Date().getTime() - sk;
-        // const sv = new Date().getTime();
-        // REPLACE: const keys = await mockCacherKeys(ctx, `${keyPrefix}${queryKey}`) //TODO 此功能仅支持redis cache
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
+        const keys = await redisScanKeys((await Register.getCacher(broker)), `${keyPrefix}${queryKey}`) //(await Register.getCacher(broker)).store.keys(`${keyPrefix}${queryKey}`); //TODO 此功能仅支持redis cache
+        
         const values = _.compact(await mget(broker, keys));
-        // const dv = new Date().getTime() - sv;
-        // const d = new Date().getTime() - s;
-        // if (d > Number(process.env.STEEDOS_DURATION)) {
-        // console.log(`query`, d, dk, dv, `${keyPrefix}${queryKey}`);
-        // }
         return values;
     } catch (error) {
-        // console.error(`error`, error)
+        console.error(`error`, error)
     }
     return []
 }
@@ -215,7 +165,7 @@ function getPackageServiceCacherKey(nodeID, serviceName) {
 
 async function setPackageServices(broker, packageServices) {
     for await (const packageService of packageServices) {
-        broker.cacher.set(getPackageServiceCacherKey(packageService.nodeID, packageService.name), { service: packageService });
+        (await Register.getCacher(broker)).set(getPackageServiceCacherKey(packageService.nodeID, packageService.name), { service: packageService });
     }
 }
 
@@ -232,7 +182,7 @@ async function clearPackageServices(broker, packageServices) {
             name = packageService.name;
         }
         // console.log(`clearPackageServices del ===== `, getPackageServiceCacherKey(nodeID, name))
-        await broker.cacher.del(getPackageServiceCacherKey(nodeID, name));
+        await (await Register.getCacher(broker)).del(getPackageServiceCacherKey(nodeID, name));
     }
 }
 
@@ -263,7 +213,7 @@ async function getPackageServices(broker) {
 async function clearPackageServiceMetadatas(broker, nodeID, packageServiceName) {
     const key = getServiceMetadataCacherKey(nodeID, packageServiceName, "*", "*");
     const clearMetadatas = await query(broker, key);
-    await broker.cacher.clean(key);
+    await (await Register.getCacher(broker)).clean(key);
     return clearMetadatas;
 }
 
@@ -290,37 +240,47 @@ async function clearPackageServicesMetadatas(broker, offlinePackageServices) {
 
 async function getMetadataServices(broker) {
     const queryKey = `${METADATA_SERVICES_PREFIX}.*`;
-    const keyPrefix = broker.cacher?.prefix || "";
-    const keys = await redisScanKeys(broker.cacher.client, `${keyPrefix}${queryKey}`)
+    const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
+    const keys = await redisScanKeys((await Register.getCacher(broker)), `${keyPrefix}${queryKey}`)
     const values: any = [];
     for (const key of keys) {
-        values.push(await broker.cacher.get(getKey(key, keyPrefix)));
+        values.push(await (await Register.getCacher(broker)).get(getKey(key, keyPrefix)));
     }
     return values;
 }
 
 async function lrange(broker, key, start = 0, end = -1) {
-    return await broker.cacher.client.lrange(key, start, end);
+    return await (await Register.getCacher(broker)).store.lrange(key, start, end);
 }
 
 export async function started(broker) {
-    return await broker.cacher.set(`${METADATA_SERVICES_PREFIX}.${broker.nodeID}`, {});
+    return await (await Register.getCacher(broker)).set(`${METADATA_SERVICES_PREFIX}.${broker.nodeID}`, {});
 }
 
 export async function stopped(broker) {
-    await broker.cacher.del(`${METADATA_SERVICES_PREFIX}.${broker.nodeID}`);
+    await (await Register.getCacher(broker)).del(`${METADATA_SERVICES_PREFIX}.${broker.nodeID}`);
     const services = await getMetadataServices(broker);
     if (!services || services.length === 0) {
-        await broker.cacher.clean(`**`);
+        await (await Register.getCacher(broker)).clean(`**`);
     }
 }
 
 export const Register = {
     clearPackageServices,
     clearPackageServicesMetadatas,
+    CACHER: null, 
+    async getCacher(broker?: any) {
+        if (Register.CACHER == null)
+            Register.CACHER = await caching('memory', {
+                max: 1000000,
+            });
+        return Register.CACHER
+    },
     async get(broker: any, key: string): Promise<any> {
         try {
-            return await broker.cacher.get(key);
+            const value = await (await Register.getCacher(broker)).get(key);
+            // console.log(`=== get: ${key},${value}`)
+            return value
         } catch (error) {
 
         }
@@ -344,9 +304,11 @@ export const Register = {
     },
     async add(broker: any, params: any, meta: any): Promise<any> {
         const { key } = params;
-        return await broker.cacher.set(key, transformMetadata(params, meta));
+        // console.log(`=== add: ${key} => ${params}`)
+        return await (await Register.getCacher(broker)).set(key, transformMetadata(params, meta));
     },
     async madd(broker: any, params: any, meta: any): Promise<any> {
+        // console.log(`=== madd: ${params.key} => ${params}`)
         return await mset(broker, transformMetadatas(params, meta));
     },
     async addServiceMetadata(broker: any, params: any, meta: any) {
@@ -356,15 +318,15 @@ export const Register = {
         return await maddServiceMetadata(broker, params, meta);
     },
     async fuzzyDelete(broker: any, key: string) {
-        const keyPrefix = broker.cacher?.prefix || "";
-        const keys = await redisScanKeys(broker.cacher.client, `${keyPrefix}${key}`) // await broker.cacher.client.keys(`${keyPrefix}${key}`);
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
+        const keys = await redisScanKeys((await Register.getCacher(broker)), `${keyPrefix}${key}`) // await (await Register.getCacher(broker)).store.keys(`${keyPrefix}${key}`);
         for (const _key of keys) {
-            await broker.cacher.del(getKey(_key, keyPrefix));
+            await (await Register.getCacher(broker)).del(getKey(_key, keyPrefix));
         }
     },
     async delete(broker: any, key: string) {
         try {
-            await broker.cacher.del(key);
+            await (await Register.getCacher(broker)).del(key);
         } catch (error) {
             broker.logger.info(error.message);
         }
@@ -386,7 +348,7 @@ export const Register = {
                 throw new Error('metadataApiName is null');
             }
             const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
-            await broker.cacher.del(key);
+            await (await Register.getCacher(broker)).del(key);
         } catch (error) {
             broker.logger.info(error.message);
         }
@@ -409,6 +371,7 @@ export const Register = {
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
         const result = await query(broker, key);
+        // console.log(`=== getServiceMetadatas: ${key} => ${result}`)
         return result ? filter(result, (item)=>{ return item && item.metadataType === metadataType}) : result;
     },
     async getServiceMetadata(broker: any, params: any, meta: any) {
@@ -418,7 +381,9 @@ export const Register = {
             console.log(`getServiceMetadata meta`, meta);
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
-        return await broker.cacher.get(key)
+        const result = await (await Register.getCacher(broker)).get(key)
+        // console.log(`=== getServiceMetadata: ${key} => ${result}`)
+        return result
     },
     async removeServiceMetadata(broker: any, params: any, meta: any) {
         let { serviceName, metadataType, metadataApiName } = params;
@@ -427,7 +392,7 @@ export const Register = {
             console.log(`getServiceMetadata meta`, meta);
         }
         const key = getServiceMetadataCacherKey(nodeID, serviceName, metadataType, metadataApiName);
-        return await broker.cacher.del(key)
+        return await (await Register.getCacher(broker)).del(key)
     },
     async refreshServiceMetadatas(broker: any, params: any) {
         const { offlinePackageServices: _offlinePackageServices } = params || { offlinePackageServices: undefined };
@@ -495,7 +460,7 @@ export const Register = {
     },
 
     async lpush(broker: any, params: any) {
-        const keyPrefix = broker.cacher?.prefix || "";
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
         const key = params.key;
         const data = params.data;
         if (!_.isArray(data)) {
@@ -505,51 +470,54 @@ export const Register = {
         _.each(data, (item) => {
             _data.push(JSON.stringify(item))
         })
-        return await broker.cacher.client.lpush(`${keyPrefix}${key}`, ..._data);
+        return await (await Register.getCacher(broker)).store.lpush(`${keyPrefix}${key}`, ..._data);
     },
 
     async rpush(broker: any, params: any) {
-        const keyPrefix = broker.cacher?.prefix || "";
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
         const key = params.key;
         const data = params.data;
         if (!_.isArray(data)) {
             throw new Error('data must be an array.');
         }
-        const _data: any = [];
+        const _data: any = await (await Register.getCacher(broker)).store.get(`${keyPrefix}${key}`) || [];
         _.each(data, (item) => {
             _data.push(JSON.stringify(item))
         })
-        return await broker.cacher.client.rpush(`${keyPrefix}${key}`, ..._data);
+        return await (await Register.getCacher(broker)).store.set(`${keyPrefix}${key}`, _data);
     },
 
     async lrange(broker: any, params: any) {
-        const keyPrefix = broker.cacher?.prefix || "";
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
         const { key, start = 0, end = -1 } = params.key;
         return await lrange(broker, `${keyPrefix}${key}`, start, end);
     },
 
     async filterList(broker: any, params: any) {
-        const keyPrefix = broker.cacher?.prefix || "";
+        const keyPrefix = (await Register.getCacher(broker))?.prefix || "";
         const { key } = params;
-        const keys = await redisScanKeys(broker.cacher.client, `${keyPrefix}${key}`);
+        const keys = await redisScanKeys((await Register.getCacher(broker)), `${keyPrefix}${key}`);
         if (!keys || keys.length == 0) {
             return [];
         }
-        const results: any = [];
-        for (const itemKey of keys) {
-            try {
-                if (itemKey) {
-                    const itemList = await lrange(broker, itemKey);
-                    if (itemList && _.isArray(itemList)) {
-                        _.each(itemList, (item) => {
-                            results.push(JSON.parse(item));
-                        })
-                    }
-                }
-            } catch (error) {
-                console.error(`error`, error);
-            }
-        }
+        const results = await mget(broker, keys)
         return results;
+        // const results: any = [];
+        // for (const itemKey of keys) {
+        //     try {
+        //         if (itemKey) {
+        //             console.log(itemKey)
+        //             const itemList = await (lrange)(broker, itemKey);
+        //             if (itemList && _.isArray(itemList)) {
+        //                 _.each(itemList, (item) => {
+        //                     results.push(JSON.parse(item));
+        //                 })
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.error(`error`, error);
+        //     }
+        // }
+        // return results;
     }
 };

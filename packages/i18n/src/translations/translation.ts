@@ -177,7 +177,9 @@ export const convertTranslation = function(_translation){
 
 export const addTranslations = function(translations){
     _.each(translations, function(item){
-        let data = convertTranslation(item.data);
-        addResourceBundle(item.lng, NAMESPACE, data, true, true);
+        if (item) {
+            let data = convertTranslation(item.data);
+            addResourceBundle(item.lng, NAMESPACE, data, true, true);
+        }
     })
 }

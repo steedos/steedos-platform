@@ -14,6 +14,7 @@
   "dependencies": {
     "@steedos/client": "2.3.0-beta.34",
     "archiver": "^5.1.0",
+    "cache-manager": "5.1.1",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
     "compressing": "^1.5.1",

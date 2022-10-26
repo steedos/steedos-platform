@@ -6993,6 +6993,14 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+cache-manager@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-5.1.1.tgz#1e0b888f25914255f6e5631526ee0ceba9989667"
+  integrity sha512-xvbv24xOimcGNIna+LOoX0IV8ng6JrEhocYOpfaxPRx4fzyB9B91WYTj/kHcgt8ZPuDq8nt3T9XFh6NlWtA2Ew==
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    lru-cache "^7.14.0"
+
 cacheable-lookup@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/cacheable-lookup/-/cacheable-lookup-2.0.1.tgz#87be64a18b925234875e10a9bb1ebca4adce6b38"
@@ -13907,6 +13915,11 @@ lru-cache@^7.10.1, lru-cache@^7.5.1:
   version "7.12.0"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.12.0.tgz#be2649a992c8a9116efda5c487538dcf715f3476"
   integrity sha512-OIP3DwzRZDfLg9B9VP/huWBlpvbkmbfiBy8xmsXp4RPmE4A3MhwNozc5ZJ3fWnSg8fDcdlE/neRTPG2ycEKliw==
+
+lru-cache@^7.14.0:
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.14.0.tgz#21be64954a4680e303a09e9468f880b98a0b3c7f"
+  integrity sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ==
 
 lru-queue@0.1:
   version "0.1.0"
