@@ -500,24 +500,21 @@ export const Register = {
         if (!keys || keys.length == 0) {
             return [];
         }
-        const results = await mget(broker, keys)
+        const results: any = [];
+        for (const itemKey of keys) {
+            try {
+                if (itemKey) {
+                    const itemList = await (await Register.getCacher(broker)).get(broker, itemKey);
+                    if (itemList && _.isArray(itemList)) {
+                        _.each(itemList, (item) => {
+                            results.push(JSON.parse(item));
+                        })
+                    }
+                }
+            } catch (error) {
+                console.error(`error`, error);
+            }
+        }
         return results;
-        // const results: any = [];
-        // for (const itemKey of keys) {
-        //     try {
-        //         if (itemKey) {
-        //             console.log(itemKey)
-        //             const itemList = await (lrange)(broker, itemKey);
-        //             if (itemList && _.isArray(itemList)) {
-        //                 _.each(itemList, (item) => {
-        //                     results.push(JSON.parse(item));
-        //                 })
-        //             }
-        //         }
-        //     } catch (error) {
-        //         console.error(`error`, error);
-        //     }
-        // }
-        // return results;
     }
 };
