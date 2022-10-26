@@ -107,19 +107,20 @@
                                                             "valueField": "symbol",
                                                             "multiple": false,
                                                             "source": "${sldsIconsOptions}",
-                                                            "menuTpl": "<span class=\"flex items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${symbol|split:_|join:-}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"/unpkg.com/@salesforce-ux/design-system/assets/icons/standard-sprite/svg/symbols.svg#${symbol}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-1.5\">${symbol}</span>\n</span>"
+                                                            "menuTpl": "<span class=\"flex items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${symbol|split:_|join:-}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"${context.rootUrl}/assets/icons/standard-sprite/svg/symbols.svg#${symbol}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-1.5\">${symbol}</span>\n</span>"
                                                         }
                                                     ],
                                                     "id": "u:420b0162ce2c",
                                                     "api": {
                                                         "method": "get",
-                                                        "url": "${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/ui.icons.json",
+                                                        "url": "${context.rootUrl}/ui.icons.json",
                                                         "requestAdaptor": "",
                                                         "adaptor": "if (payload && payload.length) {\n  let data = {};\n  let sldsStandardIcons = _.find(payload, { name: \"standard\" });\n  sldsStandardIcons = sldsStandardIcons && sldsStandardIcons.icons;\n  data.sldsIconsOptions = sldsStandardIcons;\n  payload.data = data;\n}\nreturn payload;\n",
                                                         "headers": {
                                                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                         }
-                                                    }
+                                                    },
+                                                    "messages": {}
                                                 },
                                                 {
                                                     "name": "sort",
@@ -542,7 +543,7 @@
             "rootUrl": "http://127.0.0.1:5800",
             "tenantId": "hKdnwE55WcnWveYxS",
             "userId": "62ede4f62161e377e35de58c",
-            "authToken": "6818f1ebd0fe0da92e0022f6ae59567b634bcb9bd06e0ff848e23c7eff27d06a0d64fc98ed96b80feeb53b"
+            "authToken": "770a0b9e5b4fc2f8d6317ca109b0c087d3d160da669ac0218c044e15db1da0e74dd7e16c03b9f7e1640539"
         }
     },
     "id": "u:953fda4052b6",

@@ -1,0 +1,5064 @@
+[
+    {
+        "name": "action",
+        "description": "Actions can be seen throughout the interface and represent actions a user can take on any given screen.",
+        "icons": [
+            {
+                "sprite": "action",
+                "symbol": "add_contact"
+            },
+            {
+                "sprite": "action",
+                "symbol": "add_file"
+            },
+            {
+                "sprite": "action",
+                "symbol": "add_photo_video"
+            },
+            {
+                "sprite": "action",
+                "symbol": "add_relationship"
+            },
+            {
+                "sprite": "action",
+                "symbol": "adjust_value"
+            },
+            {
+                "sprite": "action",
+                "symbol": "announcement"
+            },
+            {
+                "sprite": "action",
+                "symbol": "apex"
+            },
+            {
+                "sprite": "action",
+                "symbol": "approval"
+            },
+            {
+                "sprite": "action",
+                "symbol": "back"
+            },
+            {
+                "sprite": "action",
+                "symbol": "bug"
+            },
+            {
+                "sprite": "action",
+                "symbol": "call"
+            },
+            {
+                "sprite": "action",
+                "symbol": "canvas"
+            },
+            {
+                "sprite": "action",
+                "symbol": "change_owner"
+            },
+            {
+                "sprite": "action",
+                "symbol": "change_record_type"
+            },
+            {
+                "sprite": "action",
+                "symbol": "check"
+            },
+            {
+                "sprite": "action",
+                "symbol": "clone"
+            },
+            {
+                "sprite": "action",
+                "symbol": "close"
+            },
+            {
+                "sprite": "action",
+                "symbol": "defer"
+            },
+            {
+                "sprite": "action",
+                "symbol": "delete"
+            },
+            {
+                "sprite": "action",
+                "symbol": "description"
+            },
+            {
+                "sprite": "action",
+                "symbol": "dial_in"
+            },
+            {
+                "sprite": "action",
+                "symbol": "download"
+            },
+            {
+                "sprite": "action",
+                "symbol": "edit"
+            },
+            {
+                "sprite": "action",
+                "symbol": "edit_groups"
+            },
+            {
+                "sprite": "action",
+                "symbol": "edit_relationship"
+            },
+            {
+                "sprite": "action",
+                "symbol": "email"
+            },
+            {
+                "sprite": "action",
+                "symbol": "fallback"
+            },
+            {
+                "sprite": "action",
+                "symbol": "filter"
+            },
+            {
+                "sprite": "action",
+                "symbol": "flow"
+            },
+            {
+                "sprite": "action",
+                "symbol": "follow"
+            },
+            {
+                "sprite": "action",
+                "symbol": "following"
+            },
+            {
+                "sprite": "action",
+                "symbol": "freeze_user"
+            },
+            {
+                "sprite": "action",
+                "symbol": "goal"
+            },
+            {
+                "sprite": "action",
+                "symbol": "google_news"
+            },
+            {
+                "sprite": "action",
+                "symbol": "info"
+            },
+            {
+                "sprite": "action",
+                "symbol": "join_group"
+            },
+            {
+                "sprite": "action",
+                "symbol": "lead_convert"
+            },
+            {
+                "sprite": "action",
+                "symbol": "leave_group"
+            },
+            {
+                "sprite": "action",
+                "symbol": "log_a_call"
+            },
+            {
+                "sprite": "action",
+                "symbol": "log_event"
+            },
+            {
+                "sprite": "action",
+                "symbol": "manage_perm_sets"
+            },
+            {
+                "sprite": "action",
+                "symbol": "map"
+            },
+            {
+                "sprite": "action",
+                "symbol": "more"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_account"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_campaign"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_case"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_child_case"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_contact"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_event"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_group"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_lead"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_note"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_notebook"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_opportunity"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_person_account"
+            },
+            {
+                "sprite": "action",
+                "symbol": "new_task"
+            },
+            {
+                "sprite": "action",
+                "symbol": "password_unlock"
+            },
+            {
+                "sprite": "action",
+                "symbol": "preview"
+            },
+            {
+                "sprite": "action",
+                "symbol": "priority"
+            },
+            {
+                "sprite": "action",
+                "symbol": "question_post_action"
+            },
+            {
+                "sprite": "action",
+                "symbol": "quote"
+            },
+            {
+                "sprite": "action",
+                "symbol": "recall"
+            },
+            {
+                "sprite": "action",
+                "symbol": "record"
+            },
+            {
+                "sprite": "action",
+                "symbol": "refresh"
+            },
+            {
+                "sprite": "action",
+                "symbol": "reject"
+            },
+            {
+                "sprite": "action",
+                "symbol": "remove"
+            },
+            {
+                "sprite": "action",
+                "symbol": "remove_relationship"
+            },
+            {
+                "sprite": "action",
+                "symbol": "reset_password"
+            },
+            {
+                "sprite": "action",
+                "symbol": "scan_disabled"
+            },
+            {
+                "sprite": "action",
+                "symbol": "scan_enabled"
+            },
+            {
+                "sprite": "action",
+                "symbol": "script"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share_file"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share_link"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share_poll"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share_post"
+            },
+            {
+                "sprite": "action",
+                "symbol": "share_thanks"
+            },
+            {
+                "sprite": "action",
+                "symbol": "sort"
+            },
+            {
+                "sprite": "action",
+                "symbol": "submit_for_approval"
+            },
+            {
+                "sprite": "action",
+                "symbol": "update"
+            },
+            {
+                "sprite": "action",
+                "symbol": "update_status"
+            },
+            {
+                "sprite": "action",
+                "symbol": "upload"
+            },
+            {
+                "sprite": "action",
+                "symbol": "user"
+            },
+            {
+                "sprite": "action",
+                "symbol": "user_activation"
+            },
+            {
+                "sprite": "action",
+                "symbol": "view_relationship"
+            },
+            {
+                "sprite": "action",
+                "symbol": "web_link"
+            }
+        ]
+    },
+    {
+        "name": "custom",
+        "description": "Custom icons are available for the identity of user created objects.",
+        "icons": [
+            {
+                "sprite": "custom",
+                "symbol": "custom1"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom2"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom3"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom4"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom5"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom6"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom7"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom8"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom9"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom10"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom11"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom12"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom13"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom14"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom15"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom16"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom17"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom18"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom19"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom20"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom21"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom22"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom23"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom24"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom25"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom26"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom27"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom28"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom29"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom30"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom31"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom32"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom33"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom34"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom35"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom36"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom37"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom38"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom39"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom40"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom41"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom42"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom43"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom44"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom45"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom46"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom47"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom48"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom49"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom50"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom51"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom52"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom53"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom54"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom55"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom56"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom57"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom58"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom59"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom60"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom61"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom62"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom63"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom64"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom65"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom66"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom67"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom68"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom69"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom70"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom71"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom72"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom73"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom74"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom75"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom76"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom77"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom78"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom79"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom80"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom81"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom82"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom83"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom84"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom85"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom86"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom87"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom88"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom89"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom90"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom91"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom92"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom93"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom94"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom95"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom96"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom97"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom98"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom99"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom100"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom101"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom102"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom103"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom104"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom105"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom106"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom107"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom108"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom109"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom110"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom111"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom112"
+            },
+            {
+                "sprite": "custom",
+                "symbol": "custom113"
+            }
+        ]
+    },
+    {
+        "name": "doctype",
+        "description": "Doctype icons represent a type of file when a preview or image is unavailable",
+        "icons": [
+            {
+                "sprite": "doctype",
+                "symbol": "ai"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "attachment"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "audio"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "box_notes"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "csv"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "eps"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "excel"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "exe"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "flash"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "folder"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "gdoc"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "gdocs"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "gform"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "gpres"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "gsheet"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "html"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "image"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "keynote"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "library_folder"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "link"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "mp4"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "overlay"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "pack"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "pages"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "pdf"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "ppt"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "psd"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "quip_doc"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "quip_sheet"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "quip_slide"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "rtf"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "slide"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "stypi"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "txt"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "unknown"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "video"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "visio"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "webex"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "word"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "xml"
+            },
+            {
+                "sprite": "doctype",
+                "symbol": "zip"
+            }
+        ]
+    },
+    {
+        "name": "standard",
+        "description": "Standard icons represent entities and objects within Salesforce.",
+        "icons": [
+            {
+                "sprite": "standard",
+                "symbol": "account"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "account_info"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "action_list_component"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "actions_and_buttons"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "activation_target"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "activations"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "address"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "agent_home"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "agent_session"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "aggregation_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "ai_accelerator_card"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "all"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "announcement"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "answer_best"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "answer_private"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "answer_public"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "apex"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "apex_plugin"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "app"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "approval"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "apps"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "apps_admin"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "article"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_action"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_action_source"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_audit"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_downtime_period"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_object"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_relationship"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_state_period"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "asset_warranty"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "assigned_resource"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "assignment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "attach"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "avatar"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "avatar_loading"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "bot"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "bot_training"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "branch_merge"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "brand"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "budget"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "budget_allocation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "bundle_config"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "bundle_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "business_hours"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "buyer_account"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "buyer_group"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "calculated_insights"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "calibration"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "call"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "call_coaching"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "call_history"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "campaign"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "campaign_members"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "cancel_checkout"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "canvas"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "capacity_plan"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "care_request_reviewer"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "carousel"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_change_status"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_comment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_email"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_log_a_call"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_milestone"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_transcript"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "case_wrap_up"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "catalog"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "category"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "change_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "channel_program_history"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "channel_program_levels"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "channel_program_members"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "channel_programs"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "chart"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "checkout"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "choice"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "client"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "cms"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "coaching"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "code_playground"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "code_set"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "code_set_bundle"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "collection"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "collection_variable"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "connect_wallet"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "connected_apps"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "constant"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contact"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contact_list"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contact_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contract"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contract_line_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contract_line_outcome"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contract_line_outcome_data"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "contract_payment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "coupon_codes"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_category_wallet_group"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_product"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_product_category_wallet_role"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_transaction"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_transaction_envelope"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_transaction_envelope_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_wallet"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_wallet_group"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "crypto_wallet_group_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "currency"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "currency_input"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "custom"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "custom_component_task"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "custom_notification"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customer"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customer_360"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customer_lifecycle_analytics"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customer_portal_users"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customer_workspace"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "customers"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "dashboard"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "dashboard_component"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "dashboard_ea"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "data_integration_hub"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "data_mapping"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "data_model"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "data_streams"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "datadotcom"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "dataset"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "date_input"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "date_time"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "decision"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "default"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "delegated_account"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "device"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "discounts"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "display_rich_text"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "display_text"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "document"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "document_reference"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "drafts"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "duration_downscale"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "dynamic_record_choice"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "education"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "einstein_replies"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "email"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "email_chatter"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee_asset"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee_contact"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee_job"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee_job_position"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "employee_organization"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "empty"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "endorsement"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entitlement"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entitlement_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entitlement_process"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entitlement_template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entity"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "entity_milestone"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "environment_hub"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "event"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "events"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "expense"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "expense_report"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "expense_report_entry"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "feed"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "feedback"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "field_sales"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "file"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "filter"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "filter_criteria"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "filter_criteria_rule"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "first_non_empty"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "flow"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "folder"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "forecasts"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "form"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "formula"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "fulfillment_order"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "generic_loading"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "global_constant"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "goals"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "group_loading"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "groups"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "guidance_center"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "hierarchy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "high_velocity_sales"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "historical_adherence"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "holiday_operating_hours"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "home"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "household"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "identifier"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "immunization"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "incident"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "individual"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "insights"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "instore_locations"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "investment_account"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "invocable_action"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "iot_context"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "iot_orchestrations"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "javascript_button"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "job_family"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "job_position"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "job_profile"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "kanban"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "key_dates"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "knowledge"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "lead"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "lead_insights"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "lead_list"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "learner_program"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "letterhead"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "lightning_component"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "lightning_usage"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "link"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "list_email"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "live_chat"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "live_chat_visitor"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "location"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "location_permit"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "log_a_call"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "logging"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "loop"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "macros"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "maintenance_asset"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "maintenance_plan"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "maintenance_work_rule"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "marketing_actions"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "med_rec_recommendation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "med_rec_statement_recommendation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "medication"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "medication_dispense"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "medication_ingredient"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "medication_reconciliation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "medication_statement"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "merge"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "messaging_conversation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "messaging_session"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "messaging_user"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "metrics"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "multi_picklist"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "multi_select_checkbox"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "network_contract"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "news"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "nft_settings"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "nft_studio"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "note"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "number_input"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "observation_component"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "omni_supervisor"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "operating_hours"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "opportunity"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "opportunity_contact_role"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "opportunity_splits"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "orchestrator"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "order_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "orders"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "outcome"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "output"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "partner_fund_allocation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "partner_fund_claim"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "partner_fund_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "partner_marketing_budget"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "partners"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "password"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "past_chat"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "patient_medication_dosage"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "payment_gateway"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "people"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "performance"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "person_account"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "person_language"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "person_name"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "photo"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "picklist_choice"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "picklist_type"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "planogram"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "poll"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "portal"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "portal_roles"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "portal_roles_and_subordinates"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "post"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "practitioner_role"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "price_book_entries"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "price_books"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "pricebook"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "pricing_workspace"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "problem"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "procedure"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "procedure_detail"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "process"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "process_exception"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_consumed"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_consumed_state"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_item_transaction"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_quantity_rules"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_request_line_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_required"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_service_campaign"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_service_campaign_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_transfer"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_transfer_state"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_warranty_term"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "product_workspace"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "products"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "promotion_segments"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "promotions"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "promotions_workspace"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "prompt"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "propagation_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "proposition"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "qualifications"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "question_best"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "question_feed"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "queue"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "quick_text"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "quip"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "quip_sheet"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "quotes"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "radio_button"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "read_receipts"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "recent"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "recipe"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record_create"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record_delete"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record_lookup"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record_signature_task"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "record_update"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "recycle_bin"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "related_list"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "relationship"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "reply_text"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "report"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "report_type"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "resource_absence"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "resource_capacity"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "resource_preference"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "resource_skill"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "restriction_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "return_order"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "return_order_line_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "reward"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "rtc_presence"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sales_cadence"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sales_cadence_target"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sales_channel"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sales_path"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sales_value"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "salesforce_cms"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "scan_card"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "schedule_objective"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "scheduling_constraint"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "scheduling_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "screen"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "search"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "section"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "segments"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "selling_model"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "serialized_product"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "serialized_product_transaction"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_appointment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_appointment_capacity_usage"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_contract"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_crew"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_crew_member"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_report"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_request_detail"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_resource"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_territory"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_territory_location"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_territory_member"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "service_territory_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "settings"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "setup_modal"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_pattern"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_pattern_entry"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_preference"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_scheduling_operation"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shift_type"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "shipment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "skill"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "skill_entity"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "skill_requirement"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "slack"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "slider"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sms"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "snippet"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "snippet_alt"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "snippets"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sobject"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sobject_collection"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "social"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "solution"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sort"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sort_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "sossession"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "stage"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "stage_collection"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "steps"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "store"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "store_group"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "story"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "strategy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "survey"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "swarm_request"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "swarm_session"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "system_and_global_variable"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tableau"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "task"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "task2"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tax_policy"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tax_rate"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tax_treatment"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "team_member"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "text"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "text_template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "textarea"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "textbox"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "thanks"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "thanks_loading"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "timesheet"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "timesheet_entry"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "timeslot"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "today"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "toggle"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "topic"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "topic2"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tour"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "tour_check"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "trailhead"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "trailhead_alt"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "travel_mode"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "unified_health_score"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "unmatched"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "user"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "user_role"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "variable"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "variation_attribute_setup"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "variation_products"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "video"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "visit_templates"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "visits"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "visualforce_page"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "voice_call"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "waits"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "warranty_term"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "water"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "webcart"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_capacity_limit"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_capacity_usage"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_contract"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_forecast"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_order"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_order_item"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_plan"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_plan_rule"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_plan_template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_plan_template_entry"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_queue"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_step"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_step_template"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_type"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "work_type_group"
+            },
+            {
+                "sprite": "standard",
+                "symbol": "workforce_engagement"
+            }
+        ]
+    },
+    {
+        "name": "utility",
+        "description": "Utility icons are used throughout the interface and are SVG's for extensibility.",
+        "icons": [
+            {
+                "sprite": "utility",
+                "symbol": "activity"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "ad_set"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "add"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "adduser"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "adjust_value"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "advanced_function"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "advertising"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "agent_home"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "agent_session"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "aggregation_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "alert"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "all"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "anchor"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "animal_and_nature"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "announcement"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "answer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "answered_twice"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "anywhere_alert"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "anywhere_chat"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "apex"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "apex_plugin"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "approval"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "apps"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "archive"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrow_bottom"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrow_left"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrow_right"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrow_top"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrowdown"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "arrowup"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "asset_audit"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "asset_warranty"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "assignment"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "attach"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "automate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "away"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "back"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "ban"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "block_visitor"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bold"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bookmark"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bookmark_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bottom_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "breadcrumbs"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "broadcast"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "brush"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bucket"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bug"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "builder"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bundle_config"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "bundle_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "button_choice"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "calculated_insights"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "campaign"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "cancel_file_request"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "cancel_transfer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "capacity_plan"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "capslock"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "captions"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "cart"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "case"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "cases"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "center_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "center_align_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "change_owner"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "change_record_type"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "change_request"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chart"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chat"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "check"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "checkin"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "checkout"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chevrondown"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chevronleft"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chevronright"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "chevronup"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "choice"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "classic_interface"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "clear"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "clock"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "close"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "collapse_all"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "collection"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "collection_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "collection_variable"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "color_swatch"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "comments"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "company"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "component_customization"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "connected_apps"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "constant"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contact_request"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract_doc"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract_line_outcome"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract_line_outcome_data"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "contract_payment"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "copy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "copy_to_clipboard"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "coupon_codes"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "crossfilter"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "currency"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "currency_input"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "custom_apps"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "customer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "customer_workspace"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "cut"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dash"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "data_mapping"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "data_model"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "database"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "datadotcom"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "date_input"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "date_time"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dayview"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "delete"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "deprecate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "description"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "desktop"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "desktop_and_phone"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "desktop_console"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "detach"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dialing"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "diamond"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "discounts"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dislike"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "display_rich_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "display_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dock_panel"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "down"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "download"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "drag"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "drag_and_drop"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "duration_downscale"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "dynamic_record_choice"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "edit"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "edit_form"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "education"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "einstein"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "email"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "email_open"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "emoji"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "end_call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "end_chat"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "end_messaging_session"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "engage"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "enter"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "entitlement"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "erect_window"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "error"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "event"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "event_ext"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "events"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "expand"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "expand_all"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "expand_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "fallback"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "favorite"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "feed"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "field_sales"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "file"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "filter"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "filterList"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "filter_criteria"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "filter_criteria_rule"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "flow"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "flow_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "food_and_drink"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "form"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "formula"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "forward"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "forward_up"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "freeze_column"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "frozen"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "fulfillment_order"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "full_width_view"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "global_constant"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "graph"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "groups"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "hazmat_equipment"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "help"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "help_center"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "help_doc_ext"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "hide"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "hide_mobile"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "hierarchy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "high_velocity_sales"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "holiday_operating_hours"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "home"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "identity"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "image"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "in_app_assistant"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "inbox"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "incident"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "incoming_call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "info"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "info_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "insert_tag_field"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "insert_template"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "inspector_panel"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "internal_share"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "italic"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "jump_to_bottom"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "jump_to_left"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "jump_to_right"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "jump_to_top"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "justify_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "kanban"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "key"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "key_dates"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "keyboard_dismiss"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "keypad"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "knowledge_base"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "label"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "labels"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layers"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layout"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layout_banner"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layout_card"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layout_overlap"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "layout_tile"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "leave_conference"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "left"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "left_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "left_align_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "level_down"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "level_up"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "light_bulb"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "lightning_extension"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "lightning_inspector"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "like"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "link"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "linked"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "list"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "listen"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "live_message"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "location"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "location_permit"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "lock"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "locker_service_api_viewer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "locker_service_console"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "log_a_call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "logout"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "loop"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "lower_flag"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "macros"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "magicwand"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "mark_all_as_read"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "matrix"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "meet_content_source"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "meet_focus_content"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "meet_focus_equal"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "meet_focus_presenter"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "meet_present_panel"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "merge"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "merge_field"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "metrics"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "middle_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "minimize_window"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "missed_call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "money"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "moneybag"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "monthlyview"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "move"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "multi_picklist"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "multi_select_checkbox"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "muted"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "new"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "new_direct_message"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "new_window"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "news"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "note"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "notebook"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "notification"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "number_input"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "office365"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "offline"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "offline_briefcase"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "offline_cached"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "omni_channel"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "open"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "open_folder"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "opened_folder"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "orchestrator"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "org_chart"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "outbound_call"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "outcome"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "overflow"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "package"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "package_org"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "package_org_beta"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "page"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "palette"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "password"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "paste"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pause"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pause_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "payment_gateway"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pdf_ext"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "people"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "percent"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "phone_landscape"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "phone_portrait"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "photo"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "picklist"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "picklist_choice"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "picklist_type"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pin"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pinned"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "planning_poker"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "play"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "podcast_webinar"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pop_in"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "power"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "preview"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "price_book_entries"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "price_books"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "pricing_workspace"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "print"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "priority"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "privately_shared"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "problem"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "process"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_consumed_state"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_quantity_rules"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_service_campaign"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_service_campaign_item"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_transfer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_transfer_state"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_warranty_term"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "product_workspace"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "products"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "profile"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "promotion_segments"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "promotions"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "promotions_workspace"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "prompt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "prompt_edit"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "propagation_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "push"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "puzzle"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "qualifications"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "question"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "question_mark"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "questions_and_answers"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "quick_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "quip"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "quotation_marks"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "quote"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "radio_button"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "rating"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "reassign"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "recipe"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record_create"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record_delete"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record_lookup"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "record_update"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "recurring_exception"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "recycle_bin_empty"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "recycle_bin_full"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "redo"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "refresh"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "relate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "reminder"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "remove_formatting"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "remove_link"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "replace"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "reply"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "reply_all"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "report_issue"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "reset_password"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "resource_absence"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "resource_capacity"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "resource_territory"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "restriction_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "retail_execution"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "retweet"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "ribbon"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "richtextbulletedlist"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "richtextindent"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "richtextnumberedlist"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "richtextoutdent"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "right"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "right_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "right_align_text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "rotate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "routing_offline"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "rows"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "rules"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "salesforce1"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "salesforce_page"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "save"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "scan"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "screen"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "search"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "section"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "segments"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "send"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sentiment_negative"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sentiment_neutral"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "serialized_product"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "serialized_product_transaction"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "service_territory_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "settings"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "setup"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "setup_assistant_guide"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "setup_modal"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "share"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "share_file"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "share_mobile"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "share_post"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shield"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shift_pattern"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shift_pattern_entry"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shift_scheduling_operation"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shift_ui"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shopping_bag"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "shortcuts"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "side_list"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "signature"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "signpost"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "skip"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "skip_back"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "skip_forward"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "slack"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "slider"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "smiley_and_people"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sms"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "snippet"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sobject"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sobject_collection"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "socialshare"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sort"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sort_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "spacer"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "spinner"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "stage"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "stage_collection"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "standard_objects"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "steps"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "stop"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "store"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "strategy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "strikethrough"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "success"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "summary"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "summarydetail"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "survey"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "swarm_request"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "swarm_session"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "switch"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "symbols"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "sync"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "system_and_global_variable"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "table"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "table_settings"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tableau"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tablet_landscape"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tablet_portrait"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tabset"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "talent_development"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "target"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "target_mode"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "task"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tax_policy"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tax_rate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tax_treatment"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "text"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "text_background_color"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "text_color"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "text_template"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "textarea"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "textbox"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "threedots"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "threedots_vertical"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "thunder"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tile_card_list"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "toggle"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "toggle_panel_bottom"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "toggle_panel_left"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "toggle_panel_right"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "toggle_panel_top"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tollways"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "top_align"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "topic"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "topic2"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "touch_action"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tour"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tour_check"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "tracker"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trail"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trailblazer_ext"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trailhead"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trailhead_alt"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trailhead_ext"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "transparent"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "transport_bicycle"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "transport_heavy_truck"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "transport_light_truck"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "transport_walking"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "travel_and_places"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "trending"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "truck"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "turn_off_notifications"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "type"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "type_tool"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "undelete"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "undeprecate"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "underline"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "undo"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "unlinked"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "unlock"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "unmuted"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "up"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "upload"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "user"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "user_role"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "variable"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "variation_attribute_setup"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "variation_products"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "video"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "video_off"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "voicemail_drop"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "volume_high"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "volume_low"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "volume_off"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "waits"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "warning"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "warranty_term"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "watchlist"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "water"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "weeklyview"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "wellness"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "wifi"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "work_forecast"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "work_order_type"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "workforce_engagement"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "world"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "yubi_key"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "zoomin"
+            },
+            {
+                "sprite": "utility",
+                "symbol": "zoomout"
+            }
+        ]
+    }
+]
