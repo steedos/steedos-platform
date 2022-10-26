@@ -354,6 +354,10 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
     dataRow.length > mappings.length ? dataRow.length : mappings.length;
   for (let i = 0; i < dataLength; i++) {
     let dataCell = dataRow[i];
+    // 如果导入的值是字符串类型，则执行trim()去除头尾空白符，空白符包括：空格、制表符 tab、换行符等
+    if (_.isString(dataCell)) {
+      dataCell = dataCell.trim()
+    }
     if (!dataCell && !_.isNumber(dataCell)) {
       dataCell = null;
     }

@@ -5,7 +5,8 @@ This is a [Steedos](https://www.steedos.com/) project bootstrapped with [`create
 First, run the development server:
 
 ```bash
-yarn start:jaeger
+docker-compose up
+yarn
 yarn start
 ```
 

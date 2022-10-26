@@ -18,6 +18,9 @@ const send = async function (options) {
 };
 
 const objectWebhooksPreSend = async function (userId, doc, object_name, action) {
+    if (!userId || !doc || !object_name || !action) {
+        return
+    }
     var spaceId = doc.space;
     if (spaceId == '{spaceId}') {
         return;
@@ -102,7 +105,7 @@ const afterUpdateObjectWebHooks = async function () {
 
 const afterDeleteObjectWebHooks = async function () {
     const { previousDoc, userId, object_name } = this;
-    return await objectWebhooksPreSend(userId, previousDoc, object_name, 'create');
+    return await objectWebhooksPreSend(userId, previousDoc, object_name, 'delete');
 }
 
 module.exports = {

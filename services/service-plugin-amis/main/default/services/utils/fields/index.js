@@ -6,6 +6,7 @@ const AmisFormInputs = [
     'text',
     'date',
     'file',
+    'avatar',
     'image',
     'datetime',
     'time',
@@ -172,6 +173,50 @@ function getSelectFieldOptions(field){
     return options;
 }
 
+function  convertSFieldToAmisFilesField(field,readonly){
+    const type = field.type;
+    let table_name;
+    let fieldType = type;
+    if(type === 'avatar'){
+        table_name = 'avatars';
+        fieldType = "image";
+    }else if(type === 'image'){
+        table_name = 'images';
+    }else if(type === 'file'){
+        table_name = 'files';
+    }
+    const rootUrl = Meteor.absoluteUrl(`/api/files/${table_name}/`);
+    let convertData = {
+        type: getAmisStaticFieldType(fieldType, readonly),
+        receiver: {
+            method: "post",
+            url: `\${context.rootUrl}/s3/${table_name}`,
+            adaptor: `
+var rootUrl = ${JSON.stringify(rootUrl)};
+payload = {
+    status: response.status == 200 ? 0 : response.status,
+    msg: response.statusText,
+    data: {
+        value: payload._id,
+        name: payload.original.name,
+        url: rootUrl + payload._id,
+    }
+}
+return payload;
+            `,
+            headers: {
+                Authorization: "Bearer ${context.tenantId},${context.authToken}"
+            }
+        }
+    }
+    if(field.multiple){
+        convertData.multiple = true;
+        convertData.joinValues = false;
+        convertData.extractValue = true;
+    }
+    return convertData;
+}
+
 function convertSFieldToAmisField(field, readonly) {
     // 创建人和修改人、创建时间和修改时间不显示
     if(_.include(OMIT_FIELDS, field.name)){
@@ -315,67 +360,14 @@ function convertSFieldToAmisField(field, readonly) {
                 type: getAmisStaticFieldType('email', readonly)
             }
             break;
+        case 'avatar':
+            convertData = convertSFieldToAmisFilesField(field,readonly);
+            break;
         case 'image':
-            rootUrl = Meteor.absoluteUrl('/api/files/images/');
-            convertData = {
-                type: getAmisStaticFieldType('image', readonly),
-                receiver: {
-                    method: "post",
-                    url: "${context.rootUrl}/s3/images",
-                    adaptor: `
-var rootUrl = ${JSON.stringify(rootUrl)};
-payload = {
-    status: response.status == 200 ? 0 : response.status,
-    msg: response.statusText,
-    data: {
-        value: payload._id,
-        filename: payload.original.name,
-        url: rootUrl + payload._id,
-    }
-}
-return payload;
-                    `,
-                    headers: {
-                        Authorization: "Bearer ${context.tenantId},${context.authToken}"
-                    }
-                }
-            }
-            if(field.multiple){
-                convertData.multiple = true;
-                convertData.joinValues = false;
-                convertData.extractValue = true;
-            }
+            convertData = convertSFieldToAmisFilesField(field,readonly);
             break;
         case 'file':
-            rootUrl = Meteor.absoluteUrl('/api/files/files/');
-            convertData = {
-                type: getAmisStaticFieldType('file', readonly),
-                receiver: {
-                    method: "post",
-                    url: "${context.rootUrl}/s3/files",
-                    adaptor: `
-var rootUrl = ${JSON.stringify(rootUrl)};
-payload = {
-    status: response.status == 200 ? 0 : response.status,
-    msg: response.statusText,
-    data: {
-        value: payload._id,
-        name: payload.original.name,
-        url: rootUrl + payload._id,
-    }
-}
-return payload;
-                    `,
-                    headers: {
-                        Authorization: "Bearer ${context.tenantId},${context.authToken}"
-                    }
-                }
-            }
-            if(field.multiple){
-                convertData.multiple = true;
-                convertData.joinValues = false;
-                convertData.extractValue = true;
-            }
+            convertData = convertSFieldToAmisFilesField(field,readonly);
             break;
         case 'formula':
             //TODO

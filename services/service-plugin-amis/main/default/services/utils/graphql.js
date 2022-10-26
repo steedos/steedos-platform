@@ -69,13 +69,13 @@ function getSaveQuery(object, recordId, fields, options){
 }
 
 /*
-    img字段值移除URL前缀使其保存时正常保存id,而不是url。
+    img/avatar字段值移除URL前缀使其保存时正常保存id,而不是url。
 */
 function getScriptForRemoveUrlPrefixForImgFields(fields){
     let imgFieldsKeys = [];
     let imgFields = {};
     fields.forEach((item)=>{
-        if(item.type === 'image'){
+        if(item.type === 'image' || item.type === 'avatar' ){
             imgFieldsKeys.push(item.name);
             imgFields[item.name] = {
                 name: item.name,

@@ -85,12 +85,13 @@ function getConvertDataScriptStr(fields){
 function getScriptForAddUrlPrefixForImgFields(fields){
     let imgFieldsKeys = [];
     let imgFields = {};
-    let rootUrl = Meteor.absoluteUrl('/api/files/images/');
+    let rootUrl = Meteor.absoluteUrl('/api/files/');
     fields.forEach((item)=>{
-        if(item.type === 'image'){
+        if(item.type === 'image' || item.type === 'avatar'){
             imgFieldsKeys.push(item.name);
             imgFields[item.name] = {
                 name: item.name,
+                type: item.type,
                 multiple: item.multiple
             };
         }
@@ -106,12 +107,19 @@ function getScriptForAddUrlPrefixForImgFields(fields){
                 imgFieldsKeys.forEach((item)=>{
                     let imgFieldValue = data[item];
                     if(imgFieldValue && imgFieldValue.length){
-                        if(imgFields[item].multiple){
+                        let fieldProps = imgFields[item];
+                        let table_name;
+                        if(fieldProps.type === 'image'){
+                            table_name = 'images';
+                        }else{
+                            table_name = 'avatars';
+                        }
+                        if(fieldProps.multiple){
                             if(imgFieldValue instanceof Array){
-                                data[item] = imgFieldValue.map((value)=>{ return rootUrl + value});
+                                data[item] = imgFieldValue.map((value)=>{ return rootUrl + table_name +  '/' + value});
                             }
                         }else{
-                            data[item] = rootUrl + imgFieldValue;
+                            data[item] = rootUrl + table_name + '/' + imgFieldValue;
                         }
                     }
                 })
