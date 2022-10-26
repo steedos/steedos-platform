@@ -132,9 +132,11 @@ Template.afSelectTree.onRendered(function () {
 				if (selectedValue && selectedValue.length) {
 					selectedValue = selectedValue.join(",");
 					self.$(".input-af-select-tree").val(selectedValue);
+					self.$("input.form-control").val(selectedValue);
 				}
 				else{
 					self.$(".input-af-select-tree").val("");
+					self.$("input.form-control").val("");
 				}
 			}
 		});
