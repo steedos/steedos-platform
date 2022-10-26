@@ -186,7 +186,7 @@ function  convertSFieldToAmisFilesField(field,readonly){
         table_name = 'files';
     }
     const rootUrl = Meteor.absoluteUrl(`/api/files/${table_name}/`);
-    const convertData = {
+    let convertData = {
         type: getAmisStaticFieldType(fieldType, readonly),
         receiver: {
             method: "post",
