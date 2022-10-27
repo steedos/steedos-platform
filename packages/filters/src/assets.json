@@ -3,7 +3,7 @@
     {
       "package": "@steedos/filters",
       "urls": [
-        "https://unpkg.com/@steedos/filters@2.2.54-beta.4/dist/steedos-filters.umd.min.js"
+        "https://unpkg.com/@steedos/filters@2.2.56/dist/steedos-filters.umd.min.js"
       ],
       "library": "SteedosFilters"
     }
