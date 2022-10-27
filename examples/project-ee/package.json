@@ -6,6 +6,7 @@
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-enterprise": "2.3.0-beta.35"
+    "@steedos/service-enterprise": "2.3.0-beta.35",
+    "@steedos/ee_unpkg-local": "2.3.0-beta.35"
   }
 }
