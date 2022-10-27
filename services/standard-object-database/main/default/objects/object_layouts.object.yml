@@ -323,12 +323,20 @@ fields:
     type: number
     scale: 0
     defaultValue: 5
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 list_views:
   all:
     columns:
       - label
       - object_name
       - profiles
+      - is_system
     label: All
     filter_scope: space
 actions:
