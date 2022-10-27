@@ -1,4 +1,0 @@
-name: f3
-label: F3
-type: text
-visible_on: "{{formData.name === 'f3'}}"

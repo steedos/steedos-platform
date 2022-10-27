@@ -1,4 +1,0 @@
-name: f1
-label: F1
-type: text
-visible_on: "{{name === 'f1'}}"
