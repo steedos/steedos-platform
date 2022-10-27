@@ -10,3 +10,4 @@ options:
     value: 'hidden'
 defaultValue: 'on'
 required: true
+index: true

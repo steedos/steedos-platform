@@ -4,3 +4,4 @@ type: master_detail
 reference_to: permission_set
 reference_to_field: name
 required: true
+index: true

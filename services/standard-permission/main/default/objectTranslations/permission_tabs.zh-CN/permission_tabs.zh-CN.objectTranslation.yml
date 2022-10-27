@@ -1,0 +1,30 @@
+name: permission_tabs
+label: 选项卡权限
+description: 
+fields:
+  permission_set_id:
+    label: 权限集
+    help: 
+    description: 
+  tab:
+    label: 选项卡
+    help: 
+    description: 
+  permission:
+    label: 权限
+    help: 
+    description: 
+    options:
+      - label: 默认打开
+        value: 'on'
+      - label: 默认关闭
+        value: 'off'
+      - label: 隐藏选项卡
+        value: 'hidden'
+  is_system:
+    label: 系统
+    help: 
+    description: 
+listviews:
+  all:
+    label: 全部

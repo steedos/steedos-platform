@@ -3,6 +3,7 @@ columns:
   - field: permission_set
   - field: tab
   - field: permission
+  - field: is_system
 filter_scope: space
 filters: []
 label: 所有
