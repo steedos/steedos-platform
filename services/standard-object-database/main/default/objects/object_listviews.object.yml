@@ -273,6 +273,13 @@ fields:
     type: number
     scale: 0
     defaultValue: 100
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 paging:
   enabled: false
 list_views:
@@ -283,6 +290,7 @@ list_views:
       - shared
       - owner
       - modified
+      - is_system
     label: All List View
     filter_scope: space
 actions:

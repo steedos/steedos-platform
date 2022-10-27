@@ -151,6 +151,7 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                     if (isArray(value)) {
                         value = value.map(function (item) {
                             if (typeof item === "string") {
+                                // 以下option操作支持数组的原因，为了列表为多个or连接的条件，比如["a","contains",["m","n"]]列变为[["a","contains","m"],"or",["a","contains","n"]]
                                 if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
                                     item = convertSpecialCharacter(item);
                                 }
@@ -227,6 +228,10 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                         else {
                             if (typeof value === "string") {
                                 if(["contains", "startswith", "endswith", "notcontains", "notstartswith", "notendswith"].indexOf(option) > -1){
+                                    // 这里是为了排除掉option为等号等操作，contains这些操作在mongodb中是用的js的正则实现的
+                                    // 关联issue:
+                                    // objectql filter 字段包含特殊字符时，报错 https://github.com/steedos/steedos-platform/issues/1656
+                                    // 过滤器包部分特殊字符在ag-grid组件右侧过滤面板会报错 https://github.com/steedos/steedos-frontend/issues/126
                                     value = convertSpecialCharacter(value);
                                 }
                                 if(regDate.test(value)){
@@ -234,7 +239,13 @@ let formatFiltersToDev = (filters, userContext = { userId: null, spaceId: null, 
                                     value = new Date(value);
                                 }
                                 else if(REG_FOR_ENCORD.test(value)){
-                                    value = encodeURIComponent(value);
+                                    if(["in", "notin"].indexOf(option) < 0){
+                                        // 排除掉"in", "notin"原因：
+                                        // 对于过滤条件['field', 'in', ['x', 'y']]如果执行两次formatFiltersToDev函数的话
+                                        // in/notin会因为上面有代码会转为(field in ('x','y'))，所以这里的值为是('x','y')
+                                        // 如果再执行encodeURIComponent就会变成('x'%2C'y')造成异常
+                                        value = encodeURIComponent(value);
+                                    }
                                 }
                             }
                             tempFilters = [field, option, value];

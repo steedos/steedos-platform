@@ -1,11 +1,13 @@
 name: all
 columns:
-  - field: name
-  - field: f1
-  - field: f2
+  - field: permission_set
+  - field: tab
+  - field: permission
+  - field: is_system
 filter_scope: space
 filters: []
 label: 所有
+mobile_columns: []
 scrolling_mode: standard
 shared: true
 sort_no: 100
