@@ -1,6 +1,6 @@
 {
   "name": "steedos-node-red",
-  "version": "2.2.57",
+  "version": "2.2.58",
   "private": true,
   "main": "index.js",
   "scripts": {
