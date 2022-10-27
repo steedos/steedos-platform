@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-community",
   "main": "package.service.js",
-  "version": "2.3.0-beta.34",
+  "version": "2.3.0-beta.35",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,19 +11,19 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/service-analytics": "2.3.0-beta.34",
-    "@steedos/service-charts": "2.3.0-beta.34",
-    "@steedos/service-i18n": "2.3.0-beta.34",
-    "@steedos/service-identity-jwt": "2.3.0-beta.34",
-    "@steedos/service-metadata-server": "2.3.0-beta.34",
-    "@steedos/service-mongodb-server": "2.3.0-beta.34",
-    "@steedos/service-package-loader": "2.3.0-beta.34",
-    "@steedos/service-package-registry": "2.3.0-beta.34",
-    "@steedos/service-pages": "2.3.0-beta.34",
-    "@steedos/service-sentry": "2.3.0-beta.34",
-    "@steedos/service-sidecar": "2.3.0-beta.34",
-    "@steedos/service-steedos-server": "2.3.0-beta.34",
-    "@steedos/unpkg": "2.3.0-beta.34",
+    "@steedos/service-analytics": "2.3.0-beta.35",
+    "@steedos/service-charts": "2.3.0-beta.35",
+    "@steedos/service-i18n": "2.3.0-beta.35",
+    "@steedos/service-identity-jwt": "2.3.0-beta.35",
+    "@steedos/service-metadata-server": "2.3.0-beta.35",
+    "@steedos/service-mongodb-server": "2.3.0-beta.35",
+    "@steedos/service-package-loader": "2.3.0-beta.35",
+    "@steedos/service-package-registry": "2.3.0-beta.35",
+    "@steedos/service-pages": "2.3.0-beta.35",
+    "@steedos/service-sentry": "2.3.0-beta.35",
+    "@steedos/service-sidecar": "2.3.0-beta.35",
+    "@steedos/service-steedos-server": "2.3.0-beta.35",
+    "@steedos/unpkg": "2.3.0-beta.35",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",
     "axios": "^0.21.1",
@@ -49,7 +49,7 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "steedos-cli": "2.3.0-beta.34",
+    "steedos-cli": "2.3.0-beta.35",
     "tslib": "^2.4.0",
     "validator": "^13.6.0",
     "winston": "^3.3.3",
@@ -59,5 +59,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a3f8656f34a9ab0ae686d0519c5368f150595484"
+  "gitHead": "a5fb79aafcd152165f41d981c8d1ce97d7f4c205"
 }
