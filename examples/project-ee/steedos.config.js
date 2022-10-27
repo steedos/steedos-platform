@@ -15,8 +15,6 @@ module.exports = {
 	// Called after broker started.
 	started(broker) {
 		broker.createService(require("@steedos/service-enterprise"));
-		// 启动 本地 CDN
-        broker.createService(require("@steedos/ee_unpkg-local"));
 	},
 
 };
