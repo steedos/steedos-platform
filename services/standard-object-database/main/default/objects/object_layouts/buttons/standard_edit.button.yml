@@ -42,4 +42,3 @@ is_enable: true
 label: 编辑
 'on': record_only
 type: amis_button
-visible: true
