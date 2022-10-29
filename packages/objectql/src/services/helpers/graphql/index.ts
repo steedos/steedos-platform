@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-28 19:19:40
+ * @LastEditTime: 2022-10-29 10:20:29
  * @Description: 
  */
 
@@ -872,9 +872,9 @@ async function translateToUI(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] ? moment.utc(doc[name])
                         .format("HH:mm") : '';
                 } else if (fType == "number") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
                 } else if (fType == "currency") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
                 } else if (fType == "percent") {
                     displayObj[name] = `${doc[name] * 100}%`;
                 } else if (fType == "password") {
