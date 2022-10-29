@@ -1,15 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-10-20 11:56:22
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-10-28 19:19:40
  * @Description: 
  */
 
 import _ = require("underscore");
 import moment = require('moment');
 import { getObjectServiceName } from "../..";
-import { SteedosObjectTypeConfig } from "../../..";
+import { absoluteUrl, SteedosObjectTypeConfig } from "../../..";
 // const clone = require("clone");
 import { translationObject } from '@steedos/i18n';
 const { moleculerGql: gql } = require("moleculer-apollo-server");
@@ -797,6 +797,18 @@ function _getDisplayType(typeName, fields) {
     return type;
 }
 
+const getFileStorageName = (type)=>{
+    switch (type) {
+        case 'avatar':
+            return 'avatars'
+        case 'image':
+            return 'images'
+        case 'file':
+            return 'files'
+        default:
+            break;
+    }
+};
 
 async function translateToUI(objectName, doc, userSession: any) {
     const lng = getUserLocale(userSession);
@@ -990,36 +1002,47 @@ async function translateToUI(objectName, doc, userSession: any) {
                     displayObj[name] = doc[name] || "";
                 } else if (fType == "summary") {
                     displayObj[name] = doc[name] || "";
-                } else if (fType == "image" || fType == "file") {
-                    let fileLabel = "";
+                } else if (fType == "image" || fType == "file" || fType === 'avatar') {
+                    let fileValue: any = null;
                     let value = doc[name];
                     if (!value) {
                         continue;
                     }
                     // TODO: cfs_images_filerecord对象不存在，需要额外处理
-                    let fileObjectName = fType == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+                    let storageName = getFileStorageName(fType)
+                    let fileObjectName = `cfs_${storageName}_filerecord`;
                     let fileObject = steedosSchema.getObject(fileObjectName);
                     const fileNameFieldKey = "original.name";
                     if (field.multiple) {
                         let fileRecords = await fileObject.find({
                             filters: [`_id`, "in", value],
-                            fields: [fileNameFieldKey],
+                            fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
                         });
-                        fileLabel = _.map(fileRecords, (fileRecord) => {
-                            return fileRecord.original?.name;
-                        }).join(",");
+                        fileValue = _.map(fileRecords, (fileRecord) => {
+                            return {
+                                name: fileRecord.original?.name,
+                                url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}`),
+                                size: fileRecord.original?.size,
+                                type: fileRecord.original?.type,
+                            };
+                        });
                     } else {
                         let fileRecord = (
                             await fileObject.find({
                                 filters: [`_id`, "=", value],
-                                fields: [fileNameFieldKey],
+                                fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
                             })
                         )[0];
                         if (fileRecord) {
-                            fileLabel = fileRecord["original"]["name"];
+                            fileValue = {
+                                name: fileRecord["original"]["name"],
+                                url: absoluteUrl(`/api/files/${storageName}/${value}`),
+                                size: fileRecord.original?.size,
+                                type: fileRecord.original?.type
+                            };
                         }
                     }
-                    displayObj[name] = fileLabel;
+                    displayObj[name] = fileValue;
                 } else {
                     console.error(
                         `Graphql Display: need to handle new field type ${field.type} for ${objectName}.`
