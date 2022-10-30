@@ -1,0 +1,139 @@
+name: Setup
+code: admin
+description: 管理员设置公司、人员、权限等。
+icon: ion-ios-people-outline
+icon_slds: settings
+is_creator: true
+mobile: true
+tab_items:
+  space_users:
+    index: 1
+  process_delegation_rules:
+    index: 2
+  spaces:
+    index: 3
+  organizations:
+    index: 4
+  company:
+    index: 5
+  users:
+    index: 6
+  permission_set:
+    index: 7
+  profile:
+    index: 8
+  license:
+    index: 9
+  apps:
+    index: 10
+  steedos_packages:
+    index: 11
+  objects:
+    index: 12
+  datasources:
+    index: 13
+  queue_import:
+    index: 14
+  pages:
+    index: 15
+  tabs:
+    index: 16
+  queries:
+    index: 17
+  charts:
+    index: 18
+  stimulsoft_reports:
+    index: 19
+  process_definition:
+    index: 20
+  workflow_rule:
+    index: 21
+  object_validation_rules:
+    index: 22
+  action_field_updates:
+    index: 23
+  workflow_notifications:
+    index: 24
+  roles:
+    index: 25
+  flow_roles:
+    index: 26
+  flows:
+    index: 27
+  categories:
+    index: 28
+  instance_number_rules:
+    index: 29
+  space_user_signs:
+    index: 30
+  instances_statistic:
+    index: 31
+  webhooks:
+    index: 32
+  object_workflows:
+    index: 33
+  sessions:
+    index: 34
+  dashboard:
+    index: 35
+  audit_records:
+    index: 36
+  autonumber:
+    index: 37
+  web_forms:
+    index: 38
+  holidays:
+    index: 39
+  business_hours:
+    index: 40
+  object_webhooks:
+    index: 41
+  api_keys:
+    index: 42
+tabs:
+  - space_users
+  - process_delegation_rules
+  - spaces
+  - organizations
+  - company
+  - users
+  - permission_set
+  - profile
+  - license
+  - apps
+  - steedos_packages
+  - objects
+  - datasources
+  - queue_import
+  - pages
+  - tabs
+  - queries
+  - charts
+  - stimulsoft_reports
+  - process_definition
+  - workflow_rule
+  - object_validation_rules
+  - action_field_updates
+  - workflow_notifications
+  - roles
+  - flow_roles
+  - flows
+  - categories
+  - instance_number_rules
+  - space_user_signs
+  - instances_statistic
+  - webhooks
+  - object_workflows
+  - sessions
+  - dashboard
+  - audit_records
+  - autonumber
+  - web_forms
+  - holidays
+  - business_hours
+  - object_webhooks
+  - api_keys
+objects: []
+sort: 9100
+#url: /app/admin
+visible: false

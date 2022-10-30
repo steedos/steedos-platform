@@ -1,0 +1,9 @@
+name: queue_import
+desktop: true
+icon: product_consumed
+is_new_window: false
+label: 数据导入
+mobile: true
+permissions: []
+type: url
+url: /app/admin/queue_import/grid/all

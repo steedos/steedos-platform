@@ -1,0 +1,9 @@
+name: queries
+desktop: true
+icon: case
+is_new_window: false
+label: 查询
+mobile: true
+permissions: []
+type: url
+url: /app/admin/queries/grid/all

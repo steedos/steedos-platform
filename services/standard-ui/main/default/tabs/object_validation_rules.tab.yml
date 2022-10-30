@@ -1,0 +1,9 @@
+name: object_validation_rules
+desktop: true
+icon: textbox
+is_new_window: false
+label: 对象验证规则
+mobile: true
+permissions: []
+type: url
+url: /app/admin/object_validation_rules/grid/all

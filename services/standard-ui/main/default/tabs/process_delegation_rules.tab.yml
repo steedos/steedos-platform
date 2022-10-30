@@ -1,0 +1,9 @@
+name: process_delegation_rules
+desktop: true
+icon: metrics
+is_new_window: false
+label: 流程委托
+mobile: true
+permissions: []
+type: url
+url: /app/admin/process_delegation_rules/grid/all

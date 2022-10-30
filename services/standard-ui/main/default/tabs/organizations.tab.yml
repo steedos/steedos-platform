@@ -1,0 +1,9 @@
+name: organizations
+desktop: true
+icon: team_member
+is_new_window: false
+label: 部门
+mobile: true
+permissions: []
+type: url
+url: /app/admin/organizations/grid/all

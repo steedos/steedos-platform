@@ -1,0 +1,9 @@
+name: object_workflows
+desktop: true
+icon: link
+is_new_window: false
+label: 对象流程映射
+mobile: true
+permissions: []
+type: url
+url: /app/admin/object_workflows/grid/all

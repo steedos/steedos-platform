@@ -1,0 +1,9 @@
+name: api_keys
+desktop: true
+icon: omni_supervisor
+is_new_window: false
+label: API Key
+mobile: true
+permissions: []
+type: url
+url: /app/admin/api_keys/grid/all

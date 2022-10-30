@@ -1,0 +1,9 @@
+name: steedos_packages
+desktop: true
+icon: apex
+is_new_window: false
+label: 软件包
+mobile: true
+permissions: []
+type: url
+url: /app/admin/steedos_packages/grid/all
