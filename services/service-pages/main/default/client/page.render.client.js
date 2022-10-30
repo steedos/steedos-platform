@@ -179,7 +179,7 @@
                             maskClosable: false,
                             footer: null,
                             bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React.createElement(BuilderComponent, {
+                            children: React17.createElement(BuilderComponent, {
                                 model: "page", content: {
                                     "data": pageContentData
                                 }
@@ -195,7 +195,7 @@
                             keyboard: false, // 禁止 esc 关闭
                             footer: null,
                             bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React.createElement(BuilderComponent, {
+                            children: React17.createElement(BuilderComponent, {
                                 model: "page", content: {
                                     "data": pageContentData
                                 }

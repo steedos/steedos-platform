@@ -1,0 +1,9 @@
+name: instance_number_rules
+desktop: true
+icon: topic2
+is_new_window: false
+label: 流程编号
+mobile: true
+permissions: []
+type: url
+url: /app/admin/instance_number_rules/grid/all

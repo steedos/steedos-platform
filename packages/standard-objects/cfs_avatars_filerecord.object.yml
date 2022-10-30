@@ -1,0 +1,122 @@
+name: cfs_avatars_filerecord
+label: Avatars
+table_name: 'cfs.avatars.filerecord'
+icon: drafts
+enable_search: true
+enable_api: true
+hidden: true
+fields:
+  original:
+    label: Original
+    type: object
+    blackbox: true
+    readonly: true
+  "original.name":
+    label: Name
+    type: text
+    readonly: true
+    # is_name: true
+  "original.size":
+    label: Size
+    type: number
+    readonly: true
+  metadata:
+    label: Metadata
+    type: object
+    blackbox: true
+  "metadata.owner":
+    label: Owner
+    type: lookup
+    reference_to: users
+    hidden: true #前端显示成id了，直接隐藏
+  "metadata.owner_name":
+    label: Owner Name
+    type: text
+    readonly: true
+    # visible_on: "{{global.mode ==='read' ? true : false}}"
+  "metadata.parent":
+    label: Parent 
+    type: master_detail
+    reference_to: cms_files
+    hidden: true
+  uploadedAt: 
+    label: Upload Time
+    type: "datetime"
+  created_by:
+    hidden: true
+  modified_by:
+    hidden: true
+list_views:
+  all:
+    columns: 
+      - "original.name"
+      - "metadata.owner_name"
+      - "uploadedAt"
+      - "original.size"
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: true
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true 
+  admin:
+    allowCreate: false
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true 
+  customer:
+    allowCreate: false
+    allowDelete: true
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+
+actions:
+  online_preview:
+    label: Preview
+    sort: 110
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions, record) {
+              if(!record){
+                return false;
+              }
+              if (Meteor.isCordova){
+                return false;
+              }
+              var file = record.original;
+              if (Creator.showPreviewButton(file.name) || Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name))
+                return true;
+              
+              return false;
+            }
+    'on': record
+  download:
+    label: Download
+    visible: true
+    on: record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id) {
+        var file, fileId, filename, length, ref, ref1, rev, url;
+        file = this.record;
+        if(!file){
+          return false;
+        }
+        fileId = record_id;
+        if (fileId) {
+          if (Meteor.isCordova || window.inAppBrowser) {
+            url = Steedos.absoluteUrl("/api/files/files/" + fileId);
+            filename = file != null ? (ref = file.original) != null ? ref.name : void 0 : void 0;
+            rev = fileId;
+            length = file != null ? (ref1 = file.original) != null ? ref1.size : void 0 : void 0;
+            Steedos.cordovaDownload(url, filename, rev, length);
+          } else {
+            window.location = Steedos.absoluteUrl("/api/files/files/" + fileId + "?download=true");
+          }
+        }
+      }

@@ -1,0 +1,9 @@
+name: autonumber
+desktop: true
+icon: formula
+is_new_window: false
+label: 自动编号
+mobile: true
+permissions: []
+type: url
+url: /app/admin/autonumber/grid/all

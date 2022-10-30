@@ -1,0 +1,9 @@
+name: object_webhooks
+desktop: true
+icon: output
+is_new_window: false
+label: WebHooks
+mobile: true
+permissions: []
+type: url
+url: /app/admin/object_webhooks/grid/all
