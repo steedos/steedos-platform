@@ -37,9 +37,6 @@ tab_items:
   admin_permission_set:
     group: 公司设置
     index: 7
-  admin_profile:
-    group: 公司设置
-    index: 8
   admin_license:
     group: 公司设置
     index: 9
