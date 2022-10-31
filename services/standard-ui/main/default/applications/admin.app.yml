@@ -142,49 +142,6 @@ tab_items:
   api_keys:
     group: 高级设置
     index: 42
-tabs:
-  - space_users
-  - process_delegation_rules
-  - spaces
-  - organizations
-  - company
-  - users
-  - permission_set
-  - profile
-  - license
-  - apps
-  - steedos_packages
-  - objects
-  - datasources
-  - queue_import
-  - pages
-  - tabs
-  - queries
-  - charts
-  - stimulsoft_reports
-  - process_definition
-  - workflow_rule
-  - object_validation_rules
-  - action_field_updates
-  - workflow_notifications
-  - roles
-  - flow_roles
-  - flows
-  - categories
-  - instance_number_rules
-  - space_user_signs
-  - instances_statistic
-  - webhooks
-  - object_workflows
-  - sessions
-  - dashboard
-  - audit_records
-  - autonumber
-  - web_forms
-  - holidays
-  - business_hours
-  - object_webhooks
-  - api_keys
 objects: []
 sort: 9100
 #url: /app/admin
