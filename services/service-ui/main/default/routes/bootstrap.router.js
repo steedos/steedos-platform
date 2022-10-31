@@ -249,9 +249,11 @@ function getSpaceBootStrap(req, res) {
                         result.objects[item.object_name].enable_process = true;
                     }
                 });
+                const allImportTemplates = yield (0, objectql_1.getSteedosSchema)().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession } });
                 for (const key in result.objects) {
                     if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                         const objectConfig = result.objects[key];
+                        objectConfig.hasImportTemplates = !_.isEmpty(_.find(allImportTemplates, (item) => { return item.object_name === key; }));
                         try {
                             objectConfig.details = _.map(_.filter(allRelationsInfo.details, { objectName: key }), 'key');
                             objectConfig.masters = _.map(_.filter(allRelationsInfo.masters, { objectName: key }), 'key');
@@ -393,6 +395,9 @@ function getSpaceObjectBootStrap(req, res) {
                                     delete objectConfig.triggers[key];
                                 }
                             });
+                            objectConfig.hasImportTemplates = yield (0, objectql_1.getSteedosSchema)().broker.call(`~packages-@steedos/data-import.hasImportTemplates`, {
+                                objectName: objectConfig.name
+                            }, { meta: { user: userSession } });
                             delete objectConfig.listeners;
                             delete objectConfig.__filename;
                             delete objectConfig.extend;

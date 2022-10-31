@@ -58,6 +58,9 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
         try {
             const { objectServiceName } = req.params;
             const result = yield callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession);
+            result.hasImportTemplates = yield callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
+                objectName: result.name
+            });
             res.status(200).send(result);
         }
         catch (error) {

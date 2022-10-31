@@ -1,6 +1,6 @@
 import steedosI18n = require("@steedos/i18n");
 import { getPlugins, requireAuthentication } from '@steedos/core';
-import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps, getAllRelationsInfo, FieldPermission } from '@steedos/objectql' 
+import { getObject, getObjectLayouts, getLayout, getAppConfigs, getAssignedMenus, getAssignedApps, getAllRelationsInfo, FieldPermission, getSteedosSchema } from '@steedos/objectql' 
 //
 require("@steedos/license");
 const Fiber = require('fibers')
@@ -295,9 +295,13 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
+
+        const allImportTemplates = await getSteedosSchema().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession}})
+
         for (const key in result.objects) {
             if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                 const objectConfig = result.objects[key];
+                objectConfig.hasImportTemplates = !_.isEmpty(_.find(allImportTemplates, (item)=>{return item.object_name === key}))
                 try {
                     // const object = getObject(key);
                     // const relationsInfo = await object.getRelationsInfo();
@@ -446,6 +450,11 @@ export async function getSpaceObjectBootStrap(req, res) {
                             delete objectConfig.triggers[key];
                         }
                     })
+
+                    objectConfig.hasImportTemplates = await getSteedosSchema().broker.call(`~packages-@steedos/data-import.hasImportTemplates`, {
+                        objectName: objectConfig.name
+                    }, { meta: { user: userSession}})
+                    
 
                     delete objectConfig.listeners
                     delete objectConfig.__filename
