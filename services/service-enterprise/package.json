@@ -20,7 +20,6 @@
     "@steedos/ee_virus-scan": "2.2.58",
     "@steedos/service-community": "2.2.58",
     "mongodb": "^3.7.3",
-    "mongodb-client-encryption": "2.1.0",
     "mssql": "^8.1.2",
     "nats": "^1.4.12",
     "validator": "^13.6.0"
