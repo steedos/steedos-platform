@@ -5,6 +5,16 @@ icon: ion-ios-people-outline
 icon_slds: settings
 is_creator: true
 mobile: true
+tab_groups:
+  - group_name: 个人设置
+  - group_name: 公司设置
+  - group_name: 应用程序
+  - group_name: 对象设置
+  - group_name: 用户界面
+  - group_name: 统计分析
+  - group_name: 流程自动化
+  - group_name: 审批王
+  - group_name: 高级设置
 tab_items:
   space_users:
     group: 个人设置
