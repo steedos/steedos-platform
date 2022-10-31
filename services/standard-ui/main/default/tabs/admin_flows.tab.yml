@@ -1,0 +1,9 @@
+name: admin_flows
+desktop: true
+icon: environment_hub
+is_new_window: false
+label: 流程
+mobile: true
+permissions: []
+type: url
+url: /app/admin/flows/grid/all

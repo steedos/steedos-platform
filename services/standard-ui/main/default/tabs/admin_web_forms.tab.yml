@@ -1,0 +1,9 @@
+name: admin_web_forms
+desktop: true
+icon: display_text
+is_new_window: false
+label: 在线表单
+mobile: true
+permissions: []
+type: url
+url: /app/admin/web_forms/grid/all

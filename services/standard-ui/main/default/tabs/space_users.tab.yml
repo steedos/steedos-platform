@@ -1,9 +1,0 @@
-name: space_users
-desktop: true
-icon: people
-is_new_window: false
-label: 我的资料
-mobile: true
-permissions: []
-type: url
-url: /app/admin/space_users/view/9YCzWqtyicbontaxg?ref=users

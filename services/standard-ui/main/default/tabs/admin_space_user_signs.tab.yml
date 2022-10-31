@@ -1,0 +1,9 @@
+name: admin_space_user_signs
+desktop: true
+icon: carousel
+is_new_window: false
+label: 图片签名
+mobile: true
+permissions: []
+type: url
+url: /app/admin/space_user_signs/grid/all

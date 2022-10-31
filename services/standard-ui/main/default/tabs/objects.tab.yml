@@ -1,9 +1,0 @@
-name: objects
-desktop: true
-icon: orders
-is_new_window: false
-label: 对象
-mobile: true
-permissions: []
-type: url
-url: /app/admin/objects/grid/all

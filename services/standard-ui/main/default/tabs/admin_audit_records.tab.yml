@@ -1,0 +1,9 @@
+name: admin_audit_records
+desktop: true
+icon: record
+is_new_window: false
+label: 审计日志
+mobile: true
+permissions: []
+type: url
+url: /app/admin/audit_records/grid/all

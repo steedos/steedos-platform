@@ -1,0 +1,9 @@
+name: admin_dashboard
+desktop: true
+icon: dashboard_ea
+is_new_window: false
+label: 自定义主页
+mobile: true
+permissions: []
+type: url
+url: /app/admin/dashboard/grid/all

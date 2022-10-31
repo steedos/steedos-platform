@@ -1,9 +1,0 @@
-name: workflow_rule
-desktop: true
-icon: maintenance_work_rule
-is_new_window: false
-label: 工作流规则
-mobile: true
-permissions: []
-type: url
-url: /app/admin/workflow_rule/grid/all

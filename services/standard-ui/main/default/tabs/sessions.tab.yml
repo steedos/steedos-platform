@@ -1,9 +1,0 @@
-name: sessions
-desktop: true
-icon: queue
-is_new_window: false
-label: 登录会话
-mobile: true
-permissions: []
-type: url
-url: /app/admin/sessions/grid/all

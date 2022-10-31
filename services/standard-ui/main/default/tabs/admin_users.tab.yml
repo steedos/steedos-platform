@@ -1,0 +1,9 @@
+name: admin_users
+desktop: true
+icon: user
+is_new_window: false
+label: 人员
+mobile: true
+permissions: []
+type: url
+url: /app/admin/space_users/grid/all

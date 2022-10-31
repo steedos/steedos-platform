@@ -1,0 +1,9 @@
+name: admin_categories
+desktop: true
+icon: hierarchy
+is_new_window: false
+label: 流程分类
+mobile: true
+permissions: []
+type: url
+url: /app/admin/categories/grid/all
