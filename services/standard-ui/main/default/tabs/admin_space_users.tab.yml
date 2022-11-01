@@ -6,4 +6,4 @@ label: 我的资料
 mobile: true
 permissions: []
 type: url
-url: /app/admin/space_users/view/9YCzWqtyicbontaxg?ref=users
+url: /app/admin/space_users/view/${global.user.spaceUserId}?ref=users
