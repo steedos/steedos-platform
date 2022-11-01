@@ -1,9 +1,9 @@
 name: admin_space_users
 desktop: true
-icon: people
+icon: user
 is_new_window: false
-label: 我的资料
+label: 人员
 mobile: true
 permissions: []
 type: url
-url: /app/admin/space_users/view/${global.user.spaceUserId}?ref=users
+url: /app/admin/space_users/grid/all
