@@ -6,4 +6,4 @@ label: 公司
 mobile: true
 permissions: []
 type: url
-url: /app/admin/spaces/view/LLntvQ6p6srFzvzSc
+url: /app/admin/spaces/view/${global.user.spaceId}
