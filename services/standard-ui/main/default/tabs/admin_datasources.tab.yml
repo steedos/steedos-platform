@@ -4,6 +4,18 @@ icon: entity
 is_new_window: false
 label: 外部数据源
 mobile: true
-permissions: []
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
 type: url
 url: /app/admin/datasources/grid/all
