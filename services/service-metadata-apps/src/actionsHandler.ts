@@ -154,8 +154,14 @@ async function getHiddenTabNames(ctx) {
             ['permission_set', 'in', roles]
         ]
     }, userSession)
+    const showTabNames = [] // 同一个选项卡在不同权限集中的权限叠加，如有一个是默认打开的则选项卡默认打开
     for (const permissionTab of permissionTabs) {
-        if (permissionTab.permission === 'off' || permissionTab.permission === 'hidden') {
+        if (permissionTab.permission === 'on') {
+            showTabNames.push(permissionTab.tab)
+        }
+    }
+    for (const permissionTab of permissionTabs) {
+        if ((permissionTab.permission === 'off' || permissionTab.permission === 'hidden') && !showTabNames.includes(permissionTab.tab)) {
             hiddenTabNames.push(permissionTab.tab)
         }
     }
