@@ -1,0 +1,7 @@
+name: space_user_info_record
+is_active: true
+label: 我的资料
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

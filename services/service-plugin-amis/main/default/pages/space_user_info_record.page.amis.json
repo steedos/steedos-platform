@@ -1,0 +1,680 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "service",
+            "name": "page_readonly_i6sPKAkRowmGb6GQb",
+            "id": "detail_i6sPKAkRowmGb6GQb",
+            "data": {
+                "global": {
+                    "mode": "read",
+                    "user": {
+                        "authToken": "a8ff14c2c36b30ae8395f22804bfa27e2bdaaaf60c0052890b6991d80b8f6d8e63afbb74a337d8333548a7",
+                        "spaceId": "e4YD58Xx68PQNPD2G",
+                        "userId": "62ea04550167020d189ce439",
+                        "name": "殷亮辉",
+                        "email": "yinlianghui@hotoa.com",
+                        "utcOffset": 8,
+                        "steedos_id": "62ea04550167020d189ce439",
+                        "locale": "zh-cn",
+                        "language": "zh-CN",
+                        "roles": [
+                            "admin"
+                        ],
+                        "profile": "admin",
+                        "user": "62ea04550167020d189ce439",
+                        "user_accepted": true,
+                        "organization": {
+                            "_id": "3Cx2hQgx9WtNbL9oz",
+                            "name": "爱多邦",
+                            "fullname": "爱多邦",
+                            "company_id": "3Cx2hQgx9WtNbL9oz"
+                        },
+                        "organizations": [
+                            {
+                                "_id": "3Cx2hQgx9WtNbL9oz",
+                                "name": "爱多邦",
+                                "fullname": "爱多邦",
+                                "company_id": "3Cx2hQgx9WtNbL9oz"
+                            }
+                        ],
+                        "space": {
+                            "_id": "e4YD58Xx68PQNPD2G",
+                            "name": "爱多邦",
+                            "admins": [
+                                "62ea04550167020d189ce439"
+                            ]
+                        },
+                        "owner": "62ea04550167020d189ce439",
+                        "created_by": "62ea04550167020d189ce439",
+                        "created": "2022-08-03T05:15:14.691Z",
+                        "modified_by": "62ea04550167020d189ce439",
+                        "modified": "2022-08-03T05:15:14.691Z",
+                        "email_verified": null,
+                        "company_id": "3Cx2hQgx9WtNbL9oz",
+                        "organizations_parents": [
+                            "3Cx2hQgx9WtNbL9oz"
+                        ],
+                        "company_ids": [
+                            "3Cx2hQgx9WtNbL9oz"
+                        ],
+                        "last_logon": "2022-11-01T08:45:43.254Z",
+                        "spaces": [
+                            {
+                                "_id": "e4YD58Xx68PQNPD2G",
+                                "name": "爱多邦",
+                                "admins": [
+                                    "62ea04550167020d189ce439"
+                                ]
+                            }
+                        ],
+                        "companies": [
+                            {
+                                "_id": "3Cx2hQgx9WtNbL9oz",
+                                "name": "爱多邦",
+                                "organization": "3Cx2hQgx9WtNbL9oz"
+                            }
+                        ],
+                        "company": {
+                            "_id": "3Cx2hQgx9WtNbL9oz",
+                            "name": "爱多邦",
+                            "organization": "3Cx2hQgx9WtNbL9oz"
+                        },
+                        "permission_shares": [],
+                        "spaceUserId": "i6sPKAkRowmGb6GQb",
+                        "is_space_admin": true,
+                        "is_phone": false,
+                        "is_tablet": false,
+                        "token": "a8ff14c2c36b30ae8395f22804bfa27e2bdaaaf60c0052890b6991d80b8f6d8e63afbb74a337d8333548a7"
+                    },
+                    "spaceId": "e4YD58Xx68PQNPD2G",
+                    "userId": "62ea04550167020d189ce439"
+                },
+                "context": {
+                    "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us73.gitpod.io",
+                    "tenantId": "e4YD58Xx68PQNPD2G",
+                    "authToken": "a8ff14c2c36b30ae8395f22804bfa27e2bdaaaf60c0052890b6991d80b8f6d8e63afbb74a337d8333548a7"
+                }
+            },
+            "api": {
+                "method": "post",
+                "url": "${context.rootUrl}/graphql?rf=1667296468797",
+                "cache": 100,
+                "adaptor": "if(payload.data.data){\n    var data = payload.data.data[0];\n    var localeOptions= ({\"options\":[{\"label\":\"简体中文\",\"value\":\"zh-cn\"},{\"label\":\"English\",\"value\":\"en-us\"}]}).options;var localeSelected = _.find(localeOptions, function(option){return data.locale == option.value});data.locale__label = localeSelected ? localeSelected.label:null;var instance_stateOptions= ({\"options\":[{\"label\":\"草稿\",\"value\":\"draft\"},{\"label\":\"进行中\",\"value\":\"pending\"},{\"label\":\"已完成\",\"value\":\"completed\"},{\"label\":\"已核准\",\"value\":\"approved\"},{\"label\":\"已驳回\",\"value\":\"rejected\"},{\"label\":\"已取消\",\"value\":\"terminated\"}]}).options;var instance_stateSelected = _.find(instance_stateOptions, function(option){return data.instance_state == option.value});data.instance_state__label = instance_stateSelected ? instance_stateSelected.label:null;\n    \n            // image字段值添加URL前缀\n            let imgFieldsKeys = [\"avatar\"];\n            let imgFields = {\"avatar\":{\"name\":\"avatar\",\"type\":\"avatar\"}};\n            let rootUrl = \"https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us73.gitpod.io/api/files/\";\n            imgFieldsKeys.forEach((item)=>{\n                let imgFieldValue = data[item];\n                if(imgFieldValue && imgFieldValue.length){\n                    let fieldProps = imgFields[item];\n                    let table_name;\n                    if(fieldProps.type === 'image'){\n                        table_name = 'images';\n                    }else{\n                        table_name = 'avatars';\n                    }\n                    if(fieldProps.multiple){\n                        if(imgFieldValue instanceof Array){\n                            data[item] = imgFieldValue.map((value)=>{ return rootUrl + table_name +  '/' + value});\n                        }\n                    }else{\n                        data[item] = rootUrl + table_name + '/' + imgFieldValue;\n                    }\n                }\n            })\n\n    \n    payload.data = data;\n    window.postMessage(Object.assign({type: \"record.loaded\"}, {record: data}), \"*\")\n}\nreturn payload;\n",
+                "data": {
+                    "query": "{data:space_users(filters:[\"_id\", \"=\", \"i6sPKAkRowmGb6GQb\"]){_id,company_id,company_ids,name,username,email,email_verified,mobile,mobile_verified,organizations,organizations_parents,organization,position,manager,profile,contact_id,is_supplier,is_customer,work_phone,locale,sort_no,email_notification,sms_notification,user_accepted,password_expired,avatar,created,created_by,modified,modified_by,instance_state,_display:_ui{company_id,company_ids,email_verified,mobile_verified,organizations,organizations_parents,organization,manager,profile,contact_id,is_supplier,is_customer,locale,sort_no,email_notification,sms_notification,user_accepted,password_expired,avatar,created,created_by,modified,modified_by,instance_state}}}"
+                },
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
+            },
+            "body": [
+                {
+                    "type": "panel",
+                    "title": "标题",
+                    "body": [],
+                    "header": {
+                        "type": "wrapper",
+                        "body": [
+                            {
+                                "type": "grid",
+                                "columns": [
+                                    {
+                                        "body": [
+                                            {
+                                                "type": "grid",
+                                                "columns": [
+                                                    {
+                                                        "body": {
+                                                            "type": "tpl",
+                                                            "className": "block",
+                                                            "tpl": "<img class='slds-icon slds-icon_container slds-icon-standard-user' src='${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/assets/icons/standard/user.svg'>",
+                                                            "id": "u:9207cb731ca4"
+                                                        },
+                                                        "md": "auto",
+                                                        "className": "",
+                                                        "columnClassName": "flex justify-center items-center",
+                                                        "id": "u:cc87836b4d77"
+                                                    },
+                                                    {
+                                                        "body": [
+                                                            {
+                                                                "type": "tpl",
+                                                                "tpl": "我的资料",
+                                                                "inline": false,
+                                                                "wrapperComponent": "",
+                                                                "style": {
+                                                                    "fontFamily": "",
+                                                                    "fontSize": 13
+                                                                },
+                                                                "className": "leading-none",
+                                                                "id": "u:d1587714b279"
+                                                            },
+                                                            {
+                                                                "type": "tpl",
+                                                                "tpl": "${name}",
+                                                                "inline": false,
+                                                                "wrapperComponent": "",
+                                                                "style": {
+                                                                    "fontFamily": "",
+                                                                    "fontSize": 20,
+                                                                    "fontWeight": "bold",
+                                                                    "textAlign": "left"
+                                                                },
+                                                                "className": "leading-none",
+                                                                "id": "u:cea8ff4d1169"
+                                                            }
+                                                        ],
+                                                        "id": "u:137fd50d3ef5"
+                                                    }
+                                                ],
+                                                "id": "u:49a7b98d4d92"
+                                            }
+                                        ],
+                                        "md": 9,
+                                        "id": "u:16858b47c444"
+                                    },
+                                    {
+                                        "body": [],
+                                        "id": "u:34a9d6c22f03"
+                                    }
+                                ],
+                                "id": "u:625cd251cce5"
+                            }
+                        ],
+                        "size": "xs",
+                        "id": "u:e51302406b82"
+                    },
+                    "affixFooter": false,
+                    "headerClassName": "",
+                    "bodyClassName": "p-none",
+                    "id": "u:c49c3f47954a"
+                },
+                {
+                    "type": "tabs",
+                    "tabs": [
+                        {
+                            "title": "详情",
+                            "id": "u:2bd9939746ef",
+                            "body": [
+                                {
+                                    "type": "form",
+                                    "persistData": false,
+                                    "promptPageLeave": false,
+                                    "name": "form_readonly_i6sPKAkRowmGb6GQb",
+                                    "debug": false,
+                                    "title": "",
+                                    "data": {
+                                        "formData": "$$"
+                                    },
+                                    "wrapWithPanel": false,
+                                    "body": [
+                                        {
+                                            "type": "fieldSet",
+                                            "title": "通用",
+                                            "collapsable": true,
+                                            "body": [
+                                                {
+                                                    "name": "name",
+                                                    "label": "姓名",
+                                                    "labelRemark": "",
+                                                    "required": true,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:cfca5135d38a"
+                                                },
+                                                {
+                                                    "name": "username",
+                                                    "label": "用户名",
+                                                    "required": false,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:8f293421dc26"
+                                                },
+                                                {
+                                                    "name": "email",
+                                                    "label": "邮件",
+                                                    "required": false,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:96796db5e1f0"
+                                                },
+                                                {
+                                                    "name": "email_verified",
+                                                    "label": "邮件已验证",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.email_verified) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.email_verified%>\">\n        <span ><%=data._display.email_verified%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:9dd07a8e4d52"
+                                                },
+                                                {
+                                                    "name": "mobile",
+                                                    "label": "手机",
+                                                    "required": true,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:e6b778e340ed"
+                                                },
+                                                {
+                                                    "name": "mobile_verified",
+                                                    "label": "手机已验证",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.mobile_verified) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.mobile_verified%>\">\n        <span ><%=data._display.mobile_verified%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:ce4b1eaaf305"
+                                                },
+                                                {
+                                                    "name": "organizations",
+                                                    "label": "部门(多选)",
+                                                    "required": true,
+                                                    "type": "static",
+                                                    "tpl": "\n            <% if (data._display.organizations && data._display.organizations.length) { %><% data._display.organizations.forEach(function(item) { %> <a href=\"/app/admin/<%=item.objectName%>/view/<%=item.value%>\"><%=item.label%></a>  <% }); %><% } %>\n            ",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:a1d78a1894d1"
+                                                },
+                                                {
+                                                    "name": "organizations_parents",
+                                                    "label": "部门(含上级)",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "\n            <% if (data._display.organizations_parents && data._display.organizations_parents.length) { %><% data._display.organizations_parents.forEach(function(item) { %> <a href=\"/app/admin/<%=item.objectName%>/view/<%=item.value%>\"><%=item.label%></a>  <% }); %><% } %>\n            ",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:7ff38e62af20"
+                                                },
+                                                {
+                                                    "name": "organization",
+                                                    "label": "主部门",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.organization.objectName}/view/${_display.organization.value}\">${_display.organization.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:ccf18b122391"
+                                                },
+                                                {
+                                                    "name": "company_ids",
+                                                    "label": "分部(多选)",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "\n            <% if (data._display.company_ids && data._display.company_ids.length) { %><% data._display.company_ids.forEach(function(item) { %> <a href=\"/app/admin/<%=item.objectName%>/view/<%=item.value%>\"><%=item.label%></a>  <% }); %><% } %>\n            ",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:51de8b9102f2"
+                                                },
+                                                {
+                                                    "name": "company_id",
+                                                    "label": "主分部",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.company_id.objectName}/view/${_display.company_id.value}\">${_display.company_id.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:bae777e5b75b"
+                                                },
+                                                {
+                                                    "name": "position",
+                                                    "label": "职务",
+                                                    "required": false,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:e7607ee04c53"
+                                                },
+                                                {
+                                                    "name": "manager",
+                                                    "label": "上级主管",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.manager.objectName}/view/${_display.manager.value}\">${_display.manager.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:10c4fcc8cc2b"
+                                                },
+                                                {
+                                                    "name": "profile",
+                                                    "label": "简档",
+                                                    "required": true,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.profile.objectName}/view/${_display.profile.value}\">${_display.profile.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.user.is_space_admin}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:e951fece1ea5"
+                                                },
+                                                {
+                                                    "name": "contact_id",
+                                                    "label": "联系人",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.contact_id.objectName}/view/${_display.contact_id.value}\">${_display.contact_id.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:f51281455dc3"
+                                                },
+                                                {
+                                                    "name": "is_supplier",
+                                                    "label": "是供应商",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.is_supplier) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.is_supplier%>\">\n        <span ><%=data._display.is_supplier%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:75039601927d"
+                                                },
+                                                {
+                                                    "name": "is_customer",
+                                                    "label": "是客户",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.is_customer) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.is_customer%>\">\n        <span ><%=data._display.is_customer%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${global.mode ==='read' ? true : false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:8899c25d8eff"
+                                                },
+                                                {
+                                                    "name": "work_phone",
+                                                    "label": "工作电话",
+                                                    "required": false,
+                                                    "type": "static-text",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:917062497fc8"
+                                                },
+                                                {
+                                                    "name": "locale",
+                                                    "label": "语言",
+                                                    "required": true,
+                                                    "type": "static",
+                                                    "joinValues": false,
+                                                    "options": [
+                                                        {
+                                                            "label": "简体中文",
+                                                            "value": "zh-cn"
+                                                        },
+                                                        {
+                                                            "label": "English",
+                                                            "value": "en-us"
+                                                        }
+                                                    ],
+                                                    "extractValue": true,
+                                                    "clearable": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "tpl": "<div>${_display.locale}</div>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:80099aafc1f8"
+                                                },
+                                                {
+                                                    "name": "sort_no",
+                                                    "label": "排序号",
+                                                    "required": false,
+                                                    "type": "static-tpl",
+                                                    "tpl": "<div>${_display.sort_no}</div>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:ef6e978eb64d"
+                                                },
+                                                {
+                                                    "name": "email_notification",
+                                                    "label": "接收邮件通知",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.email_notification) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.email_notification%>\">\n        <span ><%=data._display.email_notification%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:830b9acfb227"
+                                                },
+                                                {
+                                                    "name": "sms_notification",
+                                                    "label": "接收短信提醒",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.sms_notification) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.sms_notification%>\">\n        <span ><%=data._display.sms_notification%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:10d56e424111"
+                                                },
+                                                {
+                                                    "name": "user_accepted",
+                                                    "label": "有效",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.user_accepted) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.user_accepted%>\">\n        <span ><%=data._display.user_accepted%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:fec9a339924c"
+                                                },
+                                                {
+                                                    "name": "password_expired",
+                                                    "label": "密码已过期",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<% if (data.password_expired) { %>\n    <span class=\"slds-icon_container slds-icon-utility-check slds-current-color\" title=\"<%=data._display.password_expired%>\">\n        <span ><%=data._display.password_expired%></span>\n    </span>\n    <% } %>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:15e45bb97561"
+                                                },
+                                                {
+                                                    "name": "avatar",
+                                                    "label": "头像",
+                                                    "required": false,
+                                                    "type": "static-image",
+                                                    "defaultImage": "",
+                                                    "enlargeAble": true,
+                                                    "showToolbar": true,
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:b3b0bf81a3da"
+                                                },
+                                                {
+                                                    "name": "instance_state",
+                                                    "label": "审批状态",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "joinValues": false,
+                                                    "options": [
+                                                        {
+                                                            "label": "草稿",
+                                                            "value": "draft"
+                                                        },
+                                                        {
+                                                            "label": "进行中",
+                                                            "value": "pending"
+                                                        },
+                                                        {
+                                                            "label": "已完成",
+                                                            "value": "completed"
+                                                        },
+                                                        {
+                                                            "label": "已核准",
+                                                            "value": "approved"
+                                                        },
+                                                        {
+                                                            "label": "已驳回",
+                                                            "value": "rejected"
+                                                        },
+                                                        {
+                                                            "label": "已取消",
+                                                            "value": "terminated"
+                                                        }
+                                                    ],
+                                                    "extractValue": true,
+                                                    "clearable": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "tpl": "<div>${_display.instance_state}</div>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "visibleOn": "${false}",
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:de3dac2149fe"
+                                                }
+                                            ],
+                                            "id": "u:634e8104bcd1"
+                                        },
+                                        {
+                                            "type": "fieldSet",
+                                            "title": "系统信息",
+                                            "collapsable": true,
+                                            "body": [
+                                                {
+                                                    "name": "created",
+                                                    "label": "创建时间",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "inputFormat": "YYYY-MM-DD HH:mm",
+                                                    "format": "YYYY-MM-DDTHH:mm:ss.SSS[Z]",
+                                                    "tpl": "<div>${_display.created}</div>",
+                                                    "utc": true,
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:307ec9ee5984"
+                                                },
+                                                {
+                                                    "name": "created_by",
+                                                    "label": "创建人",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.created_by.objectName}/view/${_display.created_by.value}\">${_display.created_by.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:c47d0ceb3dbb"
+                                                },
+                                                {
+                                                    "name": "modified",
+                                                    "label": "修改时间",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "inputFormat": "YYYY-MM-DD HH:mm",
+                                                    "format": "YYYY-MM-DDTHH:mm:ss.SSS[Z]",
+                                                    "tpl": "<div>${_display.modified}</div>",
+                                                    "utc": true,
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:afa9e32e8b4d"
+                                                },
+                                                {
+                                                    "name": "modified_by",
+                                                    "label": "修改人",
+                                                    "required": false,
+                                                    "type": "static",
+                                                    "tpl": "<a href=\"/app/admin/${_display.modified_by.objectName}/view/${_display.modified_by.value}\">${_display.modified_by.label}</a>",
+                                                    "className": "m-1 slds-form-element_readonly",
+                                                    "labelClassName": "text-left",
+                                                    "quickEdit": false,
+                                                    "clearValueOnHidden": true,
+                                                    "id": "u:8ee7cdce49d2"
+                                                }
+                                            ],
+                                            "id": "u:6f08de6f90b4"
+                                        }
+                                    ],
+                                    "className": "steedos-amis-form",
+                                    "actions": [],
+                                    "id": "u:c692441adeb0"
+                                }
+                            ]
+                        }
+                    ],
+                    "id": "u:ab1b39f4011e",
+                    "className": "",
+                    "linksClassName": "px-10 py-2 text-black",
+                    "toolbarClassName": "",
+                    "contentClassName": ""
+                }
+            ],
+            "messages": {}
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "recordId": "",
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {
+            "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us73.gitpod.io"
+        }
+    },
+    "id": "u:b80a805eb7fa"
+}
