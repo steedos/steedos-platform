@@ -153,7 +153,7 @@ async function getHiddenTabNames(ctx) {
             ['space', '=', spaceId],
             ['permission_set', 'in', roles]
         ]
-    })
+    }, userSession)
     for (const permissionTab of permissionTabs) {
         if (permissionTab.permission === 'off' || permissionTab.permission === 'hidden') {
             hiddenTabNames.push(permissionTab.tab)
