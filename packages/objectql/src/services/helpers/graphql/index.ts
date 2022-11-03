@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-29 10:20:29
+ * @LastEditTime: 2022-11-03 11:19:11
  * @Description: 
  */
 
@@ -579,7 +579,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
@@ -817,7 +817,7 @@ async function translateToUI(objectName, doc, userSession: any) {
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
