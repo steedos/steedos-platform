@@ -16,9 +16,9 @@ tab_groups:
   - group_name: 审批王
   - group_name: 高级设置
 tab_items:
-  admin_space_user_info:
-    group: 个人设置
-    index: 1
+  # admin_space_user_info:
+  #   group: 个人设置
+  #   index: 1
   admin_process_delegation_rules:
     group: 个人设置
     index: 2
