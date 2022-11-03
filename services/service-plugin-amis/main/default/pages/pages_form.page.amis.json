@@ -1,0 +1,54 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "${objectName}",
+            "recordId": "${recordId}",
+            "id": "u:15c7378f720e",
+            "mode": "edit",
+            "layout": "normal",
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "取消",
+                    "actionType": "",
+                    "level": "default",
+                    "block": false,
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:13ae6a42dad6"
+                },
+                {
+                    "type": "button",
+                    "label": "保存",
+                    "actionType": "submit",
+                    "level": "info",
+                    "id": "u:ada548846d2f"
+                }
+            ]
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "objectName": "pages",
+        "context": {
+            "rootUrl": "https://5000-steedos-steedosplatform-4xhrjrikxzr.ws-us73.gitpod.io"
+        }
+    },
+    "bodyClassName": "p-0",
+    "name": "page_edit_${recordId}",
+    "initApi": null,
+    "initFetch": null,
+    "id": "u:d758829f488f",
+    "messages": {},
+    "pullRefresh": {},
+    "style": {
+        "paddingTop": "10",
+        "paddingLeft": "10",
+        "paddingRight": "10",
+        "paddingBottom": "10"
+    }
+}

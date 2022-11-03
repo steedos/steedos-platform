@@ -1,0 +1,12 @@
+name: pages_form
+is_active: true
+label: 微页面表单
+object_name: pages
+pageAssignments:
+  - desktop: true
+    mobile: true
+    page: pages_form
+    type: orgDefault
+render_engine: amis
+type: form
+widgets: []
