@@ -177,18 +177,18 @@ fields:
     filterable: true
   record_ids:
     label: Record IDs
-    type: grid
-    omit: true
-    hidden: true
+    type: lookup
+    reference_to: []
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: record_ids
-  record_ids.$.o:
-    type: text
-    hidden: true
-    name: record_ids.$.o
-  record_ids.$.ids:
-    type: '[text]'
-    hidden: true
-    name: record_ids.$.ids
+  # record_ids.$.o:
+  #   type: text
+  #   hidden: true
+  #   name: record_ids.$.o
+  # record_ids.$.ids:
+  #   type: '[text]'
+  #   hidden: true
+  #   name: record_ids.$.ids
   # company_id:
   #   required: false
   #   omit: false
