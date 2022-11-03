@@ -3,7 +3,8 @@
   "version": "2.3.0",
   "private": true,
   "scripts": {
-    "start": "steedos start"
+    "start": "steedos start",
+    "repl": "moleculer-runner --repl"
   },
   "dependencies": {
     "@steedos-labs/experience": "^1.0.0-beta.20",
