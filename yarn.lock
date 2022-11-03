@@ -1496,7 +1496,7 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
-"@builder.io/sdk@^1.1.26":
+"@builder.io/sdk@1.1.26", "@builder.io/sdk@^1.1.26":
   version "1.1.26"
   resolved "https://registry.yarnpkg.com/@builder.io/sdk/-/sdk-1.1.26.tgz#1959edc7986af919a3b4b4dc91d17880bbdf2f14"
   integrity sha512-tas5giE363Lv4f35xKPkRxDnPSyjzKo1zifGVuWJCztJJjUbNIe+vaRewitzqS3u+B8sWU0pHj2Id9R1Mtx6pA==
@@ -4232,6 +4232,11 @@
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.7.0.tgz#dd6bd3d119d7efea0e85dbaa4b17de1c22b63c7a"
   integrity sha512-4x8O7uerSGLnYC10krHl9t8h7xXHn5FextqKYbTCXCnx2hC8D+9lz8wcbQAFo0d97wiUYqI8opmEgFVGx7c5hQ==
 
+"@sentry/types@^6.11.0":
+  version "6.19.7"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-6.19.7.tgz#c6b337912e588083fc2896eb012526cf7cfec7c7"
+  integrity sha512-jH84pDYE+hHIbVnab3Hr+ZXr1v8QABfhx39KknxqKWr2l0oEItzepV0URvbEhB446lk/S/59230dlUUIBGsXbg==
+
 "@sentry/utils@7.7.0":
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.7.0.tgz#013e3097c4268a76de578494c7df999635fb0ad4"
@@ -4295,10 +4300,46 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
+"@steedos-builder/react@^0.2.28":
+  version "0.2.33"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.33.tgz#1885e39dc37f9bd5c2d39407dffbd10ba352feb4"
+  integrity sha512-n4tPwJDdb1AAYBo+2mzgkIAMt44mzmwtw0/81tNRr3PtYvp595yQLoAgxsm4K7ZFcb8i13Zs9ey03aeDbV2P5w==
+  dependencies:
+    "@builder.io/react" "^1.1.50"
+    "@builder.io/sdk" "1.1.26"
+    "@emotion/core" "^10.0.17"
+    "@steedos-builder/sdk" "0.2.33"
+    hash-sum "^2.0.0"
+    preact "^10.1.0"
+    react ">=14"
+    react-dom ">=14"
+    tslib "^1.10.0"
+    vm2 "^3.6.4"
+  optionalDependencies:
+    create-react-context "^0.2.3"
+    node-fetch "^2.3.0"
+    prop-types "^15.7.2"
+
 "@steedos-builder/requirejs@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
   integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
+
+"@steedos-builder/sdk@0.2.33":
+  version "0.2.33"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.33.tgz#6e2129f7e899617c37eda0ce80c37373b7971f27"
+  integrity sha512-9ifBF6xXzLxJdRWPAai9N7AQLFm5z3jXf+bnTnKAnPi2Tza5NErvVO6YlgvmWzqQReXGNq+bJEbRVP+dERwd3A==
+  dependencies:
+    "@builder.io/sdk" "1.1.26"
+    "@monaco-editor/loader" "^1.3.0"
+    "@steedos-builder/requirejs" "^0.0.3"
+    "@types/requirejs" "^2.1.34"
+    "@types/systemjs" "^6.1.1"
+    hash-sum "^2.0.0"
+    node-fetch "^2.2.0"
+    requirejs "^2.3.6"
+    systemjs "^6.12.1"
+    tslib "^1.10.0"
 
 "@steedos-builder/sdk@^0.2.27":
   version "0.2.27"
@@ -4315,6 +4356,34 @@
     requirejs "^2.3.6"
     systemjs "^6.12.1"
     tslib "^1.10.0"
+
+"@steedos-labs/experience@^1.0.0-beta.20":
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@steedos-labs/experience/-/experience-1.0.0-beta.20.tgz#340d97c332a266880351e0d7214eabc823b80023"
+  integrity sha512-I4Gb9hjuUO/fzd88GfVCT4VwU0BajMQaD51Pfe7TIl9c8Ma1z3pWXVROepot7PLZXJWwhfu8/pHrrv9TOFVR7A==
+  dependencies:
+    "@headlessui/react" "^1.6.5"
+    "@heroicons/react" "^1.0.6"
+    "@steedos-builder/react" "^0.2.28"
+    antd "^4.22.0"
+    attr-accept "^2.2.2"
+    autoprefixer "^10.4.7"
+    axios "^0.27.2"
+    clsx "^1.1.1"
+    express "^4.18.1"
+    focus-visible "^5.2.0"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.21"
+    next "12.2.5"
+    next-auth "^4.9.0"
+    next-use-posthog "^1.16.0"
+    postcss "^8.4.14"
+    postcss-focus-visible "^6.0.4"
+    prism-react-renderer "^1.3.5"
+    react "18.2.0"
+    react-dom "18.2.0"
+    tailwindcss "^3.1.3"
+    v8 "^0.1.0"
 
 "@steedos-ui/amis@2.2.43", "@steedos-ui/amis@^2.2.43":
   version "2.2.43"
@@ -8098,7 +8167,7 @@ cookie@0.4.2, cookie@^0.4.1, cookie@~0.4.1:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.2.tgz#0e41f24de5ecf317947c82fc789e06a884824432"
   integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
-cookie@0.5.0:
+cookie@0.5.0, cookie@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
@@ -10581,6 +10650,11 @@ fecha@^4.2.0:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-4.2.3.tgz#4d9ccdbc61e8629b259fdca67e65891448d569fd"
   integrity sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==
 
+fflate@^0.4.1:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
+  integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
+
 fibers@4.0.3, fibers@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/fibers/-/fibers-4.0.3.tgz#dda5918280a48507f5d8a96dd9a525e8f4a532e2"
@@ -12903,6 +12977,11 @@ jose@^4.1.4, jose@^4.3.7:
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.8.3.tgz#5a754fb4aa5f2806608d083f438e6916b11087da"
   integrity sha512-7rySkpW78d8LBp4YU70Wb7+OTgE3OwAALNVZxhoIhp4Kscp+p/fBkdpxGAMKxvCAMV4QfXBU9m6l9nX/vGwd2g==
 
+jose@^4.9.3:
+  version "4.10.4"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.10.4.tgz#5f934b2fcf2995776e8f671f7523c6ac52c138f7"
+  integrity sha512-eBH77Xs9Yc/oTDvukhAEDVMijhekPuNktXJL4tUlB22jqKP1k48v5nmsUmc8feoJPsxB3HsfEt2LbVSoz+1mng==
+
 jpeg-js@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.2.tgz#8b345b1ae4abde64c2da2fe67ea216a114ac279d"
@@ -15063,6 +15142,21 @@ next-auth@4.10.3:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+next-auth@^4.9.0:
+  version "4.15.0"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.15.0.tgz#1e350258b240cff7e09e81f066e26ad8fe540c85"
+  integrity sha512-IasNzGLM2VlmyioDdZaRwBBBm8b5xo+zbbqVWHFh0bY6iQUZ3vuudrsdHNdxkXV3LSHdKNaoWEpYr4BydB7mCw==
+  dependencies:
+    "@babel/runtime" "^7.16.3"
+    "@panva/hkdf" "^1.0.1"
+    cookie "^0.5.0"
+    jose "^4.9.3"
+    oauth "^0.9.15"
+    openid-client "^5.1.0"
+    preact "^10.6.3"
+    preact-render-to-string "^5.1.19"
+    uuid "^8.3.2"
+
 next-tick@0.1.x:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-0.1.0.tgz#1912cce8eb9b697d640fbba94f8f00dec3b94259"
@@ -15077,6 +15171,13 @@ next-tick@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-0.2.2.tgz#75da4a927ee5887e39065880065b7336413b310d"
   integrity sha512-f7h4svPtl+QidoBv4taKXUjJ70G2asaZ8G28nS0OkqaalX8dwwrtWtyxEDPK62AC00ur/+/E0pUwBwY5EPn15Q==
+
+next-use-posthog@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/next-use-posthog/-/next-use-posthog-1.16.0.tgz#19319435bf36f64aae43eb94c49da72cc659689e"
+  integrity sha512-nEv+0c/m06/uImJTZ8llg+Pr5thMOyGEjKzXZK31UqVf+/bhbsG4mDFP4yJyDC02+U3tb1c3wW/IN0XY7Kn9lw==
+  dependencies:
+    posthog-js "1.16.0"
 
 next@12.2.2:
   version "12.2.2"
@@ -15104,7 +15205,7 @@ next@12.2.2:
     "@next/swc-win32-ia32-msvc" "12.2.2"
     "@next/swc-win32-x64-msvc" "12.2.2"
 
-next@latest:
+next@12.2.5, next@latest:
   version "12.2.5"
   resolved "https://registry.yarnpkg.com/next/-/next-12.2.5.tgz#14fb5975e8841fad09553b8ef41fe1393602b717"
   integrity sha512-tBdjqX5XC/oFs/6gxrZhjmiq90YWizUYU6qOWAfat7zJwrwapJ+BYgX2PmiacunXMaRpeVT4vz5MSPSLgNkrpA==
@@ -16862,6 +16963,15 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
+posthog-js@1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.16.0.tgz#60c24151d42f147b8513ecd0d41c768dc7c374ec"
+  integrity sha512-7gE4fDSCD7wzdr+Jb/dOIqUubsc4ahnyJYXKudDF+LcuhGX8qP8wRj8WA6JtyQDS1mqSH3Y+AwOWzfC9W8UIMQ==
+  dependencies:
+    "@sentry/types" "^6.11.0"
+    fflate "^0.4.1"
+    rrweb-snapshot "^1.1.7"
+
 preact-render-to-string@^5.1.19:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.2.0.tgz#3d3c4f9c570229b76d33353ed02ce662bd13dec1"
@@ -16916,6 +17026,11 @@ printj@~1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
   integrity sha512-zA2SmoLaxZyArQTOPj5LXecR+RagfPSU5Kw1qP+jkWeNlrq+eJZyY2oS68SU1Z/7/myXM4lo9716laOFAVStCQ==
+
+prism-react-renderer@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-1.3.5.tgz#786bb69aa6f73c32ba1ee813fbe17a0115435085"
+  integrity sha512-IJ+MSwBWKG+SM3b2SUfdrhC+gu01QkV2KmRQgREThBfSQRoufqRfxfHUxpG1WcaFjP+kojcFyO9Qqtpgt3qLCg==
 
 proc-log@^1.0.0:
   version "1.0.0"
@@ -18717,6 +18832,11 @@ routing-controllers@^0.7.7:
     glob "^7.0.5"
     reflect-metadata "^0.1.12"
     template-url "^1.0.0"
+
+rrweb-snapshot@^1.1.7:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/rrweb-snapshot/-/rrweb-snapshot-1.1.14.tgz#9d4d9be54a28a893373428ee4393ec7e5bd83fcc"
+  integrity sha512-eP5pirNjP5+GewQfcOQY4uBiDnpqxNRc65yKPW0eSoU1XamDfc4M8oqpXGMyUyvLyxFDB0q0+DChuxxiU2FXBQ==
 
 run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.1"

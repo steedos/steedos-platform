@@ -1,10 +1,12 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-11-03 15:15:45
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-25 13:52:42
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-10-29 16:21:30
  * @Description: 
  */
+
+const objectql = require('@steedos/objectql');
 
 module.exports = {
 
@@ -30,7 +32,7 @@ module.exports = {
     afterFindOne: async function () {
         try {
             if (this.data.values) {
-                Object.assign(this.data.values, { template_url: `[下载](${__meteor_runtime_config__.ROOT_URL_PATH_PREFIX}/api/data/download/template/${this.data.values._id})` })
+                Object.assign(this.data.values, { template_url: `[下载](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` })
             }
         } catch (error) {
 
@@ -40,7 +42,7 @@ module.exports = {
         if (this.data.values) {
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[下载](${__meteor_runtime_config__.ROOT_URL_PATH_PREFIX}/api/data/download/template/${value._id})`
+                    value.template_url = `[下载](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
                 }
             }
         }
@@ -49,7 +51,7 @@ module.exports = {
         if (this.data.values) {
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[下载](${__meteor_runtime_config__.ROOT_URL_PATH_PREFIX}/api/data/download/template/${value._id})`
+                    value.template_url = `[下载](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
                 }
             }
         }

@@ -1,9 +1,0 @@
-name: spaces
-desktop: true
-icon: account
-is_new_window: false
-label: 公司
-mobile: true
-permissions: []
-type: url
-url: /app/admin/spaces/view/LLntvQ6p6srFzvzSc

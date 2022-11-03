@@ -1,9 +1,0 @@
-name: profile
-desktop: true
-icon: groups
-is_new_window: false
-label: 简档
-mobile: true
-permissions: []
-type: url
-url: /app/admin/permission_set/grid/profile

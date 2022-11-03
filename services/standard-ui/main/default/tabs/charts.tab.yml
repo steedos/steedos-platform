@@ -1,9 +1,0 @@
-name: charts
-desktop: true
-icon: case
-is_new_window: false
-label: 图表
-mobile: true
-permissions: []
-type: url
-url: /app/admin/charts/grid/all

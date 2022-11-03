@@ -1,0 +1,22 @@
+name: admin_space_user_info
+desktop: true
+icon: people
+is_new_window: false
+label: 我的资料
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'on'
+    permission_set: user
+  - permission: 'on'
+    permission_set: customer
+  - permission: 'on'
+    permission_set: supplier
+  - permission: 'on'
+    permission_set: organization_admin
+  - permission: 'on'
+    permission_set: workflow_admin
+type: url
+url: /app/admin/page/space_user_info_record?id=${global.user.spaceUserId}
+# url: /app/admin/space_users/view/${global.user.spaceUserId}?ref=users

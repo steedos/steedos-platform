@@ -1,9 +1,0 @@
-name: instances_statistic
-desktop: true
-icon: metrics
-is_new_window: false
-label: 效率统计
-mobile: true
-permissions: []
-type: url
-url: /app/admin/instances_statistic/grid/all
