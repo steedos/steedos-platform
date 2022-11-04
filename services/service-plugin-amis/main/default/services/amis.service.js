@@ -105,10 +105,18 @@ module.exports = {
         },
         getInitSchema: {
             async handler({type, objectApiName, formFactor, userSession}) {
-                if(type === 'form' && objectApiName){
-                    let schema = await AmisLib.getFormSchema(objectApiName, {recordId: '${recordId}'});
+                if(objectApiName){
+                    let schema;
+                    switch(type){
+                        case "form":
+                            schema = await AmisLib.getFormSchema(objectApiName, {recordId: '${recordId}'});
+                            break;
+                        case "list":
+                            schema = await AmisLib.getListSchema(null, objectApiName, "all");
+                            break;
+                    }
                     return schema && schema.amisSchema || {};
-                //    return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 
+                    //    return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 
                 }
             }
         }
