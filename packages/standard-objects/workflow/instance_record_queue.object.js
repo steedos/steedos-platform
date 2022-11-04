@@ -589,9 +589,10 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         //         _id: 1
                         //     }
                         // });
-                        var referData = objectFindOne(oField.reference_to, { filters: [['_id', '=', values[fm.workflow_field]]], fields: ['_id'] });
+                        let referToField = oField.reference_to_field || '_id'
+                        var referData = objectFindOne(oField.reference_to, { filters: [[referToField, '=', values[fm.workflow_field]]], fields: [referToField] });
                         if (referData) {
-                            obj[fm.object_field] = referData._id;
+                            obj[fm.object_field] = referData[referToField];
                         }
 
                         // 其次认为此值是referObject NAME_FIELD_KEY值
@@ -629,11 +630,12 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         }
                     }
                     else if (['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata') {
+                        let referToField = oField.reference_to_field || '_id'
                         if (oField.multiple && wField.is_multiselect) {
-                            obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], '_id'))
+                            obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], referToField))
                         } else if (!oField.multiple && !wField.is_multiselect) {
                             if (!_.isEmpty(values[fm.workflow_field])) {
-                                obj[fm.object_field] = values[fm.workflow_field]._id
+                                obj[fm.object_field] = values[fm.workflow_field][referToField]
                             }
                         } else {
                             obj[fm.object_field] = values[fm.workflow_field];
@@ -772,11 +774,12 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 return
                             }
                             if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)) {
+                                let referToField = relatedObjectField.reference_to_field || '_id'
                                 if (!_.isEmpty(relatedObjectFieldValue)) {
                                     if (relatedObjectField.multiple && formField.is_multiselect) {
-                                        relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, '_id'))
+                                        relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, referToField))
                                     } else if (!relatedObjectField.multiple && !formField.is_multiselect) {
-                                        relatedObjectFieldValue = relatedObjectFieldValue._id
+                                        relatedObjectFieldValue = relatedObjectFieldValue[referToField]
                                     }
                                 }
                             }

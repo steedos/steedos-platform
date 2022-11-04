@@ -157,7 +157,16 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
 				if(!judge && nextStep.step_type == 'sign'){
 					judge = 'approved'
 				}
-				rev_nextSteps = rev_nextSteps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields, showSkipStep))
+                let nextStepsAfterSkipStep = ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields, showSkipStep)
+                let stepsWithOutCurrentStep = []
+                for (const s of nextStepsAfterSkipStep) {
+                    if (currentStep.id == s.id) {
+                        continue
+                    }
+                    stepsWithOutCurrentStep.push(s)
+                }
+                // 后续步骤不应包含当前步骤
+				rev_nextSteps = rev_nextSteps.concat(stepsWithOutCurrentStep)
             }else{
 				rev_nextSteps.push(nextStep);
             }

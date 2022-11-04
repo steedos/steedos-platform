@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-27 15:49:00
+ * @LastEditTime: 2022-11-03 18:01:15
  * @Description: 
  */
 module.exports = {
@@ -22,6 +22,7 @@ module.exports = {
       var newRecord = _.pick(doc, Creator.getObjectFieldsName(object_name));
       delete newRecord.is_system;
       delete newRecord._id;
+      delete newRecord.record_permissions;
       newRecord.from_code_id = record_id;
       Creator.odata.insert(object_name, newRecord, function(result, error){
           if(result){

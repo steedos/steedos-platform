@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-29 10:20:29
+ * @LastEditTime: 2022-11-03 13:29:06
  * @Description: 
  */
 
@@ -579,7 +579,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
     for (const name in fields) {
@@ -817,23 +817,14 @@ async function translateToUI(objectName, doc, userSession: any) {
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
-    let utcOffset = userSession.utcOffset;
     for (const name in fields) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
             const field = fields[name];
             if (_.has(doc, name)) {
                 const fType = field.type;
-                if (fType == "text") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "textarea") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "html_text") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "html") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "select") {
+                if (fType == "select") {
                     let label = "";
                     let map = {};
                     let value = doc[name];
@@ -853,37 +844,6 @@ async function translateToUI(objectName, doc, userSession: any) {
                         label = map[value];
                     }
                     displayObj[name] = label;
-                } else if (fType == "boolean") {
-                    if (doc[name]) {
-                        displayObj[name] = "√";
-                    } else {
-                        displayObj[name] = "";
-                    }
-                } else if (fType == "date") {
-                    // 注意日期类型存的是utc0点，不需要执行utcOffset
-                    displayObj[name] = doc[name] ? moment.utc(doc[name])
-                        .format("YYYY-MM-DD") : '';
-                } else if (fType == "datetime") {
-                    displayObj[name] = doc[name] ? moment(doc[name])
-                        .utcOffset(utcOffset)
-                        .format("YYYY-MM-DD HH:mm") : '';
-                } else if (fType == "time") {
-                    // 注意时间类型走的是utc时间，不需要执行utcOffset
-                    displayObj[name] = doc[name] ? moment.utc(doc[name])
-                        .format("HH:mm") : '';
-                } else if (fType == "number") {
-                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
-                } else if (fType == "currency") {
-                    displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
-                } else if (fType == "percent") {
-                    displayObj[name] = `${doc[name] * 100}%`;
-                } else if (fType == "password") {
-                    displayObj[name] = "";
-                    if (_.isString(doc[name])) {
-                        for (let i = 0; i < doc[name].length; i++) {
-                            displayObj[name] += "*";
-                        }
-                    }
                 } else if (fType == "lookup" && _.isString(field.reference_to)) {
                     let refTo = field.reference_to;
 
@@ -992,16 +952,10 @@ async function translateToUI(objectName, doc, userSession: any) {
                             label: item[nameFieldKey]
                         }
                     })
-                } else if (fType == "autonumber") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "url") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "email") {
-                    displayObj[name] = doc[name] || "";
                 } else if (fType == "formula") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = formatBasicFieldValue(field.data_type, field, doc[name], objConfig, userSession);
                 } else if (fType == "summary") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = formatBasicFieldValue('number', field, doc[name], objConfig, userSession);
                 } else if (fType == "image" || fType == "file" || fType === 'avatar') {
                     let fileValue: any = null;
                     let value = doc[name];
@@ -1044,10 +998,7 @@ async function translateToUI(objectName, doc, userSession: any) {
                     }
                     displayObj[name] = fileValue;
                 } else {
-                    console.error(
-                        `Graphql Display: need to handle new field type ${field.type} for ${objectName}.`
-                    );
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
                 }
             } else {
                 displayObj[name] = ""; // 如果值为空，均返回空字符串
@@ -1056,6 +1007,41 @@ async function translateToUI(objectName, doc, userSession: any) {
     }
     return displayObj;
 }
+
+function formatBasicFieldValue(valueType, field, value, objectConfig, userSession){
+    switch (valueType) {
+        case 'text':
+        case 'textarea':
+        case 'html_text':
+        case 'autonumber':
+        case 'url':
+        case 'email':
+        case 'html':
+            return value || "";
+        case 'boolean':
+            return value ? "√" : ""
+        case 'date':
+            return value ? moment.utc(value).format("YYYY-MM-DD") : '';
+        case 'datetime':
+            return value ? moment(value).utcOffset(userSession.utcOffset).format("YYYY-MM-DD HH:mm") : '';
+        case 'time':
+            return value ? moment.utc(value).format("HH:mm") : '';
+        case 'number':
+        case 'currency':
+            return value ? numberToString(value, field.scale) : "";
+        case 'percent':
+            return `${value * 100}%`
+        case 'password':
+            return _.isString(value) ? "******" : ""
+        default:
+            console.error(
+                `Graphql Display: need to handle new field type ${field.type} for ${objectConfig.name}.`
+            );
+            return value || "";
+    }
+}
+
+
 
 function _getUIType(typeName, fields) {
     let type = `type ${typeName} { _id: String `;

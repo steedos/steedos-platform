@@ -309,7 +309,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			return _.find tableField.fields,  (f) ->
 				return f.code == subFieldCode
 
-		getFieldOdataValue = (objName, id) ->
+		getFieldOdataValue = (objName, id, referenceToFieldName) ->
 			# obj = Creator.getCollection(objName)
 			obj = objectql.getObject(objName)
 			nameKey = getObjectNameFieldKey(objName)
@@ -317,14 +317,14 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				return
 			if _.isString id
 				# _record = obj.findOne(id)
-				_record = objectFindOne(objName, { filters: [['_id', '=', id]]})
+				_record = objectFindOne(objName, { filters: [[referenceToFieldName, '=', id]]})
 				if _record
 					_record['@label'] = _record[nameKey]
 					return _record
 			else if _.isArray id
 				_records = []
 				# obj.find({ _id: { $in: id } })
-				objectFind(objName, { filters: [['_id', 'in', id]]}).forEach (_record) ->
+				objectFind(objName, { filters: [[referenceToFieldName, 'in', id]]}).forEach (_record) ->
 					_record['@label'] = _record[nameKey]
 					_records.push _record
 				if !_.isEmpty _records
@@ -403,9 +403,10 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 					if oTableCodeReferenceField && ['lookup', 'master_detail'].includes(oTableCodeReferenceField.type) && _.isString(oTableCodeReferenceField.reference_to)
 						if record[oTableCode]
 							return;
+						referenceToFieldName = oTableCodeReferenceField.reference_to_field;
 						referenceToObjectName = oTableCodeReferenceField.reference_to;
 						referenceToFieldValue = record[oTableCodeReferenceField.name];
-						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue);
+						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName);
 						if referenceToDoc[gridCode]
 							record[oTableCode] = referenceToDoc[gridCode];
 							tableFieldCodes.push(JSON.stringify({
@@ -432,12 +433,13 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
 						referenceToFieldValue = lookupObjectRecord[lookupFieldName]
 						if objectLookupField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectLookupField.type) && _.isString(objectLookupField.reference_to)
+							referenceToFieldName = objectLookupField.reference_to_field || '_id'
 							referenceToObjectName = objectLookupField.reference_to
 							odataFieldValue
 							if objectField.multiple && formField.is_multiselect
-								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 							else if !objectField.multiple && !formField.is_multiselect
-								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 							values[workflow_field] = odataFieldValue
 						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && (['users', 'organizations'].includes(objectLookupField.reference_to) || ('space_users' == objectLookupField.reference_to && 'user' == objectLookupField.reference_to_field) )
 							if !_.isEmpty(referenceToFieldValue)
@@ -459,13 +461,14 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 			# lookup、master_detail字段同步到odata字段
 			else if formField && objField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
+				referenceToFieldName = objField.reference_to_field
 				referenceToObjectName = objField.reference_to
 				referenceToFieldValue = record[objField.name]
 				odataFieldValue
 				if objField.multiple && formField.is_multiselect
-					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 				else if !objField.multiple && !formField.is_multiselect
-					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 				values[workflow_field] = odataFieldValue
 			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && (['users', 'organizations'].includes(objField.reference_to) || ('space_users' == objField.reference_to && 'user' == objField.reference_to_field) )
 				referenceToFieldValue = record[objField.name]
@@ -537,12 +540,13 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							if !formField || !relatedObjectField
 								return
 							if formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type) && _.isString(relatedObjectField.reference_to)
+								referenceToFieldName = relatedObjectField.reference_to_field
 								referenceToObjectName = relatedObjectField.reference_to
 								referenceToFieldValue = rr[fieldKey]
 								if relatedObjectField.multiple && formField.is_multiselect
-									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 								else if !relatedObjectField.multiple && !formField.is_multiselect
-									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue)
+									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
 							else if ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)
 								referenceToFieldValue = rr[fieldKey]
 								if !_.isEmpty(referenceToFieldValue)
