@@ -1,0 +1,127 @@
+datasources:
+  default:
+    connection:
+      url: ${MONGO_URL}
+    objectFiles:
+      - "./steedos-app/**"
+public:
+  cfs:
+    store: ${STEEDOS_CFS_STORE}
+  templateSpaceId: 'template'
+  webservices:
+    jsreport:
+      url: ${JSREPORT_URL}
+      urlProvideForJsreport: ${JSREPORT_TO_ACQUIRE_DATA_URL}
+    app_exchange:
+      url: ${STEEDOS_APP_EXCHANGE_URL}
+  page:
+    assetUrls: ${STEEDOS_PUBLIC_PAGE_ASSETURLS}
+    unpkgUrl: ${STEEDOS_PUBLIC_PAGE_UNPKGURL}
+  analytics:
+    enabled: ${STEEDOS_PUBLIC_ANALYTICS_ENABLED}
+    baidu:
+      id: ${STEEDOS_PUBLIC_ANALYTICS_BAIDU_ID}
+    posthog:
+      id: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_ID}
+      api_host: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_API_HOST}
+cfs:
+  store: ${STEEDOS_CFS_STORE}
+  local:
+    folder: ${STEEDOS_STORAGE_DIR}
+  aliyun:
+    region: ${STEEDOS_CFS_ALIYUN_REGION}
+    bucket: ${STEEDOS_CFS_ALIYUN_BUCKET}
+    folder: ${STEEDOS_CFS_ALIYUN_FOLDER}
+    accessKeyId: ${STEEDOS_CFS_ALIYUN_ACCESSKEYID}
+    secretAccessKey: ${STEEDOS_CFS_ALIYUN_SECRETACCESSKEY}
+  aws:
+    region: ${STEEDOS_CFS_AWS_S3_REGION}
+    endpoint: ${STEEDOS_CFS_AWS_S3_ENDPOINT}
+    bucket: ${STEEDOS_CFS_AWS_S3_BUCKET}
+    accessKeyId: ${STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID}
+    secretAccessKey: ${STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY}
+    s3ForcePathStyle: ${STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE}
+    signatureVersion: ${STEEDOS_CFS_AWS_S3_SIGNATURE_VERSION}
+  steedosCloud:
+    region: ${STEEDOS_CFS_CLOUD_REGION}
+    bucket: ${STEEDOS_CFS_CLOUD_BUCKET}
+    endpoint: ${STEEDOS_CFS_CLOUD_ENDPOINT}
+    accessKeyId: ${STEEDOS_CFS_CLOUD_ACCESSKEYID}
+    secretAccessKey: ${STEEDOS_CFS_CLOUD_SECRETACCESSKEY}
+tenant:
+  _id: ${STEEDOS_CLOUD_SPACE_ID}
+  name: 华炎魔方
+  logo_url: ${STEEDOS_TENANT_LOGO_URL}
+  logo_square_url: ${STEEDOS_TENANT_LOGO_SQUARE_URL}
+  background_url: ${STEEDOS_TENANT_BACKGROUND_URL}
+  enable_activation: ${STEEDOS_TENANT_ENABLE_ACTIVATION} # 启用初始化向导
+  enable_register: ${STEEDOS_TENANT_ENABLE_REGISTER} # 启用注册功能 true / false
+  enable_forget_password: ${STEEDOS_TENANT_ENABLE_FORGET_PASSWORD}
+  enable_create_tenant: ${STEEDOS_TENANT_ENABLE_CREATE_TENANT}
+  enable_password_login: ${STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN}
+  enable_mobile_code_login: ${STEEDOS_TENANT_ENABLE_MOBILE_CODE_LOGIN}
+  enable_email_code_login: ${STEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN}
+  enable_bind_email: ${STEEDOS_TENANT_ENABLE_BIND_EMAIL}
+  enable_bind_mobile: ${STEEDOS_TENANT_ENABLE_BIND_MOBILE}
+  tokenSecret: ${STEEDOS_TENANT_TOKEN_SECRET} # 默认值 43位字符串, 每次重启服务时生成新的值
+  accessTokenExpiresIn: ${STEEDOS_TENANT_ACCESS_TOKEN_EXPIRES_IN} # 默认值 90d
+  refreshTokenExpiresIn: ${STEEDOS_TENANT_REFRESH_TOKEN_EXPIRES_IN} # 默认值 7d
+sms:
+  qcloud:
+    smsqueue_interval: 1000
+    sdkappid: ${STEEDOS_SMS_QCLOUD_SDKAPPID}
+    appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
+    signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
+email:
+  from: ${STEEDOS_EMAIL_FROM}
+  url: ${STEEDOS_EMAIL_URL}
+  host: ${STEEDOS_EMAIL_HOST}
+  port: ${STEEDOS_EMAIL_PORT}
+  username: ${STEEDOS_EMAIL_USERNAME}
+  password: ${STEEDOS_EMAIL_PASSWORD}
+  secure: ${STEEDOS_EMAIL_PASSWORD}
+  signname: ${STEEDOS_EMAIL_SIGNNAME}
+cron:
+  instancerecordqueue_interval: 10000
+  mailqueue_interval: 10000
+  # push_interval: 1000
+  webhookqueue_interval: 1000
+  build_index: "0 0 * * * *"
+instances_stat:
+  schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
+dingtalk:
+  api_Key: ${APIKEY}
+  log_path: ${DING_LOGPATH}
+qywx:
+  api_Key: ${APIKEY}
+  log_path: ${QYWX_LOGPATH}
+push:
+  apn:
+    keyData: ${STEEDOS_PUSH_APN_DATA}
+    certData: ${STEEDOS_PUSH_APN_DATA}
+  gcm:
+    apiKey: xxx
+  xinge:
+    accessId: ${STEEDOS_PUSH_XINGE_ACCESSID}
+    secretKey: ${STEEDOS_PUSH_XINGE_SECRETKEY}
+  huawei:
+    appId: ${STEEDOS_PUSH_HUAWEI_APPID}
+    appSecret: ${STEEDOS_PUSH_HUAWEI_APPSECRET}
+    appPkgName: ${STEEDOS_PUSH_HUAWEI_APPPKGNAME}
+  mi:
+    appSecret: ${STEEDOS_PUSH_MI_APPSECRET}
+    production: ${STEEDOS_PUSH_MI_PRODUCTION}
+pay:
+  weixin:
+    appid: ${PAY_WEIXIN_APPID}
+    mch_id: ${PAY_WEIXIN_MCH_ID}
+    partner_key: ${PAY_WEIXIN_PARTNER_KEY}
+sso:
+  oidc:
+    config_url: ${STEEDOS_IDENTITY_OIDC_CONFIG_URL}
+    client_id: ${STEEDOS_IDENTITY_OIDC_CLIENT_ID}
+    client_secret: ${STEEDOS_IDENTITY_OIDC_CLIENT_SECRET}
+    name: ${STEEDOS_IDENTITY_OIDC_NAME}
+    label: ${STEEDOS_IDENTITY_OIDC_LABEL}
+    logo: ${STEEDOS_IDENTITY_OIDC_LOGO}
+    require_local_account: ${STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT}

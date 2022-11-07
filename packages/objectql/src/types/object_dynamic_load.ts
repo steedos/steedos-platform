@@ -10,6 +10,8 @@ import { syncMatchFiles } from '@steedos/metadata-core';
 var util = require('../util')
 var clone = require('clone')
 
+const debugAddObjectConfigFiles = require('debug')('steedos:package:load-metadata:addAllConfigFiles:addObjectConfigFiles');
+
 export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
 export const MONGO_BASE_OBJECT = '__MONGO_BASE_OBJECT';
 export const SQL_BASE_OBJECT = '__SQL_BASE_OBJECT';
@@ -86,29 +88,35 @@ export const getObjectConfig = (object_name: string):SteedosObjectTypeConfig => 
 }
 
 export const addObjectConfigFiles = async (filePath: string, datasource: string, serviceName?: string) => {
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:start", serviceName)
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);
     }
 
     if (!datasource)
       datasource = 'meteor'
-
+    
     await loadPackageMetadatas(filePath, datasource, serviceName)
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadPackageMetadatas", serviceName)
 
     await loadObjectLayouts(filePath, serviceName);
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadObjectLayouts", serviceName)
     // await loadObjectPermissions(filePath, serviceName);
     await loadSourceProfiles(filePath, serviceName);
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourceProfiles", serviceName)
     await loadSourcePermissionset(filePath, serviceName);
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourcePermissionset", serviceName)
     
     loadObjectValidationRules(filePath, serviceName);
-
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadObjectValidationRules", serviceName)
     loadSourceRoles(filePath);
-
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourceRoles", serviceName)
     loadSourceFlowRoles(filePath);
-
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourceFlowRoles", serviceName)
     loadSourceApprovalProcesses(filePath);
-
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourceApprovalProcesses", serviceName)
     loadSourceWorkflows(filePath);
+    debugAddObjectConfigFiles("%o addObjectConfigFiles:loadSourceWorkflows", serviceName)
 }
 
 export const addServerScriptFiles = (filePath: string) => {

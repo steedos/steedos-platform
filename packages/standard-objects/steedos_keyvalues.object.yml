@@ -1,0 +1,10 @@
+name: steedos_keyvalues
+hidden: true
+fields:
+  user: 
+    type: text
+  key: 
+    type: text
+  value:
+    type: object
+    blackbox: true

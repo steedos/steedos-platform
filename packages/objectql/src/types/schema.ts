@@ -62,7 +62,7 @@ export class SteedosSchema {
 
     addDataSourceFromSteedosConfig() {
         let config: any = getSteedosConfig();
-        if (config && config.datasources) {
+        if (!isMeteor() && config && config.datasources) {
             _.each(config.datasources, (datasource: any, datasource_name: string) => {
                 datasource = _.extend(datasource, datasource.connection)
                 if (datasource_name === 'default') {

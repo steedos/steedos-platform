@@ -256,7 +256,7 @@ function getObjectServiceActionsSchema() {
                         ctx.params.filters = '(is_deleted ne true)'
                     }
                 }
-                if (_.isEmpty(ctx.params.fields)) {
+                if (_.isEmpty(ctx.params.fields) && false) {
                     const { resolveInfo } = ctx.meta;
 
                     const fieldNames = getQueryFields(resolveInfo);
@@ -659,7 +659,7 @@ export function getObjectServiceSchema(serviceName, objectConfig) {
     }
 }
 
-module.exports = {
+export const objectBaseService = {
     name: '#_objectBaseService', //TODO
     settings: {
         // objectApiName:  //TODO
@@ -668,10 +668,10 @@ module.exports = {
     actions: getObjectServiceActionsSchema(),
     methods: getObjectServiceMethodsSchema(),
     created(broker) {
-        if (!this.settings.objectApiName && !this.settings.objectConfig) {
+        if (!this.getObjectConfig && !this.settings.objectApiName && !this.settings.objectConfig) {
             throw new Error('Please set the settings.objectApiName.')
         }
-        const objectConfig: any = this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
+        const objectConfig: any = this.getObjectConfig() || this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
         if (!objectConfig) {
             throw new Error('Not found object config by objectApiName.')
         }
@@ -682,7 +682,7 @@ module.exports = {
         }
     },
     async started() {
-        const objectConfig: any = this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
+        const objectConfig: any = this.getObjectConfig() || this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
         const objectApiName = objectConfig.name;
         // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
         let steedosSchema = getSteedosSchema();
@@ -703,7 +703,8 @@ module.exports = {
         "metadata.objects.deleted": {
             async handler(ctx) {
                 const { objectApiName } = ctx.params
-                const { onDestroyObjectService, objectConfig } = this.settings
+                const { onDestroyObjectService } = this.settings
+                const objectConfig = this.getObjectConfig()
                 if (objectApiName === this.object.name) {
                     _.each(objectConfig.fields, (field, name) => {
                         if ((field.type === 'lookup' || field.type === 'master_detail') && (field.reference_to && _.isString(field.reference_to))) {
@@ -741,7 +742,7 @@ module.exports = {
     },
     merged(schema) {
         let settings = schema.settings;
-        let objectConfig = settings.objectConfig;
+        let objectConfig = this.originalSchema.methods.getObjectConfig() ||  settings.objectConfig;
         // 先关闭对象服务action rest api, 否则会导致 action rest api 过多, 请求速度变慢.
         // if (objectConfig.enable_api) {
         //     _.each(schema.actions, (action, actionName) => {

@@ -13,6 +13,8 @@ const globby = require("globby");
 const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
+const debugPackage = require('debug')('steedos:package:load-metadata');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -72,12 +74,13 @@ module.exports = {
             const { path : _path } = packageInfo;
 
             this.loadPackagePublicFiles(_path);
-            if(_path){
+            if(_path && false){
                 sendPackageFlowToDb(this.broker, _path)
                 processLoader.sendPackageProcessToDb(_path);
             }
         },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
+            debugPackage("%o load-metadata:start", name)
             this.broker.logger.debug(`Loading package from ${packagePath}`)
             await Future.task(async () => {
                 if (!datasourceName) {
@@ -85,12 +88,17 @@ module.exports = {
                 }
                 objectql.getSteedosSchema(this.broker);
                 packagePath = path.join(packagePath, '**');
-                const datasource = objectql.getDataSource(datasourceName);
-                await datasource.init();
+                // const datasource = objectql.getDataSource(datasourceName);
+                // await datasource.init();
+                debugPackage("%o load-metadata:datasource.init", name)
                 await objectql.loadStandardMetadata(name, datasourceName);
+                debugPackage("%o load-metadata:loadStandardMetadata", name)
                 await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+                debugPackage("%o load-metadata:addAllConfigFiles", name)
                 await triggerLoader.load(this.broker, packagePath, name);
+                debugPackage("%o load-metadata:triggerLoader.load", name)
                 await processTriggerLoader.load(this.broker, packagePath, name);
+                debugPackage("%o load-metadata:processTriggerLoader.load", name)
                 core.loadClientScripts();
                 let routersData = objectql.loadRouters(packagePath);
                 let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
@@ -110,8 +118,10 @@ module.exports = {
                     _routers.push(element)
                 });
                 core.loadRouters(_routers);
+                debugPackage("%o load-metadata:loadRouters", name)
                 await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
                 await this.broker.emit(`translations.object.change`, {});
+                debugPackage("%o load-metadata:translations.object.change", name)
                 return;
             }).promise();
         },
@@ -189,6 +199,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
+        debugPackage("%o started", this.name)
         if(this.beforeStart){
             try {
                 await this.beforeStart()
@@ -198,6 +209,7 @@ module.exports = {
         }
 
         console.time(`service ${this.name} started`)
+       
         let packageInfo = this.settings.packageInfo;
         if (!packageInfo) {
             return;
@@ -213,6 +225,7 @@ module.exports = {
         });
         
         await this.loadPackageMetadataFiles(_path, this.name, datasource);
+        debugPackage("%o started:load-metadata", this.name)
         if(isPackage !== false){
             try {
                 const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
@@ -221,9 +234,9 @@ module.exports = {
                 
             }    
         }
-
+        debugPackage("%o started:register-package-service", this.name)
         await this.loadPackageMetadataServices(_path);
-
+        debugPackage("%o started:load-metadata-services", this.name)
         // await this.loadPackagePublicFiles(_path);
         this.started = true;
         console.timeEnd(`service ${this.name} started`)

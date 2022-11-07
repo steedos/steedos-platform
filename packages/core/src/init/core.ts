@@ -65,7 +65,7 @@ export const loadClientScripts = ()=>{
 
 export const initCreator = async () => {
     let allObjects = await objectql.getDataSource('meteor').getObjects();
-    let allDefautObjects = await objectql.getDataSource('default').getObjects();
+    // let allDefautObjects = await objectql.getDataSource('default').getObjects();
     await Future.task(() => {
         try {
             extendSimpleSchema();
@@ -110,7 +110,11 @@ export const initCreator = async () => {
 
             let allServerScripts = objectql.getServerScripts();
             _.each(allServerScripts, function (scriptFile) {
-                require(scriptFile)
+                try {
+                    require(scriptFile)
+                } catch (error) {
+                    console.error(error)
+                }
             });
 
             _.each(allObjects, function (obj) {
@@ -134,15 +138,15 @@ export const initCreator = async () => {
                     Creator.loadObjects(objectConfig, objectConfig.name);
             });
 
-            _.each(allDefautObjects, function (obj) {
-                try {
-                    const objectConfig = obj.metadata;
-                    const _db = Creator.createCollection({name: objectConfig.name}); 
-                    Creator.Collections[_db._name] = _db;
-                } catch (error) {
-                    console.error(error)
-                }
-            })
+            // _.each(allDefautObjects, function (obj) {
+            //     try {
+            //         const objectConfig = obj.metadata;
+            //         const _db = Creator.createCollection({name: objectConfig.name}); 
+            //         Creator.Collections[_db._name] = _db;
+            //     } catch (error) {
+            //         console.error(error)
+            //     }
+            // })
 
         } catch (error) {
             console.error(error)

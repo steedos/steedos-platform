@@ -8,6 +8,13 @@ import { objectToJson } from '../util/convert';
 import { registerPermissionFields } from '..';
 var util = require('../util');
 var clone = require('clone');
+
+const debugLoadObjectMetadatas = require('debug')('steedos:package:load-metadata:addAllConfigFiles:addObjectConfigFiles:loadObjectMetadatas');
+
+// const debugRegisterObjects = require('debug')('steedos:package:load-metadata:addAllConfigFiles:addObjectConfigFiles:loadObjectMetadatas:registerObjects');
+// debugRegisterObjects.enabled = true;
+
+
 // let Fiber = require('fibers');
 declare var Creator: any;
 
@@ -136,6 +143,7 @@ async function addObjectConfigs(broker, serviceName, objectConfigs) {
         delete metadata.methods;
         objectToJson(metadata);
     })
+    debugLoadObjectMetadatas("%o registerObjects:start", serviceName)
     const res = await broker.call("objects.addConfigs", { data: metadatas }, {
         meta: {
             metadataServiceName: serviceName,
@@ -144,6 +152,7 @@ async function addObjectConfigs(broker, serviceName, objectConfigs) {
             }
         }
     });
+    debugLoadObjectMetadatas("%o registerObjects:end", serviceName)
     return res;
 }
 
@@ -156,6 +165,7 @@ async function addObjectConfigs(broker, serviceName, objectConfigs) {
  * @param serviceName 软件包服务名称
  */
 export const loadPackageMetadatas = async function (packagePath: string, datasource: string, serviceName?: string) {
+    debugLoadObjectMetadatas("%o loadPackageMetadatas:start", serviceName)
     let packageObjects = loadPackageObjects(packagePath);
     const packageFields = loadPackageFields(packagePath);
     const packageListviews = loadPackageListViews(packagePath);
@@ -163,6 +173,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
     const packageActions = loadPackageActions(packagePath);
     const packageActionScripts = loadPackageActionScripts(packagePath);
     const packagePermissions = loadPackagePermissions(packagePath);
+    debugLoadObjectMetadatas("%o loadPackageMetadatas:scan", serviceName)
 
     const packageObjectApiNames = _.map(packageObjects, 'name');
 
@@ -251,6 +262,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         })
         addObjectConfig(element, datasource, null);
     }
+    debugLoadObjectMetadatas("%o loadPackageMetadatas:format", serviceName)
 
     if(getSteedosSchema().metadataBroker){
 
@@ -259,6 +271,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         loadObjectMethods(packagePath);
 
         await addObjectConfigs(getSteedosSchema().metadataBroker, serviceName, packageObjects);
+        debugLoadObjectMetadatas("%o loadPackageMetadatas:registerObjects", serviceName)
         if (serviceName) {
             for await (const packageField of packageFields) {
                 if (packageField && !_.includes(packageObjectApiNames, packageField.object_name)) {
@@ -317,7 +330,9 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
                 }
             }
         }
+        debugLoadObjectMetadatas("%o loadPackageMetadatas:delayRegisterObjects", serviceName)
 
         await registerPackageFieldPermissions(packagePath, getSteedosSchema().metadataBroker, packagePath)
+        debugLoadObjectMetadatas("%o loadPackageMetadatas:registerFieldPermissions", serviceName)
     }
 }

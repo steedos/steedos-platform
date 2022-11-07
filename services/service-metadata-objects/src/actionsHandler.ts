@@ -2,6 +2,11 @@ import _ = require("lodash");
 import { Register } from '@steedos/metadata-registrar';
 import { METADATA_TYPE } from ".";
 import { getObjectServiceName, getOriginalObject, refreshObject, MONGO_BASE_OBJECT, SQL_BASE_OBJECT } from "./objects";
+
+const debugMetadataObjects = require('debug')('steedos:metadata:objects');
+
+const debugMetadataObjectsRegister = require('debug')('steedos:metadata:objects:register');
+
 export type SObject = {
     name: string,
     [x: string]: any
@@ -37,16 +42,20 @@ export class ActionHandlers {
     }
 
 	async registerObject(ctx, objectApiName, data, meta) {
+        debugMetadataObjectsRegister("%o registerObject:start", objectApiName)
         if (objectApiName != MONGO_BASE_OBJECT &&
             objectApiName != SQL_BASE_OBJECT && this.onRegister && _.isFunction(this.onRegister)) {
             await this.onRegister(data)
         }
+        debugMetadataObjectsRegister("%o registerObject:onRegister", objectApiName)
         // await ctx.broker.call('metadata.add', {key: cacherKey(objectApiName), data: data}, {meta: meta});
         await Register.add(ctx.broker, {key: cacherKey(objectApiName), data: data}, meta)
+        debugMetadataObjectsRegister("%o registerObject:add", objectApiName)
         if (objectApiName != MONGO_BASE_OBJECT &&
             objectApiName != SQL_BASE_OBJECT && this.onRegistered && _.isFunction(this.onRegistered)) {
             await this.onRegistered(data)
         }
+        debugMetadataObjectsRegister("%o registerObject:onRegistered", objectApiName)
 		// 为每个对象 setTimeout 延时执行
 		const registerObjectMemEntry = this.registerObjectMemEntry;
 		let timeoutId = registerObjectMemEntry.get(objectApiName);
@@ -59,6 +68,7 @@ export class ActionHandlers {
 			registerObjectMemEntry.delete(objectApiName);
 		}, DELAY_MESSAGE_OF_OBJECT_CHANGED);
 		registerObjectMemEntry.set(objectApiName, timeoutId);
+        debugMetadataObjectsRegister("%o registerObject:emit", objectApiName)
         return true;
 	}
 
@@ -139,6 +149,7 @@ export class ActionHandlers {
     }
 
     async addConfigs(ctx: any): Promise<boolean> {
+        debugMetadataObjects("addObjectConfigFiles:start")
         let configs = ctx.params.data;
         for (let config of configs) {
             if (config.extend) {
@@ -164,18 +175,19 @@ export class ActionHandlers {
                 }
             }
             // await ctx.broker.call('metadata.addServiceMetadata', { key: cacherKey(metadataApiName), data: config }, { meta: Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }) })
-
+            debugMetadataObjects("%o addObjectConfigFiles:format", config.name)
             await Register.addServiceMetadata(ctx.broker, {
                 key: cacherKey(metadataApiName),
                 data: config
             }, Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }));
-
+            debugMetadataObjects("%o addObjectConfigFiles:addMetadata", config.name)
             const objectConfig = await refreshObject(ctx, metadataApiName);
             if (!objectConfig) {
                 ctx.broker.logger.error(`not find extend object ${metadataApiName}, Please check 「${ctx.meta.metadataServiceName}」 package.service.js for dependencies`);
                 break;
             }
             const objectServiceName = getObjectServiceName(metadataApiName);
+            debugMetadataObjects("%o addObjectConfigFiles:refreshMetadata", config.name)
             await this.registerObject(ctx, metadataApiName, objectConfig, {
                 caller: {
                     // nodeID: broker.nodeID,
@@ -186,6 +198,7 @@ export class ActionHandlers {
                     }
                 }
             });
+            debugMetadataObjects("%o addObjectConfigFiles:registerMetadata", config.name)
         }
         return true;
     }

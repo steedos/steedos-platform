@@ -4,7 +4,7 @@ import { Broker } from './broker'
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-22 15:53:56
+ * @LastEditTime: 2022-11-05 13:31:22
  * @Description: 
  */
 export * from './types'
@@ -24,6 +24,8 @@ export * from './metadata-register/restrictionRules'
 export * from './metadata-register/permissionFields'
 export * from './metadata-register/process'
 export * from './metadata-register/processTrigger'
+
+export * from './services/objectService'
 
 export { getQueryFields as getGraphqlFields} from './services/helpers/graphql/getQueryFields'
 

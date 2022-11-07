@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-03 18:04:19
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-05 16:33:07
+ * @LastEditTime: 2022-11-05 16:22:56
  * @Description: 
  */
 "use strict";
@@ -18,7 +18,7 @@ module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos",
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: 'objects',
+	nodeID: 'core',
 	
 
 	// Define transporter.
@@ -34,6 +34,7 @@ module.exports = {
 			return process.env.STEEDOS_CACHER;
 		}
 	}(),
+
 	logger: [{
 		type: "Console",
 		options: {

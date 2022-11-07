@@ -3,8 +3,12 @@
   "version": "2.3.1-beta.1",
   "private": true,
   "scripts": {
-    "start": "steedos start",
-    "repl": "moleculer-runner --repl"
+    "start": "yarn start:objectServer && yarn start:metadata && yarn start:core",
+    "repl": "moleculer-runner --repl -c moleculer-repl.config.js",
+    "start:metadata": "steedos start",
+    "start:core": "moleculer-runner platformService.service.js -c moleculer-core.config.js",
+    "start:objectServer": "moleculer-runner objectServiceFactory.service.js",
+    "debug": "export DEBUG=steedos:metadata:* && steedos start"
   },
   "dependencies": {
     "@steedos-labs/experience": "^1.0.0-beta.20",

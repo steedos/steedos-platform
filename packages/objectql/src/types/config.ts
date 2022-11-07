@@ -13,6 +13,8 @@ import { registerPackageTabs } from '../dynamic-load/tab';
 import { registerPackageShareRules } from '../dynamic-load/shareRules';
 import { registerPackageRestrictionRules } from '../dynamic-load/restrictionRules';
 
+const debugAddAllConfig = require('debug')('steedos:package:load-metadata:addAllConfigFiles');
+
 export const LOADED_OBJECT_RECORDS = {}
 
 
@@ -127,15 +129,25 @@ export const getConfig = (objectName: string, _id: string) => {
 }
 
 export const addAllConfigFiles = async (filePath, datasourceApiName, serviceName) => {
+    debugAddAllConfig("%o addAllConfigFiles:start", serviceName)
     addRouterFiles(filePath);
+    debugAddAllConfig("%o addAllConfigFiles:addRouterFiles", serviceName)
     await addObjectConfigFiles(filePath, datasourceApiName, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:addObjectConfigFiles", serviceName)
     await addAppConfigFiles(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:addAppConfigFiles", serviceName)
     await registerPackageQueries(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackageQueries", serviceName)
     await registerPackageCharts(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackageCharts", serviceName)
     await registerPackagePages(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackagePages", serviceName)
     await registerPackageTabs(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackageTabs", serviceName)
     await registerPackageShareRules(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackageShareRules", serviceName)
     await registerPackageRestrictionRules(filePath, serviceName);
+    debugAddAllConfig("%o addAllConfigFiles:registerPackageRestrictionRules", serviceName)
     
     loadPackageClientScripts(serviceName, filePath);
     addServerScriptFiles(filePath);

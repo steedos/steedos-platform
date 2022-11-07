@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-26 15:07:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-05 16:17:01
  * @Description: 
  */
 "use strict";
@@ -67,8 +67,8 @@ module.exports = {
 	 */
 	async started(ctx) {
 
-        // 故障报告服务
-		this.broker.createService(require("@steedos/service-sentry"));
+        // // 故障报告服务
+		// this.broker.createService(require("@steedos/service-sentry"));
 
 		// 启动 元数据服务
 		this.broker.createService(require("@steedos/service-metadata-server"));
@@ -83,16 +83,18 @@ module.exports = {
 
         // 国际化
         this.broker.createService(require("@steedos/service-i18n"));
+		
+		require('@steedos/objectql').getSteedosSchema(this.broker);
 
 		// 启动 steedos-server 服务
-        this.broker.createService(require("@steedos/service-steedos-server"));
+        // this.broker.createService(require("@steedos/service-steedos-server"));
 		// 启动 本地 CDN
-        if (this.settings.unpkg.enable) {
-			this.broker.createService(require("@steedos/ee_unpkg-local"));
-		}
-		else{
-			this.broker.createService(require("@steedos/unpkg"));
-		}
+        // if (this.settings.unpkg.enable) {
+		// 	this.broker.createService(require("@steedos/ee_unpkg-local"));
+		// }
+		// else{
+		// 	this.broker.createService(require("@steedos/unpkg"));
+		// }
 
         // 启动 登录页面
         this.broker.createService(require("@steedos/webapp-accounts"));

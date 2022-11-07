@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-13 22:22:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-05 18:13:51
+ * @Description: 
+ */
 import * as _ from 'underscore';
 import { getDataSourceServiceName } from './index';
 import { jsonToObject } from '../util/convert';
@@ -15,10 +22,12 @@ export async function createDataSourceService(broker, dataSource) {
 
     let service = broker.createService({
         name: serviceName,
+        dependencies: ["objects"],
         events: {
             [`${dataSourceName}.*.metadata.objects.inserted`]: {
                 handler(ctx) {
                     let objectConfig = ctx.params.data;
+                    console.log(`objectConfig======>`, objectConfig.name)
                     jsonToObject(objectConfig)
                     dataSource.initObject(objectConfig)
                     /**
@@ -44,7 +53,22 @@ export async function createDataSourceService(broker, dataSource) {
                     }, 1000 * 0.1);
                 }
             },
-        }
+        },
+        async started() {
+           setTimeout(async ()=>{
+            const objects = await dataSource.getObjects(false);
+            console.log(`started=======>objects.length`, objects.length)
+            for (const object of objects) {
+                if(object && object.metadata){
+                    const objectConfig = object.metadata;
+                    console.log(`started====>objectConfig======>`, objectConfig.name)
+                    jsonToObject(objectConfig)
+                    dataSource.initObject(objectConfig)
+                }
+            }
+           }, 1000 * 5)
+           
+        },
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)

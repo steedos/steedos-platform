@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-27 17:03:58
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-05 16:20:13
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
 const serviceName = project.name;
@@ -68,8 +75,8 @@ module.exports = {
             this.broker.createService(require("@steedos/ee_sso-oidc"));
         }
 
-        // 启动 报表服务
-        this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
+        // // 启动 报表服务
+        // this.broker.createService(require("@steedos/ee_stimulsoft-reports"));
 
         // 启动 sidecar服务: steedos services 跨语言访问
         // broker.createService(require("@steedos/service-sidecar"));
