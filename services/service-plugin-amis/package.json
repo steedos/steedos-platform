@@ -10,5 +10,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@steedos-widgets/amis-lib": "^0.0.7"
+  },
   "gitHead": "d537f67f367cfcda942d57795972539074a61ca9"
 }

@@ -19,7 +19,14 @@ module.exports = {
         },
         standard_open_view: {
             label: "Open",
-            visible: false,
+            sort: -1,
+            visible: function (object_name, record_id, record_permissions) {
+                if(typeof Creator === 'undefined'){
+                    return true;
+                }{
+                    return false;
+                }
+            },
             on: "list_item",
             todo: "standard_open_view"
         },

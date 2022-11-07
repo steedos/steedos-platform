@@ -20,6 +20,7 @@ import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getPatternListeners } from '../dynamic-load';
 import { getCacher } from '@steedos/cachers';
+import { uniq } from 'lodash';
 
 const clone = require('clone')
 
@@ -1299,6 +1300,37 @@ export class SteedosObjectType extends SteedosObjectProperties {
         delete objectConfig.listeners
         delete objectConfig.__filename
         delete objectConfig.extend
+
+
+        if(!objectConfig.details){
+            objectConfig.details = []
+        }
+
+        if(this.enable_files){
+            objectConfig.details.push("cms_files.parent")
+        }
+
+        if(this.enable_tasks){
+            objectConfig.details.push("tasks.related_to")
+        }
+        if(this.enable_notes){
+            objectConfig.details.push("notes.related_to")
+        }
+        if(this.enable_events){
+            objectConfig.details.push("events.related_to")
+        }
+        if(this.enable_instances){
+            objectConfig.details.push("instances.record_ids")
+        }
+        if(this.enable_approvals){
+            objectConfig.details.push("approvals.related_to")
+        }
+        if(this.enable_process){
+            objectConfig.details.push("process_instance_history.target_object")
+        }
+
+        objectConfig.details = uniq(objectConfig.details)
+
         return objectConfig;
     }
 
