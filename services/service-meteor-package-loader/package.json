@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.3.1-beta.1",
+  "version": "2.3.1-beta.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/objectql": "2.3.1-beta.1",
+    "@steedos/objectql": "2.3.1-beta.2",
     "clone": "^2.1.2",
     "moleculer": "^0.14.21",
     "underscore": "^1.12.0"
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d537f67f367cfcda942d57795972539074a61ca9"
+  "gitHead": "90c8b343e760df21f482433b89fdc95e076ca566"
 }
