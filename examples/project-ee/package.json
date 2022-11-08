@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "steedos start",
-    "repl": "moleculer-runner --repl"
+    "repl": "moleculer-runner --repl",
+    "inspect": "export NODE_OPTIONS='--inspect' && steedos start --hot"
   },
   "dependencies": {
     "@steedos-labs/experience": "^1.0.0-beta.20",
