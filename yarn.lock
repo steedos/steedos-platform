@@ -15480,15 +15480,6 @@ node-schedule@^2.0.0:
     long-timeout "0.1.1"
     sorted-array-functions "^1.3.0"
 
-node-xlsx@^0.12.0:
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/node-xlsx/-/node-xlsx-0.12.2.tgz#cbae13baafdd84a1d5edfb137cd50a16d2f2e8f0"
-  integrity sha512-++i8GiZv7mgIgvt+85XdmhIHfcz6gVKEYosfp34vg+nDhVE3869xtnAowv/5H3m9EuoO3X9CCyAKNJ/nM1NKCw==
-  dependencies:
-    "@babel/runtime" "^7.14.6"
-    buffer-from "^1.1.1"
-    xlsx "^0.17.0"
-
 node-xlsx@^0.16.1:
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/node-xlsx/-/node-xlsx-0.16.2.tgz#40f580187eae0e032cac96e958e97cb6ceca09f6"
