@@ -66,7 +66,7 @@
     "negotiator": "^0.6.1",
     "node-rsa": "1.0.0",
     "node-schedule": "^1.3.1",
-    "node-xlsx": "^0.12.0",
+    "node-xlsx": "^0.16.1",
     "oauth2-server": "2.4.1",
     "odata-v4-service-document": "0.0.3",
     "odata-v4-service-metadata": "^0.1.6",

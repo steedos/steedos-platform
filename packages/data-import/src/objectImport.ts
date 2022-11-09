@@ -3,7 +3,6 @@ const path = require("path");
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
 const Fiber = require("fibers");
-const xlsx = require("node-xlsx");
 const moment = require("moment");
 declare var Creator: any;
 
@@ -595,6 +594,7 @@ function selectObjectToFilters(selectObj) {
 }
 
 function loadWorkbook(file) {
+  const xlsx = require("node-xlsx");
   var stream, chunks;
   stream = file.createReadStream("files");
   chunks = [];
