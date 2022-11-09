@@ -1,6 +1,6 @@
 import * as _ from 'underscore';
 import { getObjectServiceName } from './index';
-const objectService = require('../services/objectService');
+import { objectBaseService } from '../services/objectService'
 
 const LocalObjectServices = {};
 
@@ -15,11 +15,16 @@ export async function createObjectService(broker, serviceName, objectConfig) {
     }
     let service = broker.createService({
         name: serviceName,
-        mixins: [objectService],
+        mixins: [objectBaseService],
+        methods:{
+            getObjectConfig: ()=>{
+                return objectConfig
+            },
+        },
         settings: {
-            objectConfig: objectConfig,
+            // objectConfig: objectConfig,
             onDestroyObjectService,
-        }
+        },
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)
