@@ -1,0 +1,170 @@
+name: set_permission_tabs
+amis_schema: |-
+    {
+        "type": "service",
+        "body": [
+            {
+                "type": "button",
+                "label": "设置选项卡权限",
+                "id": "u:set_permission_tabs",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "actionType": "dialog",
+                                "dialog": {
+                                    "type": "dialog",
+                                    "title": "设置选项卡权限",
+                                    "body": [
+                                        {
+                                            "type": "form",
+                                            "id": "u:2281889ba1e7",
+                                            "body": [
+                                                {
+                                                    "type": "input-table",
+                                                    "id": "u:1516aff9070c",
+                                                    "name": "permission_tabs_list",
+                                                    "label": "",
+                                                    "columns": [
+                                                        {
+                                                            "label": "选项卡",
+                                                            "name": "tab.label",
+                                                            "type": "text",
+                                                            "id": "u:ebd95b18057a",
+                                                            "placeholder": "-"
+                                                        },
+                                                        {
+                                                            "label": "权限",
+                                                            "name": "permission",
+                                                            "type": "select",
+                                                            "id": "u:ad5dcb76754f",
+                                                            "options": [
+                                                                {
+                                                                    "label": "默认打开",
+                                                                    "value": "on"
+                                                                },
+                                                                {
+                                                                    "label": "默认关闭",
+                                                                    "value": "off"
+                                                                },
+                                                                {
+                                                                    "label": "隐藏选项卡",
+                                                                    "value": "hidden"
+                                                                }
+                                                            ],
+                                                            "value": "on"
+                                                        }
+                                                    ],
+                                                    "strictMode": true,
+                                                    "disabled": false,
+                                                    "mode": "normal"
+                                                }
+                                            ],
+                                            "messages": {},
+                                            "initApi": {
+                                                "method": "post",
+                                                "url": "${context.rootUrl}/graphql",
+                                                "data": {
+                                                    "&": "$$",
+                                                    "record": "${record}"
+                                                },
+                                                "adaptor": "const data = payload.data\nconst { permission_tabs, tabs } = data\nconst tableOptions = []\nconst tabNames = [] // 用于存储已经遍历过的选项卡，防止重复\nfor (const pTab of permission_tabs) {\n  tableOptions.push({\n    tab: {\n      _id: pTab.tab__expand._id,\n      name: pTab.tab__expand.name,\n      label: pTab.tab__expand.label\n    },\n    permission: pTab.permission\n  })\n  tabNames.push(pTab.tab__expand.name)\n}\n\nfor (const tab of tabs) {\n  if (tabNames.includes(tab.name)) {\n    continue\n  }\n  tableOptions.push({\n    tab: {\n      _id: tab._id,\n      name: tab.name,\n      label: tab.label\n    },\n    permission: 'on'\n  })\n}\n\ndata.permission_tabs_list = tableOptions\n\nreturn payload\n",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                },
+                                                "requestAdaptor": "const record = api.body.record\napi.data.query = `\n{\n  permission_tabs(filters: [[\"permission_set\", \"=\", \"${record.name}\"]]) {\n    _id\n    permission\n    tab__expand {\n      _id\n      name\n      label\n    }\n  }\n  tabs {\n    _id\n    name\n    label\n  }\n}\n`\ndelete api.body.record;\nreturn api;",
+                                                "dataType": "json"
+                                            },
+                                            "api": {
+                                                "method": "post",
+                                                "url": "${context.rootUrl}/api/permission/permission_set/batchSavePermissionTabs",
+                                                "data": {
+                                                    "&": "$$",
+                                                    "record": "${record}",
+                                                    "record_id": "${record_id}"
+                                                },
+                                                "requestAdaptor": "api.data.permission_set_name = api.data.record.name\ndelete api.data.permission_tabs\ndelete api.data.record\ndelete api.data.tabs\n\nreturn api",
+                                                "dataType": "json"
+                                            },
+                                            "onEvent": {
+                                                "submitSucc": {
+                                                    "weight": 0,
+                                                    "actions": [
+                                                        {
+                                                            "actionType": "custom",
+                                                            "script": "/* 自定义JS使用说明： \n * 1.动作执行函数doAction，可以执行所有类型的动作\n * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n * 3.事件对象event，在doAction之后执行event.stopPropagation = true;可以阻止后续动作执行\n*/\n\nSteedosUI.router.go({ objectName: 'permission_set', recordId: context.props.data.record_id, type: 'edit' });\n"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "id": "u:5d6ebd078296",
+                                    "closeOnEsc": false,
+                                    "closeOnOutside": false,
+                                    "showCloseButton": true,
+                                    "data": null,
+                                    "size": "lg",
+                                    "actions": [
+                                        {
+                                            "type": "button",
+                                            "label": "取消",
+                                            "onEvent": {
+                                                "click": {
+                                                    "actions": [
+                                                        {
+                                                            "componentId": "",
+                                                            "args": {},
+                                                            "actionType": "closeDialog"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "id": "u:f1b8dabafee5",
+                                            "level": "default"
+                                        },
+                                        {
+                                            "type": "submit",
+                                            "label": "保存",
+                                            "onEvent": {},
+                                            "id": "u:246398c1f14c",
+                                            "level": "primary",
+                                            "close": true,
+                                            "hidden": false
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "weight": 0
+                    }
+                },
+                "level": "enhance"
+            }
+        ],
+        "regions": [
+            "body"
+        ],
+        "data": {
+            "context": {
+                "rootUrl": "http://127.0.0.1:5100"
+            },
+            "app_id": "",
+            "tab_id": "",
+            "object_name": "",
+            "dataComponentId": "",
+            "record_id": "",
+            "record": {},
+            "permissions": {}
+        },
+        "id": "u:ae64657bc500",
+        "bodyClassName": "p-0"
+    }
+is_enable: true
+label: 设置选项卡权限
+'on': record_only
+type: amis_button
+visible: !!js/function |
+    function (object_name, record_id, record_permissions, record) {
+        return true;
+    }

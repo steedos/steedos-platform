@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-25 13:31:57
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-08-13 16:57:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-11-01 10:49:56
  * @Description: 
  */
 let express = require("express");
@@ -17,22 +17,6 @@ module.exports = {
 	// Called after broker started.
 	started(broker) {
 		broker.createService(require("@steedos/service-community"));
-
-		const svc = broker.createService(require("@steedos/server-amis"));
-
-		const app = express();
-
-		app.use("/", svc.express());
-		
-		app.use("/", express.static(svc.static(), { maxAge: svc.cacheTime() }));
-
-		app.listen(3333, err => {
-			if (err)
-				return console.error(err);
-		
-			console.log("Open http://localhost:3333");
-		});
-
 	},
 
 };

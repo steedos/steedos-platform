@@ -858,6 +858,25 @@
                 "is_file": {
                     "type": "boolean",
                     "description": "是否是附件"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "按钮类型",
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "script",
+                                "amis_button"
+                            ]
+                        }
+                    ]
+                },
+                "amis_schema": {
+                    "type": [
+                        "string",
+                        "object"
+                    ],
+                    "description": ""
                 }
             }
         },

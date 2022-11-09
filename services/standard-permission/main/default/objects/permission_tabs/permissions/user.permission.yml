@@ -1,0 +1,14 @@
+name: 选项卡权限.用户
+allowCreate: false
+allowCreateFiles: false
+allowDelete: false
+allowDeleteFiles: false
+allowEdit: false
+allowEditFiles: false
+allowRead: true
+allowReadFiles: true
+modifyAllRecords: false
+permission_set_id: user
+viewAllFiles: true
+viewAllRecords: true
+viewCompanyRecords: true

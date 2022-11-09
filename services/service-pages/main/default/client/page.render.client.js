@@ -179,7 +179,7 @@
                             maskClosable: false,
                             footer: null,
                             bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React.createElement(BuilderComponent, {
+                            children: React17.createElement(BuilderComponent, {
                                 model: "page", content: {
                                     "data": pageContentData
                                 }
@@ -195,7 +195,7 @@
                             keyboard: false, // 禁止 esc 关闭
                             footer: null,
                             bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React.createElement(BuilderComponent, {
+                            children: React17.createElement(BuilderComponent, {
                                 model: "page", content: {
                                     "data": pageContentData
                                 }
@@ -327,13 +327,63 @@
     Steedos.Page.Form.StandardNew.render = function (appId, objectApiName, title, initialValues, options) {
         const page = Steedos.Page.getPage('form', appId, objectApiName);
         if (page && page.schema) {
-            // const elementId = getModalElement(`${objectApiName}-standard_new`);
-            return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+            const elementId = getModalElement(`${objectApiName}-standard_new`);
+            page.schema = {
+                "type": "service",
+                "className": "hidden",
+                "body": [
+                    {
+                        "type": "button",
+                        "label": "新建",
+                        "id": "u:standard_new",
+                        "level": "default",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "dialog",
+                                        "dialog": {
+                                            "type": "dialog",
+                                            "title": title,
+                                            "bodyClassName": "",
+                                            "body": [
+                                                JSON.parse(page.schema)
+                                            ],
+                                            "id": "u:0b96577db93c",
+                                            "closeOnEsc": false,
+                                            "closeOnOutside": false,
+                                            "showCloseButton": true,
+                                            "size": "lg"
+                                        }
+                                    }
+                                ],
+                                "weight": 0
+                            }
+                        }
+                    }
+                ],
+                "regions": [
+                    "body"
+                ],
+                "bodyClassName": "p-0",
+                "id": "u:aef99d937b10"
+            }
+            const scope = Steedos.Page.render(elementId, page, Object.assign({}, options, {
                 appId: appId,
                 objectName: objectApiName,
                 title: title,
                 data: initialValues,
             }));
+            setTimeout(()=>{
+                $("button", scope).trigger("click")
+            }, 300)
+            return scope ;
+            // return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+            //     appId: appId,
+            //     objectName: objectApiName,
+            //     title: title,
+            //     data: initialValues,
+            // }));
         }
 
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
@@ -354,13 +404,63 @@
     Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId, options) {
         const page = Steedos.Page.getPage('form', appId, objectApiName, recordId);
         if (page && page.schema) {
-            // const elementId = getModalElement(`${objectApiName}-standard_edit`);
-            return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+            const elementId = getModalElement(`${objectApiName}-standard_edit`);
+            page.schema = {
+                "type": "service",
+                "className": "hidden",
+                "body": [
+                    {
+                        "type": "button",
+                        "label": "编辑",
+                        "id": "u:standard_new",
+                        "level": "default",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "dialog",
+                                        "dialog": {
+                                            "type": "dialog",
+                                            "title": title,
+                                            "bodyClassName": "",
+                                            "body": [
+                                                JSON.parse(page.schema)
+                                            ],
+                                            "id": "u:0b96577db93c",
+                                            "closeOnEsc": false,
+                                            "closeOnOutside": false,
+                                            "showCloseButton": true,
+                                            "size": "lg"
+                                        }
+                                    }
+                                ],
+                                "weight": 0
+                            }
+                        }
+                    }
+                ],
+                "regions": [
+                    "body"
+                ],
+                "bodyClassName": "p-0",
+                "id": "u:aef99d937b10"
+            }
+            const scope = Steedos.Page.render(elementId, page, Object.assign({}, options, {
                 appId: appId,
                 objectName: objectApiName,
                 title: title,
                 recordId: recordId
             }));
+            setTimeout(()=>{
+                $("button", scope).trigger("click")
+            }, 300)
+            return scope ;
+            // return Steedos.Page.render(SteedosUI.Modal, page, Object.assign({}, options, {
+            //     appId: appId,
+            //     objectName: objectApiName,
+            //     title: title,
+            //     recordId: recordId
+            // }));
         }
 
         return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {

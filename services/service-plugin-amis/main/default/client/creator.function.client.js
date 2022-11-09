@@ -2,14 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-20 17:42:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-26 16:52:16
+ * @LastEditTime: 2022-10-28 11:01:51
  * @Description: 提供辅助函数
  */
 (function(){
     const filtersAmisSchema = {
         "type": "page",
         "title": t("creator_filters"),
-        "name": "steedos-filters",
+        "name": "steedosFiltersPage",
         "body": [
           {
             "type": "form",
@@ -30,6 +30,7 @@
               }
             ],
             "id": "filtersForm",
+            "name": "filtersForm",
             "wrapWithPanel": false
           }
         ],
@@ -90,16 +91,16 @@
                 mask: false,
                 width: 550,
                 style: null,
-                extra: React.createElement(
+                extra: React17.createElement(
                     SteedosUI.components.Space, 
                     {}, 
                     [
-                        React.createElement(SteedosUI.components.Button, {
+                      React17.createElement(SteedosUI.components.Button, {
                             onClick: function(){
                                 SteedosUI.getRef(pageName)?.close();
                             }
                         } , t('cancel')), 
-                        React.createElement(SteedosUI.components.Button, {
+                        React17.createElement(SteedosUI.components.Button, {
                             onClick: canSave ? function(){
 
                                 const formValues = window.amisScopes[pageName].getComponentById("filtersForm").getValues()
@@ -137,7 +138,7 @@
                                 });
                                 }
                             } : function(){
-                                const formValues = window.amisScopes[pageName].getComponentById("filtersForm").getValues()
+                                const formValues = window.amisScopes[pageName].getComponentByName("filtersForm").getValues();
                                 const filters = window.amisConvert.conditionsToFilters(formValues.filters);
                                 Session.set("filter_items", filters);
                                 SteedosUI.getRef(pageName)?.close();

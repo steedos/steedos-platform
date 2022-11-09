@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-26 17:21:35
+ * @LastEditTime: 2022-11-03 18:01:15
  * @Description: 
  */
 module.exports = {
@@ -22,6 +22,7 @@ module.exports = {
       var newRecord = _.pick(doc, Creator.getObjectFieldsName(object_name));
       delete newRecord.is_system;
       delete newRecord._id;
+      delete newRecord.record_permissions;
       newRecord.from_code_id = record_id;
       Creator.odata.insert(object_name, newRecord, function(result, error){
           if(result){
@@ -34,7 +35,7 @@ module.exports = {
       return Creator.baseObject.actions.standard_new.visible() && record.is_system;
   },
   copy: function(object_name, record_id){
-    let newRecord = _.clone(Creator.getListView(Session.get("object_name"), record_id));
+    let newRecord = null; // _.clone(Creator.getListView(Session.get("object_name"), record_id));
     if(!newRecord){
       let doc = Creator.odata.get(object_name, record_id);
       if(!doc.columns || !doc.columns.length){
@@ -84,7 +85,6 @@ module.exports = {
             data._filters_function = data.filters;
         }
     }
-
     Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', t("creator_list_copy_list_view"), data, {});
   },
   copyVisible: function(object_name, record_id, record_permissions, record){

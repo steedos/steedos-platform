@@ -75,10 +75,18 @@
             "anyOf": [
                 {
                     "enum": [
-                        "script"
+                        "script",
+                        "amis_button"
                     ]
                 }
             ]
+        },
+        "amis_schema": {
+            "type": [
+                "string",
+                "object"
+            ],
+            "description": ""
         }
     }
 }

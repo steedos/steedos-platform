@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-26 15:07:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-09 13:40:15
  * @Description: 
  */
 "use strict";
@@ -26,6 +26,9 @@ module.exports = {
 		},
 		jwt: {
 			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLED || 'false', true),
+		},
+		unpkg:{
+			enable: validator.toBoolean(process.env.STEEDOS_UNPKG_ENABLE_LOCAL || 'false', true)
 		}
 	},
 
@@ -63,6 +66,24 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
+		
+		this.broker.createService(require("@steedos/webapp-public"));
+		
+		this.broker.createService(require("@steedos/service-ui"));
+
+		this.broker.createService(require("@steedos/service-accounts"));
+		
+		this.broker.createService(require("@steedos/service-charts"));
+		
+		this.broker.createService(require("@steedos/service-pages"));
+		
+		this.broker.createService(require("@steedos/service-cloud-init"));
+
+		this.broker.createService(require("@steedos/service-workflow"));
+
+		this.broker.createService(require("@steedos/service-plugin-amis"));
+
+		this.broker.createService(require("@steedos/service-files"));
 
         // 故障报告服务
 		this.broker.createService(require("@steedos/service-sentry"));
@@ -83,9 +104,13 @@ module.exports = {
 
 		// 启动 steedos-server 服务
         this.broker.createService(require("@steedos/service-steedos-server"));
-
-        // 启动 本地 CDN
-        this.broker.createService(require("@steedos/unpkg"));
+		// 启动 本地 CDN
+        if (this.settings.unpkg.enable) {
+			this.broker.createService(require("@steedos/ee_unpkg-local"));
+		}
+		else{
+			this.broker.createService(require("@steedos/unpkg"));
+		}
 
         // 启动 登录页面
         this.broker.createService(require("@steedos/webapp-accounts"));

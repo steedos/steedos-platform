@@ -25,6 +25,7 @@ Creator.Object = (options)->
 	self.form = options.form
 	self.relatedList = options.relatedList
 	self.related_lists = options.related_lists
+	self.hasImportTemplates = options.hasImportTemplates
 	self.version = options.version || 1.0
 	if !_.isBoolean(options.is_enable)  || options.is_enable == true
 		self.is_enable = true
@@ -131,6 +132,7 @@ Creator.Object = (options)->
 		copyItem = _.clone(self.actions[item_name])
 		delete self.actions[item_name] #先删除相关属性再重建才能保证后续重复定义的属性顺序生效
 		self.actions[item_name] = _.extend(copyItem, item)
+		self.actions[item_name].object_name = self.name
 
 	_.each self.actions, (item, item_name)->
 		item.name = item_name

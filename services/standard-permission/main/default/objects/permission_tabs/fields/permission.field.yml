@@ -1,0 +1,13 @@
+name: permission
+label: 权限
+type: select
+options:
+  - label: 默认打开
+    value: 'on'
+  - label: 默认关闭
+    value: 'off'
+  - label: 隐藏选项卡
+    value: 'hidden'
+defaultValue: 'on'
+required: true
+index: true

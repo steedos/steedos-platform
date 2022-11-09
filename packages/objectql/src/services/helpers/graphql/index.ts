@@ -2,14 +2,14 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-10-20 11:56:22
+ * @LastEditTime: 2022-11-07 20:55:13
  * @Description: 
  */
 
 import _ = require("underscore");
 import moment = require('moment');
 import { getObjectServiceName } from "../..";
-import { SteedosObjectTypeConfig } from "../../..";
+import { absoluteUrl, SteedosObjectTypeConfig } from "../../..";
 // const clone = require("clone");
 import { translationObject } from '@steedos/i18n';
 const { moleculerGql: gql } = require("moleculer-apollo-server");
@@ -83,10 +83,12 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let type = `type ${objectName} { ${primaryFieldType} `;
     let resolvers = {};
     resolvers[objectName] = {};
+    const fieldNamesMap = {}
     _.each(fields, (field, name) => {
         if (name.indexOf(".") > -1) {
             return;
         }
+        fieldNamesMap[name] = name;
         if (!field.type) {
             // console.error(`The field ${name} of ${objectName} has no type property.`);
             type += `${name}: JSON `;
@@ -146,7 +148,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
 
     // _display
     let _display_type_name = `${DISPLAY_PREFIX}_${objectName}`;
-    type += `${DISPLAY_PREFIX}(fields: [String]): ${_display_type_name} `;
+    type += `${DISPLAY_PREFIX}: ${_display_type_name} `;
     // resolvers[objectName][DISPLAY_PREFIX] = async function (parent, args, context, info) {
     //     let userSession = context.ctx.meta.user;
     //     return await translateToDisplay(objectName, fields, parent, userSession);
@@ -157,9 +159,10 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
         )}.${GRAPHQL_ACTION_PREFIX}${DISPLAY_PREFIX}`,
         rootParams: {
             _id: "_id",
+            ...fieldNamesMap // 对象的字段名，用于将值传递到display，而不需要再查一次
         },
         params: {
-            objectName: objectName,
+            '__objectName': objectName,
         },
     };
     // define _display type
@@ -171,16 +174,17 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
 
     // _ui
     let _ui_type_name = `${UI_PREFIX}_${objectName}`;
-    type += `${UI_PREFIX}(fields: [String]): ${_ui_type_name} `;
+    type += `${UI_PREFIX}: ${_ui_type_name} `;
     resolvers[objectName][UI_PREFIX] = {
         action: `${getObjectServiceName(
             objectName
         )}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
         rootParams: {
             _id: "_id",
+            ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
         },
         params: {
-            objectName: objectName,
+            '__objectName': objectName
         },
     };
     // define _ui_type
@@ -444,22 +448,15 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
     actions[`${GRAPHQL_ACTION_PREFIX}${DISPLAY_PREFIX}`] = {
         handler: async function (ctx) {
             let params = ctx.params;
-            let { _id, objectName, fields } = params;
+            let { __objectName } = params;
             let userSession = ctx.meta.user;
-            let steedosSchema = getSteedosSchema();
-            let obj = steedosSchema.getObject(objectName);
-            let selector: any = { filters: [["_id", "=", _id]] };
-            if (fields && fields.length > 0) {
-                selector.fields = fields;
-            } else {
-                const { resolveInfo } = ctx.meta;
-                const fieldNames = getQueryFields(resolveInfo);
-                if (!_.isEmpty(fieldNames)) {
-                    selector.fields = fieldNames;
-                }
+            let selectFieldNames = [];
+            const { resolveInfo } = ctx.meta;
+            const fieldNames = getQueryFields(resolveInfo);
+            if (!_.isEmpty(fieldNames)) {
+                selectFieldNames = fieldNames;
             }
-            let doc = (await obj.find(selector))[0];
-            let result = await translateToDisplay(objectName, doc, userSession);
+            let result = await translateToDisplay(__objectName, params, userSession, selectFieldNames);
             return result;
         },
     };
@@ -467,22 +464,16 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
     actions[`${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`] = {
         handler: async function (ctx) {
             let params = ctx.params;
-            let { _id, objectName, fields } = params;
+            let { __objectName } = params;
             let userSession = ctx.meta.user;
-            let steedosSchema = getSteedosSchema();
-            let obj = steedosSchema.getObject(objectName);
-            let selector: any = { filters: [["_id", "=", _id]] };
-            if (fields && fields.length > 0) {
-                selector.fields = fields;
-            } else {
-                const { resolveInfo } = ctx.meta;
-                const fieldNames = getQueryFields(resolveInfo);
-                if (!_.isEmpty(fieldNames)) {
-                    selector.fields = fieldNames;
-                }
+            let selectFieldNames = [];
+            const { resolveInfo } = ctx.meta;
+            const fieldNames = getQueryFields(resolveInfo);
+            if (!_.isEmpty(fieldNames)) {
+                selectFieldNames = fieldNames;
             }
-            let doc = (await obj.find(selector))[0];
-            let result = await translateToUI(objectName, doc, userSession);
+            let result = await translateToUI(__objectName, params, userSession, selectFieldNames);
+
             return result;
         },
     };
@@ -540,49 +531,49 @@ function getTranslatedFieldConfig(translatedObject: any, name: string) {
     return translatedObject.fields[name.replace(/__label$/, "")];
 }
 
-const numberToString = (number: number | string, scale: number, notThousands: boolean = false)=>{
+const numberToString = (number: number | string, scale: number, notThousands: boolean = false) => {
     if (typeof number === "number") {
-      number = number.toString();
+        number = number.toString();
     }
     if (!number) {
-      return '';
+        return '';
     }
     if (number !== "NaN") {
-      if (scale || scale === 0) {
-        number = Number(number).toFixed(scale);
-      }
-      if (!notThousands) {
-        if (!(scale || scale === 0)) {
-          // 没定义scale时，根据小数点位置算出scale值
-          let regDots = number.match(/\.(\d+)/);
-          scale = regDots && regDots[1] && regDots[1].length
-          if (!scale) {
-            scale = 0;
-          }
+        if (scale || scale === 0) {
+            number = Number(number).toFixed(scale);
         }
-        let reg = /(\d)(?=(\d{3})+\.)/g;
-        if (scale === 0) {
-          reg = /(\d)(?=(\d{3})+\b)/g;
+        if (!notThousands) {
+            if (!(scale || scale === 0)) {
+                // 没定义scale时，根据小数点位置算出scale值
+                let regDots = number.match(/\.(\d+)/);
+                scale = regDots && regDots[1] && regDots[1].length
+                if (!scale) {
+                    scale = 0;
+                }
+            }
+            let reg = /(\d)(?=(\d{3})+\.)/g;
+            if (scale === 0) {
+                reg = /(\d)(?=(\d{3})+\b)/g;
+            }
+            number = number.replace(reg, '$1,');
         }
-        number = number.replace(reg, '$1,');
-      }
-      return number;
+        return number;
     } else {
-      return "";
+        return "";
     }
-  }
+}
 
-async function translateToDisplay(objectName, doc, userSession: any) {
+async function translateToDisplay(objectName, doc, userSession: any, selectorFieldNames) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
     let object = steedosSchema.getObject(objectName);
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
     let utcOffset = userSession.utcOffset;
-    for (const name in fields) {
+    for (const name of selectorFieldNames) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
             const field = fields[name];
             if (_.has(doc, name)) {
@@ -651,7 +642,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
 
                     let refField = field.reference_to_field || '_id';
 
-                    if(refTo === 'users'){
+                    if (refTo === 'users') {
                         refTo = 'space_users';
                         refField = 'user'
                     }
@@ -683,7 +674,7 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                     let refTo = field.reference_to;
                     let refField = field.reference_to_field || '_id';
 
-                    if(refTo === 'users'){
+                    if (refTo === 'users') {
                         refTo = 'space_users';
                         refField = 'user'
                     }
@@ -710,14 +701,14 @@ async function translateToDisplay(objectName, doc, userSession: any) {
                             displayObj[name] = refRecord[nameFieldKey];
                         }
                     }
-                } else if ((fType == "master_detail" || fType == "lookup" ) && field.reference_to && !_.isString(field.reference_to)) {
+                } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {
                     let refValue = doc[name];
                     if (!refValue) {
                         continue;
                     }
                     let refTo = refValue.o;
                     let refValues = refValue.ids;
-                    if(!refTo){
+                    if (!refTo) {
                         continue;
                     }
                     let refObj = steedosSchema.getObject(refTo);
@@ -797,31 +788,34 @@ function _getDisplayType(typeName, fields) {
     return type;
 }
 
+const getFileStorageName = (type) => {
+    switch (type) {
+        case 'avatar':
+            return 'avatars'
+        case 'image':
+            return 'images'
+        case 'file':
+            return 'files'
+        default:
+            break;
+    }
+};
 
-async function translateToUI(objectName, doc, userSession: any) {
+async function translateToUI(objectName, doc, userSession: any, selectorFieldNames) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
     let object = steedosSchema.getObject(objectName);
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
-    translationObject(lng, objConfig.name, objConfig);
+    translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
-    let utcOffset = userSession.utcOffset;
-    for (const name in fields) {
+    for (const name of selectorFieldNames) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
             const field = fields[name];
             if (_.has(doc, name)) {
                 const fType = field.type;
-                if (fType == "text") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "textarea") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "html_text") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "html") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "select") {
+                if (fType == "select") {
                     let label = "";
                     let map = {};
                     let value = doc[name];
@@ -841,43 +835,12 @@ async function translateToUI(objectName, doc, userSession: any) {
                         label = map[value];
                     }
                     displayObj[name] = label;
-                } else if (fType == "boolean") {
-                    if (doc[name]) {
-                        displayObj[name] = "√";
-                    } else {
-                        displayObj[name] = "";
-                    }
-                } else if (fType == "date") {
-                    // 注意日期类型存的是utc0点，不需要执行utcOffset
-                    displayObj[name] = doc[name] ? moment.utc(doc[name])
-                        .format("YYYY-MM-DD") : '';
-                } else if (fType == "datetime") {
-                    displayObj[name] = doc[name] ? moment(doc[name])
-                        .utcOffset(utcOffset)
-                        .format("YYYY-MM-DD HH:mm") : '';
-                } else if (fType == "time") {
-                    // 注意时间类型走的是utc时间，不需要执行utcOffset
-                    displayObj[name] = doc[name] ? moment.utc(doc[name])
-                        .format("HH:mm") : '';
-                } else if (fType == "number") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "currency") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "percent") {
-                    displayObj[name] = `${doc[name] * 100}%`;
-                } else if (fType == "password") {
-                    displayObj[name] = "";
-                    if (_.isString(doc[name])) {
-                        for (let i = 0; i < doc[name].length; i++) {
-                            displayObj[name] += "*";
-                        }
-                    }
                 } else if (fType == "lookup" && _.isString(field.reference_to)) {
                     let refTo = field.reference_to;
 
                     let refField = field.reference_to_field || '_id';
 
-                    if(refTo === 'users'){
+                    if (refTo === 'users') {
                         refTo = 'space_users';
                         refField = 'user'
                     }
@@ -893,7 +856,7 @@ async function translateToUI(objectName, doc, userSession: any) {
                             filters: [refField, "in", refValue],
                             fields: [nameFieldKey],
                         });
-                        displayObj[name] = _.map(refRecords, (item)=>{
+                        displayObj[name] = _.map(refRecords, (item) => {
                             return {
                                 objectName: refTo,
                                 value: item._id,
@@ -919,7 +882,7 @@ async function translateToUI(objectName, doc, userSession: any) {
                     let refTo = field.reference_to;
                     let refField = field.reference_to_field || '_id';
 
-                    if(refTo === 'users'){
+                    if (refTo === 'users') {
                         refTo = 'space_users';
                         refField = 'user'
                     }
@@ -934,7 +897,7 @@ async function translateToUI(objectName, doc, userSession: any) {
                             filters: [refField, "in", refValue],
                             fields: [nameFieldKey],
                         });
-                        displayObj[name] = _.map(refRecords, (item)=>{
+                        displayObj[name] = _.map(refRecords, (item) => {
                             return {
                                 objectName: refTo,
                                 value: item._id,
@@ -956,14 +919,14 @@ async function translateToUI(objectName, doc, userSession: any) {
                             };
                         }
                     }
-                } else if ((fType == "master_detail" || fType == "lookup" ) && field.reference_to && !_.isString(field.reference_to)) {
+                } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {
                     let refValue = doc[name];
                     if (!refValue) {
                         continue;
                     }
                     let refTo = refValue.o;
                     let refValues = refValue.ids;
-                    if(!refTo){
+                    if (!refTo) {
                         continue;
                     }
                     let refObj = steedosSchema.getObject(refTo);
@@ -973,58 +936,60 @@ async function translateToUI(objectName, doc, userSession: any) {
                         fields: [nameFieldKey]
                     });
 
-                    displayObj[name] = _.map(refRecords, (item)=>{
+                    displayObj[name] = _.map(refRecords, (item) => {
                         return {
                             objectName: refTo,
                             value: item._id,
                             label: item[nameFieldKey]
                         }
                     })
-                } else if (fType == "autonumber") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "url") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "email") {
-                    displayObj[name] = doc[name] || "";
                 } else if (fType == "formula") {
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = formatBasicFieldValue(field.data_type, field, doc[name], objConfig, userSession);
                 } else if (fType == "summary") {
-                    displayObj[name] = doc[name] || "";
-                } else if (fType == "image" || fType == "file") {
-                    let fileLabel = "";
+                    displayObj[name] = formatBasicFieldValue('number', field, doc[name], objConfig, userSession);
+                } else if (fType == "image" || fType == "file" || fType === 'avatar') {
+                    let fileValue: any = null;
                     let value = doc[name];
                     if (!value) {
                         continue;
                     }
                     // TODO: cfs_images_filerecord对象不存在，需要额外处理
-                    let fileObjectName = fType == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+                    let storageName = getFileStorageName(fType)
+                    let fileObjectName = `cfs_${storageName}_filerecord`;
                     let fileObject = steedosSchema.getObject(fileObjectName);
                     const fileNameFieldKey = "original.name";
                     if (field.multiple) {
                         let fileRecords = await fileObject.find({
                             filters: [`_id`, "in", value],
-                            fields: [fileNameFieldKey],
+                            fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
                         });
-                        fileLabel = _.map(fileRecords, (fileRecord) => {
-                            return fileRecord.original?.name;
-                        }).join(",");
+                        fileValue = _.map(fileRecords, (fileRecord) => {
+                            return {
+                                name: fileRecord.original?.name,
+                                url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}`),
+                                size: fileRecord.original?.size,
+                                type: fileRecord.original?.type,
+                            };
+                        });
                     } else {
                         let fileRecord = (
                             await fileObject.find({
                                 filters: [`_id`, "=", value],
-                                fields: [fileNameFieldKey],
+                                fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
                             })
                         )[0];
                         if (fileRecord) {
-                            fileLabel = fileRecord["original"]["name"];
+                            fileValue = {
+                                name: fileRecord["original"]["name"],
+                                url: absoluteUrl(`/api/files/${storageName}/${value}`),
+                                size: fileRecord.original?.size,
+                                type: fileRecord.original?.type
+                            };
                         }
                     }
-                    displayObj[name] = fileLabel;
+                    displayObj[name] = fileValue;
                 } else {
-                    console.error(
-                        `Graphql Display: need to handle new field type ${field.type} for ${objectName}.`
-                    );
-                    displayObj[name] = doc[name] || "";
+                    displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
                 }
             } else {
                 displayObj[name] = ""; // 如果值为空，均返回空字符串
@@ -1033,6 +998,41 @@ async function translateToUI(objectName, doc, userSession: any) {
     }
     return displayObj;
 }
+
+function formatBasicFieldValue(valueType, field, value, objectConfig, userSession) {
+    switch (valueType) {
+        case 'text':
+        case 'textarea':
+        case 'html_text':
+        case 'autonumber':
+        case 'url':
+        case 'email':
+        case 'html':
+            return value || "";
+        case 'boolean':
+            return value ? "√" : ""
+        case 'date':
+            return value ? moment.utc(value).format("YYYY-MM-DD") : '';
+        case 'datetime':
+            return value ? moment(value).utcOffset(userSession.utcOffset).format("YYYY-MM-DD HH:mm") : '';
+        case 'time':
+            return value ? moment.utc(value).format("HH:mm") : '';
+        case 'number':
+        case 'currency':
+            return value ? numberToString(value, field.scale) : "";
+        case 'percent':
+            return `${value * 100}%`
+        case 'password':
+            return _.isString(value) ? "******" : ""
+        default:
+            console.error(
+                `Graphql Display: need to handle new field type ${field.type} for ${objectConfig.name}.`
+            );
+            return value || "";
+    }
+}
+
+
 
 function _getUIType(typeName, fields) {
     let type = `type ${typeName} { _id: String `;

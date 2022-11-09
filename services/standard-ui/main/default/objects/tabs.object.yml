@@ -151,3 +151,10 @@ permission_set:
 #     function(){
 #       Steedos.TabsManager.changeSchema(this.doc, this.schema, 'view');
 #     }
+relatedList:
+  - objectName: permission_tabs
+    columns:
+      - tab
+      - permission_set
+      - permission
+      - is_system

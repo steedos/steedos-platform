@@ -141,6 +141,7 @@ export async function getSpaceUserSession(spaceId, userId) {
                 spaceSession.company_ids = spaceSession.companies.map(function (company: any) { return company._id });
             }
             spaceSession.permission_shares = await getUserPermissionShares(su);
+            spaceSession.spaceUserId = spaceSession._id;
             addSpaceSessionToCache(spaceId, userId, spaceSession);
         } else {
             spaceSession = { roles: ['guest'], expiredAt: expiredAt };

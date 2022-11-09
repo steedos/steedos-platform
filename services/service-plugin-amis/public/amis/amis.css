@@ -84,3 +84,16 @@ body{
         position: fixed;
     }
 }
+
+/* fix: https://github.com/baidu/amis/issues/5073 */
+.antd-CBGroup-toolbar .antd-CBGroup-toolbarConditionAdd .antd-ButtonGroup>.antd-Button:first-child {
+    margin-right: 1.5rem;
+}
+
+/* fix: https://github.com/steedos/steedos-platform/issues/3898 */
+.ant-drawer.ant-drawer-right{
+    left: auto;
+}
+.ant-drawer.ant-drawer-bottom{
+    top: auto;
+}

@@ -1,4 +1,0 @@
-name: test
-datasource: default
-label: test
-query: '{ "collection": "space_users", "query": {} }'

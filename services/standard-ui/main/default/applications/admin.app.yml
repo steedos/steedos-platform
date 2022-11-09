@@ -1,0 +1,145 @@
+name: Setup
+code: admin
+description: 管理员设置公司、人员、权限等。
+icon: ion-ios-people-outline
+icon_slds: settings
+is_creator: true
+mobile: true
+tab_groups:
+  - group_name: 个人设置
+  - group_name: 公司设置
+  - group_name: 应用程序
+  - group_name: 对象设置
+  - group_name: 用户界面
+  - group_name: 统计分析
+  - group_name: 流程自动化
+  - group_name: 审批王
+  - group_name: 高级设置
+tab_items:
+  # admin_space_user_info:
+  #   group: 个人设置
+  #   index: 1
+  admin_process_delegation_rules:
+    group: 个人设置
+    index: 2
+  admin_space_info:
+    group: 公司设置
+    index: 3
+  admin_organizations:
+    group: 公司设置
+    index: 4
+  admin_company:
+    group: 公司设置
+    index: 5
+  admin_space_users:
+    group: 公司设置
+    index: 6
+  admin_permission_set:
+    group: 公司设置
+    index: 7
+  admin_license:
+    group: 公司设置
+    index: 9
+  admin_apps:
+    group: 应用程序
+    index: 10
+  admin_steedos_packages:
+    group: 应用程序
+    index: 11
+  admin_objects:
+    group: 对象设置
+    index: 12
+  admin_datasources:
+    group: 对象设置
+    index: 13
+  admin_queue_import:
+    group: 对象设置
+    index: 14
+  admin_pages:
+    group: 用户界面
+    index: 15
+  admin_tabs:
+    group: 用户界面
+    index: 16
+  admin_queries:
+    group: 统计分析
+    index: 17
+  admin_charts:
+    group: 统计分析
+    index: 18
+  admin_stimulsoft_reports:
+    group: 统计分析
+    index: 19
+  admin_process_definition:
+    group: 流程自动化
+    index: 20
+  admin_workflow_rule:
+    group: 流程自动化
+    index: 21
+  admin_object_validation_rules:
+    group: 流程自动化
+    index: 22
+  admin_action_field_updates:
+    group: 流程自动化
+    index: 23
+  admin_workflow_notifications:
+    group: 流程自动化
+    index: 24
+  admin_roles:
+    group: 审批王
+    index: 25
+  admin_flow_roles:
+    group: 审批王
+    index: 26
+  admin_flows:
+    group: 审批王
+    index: 27
+  admin_categories:
+    group: 审批王
+    index: 28
+  admin_instance_number_rules:
+    group: 审批王
+    index: 29
+  admin_space_user_signs:
+    group: 审批王
+    index: 30
+  admin_instances_statistic:
+    group: 审批王
+    index: 31
+  admin_webhooks:
+    group: 审批王
+    index: 32
+  admin_object_workflows:
+    group: 审批王
+    index: 33
+  admin_sessions:
+    group: 高级设置
+    index: 34
+  admin_dashboard:
+    group: 高级设置
+    index: 35
+  admin_audit_records:
+    group: 高级设置
+    index: 36
+  admin_autonumber:
+    group: 高级设置
+    index: 37
+  admin_web_forms:
+    group: 高级设置
+    index: 38
+  admin_holidays:
+    group: 高级设置
+    index: 39
+  admin_business_hours:
+    group: 高级设置
+    index: 40
+  admin_object_webhooks:
+    group: 高级设置
+    index: 41
+  admin_api_keys:
+    group: 高级设置
+    index: 42
+objects: []
+sort: 9100
+#url: /app/admin
+visible: false

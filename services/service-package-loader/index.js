@@ -7,9 +7,7 @@ const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
 const sendPackageFlowToDb = require('./lib/loadPackageFlow').sendPackageFlowToDb;
 const path = require('path');
-const Future = require('fibers/future');
 const _ = require('lodash');
-const globby = require("globby");
 const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
@@ -79,41 +77,39 @@ module.exports = {
         },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
             this.broker.logger.debug(`Loading package from ${packagePath}`)
-            await Future.task(async () => {
-                if (!datasourceName) {
-                    datasourceName = 'default';
-                }
-                objectql.getSteedosSchema(this.broker);
-                packagePath = path.join(packagePath, '**');
-                const datasource = objectql.getDataSource(datasourceName);
-                await datasource.init();
-                await objectql.loadStandardMetadata(name, datasourceName);
-                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
-                await triggerLoader.load(this.broker, packagePath, name);
-                await processTriggerLoader.load(this.broker, packagePath, name);
-                core.loadClientScripts();
-                let routersData = objectql.loadRouters(packagePath);
-                let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
-                let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
-                if(oldRoutersInfo){
-                    _.each(oldRoutersInfo.metadata, (info)=>{
-                        const _info = _.find(routersInfo, (item)=>{
-                            return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
-                        })
-                        if(!_info){
-                            core.removeRouter(info.path, info.methods)
-                        }
+            if (!datasourceName) {
+                datasourceName = 'default';
+            }
+            objectql.getSteedosSchema(this.broker);
+            packagePath = path.join(packagePath, '**');
+            const datasource = objectql.getDataSource(datasourceName);
+            await datasource.init();
+            await objectql.loadStandardMetadata(name, datasourceName);
+            await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+            await triggerLoader.load(this.broker, packagePath, name);
+            await processTriggerLoader.load(this.broker, packagePath, name);
+            core.loadClientScripts();
+            let routersData = objectql.loadRouters(packagePath);
+            let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
+            let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
+            if(oldRoutersInfo){
+                _.each(oldRoutersInfo.metadata, (info)=>{
+                    const _info = _.find(routersInfo, (item)=>{
+                        return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
                     })
-                }
-                const _routers = [];
-                routersData.forEach(element => {
-                    _routers.push(element)
-                });
-                core.loadRouters(_routers);
-                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
-                await this.broker.emit(`translations.object.change`, {});
-                return;
-            }).promise();
+                    if(!_info){
+                        core.removeRouter(info.path, info.methods)
+                    }
+                })
+            }
+            const _routers = [];
+            routersData.forEach(element => {
+                _routers.push(element)
+            });
+            core.loadRouters(_routers);
+            await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
+            await this.broker.emit(`translations.object.change`, {});
+            return;
         },
         loadPackageMetadataServices: async function (packagePath) {
             const filePatten = [

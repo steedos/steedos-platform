@@ -1,3 +1,11 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-04 10:05:32
+ * @Description: 
+ */
+import { uniqBy } from 'lodash';
 const collection_name = 'permission_fields';
 
 export async function getObjectFieldPermissions(dbManager, objectApiName, permissionSetId) {
@@ -10,7 +18,7 @@ export async function getObjectFieldPermissions(dbManager, objectApiName, permis
             editable: record.editable
         })
     }
-    return fieldsPermission;
+    return uniqBy(fieldsPermission, "field");
 }
 
 export async function saveOrUpdateFieldPermissions(dbManager, permissionSetName, objectName, objectPermission) {
