@@ -38,7 +38,7 @@
     "keyv": "^4.0.3",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
-    "moleculer": "^0.14.21",
+    "moleculer": "^0.14.25",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",

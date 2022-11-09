@@ -105,7 +105,7 @@
     "jquery": "^2.2.4",
     "jquery-ui-sortable": "^1.0.0",
     "lodash.memoize": "^4.1.2",
-    "moleculer": "^0.14.21",
+    "moleculer": "^0.14.25",
     "push.js": "^1.0.12",
     "react-highlighter": "^0.4.3"
   },

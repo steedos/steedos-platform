@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { METADATA_TYPE } from "..";
 import { getDBType } from "./fields";
-import { generateObjectTranslationTemplate } from './translationTemplate';
+// import { generateObjectTranslationTemplate } from './translationTemplate';
 const clone = require("clone");
 
 export const SYSTEM_DATASOURCE = "__SYSTEM_DATASOURCE";
@@ -222,11 +222,11 @@ export async function refreshObject(ctx, objectApiName) {
         });
     }
 
-    await generateObjectTranslationTemplate(ctx.broker, _.defaultsDeep(
-        {},
-        clone(_objectConfig),
-        objectConfig
-    ));
+    // await generateObjectTranslationTemplate(ctx.broker, _.defaultsDeep(
+    //     {},
+    //     clone(_objectConfig),
+    //     objectConfig
+    // ));
 
     objectConfig = _.defaultsDeep(
         {},

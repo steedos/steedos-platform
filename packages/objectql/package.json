@@ -39,7 +39,7 @@
     "jsen": "^0.6.6",
     "lodash": "^4.17.21",
     "mingo": "^6.0.5",
-    "moleculer": "^0.14.21",
+    "moleculer": "^0.14.25",
     "moleculer-apollo-server": "^0.3.6",
     "moment": "^2.29.1",
     "mongodb": "^3.7.3",
