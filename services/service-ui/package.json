@@ -1,6 +1,7 @@
 {
     "name": "@steedos/service-ui",
     "version": "2.3.1-beta.2",
+    "main": "package.service.js",
     "keywords": [
         "steedos"
     ],
