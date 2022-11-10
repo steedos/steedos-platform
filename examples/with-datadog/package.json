@@ -1,5 +1,5 @@
 {
-  "name": "with-tracing-jaeger",
+  "name": "with-datadog",
   "version": "2.3.1-beta.2",
   "private": true,
   "scripts": {
