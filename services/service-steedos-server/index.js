@@ -193,7 +193,7 @@ module.exports = {
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
-					//扩展meteor connectHandlers req
+					// 使用 express 服务扩展meteor req 功能, 比如sendFile等
 					const connectHandlersExpress = express();
 					connectHandlersExpress.use((req, res, next)=>{
 						next();
