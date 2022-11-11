@@ -5,8 +5,10 @@ const objectql = require("@steedos/objectql");
 const steedosAuth = require("@steedos/auth");
 const express = require('express');
 const _ = require("underscore");
-const app = express();
-const routersApp = express();
+const app = express.Router();
+const routersApp = express.Router();
+const steedosApp = express.Router();
+
 var path = require('path');
 import fs = require('fs')
 
@@ -15,6 +17,8 @@ import { getSteedosSchema, extend } from '@steedos/objectql';
 import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
+
+import { ODataRouter, MeteorODataAPIV4Router } from '..';
 
 const session = require('express-session')
 
@@ -174,7 +178,8 @@ export class Core {
     static run() {
         this.initPublishAPI()
         this.initCoreRoutes();
-        this.initRouters();
+        // this.initRouters();
+        this.initOdataRouters()
     }
 
     transformTriggerWhen(triggerWhen: string){
@@ -220,18 +225,31 @@ export class Core {
         _.each(routers, (item)=>{
             app.use(item.prefix, item.router)
         })
-
+        SteedosApi?.server?.use(app);
         WebApp.connectHandlers.use(app);
     }
 
-    private static initRouters(){
-        let routers = objectql.getRouters()
-        _.each(routers, (router)=>{
-            if(router.router.default){
-                routersApp.use('', router.router.default)
+    // private static initRouters(){
+    //     let routers = objectql.getRouters()
+    //     _.each(routers, (router)=>{
+    //         if(router.router.default){
+    //             routersApp.use('', router.router.default)
+    //         }
+    //     })
+    //     // SteedosApi?.server?.use(routersApp);
+    //     WebApp.connectHandlers.use(routersApp);
+    // }
+
+    private static initOdataRouters(){
+        if(MeteorODataAPIV4Router){
+            steedosApp.use('/api/v4', MeteorODataAPIV4Router);
+        }
+        _.each(getSteedosSchema().getDataSources(), (datasource, name)=>{
+            if(name != 'default'){
+                steedosApp.use("/api/odata/#{name}", ODataRouter);
             }
         })
-        WebApp.connectHandlers.use(routersApp);
+        SteedosApi?.server?.use(steedosApp);
     }
 }
 
@@ -242,9 +260,10 @@ export const loadRouters = (routers)=>{
         }
     })
     try {
+        SteedosApi?.server?.use(routersApp);
         WebApp.connectHandlers.use(routersApp);
     } catch (error) {
-        
+
     }
 }
 

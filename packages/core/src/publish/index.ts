@@ -1,8 +1,14 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-11 16:02:32
+ * @Description: 
+ */
 import express = require('express');
 import {auth} from "@steedos/auth";
 const _ = require("underscore")
 
-var app = express();
 const router = express.Router();
 
 import {PublishListViews} from './publish_listviews'
@@ -42,7 +48,7 @@ router.post('/publish', async function(req, res){
 
 export class Publish{
     static init(){
-        app.use(router)
-        WebApp.connectHandlers.use(app);
+        SteedosApi?.server?.use(router);
+        WebApp.connectHandlers.use(router);
     }
 }

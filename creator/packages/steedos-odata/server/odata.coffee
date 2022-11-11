@@ -2,7 +2,7 @@ Meteor.startup ->
 	MeteorODataRouter = require('@steedos/core').MeteorODataRouter;
 	ODataRouter = require('@steedos/core').ODataRouter
 	express = require('express');
-	app = express();
+	app = express.Router();
 	app.use('/api/odata/v4', MeteorODataRouter);
 	MeteorODataAPIV4Router = require('@steedos/core').MeteorODataAPIV4Router;
 	if MeteorODataAPIV4Router
@@ -10,7 +10,7 @@ Meteor.startup ->
 	WebApp.connectHandlers.use(app);
 	_.each Creator.steedosSchema.getDataSources(), (datasource, name)->
 		if(name != 'default')
-			otherApp = express();
+			otherApp = express.Router();
 			otherApp.use("/api/odata/#{name}", ODataRouter);
 			WebApp.connectHandlers.use(otherApp);
 
