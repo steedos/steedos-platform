@@ -4,8 +4,6 @@ const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const objectql = require('@steedos/objectql');
 const _ = require(`lodash`);
-const express = require('express');
-const path = require('path');
 
 const getCharts = async(apiName)=>{
 	const charts = await objectql.getObject('charts').find({ filters: [['name', '=', apiName]] });

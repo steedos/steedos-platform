@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
-const Stimulsoft = require('stimulsoft-reports-js');
 const { getReportWithData } = require(`./util`);
 
 router.get('/api/stimulsoft-reports/open/:reportId', core.requireAuthentication, async function (req, res) {
+    const Stimulsoft = require('stimulsoft-reports-js');
     const userSession = req.user;
     const { reportId } = req.params;
     let {  parameters } = req.query;

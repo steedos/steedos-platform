@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-31 10:13:21
+ * @LastEditTime: 2022-11-09 11:53:36
  * @Description: 
  */
 "use strict";
@@ -60,8 +60,7 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-        }
+
     },
 
     /**

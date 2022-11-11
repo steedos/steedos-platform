@@ -132,6 +132,8 @@ export class Start{
                         functionArray.forEach((fn: any) => fn.call(this, broker))
                     }
                 }
+            }else if(["tracing", "metrics"].indexOf(key) !== -1){
+                res[key] =  mods[key]
             } else {
                 res[key] = defaultsDeep({[key]: mods[key]}, {[key]: res[key]})[key];
             }

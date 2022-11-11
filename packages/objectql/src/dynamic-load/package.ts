@@ -129,6 +129,9 @@ const registerPackageFieldPermissions = async function (filePath: string, broker
 }
 
 async function addObjectConfigs(broker, serviceName, objectConfigs) {
+    if(_.isEmpty(objectConfigs)){
+        return ;
+    }
     let metadatas = clone(objectConfigs);
     _.map(metadatas, (metadata) => {
         delete metadata.triggers;

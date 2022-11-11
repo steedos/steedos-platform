@@ -36,24 +36,24 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
-			"@steedos/webapp-public",
-			"@steedos/service-ui",
-			"@steedos/service-cachers-manager",
+			// "@steedos/webapp-public",
+			// "@steedos/service-ui",
+			"@steedos/service-cachers-manager", // 依赖了 steedos/core
 			"@steedos/workflow",
 			"@steedos/accounts",
 			"@steedos/plugin-company",
 			// "@steedos/word-template",
-			"@steedos/metadata-api",
-			"@steedos/data-import",
-			"@steedos/service-fields-indexs",
-			"@steedos/service-accounts",
-			"@steedos/service-charts",
-			"@steedos/service-pages",
-			"@steedos/service-cloud-init",
-			"@steedos/service-workflow",
-			"@steedos/service-plugin-amis",
+			"@steedos/metadata-api", // ? TODO: 为啥使用meteor package load
+			"@steedos/data-import", // main 文件不是 package.service.js
+			"@steedos/service-fields-indexs", // 依赖了meteor collection
+			// "@steedos/service-accounts",
+			// "@steedos/service-charts",
+			// "@steedos/service-pages",
+			// "@steedos/service-cloud-init",
+			// "@steedos/service-workflow",
+			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
-			"@steedos/service-files",
+			// "@steedos/service-files",
 			"@steedos/standard-cms",
 			"@steedos/standard-object-database",
 			"@steedos/standard-process-approval",

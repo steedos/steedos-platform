@@ -10,7 +10,7 @@
   "dependencies": {
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
-    "moleculer": "^0.14.21",
+    "moleculer": "^0.14.25",
     "mongodb": "^3.7.3",
     "mongodb-uri": "0.9.7"
   },

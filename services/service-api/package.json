@@ -8,7 +8,7 @@
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
-    "moleculer": "^0.14.21",
+    "moleculer": "^0.14.25",
     "moleculer-apollo-server": "^0.3.6",
     "moleculer-web": "^0.10.4"
   },

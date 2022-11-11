@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-26 15:07:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-09 13:40:15
  * @Description: 
  */
 "use strict";
@@ -66,6 +66,24 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
+		
+		this.broker.createService(require("@steedos/webapp-public"));
+		
+		this.broker.createService(require("@steedos/service-ui"));
+
+		this.broker.createService(require("@steedos/service-accounts"));
+		
+		this.broker.createService(require("@steedos/service-charts"));
+		
+		this.broker.createService(require("@steedos/service-pages"));
+		
+		this.broker.createService(require("@steedos/service-cloud-init"));
+
+		this.broker.createService(require("@steedos/service-workflow"));
+
+		this.broker.createService(require("@steedos/service-plugin-amis"));
+
+		this.broker.createService(require("@steedos/service-files"));
 
         // 故障报告服务
 		this.broker.createService(require("@steedos/service-sentry"));

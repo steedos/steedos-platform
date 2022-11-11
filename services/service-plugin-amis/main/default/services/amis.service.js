@@ -115,7 +115,7 @@ module.exports = {
                             schema = await AmisLib.getListSchema(null, objectApiName, "all");
                             break;
                     }
-                    return schema && schema.amisSchema || {};
+                    return schema && schema.amisSchema;
                     //    return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 
                 }
             }
