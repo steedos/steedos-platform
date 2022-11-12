@@ -60,7 +60,8 @@ module.exports = {
 			"@steedos/standard-collaboration",
 			"@steedos/standard-ui",
 			"@steedos/standard-permission",
-			"@steedos/steedos-plugin-schema-builder"
+			"@steedos/steedos-plugin-schema-builder",
+			"@steedos/workflow_time_trigger"
 		],
 		plugins: [
 		]

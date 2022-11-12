@@ -1,0 +1,7 @@
+name: updates_field_actions
+type: lookup
+multiple: true
+label: 工作流操作：字段更新
+is_wide: true
+reference_to: action_field_updates
+reference_to_field: name

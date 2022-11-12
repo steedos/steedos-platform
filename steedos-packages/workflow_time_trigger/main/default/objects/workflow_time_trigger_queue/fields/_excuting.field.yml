@@ -1,0 +1,5 @@
+name: _excuting
+label: 正在执行
+type: boolean
+required: true
+index: true
