@@ -403,7 +403,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 					if oTableCodeReferenceField && ['lookup', 'master_detail'].includes(oTableCodeReferenceField.type) && _.isString(oTableCodeReferenceField.reference_to)
 						if record[oTableCode]
 							return;
-						referenceToFieldName = oTableCodeReferenceField.reference_to_field;
+						referenceToFieldName = oTableCodeReferenceField.reference_to_field || '_id';
 						referenceToObjectName = oTableCodeReferenceField.reference_to;
 						referenceToFieldValue = record[oTableCodeReferenceField.name];
 						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName);
@@ -461,7 +461,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 			# lookup、master_detail字段同步到odata字段
 			else if formField && objField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
-				referenceToFieldName = objField.reference_to_field
+				referenceToFieldName = objField.reference_to_field || '_id'
 				referenceToObjectName = objField.reference_to
 				referenceToFieldValue = record[objField.name]
 				odataFieldValue
@@ -540,7 +540,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							if !formField || !relatedObjectField
 								return
 							if formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type) && _.isString(relatedObjectField.reference_to)
-								referenceToFieldName = relatedObjectField.reference_to_field
+								referenceToFieldName = relatedObjectField.reference_to_field || '_id'
 								referenceToObjectName = relatedObjectField.reference_to
 								referenceToFieldValue = rr[fieldKey]
 								if relatedObjectField.multiple && formField.is_multiselect
