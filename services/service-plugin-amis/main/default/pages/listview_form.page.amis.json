@@ -372,30 +372,7 @@
             ],
             "panelClassName": "m-0",
             "bodyClassName": "p-4",
-            "actions": [
-                {
-                    "type": "button",
-                    "label": "取消",
-                    "actionType": "",
-                    "level": "default",
-                    "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                    "en-US": {
-                        "label": "Cancel"
-                    },
-                    "id": "u:2b559c02ad83"
-                },
-                {
-                    "type": "button",
-                    "label": "保存",
-                    "actionType": "submit",
-                    "level": "info",
-                    "en-US": {
-                        "label": "Save"
-                    },
-                    "id": "u:a48a8052e83a"
-                }
-            ],
+            "actions": false,
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
             "language": "javascript",
