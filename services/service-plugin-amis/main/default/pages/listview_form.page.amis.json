@@ -25,7 +25,7 @@
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 },
-                "adaptor": "\nSteedosUI.getRef(api.body.modalName).close();\nvar object_name = Session.get(\"object_name\");\nif (window.FlowRouter && window.FlowRouter.current().route.pathDef === '/app/:app_id/:object_name/grid/:list_view_id' && object_name != 'object_listviews') {\n  var app_id = Session.get(\"app_id\");\n  var list_view_id = payload.data.record._id;\n  var url = \"/app/\" + app_id + \"/\" + object_name + \"/grid/\" + list_view_id;\n  SteedosUI.router.go({ objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit' : 'new' }, url);\n} else { \n  SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n}\n\nreturn payload;\n        "
+                "adaptor": "\nvar object_name = Session.get(\"object_name\");\nif (window.FlowRouter && window.FlowRouter.current().route.pathDef === '/app/:app_id/:object_name/grid/:list_view_id' && object_name != 'object_listviews') {\n  var app_id = Session.get(\"app_id\");\n  var list_view_id = payload.data.record._id;\n  var url = \"/app/\" + app_id + \"/\" + object_name + \"/grid/\" + list_view_id;\n  SteedosUI.router.go({ objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit' : 'new' }, url);\n} else { \n  SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n}\n\nreturn payload;\n        "
             },
             "initApi": {
                 "method": "post",
