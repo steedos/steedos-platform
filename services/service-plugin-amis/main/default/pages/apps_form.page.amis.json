@@ -22,7 +22,7 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\nSteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\nreturn payload;\n        ",
+                "adaptor": "\nSteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -500,24 +500,7 @@
                 }
             ],
             "panelClassName": "m-0 -mt-3",
-            "actions": [
-                {
-                    "type": "button",
-                    "label": "取消",
-                    "actionType": "",
-                    "level": "default",
-                    "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                    "id": "u:f2208dc2b4cd"
-                },
-                {
-                    "type": "button",
-                    "label": "保存",
-                    "actionType": "submit",
-                    "level": "info",
-                    "id": "u:207386fce204"
-                }
-            ],
+            "actions": false,
             "actionsClassName": "p-sm b-t b-light text-center",
             "affixFooter": false,
             "debug": false,
