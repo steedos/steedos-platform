@@ -40,7 +40,8 @@ try
 				"@steedos/standard-collaboration",
 				"@steedos/standard-ui",
 				"@steedos/standard-permission",
-				"@steedos/ee_unpkg-local"
+				"@steedos/ee_unpkg-local",
+				"@steedos/service-files"
 			],
 			plugins: config.plugins
 		}
