@@ -10,14 +10,14 @@ export default () => {
   const params = {
     headers: {
         'Content-Type': 'application/json',
-      Authorization: `Bearer osjAHnCr7nampKZ9Z,9315d27c5351367b1561b0ddf90a7ee211b9ce9724bd8872df4b220fffcdf5df38e7d050e0567a1f4b0c3c`,
+      Authorization: `Bearer ${__ENV.API_KEY}`,
     },
   };
   const payload = JSON.stringify({
     query: `{space_users{_id,name}}`,
   });
 
-  const loginRes = http.post(`http://127.0.0.1:5301/graphql`, payload, params);
+  const loginRes = http.post(`${__ENV.ROOT_URL}/graphql`, payload, params);
   check(loginRes, { "retrieved crocodiles": (obj) => obj.body.length > 0 });
 
   sleep(1);

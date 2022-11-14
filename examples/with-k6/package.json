@@ -1,0 +1,15 @@
+{
+  "name": "with-datadog",
+  "version": "2.3.1-beta.2",
+  "private": true,
+  "scripts": {
+    "start": "steedos start",
+    "k6:graphql": "k6 run -e ROOT_URL=http://127.0.0.1:5000 -e API_KEY=xxx  ./.script/test.graphql.js"
+  },
+  "dependencies": {
+    "@steedos/service-community": "2.3.1-beta.2"
+  },
+  "devDependencies": {
+    "dd-trace": "3.7.1"
+  }
+}
