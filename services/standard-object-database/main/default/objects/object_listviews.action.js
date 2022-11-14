@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-03 18:01:15
+ * @LastEditTime: 2022-11-14 14:13:29
  * @Description: 
  */
 module.exports = {
@@ -89,5 +89,21 @@ module.exports = {
   },
   copyVisible: function(object_name, record_id, record_permissions, record){
     return true;
+  },
+  showDesign: function (object_name, record_id) {
+    document.location = Steedos.absoluteUrl(`/api/amisListviewDesign?id=${record_id}&object=${this.record.object_name}`);
+  },
+  showDesignVisible: function (object_name, record_id, record_permissions) {
+      var perms= {};
+      var record = Creator.getObjectRecord(object_name, record_id);
+      if (record_permissions) {
+        perms = record_permissions;
+      } else {
+          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
+          if (record_permissions) {
+              perms = record_permissions;
+          }
+      }
+      return perms["allowEdit"];
   }
 }

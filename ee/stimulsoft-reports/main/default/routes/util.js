@@ -1,6 +1,5 @@
 const objectql = require('@steedos/objectql');
 const broker = objectql.getSteedosSchema().broker;
-const Stimulsoft = require('stimulsoft-reports-js');
 const _ = require('lodash');
 
 /**
@@ -124,6 +123,8 @@ exports.getDatabase = getDatabase;
 
 
 exports.getReportWithData = async (reportId, userSession, parameters) => {
+    const Stimulsoft = require('stimulsoft-reports-js');
+
     const record = await objectql.getObject('stimulsoft_reports').findOne(reportId);
 
     Stimulsoft.Base.StiFontCollection.addOpentypeFontFile("Roboto-Black.ttf");

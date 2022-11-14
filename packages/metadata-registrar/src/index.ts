@@ -296,11 +296,11 @@ export const Register = {
         return await query(broker, key);
     },
     async mfilter(broker: any, keys: Array<string>): Promise<Array<any>> {
-        const values: any = [];
+        const queryAll: any = [];
         for (const key of keys) {
-            values.push(await query(broker, key))
+            queryAll.push(query(broker, key))
         }
-        return values
+        return await Promise.all(queryAll);
     },
     async add(broker: any, params: any, meta: any): Promise<any> {
         const { key } = params;

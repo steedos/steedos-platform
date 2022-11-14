@@ -1,9 +1,11 @@
 "use strict";
 
 const objectql = require('@steedos/objectql');
+const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const path = require('path');
 const Future = require('fibers/future');
+const _ = require('lodash');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -53,6 +55,26 @@ module.exports = {
 				await objectql.loadStandardMetadata(name, datasourceName);
                 await objectql.addAllConfigFiles(packagePath, datasourceName, name);
 				await triggerLoader.load(this.broker, packagePath, name);
+
+                let routersData = objectql.loadRouters(packagePath);
+                let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
+                let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
+                if(oldRoutersInfo){
+                    _.each(oldRoutersInfo.metadata, (info)=>{
+                        const _info = _.find(routersInfo, (item)=>{
+                            return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
+                        })
+                        if(!_info){
+                            core.removeRouter(info.path, info.methods)
+                        }
+                    })
+                }
+                const _routers = [];
+                routersData.forEach(element => {
+                    _routers.push(element)
+                });
+                core.loadRouters(_routers);
+
                 await this.broker.emit(`translations.object.change`, {});
 				return;
 			}).promise();

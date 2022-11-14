@@ -146,7 +146,7 @@ module.exports = {
 						return
 					})
 				}
-				
+				SteedosApi?.server?.use(router);
 				WebApp.connectHandlers.use(router);
 			} catch (error) {
 				console.error(error)
