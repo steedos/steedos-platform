@@ -280,6 +280,13 @@ fields:
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
+  amis_schema: 
+    label: Amis Schema
+    type: code
+    language: json
+    required: false
+    is_wide: true
+    # visible_on: "{{formData.type == 'amis_button' ? true: false}}"
 paging:
   enabled: false
 list_views:
@@ -299,6 +306,9 @@ actions:
     on: record_only
   copy:
     label: 复制 
+    on: record_only
+  showDesign: 
+    label: 设计器
     on: record_only
 permission_set:
   user:

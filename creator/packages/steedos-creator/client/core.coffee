@@ -458,6 +458,8 @@ if Meteor.isClient
 				dataType: 'json'
 				processData: false
 				contentType: false
+				beforeSend: (request) ->
+					request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
 				success: (responseText, status) ->
 					fileObj = undefined
 					$(document.body).removeClass 'loading'

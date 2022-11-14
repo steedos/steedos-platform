@@ -2148,10 +2148,10 @@ argparse@^2.0.1:
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
-args@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npm.taobao.org/args/download/args-5.0.1.tgz#4bf298df90a4799a09521362c579278cc2fdd761"
-  integrity sha1-S/KY35CkeZoJUhNixXknjML912E=
+args@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/args/-/args-5.0.3.tgz#943256db85021a85684be2f0882f25d796278702"
+  integrity sha512-h6k/zfFgusnv3i5TU08KQkVKuCPBtL/PWQbWkHUxvJrZ2nAyeaUupneemcrgn1xmqxPQsPIzwkUhOpoqPDRZuA==
   dependencies:
     camelcase "5.0.0"
     chalk "2.4.2"
@@ -4049,10 +4049,10 @@ event-target-shim@^5.0.0:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
-eventemitter2@^6.4.5:
-  version "6.4.5"
-  resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.5.tgz#97380f758ae24ac15df8353e0cc27f8b95644655"
-  integrity sha512-bXE7Dyc1i6oQElDG0jMRZJrRAn9QR2xyyFGmBdZleNmyQX0FqGYmhZIrIrpPfm/w//LTo4tVQGOGQcGCb5q9uw==
+eventemitter2@^6.4.9:
+  version "6.4.9"
+  resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.9.tgz#41f2750781b4230ed58827bc119d293471ecb125"
+  integrity sha512-JEPTiaOt9f04oa6NOkc4aH+nVp5I3wEjpHbIPqfgCdD5v5bUzy7xQqwcVO2aDQgOWhI28da57HksMrzK9HlRxg==
 
 eventemitter3@^2.0.3:
   version "2.0.3"
@@ -4286,10 +4286,10 @@ fast-safe-stringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
-fastest-validator@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.12.0.tgz#9d77b3cc1ef9179f06ad4580fdf3308e4cb5113d"
-  integrity sha512-Qc7oCVO9hAPz5GUONmToIoa95YWzoe7SLsrjIXTfCFf6HFQXxxWePXe8D+Kp/XCrr5H/pMJwP2xprW07wYv/BQ==
+fastest-validator@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.15.0.tgz#580cf08a7f6b662c4d1ec49a7d61125b55e972e1"
+  integrity sha512-iSGBqeRSD3O8porodq42sk0kxSC2DTyszFcrLIjQNB5fqlG2qH0sok3BSyl0lR6IKmz5Bu7ZO06i7z16XcMihw==
 
 fastq@^1.6.0:
   version "1.13.0"
@@ -5810,10 +5810,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-kleur@^4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.4.tgz#8c202987d7e577766d039a8cd461934c01cda04d"
-  integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
+kleur@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.5.tgz#95106101795f7050c6c650f350c683febddb1780"
+  integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
 
 knockout@^3.4.2:
   version "3.5.1"
@@ -6319,17 +6319,17 @@ moleculer-apollo-server@^0.3.3:
     lodash "^4.17.21"
     object-hash "^2.2.0"
 
-moleculer@^0.14.21:
-  version "0.14.21"
-  resolved "https://registry.yarnpkg.com/moleculer/-/moleculer-0.14.21.tgz#6136de8743dddc3b833b0c0103b77fe0171961cb"
-  integrity sha512-z+kIzbYl4uMNLaIKvsSugGLMorvppsali53GdkfSEHooR/5II59DI+EnW234mI2M/OWy/MxFzuGVfqDsWZkJ9g==
+moleculer@^0.14.25:
+  version "0.14.26"
+  resolved "https://registry.yarnpkg.com/moleculer/-/moleculer-0.14.26.tgz#2765876b3f2d10d891bdad62ba0b3f0233d65965"
+  integrity sha512-s29j0CoMQnOEXUaqlZ/WBRgTNrrraHaEvb+eu4QS8vfEejSn6FOV/R64UoCQ/7M3hiI/Prv78OKp40XVSu4prQ==
   dependencies:
-    args "^5.0.1"
-    eventemitter2 "^6.4.5"
-    fastest-validator "^1.12.0"
+    args "^5.0.3"
+    eventemitter2 "^6.4.9"
+    fastest-validator "^1.15.0"
     glob "^7.2.0"
     ipaddr.js "^2.0.1"
-    kleur "^4.1.4"
+    kleur "^4.1.5"
     lodash "^4.17.21"
     lru-cache "^6.0.0"
     node-fetch "^2.6.7"
