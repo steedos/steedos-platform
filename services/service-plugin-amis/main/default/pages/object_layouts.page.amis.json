@@ -21,7 +21,7 @@
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
+                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -833,7 +833,24 @@
             ],
             "panelClassName": "m-0 -mt-3",
             "bodyClassName": "p-4",
-            "actions": false,
+            "actions": [
+                {
+                    "type": "button",
+                    "label": "取消",
+                    "actionType": "",
+                    "level": "default",
+                    "block": false,
+                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
+                    "id": "u:bf2587b53d64"
+                },
+                {
+                    "type": "button",
+                    "label": "保存",
+                    "actionType": "submit",
+                    "level": "info",
+                    "id": "u:08afd6e53cab"
+                }
+            ],
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
             "checkAll": false,
