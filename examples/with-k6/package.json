@@ -1,5 +1,5 @@
 {
-  "name": "with-datadog",
+  "name": "with-k6",
   "version": "2.3.1-beta.2",
   "private": true,
   "scripts": {
