@@ -1289,6 +1289,9 @@ InstanceManager.uploadAttach = function (files, isAddVersion, isMainAttach) {
 			dataType: 'json',
 			processData: false,
 			contentType: false,
+			beforeSend: function(request) {
+				request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+			},
 			success: function (responseText, status) {
 				var fileObj;
 				$(document.body).removeClass('loading');
