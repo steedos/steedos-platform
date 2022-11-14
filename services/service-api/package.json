@@ -6,6 +6,7 @@
   "dependencies": {
     "@steedos/service-ui": "2.3.1-beta.2",
     "@steedos/auth": "2.3.1-beta.3",
+    "cors": "2.8.5",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",

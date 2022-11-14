@@ -381,8 +381,10 @@ module.exports = {
 	},
 	created(){
 		const express = require("express");
+		const cors = require('cors');
 		const compression = require('compression');
 		const app = express();
+		app.use(cors({origin: true, credentials: true}))
 		app.use(compression()) //{ filter: shouldCompress }
 
 		// function shouldCompress (req, res) {
