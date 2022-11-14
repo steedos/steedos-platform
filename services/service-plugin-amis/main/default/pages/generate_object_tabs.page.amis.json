@@ -20,7 +20,7 @@
                 },
                 "requestAdaptor": "const formData = api.data.$;\napi.data = { objects: formData.objects };\nreturn api;",
                 "responseData": null,
-                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
+                "adaptor": "\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -47,24 +47,7 @@
             ],
             "panelClassName": "m-0",
             "bodyClassName": "p-4",
-            "actions": [
-                {
-                    "type": "button",
-                    "label": "取消",
-                    "actionType": "",
-                    "level": "default",
-                    "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                    "id": "u:bf2587b53d64"
-                },
-                {
-                    "type": "button",
-                    "label": "确定",
-                    "actionType": "submit",
-                    "level": "info",
-                    "id": "u:08afd6e53cab"
-                }
-            ],
+            "actions": false,
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form -mt-3",
             "checkAll": false,
