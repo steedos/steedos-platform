@@ -282,7 +282,6 @@ fields:
     disabled: true
   amis_schema: 
     label: Amis Schema
-    sort_no: 180
     type: code
     language: json
     required: false
