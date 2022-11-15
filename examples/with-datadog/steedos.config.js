@@ -11,7 +11,7 @@ module.exports = {
 				type: "Datadog",
 				options: {
 						// Datadog Agent URL
-						agentUrl: process.env.DD_AGENT_URL || "http://localhost:8126",
+						agentUrl: process.env.DD_TRACE_AGENT_URL || "http://localhost:8126",
 						// Environment variable
 						env: process.env.DD_ENVIRONMENT || null,
 						// Sampling priority. More info: https://docs.datadoghq.com/tracing/guide/trace_sampling_and_storage/?tab=java#sampling-rules
@@ -19,7 +19,11 @@ module.exports = {
 						// Default tags. They will be added into all span tags.
 						defaultTags: null,
 						// Custom Datadog Tracer options. More info: https://datadog.github.io/dd-trace-js/#tracer-settings
-						tracerOptions: null,
+						tracerOptions: {
+							logInjection: true,
+							runtimeMetrics: true,
+							profiling: true,
+						},
 				}
 		}
 	},
