@@ -150,6 +150,9 @@ export async function getSpaceUserSession(spaceId, userId) {
     if (spaceSession.space && spaceSession.space.admins) {
         spaceSession.is_space_admin = spaceSession.space.admins.indexOf(userId) > -1;
     }
+
+    spaceSession.masterSpaceId = process.env.STEEDOS_TENANT_MASTER_ID;
+
     return spaceSession;
 }
 
