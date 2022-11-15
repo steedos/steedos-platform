@@ -4443,10 +4443,10 @@
   dependencies:
     react-required-if "^1.0.3"
 
-"@steedos-widgets/amis-lib@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.7.tgz#a64304a5ce791117405231e4e3e78e6debc71bdb"
-  integrity sha512-UPM+N1YmTsfkwqkni/EJTGdYapO5cZT6JU3XV9gdG8xhaIi4UlpXnadkkkOL/5qajBR6vkv5AwcaRDeZOmVjmA==
+"@steedos-widgets/amis-lib@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.8.tgz#607754baab8e75107a4d60b9958a13dddec5b840"
+  integrity sha512-O9h9OOz1k0dzTnG9hhtOBByMzCJPvw/1XmUDKP36cY62cIESr8WwZxhGZkLp4jExtCzE0dTYchQVAplazzkKVw==
   dependencies:
     lodash "^4.17.21"
 

@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-api",
-  "version": "2.3.1-beta.4",
+  "version": "2.3.1-beta.6",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.3.1-beta.4",
+    "@steedos/auth": "2.3.1-beta.6",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
@@ -16,5 +16,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5e137018242b488852be3e25281746e8e0b84d03"
+  "gitHead": "ce0166a7c0670ee9e414408f7182a79e796a7516"
 }
