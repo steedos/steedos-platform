@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos-widgets/amis-lib": "^0.0.8"
+    "@steedos-widgets/amis-lib": "^0.0.9"
   },
   "gitHead": "ce0166a7c0670ee9e414408f7182a79e796a7516"
 }
