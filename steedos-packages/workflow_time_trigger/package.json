@@ -9,6 +9,7 @@
     "access": "public"
   },
   "dependencies": {
+    "eval": "0.1.8",
     "node-schedule": "2.1.0"
   },
   "gitHead": "295037dcb3bd046c5c65a06e02b74e76c0ee7ac2"

@@ -75,6 +75,16 @@ fields:
   #   type: text
   # criteria: # TODO 暂不支持
   #   type: textarea
+  filters:
+    label: 过滤条件
+    type: code
+    is_wide: true
+    hidden: false
+    readonly: false
+    # visible_on: "{{global.mode ==='read' ? true : false}}"
+    depend_on:
+      - object_name
+    group: 依赖于时间的工作流操作
   time_triggers:
     type: grid
     label: 时间触发器
