@@ -46,7 +46,7 @@ module.exports = {
 		loadWebapp: async function (ctx) {
 			try {
 				if (WebApp && __meteor_runtime_config__) {
-					const router = express.Router();
+					const router = require('@steedos/router').staticRouter()
 					let publicPath = require.resolve("@steedos/ee_stimulsoft-reports/package.json");
 					publicPath = publicPath.replace("package.json", 'webapp');
 					let routerPath = "";
@@ -55,7 +55,7 @@ module.exports = {
 					}
 					const cacheTime = 86400000 * 1; // one day
 					router.use(`${routerPath}/@steedos/ee_stimulsoft-reports`, express.static(publicPath, { maxAge: cacheTime }));
-					WebApp.rawConnectHandlers.use(router);
+					// WebApp.rawConnectHandlers.use(router);
 				}
 			} catch (error) {
 				console.log(`error`, error);

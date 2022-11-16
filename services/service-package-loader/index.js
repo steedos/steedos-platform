@@ -145,14 +145,14 @@ module.exports = {
 
                 this.settings.loadedPackagePublicFiles = true;
                 try {
-                    const router = express.Router();
+                    const router = require('@steedos/router').staticRouter();
                     let routerPath = "";
                     if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
                         routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
                     }
                     const cacheTime = 86400000 * 1; // one day
                     router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-                    WebApp.connectHandlers.use(router);
+                    // WebApp.connectHandlers.use(router);
                 } catch (error) {
                     console.error(error)
                     this.settings.loadedPackagePublicFiles = false;

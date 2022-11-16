@@ -330,7 +330,7 @@ module.exports = {
 				}
 				this.settings.initBuilderRouter = true;
 				try {
-					const router = express.Router();
+					const router = require('@steedos/router').staticRouter();
 					let publicPath = require.resolve("@steedos/service-charts/package.json");
 					publicPath = publicPath.replace("package.json", 'webapp');
 					let routerPath = "";
@@ -339,7 +339,7 @@ module.exports = {
 					}
 					const cacheTime = 86400000 * 1; // one day
 					router.use(`${routerPath}/builder`, express.static(publicPath, { maxAge: cacheTime }));
-					WebApp.rawConnectHandlers.use(router);
+					// WebApp.rawConnectHandlers.use(router);
 				} catch (error) {
 					console.error(error)
 					this.settings.initBuilderRouter = false;

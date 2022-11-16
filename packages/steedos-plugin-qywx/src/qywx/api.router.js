@@ -1,10 +1,9 @@
 // "use strict";
 
 const Cookies = require("cookies");
-const express = require('express');
 const jsdom = require("jsdom");
 const JSDOM = jsdom.JSDOM;
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const Qiyeweixin = require('./qywx');
 const WXBizMsgCrypt = require('wechat-crypto');
 const objectql = require('@steedos/objectql');

@@ -1,6 +1,5 @@
 // let WXBizMsgCrypt = require('wechat-crypto');
-const express = require('express');
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const Cookies = require("cookies");
 const objectql = require('@steedos/objectql');
 const fs = require('fs');
