@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-saas",
-    "version": "2.3.1-beta.6",
+    "version": "2.3.1",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
