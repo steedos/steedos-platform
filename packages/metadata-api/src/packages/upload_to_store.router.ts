@@ -6,7 +6,7 @@ import { getPackageInfo, uploadFile, getPackageManifest, uploadInfo, groupPackag
 import { getSteedosPackageData } from '../util/steedos_package_data';
 
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const fs = require('fs');
 const path = require('path');
 

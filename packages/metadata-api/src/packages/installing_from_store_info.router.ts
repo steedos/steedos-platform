@@ -3,7 +3,7 @@ import { requireAuthentication } from '@steedos/core';
 import { getInstallingInfo } from './util';
 
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 
 const getInstallingData = async function (req, res) {
     try {

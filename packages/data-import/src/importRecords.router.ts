@@ -1,8 +1,7 @@
 import { importWithCmsFile } from "./objectImport"
 import { requireAuthentication } from '@steedos/core';
 
-const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const Fiber = require('fibers');
 
 const json2xls = require('json2xls');

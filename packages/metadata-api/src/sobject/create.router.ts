@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const Fiber = require('fibers');
 
 import { requireAuthentication } from '@steedos/core';
