@@ -35,7 +35,7 @@ function hasProductSync(productKey, spaceId){
 }
 
 function standardObject(spaceId){
-    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true) && hasProductSync('platform-enterprise', spaceId);
+    return validator.toBoolean(process.env.DEVELOPER_STANDARD_OBJECTS || 'false', true);
 }
 
 export const getObjectSuffix = (spaceId: string, internal?: boolean)=>{
