@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+
+  # Micro Service Transporter
+  nats:
+    image: steedos/nats:2.8.5
+    environment:
+      - MAX_PAYLOAD=8096000 #8MB
+      - NATS_USERNAME=${NATS_USERNAME:-steedos}
+      - NATS_PASSWORD=${NATS_PASSWORD:-steedos}
+    ports:
+      - "4222:4222"
+      - "8222:8222" # monitor port
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6832:6832/udp"
+      - "16686:16686"

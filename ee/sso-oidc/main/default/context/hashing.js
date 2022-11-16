@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newid = exports.compare = exports.hash = void 0;
 const tslib_1 = require("tslib");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const env = require("./environment");
 const { v4 } = require("uuid");
 const SALT_ROUNDS = env.SALT_ROUNDS || 10;

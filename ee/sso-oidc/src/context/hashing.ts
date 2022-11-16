@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-06-27 14:29:50
  * @Description: 
  */
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const env = require("./environment")
 const { v4 } = require("uuid")
 
