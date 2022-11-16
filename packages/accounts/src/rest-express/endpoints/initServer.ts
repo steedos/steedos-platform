@@ -1,8 +1,7 @@
-import * as express from 'express'
 import { getSteedosSchema } from '@steedos/objectql'
-const router = express.Router()
+const router = require('@steedos/router').staticRouter();
 
-router.post('/', async (req, res, next) => {
+router.post('/initServer', async (req, res, next) => {
   try {
     const broker = getSteedosSchema().broker;
     const body: any = req.body;

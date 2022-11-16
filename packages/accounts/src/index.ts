@@ -15,7 +15,6 @@ import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS } from './core';
 
-import initServer from './rest-express/endpoints/initServer';
 export { setAuthCookies, clearAuthCookies } from './rest-express/utils/steedos-auth';
 export { getMergedTenant } from './core';
 
@@ -144,10 +143,10 @@ export const accountsServer = getAccountsServer()
 export async function getAccountsRouter(context) {
 
   const router = accountsExpress(accountsServer, {
-    path: '/',
+    path: '/accounts',
   });
 
-  router.get('/', (req, res) => {
+  router.get('/accounts', (req, res) => {
     res.redirect("a/");
     res.end();
   });
@@ -170,9 +169,6 @@ export function init(context) {
     context.settings.public.webservices.accounts = { url: '/accounts' }
   }
   getAccountsRouter(context).then((accountsRouter) => {
-    context.app.use("/accounts", accountsRouter);
-
-    context.app.use("/initServer", initServer);
-
+    require('./rest-express/endpoints/initServer')
   })
 }
