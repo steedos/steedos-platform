@@ -24,3 +24,5 @@
 /ee/**/lib
 
 .pnpm-lock.yaml
+
+yarn.lock

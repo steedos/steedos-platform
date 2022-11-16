@@ -6,8 +6,7 @@
     "start": "moleculer-runner --repl --hot ./index.js"
   },
   "dependencies": {
-    "ioredis": "^4.22.0",
-    "node-red": "^2.2.2"
+    "ioredis": "^4.22.0"
   },
   "license": "MIT",
   "private": false,
