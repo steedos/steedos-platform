@@ -25,7 +25,6 @@
     "devDependencies": {
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
-        "@steedos/accounts": "2.2.50",
         "@types/react": "^16.9.22",
         "@types/react-dom": "^16.8.4",
         "ahooks": "^2.4.0",
@@ -45,7 +44,6 @@
         "react-scrollbars-custom": "^4.0.21",
         "stats": "^1.0.0",
         "stats.js": "^0.17.0",
-        "steedos-server": "2.2.50",
         "typescript": "4.6.3",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",

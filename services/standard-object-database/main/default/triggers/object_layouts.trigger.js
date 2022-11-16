@@ -3,10 +3,13 @@ const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const InternalData = require('@steedos/standard-objects').internalData;
 const util = require('@steedos/standard-objects').util
-function check(objectName, profiles, id){
+function check(spaceId, objectName, profiles, id){
     let query = {
         object_name: objectName,
         profiles: {$in: profiles}
+    }
+    if(spaceId){
+        query.space = spaceId;
     }
     if(id){
         query._id = {$ne: id}
@@ -38,7 +41,7 @@ const getInternalLatouts = async function(sourceLayouts, filters){
 module.exports = {
     beforeInsert: async function(){
         let doc = this.doc
-        check(doc.object_name, doc.profiles);
+        check(this.spaceId, doc.object_name, doc.profiles);
 
         await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true], ['object_name','=', doc.object_name]]);
 
@@ -54,7 +57,7 @@ module.exports = {
         let doc = this.doc
         let id = this.id
         let record = Creator.getCollection("object_layouts").findOne({_id: id}) || {};
-        check(doc.object_name || record.object_name, doc.profiles || record.profiles, id);
+        check(this.spaceId, doc.object_name || record.object_name, doc.profiles || record.profiles, id);
         if (_.has(doc, 'name')) {
             await util.checkAPIName(this.object_name, 'name', doc.name, this.id, [['is_system','!=', true], ['object_name','=', doc.object_name || record.object_name]]);
         }

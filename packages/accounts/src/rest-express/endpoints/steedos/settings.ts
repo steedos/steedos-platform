@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-06 18:19:28
+ * @LastEditTime: 2022-11-15 10:15:34
  * @Description: 
  */
 import * as express from 'express';
@@ -11,6 +11,7 @@ import { AccountsServer } from '../../../server';
 import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
+const validator = require('validator');
 
 const clone = require('clone');
 
@@ -32,6 +33,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     enable_email_code_login: false,
     enable_bind_mobile: false,
     enable_bind_email: false,
+    enable_saas: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true)
   }
 
   if (config.tenant) {
@@ -73,6 +75,10 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   delete _tenant['tokenSecret'];
   delete _tenant['accessTokenExpiresIn']
   delete _tenant['refreshTokenExpiresIn']
+
+  if(tenant.enable_saas){
+    delete _tenant._id;
+  }
 
   res.json({
     tenant: _tenant,
