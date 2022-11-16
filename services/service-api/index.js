@@ -9,7 +9,7 @@ const {
 	// GraphQLTime,
 	GraphQLDateTime
 } = require('graphql-iso-date');
-
+const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 
 /**
@@ -97,8 +97,6 @@ module.exports = {
 
 		// Exposed port
 		port: process.env.PORT || 3001,
-
-		steedos_api_port: process.env.STEEDOS_API_PORT,
 
 		// Exposed IP
 		// ip: "0.0.0.0",
@@ -380,46 +378,29 @@ module.exports = {
 
 	},
 	created(){
-		const express = require("express");
-		const cors = require('cors');
-		const compression = require('compression');
-		const app = express();
-		app.use(cors({origin: true, credentials: true}))
-		app.use(compression()) //{ filter: shouldCompress }
-
-		// function shouldCompress (req, res) {
-		// 	if (req.headers['x-no-compression']) {
-		// 	  // don't compress responses with this request header
-		// 	  return false
-		// 	}
-		   
-		// 	// fallback to standard filter function
-		// 	return compression.filter(req, res)
-		// }
-		this.app = app;
+		this.app = SteedosRouter.staticRouter();
 	},
 	async started (){
 
 		this.broker.createService(require("@steedos/service-ui"));
 
-		if (this.settings.server != true && this.settings.steedos_api_port){
-			/* istanbul ignore next */
-			await new this.Promise((resolve, reject) => {
-				this.app.listen(this.settings.steedos_api_port, err => {
-					if (err)
-						return reject(err);
-					this.logger.info(`Steedos Experience Server listening on ${this.settings.url}`);
-					resolve();
-				});
-			});
-		}
+		// if (this.settings.server != true && this.settings.steedos_api_port){
+		// 	/* istanbul ignore next */
+		// 	await new this.Promise((resolve, reject) => {
+		// 		this.app.listen(this.settings.steedos_api_port, err => {
+		// 			if (err)
+		// 				return reject(err);
+		// 			this.logger.info(`Steedos Experience Server listening on ${this.settings.url}`);
+		// 			resolve();
+		// 		});
+		// 	});
+		// }
 
 		this.broker.waitForServices('~packages-@steedos/service-ui').then(()=>{
 			this.app.use("/", this.express());
 		})
 
 		global.SteedosApi = {
-			server: this.app,
 			express: this.express
 		}
 	}
