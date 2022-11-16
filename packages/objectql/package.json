@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@salesforce/kit": "^1.0.4",
-    "@salesforce/ts-types": "^1.1.1",
+    "@salesforce/kit": "1.0.4",
+    "@salesforce/ts-types": "1.1.1",
     "@steedos/cachers": "2.3.2-beta.2",
     "@steedos/filters": "2.3.2-beta.2",
     "@steedos/formula": "2.3.2-beta.2",
