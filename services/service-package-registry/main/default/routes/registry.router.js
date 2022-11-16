@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const core = require("@steedos/core");
 
 let STEEDOS_REGISTRY_URL = process.env.STEEDOS_REGISTRY_URL ? process.env.STEEDOS_REGISTRY_URL : 'https://registry.steedos.cn/';

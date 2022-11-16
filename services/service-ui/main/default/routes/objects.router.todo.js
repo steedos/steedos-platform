@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const core = require('@steedos/core');
 router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthentication, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
