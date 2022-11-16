@@ -2,12 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-12 14:20:31
+ * @LastEditTime: 2022-11-15 18:11:55
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
-const express = require("express");
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 const core = require('@steedos/core');
 
 
