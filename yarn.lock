@@ -4092,7 +4092,7 @@
 
 "@salesforce/kit@1.0.4":
   version "1.0.4"
-  resolved "https://registry.npmmirror.com/@salesforce/kit/-/kit-1.0.4.tgz#1fdf7d420499a40f925253b96ab6d55b5ddaaa8a"
+  resolved "https://registry.yarnpkg.com/@salesforce/kit/-/kit-1.0.4.tgz#1fdf7d420499a40f925253b96ab6d55b5ddaaa8a"
   integrity sha512-UMrtd5qkKPdLwyzbMfRJNSqOci0cygltu7GqlvWpweqjP3I110qD20RoU9aI2ARKclmyeez9D+NFqjwjYcVFZQ==
   dependencies:
     "@salesforce/ts-types" "^1.1.2"
@@ -4100,7 +4100,7 @@
 
 "@salesforce/ts-types@1.1.1", "@salesforce/ts-types@1.1.2", "@salesforce/ts-types@^1.1.2":
   version "1.1.2"
-  resolved "https://registry.npmmirror.com/@salesforce/ts-types/-/ts-types-1.1.2.tgz#3b5a2f54ca2d9820c9785ee51f9fa84e86cb228a"
+  resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-1.1.2.tgz#3b5a2f54ca2d9820c9785ee51f9fa84e86cb228a"
   integrity sha512-sZ6CiX6sZ1EOa+XzNWSiy5fXYtDd8qqRD3MZQdUypPa+VMWQ9Cr3THr37VndxV+SRNN4iuzsf5rUJQjKh0DgeQ==
   dependencies:
     tslib "^1"
