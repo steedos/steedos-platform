@@ -110,7 +110,8 @@ module.exports = {
 		
 		loadUnpkgRoutes: function() {
 			try {
-				const router = express.Router();
+				const SteedosRouter = require('@steedos/router');
+				const router = SteedosRouter.staticRouter();
 				const cacheTime = 86400000 * 1; // one day
 				this.settings.local_packages.forEach(packageName => {		
 					var packageDir = path.join(process.cwd(), 'node_modules', packageName);
@@ -146,7 +147,7 @@ module.exports = {
 						return
 					})
 				}
-				SteedosApi?.server?.use(router);
+				// SteedosApi?.server?.use(router);
 				WebApp.connectHandlers.use(router);
 			} catch (error) {
 				console.error(error)
