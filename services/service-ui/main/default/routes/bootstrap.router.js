@@ -9,8 +9,8 @@ require("@steedos/license");
 const Fiber = require('fibers');
 const clone = require("clone");
 const _ = require('underscore');
-var express = require('express');
-const bootStrapExpress = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 function getUserProfileObjectsLayout(userId, spaceId, objectName) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         let spaceUser;
@@ -418,6 +418,6 @@ function getSpaceObjectBootStrap(req, res) {
     });
 }
 exports.getSpaceObjectBootStrap = getSpaceObjectBootStrap;
-bootStrapExpress.use('/api/bootstrap/:spaceId/:objectNames', core_1.requireAuthentication, getSpaceObjectBootStrap);
-bootStrapExpress.use('/api/bootstrap/:spaceId/', core_1.requireAuthentication, getSpaceBootStrap);
-exports.default = bootStrapExpress;
+router.use('/api/bootstrap/:spaceId/:objectNames', core_1.requireAuthentication, getSpaceObjectBootStrap);
+router.use('/api/bootstrap/:spaceId/', core_1.requireAuthentication, getSpaceBootStrap);
+exports.default = router;

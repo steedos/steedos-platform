@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const objectql_1 = require("@steedos/objectql");
-const express = require("express");
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 const core = require('@steedos/core');
 const callObjectServiceAction = function (actionName, userSession, data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
