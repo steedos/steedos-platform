@@ -6,14 +6,12 @@
   "dependencies": {
     "@steedos/service-ui": "2.3.1-beta.2",
     "@steedos/auth": "2.3.1-beta.3",
-    "cors": "2.8.5",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
     "moleculer": "^0.14.25",
     "moleculer-apollo-server": "^0.3.6",
-    "moleculer-web": "^0.10.4",
-    "compression": "1.7.4"
+    "moleculer-web": "^0.10.4"
   },
   "private": false,
   "publishConfig": {
