@@ -195,6 +195,14 @@ module.exports = {
 					this.meteor.loadServerBundles();
 					// 使用 express 服务扩展meteor req 功能, 比如sendFile等
 					const connectHandlersExpress = express();
+					const session = require('express-session');
+					connectHandlersExpress.use(session({
+						secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
+						resave: false,
+						saveUninitialized: true,
+						cookie: { secure: false, maxAge: 800000 },
+						name: 'ivan'
+					}))
 					connectHandlersExpress.use((req, res, next)=>{
 						next();
 					});
