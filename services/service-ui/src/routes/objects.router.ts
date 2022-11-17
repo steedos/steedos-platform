@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-15 18:11:55
+ * @LastEditTime: 2022-11-17 15:26:01
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
@@ -55,7 +55,6 @@ router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.r
 router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     try {
-        var s = new Date().getTime()
         const { objectServiceName } = req.params;
         const objectName = objectServiceName.substring(1);
         const [ result, hasImportTemplates ] = await Promise.all([
@@ -65,8 +64,6 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
             })
         ])
         result.hasImportTemplates = hasImportTemplates 
-        var e = new Date().getTime()
-        console.log(`uiSchema: ${e-s}`)
         res.status(200).send(result);
     } catch (error) {
         res.status(500).send(error.message);
