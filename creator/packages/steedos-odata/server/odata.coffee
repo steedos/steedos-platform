@@ -1,18 +1,18 @@
-Meteor.startup ->
-	MeteorODataRouter = require('@steedos/core').MeteorODataRouter;
-	ODataRouter = require('@steedos/core').ODataRouter
-	express = require('express');
-	app = express.Router();
-	app.use('/api/odata/v4', MeteorODataRouter);
-	MeteorODataAPIV4Router = require('@steedos/core').MeteorODataAPIV4Router;
-	if MeteorODataAPIV4Router
-		app.use('/api/v4', MeteorODataAPIV4Router)
-	WebApp.connectHandlers.use(app);
-	_.each Creator.steedosSchema.getDataSources(), (datasource, name)->
-		if(name != 'default')
-			otherApp = express.Router();
-			otherApp.use("/api/odata/#{name}", ODataRouter);
-			WebApp.connectHandlers.use(otherApp);
+# Meteor.startup ->
+# 	MeteorODataRouter = require('@steedos/core').MeteorODataRouter;
+# 	ODataRouter = require('@steedos/core').ODataRouter
+# 	express = require('express');
+# 	app = express.Router();
+# 	app.use('/api/odata/v4', MeteorODataRouter);
+# 	MeteorODataAPIV4Router = require('@steedos/core').MeteorODataAPIV4Router;
+# 	if MeteorODataAPIV4Router
+# 		app.use('/api/v4', MeteorODataAPIV4Router)
+# 	WebApp.connectHandlers.use(app);
+# 	_.each Creator.steedosSchema.getDataSources(), (datasource, name)->
+# 		if(name != 'default')
+# 			otherApp = express.Router();
+# 			otherApp.use("/api/odata/#{name}", ODataRouter);
+# 			WebApp.connectHandlers.use(otherApp);
 
 # 	odataV4Mongodb = require '@steedos/odata-v4-mongodb'
 # 	querystring = require 'querystring'

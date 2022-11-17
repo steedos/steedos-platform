@@ -1,25 +1,22 @@
 import { Response } from 'express-serve-static-core';
 import steedosAuth = require("@steedos/auth");
 import { getObjectList, getObjectRecent, createObjectData, getObjectData, updateObjectData, deleteObjectData, excuteObjectMethod } from './server';
-var express = require('express');
-var router = express.Router();
+
+var router = require('@steedos/router').staticRouter();
 
 import * as core from "express-serve-static-core";
 interface Request extends core.Request {
   user: any;
 }
 
-router.use('/:spaceId', steedosAuth.setRequestUser);
-
-// middleware that is specific to this router
-router.use('/:spaceId', function (req: Request, res: Response, next: () => void) {
+const checkUser = (req: Request, res: Response, next: () => void)=>{
   if (req.user) {
     next();
   }
   else {
     res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
   }
-})
+}
 
 /*
 在odata接口中处理
@@ -29,18 +26,18 @@ router.use('/:spaceId', function (req: Request, res: Response, next: () => void)
     owner(记录所有者)处理
 */
 
-router.get('/:spaceId/:objectName', getObjectList);
+router.get('/api/odata/v4/:spaceId/:objectName', steedosAuth.setRequestUser, checkUser, getObjectList);
 
-router.get('/:spaceId/:objectName/recent', getObjectRecent);
+router.get('/api/odata/v4/:spaceId/:objectName/recent', steedosAuth.setRequestUser, checkUser, getObjectRecent);
 
-router.post('/:spaceId/:objectName', createObjectData);
+router.post('/api/odata/v4/:spaceId/:objectName', steedosAuth.setRequestUser, checkUser, createObjectData);
 
-router.get('/:spaceId/:objectName/:_id', getObjectData);
+router.get('/api/odata/v4/:spaceId/:objectName/:_id', steedosAuth.setRequestUser, checkUser, getObjectData);
 
-router.put('/:spaceId/:objectName/:_id', updateObjectData);
+router.put('/api/odata/v4/:spaceId/:objectName/:_id', steedosAuth.setRequestUser, checkUser, updateObjectData);
 
-router.delete('/:spaceId/:objectName/:_id', deleteObjectData);
+router.delete('/api/odata/v4/:spaceId/:objectName/:_id', steedosAuth.setRequestUser, checkUser, deleteObjectData);
 
-router.all('/:spaceId/:objectName/:_id/:methodName', excuteObjectMethod);
+router.all('/api/odata/v4/:spaceId/:objectName/:_id/:methodName', steedosAuth.setRequestUser, checkUser, excuteObjectMethod);
 
 export default router
