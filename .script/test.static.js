@@ -4,7 +4,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-10 17:44:26
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-15 18:15:32
+ * @LastEditTime: 2022-11-16 18:20:37
  * @Description: 
  */
 import http from "k6/http";
