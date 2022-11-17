@@ -6,7 +6,6 @@
  * @Description: 
  */
 const AmisSchema = require('./utils/amis-schema');
-const AmisLib = require('@steedos-widgets/amis-lib');
 const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
 const clone = require("clone");
@@ -47,9 +46,6 @@ const getObjectConfig = async function(objectName){
     return objectConfig;
 }
 
-AmisLib.setUISchemaFunction(async function(objectName, force){
-    return await getObjectConfig(objectName);
-});
 
 module.exports = {
     name: "amis",
@@ -133,6 +129,11 @@ module.exports = {
         },
         getInitSchema: {
             async handler({type, objectApiName, formFactor, userSession}) {
+
+                const AmisLib = require('@steedos-widgets/amis-lib');
+                AmisLib.setUISchemaFunction(async function(objectName, force){
+                    return await getObjectConfig(objectName);
+                });
                 if(objectApiName){
                     let schema;
                     switch(type){
