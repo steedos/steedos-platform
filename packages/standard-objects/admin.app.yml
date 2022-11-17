@@ -265,3 +265,9 @@ admin_menus:
       - admin
     object_name: workflow_notifications
     parent: workflow_actions
+  - _id: workflow_outbound_messages
+    name: Workflow Outbound Messages
+    permission_sets:
+      - admin
+    object_name: workflow_outbound_messages
+    parent: workflow_actions

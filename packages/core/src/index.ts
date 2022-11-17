@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-17 09:30:50
+ * @Description: 
+ */
 import "reflect-metadata";
 
 import { getFromContainer } from "./container";
@@ -11,7 +18,7 @@ export function getCreator(): CreatorManager {
     return getFromContainer(CreatorManager);
 }
 
-export { default as ODataRouter } from './odata/ODataRouter'
+// export { default as ODataRouter } from './odata/ODataRouter'
 export { default as MeteorODataRouter } from './odata/MeteorODataRouter'
 export { default as MeteorODataAPIV4Router } from './odata/MeteorODataAPIV4Router'
 export * from './routes'

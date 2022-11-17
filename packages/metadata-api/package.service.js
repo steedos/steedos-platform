@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-17 10:21:16
+ * @Description: 
+ */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
@@ -43,8 +50,7 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-        }
+
     },
 
     /**

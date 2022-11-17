@@ -45,9 +45,28 @@ fields:
     label: 描述
     help: 
     description: 
+  time_triggers:
+    label: 时间触发器
+  time_triggers.$:
+    label: Field
+  time_triggers.$.number:
+    label: 数值
+  time_triggers.$.unit:
+    label: 单位
+  time_triggers.$.type:
+    label: 类型
+  time_triggers.$.date_field:
+    label: 日期字段
+  time_triggers.$.updates_field_actions:
+    label: 工作流操作：字段更新
+  time_triggers.$.workflow_notifications_actions:
+    label: 工作流操作：工作流通知
+  time_triggers.$.workflow_outbound_messages_actions:
+    label: 工作流操作：出站消息
 groups:
   rule_criteria: 规则条件
   immediate_actions: 即时操作
+  time_triggers: 依赖于时间的工作流操作
 listviews:
   all:
     label: 所有

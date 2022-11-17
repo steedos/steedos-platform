@@ -1,0 +1,7 @@
+name: workflow_outbound_messages_actions
+type: lookup
+multiple: true
+label: 工作流操作：出站消息
+is_wide: true
+reference_to: workflow_outbound_messages
+reference_to_field: name

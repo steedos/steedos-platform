@@ -2,12 +2,11 @@
 
 const Future = require('fibers/future');
 const path = require('path');
-const MetadataService = require("@steedos/service-metadata-server");
-const APIService = require('@steedos/service-api');
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const objectql = require('@steedos/objectql');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 const _ = require('lodash');
+const express = require('express');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -70,7 +69,7 @@ module.exports = {
 	 * Dependencies
 	 */
 	dependencies: [
-		'metadata-server'
+		'metadata-server', 'api'
 	],
 
 	/**
@@ -194,6 +193,14 @@ module.exports = {
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
+					// 使用 express 服务扩展meteor req 功能, 比如sendFile等
+					const connectHandlersExpress = express();
+					connectHandlersExpress.use((req, res, next)=>{
+						next();
+					});
+					connectHandlersExpress.use(require('@steedos/router').staticRouter());
+					connectHandlersExpress.use(SteedosApi.express());
+					WebApp.connectHandlers.use(connectHandlersExpress)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
 					// console.time(`startSteedos-dataSourceInIt`)
@@ -229,18 +236,13 @@ module.exports = {
 		// },
 
 		async startAPIService() {
-			if (this.settings.apiServer && this.settings.apiServer.enabled) {
-				this.settings.apiServer.server = false;
-				this.apiService = this.broker.createService({
-					name: "api",
-					mixins: [APIService],
-					settings: this.settings.apiServer
-				});
-				if (!this.broker.started) {
-					this.broker._restartService(this.apiService)
-				}
-				this.WebApp.connectHandlers.use("/", this.apiService.express());
-			}
+			// if (this.settings.apiServer && this.settings.apiServer.enabled) {
+			// 	console.log(`this.WebApp.rawConnectHandlers.use`, this.WebApp.rawConnectHandlers.use.toString())
+			// 	console.log(`======require('@steedos/router').staticRouter()=====`, require('@steedos/router').staticRouter())
+			// 	this.WebApp.rawConnectHandlers.use(require('@steedos/router').staticRouter());
+			// 	console.log(`===rawConnectHandlers===require('@steedos/router').staticRouter()=====`, require('@steedos/router').staticRouter())
+			// 	this.WebApp.connectHandlers.use(SteedosApi.express());
+			// }
 
 		},
 
@@ -299,7 +301,7 @@ module.exports = {
 
 			await this.startSteedos();
 
-			this.startAPIService();
+			// this.startAPIService();
 			await this.setSpaceId();
 
 			console.log('耗时：', new Date().getTime() - time);

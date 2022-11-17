@@ -2,12 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-29 13:15:06
+ * @LastEditTime: 2022-11-17 15:26:01
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
-const express = require("express");
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 const core = require('@steedos/core');
 
 
@@ -56,10 +56,14 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     const userSession = req.user;
     try {
         const { objectServiceName } = req.params;
-        const result = await callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession);
-        result.hasImportTemplates = await callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
-            objectName: result.name
-        })
+        const objectName = objectServiceName.substring(1);
+        const [ result, hasImportTemplates ] = await Promise.all([
+            callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession),
+            callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
+                objectName: objectName
+            })
+        ])
+        result.hasImportTemplates = hasImportTemplates 
         res.status(200).send(result);
     } catch (error) {
         res.status(500).send(error.message);

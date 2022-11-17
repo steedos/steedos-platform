@@ -2,14 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:15:52
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-28 16:19:51
+ * @LastEditTime: 2022-11-16 14:50:42
  * @Description: 
  */
-import * as express from "express";
 const ejs = require('ejs');
 const authController = require("./auth");
 const path = require("path");
-const router = express.Router();
+const router = require('@steedos/router').staticRouter()
 
 router
   .get("/api/global/auth/oidc/config", //"/api/global/auth/oidc/configs/:configId",

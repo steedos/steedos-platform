@@ -121,17 +121,25 @@ export async function getSpaceUserSession(spaceId, userId) {
         if (su) {
             let userSpaceId = su.space;
             let userSpaceIds = _.pluck(spaceUsers, 'space');
-            let roles = await getUserRoles(userId, userSpaceId);
-            let profile = await getSpaceUserProfile(userId, userSpaceId);
+
+            let [ roles, profile, spaces, companies, organizations, permission_shares ] = await Promise.all([
+                getUserRoles(userId, userSpaceId),
+                getSpaceUserProfile(userId, userSpaceId),
+                getSpaces(userSpaceIds),
+                getObjectDataByIds('company', su.company_ids, ['name', 'organization']),
+                getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']),
+                getUserPermissionShares(su)
+            ])
+
             spaceSession = { roles: roles, profile: profile,expiredAt: expiredAt, ...su };
             spaceSession.spaceId = userSpaceId;
-            spaceSession.spaces = await getSpaces(userSpaceIds)
+            spaceSession.spaces = spaces 
             spaceSession.space = _.find(spaceSession.spaces, (record)=>{ return record._id === userSpaceId });
             
-            spaceSession.companies = await getObjectDataByIds('company', su.company_ids, ['name', 'organization']);
+            spaceSession.companies = companies;
             spaceSession.company = _.find(spaceSession.companies, (record)=>{ return record._id === su.company_id });
             
-            spaceSession.organizations = await getObjectDataByIds('organizations', su.organizations, ['name', 'fullname', 'company_id']);
+            spaceSession.organizations = organizations ;
             spaceSession.organization = _.find(spaceSession.organizations, (record)=>{ return record._id === su.organization });
 
             if (spaceSession.company) {
@@ -140,7 +148,7 @@ export async function getSpaceUserSession(spaceId, userId) {
             if (spaceSession.companies) {
                 spaceSession.company_ids = spaceSession.companies.map(function (company: any) { return company._id });
             }
-            spaceSession.permission_shares = await getUserPermissionShares(su);
+            spaceSession.permission_shares = permission_shares;
             spaceSession.spaceUserId = spaceSession._id;
             addSpaceSessionToCache(spaceId, userId, spaceSession);
         } else {

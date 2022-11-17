@@ -141,6 +141,12 @@ export class SteedosDataSourceType implements Dictionary {
         return clone(this.cacheObjects);
     }
 
+    getCacheObject(objectName){
+        return clone(_.find(this.cacheObjects, (item)=>{
+            return item?.metadata.name === objectName
+        }))
+    }
+
     async flushCacheObjects() {
         this.cacheObjects = await this.schema.metadataRegister.getObjectsConfig(this.name);
     }

@@ -9,7 +9,7 @@ const {
 	// GraphQLTime,
 	GraphQLDateTime
 } = require('graphql-iso-date');
-
+const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 
 /**
@@ -17,7 +17,6 @@ const _ = require('lodash');
  * @typedef {import('http').IncomingMessage} IncomingRequest Incoming HTTP Request
  * @typedef {import('http').ServerResponse} ServerResponse HTTP Server Response
  */
-
 module.exports = {
 	name: "api",
 	mixins: [ApiGateway,
@@ -94,11 +93,13 @@ module.exports = {
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
 	settings: {
+		server: false,
+
 		// Exposed port
 		port: process.env.PORT || 3001,
 
 		// Exposed IP
-		ip: "0.0.0.0",
+		// ip: "0.0.0.0",
 
 		// Global Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 		use: [],
@@ -116,7 +117,7 @@ module.exports = {
 				path: "/service/api",
 
 				whitelist: [
-					"**"
+					"**",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -211,7 +212,6 @@ module.exports = {
 	},
 
 	methods: {
-
 		/**
 		 * Authenticate the request. It check the `Authorization` token value in the request header.
 		 * Check the token value & resolve the user by the token.
@@ -376,5 +376,32 @@ module.exports = {
 			};
 		},
 
+	},
+	created(){
+		this.app = SteedosRouter.staticRouter();
+	},
+	async started (){
+
+		this.broker.createService(require("@steedos/service-ui"));
+
+		// if (this.settings.server != true && this.settings.steedos_api_port){
+		// 	/* istanbul ignore next */
+		// 	await new this.Promise((resolve, reject) => {
+		// 		this.app.listen(this.settings.steedos_api_port, err => {
+		// 			if (err)
+		// 				return reject(err);
+		// 			this.logger.info(`Steedos Experience Server listening on ${this.settings.url}`);
+		// 			resolve();
+		// 		});
+		// 	});
+		// }
+
+		this.broker.waitForServices('~packages-@steedos/service-ui').then(()=>{
+			this.app.use("/", this.express());
+		})
+
+		global.SteedosApi = {
+			express: this.express
+		}
 	}
 };

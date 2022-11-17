@@ -6,10 +6,8 @@ import { reject } from './reject';
 import { reassign } from './reassign';
 import { recall } from './recall';
 import { allowObjectSubmit, allowRecallByProcessInstance, allowApproverByInstanceHistoryId } from './permission'
-const express = require('express');
 
-
-export const processExpress = express.Router();
+export const processExpress = require('@steedos/router').staticRouter();
 
 processExpress.post('/api/v4/process/submit/:objectName/:record', requireAuthentication, submit);
 

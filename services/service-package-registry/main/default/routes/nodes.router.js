@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const core = require('@steedos/core');
 const registry = require('../manager/registry');
 const loader = require('../manager/loader');

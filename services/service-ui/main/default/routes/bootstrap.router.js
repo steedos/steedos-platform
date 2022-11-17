@@ -9,8 +9,8 @@ require("@steedos/license");
 const Fiber = require('fibers');
 const clone = require("clone");
 const _ = require('underscore');
-var express = require('express');
-const bootStrapExpress = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 function getUserProfileObjectsLayout(userId, spaceId, objectName) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         let spaceUser;
@@ -136,25 +136,34 @@ function getSpaceBootStrap(req, res) {
                 let urlParams = req.params;
                 const { userId, language: lng } = userSession;
                 let spaceId = req.headers['x-space-id'] || urlParams.spaceId;
-                let space = yield (0, objectql_1.getObject)("spaces").findOne(spaceId, { fields: ['name'] });
+                let [space, object_listviews, apps, assigned_apps, spaceProcessDefinition, dbListViews, layouts, objectsFieldsPermissionGroupRole, allRelationsInfo, _dbApps, _dbDashboards, assigned_menus, allImportTemplates] = yield Promise.all([
+                    (0, objectql_1.getObject)("spaces").findOne(spaceId, { fields: ['name'] }),
+                    getUserObjectsListViews(userId, spaceId),
+                    (0, objectql_1.getAppConfigs)(spaceId),
+                    (0, objectql_1.getAssignedApps)(userSession),
+                    (0, objectql_1.getObject)("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] }),
+                    (0, objectql_1.getObject)("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] }),
+                    (0, objectql_1.getObjectLayouts)(userSession.profile, spaceId),
+                    objectql_1.FieldPermission.getObjectsFieldsPermissionGroupRole(),
+                    (0, objectql_1.getAllRelationsInfo)(),
+                    (0, objectql_1.getObject)("apps").directFind({ filters: [['space', '=', spaceId], ['is_creator', '=', true]] }),
+                    (0, objectql_1.getObject)("dashboard").directFind({ filters: [['space', '=', spaceId]] }),
+                    (0, objectql_1.getAssignedMenus)(userSession),
+                    (0, objectql_1.getSteedosSchema)().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession } })
+                ]);
                 let result = Creator.getAllPermissions(spaceId, userId);
                 steedosI18n.translationObjects(lng, result.objects);
                 result.user = userSession;
                 result.space = space;
                 result.dashboards = clone(Creator.Dashboards);
                 result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId);
-                result.object_listviews = yield getUserObjectsListViews(userId, spaceId);
-                result.apps = yield (0, objectql_1.getAppConfigs)(spaceId);
-                result.assigned_apps = yield (0, objectql_1.getAssignedApps)(userSession);
+                result.object_listviews = object_listviews;
+                result.apps = apps;
+                result.assigned_apps = assigned_apps;
                 let datasources = Creator.steedosSchema.getDataSources();
-                const spaceProcessDefinition = yield (0, objectql_1.getObject)("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] });
                 const spaceObjectsProcessDefinition = _.groupBy(spaceProcessDefinition, 'object_name');
-                const dbListViews = yield (0, objectql_1.getObject)("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] });
                 const dbObjectsListViews = _.groupBy(dbListViews, 'object_name');
-                const layouts = yield (0, objectql_1.getObjectLayouts)(userSession.profile, spaceId);
                 const objectsLayouts = _.groupBy(layouts, 'object_name');
-                const objectsFieldsPermissionGroupRole = yield objectql_1.FieldPermission.getObjectsFieldsPermissionGroupRole();
-                const allRelationsInfo = yield (0, objectql_1.getAllRelationsInfo)();
                 for (const datasourceName in datasources) {
                     let datasource = datasources[datasourceName];
                     const datasourceObjects = yield datasource.getObjects();
@@ -199,7 +208,6 @@ function getSpaceBootStrap(req, res) {
                         }
                     }
                 }
-                var _dbApps = yield (0, objectql_1.getObject)("apps").directFind({ filters: [['space', '=', spaceId], ['is_creator', '=', true]] });
                 let dbApps = {};
                 _.each(_dbApps, function (dbApp) {
                     if (dbApp.visible) {
@@ -207,7 +215,6 @@ function getSpaceBootStrap(req, res) {
                     }
                 });
                 result.apps = _.extend(result.apps || {}, dbApps);
-                var _dbDashboards = yield (0, objectql_1.getObject)("dashboard").directFind({ filters: [['space', '=', spaceId]] });
                 let dbDashboards = {};
                 _.each(_dbDashboards, function (dashboard) {
                     dbDashboards[dashboard._id] = dashboard;
@@ -231,7 +238,6 @@ function getSpaceBootStrap(req, res) {
                 });
                 steedosI18n.translationApps(lng, _Apps);
                 result.apps = _Apps;
-                let assigned_menus = yield (0, objectql_1.getAssignedMenus)(userSession);
                 steedosI18n.translationMenus(lng, assigned_menus);
                 result.assigned_menus = assigned_menus;
                 let _Dashboards = {};
@@ -249,7 +255,6 @@ function getSpaceBootStrap(req, res) {
                         result.objects[item.object_name].enable_process = true;
                     }
                 });
-                const allImportTemplates = yield (0, objectql_1.getSteedosSchema)().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession } });
                 for (const key in result.objects) {
                     if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
                         const objectConfig = result.objects[key];
@@ -413,6 +418,6 @@ function getSpaceObjectBootStrap(req, res) {
     });
 }
 exports.getSpaceObjectBootStrap = getSpaceObjectBootStrap;
-bootStrapExpress.use('/api/bootstrap/:spaceId/:objectNames', core_1.requireAuthentication, getSpaceObjectBootStrap);
-bootStrapExpress.use('/api/bootstrap/:spaceId/', core_1.requireAuthentication, getSpaceBootStrap);
-exports.default = bootStrapExpress;
+router.use('/api/bootstrap/:spaceId/:objectNames', core_1.requireAuthentication, getSpaceObjectBootStrap);
+router.use('/api/bootstrap/:spaceId/', core_1.requireAuthentication, getSpaceBootStrap);
+exports.default = router;

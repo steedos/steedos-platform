@@ -7,8 +7,8 @@ const Fiber = require('fibers')
 const clone = require("clone");
 const _ = require('underscore');
 
-var express = require('express');
-const bootStrapExpress = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 
 async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
     let spaceUser;
@@ -154,7 +154,23 @@ export async function getSpaceBootStrap(req, res) {
         const { userId, language: lng} = userSession;
 
         let spaceId = req.headers['x-space-id'] || urlParams.spaceId
-        let space = await getObject("spaces").findOne(spaceId, { fields: ['name'] })
+
+        let [ space , object_listviews, apps, assigned_apps, spaceProcessDefinition, dbListViews, layouts, objectsFieldsPermissionGroupRole, allRelationsInfo, _dbApps, _dbDashboards, assigned_menus, allImportTemplates] = await Promise.all([
+            getObject("spaces").findOne(spaceId, { fields: ['name'] }),
+            getUserObjectsListViews(userId, spaceId),
+            getAppConfigs(spaceId),
+            getAssignedApps(userSession),
+            getObject("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] }),
+            getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] }),
+            getObjectLayouts(userSession.profile, spaceId),
+            FieldPermission.getObjectsFieldsPermissionGroupRole(),
+            getAllRelationsInfo(),
+            getObject("apps").directFind({filters: [['space', '=', spaceId],['is_creator', '=', true]]}),
+            getObject("dashboard").directFind({filters: [['space', '=', spaceId]]}),
+            getAssignedMenus(userSession),
+            getSteedosSchema().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession}})
+        ])
+
         //TODO 无需再从getAllPermissions中获取用户的对象权限
         let result = Creator.getAllPermissions(spaceId, userId);
         steedosI18n.translationObjects(lng, result.objects);
@@ -163,11 +179,12 @@ export async function getSpaceBootStrap(req, res) {
         result.space = space
 
         result.dashboards = clone(Creator.Dashboards)
-        result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId)
-        result.object_listviews = await getUserObjectsListViews(userId, spaceId)
+        // TODO 删除此代码, 逻辑重新调整, 提供单独的接口处理此问题: 对象可创建流程的清单接口
+        result.object_workflows = Meteor.call('object_workflows.get', spaceId, userId) 
+        result.object_listviews = object_listviews
         // result.apps = clone(Creator.Apps)
-        result.apps = await getAppConfigs(spaceId);
-        result.assigned_apps = await getAssignedApps(userSession);
+        result.apps = apps
+        result.assigned_apps = assigned_apps;
         let datasources = Creator.steedosSchema.getDataSources();
         // for (const datasourceName in datasources) {
         //     if(datasourceName != 'default'){
@@ -183,17 +200,11 @@ export async function getSpaceBootStrap(req, res) {
         //         }
         //     }
         // }
-        const spaceProcessDefinition = await getObject("process_definition").find({ filters: [['space', '=', spaceId], ['active', '=', true]] })
         const spaceObjectsProcessDefinition = _.groupBy(spaceProcessDefinition, 'object_name');
 
-        const dbListViews = await getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] })
         const dbObjectsListViews = _.groupBy(dbListViews, 'object_name');
 
-        const layouts = await getObjectLayouts(userSession.profile, spaceId)
         const objectsLayouts = _.groupBy(layouts, 'object_name');
-        const objectsFieldsPermissionGroupRole = await FieldPermission.getObjectsFieldsPermissionGroupRole();
-        
-        const allRelationsInfo = await getAllRelationsInfo();
 
         for (const datasourceName in datasources) {
             let datasource = datasources[datasourceName];
@@ -237,7 +248,6 @@ export async function getSpaceBootStrap(req, res) {
             }
         }
         
-        var _dbApps = await getObject("apps").directFind({filters: [['space', '=', spaceId],['is_creator', '=', true]]});
         let dbApps = {};
         _.each(_dbApps, function(dbApp){
             if(dbApp.visible){
@@ -247,7 +257,6 @@ export async function getSpaceBootStrap(req, res) {
 
         result.apps = _.extend( result.apps || {}, dbApps);
 
-        var _dbDashboards = await getObject("dashboard").directFind({filters: [['space', '=', spaceId]]});
         let dbDashboards = {};
         _.each(_dbDashboards, function(dashboard){
             dbDashboards[dashboard._id] = dashboard;
@@ -274,7 +283,6 @@ export async function getSpaceBootStrap(req, res) {
 
         steedosI18n.translationApps(lng, _Apps);
         result.apps = _Apps;
-        let assigned_menus = await getAssignedMenus(userSession);
         steedosI18n.translationMenus(lng, assigned_menus);
         result.assigned_menus = assigned_menus;
         
@@ -295,8 +303,6 @@ export async function getSpaceBootStrap(req, res) {
                 result.objects[item.object_name].enable_process = true
             }
         })
-
-        const allImportTemplates = await getSteedosSchema().broker.call(`~packages-@steedos/data-import.getAllImportTemplates`, {}, { meta: { user: userSession}})
 
         for (const key in result.objects) {
             if (Object.prototype.hasOwnProperty.call(result.objects, key)) {
@@ -469,7 +475,7 @@ export async function getSpaceObjectBootStrap(req, res) {
     }).run();
 }
 
-bootStrapExpress.use('/api/bootstrap/:spaceId/:objectNames', requireAuthentication, getSpaceObjectBootStrap)
-bootStrapExpress.use('/api/bootstrap/:spaceId/', requireAuthentication, getSpaceBootStrap)
+router.use('/api/bootstrap/:spaceId/:objectNames', requireAuthentication, getSpaceObjectBootStrap)
+router.use('/api/bootstrap/:spaceId/', requireAuthentication, getSpaceBootStrap)
 
-exports.default = bootStrapExpress;
+exports.default = router;

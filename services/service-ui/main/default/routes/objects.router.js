@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const objectql_1 = require("@steedos/objectql");
-const express = require("express");
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 const core = require('@steedos/core');
 const callObjectServiceAction = function (actionName, userSession, data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -56,11 +56,18 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
+            var s = new Date().getTime();
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession);
-            result.hasImportTemplates = yield callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
-                objectName: result.name
-            });
+            const objectName = objectServiceName.substring(1);
+            const [result, hasImportTemplates] = yield Promise.all([
+                callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession),
+                callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
+                    objectName: objectName
+                })
+            ]);
+            result.hasImportTemplates = hasImportTemplates;
+            var e = new Date().getTime();
+            console.log(`uiSchema: ${e - s}`);
             res.status(200).send(result);
         }
         catch (error) {

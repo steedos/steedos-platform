@@ -42,7 +42,7 @@ const accountsExpress = (
     path = '';
   }
 
-  const router = express.Router();
+  const router = require('@steedos/router').staticRouter();
   router.use(cookieParser());
   router.post(`${path}/impersonate`, impersonate(accountsServer));
 

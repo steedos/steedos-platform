@@ -2,13 +2,12 @@ import querystring = require('querystring');
 import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import steedosI18n = require("@steedos/i18n");
 import { requireAuthentication } from './';
-const express = require("express");
 const Fiber = require('fibers');
 const moment = require('moment');
 const json2xls = require('json2xls');
 const objectql = require('@steedos/objectql')
 const _ = require('lodash')
-export const exportExcelExpress = express.Router();
+export const exportExcelExpress = require('@steedos/router').staticRouter();;
 import { SteedosDatabaseDriverType } from '@steedos/objectql'
 
 const exportRecordData = async function (req, res) {
@@ -278,6 +277,7 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
             return fieldValue;
     }
 }
+
 exportExcelExpress.get('/api/record/export/:objectName', requireAuthentication, function (req, res) {
     return Fiber(function () {
         return exportRecordData(req, res);

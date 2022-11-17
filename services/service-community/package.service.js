@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-09 13:40:15
+ * @LastEditTime: 2022-11-11 18:35:30
  * @Description: 
  */
 "use strict";
@@ -66,10 +66,10 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
+		//ApiGateway
+		this.broker.createService(require('@steedos/service-api'));
 		
 		this.broker.createService(require("@steedos/webapp-public"));
-		
-		this.broker.createService(require("@steedos/service-ui"));
 
 		this.broker.createService(require("@steedos/service-accounts"));
 		

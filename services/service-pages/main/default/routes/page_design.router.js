@@ -3,15 +3,13 @@
  * @Date: 2022-04-04 16:34:28
  * @Description: 
  */
-const express = require("express");
-const router = express.Router();
+const router = require('@steedos/router').staticRouter();
 const core = require('@steedos/core');
 const ejs = require('ejs');
 const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 const objectql = require('@steedos/objectql');
-
 router.get('/api/pageDesign', core.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');

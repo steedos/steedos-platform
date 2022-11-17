@@ -1,12 +1,16 @@
-let designerRouter = require('./src/designerRouter').designerRouter;
-let instanceFilesRouter = require('./src/instance_files').router;
-let officeConvertTOPDFRouter = require('./src/office_convert_to_pdf_router').default;
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-17 11:30:05
+ * @Description: 
+ */
 const express = require('express');
 const path = require('path');
-exports.init = function ({ app }) {
+exports.init = function ({  }) {
     let desingerDir = path.dirname(require.resolve("@steedos/steedos-plugin-workflow/package.json"));
-    app.use(designerRouter)
-        .use('/applications', express.static(path.join(desingerDir, 'public')));
-    app.use('/api/v4', instanceFilesRouter);
-    app.use(officeConvertTOPDFRouter);
+    require('./src/designerRouter')
+    require('@steedos/router').staticRouter().use('/applications', express.static(path.join(desingerDir, 'public')));
+    require('./src/instance_files')
+    require('./src/office_convert_to_pdf_router')
 };

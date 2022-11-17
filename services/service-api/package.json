@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@steedos/service-ui": "2.3.2-beta.2",
     "@steedos/auth": "2.3.2-beta.2",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",

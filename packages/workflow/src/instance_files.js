@@ -1,12 +1,13 @@
 const express = require('express');
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 const steedosAuth = require('@steedos/auth');
 const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
 
 const workflowManager = require('./workflowManager')
 
-router.use('/instances/:id/files', async function auth(req, res, next) {
+router.use('/api/v4/instances/:id/files', async function auth(req, res, next) {
     const user = await steedosAuth.auth(req, res)
     if(!user.userId){
         res.status(401).send({

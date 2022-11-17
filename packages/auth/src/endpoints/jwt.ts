@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-16 17:15:17
+ * @Description: 
+ */
 import { hashStampedToken, insertHashedLoginToken, hashLoginToken, setAuthCookies } from '../utils';
 import { getSteedosSchema } from '@steedos/objectql'
 
@@ -71,7 +78,7 @@ export const jwtSSO = async (req, res) => {
     res.redirect(302, redirectUrl);
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.messenger)
+    res.status(500).send(error.message)
   }
 
 }

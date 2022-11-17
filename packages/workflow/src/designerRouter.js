@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 const Fiber = require('fibers');
 const designerManager = require('./designerManager');
 
-const router = express.Router();
+const SteedosRouter = require('@steedos/router');
+const router = SteedosRouter.staticRouter();
 
 const steedosSchema = objectql.getSteedosSchema();
 

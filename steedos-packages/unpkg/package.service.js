@@ -58,7 +58,7 @@ module.exports = {
 		
 		loadUnpkgRoutes: function() {
 			try {
-				const router = express.Router();
+				const router = require('@steedos/router').staticRouter()
 				if (this.settings.unpkgUrl) {
 					router.get('/unpkg.com/*', (req, res) => {
 						const packageUrl = req.path.split('/unpkg.com')[1]
@@ -67,7 +67,8 @@ module.exports = {
 					})
 				}
 				
-				WebApp.connectHandlers.use(router);
+				// WebApp.connectHandlers.use(router);
+				// SteedosApi?.server?.use(router);
 			} catch (error) {
 				console.error(error)
 			}

@@ -1,6 +1,3 @@
-const express = require("express");
-const router = express.Router();
-
 const crypto = require('crypto');
 const dtApi = require("./dt_api");
 const { response } = require("express");

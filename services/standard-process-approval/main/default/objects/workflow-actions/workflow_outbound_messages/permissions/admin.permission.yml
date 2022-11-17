@@ -1,0 +1,14 @@
+name: 出站消息.管理员
+allowCreate: true
+allowCreateFiles: true
+allowDelete: true
+allowDeleteFiles: true
+allowEdit: true
+allowEditFiles: true
+allowRead: true
+allowReadFiles: true
+modifyAllFiles: true
+modifyAllRecords: true
+permission_set_id: admin
+viewAllFiles: true
+viewAllRecords: true

@@ -1,9 +1,14 @@
-import express = require('express');
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-17 09:53:01
+ * @Description: 
+ */
 import {auth} from "@steedos/auth";
 const _ = require("underscore")
 
-var app = express();
-const router = express.Router();
+const router = require('@steedos/router').staticRouter();
 
 import {PublishListViews} from './publish_listviews'
 import {Permission} from './permission'
@@ -40,9 +45,12 @@ router.post('/publish', async function(req, res){
     }
 })
 
-export class Publish{
-    static init(){
-        app.use(router)
-        WebApp.connectHandlers.use(app);
-    }
-}
+
+exports.default = router; 
+
+// export class Publish{
+//     static init(){
+//         // SteedosApi?.server?.use(router);
+//         // WebApp.connectHandlers.use(router);
+//     }
+// }

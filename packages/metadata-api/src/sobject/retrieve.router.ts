@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router =require('@steedos/router').staticRouter()
 const _ = require("underscore");
 const Fiber = require('fibers');
 

@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = require('@steedos/router').staticRouter();
 const path = require('path');
 const publicPath = require.resolve('stimulsoft-reports-js');
 const fs = require('fs');
@@ -15,6 +15,6 @@ if (fs.existsSync(publicPath)) {
     router.use(`${routerPath}/Css`, express.static(path.join(publicPath, '..', 'Css'), { maxAge: cacheTime }));
     router.use(`${routerPath}/Scripts`, express.static(path.join(publicPath, '..', 'Scripts'), { maxAge: cacheTime }));
     router.use(rootPath, express.static(path.join(__dirname, '..', "public"), { maxAge: cacheTime }));
-    WebApp.rawConnectHandlers.use(router);
+    // WebApp.rawConnectHandlers.use(router);
 }
 exports.default = router;
