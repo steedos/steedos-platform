@@ -3,6 +3,7 @@ label: Workflow Notification
 icon: quick_text
 hidden: true
 enable_inline_edit: false
+enable_enhanced_lookup: true
 version: 2
 fields:
   name:

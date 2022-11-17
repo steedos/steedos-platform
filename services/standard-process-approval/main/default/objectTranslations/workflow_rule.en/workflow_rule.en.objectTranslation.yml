@@ -37,13 +37,36 @@ fields:
     label: Field Update
     help: 
     description: 
+  workflow_notifications_actions:
+    label: Notification
+    help: 
+    description: 
   description:
     label: 
     help: 
     description: 
+  time_triggers:
+    label: Time Triggers
+  time_triggers.$:
+    label: Field
+  time_triggers.$.number:
+    label: Number
+  time_triggers.$.unit:
+    label: Unit
+  time_triggers.$.type:
+    label: Type
+  time_triggers.$.date_field:
+    label: Date Field
+  time_triggers.$.updates_field_actions:
+    label: Field Update
+  time_triggers.$.workflow_notifications_actions:
+    label: Notification
+  time_triggers.$.workflow_outbound_messages_actions:
+    label: Outbound Message Actions
 groups:
   rule_criteria: Rule Criteria
   immediate_actions: Immediate Actions
+  time_triggers: Time-Dependent Action
 listviews:
   all:
     label: All

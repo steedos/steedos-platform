@@ -1,0 +1,38 @@
+name: workflow_outbound_messages
+label: Outbound Message Actions
+description:
+fields:
+  name:
+    label: API Name
+    help: 
+    description:
+  label:
+    label: Label
+    help: 
+    description: 
+  object_name:
+    label: Object
+    help:
+    description:
+  description:
+    label: Description
+    help:
+    description:
+  endpoint_url:
+    label: Endpoint URL
+    help:
+    description:
+  user_to_send_as:
+    label: User to send as
+    help:
+    description:
+  object_fields_to_send:
+    label: Object fields to send
+    help:
+    description:
+listviews:
+  all:
+    label: All
+actions:
+  customize:
+    label: Customize

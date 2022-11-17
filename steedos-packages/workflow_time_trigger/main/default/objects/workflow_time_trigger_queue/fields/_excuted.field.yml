@@ -1,0 +1,5 @@
+name: _excuted
+label: 已执行
+type: boolean
+required: true
+index: true

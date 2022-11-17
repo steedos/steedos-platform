@@ -1,0 +1,5 @@
+name: description
+label: 描述
+type: textarea
+sort_no: 40
+is_wide: true
