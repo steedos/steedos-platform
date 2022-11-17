@@ -56,7 +56,6 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
-            var s = new Date().getTime();
             const { objectServiceName } = req.params;
             const objectName = objectServiceName.substring(1);
             const [result, hasImportTemplates] = yield Promise.all([
@@ -66,8 +65,6 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
                 })
             ]);
             result.hasImportTemplates = hasImportTemplates;
-            var e = new Date().getTime();
-            console.log(`uiSchema: ${e - s}`);
             res.status(200).send(result);
         }
         catch (error) {

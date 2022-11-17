@@ -1,7 +1,7 @@
 {
   "name": "@steedos/router",
   "private": false,
-  "version": "2.3.1-beta.3",
+  "version": "2.3.2-beta.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -9,13 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "cors": "2.8.5",
-    "compression": "1.7.4"
+    "compression": "1.7.4",
+    "cors": "2.8.5"
   },
   "author": "",
   "license": "ISC",
   "types": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "1f337e8da176f1c75a8596b29ec7889eca996dc1"
 }
