@@ -6,7 +6,6 @@
  * @Description: 
  */
 const AmisSchema = require('./utils/amis-schema');
-const AmisLib = require('@steedos-widgets/amis-lib');
 const objectql = require("@steedos/objectql");
 const steedosI18n = require("@steedos/i18n");
 const clone = require("clone");
@@ -47,9 +46,6 @@ const getObjectConfig = async function(objectName){
     return objectConfig;
 }
 
-AmisLib.setUISchemaFunction(async function(objectName, force){
-    return await getObjectConfig(objectName);
-});
 
 module.exports = {
     name: "amis",
@@ -133,17 +129,25 @@ module.exports = {
         },
         getInitSchema: {
             async handler({type, objectApiName, formFactor, userSession}) {
+
+                const AmisLib = require('@steedos-widgets/amis-lib');
+                AmisLib.setUISchemaFunction(async function(objectName, force){
+                    return await getObjectConfig(objectName);
+                });
                 if(objectApiName){
                     let schema;
                     switch(type){
                         case "form":
-                            schema = await AmisLib.getFormSchema(objectApiName, {recordId: '${recordId}'});
+                            schema = await AmisLib.getFormPageInitSchema(objectApiName);
                             break;
                         case "list":
-                            schema = await AmisLib.getListSchema(null, objectApiName, "all");
+                            schema = await AmisLib.getListPageInitSchema(objectApiName);
+                            break;
+                        case "record":
+                            schema = await AmisLib.getRecordPageInitSchema(objectApiName);
                             break;
                     }
-                    return schema && schema.amisSchema;
+                    return schema;
                     //    return AmisSchema.getRecordSchema(objectApiName, '${recordId}', false, userSession); 
                 }
             }

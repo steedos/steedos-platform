@@ -13,11 +13,13 @@
     "pnpm:install": "rm -rf node_modules && pnpm install",
     "start": "cd examples && cd project-template && steedos start",
     "start:ee": "cd examples && cd project-ee && steedos start",
-    "bootstrap": "lerna clean --yes && lerna bootstrap --force-local",
+    "bootstrap": "lerna clean --yes && lerna bootstrap",
     "build": "yarn bootstrap && lerna run build",
     "i18n": "lerna run i18n"
   },
-  "resolutions": {},
+  "resolutions": {
+    "@salesforce/ts-types": "1.1.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@types/express-serve-static-core": "~4.17.29",
