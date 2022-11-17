@@ -1,0 +1,21 @@
+<template name="related_instances">
+	{{#if showRelatedInstaces}}
+		<div class="related-instances col-md-12">
+			<span class="title" style="display: inline-block; font-weight: bold;">{{_t "instance_related_instances"}}</span><br/>
+			<table class="table table-condensed attachments">
+				<tbody>
+				{{#each related_instaces}}
+					<tr>
+						<td class="related-instances-item">
+							<a id="related_instace" href="{{related_instace_url this}}" target="_blank">{{this.name}}</a>
+							{{#if show_delete}}
+								<a class="ins-related-delete">{{_t "Delete"}}</a>
+							{{/if}}
+						</td>
+					</tr>
+				{{/each}}
+				</tbody>
+			</table>
+		</div>
+	{{/if}}
+</template>
