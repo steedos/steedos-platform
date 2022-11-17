@@ -1,5 +1,12 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-16 17:48:48
+ * @Description: 
+ */
 // import { Datasources } from './datasources'
-import { Core, initCreator, initDesignSystem } from './core'
+import { Core, initCreator } from './core'
 import { Plugins } from './plugins';
 import { getSteedosSchema } from '@steedos/objectql';
 import * as migrate from '@steedos/migrate';
@@ -13,7 +20,7 @@ export async function init(settings: any = {}) {
     getSteedosSchema();
     WebAppInternals.setInlineScriptsAllowed(false);
     initPublicStaticRouter();
-    initDesignSystem();
+    // initDesignSystem();
     await Plugins.init(settings);
     // Datasources.loadFiles();
     // await loadPackages();

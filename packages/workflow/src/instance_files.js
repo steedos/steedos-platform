@@ -7,7 +7,7 @@ const steedosSchema = objectql.getSteedosSchema();
 
 const workflowManager = require('./workflowManager')
 
-router.use('/instances/:id/files', async function auth(req, res, next) {
+router.use('/api/v4/instances/:id/files', async function auth(req, res, next) {
     const user = await steedosAuth.auth(req, res)
     if(!user.userId){
         res.status(401).send({

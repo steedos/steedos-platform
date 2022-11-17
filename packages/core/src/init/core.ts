@@ -1,34 +1,28 @@
-import { exportExcelExpress } from '../routes';
-import { processExpress } from "@steedos/process";
+import { map } from "lodash";
 const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
-const steedosAuth = require("@steedos/auth");
-const express = require('express');
+const SteedosRouter = require('@steedos/router');
 const _ = require("underscore");
-const app = express.Router();
-const routersApp = express.Router();
-const steedosApp = express.Router();
+const routersApp = SteedosRouter.staticRouter();
 
 var path = require('path');
 import fs = require('fs')
 
-import { Publish } from '../publish'
 import { getSteedosSchema, extend } from '@steedos/objectql';
-import { coreExpress } from '../express-middleware'
 
 import { createHash } from "crypto";
 
-import { ODataRouter, MeteorODataAPIV4Router } from '..';
+// import { ODataRouter, MeteorODataAPIV4Router } from '..';
 
-const session = require('express-session')
+// const session = require('express-session')
 
-routersApp.use(session({
-    secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, maxAge: 800000 },
-    name: 'ivan'
-}))
+// routersApp.use(session({
+//     secret: process.env.STEEDOS_SESSION_SECRET || 'steedos',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false, maxAge: 800000 },
+//     name: 'ivan'
+// }))
 
 export const sha1 = (contents) => {
     var hash = createHash('sha1');
@@ -178,8 +172,6 @@ export class Core {
     static run() {
         this.initPublishAPI()
         this.initCoreRoutes();
-        // this.initRouters();
-        this.initOdataRouters()
     }
 
     transformTriggerWhen(triggerWhen: string){
@@ -210,61 +202,21 @@ export class Core {
     }
 
     private static initPublishAPI() {
-        Publish.init();
+        require('../publish')
     }
 
     private static initCoreRoutes() {
-        // /api/v4/users/login, /api/v4/users/validate
-        app.use(steedosAuth.authExpress);
-        // app.use(bootStrapExpress);
-        app.use(exportExcelExpress);
-        app.use(processExpress)
-        app.use(coreExpress);
-
-        let routers = objectql.getRouterConfigs()
-        _.each(routers, (item)=>{
-            app.use(item.prefix, item.router)
-        })
-        SteedosApi?.server?.use(app);
-        WebApp.connectHandlers.use(app);
-    }
-
-    // private static initRouters(){
-    //     let routers = objectql.getRouters()
-    //     _.each(routers, (router)=>{
-    //         if(router.router.default){
-    //             routersApp.use('', router.router.default)
-    //         }
-    //     })
-    //     // SteedosApi?.server?.use(routersApp);
-    //     WebApp.connectHandlers.use(routersApp);
-    // }
-
-    private static initOdataRouters(){
-        if(MeteorODataAPIV4Router){
-            steedosApp.use('/api/v4', MeteorODataAPIV4Router);
-        }
-        _.each(getSteedosSchema().getDataSources(), (datasource, name)=>{
-            if(name != 'default'){
-                steedosApp.use("/api/odata/#{name}", ODataRouter);
-            }
-        })
-        SteedosApi?.server?.use(steedosApp);
+        require("@steedos/process");
     }
 }
 
 export const loadRouters = (routers)=>{
     _.each(routers, (router)=>{
-        if(router.router.default){
+        if(router.router.default !== SteedosRouter.staticRouter()){
+            objectql.broker.broker.logger.warn(`Please adjust router ${map(router.infoList, 'path').join(',')} to improve performance with steedos router`);
             routersApp.use('', router.router.default)
         }
     })
-    try {
-        SteedosApi?.server?.use(routersApp);
-        WebApp.connectHandlers.use(routersApp);
-    } catch (error) {
-
-    }
 }
 
 export const removeRouter = (path, methods)=>{
@@ -285,21 +237,6 @@ export const removeRouter = (path, methods)=>{
         }
     });
 }
-
-// export const initPublic = () => {
-//     const router = express.Router()
-
-//     let publicPath = require.resolve("@steedos/webapp/package.json")
-//     publicPath = publicPath.replace("package.json", 'build')
-//     let routerPath = "/"
-//     if(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX){
-//         routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
-//     }
-//     const cacheTime = 86400000*1; // one day
-//     router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-//     WebApp.rawConnectHandlers.use(router);
-//     // WebApp.connectHandlers.use(router);
-// }
 
 export const initDesignSystem = () => {
     // const router = express.Router()

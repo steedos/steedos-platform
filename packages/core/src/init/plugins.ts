@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const _ = require("underscore");
-const express = require('express');
-const app = express.Router();
+const SteedosRouter = require('@steedos/router');
+const app = SteedosRouter.staticRouter();
 // const objectql = require('@steedos/objectql')
 // const util = require('../util/index')
 // const ConfigName = 'plugin.config.yml'
@@ -33,9 +33,8 @@ export class Plugins {
                         }
                         await broker.waitForServices(service.name, null, 20)
                         if (_.isFunction(service.init)) {
+                            // console.log(`pluginName: ${name}, pluginDir: ${pluginDir}`)
                             service.init(pluginContext);
-                            SteedosApi?.server?.use(pluginContext.app);
-                            WebApp.connectHandlers.use(pluginContext.app);
                         }
                     } catch (error) {
                         console.error(error);

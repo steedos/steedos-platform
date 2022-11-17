@@ -1,4 +1,3 @@
-const express = require("express");
 const SteedosRouter = require('@steedos/router');
 const router = SteedosRouter.staticRouter();
 const core = require('@steedos/core');

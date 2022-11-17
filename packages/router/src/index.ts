@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-15 14:48:43
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-16 18:27:51
+ * @LastEditTime: 2022-11-17 11:15:40
  * @Description: 
  */
 const express = require("express");
@@ -32,7 +32,7 @@ class ExpressAppStatic{
             app.listen(process.env.STEEDOS_API_PORT, err => {
                 if (err)
                     return console.log(err)
-                app.use(this.beforeRouter())
+                app.use(this.staticBeforeRouter())
                 app.use(this.staticRouter())
                 return console.info(`Steedos Experience Server listening on ${process.env.STEEDOS_API_URL}`);
             });
