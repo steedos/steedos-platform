@@ -176,7 +176,21 @@ fields:
           return "object_name eq '" + dependValues.object_name + "'";
         }
       }
-
+  time_triggers.$.workflow_outbound_messages_actions:
+    type: lookup
+    multiple: true
+    label: 工作流操作：出站消息
+    is_wide: true
+    reference_to: workflow_outbound_messages
+    reference_to_field: name
+    depend_on:
+      - object_name
+    filtersFunction: !!js/function |
+      function (filters, dependValues) {
+        if(dependValues && dependValues.object_name){
+          return "object_name eq '" + dependValues.object_name + "'";
+        }
+      }
   description:
     type: textarea
     is_wide: true

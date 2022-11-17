@@ -1,0 +1,38 @@
+name: workflow_outbound_messages
+label: 出站消息
+description:
+fields:
+  name:
+    label: API 名称
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description:
+  label:
+    label: 显示名称
+    help: 
+    description: 
+  object_name:
+    label: 对象
+    help:
+    description:
+  description:
+    label: 描述
+    help:
+    description:
+  endpoint_url:
+    label: 端点 URL
+    help:
+    description:
+  user_to_send_as:
+    label: 发送方用户
+    help:
+    description:
+  object_fields_to_send:
+    label: 要发送的字段
+    help:
+    description:
+listviews:
+  all:
+    label: 所有
+actions:
+  customize:
+    label: 自定义

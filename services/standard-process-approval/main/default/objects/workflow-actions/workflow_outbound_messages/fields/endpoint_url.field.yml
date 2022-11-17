@@ -1,0 +1,6 @@
+name: endpoint_url
+label: 端点 URL
+type: url
+required: true
+sort_no: 50
+is_wide: true

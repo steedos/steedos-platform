@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 17:53:55
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-12 21:34:32
+ * @LastEditTime: 2022-11-17 09:24:21
  * @Description: 执行工作流时间触发器队列
  */
 
@@ -18,14 +18,18 @@ module.exports = {
             // Controls the sending interval
             sendInterval: Match.Optional(Number),
             // Controls the sending batch size per interval
-            sendBatchSize: Match.Optional(Number),
+            excuteBatchSize: Match.Optional(Number),
             // Allow optional keeping notifications in collection
             keepDocs: Match.Optional(Boolean)
         }
     */
-    run: async function (options) {
+    run: async function (options = {}) {
         console.log('time_trigger_queue schedule running...')
-        
+        const opt = {
+            excuteBatchSize: 10,
+            keepDocs: true,
+            ...options
+        }
         const rule = `*/10 * * * * *` // 每十秒执行一次
         let next = true;
         schedule.scheduleJob(rule, async function () {
@@ -42,15 +46,16 @@ module.exports = {
                         ['_excuted', '=', false],
                         ['_excuting', '=', false],
                         ['_error', '=', null]
-                    ]
+                    ],
+                    limit: opt.excuteBatchSize
                 })
                 for (const doc of queueDocs) {
                     try {
                         await queueObj.update(doc._id, {
-                            '_excuting': true
+                            '_excuting': true // 正在执行，防止重复执行
                         })
 
-                        const { record_id, updates_field_actions, workflow_notifications_actions } = doc
+                        const { record_id, updates_field_actions, workflow_notifications_actions, workflow_outbound_messages_actions } = doc
                         // 字段更新
                         if (updates_field_actions) {
                             await objectql.runFieldUpdateActions(updates_field_actions, record_id);
@@ -59,10 +64,21 @@ module.exports = {
                         if (workflow_notifications_actions) {
                             await objectql.runWorkflowNotifyActions(workflow_notifications_actions, record_id);
                         }
-                        await queueObj.update(doc._id, {
-                            '_excuted': true,
-                            '_excuting': false
-                        })
+                        // 出站消息
+                        if (workflow_outbound_messages_actions) {
+                            await objectql.runWorkflowOutboundMessageActions(workflow_outbound_messages_actions, record_id);
+                        }
+
+                        if (opt.keepDocs) {
+                            await queueObj.update(doc._id, {
+                                '_excuted': true, // 执行结束
+                                '_excuting': false
+                            })
+                        }
+                        else {
+                            await queueObj.delete(doc._id)
+                        }
+
                     } catch (error) {
                         console.error(error)
                         await queueObj.update(doc._id, {

@@ -1,0 +1,7 @@
+name: name
+label: Api Name
+type: text
+required: true
+searchable: true
+index: true
+sort_no: 30

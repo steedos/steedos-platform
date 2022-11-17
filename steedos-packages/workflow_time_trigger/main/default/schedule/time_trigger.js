@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 13:18:28
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-15 11:44:07
+ * @LastEditTime: 2022-11-17 09:47:40
  * @Description: 工作流时间触发器定时任务，用于将工作流规则中配置的时间触发器放入工作流操作执行队列
  */
 'use strict';
@@ -49,14 +49,14 @@ module.exports = {
                         const obj = objectql.getObject(object_name)
                         if (time_triggers && obj) {
                             for (const tTrigger of time_triggers) {
-                                const { number, unit, type, date_field, updates_field_actions, workflow_notifications_actions } = tTrigger
-                                if (updates_field_actions || workflow_notifications_actions) { // 配置了工作流操作才处理
+                                const { number, unit, type, date_field, updates_field_actions, workflow_notifications_actions, workflow_outbound_messages_actions } = tTrigger
+                                if (updates_field_actions || workflow_notifications_actions || workflow_outbound_messages_actions) { // 配置了工作流操作才处理
                                     let triggerTime;
                                     if (type == 'earlier_than') {
-                                        triggerTime = now.add(number, unit)
+                                        triggerTime = moment(now).add(number, unit)
                                     }
                                     else if (type == 'later_than') {
-                                        triggerTime = now.add(-number, unit)
+                                        triggerTime = moment(now).add(-number, unit)
                                     }
                                     else {
                                         console.error('time_trigger schedule:', 'invalid type in time_triggers', `workflow_rule _id ${_id}`);
@@ -66,7 +66,7 @@ module.exports = {
                                         filters: [
                                             filters, // 首先应该查找符合过滤条件的记录
                                             [date_field, '>=', triggerTime.toDate()],
-                                            [date_field, '<=', triggerTime.add(intervalMinitues, 'minute').toDate()]
+                                            [date_field, '<=', moment(triggerTime).add(intervalMinitues, 'minute').toDate()]
                                         ]
                                     })
                                     // 将过滤出的记录和配置的工作流操作，放到工作流操作执行队列，由单独的定时器执行
@@ -75,6 +75,7 @@ module.exports = {
                                             'record_id': doc._id,
                                             'updates_field_actions': updates_field_actions,
                                             'workflow_notifications_actions': workflow_notifications_actions,
+                                            'workflow_outbound_messages_actions': workflow_outbound_messages_actions,
                                             '_excuted': false,
                                             '_excuting': false,
                                         })
