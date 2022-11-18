@@ -8,7 +8,6 @@ module.exports = {
 	// Called after broker started.
 	started(broker) {
 		broker.createService(require('@steedos/service-saas'));
-		broker.createService(require("@steedos/service-enterprise"));
 	},
 
 };

@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-18 16:32:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-18 17:41:45
+ * @Description: 
+ */
 module.exports = {
     installPackageFromUrl: function (object_name, record_id) {
         SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
@@ -39,7 +46,7 @@ module.exports = {
             },
             onFinish: async (values = {}) => {
                 return new Promise((resolve, reject) => {
-                    Steedos.authRequest(Steedos.absoluteUrl('service/api/~packages-project-server/cloud/saas/packages/url'), {
+                    Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/cloud/saas/packages/url'), {
                         type: 'post', async: true, data: JSON.stringify({
                             module: values.module,
                             version: values.version,

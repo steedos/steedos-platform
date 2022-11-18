@@ -163,10 +163,6 @@ module.exports = {
             }
 		},
 		getCloudSaasPurchasedPackages:{
-			rest: {
-                method: "GET",
-                path: "/cloud/saas/packages/purchased"
-            },
 			async handler(ctx) {
 				try {
 					
@@ -181,10 +177,6 @@ module.exports = {
             }
 		},
 		installPurchasedPackages: {
-			rest: {
-                method: "POST",
-                path: "/cloud/saas/packages/purchased"
-            },
 			async handler(ctx){
 				const installErrors = {};
 				const installPackages = [];
@@ -249,10 +241,6 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			rest: {
-                method: "POST",
-                path: "/cloud/saas/packages/url"
-            },
 			async handler(ctx){
 				try {
 					const user = ctx.meta.user;
