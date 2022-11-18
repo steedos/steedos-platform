@@ -97,3 +97,8 @@ body{
 .ant-drawer.ant-drawer-bottom{
     top: auto;
 }
+
+.steedos-amis-button.slds-truncate{
+    overflow: inherit;
+    padding: 0;
+}
