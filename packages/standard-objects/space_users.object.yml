@@ -196,11 +196,14 @@ fields:
     allowedValues:
       - en-us
       - zh-cn
+      - ja-jp
     options:
       - label: 简体中文
         value: zh-cn
       - label: English
         value: en-us
+      - label: 日本語
+        value: ja-jp
     defaultValue:  !!js/function |
       function(){
         if(Meteor.isClient){
