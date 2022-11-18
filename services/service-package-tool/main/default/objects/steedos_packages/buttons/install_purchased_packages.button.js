@@ -1,6 +1,13 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-18 16:32:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-18 17:42:32
+ * @Description: 
+ */
 module.exports = {
     install_purchased_packages: function (object_name, record_id) {
-        const result = Steedos.authRequest(Steedos.absoluteUrl('service/api/~packages-project-server/cloud/saas/packages/purchased'), {async: false, type: 'get'});
+        const result = Steedos.authRequest(Steedos.absoluteUrl('api/nodes/cloud/saas/packages/purchased'), {async: false, type: 'get'});
         if(result && result.packages.length === 0){
             return toastr.info('您还未购买任何软件包')
         }else{
@@ -8,7 +15,7 @@ module.exports = {
                 timeOut: 0,
                 progressBar: true,
             })
-            Steedos.authRequest(Steedos.absoluteUrl('service/api/~packages-project-server/cloud/saas/packages/purchased'), {type: 'post', error: function(XMLHttpRequest, textStatus, errorThrown){
+            Steedos.authRequest(Steedos.absoluteUrl('api/nodes/cloud/saas/packages/purchased'), {type: 'post', error: function(XMLHttpRequest, textStatus, errorThrown){
                 toastr.clear()
                 if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.error) {
                     toastr.error(XMLHttpRequest.responseJSON.error)

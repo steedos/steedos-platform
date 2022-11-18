@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-11 18:35:30
+ * @LastEditTime: 2022-11-18 17:58:40
  * @Description: 
  */
 "use strict";
@@ -93,6 +93,9 @@ module.exports = {
 
 		// 启动 加载软件包服务
 		this.broker.createService(require("@steedos/service-package-registry"));
+
+		// 启动 软件包安装、卸载、重载等操作
+		this.broker.createService(require("@steedos/service-package-tool"));
 
 		if(this.settings.jwt.enable){
 			this.broker.createService(require("@steedos/service-identity-jwt"));
