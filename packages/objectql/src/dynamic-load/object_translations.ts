@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-18 10:36:17
+ * @LastEditTime: 2022-11-18 13:21:31
  * @Description: 
  */
 import { getSteedosSchema } from '../types/schema';
@@ -48,7 +48,7 @@ export const getObjectTranslations = async ()=>{
     const results = [];
 
     map(objectTranslationsTemplates, ({metadata: defaultTranslation})=>{
-        each(['zh-CN', 'en'], (lng)=>{
+        each(['zh-CN', 'en', 'ja'], (lng)=>{
             let objectTranslation = {};
             const objectTranslations: Array<any> = filter(objectsTranslations, {lng: lng, objectApiName: defaultTranslation.objectApiName});
             if(objectTranslations.length > 0){
