@@ -6,6 +6,7 @@ import _ from 'underscore';
 const action_field_updates = "action_field_updates";
 const workflow_rule = "workflow_rule";
 const workflow_notifications = "workflow_notifications";
+const workflow_outbound_messages = "workflow_outbound_messages"
 const metadata_name = TypeInfoKeys.Workflow;
 
 export async function workflowsFromDb(dbManager, workflowList, steedosPackage){
@@ -37,6 +38,7 @@ async function getAllWorkflows(dbManager) {
     var workflowRules = await dbManager.find(workflow_rule, { });
     let actionFieldUpdates = await dbManager.find(action_field_updates, { }); 
     let workflowNotifications = await dbManager.find(workflow_notifications, { }); 
+    let outboundMessages = await dbManager.find(workflow_outbound_messages, { }); 
 
     for(let item of workflowRules){
         if(!_.contains(objects, item.object_name)){
@@ -49,6 +51,11 @@ async function getAllWorkflows(dbManager) {
         }
     }
     for(let item of workflowNotifications){
+        if(!_.contains(objects, item.object_name)){
+            objects.push(item.object_name);
+        }
+    }
+    for(let item of outboundMessages){
         if(!_.contains(objects, item.object_name)){
             objects.push(item.object_name);
         }
@@ -71,6 +78,7 @@ async function getWorkflowByOjectName(dbManager, objectName) {
     var workflowRules = await dbManager.find(workflow_rule, {object_name: objectName});
     var actionFieldUpdates = await dbManager.find(action_field_updates, {object_name: objectName});
     var workflowNotifications = await dbManager.find(workflow_notifications, {object_name: objectName});
+    var outboundMessages = await dbManager.find(workflow_outbound_messages, {object_name: objectName});
 
     var workflow = {}
 
@@ -98,11 +106,22 @@ async function getWorkflowByOjectName(dbManager, objectName) {
         sortAttribute(notification);
     }
 
+    for(var i=0; i<outboundMessages.length; i++){
+        let message = outboundMessages[i];
+
+        delete message.user_to_send_as
+
+        deleteCommonAttribute(message);
+        delete message._id;
+        sortAttribute(message);
+    }
+
     workflow['rules'] = workflowRules
     workflow['fieldUpdates'] =actionFieldUpdates
     workflow['notifications'] =workflowNotifications
+    workflow['outboundMessages'] = outboundMessages
 
-    if(workflowRules.length == 0 && actionFieldUpdates.length == 0 && workflowNotifications.length == 0){
+    if(workflowRules.length == 0 && actionFieldUpdates.length == 0 && workflowNotifications.length == 0 && outboundMessages.length == 0){
         return undefined;
     }
     return workflow;
@@ -122,6 +141,7 @@ async function saveOrUpdateWorkflow(dbManager, workflow, workflowName) {
     var workflowRules = workflow.rules;
     var actionFieldUpdates = workflow.fieldUpdates;
     var workflowNotifications = workflow.notifications;
+    var outboundMessages = workflow.outboundMessages;
 
     for(var i=0; i<workflowRules.length; i++){
         
@@ -139,6 +159,11 @@ async function saveOrUpdateWorkflow(dbManager, workflow, workflowName) {
 
         var workflowNotification = workflowNotifications[i];
         await saveOrUpdateWorkflowNotification(dbManager, workflowNotification, workflowName);
+    }
+
+    for(var i=0; i<outboundMessages.length; i++){
+        var message = outboundMessages[i];
+        await saveOrUpdateWorkflowOutboundMessage(dbManager, message, workflowName);
     }
 
     for(var i=0; i<workflowRules.length; i++){
@@ -188,5 +213,17 @@ async function saveOrUpdateWorkflowNotification(dbManager, workflowNotification,
         return await dbManager.insert(workflow_notifications, workflowNotification);
     }else{
         return await dbManager.update(workflow_notifications, filter, workflowNotification);
+    }
+}
+
+async function saveOrUpdateWorkflowOutboundMessage(dbManager, message, objectName) {
+
+    var filter = {name: message.name, object_name: objectName};
+    var dbActionFieldUpdate = await dbManager.findOne(workflow_outbound_messages, filter);
+
+    if(dbActionFieldUpdate == null){
+        return await dbManager.insert(workflow_outbound_messages, message);
+    }else{
+        return await dbManager.update(workflow_outbound_messages, filter, message);
     }
 }

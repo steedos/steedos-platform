@@ -3,3 +3,4 @@ label: 发送方用户
 type: lookup
 reference_to: users
 sort_no: 60
+hidden: true
