@@ -261,8 +261,7 @@ module.exports = {
 					this.standardObjectsPackageLoaderService = this.broker.createService({
 						name: 'standard-objects',
 						mixins: [packageLoader],
-						settings: { packageInfo: settings }
-					}, {
+						settings: { packageInfo: settings },
 						started: () => {
 							resolve(true)
 						}
