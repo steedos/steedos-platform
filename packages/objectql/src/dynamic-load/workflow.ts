@@ -17,6 +17,7 @@ const BASERECORD = {
 const _WorkflowNotifications: Dictionary<any> = {};
 const _WorkflowRules: Dictionary<any> = {};
 const _ActionFieldUpdates: Dictionary<any> = {};
+const _OutboundMessages: Dictionary<any> = {};
 
 const addWorkflow = function(json){
     if(!json.name){
@@ -44,6 +45,14 @@ const addWorkflow = function(json){
                 throw new Error('missing attribute fieldUpdate.name');
             }
             _ActionFieldUpdates[fieldUpdate.name] = Object.assign({}, fieldUpdate, clone(BASERECORD), {type: "action_field_updates", _id: fieldUpdate.name});
+        }
+    }
+    if(json.outboundMessages){
+        for(let outboundMessage of json.outboundMessages){
+            if(!outboundMessage.name){
+                throw new Error('missing attribute outboundMessage.name');
+            }
+            _OutboundMessages[outboundMessage.name] = Object.assign({}, outboundMessage, clone(BASERECORD), {type: "workflow_outbound_messages", _id: outboundMessage.name});
         }
     }
     
@@ -111,4 +120,24 @@ export const getActionFieldUpdate = function(name){
     return _.find(getAllActionFieldUpdates(), function (item){
         return item.name === name
     });
+}
+
+// 出站消息
+export const getWorkflowOutboundMessage = function(name){
+    return _.find(getAllWorkflowOutboundMessages(), function (item){
+        return item.name === name
+    });
+}
+
+export const getWorkflowOutboundMessages = function(){
+    return clone(_OutboundMessages) || [];
+}
+
+export const getAllWorkflowOutboundMessages = function(){
+    let messages = getWorkflowOutboundMessages();
+    return _.values(messages);
+}
+
+export const getObjectWorkflowOutboundMessages = function(objName){
+    return _.where(getAllWorkflowOutboundMessages(), {object_name: objName});
 }
