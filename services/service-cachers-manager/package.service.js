@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-07 10:17:46
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-19 11:15:11
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -18,6 +18,8 @@ const auth = require('@steedos/auth')
 module.exports = {
 	name: serviceName,
 	namespace: "steedos",
+	translationsChangeTimeoutId: null,
+	objectTranslationsChangeTimeoutId: null,
 	/**
 	 * Settings
 	 */
@@ -43,14 +45,27 @@ module.exports = {
 	events: {
 		"translations.change": {
 			handler() {
-				core.loadTranslations()
+				if(this.translationsChangeTimeoutId){
+					clearTimeout(this.translationsChangeTimeoutId)
+				}
+				this.translationsChangeTimeoutId = setTimeout(()=>{
+					core.loadTranslations()
+					this.translationsChangeTimeoutId = null;
+				}, 2000)
 			}
 		},
 		"translations.object.change": {
 			handler() {
-				core.loadObjectTranslations().then(()=>{
-					cachers.getCacher('lru.translations.objects').clear();
-				})
+				if(this.objectTranslationsChangeTimeoutId){
+					clearTimeout(this.objectTranslationsChangeTimeoutId)
+				}
+				this.objectTranslationsChangeTimeoutId = setTimeout(()=>{
+					core.loadObjectTranslations().then(()=>{
+						cachers.getCacher('lru.translations.objects').clear();
+					})
+					this.objectTranslationsChangeTimeoutId = null;
+				}, 2000)
+				
 			}
 		},
 		"triggers.change": {
