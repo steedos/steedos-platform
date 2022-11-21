@@ -41,6 +41,10 @@ fields:
     label: 工作流通知
     help: 
     description: 
+  workflow_outbound_messages_actions:
+    label: 出站消息
+    help: 
+    description: 
   description:
     label: 描述
     help: 
