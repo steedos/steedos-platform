@@ -280,13 +280,19 @@ fields:
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
+  enable_amis_schema: 
+    label: Enable
+    type: boolean
+    group: custom
+    required: false
   amis_schema: 
     label: Amis Schema
     type: code
+    group: custom
     language: json
     required: false
     is_wide: true
-    # visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+    # visible_on: "{{formData.enable_amis_schema}}"
 paging:
   enabled: false
 list_views:

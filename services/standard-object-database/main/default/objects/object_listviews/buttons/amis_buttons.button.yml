@@ -53,4 +53,7 @@ is_enable: true
 label: AmisSchema
 'on': record_only
 type: amis_button
-visible: true
+visible: !!js/function |
+    function (object_name, record_id, record_permissions, record) {
+        return Creator.baseObject.actions.standard_edit.visible() && !record.is_system && record.enable_amis_schema;
+    }

@@ -96,6 +96,12 @@ module.exports = {
   showDesignVisible: function (object_name, record_id, record_permissions) {
       var perms= {};
       var record = Creator.getObjectRecord(object_name, record_id);
+      if(!record){
+        return false;
+      }
+      if(!record.enable_amis_schema){
+        return false;
+      }
       if (record_permissions) {
         perms = record_permissions;
       } else {

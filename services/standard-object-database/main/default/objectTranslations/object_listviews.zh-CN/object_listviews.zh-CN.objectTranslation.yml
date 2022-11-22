@@ -134,6 +134,12 @@ fields:
     description: 
   sort_no:
     label: 排序号
+  enable_amis_schema: 
+    label: 启用
+  amis_schema: 
+    label: Amis Schema
+groups:
+  custom: 自定义
 listviews:
   all:
     label: 全部
