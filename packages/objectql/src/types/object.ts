@@ -286,7 +286,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     
 
     getConfig(){
-        return this.datasource.getCacheObject(this.name) || this.datasource.getObjectConfig(this.name);
+        return this.datasource.getCacheObject(this.name)?.metadata || this.datasource.getObjectConfig(this.name);
     }
 
     setPermission(config: SteedosObjectPermissionTypeConfig) {
