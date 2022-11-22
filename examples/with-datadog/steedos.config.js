@@ -3,7 +3,12 @@ module.exports = {
 	namespace: "steedos",
 	// Default log level for built-in console logger. It can be overwritten in logger options above.
 	// Available values: trace, debug, info, warn, error, fatal
-	logLevel: "warn",
+	logLevel: {
+		"TRACING": "trace",
+		"TRANS*": "debug",
+		"GREETER": "debug",
+		"**": "warn",
+  },
 
 	tracing: {
 		enabled: true,
@@ -29,7 +34,7 @@ module.exports = {
 	},
 	
 	metrics: {
-		enabled: false,
+		enabled: true,
 		reporter: [
 				{
 						type: "Datadog",
@@ -37,7 +42,7 @@ module.exports = {
 								// Hostname
 								host: "my-host",
 								// Base URL
-								baseUrl: "https://api.datadoghq.eu/api/", // Default is https://api.datadoghq.com/api/
+								baseUrl: "https://api.datadoghq.com/api/", // Default is https://api.datadoghq.com/api/
 								// API version
 								apiVersion: "v1",
 								// Server URL path
@@ -55,6 +60,42 @@ module.exports = {
 				}
 		]
 	},
+
+	logger: [{
+		type: "Console",
+		options: {
+			// Using colors on the output
+			colors: true,
+			// Print module names with different colors (like docker-compose for containers)
+			moduleColors: false,
+			// Line formatter. It can be "json", "short", "simple", "full", a `Function` or a template string like "{timestamp} {level} {nodeID}/{mod}: {msg}"
+			formatter: "full",
+			// Custom object printer. If not defined, it uses the `util.inspect` method.
+			objectPrinter: null,
+			// Auto-padding the module name in order to messages begin at the same column.
+			autoPadding: false
+		}
+	},{
+		type: "Datadog",
+		options: {
+				// Logging level
+				level: "warn",
+				// Datadog server endpoint. https://docs.datadoghq.com/api/?lang=bash#send-logs-over-http
+				url: "https://http-intake.logs.datadoghq.com/api/v2/logs",
+				// Datadog API key
+				apiKey: process.env.DATADOG_API_KEY,
+				// Datadog source variable
+				ddSource: "moleculer",
+				// Datadog env variable
+				env: 'dev',
+				// Datadog hostname variable
+				hostname: '127.0.0.1', //os.hostname(),
+				// Custom object printer function for `Object` & `Ąrray`
+				objectPrinter: null,
+				// Data uploading interval
+				interval: 10 * 1000
+		}
+	}],
 
 	// Called after broker started.
 	started(broker) {

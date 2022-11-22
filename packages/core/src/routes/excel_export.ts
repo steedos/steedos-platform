@@ -1,6 +1,5 @@
 import querystring = require('querystring');
 import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
-import steedosI18n = require("@steedos/i18n");
 import { requireAuthentication } from './';
 const Fiber = require('fibers');
 const moment = require('moment');
@@ -26,13 +25,6 @@ const exportRecordData = async function (req, res) {
         const collection = await objectql.getObject(objectName);
         if (!collection) {
             res.status(404).send({ msg: `collection not exists: ${objectName}` })
-        }
-
-        const collectionConfig = await collection.getConfig();
-        
-        let lng = userSession.language;
-        if(lng){
-            steedosI18n.translationObject(lng, collection.name, collectionConfig)
         }
 
         removeInvalidMethod(queryParams);
@@ -74,7 +66,7 @@ const exportRecordData = async function (req, res) {
             }
             if (entities) {
 
-                const fieldConfigs = collectionConfig.fields
+                const fieldConfigs = (await objectql.getSteedosSchema().broker.call(`@${objectName}.getRecordView`, {}, { meta: { user: userSession }})).fields
 
                 for (let i=0; i<entities.length; i++) {
                     let record = entities[i]

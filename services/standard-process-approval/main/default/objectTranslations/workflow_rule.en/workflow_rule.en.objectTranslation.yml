@@ -41,6 +41,10 @@ fields:
     label: Notification
     help: 
     description: 
+  workflow_outbound_messages_actions:
+    label: Outbound Message
+    help: 
+    description: 
   description:
     label: 
     help: 
