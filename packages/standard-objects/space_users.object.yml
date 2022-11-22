@@ -46,7 +46,6 @@ fields:
     searchable: true
     group: '-'
     name: mobile
-    required: true
     index: true
   mobile_verified:
     type: boolean
