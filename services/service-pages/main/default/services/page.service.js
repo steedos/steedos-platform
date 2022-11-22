@@ -129,7 +129,11 @@ module.exports = {
                 if(_.find(actions, (action)=>{
                     return action.name === `${page.render_engine}.getInitSchema`
                 })){
-                    const schema = await broker.call(`${page.render_engine}.getInitSchema`, {type: page.type, objectApiName: page.object_name})
+                    const schema = await broker.call(`${page.render_engine}.getInitSchema`, {type: page.type, objectApiName: page.object_name}, {
+                        meta:{
+                            user: userSession
+                        }
+                    })
                     if(schema){
                         const now = new Date();
                         await objectql.getObject('page_versions').directInsert({
