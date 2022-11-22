@@ -10,6 +10,9 @@
         "steedos"
     ],
     "description": "steedos package",
+    "dependencies": {
+      "@steedos-widgets/amis-lib": "^0.0.10"
+    },
     "repository": {},
     "license": "MIT",
     "gitHead": "3842d837373ece532af6b8399db8998be29018a0"

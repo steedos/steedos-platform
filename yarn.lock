@@ -4416,17 +4416,17 @@
   dependencies:
     react-required-if "^1.0.3"
 
+"@steedos-widgets/amis-lib@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.10.tgz#1dcdcbc62d1ea2a5e8da726cc53ba3637a4fed50"
+  integrity sha512-6Y4rATc/gzHT1wezB9J731U9xqlI7bGM63qaQWPU5X0zeoHBoeMAI45RlDudMPZRrjXaWpq7LSnf4byRcS2t0A==
+  dependencies:
+    lodash "^4.17.21"
+
 "@steedos-widgets/amis-lib@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.7.tgz#a64304a5ce791117405231e4e3e78e6debc71bdb"
   integrity sha512-UPM+N1YmTsfkwqkni/EJTGdYapO5cZT6JU3XV9gdG8xhaIi4UlpXnadkkkOL/5qajBR6vkv5AwcaRDeZOmVjmA==
-  dependencies:
-    lodash "^4.17.21"
-
-"@steedos-widgets/amis-lib@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.9.tgz#7fbe8703619577969df143ab265191c6f7f24e55"
-  integrity sha512-Zen90SG6gwkSYhZabZ3/7zQXSU/ZGKSDBrzOQTmGiYwp0IhdtmSBnwBk022FerHO9fhV/2LnV3UWJzSLJqX1xQ==
   dependencies:
     lodash "^4.17.21"
 

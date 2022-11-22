@@ -141,6 +141,8 @@ fields:
     label: Field
     help: 
     description: 
+groups:
+  custom: Custom
 listviews:
   all:
     label: All List View

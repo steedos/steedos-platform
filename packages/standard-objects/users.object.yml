@@ -17,7 +17,6 @@ fields:
     type: text
     label: Mobile
     group: '-'
-    required: true
     readonly: true
     name: mobile
     index: true
