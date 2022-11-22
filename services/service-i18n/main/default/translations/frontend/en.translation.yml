@@ -5,3 +5,33 @@ CustomLabels:
   frontend_form_new: New
   frontend_form_select: Select
   frontend_form_confirm: Confirm
+  frontend_filter_operation_yes: 'yes'
+  frontend_filter_operation_no: 'no'
+  frontend_filter_operation_start: Start
+  frontend_filter_operation_end: End
+  frontend_filter_operation_between: Range
+  frontend_filter_operation_between_last_year: Last Year
+  frontend_filter_operation_between_this_year: This Year
+  frontend_filter_operation_between_next_year: Next Year
+  frontend_filter_operation_between_today: Today
+  frontend_filter_operation_between_yestday: Yestday
+  frontend_filter_operation_between_last_quarter: Last Quarter
+  frontend_filter_operation_between_this_quarter: This Quarter
+  frontend_filter_operation_between_next_quarter: Next Quarter
+  frontend_filter_operation_between_tomorrow: Tomorrow
+  frontend_filter_operation_between_this_week: This Week
+  frontend_filter_operation_between_last_week: Last Week
+  frontend_filter_operation_between_next_week: Next Week
+  frontend_filter_operation_between_this_month: This Month
+  frontend_filter_operation_between_last_month: Last Month
+  frontend_filter_operation_between_next_month: Next Month
+  frontend_filter_operation_between_last_7_days: Last 7 Days
+  frontend_filter_operation_between_last_30_days: Last 30 Days
+  frontend_filter_operation_between_last_60_days: Last 60 Days
+  frontend_filter_operation_between_last_90_days: Last 90 Days
+  frontend_filter_operation_between_last_120_days: Last 120 Days
+  frontend_filter_operation_between_next_7_days: Next 7 Days
+  frontend_filter_operation_between_next_30_days: Next 30 Days
+  frontend_filter_operation_between_next_60_days: Next 60 Days
+  frontend_filter_operation_between_next_90_days: Next 90 Days
+  frontend_filter_operation_between_next_120_days: Next 120 Days

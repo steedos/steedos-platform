@@ -5,3 +5,33 @@ CustomLabels:
   frontend_form_new: 新建
   frontend_form_select: 选择
   frontend_form_confirm: 确认
+  frontend_filter_operation_yes: 是
+  frontend_filter_operation_no: 否
+  frontend_filter_operation_start: 开始
+  frontend_filter_operation_end: 结束
+  frontend_filter_operation_between: 范围
+  frontend_filter_operation_between_last_year: 去年
+  frontend_filter_operation_between_this_year: 今年
+  frontend_filter_operation_between_next_year: 明年
+  frontend_filter_operation_between_today: 今天
+  frontend_filter_operation_between_yestday: 昨天
+  frontend_filter_operation_between_last_quarter: 上季度
+  frontend_filter_operation_between_this_quarter: 本季度
+  frontend_filter_operation_between_next_quarter: 下季度
+  frontend_filter_operation_between_tomorrow: 明天
+  frontend_filter_operation_between_this_week: 本周
+  frontend_filter_operation_between_last_week: 上周
+  frontend_filter_operation_between_next_week: 下周
+  frontend_filter_operation_between_this_month: 本月
+  frontend_filter_operation_between_last_month: 上月
+  frontend_filter_operation_between_next_month: 下月
+  frontend_filter_operation_between_last_7_days: 过去7天
+  frontend_filter_operation_between_last_30_days: 过去30天
+  frontend_filter_operation_between_last_60_days: 过去60天
+  frontend_filter_operation_between_last_90_days: 过去90天
+  frontend_filter_operation_between_last_120_days: 过去120天
+  frontend_filter_operation_between_next_7_days: 未来7天
+  frontend_filter_operation_between_next_30_days: 未来30天
+  frontend_filter_operation_between_next_60_days: 未来60天
+  frontend_filter_operation_between_next_90_days: 未来90天
+  frontend_filter_operation_between_next_120_days: 未来120天
