@@ -460,9 +460,9 @@ actions:
   show_object: 
     label: Preview
     on: record
-  copy_odata: 
-    label: Copy OData URL
-    on: record
+  # copy_odata: 
+  #   label: Copy OData URL
+  #   on: record
   createDefaultRecordView:
     on: record_only_more
     label: 创建默认页面布局
