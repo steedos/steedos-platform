@@ -72,6 +72,7 @@ fields:
     type: boolean
     label: Enable Search
     group: Switch
+    hidden: true
   enable_files:
     type: boolean
     label: Enable Files
@@ -99,6 +100,7 @@ fields:
     defaultValue: false
     label: Enable Share
     group: Switch
+    hidden: true
   enable_workflow:
     type: boolean
     label: Enable Workflow
@@ -111,6 +113,7 @@ fields:
     type: boolean
     label: Enable Chatter
     group: Switch
+    hidden: true
   enable_inline_edit:
     type: boolean
     defaultValue: true
