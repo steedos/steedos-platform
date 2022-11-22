@@ -1,0 +1,56 @@
+name: amis_buttons
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "重置",
+              "id": "u:76144dacd93c",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "args": {
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/listview/${record_id}/amis-schema/reset",
+                                      "method": "post",
+                                      "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                      }
+                                  },
+                                  "messages": {}
+                              },
+                              "actionType": "ajax"
+                          }
+                      ]
+                  }
+              },
+              "tooltip": "重置列表视图Amis Schema",
+              "tooltipPlacement": "top",
+              "className": "slds-button slds-button--neutral p-0"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {
+              "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us77.gitpod.io"
+          },
+          "app_id": "",
+          "tab_id": "",
+          "object_name": "",
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "id": "u:9a37e91e4b8d",
+      "bodyClassName": "p-0"
+  }
+is_enable: true
+label: AmisSchema
+'on': record_only
+type: amis_button
+visible: true
