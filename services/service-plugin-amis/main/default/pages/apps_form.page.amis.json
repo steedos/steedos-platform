@@ -131,60 +131,6 @@
                                                     "id": "u:fc07a5376a46"
                                                 },
                                                 {
-                                                    "name": "objects",
-                                                    "label": "桌面主菜单(已作废)",
-                                                    "type": "select",
-                                                    "className": "m-0",
-                                                    "labelClassName": "text-left",
-                                                    "id": "u:4e5047e44905",
-                                                    "joinValues": false,
-                                                    "extractValue": true,
-                                                    "labelField": "label",
-                                                    "valueField": "value",
-                                                    "multiple": true,
-                                                    "checkAll": false,
-                                                    "searchable": true,
-                                                    "source": {
-                                                        "method": "get",
-                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-                                                        "headers": {
-                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "name": "mobile_objects",
-                                                    "label": "手机主菜单(已作废)",
-                                                    "type": "select",
-                                                    "className": "m-0",
-                                                    "labelClassName": "text-left",
-                                                    "id": "u:cfaeb2f857a8",
-                                                    "joinValues": false,
-                                                    "extractValue": true,
-                                                    "labelField": "label",
-                                                    "valueField": "value",
-                                                    "multiple": true,
-                                                    "checkAll": false,
-                                                    "searchable": true,
-                                                    "source": {
-                                                        "method": "get",
-                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-                                                        "messages": {},
-                                                        "headers": {
-                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "name": "description",
-                                                    "label": "描述",
-                                                    "type": "textarea",
-                                                    "className": "col-span-2 m-0",
-                                                    "labelClassName": "text-left",
-                                                    "id": "u:40d99f2da55a",
-                                                    "tpl": "<b><%=data.description%></b>"
-                                                },
-                                                {
                                                     "name": "is_creator",
                                                     "label": "在桌面中显示此应用",
                                                     "type": "checkbox",
@@ -210,6 +156,15 @@
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
                                                     "id": "u:07a8a4c5f875"
+                                                },
+                                                {
+                                                    "name": "description",
+                                                    "label": "描述",
+                                                    "type": "textarea",
+                                                    "className": "col-span-2 m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:40d99f2da55a",
+                                                    "tpl": "<b><%=data.description%></b>"
                                                 }
                                             ],
                                             "id": "u:0b870f195836",
@@ -489,6 +444,63 @@
                                         }
                                     ],
                                     "id": "u:17ecc1ec4435"
+                                },
+                                {
+                                    "title": "其他",
+                                    "body": [
+                                        {
+                                            "type": "wrapper",
+                                            "className": "form-content",
+                                            "body": [
+                                                {
+                                                    "name": "objects",
+                                                    "label": "桌面主菜单(已作废)",
+                                                    "type": "select",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:4e5047e44905",
+                                                    "joinValues": false,
+                                                    "extractValue": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "multiple": true,
+                                                    "checkAll": false,
+                                                    "searchable": true,
+                                                    "source": {
+                                                        "method": "get",
+                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": "mobile_objects",
+                                                    "label": "手机主菜单(已作废)",
+                                                    "type": "select",
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:cfaeb2f857a8",
+                                                    "joinValues": false,
+                                                    "extractValue": true,
+                                                    "labelField": "label",
+                                                    "valueField": "value",
+                                                    "multiple": true,
+                                                    "checkAll": false,
+                                                    "searchable": true,
+                                                    "source": {
+                                                        "method": "get",
+                                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                                        "messages": {},
+                                                        "headers": {
+                                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "size": "none"
+                                        }
+                                    ]
                                 }
                             ],
                             "tabsMode": "line",
