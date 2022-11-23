@@ -63,56 +63,6 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	created() {
-		//ApiGateway
-		this.broker.createService(require('@steedos/service-api'));
-						
-		this.broker.createService(require("@steedos/webapp-public"));
-
-		this.broker.createService(require("@steedos/service-accounts"));
-
-		this.broker.createService(require("@steedos/service-charts"));
-
-		this.broker.createService(require("@steedos/service-pages"));
-
-		this.broker.createService(require("@steedos/service-cloud-init"));
-
-		this.broker.createService(require("@steedos/service-workflow"));
-
-		this.broker.createService(require("@steedos/service-plugin-amis"));
-
-		this.broker.createService(require("@steedos/service-files"));
-
-		// 故障报告服务
-		this.broker.createService(require("@steedos/service-sentry"));
-
-		// 启动 元数据服务
-		this.broker.createService(require("@steedos/service-metadata-server"));
-
-		// 启动 加载软件包服务
-		this.broker.createService(require("@steedos/service-package-registry"));
-
-		if(this.settings.jwt.enable){
-			this.broker.createService(require("@steedos/service-identity-jwt"));
-		}
-
-		// 国际化
-		this.broker.createService(require("@steedos/service-i18n"));
-
-		// 启动 steedos-server 服务
-		this.broker.createService(require("@steedos/service-steedos-server"));
-		// 启动 本地 CDN
-		if (this.settings.unpkg.enable) {
-			this.broker.createService(require("@steedos/ee_unpkg-local"));
-		}
-		else{
-			this.broker.createService(require("@steedos/unpkg"));
-		}
-
-		// 启动 登录页面
-		this.broker.createService(require("@steedos/webapp-accounts"));
-
-		// 产品分析
-		this.broker.createService(require("@steedos/service-analytics"));
 	},
 
 	/**
