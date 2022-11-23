@@ -29,6 +29,9 @@ module.exports = {
 		},
 		unpkg:{
 			enable: validator.toBoolean(process.env.STEEDOS_UNPKG_ENABLE_LOCAL || 'false', true)
+		},
+		saas: {
+			enable: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true)
 		}
 	},
 
@@ -120,6 +123,11 @@ module.exports = {
 
         // 产品分析
         this.broker.createService(require("@steedos/service-analytics"));
+
+
+		if (this.settings.saas.enable) {
+			this.broker.createService(require('@steedos/service-saas'));
+		}
 	},
 
 	/**

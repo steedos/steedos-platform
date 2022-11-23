@@ -7,6 +7,7 @@ const objectql = require('@steedos/objectql');
 const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-objects/package.json"));
 const _ = require('lodash');
 const express = require('express');
+const validator = require('validator');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -150,7 +151,7 @@ module.exports = {
 	 */
 	events: {
 		async 'service-cloud-init.succeeded'(ctx) {
-			await this.setSpaceId()
+			await this.setMasterSpaceId()
 		}
 	},
 
@@ -276,16 +277,19 @@ module.exports = {
 
 
 		// 设置魔方Id
-		async setSpaceId() {
-			const spaceDoc = (await objectql.getObject('spaces').find({ filters: [], fields: ['_id'], sort: 'created desc' }))[0]
-			if (spaceDoc) {
-				this.masterSpaceId = spaceDoc._id
-				this.setSettings({
-					PUBLIC_SETTINGS: {
-						masterSpaceId: this.masterSpaceId,
-					}
-				})
-			}
+		async setMasterSpaceId() {
+
+			if (validator.trim(process.env.STEEDOS_TENANT_MASTER_ID || '').length == 0) {
+				process.env.STEEDOS_TENANT_MASTER_ID = (await objectql.getObject('spaces').directFind({ fields: ['_id', 'name', 'admins'] }))[0]['_id']
+				this.logger.info(`Set master space id to first space: ${process.env.STEEDOS_TENANT_MASTER_ID} `)
+			}		
+			
+			this.masterSpaceId = process.env.STEEDOS_TENANT_MASTER_ID
+			this.setSettings({
+				PUBLIC_SETTINGS: {
+					masterSpaceId: process.env.STEEDOS_TENANT_MASTER_ID
+				}
+			})
 		},
 	},
 
@@ -309,7 +313,7 @@ module.exports = {
 			await this.startSteedos();
 
 			// this.startAPIService();
-			await this.setSpaceId();
+			await this.setMasterSpaceId();
 
 			console.log('耗时：', new Date().getTime() - time);
 			//  **已经移除了waitForServices, 此事件可以作废了, 可使用 dependencies: ['steedos-server']** ; 此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件;
