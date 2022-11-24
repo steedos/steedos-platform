@@ -1,6 +1,6 @@
 {
   "name": "@steedos/webapp-accounts",
-  "version": "2.2.60",
+  "version": "2.2.61",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -11,5 +11,5 @@
   "dependencies": {
     "lodash": "^4.17.21"
   },
-  "gitHead": "43baa608ffdac135285ff1f9dd3ef6cee254468b"
+  "gitHead": "2764b55df082c4c29ed40134c490f6b233273eed"
 }

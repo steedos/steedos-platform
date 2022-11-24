@@ -1,11 +1,11 @@
 {
   "name": "@steedos-examples/with-postgres",
-  "version": "2.2.60",
+  "version": "2.2.61",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.60"
+    "@steedos/service-community": "2.2.61"
   }
 }
