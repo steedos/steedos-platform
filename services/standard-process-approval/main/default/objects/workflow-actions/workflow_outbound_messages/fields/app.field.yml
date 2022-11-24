@@ -1,0 +1,8 @@
+name: app
+label: 应用
+type: lookup
+reference_to: apps
+reference_to_field: code
+filters:
+  - [['code','!=','admin'], ['secret','!=', null]]
+sort_no: 80
