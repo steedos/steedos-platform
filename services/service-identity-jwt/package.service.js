@@ -33,7 +33,7 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: packageName,
-			isPackage: true
+			isPackage: false,
 		},
 		jwt: {
 			secret: process.env.STEEDOS_IDENTITY_JWT_SECRET,
