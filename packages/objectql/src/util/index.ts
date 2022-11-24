@@ -801,10 +801,7 @@ export function getTemplateSpaceId(){
 }
 
 export function getCloudAdminSpaceId(){
-    let steedosConfig = getSteedosConfig();
-    if(steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId){
-        return steedosConfig.public.cloudAdminSpaceId
-    }
+    return  process.env.STEEDOS_TENANT_MASTER_ID
 }
 
 export function isTemplateSpace(spaceId){
@@ -819,7 +816,7 @@ export function isTemplateSpace(spaceId){
 
 export function isCloudAdminSpace(spaceId){
     let steedosConfig = getSteedosConfig();
-    if(spaceId && steedosConfig && steedosConfig.public && steedosConfig.public.cloudAdminSpaceId && spaceId === steedosConfig.public.cloudAdminSpaceId){
+    if(spaceId && spaceId === process.env.STEEDOS_TENANT_MASTER_ID){
         return true
     }
     return false

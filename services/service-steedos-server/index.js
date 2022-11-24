@@ -279,10 +279,10 @@ module.exports = {
 		// 设置魔方Id
 		async setMasterSpaceId() {
 
-			if (validator.trim(process.env.STEEDOS_TENANT_MASTER_ID || '').length == 0) {
-				process.env.STEEDOS_TENANT_MASTER_ID = (await objectql.getObject('spaces').directFind({ fields: ['_id', 'name', 'admins'] }))[0]['_id']
-				this.logger.info(`Set master space id to first space: ${process.env.STEEDOS_TENANT_MASTER_ID} `)
-			}		
+			// if (validator.trim(process.env.STEEDOS_TENANT_MASTER_ID || '').length == 0) {
+			// 	process.env.STEEDOS_TENANT_MASTER_ID = (await objectql.getObject('spaces').directFind({ fields: ['_id', 'name', 'admins'] }))[0]['_id']
+			// 	this.logger.info(`Set master space id to first space: ${process.env.STEEDOS_TENANT_MASTER_ID} `)
+			// }		
 			
 			this.masterSpaceId = process.env.STEEDOS_TENANT_MASTER_ID
 			this.setSettings({
