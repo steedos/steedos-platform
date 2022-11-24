@@ -401,7 +401,7 @@
                 },
                 {
                     "type": "fieldSet",
-                    "title": "自定义",
+                    "title": "高级",
                     "collapsable": true,
                     "body": [
                         {
@@ -428,7 +428,7 @@
                     "collapsed": true,
                     "visibleOn": "!!this.object_name",
                     "en-US": {
-                        "title": "Custom"
+                        "title": "Advanced"
                     }
                 }
             ],
