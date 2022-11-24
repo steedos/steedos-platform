@@ -70,7 +70,7 @@ exports.syncUserInfo = function (doc, modifier) {
                 if (Object.hasOwnProperty.call(doc, key)) {
                     const element = doc[key];
                     if (typeof element == 'object') {
-                        if (element.sub_type
+                        if (element && element.sub_type
                             && element.buffer
                             && element.position) {
                             doc[key] =  new Binary(Buffer.from(element.buffer), element.sub_type);
