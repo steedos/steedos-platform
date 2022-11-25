@@ -13,7 +13,7 @@ try
 		settings = {
 			built_in_plugins: [
 				"@steedos/webapp-public",
-				"@steedos/service-ui",
+				# "@steedos/service-ui",
 				"@steedos/service-cachers-manager",
 				"@steedos/unpkg",
 				"@steedos/workflow",
@@ -41,7 +41,8 @@ try
 				"@steedos/standard-ui",
 				"@steedos/standard-permission",
 				"@steedos/ee_unpkg-local",
-				"@steedos/service-files"
+				"@steedos/service-files",
+				"@steedos/service-identity-jwt"
 			],
 			plugins: config.plugins
 		}
@@ -111,6 +112,8 @@ try
 					} 
 				});
 
+				uiService = broker.createService(require("@steedos/service-ui"));
+
 				apiService = broker.createService({
 					name: "api",
 					mixins: [APIService],
@@ -154,8 +157,16 @@ try
 					broker.start().then(()->
 						if !broker.started 
 							broker._restartService(standardObjectsPackageLoaderService);
+							broker._restartService(uiService);
 
-						WebApp.connectHandlers.use("/", apiService.express());
+						express = require('express');
+						connectHandlersExpress = express();
+						connectHandlersExpress.use(require('@steedos/router').staticRouter());
+						broker.waitForServices('~packages-@steedos/service-ui').then ()->
+							console.log('waitForServices ~packages-@steedos/service-ui')
+							connectHandlersExpress.use(SteedosApi.express())
+							WebApp.connectHandlers.use(connectHandlersExpress)
+						
 						# steedosCore.init(settings).then ()->
 						# 	cb();
 
