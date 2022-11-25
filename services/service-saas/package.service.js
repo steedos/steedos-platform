@@ -23,7 +23,8 @@ module.exports = {
 	settings: {
 		packageInfo: {
 			path: __dirname,
-			name: packageName
+			name: packageName,
+			isPackage: false,
 		},
 		jwt: {
 			enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_JWT_ENABLED || 'false', true),

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-16 14:57:50
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-17 13:16:31
+ * @LastEditTime: 2022-11-24 12:01:27
  * @Description: 执行出站消息
  */
 
@@ -13,6 +13,8 @@ import { WorkflowOutboundMessage } from './types/workflow_outbound_message';
 import _ = require('underscore');
 
 import fetch from 'node-fetch';
+
+const jwt = require('jsonwebtoken');
 
 
 /**
@@ -47,14 +49,29 @@ export async function runWorkflowOutboundMessageAction(workflowOutboundMessage: 
         object_name,
         endpoint_url,
         // user_to_send_as,
-        object_fields_to_send
+        object_fields_to_send,
+        app
     } = workflowOutboundMessage;
 
-    let record = await getObject(object_name).findOne(recordId, { fields: object_fields_to_send });
+    const record = await getObject(object_name).findOne(recordId, { fields: object_fields_to_send });
 
-    const payload = {
+    let secret = ''
+    if (app) {
+        const appDoc = (await getObject('apps').find({ filters: [ ['code', '=', app] ]}))[0]
+        if (appDoc && appDoc.secret) { // 如果配置了api密钥则生成jwt给接收方验证
+            secret = appDoc.secret
+        }
+    }
+    
+    let payload = {
         'object_name': object_name,
         'doc': record,
+    }
+
+    if (secret) {
+        // 生成jwt
+        const options = { expiresIn: 60 * 60 }
+        payload = jwt.sign(payload, secret, options);
     }
 
     await fetch(endpoint_url, {
@@ -62,7 +79,9 @@ export async function runWorkflowOutboundMessageAction(workflowOutboundMessage: 
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            data: payload
+        })
     })
 
 

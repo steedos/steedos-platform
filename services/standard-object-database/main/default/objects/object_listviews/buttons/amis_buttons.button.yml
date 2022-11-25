@@ -19,7 +19,10 @@ amis_schema: |-
                                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                       }
                                   },
-                                  "messages": {}
+                                  "messages": {
+                                      "success": "Amis Schema重置成功!",
+                                      "failed": "Amis Schema重置失败!"
+                                  }
                               },
                               "actionType": "ajax"
                           }

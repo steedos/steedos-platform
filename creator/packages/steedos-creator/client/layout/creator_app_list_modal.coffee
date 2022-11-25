@@ -32,6 +32,8 @@ Template.creator_app_list_modal.helpers
 		if app?.url
 			url = Creator.getUrlWithToken(app.url, app)
 			if /^http(s?):\/\//.test(url)
+				if app.secret # 外接应用且配置了api密钥
+					url = Steedos.absoluteUrl("api/external/app/" + app._dbid)
 				return url
 			else
 				return Creator.getRelativeUrl(url)
@@ -40,7 +42,7 @@ Template.creator_app_list_modal.helpers
 	
 	app_target: ()->
 		app = Creator.getApp(this.id)
-		if app?.is_new_window
+		if app?.is_new_window || app?.secret
 			return "_blank"
 		else
 			return ""

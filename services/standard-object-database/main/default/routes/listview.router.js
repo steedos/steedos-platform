@@ -52,6 +52,7 @@ router.post('/api/listview/:id/amis-schema/reset', core.requireAuthentication, a
 
     } catch (error) {
         res.status(500).send(error.message);
+        console.error(error);
     }
 });
 

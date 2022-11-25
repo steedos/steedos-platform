@@ -30,6 +30,10 @@ fields:
     label: 要发送的字段
     help:
     description:
+  app:
+    label: 应用
+    help:
+    description:
 listviews:
   all:
     label: 所有

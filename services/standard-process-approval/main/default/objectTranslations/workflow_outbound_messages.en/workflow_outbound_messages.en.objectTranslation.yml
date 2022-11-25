@@ -30,6 +30,10 @@ fields:
     label: Object fields to send
     help:
     description:
+  app:
+    label: App
+    help:
+    description:
 listviews:
   all:
     label: All

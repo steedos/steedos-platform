@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-11 18:09:20
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-18 11:41:42
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-11-24 13:06:15
  * @Description: 
  */
 "use strict";
@@ -13,6 +13,7 @@ const packageLoader = require('@steedos/service-package-loader');
 const passport = require('passport');
 const JwtStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const jwt = require('jsonwebtoken');
 
 
 const authError = function (done, message, err = null) {
@@ -33,7 +34,7 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: packageName,
-			isPackage: true
+			isPackage: false,
 		},
 		jwt: {
 			secret: process.env.STEEDOS_IDENTITY_JWT_SECRET,
@@ -64,9 +65,9 @@ module.exports = {
 	 */
 	methods: {
 		beforeStart: async function () {
-			if(!this.settings.jwt.secret){
-				throw new Error(`${packageName} jwt secret is not defined`);
-			}
+			// if(!this.settings.jwt.secret){
+			// 	throw new Error(`${packageName} jwt secret is not defined`);
+			// }
 		}
 	},
 
@@ -81,34 +82,59 @@ module.exports = {
 	 */
 	async started() {
 		try {
-            if(this.settings.jwt.secret){
-				const jwtOptions = {
-					secretOrKey: this.settings.jwt.secret,
-					jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-				}
-				
-				const jwtAuthenticate = function (jwt_payload, done) {
-					try {
-						const { profile } = jwt_payload;
-						if(profile && profile.email){
-							objectql.getObject('users').find({filters: [['email', '=', profile.email]], fields: ['_id', 'name', 'email', 'username']}).then((records)=>{
-								if(records.length > 0){
-									const user = records[0];
-									return done(null, Object.assign({}, user, {id: user._id}))
-								}else{
-									return done('user not find', null)
+			const secret = this.settings.jwt.secret
+			const jwtOptions = {
+				// secretOrKey: this.settings.jwt.secret,
+				secretOrKeyProvider: function (request, rawJwtToken, done) {
+					let decoded = jwt.decode(rawJwtToken, { complete: true });
+					let payload = decoded.payload
+					const app_code = payload.app_code
+					if (app_code) { // 走应用认证
+						objectql.getObject('apps').find({filters: [['code', '=', app_code]], fields: ['secret']}).then((records)=>{
+							if(records.length > 0){
+								const app = records[0];
+								if (app.secret) {
+									return done(null, app.secret)
 								}
-							})
-						}else{
-							return done('JWT invalid', null)
-						}
-					} catch (err) {
-						return authError(done, "JWT invalid", err)
+								else {
+									done(`app ${app_code}'s secret is null`, null)
+								}
+							}else{
+								return done('app not find', null)
+							}
+						})
 					}
-				}
-				
-				passport.use(new JwtStrategy(jwtOptions, jwtAuthenticate))
+					else if (secret) { // 走全局配置
+						return done(null, secret)
+					}
+					else { // 都没有则认证不通过
+						return done('need secret', null)
+					}
+				},
+				jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 			}
+			
+			const jwtAuthenticate = function (jwt_payload, done) {
+				try {
+					const { profile } = jwt_payload;
+					if(profile && profile.email){
+						objectql.getObject('users').find({filters: [['email', '=', profile.email]], fields: ['_id', 'name', 'email', 'username']}).then((records)=>{
+							if(records.length > 0){
+								const user = records[0];
+								return done(null, Object.assign({}, user, {id: user._id}))
+							}else{
+								return done('user not find', null)
+							}
+						})
+					}else{
+						return done('JWT invalid', null)
+					}
+				} catch (err) {
+					return authError(done, "JWT invalid", err)
+				}
+			}
+			
+			passport.use(new JwtStrategy(jwtOptions, jwtAuthenticate))
         } catch (error) {
             // this.setError(error);
 			this.broker.logger.error(error)
