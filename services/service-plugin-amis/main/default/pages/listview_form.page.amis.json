@@ -410,9 +410,19 @@
                             "tpl": null,
                             "className": "m-0",
                             "labelClassName": "text-left",
-                            "option": "启用",
+                            "option": "使用 amis自定义列表",
                             "en-US": {
-                                "option": "Enable"
+                                "option": "Enable amis_schema"
+                            },
+                            "onEvent": {
+                                "change": {
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "const { object_name, name: listName, enable_amis_schema, amis_schema} = context.props.data;\nwindow.BuilderAmisObject?.AmisLib.getListviewInitSchema(object_name, listName).then(function (result) {\n  if (!enable_amis_schema && !amis_schema) {\n    doAction({\n      actionType: 'setValue',\n      componentId: 'listview_form',\n      args: {\n        value: { amis_schema: result }\n      },\n    });\n  }\n});\n\n\n\n\n\n\n"
+                                        }
+                                    ]
+                                }
                             }
                         },
                         {
@@ -422,7 +432,9 @@
                             "required": false,
                             "language": "json",
                             "className": "col-span-2 m-1",
-                            "labelClassName": "text-left"
+                            "labelClassName": "text-left",
+                            "clearValueOnHidden": false,
+                            "hidden": true
                         }
                     ],
                     "collapsed": true,
@@ -438,7 +450,7 @@
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
             "language": "javascript",
-            "id": "u:d951542bb161"
+            "id": "listview_form"
         }
     ],
     "regions": [
