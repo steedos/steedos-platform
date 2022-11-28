@@ -371,6 +371,16 @@ async function getAppsMenus(ctx) {
         if(!config.is_creator || !config.visible){
             return false;
         }
+
+        if(config._id === config.code){
+            let dbApp = _.find(assigned_apps, (item)=>{
+                return item.code === config.code && item._id != item.code && item.space === spaceId;
+            });
+            if(dbApp){
+                return dbApp.visible
+            }
+        }
+
         if (_.has(config, 'space') && config.space) {
             return config.space === spaceId;
         }
