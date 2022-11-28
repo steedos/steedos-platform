@@ -117,7 +117,15 @@
                         rootUrl: __meteor_runtime_config__.ROOT_URL,
                         tenantId: Creator.USER_CONTEXT.spaceId,
                         userId: Creator.USER_CONTEXT.userId,
-                        authToken: Creator.USER_CONTEXT.user.authToken
+                        authToken: Creator.USER_CONTEXT.user.authToken,
+                        user: Creator.USER_CONTEXT.user
+                    },
+                    global: {
+                        userId: Creator.USER_CONTEXT.userId,
+                        spaceId: Creator.USER_CONTEXT.spaceId,
+                        user: Creator.USER_CONTEXT.user, 
+                        now: new Date(),
+                        // mode: mode //由表单提供
                     }
                 }
             });
