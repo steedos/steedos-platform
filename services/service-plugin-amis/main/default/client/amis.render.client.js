@@ -153,17 +153,17 @@
               };
 
             const AmisEnv = {
-                getModalContainer: (props)=>{
-                    let div = document.querySelector("#amisModalContainer");
-                    if(!div){
-                        div = document.createElement('div');
-                        div.className="amis-scope";
-                        div.style.height='0px';
-                        div.id="amisModalContainer";
-                        document.body.appendChild(div)
-                    }
-                    return div;
-                },
+                // getModalContainer: (props)=>{
+                //     let div = document.querySelector("#amisModalContainer");
+                //     if(!div){
+                //         div = document.createElement('div');
+                //         div.className="amis-scope";
+                //         div.style.height='0px';
+                //         div.id="amisModalContainer";
+                //         document.body.appendChild(div)
+                //     }
+                //     return div;
+                // },
                 jumpTo: (to, action) => {
                 if (to === 'goBack') {
                     return window.history.back();
