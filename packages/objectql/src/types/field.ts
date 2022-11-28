@@ -149,7 +149,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
 
     getIndexInfo = ()=>{
         const indexName = this.getIndexName();
-        if(this.index || this.unique){
+        const defaultIndexFieldTypes = ['lookup', 'master_detail', 'autonumber']
+        if(this.index || this.unique || defaultIndexFieldTypes.includes(this.type)){
             let index = {}; 
             let indexValue: any =  null;
             let sparse = false;
