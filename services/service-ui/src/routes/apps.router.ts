@@ -2,13 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-08 23:28:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-15 18:11:07
+ * @LastEditTime: 2022-11-28 17:59:40
  * @Description: 
  */
 import { requireAuthentication } from '@steedos/core';
 import { getSteedosSchema } from '@steedos/objectql';
-const SteedosRouter = require('@steedos/router');
-const router = SteedosRouter.staticRouter();
+const express = require('express');
+const router =express.Router();
 
 router.get('/service/api/apps/menus', requireAuthentication, async function (req: any, res: any) {
     const userSession = req.user;

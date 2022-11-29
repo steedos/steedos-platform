@@ -1,5 +1,12 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-29 11:55:29
+ * @Description: 
+ */
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 const Fiber = require('fibers');
 
 import { requireAuthentication } from '@steedos/core';

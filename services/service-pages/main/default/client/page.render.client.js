@@ -57,7 +57,7 @@
         }
     }
 
-    Steedos.Page.render = function (root, page, data, options) {
+    Steedos.Page.render = function (root, page, data, options = {}) {
         const loadingContentData = {
             "inputs": [],
             // "title": "loading",
@@ -192,7 +192,7 @@
                                     "data": pageContentData
                                 }
                             })
-                        }, options?.props)).show();
+                        }, options.props)).show();
                     }else{
                         data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
                         SteedosUI.Modal(Object.assign({
@@ -208,7 +208,7 @@
                                     "data": pageContentData
                                 }
                             })
-                        }, options?.props)).show();
+                        }, options.props)).show();
                     }
 
                     

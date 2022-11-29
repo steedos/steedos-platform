@@ -2,10 +2,11 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:20:24
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-08-05 15:41:30
+ * @LastEditTime: 2022-11-29 11:59:40
  * @Description: 
  */
-const router =require('@steedos/router').staticRouter()
+const express = require('express');
+const router = express.Router();
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 

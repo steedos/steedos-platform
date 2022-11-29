@@ -1,9 +1,16 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-29 11:55:49
+ * @Description: 
+ */
 import { requireAuthentication } from '@steedos/core';
 
 import { getInstallingInfo } from './util';
 
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 
 const getInstallingData = async function (req, res) {
     try {

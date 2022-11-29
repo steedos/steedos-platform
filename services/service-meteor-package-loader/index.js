@@ -58,6 +58,13 @@ module.exports = {
 
                 let routersData = objectql.loadRouters(packagePath);
                 let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
+
+                // routersData.forEach(element => {
+                //     if(element.router.default === require('@steedos/router').staticRouter()){
+                //         objectql.broker.broker.logger.warn(`router error, packagePath: ${packagePath} `);
+                //     }
+                // });
+
                 let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
                 if(oldRoutersInfo){
                     _.each(oldRoutersInfo.metadata, (info)=>{

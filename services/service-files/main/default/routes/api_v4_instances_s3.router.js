@@ -6,7 +6,7 @@
  * @Description: 
  */
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 const core = require('@steedos/core');
 const formidable = require('formidable');
 const {

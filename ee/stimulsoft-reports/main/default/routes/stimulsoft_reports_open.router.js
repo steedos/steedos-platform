@@ -1,4 +1,12 @@
-const router = require('@steedos/router').staticRouter();
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-28 18:02:09
+ * @Description: 
+ */
+const express = require('express');
+const router = express.Router();
 const core = require('@steedos/core');
 const { getReportWithData } = require(`./util`);
 

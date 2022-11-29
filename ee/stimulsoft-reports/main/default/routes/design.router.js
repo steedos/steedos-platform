@@ -3,7 +3,8 @@
  * @Date: 2022-04-04 16:34:28
  * @Description: 
  */
-const router = require('@steedos/router').staticRouter();
+const express = require('express');
+const router = express.Router();
 const core = require('@steedos/core');
 const ejs = require('ejs');
 const fs = require('fs');

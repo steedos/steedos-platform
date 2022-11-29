@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const router = require('@steedos/router').staticRouter();
+const express = require('express');
+const router = express.Router();
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const jwt = require('jsonwebtoken');
