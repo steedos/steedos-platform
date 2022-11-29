@@ -5,6 +5,8 @@ CustomLabels:
   frontend_form_new: New
   frontend_form_select: Select
   frontend_form_confirm: Confirm
+  frontend_list_no_actions_tip: no operation
+  frontend_field_lookup_no_such_record: No such record
   frontend_filter_operation_yes: 'yes'
   frontend_filter_operation_no: 'no'
   frontend_filter_operation_start: Start
