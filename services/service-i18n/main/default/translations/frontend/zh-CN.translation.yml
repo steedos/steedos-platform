@@ -7,6 +7,7 @@ CustomLabels:
   frontend_form_confirm: 确认
   frontend_list_no_actions_tip: 没有可做的操作
   frontend_field_lookup_no_such_record: 无此记录
+  frontend_field_file_upload: 上传
   frontend_filter_operation_yes: 是
   frontend_filter_operation_no: 否
   frontend_filter_operation_start: 开始

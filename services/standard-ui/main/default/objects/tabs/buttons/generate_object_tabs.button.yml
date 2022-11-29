@@ -1,0 +1,49 @@
+name: generate_object_tabs
+amis_schema: |-
+    {
+        "type": "service",
+        "body": [
+            {
+                "type": "button",
+                "label": "对象选项卡",
+                "id": "u:test",
+                "onEvent": {
+                    "click": {
+                        "actions": [
+                            {
+                                "actionType": "custom",
+                                "script": "const appId = null;\nconst page = Steedos.Page.getPage('app', appId, null, null, \"generate_object_tabs\");\nif (page && page.schema) {\n  const pageSchema = JSON.parse(page.schema);\n  let formSchema = pageSchema.body[0];\n  // 设置form的canAccessSuperData属性防止弹出窗口从父级取字段默认值\n  formSchema.canAccessSuperData = false;\n  // 设置form的wrapWithPanel属性隐藏其底部保存取消按钮\n  formSchema.wrapWithPanel = false;\n  formSchema.className = \"steedos-amis-form\";\n  const title = \"选择需要生成选项卡的对象\";\n  doAction({\n    \"actionType\": \"dialog\",\n    \"dialog\": {\n      \"type\": \"dialog\",\n      \"title\": title,\n      \"body\": formSchema,\n      \"size\": \"lg\"\n    }\n  });\n}"
+                            }
+                        ],
+                        "weight": 0
+                    }
+                },
+                "className": "slds-button slds-button--neutral p-0"
+            }
+        ],
+        "regions": [
+            "body"
+        ],
+        "data": {
+            "context": {
+                "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us77.gitpod.io"
+            },
+            "app_id": "",
+            "tab_id": "",
+            "object_name": "",
+            "dataComponentId": "",
+            "record_id": "",
+            "record": {},
+            "permissions": {}
+        },
+        "id": "u:4bb4769d2fd7",
+        "bodyClassName": "p-0"
+    }
+is_enable: true
+label: 对象选项卡
+"on": list
+type: amis_button
+visible: !!js/function |
+    function (object_name, record_id, record_permissions, record) {
+        return Creator.baseObject.actions.standard_new.visible()
+    }
