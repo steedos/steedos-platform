@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_mongodb-bi-connector",
-  "version": "2.3.2-beta.12",
+  "version": "2.3.2-beta.13",
   "main": "package.service.js",
   "license": "MIT",
   "scripts": {
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f738241842b61c66eae2b1fe7bf5c0bfb66348d6"
+  "gitHead": "0ffb7e237da2ef2aeb0f44f051267483598c2033"
 }
