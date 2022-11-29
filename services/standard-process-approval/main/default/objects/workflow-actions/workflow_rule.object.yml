@@ -37,7 +37,7 @@ fields:
   formula:
     type: textarea
     is_wide: true
-    required: true
+    required: false
     group: Rule Criteria
   updates_field_actions:
     group: Immediate Actions
