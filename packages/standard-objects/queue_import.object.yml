@@ -172,6 +172,13 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+  customer:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
   admin:
     allowCreate: true
     allowDelete: true
