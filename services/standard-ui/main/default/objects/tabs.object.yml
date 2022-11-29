@@ -119,10 +119,6 @@ list_views:
       - mobile
       - type
       - is_system
-actions:
-  generateObjectTabs:
-    label: 对象选项卡
-    on: list
 permission_set:
   user:
     allowCreate: false
