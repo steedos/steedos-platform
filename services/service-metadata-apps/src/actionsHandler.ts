@@ -410,16 +410,15 @@ async function getAppsMenus(ctx) {
         }
     }
     if(!mobile){
-        menus.push(
-            {
-                id: 'admin',
-                path: '/app/admin',
-                name: '设置',
-                icon: 'settings',
-                description: '管理员设置公司、人员、权限等。',
-                children: []
-            }
-        )
+        const setupApp = {
+            code: 'admin',
+            name: '设置',
+            icon_slds: 'settings',
+            description: '管理员设置公司、人员、权限等。',
+            children: []
+        }
+        const menu = await transformAppToMenus(ctx, setupApp, mobile, userSession, context);
+        menus.push(menu);
     }
     return menus;
 }

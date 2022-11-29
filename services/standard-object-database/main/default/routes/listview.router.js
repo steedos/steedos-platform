@@ -48,7 +48,7 @@ router.post('/api/listview/:id/amis-schema/reset', core.requireAuthentication, a
             return await getUISchema(objectName, userSession);
         });
         let schema = await AmisLib.getListviewInitSchema(listview.object_name, listview.name);
-        const record = await objectql.getObject('object_listviews').directUpdate(id, { amis_schema: schema });
+        const record = await objectql.getObject('object_listviews').directUpdate(id, { amis_schema: JSON.stringify(schema, null, 4) });
         res.status(200).send(record);
 
     } catch (error) {
