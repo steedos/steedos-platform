@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-11 18:09:20
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-24 13:06:15
+ * @LastEditTime: 2022-11-29 16:09:26
  * @Description: 
  */
 "use strict";
@@ -86,32 +86,38 @@ module.exports = {
 			const jwtOptions = {
 				// secretOrKey: this.settings.jwt.secret,
 				secretOrKeyProvider: function (request, rawJwtToken, done) {
-					let decoded = jwt.decode(rawJwtToken, { complete: true });
-					let payload = decoded.payload
-					const app_code = payload.app_code
-					if (app_code) { // 走应用认证
-						objectql.getObject('apps').find({filters: [['code', '=', app_code]], fields: ['secret']}).then((records)=>{
-							if(records.length > 0){
-								const app = records[0];
-								if (app.secret) {
-									return done(null, app.secret)
+					try {
+						let decoded = jwt.decode(rawJwtToken, { complete: true });
+						let payload = decoded.payload
+						const app_code = payload.app_code
+						if (app_code) { // 走应用认证
+							objectql.getObject('apps').find({filters: [['code', '=', app_code]], fields: ['secret']}).then((records)=>{
+								if(records.length > 0){
+									const app = records[0];
+									if (app.secret) {
+										return done(null, app.secret)
+									}
+									else {
+										done(`app ${app_code}'s secret is null`, null)
+									}
+								}else{
+									return done('app not find', null)
 								}
-								else {
-									done(`app ${app_code}'s secret is null`, null)
-								}
-							}else{
-								return done('app not find', null)
-							}
-						})
+							})
+						}
+						else if (secret) { // 走全局配置
+							return done(null, secret)
+						}
+						else { // 都没有则认证不通过
+							return done('need secret', null)
+						}
+					} catch (error) {
+						// console.error(error)
+						return done(error.message, null)
 					}
-					else if (secret) { // 走全局配置
-						return done(null, secret)
-					}
-					else { // 都没有则认证不通过
-						return done('need secret', null)
-					}
+					
 				},
-				jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+				jwtFromRequest: ExtractJwt.fromExtractors([ExtractJwt.fromAuthHeaderAsBearerToken(), ExtractJwt.fromUrlQueryParameter('t')]) 
 			}
 			
 			const jwtAuthenticate = function (jwt_payload, done) {

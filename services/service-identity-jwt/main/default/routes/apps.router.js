@@ -7,6 +7,9 @@ const express = require('express');
 const router = express.Router();
 router.use('/accounts/jwt/login', passport.authenticate('jwt', { session: false }), (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     account_1.Account.ssoLogin(req, res, { err: null, user: req.user, redirect: false, accessToken: null }).then((loginResult) => {
+        if (req.query.redirect) {
+            return res.redirect(req.query.redirect);
+        }
         delete loginResult.user.services;
         delete loginResult.user.thirdPartyUser;
         return res.status(200).send(loginResult);
