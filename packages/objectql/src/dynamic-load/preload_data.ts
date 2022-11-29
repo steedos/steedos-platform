@@ -36,7 +36,7 @@ export const preloadDBApps = async function(datasource: SteedosDataSourceType){
     if(datasource.name === 'meteor'){
         Creator.Collections[tableName] = Creator.createCollection({name: tableName});
     }
-    let apps: any = await datasource.find(tableName , {filters: ['visible','=',true]});
+    let apps: any = await datasource.find(tableName , {}); // 此处不过滤禁用的app , 支持通过db中的app禁用元数据中定义的app filters: ['visible','=',true]
     for await (const element of apps) {
         await addAppConfig(element, `~database-${tableName}`);
     }

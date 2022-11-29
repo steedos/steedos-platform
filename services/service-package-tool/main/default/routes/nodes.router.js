@@ -1,4 +1,5 @@
-const router =require('@steedos/router').staticRouter()
+const express = require('express');
+const router = express.Router();
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 let schema = objectql.getSteedosSchema();

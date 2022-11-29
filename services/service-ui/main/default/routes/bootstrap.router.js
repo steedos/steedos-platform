@@ -9,8 +9,8 @@ require("@steedos/license");
 const Fiber = require('fibers');
 const clone = require("clone");
 const _ = require('underscore');
-const SteedosRouter = require('@steedos/router');
-const router = SteedosRouter.staticRouter();
+const express = require('express');
+const router = express.Router();
 function getUserProfileObjectsLayout(userId, spaceId, objectName) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         let spaceUser;

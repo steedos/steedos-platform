@@ -104,6 +104,9 @@ module.exports = {
             }
             const _routers = [];
             routersData.forEach(element => {
+                // if(element.router.default === require('@steedos/router').staticRouter()){
+                //     objectql.broker.broker.logger.warn(`router error, packagePath: ${packagePath} `);
+                // }
                 _routers.push(element)
             });
             core.loadRouters(_routers);
@@ -245,6 +248,13 @@ module.exports = {
             } catch (error) {
                 this.logger.errorr(error);
             }
+        };
+
+        let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: this.name})
+        if(oldRoutersInfo){
+            _.each(oldRoutersInfo.metadata, (info)=>{
+                core.removeRouter(info.path, info.methods)
+            })
         }
 
         objectql.deletePackageClientScripts(this.name);

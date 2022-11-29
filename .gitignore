@@ -17,6 +17,7 @@
 .rpt2_cache
 
 **/dist
+!**/twbs_bootstrap/dist
 **/logs
 
 /packages/**/lib

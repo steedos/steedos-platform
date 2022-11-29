@@ -1,4 +1,3 @@
-import { map } from "lodash";
 const Future = require('fibers/future');
 const objectql = require("@steedos/objectql");
 const SteedosRouter = require('@steedos/router');
@@ -213,14 +212,17 @@ export class Core {
 export const loadRouters = (routers)=>{
     _.each(routers, (router)=>{
         if(router.router.default !== SteedosRouter.staticRouter()){
-            objectql.broker.broker.logger.warn(`Please adjust router ${map(router.infoList, 'path').join(',')} to improve performance with steedos router`);
-            routersApp.use('', router.router.default)
+            if(router.router.default){
+                _.each(router.router.default.stack, (layer)=>{
+                    routersApp.stack.push(layer)
+                })
+            }
         }
     })
 }
 
 export const removeRouter = (path, methods)=>{
-    routersApp._router?.stack.forEach(function(route,i,routes) {
+    routersApp?.stack.forEach(function(route,i,routes) {
         if (route.route && route.route.path === path) {
             if(JSON.stringify(route.route.methods) === JSON.stringify(methods)){
                 routes.splice(i,1);

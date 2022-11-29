@@ -1,5 +1,5 @@
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');

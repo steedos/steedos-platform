@@ -46,8 +46,7 @@ fields:
     type: lookup
     reference_to: organizations
     multiple: true
-    omit: true
-    hidden: true
+    visible_on: "{{false}}"
     group: systemfields
     name: children
     filterable: true

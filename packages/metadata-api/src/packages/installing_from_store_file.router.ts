@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-29 11:55:45
+ * @Description: 
+ */
 import { requireAuthentication } from '@steedos/core';
 import { deleteFolderRecursive } from '@steedos/metadata-core'
 import { getInstallingFile, getInstallingInfo, saveImportedPackage } from './util';
@@ -8,7 +15,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require("path");
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 
 const installingPackage = async function(dataBuffer, userSession){
     var dbManager = new DbManager(userSession);

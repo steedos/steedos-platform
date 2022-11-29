@@ -7,8 +7,8 @@ const Fiber = require('fibers')
 const clone = require("clone");
 const _ = require('underscore');
 
-const SteedosRouter = require('@steedos/router');
-const router = SteedosRouter.staticRouter();
+const express = require('express');
+const router =express.Router();
 
 async function getUserProfileObjectsLayout(userId, spaceId, objectName?) {
     let spaceUser;

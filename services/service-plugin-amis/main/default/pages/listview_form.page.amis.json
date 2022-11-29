@@ -413,16 +413,6 @@
                             "option": "使用 amis自定义列表",
                             "en-US": {
                                 "option": "Enable amis_schema"
-                            },
-                            "onEvent": {
-                                "change": {
-                                    "actions": [
-                                        {
-                                            "actionType": "custom",
-                                            "script": "const { object_name, name: listName, enable_amis_schema, amis_schema} = context.props.data;\nwindow.BuilderAmisObject?.AmisLib.getListviewInitSchema(object_name, listName).then(function (result) {\n  if (!enable_amis_schema && !amis_schema) {\n    doAction({\n      actionType: 'setValue',\n      componentId: 'listview_form',\n      args: {\n        value: { amis_schema: result }\n      },\n    });\n  }\n});\n\n\n\n\n\n\n"
-                                        }
-                                    ]
-                                }
                             }
                         },
                         {

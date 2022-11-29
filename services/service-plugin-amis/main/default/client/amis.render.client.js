@@ -56,7 +56,7 @@
     };
 
     const getAmisLng = ()=>{
-        locale = Creator.USER_CONTEXT?.user?.language
+        var locale = Creator.USER_CONTEXT ? Creator.USER_CONTEXT.user.language : null;
         if(locale){
             locale = locale.replace('_', '-');
             locale = locale === 'en' ? 'en-US' : locale;
@@ -153,17 +153,17 @@
               };
 
             const AmisEnv = {
-                getModalContainer: (props)=>{
-                    let div = document.querySelector("#amisModalContainer");
-                    if(!div){
-                        div = document.createElement('div');
-                        div.className="amis-scope";
-                        div.style.height='0px';
-                        div.id="amisModalContainer";
-                        document.body.appendChild(div)
-                    }
-                    return div;
-                },
+                // getModalContainer: (props)=>{
+                //     let div = document.querySelector("#amisModalContainer");
+                //     if(!div){
+                //         div = document.createElement('div');
+                //         div.className="amis-scope";
+                //         div.style.height='0px';
+                //         div.id="amisModalContainer";
+                //         document.body.appendChild(div)
+                //     }
+                //     return div;
+                // },
                 jumpTo: (to, action) => {
                 if (to === 'goBack') {
                     return window.history.back();

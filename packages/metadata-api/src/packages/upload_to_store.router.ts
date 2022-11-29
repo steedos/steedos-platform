@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-11-17 16:29:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-29 11:56:12
+ * @Description: 
+ */
 import { requireAuthentication } from '@steedos/core';
 
 import { jsonToFile, mkTempFolder, compressFiles, deleteFolderRecursive, mkdirsSync } from '@steedos/metadata-core'
@@ -6,7 +13,7 @@ import { getPackageInfo, uploadFile, getPackageManifest, uploadInfo, groupPackag
 import { getSteedosPackageData } from '../util/steedos_package_data';
 
 const express = require("express");
-const router =require('@steedos/router').staticRouter()
+const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 

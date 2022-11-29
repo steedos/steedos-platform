@@ -101,3 +101,7 @@ body{
 .steedos-amis-button.slds-truncate{
     overflow: inherit;
 }
+
+.ant-message{
+    z-index: 2600;
+}
