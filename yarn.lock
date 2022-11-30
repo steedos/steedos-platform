@@ -4399,20 +4399,20 @@
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@2.2.51":
-  version "2.2.51"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-community/-/builder-community-2.2.51.tgz#13d22535ba3a2eb4e008057525a3ede0eccce986"
-  integrity sha512-vfk3xkYJtyjcNnGW/VsJFIls0Y0n2UmUkTeOIDG+19iDeloQYe6EdSKIsBeJdEF+8U3KpQCF2b8b4lfJS4UcWg==
+"@steedos-ui/builder-community@2.2.52":
+  version "2.2.52"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.52.tgz#4a92da82b5c9ae112ddc15ba7187ffe5dbd2d89e"
+  integrity sha512-8X6apnO1zXfEgCGcFRn56aoswdLKldPnZjXDPRKjaU3KCM/5vCXEpeWzMGr5lhzzaEMepwwAYQMvM90ssPKdJQ==
 
-"@steedos-ui/builder-widgets@2.2.51":
-  version "2.2.51"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/builder-widgets/-/builder-widgets-2.2.51.tgz#0f96afbfe8a6affb9a482a39c7f4aaccd51db587"
-  integrity sha512-oeStmzFxFtiRun8o3OqQijZLs8qNyiuJszkKKcwaPTwBDTnJJ/RpRYJ57i6I24EYvYtFj5q8UonnNiOP5CusMw==
+"@steedos-ui/builder-widgets@2.2.52":
+  version "2.2.52"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.52.tgz#9a917fa8c3962e99f5af21a888794baed6c71a85"
+  integrity sha512-XxP57X3b0ngS5frPQFUy5DS8hjyVzPaFLo7QrDuKQIkGMzBmimjF/YAgiaWi3DEHAZ//58t88+sMo9Frei2CUg==
 
-"@steedos-ui/design-system@2.2.51":
-  version "2.2.51"
-  resolved "https://registry.yarnpkg.com/@steedos-ui/design-system/-/design-system-2.2.51.tgz#d3b0f100e5c2677ec036e3926224e0b278e0d97d"
-  integrity sha512-H6BJMs9gGsK4nlk3zy5IkSk2+/ARKrdKDCs75JIVRpWrYRPji5emcd/dCp0I1XtJtf1WYnHAEK3MuvXPzctHCQ==
+"@steedos-ui/design-system@2.2.52":
+  version "2.2.52"
+  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.52.tgz#a28d8ab4db6268639019162b6082b3a651e6ee61"
+  integrity sha512-mYdaqsVVnd+/gflkp0nNBkoFJ++5vnj+vXRlvRjC81RCgW57cQAmvzfGyZNWj8XSj7SSdywE59HA7PchOrXPOQ==
   dependencies:
     react-required-if "^1.0.3"
 
