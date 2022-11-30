@@ -45,7 +45,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['~packages-@steedos/ee_service-plugin-license'],
+    dependencies: [],
 
     /**
      * Actions
