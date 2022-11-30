@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-29 11:41:22
+ * @LastEditTime: 2022-11-30 14:10:20
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -66,11 +66,15 @@ if (Meteor.isServer) {
     }, {
         background: true
     });
-    db.flows._ensureIndex({
-        "form": 1
-    }, {
-        background: true
-    });
+    try {
+        db.flows._ensureIndex({
+            "form": 1
+        }, {
+            background: true
+        });
+    } catch (error) {
+        
+    }
     db.flows._ensureIndex({
         "space": 1,
         "form": 1,

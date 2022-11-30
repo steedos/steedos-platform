@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-02-28 09:25:03
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-11-30 14:10:02
+ * @Description: 
+ */
 
 Meteor.startup(function () {
     if (Meteor.isServer) {
@@ -39,11 +46,15 @@ Meteor.startup(function () {
             }, {
                 background: true
             });
-            db.space_users._ensureIndex({
-                "manager": 1
-            }, {
-                background: true
-            });
+            try {
+                db.space_users._ensureIndex({
+                    "manager": 1
+                }, {
+                    background: true
+                });
+            } catch (error) {
+                
+            }
             db.space_users._ensureIndex({
                 "space": 1,
                 "created": 1
