@@ -2,33 +2,49 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-29 11:46:57
+ * @LastEditTime: 2022-11-30 14:15:57
  * @Description: 
  */
 if (Meteor.isServer) {
   const objectql = require("@steedos/objectql");
   const config = objectql.getSteedosConfig();
 
-  db.instances._ensureIndex({
-    "submitter": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "applicant": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "outbox_users": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "inbox_users": 1
-  }, {
-    background: true
-  });
+  try {
+    db.instances._ensureIndex({
+      "submitter": 1
+    }, {
+      background: true
+    });
+  } catch (error) {
+    
+  }
+  try {
+    db.instances._ensureIndex({
+      "applicant": 1
+    }, {
+      background: true
+    });
+  } catch (error) {
+    
+  }
+  try {
+    db.instances._ensureIndex({
+      "outbox_users": 1
+    }, {
+      background: true
+    });
+  } catch (error) {
+    
+  }
+  try {
+    db.instances._ensureIndex({
+      "inbox_users": 1
+    }, {
+      background: true
+    });
+  } catch (error) {
+    
+  }
   db.instances._ensureIndex({
     "space": 1,
     "is_deleted": 1
@@ -202,11 +218,15 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.instances._ensureIndex({
-    "category": 1
-  }, {
-    background: true
-  });
+  try {
+    db.instances._ensureIndex({
+      "category": 1
+    }, {
+      background: true
+    });
+  } catch (error) {
+    
+  }
   db.instances._ensureIndex({
     "record_ids.o": 1,
     "record_ids.ids": 1
