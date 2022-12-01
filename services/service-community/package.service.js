@@ -32,7 +32,10 @@ module.exports = {
 		},
 		saas: {
 			enable: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true)
-		}
+		},
+        oidc: {
+            enable: validator.toBoolean(process.env.STEEDOS_IDENTITY_OIDC_ENABLED || 'false', true),
+        }
 	},
 
 	/**
@@ -104,6 +107,10 @@ module.exports = {
 			this.broker.createService(require("@steedos/service-identity-jwt"));
 		}
 
+        // 启动 OIDC SSO 服务
+        if (this.settings.oidc.enable) {
+            this.broker.createService(require("@steedos/ee_sso-oidc"));
+        }
 
         // 国际化
         this.broker.createService(require("@steedos/service-i18n"));

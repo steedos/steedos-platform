@@ -89,7 +89,7 @@ fields:
         }
         return options;
       }
-    defaultValue: '3'
+    defaultValue: "3"
     visible_on: "{{'profile' === formData.type ? true: false}}"
   max_login_attempts:
     type: select
@@ -106,7 +106,7 @@ fields:
         value: '10'
       - label: '无限制'
         value: '0'
-    defaultValue: '10'
+    defaultValue: "10"
     visible_on: "{{'profile' === formData.type ? true: false}}"
   lockout_interval:
     type: select
@@ -123,7 +123,7 @@ fields:
         value: '60'
       - label: '始终(必须由管理员重置)'
         value: '0'
-    defaultValue: '15'
+    defaultValue: "15"
     visible_on: "{{'profile' === formData.type ? true: false}}"
   enable_MFA:
     type: boolean
