@@ -211,6 +211,11 @@
                       if(name){
                         window.amisScopes[name] = ref; 
                       }
+
+                      if(window.SteedosUI && schema.name){
+                        SteedosUI.refs[schema.name] = ref;
+                      }
+
                     } catch (error) {
                       console.error('error', error)
                     }

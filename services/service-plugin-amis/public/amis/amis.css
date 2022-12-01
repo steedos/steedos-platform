@@ -105,3 +105,7 @@ body{
 .ant-message{
     z-index: 2600;
 }
+
+.page-list-view-root .amis-scope .antd-Table-headToolbar{
+    display: none;
+}
