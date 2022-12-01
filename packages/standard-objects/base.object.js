@@ -21,11 +21,7 @@ module.exports = {
             label: "Open",
             sort: -1,
             visible: function (object_name, record_id, record_permissions) {
-                if(typeof Creator === 'undefined'){
-                    return true;
-                }{
-                    return false;
-                }
+                return true;
             },
             on: "list_item",
             todo: "standard_open_view"
