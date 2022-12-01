@@ -59,7 +59,7 @@
                 type: 'amis',
                 schema: {
                     "type": "page",
-                    name: `amis-${app}-${objectApiName}-listview`,
+                    name: `amis-${appId}-${objectApiName}-listview`,
                     "title": "Welcome to Steedos",
                     bodyClassName: 'bg-white p-0',
                     "body": [
