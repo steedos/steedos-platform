@@ -134,12 +134,6 @@
                           },
                           "appId": "builder",
                           "title": "",
-                          "context": {
-                            "rootUrl": "http://127.0.0.1:5300",
-                            "userId": "63044e7529b3b23f86e0c95a",
-                            "tenantId": "osjAHnCr7nampKZ9Z",
-                            "authToken": "0fc302b88dfb733b65cfd35d8181d0b3026b9442c4ba8aae7880666f42db0dbe883af116501f44c6a8757d"
-                          }
                         },
                         "id": "u:d138f5276481"
                       }
