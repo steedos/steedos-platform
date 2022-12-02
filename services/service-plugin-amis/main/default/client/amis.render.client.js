@@ -196,6 +196,15 @@
                 const schema = props.schema;
                 const data = props.data;
                 const name = props.name;
+
+                if(SteedosUI.refs[schema.name]){
+                  if(SteedosUI.refs[schema.name].unmount){
+                    SteedosUI.refs[schema.name].unmount()
+                  }else{
+                    console.log(`not find amis scope unmount`)
+                  }
+                }
+
                 if(props.pageType === 'form'){
                     env = Object.assign({
                         getModalContainer: ()=>{
@@ -211,11 +220,6 @@
                       if(name){
                         window.amisScopes[name] = ref; 
                       }
-
-                      if(window.SteedosUI && schema.name){
-                        SteedosUI.refs[schema.name] = ref;
-                      }
-
                     } catch (error) {
                       console.error('error', error)
                     }
@@ -224,7 +228,10 @@
                   }
 
                 React.useEffect(()=>{
-                    amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                    const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                    if(window.SteedosUI && schema.name){
+                      SteedosUI.refs[schema.name] = amisScope;
+                    }
                   }, [])
                 return React.createElement("div", {
                     className: "amis-scope"

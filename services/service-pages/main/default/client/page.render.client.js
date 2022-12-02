@@ -56,7 +56,7 @@
         }
         else if(type === 'list'){
             return {
-                type: 'amis',
+                render_engine: 'amis',
                 schema: {
                     "type": "page",
                     name: `amis-${appId}-${objectApiName}-listview`,
@@ -80,67 +80,71 @@
             }
         }else if(type === 'record' && objectApiName != 'pages'){
             return {
-                "type": "page",
-                "title": "Welcome to Steedos",
-                "body": [
-                  {
-                    "type": "steedos-record-detail-header",
-                    "label": "标题面板",
-                    "objectApiName": "${objectName}",
-                    "recordId": "${recordId}",
-                    "id": "u:48d2c28eb755"
-                  },
-                  {
-                    "type": "tabs",
-                    "tabs": [
-                      {
-                        "title": "详细",
+                    render_engine: 'amis',
+                    schema: {
+                        "type": "page",
+                        "title": "Welcome to Steedos",
                         "body": [
                           {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
+                            "type": "steedos-record-detail-header",
+                            "label": "标题面板",
                             "objectApiName": "${objectName}",
                             "recordId": "${recordId}",
-                            "id": "u:d4a495811d57"
-                          }
-                        ],
-                        "id": "u:5d4e7e3f6ecc"
-                      },
-                      {
-                        "title": "相关表",
-                        "body": [
+                            "id": "u:48d2c28eb755"
+                          },
                           {
-                            "type": "steedos-object-related-lists",
-                            "label": "相关列表",
-                            "objectApiName": "${objectName}",
-                            "recordId": "${recordId}",
-                            "id": "u:3b85b7b7a7f6"
+                            "type": "tabs",
+                            "tabs": [
+                              {
+                                "title": "详细",
+                                "body": [
+                                  {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "${objectName}",
+                                    "recordId": "${recordId}",
+                                    "id": "u:d4a495811d57"
+                                  }
+                                ],
+                                "id": "u:5d4e7e3f6ecc"
+                              },
+                              {
+                                "title": "相关表",
+                                "body": [
+                                  {
+                                    "type": "steedos-object-related-lists",
+                                    "label": "相关列表",
+                                    "objectApiName": "${objectName}",
+                                    "recordId": "${recordId}",
+                                    "id": "u:3b85b7b7a7f6"
+                                  }
+                                ],
+                                "id": "u:1a0326aeec2b"
+                              }
+                            ],
+                            "id": "u:a649e4094a12"
                           }
                         ],
-                        "id": "u:1a0326aeec2b"
+                        "regions": [
+                          "body"
+                        ],
+                        "data": {
+                          "recordId": "",
+                          "initialValues": {
+                          },
+                          "appId": "builder",
+                          "title": "",
+                          "context": {
+                            "rootUrl": "http://127.0.0.1:5300",
+                            "userId": "63044e7529b3b23f86e0c95a",
+                            "tenantId": "osjAHnCr7nampKZ9Z",
+                            "authToken": "0fc302b88dfb733b65cfd35d8181d0b3026b9442c4ba8aae7880666f42db0dbe883af116501f44c6a8757d"
+                          }
+                        },
+                        "id": "u:d138f5276481"
                       }
-                    ],
-                    "id": "u:a649e4094a12"
-                  }
-                ],
-                "regions": [
-                  "body"
-                ],
-                "data": {
-                  "recordId": "",
-                  "initialValues": {
-                  },
-                  "appId": "builder",
-                  "title": "",
-                  "context": {
-                    "rootUrl": "http://127.0.0.1:5300",
-                    "userId": "63044e7529b3b23f86e0c95a",
-                    "tenantId": "osjAHnCr7nampKZ9Z",
-                    "authToken": "0fc302b88dfb733b65cfd35d8181d0b3026b9442c4ba8aae7880666f42db0dbe883af116501f44c6a8757d"
-                  }
-                },
-                "id": "u:d138f5276481"
-              }
+                }
+            
         }
     }
 
