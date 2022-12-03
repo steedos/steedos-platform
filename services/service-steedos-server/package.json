@@ -30,7 +30,6 @@
     "@steedos/standard-process-approval": "2.3.2-beta.15",
     "@steedos/standard-ui": "2.3.2-beta.15",
     "@steedos/steedos-plugin-schema-builder": "2.3.2-beta.15",
-    "@steedos/standard-space": "2.3.2-beta.15",
     "@steedos/unpkg": "2.3.2-beta.15",
     "@steedos/webapp-accounts": "2.3.2-beta.15",
     "@steedos/webapp-public": "2.3.2-beta.15",
