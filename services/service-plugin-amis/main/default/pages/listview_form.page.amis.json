@@ -401,6 +401,49 @@
                 },
                 {
                     "type": "fieldSet",
+                    "title": "搜索项",
+                    "collapsable": true,
+                    "body": [
+                        {
+                            "label": "默认可搜索字段",
+                            "type": "transfer",
+                            "name": "searchable_fields",
+                            "options": [],
+                            "selectMode": "list",
+                            "searchable": true,
+                            "searchApi": "",
+                            "sortable": true,
+                            "mode": "normal",
+                            "searchResultMode": "list",
+                            "joinValues": false,
+                            "extractValue": true,
+                            "source": {
+                                "method": "get",
+                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                },
+                                "data": null,
+                                "requestAdaptor": "",
+                                "adaptor": "",
+                                "sendOn": "!!this.object_name"
+                            },
+                            "visibleOn": "!!this.object_name",
+                            "className": "col-span-2 m-0",
+                            "en-US": {
+                                "label": "searchable fields"
+                            },
+                            "multiple": true
+                        }
+                    ],
+                    "collapsed": true,
+                    "visibleOn": "!!this.object_name",
+                    "en-US": {
+                        "title": "searchable"
+                    }
+                },
+                {
+                    "type": "fieldSet",
                     "title": "高级",
                     "collapsable": true,
                     "body": [
