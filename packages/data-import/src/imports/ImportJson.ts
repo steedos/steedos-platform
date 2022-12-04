@@ -6,7 +6,7 @@ import { syncMatchFiles } from '@steedos/metadata-core';
 const path = require('path');
 const fs = require("fs");
 import { EJSON } from 'bson'
-import { preCreateCollection } from '..';
+import { formatResults, preCreateCollection } from '..';
 
 const transactionOptions: any = {
     readPreference: 'primary',
@@ -40,7 +40,7 @@ export default class ImportJson implements Base {
     async readFile(filePath: string): Promise<Array<{ objectName: string, records: Array<any> }>> {
         let results: any = []
         const filePatten = [
-            path.join(filePath, "**", "*.data.json"), 
+            path.join(filePath, "**", "*.data.json"),
             "!" + path.join(filePath, "**", "*.flow.data.json"),
             "!" + path.join(filePath, "node_modules")];
 
@@ -54,10 +54,15 @@ export default class ImportJson implements Base {
     }
 
     async fileRecordsToDB(filePath: string) {
-        var dbManager = new DbManager(this.userSession);
+        const userSession = this.userSession
+        const { spaceId, userId, company_id, company_ids } = userSession
+        var dbManager = new DbManager(userSession);
         const now = new Date()
         try {
-            const results: any = await this.readFile(filePath);
+            let results: any = await this.readFile(filePath);
+
+            results = formatResults(results, userSession)
+
             await dbManager.connect();
 
             // 如果库中没有collection则提前新建好
@@ -78,21 +83,21 @@ export default class ImportJson implements Base {
                                     delete record.created_by;
                                     await dbManager.update(result.objectName, { _id: record._id }, Object.assign(record, {
                                         modified: now,
-                                        modified_by: this.userSession.userId,
-                                        company_id: this.userSession.company_id,
-                                        company_ids: this.userSession.company_ids,
+                                        modified_by: userId,
+                                        company_id: company_id,
+                                        company_ids: company_ids,
                                     }))
                                 } else {
                                     await dbManager.insert(result.objectName, Object.assign(record, {
                                         _id: record._id || new ObjectId().toHexString(),
-                                        space: this.userSession.spaceId,
-                                        owner: this.userSession.userId,
+                                        space: spaceId,
+                                        owner: userId,
                                         created: now,
-                                        created_by: this.userSession.userId,
+                                        created_by: userId,
                                         modified: now,
-                                        modified_by: this.userSession.userId,
-                                        company_id: this.userSession.company_id,
-                                        company_ids: this.userSession.company_ids,
+                                        modified_by: userId,
+                                        company_id: company_id,
+                                        company_ids: company_ids,
                                     }), false)
                                 }
                             }

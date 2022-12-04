@@ -253,6 +253,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directAggregate(tableName: string, query: SteedosQueryOptions, externalPipeline: any[], userId?: SteedosIDType) {
+        await this.connect();
         let collection = this.collection(tableName);
         let pipeline = [];
         if(query.filters){
@@ -267,6 +268,7 @@ export class SteedosMongoDriver implements SteedosDriver {
     }
 
     async directAggregatePrefixalPipeline(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any[], userId?: SteedosIDType) {
+        await this.connect();
         let collection = this.collection(tableName);
         let pipeline = [];
 
