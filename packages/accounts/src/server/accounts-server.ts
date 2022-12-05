@@ -17,7 +17,6 @@ import { generateAccessToken, generateRefreshToken, generateRandomToken } from '
 
 import { emailTemplates, sendMail } from './utils/email';
 import { ServerHooks } from './utils/server-hooks';
-
 import { AccountsServerOptions } from './types/accounts-server-options';
 import { JwtData } from './types/jwt-data';
 import { EmailTemplateType } from './types/email-template-type';
@@ -271,7 +270,7 @@ export class AccountsServer {
       name: user.name,
       email: user.email
     });
-
+    const spaces = await this.db.getMySpaces(user.id);
     return {
       sessionId,
       token,
@@ -280,6 +279,7 @@ export class AccountsServer {
         accessToken,
       },
       space,
+      spaces,
       user,
     };
   }
