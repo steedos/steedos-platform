@@ -34,8 +34,9 @@
     }
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
+        let objectInfo = null;
         if (type != 'list' && objectApiName) {
-            const objectInfo = Creator.getObject(objectApiName);
+            objectInfo = Creator.getObject(objectApiName);
             if (objectInfo && objectInfo.version < 2) {
                 return;
             }
@@ -83,6 +84,7 @@
                     render_engine: 'amis',
                     schema: {
                         "type": "page",
+                        "name": `amis-${appId}-${objectApiName}-detail`,
                         "title": "Welcome to Steedos",
                         "body": [
                           {
@@ -90,7 +92,19 @@
                             "label": "标题面板",
                             "objectApiName": "${objectName}",
                             "recordId": "${recordId}",
-                            "id": "u:48d2c28eb755"
+                            "id": "u:48d2c28eb755",
+                            onEvent: {
+                                "recordLoaded": {
+                                    "actions": [
+                                        {
+                                            "actionType": "reload",
+                                            "data": {
+                                              "name": `\${record.${objectInfo?.NAME_FIELD_KEY || 'name'}}`
+                                            }
+                                        }
+                                    ]
+                                  }
+                            },
                           },
                           {
                             "type": "tabs",
@@ -132,7 +146,6 @@
                           "recordId": "",
                           "initialValues": {
                           },
-                          "appId": "builder",
                           "title": "",
                         },
                         "id": "u:d138f5276481"
