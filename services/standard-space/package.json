@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-space",
-    "version": "2.3.2-beta.15",
+    "version": "2.3.2-beta.16",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {

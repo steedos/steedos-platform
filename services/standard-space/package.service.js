@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-03 19:29:07
+ * @LastEditTime: 2022-12-05 10:00:43
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-package-loader');
+const packageLoader = require('@steedos/service-meteor-package-loader');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
