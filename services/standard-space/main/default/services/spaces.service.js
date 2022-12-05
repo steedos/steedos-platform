@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-05 10:10:24
+ * @LastEditTime: 2022-12-05 16:42:16
  * @Description: 
  */
 "use strict";
@@ -259,7 +259,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        this.broker.logger.warn('[service][spaces]===>', 'started')
+        this.broker.logger.info('[service][spaces]===>', 'started')
     },
 
     /**

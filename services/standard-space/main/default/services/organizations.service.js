@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-05 10:10:01
+ * @LastEditTime: 2022-12-05 16:48:43
  * @Description: 
  */
 "use strict";
@@ -43,7 +43,7 @@ module.exports = {
                 orgId: { type: "string" },
             },
             async handler(ctx) {
-                this.broker.logger.info('[service][organizations]===>', 'calculateFullname')
+                this.broker.logger.info('[service][organizations]===>', 'calculateFullname', ctx.params.orgId)
                 return this.calculateFullname(ctx.params.orgId)
             }
         }
@@ -99,7 +99,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        this.broker.logger.warn('[service]===> spaces started')
+        this.broker.logger.info('[service][organizations]===>', 'started')
     },
 
     /**
