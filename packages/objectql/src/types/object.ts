@@ -781,6 +781,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         if ('modifyAssignCompanysRecords' === k) {
                             if (!_.isEmpty(_v) && _.isArray(_v)) {
                                 userObjectPermission['viewAssignCompanysRecords'].push(..._v);
+                                // 去重
+                                userObjectPermission['viewAssignCompanysRecords'] = _.uniq(userObjectPermission['viewAssignCompanysRecords'])
                             }
                         }
                         if (!_.isEmpty(_v) && _.isArray(_v)) {
@@ -1905,7 +1907,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
                 // 指定公司权限
                 let viewAssignCompanysRecordsFilter = [];
-                if (objPm.viewAssignCompanysRecords) {
+                if (!objPm.viewAllRecords && objPm.viewAssignCompanysRecords) {
                     _.each(objPm.viewAssignCompanysRecords, (assignCompanyId) => {
                         viewAssignCompanysRecordsFilter.push(`((company_id eq '${assignCompanyId}') or (company_ids eq '${assignCompanyId}'))`)
                     })
