@@ -132,6 +132,18 @@ fields:
     label: 字段
     help: 
     description: 
+  searchable_fields:
+    label: 默认可搜索字段
+    help: 
+    description: 
+  searchable_fields.$:
+    label: 默认可搜索字段
+    help: 
+    description: 
+  searchable_fields.$.field:
+    label: 字段
+    help: 
+    description: 
   sort_no:
     label: 排序号
   enable_amis_schema: 

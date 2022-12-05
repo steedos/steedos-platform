@@ -268,6 +268,33 @@ fields:
 
               return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
             }
+  searchable_fields:
+    label: Searchable Fields
+    type: grid
+    is_wide: true
+    depend_on:
+      - object_name
+  searchable_fields.$:
+    label: Column
+    blackbox: true
+    type: object
+  searchable_fields.$.field:
+    label: Field
+    type: lookup
+    multiple: false
+    is_wide: false
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              if (!(values != null ? values.object_name : void 0)) {
+                values.object_name = Session.get("object_name");
+              }
+
+              if(values.object_name && !_.isString(values.object_name)){
+                values.object_name = values.object_name.name
+              }
+
+              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
+            }
   sort_no:
     label: Sort no
     type: number
