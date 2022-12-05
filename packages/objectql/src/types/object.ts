@@ -1743,8 +1743,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 } 
                 else {
                     if (userSession) {
-                        let _records = returnValue
-                        if (method == 'findOne' && returnValue) {
+                        let _records = values
+                        if (method == 'findOne' && values) {
                             _records = [_records]
                         }
                         await this.appendRecordPermission(_records, userSession);
