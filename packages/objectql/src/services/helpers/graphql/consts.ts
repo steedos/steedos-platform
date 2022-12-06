@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-20 19:02:47
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-10-20 11:25:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-06 09:56:31
  * @Description: 
  */
 
@@ -24,3 +24,4 @@ export const DISPLAY_PREFIX = '_display';
 export const UI_PREFIX = '_ui';
 export const RELATED_PREFIX = '_related';
 export const GRAPHQL_ACTION_PREFIX = 'graphql_';
+export const PERMISSIONS_PREFIX = '_permissions';
