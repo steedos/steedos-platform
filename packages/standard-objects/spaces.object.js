@@ -1,10 +1,10 @@
 Fiber = require('fibers')
 const core = require('@steedos/core');
-const objectql = require('@steedos/objectql');
-const _ = require("lodash");
-const steedosLicense = require("@steedos/license");
-const metadataCore = require('@steedos/metadata-core');
-const validator = require('validator');
+// const objectql = require('@steedos/objectql');
+// const _ = require("lodash");
+// const steedosLicense = require("@steedos/license");
+// const metadataCore = require('@steedos/metadata-core');
+// const validator = require('validator');
 db.spaces = core.newCollection('spaces');
 
 // db.spaces.helpers({
@@ -89,96 +89,96 @@ db.spaces = core.newCollection('spaces');
     // objectql.broker.emit(`space.initialized`, spaceDoc);
 // }
 
-Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
-    let now = new Date();
-    let spaceUsersDB = db.space_users;
+// Creator.addSpaceUsers = function(spaceId, userId, user_accepted, organization_id){
+//     let now = new Date();
+//     let spaceUsersDB = db.space_users;
 
 
-    let spaceUserObj = spaceUsersDB.direct.findOne({
-        user: userId,
-        space: spaceId
-    });
+//     let spaceUserObj = spaceUsersDB.direct.findOne({
+//         user: userId,
+//         space: spaceId
+//     });
 
-    if(spaceUserObj){
-        return ;
-    }
+//     if(spaceUserObj){
+//         return ;
+//     }
 
-    let profile = 'user';
+//     let profile = 'user';
 
-    let space = db.spaces.findOne(spaceId, {fields: {default_profile: 1, default_organization: 1}})
-    if(space){
-        if(space.default_profile){
-            profile = space.default_profile
-        }
-        if(!organization_id && space.default_organization){
-            organization_id = space.default_organization
-        }
-    }
+//     let space = db.spaces.findOne(spaceId, {fields: {default_profile: 1, default_organization: 1}})
+//     if(space){
+//         if(space.default_profile){
+//             profile = space.default_profile
+//         }
+//         if(!organization_id && space.default_organization){
+//             organization_id = space.default_organization
+//         }
+//     }
 
-    if(!organization_id){
-        let root_org = db.organizations.findOne({
-            space: spaceId,
-            parent: null
-        });
-        organization_id = root_org._id
-    }
+//     if(!organization_id){
+//         let root_org = db.organizations.findOne({
+//             space: spaceId,
+//             parent: null
+//         });
+//         organization_id = root_org._id
+//     }
 
-    //company_id,company_ids,organizations_parents由triggers维护
-    let spaceUsersDoc = {
-        user: userId, 
-        user_accepted: user_accepted, 
-        organization: organization_id, 
-        organizations: [organization_id], 
-        // organizations_parents: [organization_id],
-        // company_id: company_id,
-        // company_ids: [company_id],
-        profile: profile,
-        space: spaceId,
-        owner: userId,
-        created_by: userId,
-        created: now,
-        modified_by: userId,
-        modified: now
-      }
-    spaceUsersDB.insert(spaceUsersDoc)
+//     //company_id,company_ids,organizations_parents由triggers维护
+//     let spaceUsersDoc = {
+//         user: userId, 
+//         user_accepted: user_accepted, 
+//         organization: organization_id, 
+//         organizations: [organization_id], 
+//         // organizations_parents: [organization_id],
+//         // company_id: company_id,
+//         // company_ids: [company_id],
+//         profile: profile,
+//         space: spaceId,
+//         owner: userId,
+//         created_by: userId,
+//         created: now,
+//         modified_by: userId,
+//         modified: now
+//       }
+//     spaceUsersDB.insert(spaceUsersDoc)
 
-    if(Creator.isSpaceAdmin(spaceId, userId)){
-        spaceUsersDB.direct.update({user: userId, space: spaceId}, {$set: {profile: 'admin'}})
-    }
+//     if(Creator.isSpaceAdmin(spaceId, userId)){
+//         spaceUsersDB.direct.update({user: userId, space: spaceId}, {$set: {profile: 'admin'}})
+//     }
 
-    // TODO 如果开发环境且创建第一条space_users记录时, 自动生成api key 并写入.env.local 文件
-    if(process.env.NODE_ENV != 'production' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
-        // 创建api key
-        objectql.getObject('api_keys').insert({
-            api_key: process.env.STEEDOS_INITIAL_API_KEY || Random.secret(),
-            space: spaceId,
-            owner: userId,
-            active: true
-        }).then(function(record){
-            // 写入.env.local 文件
-            let rootUrl = metadataCore.getRootUrl();
-            if(!rootUrl){
-                rootUrl = process.env.ROOT_URL
-            }
-            if(!rootUrl){
-                rootUrl = 'http://localhost:5000'
-            }
-            let server = rootUrl
-            if(!server.startsWith('http')){
-                server = `http://${server}`
-            }
-            if(server.endsWith('/')){
-                server = server.substring(0, server.length-1);
-            }
-            metadataCore.saveSourceConfig({
-                server: server,
-                apikey: record.api_key
-            })
-        }).catch(function(error){
-            console.log(error)
-        })
-    }
-}
+//     // TODO 如果开发环境且创建第一条space_users记录时, 自动生成api key 并写入.env.local 文件
+//     if(process.env.NODE_ENV != 'production' && spaceUsersDB.direct.find({space: spaceId}).count() === 1){
+//         // 创建api key
+//         objectql.getObject('api_keys').insert({
+//             api_key: process.env.STEEDOS_INITIAL_API_KEY || Random.secret(),
+//             space: spaceId,
+//             owner: userId,
+//             active: true
+//         }).then(function(record){
+//             // 写入.env.local 文件
+//             let rootUrl = metadataCore.getRootUrl();
+//             if(!rootUrl){
+//                 rootUrl = process.env.ROOT_URL
+//             }
+//             if(!rootUrl){
+//                 rootUrl = 'http://localhost:5000'
+//             }
+//             let server = rootUrl
+//             if(!server.startsWith('http')){
+//                 server = `http://${server}`
+//             }
+//             if(server.endsWith('/')){
+//                 server = server.substring(0, server.length-1);
+//             }
+//             metadataCore.saveSourceConfig({
+//                 server: server,
+//                 apikey: record.api_key
+//             })
+//         }).catch(function(error){
+//             console.log(error)
+//         })
+//     }
+// }
 
 // if (Meteor.isServer) {
     // db.spaces.before.insert(function (userId, doc) {

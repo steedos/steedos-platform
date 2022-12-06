@@ -637,6 +637,7 @@ Meteor.startup(function () {
                 return console.error(e.stack);
             }
         });
+        /**
         db.space_users.update_organizations_parents = function (_id, organizations) {
             var organizations_parents, orgs;
             orgs = db.organizations.find({
@@ -657,6 +658,7 @@ Meteor.startup(function () {
                     }
                 });
         };
+         */
         db.space_users.update_company_ids = function (_id, su) {
             var company_ids, orgs;
             if (!su) {

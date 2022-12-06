@@ -1,29 +1,30 @@
 const core = require('@steedos/core');
 db.organizations = core.newCollection('organizations');
 
-if (Meteor.isClient) {
-    //	db.organizations._simpleSchema.i18n("organizations")
-    db.organizations._sortFunction = function (doc1, doc2) {
-        var ref;
-        if (doc1.sort_no === doc2.sort_no) {
-            return (ref = doc1.name) != null ? ref.localeCompare(doc2.name) : void 0;
-        } else if (doc1.sort_no > doc2.sort_no) {
-            return -1;
-        } else {
-            return 1;
-        }
-    };
-    db.organizations.getRoot = function (fields) {
-        return SteedosDataManager.organizationRemote.findOne({
-            parent: null
-        }, {
-                fields: fields
-            });
-    };
-}
+// if (Meteor.isClient) {
+//     //	db.organizations._simpleSchema.i18n("organizations")
+//     db.organizations._sortFunction = function (doc1, doc2) {
+//         var ref;
+//         if (doc1.sort_no === doc2.sort_no) {
+//             return (ref = doc1.name) != null ? ref.localeCompare(doc2.name) : void 0;
+//         } else if (doc1.sort_no > doc2.sort_no) {
+//             return -1;
+//         } else {
+//             return 1;
+//         }
+//     };
+//     db.organizations.getRoot = function (fields) {
+//         return SteedosDataManager.organizationRemote.findOne({
+//             parent: null
+//         }, {
+//                 fields: fields
+//             });
+//     };
+// }
 
 //db.organizations.attachSchema db.organizations._simpleSchema;
 db.organizations.helpers({
+    /**
     calculateParents: function () {
         var parentId, parentOrg, parents;
         parents = [];
@@ -161,9 +162,11 @@ db.organizations.helpers({
         });
         return _.uniq(users);
     }
+    */
 });
 
 if (Meteor.isServer) {
+    /**
     const checkHasOrgAdminPermission = function (org, userId){
         let result = false;
         if(typeof org === "string"){
@@ -356,6 +359,7 @@ if (Meteor.isServer) {
             });
         }
     });
+     */
     db.organizations.before.update(function (userId, doc, fieldNames, modifier, options) {
         var isOrgAdmin, isParentOrgAdmin, isSpaceAdmin, nameOrg, parent, parentOrg, ref, ref1, ref2, ref3, ref4, space;
         modifier.$set = modifier.$set || {};

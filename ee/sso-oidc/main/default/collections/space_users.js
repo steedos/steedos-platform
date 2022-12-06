@@ -6,7 +6,11 @@ const objectql_1 = require("@steedos/objectql");
 class SpaceUsers {
     static insert(spaceId, userId, options = { user_accepted: true }) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            Creator.addSpaceUsers(spaceId, userId, options.user_accepted);
+            yield (0, objectql_1.getSteedosSchema)().broker.call(`spaces.addSpaceUsers`, {
+                spaceId,
+                userId,
+                user_accepted: options.user_accepted,
+            });
         });
     }
     static findByUserId(userId) {

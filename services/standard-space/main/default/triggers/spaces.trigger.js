@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-03 11:19:39
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-03 19:03:38
+ * @LastEditTime: 2022-12-06 14:34:07
  * @Description: 
  */
 "use strict";
@@ -16,8 +16,6 @@ module.exports = {
     listenTo: 'spaces',
 
     beforeInsert: async function () {
-        console.log('==>>> spaces beforeInsert')
-
         let { doc, userId } = this
         if (!userId && doc.owner) {
             userId = doc.owner;
@@ -41,8 +39,6 @@ module.exports = {
     },
 
     beforeUpdate: async function () {
-        console.log('==>>> spaces beforeUpdate')
-
         const { doc, userId, id } = this
         const spaceDoc = await objectql.getObject('spaces').findOne(id)
         if (spaceDoc.owner !== userId) {
@@ -66,8 +62,6 @@ module.exports = {
     },
 
     afterInsert: async function () {
-        console.log('==>>> spaces afterInsert')
-
         const { doc: spaceDoc } = this
         const spaceObj = objectql.getObject('spaces')
         // 创建第一个space时, 更新Tenant配置
