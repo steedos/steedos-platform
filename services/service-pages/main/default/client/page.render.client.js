@@ -142,12 +142,6 @@
                         "regions": [
                           "body"
                         ],
-                        "data": {
-                          "recordId": "",
-                          "initialValues": {
-                          },
-                          "title": "",
-                        },
                         "id": "u:d138f5276481"
                       }
                 }
@@ -209,7 +203,7 @@
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
 
-            const defData = lodash.defaultsDeep({}, data , {
+            const defData = lodash.defaultsDeep({}, data , {data: data} , {
                 data: {
                     context: {
                         rootUrl: __meteor_runtime_config__.ROOT_URL,
