@@ -7,32 +7,36 @@
  */
 
 const objectql = require('@steedos/objectql');
+const auth = require("@steedos/auth");
 
 module.exports = {
 
     listenTo: 'queue_import',
 
     beforeInsert: async function () {
-        const { getObject, doc } = this;
-        await _validateData(doc, getObject);
+        const { getObject, doc ,userId} = this;
+        await _validateData(doc, getObject, userId);
     },
 
     beforeUpdate: async function () {
-        const { id, object_name, getObject, doc } = this;
+        const { id, object_name, getObject, doc, userId } = this;
         // 导入操作/字段映射/表示数据唯一性字段(重复执行导入时根据此字段更新记录) 更新时校验
         if (doc.hasOwnProperty('operation') || doc.hasOwnProperty('field_mappings') || doc.hasOwnProperty('external_id_name')) {
             const currentDoc = await getObject(object_name).findOne(id);
             await _validateData({
                 ...currentDoc,
                 ...doc
-            }, getObject);
+            }, getObject, userId);
         }
     },
 
     afterFindOne: async function () {
         try {
             if (this.data.values) {
-                Object.assign(this.data.values, { template_url: `[下载](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` })
+                const userSession = await auth.getSessionByUserId(this.userId);
+                const locale = userSession?.locale;
+                const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
+                Object.assign(this.data.values, { template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` })
             }
         } catch (error) {
 
@@ -40,18 +44,24 @@ module.exports = {
     },
     afterFind: async function () {
         if (this.data.values) {
+            const userSession = await auth.getSessionByUserId(this.userId);
+            const locale = userSession?.locale;
+            const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[下载](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
                 }
             }
         }
     },
     afterAggregate: async function () {
         if (this.data.values) {
+            const userSession = await auth.getSessionByUserId(this.userId);
+            const locale = userSession?.locale;
+            const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[下载](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
                 }
             }
         }
@@ -62,7 +72,7 @@ module.exports = {
  * 校验数据
  * @param {*} doc 
  */
-async function _validateData(doc, getObject) {
+async function _validateData(doc, getObject, userId) {
     // 当导入操作为 更新/存在则更新，不存在则新增 时，需要保证 表示数据唯一性字段 在字段映射中存在
     if (doc.operation === 'update' || doc.operation === 'upsert') {
         const apiNames = [];
@@ -80,7 +90,11 @@ async function _validateData(doc, getObject) {
                     const field = await getObject(doc.object_name).getField(fieldName);
                     label = field.label;
                 }
-                throw new Error(`表示数据唯一性字段 ${label} 在字段映射中不存在，请配置。`);
+                const userSession = await auth.getSessionByUserId(userId);
+                const locale = userSession?.locale;
+                const field_mapping_alert = TAPi18n.__('queue_import_form_field_mapping_prompt', {returnObjects: true, label: label}, locale);
+                throw new Error(field_mapping_alert);
+                // throw new Error(`表示数据唯一性字段 ${label} 在字段映射中不存在，请配置。`);
             }
         }
     }

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-29 16:05:04
+ * @LastEditTime: 2022-12-05 09:08:08
  * @Description: 
  */
 export interface ConnectionInformations {

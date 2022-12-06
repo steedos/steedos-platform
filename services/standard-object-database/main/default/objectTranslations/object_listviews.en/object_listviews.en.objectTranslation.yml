@@ -141,6 +141,18 @@ fields:
     label: Field
     help: 
     description: 
+  searchable_fields:
+    label: Searchable Fields
+    help: 
+    description: 
+  searchable_fields.$:
+    label: Column
+    help: 
+    description: 
+  searchable_fields.$.field:
+    label: Field
+    help: 
+    description: 
 groups:
   custom: Custom
 listviews:

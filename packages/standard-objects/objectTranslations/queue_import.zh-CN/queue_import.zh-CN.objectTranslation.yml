@@ -115,6 +115,11 @@ actions:
   downloadTemplate:
     label: 下载模板
 CustomLabels:
+  queue_import_download: 下载
+  queue_import_form_field_mapping_prompt: "表示数据唯一性字段 {$label} 在字段映射中不存在，请配置。"
+  queue_import_tips: 导入完成
+  queue_import_success_notification_body: "总共导入{$total_count}条记录;\n成功: {$success_count}条;\n失败: {$failure_count};"
+  queue_import_error_info: "错误信息"
   queue_import_action_import_execute_success: 已执行
   queue_import_action_import_need_file: 请上传Excel文件
   queue_import_action_import_just_need_one_file: 只需上传一个文件
