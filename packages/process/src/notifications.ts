@@ -36,7 +36,7 @@ export const sendNotifications = async (from: string, to: string, {instanceHisto
             ids: [linkToId]
         },
         related_name: relatedDocName,
-        from: `Process ${status}`,
+        from: from,
         space: instance.space
     };
 
