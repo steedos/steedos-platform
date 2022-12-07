@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 18:08:21
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-06 20:13:31
+ * @LastEditTime: 2022-12-07 20:25:36
  * @Description: 
  */
 
@@ -50,6 +50,23 @@ module.exports = {
                 return this.update_organizations_parents(ctx.params.suId, ctx.params.orgIds)
             }
         },
+        /**
+         * @api {post} update_company_ids 更新所属分部
+         * @apiName update_company_ids
+         * @apiGroup space_users.service.js
+         * @apiParam {String} suId 人员ID
+         * @apiSuccess {Boolean} 
+         */
+        update_company_ids: {
+            params: {
+                suId: { type: "string" },
+            },
+            async handler(ctx) {
+                this.broker.logger.info('[service][space_users]===>', 'update_company_ids', ctx.params)
+                return this.update_company_ids(ctx.params.suId)
+            }
+        },
+        
     },
 
     /**
@@ -83,6 +100,35 @@ module.exports = {
             return !!(await suObj.directUpdate(suId, {
                 organizations_parents: organizations_parents
             }))
+        },
+        /**
+         * 更新人员所属分部
+         * @param {*} _id 
+         * @returns 
+         */
+        async update_company_ids(_id) {
+            const suObj = getObject('space_users')
+            const orgObj = getObject('organizations')
+            var company_ids, orgs;
+            const su = await suObj.findOne(_id, {
+                fields: ['organizations', 'company_id', 'space']
+            });
+            if (!su) {
+                console.error("update_company_ids,can't find space_users by _id of:", _id);
+                return;
+            }
+            orgs = await orgObj.find({
+                filters: [
+                    ['_id', 'in', su.organizations]
+                ],
+                fields: ['company_id']
+            });
+            company_ids = _.pluck(orgs, 'company_id');
+            // company_ids中的空值就空着，不需要转换成根组织ID值
+            company_ids = _.uniq(_.compact(company_ids));
+            await suObj.directUpdate(_id, {
+                company_ids: company_ids
+            });
         }
     },
 

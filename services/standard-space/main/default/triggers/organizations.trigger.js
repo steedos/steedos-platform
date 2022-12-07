@@ -2,9 +2,11 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 15:30:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 13:13:04
+ * @LastEditTime: 2022-12-07 14:22:58
  * @Description: 
  */
+"use strict";
+// @ts-check
 const { getObject, getSteedosSchema } = require('@steedos/objectql');
 const _ = require("underscore");
 

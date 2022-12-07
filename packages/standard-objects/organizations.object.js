@@ -780,16 +780,16 @@ if (Meteor.isServer) {
     //     };
     //     return db.organizations.find(selector);
     // });
-    // Meteor.publish('my_organizations', function (spaceId) {
-    //     if (!this.userId) {
-    //         return this.ready();
-    //     }
-    //     if (!spaceId) {
-    //         return this.ready();
-    //     }
-    //     return db.organizations.find({
-    //         space: spaceId,
-    //         users: this.userId
-    //     });
-    // });
+    Meteor.publish('my_organizations', function (spaceId) {
+        if (!this.userId) {
+            return this.ready();
+        }
+        if (!spaceId) {
+            return this.ready();
+        }
+        return db.organizations.find({
+            space: spaceId,
+            users: this.userId
+        });
+    });
 // }

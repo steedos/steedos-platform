@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-05 16:42:16
+ * @LastEditTime: 2022-12-07 14:55:21
  * @Description: 
  */
 "use strict";
@@ -72,6 +72,24 @@ module.exports = {
             async handler(ctx) {
                 this.broker.logger.info('[service][spaces]===>', 'addSpaceUsers', ctx.params)
                 return await this.addSpaceUsers(ctx.params.spaceId, ctx.params.userId, ctx.params.user_accepted, ctx.params.organization_id)
+            }
+        },
+        /**
+         * @api {call} isSpaceAdmin 是否工作区管理员
+         * @apiName isSpaceAdmin
+         * @apiGroup spaces.service.js
+         * @apiParam {String} spaceId 工作区ID
+         * @apiParam {String} userId 用户ID
+         * @apiSuccess {Boolean} 是否工作区管理员
+         */
+        isSpaceAdmin: {
+            params: {
+                spaceId: { type: "string" },
+                userId: { type: "string" },
+            },
+            async handler(ctx) {
+                this.broker.logger.info('[service][spaces]===>', 'isSpaceAdmin', ctx.params)
+                return await this.isSpaceAdmin(ctx.params.spaceId, ctx.params.userId)
             }
         }
     },

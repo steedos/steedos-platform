@@ -77,37 +77,37 @@ if (Meteor.isServer) {
             throw new Meteor.Error(400, "users_error_username_exists");
         }
     };
-    db.users.validateUsername = function (username, userId) {
-        var nameValidation, ref, ref1, ref2, ref3, user;
-        user = db.users.findOne({
-            username: {
-                $regex: new RegExp("^" + Meteor._escapeRegExp(username).trim() + "$", "i")
-            },
-            _id: {
-                $ne: userId
-            }
-        });
-        if (user) {
-            throw new Meteor.Error('username-unavailable', 'username-unavailable');
-        }
-        if (!((ref = Meteor.settings.public) != null ? (ref1 = ref.accounts) != null ? ref1.is_username_skip_minrequiredlength : void 0 : void 0)) {
-            if (username.length < 6) {
-                throw new Meteor.Error('username-minrequiredlength', "username-minrequiredlength");
-            }
-        }
-        try {
-            if ((ref2 = Meteor.settings.public) != null ? (ref3 = ref2.accounts) != null ? ref3.UTF8_Names_Validation : void 0 : void 0) {
-                nameValidation = new RegExp('^' + Meteor.settings.public.accounts.UTF8_Names_Validation + '$');
-            } else {
-                nameValidation = new RegExp('^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$');
-            }
-        } catch (error) {
-            nameValidation = new RegExp('^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$');
-        }
-        if (!nameValidation.test(username)) {
-            throw new Meteor.Error('username-invalid', "username-invalid");
-        }
-    };
+    // db.users.validateUsername = function (username, userId) {
+    //     var nameValidation, ref, ref1, ref2, ref3, user;
+    //     user = db.users.findOne({
+    //         username: {
+    //             $regex: new RegExp("^" + Meteor._escapeRegExp(username).trim() + "$", "i")
+    //         },
+    //         _id: {
+    //             $ne: userId
+    //         }
+    //     });
+    //     if (user) {
+    //         throw new Meteor.Error('username-unavailable', 'username-unavailable');
+    //     }
+    //     if (!((ref = Meteor.settings.public) != null ? (ref1 = ref.accounts) != null ? ref1.is_username_skip_minrequiredlength : void 0 : void 0)) {
+    //         if (username.length < 6) {
+    //             throw new Meteor.Error('username-minrequiredlength', "username-minrequiredlength");
+    //         }
+    //     }
+    //     try {
+    //         if ((ref2 = Meteor.settings.public) != null ? (ref3 = ref2.accounts) != null ? ref3.UTF8_Names_Validation : void 0 : void 0) {
+    //             nameValidation = new RegExp('^' + Meteor.settings.public.accounts.UTF8_Names_Validation + '$');
+    //         } else {
+    //             nameValidation = new RegExp('^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$');
+    //         }
+    //     } catch (error) {
+    //         nameValidation = new RegExp('^[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]+$');
+    //     }
+    //     if (!nameValidation.test(username)) {
+    //         throw new Meteor.Error('username-invalid', "username-invalid");
+    //     }
+    // };
     db.users.validatePhone = function (userId, doc, modifier) {
         modifier.$set = modifier.$set || {};
         if (doc._id !== userId && modifier.$set["phone.number"]) {
