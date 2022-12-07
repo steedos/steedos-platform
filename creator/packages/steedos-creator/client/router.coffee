@@ -354,7 +354,7 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 			main: 'recordLoading'
 		
 		main = "related_object_list"
-		page = Steedos.Page.getPage('list', app_id, related_object_name);
+		page = Steedos.Page.getPage('related_list', app_id, related_object_name);
 		if page
 			main = "page_related_list_view"
 			regions = {

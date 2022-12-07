@@ -189,6 +189,7 @@ actions:
     type: amis_button
     visible: !!js/function |
       function(){
+        console.log('cms file upload visible function: arguments', arguments)
         if(arguments.length > 3){
           var ctx = arguments[3];
           if(ctx && ctx.$master){
@@ -211,7 +212,7 @@ actions:
                             "id": "u:a58d02614e04",
                             "btnLabel": "上传",
                             "btnClassName": "m-0",
-                            "multiple": true,
+                            "multiple": false,
                             "maxLength": 10,
                             "submitType": "asUpload",
                             "uploadType": "fileReceptor",
@@ -256,7 +257,7 @@ actions:
                                           "componentId": "",
                                           "args": {},
                                           "actionType": "custom",
-                                          "script": "debugger;SteedosUI.getRef(context.props.data.scopeId).getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
+                                          "script": "SteedosUI.getRef(context.props.data.scopeId).getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
                                         }
                                     ]
                                 }

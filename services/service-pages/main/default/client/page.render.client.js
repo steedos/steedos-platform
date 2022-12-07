@@ -123,7 +123,7 @@
                                 "id": "u:5d4e7e3f6ecc"
                               },
                               {
-                                "title": "相关表",
+                                "title": "相关",
                                 "body": [
                                   {
                                     "type": "steedos-object-related-lists",
@@ -146,6 +146,123 @@
                       }
                 }
             
+        }else if(type === 'related_list'){
+            const relatedKey = FlowRouter._current.queryParams.related_field_name;
+            const masterObject = Creator.getObject(FlowRouter.getParam("object_name"))
+            const object = Creator.getObject(objectApiName)
+            const idFieldName = masterObject.idFieldName;
+            return {
+                render_engine: 'amis',
+                schema: {
+                    type: 'service',
+                    name: `amis-${appId}-${FlowRouter.getParam("object_name")}-related-${objectApiName}`,
+                    api: {
+                        method: "post",
+                        url: `\${context.rootUrl}/graphql`,
+                        requestAdaptor: `
+                            api.data = {
+                                query: \`{
+                                    data: ${masterObject.name}(filters:["${idFieldName}", "=", "${FlowRouter.getParam("record_id")}"]){
+                                        ${idFieldName}
+                                        ${masterObject.NAME_FIELD_KEY},
+                                        recordPermissions: _permissions{
+                                            allowCreate,
+                                            allowCreateFiles,
+                                            allowDelete,
+                                            allowDeleteFiles,
+                                            allowEdit,
+                                            allowEditFiles,
+                                            allowRead,
+                                            allowReadFiles,
+                                            disabled_actions,
+                                            disabled_list_views,
+                                            field_permissions,
+                                            modifyAllFiles,
+                                            modifyAllRecords,
+                                            modifyAssignCompanysRecords,
+                                            modifyCompanyRecords,
+                                            uneditable_fields,
+                                            unreadable_fields,
+                                            unrelated_objects,
+                                            viewAllFiles,
+                                            viewAllRecords,
+                                            viewAssignCompanysRecords,
+                                            viewCompanyRecords,
+                                          }
+                                    }
+                                }\`
+                            }
+                            console.log("api", api)
+                            return api;
+                        `,
+                        adaptor: `
+                            if(payload.data.data){
+                                var data = payload.data.data[0];
+                                payload.data = data;
+                            }
+                            payload.data.$breadcrumb = [
+                                {
+                                  "label": "${masterObject.label}",
+                                  "href": "/app/${appId}/${masterObject.name}"
+                                },
+                                {
+                                    "label": payload.data.${masterObject.NAME_FIELD_KEY},
+                                    "href": "/app/${appId}/${masterObject.name}/view/${FlowRouter.getParam("record_id")}",
+                                },
+                                {
+                                    "label": "相关 ${object.label}"
+                                },
+                              ]
+                            console.log('payload', payload)
+                            payload.data.$loaded = true;
+                            return payload;
+                        `,
+                        headers: {
+                            Authorization: "Bearer ${context.tenantId},${context.authToken}"
+                        }
+                    },
+                    "data": {
+                        "&": "$$",
+                        "$breadcrumb": [] //先给一个空数组, 防止breadcrumb组件报错
+                      },
+                    body: [
+
+                        {
+                            "type": "page",
+                            "body": {
+                              "type": "panel",
+                              "title": {
+                                "type": "breadcrumb",
+                                "source": "${$breadcrumb}"
+                              },
+                              "body": [
+                                {
+                                    type: 'steedos-object-related-listview',
+                                    objectApiName: masterObject.name,
+                                    recordId: FlowRouter.getParam("record_id"),
+                                    relatedObjectApiName: objectApiName,
+                                    foreign_key: relatedKey,
+                                    relatedKey: relatedKey,
+                                    hiddenOn: "!!!this.$loaded"
+                                    // top: 5
+                                }
+                              ]
+                            }
+                          }
+                        ,
+                        // {
+                        //     type: 'steedos-object-related-listview',
+                        //     objectApiName: masterObject.name,
+                        //     recordId: FlowRouter.getParam("record_id"),
+                        //     relatedObjectApiName: objectApiName,
+                        //     foreign_key: relatedKey,
+                        //     relatedKey: relatedKey,
+                        //     hiddenOn: "!!!this.$loaded"
+                        //     // top: 5
+                        // }
+                    ]
+                }
+              }
         }
     }
 

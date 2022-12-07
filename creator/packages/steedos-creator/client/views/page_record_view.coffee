@@ -10,6 +10,10 @@ Template.page_record_view.onRendered ->
 
 
 Template.page_record_view.onDestroyed ->
+    try 
+        SteedosUI.refs["amis-#{Session.get("app_id")}-#{Session.get("object_name")}-detail"].unmount()
+    catch e
+        console.error(e);
     _.each(this.containerList, (container)->
         if container 
             ReactDOM.unmountComponentAtNode(container)

@@ -6100,7 +6100,7 @@ aliyun-sdk@1.12.3:
     xml2js "0.4.4"
     xmlbuilder "^13.0.2"
 
-amis-core@^2.4.0, amis-core@^2.5.1:
+amis-core@^2.2.0, amis-core@^2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/amis-core/-/amis-core-2.5.1.tgz#35e5a1b13fb2ca97e6e4458b51eb4d9a866f7587"
   integrity sha512-ObzWQYUTbgTixt6nuD7AhlN9oXlPa77bQaFKnhFXrnE/5kulV5B3eV8D1tl+dj1l569IQM/y2wlGHR4zopZ02g==
@@ -6131,7 +6131,7 @@ amis-formula@^2.5.1:
     moment "^2.29.4"
     tslib "^2.3.1"
 
-amis-ui@^2.4.0:
+amis-ui@^2.2.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/amis-ui/-/amis-ui-2.5.1.tgz#9d5e68cc6ae278d4f3ac8206132d0413bcd41788"
   integrity sha512-23nePtGx2LPTF2zb2K37ZL/Yk7Ch9jWL6HSo1LCkeRSfO/XIev0S8WKuDBBQymJ8pZX3fDExhij1HdcVpA27aw==
@@ -6171,18 +6171,19 @@ amis-ui@^2.4.0:
     tslib "^2.3.1"
     uncontrollable "7.2.1"
 
-amis@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/amis/-/amis-2.4.0.tgz#595128e4209840fa83d214c8fec4e482838d0d36"
-  integrity sha512-jcF0urHnk9AEGhIsx7Ih+iZGWkfVjOpMa335TQfqY12jw2YUHRmquEsrN0q9Nx4XJRp/5RzJ/Xc2BENMIl/z5g==
+amis@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/amis/-/amis-2.2.0.tgz#13faef0c23ecad532a3e883ed372b1a3138ed5a3"
+  integrity sha512-VsswW9M6QatEHo7XBwA5buR1LTrp7HzmdNrUsaIvQ6shn0Sjsxk9+dNsarBWyFxuwrjH5nursP7PZBZrW+mcfw==
   dependencies:
-    amis-core "^2.4.0"
-    amis-ui "^2.4.0"
+    amis-core "^2.2.0"
+    amis-ui "^2.2.0"
+    ansi-to-react "^6.1.6"
     attr-accept "2.2.2"
     blueimp-canvastoblob "2.1.0"
     classnames "2.3.1"
-    downshift "6.1.12"
-    echarts "5.4.0"
+    downshift "6.1.7"
+    echarts "5.3.3"
     echarts-stat "^1.2.0"
     exceljs "^4.3.0"
     file-saver "^2.0.2"
@@ -6207,9 +6208,14 @@ amis@2.4.0:
     react-dropzone "^11.4.2"
     react-json-view "1.21.3"
     react-transition-group "4.4.2"
-    sortablejs "1.15.0"
+    sortablejs "1.14.0"
     tslib "^2.3.1"
     video-react "0.15.0"
+
+anser@^1.4.1:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"
+  integrity sha512-hCv9AqTQ8ycjpSd3upOJd7vFwW1JaoYQ7tpham03GJ1ca8/65rqn0RpaWpItOAd6ylW9wAw6luXYPJIyPFVOww==
 
 ansi-color@^0.2.1:
   version "0.2.1"
@@ -6266,6 +6272,14 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0, ansi-styles@^4.2.0, ansi-styles@^4.3.0:
   integrity sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
   dependencies:
     color-convert "^2.0.1"
+
+ansi-to-react@^6.1.6:
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/ansi-to-react/-/ansi-to-react-6.1.6.tgz#d6fe15ecd4351df626a08121b1646adfe6c02ccb"
+  integrity sha512-+HWn72GKydtupxX9TORBedqOMsJRiKTqaLUKW8txSBZw9iBpzPKLI8KOu4WzwD4R7hSv1zEspobY6LwlWvwZ6Q==
+  dependencies:
+    anser "^1.4.1"
+    escape-carriage "^1.3.0"
 
 ansicolors@~0.3.2:
   version "0.3.2"
@@ -10357,6 +10371,17 @@ downshift@6.1.12:
     react-is "^17.0.2"
     tslib "^2.3.0"
 
+downshift@6.1.7:
+  version "6.1.7"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-6.1.7.tgz#fdb4c4e4f1d11587985cd76e21e8b4b3fa72e44c"
+  integrity sha512-cVprZg/9Lvj/uhYRxELzlu1aezRcgPWBjTvspiGTVEU64gF5pRdSRKFVLcxqsZC637cLAGMbL40JavEfWnqgNg==
+  dependencies:
+    "@babel/runtime" "^7.14.8"
+    compute-scroll-into-view "^1.0.17"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+    tslib "^2.3.0"
+
 dtrace-provider@~0.6:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/dtrace-provider/-/dtrace-provider-0.6.0.tgz#0b078d5517937d873101452d9146737557b75e51"
@@ -10416,6 +10441,14 @@ echarts@5.3.2:
   dependencies:
     tslib "2.3.0"
     zrender "5.3.1"
+
+echarts@5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-5.3.3.tgz#df97b09c4c0e2ffcdfb44acf518d50c50e0b838e"
+  integrity sha512-BRw2serInRwO5SIwRviZ6Xgm5Lb7irgz+sLiFMmy/HOaf4SQ+7oYqxKzRHAKp4xHQ05AuHw1xvoQWJjDQq/FGw==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.2"
 
 echarts@5.4.0:
   version "5.4.0"
@@ -10744,6 +10777,11 @@ escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==
+
+escape-carriage@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/escape-carriage/-/escape-carriage-1.3.0.tgz#71006b2d4da8cb6828686addafcb094239c742f3"
+  integrity sha512-ATWi5MD8QlAGQOeMgI8zTp671BG8aKvAC0M7yenlxU4CRLGO/sKthxVUyjiOFKjHdIo+6dZZUNFgHFeVEaKfGQ==
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -20011,6 +20049,11 @@ sort-keys@^4.0.0:
   dependencies:
     is-plain-obj "^2.0.0"
 
+sortablejs@1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
+  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
+
 sortablejs@1.15.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.0.tgz#53230b8aa3502bb77a29e2005808ffdb4a5f7e2a"
@@ -22626,6 +22669,13 @@ zrender@5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/zrender/-/zrender-5.3.1.tgz#fa8e63ac7e719cfd563831fe8c42a9756c5af384"
   integrity sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==
+  dependencies:
+    tslib "2.3.0"
+
+zrender@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/zrender/-/zrender-5.3.2.tgz#f67b11d36d3d020d62411d3bb123eb1c93cccd69"
+  integrity sha512-8IiYdfwHj2rx0UeIGZGGU4WEVSDEdeVCaIg/fomejg1Xu6OifAL1GVzIPHg2D+MyUkbNgPWji90t0a8IDk+39w==
   dependencies:
     tslib "2.3.0"
 
