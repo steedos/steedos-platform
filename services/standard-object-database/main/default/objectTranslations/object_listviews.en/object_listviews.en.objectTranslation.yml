@@ -24,8 +24,8 @@ fields:
     options:
       - label: Mine
         value: mine
-      - label: space
-        value: Space
+      - label: Space
+        value: space
   shared:
     label: Shared to All Users
     help: 
@@ -154,13 +154,15 @@ fields:
     help: 
     description: 
 groups:
-  custom: Custom
+  advanced: Advanced
 listviews:
   all:
     label: All List View
 actions:
   customize:
     label: Customize
+  copy:
+    label: Copy
 CustomLabels:
   object_listviews_field_filters.$: 
   object_listviews_field_sort.$: 
