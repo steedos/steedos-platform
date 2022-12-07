@@ -39,8 +39,8 @@ jobs:
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.3') && !startsWith(steps.branch-name.outputs.tag, '2.4')  }}
         run: exit 1
 
-      - name: Merge 2.3 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
+      - name: Merge 2.4 -> master
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
