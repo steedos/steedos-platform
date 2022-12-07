@@ -308,14 +308,14 @@ fields:
     visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
   enable_amis_schema: 
-    label: Enable
+    label: Enable amis_schema
     type: boolean
-    group: custom
+    group: advanced
     required: false
   amis_schema: 
     label: Amis Schema
     type: code
-    group: custom
+    group: advanced
     language: json
     required: false
     is_wide: true
