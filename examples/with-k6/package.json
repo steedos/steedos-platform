@@ -1,6 +1,6 @@
 {
   "name": "with-k6",
-  "version": "2.3.2-beta.17",
+  "version": "2.3.2",
   "private": true,
   "scripts": {
     "start": "steedos start",
