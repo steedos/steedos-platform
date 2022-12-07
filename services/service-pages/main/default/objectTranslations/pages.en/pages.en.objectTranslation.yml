@@ -1,5 +1,5 @@
 name: pages
-label: 微页面
+label: Mini Page
 description: 
 fields:
   dashboard_filters_enabled:
@@ -7,15 +7,15 @@ fields:
     help: 
     description: 
   description:
-    label: 描述
+    label: Description
     help: 
     description: 
   is_active:
-    label: 状态
+    label: Actived
     help: 
     description: 
   is_archived:
-    label: 已归档
+    label: Archived
     help: 
     description: 
   is_draft:
@@ -27,11 +27,11 @@ fields:
     help: 
     description: 
   is_system:
-    label: 系统
+    label: System
     help: 
     description: 
   label:
-    label: 名称
+    label: Label
     help: 
     description: 
   name:
@@ -39,15 +39,15 @@ fields:
     help: 
     description: 
   object_name:
-    label: 对象
+    label: Object
     help: 
     description: 
   owner:
-    label: 所有者
+    label: Owner
     help: 
     description: 
   render_engine:
-    label: 渲染器
+    label: Render engine
     help: 
     options:
       - label: Amis
@@ -64,37 +64,37 @@ fields:
     help: 
     description: 
   type:
-    label: 类型
+    label: Type
     help: 
     options:
-      - label: 应用程序页面
+      - label: App page
         value: app
-      - label: 记录页面
+      - label: Record page
         value: record
-      - label: 列表页面
+      - label: List page
         value: list
-      - label: 表单
+      - label: Form
         value: form
     description: 
   version:
-    label: 版本号
+    label: Version Number
     help: 
     description: 
 listviews:
   all:
-    label: 所有
+    label: All
   recent:
-    label: 最近查看
+    label: Recent
 actions:
   customPage:
-    label: 自定义
+    label: Custom Page
   deploy:
-    label: 发布
+    label: Deploy
   disable:
-    label: 禁用
+    label: Disable
   enable:
-    label: 启用
+    label: Enable
   resetSchema:
-    label: 重置
+    label: Reset Schema
   showDesign:
-    label: 设计器
+    label: Show Design
