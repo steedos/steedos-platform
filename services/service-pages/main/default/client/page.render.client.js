@@ -88,8 +88,7 @@
                         "title": "Welcome to Steedos",
                         "body": [
                           {
-                            "type": "steedos-record-detail-header",
-                            "label": "标题面板",
+                            "type": "steedos-record-detail",
                             "objectApiName": "${objectName}",
                             "recordId": "${recordId}",
                             "id": "u:48d2c28eb755",
@@ -105,38 +104,6 @@
                                     ]
                                   }
                             },
-                          },
-                          {
-                            "type": "tabs",
-                            "tabs": [
-                              {
-                                "title": "详细",
-                                "body": [
-                                  {
-                                    "type": "steedos-object-form",
-                                    "label": "对象表单",
-                                    "objectApiName": "${objectName}",
-                                    "recordId": "${recordId}",
-                                    "id": "u:d4a495811d57"
-                                  }
-                                ],
-                                "id": "u:5d4e7e3f6ecc"
-                              },
-                              {
-                                "title": "相关",
-                                "body": [
-                                  {
-                                    "type": "steedos-object-related-lists",
-                                    "label": "相关列表",
-                                    "objectApiName": "${objectName}",
-                                    "recordId": "${recordId}",
-                                    "id": "u:3b85b7b7a7f6"
-                                  }
-                                ],
-                                "id": "u:1a0326aeec2b"
-                              }
-                            ],
-                            "id": "u:a649e4094a12"
                           }
                         ],
                         "regions": [
