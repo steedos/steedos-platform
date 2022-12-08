@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-06-05 22:05:29
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-08 18:26:51
+ * @Description: 
+ */
 import { getFromContainer } from "../container";
 import { ODataManager } from "./ODataManager";
 import { getSteedosSchema } from "@steedos/objectql";
@@ -65,8 +72,8 @@ export async function deleteObjectData(req, res) {
       return await oDataExpressMiddleware.deleteObjectData(req, res);
    }
 }
-export async function excuteObjectMethod(req, res) {
-   return await meteorODataExpressMiddleware.excuteObjectMethod(req, res);
+export async function excuteObjectMethod(req, res, next) {
+   return await meteorODataExpressMiddleware.excuteObjectMethod(req, res, next);
 }
 
 async function _isMeteorDriver(req) {

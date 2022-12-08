@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 14:06:31
+ * @LastEditTime: 2022-12-08 18:09:14
  * @Description: 
  */
 "use strict";
@@ -270,11 +270,12 @@ module.exports = {
     listenTo: 'space_users',
 
     beforeInsert: async function () {
-        const { doc, userId } = this
+        const { doc } = this
+        const userId = this.userId || doc.created_by
         const broker = getSteedosSchema().broker
         const userObj = getObject('users')
         const orgObj = getObject('organizations')
-        var creator, email, id, options, organization, user;
+        var creator, email, id, options, organization;
         if (doc.email) {
             doc.email = doc.email.toLowerCase().trim();
         }

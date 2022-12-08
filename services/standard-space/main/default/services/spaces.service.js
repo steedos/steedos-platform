@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 18:05:46
+ * @LastEditTime: 2022-12-08 18:35:55
  * @Description: 
  */
 "use strict";
@@ -33,7 +33,7 @@ module.exports = {
      */
     actions: {
         /**
-         * @api {post} /service/api/spaces/register_tenant 注册工作区
+         * @api {post} /api/v4/spaces/register/tenant 注册工作区
          * @apiName register_tenant
          * @apiGroup spaces.service.js
          * @apiParam {String} name 工作区名称
@@ -42,13 +42,13 @@ module.exports = {
         register_tenant: {
             rest: {
                 method: "POST",
-                path: "/register_tenant"
+                fullPath: "/api/v4/spaces/register/tenant",
             },
             params: {
                 name: { type: "string" }
             },
             async handler(ctx) {
-                this.broker.logger.info('[service][spaces]===>', '/service/api/spaces/register_tenant', ctx.params.name)
+                this.broker.logger.info('[service][spaces]===>', '/api/v4/spaces/register/tenant', ctx.params.name)
                 return await this.register_tenant(ctx.params.name, ctx.meta.user)
             }
         },
