@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 21:16:13
+ * @LastEditTime: 2022-12-08 14:06:31
  * @Description: 
  */
 "use strict";
@@ -215,6 +215,55 @@ async function encryptFields(doc) {
         }
     }
 
+}
+
+async function vaildateUserUsedByOther(doc) {
+    const flowPositionObj = getObject('flow_positions');
+    const flowRoleObj = getObject('flow_roles');
+    const flowObj = getObject('flows');
+    var flowNames, roleNames;
+    roleNames = [];
+    const flowPostions = await flowPositionObj.find({
+        filters: [
+            ['space', '=', doc.space],
+            ['users', '=', doc.user]
+        ],
+        fields: ['users', 'role']
+    })
+    for (const p of flowPostions) {
+        var role;
+        if (p.users.includes(doc.user)) {
+            role = await flowRoleObj.findOne(p.role, { fields: ['name'] });
+            if (role) {
+                roleNames.push(role.name);
+            }
+        }
+    }
+    if (!_.isEmpty(roleNames)) {
+        throw new Error("space_users_error_roles_used", {
+            names: roleNames.join(',')
+        });
+    }
+    flowNames = [];
+    const flows = await flowObj.find({
+        filters: [
+            ['space', '=', doc.space]
+        ],
+        fields: ['name', 'current.steps']
+    })
+    for (const f of flows) {
+        for (const s of f.current.steps) {
+            if (s.deal_type === 'specifyUser' && s.approver_users.includes(doc.user)) {
+                flowNames.push(f.name);
+            }
+        }
+    }
+
+    if (!_.isEmpty(flowNames)) {
+        throw new Error("space_users_error_flows_used", {
+            names: _.uniq(flowNames).join(',')
+        });
+    }
 }
 
 module.exports = {
@@ -443,10 +492,15 @@ module.exports = {
             delete suDoc.password;
             await userObj.update(suDoc.user, updateObj)
         }
+
+        if (doc.user_accepted !== void 0 && !doc.user_accepted) {
+            // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+            await vaildateUserUsedByOther(suDoc);
+        }
     },
 
     beforeDelete: async function () {
-
+        throw new Error("space_users_error_can_not_remove");
     },
 
     afterInsert: async function () {
@@ -521,7 +575,7 @@ module.exports = {
                 }, locale);
                 return MailQueue.send({
                     to: user.email,
-                    from: user.name + ' on ' + Meteor.settings.email.from,
+                    from: user.name + ' on ' + settings.email.from,
                     subject: subject,
                     html: content
                 });

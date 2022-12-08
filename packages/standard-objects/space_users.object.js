@@ -1,8 +1,8 @@
 // const spaceUserCore = require('./space_users.core')
 const core = require('@steedos/core');
 // const validator = require("validator");
-const objectql = require('@steedos/objectql');
-const Future = require('fibers/future');
+// const objectql = require('@steedos/objectql');
+// const Future = require('fibers/future');
 
 // const password = require('./util/password')
 
@@ -733,75 +733,75 @@ Meteor.startup(function () {
 
 });
 
-// steedos-workflow包中相关脚本迁移过来
-Meteor.startup(function () {
-    if (Meteor.isServer && db.space_users) {
-        db.space_users.vaildateUserUsedByOther = function (doc) {
-            var flowNames, roleNames;
-            roleNames = [];
-            _.each(db.flow_positions.find({
-                space: doc.space,
-                users: doc.user
-            }, {
-                    fields: {
-                        users: 1,
-                        role: 1
-                    }
-                }).fetch(), function (p) {
-                    var role;
-                    if (p.users.includes(doc.user)) {
-                        role = db.flow_roles.findOne({
-                            _id: p.role
-                        }, {
-                                fields: {
-                                    name: 1
-                                }
-                            });
-                        if (role) {
-                            return roleNames.push(role.name);
-                        }
-                    }
-                });
-            if (!_.isEmpty(roleNames)) {
-                throw new Meteor.Error(400, "space_users_error_roles_used", {
-                    names: roleNames.join(',')
-                });
-            }
-            flowNames = [];
-            _.each(db.flows.find({
-                space: doc.space
-            }, {
-                    fields: {
-                        name: 1,
-                        'current.steps': 1
-                    }
-                }).fetch(), function (f) {
-                    return _.each(f.current.steps, function (s) {
-                        if (s.deal_type === 'specifyUser' && s.approver_users.includes(doc.user)) {
-                            return flowNames.push(f.name);
-                        }
-                    });
-                });
-            if (!_.isEmpty(flowNames)) {
-                throw new Meteor.Error(400, "space_users_error_flows_used", {
-                    names: _.uniq(flowNames).join(',')
-                });
-            }
-        };
-        db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
-            modifier.$set = modifier.$set || {};
-            if (modifier.$set.user_accepted !== void 0 && !modifier.$set.user_accepted) {
-                // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
-                return db.space_users.vaildateUserUsedByOther(doc);
-            }
-        });
-        return db.space_users.before.remove(function (userId, doc) {
-            // // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
-            // return db.space_users.vaildateUserUsedByOther(doc);
-            throw new Meteor.Error(400, "space_users_error_can_not_remove");
-        });
-    }
-});
+// // steedos-workflow包中相关脚本迁移过来
+// Meteor.startup(function () {
+//     if (Meteor.isServer && db.space_users) {
+        // db.space_users.vaildateUserUsedByOther = function (doc) {
+        //     var flowNames, roleNames;
+        //     roleNames = [];
+        //     _.each(db.flow_positions.find({
+        //         space: doc.space,
+        //         users: doc.user
+        //     }, {
+        //             fields: {
+        //                 users: 1,
+        //                 role: 1
+        //             }
+        //         }).fetch(), function (p) {
+        //             var role;
+        //             if (p.users.includes(doc.user)) {
+        //                 role = db.flow_roles.findOne({
+        //                     _id: p.role
+        //                 }, {
+        //                         fields: {
+        //                             name: 1
+        //                         }
+        //                     });
+        //                 if (role) {
+        //                     return roleNames.push(role.name);
+        //                 }
+        //             }
+        //         });
+        //     if (!_.isEmpty(roleNames)) {
+        //         throw new Meteor.Error(400, "space_users_error_roles_used", {
+        //             names: roleNames.join(',')
+        //         });
+        //     }
+        //     flowNames = [];
+        //     _.each(db.flows.find({
+        //         space: doc.space
+        //     }, {
+        //             fields: {
+        //                 name: 1,
+        //                 'current.steps': 1
+        //             }
+        //         }).fetch(), function (f) {
+        //             return _.each(f.current.steps, function (s) {
+        //                 if (s.deal_type === 'specifyUser' && s.approver_users.includes(doc.user)) {
+        //                     return flowNames.push(f.name);
+        //                 }
+        //             });
+        //         });
+        //     if (!_.isEmpty(flowNames)) {
+        //         throw new Meteor.Error(400, "space_users_error_flows_used", {
+        //             names: _.uniq(flowNames).join(',')
+        //         });
+        //     }
+        // };
+        // db.space_users.before.update(function (userId, doc, fieldNames, modifier, options) {
+        //     modifier.$set = modifier.$set || {};
+        //     if (modifier.$set.user_accepted !== void 0 && !modifier.$set.user_accepted) {
+        //         // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+        //         return db.space_users.vaildateUserUsedByOther(doc);
+        //     }
+        // });
+        // return db.space_users.before.remove(function (userId, doc) {
+        //     // // 禁用、从工作区移除用户时，检查用户是否被指定为角色成员或者步骤指定处理人 #1288
+        //     // return db.space_users.vaildateUserUsedByOther(doc);
+        //     throw new Meteor.Error(400, "space_users_error_can_not_remove");
+        // });
+//     }
+// });
 /* 
 let actions = {
     import: {
