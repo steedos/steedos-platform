@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-06-12 19:08:48
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-08 16:19:52
+ * @Description: 
+ */
 module.exports = {
     updateOrgs: function (object_name, record_id) {
         if (!this.record.organization) {
@@ -10,11 +17,13 @@ module.exports = {
             var userSession = Creator.USER_CONTEXT;
             var spaceId = userSession.spaceId;
             var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
-            var url = "/api/v4/company/" + record_id + "/updateOrgs";
+            var url = "/service/api/company/updateOrgs";
             url = Steedos.absoluteUrl(url);
             try {
                 var authorization = "Bearer " + spaceId + "," + authToken;
-                var fetchParams = {};
+                var fetchParams = {
+                    companyId: record_id
+                };
                 var headers = [{
                     name: 'Content-Type',
                     value: 'application/json'
@@ -25,7 +34,7 @@ module.exports = {
                 window.$.ajax({
                     type: "POST",
                     url: url,
-                    data: fetchParams,
+                    data: JSON.stringify(fetchParams),
                     dataType: "json",
                     contentType: 'application/json',
                     beforeSend: function (XHR) {

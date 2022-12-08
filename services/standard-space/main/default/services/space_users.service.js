@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 18:08:21
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 11:50:37
+ * @LastEditTime: 2022-12-08 15:39:52
  * @Description: 
  */
 
@@ -468,7 +468,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        this.broker.logger.info('[service][organizations]===>', 'started')
+        this.broker.logger.info('[service][space_users]===>', 'started')
     },
 
     /**
