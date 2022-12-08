@@ -5,8 +5,10 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Steedos.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/disable"),
-      data: JSON.stringify({}),
+      url: Steedos.absoluteUrl("/service/api/space_users/disable"),
+      data: JSON.stringify({
+        suId: record_id
+      }),
       dataType: "json",
       contentType: 'application/json',
       beforeSend: function (XHR) {
@@ -90,8 +92,10 @@ module.exports = {
     var authorization = "Bearer " + userSession.spaceId + "," + userSession.user.authToken;
     $.ajax({
       type: "POST",
-      url: Steedos.absoluteUrl("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/enable"),
-      data: JSON.stringify({}),
+      url: Steedos.absoluteUrl("/service/api/space_users/enable"),
+      data: JSON.stringify({
+        suId: record_id
+      }),
       dataType: "json",
       contentType: 'application/json',
       beforeSend: function (XHR) {
@@ -173,7 +177,9 @@ module.exports = {
     }, function (confirm) {
       if (confirm) {
         var userSession = Creator.USER_CONTEXT;
-        var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/lockout", {type: 'post', async: false, data: JSON.stringify({})});
+        var result = Steedos.authRequest("/service/api/space_users/lockout", {type: 'post', async: false, data: JSON.stringify({
+          suId: record_id
+        })});
         if(result.error){
           // 报错信息重复
           // toastr.error(t("space_users_method_lockout_error", t(result.error.reason)));
@@ -207,7 +213,9 @@ module.exports = {
 
     if (record){
       var userSession = Creator.USER_CONTEXT;
-      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
+      var result = Steedos.authRequest("/service/api/space_users/is_lockout", {type: 'post', async: false, data: JSON.stringify({
+        suId: record_id
+      })});
       if(result.error){
         toastr.error(result.error.reason);
       }else{
@@ -227,7 +235,9 @@ module.exports = {
     }, function (confirm) {
       if (confirm) {
         var userSession = Creator.USER_CONTEXT;
-        var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/unlock", {type: 'post', async: false, data: JSON.stringify({})});
+        var result = Steedos.authRequest("/service/api/space_users/unlock", {type: 'post', async: false, data: JSON.stringify({
+          suId: record_id
+        })});
         if(result.error){
           // 报错信息重复
           // toastr.error(t("space_users_method_unlock_error", t(result.error.reason)));
@@ -261,7 +271,9 @@ module.exports = {
     
     if (record){
       var userSession = Creator.USER_CONTEXT;
-      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_lockout", {type: 'get', async: false, data: JSON.stringify({})});
+      var result = Steedos.authRequest("/service/api/space_users/is_lockout", {type: 'post', async: false, data: JSON.stringify({
+        suId: record_id
+      })});
       if(result.error){
         toastr.error(result.error.reason);
       }else{
@@ -287,7 +299,9 @@ module.exports = {
     var currentSpaceUser = db.space_users.findOne({user: Creator.USER_CONTEXT.userId});
     if (!isAdmin || (currentSpaceUser._id == this.record._id)) {
       var isPasswordEmpty = false;
-      var result = Steedos.authRequest("/api/odata/v4/" + userSession.spaceId + "/" + object_name + "/" + record_id + "/is_password_empty", { type: 'get', async: false });
+      var result = Steedos.authRequest("/service/api/space_users/is_password_empty", { type: 'post', async: false, data: JSON.stringify({
+        suId: record_id
+      })});
       if (!result.error) {
         isPasswordEmpty = result.empty;
       }

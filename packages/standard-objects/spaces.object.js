@@ -485,3 +485,129 @@ if (Meteor.isServer) {
         };
     });
 }
+
+//仅考虑mongo-db数据源的对象数据
+// function initSpaceData(spaceId, userId){
+//     let spacesCollection = Creator.getCollection("spaces")
+//     let datas = objectql.getAllObjectData();
+//     let now = new Date();
+//     let insertMap = {};
+//     try {
+//         for(let objectName in datas){
+//             let records = datas[objectName];
+//             if(_.indexOf(["spaces"], objectName) < 0){
+//                 for(let record of records){
+//                     if(Creator.getCollection(objectName)){
+//                         let docId = Creator.getCollection(objectName).direct.insert(Object.assign({}, record, {_id: record._id || spacesCollection._makeNewID(), space: spaceId, owner: userId, created: now, modified: now, created_by: userId, modified_by: userId}));
+//                         if(insertMap[objectName]){
+//                             insertMap[objectName].push(docId)
+//                         }else{
+//                             insertMap[objectName] = []
+//                             insertMap[objectName].push(docId)
+//                         }
+//                         // await objectql.getObject(objectName).directInsert(Object.assign({}, record, {_id: spacesCollection._makeNewID(), space: spaceId}));
+//                     }
+//                 }
+//             }
+//         }
+//     } catch (error) {
+//         _.each(insertMap, function(_ids,objectName){
+//             Creator.getCollection(objectName).direct.remove({_id: {$in: _ids}})
+//         })
+//         throw new Error("初始化数据失败");
+//     }
+// }
+
+// Creator.Objects['spaces'].methods = {
+//     "tenant": function (req, res) {
+//         return Fiber(function () {
+//             const config = objectql.getSteedosConfig();
+//             let tenant = {
+//                 name: "Steedos",
+//                 logo_url: undefined,
+//                 background_url: undefined,
+//                 enable_create_tenant: true,
+//                 enable_register: true,
+//                 enable_forget_password: true
+//             }
+    
+//             if (config.tenant) {
+//                 _.assignIn(tenant, config.tenant)
+//             }
+
+//             if(!tenant.enable_create_tenant){
+//                 return res.status(500).send({
+//                     "message": "禁止注册企业",
+//                     "success": false
+//                 });
+//             }
+
+//             let error = '';
+//             try {
+//                 let userSession = req.user;
+//                 let spaceName = req.body.name;
+//                 if(!spaceName){
+//                     throw new Error("名称不能为空")
+//                 }
+                
+//                 if(userSession){
+//                     let userId = userSession.userId
+//                     let spaceId = db.spaces._makeNewID()
+//                     let spaceDoc = {
+//                         _id: spaceId,
+//                         space: spaceId,
+//                         name: spaceName, 
+//                         owner: userId
+//                     }
+//                     // if(!tenant.saas){
+//                     //     initSpaceData(spaceId, userId);
+//                     // }
+//                     let newSpaceId = db.spaces.insert(spaceDoc);
+//                     let newSpace = db.spaces.findOne(newSpaceId);
+//                     return res.send(newSpace);
+//                 }else{
+//                     if(!userSession){
+//                         return res.status(401).send({
+//                             "success": false
+//                         });
+//                     }
+//                 }
+//             } catch (err) {
+//                 error = err.message
+//             }
+//             return res.status(500).send({
+//                 "message": error,
+//                 "success": false
+//             });
+//         }).run();
+//     },
+//     "clean_license": function(req, res){
+//         return Fiber(function () {
+//             let userSession = req.user;
+//             let { _id: spaceId } = req.params;
+//             let spaceUser = db.space_users.findOne({space: spaceId, user: userSession.userId}, {fields: {_id: 1}})
+//             //Creator.isSpaceAdmin(spaceId, userSession.userId)
+//             if(spaceUser){
+//                 steedosLicense.cleanLicenseCache(spaceId);
+//             }
+//             return res.send({});
+//         }).run();
+//     }
+//     // "initSpaceData": function(req, res){
+//     //     return Fiber(function () {
+            
+//     //         let userSession = req.user;
+//     //         let { _id: spaceId } = req.params
+    
+//     //         if(!Creator.isSpaceAdmin(spaceId, userSession.userId)){
+//     //             return res.status(401).send({
+//     //                 "success": false
+//     //             });
+//     //         }
+//     //         initSpaceData(spaceId, userSession.userId);
+//     //         return res.send({
+//     //             "success": true
+//     //         });
+//     //     }).run();
+//     // }
+// }

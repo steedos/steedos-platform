@@ -1071,348 +1071,348 @@ let actions = {
 Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_users.actions, actions);
  */
 
-let doDisable = async function(spaceUser){
-    return Future.task(() => {
-        try {
-            let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1, steedos_id: 1}});
-            if(!result){
-                console.error("The users directUpdate return nothing.");
-                return false;
-            }
+// let doDisable = async function(spaceUser){
+//     return Future.task(() => {
+//         try {
+//             let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1, steedos_id: 1}});
+//             if(!result){
+//                 console.error("The users directUpdate return nothing.");
+//                 return false;
+//             }
             
-            result = db.space_users.direct.update({_id: spaceUser._id}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1}});
-            return result;
-        } catch (error) {
-            this.logger.error(error);
-            return false;
-        }
-    }).promise();
-}
+//             result = db.space_users.direct.update({_id: spaceUser._id}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1}});
+//             return result;
+//         } catch (error) {
+//             this.logger.error(error);
+//             return false;
+//         }
+//     }).promise();
+// }
 
-let methods = {
-    disable: async function (req, res) {
-        try {
-            const params = req.params;
-            const user = req.user;
+// let methods = {
+    // disable: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const user = req.user;
 
-            const steedosSchema = objectql.getSteedosSchema();
-            const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
 
-            const companyIds = spaceUser.company_ids;
+    //         const companyIds = spaceUser.company_ids;
             
-            let isAdmin = user.is_space_admin;
-            if(!isAdmin && companyIds && companyIds.length){
-                const query = {
-                    fields: ['admins'],
-                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
-                }
-                const companys = await objectql.getObject("company").find(query);
-                isAdmin = _.any(companys, (item)=>{
-                    return item.admins && item.admins.indexOf(user.userId) > -1
-                })
-            }
+    //         let isAdmin = user.is_space_admin;
+    //         if(!isAdmin && companyIds && companyIds.length){
+    //             const query = {
+    //                 fields: ['admins'],
+    //                 filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+    //             }
+    //             const companys = await objectql.getObject("company").find(query);
+    //             isAdmin = _.any(companys, (item)=>{
+    //                 return item.admins && item.admins.indexOf(user.userId) > -1
+    //             })
+    //         }
 
-            if (!isAdmin) {
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_disable_enable_error_only_admin"
-                    }
-                });
-                return;
-            }
-            if (spaceUser.user === user.userId){
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_error_can_not_own"
-                    }
-                });
-                return;
-            }
-            if (!spaceUser.user_accepted) {
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_error_can_not_disable_disabled"
-                    }
-                });
-                return;
-            }
-            let result = await doDisable(spaceUser);
-            if(result){
-                res.status(200).send({ success: true });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "The space_users/users directUpdate return nothing."
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-    enable: async function (req, res) {
-        try {
-            const params = req.params;
-            const user = req.user;
+    //         if (!isAdmin) {
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_disable_enable_error_only_admin"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         if (spaceUser.user === user.userId){
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_error_can_not_own"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         if (!spaceUser.user_accepted) {
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_error_can_not_disable_disabled"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         let result = await doDisable(spaceUser);
+    //         if(result){
+    //             res.status(200).send({ success: true });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "The space_users/users directUpdate return nothing."
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+    // enable: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const user = req.user;
 
-            const steedosSchema = objectql.getSteedosSchema();
-            const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         const spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
 
-            const companyIds = spaceUser.company_ids;
+    //         const companyIds = spaceUser.company_ids;
             
-            let isAdmin = user.is_space_admin;
-            if(!isAdmin && companyIds && companyIds.length){
-                const query = {
-                    fields: ['admins'],
-                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
-                }
-                const companys = await objectql.getObject("company").find(query);
-                isAdmin = _.any(companys, (item)=>{
-                    return item.admins && item.admins.indexOf(user.userId) > -1
-                })
-            }
+    //         let isAdmin = user.is_space_admin;
+    //         if(!isAdmin && companyIds && companyIds.length){
+    //             const query = {
+    //                 fields: ['admins'],
+    //                 filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+    //             }
+    //             const companys = await objectql.getObject("company").find(query);
+    //             isAdmin = _.any(companys, (item)=>{
+    //                 return item.admins && item.admins.indexOf(user.userId) > -1
+    //             })
+    //         }
 
-            if(!isAdmin){
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_disable_enable_error_only_admin"
-                    }
-                });
-                return;
-            }
-            if (spaceUser.user === user.userId) {
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_error_can_not_own"
-                    }
-                });
-                return;
-            }
-            if (spaceUser.user_accepted) {
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_error_can_not_enable_enabled"
-                    }
-                });
-                return;
-            }
-            let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true, profile: spaceUser.profile });
-            if(result){
-                res.status(200).send({ success: true });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "The object updateOne return nothing."
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-    is_lockout: async function (req, res) {
-        try {
-            const params = req.params;
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
-            let result = await steedosSchema.getObject('users').findOne(spaceUser.user)
-            if(result){
-                res.status(200).send({ lockout: result.lockout });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "user not find."
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-    lockout: async function (req, res) {
-        try {
-            const params = req.params;
-            const user = req.user;
+    //         if(!isAdmin){
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_disable_enable_error_only_admin"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         if (spaceUser.user === user.userId) {
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_error_can_not_own"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         if (spaceUser.user_accepted) {
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_error_can_not_enable_enabled"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         let result = await steedosSchema.getObject('space_users').updateOne(params._id, { user_accepted: true, profile: spaceUser.profile });
+    //         if(result){
+    //             res.status(200).send({ success: true });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "The object updateOne return nothing."
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+    // is_lockout: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user"] });
+    //         let result = await steedosSchema.getObject('users').findOne(spaceUser.user)
+    //         if(result){
+    //             res.status(200).send({ lockout: result.lockout });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "user not find."
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+    // lockout: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const user = req.user;
 
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
 
-            const companyIds = spaceUser.company_ids;
+    //         const companyIds = spaceUser.company_ids;
             
-            let isAdmin = user.is_space_admin;
-            if(!isAdmin && companyIds && companyIds.length){
-                const query = {
-                    fields: ['admins'],
-                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
-                }
-                const companys = await objectql.getObject("company").find(query);
-                isAdmin = _.any(companys, (item)=>{
-                    return item.admins && item.admins.indexOf(user.userId) > -1
-                })
-            }
+    //         let isAdmin = user.is_space_admin;
+    //         if(!isAdmin && companyIds && companyIds.length){
+    //             const query = {
+    //                 fields: ['admins'],
+    //                 filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+    //             }
+    //             const companys = await objectql.getObject("company").find(query);
+    //             isAdmin = _.any(companys, (item)=>{
+    //                 return item.admins && item.admins.indexOf(user.userId) > -1
+    //             })
+    //         }
 
-            if(!isAdmin){
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_unlock_lockout_error_only_admin"
-                    }
-                });
-                return;
-            }
-            if (spaceUser.user === user.userId) {
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "不能锁定您自己的帐户。"
-                    }
-                });
-                return;
-            }
-            let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: true});
-            if(result){
-                res.status(200).send({ success: true });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "The object updateOne return nothing."
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-    unlock: async function (req, res) {
-        try {
-            const params = req.params;
-            const user = req.user;
+    //         if(!isAdmin){
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_unlock_lockout_error_only_admin"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         if (spaceUser.user === user.userId) {
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "不能锁定您自己的帐户。"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: true});
+    //         if(result){
+    //             res.status(200).send({ success: true });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "The object updateOne return nothing."
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+    // unlock: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const user = req.user;
 
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user_accepted", "user", "profile", "company_ids"]});
 
-            const companyIds = spaceUser.company_ids;
+    //         const companyIds = spaceUser.company_ids;
             
-            let isAdmin = user.is_space_admin;
-            if(!isAdmin && companyIds && companyIds.length){
-                const query = {
-                    fields: ['admins'],
-                    filters: [['_id','=',companyIds],['space','=',user.spaceId]]
-                }
-                const companys = await objectql.getObject("company").find(query);
-                isAdmin = _.any(companys, (item)=>{
-                    return item.admins && item.admins.indexOf(user.userId) > -1
-                })
-            }
+    //         let isAdmin = user.is_space_admin;
+    //         if(!isAdmin && companyIds && companyIds.length){
+    //             const query = {
+    //                 fields: ['admins'],
+    //                 filters: [['_id','=',companyIds],['space','=',user.spaceId]]
+    //             }
+    //             const companys = await objectql.getObject("company").find(query);
+    //             isAdmin = _.any(companys, (item)=>{
+    //                 return item.admins && item.admins.indexOf(user.userId) > -1
+    //             })
+    //         }
 
-            if(!isAdmin){
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "space_users_method_unlock_lockout_error_only_admin"
-                    }
-                });
-                return;
-            }
-            let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: false, login_failed_number: 0, login_failed_lockout_time: undefined});
-            if(result){
-                res.status(200).send({ success: true });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "The object updateOne return nothing."
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-    is_password_empty: async function (req, res) {
-        try {
-            const params = req.params;
-            const steedosSchema = objectql.getSteedosSchema();
-            let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user"] });
-            const result = await steedosSchema.getObject('users').findOne(spaceUser.user, { fields:["services.password"] });
-            if(result){
-                res.status(200).send({ empty: !!!(result.services && result.services.password && (result.services.password.bcrypt || result.services.password.bcrypts)) });
-            }
-            else{
-                res.status(400).send({
-                    success: false,
-                    error: {
-                        reason: "未找到用户"
-                    }
-                });
-            }
-        } catch (error) {
-            res.status(400).send({
-                success: false,
-                error: {
-                    reason: error.reason,
-                    message: error.message,
-                    details: error.details,
-                    stack: error.stack
-                }
-            });
-        }
-    },
-};
+    //         if(!isAdmin){
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "space_users_method_unlock_lockout_error_only_admin"
+    //                 }
+    //             });
+    //             return;
+    //         }
+    //         let result = await steedosSchema.getObject('users').updateOne(spaceUser.user, {lockout: false, login_failed_number: 0, login_failed_lockout_time: undefined});
+    //         if(result){
+    //             res.status(200).send({ success: true });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "The object updateOne return nothing."
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+    // is_password_empty: async function (req, res) {
+    //     try {
+    //         const params = req.params;
+    //         const steedosSchema = objectql.getSteedosSchema();
+    //         let spaceUser = await steedosSchema.getObject('space_users').findOne(params._id, { fields: ["user"] });
+    //         const result = await steedosSchema.getObject('users').findOne(spaceUser.user, { fields:["services.password"] });
+    //         if(result){
+    //             res.status(200).send({ empty: !!!(result.services && result.services.password && (result.services.password.bcrypt || result.services.password.bcrypts)) });
+    //         }
+    //         else{
+    //             res.status(400).send({
+    //                 success: false,
+    //                 error: {
+    //                     reason: "未找到用户"
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         res.status(400).send({
+    //             success: false,
+    //             error: {
+    //                 reason: error.reason,
+    //                 message: error.message,
+    //                 details: error.details,
+    //                 stack: error.stack
+    //             }
+    //         });
+    //     }
+    // },
+// };
 
-Creator.Objects.space_users.methods = Object.assign({}, Creator.Objects.space_users.methods, methods);
+// Creator.Objects.space_users.methods = Object.assign({}, Creator.Objects.space_users.methods, methods);

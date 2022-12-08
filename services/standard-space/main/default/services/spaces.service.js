@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 14:55:21
+ * @LastEditTime: 2022-12-08 09:35:31
  * @Description: 
  */
 "use strict";
@@ -42,7 +42,7 @@ module.exports = {
         register_tenant: {
             rest: {
                 method: "POST",
-                path: "/register/tenant"
+                path: "/register_tenant"
             },
             params: {
                 name: { type: "string" }
