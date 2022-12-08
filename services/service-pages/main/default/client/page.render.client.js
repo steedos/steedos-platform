@@ -91,6 +91,7 @@
                             "type": "steedos-record-detail",
                             "objectApiName": "${objectName}",
                             "recordId": "${recordId}",
+                            appId: appId,
                             "id": "u:48d2c28eb755",
                             onEvent: {
                                 "recordLoaded": {
@@ -190,31 +191,27 @@
                     },
                     "data": {
                         "&": "$$",
-                        "$breadcrumb": [] //先给一个空数组, 防止breadcrumb组件报错
+                        "$breadcrumb": [], //先给一个空数组, 防止breadcrumb组件报错
                       },
                     body: [
-
                         {
-                            "type": "page",
-                            "body": {
-                              "type": "panel",
-                              "title": {
-                                "type": "breadcrumb",
-                                "source": "${$breadcrumb}"
-                              },
-                              "body": [
-                                {
-                                    type: 'steedos-object-related-listview',
-                                    objectApiName: masterObject.name,
-                                    recordId: FlowRouter.getParam("record_id"),
-                                    relatedObjectApiName: objectApiName,
-                                    foreign_key: relatedKey,
-                                    relatedKey: relatedKey,
-                                    hiddenOn: "!!!this.$loaded"
-                                    // top: 5
-                                }
-                              ]
-                            }
+                            "type": "panel",
+                            "title": {
+                              "type": "breadcrumb",
+                              "source": "${$breadcrumb}"
+                            },
+                            "body": [
+                              {
+                                  type: 'steedos-object-related-listview',
+                                  objectApiName: masterObject.name,
+                                  recordId: FlowRouter.getParam("record_id"),
+                                  relatedObjectApiName: objectApiName,
+                                  foreign_key: relatedKey,
+                                  relatedKey: relatedKey,
+                                  hiddenOn: "!!!this.$loaded"
+                                  // top: 5
+                              }
+                            ]
                           }
                         ,
                         // {
@@ -289,6 +286,9 @@
 
             const defData = lodash.defaultsDeep({}, data , {data: data} , {
                 data: {
+                    app_id: data.appId,
+                    object_name: data.objectName,
+                    record_id: data.recordId,
                     context: {
                         rootUrl: __meteor_runtime_config__.ROOT_URL,
                         tenantId: Creator.USER_CONTEXT.spaceId,
