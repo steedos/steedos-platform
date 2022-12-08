@@ -21160,9 +21160,9 @@ tinycolor2@^1.4.1:
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
 
 tinymce@^6.1.2:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.2.0.tgz#473aa38af03bf772916f3e1730e6b8d3471203f0"
-  integrity sha512-zLjbFrg0hbtJ6PxmZUjQY6zyIOM/mLrWGTvhBec7XwYwoW1E0xXMQzy2tgMTh3OvJpsclgqf2ZMjmwcv4Cludw==
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.3.1.tgz#cc5cf2b9f702d429cf5d1d21ed62245d768bfc4f"
+  integrity sha512-+oCwXuTxAdJXVJ0130OxQz0JDNsqg3deuzgeUo8X5Vb27EzCJgXwO5eWvCxvkxpQo4oiHMVlM4tUIpTUHufHGQ==
 
 title-case@^2.1.0:
   version "2.1.1"
