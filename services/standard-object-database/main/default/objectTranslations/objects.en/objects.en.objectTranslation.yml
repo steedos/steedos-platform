@@ -206,6 +206,8 @@ listviews:
   deleted:
     label: Deleted
 actions:
+  schemaBuilder:
+    label: Schema Builder
   show_object:
     label: Preview
   copy_odata:

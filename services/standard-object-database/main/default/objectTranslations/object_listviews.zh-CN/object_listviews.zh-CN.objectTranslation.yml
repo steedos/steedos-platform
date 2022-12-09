@@ -147,11 +147,11 @@ fields:
   sort_no:
     label: 排序号
   enable_amis_schema: 
-    label: 启用
+    label: 使用 amis自定义列表
   amis_schema: 
     label: Amis Schema
 groups:
-  custom: 自定义
+  advanced: 高级
 listviews:
   all:
     label: 全部

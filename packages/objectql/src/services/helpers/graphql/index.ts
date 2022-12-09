@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-07 20:55:13
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-06 10:31:30
  * @Description: 
  */
 
@@ -17,7 +17,7 @@ import { getSteedosSchema, getUserLocale } from '../../..';
 import { getQueryFields } from "./getQueryFields";
 import { getPrimaryFieldType } from "./getPrimaryFieldType";
 
-import { BASIC_TYPE_MAPPING, EXPAND_SUFFIX, DISPLAY_PREFIX, RELATED_PREFIX, GRAPHQL_ACTION_PREFIX, UI_PREFIX } from "./consts";
+import { BASIC_TYPE_MAPPING, EXPAND_SUFFIX, DISPLAY_PREFIX, RELATED_PREFIX, GRAPHQL_ACTION_PREFIX, UI_PREFIX, PERMISSIONS_PREFIX } from "./consts";
 
 export function generateActionGraphqlProp(actionName: string, objectConfig: SteedosObjectTypeConfig) {
     let gplObj: any = {};
@@ -75,6 +75,26 @@ export function generateActionGraphqlProp(actionName: string, objectConfig: Stee
     // console.log(gplObj);
     return gplObj;
 }
+
+const callObjectServiceAction = async function(actionName, userSession, data?){
+    const broker = getSteedosSchema().broker;
+    return broker.call(actionName, data, { meta: { user: userSession}})
+}
+
+const formatFileSize = function(fileSize) {
+    var rev, unit;
+    rev = fileSize / 1024.00;
+    unit = 'KB';
+    if (rev > 1024.00) {
+      rev = rev / 1024.00;
+      unit = 'MB';
+    }
+    if (rev > 1024.00) {
+      rev = rev / 1024.00;
+      unit = 'GB';
+    }
+    return rev.toFixed(2) + unit;
+  };
 
 export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let objectName = objectConfig.name;
@@ -191,6 +211,27 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
     let _ui_type = _getUIType(_ui_type_name, fields);
     type = gql`
         ${_ui_type}
+        ${type}
+    `;
+
+    // _permissions
+    let _permissions_type_name = `${PERMISSIONS_PREFIX}_${objectName}`;
+    type += `${PERMISSIONS_PREFIX}: ${_permissions_type_name} `;
+    resolvers[objectName][PERMISSIONS_PREFIX] = {
+        action: `${getObjectServiceName(
+            objectName
+        )}.${GRAPHQL_ACTION_PREFIX}${PERMISSIONS_PREFIX}`,
+        rootParams: {
+            _id: "_id"
+        },
+        params: {
+            '__objectName': objectName
+        },
+    };
+    // define _permissions_type
+    let _permissions_type = _getPermissionsType(_permissions_type_name, fields);
+    type = gql`
+        ${_permissions_type}
         ${type}
     `;
 
@@ -475,6 +516,17 @@ export function getGraphqlActions(objectConfig: SteedosObjectTypeConfig) {
             let result = await translateToUI(__objectName, params, userSession, selectFieldNames);
 
             return result;
+        },
+    };
+
+    actions[`${GRAPHQL_ACTION_PREFIX}${PERMISSIONS_PREFIX}`] = {
+        handler: async function (ctx) {
+            let params = ctx.params;
+            let { __objectName } = params;
+            let userSession = ctx.meta.user;
+            return await callObjectServiceAction(`@${__objectName}.getRecordPermissionsById`, userSession, {
+                recordId: params._id
+            });;
         },
     };
 
@@ -988,6 +1040,8 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                         }
                     }
                     displayObj[name] = fileValue;
+                }else if(fType == "filesize"){
+                    displayObj[name] = formatFileSize(doc[name]); 
                 } else {
                     displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
                 }
@@ -1047,6 +1101,35 @@ function _getUIType(typeName, fields) {
     });
     type += "}";
     return type;
+}
+
+function _getPermissionsType(typeName, fields) {
+    return `
+        type ${typeName} {
+            allowCreate: Boolean
+            allowCreateFiles: Boolean
+            allowDelete: Boolean
+            allowDeleteFiles: Boolean
+            allowEdit: Boolean
+            allowEditFiles: Boolean
+            allowRead: Boolean
+            allowReadFiles: Boolean
+            disabled_actions: [String]
+            disabled_list_views: [String]
+            field_permissions: JSON
+            modifyAllFiles: Boolean
+            modifyAllRecords: Boolean
+            modifyAssignCompanysRecords: [String]
+            modifyCompanyRecords: Boolean
+            uneditable_fields: [String]
+            unreadable_fields: [String]
+            unrelated_objects: [String]
+            viewAllFiles: Boolean
+            viewAllRecords: Boolean
+            viewAssignCompanysRecords: [String]
+            viewCompanyRecords: Boolean
+        }
+    `
 }
 
 // 获取object元数据

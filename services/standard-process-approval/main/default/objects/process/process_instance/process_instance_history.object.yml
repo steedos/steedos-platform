@@ -9,7 +9,7 @@ fields:
   name:
     type: text
     label: Step Name
-    hidden: true
+    readonly: true
   created_by:
     label: Submitter
     is_wide: true
@@ -24,7 +24,7 @@ fields:
   step_status:
     type: select
     label: Status
-    hidden: true
+    readonly: true
     options:
       - approved
       - fault
@@ -82,8 +82,8 @@ fields:
     hidden: true
     omit: true
   modified:
-    hidden: true
-    omit: true
+    readonly: true
+    # omit: true
   modified_by:
     hidden: true
     omit: true
