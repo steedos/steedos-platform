@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-05 10:00:43
+ * @LastEditTime: 2022-12-09 13:40:48
  * @Description: 
  */
 "use strict";
@@ -23,14 +23,14 @@ module.exports = {
 		packageInfo: {
 			path: __dirname,
 			name: packageName,
-			isPackage: false,
+			isPackage: false
 		}
 	},
 
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['~packages-standard-objects'],
 
 	/**
 	 * Actions

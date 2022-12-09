@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-06 15:05:11
+ * @LastEditTime: 2022-12-09 13:24:35
  * @Description: 
  */
 "use strict";
@@ -30,7 +30,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: [],
+    dependencies: ['~packages-standard-objects', '~packages-@steedos/standard-space'],
 
     /**
      * Actions

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 19:31:30
+ * @LastEditTime: 2022-12-09 13:59:40
  * @Description: 
  */
 "use strict";
@@ -150,7 +150,7 @@ async function updatevaildate(suDoc, doc) {
     }
 
     if (doc && doc.mobile) {
-        const steedosConfig = objectql.getSteedosConfig();
+        const steedosConfig = getSteedosConfig();
         const config = steedosConfig.accounts || {};
         if (!checkMobile(doc.mobile, config)) {
             throw new Error("mobile_format_error");
@@ -176,7 +176,7 @@ async function updatevaildate(suDoc, doc) {
         throw new Error("space_users_error_email_required");
     }
     if (((ref6 = doc) != null ? ref6.email : void 0) && doc.email !== suDoc.email) {
-        repeatEmailUser = (await userObj.find({
+        const repeatEmailUser = (await userObj.find({
             filters: [
                 ['email', '=', doc.email]
             ]
@@ -186,7 +186,7 @@ async function updatevaildate(suDoc, doc) {
         }
     }
     if (((ref8 = doc) != null ? ref8.mobile : void 0) && doc.mobile !== suDoc.mobile) {
-        mobileUser = (await userObj.find({
+        const mobileUser = (await userObj.find({
             filters: [
                 ['mobile', '=', doc.mobile]
             ]
@@ -330,7 +330,6 @@ module.exports = {
                     doc.name = doc.email.split('@')[0];
                 }
                 // 将用户插入到users表
-                user = {};
                 id = await userObj._makeNewID();
                 options = {
                     name: doc.name,

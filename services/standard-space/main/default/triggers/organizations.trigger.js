@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 15:30:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 14:22:58
+ * @LastEditTime: 2022-12-09 13:48:13
  * @Description: 
  */
 "use strict";
@@ -217,7 +217,7 @@ module.exports = {
         const orgObj = getObject('organizations')
         const suObj = getObject('space_users')
         const broker = getSteedosSchema().broker
-        var parent, rootOrg, sUser, space_users, updateFields;
+        var obj, parent, rootOrg, space_users, updateFields;
         updateFields = {};
         const orgId = doc._id
         obj = await orgObj.findOne(orgId);
