@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 18:09:14
+ * @LastEditTime: 2022-12-08 19:31:30
  * @Description: 
  */
 "use strict";
@@ -552,38 +552,7 @@ module.exports = {
     },
 
     afterDelete: async function () {
-        const { previousDoc, id } = this
-        const broker = getSteedosSchema().broker
-        const orgObj = getObject('organizations')
-        const userObj = getObject('users')
-        const spaceObj = getObject('spaces')
-        var content, locale, space, subject, user;
-        if (previousDoc.organizations) {
-            for (const org of previousDoc.organizations) {
-                await broker.call('organizations.updateUsers', { orgId: org })
-            }
-        }
-
-        try {
-            user = await userObj.findOne(previousDoc.user, { fields: ['email', 'name', 'steedos_id', 'email_verified'] });
-            if (user.email && user.email_verified) {
-                locale = Steedos.locale(previousDoc.user, true);
-                space = await spaceObj.findOne(previousDoc.space, { fields: ['name'] });
-                subject = TAPi18n.__('space_users_remove_mail_subject', {}, locale);
-                content = TAPi18n.__('space_users_remove_mail_content', {
-                    steedos_id: user.steedos_id,
-                    space_name: space != null ? space.name : void 0
-                }, locale);
-                return MailQueue.send({
-                    to: user.email,
-                    from: user.name + ' on ' + settings.email.from,
-                    subject: subject,
-                    html: content
-                });
-            }
-        } catch (error) {
-            console.error(error.stack);
-        }
+        
     },
 
 }
