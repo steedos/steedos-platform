@@ -2,10 +2,10 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-08-22 11:49:00
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-09-28 10:13:09
+ * @LastEditTime: 2022-12-11 14:23:55
  * @Description: 
  */
-import { getObject, computeFormula } from '../index';
+import { getObject, computeFormula, getSteedosSchema } from '../index';
 
 import { WorkflowNotification } from './types/workflow_notification';
 
@@ -23,7 +23,7 @@ export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any
     if (_.isEmpty(ids) || _.isEmpty(recordId)) {
         return;
     }
-    let filters = [['name', 'in', ids],'or', ['_id', 'in', ids]];
+    let filters = [['name', 'in', ids], 'or', ['_id', 'in', ids]];
     let notifications = await getObject("workflow_notifications").find({ filters: filters })
     for (const wn of notifications) {
         await runWorkflowNotifyAction(wn, recordId, userSession);
@@ -84,5 +84,10 @@ export async function runWorkflowNotifyAction(workflowNotification: WorkflowNoti
      * from: userId
      * to: [userId]
      */
-    Creator.addNotifications(message, userId, to);
+    // Creator.addNotifications(message, userId, to);
+    getSteedosSchema().broker.call('notifications.add', {
+        message: message,
+        from: userId,
+        to: to
+    })
 }

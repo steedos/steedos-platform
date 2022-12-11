@@ -801,23 +801,21 @@ export async function importWithExcelFile(file, options) {
     }
 
     //发送通知
-    return Fiber(function() {
-      Creator.addNotifications(
-        {
-          name: `${TAPi18n.__('queue_import_tips', {returnObjects: true}, locale)}: ${file.original.name}`,
-          body: notificationBody,
-          related_to: {
-            o: "queue_import_history",
-            ids: [options.importObjectHistoryId],
-          },
-          related_name: file.original.name,
-          from: options.userSession.userId,
-          space: options.userSession.spaceId,
+    return objectql.getSteedosSchema().broker.call('notifications.add', {
+      message: {
+        name: `${TAPi18n.__('queue_import_tips', {returnObjects: true}, locale)}: ${file.original.name}`,
+        body: notificationBody,
+        related_to: {
+          o: "queue_import_history",
+          ids: [options.importObjectHistoryId],
         },
-        options.userSession.userId,
-        options.userSession.userId
-      );
-    }).run();
+        related_name: file.original.name,
+        from: options.userSession.userId,
+        space: options.userSession.spaceId,
+      },
+      from: options.userSession.userId,
+      to: options.userSession.userId
+    })
   }
 
   importDataAsync(recordDatas);
