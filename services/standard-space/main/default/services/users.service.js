@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 19:23:03
+ * @LastEditTime: 2022-12-11 10:45:05
  * @Description: 
  */
 "use strict";
@@ -44,7 +44,7 @@ module.exports = {
             },
             async handler(ctx) {
                 this.broker.logger.info('[service][users]===>', 'validateUsername', ctx.params)
-                return await this.validateUsername(ctx.params.username, ctx.meta.userId)
+                return await this.validateUsername(ctx.params.username, ctx.params.userId)
             }
         },
     },

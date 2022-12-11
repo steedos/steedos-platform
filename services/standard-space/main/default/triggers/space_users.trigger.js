@@ -2,13 +2,15 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-09 13:59:40
+ * @LastEditTime: 2022-12-11 10:16:40
  * @Description: 
  */
 "use strict";
 // @ts-check
 const { getObject, getSteedosSchema, getSteedosConfig, getDataSource } = require('@steedos/objectql');
 const _ = require("underscore");
+const { t } = require('@steedos/i18n')
+const auth = require("@steedos/auth");
 const validator = require("validator");
 const spaceUserCore = require('./space_users.core')
 const password = require('../util/password')
@@ -458,24 +460,25 @@ module.exports = {
 
             if (newMobile) {
                 // 修改人
-                lang = Steedos.locale(suDoc.user, true);
+                const userSession = await auth.getSessionByUserId(suDoc.user);
+                lang = userSession.locale;
 
                 if (newMobile && (/^1[3456789]\d{9}$/.test(newMobile))) {
                     params = {
                         name: "系统",
-                        number: newMobile ? newMobile : TAPi18n.__('space_users_empty_phone', {}, lang)
+                        number: newMobile ? newMobile : t('space_users_empty_phone', {}, lang)
                     };
                     paramString = JSON.stringify(params);
                     if (suDoc.mobile && suDoc.mobile_verified) {
                         // 发送手机短信给修改前的手机号
-                        SMSQueue.send({
+                        await broker.call('sms.send', {
                             Format: 'JSON',
                             Action: 'SingleSendSms',
                             ParamString: paramString,
                             RecNum: suDoc.mobile,
                             SignName: 'OA系统',
                             TemplateCode: 'SMS_67660108',
-                            msg: TAPi18n.__('sms.chnage_mobile.template', params, lang)
+                            msg: t('sms.chnage_mobile.template', params, lang)
                         });
                     }
                 }
@@ -551,7 +554,7 @@ module.exports = {
     },
 
     afterDelete: async function () {
-        
+
     },
 
 }
