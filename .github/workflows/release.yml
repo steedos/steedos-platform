@@ -127,7 +127,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
       - name: Lerna publish 2.3
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3')}}
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') && steps.version.outputs.is_stable == 'true' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -140,6 +140,20 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
+      - name: Lerna publish 2.3 beta
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') && steps.version.outputs.is_stable != 'true' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag next
+          git add . 
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git push
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Lerna publish 2.4
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') && steps.version.outputs.is_stable == 'true' }}
         run: |
@@ -160,7 +174,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag next
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag 2.4
           git add . 
           git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
           git push
