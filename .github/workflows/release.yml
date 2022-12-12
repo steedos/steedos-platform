@@ -39,19 +39,19 @@ jobs:
         if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.3') && !startsWith(steps.branch-name.outputs.tag, '2.4')  }}
         run: exit 1
 
-      - name: Merge 2.4 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}  # && steps.version.outputs.is_stable == 'true'}}
+      - name: Merge 2.3 -> master
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: 2.4
+          from_branch: 2.3
           target_branch: master
           github_token: ${{ github.token }}
 
-      # checkout branch master(2.4)
+      # checkout branch master(2.3)
       - name: Checkout branch master
         uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}
         with: 
           ref: 'master'
       
@@ -182,13 +182,13 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           
-      - name: Merge master -> 2.4
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}  # && steps.version.outputs.is_stable == 'true'}}
+      - name: Merge master -> 2.3
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
           from_branch: master
-          target_branch: 2.4
+          target_branch: 2.3
           github_token: ${{ github.token }}
 
       - name: Sleep 600s, wait for npm cache
