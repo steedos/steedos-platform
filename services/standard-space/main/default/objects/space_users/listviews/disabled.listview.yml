@@ -1,0 +1,18 @@
+name: disabled
+label: Invalid Users
+columns:
+  - name
+  - mobile
+  - email
+  - position
+  - user_accepted
+  - username
+  - organization
+filter_scope: space
+filters:
+  - - user_accepted
+    - '!='
+    - true
+sort:
+  - - created
+    - desc

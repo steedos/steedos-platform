@@ -1,0 +1,8 @@
+name: owner
+label: Owner
+type: lookup
+reference_to: users
+readonly: true
+omit: false
+hidden: false
+sort_no: 110

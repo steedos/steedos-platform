@@ -1,0 +1,25 @@
+name: locale
+label: Language
+type: select
+required: true
+allowedValues:
+  - en-us
+  - zh-cn
+  - ja
+options:
+  - label: 简体中文
+    value: zh-cn
+  - label: English
+    value: en-us
+  - label: 日本語
+    value: ja
+defaultValue: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    if(Meteor.isClient){
+      return Meteor.user().locale;
+    }
+
+  }
+sort_no: 280

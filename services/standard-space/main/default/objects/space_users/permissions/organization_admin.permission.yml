@@ -1,0 +1,7 @@
+permission_set_id: organization_admin
+allowCreate: true
+allowDelete: false
+allowEdit: true
+allowRead: true
+modifyCompanyRecords: true
+viewAllRecords: true

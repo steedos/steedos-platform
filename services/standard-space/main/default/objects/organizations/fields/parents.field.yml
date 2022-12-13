@@ -1,0 +1,11 @@
+name: parents
+label: All Superiors
+type: lookup
+reference_to: organizations
+multiple: true
+omit: true
+group: systemfields
+hidden: true
+blackbox: true
+filterable: true
+sort_no: 130

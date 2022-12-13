@@ -1,0 +1,9 @@
+name: all
+label: All Companies
+columns:
+  - name
+filter_scope: all
+filters:
+  - - _id
+    - '='
+    - '{spaceId}'

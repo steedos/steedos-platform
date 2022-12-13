@@ -1,0 +1,20 @@
+name: all
+label: All Valid Users
+columns:
+  - name
+  - mobile
+  - email
+  - position
+  - sort_no
+  - username
+  - organization
+filter_scope: space
+filters:
+  - - user_accepted
+    - '='
+    - true
+sort:
+  - - sort_no
+    - desc
+  - - name
+    - asc

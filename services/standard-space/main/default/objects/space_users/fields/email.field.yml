@@ -1,0 +1,6 @@
+name: email
+type: text
+label: Email
+searchable: true
+index: true
+sort_no: 120

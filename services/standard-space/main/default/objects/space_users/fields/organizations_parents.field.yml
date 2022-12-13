@@ -1,0 +1,10 @@
+name: organizations_parents
+label: All Departments and Superiors
+type: lookup
+reference_to: organizations
+multiple: true
+readonly: true
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+filterable: true
+hidden: false
+sort_no: 170

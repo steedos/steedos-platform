@@ -1,0 +1,7 @@
+name: email_verified
+type: boolean
+label: Email Verified
+readonly: true
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+hidden: false
+sort_no: 130

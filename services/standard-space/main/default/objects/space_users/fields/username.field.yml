@@ -1,0 +1,6 @@
+name: username
+type: text
+label: Username
+searchable: true
+index: true
+sort_no: 110

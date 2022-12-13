@@ -1,0 +1,23 @@
+name: default_profile
+label: Default profile
+type: lookup
+showIcon: false
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+    var result = [];
+    profiles.forEach(function (item) {
+      if(item.name != 'admin'){
+        result.push({
+          label: item.label,
+          value: item.name
+        });
+      }
+    });
+    return result;
+
+  }
+group: Register account
+sort_no: 140

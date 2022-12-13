@@ -1,0 +1,6 @@
+name: is_cloudadmin
+type: boolean
+omit: true
+hidden: true
+label: is CloudAdmin
+sort_no: 210

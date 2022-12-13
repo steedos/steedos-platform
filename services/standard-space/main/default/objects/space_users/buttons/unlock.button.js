@@ -1,0 +1,71 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-12-12 11:32:06
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-13 10:14:52
+ * @Description: 
+ */
+module.exports = {
+    unlock: function (object_name, record_id) {
+        var text = "解除锁定以便恢复用户的访问权限。 是否确定？";
+        swal({
+            title: "解除锁定用户",
+            text: "<div>" + text + "</div>",
+            html: true,
+            showCancelButton: true,
+            confirmButtonText: t('YES'),
+            cancelButtonText: t('NO')
+        }, function (confirm) {
+            if (confirm) {
+                var userSession = Creator.USER_CONTEXT;
+                var result = Steedos.authRequest("/service/api/space_users/unlock", {
+                    type: 'post', async: false, data: JSON.stringify({
+                        suId: record_id
+                    })
+                });
+                if (result.error) {
+                    // 报错信息重复
+                    // toastr.error(t("space_users_method_unlock_error", t(result.error.reason)));
+                } else {
+                    toastr.success(t("space_users_method_unlock_success"));
+                    FlowRouter.reload()
+                }
+            }
+            sweetAlert.close();
+        })
+    },
+    unlockVisible: function (object_name, record_id, record_permissions, record) {
+        if ((record.user && record.user._id) === Steedos.userId()) {
+            return;
+        }
+        var organization = Session.get("organization");
+        var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
+        if (!allowEdit) {
+            // permissions配置没有权限则不给权限
+            return false
+        }
+        var isAdmin = Steedos.isSpaceAdmin();
+        if (!isAdmin) {
+            // 组织管理员要单独判断，只给到有对应分部的组织管理员权限
+            isAdmin = SpaceUsersCore.isCompanyAdmin(record_id, organization);
+        }
+        if (!isAdmin) {
+            return;
+        }
+        //以上为权限判断
+
+        if (record) {
+            var userSession = Creator.USER_CONTEXT;
+            var result = Steedos.authRequest("/service/api/space_users/is_lockout", {
+                type: 'post', async: false, data: JSON.stringify({
+                    suId: record_id
+                })
+            });
+            if (result.error) {
+                toastr.error(result.error.reason);
+            } else {
+                return result.lockout
+            }
+        }
+    },
+}

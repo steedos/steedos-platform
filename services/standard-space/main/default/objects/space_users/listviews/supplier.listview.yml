@@ -1,0 +1,18 @@
+name: supplier
+label: 供应商用户
+columns:
+  - name
+  - position
+  - mobile
+  - email
+  - user_accepted
+  - username
+  - organization
+filter_scope: space
+filters:
+  - - is_supplier
+    - '='
+    - true
+sort:
+  - - created
+    - desc

@@ -1,0 +1,15 @@
+permission_set_id: supplier
+allowCreate: false
+allowDelete: false
+allowEdit: true
+allowRead: true
+modifyAllRecords: false
+viewAllRecords: false
+uneditable_fields:
+  - profile
+  - password_expired
+  - organizations
+  - manager
+  - contact_id
+  - position
+  - sort_no

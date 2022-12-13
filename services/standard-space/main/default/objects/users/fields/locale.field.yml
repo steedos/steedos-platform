@@ -1,0 +1,13 @@
+name: locale
+label: Language
+type: select
+allowedValues:
+  - en-us
+  - zh-cn
+options:
+  - label: Simplified Chinese
+    value: zh-cn
+  - label: English
+    value: en-us
+filterable: true
+sort_no: 160

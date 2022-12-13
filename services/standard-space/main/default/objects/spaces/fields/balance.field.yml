@@ -1,0 +1,7 @@
+name: balance
+label: Account Balance
+type: number
+scale: 2
+omit: true
+hidden: true
+sort_no: 160

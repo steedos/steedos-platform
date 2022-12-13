@@ -1,0 +1,7 @@
+name: fullname
+label: Fullname
+type: text
+visible_on: '{{false}}'
+is_name: true
+searchable: true
+sort_no: 110

@@ -1,0 +1,7 @@
+name: mobile
+type: text
+label: Mobile
+group: '-'
+readonly: true
+index: true
+sort_no: 120
