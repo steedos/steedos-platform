@@ -1,0 +1,20 @@
+name: organizations
+type: lookup
+label: All Departments
+reference_to: organizations
+multiple: true
+index: true
+defaultValue: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    var organization = Session.get('organization');
+    var orgId = organization && organization._id;
+    if(orgId){
+      return [orgId];
+    }
+
+  }
+required: true
+filterable: true
+sort_no: 160

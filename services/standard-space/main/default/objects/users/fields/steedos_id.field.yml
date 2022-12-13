@@ -1,0 +1,7 @@
+name: steedos_id
+type: text
+unique: true
+readonly: true
+omit: true
+label: Steedos ID
+sort_no: 150

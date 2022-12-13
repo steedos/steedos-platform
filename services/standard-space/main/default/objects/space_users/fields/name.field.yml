@@ -1,0 +1,11 @@
+name: name
+label: Name
+type: text
+defaultValue: ''
+description: ''
+inlineHelpText: ''
+required: true
+searchable: true
+index: true
+sortable: true
+sort_no: 100

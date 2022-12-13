@@ -1,0 +1,8 @@
+name: organization
+label: Main Department
+type: lookup
+reference_to: organizations
+readonly: true
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+filterable: true
+sort_no: 180

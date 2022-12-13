@@ -1,0 +1,6 @@
+name: invite_state
+label: Invitation Status
+type: text
+omit: true
+hidden: true
+sort_no: 330

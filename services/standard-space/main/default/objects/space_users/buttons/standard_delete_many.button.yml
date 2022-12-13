@@ -1,0 +1,8 @@
+name: standard_delete_many
+visible: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    return false;
+
+  }

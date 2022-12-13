@@ -1,0 +1,4 @@
+name: sms_notification
+label: Recieve SMS Notifications
+type: boolean
+sort_no: 310

@@ -1,0 +1,6 @@
+name: sort_no
+type: number
+label: Sort Number
+group: '-'
+sortable: true
+sort_no: 290

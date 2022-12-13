@@ -1,0 +1,5 @@
+name: sms.ParamString
+type: text
+hidden: true
+omit: true
+sort_no: 130

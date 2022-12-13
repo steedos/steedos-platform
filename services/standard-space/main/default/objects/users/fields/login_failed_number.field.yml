@@ -1,0 +1,5 @@
+name: login_failed_number
+type: number
+omit: true
+hidden: true
+sort_no: 260

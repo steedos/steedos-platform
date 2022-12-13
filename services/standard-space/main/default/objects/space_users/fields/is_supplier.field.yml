@@ -1,0 +1,6 @@
+name: is_supplier
+type: boolean
+label: Supplier
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+readonly: true
+sort_no: 250

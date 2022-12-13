@@ -1,0 +1,9 @@
+name: parent
+label: Superior
+type: lookup
+reference_to: organizations
+sortable: true
+index: true
+blackbox: true
+filterable: true
+sort_no: 120

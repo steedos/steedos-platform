@@ -1,11 +1,11 @@
 /*
  * @Author: sunhaolin@hotoa.com
- * @Date: 2022-06-12 19:08:48
+ * @Date: 2022-12-12 11:29:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 16:19:52
+ * @LastEditTime: 2022-12-12 13:44:14
  * @Description: 
  */
-module.exports = {
+module.exports = { 
     updateOrgs: function (object_name, record_id) {
         if (!this.record.organization) {
             toastr.warning("该分部的关联组织未设置，未更新任何数据");
@@ -100,4 +100,4 @@ module.exports = {
         }
         return perms["allowEdit"];
     },
-}
+ }

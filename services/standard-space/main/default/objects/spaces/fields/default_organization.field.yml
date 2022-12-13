@@ -1,0 +1,6 @@
+name: default_organization
+label: Default organization
+type: lookup
+reference_to: organizations
+group: Register account
+sort_no: 150

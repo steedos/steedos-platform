@@ -1,0 +1,8 @@
+name: name
+label: Name
+type: text
+required: true
+searchable: true
+index: true
+sortable: true
+sort_no: 100

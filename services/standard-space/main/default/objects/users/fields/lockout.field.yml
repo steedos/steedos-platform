@@ -1,0 +1,5 @@
+name: lockout
+type: boolean
+omit: true
+hidden: true
+sort_no: 280

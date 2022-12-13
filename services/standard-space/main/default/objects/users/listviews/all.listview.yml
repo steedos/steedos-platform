@@ -1,0 +1,14 @@
+name: all
+label: All
+columns:
+  - name
+  - username
+  - email
+  - mobile
+  - company
+  - work_phone
+filter_scope: all
+filters:
+  - - _id
+    - '='
+    - '{userId}'

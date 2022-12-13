@@ -1,0 +1,6 @@
+name: is_customer
+type: boolean
+label: Customer
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+readonly: true
+sort_no: 260

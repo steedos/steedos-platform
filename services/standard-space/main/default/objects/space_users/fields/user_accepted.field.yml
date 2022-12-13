@@ -1,0 +1,5 @@
+name: user_accepted
+type: boolean
+label: Valid
+defaultValue: true
+sort_no: 320
