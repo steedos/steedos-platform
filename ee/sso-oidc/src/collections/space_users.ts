@@ -1,16 +1,21 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-27 13:59:25
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-06 17:24:59
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-06 14:35:10
  * @Description: 
  */
 
 declare var Creator;
-import { getObject } from '@steedos/objectql';
+import { getObject, getSteedosSchema } from '@steedos/objectql';
 export class SpaceUsers{
     static async insert(spaceId, userId, options = { user_accepted: true}){
-        Creator.addSpaceUsers(spaceId, userId, options.user_accepted)
+        // Creator.addSpaceUsers(spaceId, userId, options.user_accepted)
+        await getSteedosSchema().broker.call(`spaces.addSpaceUsers`, {
+            spaceId,
+            userId,
+            user_accepted: options.user_accepted,
+        })
     }
 
     static async findByUserId(userId){

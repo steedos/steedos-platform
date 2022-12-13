@@ -2,13 +2,14 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-12 23:23:50
+ * @LastEditTime: 2022-12-07 19:49:48
  * @Description: 
  */
 const _ = require('underscore');
 const NEEDSYNCATTRIBUTES = ['name', 'username', 'email', 'email_verified', 'mobile', 
 'mobile_verified', 'locale', 'avatar', 'last_logon', 'email_notification', 'sms_notification', 'password_expired'];
 const { Binary } = require('mongodb');
+const { getObject } = require('@steedos/objectql');
 
 getNeedSyncSet = function(doc, modifierSet){
     let syncSet = {};
@@ -20,25 +21,14 @@ getNeedSyncSet = function(doc, modifierSet){
     return syncSet;
 }
 
-getNeedSyncUnSet = function(doc, modifierUnset){
-    let syncUnset = {};
-    _.each(NEEDSYNCATTRIBUTES, function(key){
-        if(_.has(modifierUnset, key)){
-            syncUnset[key] = 1
-        }
-    })
-    return _.isEmpty(syncUnset) ? undefined: syncUnset;
-}
 
 //当space_users的特定属性[:NEEDSYNCATTRIBUTES]变化时，同步到users、非当前space_users
-exports.syncUserInfo = function (doc, modifier) {
-    let modifierSet = modifier.$set || {};
-    let modifierUnset = modifier.$unset || {};
+exports.syncUserInfo = async function (doc, modifierSet) {
+    const userObj = getObject('users')
+    const suObj = getObject('space_users')
     let needSyncProp = getNeedSyncSet(doc, modifierSet);
-    let needSyncUnProp = getNeedSyncUnSet(doc, modifierUnset);
     if(!_.isEmpty(needSyncProp)){
         let userProp = {};
-        let userUnProp = {};
         
         if(needSyncProp.email){
 			needSyncProp.email_verified = false
@@ -50,9 +40,6 @@ exports.syncUserInfo = function (doc, modifier) {
 
         if(_.has(needSyncProp, 'email') && !needSyncProp.email){
             needSyncProp.email_verified = false
-            userUnProp = Object.assign({emails: 1}, needSyncUnProp)
-        }else{
-            userUnProp = needSyncUnProp
         }
         
         if(needSyncProp.email){
@@ -82,11 +69,11 @@ exports.syncUserInfo = function (doc, modifier) {
         _conertToBinary(userProp);
         _conertToBinary(needSyncProp);
 
-        db.users.direct.update({_id: doc.user}, {$set: userProp, $unset: userUnProp});
-        db.space_users.direct.update({_id: {$ne: doc._id}, user: doc.user}, {$set: needSyncProp, $unset: needSyncUnProp}, {
-            multi: true,
-            validate: false
-        });
+        await userObj.directUpdate(doc.user, userProp)
+        await suObj.updateMany([
+            ['_id', '!=', doc._id],
+            ['user', '=', doc.user]
+        ], needSyncProp)
     }
 }
 

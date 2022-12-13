@@ -462,13 +462,18 @@ const deleteObjectData = async function (req: Request, res: Response) {
     }
 }
 
-const excuteObjectMethod = async function (req: Request, res: Response) {
+const excuteObjectMethod = async function (req: Request, res: Response, next: any) {
     try {
         let userSession = req.user;
         // let userId = userSession.userId;
         let urlParams = req.params;
         // let bodyParams = req.body;
         let key = urlParams.objectName;
+
+        if (key === 'spaces') {
+            return next()
+        }
+
         // let spaceId = userSession.spaceId;
         let collection = getCreator().getSteedosSchema().getLocalObject(key);
         let setErrorMessage = getODataManager().setErrorMessage;

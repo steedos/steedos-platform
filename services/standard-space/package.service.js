@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
- * @Date: 2022-07-29 09:40:31
+ * @Date: 2022-12-02 13:17:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-09 13:41:25
+ * @LastEditTime: 2022-12-09 13:40:48
  * @Description: 
  */
 "use strict";
@@ -56,15 +56,14 @@ module.exports = {
 	/**
 	 * Service created lifecycle event handler
 	 */
-	async created() {
-
+	created() {
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		
 	},
 
 	/**

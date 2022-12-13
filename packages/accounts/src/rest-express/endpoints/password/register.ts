@@ -6,7 +6,8 @@ import { errors } from '../../../password/errors';
 import { canRegister, loginWithCode } from '../../../core';
 import { setAuthCookies } from '../../utils/steedos-auth';
 import { db } from '../../../db';
-declare var Creator;
+// declare var Creator;
+import { getSteedosSchema } from '@steedos/objectql'
 
 export const registerPassword = (accountsServer: AccountsServer) => async (
   req: express.Request,
@@ -61,9 +62,19 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
     const userId = await password.createUser(req.body);
     
     if(inviteInfo && inviteInfo.space){
-      Creator.addSpaceUsers(inviteInfo.space, userId, true)
+      // Creator.addSpaceUsers(inviteInfo.space, userId, true)
+      await getSteedosSchema().broker.call(`spaces.addSpaceUsers`, {
+          spaceId: inviteInfo.space,
+          userId,
+          user_accepted: true,
+      })
     }else if(req.body.spaceId && space){
-      Creator.addSpaceUsers(req.body.spaceId, userId, true)
+      // Creator.addSpaceUsers(req.body.spaceId, userId, true)
+      await getSteedosSchema().broker.call(`spaces.addSpaceUsers`, {
+          spaceId: req.body.spaceId,
+          userId,
+          user_accepted: true,
+      })
     }
 
     const foundedUser = await password.findUserById(userId);

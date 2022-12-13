@@ -6,6 +6,7 @@ const triggerLoader = require('./lib').triggerLoader;
 const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
+const metaDataCore = require('@steedos/metadata-core');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -85,7 +86,24 @@ module.exports = {
                 await this.broker.emit(`translations.object.change`, {});
 				return;
 			}).promise();
-		}
+		},
+        loadPackageMetadataServices: async function (packagePath) {
+            const filePatten = [
+                path.join(packagePath, 'main', 'default', 'services', "**", `*.service.js`),
+                "!" + path.join(packagePath, "**", "node_modules"),
+            ];
+            const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
+            for await (const serviceFilePath of matchedPaths) {
+                try {
+                    const service = objectql.loadService(this.broker, serviceFilePath);
+                    if (!this.broker.started) {
+                        this.broker._restartService(service)
+                    }
+                } catch (error) {
+                    this.logger.error(error)
+                }
+            }
+        },
 	},
 
     /**
@@ -115,6 +133,10 @@ module.exports = {
             return;
         }
         await this.loadPackageMetadataFiles(path, this.name);
+
+        // 加载.service.js
+        await this.loadPackageMetadataServices(path);
+
         console.timeEnd(`service ${this.name} started`)
         // console.log(`service ${this.name} started`);
     },

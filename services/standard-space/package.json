@@ -1,0 +1,15 @@
+{
+    "name": "@steedos/standard-space",
+    "version": "2.3.2",
+    "main": "package.service.js",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "steedos"
+    ],
+    "description": "steedos package",
+    "repository": {},
+    "license": "MIT"
+}
