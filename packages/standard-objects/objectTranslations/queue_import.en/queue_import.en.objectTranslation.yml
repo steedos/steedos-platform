@@ -105,6 +105,11 @@ actions:
   downloadTemplate:
     label: Download Template
 CustomLabels:
+  queue_import_download: Download
+  queue_import_form_field_mapping_prompt: "Indicates that the data uniqueness field {$label} does not exist in the field mapping. Please configure it."
+  queue_import_tips: Import complete
+  queue_import_success_notification_body: "A total of {$total_count} records are imported; \n Success: {$total_count}; \n Failed: {$failure_count};"
+  queue_import_error_info: "Error message"
   queue_import_action_import_execute_success: Executed
   queue_import_action_import_need_file: Upload excel file, please.
   queue_import_action_import_just_need_one_file: Just need one file.

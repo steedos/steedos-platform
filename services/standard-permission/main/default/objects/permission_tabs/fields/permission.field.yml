@@ -6,8 +6,8 @@ options:
     value: 'on'
   - label: 默认关闭
     value: 'off'
-  - label: 隐藏选项卡
-    value: 'hidden'
+  # - label: 隐藏选项卡
+  #   value: 'hidden'
 defaultValue: 'on'
 required: true
 index: true

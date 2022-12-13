@@ -54,10 +54,10 @@ function onCreateSpace(spaceDoc){
     let companyDB = Creator.getCollection("company");
     let companyId = companyDB._makeNewID();
     let companyDoc = {
-        _id: companyId, 
+        _id: spaceId, 
         name: spaceName, 
-        organization: companyId,
-        company_id: companyId,
+        organization: spaceId,
+        company_id: spaceId,
         space: spaceId, 
         owner: userId,
         created_by: userId,
@@ -69,12 +69,12 @@ function onCreateSpace(spaceDoc){
 
     let orgDB = Creator.getCollection("organizations");
     let orgDoc = {
-        _id: companyId,
+        _id: spaceId,
         name: spaceName, 
         fullname: spaceName, 
         is_company: true, 
         users: [userId],
-        company_id: companyId,
+        company_id: spaceId,
         space: spaceId, 
         owner: userId,
         created_by: userId,

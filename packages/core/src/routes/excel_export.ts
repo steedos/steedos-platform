@@ -188,9 +188,9 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
     switch (fieldConfig.type) {
         case "boolean":
             if (fieldValue) {
-                return '是';
+                return TAPi18n.__("form_field_checkbox_yes", {}, userSession.language);
             } else {
-                return '否';
+                return TAPi18n.__("form_field_checkbox_no", {}, userSession.language);
             }
         case "select":
             let options = fieldConfig.options;

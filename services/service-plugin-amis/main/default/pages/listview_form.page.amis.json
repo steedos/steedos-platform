@@ -18,7 +18,7 @@
                     "recordId": "${recordId}",
                     "modalName": "${modalName}"
                 },
-                "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
+                "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n    return { field: item };\n});\n\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
                 "responseData": {
                     "recordId": "${record._id}"
                 },
@@ -31,9 +31,9 @@
                 "method": "post",
                 "url": "${context.rootUrl}/graphql?rf=1653731141728",
                 "cache": 100,
-                "adaptor": "var data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n//数据格式转换\nif (data) {\n    data.columns = lodash.map(data.columns, 'field');\n    data.sort = lodash.map(data.sort, (item) => {\n        return `${item.field_name}:${item.order || 'asc'}`\n    });\n    data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n        try {\n            data.filters = JSON.parse(data.filters);\n        }catch(e){}\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n        data._filters_type_controller = 'function';\n    } else {\n        data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n        data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n        data._filters_function = data.filters;\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
+                "adaptor": "var data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n//数据格式转换\nif (data) {\n    data.columns = lodash.map(data.columns, 'field');\n    data.sort = lodash.map(data.sort, (item) => {\n        return `${item.field_name}:${item.order || 'asc'}`\n    });\n    data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n    data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n        try {\n            data.filters = JSON.parse(data.filters);\n        }catch(e){}\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n        data._filters_type_controller = 'function';\n    } else {\n        data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n        data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n        data._filters_function = data.filters;\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
                 "data": {
-                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,filter_scope,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
+                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,filter_scope,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
                 },
                 "sendOn": "!!this.recordId",
                 "replaceData": false,
@@ -401,6 +401,49 @@
                 },
                 {
                     "type": "fieldSet",
+                    "title": "搜索项",
+                    "collapsable": true,
+                    "body": [
+                        {
+                            "label": "默认可搜索字段",
+                            "type": "transfer",
+                            "name": "searchable_fields",
+                            "options": [],
+                            "selectMode": "list",
+                            "searchable": true,
+                            "searchApi": "",
+                            "sortable": true,
+                            "mode": "normal",
+                            "searchResultMode": "list",
+                            "joinValues": false,
+                            "extractValue": true,
+                            "source": {
+                                "method": "get",
+                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                },
+                                "data": null,
+                                "requestAdaptor": "",
+                                "adaptor": "",
+                                "sendOn": "!!this.object_name"
+                            },
+                            "visibleOn": "!!this.object_name",
+                            "className": "col-span-2 m-0",
+                            "en-US": {
+                                "label": "searchable fields"
+                            },
+                            "multiple": true
+                        }
+                    ],
+                    "collapsed": true,
+                    "visibleOn": "!!this.object_name",
+                    "en-US": {
+                        "title": "searchable"
+                    }
+                },
+                {
+                    "type": "fieldSet",
                     "title": "高级",
                     "collapsable": true,
                     "body": [
@@ -413,16 +456,6 @@
                             "option": "使用 amis自定义列表",
                             "en-US": {
                                 "option": "Enable amis_schema"
-                            },
-                            "onEvent": {
-                                "change": {
-                                    "actions": [
-                                        {
-                                            "actionType": "custom",
-                                            "script": "const { object_name, name: listName, enable_amis_schema, amis_schema} = context.props.data;\nwindow.BuilderAmisObject?.AmisLib.getListviewInitSchema(object_name, listName).then(function (result) {\n  if (!enable_amis_schema && !amis_schema) {\n    doAction({\n      actionType: 'setValue',\n      componentId: 'listview_form',\n      args: {\n        value: { amis_schema: result }\n      },\n    });\n  }\n});\n\n\n\n\n\n\n"
-                                        }
-                                    ]
-                                }
                             }
                         },
                         {

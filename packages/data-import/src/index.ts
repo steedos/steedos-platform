@@ -4,13 +4,18 @@ import { getSteedosConfig } from '@steedos/objectql'
 import ImportJson from './imports/ImportJson'
 import ImportCsv from './imports/ImportCsv'
 import ImportFlow from './imports/ImportFlow'
+import { userSessionType } from './types'
 
-export async function getUserSession(): Promise<any> {
+export async function getUserSession(spaceId?: string): Promise<userSessionType|any> {
     var dbManager = new DbManager({});
     const now = new Date()
     try {
         await dbManager.connect();
-        const space = await dbManager.findOne('spaces', {}, false);
+        const selector = {}
+        if (spaceId) {
+            selector['_id'] = spaceId
+        }
+        const space = await dbManager.findOne('spaces', selector, false);
         if (!space) {
             return;
         }
@@ -62,12 +67,23 @@ type readFileResult = {
 }
 
 /**
+ * 将数据中的${space_id}替换为spaceId值
+ * @param results 
+ * @param userSession 
+ * @returns new results
+ */
+export function formatResults (results: readFileResult[], userSession: userSessionType): readFileResult[] {
+    const { spaceId, userId } = userSession
+    return JSON.parse(JSON.stringify(results).replace(/\${space_id}/g, spaceId).replace(/\${space_owner_id}/g, userId))
+}
+
+/**
  * 
  * @param {*} filePath 要导入数据的文件夹路径
  * @param {*} onlyInsert 仅导入，在导入数据之前先检查，如果存在任意一条记录，则不执行导入
  */
-export async function importData(filePath: string, onlyInsert: boolean = true) {
-    const userSession = await getUserSession()
+export async function importData(filePath: string, onlyInsert: boolean = true, spaceId?: string) {
+    const userSession = await getUserSession(spaceId)
     if (isEmpty(userSession)) {
         return;
     }

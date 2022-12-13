@@ -146,6 +146,8 @@ fields:
   undirect:
     type: boolean
     label: 触发对象触发器、工作流规则、字段验证规则
+  instance_state:
+    hidden: true
   # todo:
 form:
   beforeEdit: !!js/function |
