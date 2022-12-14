@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-14 10:26:50
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-14 16:28:03
+ * @LastEditTime: 2022-12-14 17:15:10
  * @Description: 
  */
 const { getObjectProcessDefinition, recordSubmit } = require('@steedos/process')
@@ -32,13 +32,14 @@ module.exports = {
     actions: {
         /**
          * @api {call} submit 提请批准
+         * @apiVersion 0.0.0
          * @apiName submit
          * @apiGroup approval_process.service.js
-         * @apiParam {String} objectName 对象API Name
-         * @apiParam {String} recordId 记录ID
-         * @apiParam {String} comment 意见
-         * @apiParam {String} approver 批准人
-         * @apiSuccess {Object} 返回提请批准结果
+         * @apiBody {String} objectName 对象API Name
+         * @apiBody {String} recordId 记录ID
+         * @apiBody {String} comment 意见
+         * @apiBody {String} approver 批准人ID
+         * @apiSuccess {String} state 返回提请批准结果
          * @apiExample {js} 示例:
          *     await broker.call('approval_process.submit', {
          *         objectName: '',
