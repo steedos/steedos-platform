@@ -164,10 +164,13 @@ const insertRecord = async function(userId, object_name, new_doc) {
     auditRecordsObject = objectql.getObject('audit_records');
     space_id = new_doc.space;
     record_id = new_doc._id;
+    const userSession = await auth.getSessionByUserId(userId);
+    const locale = userSession && userSession.locale;
+    const field_name = TAPi18n.__('audit_records_created', {returnObjects: true}, locale);
     doc = {
       _id: await auditRecordsObject._makeNewID(),
       space: space_id,
-      field_name: "已创建。",
+      field_name: field_name,
       created_by: getOwner('insert', userId, new_doc),
       related_to: {
         o: object_name,

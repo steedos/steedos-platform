@@ -31,3 +31,5 @@ listviews:
     label: 全部
   recent:
     label: 最近查看
+CustomLabels:
+  audit_records_created: 已创建。
