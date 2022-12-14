@@ -79,10 +79,12 @@ const transformFieldValue = async function(field, value, options) {
         return moment(value).utcOffset(utcOffset).format('YYYY-MM-DD HH:mm');
       case 'boolean':
         if (_.isBoolean(value)) {
+          const userSession = await auth.getSessionByUserId(options.userId);
+          const locale = userSession && userSession.locale;
           if (value) {
-            return '是';
+            return TAPi18n.__("form_field_checkbox_yes", {}, locale);
           } else {
-            return '否';
+            return TAPi18n.__("form_field_checkbox_no", {}, locale);
           }
         }
         break;
@@ -279,8 +281,8 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
             break;
             case 'boolean':
             if (previous_value !== new_value) {
-                db_previous_value = await transformFieldValue(field, previous_value, options);
-                db_new_value = await transformFieldValue(field, new_value, options);
+                db_previous_value = await transformFieldValue(field, previous_value, { ...options, userId });
+                db_new_value = await transformFieldValue(field, new_value, { ...options, userId });
             }
             break;
             case 'select':
