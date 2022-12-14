@@ -7,7 +7,7 @@ fields:
     help: 
     description: 
   created:
-    label: 时间
+    label: Creation Time
     help: 
     description: 
   field_name:
@@ -31,3 +31,5 @@ listviews:
     label: All Audit Records
   recent:
     label: Recently Viewed Audit Records
+CustomLabels:
+  audit_records_created: Created

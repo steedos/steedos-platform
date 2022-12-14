@@ -34,7 +34,7 @@ module.exports = {
         try {
             if (this.data.values) {
                 const userSession = await auth.getSessionByUserId(this.userId);
-                const locale = userSession?.locale;
+                const locale = userSession && userSession.locale;
                 const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
                 Object.assign(this.data.values, { template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` })
             }
@@ -45,7 +45,7 @@ module.exports = {
     afterFind: async function () {
         if (this.data.values) {
             const userSession = await auth.getSessionByUserId(this.userId);
-            const locale = userSession?.locale;
+            const locale = userSession && userSession.locale;
             const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
@@ -57,7 +57,7 @@ module.exports = {
     afterAggregate: async function () {
         if (this.data.values) {
             const userSession = await auth.getSessionByUserId(this.userId);
-            const locale = userSession?.locale;
+            const locale = userSession && userSession.locale;
             const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
@@ -91,7 +91,7 @@ async function _validateData(doc, getObject, userId) {
                     label = field.label;
                 }
                 const userSession = await auth.getSessionByUserId(userId);
-                const locale = userSession?.locale;
+                const locale = userSession && userSession.locale;
                 const field_mapping_alert = TAPi18n.__('queue_import_form_field_mapping_prompt', {returnObjects: true, label: label}, locale);
                 throw new Error(field_mapping_alert);
                 // throw new Error(`表示数据唯一性字段 ${label} 在字段映射中不存在，请配置。`);

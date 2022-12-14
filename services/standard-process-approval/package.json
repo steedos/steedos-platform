@@ -9,6 +9,9 @@
     "keywords": [
         "steedos"
     ],
+    "dependencies": {
+      "@steedos/process": "2.3.3-beta.2"
+    },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",

@@ -239,7 +239,7 @@
                                                             "label": "桌面",
                                                             "type": "tpl",
                                                             "id": "u:b95c69a1cd84",
-                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:desktop|isTrue:'✔':'✘'}",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|first|pick:desktop|isTrue:'✔':'✘'}",
                                                             "placeholder": "-",
                                                             "remark": "显示在桌面菜单中"
                                                         },
@@ -248,7 +248,7 @@
                                                             "label": "手机",
                                                             "type": "tpl",
                                                             "id": "u:b95c69a1cd84",
-                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|pick:mobile|isTrue:'✔':'✘'}",
+                                                            "tpl": "${tabs_options|filter:value:equals:tab_name|first|pick:mobile|isTrue:'✔':'✘'}",
                                                             "placeholder": "-",
                                                             "remark": "显示在手机菜单中"
                                                         }

@@ -67,6 +67,7 @@ fields:
     description: 
 groups:
   profile_password_policy: 密码策略
+  login_policy: 登录策略
 listviews:
   all:
     label: 全部
