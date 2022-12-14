@@ -37,7 +37,7 @@ NodeManager.uploadAttach = function(fileDataInfo, fileKeyValue, req) {
 
 	var files = new Array();
 	for (var i = 0; i < fileKeyValue.length; i++) {
-		var content = "\r\n----" + boundaryKey + "\r\n" + "Content-Disposition: form-data; name=\"" + fileKeyValue[i].urlKey + "\"; filename=\"" + encodeURIComponent(path.basename(fileKeyValue[i].urlValue)) + "\r\n" + "Content-Type: " + fileinfo[i].urlValue + "\r\n\r\n";
+		var content = "\r\n----" + boundaryKey + "\r\n" + "Content-Disposition: form-data; name=\"" + fileKeyValue[i].urlKey + "\"; filename=\"" + encodeURIComponent(path.basename(fileKeyValue[i].urlValue)) + "\"\r\n" + "Content-Type: " + fileinfo[i].urlValue + "\r\n\r\n";
 		files.push({
 			contentBinary: content,
 			filePath: fileKeyValue[i].urlValue
