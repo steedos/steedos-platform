@@ -9,7 +9,20 @@ Template.related_instances_modal.helpers
 #		else
 #			return ""
 	schema: ->
-		return db.instances._simpleSchema;
+		# return db.instances._simpleSchema;
+		return new SimpleSchema({
+			related_instances: {
+				type: [String],
+				optional: true,
+				autoform: {
+					type: "universe-select",
+					afFieldInput: {
+						multiple: true,
+						optionsMethod: "getRelatedInstancesOptions"
+					}
+				}
+			}
+		})
 
 	seletec_length: ->
 		return Session.get("related_instances").length
