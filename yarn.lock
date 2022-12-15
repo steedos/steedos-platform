@@ -4321,15 +4321,15 @@
   optionalDependencies:
     "@webcomponents/custom-elements" "^1.2.1"
 
-"@steedos-builder/react@^0.2.27", "@steedos-builder/react@^0.2.28":
-  version "0.2.33"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.33.tgz#1885e39dc37f9bd5c2d39407dffbd10ba352feb4"
-  integrity sha512-n4tPwJDdb1AAYBo+2mzgkIAMt44mzmwtw0/81tNRr3PtYvp595yQLoAgxsm4K7ZFcb8i13Zs9ey03aeDbV2P5w==
+"@steedos-builder/react@^0.2.34":
+  version "0.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.34.tgz#e3b8a068af25f612a8c398fc256718869750f21e"
+  integrity sha512-RX5mKmrQ7cb0J+/kJB07JEN2omXa6seV2hJldMGu5PUaYLAC0OW9kOYZBSdvkaJeQYyeAAiPLJaa6jtlkUMGcg==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "0.2.33"
+    "@steedos-builder/sdk" "0.2.34"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -4346,10 +4346,10 @@
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
   integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
 
-"@steedos-builder/sdk@0.2.33":
-  version "0.2.33"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.33.tgz#6e2129f7e899617c37eda0ce80c37373b7971f27"
-  integrity sha512-9ifBF6xXzLxJdRWPAai9N7AQLFm5z3jXf+bnTnKAnPi2Tza5NErvVO6YlgvmWzqQReXGNq+bJEbRVP+dERwd3A==
+"@steedos-builder/sdk@0.2.34":
+  version "0.2.34"
+  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.34.tgz#a06d2141f2ff3f26d2dded67fa844ccdee91f6d2"
+  integrity sha512-oshOsGaS1pVS/NgZ38/ax2m4qFVQvN/5ih5qPUpdpkSFrlMgjH88PEojGU/PvJCPGnYD7f2mYG7HYK4YooqMUQ==
   dependencies:
     "@builder.io/sdk" "1.1.26"
     "@monaco-editor/loader" "^1.3.0"
@@ -4361,34 +4361,6 @@
     requirejs "^2.3.6"
     systemjs "^6.12.1"
     tslib "^1.10.0"
-
-"@steedos-labs/experience@^1.0.0-beta.20":
-  version "1.0.0-beta.25"
-  resolved "https://registry.yarnpkg.com/@steedos-labs/experience/-/experience-1.0.0-beta.25.tgz#b81f7aca2760e517140c5a8be43ff4484ad76832"
-  integrity sha512-U1gzA/CYkYLbfnkhd/isgIe0cJAxeTdUT9sEHfcXjjbszEwXxW359F7nvbNJVEKB1SUYNQtCBhEIzDm5T/zWVA==
-  dependencies:
-    "@headlessui/react" "^1.6.5"
-    "@heroicons/react" "^1.0.6"
-    "@steedos-builder/react" "^0.2.28"
-    antd "^4.22.0"
-    attr-accept "^2.2.2"
-    autoprefixer "^10.4.7"
-    axios "^0.27.2"
-    clsx "^1.1.1"
-    express "^4.18.1"
-    focus-visible "^5.2.0"
-    jsonwebtoken "^8.5.1"
-    lodash "^4.17.21"
-    next "12.2.5"
-    next-auth "4.15.0"
-    next-use-posthog "^1.16.0"
-    postcss "^8.4.14"
-    postcss-focus-visible "^6.0.4"
-    prism-react-renderer "^1.3.5"
-    react "18.2.0"
-    react-dom "18.2.0"
-    tailwindcss "^3.1.3"
-    v8 "^0.1.0"
 
 "@steedos-ui/amis@2.2.43":
   version "2.2.43"
@@ -4549,6 +4521,37 @@
     dotenv-flow "^3.1.0"
     lodash "^4.17.21"
     node-xlsx "^0.16.1"
+
+"@steedos/ee_experience@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@steedos/ee_experience/-/ee_experience-1.0.5.tgz#8386f2a8e8fb5fe25884d12313d95ff1963bddd0"
+  integrity sha512-/bJi7OqoheRKqWFbGfCc5XVJb+1yR4N6/G/1+3TOOhcUye4MkKOyVMOF/2/W7ZBkTMHKa4oQBM+qDO+3fk6/SQ==
+  dependencies:
+    "@headlessui/react" "^1.6.5"
+    "@heroicons/react" "^1.0.6"
+    "@steedos-builder/react" "^0.2.34"
+    antd "^4.22.0"
+    attr-accept "^2.2.2"
+    autoprefixer "^10.4.7"
+    axios "^0.27.2"
+    cache-manager "^5.1.3"
+    clsx "^1.1.1"
+    express "^4.18.1"
+    focus-visible "^5.2.0"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.21"
+    next "12.2.5"
+    next-auth "4.15.0"
+    next-use-posthog "^1.16.0"
+    postcss "^8.4.14"
+    postcss-focus-visible "^6.0.4"
+    postcss-less "^6.0.0"
+    prism-react-renderer "^1.3.5"
+    querystring "^0.2.1"
+    react "18.2.0"
+    react-dom "18.2.0"
+    tailwindcss "^3.1.3"
+    v8 "^0.1.0"
 
 "@steedos/ee_service-plugin-license@^2.2.5":
   version "2.2.5"
@@ -6100,7 +6103,7 @@ aliyun-sdk@1.12.3:
     xml2js "0.4.4"
     xmlbuilder "^13.0.2"
 
-amis-core@^2.4.0, amis-core@^2.5.2:
+amis-core@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/amis-core/-/amis-core-2.5.2.tgz#a3e9c68919ed5f857752b777a5ffbba17a787a3f"
   integrity sha512-pBY5BUUbsGXXl4WTOb/rugUi03k3OlJ8x1x2vlSp/nbX8XUsrG4siqtDJenidbViWw2UqrNL2Fr6PlC3S8KBYg==
@@ -6131,7 +6134,7 @@ amis-formula@^2.5.2:
     moment "^2.29.4"
     tslib "^2.3.1"
 
-amis-ui@^2.4.0:
+amis-ui@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/amis-ui/-/amis-ui-2.5.2.tgz#d2b3be9a0d140cf90d75e43aa4ecd8052ef1f124"
   integrity sha512-VwGhYR5Wi8eoAeThtsjaQZ5ANMjZWycj072qth0pURKRoF3VvpLlsy7kk5lYVBErVSCEyG4Czu8PAvYOeIMHNg==
@@ -6171,13 +6174,13 @@ amis-ui@^2.4.0:
     tslib "^2.3.1"
     uncontrollable "7.2.1"
 
-amis@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/amis/-/amis-2.4.0.tgz#595128e4209840fa83d214c8fec4e482838d0d36"
-  integrity sha512-jcF0urHnk9AEGhIsx7Ih+iZGWkfVjOpMa335TQfqY12jw2YUHRmquEsrN0q9Nx4XJRp/5RzJ/Xc2BENMIl/z5g==
+amis@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/amis/-/amis-2.5.2.tgz#3a0e480304fdeac38620793adf67e949be386181"
+  integrity sha512-kuBKkA9pvlqEpr2EKZjM0IrNOH5iaUSq+j0J0zTmwlbWmc6AEoJ0HsiPJPvyZGSU56EoJYL5XWXI+QMEOUFj/Q==
   dependencies:
-    amis-core "^2.4.0"
-    amis-ui "^2.4.0"
+    amis-core "^2.5.2"
+    amis-ui "^2.5.2"
     attr-accept "2.2.2"
     blueimp-canvastoblob "2.1.0"
     classnames "2.3.1"
@@ -6198,7 +6201,6 @@ amis@2.4.0:
     mobx-react "^6.3.1"
     mobx-state-tree "^3.17.3"
     moment "^2.19.4"
-    monaco-editor "0.30.1"
     mpegts.js "^1.6.10"
     prop-types "^15.6.1"
     qrcode.react "^3.1.0"
@@ -7850,6 +7852,14 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
+
+cache-manager@^5.1.3:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-5.1.4.tgz#b3024f2127353f9f725f43ecbd184872101b6bb2"
+  integrity sha512-beXzzuboV6I0AkU25udrd8tRxFbU6c5m7+3eOdmznSVNkyKe0+uTK8EtcuhTwqc/wAYrAGl62w3s58rjKnrO6g==
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    lru-cache "^7.14.0"
 
 cacheable-lookup@^2.0.0:
   version "2.0.1"
@@ -17421,6 +17431,11 @@ postcss-js@^4.0.0:
   dependencies:
     camelcase-css "^2.0.1"
 
+postcss-less@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-less/-/postcss-less-6.0.0.tgz#463b34c60f53b648c237f569aeb2e09149d85af4"
+  integrity sha512-FPX16mQLyEjLzEuuJtxA8X3ejDLNGGEG503d2YGZR5Ask1SpDN8KmZUMpzCvyalWRywAn1n1VOA5dcqfCLo5rg==
+
 postcss-load-config@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-3.1.4.tgz#1ab2571faf84bb078877e1d07905eabe9ebda855"
@@ -18018,7 +18033,7 @@ querystring@0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==
 
-querystring@^0.2.0:
+querystring@^0.2.0, querystring@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.1.tgz#40d77615bb09d16902a85c3e38aa8b5ed761c2dd"
   integrity sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==

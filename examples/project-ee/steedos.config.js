@@ -15,7 +15,7 @@ module.exports = {
 	// Called after broker started.
 	started(broker) {
 		broker.createService(require("@steedos/service-enterprise"));
-		broker.createService(require("@steedos-labs/experience"));
+		broker.createService(require("@steedos/ee_experience"));
 	},
 
 };

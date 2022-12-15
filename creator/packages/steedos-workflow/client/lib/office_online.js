@@ -125,6 +125,7 @@ OfficeOnline.http.uploadFile = function(fileDataInfo, files) {
 	var options = {
 		host: window.location.hostname,
 		port: window.location.port,
+		headers: {'Authorization': 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken()},
 		method: "POST",
 		path: "/api/v4/instances/s3/"
 	}
@@ -262,6 +263,7 @@ OfficeOnline.https.uploadFile = function(fileDataInfo, files) {
 	var options = {
 		host: window.location.hostname,
 		port: window.location.port,
+		headers: {'Authorization': 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken()},
 		method: "POST",
 		path: "/api/v4/instances/s3/"
 	}

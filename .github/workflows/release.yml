@@ -36,11 +36,11 @@ jobs:
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.3') && !startsWith(steps.branch-name.outputs.tag, '2.4')  }}
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.3') && !startsWith(steps.branch-name.outputs.tag, '2.4')  }}
         run: exit 1
 
       - name: Merge 2.3 -> master
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }}  # && steps.version.outputs.is_stable == 'true'}}
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }} 
         uses: devmasx/merge-branch@master
         with:
           type: now
@@ -55,12 +55,12 @@ jobs:
         with: 
           ref: 'master'
       
-      # checkout branch 2.3
-      - name: Checkout branch 2.3
+      # checkout branch 2.4
+      - name: Checkout branch 2.4
         uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.3') }} 
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }} 
         with: 
-          ref: '2.3'
+          ref: '2.4'
 
       # checkout branch 2.2
       - name: Checkout branch 2.2

@@ -26,5 +26,5 @@
 
 .pnpm-lock.yaml
 
-
+!/server/bundle/**/node_modules/formBuilder/dist
 !/server/bundle/**/node_modules
