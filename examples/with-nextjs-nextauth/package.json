@@ -1,6 +1,6 @@
 {
   "name": "with-nextjs-nextauth",
-  "version": "2.3.3-beta.3",
+  "version": "2.3.3-beta.4",
   "private": true,
   "scripts": {
     "dev": "next dev",
