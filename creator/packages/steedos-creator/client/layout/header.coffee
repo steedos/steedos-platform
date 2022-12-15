@@ -101,3 +101,9 @@ Template.creatorHeader.events
 	'click .show-object': ()->
 		object = Creator.getObject(Session.get("object_name"))
 		Steedos.openWindow Creator.getObjectUrl("objects", object._id, 'admin')
+
+
+Template.creatorHeader.onRendered ->
+	Steedos.Page.Header.render()
+	this.autorun ->
+		Steedos.Page.AppNav.render(Session.get('app_id'))

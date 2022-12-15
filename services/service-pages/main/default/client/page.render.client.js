@@ -8,6 +8,8 @@
         App: {},
         Record: {},
         Listview: {},
+        Header: {},
+        AppNav: {},
         RelatedListview: {},
         Form: {
             StandardNew: {},
@@ -58,6 +60,7 @@
         else if(type === 'list'){
             return {
                 render_engine: 'amis',
+                name: 'steedosListviewPage',
                 schema: {
                     "type": "page",
                     name: `amis-${appId}-${objectApiName}-listview`,
@@ -82,6 +85,7 @@
         }else if(type === 'record' && objectApiName != 'pages'){
             return {
                     render_engine: 'amis',
+                    name: 'steedosRecordPage',
                     schema: {
                         "type": "page",
                         "name": `amis-${appId}-${objectApiName}-detail`,
@@ -121,6 +125,7 @@
             const idFieldName = masterObject.idFieldName;
             return {
                 render_engine: 'amis',
+                name: 'steedosRelatedListPage',
                 schema: {
                     type: 'service',
                     name: `amis-${appId}-${FlowRouter.getParam("object_name")}-related-${objectApiName}`,
@@ -734,5 +739,164 @@
         return stores.API.client.sobject(objectApiName).record(recordId, null, {
             graphqlFieldsQuery: getGraphqlFieldsQuery(objectApiName, selectFields, expandFields)
         })
+    }
+
+    const getSpaceLogo = function(){
+        let logoSrc = '';
+        const space = db.spaces.findOne(Steedos.getSpaceId())
+        if(space?.avatar){
+            logoSrc = Steedos.absoluteUrl(space.avatar) 
+        }else if(space?.avatar_square){
+            logoSrc = Steedos.absoluteUrl(space.avatar_square) 
+        }else{
+            var settings = Session.get("tenant_settings");
+            if(settings){
+                avatar_url = settings?.logo_square_url;
+            }
+            if(!avatar_url || !settings){
+                avatar_url = "/images/logo_platform.png"
+                if(Meteor.user()?.locale != 'zh-cn'){
+                    avatar_url = "/images/logo_platform.en-us.png"
+                }
+            }
+            logoSrc = Steedos.absoluteUrl(avatar_url) 
+        }
+        return logoSrc
+    }
+
+    Steedos.Page.Header.render = function(){
+        try {
+            const data = {};
+            const page = Steedos.Page.Header.getPage();
+            var rootId = "steedosGlobalHeaderRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $(".steedos-global-header-root")[0].appendChild(modalRoot);
+            }
+            if (page.render_engine && page.render_engine != 'redash') {
+                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, data));
+            }
+        } catch (error) {
+            console.error(`Steedos.Page.Header.render`, error)
+        }
+    }
+    Steedos.Page.Header.getPage = function(){
+        const logoSrc = getSpaceLogo()
+        return {
+            render_engine: 'amis',
+            name: 'steedosGlobalHeaderPage',
+            schema: {
+                "type": "service",
+                name: "globalHeader",
+                "body": [
+                  {
+                    "type": "grid",
+                    className: 'pl-4',
+                    "columns": [
+                      {
+                        "columnClassName": "",
+                        "body": [
+                          {
+                            "type": "steedos-logo",
+                            "src": logoSrc,
+                            "className": 'block h-10 w-auto'
+                          }
+                        ],
+                        "id": "u:1f6c4552143c",
+                        "valign": "middle"
+                      },
+                      {
+                        "columnClassName": "",
+                        "body": [
+                            {
+                                "type": "steedos-global-header",
+                                "label": "Global Header",
+                                className: 'flex flex-nowrap gap-x-2',
+                                logoutScript: "Steedos.logout();"
+                              }
+                        ],
+                        "id": "u:b73c2c079561",
+                        "md": "auto"
+                      }
+                    ],
+                    "id": "u:b403a69ebdaf",
+                    "align": "left"
+                  }
+                ],
+              }
+        }
+    }
+
+    Steedos.Page.AppNav.render = function(appId){
+        try {
+            const data = {};
+            const page = Steedos.Page.AppNav.getPage(appId);
+            var rootId = "steedosAppNavRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $(".steedos-app-nav-root")[0].appendChild(modalRoot);
+            }
+            if (page.render_engine && page.render_engine != 'redash') {
+                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, data));
+            }
+        } catch (error) {
+            console.error(`Steedos.Page.Header.render`, error)
+        }
+    }
+    Steedos.Page.AppNav.getPage = function(appId){
+        return {
+            render_engine: 'amis',
+            name: 'steedosAppNavPage',
+            schema: {
+                "type": "service",
+                "name": "steedosAppNav",
+                "className": "slds-global-header_container sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 border-b border-b-2 border-sky-500 lg:shadow",
+                "body": [
+                  {
+                    "type": "grid",
+                    className: 'pl-4',
+                    "columns": [
+                      {
+                        "columnClassName": "",
+                        "body": [
+                          {
+                            "type": "steedos-app-launcher",
+                            showAppName: true,
+                            "appId": appId,
+                          }
+                        ],
+                        "id": "u:e8a42e96eaf5",
+                        "md": "auto",
+                        "valign": "middle"
+                      },
+                      {
+                        "columnClassName": "",
+                        "body": [
+                          {
+                            "type": "steedos-app-menu",
+                            "stacked": false,
+                            "appId": appId,
+                            overflow: {
+                                enable: true,
+                                overflowLabel: '更多'
+                            },
+                            "id": "u:77851eb4aa89",
+                            hiddenOn: `${appId === 'admin'}`
+                          }
+                        ],
+                        "id": "u:5367229505d8",
+                        "md": "",
+                        "valign": "middle",
+                        hiddenOn: `${appId === 'admin'}`
+                      }
+                    ],
+                    "id": "u:6cc99950b29c"
+                  }
+                ],
+              }}
     }
 })();
