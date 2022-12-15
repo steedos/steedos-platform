@@ -802,6 +802,7 @@
                                                                     }
                                                                 },
                                                                 "type": "dialog",
+                                                                "size": "md",
                                                                 "id": "u:3663990f226a",
                                                                 "closeOnEsc": false,
                                                                 "closeOnOutside": false,
