@@ -433,6 +433,7 @@
                                                                     }
                                                                 },
                                                                 "type": "dialog",
+                                                                "size": "md",
                                                                 "id": "u:c405734543e0",
                                                                 "closeOnEsc": false,
                                                                 "closeOnOutside": false,
