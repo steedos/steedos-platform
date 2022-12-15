@@ -170,6 +170,7 @@
                                                         {
                                                             "name": "visible_on",
                                                             "label": "显示条件",
+                                                            "className": "w-6/12",
                                                             "quickEdit": {
                                                                 "type": "input-text",
                                                                 "className": "m-0",
