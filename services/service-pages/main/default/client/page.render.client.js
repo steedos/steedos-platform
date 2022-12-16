@@ -829,10 +829,10 @@
         }
     }
 
-    Steedos.Page.AppNav.render = function(appId){
+    Steedos.Page.AppNav.render = function(appId, tabId){
         try {
             const data = {};
-            const page = Steedos.Page.AppNav.getPage(appId);
+            const page = Steedos.Page.AppNav.getPage(appId, tabId);
             var rootId = "steedosAppNavRoot";
             var modalRoot = document.getElementById(rootId);
             if (!modalRoot) {
@@ -847,7 +847,7 @@
             console.error(`Steedos.Page.Header.render`, error)
         }
     }
-    Steedos.Page.AppNav.getPage = function(appId){
+    Steedos.Page.AppNav.getPage = function(appId, tabId){
         return {
             render_engine: 'amis',
             name: 'steedosAppNavPage',
@@ -879,10 +879,13 @@
                           {
                             "type": "steedos-app-menu",
                             "stacked": false,
+                            showIcon: false,
                             "appId": appId,
+                            selectedId: tabId,
                             overflow: {
                                 enable: true,
-                                overflowLabel: '更多'
+                                overflowLabel: '更多',
+                                overflowIndicator: "fas fa-angle-double-down"
                             },
                             "id": "u:77851eb4aa89",
                             hiddenOn: `${appId === 'admin'}`
