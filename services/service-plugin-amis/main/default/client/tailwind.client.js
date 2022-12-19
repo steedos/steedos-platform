@@ -11,6 +11,12 @@ try {
   //   tailwindScript.setAttribute("src", Steedos.absoluteUrl('/tailwind/tailwind.js'));
   //   document.getElementsByTagName("head")[0].appendChild(tailwindScript);
   // }
+  let tailwindBase = document.createElement("link");
+  tailwindBase.setAttribute("rel", "stylesheet");
+  tailwindBase.setAttribute("type", "text/css");
+  tailwindBase.setAttribute("href", Steedos.absoluteUrl("/tailwind/tailwind-base.css"));
+  document.getElementsByTagName("head")[0].appendChild(tailwindBase);
+
   let tailwindStyle = document.createElement("link");
   tailwindStyle.setAttribute("rel", "stylesheet");
   tailwindStyle.setAttribute("type", "text/css");
