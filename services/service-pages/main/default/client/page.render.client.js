@@ -81,7 +81,7 @@
                     "type": "page",
                     name: `amis-${appId}-${objectApiName}-listview`,
                     "title": "Welcome to Steedos",
-                    bodyClassName: 'bg-white p-0',
+                    bodyClassName: 'p-3',
                     "body": [
                       {
                         "type": "steedos-object-listview",
@@ -102,6 +102,7 @@
             return {
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
+                    bodyClassName: 'p-3',
                     schema: {
                         "type": "page",
                         "name": `amis-${appId}-${objectApiName}-detail`,
@@ -810,7 +811,7 @@
                 "body": [
                   {
                     "type": "grid",
-                    className: 'pl-4',
+                    className: 'pl-4 py-2',
                     "columns": [
                       {
                         "columnClassName": "",
