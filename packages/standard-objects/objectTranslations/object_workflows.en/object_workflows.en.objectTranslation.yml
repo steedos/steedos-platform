@@ -77,6 +77,9 @@ fields:
       - label: Object To Instance
         value: "obj_to_ins"
     description:
+  lock_record_after_approval:
+    label: Lock record after approval
+    description:
 groups:
   script: Script
 listviews:
