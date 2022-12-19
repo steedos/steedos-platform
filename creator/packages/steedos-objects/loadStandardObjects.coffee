@@ -93,6 +93,8 @@ try
 					},
 					skipProcessEventRegistration: true
 				});
+
+				objectql.broker.init(broker);
 				
 				projectService = broker.createService({
 					name: "project-server",

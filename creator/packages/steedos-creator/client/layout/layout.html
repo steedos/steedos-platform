@@ -1,3 +1,10 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-16 18:04:14
+ * @Description: 
+-->
 <template name="creatorLayout">
 	{{#if isloading}}
 	{{else}}
@@ -30,14 +37,5 @@
 		<div class="connection-status">
 			{{> status}}
 		</div>
-
-		{{> CreatorAutoformModals}}
-		{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorAddRelatedForm" meteormethod="af_insert" class="btn btn-primary creator-add-related hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-		{{> templateFlowsModal}}
-		{{> flowsTreeModal}}
-		{{> gridModal}}
-	{{/if}}
+		{{/if}}
 </template>

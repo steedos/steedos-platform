@@ -18,6 +18,7 @@
             }else{
                 thing = lodash.get(obj, path);
             }
+            // console.log(`_innerWaitForThing`, path)
             if (thing) {
                 return resolve(thing);
             }
@@ -58,7 +59,7 @@
     if (window.define)
         window.define.amd = undefined;
 
-    window.ReactDOM = ReactDom;
+    // window.ReactDOM = ReactDom;
     window.React17 = window.React;
     window.ReactDOM17 = window.ReactDOM;
 

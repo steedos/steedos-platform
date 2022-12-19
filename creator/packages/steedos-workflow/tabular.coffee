@@ -110,10 +110,11 @@ instancesListTableTabular = (flowId, fields)->
 
 					unread = ''
 
-					isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
-					if Favorites.isRecordSelected("instances", doc._id)
-						unread = '<i class="ion ion-ios-star-outline instance-favorite-selected"></i>'
-					else if Session.get("box") == 'inbox' && doc.is_read == false
+					# isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
+					# if Favorites.isRecordSelected("instances", doc._id)
+					# 	unread = '<i class="ion ion-ios-star-outline instance-favorite-selected"></i>'
+					# else 
+					if Session.get("box") == 'inbox' && doc.is_read == false
 						unread = '<i class="ion ion-record unread"></i>'
 					else if Session.get("box") == 'monitor' && doc.is_hidden == true
 						unread = '<i class="fa fa-lock"></i>'

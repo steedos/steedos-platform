@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 18:35:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-16 17:07:44
  * @Description: 
  */
 "use strict";
@@ -259,7 +259,7 @@ module.exports = {
         async isSpaceAdmin(spaceId, userId) {
             const spaceObj = getObject('spaces')
             const space = await spaceObj.findOne(spaceId, { fields: ['admins'] })
-            if (space?.admins) {
+            if (space && space.admins) {
                 return space.admins.indexOf(userId) >= 0
             }
             return false

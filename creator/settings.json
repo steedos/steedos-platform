@@ -6,6 +6,9 @@
         "workflow": {
             "instance_attach_can_convert_to_office": true,
             "instance_allow_distribute": true
+        },
+        "page": {
+            "assetUrls": "http://127.0.0.1:8080/%40steedos-widgets/amis-object/dist/assets-dev.json"
         }
     },
     "cron": {

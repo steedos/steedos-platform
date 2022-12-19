@@ -122,13 +122,13 @@ Setup.validate = (onSuccess)->
 			user: data
 		}
 
-		stores.Settings.setTenantId(data.spaceId);
-		stores.Settings.setUserId(data.userId);
-		stores.Settings.setAuthToken(data.authToken);
+		# stores.Settings.setTenantId(data.spaceId);
+		# stores.Settings.setUserId(data.userId);
+		# stores.Settings.setAuthToken(data.authToken);
 
-		stores.API.client.setUserId(data.userId)
-		stores.API.client.setToken(data.authToken);
-		stores.API.client.setSpaceId(data.spaceId);
+		# stores.API.client.setUserId(data.userId)
+		# stores.API.client.setToken(data.authToken);
+		# stores.API.client.setSpaceId(data.spaceId);
 
 		if !Meteor.loggingIn()
 			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
@@ -250,7 +250,7 @@ handleBootstrapData = (result, callback)->
 			object.list_views[_key] = _object_listview
 		Creator.loadObjects object, object_name
 
-	Creator.Apps = BuilderCreator.creatorAppsSelector(BuilderCreator.store.getState())
+	Creator.Apps = Creator.creatorAppsSelector(result.apps, result.assigned_apps)
 	Creator.Menus = result.assigned_menus
 	if Steedos.isMobile()
 		mobileApps = _.filter Creator.getVisibleApps(true), (item)->
@@ -307,58 +307,58 @@ requestLicense = (spaceId)->
 		success: (result) ->
 			Creator.__l.set result
 
-# requestBootstrapDataUseAjax = (spaceId, callback)->
-# 	unless spaceId and Meteor.userId()
-# 		return
-# 	userId = Meteor.userId()
-# 	authToken = Accounts._storedLoginToken()
-# 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
-# 	debugger
-# 	headers = {}
-# 	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
-# 	headers['X-User-Id'] = userId
-# 	headers['X-Auth-Token'] = authToken
-# 	$.ajax
-# 		type: "get"
-# 		url: url
-# 		dataType: "json"
-# 		headers: headers
-# 		error: (jqXHR, textStatus, errorThrown) ->
-# 			FlowRouter.initialize();
-# 			error = jqXHR.responseJSON
-# 			console.error error
-# 			if error?.reason
-# 				toastr?.error?(TAPi18n.__(error.reason))
-# 			else if error?.message
-# 				toastr?.error?(TAPi18n.__(error.message))
-# 			else
-# 				toastr?.error?(error)
-# 		success: (result) ->
-# 			handleBootstrapData(result, callback);
+requestBootstrapDataUseAjax = (spaceId, callback)->
+	unless spaceId and Meteor.userId()
+		return
+	userId = Meteor.userId()
+	authToken = Accounts._storedLoginToken()
+	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
+	debugger
+	headers = {}
+	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
+	headers['X-User-Id'] = userId
+	headers['X-Auth-Token'] = authToken
+	$.ajax
+		type: "get"
+		url: url
+		dataType: "json"
+		headers: headers
+		error: (jqXHR, textStatus, errorThrown) ->
+			FlowRouter.initialize();
+			error = jqXHR.responseJSON
+			console.error error
+			if error?.reason
+				toastr?.error?(TAPi18n.__(error.reason))
+			else if error?.message
+				toastr?.error?(TAPi18n.__(error.message))
+			else
+				toastr?.error?(error)
+		success: (result) ->
+			handleBootstrapData(result, callback);
 
 
-requestBootstrapDataUseAction = (spaceId)->
-	BuilderCreator.store.dispatch(BuilderCreator.loadBootstrapEntitiesData({spaceId: spaceId}))
+# requestBootstrapDataUseAction = (spaceId)->
+# 	BuilderCreator.store.dispatch(BuilderCreator.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
-	if BuilderCreator.store
-		requestBootstrapDataUseAction(spaceId);
-	# else
-	# 	requestBootstrapDataUseAjax(spaceId, callback);
+	# if BuilderCreator.store
+	# 	requestBootstrapDataUseAction(spaceId);
+	# # else
+	requestBootstrapDataUseAjax(spaceId, callback);
 
 Setup.bootstrap = (spaceId, callback)->
 	requestBootstrapData(spaceId, callback)
 
 
 
-Meteor.startup ()->
-	RequestStatusOption = BuilderCreator.RequestStatusOption
-	lastBootStrapRequestStatus = '';
-	BuilderCreator.store?.subscribe ()->
-		state = BuilderCreator.store.getState();
-		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
-			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
-			if BuilderCreator.isRequestSuccess(state)
-				handleBootstrapData(clone(BuilderCreator.getBootstrapData(state)));
-		else
-			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state);
+# Meteor.startup ()->
+# 	RequestStatusOption = BuilderCreator.RequestStatusOption
+# 	lastBootStrapRequestStatus = '';
+# 	BuilderCreator.store?.subscribe ()->
+# 		state = BuilderCreator.store.getState();
+# 		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
+# 			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
+# 			if BuilderCreator.isRequestSuccess(state)
+# 				handleBootstrapData(clone(BuilderCreator.getBootstrapData(state)));
+# 		else
+# 			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state);

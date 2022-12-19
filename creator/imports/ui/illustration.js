@@ -1,13 +1,13 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-19 11:29:08
+ * @Description: 
+ */
 import './illustration.html';
-const { Illustration } = BuilderCreator
 
 Template.illustration.helpers({
-	illustration: function () {
-		return Illustration;
-	},
-	path: function () {
-		return this.path || Creator.getRelativeUrl("/assets/images/illustrations/empty-state-no-results.svg#no-results");
-	},
 	heading: function () {
 		return this.heading;
 	},

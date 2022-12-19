@@ -17,8 +17,9 @@ Creator.getSchema = (object_name)->
 	return Creator.getObject(object_name)?.schema
 
 Creator.getObjectHomeComponent = (object_name)->
-	if Meteor.isClient
-		return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
+	# if Meteor.isClient
+	# 	return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
+	return false;
 
 Creator.getObjectUrl = (object_name, record_id, app_id) ->
 	if !app_id
@@ -242,9 +243,9 @@ Creator.getAppDashboard = (app_id)->
 
 Creator.getAppDashboardComponent = (app_id)->
 	app = Creator.getApp(app_id)
-	if !app
+	if !app || true
 		return
-	return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "Dashboard", app._id);
+	# return BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "Dashboard", app._id);
 
 Creator.getAppObjectNames = (app_id)->
 	app = Creator.getApp(app_id)
@@ -319,10 +320,53 @@ Creator.loadAppsMenus = ()->
 	 }
 	Steedos.authRequest "/service/api/apps/menus", options
 
+Creator.creatorAppsSelector = (apps, assigned_apps) ->
+	adminApp = undefined
+	sortedApps = undefined
+	_.each apps, (app, key) ->
+		if !app._id
+			app._id = key
+		if app.is_creator
+			# 不需要isSpaceAdmin逻辑
+			# if (isSpaceAdmin) {
+			#		 app.visible = true;
+			# }
+		else
+			# 非creator应该一律不显示
+			app.visible = false
+		return
+	sortedApps = _.sortBy(_.values(apps), 'sort')
+	creatorApps = {}
+	adminApp = {}
+	# 按钮sort排序次序设置Creator.Apps值
+	_.each sortedApps, (n) ->
+		if n._id == 'admin'
+			adminApp = n
+		else
+			creatorApps[n._id] = n
+	# admin菜单显示在最后
+	creatorApps.admin = adminApp
+	if assigned_apps.length
+		_.each creatorApps, (app, key) ->
+			if assigned_apps.indexOf(key) > -1
+				app.visible = app.is_creator
+			else
+				app.visible = false
+			return
+	creatorApps
+
+Creator.visibleAppsSelector = (creatorApps, includeAdmin = true) ->
+	apps = []
+	_.each creatorApps, (v, k) ->
+		if v.visible != false and v._id != 'admin' or includeAdmin and v._id == 'admin'
+			apps.push v
+		return
+	apps
+
 Creator.getVisibleApps = (includeAdmin)->
 	changeApp = Creator._subApp.get();
-	BuilderCreator.store.getState().entities.apps = Object.assign({}, BuilderCreator.store.getState().entities.apps, {apps: changeApp});
-	return BuilderCreator.visibleAppsSelector(BuilderCreator.store.getState(), includeAdmin)
+	creatorApps = Object.assign({}, Creator.Apps, {apps: changeApp});
+	return Creator.visibleAppsSelector(creatorApps, includeAdmin)
 
 Creator.getVisibleAppsObjects = ()->
 	apps = Creator.getVisibleApps()

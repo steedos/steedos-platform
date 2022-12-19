@@ -250,9 +250,6 @@ Template.creator_view.helpers
 		firstLevelKeys = _.without simpleSchema._firstLevelSchemaKeys, "created", "modified"
 		permission_fields = Creator.getFields()
 
-#		_.forEach schema, (field, name)->
-#			if field.type == Object && field.autoform
-#				field.autoform.type = 'hidden'
 
 		fieldGroups = []
 		fieldsForGroup = []

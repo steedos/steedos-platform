@@ -4,6 +4,22 @@
 * @Description: 提供自定义page渲染能力, 供内部使用, 内容会迭代调整, 不对用户开放. 
 */
 ;(function(){
+
+
+    const withModalWrap = (component, provideProps) => {
+        return (props) => {
+          const ModalComponent = component;
+          return React.createElement(ModalComponent, props);
+        }
+      }
+      const render = (component, componentProps, container, provideProps = {} ) => {
+          const wrapComponent = withModalWrap(component, provideProps);
+          const contentEle = React.createElement(wrapComponent,{
+              ...componentProps
+            });
+          return ReactDOM.render(contentEle, container);
+      }
+
     Steedos.Page = {
         App: {},
         Record: {},
@@ -82,7 +98,7 @@
                     "id": "u:7b47b6042b0d"
                 }
             }
-        }else if(type === 'record' && objectApiName != 'pages'){
+        }else if(type === 'record'){
             return {
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
@@ -341,7 +357,7 @@
 
             if(!lodash.isFunction(root)){
                 //渲染loading
-                SteedosUI.render(BuilderComponent, {
+                render(BuilderComponent, {
                     model: "page", content: {
                         "data": loadingContentData
                     }
@@ -354,7 +370,7 @@
             ]).then(()=>{
                 //渲染page
                 if(!lodash.isFunction(root)){
-                    SteedosUI.render(BuilderComponent, {
+                    render(BuilderComponent, {
                         model: "page", content: {
                             "data": pageContentData
                         }
@@ -377,6 +393,7 @@
                         }, options.props)).show();
                     }else{
                         data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
+                        console.log(`Modal`, '=======Modal')
                         SteedosUI.Modal(Object.assign({
                             name: data.modalName,
                             title: data.title,

@@ -73,8 +73,8 @@
             waitForThing(window, 'assetsLoaded'),
             waitForThing(window, 'amis'),
         ]).then(()=>{
-            window.React = window.__React;
-            window.ReactDOM = window.__ReactDOM;
+            // window.React = window.__React;
+            // window.ReactDOM = window.__ReactDOM;
             const AmisRenderers = [];
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
@@ -242,21 +242,23 @@
 
             const initMonaco = ()=>{
 
-                const { detect } = require('detect-browser');
+                // const { detect } = require('detect-browser');
 
-                const browser = detect();
+                // const browser = detect();
 
-                // 低于86版的chrome 不支持code类型字段及功能
-                if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
-                    return Promise.resolve(true)
-                }
+                // // 低于86版的chrome 不支持code类型字段及功能
+                // if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
+                //     return Promise.resolve(true)
+                // }
 
-                // 手机版暂不支持code类型字段.
-                if(Meteor.isCordova){
-                    return Promise.resolve(true)
-                }else{
-                    return Builder.initMonaco()
-                }
+                // // 手机版暂不支持code类型字段.
+                // if(Meteor.isCordova){
+                //     return Promise.resolve(true)
+                // }else{
+                //     return Builder.initMonaco()
+                // }
+
+                return Promise.resolve(true)
             }
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
             initMonaco().catch((err)=>{
