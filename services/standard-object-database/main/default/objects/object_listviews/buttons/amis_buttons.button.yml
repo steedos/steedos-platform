@@ -31,7 +31,7 @@ amis_schema: |-
               },
               "tooltip": "重置列表视图Amis Schema",
               "tooltipPlacement": "top",
-              "className": "slds-button slds-button--neutral p-0"
+              "className": ""
           }
       ],
       "regions": [

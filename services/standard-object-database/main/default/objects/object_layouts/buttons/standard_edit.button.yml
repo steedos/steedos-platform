@@ -18,7 +18,7 @@ amis_schema: |-
                     "weight": 0
                 }
             },
-            "className": "slds-button slds-button--neutral p-0"
+            "className": ""
         }
     ],
     "regions": [
