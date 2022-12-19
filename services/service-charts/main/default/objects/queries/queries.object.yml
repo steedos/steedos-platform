@@ -17,10 +17,3 @@ hidden: true
 is_enable: true
 label: 查询
 version: 2
-# form:
-#  afterView: !!js/function |
-#       function(){
-#         if(this.doc.name){
-#           SteedosUI.render(stores.ComponentRegistry.components.QuerySource, { queryId: this.doc.name }, $(".slds-template__container")[0])
-#         }
-#       }
