@@ -320,6 +320,11 @@ fields:
         value: "obj_to_ins"
     defaultValue: both
     required: true
+  lock_record_after_approval:
+    label: Lock record after approval
+    type: boolean
+    defaultValue: false
+    required: true
 list_views:
   default:
     columns:

@@ -865,7 +865,7 @@ InstanceRecordQueue.evalFieldMapBackScript = function (field_map_back_script, in
     return {}
 }
 
-InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins) {
+InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObjects, relatedObjectsValue, spaceId, ins, locked = false) {
     var insId = ins._id;
 
     _.each(relatedObjects, function (relatedObject) {
@@ -901,6 +901,7 @@ InstanceRecordQueue.syncRelatedObjectsValue = function (mainRecordId, relatedObj
                 //     state: instance_state
                 // }];
                 // relatedObjectValue.instance_state = instance_state;
+                relatedObjectValue.locked = locked
                 if (Creator.Objects[relatedObject.object_name]) {
                     Creator.getCollection(relatedObject.object_name, spaceId).insert(relatedObjectValue, { validate: false, filter: false })
                 } else {
@@ -977,12 +978,13 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
                 }
+                var lock_record_after_approval = ow.lock_record_after_approval || false;
                 var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record)
                 var setObj = syncValues.mainObjectValue;
 
                 var instance_state = ins.state;
                 if (ins.state === 'completed') {
-                    setObj.locked = false
+                    setObj.locked = lock_record_after_approval
                     if (ins.final_decision) {
                         instance_state = ins.final_decision;
                     }
@@ -1063,6 +1065,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     newRecordId = makeNewID(ow.object_name),
                     objectName = ow.object_name,
                     syncDirection = ow.sync_direction || 'both';
+                    lock_record_after_approval = ow.lock_record_after_approval || false;
 
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
@@ -1075,10 +1078,13 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 newObj._id = newRecordId;
                 newObj.space = spaceId;
                 newObj.name = newObj.name || ins.name;
+                
+                newObj.locked = true;
 
                 var instance_state = ins.state;
                 if (ins.state === 'completed' && ins.final_decision) {
                     instance_state = ins.final_decision;
+                    newObj.locked = lock_record_after_approval;
                 }
                 newObj.instances = [{
                     _id: insId,
@@ -1105,7 +1111,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     })
                     var relatedObjects = getRelateds(ow.object_name);
                     var relatedObjectsValue = syncValues.relatedObjectsValue;
-                    InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins);
+                    InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins, newObj.locked);
                     // workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
                     // var record = objectCollection.findOne(newRecordId);
                     var record = objectFindOne(objectName, { filters: [['_id', '=', newRecordId]] });
