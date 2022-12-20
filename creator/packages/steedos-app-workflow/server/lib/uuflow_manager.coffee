@@ -661,6 +661,7 @@ uuflowManager.getApproveValues = (approve_values, permissions, form_id, form_ver
 	return approve_values
 
 uuflowManager.workflow_engine = (approve_from_client, current_user_info, current_user, auto_submitted)->
+	console.log('>>>>>>>>>>>>>>>>>>>>', 'uuflowManager.workflow_engine')
 	instance_id = approve_from_client["instance"]
 	trace_id = approve_from_client["trace"]
 	approve_id = approve_from_client["_id"]
@@ -759,7 +760,7 @@ uuflowManager.workflow_engine = (approve_from_client, current_user_info, current
 	uuflowManager.isInstancePending(instance)
 	# 判断当前用户是否approve 对应的处理人或代理人
 	uuflowManager.isHandlerOrAgent(approve, current_user)
-	updateObj = new Object
+	updateObj = {}
 
 	if next_steps is null or next_steps.length is 0
 		throw new Meteor.Error('error!', '还未指定下一步和处理人，操作失败')
@@ -782,8 +783,8 @@ uuflowManager.workflow_engine = (approve_from_client, current_user_info, current
 			throw new Meteor.Error('error!', 'end结点出现approve，服务器错误')
 
 		form = db.forms.findOne(instance.form)
-		updateObj.keywords = uuflowManager.caculateKeywords(updateObj.values, form, instance.form_version)
-		db.instances.update({_id: instance_id}, {$set: updateObj})
+		updateObj.$set.keywords = uuflowManager.caculateKeywords(updateObj.$set.values, form, instance.form_version)
+		db.instances.update(instance_id, updateObj)
 
 	instance = uuflowManager.getInstance(instance_id)
 	instance_trace = _.find(instance.traces, (trace)->
@@ -841,7 +842,9 @@ uuflowManager.workflow_engine = (approve_from_client, current_user_info, current
 
 
 uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted) ->
-	setObj = new Object
+	setObj = {}
+	updateObj = {}
+	setTraceObj = {}
 	space_id = instance.space
 	# 验证next_steps.step是否合法
 	nextSteps = uuflowManager.getNextSteps(instance, flow, step, "")
@@ -863,24 +866,23 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 		while i < instance_traces.length
 			if instance_traces[i]._id is trace_id
 				# 更新当前trace记录
-				instance_traces[i].is_finished = true
-				instance_traces[i].finish_date = new Date
-				instance_traces[i].judge = judge
+				setTraceObj["traces.#{i}.is_finished"] = true
+				setTraceObj["traces.#{i}.finish_date"] = new Date
+				setTraceObj["traces.#{i}.judge"] = judge
 				h = 0
 				while h < instance_traces[i].approves.length
 					if instance_traces[i].approves[h]._id is approve_id
 						# 更新当前trace.approve记录
-						instance_traces[i].approves[h].is_finished = true
-						instance_traces[i].approves[h].handler = current_user
-						instance_traces[i].approves[h].handler_name = current_user_info.name
-						instance_traces[i].approves[h].finish_date = new Date
-						instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-						instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-						instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-						# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
-						# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
-						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-						instance_traces[i].approves[h].auto_submitted = auto_submitted
+						approveFinishDate = new Date
+						setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+						setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+						setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+						setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+						setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+						setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+						setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+						setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+						setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 					h++
 			i++
 
@@ -899,7 +901,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 		setObj.state = "completed"
 		setObj.modified = new Date
 		setObj.modified_by = current_user
-		setObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+		setObj.values = uuflowManager.getUpdatedValues(instance)
 		instance.values = setObj.values
 		setObj.name = uuflowManager.getInstanceName(instance)
 
@@ -909,13 +911,9 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 		trace_approve = _.find(instance_trace.approves, (approve) ->
 			return approve._id is approve_id
 		)
-		outbox_users = instance.outbox_users
-		outbox_users.unshift(trace_approve.handler)
-		outbox_users.unshift(trace_approve.user)
-		setObj.outbox_users = _.uniq(outbox_users)
+		updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
 
-		instance_traces.push(newTrace)
-		setObj.traces = instance_traces
+		updateObj.$push = { traces: newTrace }
 		setObj.inbox_users = []
 		setObj.finish_date = new Date
 		setObj.current_step_name = next_step_name
@@ -942,24 +940,23 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 					while i < instance_traces.length
 						if instance_traces[i]._id is trace_id
 							# 更新当前trace记录
-							instance_traces[i].is_finished = true
-							instance_traces[i].finish_date = new Date
-							instance_traces[i].judge = judge
+							setTraceObj["traces.#{i}.is_finished"] = true
+							setTraceObj["traces.#{i}.finish_date"] = new Date
+							setTraceObj["traces.#{i}.judge"] = judge
 							h = 0
 							while h < instance_traces[i].approves.length
 								if instance_traces[i].approves[h]._id is approve_id
 									# 更新当前trace.approve记录
-									instance_traces[i].approves[h].is_finished = true
-									instance_traces[i].approves[h].handler = current_user
-									instance_traces[i].approves[h].handler_name = current_user_info.name
-									instance_traces[i].approves[h].finish_date = new Date
-									instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-									instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-									instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-									# 调整approves 的values 。删除values中在当前步骤中没有编辑权限的字段值
-									# instance_traces[i].approves[h].values = uuflowManager.getApproveValues(instance_traces[i].approves[h].values, step["permissions"], instance.form, instance.form_version)
-									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-									instance_traces[i].approves[h].auto_submitted = auto_submitted
+									approveFinishDate = new Date
+									setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+									setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+									setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+									setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+									setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+									setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 								h++
 						i++
 
@@ -975,7 +972,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 					newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 					newTrace.approves = new Array
 
-					updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+					updated_values = uuflowManager.getUpdatedValues(instance)
 					_.each next_step_users, (next_step_user_id, idx) ->
 						# 插入下一步trace.approve记录
 						newApprove = new Object
@@ -1028,22 +1025,22 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = (instance_id, t
 					trace_approve = _.find(instance_trace.approves, (approve) ->
 						return approve._id is approve_id
 					)
-					outbox_users = instance.outbox_users
-					outbox_users.unshift(trace_approve.user)
-					outbox_users.unshift(trace_approve.handler)
-					setObj.outbox_users = _.uniq(outbox_users)
+					updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
 					setObj.inbox_users = next_step_users
 
-					instance_traces.push(newTrace)
-					setObj.traces = instance_traces
+					updateObj.$push = { traces: newTrace }
 					setObj.current_step_name = next_step_name
 
 					setObj.current_step_auto_submit = uuflowManager.getCurrentStepAutoSubmit(flow.timeout_auto_submit, next_step.lines)
 
-	return setObj
+	db.instances.update(instance_id, { $set: setTraceObj })
+	updateObj.$set = setObj
+	return updateObj
 
 uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, description, auto_submitted) ->
-	setObj = new Object
+	updateObj = {}
+	setObj = {}
+	setTraceObj = {}
 	space_id = instance.space
 	# 验证approve的judge是否为空
 
@@ -1072,22 +1069,23 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 				while i < instance_traces.length
 					if instance_traces[i]._id is trace_id
 						# 更新当前trace记录
-						instance_traces[i].is_finished = true
-						instance_traces[i].finish_date = new Date
-						instance_traces[i].judge = judge
+						setTraceObj["traces.#{i}.is_finished"] = true
+						setTraceObj["traces.#{i}.finish_date"] = new Date
+						setTraceObj["traces.#{i}.judge"] = judge
 						h = 0
 						while h < instance_traces[i].approves.length
 							if instance_traces[i].approves[h]._id is approve_id
 								# 更新当前trace.approve记录
-								instance_traces[i].approves[h].is_finished = true
-								instance_traces[i].approves[h].handler = current_user
-								instance_traces[i].approves[h].handler_name = current_user_info.name
-								instance_traces[i].approves[h].finish_date = new Date
-								instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-								instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-								instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-								instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-								instance_traces[i].approves[h].auto_submitted = auto_submitted
+								approveFinishDate = new Date
+								setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+								setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+								setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+								setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+								setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+								setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+								setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+								setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+								setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 							h++
 					i++
 
@@ -1107,7 +1105,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 				setObj.final_decision = judge
 				setObj.modified = new Date
 				setObj.modified_by = current_user
-				setObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+				setObj.values = uuflowManager.getUpdatedValues(instance)
 				instance.values = setObj.values
 				setObj.name = uuflowManager.getInstanceName(instance)
 
@@ -1117,17 +1115,11 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 				trace_approve = _.find(instance_trace.approves, (approve) ->
 					return approve._id is approve_id
 				)
-				outbox_users = instance.outbox_users
-				outbox_users.unshift(trace_approve.handler)
-				outbox_users.unshift(trace_approve.user)
-				setObj.outbox_users = _.uniq(outbox_users)
-				instance_traces.push(newTrace)
-				setObj.traces = instance_traces
+				updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+				updateObj.$push = { traces: newTrace }
 				setObj.inbox_users = []
 				setObj.finish_date = new Date
 
-				if instance.cc_users
-					setObj.cc_users = instance.cc_users
 
 				setObj.current_step_name = next_step_name
 				setObj.current_step_auto_submit = false
@@ -1152,22 +1144,23 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							while i < instance_traces.length
 								if instance_traces[i]._id is trace_id
 									# 更新当前trace记录
-									instance_traces[i].is_finished = true
-									instance_traces[i].finish_date = new Date
-									instance_traces[i].judge = judge
+									setTraceObj["traces.#{i}.is_finished"] = true
+									setTraceObj["traces.#{i}.finish_date"] = new Date
+									setTraceObj["traces.#{i}.judge"] = judge
 									h = 0
 									while h < instance_traces[i].approves.length
 										if instance_traces[i].approves[h]._id is approve_id
 											# 更新当前trace.approve记录
-											instance_traces[i].approves[h].is_finished = true
-											instance_traces[i].approves[h].handler = current_user
-											instance_traces[i].approves[h].handler_name = current_user_info.name
-											instance_traces[i].approves[h].finish_date = new Date
-											instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-											instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-											instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-											instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-											instance_traces[i].approves[h].auto_submitted = auto_submitted
+											approveFinishDate = new Date
+											setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+											setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+											setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+											setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+											setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+											setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+											setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+											setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+											setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 										h++
 								i++
 
@@ -1183,7 +1176,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 							newTrace.approves = new Array
 
-							updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+							updated_values = uuflowManager.getUpdatedValues(instance)
 							_.each next_step_users, (next_step_user_id, idx) ->
 								# 插入下一步trace.approve记录
 								newApprove = new Object
@@ -1239,17 +1232,11 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 							trace_approve = _.find(instance_trace.approves, (approve) ->
 								return approve._id is approve_id
 							)
-							outbox_users = instance.outbox_users
-							outbox_users.unshift(trace_approve.user)
-							outbox_users.unshift(trace_approve.handler)
-							setObj.outbox_users = _.uniq(outbox_users)
 							setObj.inbox_users = next_step_users
-							instance_traces.push(newTrace)
-							setObj.traces = instance_traces
+							updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+							updateObj.$push = { traces: newTrace }
 
 							setObj.state = "pending"
-							if instance.cc_users
-								setObj.cc_users = instance.cc_users
 
 							setObj.current_step_name = next_step_name
 
@@ -1277,22 +1264,23 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 					while i < instance_traces.length
 						if instance_traces[i]._id is trace_id
 							# 更新当前trace记录
-							instance_traces[i].is_finished = true
-							instance_traces[i].finish_date = new Date
-							instance_traces[i].judge = judge
+							setTraceObj["traces.#{i}.is_finished"] = true
+							setTraceObj["traces.#{i}.finish_date"] = new Date
+							setTraceObj["traces.#{i}.judge"] = judge
 							h = 0
 							while h < instance_traces[i].approves.length
 								if instance_traces[i].approves[h]._id is approve_id
 									# 更新当前trace.approve记录
-									instance_traces[i].approves[h].is_finished = true
-									instance_traces[i].approves[h].handler = current_user
-									instance_traces[i].approves[h].handler_name = current_user_info.name
-									instance_traces[i].approves[h].finish_date = new Date
-									instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-									instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-									instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-									instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-									instance_traces[i].approves[h].auto_submitted = auto_submitted
+									approveFinishDate = new Date
+									setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+									setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+									setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+									setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+									setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+									setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+									setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 								h++
 						i++
 
@@ -1312,7 +1300,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 					setObj.final_decision = judge
 					setObj.modified = new Date
 					setObj.modified_by = current_user
-					setObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+					setObj.values = uuflowManager.getUpdatedValues(instance)
 					instance.values = setObj.values
 					setObj.name = uuflowManager.getInstanceName(instance)
 
@@ -1322,17 +1310,11 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 					trace_approve = _.find(instance_trace.approves, (approve) ->
 						return approve._id is approve_id
 					)
-					outbox_users = instance.outbox_users
-					outbox_users.unshift(trace_approve.handler)
-					outbox_users.unshift(trace_approve.user)
-					setObj.outbox_users = _.uniq(outbox_users)
-					instance_traces.push(newTrace)
-					setObj.traces = instance_traces
+					updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+					updateObj.$push = { traces: newTrace }
 					setObj.inbox_users = []
 					setObj.finish_date = new Date
 
-					if instance.cc_users
-						setObj.cc_users = instance.cc_users
 
 					setObj.current_step_name = next_step_name
 					setObj.current_step_auto_submit = false
@@ -1357,22 +1339,23 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								while i < instance_traces.length
 									if instance_traces[i]._id is trace_id
 										# 更新当前trace记录
-										instance_traces[i].is_finished = true
-										instance_traces[i].finish_date = new Date
-										instance_traces[i].judge = judge
+										setTraceObj["traces.#{i}.is_finished"] = true
+										setTraceObj["traces.#{i}.finish_date"] = new Date
+										setTraceObj["traces.#{i}.judge"] = judge
 										h = 0
 										while h < instance_traces[i].approves.length
 											if instance_traces[i].approves[h]._id is approve_id
 												# 更新当前trace.approve记录
-												instance_traces[i].approves[h].is_finished = true
-												instance_traces[i].approves[h].handler = current_user
-												instance_traces[i].approves[h].handler_name = current_user_info.name
-												instance_traces[i].approves[h].finish_date = new Date
-												instance_traces[i].approves[h].handler_organization = space_user_org_info["organization"]
-												instance_traces[i].approves[h].handler_organization_name = space_user_org_info["organization_name"]
-												instance_traces[i].approves[h].handler_organization_fullname = space_user_org_info["organization_fullname"]
-												instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-												instance_traces[i].approves[h].auto_submitted = auto_submitted
+												approveFinishDate = new Date
+												setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+												setTraceObj["traces.#{i}.approves.#{h}.handler"] = current_user
+												setTraceObj["traces.#{i}.approves.#{h}.handler_name"] = current_user_info.name
+												setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+												setTraceObj["traces.#{i}.approves.#{h}.handler_organization"] = space_user_org_info["organization"]
+												setTraceObj["traces.#{i}.approves.#{h}.handler_organization_name"] = space_user_org_info["organization_name"]
+												setTraceObj["traces.#{i}.approves.#{h}.handler_organization_fullname"] = space_user_org_info["organization_fullname"]
+												setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+												setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 											h++
 									i++
 
@@ -1388,7 +1371,7 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id)
 								newTrace.approves = new Array
 
-								updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id))
+								updated_values = uuflowManager.getUpdatedValues(instance)
 								_.each next_step_users, (next_step_user_id, idx) ->
 									# 插入下一步trace.approve记录
 									newApprove = new Object
@@ -1444,27 +1427,24 @@ uuflowManager.engine_step_type_is_sign = (instance_id, trace_id, approve_id, nex
 								trace_approve = _.find(instance_trace.approves, (approve) ->
 									return approve._id is approve_id
 								)
-								outbox_users = instance.outbox_users
-								outbox_users.unshift(trace_approve.user)
-								outbox_users.unshift(trace_approve.handler)
-								setObj.outbox_users = _.uniq(outbox_users)
 								setObj.inbox_users = next_step_users
-								instance_traces.push(newTrace)
-								setObj.traces = instance_traces
+								updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+								updateObj.$push = { traces: newTrace }
 
 								setObj.state = "pending"
-								if instance.cc_users
-									setObj.cc_users = instance.cc_users
 
 								setObj.current_step_name = next_step_name
 
 								setObj.current_step_auto_submit = uuflowManager.getCurrentStepAutoSubmit(flow.timeout_auto_submit, next_step.lines)
 
-
-	return setObj
+	db.instances.update(instance_id, { $set: setTraceObj })
+	updateObj.$set = setObj
+	return updateObj
 
 uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_id, next_steps, space_user_org_info, judge, instance, flow, step, current_user, current_user_info, auto_submitted) ->
-	setObj = new Object
+	setObj = {}
+	updateObj = {}
+	setTraceObj = {}
 	space_id = instance.space
 	# 验证approve的judge是否为空
 	if not judge
@@ -1493,10 +1473,11 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 				while h < instance_traces[i].approves.length
 					if instance_traces[i].approves[h]._id is approve_id or ((step.oneClickApproval and ['approved','readed'].includes(judge)) or (step.oneClickRejection and 'rejected' is judge))
 						# 更新当前trace.approve记录
-						instance_traces[i].approves[h].is_finished = true
-						instance_traces[i].approves[h].finish_date = new Date
-						instance_traces[i].approves[h].cost_time = instance_traces[i].approves[h].finish_date - instance_traces[i].approves[h].start_date
-						instance_traces[i].approves[h].auto_submitted = auto_submitted
+						approveFinishDate = new Date
+						setTraceObj["traces.#{i}.approves.#{h}.is_finished"] = true
+						setTraceObj["traces.#{i}.approves.#{h}.finish_date"] = approveFinishDate
+						setTraceObj["traces.#{i}.approves.#{h}.cost_time"] = approveFinishDate - instance_traces[i].approves[h].start_date
+						setTraceObj["traces.#{i}.approves.#{h}.auto_submitted"] = auto_submitted
 
 					if instance_traces[i].approves[h].is_finished is false and instance_traces[i].approves[h].type isnt 'cc' and instance_traces[i].approves[h].type isnt 'distribute'
 						isAllApproveFinished = false
@@ -1509,9 +1490,9 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 			while i < instance_traces.length
 				if instance_traces[i]._id is trace_id
 					# 更新当前trace记录
-					instance_traces[i].is_finished = true
-					instance_traces[i].finish_date = new Date
-					instance_traces[i].judge = "submitted"
+					setTraceObj["traces.#{i}.is_finished"] = true
+					setTraceObj["traces.#{i}.finish_date"] = new Date
+					setTraceObj["traces.#{i}.judge"] = "submitted"
 				i++
 
 			# 判断next_step是否为结束结点
@@ -1535,22 +1516,19 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 					return trace._id is trace_id
 				)
 
-				outbox_users = instance.outbox_users
-				_.each instance_trace.approves, (appro) ->
-					outbox_users.push appro.user
-					outbox_users.push appro.handler
+				trace_approve = _.find(instance_trace.approves, (approve) ->
+					return approve._id is approve_id
+				)
 
-				setObj.outbox_users = _.uniq(outbox_users)
-				setObj.inbox_users = new Array
-				instance_traces.push(newTrace)
-				setObj.traces = instance_traces
+				setObj.inbox_users = []
+
+				updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+				updateObj.$push = { traces: newTrace }
 				setObj.finish_date = new Date
 
 				updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
 				setObj.values = updated_values
 				setObj.name = uuflowManager.getInstanceName(instance)
-				if instance.cc_users
-					setObj.cc_users = instance.cc_users
 
 				setObj.current_step_name = next_step_name
 				final_decision = ''
@@ -1636,23 +1614,18 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 							instance_trace = _.find(instance_traces, (trace) ->
 								return trace._id is trace_id
 							)
-							outbox_users = instance.outbox_users
-							_.each instance_trace.approves, (appro) ->
-								outbox_users.push appro.user
-								outbox_users.push appro.handler
-
-							setObj.outbox_users = _.uniq(outbox_users)
+							trace_approve = _.find(instance_trace.approves, (approve) ->
+								return approve._id is approve_id
+							)
 							setObj.inbox_users = next_step_users
-							instance_traces.push(newTrace)
-							setObj.traces = instance_traces
+							updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
+							updateObj.$push = { traces: newTrace }
 
 							setObj.state = "pending"
 
 							updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
 							setObj.values = updated_values
 							setObj.name = uuflowManager.getInstanceName(instance)
-							if instance.cc_users
-								setObj.cc_users = instance.cc_users
 
 							setObj.current_step_name = next_step_name
 							setObj.current_step_auto_submit = uuflowManager.getCurrentStepAutoSubmit(flow.timeout_auto_submit, next_step.lines)
@@ -1664,8 +1637,7 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 			trace_approve = _.find(instance_trace.approves, (approve) ->
 				return approve._id is approve_id
 			)
-			instance.outbox_users.unshift(trace_approve.handler)
-			setObj.outbox_users = instance.outbox_users
+			updateObj.$addToSet = { outbox_users: { $each: [trace_approve.handler, trace_approve.user] } }
 
 			instance.inbox_users.splice(instance.inbox_users.indexOf(trace_approve.handler), 1)
 
@@ -1673,17 +1645,16 @@ uuflowManager.engine_step_type_is_counterSign = (instance_id, trace_id, approve_
 			setObj.modified = new Date
 			setObj.modified_by = current_user
 
-			setObj.traces = instance_traces
 
 			setObj.state = "pending"
 
 			updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id), approve_id)
 			setObj.values = updated_values
 			setObj.name = uuflowManager.getInstanceName(instance)
-			if instance.cc_users
-				setObj.cc_users = instance.cc_users
 
-	return setObj
+	db.instances.update(instance_id, { $set: setTraceObj })
+	updateObj.$set = setObj
+	return updateObj
 
 # 生成HTML格式只读表单和签核历程, 由于此方法生成的html数据会作为邮件内容发送，为了再邮件中样式显示正常，
 # 请不要写单独的css，所有样式请写在html标签的style属性中。

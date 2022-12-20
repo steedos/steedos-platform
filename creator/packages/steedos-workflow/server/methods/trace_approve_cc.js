@@ -98,12 +98,10 @@ Meteor.methods({
 			'traces._id': trace_id
 		}, {
 			$set: setObj,
-			$addToSet: {
+			$push: {
 				'traces.$.approves': {
 					$each: new_approves
-				}
-			},
-			$push: {
+				},
 				cc_users: {
 					$each: cc_user_ids
 				}
