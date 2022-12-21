@@ -593,20 +593,6 @@
             //     data: initialValues,
             // }));
         }
-
-        SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-            name: `${objectApiName}_standard_new_form`,
-            objectApiName: objectApiName,
-            title: title,
-            initialValues: initialValues,
-            afterInsert: function (result) {
-                if (result.length > 0) {
-                    var record = result[0];
-                    SteedosUI.router.go({objectName: objectApiName, recordId: record._id, type: 'new'});
-                    return true;
-                }
-            }
-        }, null, { iconPath: '/assets/icons' });
     };
 
     Steedos.Page.Form.StandardEdit.render = function (appId, objectApiName, title, recordId, options) {
@@ -670,32 +656,6 @@
             //     recordId: recordId
             // }));
         }
-
-        return SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-            name: `${objectApiName}_standard_edit_form`,
-            objectApiName: objectApiName,
-            recordId: recordId,
-            title: title,
-            afterUpdate: function () {
-                setTimeout(function () {
-                    if(["/app/:app_id/:object_name/view/:record_id", "/app/:app_id/:object_name/:record_id/:related_object_name/grid"].indexOf(FlowRouter.current().route.pathDef) > -1){
-                        // 记录详细界面编辑子表记录，或相关子表列表界面编辑子表记录
-                        var params = FlowRouter.current().params;
-                        if(params.record_id !== recordId){
-                            // ObjectForm有缓存，修改子表记录可能会有主表记录的汇总字段变更，需要刷新主表记录
-                            SteedosUI.reloadRecord(params.object_name, params.record_id)
-                        }
-                    }
-                    if (FlowRouter.current().route.path.endsWith("/:record_id")) {
-                        FlowRouter.reload()
-                    } else {
-                        window.refreshDxSchedulerInstance()
-                        window.refreshGrid(options.gridName);
-                    }
-                }, 1);
-                return true;
-            }
-        }, null, { iconPath: '/assets/icons' })
     };
 
     // Steedos.Page.Form.StandardDelete.render = function(){

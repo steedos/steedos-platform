@@ -18,14 +18,3 @@ icon: contract
 is_enable: true
 label: 微页面
 version: 2
-form:
- afterView: !!js/function |
-      function(){
-        if(this.doc.name && (this.doc.render_engine === 'redash' || !this.doc.render_engine)){
-          return SteedosUI.render(stores.ComponentRegistry.components.Page, { pageId: this.doc.name }, $(".slds-template__container")[0])
-        }
-        if(this.doc.type === 'app'){
-          $('[data-object-name="page_assignments"]').hide()
-        }
-        $('[data-object-name="page_versions"]').hide()
-      }
