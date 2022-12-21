@@ -399,12 +399,12 @@ Package.onUse(function(api) {
 	api.addFiles('routes/test_webhook.coffee', 'server');
 
 	api.addFiles('server/lib/1_form_formula.js', 'server');
-	api.addFiles('server/lib/get_handlers_manager.coffee', 'server');
-	api.addFiles('server/lib/permission_manager.coffee', 'server');
-	api.addFiles('server/lib/approve_manager.coffee', 'server');
-	api.addFiles('server/lib/flow_manager.coffee', 'server');
-	api.addFiles('server/lib/form_manager.coffee', 'server');
-	api.addFiles('server/lib/step_manager.coffee', 'server');
+	// api.addFiles('server/lib/get_handlers_manager.coffee', 'server');
+	// api.addFiles('server/lib/permission_manager.coffee', 'server');
+	// api.addFiles('server/lib/approve_manager.coffee', 'server');
+	// api.addFiles('server/lib/flow_manager.coffee', 'server');
+	// api.addFiles('server/lib/form_manager.coffee', 'server');
+	// api.addFiles('server/lib/step_manager.coffee', 'server');
 
 	api.addFiles('server/publications/categories.coffee', 'server');
 	api.addFiles('server/publications/cfs_instances.coffee', 'server');
@@ -463,12 +463,21 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/startup.coffee', 'server');
 
-	api.addFiles('server/lib/instance_manager.coffee', 'server');
+	// api.addFiles('server/lib/instance_manager.coffee', 'server');
 
 	api.addFiles('server/schedule/auto_finish_process_delegation.coffee', 'server');
 	api.addFiles('server/schedule/timeout_auto_submit.coffee', 'server');
 
-	api.export(['getHandlersManager', 'permissionManager', 'workflowTemplate', 'InstanceManager', 'approveManager', 'stepManager', 'flowManager', 'formManager'], ['server']);
+	api.export([
+		// 'getHandlersManager',
+		// 'permissionManager',
+		'workflowTemplate',
+		// 'InstanceManager',
+		// 'approveManager',
+		// 'stepManager',
+		// 'flowManager',
+		// 'formManager'
+	], ['server']);
 	// api.export(['uuflowManager', 'getHandlersManager', 'permissionManager', 'workflowTemplate', 'InstanceManager', 'approveManager', 'stepManager', 'flowManager', 'formManager'], ['server']);
 
 });
