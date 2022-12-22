@@ -1,41 +1,13 @@
+{ workflowMethods } = require('@steedos/workflow')
 Meteor.methods
 	'get_batch_instances': (space, categoryId, flowIds)->
-		if !this.userId
-			return
-
-		if !space
-			return
-
-		_batch_instances = InstanceManager.getBatchInstances(space, categoryId, flowIds, this.userId)
-
-		return _batch_instances
+		return workflowMethods.get_batch_instances.apply(this, arguments)
 
 	'get_batch_instances_count': (space, categoryId, flowIds)->
-		if !this.userId
-			return
-
-		if !space
-			return
-
-		_batch_instances = InstanceManager.getBatchInstances(space, categoryId, flowIds, this.userId)
-
-		return _batch_instances?.length || 0
+		return workflowMethods.get_batch_instances_count.apply(this, arguments)
 
 	'get_my_approves': (instanceIds)->
-
-		that = this
-
-		if !that.userId
-			return
-
-		myApproves = new Array()
-
-		instanceIds.forEach (insId)->
-			my_approve = InstanceManager.getMyApprove(insId, that.userId)
-			if my_approve
-				myApproves.push(my_approve)
-
-		return myApproves
+		return workflowMethods.get_my_approves.apply(this, arguments)
 
 
 

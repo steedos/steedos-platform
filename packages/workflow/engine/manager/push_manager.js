@@ -1,11 +1,11 @@
 var ref, ref1, ref2, ref3;
 // 定义全局变量
 global.pushManager = {
-    bqq_app_id: "200626779",
-    imo_app_cid: (ref = Meteor.settings.imo) != null ? ref.appcid : void 0,
-    imo_app_uid: (ref1 = Meteor.settings.imo) != null ? ref1.appuid : void 0,
-    imo_sync_app_key: (ref2 = Meteor.settings.imo) != null ? ref2.sync_app_key : void 0,
-    imo_push_app_key: (ref3 = Meteor.settings.imo) != null ? ref3.push_app_key : void 0
+    // bqq_app_id: "200626779",
+    // imo_app_cid: (ref = Meteor.settings.imo) != null ? ref.appcid : void 0,
+    // imo_app_uid: (ref1 = Meteor.settings.imo) != null ? ref1.appuid : void 0,
+    // imo_sync_app_key: (ref2 = Meteor.settings.imo) != null ? ref2.sync_app_key : void 0,
+    // imo_push_app_key: (ref3 = Meteor.settings.imo) != null ? ref3.push_app_key : void 0
 };
 
 pushManager.get_to_users = function (send_from, instance, cc_user_ids, current_user_info) {

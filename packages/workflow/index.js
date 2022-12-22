@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-21 11:22:40
+ * @LastEditTime: 2022-12-22 11:08:26
  * @Description: 
  */
 const express = require('express');
@@ -17,3 +17,6 @@ exports.init = function ({  }) {
 
 // 声明审批王引擎所需全局变量
 require('./engine/manager')
+
+// 导出methods
+exports.workflowMethods = require('./engine/methods')
