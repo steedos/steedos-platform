@@ -1,4 +1,120 @@
 name: installPackageFromUrl
-is_enable: true
 label: 手动安装软件包
 'on': list
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "手动安装软件包",
+              "id": "u:install_package_from_url",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "actionType": "dialog",
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "手动安装软件包",
+                                  "body": [
+                                      {
+                                          "type": "form",
+                                          "id": "u:add9d810b386",
+                                          "title": "",
+                                          "body": [
+                                              {
+                                                  "label": "软件包名称",
+                                                  "type": "input-text",
+                                                  "name": "module",
+                                                  "id": "u:524cb8f8d888",
+                                                  "required": true
+                                              },
+                                              {
+                                                  "type": "radios",
+                                                  "label": "",
+                                                  "name": "type",
+                                                  "options": [
+                                                      {
+                                                          "label": "版本号安装",
+                                                          "value": "version"
+                                                      },
+                                                      {
+                                                          "label": "软件包地址安装",
+                                                          "value": "A"
+                                                      }
+                                                  ],
+                                                  "id": "u:9340f42fd219",
+                                                  "value": "version"
+                                              },
+                                              {
+                                                  "label": "软件包URL",
+                                                  "type": "input-text",
+                                                  "name": "url",
+                                                  "id": "u:524cb8f8d888",
+                                                  "placeholder": "",
+                                                  "hiddenOn": "this.type == 'version'"
+                                              },
+                                              {
+                                                  "label": "版本号",
+                                                  "type": "input-text",
+                                                  "name": "version",
+                                                  "id": "u:524cb8f8d888",
+                                                  "placeholder": "如果未填写, 则安装最新正式版",
+                                                  "hiddenOn": "this.type != 'version'"
+                                              },
+                                              {
+                                                  "type": "input-password",
+                                                  "label": "认证信息",
+                                                  "name": "password",
+                                                  "id": "u:25e4f0cdf57b",
+                                                  "showCounter": false,
+                                                  "validations": {},
+                                                  "validationErrors": {}
+                                              }
+                                          ],
+                                          "mode": "normal",
+                                          "api": {
+                                              "method": "post",
+                                              "url": "${context.rootUrl}/api/nodes/cloud/saas/packages/url",
+                                              "data": {
+                                                  "&": "$$"
+                                              },
+                                              "dataType": "json",
+                                              "requestAdaptor": "api.data = {\n  module: api.body.module,\n  version: api.body.version,\n  url: api.body.url,\n  auth: api.body.auth\n};"
+                                              "headers": {
+                                                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                              }
+                                          },
+                                          "messages": {
+                                              "fetchFailed": "初始化失败",
+                                              "saveSuccess": "安装成功",
+                                              "saveFailed": "安装失败"
+                                          }
+                                      }
+                                  ],
+                                  "id": "u:efa30bace722",
+                                  "closeOnEsc": true,
+                                  "closeOnOutside": false,
+                                  "showCloseButton": true,
+                                  "size": "md"
+                              }
+                          }
+                      ],
+                      "weight": 0
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+         
+      },
+      "bodyClassName": "p-0",
+      "id": "u:43363bc48c62"
+  }
+is_enable: true
+type: amis_button
+visible: true

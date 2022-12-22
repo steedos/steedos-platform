@@ -313,7 +313,7 @@ requestBootstrapDataUseAjax = (spaceId, callback)->
 	userId = Meteor.userId()
 	authToken = Accounts._storedLoginToken()
 	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
-	debugger
+	# debugger
 	headers = {}
 	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
 	headers['X-User-Id'] = userId
