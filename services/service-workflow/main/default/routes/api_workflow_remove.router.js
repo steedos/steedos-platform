@@ -1,77 +1,97 @@
 /*
- * @Author: baozhoutao@steedos.com
- * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-20 13:41:00
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-12-24 14:47:21
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-24 14:51:46
  * @Description: 
  */
-const express = require("express");
+'use strict';
+// @ts-check
+const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
-const _ = require('lodash');
-const Fiber = require("fibers");
-
-//TODO 
+const _ = require('underscore');
+const Fiber = require('fibers');
 /**
- * body: {
- *  instance: {
- *     _id: 'xxx'
- *  }
- * }
+@api {post} /api/workflow/remove 删除申请单
+@apiVersion 0.0.0
+@apiName /api/workflow/remove
+@apiGroup service-workflow
+@apiBody {Object[]} Instances 申请单信息
+@apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        
+    }
+@apiErrorExample {json} Error-Response:
+    HTTP/1.1 200 OK
+    {
+      errors: [{ errorMessage: e.message }]
+    }
  */
-router.post('/api/workflow/v2/remove', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/remove', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
-        const { instance: data } = req.body;
-        const current_user = userSession.userId;
+        const spaceId = userSession.spaceId;
+        const userId = userSession.userId;
+        const isSpaceAdmin = userSession.is_space_admin;
+        var hashData = req.body;
         Fiber(async function () {
             try {
-                
-                var cc_users, delete_obj, flow, inbox_users, instance, space, spaceUserOrganizations, space_id, space_user, user_ids;
-                instance = uuflowManager.getInstance(data._id);
-                space_id = instance.space;
-                space = uuflowManager.getSpace(space_id);
-                space_user = uuflowManager.getSpaceUser(space_id, current_user);
-                flow = db.flows.findOne({
-                _id: instance.flow
-                });
-                spaceUserOrganizations = db.organizations.find({
-                _id: {
-                    $in: space_user.organizations
-                }
-                }).fetch();
-                if ((instance.submitter !== current_user) && (!space.admins.includes(current_user)) && !WorkflowManager.canAdmin(flow, space_user, spaceUserOrganizations)) {
-                throw new Meteor.Error('error!', "您不能删除此申请单。");
-                }
-                delete_obj = db.instances.findOne(data._id);
-                delete_obj.deleted = new Date;
-                delete_obj.deleted_by = current_user;
-                db.deleted_instances.insert(delete_obj);
-                db.instances.remove(data._id);
-                if (delete_obj.state !== "draft") {
-                    inbox_users = delete_obj.inbox_users ? delete_obj.inbox_users : [];
-                    cc_users = delete_obj.cc_users ? delete_obj.cc_users : [];
-                    user_ids = _.uniq(inbox_users.concat(cc_users));
-                    _.each(user_ids, function(u_id) {
-                        return pushManager.send_message_to_specifyUser("terminate_approval", u_id);
+                var current_user, current_user_info, e, hashData, inserted_instances;
+                current_user_info = Object.assign({}, userSession, { _id: userSession.userId })
+                current_user = current_user_info._id;
+                hashData = req.body;
+                _.each(hashData['Instances'], function (instance_from_client) {
+                    var cc_users, delete_obj, flow, inbox_users, instance, space, spaceUserOrganizations, space_id, space_user, user_ids;
+                    // 获取一个instance
+                    instance = uuflowManager.getInstance(instance_from_client["_id"]);
+                    space_id = instance.space;
+                    // 获取一个space
+                    space = uuflowManager.getSpace(space_id);
+                    // 获取一个space下的一个user
+                    space_user = uuflowManager.getSpaceUser(space_id, current_user);
+                    flow = db.flows.findOne({
+                        _id: instance.flow
                     });
-                    pushManager.send_instance_notification("monitor_delete_applicant", delete_obj, "", Object.assign({}, userSession, {_id: userSession.userId}));
-                }
-                
+                    spaceUserOrganizations = db.organizations.find({
+                        _id: {
+                            $in: space_user.organizations
+                        }
+                    }).fetch();
+                    if ((instance.submitter !== current_user) && (!space.admins.includes(current_user)) && !WorkflowManager.canAdmin(flow, space_user, spaceUserOrganizations)) {
+                        throw new Meteor.Error('error!', "您不能删除此申请单。");
+                    }
+                    delete_obj = db.instances.findOne(instance_from_client["_id"]);
+                    delete_obj.deleted = new Date;
+                    delete_obj.deleted_by = current_user;
+                    db.deleted_instances.insert(delete_obj);
+                    // 删除instance
+                    db.instances.remove(instance_from_client["_id"]);
+                    if (delete_obj.state !== "draft") {
+                        //发送给待处理人, #发送给被传阅人
+                        inbox_users = delete_obj.inbox_users ? delete_obj.inbox_users : [];
+                        cc_users = delete_obj.cc_users ? delete_obj.cc_users : [];
+                        user_ids = _.uniq(inbox_users.concat(cc_users));
+                        _.each(user_ids, function (u_id) {
+                            return pushManager.send_message_to_specifyUser("terminate_approval", u_id);
+                        });
+                        // 发送删除通知邮件给通过校验的申请人/填单人，对申请人/填单人各生成一条smtp message
+                        return pushManager.send_instance_notification("monitor_delete_applicant", delete_obj, "", current_user_info);
+                    }
+                });
+
                 res.status(200).send({});
-            } catch (error) {
-                console.error(error);
+            } catch (e) {
+                console.error(e);
                 res.status(200).send({
-                    error: error.message
+                    errors: [{ errorMessage: e.message }]
                 });
             }
-
         }).run()
-    
-    } catch (error) {
-        console.error(error);
+    } catch (e) {
         res.status(200).send({
-            error: error.message
+            errors: [{ errorMessage: e.message }]
         });
     }
 });
