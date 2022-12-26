@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:14:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 15:18:24
+ * @LastEditTime: 2022-12-26 12:04:19
  * @Description: 
  */
 'use strict';
@@ -14,7 +14,7 @@ const _ = require('underscore');
 const Fiber = require('fibers');
 const Cookies = require("cookies");
 /**
-@api {post} /api/workflow/export/talbe_template 接口说明
+@api {get} /api/workflow/export/talbe_template 接口说明
 @apiVersion 0.0.0
 @apiName /api/workflow/export/talbe_template
 @apiGroup service-workflow
@@ -29,7 +29,7 @@ const Cookies = require("cookies");
       errors: [{ errorMessage: e.message }]
     }
  */
-router.post('/api/workflow/export/talbe_template', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/export/talbe_template', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         const spaceId = userSession.spaceId;
@@ -95,14 +95,10 @@ router.post('/api/workflow/export/talbe_template', core.requireAuthentication, a
                         }
                     });
                     if (!space) {
-                        JsonRoutes.sendResult(res, {
-                            code: 404,
-                            data: {
-                                "error": "Validate Request -- No permission",
-                                "success": false
-                            }
+                        return res.status(404).send({
+                            "error": "Validate Request -- No permission",
+                            "success": false
                         });
-                        return;
                     }
                 }
                 data = TemplateManager.handleTableTemplate({

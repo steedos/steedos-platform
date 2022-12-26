@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 11:56:18
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 13:24:16
+ * @LastEditTime: 2022-12-26 11:18:12
  * @Description: 
  */
 'use strict';
@@ -13,6 +13,8 @@ const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
 const moment = require('moment')
+const fs = require('fs')
+const path = require('path')
 /**
 @api {get} /api/workflow/export/instances 申请单导出
 @apiVersion 0.0.0
@@ -147,7 +149,7 @@ router.get('/api/workflow/export/instances', core.requireAuthentication, async f
                     }).fetch();
                 }
                 ejs = require('ejs');
-                str = require('../server/ejs/export_instances.ejs');
+                str = fs.readFileSync(path.resolve(__dirname, '../server/ejs/export_instances.ejs'), 'utf8');
                 // 检测是否有语法错误
                 // ejsLint = require('ejs-lint')
                 // if ejsLint.lint

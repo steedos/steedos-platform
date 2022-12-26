@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 11:44:39
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 11:50:31
+ * @LastEditTime: 2022-12-26 10:01:36
  * @Description: 
  */
 'use strict';
@@ -29,7 +29,7 @@ const Fiber = require('fibers');
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/workflow/drafts', core.requireAuthentication, async function (req, res) {
+router.post('/api/workflow/drafts', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
         Fiber(async function () {

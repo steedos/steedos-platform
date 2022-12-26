@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:00:04
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 14:52:09
+ * @LastEditTime: 2022-12-26 12:05:02
  * @Description: 
  */
 'use strict';
@@ -73,17 +73,13 @@ router.post('/api/workflow/open/cfs/:ins_id', core.requireAuthentication, async 
                     if (req.files && req.files[0]) {
                         // 附件上传接口，限制附件大小，最大为100M
                         if (req.files[0].data.length > (100 * 1024 * 1024)) {
-                            JsonRoutes.sendResult(res, {
-                                code: 200,
-                                data: {
-                                    errors: [
-                                        {
-                                            errorMessage: "超过上传附件大小限制(100M)"
-                                        }
-                                    ]
-                                }
+                            return res.status(200).send({
+                                errors: [
+                                    {
+                                        errorMessage: "超过上传附件大小限制(100M)"
+                                    }
+                                ]
                             });
-                            return;
                         }
                         newFile = new FS.File();
                         return newFile.attachData(req.files[0].data, {

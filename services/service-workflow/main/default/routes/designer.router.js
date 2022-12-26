@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 15:14:24
+ * @LastEditTime: 2022-12-26 09:43:16
  * @Description: 
  */
 'use strict';
@@ -150,9 +150,9 @@ var DesignerAPI = {
 };
 
 /**
-@api {get} /api/workflow/designer?url=:url 接口说明
+@api {get} /api/workflow/designer 接口说明
 @apiVersion 0.0.0
-@apiName /api/workflow/designer?url=:url
+@apiName /api/workflow/designer
 @apiGroup service-workflow
 @apiBody {String} companyId 组织ID
 @apiParam {String} companyId 组织ID
@@ -168,7 +168,7 @@ var DesignerAPI = {
       errors: [{ errorMessage: e.message }]
     }
  */
-router.get('/api/workflow/designer?url=:url', core.requireAuthentication, async function (req, res) {
+router.get('/api/workflow/designer', core.requireAuthentication, async function (req, res) {
     try {
         return DesignerAPI.sendHtmlResponse(req, res)
     } catch (e) {
