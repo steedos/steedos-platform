@@ -237,62 +237,62 @@ Steedos.StandardObjects = {
                     return false;
                 },
                 todo: function(object_name){
-                    const objectName = "queue_import_history";
-                    const object = Creator.getObject(objectName);
-                    const initialValues = {object_name: object_name};
-                    const objectSchema = {
-                        fields: window.lodash.cloneDeep(object.fields)
-                    };
-                    objectSchema.fields.object_name.hidden = true;
-                    SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
-                        name: `${objectName}_standard_new_form`,
-                        // objectApiName: objectName,
-                        objectSchema: objectSchema,
-                        title: '新建 ' + object.label,
-                        initialValues: initialValues,
-                        onFinish: async (values = {}) => {
-                            return new Promise((resolve, reject) => {
-                                try {
-                                    stores.API.insertRecord(objectName, Object.assign({}, values, initialValues)).then((result)=>{
-                                        if(result && result.length > 0){
-                                            const record_id = result[0]._id;
-                                            $("body").addClass("loading");
-                                            $.ajax({
-                                                url: Steedos.absoluteUrl("/api/data/initiateImport"),
-                                                type: "post",
-                                                data: {
-                                                importObjectHistoryId: record_id
-                                                },
-                                                xhrFields: {
-                                                withCredentials: true
-                                                },
-                                                success: function(res){
-                                                    $("body").removeClass("loading");
-                                                    SteedosUI.reloadRecord(objectName, record_id);
-                                                    FlowRouter.reload();
-                                                    toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
-                                                },
-                                                error: function(res){
-                                                    $("body").removeClass("loading");
-                                                    toastr.error(res.responseJSON.message);
-                                                }
-                                            });
-                                            FlowRouter.reload();
-                                            resolve(true);
-                                        }
-                                        resolve(false);
-                                    }).catch(function(e){
-                                        console.log(e)
-                                        toastr.error(e.message)
-                                        resolve(false);
-                                    }) 
-                                } catch (error) {
-                                    console.error(`e2`, error);
-                                    reject(false);
-                                }
-                            })
-                        }
-                    }, null, {iconPath: '/assets/icons'})
+                    // const objectName = "queue_import_history";
+                    // const object = Creator.getObject(objectName);
+                    // const initialValues = {object_name: object_name};
+                    // const objectSchema = {
+                    //     fields: window.lodash.cloneDeep(object.fields)
+                    // };
+                    // objectSchema.fields.object_name.hidden = true;
+                    // SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+                    //     name: `${objectName}_standard_new_form`,
+                    //     // objectApiName: objectName,
+                    //     objectSchema: objectSchema,
+                    //     title: '新建 ' + object.label,
+                    //     initialValues: initialValues,
+                    //     onFinish: async (values = {}) => {
+                    //         return new Promise((resolve, reject) => {
+                    //             try {
+                    //                 stores.API.insertRecord(objectName, Object.assign({}, values, initialValues)).then((result)=>{
+                    //                     if(result && result.length > 0){
+                    //                         const record_id = result[0]._id;
+                    //                         $("body").addClass("loading");
+                    //                         $.ajax({
+                    //                             url: Steedos.absoluteUrl("/api/data/initiateImport"),
+                    //                             type: "post",
+                    //                             data: {
+                    //                             importObjectHistoryId: record_id
+                    //                             },
+                    //                             xhrFields: {
+                    //                             withCredentials: true
+                    //                             },
+                    //                             success: function(res){
+                    //                                 $("body").removeClass("loading");
+                    //                                 SteedosUI.reloadRecord(objectName, record_id);
+                    //                                 FlowRouter.reload();
+                    //                                 toastr.success(TAPi18n.__("queue_import_action_import_execute_success"));
+                    //                             },
+                    //                             error: function(res){
+                    //                                 $("body").removeClass("loading");
+                    //                                 toastr.error(res.responseJSON.message);
+                    //                             }
+                    //                         });
+                    //                         FlowRouter.reload();
+                    //                         resolve(true);
+                    //                     }
+                    //                     resolve(false);
+                    //                 }).catch(function(e){
+                    //                     console.log(e)
+                    //                     toastr.error(e.message)
+                    //                     resolve(false);
+                    //                 }) 
+                    //             } catch (error) {
+                    //                 console.error(`e2`, error);
+                    //                 reject(false);
+                    //             }
+                    //         })
+                    //     }
+                    // }, null, {iconPath: '/assets/icons'})
                 }
             }
         },
