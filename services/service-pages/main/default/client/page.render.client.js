@@ -13,11 +13,17 @@
         }
       }
       const render = (component, componentProps, container, provideProps = {} ) => {
-          const wrapComponent = withModalWrap(component, provideProps);
-          const contentEle = React.createElement(wrapComponent,{
-              ...componentProps
-            });
-          return ReactDOM.render(contentEle, container);
+          try {
+            const wrapComponent = withModalWrap(component, provideProps);
+            const contentEle = React.createElement(wrapComponent,{
+                ...componentProps
+                });
+            setTimeout(()=>{
+                ReactDOM.render(contentEle, container);
+            }, 10)
+          } catch (error) {
+            console.log(`error`, error)
+          }
       }
 
     Steedos.Page = {
