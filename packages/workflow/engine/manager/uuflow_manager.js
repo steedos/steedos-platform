@@ -1,10 +1,11 @@
-var Cookies, _eval, isSkipStep, steedosCore;
-
-Cookies = require("cookies");
-
-_eval = require('eval');
-
-steedosCore = require('@steedos/core');
+const {
+    insert_instance_tasks,
+    update_instance_tasks,
+    remove_instance_tasks
+} = require('./instance_tasks_manager')
+const Cookies = require("cookies");
+const _eval = require('eval');
+const steedosCore = require('@steedos/core');
 
 // 定义全局变量
 global.uuflowManager = {};
@@ -84,7 +85,7 @@ uuflowManager.getFlow = function (flow_id) {
 
 uuflowManager.getSpaceUserOrgInfo = function (space_user) {
     var info, org;
-    info = new Object;
+    info = {};
     info.organization = space_user.organization;
     org = db.organizations.findOne(space_user.organization, {
         fields: {
@@ -224,7 +225,7 @@ uuflowManager.getUserOrganization = function (user_id, space_id) {
 
 uuflowManager.getUserRoles = function (user_id, space_id) {
     var positions, role_names;
-    role_names = new Array;
+    role_names = [];
     positions = db.flow_positions.find({
         space: space_id,
         users: user_id
@@ -304,7 +305,7 @@ uuflowManager.calculateCondition = function (values, condition_str) {
             if (!subform_field instanceof Array) {
                 throw new Meteor.Error('error!', "参数不是数组类型");
             }
-            sub_field = new Array;
+            sub_field = [];
             _.each(subform_field, function (field_value) {
                 return sub_field.push(Number(String(field_value)));
             });
@@ -318,7 +319,7 @@ uuflowManager.calculateCondition = function (values, condition_str) {
             if (!subform_field instanceof Array) {
                 throw new Meteor.Error('error!', "参数不是数组类型");
             }
-            sub_field = new Array;
+            sub_field = [];
             _.each(subform_field, function (field_value) {
                 return sub_field.push(Number(String(field_value)));
             });
@@ -352,10 +353,10 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
             if (field.type === "table") { //子表
                 //得到已引用的子表字段
                 subform_fields_all = field.fields;
-                _subform_values = new Object;
+                _subform_values = {};
                 return _.each(subform_fields_all, function (current_field) {
                     var values_arr;
-                    values_arr = new Array;
+                    values_arr = [];
                     if (["number", "percentage", "currency"].includes(current_field["type"])) {
                         _.each(__values[field.code], function (sub_field) {
                             return values_arr.push(sub_field[current_field["code"]]);
@@ -382,15 +383,15 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
             } else if (field.type === "group") { //选组
                 if (field.is_multiselect) {
                     if (__values[field.code] && __values[field.code].length > 0) {
-                        group_id = new Array;
-                        group_name = new Array;
-                        group_fullname = new Array;
+                        group_id = [];
+                        group_name = [];
+                        group_fullname = [];
                         _.each(__values[field.code], function (group) {
                             group_id.push(group["id"]);
                             group_name.push(group["name"]);
                             return group_fullname.push(group["fullname"]);
                         });
-                        __values[field.code] = new Object;
+                        __values[field.code] = {};
                         __values[field.code]["id"] = group_id;
                         __values[field.code]["name"] = group_name;
                         return __values[field.code]["fullname"] = group_fullname;
@@ -399,12 +400,12 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
             } else if (field.type === "user") { //选人
                 if (field.is_multiselect) {
                     if (__values[field.code] && __values[field.code].length > 0) {
-                        user_id = new Array;
-                        user_name = new Array;
-                        organization = new Object;
-                        organization["user_organization_fullname"] = new Array;
-                        organization["user_organization_name"] = new Array;
-                        user_roles = new Array;
+                        user_id = [];
+                        user_name = [];
+                        organization = {};
+                        organization["user_organization_fullname"] = [];
+                        organization["user_organization_name"] = [];
+                        user_roles = [];
                         _.each(__values[field.code], function (select_user) {
                             var organization_selectuser, role_selectuser;
                             user_id.push(select_user["id"]);
@@ -419,7 +420,7 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
                                 return user_roles = user_roles || role_selectuser;
                             }
                         });
-                        __values[field.code] = new Object;
+                        __values[field.code] = {};
                         __values[field.code]["id"] = user_id;
                         __values[field.code]["name"] = user_name;
                         __values[field.code]["organization"] = organization;
@@ -430,7 +431,7 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
                         organization_selectuser = uuflowManager.getUserOrganization(__values[field.code]["id"], space_id);
                         role_selectuser = uuflowManager.getUserRoles(__values[field.code]["id"], space_id);
                         if (organization_selectuser) {
-                            __values[field.code]["organization"] = new Object;
+                            __values[field.code]["organization"] = {};
                             __values[field.code]["organization"]["fullname"] = organization_selectuser.fullname;
                             __values[field.code]["organization"]["name"] = organization_selectuser.name;
                         }
@@ -457,7 +458,7 @@ uuflowManager.setFormFieldVariable = function (fields, __values, space_id) {
     }
 };
 
-isSkipStep = function (instance, step) {
+function isSkipStep(instance, step) {
     return _.contains(instance.skip_steps, step._id);
 };
 
@@ -465,7 +466,7 @@ isSkipStep = function (instance, step) {
 uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
     var __values, applicant_name, applicant_organization_fullname, applicant_organization_name, applicant_roles, approver_name, approver_organization_fullname, approver_organization_name, approver_roles, current_approve, flowVersions, flow_steps, form, formVersion, lines, nextSteps, prefix, reg, rejectedSteps, rev_nextSteps, start_approve, step_type, submitter_name, submitter_organization_fullname, submitter_organization_name, submitter_roles, trace_steps, traces, version_steps;
     step_type = step.step_type;
-    nextSteps = new Array;
+    nextSteps = [];
     if (step_type === "condition") {
         //step的lines中查询出state=submitted且instance.fields满足其条件的line
         if (values !== void 0) {
@@ -513,22 +514,22 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
         // 处理人的全名
         approver_name = current_approve.handler_name;
         // Condition中涉及的一些变量
-        __values["applicant"] = new Object;
+        __values["applicant"] = {};
         __values["applicant"]["roles"] = applicant_roles;
         __values["applicant"]["name"] = applicant_name;
-        __values["applicant"]["organization"] = new Object;
+        __values["applicant"]["organization"] = {};
         __values["applicant"]["organization"]["fullname"] = applicant_organization_fullname;
         __values["applicant"]["organization"]["name"] = applicant_organization_name;
-        __values["submitter"] = new Object;
+        __values["submitter"] = {};
         __values["submitter"]["roles"] = submitter_roles;
         __values["submitter"]["name"] = submitter_name;
-        __values["submitter"]["organization"] = new Object;
+        __values["submitter"]["organization"] = {};
         __values["submitter"]["organization"]["fullname"] = submitter_organization_fullname;
         __values["submitter"]["organization"]["name"] = submitter_organization_name;
-        __values["approver"] = new Object;
+        __values["approver"] = {};
         __values["approver"]["roles"] = approver_roles;
         __values["approver"]["name"] = approver_name;
-        __values["approver"]["organization"] = new Object;
+        __values["approver"]["organization"] = {};
         __values["approver"]["organization"]["fullname"] = approver_organization_fullname;
         __values["approver"]["organization"]["name"] = approver_organization_name;
         // 获取申请单对应表单
@@ -558,7 +559,7 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
             }
         });
     } else if (step_type === "end") {
-        return new Array;
+        return [];
     } else if (step_type === "submit" || step_type === "start" || step_type === "counterSign") {
         lines = _.filter(step.lines, function (line) {
             return line.state === "submitted";
@@ -584,11 +585,11 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
             });
             rejectedSteps = _.pluck(lines, 'to_step');
             // 取出instance的traces,取出所有历史trace中(is_finished=ture)的step_id
-            trace_steps = new Array;
+            trace_steps = [];
             _.each(instance.traces, function (trace) {
                 var flowVersions;
                 if (trace.is_finished === true) {
-                    flowVersions = new Array;
+                    flowVersions = [];
                     flowVersions.push(flow.current);
                     if (flow.historys) {
                         flowVersions = flowVersions.concat(flow.historys);
@@ -605,7 +606,7 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
                 }
             });
             // 取出flow,取到instance对应的版本的开始结点和结束结点的step_id
-            flow_steps = new Array;
+            flow_steps = [];
             if (instance.flow_version === flow.current._id) {
                 _.each(flow.current.steps, function (flow_step) {
                     if (flow_step.step_type === "start" || flow_step.step_type === "end") {
@@ -625,8 +626,8 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
         }
     }
     // 若下一步中包含 条件节点 则 继续取得 条件节点的 后续步骤
-    version_steps = new Object;
-    flowVersions = new Array;
+    version_steps = {};
+    flowVersions = [];
     flowVersions.push(flow.current);
     if (flow.historys) {
         flowVersions = flowVersions.concat(flow.historys);
@@ -653,7 +654,7 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
         }
     });
     nextSteps = _.uniq(nextSteps);
-    rev_nextSteps = new Array();
+    rev_nextSteps = [];
     _.each(nextSteps, function (nextStepId) {
         var _step;
         _step = uuflowManager.getStep(instance, flow, nextStepId);
@@ -770,7 +771,7 @@ uuflowManager.getApproveValues = function (approve_values, permissions, form_id,
     var form_v, instance_form;
     // 如果permissions为null，则approve_values为{}
     if (permissions === null) {
-        approve_values = new Object;
+        approve_values = {};
     } else {
         // 获得instance中的所有字段
         instance_form = db.forms.findOne(form_id);
@@ -816,13 +817,13 @@ uuflowManager.workflow_engine = function (approve_from_client, current_user_info
     approve_id = approve_from_client["_id"];
     values = approve_from_client["values"];
     if (!values) {
-        values = new Object;
+        values = {};
     }
     next_steps = approve_from_client["next_steps"];
     judge = approve_from_client["judge"];
     description = approve_from_client["description"];
     geolocation = approve_from_client["geolocation"];
-    setObj = new Object;
+    setObj = {};
     // 获取一个instance
     instance = uuflowManager.getInstance(instance_id);
     space_id = instance.space;
@@ -1047,7 +1048,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = function (insta
             i++;
         }
         // 插入下一步trace记录
-        newTrace = new Object;
+        newTrace = {};
         newTrace._id = new Mongo.ObjectID()._str;
         newTrace.instance = instance_id;
         newTrace.previous_trace_ids = [trace_id];
@@ -1127,7 +1128,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = function (insta
                         i++;
                     }
                     // 插入下一步trace记录
-                    newTrace = new Object;
+                    newTrace = {};
                     newTrace._id = new Mongo.ObjectID()._str;
                     newTrace.instance = instance_id;
                     newTrace.previous_trace_ids = [trace_id];
@@ -1136,12 +1137,12 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = function (insta
                     newTrace.name = next_step_name;
                     newTrace.start_date = new Date;
                     newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
-                    newTrace.approves = new Array;
+                    newTrace.approves = [];
                     updated_values = uuflowManager.getUpdatedValues(instance);
                     _.each(next_step_users, function (next_step_user_id, idx) {
                         var agent, handler_id, handler_info, newApprove, next_step_space_user, next_step_user_org_info, user_info;
                         // 插入下一步trace.approve记录
-                        newApprove = new Object;
+                        newApprove = {};
                         newApprove._id = new Mongo.ObjectID()._str;
                         newApprove.instance = instance_id;
                         newApprove.trace = newTrace._id;
@@ -1185,7 +1186,7 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = function (insta
                         newApprove.due_date = newTrace.due_date;
                         newApprove.is_read = false;
                         newApprove.is_error = false;
-                        newApprove.values = new Object;
+                        newApprove.values = {};
                         uuflowManager.setRemindInfo(updated_values, newApprove);
                         return newTrace.approves.push(newApprove);
                     });
@@ -1280,7 +1281,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                     i++;
                 }
                 // 插入下一步trace记录
-                newTrace = new Object;
+                newTrace = {};
                 newTrace._id = new Mongo.ObjectID()._str;
                 newTrace.instance = instance_id;
                 newTrace.previous_trace_ids = [trace_id];
@@ -1360,7 +1361,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                                 i++;
                             }
                             // 插入下一步trace记录
-                            newTrace = new Object;
+                            newTrace = {};
                             newTrace._id = new Mongo.ObjectID()._str;
                             newTrace.instance = instance_id;
                             newTrace.previous_trace_ids = [trace_id];
@@ -1369,12 +1370,12 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                             newTrace.name = next_step_name;
                             newTrace.start_date = new Date;
                             newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
-                            newTrace.approves = new Array;
+                            newTrace.approves = [];
                             updated_values = uuflowManager.getUpdatedValues(instance);
                             _.each(next_step_users, function (next_step_user_id, idx) {
                                 var agent, handler_id, handler_info, newApprove, next_step_space_user, next_step_user_org_info, user_info;
                                 // 插入下一步trace.approve记录
-                                newApprove = new Object;
+                                newApprove = {};
                                 newApprove._id = new Mongo.ObjectID()._str;
                                 newApprove.instance = instance_id;
                                 newApprove.trace = newTrace._id;
@@ -1418,7 +1419,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                                 newApprove.due_date = newTrace.due_date;
                                 newApprove.is_read = false;
                                 newApprove.is_error = false;
-                                newApprove.values = new Object;
+                                newApprove.values = {};
                                 uuflowManager.setRemindInfo(updated_values, newApprove);
                                 return newTrace.approves.push(newApprove);
                             });
@@ -1500,7 +1501,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                         i++;
                     }
                     // 插入下一步trace记录
-                    newTrace = new Object;
+                    newTrace = {};
                     newTrace._id = new Mongo.ObjectID()._str;
                     newTrace.instance = instance_id;
                     newTrace.previous_trace_ids = [trace_id];
@@ -1580,7 +1581,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                                     i++;
                                 }
                                 // 插入下一步trace记录
-                                newTrace = new Object;
+                                newTrace = {};
                                 newTrace._id = new Mongo.ObjectID()._str;
                                 newTrace.instance = instance_id;
                                 newTrace.previous_trace_ids = [trace_id];
@@ -1589,12 +1590,12 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                                 newTrace.name = next_step_name;
                                 newTrace.start_date = new Date;
                                 newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
-                                newTrace.approves = new Array;
+                                newTrace.approves = [];
                                 updated_values = uuflowManager.getUpdatedValues(instance);
                                 _.each(next_step_users, function (next_step_user_id, idx) {
                                     var agent, handler_id, handler_info, newApprove, next_step_space_user, next_step_user_org_info, user_info;
                                     // 插入下一步trace.approve记录
-                                    newApprove = new Object;
+                                    newApprove = {};
                                     newApprove._id = new Mongo.ObjectID()._str;
                                     newApprove.instance = instance_id;
                                     newApprove.trace = newTrace._id;
@@ -1638,7 +1639,7 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
                                     newApprove.due_date = newTrace.due_date;
                                     newApprove.is_read = false;
                                     newApprove.is_error = false;
-                                    newApprove.values = new Object;
+                                    newApprove.values = {};
                                     uuflowManager.setRemindInfo(updated_values, newApprove);
                                     return newTrace.approves.push(newApprove);
                                 });
@@ -1743,7 +1744,7 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
             // 判断next_step是否为结束结点
             if (next_step_type === "end") {
                 // 插入下一步trace记录
-                newTrace = new Object;
+                newTrace = {};
                 newTrace._id = new Mongo.ObjectID()._str;
                 newTrace.instance = instance_id;
                 newTrace.previous_trace_ids = [trace_id];
@@ -1802,7 +1803,7 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
                             throw new Meteor.Error('error!', "指定的下一步处理人有误");
                         } else {
                             // 插入下一步trace记录
-                            newTrace = new Object;
+                            newTrace = {};
                             newTrace._id = new Mongo.ObjectID()._str;
                             newTrace.instance = instance_id;
                             newTrace.previous_trace_ids = [trace_id];
@@ -1811,11 +1812,11 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
                             newTrace.name = next_step_name;
                             newTrace.start_date = new Date;
                             newTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
-                            newTrace.approves = new Array;
+                            newTrace.approves = [];
                             _.each(next_step_users, function (next_step_user_id, idx) {
                                 var agent, handler_id, handler_info, newApprove, next_step_space_user, next_step_user_org_info, user_info;
                                 // 插入下一步trace.approve记录
-                                newApprove = new Object;
+                                newApprove = {};
                                 newApprove._id = new Mongo.ObjectID()._str;
                                 newApprove.instance = instance_id;
                                 newApprove.trace = newTrace._id;
@@ -1859,7 +1860,7 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
                                 newApprove.due_date = newTrace.due_date;
                                 newApprove.is_read = false;
                                 newApprove.is_error = false;
-                                newApprove.values = new Object;
+                                newApprove.values = {};
                                 uuflowManager.setRemindInfo(instance.values, newApprove);
                                 return newTrace.approves.push(newApprove);
                             });
@@ -2023,7 +2024,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     ins_obj.created_by = user_id;
     ins_obj.modified = now;
     ins_obj.modified_by = user_id;
-    ins_obj.values = new Object;
+    ins_obj.values = {};
     companyId = uuflowManager.getFlowCompanyId(flow_id);
     if (companyId) {
         ins_obj.company_id = companyId;
@@ -2059,7 +2060,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     appr_obj.is_read = true;
     appr_obj.is_error = false;
     appr_obj.description = '';
-    appr_obj.values = approve_from_client && approve_from_client["values"] ? approve_from_client["values"] : new Object;
+    appr_obj.values = approve_from_client && approve_from_client["values"] ? approve_from_client["values"] : {};
     trace_obj.approves = [appr_obj];
     ins_obj.traces = [trace_obj];
     ins_obj.inbox_users = instance_from_client.inbox_users || [];
@@ -2077,6 +2078,9 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
         }
     }
     new_ins_id = db.instances.insert(ins_obj);
+
+    insert_instance_tasks(new_ins_id, trace_obj._id, appr_obj._id)
+
     return new_ins_id;
 };
 
@@ -2106,6 +2110,7 @@ uuflowManager.getDueDate = function (hours, spaceId) {
 
 uuflowManager.submit_instance = function (instance_from_client, user_info) {
     var applicant, applicant_id, applicant_org_info, approve, approve_id, attachments, checkApplicant, checkUsers, current_user, description, flow, flow_has_upgrade, flow_id, form, instance, instance_id, instance_name, instance_traces, lang, newTrace, nextSteps, nextTrace, next_step, next_step_users, next_steps, permissions, setObj, space, space_id, space_user, space_user_org_info, start_step, step, submitter_id, trace, trace_id, traces, upObj, updated_values, user, values;
+    const now = new Date()
     current_user = user_info._id;
     lang = "en";
     if (user_info.locale === 'zh-cn') {
@@ -2116,7 +2121,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     approve_id = instance_from_client["traces"][0]["approves"][0]["_id"];
     values = instance_from_client["traces"][0]["approves"][0]["values"];
     if (!values) {
-        values = new Object;
+        values = {};
     }
     //　验证表单上的applicant已填写
     if (!instance_from_client["applicant"]) {
@@ -2167,34 +2172,10 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     });
     instance_traces = instance.traces;
     instance_traces[0]["approves"][0].description = description;
-    setObj = new Object;
+    setObj = {};
     flow_has_upgrade = false;
     // 判断:applicant和原instance的applicant是否相等
-    if (applicant_id === instance.applicant) {
-        // applicant和原instance的applicant相等
-        // 判断流程是否已升级，instance["flow_version"] == flow["current"]["_id"]表示流程未升级
-        if (instance.flow_version === flow.current._id) {
-            instance_traces[0]["approves"][0].judge = "submitted";
-            // 判断next_steps是否为空,不为空则写入到当前approve的next_steps中
-            if (next_steps) {
-                instance_traces[0]["approves"][0].next_steps = next_steps;
-            }
-            setObj.modified = new Date;
-            setObj.modified_by = current_user;
-        } else {
-            // 流程已升级
-            flow_has_upgrade = true;
-            // 更新instance记录
-            setObj.flow_version = flow.current._id;
-            setObj.form_version = flow.current.form_version;
-            setObj.modified = new Date;
-            setObj.modified_by = current_user;
-            // 清空原来的值， 存入当前最新版flow中开始节点的step_id
-            instance_traces[0].step = start_step._id;
-            instance_traces[0].name = start_step.name;
-            instance_traces[0]["approves"][0].judge = "submitted";
-        }
-    } else {
+    if (applicant_id !== instance.applicant) {
         // applicant和原instance的applicant不相等
         user = uuflowManager.getUser(applicant_id);
         applicant = uuflowManager.getSpaceUser(space_id, applicant_id);
@@ -2209,36 +2190,34 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         setObj.applicant_company = applicant["company_id"];
         instance_traces[0]["approves"][0].user = applicant_id;
         instance_traces[0]["approves"][0].user_name = user.name;
-        instance_traces[0]["approves"][0].judge = "submitted";
-        // 判断流程是否已升级，instance["flow_version"] == flow["current"]["_id"]表示流程未升级
-        if (instance.flow_version === flow.current._id) {
-            // 判断next_steps是否为空,不为空则写入到当前approve的next_steps中
-            if (next_steps) {
-                instance_traces[0]["approves"][0].next_steps = next_steps;
-                setObj.modified = new Date;
-                setObj.modified_by = current_user;
-            }
-        } else {
-            // 流程已升级
-            flow_has_upgrade = true;
-            // 更新instance记录
-            setObj.flow_version = flow.current._id;
-            setObj.form_version = flow.current.form_version;
-            setObj.modified = new Date;
-            setObj.modified_by = current_user;
-            // 清空原来的值， 存入当前最新版flow中开始节点的step_id
-            instance_traces[0].step = start_step._id;
-            instance_traces[0].name = start_step.name;
+    }
+    // 判断流程是否已升级，instance["flow_version"] == flow["current"]["_id"]表示流程未升级
+    if (instance.flow_version === flow.current._id) {
+        // 判断next_steps是否为空,不为空则写入到当前approve的next_steps中
+        if (next_steps) {
+            instance_traces[0]["approves"][0].next_steps = next_steps;
         }
+    } else {
+        // 流程已升级
+        flow_has_upgrade = true;
+        // 更新instance记录
+        setObj.flow_version = flow.current._id;
+        setObj.form_version = flow.current.form_version;
+        // 清空原来的值， 存入当前最新版flow中开始节点的step_id
+        instance_traces[0].step = start_step._id;
+        instance_traces[0].name = start_step.name;
     }
     // 调整approves 的values 删除values中在当前步骤中没有编辑权限的字段值
     instance_traces[0]["approves"][0].values = uuflowManager.getApproveValues(values, step.permissions, instance.form, instance.form_version); // 非odata字段从台帐将值传到审批单（开始节点此字段无编辑权限），审批单提交后，值丢失 #891
     setObj.traces = instance_traces;
+    setObj.modified = now;
+    setObj.modified_by = current_user;
     db.instances.update({
         _id: instance_id
     }, {
         $set: setObj
     });
+    update_instance_tasks(instance_id, instance_traces[0]._id, instance_traces[0]["approves"][0]._id)
     if (flow_has_upgrade) {
         return {
             alerts: TAPi18n.__('flow.point_upgraded', {}, lang)
@@ -2249,7 +2228,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     // 判断一个instance是否为拟稿状态
     uuflowManager.isInstanceDraft(instance, lang);
     traces = instance.traces;
-    upObj = new Object;
+    upObj = {};
     if ((!approve["next_steps"]) || (approve["next_steps"].length === 0)) {
         throw new Meteor.Error('error!', "还未指定下一步和处理人，提交失败");
     } else {
@@ -2273,33 +2252,34 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     // 判断next_step是否为结束结点
     if (next_step.step_type === "end") {
         // 更新approve
+        traces[0]["approves"][0].judge = "submitted";
         traces[0]["approves"][0].is_finished = true;
-        traces[0]["approves"][0].finish_date = new Date;
-        traces[0]["approves"][0].cost_time = traces[0]["approves"][0].finish_date - traces[0]["approves"][0].start_date;
+        traces[0]["approves"][0].finish_date = now;
+        traces[0]["approves"][0].cost_time = now - traces[0]["approves"][0].start_date;
         // 更新trace
         traces[0].is_finished = true;
         traces[0].judge = "submitted";
-        traces[0].finish_date = new Date;
+        traces[0].finish_date = now;
         // 插入下一步trace记录
-        newTrace = new Object;
+        newTrace = {};
         newTrace._id = new Mongo.ObjectID()._str;
         newTrace.instance = instance_id;
         newTrace.previous_trace_ids = [trace["_id"]];
         newTrace.is_finished = true;
         newTrace.step = next_step._id;
         newTrace.name = next_step.name;
-        newTrace.start_date = new Date;
-        newTrace.finish_date = new Date;
+        newTrace.start_date = now;
+        newTrace.finish_date = now;
         // 更新instance记录
         // 申请单名称按照固定规则生成申请单名称：流程名称＋' '+申请单编号
-        upObj.submit_date = new Date;
+        upObj.submit_date = now;
         upObj.state = "completed";
         upObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
         upObj.code = flow.current_no + 1 + "";
         instance.code = upObj.code;
         instance.values = upObj.values;
         upObj.name = uuflowManager.getInstanceName(instance);
-        upObj.modified = new Date;
+        upObj.modified = now;
         upObj.modified_by = current_user;
         upObj.inbox_users = [];
         upObj.outbox_users = _.uniq([current_user, traces[0]["approves"][0]["user"]]);
@@ -2307,7 +2287,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         // traces[0]["approves"][0].values = uuflowManager.getApproveValues(traces[0]["approves"][0].values, step.permissions, instance.form, instance.form_version)
         traces.push(newTrace);
         upObj.traces = traces;
-        upObj.finish_date = new Date;
+        upObj.finish_date = now;
         upObj.current_step_name = next_step.name;
         upObj.final_decision = "approved";
         upObj.current_step_auto_submit = false; // next_step不为结束节点
@@ -2328,29 +2308,30 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
                 } else {
                     // 若合法，执行流转操作
                     // 更新approve
+                    traces[0]["approves"][0].judge = "submitted";
                     traces[0]["approves"][0].is_finished = true;
-                    traces[0]["approves"][0].finish_date = new Date;
+                    traces[0]["approves"][0].finish_date = now;
                     traces[0]["approves"][0].cost_time = traces[0]["approves"][0].finish_date - traces[0]["approves"][0].start_date;
                     // 更新trace
                     traces[0].is_finished = true;
-                    traces[0].finish_date = new Date;
+                    traces[0].finish_date = now;
                     traces[0].judge = "submitted";
                     // 插入下一步trace记录
-                    nextTrace = new Object;
+                    nextTrace = {};
                     nextTrace._id = new Mongo.ObjectID()._str;
                     nextTrace.instance = instance_id;
                     nextTrace.previous_trace_ids = [trace["_id"]];
                     nextTrace.is_finished = false;
                     nextTrace.step = next_step._id;
                     nextTrace.name = next_step.name;
-                    nextTrace.start_date = new Date;
+                    nextTrace.start_date = now;
                     nextTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
-                    nextTrace.approves = new Array;
+                    nextTrace.approves = [];
                     updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
                     // 插入下一步trace.approve记录
                     _.each(next_step_users, function (next_step_user_id, idx) {
                         var agent, handler_id, handler_info, nextApprove, next_step_space_user, next_step_user_org_info;
-                        nextApprove = new Object;
+                        nextApprove = {};
                         nextApprove._id = new Mongo.ObjectID()._str;
                         user_info = uuflowManager.getUser(next_step_user_id);
                         handler_id = next_step_user_id;
@@ -2375,22 +2356,22 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
                         nextApprove.handler_organization = next_step_user_org_info["organization"];
                         nextApprove.handler_organization_name = next_step_user_org_info["organization_name"];
                         nextApprove.handler_organization_fullname = next_step_user_org_info["organization_fullname"];
-                        nextApprove.start_date = new Date;
+                        nextApprove.start_date = now;
                         nextApprove.due_date = nextTrace.due_date;
                         nextApprove.is_read = false;
                         nextApprove.is_error = false;
-                        nextApprove.values = new Object;
+                        nextApprove.values = {};
                         uuflowManager.setRemindInfo(updated_values, nextApprove);
                         return nextTrace.approves.push(nextApprove);
                     });
                     // 更新instance记录
                     upObj.name = instance_name;
-                    upObj.submit_date = new Date;
+                    upObj.submit_date = now;
                     upObj.state = "pending";
                     // 重新查找暂存之后的instance
                     upObj.values = updated_values;
                     upObj.inbox_users = next_step_users;
-                    upObj.modified = new Date;
+                    upObj.modified = now;
                     upObj.modified_by = current_user;
                     // 申请单名称按照固定规则生成申请单名称：流程名称＋' '+申请单编号
                     upObj.code = flow.current_no + 1 + "";
@@ -2421,6 +2402,13 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
             current_no: flow.current_no + 1
         }
     });
+    // 更新当前记录
+    update_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id)
+    if (nextTrace) {
+        // 生成新记录
+        insert_instance_tasks(instance_id, nextTrace._id, nextTrace["approves"][0]._id)
+    }
+
     if (next_step.step_type !== "end") {
         instance = db.instances.findOne(instance_id);
         //发送短消息给申请人
@@ -2434,7 +2422,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
 uuflowManager.get_SpaceChangeSet = function (formids, is_admin, sync_token) {
     var changeSet, formids_ary;
     sync_token = new Date(Number(sync_token) * 1000);
-    changeSet = new Object;
+    changeSet = {};
     changeSet.sync_token = new Date().getTime() / 1000;
     changeSet.inserts = {
         Spaces: [],
@@ -2719,7 +2707,7 @@ uuflowManager.sendRemindSMS = function (ins_name, deadline, users_id, space_id, 
             }, lang)
         });
         // 发推送消息
-        notification = new Object;
+        notification = {};
         notification["createdAt"] = new Date;
         notification["createdBy"] = '<SERVER>';
         notification["from"] = 'workflow';
@@ -2728,7 +2716,7 @@ uuflowManager.sendRemindSMS = function (ins_name, deadline, users_id, space_id, 
             instance_name: ins_name,
             deadline: params.deadline
         }, lang);
-        payload = new Object;
+        payload = {};
         payload["space"] = space_id;
         payload["instance"] = ins_id;
         payload["host"] = Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length - 1);
@@ -3015,7 +3003,7 @@ uuflowManager.distributedInstancesRemind = function (instance) {
                             lang = 'zh-CN';
                         }
                         // 发推送消息
-                        notification = new Object;
+                        notification = {};
                         notification["createdAt"] = new Date;
                         notification["createdBy"] = '<SERVER>';
                         notification["from"] = 'workflow';
@@ -3023,7 +3011,7 @@ uuflowManager.distributedInstancesRemind = function (instance) {
                         notification['text'] = TAPi18n.__('instance.push.body.distribute_remind', {
                             instance_name: instance != null ? instance.name : void 0
                         }, lang);
-                        payload = new Object;
+                        payload = {};
                         payload["space"] = original_instacne != null ? original_instacne.space : void 0;
                         payload["instance"] = original_instacne != null ? original_instacne._id : void 0;
                         payload["host"] = Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length - 1);
@@ -3303,7 +3291,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
     current_setp = uuflowManager.getStep(instance, flow, last_trace.step);
     current_setp_type = current_setp.step_type;
     traces = instance.traces;
-    setObj = new Object;
+    setObj = {};
     // 重定位的时候使用approve.values合并 instance.values生成新的instance.values #1328
     setObj.values = uuflowManager.getUpdatedValues(instance);
     now = new Date;
@@ -3311,7 +3299,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
     while (i < traces.length) {
         if (traces[i]._id === last_trace._id) {
             if (!traces[i].approves) {
-                traces[i].approves = new Array;
+                traces[i].approves = [];
             }
             // 更新当前trace.approve记录
             h = 0;
@@ -3369,7 +3357,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
                     fullname: 1
                 }
             });
-            relocate_appr = new Object;
+            relocate_appr = {};
             relocate_appr._id = new Mongo.ObjectID()._str;
             relocate_appr.instance = instance_id;
             relocate_appr.trace = traces[i]._id;
@@ -3389,7 +3377,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
             relocate_appr.is_read = true;
             relocate_appr.description = relocate_comment;
             relocate_appr.is_error = false;
-            relocate_appr.values = new Object;
+            relocate_appr.values = {};
             relocate_appr.cost_time = relocate_appr.finish_date - relocate_appr.start_date;
             traces[i].approves.push(relocate_appr);
             // 更新当前trace记录
@@ -3401,7 +3389,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
     }
     if (next_step_type === "end") {
         // 插入下一步trace记录
-        newTrace = new Object;
+        newTrace = {};
         newTrace._id = new Mongo.ObjectID()._str;
         newTrace.instance = instance_id;
         newTrace.previous_trace_ids = [last_trace._id];
@@ -3420,7 +3408,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
         setObj.current_step_auto_submit = false;
     } else {
         // 插入下一步trace记录
-        newTrace = new Object;
+        newTrace = {};
         newTrace._id = new Mongo.ObjectID()._str;
         newTrace.instance = instance_id;
         newTrace.previous_trace_ids = [last_trace._id];
@@ -3433,7 +3421,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
         _.each(relocate_inbox_users, function (next_step_user_id, idx) {
             var agent, handler_id, handler_info, newApprove, next_step_space_user, next_step_user_org_info, user_info;
             // 插入下一步trace.approve记录
-            newApprove = new Object;
+            newApprove = {};
             newApprove._id = new Mongo.ObjectID()._str;
             newApprove.instance = instance_id;
             newApprove.trace = newTrace._id;
@@ -3472,7 +3460,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
             newApprove.due_date = newTrace.due_date;
             newApprove.is_read = false;
             newApprove.is_error = false;
-            newApprove.values = new Object;
+            newApprove.values = {};
             uuflowManager.setRemindInfo(instance.values, newApprove);
             return newTrace.approves.push(newApprove);
         });
@@ -3515,7 +3503,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
             }
         });
         // 提取instances.outbox_users数组和填单人、申请人
-        _users = new Array;
+        _users = [];
         _users.push(ins.applicant);
         _users.push(ins.submitter);
         _users = _.uniq(_users.concat(ins.outbox_users));
@@ -3657,5 +3645,6 @@ uuflowManager.draft_save_instance = function (ins, userId) {
     }, {
         $set: setObj
     });
+    update_instance_tasks(ins_id, trace_id, approve_id)
     return result;
 };

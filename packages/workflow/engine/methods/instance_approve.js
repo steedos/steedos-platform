@@ -1,3 +1,6 @@
+const {
+    update_instance_tasks,
+} = require('../manager').instance_tasks_manager
 module.exports = {
     set_approve_have_read: function (instanceId, traceId, approveId) {
         var instance, ref, self, setObj, trace;
@@ -32,6 +35,7 @@ module.exports = {
                 }, {
                     $set: setObj
                 });
+                update_instance_tasks(instanceId, traceId, approveId)
             }
             return true;
         }

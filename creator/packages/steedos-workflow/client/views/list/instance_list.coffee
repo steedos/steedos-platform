@@ -12,6 +12,7 @@ Template.instance_list.helpers
 	selector: ->
 		unless Meteor.user()
 			return {_id: -1}
+		uid = Meteor.userId()
 		query = {space: Session.get("spaceId")}
 		if !_.isEmpty Session.get('workflow_categories')
 			query.category = {$in: Session.get('workflow_categories')}
@@ -19,38 +20,51 @@ Template.instance_list.helpers
 			query.flow = Session.get("flowId")
 		box = Session.get("box")
 		if box == "inbox"
-			query.$or = [{inbox_users: Meteor.userId()}, {cc_users: Meteor.userId()}]
+			query.handler = uid
+			query.is_finished = false
+			query.instance_state = {$in: ["pending", "completed"]}
+			# query.$or = [{inbox_users: Meteor.userId()}, {cc_users: Meteor.userId()}]
 			# query.state = {$in: ["pending", "completed"]}
 			# query.inbox_users = Meteor.userId()
 		else if box == "outbox"
-			uid = Meteor.userId()
-			query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
+			query.handler = uid
+			query.is_finished = true
+			# uid = Meteor.userId()
+			# query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
 		else if box == "draft"
-			query.submitter = Meteor.userId()
-			query.state = "draft"
-			query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
+			query.handler = uid
+			query.is_finished = false
+			query.instance_state = 'draft'
+			# query.submitter = Meteor.userId()
+			# query.state = "draft"
+			# query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
 		else if box == "pending"
-			uid = Meteor.userId()
+			query.instance_state = 'pending'
 			query.$or = [{submitter: uid}, {applicant: uid}]
-			query.state = "pending"
+			# uid = Meteor.userId()
+			# query.$or = [{submitter: uid}, {applicant: uid}]
+			# query.state = "pending"
 		else if box == "completed"
-			query.submitter = Meteor.userId()
-			query.state = "completed"
+			query.submitter = uid
+			query.instance_state = 'completed'
+			# query.submitter = Meteor.userId()
+			# query.state = "completed"
 		else if box == "monitor"
-			query.state = {$in: ["pending", "completed"]}
-			uid = Meteor.userId()
+			query.instance_state = {$in: ["pending", "completed"]}
 			space = db.spaces.findOne(Session.get("spaceId"))
 			if !space
-				query.state = "none"
+				query.instance_state = "none"
 
 			if !space.admins.contains(uid)
 				flow_ids = Tracker.nonreactive(WorkflowManager.getMyAdminOrMonitorFlows)
 				if query.flow
 					if !flow_ids.includes(query.flow)
-						query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
+						# query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
+						query.handler = uid
 				else
-					query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid},
-						{flow: {$in: flow_ids}}]
+					# query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid},
+					# 	{flow: {$in: flow_ids}}]
+					query.$or = [{handler: uid}, {flow: {$in: flow_ids}}]
 				# if query.flow
 				# 	if !flow_ids.includes(query.flow)
 				# 		query.flow = ""
@@ -58,9 +72,9 @@ Template.instance_list.helpers
 				# 	query.flow = {$in: flow_ids}
 
 		else
-			query.state = "none"
+			query.instance_state = "none"
 
-		query.is_deleted = false
+		# query.is_deleted = false
 
 		workflowCategory = Session.get("workflowCategory")
 
@@ -85,7 +99,7 @@ Template.instance_list.helpers
 
 #		Template.instance_list._tableColumns()
 
-		if box isnt "monitor"
+		if box isnt "monitor" and box isnt "draft"
 			query.is_hidden = { $ne: true }
 
 		return query
@@ -315,7 +329,7 @@ Template.instance_list.events
 		rowData = dataTable.row(event.currentTarget).data();
 		if (!rowData)
 			return;
-		if Session.get("instanceId") != rowData._id
+		if Session.get("instanceId") != rowData.instance
 			$("body").addClass("loading")
 
 		setTimeout ()->
@@ -334,7 +348,7 @@ Template.instance_list.events
 			# else
 			dataTable.$('tr.selected').removeClass('selected');
 			row.addClass('selected');
-			FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + rowData._id);
+			FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + rowData.instance);
 		, 1
 
 	'click #instance_search_tip_close_btn': (event, template) ->

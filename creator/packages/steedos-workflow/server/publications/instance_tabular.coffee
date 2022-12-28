@@ -143,3 +143,26 @@ Meteor.publish "instance_tabular", (tableName, ids, fields)->
 	self.ready();
 	self.onStop ()->
 		handle.stop()
+
+Meteor.publish "instance_tasks_tabular", (tabularName, ids, fields)->
+	unless this.userId
+		return this.ready()
+
+	check(tabularName, String);
+
+	check(ids, Array);
+
+	check(fields, Match.Optional(Object))
+
+	# console.log('tabularName: ', tabularName);
+	# console.log('ids: ', JSON.stringify(ids));
+	# console.log('fields: ', JSON.stringify(fields));
+
+	db.instance_tasks.find({
+		_id: {
+			$in: ids
+		}
+	}, {
+		fields: fields
+	})
+

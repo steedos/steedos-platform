@@ -76,6 +76,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/flows.coffee');
 	api.addFiles('lib/models/flow_roles.coffee');
 	api.addFiles('lib/models/flow_positions.coffee');
+	api.addFiles('lib/models/instance_tasks.coffee');
 	api.addFiles('lib/models/instances.coffee');
 	api.addFiles('lib/models/categories.coffee');
 	api.addFiles('lib/models/spaces.coffee');

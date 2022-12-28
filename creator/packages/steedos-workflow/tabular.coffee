@@ -22,8 +22,8 @@ updateTabularTitle = ()->
 instancesListTableTabular = (flowId, fields)->
 	options = {
 		name: "instances",
-		collection: db.instances,
-		pub: "instance_tabular",
+		collection: db.instance_tasks,
+		pub: "instance_tasks_tabular",
 		onUnload: ()->
 			Meteor.setTimeout(Template.instance_list._tableColumns, 150)
 
@@ -134,7 +134,7 @@ instancesListTableTabular = (flowId, fields)->
 
 					return """
 								<div class='instance-read-bar'>#{unread}</div>
-								<div class='instance-name #{instanceNamePriorityClass}'>#{doc.name}#{cc_view}#{agent_view}
+								<div class='instance-name #{instanceNamePriorityClass}'>#{doc.instance_name}#{cc_view}#{agent_view}
 									<span>#{doc.applicant_name}</span>
 								</div>
 								<div class='instance-detail'>#{step_current_name_view}
@@ -148,7 +148,7 @@ instancesListTableTabular = (flowId, fields)->
 				visible: false,
 			},
 			{
-				data: "name",
+				data: "instance_name",
 				title: t("instances_name"),
 				render: (val, type, doc) ->
 					cc_view = "";
@@ -181,7 +181,7 @@ instancesListTableTabular = (flowId, fields)->
 						instanceNamePriorityClass = "color-priority color-priority-#{priorityIconClass}"
 					return """
 							<div class='instance-read-bar'>#{unread}</div>
-							<div class='instance-name #{instanceNamePriorityClass}'>#{doc.name}#{cc_view}#{agent_view}</div>
+							<div class='instance-name #{instanceNamePriorityClass}'>#{doc.instance_name}#{cc_view}#{agent_view}</div>
 						"""
 				visible: false,
 				orderable: false
@@ -282,7 +282,7 @@ instancesListTableTabular = (flowId, fields)->
 			else
 				'tpl'
 		order: [[4, "desc"]],
-		extraFields: ["form", "flow", "inbox_users", "state", "space", "applicant", "form_version",
+		extraFields: ["instance", "form", "flow", "inbox_users", "state", "space", "applicant", "form_version",
 			"flow_version", "is_cc", "cc_count", "is_read", "current_step_name", "values", "keywords", "final_decision", "flow_name", "is_hidden", "agent_user_name"],
 		lengthChange: true,
 		lengthMenu: [10,15,20,25,50,100],
@@ -386,66 +386,66 @@ _get_inbox_instances_tabular_options = (flowId, fields)->
 		options.name = "inbox_instances"
 
 	options.order = [[8, "desc"]]
-	options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
-		aggregate_operation = [
-			{
-				$match: selector
-			},
-			{
-				$project: {
-					name: 1,
-					"_approve": '$traces.approves'
-				}
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$match: {
-					'_approve.is_finished': false
-					'_approve.handler': userId,
-				}
-			}
-		]
-		if sort and sort.length > 0
-			s1 = sort[0]
-			s1_0 = s1[0]
-			s1_1 = s1[1]
-			if s1_0 == 'start_date'
+	# options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
+	# 	aggregate_operation = [
+	# 		{
+	# 			$match: selector
+	# 		},
+	# 		{
+	# 			$project: {
+	# 				name: 1,
+	# 				"_approve": '$traces.approves'
+	# 			}
+	# 		},
+	# 		{
+	# 			$unwind: "$_approve"
+	# 		},
+	# 		{
+	# 			$unwind: "$_approve"
+	# 		},
+	# 		{
+	# 			$match: {
+	# 				'_approve.is_finished': false
+	# 				'_approve.handler': userId,
+	# 			}
+	# 		}
+	# 	]
+	# 	if sort and sort.length > 0
+	# 		s1 = sort[0]
+	# 		s1_0 = s1[0]
+	# 		s1_1 = s1[1]
+	# 		if s1_0 == 'start_date'
 
-				findOptions.sort = [['modified', s1_1]]
+	# 			findOptions.sort = [['modified', s1_1]]
 
-				aggregate_operation.push $group: {_id: "$_id", "approve_start_date": {$first: "$_approve.start_date"}}
+	# 			aggregate_operation.push $group: {_id: "$_id", "approve_start_date": {$first: "$_approve.start_date"}}
 
-				ag_sort = 'approve_start_date': if s1_1 == 'asc' then 1 else -1
+	# 			ag_sort = 'approve_start_date': if s1_1 == 'asc' then 1 else -1
 
-				aggregate_operation.push $sort: ag_sort
-				aggregate_operation.push $skip: skip
-				aggregate_operation.push $limit: limit
-				filteredRecordIds = new Array()
+	# 			aggregate_operation.push $sort: ag_sort
+	# 			aggregate_operation.push $skip: skip
+	# 			aggregate_operation.push $limit: limit
+	# 			filteredRecordIds = new Array()
 
-				aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
-					table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
-						if err
-							throw new Error(err)
-						data.forEach (doc) ->
-							filteredRecordIds.push doc._id
-							return
-						if cb
-							cb()
-						return
-					return
+	# 			aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
+	# 				table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
+	# 					if err
+	# 						throw new Error(err)
+	# 					data.forEach (doc) ->
+	# 						filteredRecordIds.push doc._id
+	# 						return
+	# 					if cb
+	# 						cb()
+	# 					return
+	# 				return
 
-				async_aggregate = Meteor.wrapAsync(aggregate)
+	# 			async_aggregate = Meteor.wrapAsync(aggregate)
 
-				async_aggregate table, aggregate_operation, filteredRecordIds
+	# 			async_aggregate table, aggregate_operation, filteredRecordIds
 
-				return filteredRecordIds.uniq()
-			else
-				return old_filteredRecordIds
+	# 			return filteredRecordIds.uniq()
+	# 		else
+	# 			return old_filteredRecordIds
 
 	return options
 
@@ -460,66 +460,66 @@ _get_outbox_instances_tabular_options = (flowId, fields)->
 		options.name = "outbox_instances"
 
 	options.order = [[9, "desc"]]
-	options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
-		aggregate_operation = [
-			{
-				$match: selector
-			},
-			{
-				$project: {
-					name: 1,
-					"_approve": '$traces.approves'
-				}
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$match: {
-					'_approve.is_finished': true
-					$or: [{'_approve.handler': userId},{'_approve.user': userId}]
-				}
-			}
-		]
-		if sort and sort.length > 0
-			s1 = sort[0]
-			s1_0 = s1[0]
-			s1_1 = s1[1]
-			if s1_0 == 'my_finish_date'
+	# options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
+	# 	aggregate_operation = [
+	# 		{
+	# 			$match: selector
+	# 		},
+	# 		{
+	# 			$project: {
+	# 				name: 1,
+	# 				"_approve": '$traces.approves'
+	# 			}
+	# 		},
+	# 		{
+	# 			$unwind: "$_approve"
+	# 		},
+	# 		{
+	# 			$unwind: "$_approve"
+	# 		},
+	# 		{
+	# 			$match: {
+	# 				'_approve.is_finished': true
+	# 				$or: [{'_approve.handler': userId},{'_approve.user': userId}]
+	# 			}
+	# 		}
+	# 	]
+	# 	if sort and sort.length > 0
+	# 		s1 = sort[0]
+	# 		s1_0 = s1[0]
+	# 		s1_1 = s1[1]
+	# 		if s1_0 == 'my_finish_date'
 
-				findOptions.sort = [['modified', s1_1]]
+	# 			findOptions.sort = [['modified', s1_1]]
 
-				aggregate_operation.push $group: {_id: "$_id", "approve_finish_date": {$last: "$_approve.finish_date"}}
+	# 			aggregate_operation.push $group: {_id: "$_id", "approve_finish_date": {$last: "$_approve.finish_date"}}
 
-				ag_sort = 'approve_finish_date': if s1_1 == 'asc' then 1 else -1
+	# 			ag_sort = 'approve_finish_date': if s1_1 == 'asc' then 1 else -1
 
-				aggregate_operation.push $sort: ag_sort
-				aggregate_operation.push $skip: skip
-				aggregate_operation.push $limit: limit
-				filteredRecordIds = new Array()
+	# 			aggregate_operation.push $sort: ag_sort
+	# 			aggregate_operation.push $skip: skip
+	# 			aggregate_operation.push $limit: limit
+	# 			filteredRecordIds = new Array()
 
-				aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
-					table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
-						if err
-							throw new Error(err)
-						data.forEach (doc) ->
-							filteredRecordIds.push doc._id
-							return
-						if cb
-							cb()
-						return
-					return
+	# 			aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
+	# 				table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
+	# 					if err
+	# 						throw new Error(err)
+	# 					data.forEach (doc) ->
+	# 						filteredRecordIds.push doc._id
+	# 						return
+	# 					if cb
+	# 						cb()
+	# 					return
+	# 				return
 
-				async_aggregate = Meteor.wrapAsync(aggregate)
+	# 			async_aggregate = Meteor.wrapAsync(aggregate)
 
-				async_aggregate table, aggregate_operation, filteredRecordIds
+	# 			async_aggregate table, aggregate_operation, filteredRecordIds
 
-				return filteredRecordIds.uniq()
-			else
-				return old_filteredRecordIds
+	# 			return filteredRecordIds.uniq()
+	# 		else
+	# 			return old_filteredRecordIds
 
 	return options
 
