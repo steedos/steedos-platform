@@ -114,3 +114,5 @@ listviews:
 actions:
   customize:
     label: Customize
+  resetFieldPermissions:
+    label: ResetFieldPermissions
