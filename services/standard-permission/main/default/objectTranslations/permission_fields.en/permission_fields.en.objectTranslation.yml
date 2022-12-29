@@ -1,0 +1,37 @@
+name: permission_fields
+label: Permission fields
+description: 
+fields:
+  name:
+    label: Api name
+    type: text
+    readonly: true
+    sort_no: 100
+  permission_set_id:
+    label: Permission set
+    help: 
+    description: 
+  permission_object:
+    label: Permission object
+    help: 
+    description: 
+  object_name:
+    label: Object name
+    help: 
+    description: 
+  field:
+    label: Field name
+    help: 
+    description: 
+  readable:
+    label: Readable
+    help: 
+    description: 
+  editable:
+    label: Editable
+    help: 
+    description: 
+  is_system:
+    label: System
+    help: 
+    description: 

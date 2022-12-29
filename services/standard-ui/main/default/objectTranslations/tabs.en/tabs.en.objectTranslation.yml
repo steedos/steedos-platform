@@ -3,7 +3,7 @@ label: Custom Tabs
 description: 
 fields:
   label:
-    label: 显示名称
+    label: Label
     help: This is the label of the tab, for web tabs only.
   name:
     label: Api Name
