@@ -81,7 +81,7 @@ amis_schema: |-
                                                   "&": "$$"
                                               },
                                               "dataType": "json",
-                                              "requestAdaptor": "api.data = {\n  module: api.body.module,\n  version: api.body.version,\n  url: api.body.url,\n  auth: api.body.auth\n};"
+                                              "requestAdaptor": "api.data = {\n  module: api.body.module,\n  version: api.body.version,\n  url: api.body.url,\n  auth: api.body.auth\n};",
                                               "headers": {
                                                   "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                               }
