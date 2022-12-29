@@ -1,3 +1,6 @@
+const {
+    update_instance_tasks,
+} = require('../manager').instance_tasks_manager
 module.exports = {
 
     draft_save_instance: function (ins) {
@@ -148,6 +151,7 @@ module.exports = {
         }, {
             $set: setObj
         });
+        update_instance_tasks(ins_id, trace_id, approve_id)
         return true;
     }
 

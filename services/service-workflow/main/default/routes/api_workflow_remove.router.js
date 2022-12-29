@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:47:21
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 14:51:46
+ * @LastEditTime: 2022-12-29 17:16:42
  * @Description: 
  */
 'use strict';
@@ -32,10 +32,6 @@ const Fiber = require('fibers');
 router.post('/api/workflow/remove', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
-        const spaceId = userSession.spaceId;
-        const userId = userSession.userId;
-        const isSpaceAdmin = userSession.is_space_admin;
-        var hashData = req.body;
         Fiber(async function () {
             try {
                 var current_user, current_user_info, e, hashData, inserted_instances;
@@ -44,8 +40,9 @@ router.post('/api/workflow/remove', core.requireAuthentication, async function (
                 hashData = req.body;
                 _.each(hashData['Instances'], function (instance_from_client) {
                     var cc_users, delete_obj, flow, inbox_users, instance, space, spaceUserOrganizations, space_id, space_user, user_ids;
+                    const insId = instance_from_client["_id"]
                     // 获取一个instance
-                    instance = uuflowManager.getInstance(instance_from_client["_id"]);
+                    instance = uuflowManager.getInstance(insId);
                     space_id = instance.space;
                     // 获取一个space
                     space = uuflowManager.getSpace(space_id);
@@ -62,12 +59,16 @@ router.post('/api/workflow/remove', core.requireAuthentication, async function (
                     if ((instance.submitter !== current_user) && (!space.admins.includes(current_user)) && !WorkflowManager.canAdmin(flow, space_user, spaceUserOrganizations)) {
                         throw new Meteor.Error('error!', "您不能删除此申请单。");
                     }
-                    delete_obj = db.instances.findOne(instance_from_client["_id"]);
+                    delete_obj = db.instances.findOne(insId);
                     delete_obj.deleted = new Date;
                     delete_obj.deleted_by = current_user;
                     db.deleted_instances.insert(delete_obj);
                     // 删除instance
-                    db.instances.remove(instance_from_client["_id"]);
+                    db.instances.remove(insId);
+                    // 删除instance_tasks
+                    db.instance_tasks.remove({
+                        instance: insId
+                    })
                     if (delete_obj.state !== "draft") {
                         //发送给待处理人, #发送给被传阅人
                         inbox_users = delete_obj.inbox_users ? delete_obj.inbox_users : [];

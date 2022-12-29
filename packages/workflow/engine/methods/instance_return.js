@@ -1,3 +1,7 @@
+const {
+    update_instance_tasks,
+    insert_instance_tasks
+} = require('../manager').instance_tasks_manager
 module.exports = {
     instance_return: function (approve, reason) {
         var approve_values, b, current_step, current_user, current_user_info, flow, ins, instance, instance_id, last_trace, newTrace, new_inbox_users, now, pre_step, pre_trace, r, rest_counter_users, setObj, space_id, traces;
@@ -147,6 +151,9 @@ module.exports = {
         }, {
             $set: setObj
         });
+        // 更新当前记录
+        update_instance_tasks(instance_id, last_trace._id, approve._id)
+
         b = db.instances.update({
             _id: instance_id
         }, {
@@ -154,6 +161,9 @@ module.exports = {
                 traces: newTrace
             }
         });
+        // 生成新记录
+        insert_instance_tasks(instance_id, newTrace._id, newTrace.approves[0]._id)
+        
         if (r && b) {
             // 新inbox_users 和 当前用户 发送push
             pushManager.send_message_to_specifyUser("current_user", current_user);
