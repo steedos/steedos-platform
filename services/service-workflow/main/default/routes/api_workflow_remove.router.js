@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:47:21
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-29 17:16:42
+ * @LastEditTime: 2022-12-30 17:42:19
  * @Description: 
  */
 'use strict';
@@ -12,6 +12,9 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
+const {
+    remove_instance_tasks_by_instance_id,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
 @api {post} /api/workflow/remove 删除申请单
 @apiVersion 0.0.0
@@ -66,9 +69,7 @@ router.post('/api/workflow/remove', core.requireAuthentication, async function (
                     // 删除instance
                     db.instances.remove(insId);
                     // 删除instance_tasks
-                    db.instance_tasks.remove({
-                        instance: insId
-                    })
+                    remove_instance_tasks_by_instance_id(insId)
                     if (delete_obj.state !== "draft") {
                         //发送给待处理人, #发送给被传阅人
                         inbox_users = delete_obj.inbox_users ? delete_obj.inbox_users : [];

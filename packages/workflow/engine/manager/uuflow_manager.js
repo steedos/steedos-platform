@@ -1,7 +1,8 @@
 const {
     insert_instance_tasks,
+    insert_many_instance_tasks,
     update_instance_tasks,
-    remove_instance_tasks
+    update_many_instance_tasks
 } = require('./instance_tasks_manager')
 const Cookies = require("cookies");
 const _eval = require('eval');
@@ -895,6 +896,9 @@ uuflowManager.workflow_engine = function (approve_from_client, current_user_info
             }, {
                 $set: setObj
             });
+            // 更新instance_tasks
+            update_instance_tasks(instance_id, trace_id, approve_id)
+            break;
         }
         i++;
     }
@@ -939,6 +943,15 @@ uuflowManager.workflow_engine = function (approve_from_client, current_user_info
         form = db.forms.findOne(instance.form);
         updateObj.$set.keywords = uuflowManager.caculateKeywords(updateObj.$set.values, form, instance.form_version);
         db.instances.update(instance_id, updateObj);
+        // 新增
+        if (updateObj.$push && updateObj.$push.traces && updateObj.$push.traces.approves) {
+            const newTrace = updateObj.$push.traces
+            const approveIds = []
+            for (const a of newTrace.approves) {
+                approveIds.push(a._id)
+            }
+            insert_many_instance_tasks(instance_id, newTrace._id, approveIds)
+        }
     }
     instance = uuflowManager.getInstance(instance_id);
     instance_trace = _.find(instance.traces, function (trace) {
@@ -1221,6 +1234,8 @@ uuflowManager.engine_step_type_is_start_or_submit_or_condition = function (insta
     db.instances.update(instance_id, {
         $set: setTraceObj
     });
+    // 更新instance_tasks
+    update_instance_tasks(instance_id, trace_id, approve_id)
     updateObj.$set = setObj;
     return updateObj;
 };
@@ -1678,6 +1693,8 @@ uuflowManager.engine_step_type_is_sign = function (instance_id, trace_id, approv
     db.instances.update(instance_id, {
         $set: setTraceObj
     });
+    // 更新instance_tasks
+    update_instance_tasks(instance_id, trace_id, approve_id)
     updateObj.$set = setObj;
     return updateObj;
 };
@@ -1688,6 +1705,7 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
     updateObj = {};
     setTraceObj = {};
     space_id = instance.space;
+    const finishedApproveIds = []
     // 验证approve的judge是否为空
     if (!judge) {
         throw new Meteor.Error('error!', "请选择核准或驳回。");
@@ -1721,8 +1739,9 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
                         setTraceObj[`traces.${i}.approves.${h}.finish_date`] = approveFinishDate;
                         setTraceObj[`traces.${i}.approves.${h}.cost_time`] = approveFinishDate - instance_traces[i].approves[h].start_date;
                         setTraceObj[`traces.${i}.approves.${h}.auto_submitted`] = auto_submitted;
+                        finishedApproveIds.push(instance_traces[i].approves[h]._id)
                     }
-                    if (instance_traces[i].approves[h].is_finished === false && instance_traces[i].approves[h].type !== 'cc' && instance_traces[i].approves[h].type !== 'distribute') {
+                    else if (instance_traces[i].approves[h].is_finished === false && instance_traces[i].approves[h].type !== 'cc' && instance_traces[i].approves[h].type !== 'distribute') {
                         isAllApproveFinished = false;
                     }
                     h++;
@@ -1918,6 +1937,8 @@ uuflowManager.engine_step_type_is_counterSign = function (instance_id, trace_id,
     db.instances.update(instance_id, {
         $set: setTraceObj
     });
+    // 更新instance_tasks
+    update_many_instance_tasks(instance_id, trace_id, finishedApproveIds)
     updateObj.$set = setObj;
     return updateObj;
 };

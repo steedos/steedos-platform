@@ -1,3 +1,8 @@
+const {
+    update_instance_tasks,
+    insert_instance_tasks,
+    remove_instance_tasks
+} = require('../manager').instance_tasks_manager
 module.exports = {
     cc_do: function (approve, cc_user_ids, description) {
 
@@ -107,6 +112,10 @@ module.exports = {
                 }
             }
         });
+        // 新增记录
+        for (const a of new_approves) {
+            insert_instance_tasks(ins_id, trace_id, a._id)
+        }
 
         instance = db.instances.findOne(ins_id);
         current_user_info = db.users.findOne(current_user_id);
@@ -152,6 +161,7 @@ module.exports = {
         }, {
             $set: setObj
         });
+        update_instance_tasks(ins_id, trace_id, current_trace.approves[index]._id)
         return true;
     },
 
@@ -229,6 +239,8 @@ module.exports = {
                     }
                 }
             });
+            // 更新
+            update_instance_tasks(ins_id, myApprove.trace, myApprove._id)
 
             instance = db.instances.findOne(ins_id);
 
@@ -311,6 +323,7 @@ module.exports = {
                 }
             });
         }
+        update_instance_tasks(instanceId, trace_id, approveId)
 
 
         pushManager.send_message_to_specifyUser("current_user", remove_user_id);
@@ -399,7 +412,7 @@ module.exports = {
             _id: ins_id,
             'traces._id': myApprove.trace
         }, updateObj);
-
+        update_instance_tasks(ins_id, myApprove.trace, myApprove._id)
         return true;
     }
 }

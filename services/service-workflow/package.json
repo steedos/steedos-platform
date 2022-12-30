@@ -4,6 +4,7 @@
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
+    "@steedos/workflow": "2.3.3-beta.2",
     "lodash": "^4.17.21",
     "node-schedule": "^2.0.0"
   },
