@@ -1158,7 +1158,7 @@ pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId
 
 //通知服务
 pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids) {
-    console.log('[push_manager.js]>>>>>>>>>>>>>>>>>>>>', 'pushManager.send_instance_notification');
+    // console.log('[push_manager.js]>>>>>>>>>>>>>>>>>>>>', 'pushManager.send_instance_notification');
     var _approves_des, _approves_username, approve, approves_description, body_style_end, body_style_start, current_step, current_step_name, e, flow, flow_version, from_user, href, instance_id, lastApprove_judge, lastApprove_usersname, nextApprove_usersname, nextStep_type, parameters, space_id, to_user_change, to_users, trace;
     try {
         // Meteor.defer ()->

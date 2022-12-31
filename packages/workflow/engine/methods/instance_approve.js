@@ -1,5 +1,6 @@
 const {
     update_instance_tasks,
+    update_many_instance_tasks,
 } = require('../manager').instance_tasks_manager
 module.exports = {
     set_approve_have_read: function (instanceId, traceId, approveId) {
@@ -76,6 +77,7 @@ module.exports = {
                 }, {
                     $set: setObj
                 });
+                update_instance_tasks(instanceId, traceId, approveId)
             }
             return true;
         }
@@ -125,6 +127,7 @@ module.exports = {
                     return upObj[`traces.$.approves.${idx}.read_date`] = new Date();
                 }
             });
+            const needUpdateApproveIds = []
             if (((ref3 = Meteor.settings.public.workflow) != null ? ref3.keepLastSignApproveDescription : void 0) === false && (!!currentApproveDescription !== !!trimDescription || showBlankApproveDescription)) {
                 ins = db.instances.findOne({
                     _id: instanceId
@@ -149,6 +152,7 @@ module.exports = {
                                     upObj[`traces.${tIdx}.approves.${aIdx}.sign_show`] = true;
                                     return upObj[`traces.${tIdx}.approves.${aIdx}.keepLastSignApproveDescription`] = null;
                                 }
+                                needUpdateApproveIds.push(appr._id)
                             }
                         }) : void 0;
                     }
@@ -161,6 +165,10 @@ module.exports = {
                 }, {
                     $set: upObj
                 });
+                update_instance_tasks(instanceId, traceId, approveId)
+                if (needUpdateApproveIds.length > 0) {
+                    update_many_instance_tasks(instanceId, traceId, needUpdateApproveIds)
+                }
             }
             return true;
         }
@@ -190,12 +198,13 @@ module.exports = {
                     }
                 });
                 if (!_.isEmpty(setObj)) {
-                    return db.instances.update({
+                    db.instances.update({
                         _id: obj.instance,
                         "traces._id": obj.trace
                     }, {
                         $set: setObj
                     });
+                    update_instance_tasks(obj.instance, obj.trace, [obj._id, myApprove_id])
                 }
             }
         });

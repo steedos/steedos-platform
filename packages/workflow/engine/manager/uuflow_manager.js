@@ -812,7 +812,7 @@ uuflowManager.getApproveValues = function (approve_values, permissions, form_id,
 
 uuflowManager.workflow_engine = function (approve_from_client, current_user_info, current_user, auto_submitted) {
     var applicant_id, approve, approve_id, checkApplicant, description, flow, flow_id, form, geolocation, i, instance, instance_id, instance_trace, judge, key_str, last_step, last_step_type, last_trace, next_step, next_step_id, next_step_type, next_steps, setObj, space, space_id, space_user, space_user_org_info, step, step_type, to_users, trace, trace_approves, trace_id, updateObj, values;
-    console.log('[uuflow_manager.js]>>>>>>>>>>>>>>>>>>>>', 'uuflowManager.workflow_engine');
+    // console.log('[uuflow_manager.js]>>>>>>>>>>>>>>>>>>>>', 'uuflowManager.workflow_engine');
     instance_id = approve_from_client["instance"];
     trace_id = approve_from_client["trace"];
     approve_id = approve_from_client["_id"];
@@ -3316,6 +3316,7 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
     // 重定位的时候使用approve.values合并 instance.values生成新的instance.values #1328
     setObj.values = uuflowManager.getUpdatedValues(instance);
     now = new Date;
+    const finishedApproveIds = []
     i = 0;
     while (i < traces.length) {
         if (traces[i]._id === last_trace._id) {
@@ -3366,8 +3367,9 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
                             }
                         }
                     }
+                    // end 被重定位给A，再被重定位走，之前A的意见在意见栏中显示不出来了。 #1921
+                    finishedApproveIds.push(traces[i].approves[h]._id)
                 }
-                // end 被重定位给A，再被重定位走，之前A的意见在意见栏中显示不出来了。 #1921
                 h++;
             }
             // 在同一trace下插入重定位操作者的approve记录
@@ -3514,6 +3516,15 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
             }
         });
     }
+    // 更新当前结束的approve
+    update_many_instance_tasks(instance_id, last_trace._id, finishedApproveIds)
+    // 生成重定位操作的approve
+    insert_instance_tasks(instance_id, last_trace._id, relocate_appr._id)
+    // 生成新待审核的approve
+    if (newTrace.approves) {
+        insert_many_instance_tasks(instance_id, newTrace._id, _.pluck(newTrace.approves, '_id'))
+    }
+
     if (r) {
         ins = uuflowManager.getInstance(instance_id);
         // 给被删除的inbox_users 和 当前用户 发送push

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-30 17:36:06
+ * @LastEditTime: 2022-12-31 14:30:41
  * @Description: 
  */
 'use strict';
@@ -47,7 +47,7 @@ function insert_many_instance_tasks(insId, traceId, approveIds) {
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
  * @param {String} approveId ApproveID
- * @returns 更新结果
+ * @returns 更新结果 1
  */
 function update_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
@@ -55,7 +55,6 @@ function update_instance_tasks(insId, traceId, approveId) {
     const result = db.instance_tasks.update({ _id: approveId }, {
         $set: taskDoc
     })
-    console.log('update_instance_tasks:', result)
     return result
 }
 
@@ -85,24 +84,22 @@ function update_many_instance_tasks(insId, traceId, approveIds) {
 /**
  * 删除instance_tasks记录
  * @param {String} approveId 
- * @returns 
+ * @returns 1
  */
 function remove_instance_tasks(approveId) {
     const result = db.instance_tasks.remove({ _id: approveId })
-    console.log('remove_instance_tasks:', result)
     return result
 }
 
 /**
  * 删除instance相关的所有instance_tasks记录
  * @param {String} insId 申请单ID 
- * @returns 
+ * @returns 1
  */
 function remove_instance_tasks_by_instance_id(insId) {
     const result = db.instance_tasks.remove({
         instance: insId
     })
-    console.log('remove_instance_tasks_by_instance_id:', result)
     return result
 }
 
@@ -144,6 +141,9 @@ function _generateTaskDoc(insDoc, traceDoc, approveDoc) {
         'step_name': traceDoc.name,
         'category_name': insDoc.category_nam,
         'instance_state': insDoc.state,
+        'modified': insDoc.modified,
+        'distribute_from_instance': insDoc.distribute_from_instance,
+        'forward_from_instance': insDoc.forward_from_instance,
     }
 }
 

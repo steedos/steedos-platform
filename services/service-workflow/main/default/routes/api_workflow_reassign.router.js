@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:38:27
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 14:51:50
+ * @LastEditTime: 2022-12-31 15:11:41
  * @Description: 
  */
 'use strict';
@@ -12,6 +12,10 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
+const {
+    update_many_instance_tasks,
+    insert_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
 @api {post} /api/workflow/reassign 接口说明
 @apiVersion 0.0.0
@@ -31,12 +35,9 @@ const Fiber = require('fibers');
 router.post('/api/workflow/reassign', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
-        const spaceId = userSession.spaceId;
-        const userId = userSession.userId;
-        const isSpaceAdmin = userSession.is_space_admin;
         Fiber(async function () {
             try {
-                var current_user, current_user_info, e, hashData;
+                var current_user, current_user_info, hashData;
                 current_user_info = Object.assign({}, userSession, { _id: userSession.userId })
                 current_user = current_user_info._id;
                 hashData = req.body;
@@ -78,6 +79,8 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                     }
                     setObj = new Object;
                     now = new Date;
+                    const finishedApproveIds = []
+                    const newApproveIds = []
                     i = 0;
                     approve_users_handlers = [];
                     while (i < last_trace.approves.length) {
@@ -90,6 +93,7 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                                 last_trace.approves[i].cost_time = last_trace.approves[i].finish_date - last_trace.approves[i].start_date;
                                 approve_users_handlers.push(last_trace.approves[i].user);
                                 approve_users_handlers.push(last_trace.approves[i].handler);
+                                finishedApproveIds.push(last_trace.approves[i]._id)
                             }
                         }
                         i++;
@@ -178,7 +182,8 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                         new_appr.is_error = false;
                         new_appr.values = new Object;
                         uuflowManager.setRemindInfo(instance.values, new_appr);
-                        return last_trace.approves.push(new_appr);
+                        last_trace.approves.push(new_appr);
+                        newApproveIds.push(new_appr._id)
                     });
                     instance.outbox_users.push(current_user);
                     instance.outbox_users = instance.outbox_users.concat(approve_users_handlers);
@@ -193,6 +198,13 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                     }, {
                         $set: setObj
                     });
+
+                    // 更新当前结束的approve
+                    update_many_instance_tasks(instance_id, last_trace._id, finishedApproveIds)
+                    // 生成重定位操作的approve和新待审核的approve
+                    newApproveIds.push(assignee_appr._id)
+                    insert_many_instance_tasks(instance_id, last_trace._id, newApproveIds)
+
                     if (r) {
                         ins = uuflowManager.getInstance(instance_id);
                         // 给被删除的inbox_users 和 当前用户 发送push
