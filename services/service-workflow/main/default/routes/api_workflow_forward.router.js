@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 13:41:11
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 13:50:53
+ * @LastEditTime: 2022-12-31 09:53:18
  * @Description: 
  */
 'use strict';
@@ -12,6 +12,11 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
+const {
+    insert_instance_tasks,
+    update_instance_tasks,
+    insert_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
 @api {post} /api/workflow/forward 申请单转发/分发
 @apiVersion 0.0.0
@@ -25,6 +30,7 @@ const Fiber = require('fibers');
 @apiBody {Boolean} isForwardAttachments 是否转发/分发原表单附件
 @apiBody {String[]} selectedUsers 被转发/分发的用户ID
 @apiBody {String} action_type="forward","distribute" 操作类型
+@apiBody {String} [from_approve_id] 分发来源ApproveID
 @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
@@ -483,7 +489,9 @@ router.post('/api/workflow/forward', core.requireAuthentication, async function 
                         ins_obj.category = category._id;
                     }
 
-                    new_ins_id = db.instances.insert(ins_obj);
+                    var new_ins_id = db.instances.insert(ins_obj);
+
+                    insert_instance_tasks(ins_obj._id, trace_obj._id, appr_obj._id)
 
                     // 复制附件
                     var collection = cfs.instances;
@@ -624,6 +632,7 @@ router.post('/api/workflow/forward', core.requireAuthentication, async function 
                             }
                         }
                     });
+                    insert_many_instance_tasks(instance_id, current_trace_id, _.pluck(forward_approves, '_id'))
                 }
 
 
@@ -638,6 +647,7 @@ router.post('/api/workflow/forward', core.requireAuthentication, async function 
                             }, {
                                 $set: update_read
                             });
+                            update_instance_tasks(instance_id, current_trace_id, from_approve_id)
                         }
                     })
 

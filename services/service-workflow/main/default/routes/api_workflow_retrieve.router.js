@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:52:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-24 14:57:08
+ * @LastEditTime: 2022-12-31 11:19:56
  * @Description: 
  */
 'use strict';
@@ -12,6 +12,11 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
+const {
+    insert_instance_tasks,
+    update_instance_tasks,
+    update_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
 @api {post} /api/workflow/retrieve 取回
 @apiVersion 0.0.0
@@ -96,6 +101,8 @@ router.post('/api/workflow/retrieve', core.requireAuthentication, async function
                         old_inbox_users = instance.inbox_users;
                         setObj = new Object;
                         now = new Date;
+                        const finishedApproveIds = []
+                        let retrieve_appr_id = ''
                         _.each(traces, function (t) {
                             var current_space_user, current_user_organization, retrieve_appr;
                             if (t._id === last_trace_id) {
@@ -112,7 +119,9 @@ router.post('/api/workflow/retrieve', core.requireAuthentication, async function
                                         appr.is_read = true;
                                         appr.is_finished = true;
                                         appr.judge = "terminated";
-                                        return appr.cost_time = appr.finish_date - appr.start_date;
+                                        appr.cost_time = appr.finish_date - appr.start_date;
+
+                                        finishedApproveIds.push(appr._id)
                                     }
                                 });
                                 // 在同一trace下插入取回操作者的approve记录
@@ -205,6 +214,14 @@ router.post('/api/workflow/retrieve', core.requireAuthentication, async function
                         }, {
                             $set: setObj
                         });
+
+                        // 更新被取回的approve
+                        update_many_instance_tasks(instance_id, last_trace_id, finishedApproveIds)
+                        // 插入取回操作的approve
+                        insert_instance_tasks(instance_id, last_trace_id, retrieve_appr_id)
+                        // 插入新步骤的approve
+                        insert_instance_tasks(instance_id, newTrace._id, newApprove._id)
+
                         if (r) {
                             // 给被删除的inbox_users 和 当前用户 发送push
                             pushManager.send_message_current_user(current_user_info);
@@ -246,6 +263,9 @@ router.post('/api/workflow/retrieve', core.requireAuthentication, async function
                         }, {
                             $set: setObj
                         });
+
+                        update_instance_tasks(instance_id, retrieve_approve.trace, retrieve_approve._id)
+
                         if (r) {
                             pushManager.send_message_current_user(current_user_info);
                         }
