@@ -62,6 +62,17 @@ Template.instance_list_wrapper.helpers
 	recordsTotalCount: ()->
 		return Tabular.tableRecords.find().fetch()[0]?.recordsTotal
 
+	newButton: ()->
+		return Creator.getObject("instances").actions.instance_new;
+	newButtonClassName: ()->
+		return "slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-"+this.name
+	newButtonData: ()->
+		return {
+			app_id: Session.get("app_id")
+			object_name: Session.get("object_name")
+			permissions: Creator.getPermissions()
+		}
+
 Template.instance_list_wrapper.onCreated ->
 	self = this;
 	self.btnToggleColumnsIcon = new ReactiveVar("expand_alt")
