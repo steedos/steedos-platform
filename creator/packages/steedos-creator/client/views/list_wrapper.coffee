@@ -381,7 +381,11 @@ Template.creator_list_wrapper.events
 		Creator.executeAction("object_listviews", Object.assign({isRelated: true, initialValues: {object_name: Session.get("object_name")}}, Creator.getObject("object_listviews").actions.standard_new))
 
 	'click .copy-list-view': (event, template)->
-		Creator.executeAction("object_listviews", Creator.getObject("object_listviews").actions.copy, Session.get("list_view_id"));
+		listViewId = Session.get("list_view_id")
+		recordId = listViewId
+		if !Creator.Collections.object_listviews.findOne(listViewId) # 不是自定义视图
+			recordId = Session.get("object_name") + '.' + listViewId
+		Creator.executeAction("object_listviews", Creator.getObject("object_listviews").actions.copy, recordId);
 		# delete current_list_view._id
 
 		# delete current_list_view.name
