@@ -31,7 +31,6 @@
         Record: {},
         Listview: {},
         Header: {},
-        AppNav: {},
         RelatedListview: {},
         Form: {
             StandardNew: {},
@@ -885,74 +884,5 @@
                   ]
               }
         }
-    }
-
-    Steedos.Page.AppNav.render = function(appId, tabId){
-        try {
-            const data = {
-                app: Session.get('app_menus')
-            };
-            const page = Steedos.Page.AppNav.getPage(appId, tabId);
-            var rootId = "steedosAppNavRoot";
-            var modalRoot = document.getElementById(rootId);
-            if (!modalRoot) {
-                modalRoot = document.createElement('div');
-                modalRoot.setAttribute('id', rootId);
-                $(".steedos-app-nav-root")[0].appendChild(modalRoot);
-            }
-            if (page.render_engine && page.render_engine != 'redash') {
-                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, data));
-            }
-        } catch (error) {
-            console.error(`Steedos.Page.Header.render`, error)
-        }
-    }
-    Steedos.Page.AppNav.getPage = function(appId, tabId){
-        return {
-            render_engine: 'amis',
-            name: 'steedosAppNavPage',
-            schema: {
-                "type": "service",
-                "name": "steedosAppNav",
-                "body": [
-                    // {
-                    //   "type": "grid",
-                    //   "className": 'steedos-context-bar hidden sm:flex h-10 leading-5 pl-4 mb-[-3px]',
-                    //   "columns": [
-                    //     {
-                    //       "columnClassName": "items-center hidden sm:flex pb-0",
-                    //       "body": [
-                    //         {
-                    //           "type": "steedos-app-launcher",
-                    //           "showAppName": true,
-                    //           "appId": appId,
-                    //         }
-                    //       ],
-                    //       "md": "auto",
-                    //       "valign": "middle"
-                    //     },
-                    //     {
-                    //       "columnClassName": "flex ",
-                    //       "body": [
-                    //         {
-                    //           "type": "steedos-app-menu",
-                    //           "stacked": false,
-                    //           showIcon: false,
-                    //           "appId": appId,
-                    //           overflow: {
-                    //               enable: false,
-                    //               itemWidth: 80,
-                    //           },
-                    //           "id": "u:77851eb4aa89",
-                    //         }
-                    //       ],
-                    //       "id": "u:5367229505d8",
-                    //       "md": "",
-                    //       "valign": "middle",
-                    //     }
-                    //   ],
-                    // }
-                  ],
-              }}
     }
 })();
