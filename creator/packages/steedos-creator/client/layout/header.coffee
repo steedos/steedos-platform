@@ -104,7 +104,7 @@ Template.creatorHeader.events
 
 
 Template.creatorHeader.onRendered ->
-	Steedos.Page.Header.render()
 	this.autorun ->
 		tab_id = Session.get("pageApiName") || Session.get("object_name") 
-		Steedos.Page.AppNav.render(Session.get('app_id'), tab_id)
+		Steedos.Page.Header.render(Session.get('app_id'), tab_id)
+		# Steedos.Page.AppNav.render(Session.get('app_id'), tab_id)
