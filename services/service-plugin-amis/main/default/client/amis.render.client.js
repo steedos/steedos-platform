@@ -151,7 +151,30 @@
               
                 return pathname + search + hash;
               };
-
+            const isCurrentUrl = (to, ctx)=>{
+              try {
+                if (!to) {
+                  return false;
+                }
+                const pathname = window.location.pathname;
+                const link = normalizeLink(to, {
+                  ...location,
+                  pathname,
+                  hash: ''
+                });
+              
+                if (!~link.indexOf('http') && ~link.indexOf(':')) {
+                  let strict = ctx && ctx.strict;
+                  return match(link, {
+                    decode: decodeURIComponent,
+                    strict: typeof strict !== 'undefined' ? strict : true
+                  })(pathname);
+                }
+                return decodeURI(pathname) === link || decodeURI(pathname).startsWith(`${link}/`);
+              } catch (error) {
+                console.error(`error`, error)
+              }
+            }
             const AmisEnv = {
                 // getModalContainer: (props)=>{
                 //     let div = document.querySelector("#amisModalContainer");
@@ -189,6 +212,7 @@
                 }
                 },
                 theme: 'antd',
+                isCurrentUrl: isCurrentUrl,
             };
 
             const AmisRender = function (props) {

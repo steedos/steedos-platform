@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "86c10100e903d0784f8aa52969f842111ded6d34.js",
+      "path": "89c2c76e57e518aa6754f5f36479023b455023e9.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/86c10100e903d0784f8aa52969f842111ded6d34.js?meteor_js_resource=true",
-      "size": 8277090,
-      "hash": "86c10100e903d0784f8aa52969f842111ded6d34",
-      "sri": "8iHGPOgQ2CnSbrx/Yi+gIibCgirWvXH7g7NLpAwnULsvb1szUoMJtgptsxf3+u13Cx2E8qCO9CvD0v1ynBsOWA=="
+      "url": "/__cordova/89c2c76e57e518aa6754f5f36479023b455023e9.js?meteor_js_resource=true",
+      "size": 8277772,
+      "hash": "89c2c76e57e518aa6754f5f36479023b455023e9",
+      "sri": "Z6Kf+9Ce1zruXd4+8358G/6MibKHRc0zzC+MRmgzsTfDt1jnhrIpB78uyl3+ZOBZNPUcc/OG5QFm6/RGy9YjjA=="
     },
     {
-      "path": "86c10100e903d0784f8aa52969f842111ded6d34.stats.json",
+      "path": "89c2c76e57e518aa6754f5f36479023b455023e9.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/86c10100e903d0784f8aa52969f842111ded6d34.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/89c2c76e57e518aa6754f5f36479023b455023e9.stats.json?meteor_js_resource=true",
       "size": 132558,
-      "hash": "da7d8e2709795f9ed66e0354c5ca19ebfb11164b",
-      "sri": "CoCUy3Uydonl6dBzqVDQEXY/TQ2TdLfkq8mz8sdvbOraDb6i5pbZdD+hKk2ijq8kDRECyFr8rXqEPf8VqdcKFw=="
+      "hash": "988c6f935d88ccff0661ba97a2d6042f8c9b229f",
+      "sri": "EPbd0CpMBoo/B+LoEp0AyWd/S21WdYuUxRAuq/mBCzd3FtG/6VIkCNeVcNKETxuXKVDrqvPuZAfbipXEd6Q7NA=="
     },
     {
       "path": "f65cce8d28b5046046a5c52c97c88414a42cb72e.css",
@@ -498,8 +498,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
       "size": 20127,
-      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
-      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
+      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -508,8 +508,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
       "size": 20127,
-      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
-      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
+      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
@@ -518,8 +518,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
       "size": 108738,
-      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
-      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
+      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
@@ -528,8 +528,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
       "size": 108738,
-      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
-      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
+      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -538,8 +538,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
       "size": 45404,
-      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
-      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
+      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -548,8 +548,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
       "size": 45404,
-      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
-      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
+      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
@@ -558,8 +558,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
       "size": 23424,
-      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
-      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
+      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
@@ -568,8 +568,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
       "size": 23424,
-      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
-      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
+      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
@@ -578,8 +578,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
-      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
-      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
+      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6",
+      "sri": null
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
@@ -588,8 +588,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
-      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
-      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
+      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6",
+      "sri": null
     },
     {
       "path": "packages/steedos_ionicons/fonts/ionicons.eot",
