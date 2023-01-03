@@ -1,0 +1,6 @@
+name: instance_relocate
+is_enable: false
+label: 重定位
+'on': record_only
+type: amis_button
+visible: true

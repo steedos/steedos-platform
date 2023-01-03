@@ -1,0 +1,103 @@
+name: instance_new
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "新建",
+              "id": "u:instance_new",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "actionType": "dialog",
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "选择流程",
+                                  "body": [
+                                      {
+                                          "type": "input-tree",
+                                          "label": false,
+                                          "name": "tree",
+                                          "options": [],
+                                          "id": "u:a713f256906d",
+                                          "multiple": false,
+                                          "source": {
+                                              "method": "post",
+                                              "url": "${context.rootUrl}/graphql",
+                                              "requestAdaptor": "api.data.query = `\n  {\n  options:categories{\n    value:_id,\n    label:name,\n    children:_related_flows_category(filters: [[\"state\", \"=\", \"enabled\"]]){\n      value:_id,\n      label:name,\n      perms,\n      state\n    }\n  }\n}\n`;\nreturn api;",
+                                              "headers": {
+                                                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                              }
+                                          },
+                                          "showIcon": true,
+                                          "showRadio": true,
+                                          "onlyLeaf": true,
+                                          "onEvent": {
+                                              "change": {
+                                                  "weight": 0,
+                                                  "actions": [
+                                                      {
+                                                          "args": {
+                                                              "api": {
+                                                                  "url": "${context.rootUrl}/api/workflow/v2/draft",
+                                                                  "method": "post",
+                                                                  "dataType": "json",
+                                                                  "requestAdaptor": "const { flowId, context } = api.body;\napi.data = {\n  \"instance\": {\n    \"flow\": flowId,\n    \"applicant\": context.userId,\n    \"space\": context.tenantId\n  }\n}\nreturn api;",
+                                                                  "data": {
+                                                                      "&": "$$",
+                                                                      "context": "${context}",
+                                                                      "flowId": "$event.data.value"
+                                                                  },
+                                                                  "headers": {
+                                                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                  }
+                                                              },
+                                                              "messages": {
+                                                                  "success": "创建成功!"
+                                                              }
+                                                          },
+                                                          "actionType": "ajax"
+                                                      },
+                                                      {
+                                                          "actionType": "custom",
+                                                          "script": "\nconst instance = event.data.instance;\nconsole.log(`instance===`, instance, `/workflow/space/${instance.space}/draft/${instance._id}`)\ndoAction({\n  actionType: 'url',\n  args: {\n    blank: false,\n    url: `/workflow/space/${instance.space}/draft/${instance._id}`\n  }\n});\n"
+                                                      },
+                                                      {
+                                                        "componentId": "",
+                                                        "args": {
+                                                        },
+                                                        "actionType": "closeDrawer"
+                                                      }
+                                                  ]
+                                              }
+                                          },
+                                          "treeContainerClassName": "max-h-screen"
+                                      }
+                                  ],
+                                  "id": "u:0a98fff55554",
+                                  "closeOnEsc": true,
+                                  "closeOnOutside": false,
+                                  "showCloseButton": true,
+                                  "size": "lg",
+                                  "actions": false
+                              }
+                          }
+                      ],
+                      "weight": 0
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "bodyClassName": "p-0",
+      "id": "u:b9ad8e8df0b0"
+  }
+is_enable: true
+label: 新建
+'on': list
+type: amis_button
+visible: true
