@@ -713,8 +713,6 @@ GetBoxInstancesTabularOptions = (box, flowId, fields)->
 		options = _get_inbox_instances_tabular_options(flowId, fields)
 	else if box == "outbox"
 		options = _get_outbox_instances_tabular_options(flowId, fields)
-	else if box == "draft"
-		options = instanceTasksListTableTabular(flowId, fields)
 	else
 		options = instancesListTableTabular(flowId, fields)
 		if !flowId

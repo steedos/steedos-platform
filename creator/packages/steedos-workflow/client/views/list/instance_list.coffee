@@ -49,31 +49,16 @@ Template.instance_list.helpers
 			# uid = Meteor.userId()
 			# query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
 		else if box == "draft"
-			query.handler = uid
-			query.is_finished = false
-			query.instance_state = 'draft'
-			query.distribute_from_instance = null
-			query.forward_from_instance = null
-			# query.submitter = Meteor.userId()
-			# query.state = "draft"
-			# query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
+			query.submitter = uid
+			query.state = "draft"
+			query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
 		else if box == "pending"
-			# query.instance_state = 'pending'
-			# query.is_finished = false
-			# query.$or = [{submitter: uid}, {applicant: uid}]
-
-			# uid = Meteor.userId()
 			query.$or = [{submitter: uid}, {applicant: uid}]
 			query.state = "pending"
 		else if box == "completed"
-			# query.submitter = uid
-			# query.instance_state = 'completed'
 			query.submitter = uid
 			query.state = "completed"
 		else if box == "monitor"
-			# query.instance_state = {$in: ["pending", "completed"]}
-			# query.type = 'draft' 
-			# query.is_finished = true # 说明申请单已从草稿提交，加上type = 'draft' 条件 解决显示重复问题
 			query.state = {$in: ["pending", "completed"]}
 			space = db.spaces.findOne(Session.get("spaceId"))
 			if !space
@@ -84,11 +69,9 @@ Template.instance_list.helpers
 				if query.flow
 					if !flow_ids.includes(query.flow)
 						query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid}]
-						# query.handler = uid
 				else
 					query.$or = [{submitter: uid}, {applicant: uid}, {inbox_users: uid}, {outbox_users: uid},
 						{flow: {$in: flow_ids}}]
-					# query.$or = [{handler: uid}, {flow: {$in: flow_ids}}]
 				# if query.flow
 				# 	if !flow_ids.includes(query.flow)
 				# 		query.flow = ""
@@ -175,8 +158,6 @@ Template.instance_list.helpers
 					return TabularTables.inbox_instances
 				else if Session.get("box") == "outbox"
 					return TabularTables.outbox_instances
-				else if Session.get("box") == "draft"
-					return TabularTables.instance_tasks
 				else
 					return TabularTables.instances
 		else
@@ -184,8 +165,6 @@ Template.instance_list.helpers
 				return TabularTables.inbox_instances
 			else if Session.get("box") == "outbox"
 				return TabularTables.outbox_instances
-			else if Session.get("box") == "draft"
-				return TabularTables.instance_tasks
 			else
 				return TabularTables.instances
 
@@ -358,7 +337,7 @@ Template.instance_list.events
 		if (!rowData)
 			return;
 		insId = rowData._id
-		if ['draft', 'inbox', 'outbox'].includes(Session.get('box'))
+		if ['inbox', 'outbox'].includes(Session.get('box'))
 			insId = rowData.instance
 		if Session.get("instanceId") != insId
 			$("body").addClass("loading")
