@@ -57,11 +57,7 @@
 								<div class="slds-truncate" title="{{_ "standard_query"}}">{{_ "standard_query"}}</div>
 							</a>
 						</li>
-						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_new">
-							<a href="javascript:void(0);" title="{{_ "New"}}">
-								<div class="slds-truncate" title="{{_ "New"}}">{{_ "New"}}</div>
-							</a>
-						</li>
+						{{> amis_action button=newButton buttonClassName=newButtonClassName data=newButtonData }}
 					</ul>
 				</div>
 				

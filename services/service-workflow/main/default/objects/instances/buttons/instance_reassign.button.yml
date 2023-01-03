@@ -1,0 +1,6 @@
+name: instance_reassign
+is_enable: false
+label: 转签核
+'on': record_only
+type: amis_button
+visible: true

@@ -2,10 +2,10 @@
 module.exports = {
     important: "body.steedos",
     content: [
-        '../../creator/**/*.{html,coffee,js,jsx,tsx,json}',
-        '../../services/**/*.json',
-        '../../steedos-packages/**/*.json',
-        '../../packages/**/*.json'
+        // '../../creator/**/*.{html,coffee,js,jsx,tsx,json}',
+        '../../services/**/*.{json,client.js}',
+        '../../steedos-packages/**/*.{json,client.js}',
+        '../../packages/**/*.{json,client.js}'
     ],
     theme: {
       fontSize: {
