@@ -372,6 +372,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			formTableFieldCode = getFormTableFieldCode(workflow_field)
 			objField = object.fields[object_field]
 			formField = getFormField(workflow_field)
+			recordFieldValue = record[object_field]
 			# 处理子表字段
 			if relatedObjectFieldCode
 				
@@ -486,6 +487,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							selectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
 					if selectFieldValue
 						values[workflow_field] = selectFieldValue
+			else if formField && objField && formField.type == 'date' && recordFieldValue
+				values[workflow_field] = uuflowManagerForInitApproval.formatDate(recordFieldValue) # Date转String
 			else if record.hasOwnProperty(object_field)
 				values[workflow_field] = record[object_field]
 
@@ -560,6 +563,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 											tableFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
 										else if !relatedObjectField.multiple && !formField.is_multiselect
 											tableFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
+							else if formField.type == 'date' && rr[fieldKey]
+								tableFieldValue = uuflowManagerForInitApproval.formatDate(rr[fieldKey]) # Date转String
 							else
 								tableFieldValue = rr[fieldKey]
 							tableValueItem[formFieldKey] = tableFieldValue
@@ -687,3 +692,6 @@ uuflowManagerForInitApproval.checkIsInApproval = (recordIds, spaceId) ->
 
 	return
 
+
+uuflowManagerForInitApproval.formatDate = (date) ->
+	return moment(date).format("YYYY-MM-DD")
