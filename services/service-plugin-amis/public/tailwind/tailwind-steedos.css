@@ -62,12 +62,27 @@ body.steedos .sticky {
   position: sticky
 }
 
+body.steedos .inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px
+}
+
 body.steedos .top-0 {
   top: 0px
 }
 
 body.steedos .z-40 {
   z-index: 40
+}
+
+body.steedos .z-10 {
+  z-index: 10
+}
+
+body.steedos .z-20 {
+  z-index: 20
 }
 
 body.steedos .col-span-2 {
@@ -88,6 +103,10 @@ body.steedos .mr-4 {
 
 body.steedos .mb-\[-3px\] {
   margin-bottom: -3px
+}
+
+body.steedos .mt-\[50px\] {
+  margin-top: 50px
 }
 
 body.steedos .mt-0\.5 {
@@ -142,12 +161,20 @@ body.steedos .h-10 {
   height: 2.5rem
 }
 
+body.steedos .h-full {
+  height: 100%
+}
+
 body.steedos .w-full {
   width: 100%
 }
 
 body.steedos .w-auto {
   width: auto
+}
+
+body.steedos .w-64 {
+  width: 16rem
 }
 
 body.steedos .w-10 {
@@ -167,8 +194,17 @@ body.steedos .flex-1 {
   flex: 1 1 0%
 }
 
+body.steedos .-translate-x-0 {
+  --tw-translate-x: -0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
 body.steedos .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+body.steedos .flex-col {
+  flex-direction: column
 }
 
 body.steedos .flex-nowrap {
@@ -196,12 +232,20 @@ body.steedos .overflow-hidden {
   overflow: hidden
 }
 
+body.steedos .overflow-y-auto {
+  overflow-y: auto
+}
+
 body.steedos .border {
   border-width: 1px
 }
 
 body.steedos .border-b-\[3px\] {
   border-bottom-width: 3px
+}
+
+body.steedos .border-r {
+  border-right-width: 1px
 }
 
 body.steedos .border-solid {
@@ -211,6 +255,16 @@ body.steedos .border-solid {
 body.steedos .border-sky-500 {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity))
+}
+
+body.steedos .border-slate-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity))
+}
+
+body.steedos .bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
 body.steedos .p-3 {
@@ -246,6 +300,10 @@ body.steedos .pl-4 {
 
 body.steedos .pb-0 {
   padding-bottom: 0px
+}
+
+body.steedos .pt-2 {
+  padding-top: 0.5rem
 }
 
 body.steedos .pl-1\.5 {
@@ -309,9 +367,21 @@ body.steedos .duration-500 {
   transition-duration: 500ms
 }
 
+body.steedos .duration-300 {
+  transition-duration: 300ms
+}
+
+body.steedos .ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+}
+
 @media (min-width: 640px) {
   body.steedos .sm\:flex {
     display: flex
+  }
+
+  body.steedos .sm\:w-\[220px\] {
+    width: 220px
   }
 
   body.steedos .sm\:shadow {
