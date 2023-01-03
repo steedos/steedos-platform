@@ -751,6 +751,8 @@
 
     Steedos.Page.Header.render = function(appId, tabId){
         const app = _.find(Session.get('app_menus'), {id: appId})
+        if (app.id === 'admin')
+            app.showSidebar = true;
 
         try {
             const data = {
@@ -843,6 +845,7 @@
                         {
                           "type": "grid",
                           "className": 'steedos-context-bar hidden sm:flex h-10 leading-5 pl-4 mb-[-3px]',
+                          hiddenOn: "${app.showSidebar === true}",
                           "columns": [
                             {
                               "columnClassName": "items-center hidden sm:flex pb-0",
