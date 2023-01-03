@@ -20,7 +20,7 @@
                 });
             setTimeout(()=>{
                 ReactDOM.render(contentEle, container);
-            }, 10)
+            }, 100)
           } catch (error) {
             console.log(`error`, error)
           }
@@ -480,6 +480,7 @@
             }
 
             if (page.render_engine && page.render_engine != 'redash') {
+                data.listName = data.listViewId;
                 return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data));
             }
         } catch (error) {
