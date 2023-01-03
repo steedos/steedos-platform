@@ -1291,6 +1291,14 @@ CustomLabels:
   instance_reassign: Reassign
   instance_relocate: Relocate
   instance_print: Print
+  instance_tasks_instance_name: Title
+  instance_tasks_applicant_name: Applicant
+  instance_tasks_modified: Modified
+  instance_tasks_submit_date: Submit Date
+  instance_tasks_flow_name: Workflow
+  instance_tasks_current_step_name: Current step
+  instance_tasks_finish_date: Modified
+  instance_tasks_start_date: Receiving time
   flow_roles: Workflow Positions
   flow_roles_name: Position Name
   flow_positions: Positions Users

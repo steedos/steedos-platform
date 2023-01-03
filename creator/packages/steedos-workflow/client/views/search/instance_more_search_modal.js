@@ -99,17 +99,20 @@ Template.instance_more_search_modal.events({
 		//     selector.$and = and;
 		// }
 
+		const isSearchInstanceTasks = ['inbox', 'outboux'].includes(Session.get('box'))
+
 		var and = [];
 		if ($("input[name='instance_more_search_state']:checked").val()) {
-			selector.state = $("input[name='instance_more_search_state']:checked").val();
-			Session.set("instance-search-state", selector.state)
+			const state = $("input[name='instance_more_search_state']:checked").val();
+			selector[isSearchInstanceTasks ? 'instance_state' : 'state'] = state
+			Session.set("instance-search-state", state)
 		}
 
 		if ($('#instance_more_search_name').val()) {
 			var name_key_words = $('#instance_more_search_name').val().split(" ");
 			_.each(name_key_words, function(k) {
 				and.push({
-					name: {
+					[isSearchInstanceTasks ? 'instance_name' : 'name']: {
 						$regex: Steedos.convertSpecialCharacter(k)
 					}
 				});

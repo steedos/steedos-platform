@@ -1198,6 +1198,14 @@ CustomLabels:
   instance_reassign: 转签核
   instance_relocate: 重定位
   instance_print: 打印
+  instance_tasks_instance_name: 标题
+  instance_tasks_applicant_name: 提交人
+  instance_tasks_modified: 处理时间
+  instance_tasks_submit_date: 提交时间
+  instance_tasks_flow_name: 流程
+  instance_tasks_current_step_name: 当前步骤
+  instance_tasks_finish_date: 处理时间
+  instance_tasks_start_date: 接收时间
   flow_roles: 审批岗位
   flow_roles_name: 岗位名称
   flow_positions: 岗位成员

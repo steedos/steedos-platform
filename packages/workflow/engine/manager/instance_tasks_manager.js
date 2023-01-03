@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-31 14:30:41
+ * @LastEditTime: 2023-01-03 15:29:21
  * @Description: 
  */
 'use strict';
@@ -139,11 +139,13 @@ function _generateTaskDoc(insDoc, traceDoc, approveDoc) {
         'form': insDoc.form,
         'step': traceDoc.step,
         'step_name': traceDoc.name,
-        'category_name': insDoc.category_nam,
+        'category_name': insDoc.category_name,
         'instance_state': insDoc.state,
         'modified': insDoc.modified,
         'distribute_from_instance': insDoc.distribute_from_instance,
         'forward_from_instance': insDoc.forward_from_instance,
+        'keywords': insDoc.keywords,
+        'is_archived': insDoc.is_archived,
     }
 }
 
