@@ -895,7 +895,7 @@
                         {
         
                           "type": "button",
-                          "className": 'p-0 fixed z-10 inset-0 mt-[50px]',
+                          "className": 'p-0 absolute inset-0 mt-[50px]',
                           hiddenOn: "${app.showSidebar != true}",
                           body: [{
                             type: "wrapper",
