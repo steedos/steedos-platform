@@ -36,11 +36,11 @@ fields:
     help: 
     description: 
   password_history:
-    label: 强制密码历史
+    label: Enforce password history
     help: 
     description: 
   max_login_attempts:
-    label: 最大无效登录尝试次数
+    label: Max login attempts
     help: 
     options:
       - label: '3'
@@ -49,24 +49,38 @@ fields:
         value: '5'
       - label: '10'
         value: '10'
-      - label: 无限制
+      - label: unlimited
         value: '0'
     description: 
   lockout_interval:
-    label: 锁定有效期间
+    label: Lockout interval
     help: 
     options:
-      - label: 15 分钟
+      - label: 15 minutes
         value: '15'
-      - label: 30 分钟
+      - label: 30 minutes
         value: '30'
-      - label: 60 分钟
+      - label: 60 minutes
         value: '60'
-      - label: 始终(必须由管理员重置)
+      - label: Always (must be reset by an administrator)
         value: '0'
     description: 
+  enable_MFA:
+    label: Multiple authentication (SMS service needs to be enabled)
+    help: On the basis of password login, two combined authentication technologies of SMS verification are added for system login.
+  logout_other_clients: 
+    label: Single login
+    help: Logs off other clients logged in as the current user.
+  login_expiration_in_days:
+    label: Login expiration time (days)
+  phone_logout_other_clients: 
+    label: Single login of mobile app
+    help: Log off other clients logged in as the current user。
+  phone_login_expiration_in_days:
+    label: Mobile App Login Expiration Time (days)
 groups:
   profile_password_policy: profile password policy
+  login_policy: login policy
 listviews:
   all:
     label: All

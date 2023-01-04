@@ -356,8 +356,10 @@ async function getAppsMenus(ctx) {
         throw new Error('no permission.')
     }
     let assigned_apps = await getAssignedApps(userSession);
-    const mobile = ctx.params.mobile;
-    
+    let mobile = ctx.params.mobile;
+    if(typeof mobile !== 'boolean'){
+        mobile = mobile === "true" ? true : false;
+    }
     const spaceId = userSession.spaceId;
     const metadataApps = await getAllApps(ctx);
     const context = await getContext(ctx)

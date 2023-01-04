@@ -4378,34 +4378,34 @@
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.52.tgz#4a92da82b5c9ae112ddc15ba7187ffe5dbd2d89e"
-  integrity sha512-8X6apnO1zXfEgCGcFRn56aoswdLKldPnZjXDPRKjaU3KCM/5vCXEpeWzMGr5lhzzaEMepwwAYQMvM90ssPKdJQ==
+"@steedos-ui/builder-community@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.53.tgz#f9db7e543942aa4b06b8bd6aee316b56f6eb2a40"
+  integrity sha512-gP9qT9Dx7DF3eofSz2+Hi5KOxaVWKj0LfTluOM/veb50h3mSYDkqIfF3dlQFe4ulvJ7GCZcgcnge0feYGi8n+Q==
 
-"@steedos-ui/builder-widgets@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.52.tgz#9a917fa8c3962e99f5af21a888794baed6c71a85"
-  integrity sha512-XxP57X3b0ngS5frPQFUy5DS8hjyVzPaFLo7QrDuKQIkGMzBmimjF/YAgiaWi3DEHAZ//58t88+sMo9Frei2CUg==
+"@steedos-ui/builder-widgets@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.53.tgz#ede2b46d755858641692ea36d73d1c6902a2284b"
+  integrity sha512-w4fWadZbqO1CqRr74Kh12L8WII6cTiZRs/Rb1ptCOLlqXksjk9hguefnjhlp9cUcvx7bgE8TnagweGiD2/IpLQ==
 
-"@steedos-ui/design-system@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.52.tgz#a28d8ab4db6268639019162b6082b3a651e6ee61"
-  integrity sha512-mYdaqsVVnd+/gflkp0nNBkoFJ++5vnj+vXRlvRjC81RCgW57cQAmvzfGyZNWj8XSj7SSdywE59HA7PchOrXPOQ==
+"@steedos-ui/design-system@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.53.tgz#251a2b51b23177d3fc97a315f8e01514234b6ddb"
+  integrity sha512-5q2jSACHmPZJXHfANzjfh9SrQ1WoYbXLoD45sniaOFwwP2B/dCLwm9fxjF5o3ho2O1qcWnNx3aUcRH3+lGQKdw==
   dependencies:
     react-required-if "^1.0.3"
-
-"@steedos-widgets/amis-lib@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.16.tgz#06eb9996ee17290ceb5e0aec5acb01874cc364a9"
-  integrity sha512-qDgYUNrAAXZXUf/MjzwWbR/TjqHE8/kOLilEGuXGlBmxHfWtDmqyLKGPte8oHJfqFoIG5gk7hn7hgMQ5JuKOTA==
-  dependencies:
-    lodash "^4.17.21"
 
 "@steedos-widgets/amis-lib@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.7.tgz#a64304a5ce791117405231e4e3e78e6debc71bdb"
   integrity sha512-UPM+N1YmTsfkwqkni/EJTGdYapO5cZT6JU3XV9gdG8xhaIi4UlpXnadkkkOL/5qajBR6vkv5AwcaRDeZOmVjmA==
+  dependencies:
+    lodash "^4.17.21"
+
+"@steedos-widgets/amis-lib@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-1.0.10.tgz#15f1e2f3be8452ce4efd8896a6749d2ef6fb11d9"
+  integrity sha512-VXD2SXn3joNLHrPcOH53AZVnF1SQRY/RGg9aUx7XREZ8wFIo6rhzeo9cqIrfyYl1eIo7ujIJ+NVoTKz4cs/sJQ==
   dependencies:
     lodash "^4.17.21"
 
