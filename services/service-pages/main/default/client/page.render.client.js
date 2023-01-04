@@ -748,7 +748,7 @@
     Steedos.Page.Header.render = function(appId, tabId){
         const app = _.find(Session.get('app_menus'), {id: appId})
         if (typeof app != 'undefined') {
-            if (app.id === 'admin')
+            if (app.id === 'admin' || (window.innerWidth < 768))
                 app.showSidebar = true;
             if (app.showSidebar)
                 document.body.classList.add('sidebar')
