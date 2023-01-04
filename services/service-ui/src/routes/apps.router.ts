@@ -12,8 +12,9 @@ const router =express.Router();
 
 router.get('/service/api/apps/menus', requireAuthentication, async function (req: any, res: any) {
     const userSession = req.user;
+    const mobile = req.query && req.query.mobile;
     try {
-        const result = await getSteedosSchema().broker.call('apps.getMenus', {}, {meta: {user: userSession}});
+        const result = await getSteedosSchema().broker.call('apps.getMenus', {mobile: mobile}, {meta: {user: userSession}});
         res.status(200).send(result);
     } catch (error) {
         res.status(500).send(error.message);
