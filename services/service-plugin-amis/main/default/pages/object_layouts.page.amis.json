@@ -893,10 +893,7 @@
         "body"
     ],
     "data": {
-        "objectName": "object_layouts",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800"
-        }
+        "objectName": "object_layouts"
     },
     "bodyClassName": "p-0",
     "name": "page_edit_${recordId}",

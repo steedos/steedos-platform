@@ -533,13 +533,7 @@
         "body"
     ],
     "data": {
-        "objectName": "apps",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800",
-            "tenantId": "hKdnwE55WcnWveYxS",
-            "userId": "62ede4f62161e377e35de58c",
-            "authToken": "770a0b9e5b4fc2f8d6317ca109b0c087d3d160da669ac0218c044e15db1da0e74dd7e16c03b9f7e1640539"
-        }
+        "objectName": "apps"
     },
     "id": "u:953fda4052b6",
     "bodyClassName": "p-0",
