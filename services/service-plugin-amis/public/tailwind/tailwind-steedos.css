@@ -77,10 +77,6 @@ body.steedos .z-40 {
   z-index: 40
 }
 
-body.steedos .z-10 {
-  z-index: 10
-}
-
 body.steedos .z-20 {
   z-index: 20
 }
@@ -181,6 +177,10 @@ body.steedos .w-10 {
   width: 2.5rem
 }
 
+body.steedos .w-6\/12 {
+  width: 50%
+}
+
 body.steedos .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content
@@ -226,10 +226,6 @@ body.steedos .justify-between {
 body.steedos .gap-x-3 {
   -moz-column-gap: 0.75rem;
        column-gap: 0.75rem
-}
-
-body.steedos .overflow-hidden {
-  overflow: hidden
 }
 
 body.steedos .overflow-y-auto {

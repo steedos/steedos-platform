@@ -8,7 +8,7 @@
     "inspect": "cross-env NODE_OPTIONS='--inspect' steedos start --hot"
   },
   "dependencies": {
-    "@steedos-labs/experience": "^1.0.0-beta.20",
+    "@steedos/ee_experience": "^1.0.11",
     "@steedos/ee_unpkg-local": "2.3.3",
     "@steedos/service-enterprise": "2.3.3"
   }
