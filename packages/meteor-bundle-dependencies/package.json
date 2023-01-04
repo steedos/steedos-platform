@@ -25,7 +25,7 @@
     "es5-shim": "4.5.10",
     "faye-websocket": "0.11.1",
     "install": "0.12.2",
-    "json5": "2.1.0",
+    "json5": "2.2.2",
     "lolex": "2.3.1",
     "meteor-babel": "7.2.0",
     "meteor-babel-helpers": "0.0.3",
