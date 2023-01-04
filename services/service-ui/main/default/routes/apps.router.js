@@ -8,8 +8,9 @@ const router = express.Router();
 router.get('/service/api/apps/menus', core_1.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
+        const mobile = req.query && req.query.mobile;
         try {
-            const result = yield (0, objectql_1.getSteedosSchema)().broker.call('apps.getMenus', {}, { meta: { user: userSession } });
+            const result = yield (0, objectql_1.getSteedosSchema)().broker.call('apps.getMenus', { mobile: mobile }, { meta: { user: userSession } });
             res.status(200).send(result);
         }
         catch (error) {
