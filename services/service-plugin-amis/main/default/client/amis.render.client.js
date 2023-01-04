@@ -252,7 +252,6 @@
                   }
 
                 React.useEffect(()=>{
-                    console.log(`amisRequire===>`, schema, {data, name, locale: getAmisLng()})
                     const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
                     if(window.SteedosUI && schema.name){
                       SteedosUI.refs[schema.name] = amisScope;

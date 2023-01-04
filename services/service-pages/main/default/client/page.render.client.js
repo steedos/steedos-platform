@@ -187,7 +187,6 @@
                                     }
                                 }\`
                             }
-                            console.log("api", api)
                             return api;
                         `,
                         adaptor: `
@@ -208,7 +207,6 @@
                                     "label": "相关 ${object.label}"
                                 },
                               ]
-                            console.log('payload', payload)
                             payload.data.$loaded = true;
                             return payload;
                         `,
@@ -399,7 +397,6 @@
                         }, options.props)).show();
                     }else{
                         data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
-                        console.log(`Modal`, '=======Modal')
                         SteedosUI.Modal(Object.assign({
                             name: data.modalName,
                             title: data.title,
