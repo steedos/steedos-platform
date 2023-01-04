@@ -104,7 +104,20 @@ Template.creatorHeader.events
 
 
 Template.creatorHeader.onRendered ->
+	tabId = Session.get("pageApiName") || Session.get("object_name")
 	this.autorun ->
-		tab_id = Session.get("pageApiName") || Session.get("object_name") 
-		Steedos.Page.Header.render(Session.get('app_id'), tab_id)
+		Steedos.Page.Header.render(Session.get('app_id'), tabId)
 		# Steedos.Page.AppNav.render(Session.get('app_id'), tab_id)
+
+	this.autorun ->
+		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		if window.SteedosUI
+			amisScope = SteedosUI.refs.globalHeader;
+			if amisScope
+				Meteor.setTimeout ()->
+					amisScope.updateProps( {
+						location: FlowRouter.current()
+					}, ()->
+						console.log("amisScope.updateProps callback.......")
+					);
+				, 100

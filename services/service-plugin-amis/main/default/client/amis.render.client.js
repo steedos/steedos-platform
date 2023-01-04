@@ -76,6 +76,12 @@
             // window.React = window.__React;
             // window.ReactDOM = window.__ReactDOM;
             const AmisRenderers = [];
+            let amisLib = amisRequire('amis');
+            const registerMap = {
+              renderer: amisLib.Renderer,
+              formitem: amisLib.FormItem,
+              options: amisLib.OptionsControl,
+            };
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
             
@@ -103,13 +109,35 @@
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }
-                        amisRequire("amis").Renderer(
-                            {
-                                type: comp.amis?.render.type,
-                                weight: comp.amis?.render.weight,
-                                autoVar: true,
-                            }
-                        )(AmisWrapper);
+                        // 注册amis渲染器
+                        let asset = comp.amis.render;
+                        if (!registerMap[asset.usage]) {
+                          console.error(
+                            `自定义组件注册失败，不存在${asset.usage}自定义组件类型。`, comp
+                          );
+                        } else {
+                          registerMap[asset.usage]({
+                            test: new RegExp(`(^|\/)${asset.type}`),
+                            type: asset.type,
+                            weight: asset.weight,
+                            autoVar: true,
+                          })(AmisWrapper);
+                          // 记录当前创建的amis自定义组件
+                          console.info('注册了一个自定义amis组件:', {
+                            type: asset.type,
+                            weight: asset.weight,
+                            component: AmisWrapper,
+                            framework: asset.framework,
+                            usage: asset.usage,
+                          });
+                        }
+                        // amisRequire("amis").Renderer(
+                        //     {
+                        //         type: comp.amis?.render.type,
+                        //         weight: comp.amis?.render.weight,
+                        //         autoVar: true,
+                        //     }
+                        // )(AmisWrapper);
                     } catch(e){console.error(e)}
                 }
             });
@@ -252,7 +280,6 @@
                   }
 
                 React.useEffect(()=>{
-                    console.log(`amisRequire===>`, schema, {data, name, locale: getAmisLng()})
                     const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
                     if(window.SteedosUI && schema.name){
                       SteedosUI.refs[schema.name] = amisScope;

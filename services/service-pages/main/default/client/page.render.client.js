@@ -187,7 +187,6 @@
                                     }
                                 }\`
                             }
-                            console.log("api", api)
                             return api;
                         `,
                         adaptor: `
@@ -208,7 +207,6 @@
                                     "label": "相关 ${object.label}"
                                 },
                               ]
-                            console.log('payload', payload)
                             payload.data.$loaded = true;
                             return payload;
                         `,
@@ -399,7 +397,6 @@
                         }, options.props)).show();
                     }else{
                         data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
-                        console.log(`Modal`, '=======Modal')
                         SteedosUI.Modal(Object.assign({
                             name: data.modalName,
                             title: data.title,
@@ -751,7 +748,7 @@
     Steedos.Page.Header.render = function(appId, tabId){
         const app = _.find(Session.get('app_menus'), {id: appId})
         if (typeof app != 'undefined') {
-            if (app.id === 'admin')
+            if (app.id === 'admin' || (window.innerWidth < 768))
                 app.showSidebar = true;
             if (app.showSidebar)
                 document.body.classList.add('sidebar')
@@ -793,7 +790,7 @@
                       body: [
                         {
                           "type": "wrapper",
-                          "className": "p-0 slds-global-header_container sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 sm:shadow  border-b-[3px] border-sky-500 border-solid overflow-hidden",
+                          "className": "p-0 slds-global-header_container sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 sm:shadow  border-b-[3px] border-sky-500 border-solid",
                           body: [
                             {
                               "type": "wrapper",
