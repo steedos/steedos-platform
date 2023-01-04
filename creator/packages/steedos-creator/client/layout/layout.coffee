@@ -83,6 +83,12 @@ Template.creatorLayout.events
 		$(".steedos").addClass('move--right')
 
 
+
+Template.creatorLayout.onRendered ->
+	this.autorun ->
+		if (window.innerWidth >= 768) 
+      document.body.classList.add('sidebar-open')
+
 isCalendarView = ()->
 	view = Creator.getListView(Session.get "object_name", Session.get("list_view_id"))
 	return view?.type == 'calendar'
