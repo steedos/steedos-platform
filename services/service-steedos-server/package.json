@@ -22,6 +22,7 @@
     "@steedos/service-plugin-amis": "2.4.0-beta.2",
     "@steedos/service-ui": "2.4.0-beta.2",
     "@steedos/service-workflow": "2.4.0-beta.2",
+    "@steedos/standard-space": "2.4.0-beta.2",
     "@steedos/standard-cms": "2.4.0-beta.2",
     "@steedos/standard-collaboration": "2.4.0-beta.2",
     "@steedos/standard-object-database": "2.4.0-beta.2",
