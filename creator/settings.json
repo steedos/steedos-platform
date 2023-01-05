@@ -6,9 +6,6 @@
         "workflow": {
             "instance_attach_can_convert_to_office": true,
             "instance_allow_distribute": true
-        },
-        "page": {
-            "assetUrls": "https://8080-silver-constrictor-zuwb3f74.ws.vscode.steedos.cn/@steedos-widgets/amis-object/dist/assets-dev.json"
         }
     },
     "cron": {

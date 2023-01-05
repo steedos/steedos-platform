@@ -231,11 +231,13 @@ var tabularOnRendered = function () {
 
 		//console.log('tabular_getInfo autorun');
 		// console.log("tabular.search_value.get()", template.tabular.search_value.get());
+		const options = template.tabular.options.get()
 		Meteor.subscribe(
 			"tabular_getInfo",
 			template.tabular.tableName.get(),
 			template.tabular.pubSelector.get(),
-			template.tabular.sort.get(),
+			// template.tabular.sort.get(),
+			options.getSort ? options.getSort(template.tabular.sort.get()) : template.tabular.sort.get(),
 			template.tabular.skip.get(),
 			template.tabular.limit.get(),
 			template.tabular.search_value.get(),

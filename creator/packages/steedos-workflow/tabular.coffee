@@ -23,7 +23,7 @@ instancesListTableTabular = (flowId, fields)->
 	options = {
 		name: "instances",
 		collection: db.instances,
-		pub: "instances_tabular",
+		pub: "instance_tabular",
 		onUnload: ()->
 			Meteor.setTimeout(Template.instance_list._tableColumns, 150)
 
@@ -416,7 +416,7 @@ instanceTasksListTableTabular = (flowId, fields)->
 
 		createdRow: (row, data, dataIndex) ->
 			if Meteor.isClient
-				if data._id == FlowRouter.current().params.instanceId
+				if data.instance == FlowRouter.current().params.instanceId
 					row.setAttribute("class", "selected")
 		columns: [
 			{
@@ -426,23 +426,23 @@ instanceTasksListTableTabular = (flowId, fields)->
 					modifiedString = moment(doc.modified).format('YYYY-MM-DD');
 
 					modified = doc.modified
-					if Session.get("box") == 'inbox' && doc.state != 'draft'
+					if Session.get("box") == 'inbox' && doc.instance_state != 'draft'
 						modified = doc.start_date || doc.modified
 
-					if Session.get("box") == 'outbox' || Session.get("box") == 'monitor'
-						modified = doc.submit_date || doc.submit_date
+					if Session.get("box") == 'outbox'
+						modified = doc.submit_date || doc.modified
 
 					modifiedFromNow = Steedos.momentReactiveFromNow(modified);
 					flow_name = doc.flow_name
 					cc_view = "";
 					step_current_name_view = "";
 					# 当前用户在cc user中，但是不在inbox users时才显示'传阅'文字
-					if doc.is_cc && !doc.inbox_users?.includes(Meteor.userId()) && Session.get("box") == 'inbox'
+					if doc.type == 'cc' && Session.get("box") == 'inbox'
 						cc_view = "<label class='cc-label'>(" + TAPi18n.__("instance_cc_title") + ")</label> "
-						step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.current_step_name})</span></div>"
+						step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.step_name})</span></div>"
 					else
-						if Session.get("box") != 'draft' && doc.current_step_name
-							step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.current_step_name})</span></div>"
+						if doc.step_name
+							step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.step_name})</span></div>"
 						else
 							step_current_name_view = "<div class='flow-name'>#{flow_name}</div>"
 
@@ -452,10 +452,6 @@ instanceTasksListTableTabular = (flowId, fields)->
 
 					unread = ''
 
-					# isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
-					# if Favorites.isRecordSelected("instances", doc._id)
-					# 	unread = '<i class="ion ion-ios-star-outline instance-favorite-selected"></i>'
-					# else 
 					if Session.get("box") == 'inbox' && doc.is_read == false
 						unread = '<i class="ion ion-record unread"></i>'
 					else if Session.get("box") == 'monitor' && doc.is_hidden == true
@@ -551,13 +547,13 @@ instanceTasksListTableTabular = (flowId, fields)->
 				orderable: false
 			},
 			{
-				data: "current_step_name",
+				data: "step_name",
 				title: t("instances_step_current_name"),
 				render: (val, type, doc) ->
-					if doc.state == "completed"
-						judge = doc.final_decision || "approved"
+					if doc.instance_state == "completed"
+						judge = doc.judge || "approved"
 
-					step_current_name = doc.current_step_name || ''
+					step_current_name = doc.step_name || ''
 
 					cc_tag = ''
 
@@ -624,8 +620,8 @@ instanceTasksListTableTabular = (flowId, fields)->
 			else
 				'tpl'
 		order: [[4, "desc"]],
-		extraFields: ["instance", "form", "flow", "inbox_users", "state", "space", "applicant", "form_version",
-			"flow_version", "is_cc", "cc_count", "is_read", "current_step_name", "values", "keywords", "final_decision", "flow_name", "is_hidden", "agent_user_name"],
+		extraFields: ["instance", "form", "flow", "inbox_users", "instance_state", "space", "applicant", "form_version",
+			"flow_version", "type", "is_read", "step_name", "values", "keywords", "final_decision", "flow_name", "is_hidden", "agent_user_name"],
 		lengthChange: true,
 		lengthMenu: [10,15,20,25,50,100],
 		pageLength: 10,
@@ -731,6 +727,9 @@ _get_inbox_instances_tabular_options = (flowId, fields)->
 
 	options.order = [[8, "desc"]]
 
+	options.getSort = (sort) -> 
+		return sort
+
 	return options
 
 Meteor.startup ()->
@@ -744,6 +743,19 @@ _get_outbox_instances_tabular_options = (flowId, fields)->
 		options.name = "outbox_instances"
 
 	options.order = [[9, "desc"]]
+
+	options.getSort = (sort) -> 
+		console.log(sort)
+		newSort = [ 
+			['space', 'asc'],
+			['handler', 'asc'],
+			['is_finished', 'asc'],
+			['type', 'asc'],
+			['judge', 'asc'],
+			['is_hidden', 'asc'],
+		]
+		newSort = newSort.concat(sort)
+		return newSort
 
 	return options
 
