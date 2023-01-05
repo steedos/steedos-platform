@@ -1,6 +1,6 @@
 {
     "name": "@steedos/plugin-dingtalk",
-    "version": "2.4.0-beta.2",
+    "version": "2.4.0-beta.3",
     "private": false,
     "description": "",
     "publishConfig": {
@@ -32,8 +32,8 @@
     "devDependencies": {
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
-        "steedos-server": "2.4.0-beta.2"
+        "steedos-server": "2.4.0-beta.3"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
-    "gitHead": "4bbd9ee44a8cc1e75db2027c135b9e208b93964a"
+    "gitHead": "1c901ac5b13f425f28aedf0f1bf61199f0012663"
 }
