@@ -817,7 +817,7 @@
                                   "type": "steedos-global-header",
                                   "label": "Global Header",
                                   className: 'flex flex-nowrap gap-x-3 items-center',
-                                  logoutScript: "window.signOut();",
+                                  logoutScript: "window.Steedos.logout();",
                                   customButtons: [
                                     {
                                       "type": "button",
