@@ -36,6 +36,7 @@ Creator.Objects['notifications'].methods = {
     },
     read: async function (req, res) {
         let { _id: record_id } = req.params;
+        let { rootUrl, appId } = req.query;
         let userSession = await auth(req, res);
         let req_async = _.has(req.query, 'async');
         if (userSession.userId) {
@@ -62,7 +63,9 @@ Creator.Objects['notifications'].methods = {
                 // 没有权限时，只是不修改is_read值，但是允许跳转到相关记录查看
                 await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true, modified: new Date() })
             }
-            let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space);
+            let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space, {
+                rootUrl, appId
+            });
             if(req_async){ // || req.get("X-Requested-With") === 'XMLHttpRequest'
                 return res.status(200).send({
                     "status": 302,
