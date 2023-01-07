@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-04 14:56:22
+ * @LastEditTime: 2023-01-07 15:28:23
  * @Description: 
  */
 'use strict';
@@ -88,6 +88,16 @@ function update_many_instance_tasks(insId, traceId, approveIds) {
  */
 function remove_instance_tasks(approveId) {
     const result = db.instance_tasks.remove({ _id: approveId })
+    return result
+}
+
+/**
+ * 删除instance_tasks记录
+ * @param {String[]} approveIds
+ * @returns 1
+ */
+function remove_many_instance_tasks(approveIds) {
+    const result = db.instance_tasks.remove({ _id: {$in: approveIds} })
     return result
 }
 
@@ -187,5 +197,6 @@ module.exports = {
     update_instance_tasks,
     update_many_instance_tasks,
     remove_instance_tasks,
+    remove_many_instance_tasks,
     remove_instance_tasks_by_instance_id
 }

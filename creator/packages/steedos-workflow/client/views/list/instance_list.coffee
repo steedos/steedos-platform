@@ -44,8 +44,8 @@ Template.instance_list.helpers
 		else if box == "outbox"
 			query.handler = uid
 			query.is_finished = true
-			query.type = { $ne : 'distribute' }
-			query.judge = { $nin: ['relocated', 'terminated', 'reassigned'] }
+			# query.type = { $ne : 'distribute' }
+			# query.judge = { $nin: ['relocated', 'terminated', 'reassigned'] }
 			# uid = Meteor.userId()
 			# query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
 		else if box == "draft"
@@ -106,9 +106,9 @@ Template.instance_list.helpers
 
 #		Template.instance_list._tableColumns()
 
-		if box isnt "monitor" and box isnt "draft"
-			query.is_hidden = { $ne: true }
-
+		# if box isnt "monitor"
+		# 	query.is_hidden = { $ne: true }
+		console.log('query:', query)
 		return query
 
 	is_display_search_tip: ->

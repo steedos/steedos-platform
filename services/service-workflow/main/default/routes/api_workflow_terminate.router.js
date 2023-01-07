@@ -14,7 +14,7 @@ const _ = require('lodash');
 const Fiber = require("fibers");
 const { excuteTriggers } = require('../utils/trigger');
 const {
-    update_many_instance_tasks,
+    remove_many_instance_tasks,
 } = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
  * 申请人取消申请
@@ -173,8 +173,8 @@ router.post('/api/workflow/terminate', core.requireAuthentication, async functio
                     }, {
                         $set: setObj
                     });
-                    // 更新intance_tasks
-                    update_many_instance_tasks(instance_id, instance_trace._id, finishedApproveIds)
+                    // 删除intance_tasks
+                    remove_many_instance_tasks(finishedApproveIds)
                     if (r) {
                         ins = uuflowManager.getInstance(instance_id);
                         //通知填单人、申请人

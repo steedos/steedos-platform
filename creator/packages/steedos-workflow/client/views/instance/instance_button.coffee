@@ -445,6 +445,7 @@ instanceButtonHelpers =
 		return Steedos.isMobile()
 
 	enabled_hide: ()->
+		return false # 暂不启用
 		if Session.get('box') isnt "monitor"
 			return false
 

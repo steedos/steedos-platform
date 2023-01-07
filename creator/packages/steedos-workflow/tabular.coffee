@@ -306,7 +306,16 @@ instancesListTableTabular = (flowId, fields)->
 				return {_id: -1}
 			return selector
 		pagingType: "numbers"
-
+		
+		# getSort: (selector, sort) -> 
+		# 	console.log('selector:',selector)
+		# 	console.log('sort:',sort)
+		# 	newSort = []
+		# 	_.each selector, (v, k) ->
+		# 		newSort.push([k, 1])
+		# 	newSort = newSort.concat(sort)
+		# 	console.log('newSort:',newSort)
+		# 	return newSort
 	}
 
 	if flowId
@@ -701,6 +710,8 @@ instanceTasksListTableTabular = (flowId, fields)->
 Meteor.startup ()->
 	TabularTables.instances = new Tabular.Table instancesListTableTabular()
 	TabularTables.instance_tasks = new Tabular.Table instanceTasksListTableTabular()
+	TabularTables.inbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("inbox")
+	TabularTables.outbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("outbox")
 
 
 GetBoxInstancesTabularOptions = (box, flowId, fields)->
@@ -717,8 +728,6 @@ GetBoxInstancesTabularOptions = (box, flowId, fields)->
 		options.name = key
 	return options
 
-
-
 _get_inbox_instances_tabular_options = (flowId, fields)->
 	options = instanceTasksListTableTabular(flowId, fields)
 
@@ -727,14 +736,11 @@ _get_inbox_instances_tabular_options = (flowId, fields)->
 
 	options.order = [[8, "desc"]]
 
-	options.getSort = (sort) -> 
+	options.getSort = (selector, sort) -> 
+		console.log('inbox_instances:',sort)
 		return sort
 
 	return options
-
-Meteor.startup ()->
-	TabularTables.inbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("inbox")
-
 
 _get_outbox_instances_tabular_options = (flowId, fields)->
 	options = instanceTasksListTableTabular(flowId, fields)
@@ -742,25 +748,20 @@ _get_outbox_instances_tabular_options = (flowId, fields)->
 	if !flowId
 		options.name = "outbox_instances"
 
-	options.order = [[9, "desc"]]
+	options.order = [[9, -1]]
 
-	options.getSort = (sort) -> 
-		console.log(sort)
-		newSort = [ 
-			['space', 'asc'],
-			['handler', 'asc'],
-			['is_finished', 'asc'],
-			['type', 'asc'],
-			['judge', 'asc'],
-			['is_hidden', 'asc'],
-		]
-		newSort = newSort.concat(sort)
-		return newSort
+	options.getSort = (selector, sort) -> 
+		console.log('outbox_instances:',sort)
+		# newSort = [ 
+		# 	['space', 1],
+		# 	['handler', 1],
+		# 	['is_finished', 1],
+		# ]
+		# newSort = newSort.concat(sort)
+		# return newSort
+		return sort
 
 	return options
-
-Meteor.startup ()->
-	TabularTables.outbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("outbox")
 
 if Meteor.isClient
 	TabularTables.flowInstances = new ReactiveVar()

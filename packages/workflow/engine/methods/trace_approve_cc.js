@@ -323,7 +323,7 @@ module.exports = {
                 }
             });
         }
-        update_instance_tasks(instanceId, trace_id, approveId)
+        remove_instance_tasks(approveId)
 
 
         pushManager.send_message_to_specifyUser("current_user", remove_user_id);

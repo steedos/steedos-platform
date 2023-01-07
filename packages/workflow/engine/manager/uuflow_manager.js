@@ -2,7 +2,8 @@ const {
     insert_instance_tasks,
     insert_many_instance_tasks,
     update_instance_tasks,
-    update_many_instance_tasks
+    update_many_instance_tasks,
+    remove_many_instance_tasks,
 } = require('./instance_tasks_manager')
 const Cookies = require("cookies");
 const _eval = require('eval');
@@ -3516,10 +3517,8 @@ uuflowManager.relocate = function (instance_from_client, current_user_info) {
             }
         });
     }
-    // 更新当前结束的approve
-    update_many_instance_tasks(instance_id, last_trace._id, finishedApproveIds)
-    // 生成重定位操作的approve
-    insert_instance_tasks(instance_id, last_trace._id, relocate_appr._id)
+    // 删除当前结束的approve
+    remove_many_instance_tasks(finishedApproveIds)
     // 生成新待审核的approve
     if (newTrace.approves) {
         insert_many_instance_tasks(instance_id, newTrace._id, _.pluck(newTrace.approves, '_id'))

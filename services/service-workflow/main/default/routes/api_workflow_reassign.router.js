@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:38:27
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-31 15:11:41
+ * @LastEditTime: 2023-01-07 15:32:38
  * @Description: 
  */
 'use strict';
@@ -13,7 +13,7 @@ const core = require('@steedos/core');
 const _ = require('underscore');
 const Fiber = require('fibers');
 const {
-    update_many_instance_tasks,
+    remove_many_instance_tasks,
     insert_many_instance_tasks,
 } = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
@@ -199,10 +199,9 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                         $set: setObj
                     });
 
-                    // 更新当前结束的approve
-                    update_many_instance_tasks(instance_id, last_trace._id, finishedApproveIds)
-                    // 生成重定位操作的approve和新待审核的approve
-                    newApproveIds.push(assignee_appr._id)
+                    // 删除当前结束的approve
+                    remove_many_instance_tasks(finishedApproveIds)
+                    // 生成新待审核的approve
                     insert_many_instance_tasks(instance_id, last_trace._id, newApproveIds)
 
                     if (r) {

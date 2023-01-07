@@ -1,3 +1,7 @@
+const {
+    remove_many_instance_tasks,
+    remove_instance_tasks
+} = require('../manager').instance_tasks_manager
 module.exports = {
     // 改为通过api调用
     forward_instance: function (instance_id, space_id, flow_id, hasSaveInstanceToAttachment, description, isForwardAttachments, selectedUsers, action_type, related, from_approve_id) {
@@ -80,6 +84,7 @@ module.exports = {
         }, {
             $set: set_obj
         })
+        remove_instance_tasks(approve_id)
 
         return true;
     },
@@ -97,6 +102,8 @@ module.exports = {
         userId = this.userId
 
         var hasAdminPermission = WorkflowManager.hasFlowAdminPermission(ins.flow, ins.space, userId)
+
+        const finishedApproveIds = []
 
         _.each(ins.traces, function (t) {
             if (t.approves) {
@@ -131,6 +138,8 @@ module.exports = {
                             set_obj['traces.$.approves.' + idx + '.finish_date'] = new Date()
                             set_obj['traces.$.approves.' + idx + '.is_read'] = true
                             set_obj['traces.$.approves.' + idx + '.read_date'] = new Date()
+                            
+                            finishedApproveIds.push(a._id)
                         }
 
                         exists = true
@@ -149,6 +158,8 @@ module.exports = {
                 }, {
                     $set: set_obj
                 })
+
+                remove_many_instance_tasks(finishedApproveIds)
             }
         })
 

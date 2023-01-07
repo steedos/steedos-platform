@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 13:41:11
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-31 09:53:18
+ * @LastEditTime: 2023-01-07 15:24:00
  * @Description: 
  */
 'use strict';
@@ -632,7 +632,6 @@ router.post('/api/workflow/forward', core.requireAuthentication, async function 
                             }
                         }
                     });
-                    insert_many_instance_tasks(instance_id, current_trace_id, _.pluck(forward_approves, '_id'))
                 }
 
 
