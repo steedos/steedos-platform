@@ -38,7 +38,8 @@ Steedos.ProcessManager.allowSubmit = function(object_name, record_id){
     if(!object_name || !record_id){
         return false;
     }
-    if(!Creator.getObject(object_name).enable_process){
+    const object = this.object || window.Creator?.getObject(object_name)
+    if(!object.enable_process){
         return false;
     }
     var result = Steedos.authRequest(`/api/v4/process/permission/submit/${object_name}/${record_id}`, {type: 'get', async: false});
