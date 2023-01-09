@@ -93,7 +93,7 @@ FlowRouter.route '/app/menu',
 	]
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission, checkAppId ],
+	triggersEnter: [ checkUserSigned, checkAppPermission ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")

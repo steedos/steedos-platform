@@ -747,15 +747,13 @@
     }
 
     Steedos.Page.Header.render = function(appId, tabId){
-        const app = _.find(Session.get('app_menus'), {id: appId})
-        if (typeof app != 'undefined') {
-            if (app.id === 'admin' || (window.innerWidth < 768))
-                app.showSidebar = true;
-            if (app.showSidebar)
-                document.body.classList.add('sidebar')
-            else
-                document.body.classList.remove("sidebar")   
-        }
+        const app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        if (app.id === 'admin' || (window.innerWidth < 768))
+            app.showSidebar = true;
+        if (app.showSidebar)
+            document.body.classList.add('sidebar')
+        else
+            document.body.classList.remove("sidebar")   
 
         try {
             const data = {
