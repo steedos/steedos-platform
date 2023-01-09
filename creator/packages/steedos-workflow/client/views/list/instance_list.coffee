@@ -5,6 +5,16 @@ Template.instance_list.helpers
 
 	is_inbox: ->
 		return Session.get("box") == "inbox"
+	is_outbox: ->
+		return Session.get("box") == "outbox"
+	is_monitor: ->
+		return Session.get("box") == "monitor"
+	is_draft: ->
+		return Session.get("box") == "draft"
+	is_pending: ->
+		return Session.get("box") == "pending"
+	is_completed: ->
+		return Session.get("box") == "completed"
 
 	spaceId: ->
 		return Session.get("spaceId");

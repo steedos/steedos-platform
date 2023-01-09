@@ -18,7 +18,15 @@
 		<!--此写法只为解决不同在待审核与其他箱切换时，分页错误的问题。此写法可以创建2个tabular view-->
 		{{#if is_inbox}}
 			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
-		{{else}}
+		{{else if is_outbox}}
+			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
+		{{else if is_monitor}}
+			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
+		{{else if is_draft}}
+			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
+		{{else if is_pending}}
+			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
+		{{else if is_completed}}
 			{{> tabular table=getInstanceListTabular selector=selector class="table table-bordered table-striped dataTable datatable-instances"}}
 		{{/if}}
 
