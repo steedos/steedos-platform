@@ -108,12 +108,21 @@ const util = {
   /**
    * Returns the object record url
    */
-  getObjectRecordUrl: (objectName: string, recordId: string, spaceId: string = null)=>{
-    let url = `/app/-/${objectName}/view/${recordId}`;
+  getObjectRecordUrl: (objectName: string, recordId: string, spaceId: string = null, options: any = {})=>{
+    let appId = '-';
+    if(options.appId){
+      appId = options.appId;
+    }
+    let url = `/app/${appId}/${objectName}/view/${recordId}`;
     if (objectName === "instances"){
         url = `/workflow/space/${spaceId}/inbox/${recordId}`;
     }
     let rootUrl = __meteor_runtime_config__ ? __meteor_runtime_config__.ROOT_URL_PATH_PREFIX : "";
+
+    if(options.rootUrl){
+      rootUrl = options.rootUrl
+    }
+
     if(rootUrl){
       url = rootUrl + url;
     }

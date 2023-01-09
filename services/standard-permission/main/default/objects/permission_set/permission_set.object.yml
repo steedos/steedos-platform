@@ -130,14 +130,14 @@ fields:
     label: 多重身份验证(需要开启短信服务)
     inlineHelpText: 密码登陆的基础上增加短信验证的两种组合的鉴别技术进行系统登陆.
     sort_no: 1200
-    group: 登录策略
+    group: login policy
     visible_on: "{{'profile' === formData.type ? true: false}}"
   logout_other_clients: 
     type: boolean
     label: 单例登录
     inlineHelpText: 注销以当前用户身份登录的其他客户端。
     sort_no: 1100
-    group: 登录策略
+    group: login policy
     visible_on: "{{'profile' === formData.type ? true: false}}"
   login_expiration_in_days:
     type: number
@@ -145,14 +145,14 @@ fields:
     label: 登录到期时间(天)
     sort_no: 1000
     defaultValue: 90
-    group: 登录策略
+    group: login policy
     visible_on: "{{'profile' === formData.type ? true: false}}"
   phone_logout_other_clients: 
     type: boolean
     label: 手机App单例登录
     inlineHelpText: 注销以当前用户身份登录的其他客户端。
     sort_no: 1100
-    group: 登录策略
+    group: login policy
     visible_on: "{{'profile' === formData.type ? true: false}}"
   phone_login_expiration_in_days:
     type: number
@@ -160,7 +160,7 @@ fields:
     label: 手机App登录到期时间(天)
     sort_no: 1000
     defaultValue: 90
-    group: 登录策略
+    group: login policy
     visible_on: "{{'profile' === formData.type ? true: false}}"
 list_views:
   all:

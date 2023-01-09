@@ -4378,34 +4378,34 @@
     "@types/path-to-regexp" "^1.7.0"
     path-to-regexp "^6.2.1"
 
-"@steedos-ui/builder-community@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.52.tgz#4a92da82b5c9ae112ddc15ba7187ffe5dbd2d89e"
-  integrity sha512-8X6apnO1zXfEgCGcFRn56aoswdLKldPnZjXDPRKjaU3KCM/5vCXEpeWzMGr5lhzzaEMepwwAYQMvM90ssPKdJQ==
+"@steedos-ui/builder-community@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-community/-/builder-community-2.2.53.tgz#f9db7e543942aa4b06b8bd6aee316b56f6eb2a40"
+  integrity sha512-gP9qT9Dx7DF3eofSz2+Hi5KOxaVWKj0LfTluOM/veb50h3mSYDkqIfF3dlQFe4ulvJ7GCZcgcnge0feYGi8n+Q==
 
-"@steedos-ui/builder-widgets@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.52.tgz#9a917fa8c3962e99f5af21a888794baed6c71a85"
-  integrity sha512-XxP57X3b0ngS5frPQFUy5DS8hjyVzPaFLo7QrDuKQIkGMzBmimjF/YAgiaWi3DEHAZ//58t88+sMo9Frei2CUg==
+"@steedos-ui/builder-widgets@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/builder-widgets/-/builder-widgets-2.2.53.tgz#ede2b46d755858641692ea36d73d1c6902a2284b"
+  integrity sha512-w4fWadZbqO1CqRr74Kh12L8WII6cTiZRs/Rb1ptCOLlqXksjk9hguefnjhlp9cUcvx7bgE8TnagweGiD2/IpLQ==
 
-"@steedos-ui/design-system@2.2.52":
-  version "2.2.52"
-  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.52.tgz#a28d8ab4db6268639019162b6082b3a651e6ee61"
-  integrity sha512-mYdaqsVVnd+/gflkp0nNBkoFJ++5vnj+vXRlvRjC81RCgW57cQAmvzfGyZNWj8XSj7SSdywE59HA7PchOrXPOQ==
+"@steedos-ui/design-system@2.2.53":
+  version "2.2.53"
+  resolved "https://registry.npmjs.org/@steedos-ui/design-system/-/design-system-2.2.53.tgz#251a2b51b23177d3fc97a315f8e01514234b6ddb"
+  integrity sha512-5q2jSACHmPZJXHfANzjfh9SrQ1WoYbXLoD45sniaOFwwP2B/dCLwm9fxjF5o3ho2O1qcWnNx3aUcRH3+lGQKdw==
   dependencies:
     react-required-if "^1.0.3"
-
-"@steedos-widgets/amis-lib@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.16.tgz#06eb9996ee17290ceb5e0aec5acb01874cc364a9"
-  integrity sha512-qDgYUNrAAXZXUf/MjzwWbR/TjqHE8/kOLilEGuXGlBmxHfWtDmqyLKGPte8oHJfqFoIG5gk7hn7hgMQ5JuKOTA==
-  dependencies:
-    lodash "^4.17.21"
 
 "@steedos-widgets/amis-lib@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-0.0.7.tgz#a64304a5ce791117405231e4e3e78e6debc71bdb"
   integrity sha512-UPM+N1YmTsfkwqkni/EJTGdYapO5cZT6JU3XV9gdG8xhaIi4UlpXnadkkkOL/5qajBR6vkv5AwcaRDeZOmVjmA==
+  dependencies:
+    lodash "^4.17.21"
+
+"@steedos-widgets/amis-lib@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-1.0.10.tgz#15f1e2f3be8452ce4efd8896a6749d2ef6fb11d9"
+  integrity sha512-VXD2SXn3joNLHrPcOH53AZVnF1SQRY/RGg9aUx7XREZ8wFIo6rhzeo9cqIrfyYl1eIo7ujIJ+NVoTKz4cs/sJQ==
   dependencies:
     lodash "^4.17.21"
 
@@ -4522,10 +4522,10 @@
     lodash "^4.17.21"
     node-xlsx "^0.16.1"
 
-"@steedos/ee_experience@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@steedos/ee_experience/-/ee_experience-1.0.10.tgz#d78230e2ce1095e50126ce74780fb4d8dd356a8b"
-  integrity sha512-o0Ksa23zqM8NeFHdjv8N+Gt2woV5w46pObxXzSb13pcFoCTWcNsofhwWEcIvKCir+IddzzP+g1T6cqjUtbO+0A==
+"@steedos/ee_experience@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.npmmirror.com/@steedos/ee_experience/-/ee_experience-1.0.11.tgz#dc41028dd2697e67031057365813f63c505a03a0"
+  integrity sha512-vP13nj0BPfobQHIzGJ/BFH7Dwl2mh/opkyl7/oVOokD6iOSXIuzedd+/Uonchws7QrXLFNFJkSuNmv/3fv9edA==
   dependencies:
     "@headlessui/react" "^1.6.5"
     "@heroicons/react" "^1.0.6"
@@ -6103,12 +6103,12 @@ aliyun-sdk@1.12.3:
     xml2js "0.4.4"
     xmlbuilder "^13.0.2"
 
-amis-core@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/amis-core/-/amis-core-2.5.2.tgz#a3e9c68919ed5f857752b777a5ffbba17a787a3f"
-  integrity sha512-pBY5BUUbsGXXl4WTOb/rugUi03k3OlJ8x1x2vlSp/nbX8XUsrG4siqtDJenidbViWw2UqrNL2Fr6PlC3S8KBYg==
+amis-core@^2.2.0, amis-core@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/amis-core/-/amis-core-2.6.0.tgz#43bfb7a0b38638178b856507ebafe446970906c1"
+  integrity sha512-ZdYUdvYwe2XCZaTXlyAdP3l4bpbeJN5jwKO2juxSqGEgcW17YD1NvQn/y+Rb3rZBEZ9wDGoCrzX4ryVjBtBWZA==
   dependencies:
-    amis-formula "^2.5.2"
+    amis-formula "^2.6.0"
     classnames "2.3.1"
     file-saver "^2.0.2"
     hoist-non-react-statics "^3.3.2"
@@ -6125,23 +6125,23 @@ amis-core@^2.5.2:
     tslib "^2.3.1"
     uncontrollable "7.2.1"
 
-amis-formula@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/amis-formula/-/amis-formula-2.5.2.tgz#10eb47305ff22f6d08bd59250e470c10922e946b"
-  integrity sha512-A4bSCro39IRRZkxeC+r3Ih4O6jb7h6ZOiSfnfmC9L9SJy9EEUMKtSOE/X1gzp4bwXg8SrBWopoKfjJoKgYS49A==
+amis-formula@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/amis-formula/-/amis-formula-2.6.0.tgz#126b7c1f6c17fa2e1076338f783482a762dea0ad"
+  integrity sha512-tF41ls3Z16ik3UMEutGUwmC1EX8912qyGeu++v+Ind28n8ZJWExAcmEufB8WrU+UUcTkfd0aza5o0hiZHRUV5w==
   dependencies:
     lodash "^4.17.15"
     moment "^2.29.4"
     tslib "^2.3.1"
 
-amis-ui@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/amis-ui/-/amis-ui-2.5.2.tgz#d2b3be9a0d140cf90d75e43aa4ecd8052ef1f124"
-  integrity sha512-VwGhYR5Wi8eoAeThtsjaQZ5ANMjZWycj072qth0pURKRoF3VvpLlsy7kk5lYVBErVSCEyG4Czu8PAvYOeIMHNg==
+amis-ui@^2.2.0:
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/amis-ui/-/amis-ui-2.6.0.tgz#a69f3d8f30839efe425ae64dcd3ce43834d2e4af"
+  integrity sha512-r28KT3TSzpBr7v/WrWQKPf4KO2FUMIUnLM0+LmQuhStQs402sPfl682NFtTCQbrFQvJMpkaQCYMp6COseeqMIA==
   dependencies:
     "@rc-component/mini-decimal" "^1.0.1"
-    amis-core "^2.5.2"
-    amis-formula "^2.5.2"
+    amis-core "^2.6.0"
+    amis-formula "^2.6.0"
     classnames "2.3.1"
     codemirror "^5.63.0"
     downshift "6.1.12"
@@ -6160,7 +6160,7 @@ amis-ui@^2.5.2:
     moment "^2.19.4"
     monaco-editor "0.30.1"
     prop-types "^15.6.1"
-    rc-input-number "^7.3.9"
+    rc-input-number "^7.4.0"
     rc-progress "^3.1.4"
     react-color "^2.19.3"
     react-hook-form "7.39.0"
@@ -6174,18 +6174,19 @@ amis-ui@^2.5.2:
     tslib "^2.3.1"
     uncontrollable "7.2.1"
 
-amis@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/amis/-/amis-2.5.2.tgz#3a0e480304fdeac38620793adf67e949be386181"
-  integrity sha512-kuBKkA9pvlqEpr2EKZjM0IrNOH5iaUSq+j0J0zTmwlbWmc6AEoJ0HsiPJPvyZGSU56EoJYL5XWXI+QMEOUFj/Q==
+amis@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/amis/-/amis-2.2.0.tgz#13faef0c23ecad532a3e883ed372b1a3138ed5a3"
+  integrity sha512-VsswW9M6QatEHo7XBwA5buR1LTrp7HzmdNrUsaIvQ6shn0Sjsxk9+dNsarBWyFxuwrjH5nursP7PZBZrW+mcfw==
   dependencies:
-    amis-core "^2.5.2"
-    amis-ui "^2.5.2"
+    amis-core "^2.2.0"
+    amis-ui "^2.2.0"
+    ansi-to-react "^6.1.6"
     attr-accept "2.2.2"
     blueimp-canvastoblob "2.1.0"
     classnames "2.3.1"
-    downshift "6.1.12"
-    echarts "5.4.0"
+    downshift "6.1.7"
+    echarts "5.3.3"
     echarts-stat "^1.2.0"
     exceljs "^4.3.0"
     file-saver "^2.0.2"
@@ -6201,6 +6202,7 @@ amis@2.5.2:
     mobx-react "^6.3.1"
     mobx-state-tree "^3.17.3"
     moment "^2.19.4"
+    monaco-editor "0.30.1"
     mpegts.js "^1.6.10"
     prop-types "^15.6.1"
     qrcode.react "^3.1.0"
@@ -6209,9 +6211,14 @@ amis@2.5.2:
     react-dropzone "^11.4.2"
     react-json-view "1.21.3"
     react-transition-group "4.4.2"
-    sortablejs "1.15.0"
+    sortablejs "1.14.0"
     tslib "^2.3.1"
     video-react "0.15.0"
+
+anser@^1.4.1:
+  version "1.4.10"
+  resolved "https://registry.npmmirror.com/anser/-/anser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"
+  integrity sha512-hCv9AqTQ8ycjpSd3upOJd7vFwW1JaoYQ7tpham03GJ1ca8/65rqn0RpaWpItOAd6ylW9wAw6luXYPJIyPFVOww==
 
 ansi-color@^0.2.1:
   version "0.2.1"
@@ -6268,6 +6275,14 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0, ansi-styles@^4.2.0, ansi-styles@^4.3.0:
   integrity sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
   dependencies:
     color-convert "^2.0.1"
+
+ansi-to-react@^6.1.6:
+  version "6.1.6"
+  resolved "https://registry.npmmirror.com/ansi-to-react/-/ansi-to-react-6.1.6.tgz#d6fe15ecd4351df626a08121b1646adfe6c02ccb"
+  integrity sha512-+HWn72GKydtupxX9TORBedqOMsJRiKTqaLUKW8txSBZw9iBpzPKLI8KOu4WzwD4R7hSv1zEspobY6LwlWvwZ6Q==
+  dependencies:
+    anser "^1.4.1"
+    escape-carriage "^1.3.0"
 
 ansicolors@~0.3.2:
   version "0.3.2"
@@ -6329,9 +6344,9 @@ antd@^4.22.0:
     scroll-into-view-if-needed "^2.2.25"
 
 antd@^4.24.5:
-  version "4.24.5"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.24.5.tgz#e2489fe7929b53044f239f0893f22baf52e43c48"
-  integrity sha512-1dgDd6OqVP0OGNenNm6bPppYsCO1wkT4SFLcpS/QiiiVZQoDCErQYvEH0ULmPWAEler1Brzal260wwpm0uPeeg==
+  version "4.24.7"
+  resolved "https://registry.npmmirror.com/antd/-/antd-4.24.7.tgz#ad90cc2d6225fe3e0030aeccdc64de6c26edc3e7"
+  integrity sha512-Qr3AYkeqpd3i/c6M7pjca7Y6XlaIv/p6gD3aqe7/0o8Ueg50G7Aeh+TOaiUfXLGDhnVoNEdaVdDiv8aIaoWB5A==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.7.0"
@@ -6346,10 +6361,10 @@ antd@^4.24.5:
     rc-checkbox "~2.3.0"
     rc-collapse "~3.4.2"
     rc-dialog "~9.0.2"
-    rc-drawer "~6.0.0"
+    rc-drawer "~6.1.0"
     rc-dropdown "~4.0.0"
     rc-field-form "~1.27.0"
-    rc-image "~5.12.0"
+    rc-image "~5.13.0"
     rc-input "~0.1.4"
     rc-input-number "~7.3.9"
     rc-mentions "~1.13.1"
@@ -6367,7 +6382,7 @@ antd@^4.24.5:
     rc-steps "~5.0.0-alpha.2"
     rc-switch "~3.2.0"
     rc-table "~7.26.0"
-    rc-tabs "~12.4.1"
+    rc-tabs "~12.5.0"
     rc-textarea "~0.4.5"
     rc-tooltip "~5.2.0"
     rc-tree "~5.7.0"
@@ -10416,6 +10431,17 @@ downshift@6.1.12:
     react-is "^17.0.2"
     tslib "^2.3.0"
 
+downshift@6.1.7:
+  version "6.1.7"
+  resolved "https://registry.npmmirror.com/downshift/-/downshift-6.1.7.tgz#fdb4c4e4f1d11587985cd76e21e8b4b3fa72e44c"
+  integrity sha512-cVprZg/9Lvj/uhYRxELzlu1aezRcgPWBjTvspiGTVEU64gF5pRdSRKFVLcxqsZC637cLAGMbL40JavEfWnqgNg==
+  dependencies:
+    "@babel/runtime" "^7.14.8"
+    compute-scroll-into-view "^1.0.17"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+    tslib "^2.3.0"
+
 dtrace-provider@~0.6:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/dtrace-provider/-/dtrace-provider-0.6.0.tgz#0b078d5517937d873101452d9146737557b75e51"
@@ -10475,6 +10501,14 @@ echarts@5.3.2:
   dependencies:
     tslib "2.3.0"
     zrender "5.3.1"
+
+echarts@5.3.3:
+  version "5.3.3"
+  resolved "https://registry.npmmirror.com/echarts/-/echarts-5.3.3.tgz#df97b09c4c0e2ffcdfb44acf518d50c50e0b838e"
+  integrity sha512-BRw2serInRwO5SIwRviZ6Xgm5Lb7irgz+sLiFMmy/HOaf4SQ+7oYqxKzRHAKp4xHQ05AuHw1xvoQWJjDQq/FGw==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.2"
 
 echarts@5.4.0:
   version "5.4.0"
@@ -10803,6 +10837,11 @@ escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==
+
+escape-carriage@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmmirror.com/escape-carriage/-/escape-carriage-1.3.0.tgz#71006b2d4da8cb6828686addafcb094239c742f3"
+  integrity sha512-ATWi5MD8QlAGQOeMgI8zTp671BG8aKvAC0M7yenlxU4CRLGO/sKthxVUyjiOFKjHdIo+6dZZUNFgHFeVEaKfGQ==
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -17482,7 +17521,7 @@ postcss-js@^4.0.0:
 
 postcss-less@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-less/-/postcss-less-6.0.0.tgz#463b34c60f53b648c237f569aeb2e09149d85af4"
+  resolved "https://registry.npmmirror.com/postcss-less/-/postcss-less-6.0.0.tgz#463b34c60f53b648c237f569aeb2e09149d85af4"
   integrity sha512-FPX16mQLyEjLzEuuJtxA8X3ejDLNGGEG503d2YGZR5Ask1SpDN8KmZUMpzCvyalWRywAn1n1VOA5dcqfCLo5rg==
 
 postcss-load-config@^3.1.4:
@@ -18248,6 +18287,17 @@ rc-drawer@~6.0.0:
     rc-motion "^2.6.1"
     rc-util "^5.21.2"
 
+rc-drawer@~6.1.0:
+  version "6.1.2"
+  resolved "https://registry.npmmirror.com/rc-drawer/-/rc-drawer-6.1.2.tgz#032918a21bfa8a7d9e52ada1e7b8ed08c0ae6346"
+  integrity sha512-mYsTVT8Amy0LRrpVEv7gI1hOjtfMSO/qHAaCDzFx9QBLnms3cAQLJkaxRWM+Eq99oyLhU/JkgoqTg13bc4ogOQ==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    "@rc-component/portal" "^1.0.0-6"
+    classnames "^2.2.6"
+    rc-motion "^2.6.1"
+    rc-util "^5.21.2"
+
 rc-dropdown@~4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/rc-dropdown/-/rc-dropdown-4.0.1.tgz#f65d9d3d89750241057db59d5a75e43cd4576b68"
@@ -18278,7 +18328,29 @@ rc-image@~5.12.0:
     rc-dialog "~9.0.0"
     rc-util "^5.0.6"
 
-rc-input-number@^7.3.9, rc-input-number@~7.3.9:
+rc-image@~5.13.0:
+  version "5.13.0"
+  resolved "https://registry.npmmirror.com/rc-image/-/rc-image-5.13.0.tgz#1ed9b852a40b5eff34786ba7d2f0e9d26eeab874"
+  integrity sha512-iZTOmw5eWo2+gcrJMMcnd7SsxVHl3w5xlyCgsULUdJhJbnuI8i/AL0tVOsE7aLn9VfOh1qgDT3mC2G75/c7mqg==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@rc-component/portal" "^1.0.2"
+    classnames "^2.2.6"
+    rc-dialog "~9.0.0"
+    rc-motion "^2.6.2"
+    rc-util "^5.0.6"
+
+rc-input-number@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.npmmirror.com/rc-input-number/-/rc-input-number-7.4.0.tgz#b8b4ffa8bbc04198e79ce8b9611756d046d128ec"
+  integrity sha512-r/Oub/sPYbzqLNUOHnnc9sbCu78a81KX+RCbRwmpvB4W6nptUySbdWS5KHV4Hak5CAE1LAd+wWm5JjvZizG1FA==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    "@rc-component/mini-decimal" "^1.0.1"
+    classnames "^2.2.5"
+    rc-util "^5.23.0"
+
+rc-input-number@~7.3.9:
   version "7.3.11"
   resolved "https://registry.yarnpkg.com/rc-input-number/-/rc-input-number-7.3.11.tgz#c7089705a220e1a59ba974fabf89693e00dd2442"
   integrity sha512-aMWPEjFeles6PQnMqP5eWpxzsvHm9rh1jQOWXExUEIxhX62Fyl/ptifLHOn17+waDG1T/YUb6flfJbvwRhHrbA==
@@ -18310,7 +18382,7 @@ rc-mentions@~1.11.0:
 
 rc-mentions@~1.13.1:
   version "1.13.1"
-  resolved "https://registry.yarnpkg.com/rc-mentions/-/rc-mentions-1.13.1.tgz#c884b70e1505a197f1b32a7c6b39090db6992a72"
+  resolved "https://registry.npmmirror.com/rc-mentions/-/rc-mentions-1.13.1.tgz#c884b70e1505a197f1b32a7c6b39090db6992a72"
   integrity sha512-FCkaWw6JQygtOz0+Vxz/M/NWqrWHB9LwqlY2RtcuFqWJNFK9njijOOzTSsBGANliGufVUzx/xuPHmZPBV0+Hgw==
   dependencies:
     "@babel/runtime" "^7.10.1"
@@ -18335,7 +18407,7 @@ rc-menu@~9.7.2:
 
 rc-menu@~9.8.0:
   version "9.8.1"
-  resolved "https://registry.yarnpkg.com/rc-menu/-/rc-menu-9.8.1.tgz#988cd807f78d2f92eab686f6813f50b165f78405"
+  resolved "https://registry.npmmirror.com/rc-menu/-/rc-menu-9.8.1.tgz#988cd807f78d2f92eab686f6813f50b165f78405"
   integrity sha512-179weouypfjWJSRvvoo/vPy+StojsMzK2XC5jRNhL1ryt/N/8wAFESte8K6jZJkNp9DHDLFTe+dCGmikKpiFuA==
   dependencies:
     "@babel/runtime" "^7.10.1"
@@ -18500,10 +18572,10 @@ rc-tabs@~12.3.0:
     rc-resize-observer "^1.0.0"
     rc-util "^5.16.0"
 
-rc-tabs@~12.4.1:
-  version "12.4.2"
-  resolved "https://registry.yarnpkg.com/rc-tabs/-/rc-tabs-12.4.2.tgz#487a1b3f8d8cf0bfc121224013dab00d4a8e0532"
-  integrity sha512-FFlGwuTjQUznWzJtyhmHc6KAp5lRQFxKUv9Aj1UtsOYe2e7WGmuzcrd+/LQchuPe0VjhaZPdGkmFGcqGqNO6ow==
+rc-tabs@~12.5.0:
+  version "12.5.5"
+  resolved "https://registry.npmmirror.com/rc-tabs/-/rc-tabs-12.5.5.tgz#8b34c2ea58f7d9fe141de252f24e69b26df34221"
+  integrity sha512-Y0k+JK4IN2cr0+MstkYK6MryvURhUc8JvHDCXujbUA6zHVTnWeTikOspGgvHPrlfZRl7WS+DPyMdEFE6RwlueQ==
   dependencies:
     "@babel/runtime" "^7.11.2"
     classnames "2.x"
@@ -20112,6 +20184,11 @@ sort-keys@^4.0.0:
   integrity sha512-aUYIEU/UviqPgc8mHR6IW1EGxkAXpeRETYcrzg8cLAvUPZcpAlleSXHV2mY7G12GphSH6Gzv+4MMVSSkbdteHg==
   dependencies:
     is-plain-obj "^2.0.0"
+
+sortablejs@1.14.0:
+  version "1.14.0"
+  resolved "https://registry.npmmirror.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
+  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
 
 sortablejs@1.15.0:
   version "1.15.0"
@@ -22728,6 +22805,13 @@ zrender@5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/zrender/-/zrender-5.3.1.tgz#fa8e63ac7e719cfd563831fe8c42a9756c5af384"
   integrity sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==
+  dependencies:
+    tslib "2.3.0"
+
+zrender@5.3.2:
+  version "5.3.2"
+  resolved "https://registry.npmmirror.com/zrender/-/zrender-5.3.2.tgz#f67b11d36d3d020d62411d3bb123eb1c93cccd69"
+  integrity sha512-8IiYdfwHj2rx0UeIGZGGU4WEVSDEdeVCaIg/fomejg1Xu6OifAL1GVzIPHg2D+MyUkbNgPWji90t0a8IDk+39w==
   dependencies:
     tslib "2.3.0"
 

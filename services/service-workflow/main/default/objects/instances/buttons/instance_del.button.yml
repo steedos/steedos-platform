@@ -1,32 +1,4 @@
 name: instance_del
-amis_actions: |-
-  [
-          {
-            "args": {
-              "api": {
-                "url": "${context.rootUrl}/api/workflow/v2/remove",
-                "method": "post",
-                "requestAdaptor": "api.data = {\n    instance: {\n        _id: api.data.record_id\n    }\n}\n\nreturn api;",
-                "data": {
-                  "record_id": "$record_id"
-                },
-                "headers": {
-                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                }
-              },
-              "messages": {}
-            },
-            "actionType": "ajax"
-          },
-          {
-            "componentId": "",
-            "args": {
-              "url": "/app/${app_id}/instances/grid/${record.box}",
-              "blank": false
-            },
-            "actionType": "url"
-          }
-        ]
 amis_schema: |-
   {
       "type": "service",
@@ -75,16 +47,6 @@ amis_schema: |-
           "body"
       ],
       "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5000"
-          },
-          "app_id": "",
-          "tab_id": "",
-          "object_name": "",
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
       },
       "bodyClassName": "p-0",
       "id": "u:4b39d426c2a4"

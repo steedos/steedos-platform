@@ -170,6 +170,18 @@
                             "id": "u:811f0c5d03ad"
                         },
                         {
+                            "name": "sort_no",
+                            "label": "排序号",
+                            "type": "input-number",
+                            "precision": 0,
+                            "className": "m-0",
+                            "labelClassName": "text-left",
+                            "en-US": {
+                                "label": "Sort NO."
+                            },
+                            "id": "u:25a6ee957503"
+                        },
+                        {
                             "label": "显示的列",
                             "type": "transfer",
                             "name": "columns",
@@ -199,18 +211,6 @@
                             "en-US": {
                                 "label": "Columns"
                             }
-                        },
-                        {
-                            "name": "sort_no",
-                            "label": "排序号",
-                            "type": "input-number",
-                            "precision": 0,
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "en-US": {
-                                "label": "Sort NO."
-                            },
-                            "id": "u:25a6ee957503"
                         }
                     ],
                     "id": "u:7f7b2d3ea064"

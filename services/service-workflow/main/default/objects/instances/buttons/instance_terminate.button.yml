@@ -1,101 +1,4 @@
 name: instance_terminate
-amis_actions: |-
-  [
-          {
-            "actionType": "dialog",
-            "dialog": {
-              "type": "dialog",
-              "title": "取消申请",
-              "body": [
-                {
-                  "type": "tpl",
-                  "tpl": "<p>&nbsp;请填写取消申请的理由</p>",
-                  "inline": false,
-                  "id": "u:0a1847d1d018",
-                  "className": "m-b-sm"
-                },
-                {
-                  "type": "form",
-                  "title": "表单",
-                  "body": [
-                    {
-                      "label": false,
-                      "type": "textarea",
-                      "name": "terminate_reason",
-                      "id": "u:0f956b433712",
-                      "minRows": 3,
-                      "maxRows": 20,
-                      "required": true
-                    }
-                  ],
-                  "id": "u:7a36d573eb51"
-                }
-              ],
-              "id": "u:9af240735397",
-              "actions": [
-                {
-                  "type": "button",
-                  "label": "取消",
-                  "onEvent": {
-                    "click": {
-                      "actions": [
-                        {
-                          "componentId": "",
-                          "args": {},
-                          "actionType": "closeDialog"
-                        }
-                      ]
-                    }
-                  },
-                  "id": "u:d953ce5ace05"
-                },
-                {
-                  "type": "button",
-                  "label": "确定",
-                  "onEvent": {
-                    "click": {
-                      "actions": [
-                        {
-                          "args": {},
-                          "actionType": "validate",
-                          "componentId": "u:7a36d573eb51"
-                        },
-                        {
-                          "args": {
-                            "api": {
-                              "url": "${context.rootUrl}/api/workflow/v2/instance/terminate",
-                              "method": "post",
-                              "data": {
-                                "&": "$$",
-                                "record": "${record}"
-                              },
-                              "requestAdaptor": "\nconsole.log(\"api.data\", api.data)\nconst { record, terminate_reason } = api.data;\napi.data = {\n  terminate_reason: terminate_reason,\n  instance_id: record._id\n}\nreturn api;",
-                              "headers": {
-                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                              }
-                            },
-                            "messages": {
-                              "success": "已取消申请",
-                              "failed": "取消申请失败"
-                            }
-                          },
-                          "actionType": "ajax"
-                        },
-                        {
-                          "componentId": "",
-                          "args": {},
-                          "actionType": "closeDialog"
-                        }
-                      ]
-                    }
-                  },
-                  "id": "u:9cbc7515d223",
-                  "level": "primary"
-                }
-              ]
-            }
-          }
-        ]
 amis_schema: |-
   {
       "type": "service",
@@ -212,16 +115,6 @@ amis_schema: |-
           "body"
       ],
       "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5000"
-          },
-          "app_id": "",
-          "tab_id": "",
-          "object_name": "",
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
       },
       "bodyClassName": "p-0",
       "id": "u:441b481ccdeb"

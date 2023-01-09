@@ -79,10 +79,12 @@ const transformFieldValue = async function(field, value, options) {
         return moment(value).utcOffset(utcOffset).format('YYYY-MM-DD HH:mm');
       case 'boolean':
         if (_.isBoolean(value)) {
+          const userSession = await auth.getSessionByUserId(options.userId);
+          const locale = userSession && userSession.locale;
           if (value) {
-            return '是';
+            return TAPi18n.__("form_field_checkbox_yes", {}, locale);
           } else {
-            return '否';
+            return TAPi18n.__("form_field_checkbox_no", {}, locale);
           }
         }
         break;
@@ -164,10 +166,13 @@ const insertRecord = async function(userId, object_name, new_doc) {
     auditRecordsObject = objectql.getObject('audit_records');
     space_id = new_doc.space;
     record_id = new_doc._id;
+    const userSession = await auth.getSessionByUserId(userId);
+    const locale = userSession && userSession.locale;
+    const field_name = TAPi18n.__('audit_records_created', {returnObjects: true}, locale);
     doc = {
       _id: await auditRecordsObject._makeNewID(),
       space: space_id,
-      field_name: "已创建。",
+      field_name: field_name,
       created_by: getOwner('insert', userId, new_doc),
       related_to: {
         o: object_name,
@@ -276,8 +281,8 @@ const updateRecord = async function(userId, object_name, new_doc, previous_doc, 
             break;
             case 'boolean':
             if (previous_value !== new_value) {
-                db_previous_value = await transformFieldValue(field, previous_value, options);
-                db_new_value = await transformFieldValue(field, new_value, options);
+                db_previous_value = await transformFieldValue(field, previous_value, { ...options, userId });
+                db_new_value = await transformFieldValue(field, new_value, { ...options, userId });
             }
             break;
             case 'select':

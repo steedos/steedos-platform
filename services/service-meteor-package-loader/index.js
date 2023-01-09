@@ -96,6 +96,7 @@ module.exports = {
             for await (const serviceFilePath of matchedPaths) {
                 try {
                     const service = objectql.loadService(this.broker, serviceFilePath);
+                    this.packageServices.push(service);
                     if (!this.broker.started) {
                         this.broker._restartService(service)
                     }
@@ -110,6 +111,7 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
+        this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
     },
 
@@ -134,7 +136,6 @@ module.exports = {
         }
         await this.loadPackageMetadataFiles(path, this.name);
 
-        // 加载.service.js
         await this.loadPackageMetadataServices(path);
 
         console.timeEnd(`service ${this.name} started`)

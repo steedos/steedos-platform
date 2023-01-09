@@ -86,13 +86,14 @@
                     "type": "page",
                     name: `amis-${appId}-${objectApiName}-listview`,
                     "title": "Welcome to Steedos",
-                    bodyClassName: 'p-3',
+                    bodyClassName: 'steedos-listview p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid	sm:m-3 flex flex-1 flex-col',
                     "body": [
                       {
                         "type": "steedos-object-listview",
                         showHeader: true,
                         "label": "列表视图",
                         "objectApiName": "${objectName}",
+                        "columnsTogglable": false,
                         "listName": "all",
                         "id": "u:be7c6341cd11"
                       }
@@ -107,9 +108,9 @@
             return {
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
-                    bodyClassName: 'p-3',
                     schema: {
-                        "type": "page",
+                        "type": "service",
+                        "className": 'sm:p-3',
                         "name": `amis-${appId}-${objectApiName}-detail`,
                         "title": "Welcome to Steedos",
                         "body": [
@@ -746,15 +747,13 @@
     }
 
     Steedos.Page.Header.render = function(appId, tabId){
-        const app = _.find(Session.get('app_menus'), {id: appId})
-        if (typeof app != 'undefined') {
-            if (app.id === 'admin' || (window.innerWidth < 768))
-                app.showSidebar = true;
-            if (app.showSidebar)
-                document.body.classList.add('sidebar')
-            else
-                document.body.classList.remove("sidebar")   
-        }
+        const app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        if (app.id === 'admin' || (window.innerWidth < 768))
+            app.showSidebar = true;
+        if (app.showSidebar)
+            document.body.classList.add('sidebar')
+        else
+            document.body.classList.remove("sidebar")   
 
         try {
             const data = {
@@ -817,7 +816,7 @@
                                   "type": "steedos-global-header",
                                   "label": "Global Header",
                                   className: 'flex flex-nowrap gap-x-3 items-center',
-                                  logoutScript: "window.signOut();",
+                                  logoutScript: "window.Steedos.logout();",
                                   customButtons: [
                                     {
                                       "type": "button",

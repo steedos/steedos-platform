@@ -8,6 +8,9 @@ CustomLabels:
   frontend_list_no_actions_tip: no operation
   frontend_field_lookup_no_such_record: No such record
   frontend_field_file_upload: Upload
+  frontend_field_tips_please_input: 'Please input '
+  frontend_field_tips_email_address: ' must be a legal email address'
+  frontend_field_tips_calculate_when_saving: Calculate when saving
   frontend_filter_operation_yes: 'yes'
   frontend_filter_operation_no: 'no'
   frontend_filter_operation_start: Start

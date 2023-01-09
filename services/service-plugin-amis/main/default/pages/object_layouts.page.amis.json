@@ -170,6 +170,7 @@
                                                         {
                                                             "name": "visible_on",
                                                             "label": "显示条件",
+                                                            "className": "w-6/12",
                                                             "quickEdit": {
                                                                 "type": "input-text",
                                                                 "className": "m-0",
@@ -433,6 +434,7 @@
                                                                     }
                                                                 },
                                                                 "type": "dialog",
+                                                                "size": "md",
                                                                 "id": "u:c405734543e0",
                                                                 "closeOnEsc": false,
                                                                 "closeOnOutside": false,
@@ -801,6 +803,7 @@
                                                                     }
                                                                 },
                                                                 "type": "dialog",
+                                                                "size": "md",
                                                                 "id": "u:3663990f226a",
                                                                 "closeOnEsc": false,
                                                                 "closeOnOutside": false,
