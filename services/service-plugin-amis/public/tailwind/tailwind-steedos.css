@@ -272,10 +272,6 @@ body.steedos .p-0 {
   padding: 0px
 }
 
-body.steedos .p-3 {
-  padding: 0.75rem
-}
-
 body.steedos .p-4 {
   padding: 1rem
 }
@@ -395,6 +391,10 @@ body.steedos .ease-in-out {
 
   body.steedos .sm\:border {
     border-width: 1px
+  }
+
+  body.steedos .sm\:p-3 {
+    padding: 0.75rem
   }
 
   body.steedos .sm\:shadow {

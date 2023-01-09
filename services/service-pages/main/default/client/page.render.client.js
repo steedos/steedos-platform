@@ -108,9 +108,9 @@
             return {
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
-                    bodyClassName: 'p-3',
                     schema: {
-                        "type": "page",
+                        "type": "service",
+                        "className": 'sm:p-3',
                         "name": `amis-${appId}-${objectApiName}-detail`,
                         "title": "Welcome to Steedos",
                         "body": [
