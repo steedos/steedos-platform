@@ -1,14 +1,4 @@
 name: instance_print
-amis_actions: |-
-  [
-          {
-            "componentId": "",
-            "args": {
-              "url": "${context.rootUrl}/workflow/space/${record.space}/print/${record._id}"
-            },
-            "actionType": "url"
-          }
-        ]
 amis_schema: |-
   {
       "type": "service",
@@ -37,9 +27,6 @@ amis_schema: |-
           "body"
       ],
       "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5000"
-          }
       },
       "bodyClassName": "p-0",
       "id": "u:8dae0fbfd028"
