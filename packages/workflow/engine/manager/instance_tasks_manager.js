@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-07 15:28:23
+ * @LastEditTime: 2023-01-09 14:48:06
  * @Description: 
  */
 'use strict';
@@ -143,6 +143,7 @@ function _generateTaskDoc(insDoc, traceDoc, approveDoc) {
         'submitter_name': insDoc.submitter_name,
         'applicant': insDoc.applicant,
         'applicant_name': insDoc.applicant_name,
+        'applicant_organization_name': insDoc.applicant_organization_name,
         'submit_date': insDoc.submit_date,
         'flow': insDoc.flow,
         'flow_name': insDoc.flow_name,

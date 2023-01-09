@@ -63,8 +63,8 @@ Template.instance_list.helpers
 			query.state = "draft"
 			query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
 		else if box == "pending"
-			query.$or = [{submitter: uid}, {applicant: uid}]
 			query.state = "pending"
+			query.$or = [{submitter: uid}, {applicant: uid}]
 		else if box == "completed"
 			query.submitter = uid
 			query.state = "completed"
