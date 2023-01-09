@@ -1072,7 +1072,7 @@ Creator.Objects.space_users.actions = Object.assign({}, Creator.Objects.space_us
 let doDisable = async function(spaceUser){
     return Future.task(() => {
         try {
-            let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1, steedos_id: 1}});
+            let result = db.users.direct.update({_id: spaceUser.user}, {$set: {user_accepted: false, profile: spaceUser.profile}, $unset: {username: 1, mobile: 1, mobile_verified: 1, email: 1, email_verified: 1, emails: 1}});
             if(!result){
                 console.error("The users directUpdate return nothing.");
                 return false;
