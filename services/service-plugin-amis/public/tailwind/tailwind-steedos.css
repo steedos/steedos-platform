@@ -186,12 +186,12 @@ body.steedos .min-w-max {
   min-width: max-content
 }
 
-body.steedos .flex-none {
-  flex: none
-}
-
 body.steedos .flex-1 {
   flex: 1 1 0%
+}
+
+body.steedos .flex-none {
+  flex: none
 }
 
 body.steedos .-translate-x-0 {
@@ -244,6 +244,11 @@ body.steedos .border-solid {
   border-style: solid
 }
 
+body.steedos .border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity))
+}
+
 body.steedos .border-sky-500 {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity))
@@ -257,10 +262,6 @@ body.steedos .border-slate-200 {
 body.steedos .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
-body.steedos .p-3 {
-  padding: 0.75rem
 }
 
 body.steedos .p-0 {
@@ -368,12 +369,28 @@ body.steedos .ease-in-out {
 }
 
 @media (min-width: 640px) {
+  body.steedos .sm\:m-3 {
+    margin: 0.75rem
+  }
+
   body.steedos .sm\:flex {
     display: flex
   }
 
   body.steedos .sm\:w-\[220px\] {
     width: 220px
+  }
+
+  body.steedos .sm\:rounded {
+    border-radius: 0.25rem
+  }
+
+  body.steedos .sm\:border {
+    border-width: 1px
+  }
+
+  body.steedos .sm\:p-3 {
+    padding: 0.75rem
   }
 
   body.steedos .sm\:shadow {
