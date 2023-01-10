@@ -1,0 +1,5 @@
+name: handler_organization
+label: 实际处理人所属组织
+type: lookup
+reference_to: organizations
+sort_no: 90

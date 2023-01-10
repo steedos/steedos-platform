@@ -73,6 +73,8 @@ db.instance_tasks._simpleSchema = new SimpleSchema
         type: String
     applicant_name:
         type: String
+    applicant_organization_name:
+        type: String
     submit_date:
         type: Date
     flow:

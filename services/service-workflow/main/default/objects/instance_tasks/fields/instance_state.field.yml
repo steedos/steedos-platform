@@ -1,0 +1,11 @@
+name: instance_state
+label: 分类名称
+type: select
+options:
+  - label: 草稿
+    value: draft
+  - label: 进行中
+    value: pending
+  - label: 已完成
+    value: completed
+sort_no: 390

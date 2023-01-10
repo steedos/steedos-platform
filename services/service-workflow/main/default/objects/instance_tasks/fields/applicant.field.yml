@@ -1,0 +1,5 @@
+name: applicant
+label: 申请单申请人
+type: lookup
+reference_to: users
+sort_no: 290
