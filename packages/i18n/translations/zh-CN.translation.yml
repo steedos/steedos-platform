@@ -1203,7 +1203,7 @@ CustomLabels:
   instance_tasks_modified: 处理时间
   instance_tasks_submit_date: 提交时间
   instance_tasks_flow_name: 流程
-  instance_tasks_current_step_name: 当前步骤
+  instance_tasks_step_name: 当前步骤
   instance_tasks_finish_date: 处理时间
   instance_tasks_start_date: 接收时间
   flow_roles: 审批岗位

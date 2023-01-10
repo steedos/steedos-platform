@@ -1296,7 +1296,7 @@ CustomLabels:
   instance_tasks_modified: Modified
   instance_tasks_submit_date: Submit Date
   instance_tasks_flow_name: Workflow
-  instance_tasks_current_step_name: Current step
+  instance_tasks_step_name: Current step
   instance_tasks_finish_date: Modified
   instance_tasks_start_date: Receiving time
   flow_roles: Workflow Positions
