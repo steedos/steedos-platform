@@ -466,7 +466,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "lib/index.js"
 };
 
@@ -493,7 +493,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "lib/index.js"
 };
 
@@ -520,7 +520,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "index.js"
 };
 
@@ -547,7 +547,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "index.js"
 };
 
@@ -574,7 +574,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "index.js"
 };
 
@@ -601,7 +601,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "package.service.js"
 };
 
@@ -628,7 +628,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-ui",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "package.service.js"
 };
 
@@ -655,7 +655,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-pages",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "package.service.js"
 };
 
@@ -682,7 +682,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/router",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "lib/index.js"
 };
 
@@ -709,7 +709,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "lib/index.js"
 };
 
@@ -736,7 +736,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.3.3-beta.2",
+  "version": "2.4.0-beta.5",
   "main": "lib/index.js"
 };
 
@@ -753,27 +753,27 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"service-workflow":{"package.json":function module(require,exports,module){
+}}},"workflow":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/@steedos/service-workflow/package.json                                                //
+// node_modules/@steedos/workflow/package.json                                                        //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
 module.exports = {
-  "name": "@steedos/service-workflow",
-  "version": "2.3.3-beta.2",
-  "main": "package.service.js"
+  "name": "@steedos/workflow",
+  "version": "2.4.0-beta.5",
+  "main": "index.js"
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"package.service.js":function module(require,exports,module){
+},"index.js":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
-// node_modules/@steedos/service-workflow/package.service.js                                          //
+// node_modules/@steedos/workflow/index.js                                                            //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //
@@ -1762,33 +1762,6 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"jszip":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/jszip/package.json                                                                    //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "jszip",
-  "version": "3.7.0",
-  "main": "./lib/index"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"index.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/jszip/lib/index.js                                                                    //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }}},"marked":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1810,33 +1783,6 @@ module.exports = {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
 // node_modules/marked/lib/marked.cjs                                                                 //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"ejs":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/ejs/package.json                                                                      //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "ejs",
-  "version": "3.1.8",
-  "main": "./lib/ejs.js"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"lib":{"ejs.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/ejs/lib/ejs.js                                                                        //
 //                                                                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                       //

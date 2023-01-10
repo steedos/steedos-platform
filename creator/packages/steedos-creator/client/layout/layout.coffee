@@ -1,20 +1,6 @@
 Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
-	showTrialHearder: ()->
-		return false
-		__l = Creator.__l.get()
-		if !__l
-			return true
-		if __l.is_trial || __l.is_develop
-			return true
-		if __l.verify_status != 'SUCCESS'
-			return true
-	hiddenHeader: ()->
-		if Session.get("hidden_header") and Session.get("hidden_header") == true
-			return true
-		else
-			return false
 	
 	isloading: ->
 		return Creator.isloading()
@@ -77,17 +63,13 @@ Template.creatorLayout.helpers
 				FlowRouter.reload()
 			, 1);
 			return true;
-Template.creatorLayout.events
-	'click .sidebar-show': (e, t)->
-		$("#sidebar-left").removeClass('hidden')
-		$(".steedos").addClass('move--right')
 
 
 
-Template.creatorLayout.onRendered ->
-	this.autorun ->
-		if (window.innerWidth >= 768) 
-      document.body.classList.add('sidebar-open')
+# Template.creatorLayout.onRendered ->
+# 	this.autorun ->
+# 		if (window.innerWidth >= 768) 
+#       document.body.classList.add('sidebar-open')
 
 isCalendarView = ()->
 	view = Creator.getListView(Session.get "object_name", Session.get("list_view_id"))
