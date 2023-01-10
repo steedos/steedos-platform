@@ -747,14 +747,16 @@
     }
 
     Steedos.Page.Header.render = function(appId, tabId){
-        const app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        let app = _.find(Session.get('app_menus'), {id: appId}) || {}
         if (app.id === 'admin' || (window.innerWidth < 768))
             app.showSidebar = true;
         if (app.showSidebar)
             document.body.classList.add('sidebar')
         else
             document.body.classList.remove("sidebar")   
-
+        if(app.showSidebar && window.location.pathname.startsWith("/workflow")){
+            app = {id: 'workflow'}
+        }
         try {
             const data = {
                 app
