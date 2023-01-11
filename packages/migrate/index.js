@@ -1,69 +1,67 @@
-var migrate = require('migrate')
-var path = require('path');
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-11 14:03:39
+ * @Description: 
+ */
+const migrate = require('migrate')
+const path = require('path');
+const validator = require('validator');
 
-var stateStore = path.join(process.cwd(), '.migrate');
-var migrationsDirectory = path.join(__dirname, 'migrations'); 
+const stateStore = path.join(process.cwd(), '.steedos', '.migrate');
+const migrationsDirectory = path.join(__dirname, 'migrations');
 
-// let Fiber = require('fibers');
-
-const up = async function() {
+const up = async function () {
 
     migrate.load({
         stateStore: stateStore,
         migrationsDirectory: migrationsDirectory
     }, function (err, set) {
         if (err) {
-          throw err
+            throw err
         }
         set.up(function (err) {
-          if (err) {
-            throw err
-          }
-          console.log('DB migrations up successfully.')
+            if (err) {
+                throw err
+            }
+
         })
     })
 }
 
-const init = async function() {
-    var objectql = require("@steedos/objectql");
-    if (objectql.getSteedosConfig().datasources.default.auto_migrate)
+const init = async function () {
+    if (process.env.STEEDOS_DB_AUTO_MIGRATE !== false && process.env.STEEDOS_DB_AUTO_MIGRATE !== 'false') {
+        // 如果未设置为不自动执行，则默认自动执行
+        process.env.STEEDOS_DB_AUTO_MIGRATE = true
+    }
+    const autoMigrate = validator.toBoolean(process.env.STEEDOS_DB_AUTO_MIGRATE || '', true);
+    // console.log('process.env.STEEDOS_DB_AUTO_MIGRATE:', process.env.STEEDOS_DB_AUTO_MIGRATE)
+    // console.log('autoMigrate:', autoMigrate)
+    if (autoMigrate) {
         up();
+    }
 }
 
-const down = async function() {
+const down = async function () {
     migrate.load({
         stateStore: stateStore,
         migrationsDirectory: migrationsDirectory
     }, function (err, set) {
         if (err) {
-          throw err
+            throw err
         }
         set.down(function (err) {
-          if (err) {
-            throw err
-          }
-          console.log('DB migrations down successfully.')
+            if (err) {
+                throw err
+            }
+            console.log('DB migrations down successfully.')
         })
     })
 }
-
-// const upSync = function(){
-//   Fiber(function(){
-//       let fiber = Fiber.current;
-//       up.then(result => {
-//           fiber.run();
-//       }).catch(result => {
-//           console.error(result)
-//           fiber.run();
-//       })
-//       Fiber.yield();
-//   }).run();
-// }
-
 
 module.exports = {
     init: init,
     up: up,
-    // upSync: upSync,
     down: down
 }

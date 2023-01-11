@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "mongodb": "^3.7.3",
     "migrate": "^1.6.2"
   },
   "publishConfig": {
