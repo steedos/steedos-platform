@@ -13,7 +13,7 @@ import {
     dealWithRelatedFields,
     getLocalService,
     getQueryFields
-} from './helpers/graphql'; 
+} from './helpers/graphql';
 // generateActionRestProp, 
 import { getObjectServiceName } from '.';
 import { jsonToObject } from '../util/convert';
@@ -407,7 +407,18 @@ function getObjectServiceActionsSchema() {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { id } = ctx.params;
-                return this.delete(id, userSession)
+                const object = this.object
+                const enableTrash = object.enable_trash
+                if (!enableTrash) {
+                    return this.delete(id, userSession)
+                } else {
+                    const data = {
+                        is_deleted: true,
+                        deleted: new Date(),
+                        deleted_by: userSession ? userSession.userId : null
+                    }
+                    return this.update(id, data, userSession)
+                }
             }
         },
         directAggregate: {
@@ -742,7 +753,7 @@ export const objectBaseService = {
     },
     merged(schema) {
         let settings = schema.settings;
-        let objectConfig = this.originalSchema.methods.getObjectConfig() ||  settings.objectConfig;
+        let objectConfig = this.originalSchema.methods.getObjectConfig() || settings.objectConfig;
         // 先关闭对象服务action rest api, 否则会导致 action rest api 过多, 请求速度变慢.
         // if (objectConfig.enable_api) {
         //     _.each(schema.actions, (action, actionName) => {

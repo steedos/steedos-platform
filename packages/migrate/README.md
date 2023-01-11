@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-10 18:00:53
+ * @LastEditTime: 2023-01-11 16:54:20
  * @Description: 
 -->
 Steedos Migration Scripts
@@ -35,13 +35,9 @@ var migrate = require("@steedos/migrate");
 migrate.down();
 ```
 
-### Enable auto migrate for steedos
+### Default auto migrate for steedos
 
-```yml
-datasources:
-  default:
-    auto_migrate: true
-```
+config STEEDOS_DB_AUTO_MIGRATE=false in .env.local to disable auto migrate
 
 ### Add migration script
 
