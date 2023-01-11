@@ -19,10 +19,8 @@ fields:
     type: lookup
     required: true
     is_wide: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-        return Steedos.getObjectsOptions();
-      }
+    reference_to: objects
+    reference_to_field: name
     name: object_name
     filterable: true
   encoding:
