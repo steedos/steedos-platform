@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-30 14:15:57
+ * @LastEditTime: 2023-01-10 11:59:22
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -16,7 +16,7 @@ if (Meteor.isServer) {
       background: true
     });
   } catch (error) {
-    
+
   }
   try {
     db.instances._ensureIndex({
@@ -25,7 +25,7 @@ if (Meteor.isServer) {
       background: true
     });
   } catch (error) {
-    
+
   }
   try {
     db.instances._ensureIndex({
@@ -34,7 +34,7 @@ if (Meteor.isServer) {
       background: true
     });
   } catch (error) {
-    
+
   }
   try {
     db.instances._ensureIndex({
@@ -43,7 +43,7 @@ if (Meteor.isServer) {
       background: true
     });
   } catch (error) {
-    
+
   }
   db.instances._ensureIndex({
     "space": 1,
@@ -225,7 +225,7 @@ if (Meteor.isServer) {
       background: true
     });
   } catch (error) {
-    
+
   }
   db.instances._ensureIndex({
     "record_ids.o": 1,
@@ -238,4 +238,57 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
+
+  // 监控箱-管理员
+  try {
+    db.instances._ensureIndex({
+      space: 1,
+      state: 1,
+      submit_date: -1,
+    }, { background: true, name: 'monitor_admin' });
+  } catch (error) {
+
+  }
+
+  // 监控箱-用户
+  try {
+    db.instances._ensureIndex({
+      flow: 1,
+    }, { background: true });
+  } catch (error) {
+
+  }
+
+  // 草稿箱
+  try {
+    db.instances._ensureIndex({
+      space: 1,
+      submitter: 1,
+      state: 1,
+      modified: -1,
+    }, { background: true, name: 'draft' });
+  } catch (error) {
+
+  }
+
+  // 进行中
+  try {
+    db.instances._ensureIndex({
+      space: 1,
+      state: 1,
+      modified: -1,
+    }, { background: true, name: 'pending' });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
+      space: 1,
+      state: 1,
+      applicant: 1,
+      modified: -1,
+    }, { background: true, name: 'pending_applicant' });
+  } catch (error) {
+
+  }
 }

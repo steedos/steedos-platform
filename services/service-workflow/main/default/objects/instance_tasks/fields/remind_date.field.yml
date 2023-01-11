@@ -1,0 +1,6 @@
+name: remind_date
+label: 催办提醒时间
+type: datetime
+hidden: true
+omit: true
+sort_no: 180

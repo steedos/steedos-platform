@@ -35,9 +35,9 @@ module.exports = {
 			async handler(ctx) {
 				this.logger.debug(`refreshIndexes start`);
 				const objects = await ctx.call(`objects.getAll`, {});
-				for await(const object of objects) {
+				for await (const object of objects) {
 					const objectAPIName = object.metadata.name;
-					if(objectAPIName && !objectAPIName.startsWith('__')){
+					if (objectAPIName && !objectAPIName.startsWith('__')) {
 						await objectql.getObject(objectAPIName).refreshIndexes()
 					}
 				}
@@ -55,6 +55,18 @@ module.exports = {
 								console.error(`refresh indexe error: ${matchedPath}`, error);
 							}
 						}).run();
+					} catch (error) {
+						console.error(`refresh indexe error: ${matchedPath}`, error);
+					}
+				});
+
+				const indexFilePatten = [
+					path.join(__dirname, 'collection-indexes', "*.index.js")
+				];
+				const matchedIndexPaths = metaDataCore.syncMatchFiles(indexFilePatten);
+				_.each(matchedIndexPaths, (matchedPath) => {
+					try {
+						require(matchedPath).run();
 					} catch (error) {
 						console.error(`refresh indexe error: ${matchedPath}`, error);
 					}
@@ -94,11 +106,11 @@ module.exports = {
 			let indexScheduleCron = "0 0 * * * *"; // 默认每小时执行一次
 			const steedosConfig = objectql.getSteedosConfig() || {};
 			const cron = steedosConfig.cron;
-			if(cron && cron.build_index){
+			if (cron && cron.build_index) {
 				indexScheduleCron = cron.build_index;
 			}
 			if (indexScheduleCron) {
-				this.job = schedule.scheduleJob(indexScheduleCron, ()=>{
+				this.job = schedule.scheduleJob(indexScheduleCron, () => {
 					this.broker.call(`${serviceName}.refreshIndexes`)
 				});
 			}
@@ -111,7 +123,7 @@ module.exports = {
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-		if(this.job && this.job.cancel){
+		if (this.job && this.job.cancel) {
 			this.job.cancel()
 		}
 	}

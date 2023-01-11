@@ -33,6 +33,7 @@ try
 				# "@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
+		    "@steedos/service-package-tool";
 				# "@steedos/standard-process",
 				"@steedos/webapp-accounts",
 				"@steedos/service-workflow",

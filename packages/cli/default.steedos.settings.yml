@@ -126,3 +126,5 @@ sso:
     label: ${STEEDOS_IDENTITY_OIDC_LABEL}
     logo: ${STEEDOS_IDENTITY_OIDC_LOGO}
     require_local_account: ${STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT}
+db:
+  auto_migrate: ${STEEDOS_DB_AUTO_MIGRATE}
