@@ -754,6 +754,8 @@
             document.body.classList.add('sidebar')
         else
             document.body.classList.remove("sidebar")   
+        if (window.innerWidth >= 768) 
+            document.body.classList.add('sidebar-open')
         if(app.showSidebar && window.location.pathname.startsWith("/workflow")){
             app = {id: 'workflow'}
         }
