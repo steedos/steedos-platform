@@ -263,3 +263,12 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+  customer:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyCompanyRecords: false
+    viewCompanyRecords: false
+    modifyAllRecords: false
+    viewAllRecords: false
