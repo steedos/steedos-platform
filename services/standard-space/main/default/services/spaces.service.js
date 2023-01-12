@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-12 10:27:04
+ * @LastEditTime: 2023-01-12 11:01:26
  * @Description: 
  */
 "use strict";
@@ -210,7 +210,7 @@ module.exports = {
             }
             const newsuDoc = await suObj.insert(spaceUsersDoc)
 
-            if (this.isSpaceAdmin(spaceId, userId)) {
+            if (await this.isSpaceAdmin(spaceId, userId)) {
                 await suObj.directUpdate(newsuDoc._id, {
                     profile: 'admin'
                 })
