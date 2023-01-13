@@ -137,7 +137,8 @@ fields:
       function(filters, values){
         return ['object', '=', values.object_name]
       }
-    required: "{{formData.operation != 'insert' ? true : false}}"
+    visible_on: "{{formData.operation != 'insert' ? true : false}}"
+    required: true
     name: external_id_name
     filterable: true
   template_url:
