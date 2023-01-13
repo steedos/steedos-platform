@@ -317,6 +317,9 @@ async function converterLookup(
 function converterBool(field_name, dataCell, jsonObj) {
   var bool_error, flag;
   bool_error = "";
+  if (!dataCell) {
+    return bool_error
+  }
   flag = dataCell.toString().toLowerCase();
   if (flag === "是" || flag === "1" || flag === "yes" || flag === "true") {
     jsonObj[field_name] = true;
