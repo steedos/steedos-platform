@@ -356,6 +356,7 @@
                                                             }
                                                         }
                                                     ],
+                                                    "headerToolbarClassName": "px-1 py-3",
                                                     "id": "crud_tab_items",
                                                     "perPageAvailable": [
                                                         10
