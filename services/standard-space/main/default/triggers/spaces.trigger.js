@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-03 11:19:39
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-06 14:34:07
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-01-13 11:55:59
  * @Description: 
  */
 "use strict";
@@ -27,7 +27,7 @@ module.exports = {
         doc.enable_register = false;
         doc.services = doc.services || {};
         if (!userId) {
-            throw new Error(400, "spaces_error_login_required");
+            throw new Error("spaces_error_login_required");
         }
 
         if (doc._id) {
@@ -42,7 +42,7 @@ module.exports = {
         const { doc, userId, id } = this
         const spaceDoc = await objectql.getObject('spaces').findOne(id)
         if (spaceDoc.owner !== userId) {
-            throw new Error(400, "spaces_error_space_owner_only");
+            throw new Error("spaces_error_space_owner_only");
         }
         if (doc.owner) {
             if (!doc.admins) {
@@ -53,12 +53,12 @@ module.exports = {
         }
 
         if (_.has(doc, 'admins') && _.isEmpty(doc.admins)) {
-            throw new Error(400, "spaces_error_space_admins_required");
+            throw new Error("spaces_error_space_admins_required");
         }
     },
 
     beforeDelete: async function () {
-        throw new Error(400, "spaces_error_space_readonly");
+        throw new Error("spaces_error_space_readonly");
     },
 
     afterInsert: async function () {
