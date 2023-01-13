@@ -90,6 +90,7 @@ GridExport.excel = (object_name, list_view_id, is_related, related_object_name, 
 		orders.push(order2);
 	)
 	order = orders.join(",")
+	filename = encodeURIComponent(filename)
 	if is_related
 		url = "/api/record/export/#{related_object_name}?$select=#{select.toString()}&filename="+filename
 	else

@@ -16,6 +16,7 @@ const exportRecordData = async function (req, res) {
         let urlParams = req.params;
         let queryParams = req.query;
         let filename = queryParams.filename;
+        delete queryParams.filename;
         if (!filename) {
             filename = "导出"
         }
