@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_plugin-field-encryption",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -15,5 +15,5 @@
     "mongodb-client-encryption": "^2.1.0",
     "mongodb-uri": "0.9.7"
   },
-  "gitHead": "adfbf2b14c15751d6702d8e127426ac1d9d813eb"
+  "gitHead": "a817e9bda1620c21a3da1876d01238b1fc1df828"
 }
