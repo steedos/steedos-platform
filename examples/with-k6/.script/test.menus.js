@@ -1,15 +1,15 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-12 11:33:10
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-19 17:34:57
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-13 15:04:41
  * @Description: 
  */
 import http from "k6/http";
 import { check, group, sleep } from "k6";
 
 export const options = {
-    vus: 10,
+    vus: 1,
     duration: '30s',
 };
 
@@ -17,11 +17,11 @@ export default () => {
   const params = {
     headers: {
         'Content-Type': 'application/json',
-      Authorization: `Bearer osjAHnCr7nampKZ9Z,9315d27c5351367b1561b0ddf90a7ee211b9ce9724bd8872df4b220fffcdf5df38e7d050e0567a1f4b0c3c`,
+        Authorization: `Bearer ${__ENV.API_KEY}`,
     },
   };
 
-  const loginRes = http.get(`http://127.0.0.1:5301/service/api/apps/projects_ee/menus`, params);
+  const loginRes = http.get(`${__ENV.ROOT_URL}/service/api/apps/admin/menus`, params);
   check(loginRes, { "retrieved crocodiles": (obj) => obj.body.length > 0 });
 
   sleep(1);

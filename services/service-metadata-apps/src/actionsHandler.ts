@@ -1,23 +1,23 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
-import {translationApp, translationObjectLabel} from '@steedos/i18n';
-import {getAssignedApps, getObject as _getObject, getSteedosSchema} from "@steedos/objectql";
+import { translationApp, translationObjectLabel } from '@steedos/i18n';
+import { getAssignedApps, getObject as _getObject } from "@steedos/objectql";
 
-function cacherKey(appApiName: string): string{
+function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
 }
 
-async function registerApp(ctx, appApiName, data, meta){
-    return await ctx.broker.call('metadata.add', {key: cacherKey(appApiName), data: data}, {meta: meta});
+async function registerApp(ctx, appApiName, data, meta) {
+    return await ctx.broker.call('metadata.add', { key: cacherKey(appApiName), data: data }, { meta: meta });
 }
 
-async function getSpaceApp(ctx: any, appApiName: string){
+async function getSpaceApp(ctx: any, appApiName: string) {
     const allApps = await getAllApps(ctx);
     const userSession = ctx.meta.user;
     const spaceId = userSession.spaceId;
     const userApps = _.filter(allApps, function (metadataConfig) {
         const config = metadataConfig.metadata;
-        if(!config.is_creator || !config.visible){
+        if (!config.is_creator || !config.visible) {
             return false;
         }
         if (_.has(config, 'space') && config.space) {
@@ -28,28 +28,28 @@ async function getSpaceApp(ctx: any, appApiName: string){
         }
         return true;
     });
-    
-    return _.find(userApps, function(metadataConfig){
+
+    return _.find(userApps, function (metadataConfig) {
         const config = metadataConfig.metadata;
         return config.space && config.code === appApiName
     })
 }
 
-async function get(ctx: any){
+async function get(ctx: any) {
     const spaceAppMetadataConfig = await getSpaceApp(ctx, ctx.params.appApiName)
-    if(spaceAppMetadataConfig){
-     return spaceAppMetadataConfig;   
-    }else{
-        const metadataConfig = await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.appApiName)}, {meta: ctx.meta});
-        if(metadataConfig){
+    if (spaceAppMetadataConfig) {
+        return spaceAppMetadataConfig;
+    } else {
+        const metadataConfig = await ctx.broker.call('metadata.get', { key: cacherKey(ctx.params.appApiName) }, { meta: ctx.meta });
+        if (metadataConfig) {
             return metadataConfig;
-        }else{
+        } else {
             const allApps = await getAllApps(ctx);
             const userSession = ctx.meta.user;
             const spaceId = userSession.spaceId;
             const userApps = _.filter(allApps, function (metadataConfig) {
                 const config = metadataConfig.metadata;
-                if(!config.is_creator || !config.visible){
+                if (!config.is_creator || !config.visible) {
                     return false;
                 }
                 if (_.has(config, 'space') && config.space) {
@@ -60,10 +60,10 @@ async function get(ctx: any){
                 }
                 return true;
             })
-            if(ctx.params.appApiName === '-'){
+            if (ctx.params.appApiName === '-') {
                 return _.first(_.sortBy(userApps, ['metadata.sort']));
             }
-            return _.find(userApps, function(metadataConfig){
+            return _.find(userApps, function (metadataConfig) {
                 const app = metadataConfig.metadata;
                 return app.code === ctx.params.appApiName
             })
@@ -71,28 +71,31 @@ async function get(ctx: any){
     }
 }
 
-async function getAllApps(ctx: any){
-    return await ctx.broker.call('metadata.filter', {key: cacherKey("*")}, {meta: ctx.meta})
+async function getAllApps(ctx: any) {
+    return await ctx.broker.call('metadata.filter', { key: cacherKey("*") }, { meta: ctx.meta })
 }
 
 // async function getObject(ctx: any, objectApiName: string){
 //     return await ctx.broker.call('objects.get', {objectApiName})
 // }
 
-async function getAllTabs(ctx: any){
+async function getAllTabs(ctx: any) {
     return await ctx.broker.call('tabs.getAll');
 }
 
-async function getContext(ctx: any){
+async function getContext(ctx: any) {
+    const allTabs = await getAllTabs(ctx)
+    // const allObject = await getSteedosSchema().getAllObject()
+    const hiddenTabNames = await getHiddenTabNames(ctx)
     return {
-        tabs: await getAllTabs(ctx),
-        objects: await getSteedosSchema().getAllObject(),
-        hiddenTabNames: await getHiddenTabNames(ctx)
+        tabs: allTabs,
+        // objects: allObject,
+        hiddenTabNames: hiddenTabNames
     }
 }
 
-async function getTab(ctx: any, tabApiName: string){
-    const metadataConfig = await ctx.broker.call('tabs.get', {tabApiName});
+async function getTab(ctx: any, tabApiName: string) {
+    const metadataConfig = await ctx.broker.call('tabs.get', { tabApiName });
     return metadataConfig?.metadata;
 }
 
@@ -100,10 +103,10 @@ async function getTab(ctx: any, tabApiName: string){
 //     return await ctx.broker.call('tabs.getChildren', {tabApiName});
 // }
 
-function getTabChildren(context: any, tabApiName: string){
-    if(context){
+function getTabChildren(context: any, tabApiName: string) {
+    if (context) {
         const { tabs } = context;
-        return _.filter(tabs, function(tab){
+        return _.filter(tabs, function (tab) {
             return tab?.metadata.parent === tabApiName
         })
     }
@@ -115,22 +118,22 @@ function getTabChildren(context: any, tabApiName: string){
  * @param mobile 是否是在移动设备上显示tab
  * @returns 
  */
-function checkTabMobile(tab, mobile){
+function checkTabMobile(tab, mobile) {
     let isChecked = false;
-    if(mobile === true || mobile === "true"){
+    if (mobile === true || mobile === "true") {
         isChecked = tab.mobile !== false;
     }
-    else{
+    else {
         isChecked = tab.desktop !== false;
     }
     return isChecked;
 }
-function checkAppMobile(app, mobile){
+function checkAppMobile(app, mobile) {
     let isChecked = false;
-    if(mobile === true || mobile === "true"){
+    if (mobile === true || mobile === "true") {
         isChecked = app.mobile !== false;
     }
-    else{
+    else {
         isChecked = app.is_creator !== false;
     }
     return isChecked;
@@ -168,18 +171,18 @@ async function getHiddenTabNames(ctx) {
     return hiddenTabNames
 }
 
-async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}){
+async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}) {
     try {
         const objectsConfigs = context.objects;
         const tab = await getTab(ctx, tabApiName);
-        if(tab){
+        if (tab) {
             const isMobileChecked = checkTabMobile(tab, mobile)
-            if(!isMobileChecked){
+            if (!isMobileChecked) {
                 return;
             }
             const tabChildren = getTabChildren(context, tabApiName);
-            
-            if(tabChildren && tabChildren.length > 0){
+
+            if (tabChildren && tabChildren.length > 0) {
                 const tabMenu = {
                     id: tab.name,
                     icon: tab.icon,
@@ -187,23 +190,23 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                     children: [],
                     ...props
                 };
-                for (const {metadata: tabChild} of tabChildren) {
-                    if(tabChild && tabChild.apiName){
+                for (const { metadata: tabChild } of tabChildren) {
+                    if (tabChild && tabChild.apiName) {
                         await tabMenus(ctx, appPath, tabChild.apiName, tabMenu, mobile, userSession, context);
                     }
                 }
                 menu.children.push(tabMenu);
-            }else{
-                if(tab.type === 'object'){
+            } else {
+                if (tab.type === 'object') {
                     const allowRead = await objectAllowRead(tab.object, userSession);
-                    if(!allowRead){
+                    if (!allowRead) {
                         return;
                     }
                     // const objectMetadata = await getObject(ctx, tab.object);
-                    const objectMetadata = _.find(objectsConfigs, (config)=>{
+                    const objectMetadata = _.find(objectsConfigs, (config) => {
                         return config && config.metadata.name === tab.object
                     });
-                    if(objectMetadata){
+                    if (objectMetadata) {
                         const objectConfig = objectMetadata.metadata;
                         const objectLabel = translationObjectLabel(userSession.language, objectConfig.name, objectConfig.label || objectConfig.name)
                         menu.children.push(
@@ -218,7 +221,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         )
                     }
                 }
-                if(tab.type === 'url'){
+                if (tab.type === 'url') {
                     let urlMenu: any = {
                         id: `${tab.name}`,
                         type: tab.type,
@@ -227,14 +230,14 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         name: `${tab.label}`,
                         ...props
                     };
-                    if(tab.is_new_window){
-                        urlMenu.target ='_blank'
+                    if (tab.is_new_window) {
+                        urlMenu.target = '_blank'
                     }
                     menu.children.push(
                         urlMenu
                     )
                 }
-                if(tab.type === 'page'){
+                if (tab.type === 'page') {
                     menu.children.push(
                         {
                             id: `${tab.name}`,
@@ -257,17 +260,17 @@ async function objectAllowRead(objectApiName: string, userSession) {
     return await _getObject(objectApiName).allowRead(userSession);
 }
 
-async function transformAppToMenus(ctx, app, mobile, userSession, context){
-    if(!app.code && !app._id){
+async function transformAppToMenus(ctx, app, mobile, userSession, context) {
+    if (!app.code && !app._id) {
         return;
     }
 
     const isAppShow = checkAppMobile(app, mobile);
-    if(!isAppShow){
+    if (!isAppShow) {
         return;
     }
 
-    if(!app.code){
+    if (!app.code) {
         app.code = app._id;
     }
     translationApp(userSession.language, app.code, app);
@@ -281,9 +284,9 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         children: []
     }
     const hiddenTabNames = context.hiddenTabNames || []
-    if(app.tab_items){
+    if (app.tab_items) {
         // app.tab_items is array
-        if(_.isArray(app.tab_items)){
+        if (_.isArray(app.tab_items)) {
             for (const item of app.tab_items) {
                 try {
                     if (hiddenTabNames.includes(item.tab_name)) continue;
@@ -292,7 +295,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
                     ctx.broker.logger.info(error.message);
                 }
             }
-        }else{
+        } else {
             for (const tabApiName in app.tab_items) {
                 try {
                     if (hiddenTabNames.includes(tabApiName)) continue;
@@ -303,7 +306,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
                 }
             }
         }
-    }else if(_.isArray(app.tabs)){
+    } else if (_.isArray(app.tabs)) {
         for (const tabApiName of app.tabs) {
             try {
                 if (hiddenTabNames.includes(tabApiName)) continue;
@@ -314,40 +317,52 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context){
         }
     }
     const objects = mobile ? app.mobile_objects : app.objects
-    const objectsConfigs = context.objects;
-    if(_.isArray(objects)){
+    // const objectsConfigs = context.objects;
+    if (_.isArray(objects)) {
+        const getChildrenPromises = []
         for (const objectApiName of objects) {
-            try {
-                // const objectMetadata = await getObject(ctx, objectApiName);
-                const objectMetadata = _.find(objectsConfigs, (config)=>{
-                    return config && config.metadata.name === objectApiName
-                });
-                if(!objectMetadata){
-                    ctx.broker.logger.error(`${objectApiName} is not found in the objects of app ${app.code} `)
-                    continue;
-                }
-                const allowRead = await objectAllowRead(objectApiName, userSession);
-                if(!allowRead){
-                    continue;
-                }
-                if(objectMetadata){
-                    const objectConfig = objectMetadata.metadata;
-                    const objectLabel = translationObjectLabel(userSession.language, objectConfig.name, objectConfig.label || objectConfig.name)
-                    menu.children.push(
-                        {
-                            id: objectConfig.name,
-                            icon: objectConfig.icon,
-                            path: `${appPath}/${objectConfig.name}`,
-                            name: `${objectLabel}`
-                        }
-                    )
-                }
-            } catch (error) {
-                ctx.broker.logger.error(error);
+            getChildrenPromises.push(getMenuChildren({
+                objectApiName, userSession, ctx, menu, appPath, app
+            }))
+        }
+        const children = await Promise.all(getChildrenPromises)
+        for (const child of children) {
+            if (child) {
+                menu.children.push(child)
             }
         }
     }
     return menu;
+}
+
+async function getMenuChildren({ objectApiName, userSession, ctx, menu, appPath, app }) {
+    try {
+        // const objectMetadata = await getObject(ctx, objectApiName);
+        const objectConfig = _getObject(objectApiName).getConfig()
+        // const objectMetadata = _.find(objectsConfigs, (config)=>{
+        //     return config && config.metadata.name === objectApiName
+        // });
+        if (!objectConfig) {
+            ctx.broker.logger.error(`${objectApiName} is not found in the objects of app ${app.code} `)
+            return
+        }
+        const allowRead = await objectAllowRead(objectApiName, userSession);
+        if (!allowRead) {
+            return
+        }
+        if (objectConfig) {
+            // const objectConfig = objectMetadata.metadata;
+            const objectLabel = translationObjectLabel(userSession.language, objectConfig.name, objectConfig.label || objectConfig.name)
+            return {
+                id: objectConfig.name,
+                icon: objectConfig.icon,
+                path: `${appPath}/${objectConfig.name}`,
+                name: `${objectLabel}`
+            }
+        }
+    } catch (error) {
+        ctx.broker.logger.error(error);
+    }
 }
 
 async function getAppsMenus(ctx) {
@@ -357,28 +372,28 @@ async function getAppsMenus(ctx) {
     }
     let assigned_apps = await getAssignedApps(userSession);
     let mobile = ctx.params.mobile;
-    if(typeof mobile !== 'boolean'){
+    if (typeof mobile !== 'boolean') {
         mobile = mobile === "true" ? true : false;
     }
     const spaceId = userSession.spaceId;
     const metadataApps = await getAllApps(ctx);
     const context = await getContext(ctx)
     const allApps = _.map(metadataApps, 'metadata');
-    if(assigned_apps && assigned_apps.length){
-        assigned_apps = _.filter(allApps, (item)=>{ return assigned_apps.includes(item.code)});
-    }else{
+    if (assigned_apps && assigned_apps.length) {
+        assigned_apps = _.filter(allApps, (item) => { return assigned_apps.includes(item.code) });
+    } else {
         assigned_apps = allApps;
     }
     const _userApps = _.filter(assigned_apps, function (config) {
-        if(!config.is_creator || !config.visible){
+        if (!config.is_creator || !config.visible) {
             return false;
         }
 
-        if(config._id === config.code){
-            let dbApp = _.find(assigned_apps, (item)=>{
+        if (config._id === config.code) {
+            let dbApp = _.find(assigned_apps, (item) => {
                 return item.code === config.code && item._id != item.code && item.space === spaceId;
             });
-            if(dbApp){
+            if (dbApp) {
                 return dbApp.visible
             }
         }
@@ -391,27 +406,27 @@ async function getAppsMenus(ctx) {
     const menus = [];
 
     let userApps = [];
-    _.each(_.sortBy(_userApps, ['sort']), function(app){
-        if(!app.code){
+    _.each(_.sortBy(_userApps, ['sort']), function (app) {
+        if (!app.code) {
             app.code = app._id;
         }
-        const _appIndex = _.findIndex(userApps, function(item){ return item.code === app.code});
-        if(_appIndex < 0){
+        const _appIndex = _.findIndex(userApps, function (item) { return item.code === app.code });
+        if (_appIndex < 0) {
             userApps.push(app)
-        }else{
+        } else {
             const _app = userApps[_appIndex];
-            if(!_app.space && app.space){
+            if (!_app.space && app.space) {
                 userApps[_appIndex] = app;
             }
         }
     })
     for (const app of _.sortBy(userApps, ['sort'])) {
         const menu = await transformAppToMenus(ctx, app, mobile, userSession, context);
-        if(menu){
+        if (menu) {
             menus.push(menu);
         }
     }
-    if(!mobile){
+    if (!mobile) {
         const setupApp = {
             code: 'admin',
             name: '设置',
@@ -425,19 +440,18 @@ async function getAppsMenus(ctx) {
     return menus;
 }
 
-async function getAppMenus(ctx){
+async function getAppMenus(ctx) {
     const userSession = ctx.meta.user;
     const { mobile } = ctx.params;
     if (!userSession) {
         throw new Error('no permission.')
     }
     const spaceId = userSession.spaceId;
-
     const metadataConf = await get(ctx);
-    if(metadataConf){
+    if (metadataConf) {
         const appConfig = metadataConf.metadata;
         if (_.has(appConfig, 'space') && appConfig.space && appConfig.space != spaceId) {
-            return ;
+            return;
         }
         const context = await getContext(ctx)
         const appMenus = await transformAppToMenus(ctx, appConfig, mobile, userSession, context);
@@ -448,7 +462,7 @@ async function getAppMenus(ctx){
 
 export const ActionHandlers = {
     async get(ctx: any): Promise<any> {
-        return await ctx.broker.call('metadata.get', {key: cacherKey(ctx.params.appApiName)}, {meta: ctx.meta})
+        return await ctx.broker.call('metadata.get', { key: cacherKey(ctx.params.appApiName) }, { meta: ctx.meta })
     },
     async getAll(ctx: any): Promise<any> {
         return await getAllApps(ctx);
@@ -460,33 +474,33 @@ export const ActionHandlers = {
     async getAppMenus(ctx: any): Promise<any> {
         return await getAppMenus(ctx);
     },
-    async add(ctx: any): Promise<boolean>{
+    async add(ctx: any): Promise<boolean> {
         let config = ctx.params.data;
         const serviceName = ctx.meta.metadataServiceName
         const metadataApiName = ctx.params.appApiName;
         const metadataConfig = await getServiceAppConfig(ctx, serviceName, metadataApiName)
-        if(metadataConfig && metadataConfig.metadata){
+        if (metadataConfig && metadataConfig.metadata) {
             config = _.defaultsDeep(config, metadataConfig.metadata);
         }
-        await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
+        await ctx.broker.call('metadata.addServiceMetadata', { key: cacherKey(metadataApiName), data: config }, { meta: Object.assign({}, ctx.meta, { metadataType: METADATA_TYPE, metadataApiName: metadataApiName }) })
         const appConfig = await refreshApp(ctx, metadataApiName);
         return await registerApp(ctx, metadataApiName, appConfig, ctx.meta)
     },
-    async delete(ctx: any): Promise<boolean>{
-        return await ctx.broker.call('metadata.delete', {key: cacherKey(ctx.params.appApiName)}, {meta: ctx.meta})
+    async delete(ctx: any): Promise<boolean> {
+        return await ctx.broker.call('metadata.delete', { key: cacherKey(ctx.params.appApiName) }, { meta: ctx.meta })
     },
-    async verify(ctx: any): Promise<boolean>{
+    async verify(ctx: any): Promise<boolean> {
         console.log("verify");
         return true;
     },
-    async refresh(ctx){
+    async refresh(ctx) {
         const { isClear, metadataApiNames } = ctx.params
-        if(isClear){
+        if (isClear) {
             for (const metadataApiName of metadataApiNames) {
                 const appConfig = await refreshApp(ctx, metadataApiName);
-                if(!appConfig){
-                    await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
-                }else{
+                if (!appConfig) {
+                    await ctx.broker.call('metadata.delete', { key: cacherKey(metadataApiName) })
+                } else {
                     await registerApp(ctx, metadataApiName, appConfig, {});
                 }
             }
