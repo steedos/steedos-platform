@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-11 10:54:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-11 14:45:02
+ * @LastEditTime: 2023-01-13 16:31:10
  * @Description: 发送通知服务
  */
 "use strict";
@@ -58,7 +58,7 @@ module.exports = {
                                 ids: { type: "array", items: "string" },
                             }
                         },
-                        related_name: { type: "string" },
+                        related_name: { type: "string", optional: true },
                         from: { type: "string", optional: true },
                         space: { type: "string" },
                     }
