@@ -1,6 +1,9 @@
 module.exports = {
   show_object: function (object_name, record_id, item_element) {
     var record = this.record || Creator.getObjectById(record_id);
+    if(record && record.record){
+        record = record.record;
+    }
     if(!record){
         return toastr.error("未找到记录");
     }
@@ -19,15 +22,16 @@ module.exports = {
         }
     }
 
-    window.stores.API.client.sobject(record.name).getConfig().then((res)=>{
-        if(res.idFieldName){
-            window.open(Creator.getRelativeUrl("/app/-/" + record.name));
-        }else{
-            return toastr.error("请配置主键字段");
-        }
-    }).catch(function(err){
-        return window.toastr.error(err.message);
-    })
+    window.open(Creator.getRelativeUrl("/app/admin/" + record.name));
+    // SteedosUI.Object.getUISchema(record.name).then((res)=>{
+    //     if(res.idFieldName){
+    //         window.open(Creator.getRelativeUrl("/app/-/" + record.name));
+    //     }else{
+    //         return toastr.error("请配置主键字段");
+    //     }
+    // }).catch(function(err){
+    //     return window.toastr.error(err.message);
+    // })
 
     
 
