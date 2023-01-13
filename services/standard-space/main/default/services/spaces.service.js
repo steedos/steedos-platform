@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-12 11:01:26
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-01-13 11:44:40
  * @Description: 
  */
 "use strict";
@@ -91,7 +91,25 @@ module.exports = {
                 this.broker.logger.info('[service][spaces]===>', 'isSpaceAdmin', ctx.params)
                 return await this.isSpaceAdmin(ctx.params.spaceId, ctx.params.userId)
             }
-        }
+        },
+        /**
+         * @api {call} isSpaceOwner 是否工作区拥有者
+         * @apiName isSpaceOwner
+         * @apiGroup spaces.service.js
+         * @apiParam {String} spaceId 工作区ID
+         * @apiParam {String} userId 用户ID
+         * @apiSuccess {Boolean} 是否工作区拥有者
+         */
+        isSpaceOwner: {
+            params: {
+                spaceId: { type: "string" },
+                userId: { type: "string" },
+            },
+            async handler(ctx) {
+                this.broker.logger.info('[service][spaces]===>', 'isSpaceOwner', ctx.params)
+                return await this.isSpaceOwner(ctx.params.spaceId, ctx.params.userId)
+            }
+        },
     },
 
     /**
@@ -263,6 +281,17 @@ module.exports = {
                 return space.admins.indexOf(userId) >= 0
             }
             return false
+        },
+        /**
+         * 是否工作区拥有者
+         * @param {*} spaceId 
+         * @param {*} userId 
+         * @return boolean
+         */
+        async isSpaceOwner(spaceId, userId) {
+            const spaceObj = getObject('spaces')
+            const count = await spaceObj.count({filters: [['_id', '=', spaceId], ['owner', '=', userId]]})
+            return count > 0
         }
     },
 

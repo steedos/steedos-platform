@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-11 10:16:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-01-13 14:39:03
  * @Description: 
  */
 "use strict";
@@ -284,8 +284,8 @@ module.exports = {
         await insertVaildate(doc);
 
         if (doc.profile) {
-            const isSpaceAdmin = await broker.call('spaces.isSpaceAdmin', { spaceId: doc.space, userId: userId })
-            if (doc.profile === 'admin' && !isSpaceAdmin) {
+            const isSpaceOwner = await broker.call('spaces.isSpaceOwner', { spaceId: doc.space, userId: userId })
+            if (doc.profile === 'admin' && !isSpaceOwner) {
                 throw new Error("Only the administrator can set the profile to admin");
             }
         } else {
