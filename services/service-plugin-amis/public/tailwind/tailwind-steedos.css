@@ -232,6 +232,10 @@ body.steedos .overflow-y-auto {
   overflow-y: auto
 }
 
+body.steedos .border {
+  border-width: 1px
+}
+
 body.steedos .border-b-\[3px\] {
   border-bottom-width: 3px
 }
@@ -277,6 +281,11 @@ body.steedos .px-4 {
   padding-right: 1rem
 }
 
+body.steedos .px-0 {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
 body.steedos .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem
@@ -297,6 +306,10 @@ body.steedos .pb-0 {
 
 body.steedos .pt-2 {
   padding-top: 0.5rem
+}
+
+body.steedos .pb-32 {
+  padding-bottom: 8rem
 }
 
 body.steedos .pl-1\.5 {
