@@ -11,6 +11,7 @@ fields:
     index: true
     readonly: true
     defaultValue: "{{ global.userId }}"
+    visible_on: "{{global.mode ==='read' ? true : false}}"
     name: from
     filterable: true
   from_name:
@@ -19,7 +20,7 @@ fields:
     label: Client Name
     readonly: true
     formula: from.name
-    visible_on: "{{global.mode ==='read' ? true : false}}"
+    visible_on: "{{false}}"
     name: from_name
   to:
     type: lookup
@@ -33,7 +34,7 @@ fields:
     type: text
     label: Trustee Name
     readonly: true
-    visible_on: "{{global.mode ==='read' ? true : false}}"
+    visible_on: "{{false}}"
     name: to_name
   start_time:
     type: datetime
