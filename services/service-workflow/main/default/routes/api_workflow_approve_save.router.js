@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-28 17:56:53
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-14 11:13:53
  * @Description: 
  */
 const express = require("express");
@@ -10,6 +10,9 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('lodash');
 const Fiber = require("fibers");
+const {
+    update_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 
 router.post('/api/workflow/v2/approve/save', core.requireAuthentication, async function (req, res) {
     try {
@@ -156,6 +159,7 @@ router.post('/api/workflow/v2/approve/save', core.requireAuthentication, async f
                 }, {
                     $set: setObj
                 });
+                update_instance_tasks(ins_id, trace_id, approve_id)
                 res.status(200).send({
                     'instance': ins
                 });

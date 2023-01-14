@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-21 15:28:50
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-14 11:27:16
  * @Description:
  */
 const express = require("express");
@@ -10,7 +10,9 @@ const router = express.Router();
 const core = require("@steedos/core");
 const _ = require("lodash");
 const Fiber = require("fibers");
-
+const {
+  remove_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 router.post("/api/workflow/v2/instance/terminate",core.requireAuthentication,async function (req, res) {
     try {
       let userSession = req.user;
@@ -92,6 +94,7 @@ router.post("/api/workflow/v2/instance/terminate",core.requireAuthentication,asy
               return trace.is_finished === false;
             });
             traces = instance.traces;
+            const finishedApproveIds = []
             i = 0;
             while (i < traces.length) {
               if (traces[i].is_finished === false) {
@@ -104,6 +107,7 @@ router.post("/api/workflow/v2/instance/terminate",core.requireAuthentication,asy
                     traces[i].approves[h].finish_date = now;
                     traces[i].approves[h].judge = null;
                     traces[i].approves[h].description = null;
+                    finishedApproveIds.push(traces[i].approves[h]._id)
                   }
                   h++;
                 }
@@ -176,6 +180,8 @@ router.post("/api/workflow/v2/instance/terminate",core.requireAuthentication,asy
                 $set: setObj,
               }
             );
+            // 删除intance_tasks
+            remove_many_instance_tasks(finishedApproveIds)
             if (r) {
               ins = uuflowManager.getInstance(instance_id);
               pushManager.send_instance_notification(

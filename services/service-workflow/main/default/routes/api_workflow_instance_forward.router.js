@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-21 16:24:32
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-14 11:17:42
  * @Description:
  */
 const express = require("express");
@@ -10,7 +10,11 @@ const router = express.Router();
 const core = require("@steedos/core");
 const _ = require("lodash");
 const Fiber = require("fibers");
-
+const {
+    insert_instance_tasks,
+    update_instance_tasks,
+    insert_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, async function (req, res) {
     try {
       let userSession = req.user;
@@ -524,6 +528,8 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
 
             new_ins_id = db.instances.insert(ins_obj);
 
+            insert_instance_tasks(ins_obj._id, trace_obj._id, appr_obj._id)
+
             // 复制附件
             var collection = cfs.instances;
 
@@ -700,6 +706,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
                     $set: update_read,
                   }
                 );
+                update_instance_tasks(instance_id, current_trace_id, from_approve_id)
               }
             });
           }

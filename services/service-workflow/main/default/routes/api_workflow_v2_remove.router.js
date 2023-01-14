@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-20 13:41:00
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-14 11:06:17
  * @Description: 
  */
 const express = require("express");
@@ -10,7 +10,9 @@ const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('lodash');
 const Fiber = require("fibers");
-
+const {
+    remove_instance_tasks_by_instance_id,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 //TODO 
 /**
  * body: {
@@ -48,6 +50,8 @@ router.post('/api/workflow/v2/remove', core.requireAuthentication, async functio
                 delete_obj.deleted_by = current_user;
                 db.deleted_instances.insert(delete_obj);
                 db.instances.remove(data._id);
+                // 删除instance_tasks
+                remove_instance_tasks_by_instance_id(data._id)
                 if (delete_obj.state !== "draft") {
                     inbox_users = delete_obj.inbox_users ? delete_obj.inbox_users : [];
                     cc_users = delete_obj.cc_users ? delete_obj.cc_users : [];
