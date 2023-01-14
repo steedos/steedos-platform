@@ -814,7 +814,8 @@ actions:
   designForm:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions, record) {
+      function (object_name, record_id, record_permissions, data) {
+              const record = data.data;
               if (record && record.object_name){
                 return false;
               };
@@ -823,7 +824,7 @@ actions:
     'on': record
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
-              return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.form, Creator.getUserCompanyId());
+              return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
             }
   enableFlow:
     label: Enable Flow
