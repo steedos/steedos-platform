@@ -16,7 +16,7 @@ fields:
     searchable: true
     is_wide: true
   body:
-    type: markdown
+    type: html
     label: Main Body
     rows: 5
     required: true
