@@ -131,6 +131,11 @@ function getObjectServiceMethodsSchema() {
                 return this.object.toConfig()
             }
         },
+        getConfig: {
+            handler() {
+                return this.object.getConfig()
+            }
+        },
         getUserObjectPermission: {
             handler(userSession) {
                 return this.object.getUserObjectPermission(userSession)
@@ -526,6 +531,11 @@ function getObjectServiceActionsSchema() {
         toConfig: {
             async handler(ctx) {
                 return this.toConfig()
+            }
+        },
+        getConfig: {
+            async handler(ctx) {
+                return this.getConfig()
             }
         },
         getUserObjectPermission: {

@@ -322,7 +322,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         const getChildrenPromises = []
         for (const objectApiName of objects) {
             getChildrenPromises.push(getMenuChildren({
-                objectApiName, userSession, ctx, menu, appPath, app
+                objectApiName, userSession, ctx, appPath, app
             }))
         }
         const children = await Promise.all(getChildrenPromises)
@@ -335,13 +335,9 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     return menu;
 }
 
-async function getMenuChildren({ objectApiName, userSession, ctx, menu, appPath, app }) {
+async function getMenuChildren({ objectApiName, userSession, ctx, appPath, app }) {
     try {
-        // const objectMetadata = await getObject(ctx, objectApiName);
-        const objectConfig = _getObject(objectApiName).getConfig()
-        // const objectMetadata = _.find(objectsConfigs, (config)=>{
-        //     return config && config.metadata.name === objectApiName
-        // });
+        const objectConfig = await _getObject(objectApiName).getConfig()
         if (!objectConfig) {
             ctx.broker.logger.error(`${objectApiName} is not found in the objects of app ${app.code} `)
             return
