@@ -91,3 +91,13 @@ db.instance_tasks._simpleSchema = new SimpleSchema
         type: String
     instance_state:
         type: String
+    distribute_from_instance:
+        type: String
+    forward_from_instance:
+        type: String
+    keywords:
+        type: String
+    is_archived:
+        type: Boolean
+    category:
+        type: String
