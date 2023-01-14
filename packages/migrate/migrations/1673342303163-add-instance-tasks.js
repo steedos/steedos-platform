@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-01-10 17:18:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-11 14:26:12
+ * @LastEditTime: 2023-01-14 10:29:56
  * @Description: 
  */
 'use strict'
@@ -48,6 +48,7 @@ module.exports.up = async function (next) {
                     aDoc['forward_from_instance'] = insDoc.forward_from_instance;
                     aDoc['keywords'] = insDoc.keywords;
                     aDoc['is_archived'] = insDoc.is_archived;
+                    aDoc['category'] = insDoc.category;
                     docs.push(aDoc)
                 })
             }
