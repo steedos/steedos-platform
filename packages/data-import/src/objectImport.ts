@@ -592,11 +592,20 @@ function selectObjectToFilters(selectObj) {
     let filter: any = [];
     filter.push(k);
     filter.push("=");
-    filter.push(selectObj[k]);
+    filter.push(formateFilterValue(selectObj[k]));
     filters.push(filter);
   }
   return filters;
 }
+
+function formateFilterValue(value) {
+  if (_.isString(value)) {
+    return value.replace(/%/g, "%25")
+  }
+
+  return value
+}
+
 
 function loadWorkbook(file) {
   const xlsx = require("node-xlsx");
