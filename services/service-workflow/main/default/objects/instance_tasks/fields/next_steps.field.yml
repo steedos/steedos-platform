@@ -1,6 +1,4 @@
 name: next_steps
 label: 下一步
-type: object
-multiple: true
-blackbox: true
+type: grid
 sort_no: 240

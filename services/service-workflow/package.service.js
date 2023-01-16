@@ -2,7 +2,7 @@
 const Fiber = require("fibers");
 const project = require('./package.json');
 const serviceName = project.name;
-const packageLoader = require('@steedos/service-package-loader');
+const packageLoader = require('@steedos/service-meteor-package-loader');
 const { excuteTriggers } = require('./main/default/utils/trigger');
 
 /**
@@ -27,7 +27,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['~packages-standard-objects'],
 	/**
 	 * Actions
 	 */
