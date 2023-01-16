@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-06 10:31:30
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-16 17:39:58
  * @Description: 
  */
 
@@ -624,7 +624,7 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
     // let _object = clone(objConfig);
     translationObject(lng, objConfig.name, objConfig, true);
     let displayObj = { _id: doc._id };
-    let utcOffset = userSession.utcOffset;
+    let utcOffset = userSession.utcOffset || 8;
     for (const name of selectorFieldNames) {
         if (Object.prototype.hasOwnProperty.call(fields, name)) {
             const field = fields[name];
@@ -1068,7 +1068,7 @@ function formatBasicFieldValue(valueType, field, value, objectConfig, userSessio
         case 'date':
             return value ? moment.utc(value).format("YYYY-MM-DD") : '';
         case 'datetime':
-            return value ? moment(value).utcOffset(userSession.utcOffset).format("YYYY-MM-DD HH:mm") : '';
+            return value ? moment(value).utcOffset(userSession.utcOffset || 8).format("YYYY-MM-DD HH:mm") : '';
         case 'time':
             return value ? moment.utc(value).format("HH:mm") : '';
         case 'number':
