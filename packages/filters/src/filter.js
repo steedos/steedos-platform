@@ -87,7 +87,7 @@ const DevExpressOData = {
         return this.serializeValueV2(value);
     }, 
     serializeString(value) {
-        return "'" + value.replace(/'/g, "''").replace(/%/g, "%25") + "'";
+        return "'" + value.replace(/'/g, "''") + "'";
     },
     serializeDate(value, serializationFormat) {
         if (!serializationFormat) {
