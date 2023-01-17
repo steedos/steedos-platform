@@ -463,7 +463,9 @@ require("/node_modules/meteor/steedos:app-workflow/routes/export.coffee");
 require("/node_modules/meteor/steedos:app-workflow/routes/import.coffee");
 
 /* Exports */
-Package._define("steedos:app-workflow");
+Package._define("steedos:app-workflow", {
+  Template: Template
+});
 
 })();
 
