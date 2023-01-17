@@ -1012,7 +1012,7 @@ actions:
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return Modal.show("distribute_edit_flow_modal", {
-                flow: this.record
+                flow: this.record.record
               });
             }
   removeFlow:

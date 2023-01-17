@@ -7,6 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "转发",
               "id": "u:instance_forward",
+              "className": "p-0 ",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -110,7 +111,7 @@ amis_schema: |-
                                                                       "record": "${record}",
                                                                       "context": "${context}"
                                                                   },
-                                                                  "requestAdaptor": "const { record, flow_id, description, context } = api.data;\napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": true,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [context.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": record.approve._id\n};\nreturn api;"
+                                                                  "requestAdaptor": "console.log('====', api);const { record, flow_id, description, context } = api.data; var from_approve_id = null; if(record.approve && record.approve._id){from_approve_id = record.approve._id}else if(window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id){from_approve_id = window.InstanceManager.getCurrentApprove()._id} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": true,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [context.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;"
                                                               },
                                                               "messages": {}
                                                           },

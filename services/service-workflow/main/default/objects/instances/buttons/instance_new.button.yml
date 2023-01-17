@@ -7,6 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "新建",
               "id": "u:instance_new",
+              "className": "p-0 ",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -14,66 +15,56 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "选择流程",
+                                  "title": "请选择流程",
                                   "body": [
                                       {
-                                          "type": "input-tree",
-                                          "label": false,
-                                          "name": "tree",
-                                          "options": [],
-                                          "id": "u:a713f256906d",
-                                          "multiple": false,
-                                          "source": {
-                                              "method": "post",
-                                              "url": "${context.rootUrl}/graphql",
-                                              "requestAdaptor": "api.data.query = `\n  {\n  options:categories{\n    value:_id,\n    label:name,\n    children:_related_flows_category(filters: [[\"state\", \"=\", \"enabled\"]]){\n      value:_id,\n      label:name,\n      perms,\n      state\n    }\n  }\n}\n`;\nreturn api;",
-                                              "headers": {
-                                                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                              }
-                                          },
+                                          "type": "steedos-select-flow",
+                                          "id": "instanceNewFlowSelect",
                                           "showIcon": true,
-                                          "showRadio": true,
+                                          "showRadio": false,
                                           "onlyLeaf": true,
+                                          "name": "flow",
+                                          "treeContainerClassName": "max-h-[80vh]",
                                           "onEvent": {
-                                              "change": {
-                                                  "weight": 0,
-                                                  "actions": [
-                                                      {
-                                                          "args": {
-                                                              "api": {
-                                                                  "url": "${context.rootUrl}/api/workflow/v2/draft",
-                                                                  "method": "post",
-                                                                  "dataType": "json",
-                                                                  "requestAdaptor": "const { flowId, context } = api.body;\napi.data = {\n  \"instance\": {\n    \"flow\": flowId,\n    \"applicant\": context.userId,\n    \"space\": context.tenantId\n  }\n}\nreturn api;",
-                                                                  "data": {
-                                                                      "&": "$$",
-                                                                      "context": "${context}",
-                                                                      "flowId": "$event.data.value"
-                                                                  },
-                                                                  "headers": {
-                                                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                                  }
-                                                              },
-                                                              "messages": {
-                                                                  "success": "创建成功!"
-                                                              }
-                                                          },
-                                                          "actionType": "ajax"
-                                                      },
-                                                      {
-                                                          "actionType": "custom",
-                                                          "script": "\nconst instance = event.data.instance;\nconsole.log(`instance===`, instance, `/workflow/space/${instance.space}/draft/${instance._id}`)\ndoAction({\n  actionType: 'url',\n  args: {\n    blank: false,\n    url: `/workflow/space/${instance.space}/draft/${instance._id}`\n  }\n});\n"
-                                                      },
-                                                      {
+                                                "change": {
+                                                    "weight": 0,
+                                                    "actions": [
+                                                        {
+                                                            "args": {
+                                                                "api": {
+                                                                    "url": "${context.rootUrl}/api/workflow/v2/draft",
+                                                                    "method": "post",
+                                                                    "dataType": "json",
+                                                                    "requestAdaptor": "const { flowId, context } = api.body;\napi.data = {\n  \"instance\": {\n    \"flow\": flowId,\n    \"applicant\": context.userId,\n    \"space\": context.tenantId\n  }\n}\nreturn api;",
+                                                                    "data": {
+                                                                        "&": "$$",
+                                                                        "context": "${context}",
+                                                                        "flowId": "$event.data.value"
+                                                                    },
+                                                                    "headers": {
+                                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                    }
+                                                                },
+                                                                "messages": {
+                                                                    "success": "创建成功!"
+                                                                }
+                                                            },
+                                                            "actionType": "ajax"
+                                                        },
+                                                        {
+                                                            "actionType": "custom",
+                                                            "script": "\nconst instance = event.data.instance;\nconsole.log(`instance===`, instance, `/workflow/space/${instance.space}/draft/${instance._id}`)\ndoAction({\n  actionType: 'url',\n  args: {\n    blank: false,\n    url: `/workflow/space/${instance.space}/draft/${instance._id}`\n  }\n});\n"
+                                                        },
+                                                        {
                                                         "componentId": "",
                                                         "args": {
                                                         },
                                                         "actionType": "closeDrawer"
-                                                      }
-                                                  ]
-                                              }
-                                          },
-                                          "treeContainerClassName": "max-h-screen"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+
                                       }
                                   ],
                                   "id": "u:0a98fff55554",

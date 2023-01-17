@@ -7,6 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "保存",
               "id": "u:instance_save",
+              "className": "p-0 ",
               "onEvent": {
                   "click": {
                       "actions": [

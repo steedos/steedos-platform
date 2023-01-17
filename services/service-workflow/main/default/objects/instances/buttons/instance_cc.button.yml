@@ -7,6 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "传阅",
               "id": "u:instance_cc",
+              "className": "p-0 ",
               "onEvent": {
                   "click": {
                       "actions": [

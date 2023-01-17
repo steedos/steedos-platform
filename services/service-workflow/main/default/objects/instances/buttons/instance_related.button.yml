@@ -7,6 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "关联文件",
               "id": "u:instance_link",
+              "className": "p-0 ",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -146,7 +147,7 @@ amis_schema: |-
                                                           "actionType": "custom",
                                                           "args": {},
                                                           "componentId": "",
-                                                          "script": "SteedosUI.getRef(\"amis-root-workflow\").getComponentByName(\"instancePage\").reload()"
+                                                          "script": "SteedosUI.getRef(\"amis-root-workflow\")?.getComponentByName(\"instancePage\")?.reload()"
                                                       },
                                                       {
                                                           "componentId": "",
