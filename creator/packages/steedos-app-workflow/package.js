@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-21 14:53:41
+ * @LastEditTime: 2023-01-17 16:50:50
  * @Description: 
  */
 Package.describe({
@@ -95,4 +95,5 @@ Package.onUse(function(api) {
 	api.addFiles('routes/import.coffee', 'server');
 
 	// api.export(['WorkflowManager', 'uuflowManager', 'pushManager', 'steedosExport', 'steedosImport'], ['server']);
+	api.export(['Template'], ['server'])
 })

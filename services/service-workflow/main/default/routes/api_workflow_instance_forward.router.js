@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-14 11:17:42
+ * @LastEditTime: 2023-01-17 16:26:29
  * @Description:
  */
 const express = require("express");
@@ -40,7 +40,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           check(space_id, String);
           check(flow_id, String);
           check(hasSaveInstanceToAttachment, Boolean);
-          check(description, String);
+          check(description, Match.Maybe(String));
           check(isForwardAttachments, Boolean);
           check(selectedUsers, Array);
           check(action_type, Match.OneOf("forward", "distribute"));
