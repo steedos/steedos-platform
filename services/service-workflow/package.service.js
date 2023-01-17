@@ -27,7 +27,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: [],
+	dependencies: ['~packages-standard-objects'],
 	/**
 	 * Actions
 	 */
