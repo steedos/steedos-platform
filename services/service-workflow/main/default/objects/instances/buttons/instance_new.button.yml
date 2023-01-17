@@ -7,7 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "新建",
               "id": "u:instance_new",
-              "className": "p-0 ",
+              "className": "instance-new-btn",
               "onEvent": {
                   "click": {
                       "actions": [

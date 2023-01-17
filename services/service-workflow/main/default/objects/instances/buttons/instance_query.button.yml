@@ -6,9 +6,9 @@ amis_schema: |-
         {
         "type": "button",
         "label": "查找",
-        "id": "u:flow_filter",
+        "id": "u:instance_query",
         "level": "default",
-        "className": "p-0 ",
+        "className": "instance-query-btn",
         "onEvent": {
             "click": {
             "actions": [
