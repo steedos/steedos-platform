@@ -1476,19 +1476,17 @@ InstanceManager.fixInstancePosition = function (isNeedToScrollTop) {
 
 InstanceManager.setApproveHaveRead = function (instanceId) {
 	var ins = WorkflowManager.getInstance()
-	if (!ins.is_read) {
-		var myApprove = InstanceManager.getCurrentApprove()
-		if (myApprove) {
-			Meteor.call("set_approve_have_read", ins._id, myApprove.trace, myApprove.id, function (error, result) { });
-		} else {
-			var ccApprove = InstanceManager.getCCApprove(Meteor.userId(), false);
-			if (!_.isEmpty(ccApprove)) {
-				Meteor.call("cc_read", ccApprove, function (error, result) {
-					console.log('set read')
-				});
-			}
-
+	var myApprove = InstanceManager.getCurrentApprove()
+	if (myApprove && !myApprove.is_read) {
+		Meteor.call("set_approve_have_read", ins._id, myApprove.trace, myApprove.id, function (error, result) { });
+	} else {
+		var ccApprove = InstanceManager.getCCApprove(Meteor.userId(), false);
+		if (!_.isEmpty(ccApprove) && !ccApprove.is_read) {
+			Meteor.call("cc_read", ccApprove, function (error, result) {
+				console.log('set read')
+			});
 		}
+
 	}
 }
 

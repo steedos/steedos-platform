@@ -2,24 +2,61 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-13 14:53:14
+ * @LastEditTime: 2023-01-17 11:51:24
  * @Description: 
  */
 'use strict';
 // @ts-check
 const _ = require('lodash')
+const { getObject } = require('@steedos/objectql')
+
+function _insert(taskDoc) {
+    const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
+        getObject('instance_tasks').insert(taskDoc).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(taskDoc);
+    return newTaskDoc
+}
+
+function _update(_id, taskDoc) {
+    const latestTaskDoc = Meteor.wrapAsync(function (_id, taskDoc, cb) {
+        getObject('instance_tasks').update(_id, taskDoc).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(_id, taskDoc);
+    return latestTaskDoc
+}
+
+function _remove(_id) {
+    const result = Meteor.wrapAsync(function (_id, cb) {
+        getObject('instance_tasks').delete(_id).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(_id);
+    return result
+}
+
+function _find(query) {
+    const taskDocs = Meteor.wrapAsync(function (query, cb) {
+        getObject('instance_tasks').find(query).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(query);
+    return taskDocs
+}
 
 /**
  * 新增instance_tasks记录
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
  * @param {String} approveId ApproveID
- * @returns 新增的instance_tasks的ID
+ * @returns 新增的instance_tasks
  */
 function insert_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    const insTaskId = db.instance_tasks.insert(taskDoc)
-    return insTaskId
+    const newTaskDoc = _insert(taskDoc)
+    return newTaskDoc
 }
 
 /**
@@ -32,14 +69,14 @@ function insert_instance_tasks(insId, traceId, approveId) {
 function insert_many_instance_tasks(insId, traceId, approveIds) {
     const insDoc = _getInsDoc(insId)
     const traceDoc = _getTraceDoc(insDoc, traceId)
-    const newIDs = []
+    const newDocs = []
     for (const aId of approveIds) {
         const approveDoc = _getApproveDoc(traceDoc, aId)
         const taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
-        const insTaskId = db.instance_tasks.insert(taskDoc)
-        newIDs.push(insTaskId)
+        const newTaskDoc = _insert(taskDoc)
+        newDocs.push(newTaskDoc)
     }
-    return newIDs
+    return newDocs
 }
 
 /**
@@ -47,14 +84,12 @@ function insert_many_instance_tasks(insId, traceId, approveIds) {
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
  * @param {String} approveId ApproveID
- * @returns 更新结果 1
+ * @returns 更新后的instance_tasks
  */
 function update_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
     delete taskDoc._id
-    const result = db.instance_tasks.update({ _id: approveId }, {
-        $set: taskDoc
-    })
+    const result = _update(approveId, taskDoc)
     return result
 }
 
@@ -63,7 +98,7 @@ function update_instance_tasks(insId, traceId, approveId) {
  * @param {String} insId 
  * @param {String} traceId 
  * @param {String[]} approveIds 
- * @returns 更新结果
+ * @returns 更新后的instance_tasks
  */
 function update_many_instance_tasks(insId, traceId, approveIds) {
     const insDoc = _getInsDoc(insId)
@@ -73,9 +108,7 @@ function update_many_instance_tasks(insId, traceId, approveIds) {
         const approveDoc = _getApproveDoc(traceDoc, aId)
         const taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
         delete taskDoc._id
-        const result = db.instance_tasks.update({ _id: aId }, {
-            $set: taskDoc
-        })
+        const result = _update(aId, taskDoc)
         results.push(result)
     }
     return results
@@ -87,7 +120,7 @@ function update_many_instance_tasks(insId, traceId, approveIds) {
  * @returns 1
  */
 function remove_instance_tasks(approveId) {
-    const result = db.instance_tasks.remove({ _id: approveId })
+    const result = _remove(approveId)
     return result
 }
 
@@ -97,8 +130,12 @@ function remove_instance_tasks(approveId) {
  * @returns 1
  */
 function remove_many_instance_tasks(approveIds) {
-    const result = db.instance_tasks.remove({ _id: {$in: approveIds} })
-    return result
+    const results = []
+    for (const aId of approveIds) {
+        const r = _remove(aId)
+        results.push(r)
+    }
+    return results
 }
 
 /**
@@ -107,10 +144,18 @@ function remove_many_instance_tasks(approveIds) {
  * @returns 1
  */
 function remove_instance_tasks_by_instance_id(insId) {
-    const result = db.instance_tasks.remove({
-        instance: insId
+    const results = []
+    const taskDocs = _find({
+        filters: [
+            ['instance', '=', insId]
+        ],
+        fields: ['_id']
     })
-    return result
+    for (const t of taskDocs) {
+        const r = _remove(t._id)
+        results.push(r)
+    }
+    return results
 }
 
 /**
@@ -166,7 +211,12 @@ function _generateTaskDoc(insDoc, traceDoc, approveDoc) {
  * @returns 申请单文档
  */
 function _getInsDoc(insId) {
-    return db.instances.findOne(insId)
+    const insDoc = Meteor.wrapAsync(function (insId, cb) {
+        getObject('instances').findOne(insId).then(function (resolve, reject) {
+            cb(reject, resolve)
+        })
+    })(insId)
+    return insDoc
 }
 
 /**
