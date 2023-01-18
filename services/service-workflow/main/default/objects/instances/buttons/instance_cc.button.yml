@@ -31,6 +31,7 @@ amis_schema: |-
                                       {
                                         "type": "form",
                                         "title": "表单",
+                                        "debug": false,
                                         "body": [
                                         {
                                           "type": "steedos-select-user",
