@@ -192,7 +192,7 @@ actions:
         if(arguments.length > 3){
           var ctx = arguments[3];
           if(ctx && ctx.$master){
-            return ctx.$master.recordPermissions.allowCreateFiles
+            return ctx.recordPermissions.allowCreateFiles
           }
         }
       }
