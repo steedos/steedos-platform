@@ -11,7 +11,7 @@
   "dependencies": {
     "@salesforce-ux/design-system": "^2.17.5",
     "@steedos-builder/fiddle": "^0.0.5",
-    "@steedos-builder/react": "^0.2.35",
+    "@steedos-builder/react": "^0.2.36",
     "@steedos-ui/amis": "2.2.43",
     "@steedos-ui/builder-community": "2.2.53",
     "@steedos-ui/builder-widgets": "2.2.53",
