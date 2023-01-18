@@ -4317,6 +4317,26 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
+"@steedos-builder/react@^0.2.35":
+  version "0.2.35"
+  resolved "https://registry.npmmirror.com/@steedos-builder/react/-/react-0.2.35.tgz#f2ce18a9f76a741ee35d107760c78517782f1199"
+  integrity sha512-iPUKuKRdFIkkwk2aNCYqYk2NSesGxnfbP/PGwL2f8aIn7sK6wuYiTUPa7HJLVF853V0Mb8JjkkTG4FAMeXf3Zw==
+  dependencies:
+    "@builder.io/react" "^1.1.50"
+    "@builder.io/sdk" "1.1.26"
+    "@emotion/core" "^10.0.17"
+    "@steedos-builder/sdk" "0.2.34"
+    hash-sum "^2.0.0"
+    preact "^10.1.0"
+    react ">=14"
+    react-dom ">=14"
+    tslib "^1.10.0"
+    vm2 "^3.6.4"
+  optionalDependencies:
+    create-react-context "^0.2.3"
+    node-fetch "^2.3.0"
+    prop-types "^15.7.2"
+
 "@steedos-builder/requirejs@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
