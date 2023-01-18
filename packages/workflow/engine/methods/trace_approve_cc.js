@@ -153,7 +153,6 @@ module.exports = {
         setObj['traces.$.approves.' + index + '.is_read'] = true;
         setObj['traces.$.approves.' + index + '.read_date'] = new Date();
 
-        setObj.traces = traces;
 
         db.instances.update({
             _id: ins_id,
@@ -207,6 +206,8 @@ module.exports = {
                         }, {
                             $set: upobj
                         })
+                        // 更新
+                        update_instance_tasks(ins_id, a.trace, a._id)
                     }
                 }
             }
@@ -239,8 +240,6 @@ module.exports = {
                     }
                 }
             });
-            // 更新
-            update_instance_tasks(ins_id, myApprove.trace, myApprove._id)
 
             instance = db.instances.findOne(ins_id);
 

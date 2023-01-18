@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:16:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-18 09:34:24
+ * @LastEditTime: 2023-01-18 16:50:20
  * @Description: 
  */
 'use strict';
@@ -21,7 +21,7 @@ module.exports = {
     afterInsert: async function () { },
 
     afterUpdate: async function () {
-        console.log('[trigger][instance_tasks]', 'afterUpdate')
+        // console.log('[trigger][instance_tasks]', 'afterUpdate')
         const { doc, previousDoc } = this
         // 未完成到已完成
         if (!previousDoc.is_finished && doc.is_finished) {
