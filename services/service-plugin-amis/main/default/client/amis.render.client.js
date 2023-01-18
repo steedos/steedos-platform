@@ -19,8 +19,8 @@
     };
   }
   // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/sdk.css"))
-  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
-  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
+  // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
+  // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
   loadCss(Steedos.absoluteUrl("/amis/amis.css"))
     
     try {
@@ -48,9 +48,9 @@
           }
 
         // 加载Amis SDK: 如果直接放到body中会导致 meteor 编译后的 cordova.js 加载报错
-        let amisSDKScript = document.createElement("script");
-        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
-        document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
+        // let amisSDKScript = document.createElement("script");
+        // amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
+        // document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
     };
