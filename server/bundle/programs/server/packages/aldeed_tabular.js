@@ -18,7 +18,7 @@ var Deps = Package.tracker.Deps;
 var HTML = Package.htmljs.HTML;
 
 /* Package-scope variables */
-var Tabular, getPubSelector, tableInit, Util;
+var Tabular;
 
 (function(){
 
