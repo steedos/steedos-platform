@@ -7,7 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "转发",
               "id": "u:instance_forward",
-              "className": "p-0 ",
+              "className": "  ",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -35,20 +35,13 @@ amis_schema: |-
                                           "body": [
                                               {
                                                   "label": "流程名称",
-                                                  "type": "tree-select",
+                                                  "type": "steedos-select-flow",
+                                                  "mode": "tree-select",
                                                   "name": "flow_id",
-                                                  "id": "u:76ff8e30ff00",
+                                                  "id": "instanceForwardFlow",
                                                   "options": [],
                                                   "multiple": false,
                                                   "required": true,
-                                                  "source": {
-                                                      "method": "post",
-                                                      "url": "${context.rootUrl}/graphql",
-                                                      "requestAdaptor": "api.data.query = `\n  {\n  options:categories{\n    value:_id,\n    label:name,\n    children:_related_flows_category(filters: [[\"state\", \"=\", \"enabled\"]]){\n      value:_id,\n      label:name,\n      perms,\n      state\n    }\n  }\n}\n`;\nreturn api;",
-                                                      "headers": {
-                                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                      }
-                                                  },
                                                   "searchable": true,
                                                   "autoFill": {},
                                                   "onlyLeaf": true

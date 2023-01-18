@@ -7,7 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "取消申请",
               "id": "u:instance_terminate",
-              "className": "p-0 ",
+              "className": "  ",
               "onEvent": {
                   "click": {
                       "actions": [

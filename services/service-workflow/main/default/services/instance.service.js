@@ -64,6 +64,12 @@ module.exports = {
     
             return await objectql.getObject('instances').count(query, null)
           },
+    },
+    getApprove: {
+        async handler(ctx){
+            const { instanceId, traceId, approveId } = ctx.params;
+            return await this.getApprove(instanceId, traceId, approveId);
+        }
     }
   },
   methods: {
@@ -143,6 +149,17 @@ module.exports = {
             }
             return filters;
         },
+    },
+    getApprove: {
+        async handler(instanceId, traceId, approveId){
+            const instance = await objectql.getObject('instances').findOne(instanceId);
+            const trace = _.find(instance.traces, (trace) => {
+                return trace._id == traceId;
+              });
+            return _.find(trace?.approves, (approve) => {
+                return approve._id == approveId;
+            });
+        }
     }
   }
 };

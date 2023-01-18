@@ -7,7 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "传阅",
               "id": "u:instance_cc",
-              "className": "p-0 ",
+              "className": "  ",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -29,32 +29,31 @@ amis_schema: |-
                                           "className": "m-b-sm"
                                       },
                                       {
-                                          "type": "select",
+                                        "type": "form",
+                                        "title": "表单",
+                                        "body": [
+                                        {
+                                          "type": "steedos-select-user",
                                           "label": "传阅对象",
-                                          "name": "select",
-                                          "options": [
-                                              {
-                                                  "label": "选项A",
-                                                  "value": "A"
-                                              },
-                                              {
-                                                  "label": "选项B",
-                                                  "value": "B"
-                                              }
-                                          ],
+                                          "name": "users",
                                           "id": "u:c3ad733db360",
-                                          "multiple": false,
+                                          "multiple": true,
                                           "mode": "normal",
                                           "required": true
                                       },
                                       {
                                           "type": "textarea",
                                           "label": "传阅说明",
-                                          "name": "cc_description",
+                                          "name": "description",
                                           "id": "u:1dc7e49e6e7d",
                                           "minRows": 3,
                                           "maxRows": 20
                                       }
+                                        ],
+                                        "id": "u:742f9c0dc8a1",
+                                        "mode": "normal"
+                                    }
+                                      
                                   ],
                                   "id": "u:519ca64b1934",
                                   "actions": [
@@ -80,18 +79,27 @@ amis_schema: |-
                                           "onEvent": {
                                               "click": {
                                                   "actions": [
-                                                      {
-                                                          "componentId": "",
-                                                          "args": {
-                                                              "msgType": "info",
-                                                              "position": "top-right",
-                                                              "closeButton": true,
-                                                              "showIcon": true,
-                                                              "msg": "未完成: 待处理",
-                                                              "title": "缺失选人控件"
-                                                          },
-                                                          "actionType": "toast"
-                                                      },
+                                                        {
+                                                        "componentId": "",
+                                                        "args": {
+                                                            "api": {
+                                                            "url": "${context.rootUrl}/api/workflow/v2/cc_do",
+                                                            "method": "post",
+                                                            "dataType": "json",
+                                                            "data": {
+                                                                "&": "$$",
+                                                                "record": "${record}"
+                                                            },
+                                                            "requestAdaptor": "console.log(\"api\", api);\n api.data = {instanceId: api.body.record._id, traceId: api.body.record.approve.trace, approveId: api.body.record.approve._id, usersId: api.body.users, description: api.body.description}; return api;",
+                                                            "adaptor": "console.log('payload', payload);\nreturn payload;",
+                                                            "headers": {
+                                                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                            }
+                                                            },
+                                                            "messages": {}
+                                                        },
+                                                        "actionType": "ajax"
+                                                        },
                                                       {
                                                           "componentId": "",
                                                           "args": {},

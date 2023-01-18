@@ -7,7 +7,7 @@ amis_schema: |-
               "type": "button",
               "label": "退回",
               "id": "u:instance_return",
-              "className": "p-0 ",
+              "className": "  ",
               "onEvent": {
                   "click": {
                       "actions": [
