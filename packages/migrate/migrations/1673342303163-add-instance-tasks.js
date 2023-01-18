@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-01-10 17:18:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-14 10:29:56
+ * @LastEditTime: 2023-01-18 14:09:07
  * @Description: 
  */
 'use strict'
@@ -23,6 +23,7 @@ module.exports.up = async function (next) {
     console.log('[migration] add-instance-tasks is running...')
     await instanceColl.find({}).forEach(async function (insDoc) {
         var docs = [];
+        var latestApproveIndexMap = {}
         insDoc.traces.forEach(function (tDoc) {
             if (tDoc.approves) {
                 tDoc.approves.forEach(function (aDoc) {
@@ -50,9 +51,18 @@ module.exports.up = async function (next) {
                     aDoc['is_archived'] = insDoc.is_archived;
                     aDoc['category'] = insDoc.category;
                     docs.push(aDoc)
+                    if (aDoc.is_finished) { //记录下需要设置is_latest_approve的游标，如有重复审批则更新为最新的
+                        latestApproveIndexMap[aDoc.handler] = docs.length - 1
+                    }
                 })
             }
         })
+
+        for (const handler in latestApproveIndexMap) {
+            if (Object.hasOwnProperty.call(latestApproveIndexMap, handler)) {
+                docs[latestApproveIndexMap[handler]].is_latest_approve = true
+            }
+        }
 
         if (docs.length > 0) {
             try {

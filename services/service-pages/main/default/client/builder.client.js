@@ -72,7 +72,8 @@
 
     window.BuilderComponent = BuilderReact.BuilderComponent;
     
-    // window.builder = BuilderReact.builder;
+    window.builder = BuilderReact.builder;
+    window.builder.init('steedos');
 
     Promise.all([
         waitForThing(Creator, 'USER_CONTEXT'),

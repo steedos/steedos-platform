@@ -54,6 +54,7 @@ Template.instance_list.helpers
 		else if box == "outbox"
 			query.handler = uid
 			query.is_finished = true
+			query.is_latest_approve = true
 			# query.type = { $ne : 'distribute' }
 			# query.judge = { $nin: ['relocated', 'terminated', 'reassigned'] }
 			# uid = Meteor.userId()
