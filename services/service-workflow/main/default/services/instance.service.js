@@ -156,9 +156,11 @@ module.exports = {
             const trace = _.find(instance.traces, (trace) => {
                 return trace._id == traceId;
               });
-            return _.find(trace?.approves, (approve) => {
-                return approve._id == approveId;
-            });
+            if(trace){
+                return _.find(trace.approves, (approve) => {
+                    return approve._id == approveId;
+                });
+            }
         }
     }
   }
