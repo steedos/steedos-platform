@@ -531,7 +531,7 @@ list_views:
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
           return [
-            ["rating","=","hot"]
+            ["rating","=","Hot"]
           ];
       }
     columns:
