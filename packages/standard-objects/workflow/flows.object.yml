@@ -943,9 +943,8 @@ actions:
                 return window.open(Steedos.absoluteUrl("/api/workflow/export/form?form=" + form_id), '_blank');
               } else {
                 flow = Creator.getCollection(object_name).findOne(record_id);
-
                 if (flow) {
-                  return window.open(Steedos.absoluteUrl("/api/workflow/export/form?form=" + form_id), '_blank');
+                  return window.open(Steedos.absoluteUrl("/api/workflow/export/form?form=" + flow.form), '_blank');
                 }
               }
             }
