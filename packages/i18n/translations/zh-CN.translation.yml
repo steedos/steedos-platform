@@ -1780,8 +1780,6 @@ CustomLabels:
   process_delegation_rules_enabled: 启用
   process_delegation_rules_start_time: 委托开始
   process_delegation_rules_end_time: 委托结束
-  process_delegation_rules_from_name: 委托人
-  process_delegation_rules_to_name: 被委托人
   process_delegation_rules_start_must_lt_end: 开始时间应小于结束时间
   process_delegation_rules_description: "{$userName}委托"
   process_delegation_rules_cannot_deltegation_eachother: 只允许单向委托， 请更换被委托人或者调整委托时间

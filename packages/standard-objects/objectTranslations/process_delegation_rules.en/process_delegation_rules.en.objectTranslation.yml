@@ -6,16 +6,8 @@ fields:
     label: Client
     help: 
     description: 
-  from_name:
-    label: Client Name
-    help: 
-    description: 
   to:
     label: Trustee
-    help: 
-    description: 
-  to_name:
-    label: Trustee Name
     help: 
     description: 
   start_time:

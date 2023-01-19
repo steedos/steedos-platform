@@ -6,16 +6,8 @@ fields:
     label: 委托人
     help: 
     description: 
-  from_name:
-    label: 委托人姓名
-    help: 
-    description: 
   to:
     label: 被委托人
-    help: 
-    description: 
-  to_name:
-    label: 被委托人姓名
     help: 
     description: 
   start_time:
