@@ -362,11 +362,11 @@
 
             if(!lodash.isFunction(root)){
                 //渲染loading
-                render(BuilderComponent, {
-                    model: "page", content: {
-                        "data": loadingContentData
-                    }
-                }, root)
+                // render(BuilderComponent, {
+                //     model: "page", content: {
+                //         "data": loadingContentData
+                //     }
+                // }, root)
             }
 
             Promise.all([
