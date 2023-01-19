@@ -107,7 +107,9 @@ Template.creatorHeader.onRendered ->
 	tabId = Session.get("pageApiName") || Session.get("object_name")
 	this.autorun ->
 		Steedos.Page.Header.render(Session.get('app_id'), tabId)
-		# Steedos.Page.AppNav.render(Session.get('app_id'), tab_id)
+
+	$(window).resize ->
+		Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
 	this.autorun ->
 		tab_id = Session.get("pageApiName") || Session.get("object_name");
