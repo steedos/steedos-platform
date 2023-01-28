@@ -221,24 +221,21 @@
                       },
                     body: [
                         {
-                            "type": "panel",
-                            "title": {
                               "type": "breadcrumb",
-                              "source": "${$breadcrumb}"
-                            },
-                            "body": [
-                              {
-                                  type: 'steedos-object-related-listview',
-                                  objectApiName: masterObject.name,
-                                  recordId: FlowRouter.getParam("record_id"),
-                                  relatedObjectApiName: objectApiName,
-                                  foreign_key: relatedKey,
-                                  relatedKey: relatedKey,
-                                  hiddenOn: "!!!this.$loaded"
-                                  // top: 5
-                              }
-                            ]
-                          }
+                              "source": "${$breadcrumb}",
+                              "className": "mx-4 my-2",
+                        },
+                        {
+                            type: 'steedos-object-related-listview',
+                            objectApiName: masterObject.name,
+                            recordId: FlowRouter.getParam("record_id"),
+                            relatedObjectApiName: objectApiName,
+                            foreign_key: relatedKey,
+                            relatedKey: relatedKey,
+                            hiddenOn: "!!!this.$loaded",
+                            "className": "mx-4",
+                            // top: 5
+                        }
                         ,
                         // {
                         //     type: 'steedos-object-related-listview',
