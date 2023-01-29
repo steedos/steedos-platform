@@ -758,7 +758,8 @@
         }
         try {
             const data = {
-                app
+                app,
+                isMobile: window.innerWidth <= 768
             };
             const page = Steedos.Page.Header.getPage(appId, tabId);
             var rootId = "steedosGlobalHeaderRoot";
@@ -804,7 +805,32 @@
                                       "type": "steedos-logo",
                                       "src": "/logo.png",
                                       "className": 'block h-7 w-auto mr-4',
-                                      "hiddenOn": "window.innerWidth < 768",
+                                      "hiddenOn": "${isMobile}",
+                                    },
+                                    {
+                                      "type": "button",
+                                      "className": "toggle-sidebar flex items-center pr-4",
+                                      "hiddenOn": "${!isMobile}",
+                                      "onEvent": {
+                                        "click": {
+                                          "actions": [
+                                            {
+                                              "actionType": "custom",
+                                              "script": "document.body.classList.toggle('sidebar-open')",
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "body": [
+                                        {
+                                          "type": "steedos-icon",
+                                          "category": "utility",
+                                          "name": "rows",
+                                          "colorVariant": "default",
+                                          "id": "u:afc3a08e8cf3",
+                                          "className": "slds-button_icon slds-global-header__icon"
+                                        }
+                                      ],
                                     },
                                     {
                                       "type": "steedos-app-launcher",
@@ -822,7 +848,7 @@
                                     {
                                       "type": "button",
                                       "className": "toggle-sidebar",
-                                      "hiddenOn": "${app.showSidebar != true}",
+                                      "visibleOn": "${AND(app.showSidebar,!isMobile)}",
                                       "onEvent": {
                                         "click": {
                                           "actions": [
