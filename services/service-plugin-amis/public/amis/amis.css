@@ -13,10 +13,6 @@
     vertical-align: initial !important;
 } */
 
-body{
-    -webkit-font-smoothing: inherit !important;
-}
-
 /* .row-main{
     border-radius: 0.25rem
 } */
@@ -67,10 +63,6 @@ body{
         border-bottom: none;
     }
     
-    .steedos-amis-form .antd-Collapse .antd-Form--normal{
-        grid-template-columns: none !important;
-    }
-
     .ant-modal-root .amis-scope .antd-Panel-footerWrap{
         position: fixed;
     }
