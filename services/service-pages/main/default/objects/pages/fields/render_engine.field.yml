@@ -5,7 +5,7 @@ defaultValue: amis
 options:
   - label: Amis
     value: amis
-  - label: Redash
-    value: redash
+  # - label: Redash
+  #   value: redash
 required: true
 sort_no: 125
