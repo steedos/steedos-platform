@@ -5,7 +5,7 @@ is_new_window: false
 label: 图表
 mobile: true
 permissions:
-  - permission: 'on'
+  - permission: 'off' # 2.4禁用图表功能
     permission_set: admin
   - permission: 'off'
     permission_set: user
