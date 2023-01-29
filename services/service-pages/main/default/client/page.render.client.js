@@ -834,7 +834,7 @@
                                     },
                                     {
                                       "type": "steedos-app-launcher",
-                                      hiddenOn: "${app.showSidebar != true}",
+                                      "visibleOn": "${isMobile}",
                                       "showAppName": true
                                     },
                                   ],
@@ -876,11 +876,11 @@
             
                             {
                               "type": "grid",
-                              hiddenOn: "${app.showSidebar === true}",
-                              "className": 'steedos-context-bar hidden sm:flex h-10 leading-5 pl-4 mb-[-3px]',
+                              "hiddenOn": "${isMobile}",
+                              "className": 'steedos-context-bar flex h-10 leading-5 pl-4 mb-[-3px]',
                               "columns": [
                                 {
-                                  "columnClassName": "items-center hidden sm:flex pb-0",
+                                  "columnClassName": "items-center flex pb-0",
                                   "body": [
                                     {
                                       "type": "steedos-app-launcher",
@@ -892,6 +892,7 @@
                                   "valign": "middle"
                                 },
                                 {
+                                  hiddenOn: "${app.showSidebar === true}",
                                   "columnClassName": "flex ",
                                   "body": [
                                     {
@@ -899,6 +900,7 @@
                                       "stacked": false,
                                       showIcon: false,
                                       "appId": "${app.id}",
+                                      hiddenOn: "${app.showSidebar === true}",
                                       overflow: {
                                           enable: false,
                                           itemWidth: 80,
@@ -918,7 +920,7 @@
                         {
         
                           "type": "button",
-                          "className": 'p-0 absolute inset-0 mt-[50px]',
+                          "className": 'p-0 absolute inset-0 mt-[50px] sm:mt-[90px]',
                           hiddenOn: "${app.showSidebar != true}",
                           body: [{
                             type: "wrapper",

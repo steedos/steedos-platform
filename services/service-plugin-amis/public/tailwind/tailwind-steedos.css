@@ -159,10 +159,6 @@ body.steedos .h-\[50px\] {
   height: 50px
 }
 
-body.steedos .h-7 {
-  height: 1.75rem
-}
-
 body.steedos .h-10 {
   height: 2.5rem
 }
@@ -316,6 +312,10 @@ body.steedos .py-2 {
   padding-bottom: 0.5rem
 }
 
+body.steedos .pr-4 {
+  padding-right: 1rem
+}
+
 body.steedos .pl-4 {
   padding-left: 1rem
 }
@@ -406,8 +406,8 @@ body.steedos .ease-in-out {
     margin: 0.75rem
   }
 
-  body.steedos .sm\:flex {
-    display: flex
+  body.steedos .sm\:mt-\[90px\] {
+    margin-top: 90px
   }
 
   body.steedos .sm\:w-\[220px\] {
