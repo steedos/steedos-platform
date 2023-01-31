@@ -1,6 +1,6 @@
 {
   "name": "project-ee",
-  "version": "2.4.0-beta.15",
+  "version": "2.4.0-beta.16",
   "private": true,
   "scripts": {
     "start": "steedos start",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@steedos/ee_experience": "^1.0.11",
-    "@steedos/ee_unpkg-local": "2.4.0-beta.15",
-    "@steedos/service-enterprise": "2.4.0-beta.15"
+    "@steedos/ee_unpkg-local": "2.4.0-beta.16",
+    "@steedos/service-enterprise": "2.4.0-beta.16"
   }
 }
