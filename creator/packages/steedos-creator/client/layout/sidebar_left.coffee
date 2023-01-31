@@ -70,8 +70,6 @@ Template.creatorSidebarLeft.helpers
 		
 
 Template.creatorSidebarLeft.events
-	"click #sidebarSwitcherButton": (e, t)->
-		Modal.show("mobile_apps_modal")
 	"click .settings-btn": (e, t)->
 		FlowRouter.go '/user_settings'
 	'click .sidebar-backdrop': (e, t)->

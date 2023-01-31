@@ -65,11 +65,27 @@ Template.creatorLayout.helpers
 			return true;
 
 
+Template.creatorLayout.onRendered ->
+	tabId = Session.get("pageApiName") || Session.get("object_name")
+	this.autorun ->
+		Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
-# Template.creatorLayout.onRendered ->
-# 	this.autorun ->
-# 		if (window.innerWidth >= 768) 
-#       document.body.classList.add('sidebar-open')
+	# $(window).resize ->
+	# 	Steedos.Page.Header.render(Session.get('app_id'), tabId)
+
+	this.autorun ->
+		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		if window.SteedosUI
+			amisScope = SteedosUI.refs.globalHeader;
+			if amisScope
+				Meteor.setTimeout ()->
+					amisScope.updateProps( {
+						location: FlowRouter.current()
+					}, ()->
+						console.log("amisScope.updateProps callback.......")
+					);
+				, 100
+
 
 isCalendarView = ()->
 	view = Creator.getListView(Session.get "object_name", Session.get("list_view_id"))
