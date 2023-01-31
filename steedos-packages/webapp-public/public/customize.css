@@ -3,10 +3,6 @@ html {
 	background: unset;
 }
 
-body {
-  background: rgb(225, 239, 254);
-}
-
 .slds-page-header {
   background: rgb(248, 250, 252);
 }
@@ -31,4 +27,18 @@ body {
 /* 隐藏左侧 ‘关于’ 菜单 */
 .creator-content-wrapper .split-left .dx-treeview-node-container li[data-item-id=about]{
   display: none;
+}
+
+:root {
+  --body-bg: rgb(225, 239, 254);
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+      --body-bg: white; 
+  }
+}
+
+body {
+  background: var(--body-bg);
 }
