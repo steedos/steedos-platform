@@ -203,7 +203,7 @@
                 console.error(`error`, error)
               }
             }
-            const AmisEnv = {
+            AmisEnv = {
                 // getModalContainer: (props)=>{
                 //     let div = document.querySelector("#amisModalContainer");
                 //     if(!div){
@@ -279,17 +279,59 @@
                     return scoped = ref
                   }
 
-                React.useEffect(()=>{
+                
+                let amisReact = amisRequire('react');
+
+                amisReact.useEffect(()=>{
                     const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
                     if(window.SteedosUI && schema.name){
                       SteedosUI.refs[schema.name] = amisScope;
                     }
                   }, [])
-                return React.createElement("div", {
+                return amisReact.createElement("div", {
                     className: "amis-scope"
-                  }, React.createElement("div", {
+                  }, amisReact.createElement("div", {
                     className: `steedos-amis-render-scope-${name}`
                   }));
+            };
+
+            window.renderAmis = function (root, schema, data, env) {
+
+              if(SteedosUI.refs[schema.name]){
+                if(SteedosUI.refs[schema.name].unmount){
+                  SteedosUI.refs[schema.name].unmount()
+                }else{
+                  console.log(`not find amis scope unmount`)
+                }
+              }
+
+              // if(props.pageType === 'form'){
+              //     env = Object.assign({
+              //         getModalContainer: ()=>{
+              //             return document.querySelector('.amis-scope');
+              //         }
+              //     }, env);
+              // }
+              schema.scopeRef = (ref) => {
+                  try {
+                    if(!window.amisScopes){
+                      window.amisScopes = {};
+                    }
+                    if(name){
+                      window.amisScopes[name] = ref; 
+                    }
+                  } catch (error) {
+                    console.error('error', error)
+                  }
+                  
+                  return scoped = ref
+                }
+
+              
+                const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                if(window.SteedosUI && schema.name){
+                  SteedosUI.refs[schema.name] = amisScope;
+                }
             };
 
             const initMonaco = ()=>{

@@ -254,55 +254,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        const loadingContentData = {
-            "inputs": [],
-            // "title": "loading",
-            "blocks": [
-                {
-                    "@type": "@builder.io/sdk:Element",
-                    "@version": 2,
-                    "layerName": "Box",
-                    "id": "builder-8070f86b1aed4e78a5878fa5c0d79e49",
-                    "children": [
-                        {
-                            "@type": "@builder.io/sdk:Element",
-                            "@version": 2,
-                            "layerName": "Loading...\n...",
-                            "id": "builder-4b16375a68dc4e49b4844843091bf91d",
-                            "component": {
-                                "name": "Text",
-                                "options": {
-                                    "text": "<p>Loading...</p>\n"
-                                }
-                            },
-                            "responsiveStyles": {
-                                "large": {
-                                    "display": "flex",
-                                    "flexDirection": "column",
-                                    "position": "relative",
-                                    "flexShrink": "0",
-                                    "boxSizing": "border-box",
-                                    "marginTop": "20px",
-                                    "lineHeight": "normal",
-                                    "height": "auto",
-                                    "textAlign": "center"
-                                }
-                            }
-                        }
-                    ],
-                    "responsiveStyles": {
-                        "large": {
-                            "display": "flex",
-                            "flexDirection": "column",
-                            "position": "relative",
-                            "flexShrink": "0",
-                            "boxSizing": "border-box"
-                        }
-                    }
-                }
-            ]
-        };
-
+        
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
@@ -359,24 +311,20 @@
 
             if(!lodash.isFunction(root)){
                 //渲染loading
-                // render(BuilderComponent, {
-                //     model: "page", content: {
-                //         "data": loadingContentData
-                //     }
-                // }, root)
             }
 
             Promise.all([
+                waitForThing(window, 'renderAmis'),
                 waitForThing(window, 'BuilderComponent'),
                 waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
             ]).then(()=>{
                 //渲染page
                 if(!lodash.isFunction(root)){
-                    render(BuilderComponent, {
-                        model: "page", content: {
-                            "data": pageContentData
-                        }
-                    }, root)
+                    renderAmis(
+                        root,
+                        schema,
+                        data,
+                    )
                 }else{
                     if(root === SteedosUI.Drawer){
                         data.drawerName = data.drawerName || lodash.uniqueId(`drawer-${page.object_name}`);
