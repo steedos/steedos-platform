@@ -127,10 +127,12 @@ fields:
   formula:
     type: textarea
     is_wide: true
+    visible_on: "{{formData.operation === 'formula' ? true: false}}"
   literal_value:
     type: text
     is_wide: true
     label: Literal value
+    visible_on: "{{formData.operation === 'literal' ? true: false}}"
   notify_assignee:
     type: boolean
     hidden: true
