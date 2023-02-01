@@ -698,9 +698,6 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
                         refTo = 'space_users';
                         refField = 'user'
                     }
-                    else if (refTo === 'space_users') {
-                        refField = 'user'
-                    }
 
                     let refValue = doc[name];
                     if (!refValue) {
@@ -731,9 +728,6 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
 
                     if (refTo === 'users') {
                         refTo = 'space_users';
-                        refField = 'user'
-                    }
-                    else if (refTo === 'space_users') {
                         refField = 'user'
                     }
                     let refValue = doc[name];
@@ -902,9 +896,6 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                         refTo = 'space_users';
                         refField = 'user'
                     }
-                    else if (refTo === 'space_users') {
-                        refField = 'user'
-                    }
 
                     let refValue = doc[name];
                     if (!refValue) {
@@ -945,9 +936,6 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
 
                     if (refTo === 'users') {
                         refTo = 'space_users';
-                        refField = 'user'
-                    }
-                    else if (refTo === 'space_users') {
                         refField = 'user'
                     }
                     let refValue = doc[name];
