@@ -51,6 +51,8 @@ fields:
     multiple: true
     required: true
     create: false
+    reference_to: permission_set
+    reference_to_field: name
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
