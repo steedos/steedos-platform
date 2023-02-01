@@ -681,7 +681,7 @@ actions:
                                                       "extractValue": true,
                                                       "labelField": "label",
                                                       "valueField": "value",
-                                                      "className": "m-0",
+                                                      "className": "",
                                                       "labelClassName": "text-left",
                                                       "en-US": {
                                                           "label": "Object"
@@ -739,50 +739,6 @@ actions:
       }
     is_enable: true
     type: amis_button
-  standard_new_by_template:
-    label: Pull from Library
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var permissions;
-              permissions = Creator.getPermissions();
-              if (Creator.getTemplateSpaceId() && permissions) {
-                return permissions["allowCreate"];
-              }
-            }
-    'on': list
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-        Template.templateFlowsModal.show({onConfirm: function(selection){
-          if(selection && selection.length > 0){
-            var flow = selection[0];
-            var templateFlowId = flow._id;
-            if(templateFlowId){
-              Meteor.call("flow_copy", Steedos.spaceId(), templateFlowId, {name: flow.name, from: 'template'}, function(error, result){
-                if(error){
-                   toastr.error(t(error.reason, error.details), t('import_flows_error_title'));
-                }else{
-                  toastr.success(t('workflow_copy_flow_success'));
-                  if (result.length > 0) {
-                    return FlowRouter.go("/app/admin/flows/view/" + result[0]);
-                  }
-                }
-              })
-            }
-          }
-        }, gridProp: {
-          columns: [
-            {
-                field: 'name',
-                label: '流程名',
-                width: '30%'
-              },{
-                  field: 'description',
-                  type: 'markdown',
-                  label: '描述'
-              }
-            ]
-        }})
-      }
   design:
     label: Designer
     visible: !<tag:yaml.org,2002:js/function> |-
