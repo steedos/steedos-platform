@@ -33,7 +33,7 @@ fields:
     type: file
     collection: files
     multiple: true
-    hidden: true
+    visible_on: "{{false}}"
     name: versions
   parent:
     label: Parent
