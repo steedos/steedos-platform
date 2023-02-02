@@ -751,7 +751,7 @@ actions:
               return WorkflowCore.openFlowDesign(Steedos.locale().toLocaleLowerCase(), Steedos.spaceId(), null, Creator.getUserCompanyId());
             }
   standard_edit:
-    visible: false
+    visible: true
     'on': record
   standard_delete:
     visible: false
