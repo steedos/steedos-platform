@@ -1,7 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import { translationApp, translationObjectLabel } from '@steedos/i18n';
-import { getAssignedApps, getObject as _getObject } from "@steedos/objectql";
+import { getAssignedApps, getObject as _getObject, getSteedosSchema } from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -85,11 +85,11 @@ async function getAllTabs(ctx: any) {
 
 async function getContext(ctx: any) {
     const allTabs = await getAllTabs(ctx)
-    // const allObject = await getSteedosSchema().getAllObject()
+    const allObject = await getSteedosSchema().getAllObject()
     const hiddenTabNames = await getHiddenTabNames(ctx)
     return {
         tabs: allTabs,
-        // objects: allObject,
+        objects: allObject,
         hiddenTabNames: hiddenTabNames
     }
 }
