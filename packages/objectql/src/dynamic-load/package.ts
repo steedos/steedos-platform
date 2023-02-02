@@ -236,8 +236,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
             util.extend(element.fields, { [field.name]: field })
         });
         _.each(element.fields, (field)=>{
-            if(field.omit === true){
-                console.log(`${element.name}.${field.name} set hidden true`)
+            if(field.omit === true && !_.has(field, 'hidden')){
                 field.hidden = true;
             }
         })
