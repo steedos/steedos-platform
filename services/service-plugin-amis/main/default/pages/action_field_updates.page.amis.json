@@ -161,17 +161,6 @@
                     "clearValueOnHidden": true,
                     "fieldName": "operation",
                     "id": "u:627e520855b5",
-                    "onEvent": {
-                      "change": {
-                        "weight": 0,
-                        "actions": [
-                          {
-                            "actionType": "custom",
-                            "script": "/* 自定义JS使用说明： \n * 1.动作执行函数doAction，可以执行所有类型的动作\n * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n * 3.事件对象event，在doAction之后执行event.stopPropagation = true;可以阻止后续动作执行\n*/\n\nconst current_field_name = context.props.name;\nconst current_field_label = context.props.label;\nconst formData = context.props.data;\nconst current_field_value = formData[current_field_name];\n\nif (current_field_value === 'literal') {\n  const target_object_name = formData.object_name;\n  const target_field_name = formData.field_name;\n  const target_object_uiSchema = Creator.getObject(target_object_name);\n  const target_fields = target_object_uiSchema && target_object_uiSchema.fields;\n  const target_field_type = target_fields && target_fields[target_field_name].type;\n  let literal_value_schema = {\n    \"type\": \"text\",\n    \"name\": \"literal_value\",\n    \"label\": \"指定新字段值\",\n    \"required\": false,\n    \"is_wide\": true,\n    \"labelClassName\": \"text-left\"\n  }\n  if (target_field_type) {\n    literal_value_schema = Object.assign({}, target_object_uiSchema.fields[target_field_name], {\n      name: \"literal_value\",\n      label: \"指定新字段值\",\n      disabled: false,\n      readonly: false,\n      is_wide: true\n    });\n    doAction({\n      actionType: 'setValue',\n      componentId: 'service-action_field_updates-form-edit',\n      args: {\n        value: {\n          literal_value_schema\n        }\n      }\n    });\n  }\n}\n\n"
-                          }
-                        ]
-                      }
-                    },
                     "multiple": false
                   },
                   {
@@ -188,13 +177,31 @@
                     "hiddenOn": "this.operation != 'formula'"
                   },
                   {
-                    "type": "steedos-field",
-                    "id": "u:dca4fd13be68",
-                    "name": "literal_value",
-                    "clearValueOnHidden": true,
-                    "fieldName": "literal_value",
-                    "field": "${literal_value_schema}",
-                    "hiddenOn": "this.operation != 'literal' "
+                    "type": "service",
+                    "body": [
+                      {
+                        "type": "steedos-field",
+                        "name": "literal_value",
+                        "clearValueOnHidden": true,
+                        "fieldName": "literal_value",
+                        "field": "${literal_value_schema}",
+                        "visibleOn": "this.operation === 'literal' && !!this.literal_value_schema"
+                      }
+                    ],
+                    "id": "u:d201a629c160",
+                    "messages": {},
+                    "api": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/@${object_name}/uiSchema?field_name=${field_name}&operation=${operation}",
+                      "adaptor": "const formData = api.body;\nconst target_field_name = formData.field_name;\nconst target_object_uiSchema = payload;\nconst target_fields = target_object_uiSchema && target_object_uiSchema.fields;\nconst target_field_type = target_fields && target_fields[target_field_name].type;\nlet literal_value_schema = {\n  \"type\": \"text\",\n  \"name\": \"literal_value\",\n  \"label\": \"指定新字段值\",\n  \"required\": false,\n  \"is_wide\": true,\n  \"labelClassName\": \"text-left\"\n}\nif (target_field_type) {\n  literal_value_schema = Object.assign({}, target_object_uiSchema.fields[target_field_name], {\n    name: \"literal_value\",\n    label: \"指定新字段值\",\n    disabled: false,\n    readonly: false,\n    is_wide: true\n  });\n}\npayload = {};\npayload.data = {\n  literal_value_schema\n}\nreturn payload;",
+                      "sendOn": "!!this.object_name && !!this.field_name && this.operation === 'literal'",
+                      "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                      },
+                      "data": {
+                        "&": "$$"
+                      }
+                    }
                   },
                   {
                     "name": "description",
@@ -282,19 +289,7 @@
             }
           }
         ],
-        "initApi": null,
-        "id": "service-action_field_updates-form-edit",
-        "data": {
-          "$": "$$",
-          "literal_value_schema": {
-            "type": "text",
-            "name": "literal_value",
-            "label": "指定新字段值",
-            "required": false,
-            "is_wide": true,
-            "labelClassName": "text-left"
-          }
-        }
+        "initApi": null
       }
     ],
     "data": {
