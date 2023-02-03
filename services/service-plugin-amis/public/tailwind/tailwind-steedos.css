@@ -54,10 +54,6 @@ body.steedos .absolute {
   position: absolute
 }
 
-body.steedos .relative {
-  position: relative
-}
-
 body.steedos .sticky {
   position: sticky
 }
@@ -71,10 +67,6 @@ body.steedos .inset-0 {
 
 body.steedos .top-0 {
   top: 0px
-}
-
-body.steedos .isolate {
-  isolation: isolate
 }
 
 body.steedos .z-40 {
