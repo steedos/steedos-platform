@@ -1,8 +1,8 @@
 const formatFiltersToODataQuery = require('../../lib/index').formatFiltersToODataQuery;
 const formatFiltersToDev = require('../../lib/index').formatFiltersToDev;
 const expect = require('chai').expect;
-const symbols = ";/?:@&=+$,#%".split("");
-const escapeSymbols = "?+$".split("");
+const symbols = ";/?:@&=+$,#%^$()*+?.\|[]{}".split("");
+const escapeSymbols = "^$()*+?.\|[]{}".split("");
 describe(`specific symbol like ${symbols.join("")} format filter to odata query`, () => {
     symbols.forEach(function(symbol){
         it(`eq = ${symbol}`, async () => {
