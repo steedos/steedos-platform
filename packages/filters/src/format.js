@@ -10,7 +10,7 @@ import { evaluateFormula } from "./formula";
 // 注意encodeURIComponent("\\*")的结果是%5C*，因为不需要encodeURIComponent函数编码，所以不用加入REG_FOR_ENCORD变量
 // %号很特别，\%(?!25)表示包含%且%后续不跟随25，即不匹配%25，其他特殊字符比如?执行encodeURIComponent后也包含%，所以特殊字符都需要处理
 // 因为注意encodeURIComponent("%")结果为%25，它本身也包含了%号，即encodeURIComponent("%25")结果为%2525，所以需要排除%25这种字符串，让它不会再次执行encodeURIComponent
-const REG_FOR_ENCORD = /\;|\/|\?|\:|\@|\&|\=|\+|\$|\,|\#|\%(?!25|3B|3b|2F|2f|3F|3f|3A|3a|40|26|3D|3d|2B|2b|24|2C|2c|23|5C|5c)|\^|(\\\()|(\\\))|(\\\.)|\\|\||\[|\]|\{|\}/;
+const REG_FOR_ENCORD = /\;|\/|\?|\:|\@|\&|\=|\+|\$|\,|\#|\%(?!25|3B|3b|2F|2f|3F|3f|3A|3a|40|26|3D|3d|2B|2b|24|2C|2c|23|5C|5c|5E|5e|7C|7c|5B|5b|5D|5d|7B|7b|7D|7d)|\^|(\\\()|(\\\))|(\\\.)|\\|\||\[|\]|\{|\}/;
 
 /**
     ^$()*+?.\|[]{}等特殊符号需要转义，否则有可能会报错且无法正确识别
