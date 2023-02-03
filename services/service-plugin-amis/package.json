@@ -16,5 +16,8 @@
   "dependencies": {
     "@steedos-widgets/amis-lib": "^1.0.10"
   },
-  "gitHead": "1a6e749338be48912c63f1019b39294267132e3b"
+  "gitHead": "1a6e749338be48912c63f1019b39294267132e3b",
+  "devDependencies": {
+    "tailwindcss": "3.2.4"
+  }
 }
