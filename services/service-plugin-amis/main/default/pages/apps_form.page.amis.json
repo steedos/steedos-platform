@@ -534,7 +534,16 @@
                             "script": "const data = context.props.data;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\nconst tabOptions = data.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
                         }
                     ]
-                }
+                },
+                "submitSucc": {
+                    "weight": 0,
+                    "actions": [
+                      {
+                        "componentId": "listview_apps",
+                        "actionType": "reload"
+                      }
+                    ]
+                  }
             },
             "id": "apps-form"
         }
