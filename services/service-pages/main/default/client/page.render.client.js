@@ -739,11 +739,11 @@
                       body: [
                         {
                           "type": "wrapper",
-                          "className": "bg-white sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 sm:shadow  border-b-[3px] border-sky-500 border-solid",
+                          "className": "bg-white sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 sm:shadow  border-b-[3px] border-sky-500 border-solid steedos-header-container",
                           body: [
                             {
                               "type": "wrapper",
-                              "className": 'flex w-full px-4 h-[50px] p-0 justify-between items-center',
+                              "className": 'flex w-full px-4 h-[50px] p-0 justify-between items-center steedos-header-container-line-one',
                               "body": [
                                 {
                                   type: "wrapper",
@@ -819,7 +819,7 @@
                             {
                               "type": "grid",
                               "hiddenOn": "${isMobile}",
-                              "className": 'steedos-context-bar flex h-10 leading-5 pl-4 mb-[-3px]',
+                              "className": 'steedos-context-bar flex h-10 leading-5 pl-4 mb-[-3px] steedos-header-container-line-two',
                               "columns": [
                                 {
                                   "columnClassName": "items-center flex pb-0",
