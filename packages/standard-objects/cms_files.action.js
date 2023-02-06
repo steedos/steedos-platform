@@ -26,10 +26,14 @@ module.exports = {
   },
 
   online_preview: function (object_name, record_id) {
-    var file, fileId, ref, url;
+    var file, fileId, ref1, ref2, ref3, ref4, url;
     file = this.record;
 
-    fileId = file != null ? (ref = file.versions) != null ? ref[0] : void 0 : void 0;
+    if (file != null ? file.versions : void 0) {
+      fileId = file != null ? (ref1 = file.versions) != null ? ref1[0] : void 0 : void 0;
+    } else {
+      fileId = file != null ? (ref2 = file.__super) != null ? (ref3 = ref2.record) != null ? (ref4 = ref3.versions) != null ? ref4[0] : void 0 : void 0 : void 0 : void 0;
+    }
     
     url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.name);
     
