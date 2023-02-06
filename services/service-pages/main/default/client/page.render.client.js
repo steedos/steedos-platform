@@ -819,7 +819,7 @@
                             {
                               "type": "grid",
                               "hiddenOn": "${isMobile}",
-                              "className": 'steedos-context-bar flex h-10 leading-5 pl-4 mb-[-3px] steedos-header-container-line-two',
+                              "className": 'steedos-context-bar flex flex-nowrap h-10 leading-5 pl-4 mb-[-3px] steedos-header-container-line-two',
                               "columns": [
                                 {
                                   "columnClassName": "items-center flex pb-0",
@@ -835,7 +835,7 @@
                                 },
                                 {
                                   hiddenOn: "${app.showSidebar === true}",
-                                  "columnClassName": "flex ",
+                                  "columnClassName": "flex overflow-hidden",
                                   "body": [
                                     {
                                       "type": "steedos-app-menu",
