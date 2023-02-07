@@ -6,7 +6,7 @@ fields:
   record:
     type: lookup
     label: Record
-    omit: true
+    omit: false
     is_name: true
     reference_to: !<tag:yaml.org,2002:js/function> |-
       function () {
