@@ -581,37 +581,41 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                         displayObj[name] = formatFileSize(doc[name]);
                     }
                     else if (fType === 'object') {
-                        const _doc = {}
-                        _.each(doc[name], function (v, k) {
-                            const newKey = `${name}.${k}`
-                            _doc[newKey] = v
-                        })
-                        const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
-                        const objectDoc = {}
-                        _.each(objectFieldDoc, function (v, k) {
-                            const newKey = k.replace(`${name}.`, '')
-                            objectDoc[newKey] = v
-                        })
-                        displayObj[name] = objectDoc
-                    }
-                    else if (fType === 'grid') {
-                        const gridDocs = []
-                        for (const gridDoc of doc[name]) {
+                        if (doc[name] && _.isObject(doc[name])) {
                             const _doc = {}
-                            _.each(gridDoc, function (v, k) {
-                                const newKey = `${name}.$.${k}`
+                            _.each(doc[name], function (v, k) {
+                                const newKey = `${name}.${k}`
                                 _doc[newKey] = v
                             })
                             const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
                             const objectDoc = {}
                             _.each(objectFieldDoc, function (v, k) {
-                                const newKey = k.replace(`${name}.$.`, '')
+                                const newKey = k.replace(`${name}.`, '')
                                 objectDoc[newKey] = v
                             })
-                            gridDocs.push(objectDoc)
+                            displayObj[name] = objectDoc
                         }
+                    }
+                    else if (fType === 'grid') {
+                        if (doc[name] && _.isArray(doc[name])) {
+                            const gridDocs = []
+                            for (const gridDoc of doc[name]) {
+                                const _doc = {}
+                                _.each(gridDoc, function (v, k) {
+                                    const newKey = `${name}.$.${k}`
+                                    _doc[newKey] = v
+                                })
+                                const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
+                                const objectDoc = {}
+                                _.each(objectFieldDoc, function (v, k) {
+                                    const newKey = k.replace(`${name}.$.`, '')
+                                    objectDoc[newKey] = v
+                                })
+                                gridDocs.push(objectDoc)
+                            }
 
-                        displayObj[name] = gridDocs
+                            displayObj[name] = gridDocs
+                        }
                     }
                     else {
                         displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
