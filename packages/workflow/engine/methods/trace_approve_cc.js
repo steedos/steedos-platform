@@ -4,8 +4,7 @@ const {
     remove_instance_tasks
 } = require('../manager').instance_tasks_manager
 module.exports = {
-    cc_do: function (approve, cc_user_ids, description) {
-
+    cc_do: function (approve, cc_user_ids, description, ctx) {
         var setObj = {};
         var ins_id = approve.instance;
         var trace_id = approve.trace;
@@ -18,7 +17,7 @@ module.exports = {
                 values: 1
             }
         });
-        var current_user_id = this.userId;
+        var current_user_id = ctx?.userId || this.userId;
         var space_id = instance.space;
         var new_approves = [];
 

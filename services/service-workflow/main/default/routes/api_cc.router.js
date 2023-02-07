@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-01-18 15:57:27
+ * @LastEditTime: 2023-02-07 18:12:15
  * @Description: 
  */
 const express = require("express");
@@ -19,10 +19,10 @@ router.post('/api/workflow/v2/cc_do', core.requireAuthentication, async function
         const approve = await objectql.getSteedosSchema().broker.call('instance.getApprove', {instanceId, traceId, approveId})
         Fiber(async function () {
             try {
-                Meteor.call('cc_do', approve, usersId, description, (error, result)=>{
+                Meteor.call('cc_do', approve, usersId, description, {userId: userSession.userId}, (error, result)=>{
                     if(error){
                         res.status(200).send({
-                            error: error
+                            error: error.message
                         });
                     }else{
                         res.status(200).send(result); 

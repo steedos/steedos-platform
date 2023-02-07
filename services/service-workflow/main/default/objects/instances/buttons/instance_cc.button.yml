@@ -31,30 +31,66 @@ amis_schema: |-
                                       {
                                         "type": "form",
                                         "title": "表单",
-                                        "debug": false,
+                                        "debug": true,
                                         "body": [
-                                        {
-                                          "type": "steedos-select-user",
-                                          "label": "传阅对象",
-                                          "name": "users",
-                                          "id": "u:c3ad733db360",
-                                          "multiple": true,
-                                          "mode": "normal",
-                                          "required": true
-                                      },
-                                      {
-                                          "type": "textarea",
-                                          "label": "传阅说明",
-                                          "name": "description",
-                                          "id": "u:1dc7e49e6e7d",
-                                          "minRows": 3,
-                                          "maxRows": 20
-                                      }
+                                            {
+                                                "type": "steedos-select-user",
+                                                "label": "传阅对象",
+                                                "name": "users",
+                                                "id": "u:c3ad733db360",
+                                                "multiple": true,
+                                                "mode": "normal",
+                                                "required": true
+                                            },
+                                            {
+                                                "type": "textarea",
+                                                "label": "传阅说明",
+                                                "name": "description",
+                                                "id": "u:1dc7e49e6e7d",
+                                                "minRows": 3,
+                                                "maxRows": 20
+                                            }
                                         ],
                                         "id": "u:742f9c0dc8a1",
-                                        "mode": "normal"
-                                    }
-                                      
+                                        "mode": "normal",
+                                          "api": {
+                                                "url": "${context.rootUrl}/api/workflow/v2/cc_do",
+                                                "method": "post",
+                                                "dataType": "json",
+                                                "data": {
+                                                    "&": "$$",
+                                                    "record": "${record}"
+                                                },
+                                                "requestAdaptor": "console.log(\"api\", api);\n api.data = {instanceId: api.body.record._id, traceId: api.body.record.approve.trace, approveId: api.body.record.approve._id, usersId: api.body.users, description: api.body.description}; return api;",
+                                                "adaptor": "console.log('payload', payload);\nreturn payload;",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                },
+                                                "messages": {
+                                                    "success": "传阅成功!",
+                                                    "failed": "传阅失败"
+                                                }
+                                            },
+                                            "onEvent": {
+                                                "submitSucc": {
+                                                    "actions": [
+                                                        {
+                                                          "componentId": "",
+                                                          "args": {},
+                                                          "actionType": "closeDialog"
+                                                        },
+                                                        {
+                                                            "componentId": "",
+                                                            "args": {
+                                                                "blank": false,
+                                                                "url": "/workflow/space/${context.tenantId}/${record.box}"
+                                                            },
+                                                            "actionType": "url"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
                                   ],
                                   "id": "u:519ca64b1934",
                                   "actions": [
@@ -81,31 +117,16 @@ amis_schema: |-
                                               "click": {
                                                   "actions": [
                                                         {
-                                                        "componentId": "",
-                                                        "args": {
-                                                            "api": {
-                                                            "url": "${context.rootUrl}/api/workflow/v2/cc_do",
-                                                            "method": "post",
-                                                            "dataType": "json",
-                                                            "data": {
-                                                                "&": "$$",
-                                                                "record": "${record}"
-                                                            },
-                                                            "requestAdaptor": "console.log(\"api\", api);\n api.data = {instanceId: api.body.record._id, traceId: api.body.record.approve.trace, approveId: api.body.record.approve._id, usersId: api.body.users, description: api.body.description}; return api;",
-                                                            "adaptor": "console.log('payload', payload);\nreturn payload;",
-                                                            "headers": {
-                                                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                            }
-                                                            },
-                                                            "messages": {}
-                                                        },
-                                                        "actionType": "ajax"
-                                                        },
-                                                      {
-                                                          "componentId": "",
                                                           "args": {},
-                                                          "actionType": "closeDialog"
-                                                      }
+                                                          "actionType": "validate",
+                                                          "componentId": "u:742f9c0dc8a1"
+                                                      },
+                                                      {
+                                                        "componentId": "u:742f9c0dc8a1",
+                                                        "args": {
+                                                        },
+                                                        "actionType": "submit"
+                                                       }
                                                   ]
                                               }
                                           },
