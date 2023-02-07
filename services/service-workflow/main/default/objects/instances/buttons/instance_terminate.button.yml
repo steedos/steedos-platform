@@ -38,7 +38,42 @@ amis_schema: |-
                                                   "required": true
                                               }
                                           ],
-                                          "id": "u:7a36d573eb51"
+                                          "id": "u:7a36d573eb51",
+                                          "api": {
+                                                "url": "${context.rootUrl}/api/workflow/v2/instance/terminate",
+                                                "method": "post",
+                                                "data": {
+                                                    "&": "$$",
+                                                    "record": "${record}"
+                                                },
+                                                "requestAdaptor": "\nconsole.log(\"api.data\", api.data)\nconst { record, terminate_reason } = api.data;\napi.data = {\n  terminate_reason: terminate_reason,\n  instance_id: record._id\n}\nreturn api;",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                },
+                                                "messages": {
+                                                    "success": "取消申请成功!",
+                                                    "failed": "取消申请失败"
+                                                }
+                                            },
+                                            "onEvent": {
+                                                "submitSucc": {
+                                                    "actions": [
+                                                        {
+                                                          "componentId": "",
+                                                          "args": {},
+                                                          "actionType": "closeDialog"
+                                                        },
+                                                        {
+                                                            "componentId": "",
+                                                            "args": {
+                                                                "blank": false,
+                                                                "url": "/workflow/space/${context.tenantId}/${record.box}"
+                                                            },
+                                                            "actionType": "url"
+                                                        }
+                                                    ]
+                                                }
+                                            }
                                       }
                                   ],
                                   "id": "u:9af240735397",
@@ -71,31 +106,11 @@ amis_schema: |-
                                                           "componentId": "u:7a36d573eb51"
                                                       },
                                                       {
-                                                          "args": {
-                                                              "api": {
-                                                                  "url": "${context.rootUrl}/api/workflow/v2/instance/terminate",
-                                                                  "method": "post",
-                                                                  "data": {
-                                                                      "&": "$$",
-                                                                      "record": "${record}"
-                                                                  },
-                                                                  "requestAdaptor": "\nconsole.log(\"api.data\", api.data)\nconst { record, terminate_reason } = api.data;\napi.data = {\n  terminate_reason: terminate_reason,\n  instance_id: record._id\n}\nreturn api;",
-                                                                  "headers": {
-                                                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                                  }
-                                                              },
-                                                              "messages": {
-                                                                  "success": "已取消申请",
-                                                                  "failed": "取消申请失败"
-                                                              }
-                                                          },
-                                                          "actionType": "ajax"
-                                                      },
-                                                      {
-                                                          "componentId": "",
-                                                          "args": {},
-                                                          "actionType": "closeDialog"
-                                                      }
+                                                        "componentId": "u:7a36d573eb51",
+                                                        "args": {
+                                                        },
+                                                        "actionType": "submit"
+                                                       }
                                                   ]
                                               }
                                           },
