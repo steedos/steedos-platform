@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-20 19:02:47
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-06 09:56:31
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-02-06 18:16:22
  * @Description: 
  */
 
@@ -25,3 +25,5 @@ export const UI_PREFIX = '_ui';
 export const RELATED_PREFIX = '_related';
 export const GRAPHQL_ACTION_PREFIX = 'graphql_';
 export const PERMISSIONS_PREFIX = '_permissions';
+export const OBJECT_FIELD_TYPE = '__object';
+export const GRID_FIELD_TYPE = '__grid';
