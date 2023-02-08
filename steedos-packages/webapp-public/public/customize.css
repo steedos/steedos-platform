@@ -43,6 +43,18 @@ body {
   background: var(--body-bg);
 }
 
-#main {
+.creator-content-wrapper {
   overflow: scroll;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-top: 90px;
+}
+
+@media only screen and (max-width: 768px) {
+  .creator-content-wrapper {
+    margin-top: 50px;
+  }
 }
