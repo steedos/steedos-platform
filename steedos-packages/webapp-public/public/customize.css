@@ -42,3 +42,7 @@ html {
 body {
   background: var(--body-bg);
 }
+
+#main {
+  overflow: scroll;
+}
