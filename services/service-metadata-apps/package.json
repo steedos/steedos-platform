@@ -14,7 +14,7 @@
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down",
-    "build": "tsc"
+    "build": "rm -rf ./lib && tsc"
   },
   "author": "",
   "license": "MIT",

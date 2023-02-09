@@ -2,14 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-12 11:33:10
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-13 15:04:41
+ * @LastEditTime: 2023-02-09 10:27:46
  * @Description: 
  */
 import http from "k6/http";
 import { check, group, sleep } from "k6";
 
 export const options = {
-    vus: 1,
+    vus: 10,
     duration: '30s',
 };
 

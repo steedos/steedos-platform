@@ -1,7 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import { translationApp, translationObjectLabel } from '@steedos/i18n';
-import { getAssignedApps, getObject as _getObject, getSteedosSchema } from "@steedos/objectql";
+import { getAssignedApps, getObject as _getObject } from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -85,11 +85,11 @@ async function getAllTabs(ctx: any) {
 
 async function getContext(ctx: any) {
     const allTabs = await getAllTabs(ctx)
-    const allObject = await getSteedosSchema().getAllObject()
+    // const allObject = await getSteedosSchema().getAllObject()
     const hiddenTabNames = await getHiddenTabNames(ctx)
     return {
         tabs: allTabs,
-        objects: allObject,
+        // objects: allObject,
         hiddenTabNames: hiddenTabNames
     }
 }
@@ -173,7 +173,7 @@ async function getHiddenTabNames(ctx) {
 
 async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}) {
     try {
-        const objectsConfigs = context.objects;
+        // const objectsConfigs = context.objects;
         const tab = await getTab(ctx, tabApiName);
         if (tab) {
             const isMobileChecked = checkTabMobile(tab, mobile)
@@ -203,11 +203,12 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         return;
                     }
                     // const objectMetadata = await getObject(ctx, tab.object);
-                    const objectMetadata = _.find(objectsConfigs, (config) => {
-                        return config && config.metadata.name === tab.object
-                    });
-                    if (objectMetadata) {
-                        const objectConfig = objectMetadata.metadata;
+                    // const objectMetadata = _.find(objectsConfigs, (config) => {
+                    //     return config && config.metadata.name === tab.object
+                    // });
+                    const objectConfig = await _getObject(tab.object).getConfig()
+                    if (objectConfig) {
+                        // const objectConfig = objectMetadata.metadata;
                         const objectLabel = translationObjectLabel(userSession.language, objectConfig.name, objectConfig.label || objectConfig.name)
                         menu.children.push(
                             {
