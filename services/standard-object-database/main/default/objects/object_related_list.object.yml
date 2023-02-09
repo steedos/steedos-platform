@@ -42,7 +42,7 @@ fields:
               _options = [];
 
               _.forEach(Creator.objectsByName, function (o, k) {
-                if(_.include(['cms_files', 'instances', 'tasks', 'notes', 'events', 'approvals', 'audit_records'], k)){
+                if(_.includes(['cms_files', 'instances', 'tasks', 'notes', 'events', 'approvals', 'audit_records'], k)){
                   return _options.push({
                     label: o.label,
                     value: k,
