@@ -1,0 +1,199 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "steedos-record-detail-header",
+            "label": "标题面板",
+            "objectApiName": "${objectName}",
+            "recordId": "${recordId}",
+            "onEvent": {
+                "recordLoaded": {
+                    "actions": [
+                        {
+                            "actionType": "setValue",
+                            "args": {
+                                "value": {
+                                    "recordLoaded": true
+                                }
+                            }
+                        },
+                        {
+                            "actionType": "reload",
+                            "data": {
+                                "name": "${record.label}",
+                                "record": "${record}",
+                                "recordLoaded": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "id": "u:bc56cf9d43bc"
+        },
+        {
+            "type": "tabs",
+            "tabs": [
+                {
+                    "title": "详细信息",
+                    "body": [
+                        {
+                            "type": "tabs",
+                            "tabs": [
+                                {
+                                    "title": "详细",
+                                    "body": [
+                                        {
+                                            "type": "steedos-object-form",
+                                            "label": "对象表单",
+                                            "mode": "read",
+                                            "objectApiName": "${objectName}",
+                                            "recordId": "${recordId}",
+                                            "labelAlign": "left",
+                                            "id": "u:4eb5fa6f6fad"
+                                        }
+                                    ],
+                                    "id": "u:55e5c732daf6"
+                                }
+                            ],
+                            "id": "u:090f4ed96ac2"
+                        }
+                    ],
+                    "id": "u:b2fbc13aabb8"
+                },
+                {
+                    "title": "列表视图",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_listviews",
+                            "id": "u:c415f75c5557",
+                            "perPage": 20
+                        }
+                    ],
+                    "id": "u:df900c5f2119"
+                },
+                {
+                    "title": "对象字段",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_fields",
+                            "id": "u:6bef459155bd",
+                            "top": 2000
+                        }
+                    ],
+                    "id": "u:f1a52545b642"
+                },
+                {
+                    "title": "页面布局",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_layouts",
+                            "id": "u:ed9559f8aa86",
+                            "perPage": 20
+                        }
+                    ],
+                    "id": "u:ee4ab13a92e6"
+                },
+                {
+                    "title": "流程映射",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_workflows",
+                            "perPage": 20,
+                            "id": "u:e14df76cfa51"
+                        }
+                    ],
+                    "id": "u:cbc13e1a7033"
+                },
+                {
+                    "title": "相关子表",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_related_list",
+                            "perPage": 20
+                        }
+                    ],
+                    "id": "u:f315ce2f6583"
+                },
+                {
+                    "title": "操作按钮",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_actions",
+                            "perPage": 20,
+                            "id": "u:e1a8b77a140c"
+                        }
+                    ],
+                    "id": "u:d75b105f6d02"
+                },
+                {
+                    "title": "触发器",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_triggers",
+                            "perPage": 20,
+                            "id": "u:a7a077d68636"
+                        }
+                    ],
+                    "id": "u:4f792dc81a67"
+                },
+                {
+                    "title": "验证规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_validation_rules",
+                            "perPage": 20
+                        }
+                    ],
+                    "id": "u:225314c38616"
+                }
+            ],
+            "id": "u:6a3b45d7adcf",
+            "tabsMode": "vertical",
+            "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 p-0.5",
+            "toolbarClassName": "bg-white",
+            "linksClassName": "bg-white border-r",
+            "contentClassName": "bg-white"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "objectName": "objects",
+        "recordId": "contract_bidding_information",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5200"
+        }
+    },
+    "id": "page_objects_record_detail",
+    "bodyClassName": "",
+    "asideResizor": false,
+    "pullRefresh": {
+        "disabled": true
+    },
+    "className": "object-detail-page"
+}
