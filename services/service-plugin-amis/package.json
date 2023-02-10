@@ -1,9 +1,12 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "2.3.5",
+  "version": "2.4.0-beta.20",
   "main": "package.service.js",
   "scripts": {
-    "build": "node .scripts/build.tailwind.js"
+    "build": "yarn build:tailwind-base && yarn build:tailwind",
+    "build:tailwind-cdn": "node .scripts/build.tailwind.js",
+    "build:tailwind-base": "tailwindcss -i ./src/styles/tailwind-base.css -o ./public/tailwind/tailwind-base.css",
+    "build:tailwind": "tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind/tailwind-steedos.css"
   },
   "license": "MIT",
   "private": false,
@@ -11,7 +14,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos-widgets/amis-lib": "^1.0.10"
+    "@steedos-widgets/amis-lib": "^1.0.20"
   },
-  "gitHead": "a817e9bda1620c21a3da1876d01238b1fc1df828"
+  "gitHead": "21e6705921d682193a70b10a2e0e402a3ca32539",
+  "devDependencies": {
+    "tailwindcss": "3.2.4"
+  }
 }

@@ -1,20 +1,6 @@
 Template.creatorLayout.helpers Creator.helpers
 
 Template.creatorLayout.helpers
-	showTrialHearder: ()->
-		return false
-		__l = Creator.__l.get()
-		if !__l
-			return true
-		if __l.is_trial || __l.is_develop
-			return true
-		if __l.verify_status != 'SUCCESS'
-			return true
-	hiddenHeader: ()->
-		if Session.get("hidden_header") and Session.get("hidden_header") == true
-			return true
-		else
-			return false
 	
 	isloading: ->
 		return Creator.isloading()
@@ -77,10 +63,28 @@ Template.creatorLayout.helpers
 				FlowRouter.reload()
 			, 1);
 			return true;
-Template.creatorLayout.events
-	'click .sidebar-show': (e, t)->
-		$("#sidebar-left").removeClass('hidden')
-		$(".steedos").addClass('move--right')
+
+
+Template.creatorLayout.onRendered ->
+	tabId = Session.get("pageApiName") || Session.get("object_name")
+	this.autorun ->
+		Steedos.Page.Header.render(Session.get('app_id'), tabId)
+
+	# $(window).resize ->
+	# 	Steedos.Page.Header.render(Session.get('app_id'), tabId)
+
+	this.autorun ->
+		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		if window.SteedosUI
+			amisScope = SteedosUI.refs.globalHeader;
+			if amisScope
+				Meteor.setTimeout ()->
+					amisScope.updateProps( {
+						location: FlowRouter.current()
+					}, ()->
+						console.log("amisScope.updateProps callback.......")
+					);
+				, 100
 
 
 isCalendarView = ()->

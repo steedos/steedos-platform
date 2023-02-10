@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-05-24 12:32:56
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-17 16:50:50
+ * @Description: 
+ */
 Package.describe({
 	name: 'steedos:app-workflow',
 	version: '0.0.15',
@@ -79,13 +86,14 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/flow/distribute_edit_flow_modal.less', 'client');
 	api.addFiles('server/methods/distribute.coffee', 'server');
 
-	api.addFiles('server/lib/workflow_manager.js', 'server');
-	api.addFiles('server/lib/uuflow_manager.coffee', 'server');
-	api.addFiles('server/lib/push_manager.coffee', 'server');
-	api.addFiles('server/lib/export.coffee', 'server');
+	// api.addFiles('server/lib/workflow_manager.js', 'server');
+	// api.addFiles('server/lib/uuflow_manager.coffee', 'server');
+	// api.addFiles('server/lib/push_manager.coffee', 'server');
+	// api.addFiles('server/lib/export.coffee', 'server');
 	api.addFiles('routes/export.coffee', 'server');
-	api.addFiles('server/lib/import.coffee', 'server');
+	// api.addFiles('server/lib/import.coffee', 'server');
 	api.addFiles('routes/import.coffee', 'server');
 
-	api.export(['WorkflowManager', 'uuflowManager', 'pushManager', 'steedosExport', 'steedosImport'], ['server']);
+	// api.export(['WorkflowManager', 'uuflowManager', 'pushManager', 'steedosExport', 'steedosImport'], ['server']);
+	api.export(['Template'], ['server'])
 })

@@ -20,7 +20,7 @@ amis_schema: |-
                       "weight": 0
                   }
               },
-              "className": "slds-button slds-button--neutral p-0",
+              "className": "",
               "level": "default"
           }
       ],
@@ -28,16 +28,6 @@ amis_schema: |-
           "body"
       ],
       "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5800"
-          },
-          "app_id": "",
-          "tab_id": "",
-          "object_name": "",
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
       },
       "bodyClassName": "p-0",
       "id": "u:15c4ad9486da"

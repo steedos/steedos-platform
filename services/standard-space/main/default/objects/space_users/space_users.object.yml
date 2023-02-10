@@ -1,0 +1,12 @@
+name: space_users
+label: User
+icon: user
+enable_search: true
+enable_inline_edit: false
+enable_enhanced_lookup: true
+version: 2
+sidebar:
+  template_name: creator_grid_sidebar_organizations
+  hidden: true
+  enable_hide: true
+  clear_selection_while_hidden: true

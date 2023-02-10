@@ -114,6 +114,10 @@ class ObjectServiceDispatcher {
         return await this.callAction(`toConfig`);
     }
 
+    async getConfig() {
+        return await this.callAction(`getConfig`);
+    }
+
     async getUserObjectPermission(userSession){
         const permission = await this.callAction(`getUserObjectPermission`, {userSession});
         return permission;

@@ -15,11 +15,15 @@
 		<div class="slds-button-group ml-2" role="group">
 			<!-- 传阅、取回、重定位、流程图四个按钮放外面，会同时出现的只有发送和传阅  -->
 			{{#each mainButtons}}
-				<div class="slds-button slds-button--neutral slds-truncate {{classNames}}">
-					<a href="javascript:void(0);" title="{{name}}" class="">
-						<div class="record-edit-text slds-truncate" title="{{name}}">{{name}}</div>
-					</a>
-				</div>
+				{{#if useAmisButton}}
+					{{> amis_action button=amisButton buttonClassName=amisButtonClassName data=amisButtonData }}
+				{{else}}
+					<div class="slds-button slds-button--neutral slds-truncate {{classNames}}">
+						<a href="javascript:void(0);" title="{{name}}" class="">
+							<div class="record-edit-text slds-truncate" title="{{name}}">{{name}}</div>
+						</a>
+					</div>
+				{{/if}}
 			{{/each}}
 			<!-- 其他按钮放折叠菜单里面  -->
 			{{#if foldedButtons.length}}
@@ -30,11 +34,15 @@
 					<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
 						<ul class="slds-dropdown__list slds-show">
 							{{#each foldedButtons}}
-								<li class="slds-dropdown__item crm-header-menu-item {{classNames}}" role="presentation">
-									<a href="javascript:void(0);" title="{{name}}" class="" role="option" tabindex="-1">
-										<span>{{name}}</span>
-									</a>
-								</li>
+								{{#if useAmisButton}}
+									{{> amis_action button=amisButton buttonClassName=amisButtonDropdownClassName data=amisButtonData }}
+								{{else}}
+									<li class="slds-dropdown__item crm-header-menu-item {{classNames}}" role="presentation">
+										<a href="javascript:void(0);" title="{{name}}" class="" role="option" tabindex="-1">
+											<span>{{name}}</span>
+										</a>
+									</li>
+								{{/if}}
 							{{/each}}
 						</ul>
 					</div>

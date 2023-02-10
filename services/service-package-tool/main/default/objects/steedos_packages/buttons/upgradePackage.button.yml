@@ -2,3 +2,149 @@ name: upgradePackage
 is_enable: true
 label: 升级
 'on': record_only
+amis_schema: |-
+  {
+  "type": "service",
+  "body": [
+    {
+      "type": "button",
+      "label": "升级",
+      "id": "u:upgrade_package",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "type": "dialog",
+                "title": "请选择版本",
+                "body": [
+                  {
+                    "type": "form",
+                    "body": [
+                      {
+                        "type": "picker",
+                        "required": true,
+                        "id": "u:ae8d73bea81b",
+                        "label": false,
+                        "name": "version",
+                        "valueField": "version",
+                        "options": [
+                        ],
+                        "modalMode": "dialog",
+                        "multiple": false,
+                        "embed": true,
+                        "source": {
+                          "method": "get",
+                          "url": "${context.rootUrl}/api/nodes/versions?module=${record.name}",
+                          "data": {
+                            "&": "$$",
+                            "record": "${record}"
+                          },
+                          "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                          }
+                        },
+                        "pickerSchema": {
+                          "mode": "table",
+                          "id": "u:34518bacaba7",
+                          "perPageAvailable": [
+                            10
+                          ],
+                          "messages": {
+                          },
+                          "filter": null,
+                          "columns": [
+                            {
+                              "label": "版本号",
+                              "name": "version",
+                              "id": "u:b0e787352cf4",
+                              "placeholder": "-"
+                            },
+                            {
+                              "label": "标签",
+                              "name": "tag",
+                              "id": "u:f17df7e102a2",
+                              "placeholder": "-"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "id": "u:14efe3589478",
+                    "api": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/api/nodes/upgrade",
+                      "dataType": "json",
+                      "requestAdaptor": "api.data = {module: api.body.record.name, version: api.body.version}",
+                      "data": {
+                        "&": "$$",
+                        "context": "${context}",
+                        "record": "${record}"
+                      },
+                      "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                      }
+                    },
+                     "messages": {
+                        "saveSuccess": "升级成功",
+                        "saveFailed": "安装失败"
+                      }
+                  }
+                ],
+                "id": "u:c3960c3b1049",
+                "closeOnEsc": false,
+                "closeOnOutside": false,
+                "showCloseButton": true,
+                "data": {
+                  "&": "$$",
+                  "context": "${context}",
+                  "record": "${record}"
+                },
+                "size": "md",
+                "actions": [
+                  {
+                    "type": "button",
+                    "label": "取消",
+                    "onEvent": {
+                      "click": {
+                        "actions": [
+                          {
+                            "componentId": "",
+                            "args": {
+                            },
+                            "actionType": "closeDialog"
+                          }
+                        ]
+                      }
+                    },
+                    "id": "u:dbf7b7a9821c"
+                  },
+                  {
+                    "type": "submit",
+                    "label": "确认",
+                    "id": "u:0318127b7745",
+                    "close": true,
+                    "confirmText": "确定要升级?",
+                    "level": "primary"
+                  }
+                ]
+              }
+            }
+          ],
+          "weight": 0
+        }
+      }
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    
+  },
+  "bodyClassName": "p-0",
+  "id": "u:721e4093f456"
+  }
+type: amis_button
+visible: true

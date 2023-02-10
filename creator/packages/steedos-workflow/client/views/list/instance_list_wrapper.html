@@ -15,7 +15,7 @@
 						</div>
 						<div class="slds-media__body">
 							<nav>
-								<ol class="slds-breadcrumb slds-line-height_reset">
+								<ol class="slds-breadcrumb slds-line-height_reset m-0">
 									<li class="slds-breadcrumb__item crm-breadcrumb-item">
 										<span>{{_ objectLabel}}</span>
 									</li>
@@ -50,18 +50,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
-					<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer">
-						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_query">
-							<a href="javascript:void(0);" title="{{_ "standard_query"}}">
-								<div class="slds-truncate" title="{{_ "standard_query"}}">{{_ "standard_query"}}</div>
-							</a>
-						</li>
-						<li class="slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-standard_new">
-							<a href="javascript:void(0);" title="{{_ "New"}}">
-								<div class="slds-truncate" title="{{_ "New"}}">{{_ "New"}}</div>
-							</a>
-						</li>
+				<div class="slds-col slds-no-flex slds-grid slds-align-top">
+					<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer mb-0">
+						{{> amis_action button=queryButton buttonClassName=queryButtonClassName data=queryButtonData }}
+						{{> amis_action button=newButton buttonClassName=newButtonClassName data=newButtonData }}
 					</ul>
 				</div>
 				
@@ -125,8 +117,11 @@
 							</div>
 						</div>
 					{{/if}}
-					{{> steedos_button className="slds-button_icon-border-filled btn-filter-list tabular-filter-by-flow slds-m-left_x-small"
-						iconCategory="utility" iconName="filterList" variant="icon" title=(_ "workflow_export_filter")}}
+					<div class="slds-col slds-no-flex slds-grid slds-align-top">
+						<ul class="slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer mb-0">
+							{{> amis_action button=flowFilterButton buttonClassName=flowFilterButtonClassName data=flowFilterButtonData }}
+						</ul>
+					</div>
 					<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_xx-small">
 						<div aria-haspopup="true" data-toggle="dropdown">
 							{{> steedos_button className="slds-button_icon-more"

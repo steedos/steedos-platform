@@ -48,7 +48,7 @@ export const loadClientScripts = ()=>{
             let clientScripts = objectql.getClientScriptsFiles();
             _.each(clientScripts, function (scriptFile) {
                 let code = fs.readFileSync(scriptFile, 'utf8');
-                clientCodes = clientCodes + '\r\n;' + code + '\r\n;'
+                clientCodes = clientCodes + '\r\n;' + `try{${code}}catch(error){console.error('client.js [${scriptFile}] error', error)}` + '\r\n;'
             });
     
             clientCodes = clientCodes + objectql.getClientScripts();
@@ -161,7 +161,7 @@ const getClientBaseObject = () => {
         });
         let code = "Creator.baseObject=" + baseObject;
         code = code.replace(/"\$FS\$/g, "").replace(/\$FE\$"/g, "").replace(/'\$FS\$/g, "").replace(/\$FE\$'/g, "").replace(/\\r/g, "").replace(/\\n/g, "")
-        code = code + ";\r\n";
+        code = `try{${code}}catch(error){console.error('client.js [baseObject] error',error)}` + ";\r\n";
         return code;
     }
 }

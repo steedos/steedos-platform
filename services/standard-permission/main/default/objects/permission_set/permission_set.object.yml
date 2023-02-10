@@ -1,5 +1,5 @@
 name: permission_set
-label: Permission Set
+label: Profile & Permission Set
 icon: groups
 hidden: false
 enable_inline_edit: false
@@ -39,22 +39,8 @@ fields:
     label: Assigned Apps
     type: lookup
     multiple: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.Apps, function (o, k) {
-                return _options.push({
-                  label: o.label || o.name,
-                  value: k,
-                  icon: o.icon_slds
-                });
-              });
-
-              return _options;
-            }
+    reference_to: apps
+    reference_to_field: code
     name: assigned_apps
     filterable: true
   users:

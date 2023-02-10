@@ -1,0 +1,53 @@
+name: download
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "id": "u:download",
+              "type": "button",
+              "label": "下载",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "args": {
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/files/files/${versions[0] || record.versions[0]}?download=true",
+                                      "method": "get",
+                                      "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                      }
+                                  }
+                              },
+                              "actionType": "download"
+                          }
+                      ],
+                      "weight": 0
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {
+              "rootUrl": "http://127.0.0.1:5800"
+          },
+          "app_id": "",
+          "tab_id": "",
+          "object_name": "",
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:be6e9cd18e15"
+  }
+is_enable: true
+label: 下载
+'on': record
+type: amis_button
+visible: true

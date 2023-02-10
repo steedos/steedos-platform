@@ -1,3 +1,4 @@
+marked = require("marked")
 TracesTemplate.helpers =
 	equals: (a, b) ->
 		a == b

@@ -1,0 +1,8 @@
+name: admins
+label: Admin Users
+type: lookup
+reference_to: users
+index: true
+multiple: true
+filterable: true
+sort_no: 120

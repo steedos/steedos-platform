@@ -1,0 +1,6 @@
+name: primary_email_verified
+type: boolean
+omit: true
+hidden: true
+label: Primary Email Verified
+sort_no: 190

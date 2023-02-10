@@ -2,7 +2,7 @@
 checkUserSigned = (context, redirect) ->
 	if Meteor.userId()
 		Creator.pushCurrentPathToUrlQuery();
-		Meteor.defer(Favorites.changeState);
+		# Meteor.defer(Favorites.changeState);
 	return
 	# listTreeCompany = localStorage.getItem("listTreeCompany")
 	# if listTreeCompany
@@ -38,11 +38,11 @@ set_sessions = (context, redirect)->
 		Template.creator_view.currentInstance?.record?.set(null)
 	Session.set("record_id", record_id)
 	Session.set("record_name", null)
-	objectHomeComponent = BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
-	if objectHomeComponent
-		Session.set("object_home_component", object_name);
-	else
-		Session.set("object_home_component", null)
+	# objectHomeComponent = BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
+	# if objectHomeComponent
+	# 	Session.set("object_home_component", object_name);
+	# else
+	# 	Session.set("object_home_component", null)
 	if record_id and ((oldObjectName and oldObjectName != object_name) or (oldRecordId and record_id != oldRecordId))
 		# 切换object_name且是详细界面，说明是点击进入了相关详细记录界面，强制加一条临时导航栏项
 		Session.set("temp_navs_force_create", true)
@@ -93,7 +93,7 @@ FlowRouter.route '/app/menu',
 	]
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission, checkAppId ],
+	triggersEnter: [ checkUserSigned, checkAppPermission ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
@@ -354,7 +354,7 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 			main: 'recordLoading'
 		
 		main = "related_object_list"
-		page = Steedos.Page.getPage('list', app_id, related_object_name);
+		page = Steedos.Page.getPage('related_list', app_id, related_object_name);
 		if page
 			main = "page_related_list_view"
 			regions = {

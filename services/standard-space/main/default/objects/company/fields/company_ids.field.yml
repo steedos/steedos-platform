@@ -1,0 +1,18 @@
+name: company_ids
+defaultValue: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+  }
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    /* 主分部 company_id / 所属分部 company_ids 业务逻辑 #170 忽略base.object.yml中的defaultValue、optionsFunction脚本 */
+
+  }
+omit: true
+hidden: true
+sort_no: 190

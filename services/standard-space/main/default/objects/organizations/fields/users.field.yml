@@ -1,0 +1,8 @@
+name: users
+label: Members
+type: lookup
+reference_to: users
+multiple: true
+is_wide: true
+filterable: true
+sort_no: 160

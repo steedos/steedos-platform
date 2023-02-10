@@ -4,7 +4,7 @@ checkUserSigned = (context, redirect) ->
 
 	if Meteor.userId()
 		Creator.pushCurrentPathToUrlQuery();
-		Meteor.defer(Favorites.changeState);
+		# Meteor.defer(Favorites.changeState);
 
 Meteor.startup ()->
 	Tracker.autorun ()->

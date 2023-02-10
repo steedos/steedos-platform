@@ -36,7 +36,10 @@ module.exports = {
                 const userSession = await auth.getSessionByUserId(this.userId);
                 const locale = userSession && userSession.locale;
                 const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
-                Object.assign(this.data.values, { template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` })
+                Object.assign(this.data.values, { 
+                    // template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` 
+                    template_url: `<a href="${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)}" target="_self">${download}</a>`
+                })
             }
         } catch (error) {
 
@@ -49,7 +52,8 @@ module.exports = {
             const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    // value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
                 }
             }
         }
@@ -61,7 +65,8 @@ module.exports = {
             const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
             for (const value of this.data.values) {
                 if (value) {
-                    value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    // value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
+                    value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
                 }
             }
         }

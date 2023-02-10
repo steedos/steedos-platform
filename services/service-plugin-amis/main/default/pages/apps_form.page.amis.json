@@ -33,7 +33,7 @@
                 "sendOn": "!!this.recordId",
                 "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\nif (data.tab_items && !_.isArray(data.tab_items)) {\n    // 数据库中存储的是对象格式而不是数组，转换为数组用于界面显示\n    let arrTabItems = [];\n    _.each(data.tab_items, function (n, k) {\n        n.tab_name = k;\n        delete n.index;\n        arrTabItems.push(n);\n    });\n    data.tab_items = arrTabItems;\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
                 "data": {
-                    "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible,description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                    "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible, showSidebar, description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -156,6 +156,15 @@
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
                                                     "id": "u:07a8a4c5f875"
+                                                },
+                                                {
+                                                    "name": "showSidebar",
+                                                    "label": "菜单显示在左侧",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:07a8a4c5f877"
                                                 },
                                                 {
                                                     "name": "description",
@@ -356,6 +365,7 @@
                                                             }
                                                         }
                                                     ],
+                                                    "headerToolbarClassName": "px-1 py-3",
                                                     "id": "crud_tab_items",
                                                     "perPageAvailable": [
                                                         10
@@ -524,7 +534,16 @@
                             "script": "const data = context.props.data;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\nconst tabOptions = data.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
                         }
                     ]
-                }
+                },
+                "submitSucc": {
+                    "weight": 0,
+                    "actions": [
+                      {
+                        "componentId": "listview_apps",
+                        "actionType": "reload"
+                      }
+                    ]
+                  }
             },
             "id": "apps-form"
         }
@@ -533,13 +552,7 @@
         "body"
     ],
     "data": {
-        "objectName": "apps",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800",
-            "tenantId": "hKdnwE55WcnWveYxS",
-            "userId": "62ede4f62161e377e35de58c",
-            "authToken": "770a0b9e5b4fc2f8d6317ca109b0c087d3d160da669ac0218c044e15db1da0e74dd7e16c03b9f7e1640539"
-        }
+        "objectName": "apps"
     },
     "id": "u:953fda4052b6",
     "bodyClassName": "p-0",

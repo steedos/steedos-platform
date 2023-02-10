@@ -3,78 +3,96 @@ getDefaultButtonsMap = ()->
 	# 会同时出现的只有发送和传阅
 	# 其他按钮放折叠菜单里面
 	cc: 
+		code: 'cc'
 		name: t("instance_cc_title")
 		classNames: "btn-instance-cc"
 		enabled: false
 		unfolded: true
 	retrieve: 
+		code: 'retrieve'
 		name: t("instance_retrieve")
 		classNames: "btn-instance-retrieve"
 		enabled: false
 		unfolded: true
 	relocate: 
+		code: 'relocate'
 		name: t("instance_relocate")
 		classNames: "btn-instance-relocate"
 		enabled: false
 		unfolded: true
 	workflow_chart: 
+		code: 'workflow_chart'
 		name: t("workflow_chart")
 		classNames: "btn-workflow-chart"
 		enabled: false
 		unfolded: true
 	save: 
+		code: 'save'
 		name: t("instance_save")
 		classNames: "btn-instance-update"
 		enabled: false
 	suggest: 
+		code: 'suggest'
 		name: t("instance_suggestion_toggle")
 		classNames: "btn-suggestion-toggle"
 		enabled: false
 	return:
+		code: 'return'
 		name: t("instance_return")
 		classNames: "btn-instance-return"
 		enabled: false
 	reassign:
+		code: 'reassign'
 		name: t("instance_reassign")
 		classNames: "btn-instance-reassign"
 		enabled: false
 	delete:
+		code: 'delete'
 		name: t("instance_delete")
 		classNames: "btn-instance-remove"
 		enabled: false
 	print:
+		code: 'print'
 		name: t("instance_print")
 		classNames: "btn-instance-to-print"
 		enabled: false
 	traces:
+		code: 'traces'
 		name: t("instance_approval_history")
 		classNames: "btn-trace-list"
 		enabled: false
 	distribute:
+		code: 'distribute'
 		name: t("instance_distribute_title")
 		classNames: "btn-instance-distribute"
 		enabled: false
 	terminate:
+		code: 'terminate'
 		name: t("instance_cancel")
 		classNames: "btn-instance-force-end"
 		enabled: false
 	related:
+		code: 'related'
 		name: t("instance_related_instances_title")
 		classNames: "btn-instance-related-instances"
 		enabled: false
 	remind:
+		code: 'remind'
 		name: t("instance_remind_title")
 		classNames: "btn-instance-remind"
 		enabled: false
 	hide:
+		code: 'hide'
 		name: t("instance_reopen_title")
 		classNames: "btn-instance-hide"
 		enabled: false
 	reopen:
+		code: 'reopen'
 		name: t("instance_reopen_title")
 		classNames: "btn-instance-hide"
 		enabled: false
 	forward:
+		code: 'forward'
 		name: t("instance_forward_title")
 		classNames: "btn-instance-forward"
 		enabled: false
@@ -123,6 +141,25 @@ getResponsiveButtons = (buttons, maxUnfoldedCount)->
 	return buttons
 
 instanceButtonHelpers =
+	useAmisButton: ()->
+		# 分发目前正常, 无需使用amis button . this.code == 'distribute' || 
+		return this.code == 'related' || this.code == 'forward'
+	amisButton: ()->
+		return Creator.getObject("instances").actions["instance_" + this.code];
+	amisButtonClassName: ()->
+		return "slds-button slds-button--neutral slds-truncate list-action-custom list-action-custom-instance-" + this.code
+	amisButtonDropdownClassName: ()->
+		return "slds-dropdown__item crm-header-menu-item list-action-custom list-action-custom-instance-" + this.code 
+	amisButtonData: ()->
+		record = WorkflowManager.getInstance();
+		record.box = Session.get("box")
+		return {
+			app_id: Session.get("app_id")
+			object_name: Session.get("object_name")
+			permissions: Creator.getPermissions(),
+			record_id: record._id,
+			record: record
+		} 
 
 	enabled_save: ->
 		ins = WorkflowManager.getInstance();
@@ -445,6 +482,7 @@ instanceButtonHelpers =
 		return Steedos.isMobile()
 
 	enabled_hide: ()->
+		return false # 暂不启用
 		if Session.get('box') isnt "monitor"
 			return false
 

@@ -1,0 +1,6 @@
+name: services
+type: object
+blackbox: true
+omit: true
+hidden: true
+sort_no: 170

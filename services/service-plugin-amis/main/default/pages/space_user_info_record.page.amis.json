@@ -592,12 +592,7 @@
         "initialValues": {},
         "appId": "builder",
         "title": "",
-        "context": {
-            "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us73.gitpod.io",
-            "tenantId": "e4YD58Xx68PQNPD2G",
-            "userId": "62ea04550167020d189ce439",
-            "authToken": "077c2bb0f4a7c594572fceb47086e2ebd439c6689852b2264c2b20905a38f0f2fbe3491ce3aebfd1872bd5"
-        }
+        "context": "${context}"
     },
     "id": "u:b80a805eb7fa"
 }

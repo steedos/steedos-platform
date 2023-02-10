@@ -2,7 +2,7 @@ name: admin_permission_set
 desktop: true
 icon: groups
 is_new_window: false
-label: 权限集
+label: 简档 & 权限集
 mobile: true
 permissions:
   - permission: 'on'
@@ -18,4 +18,4 @@ permissions:
   - permission: 'off'
     permission_set: workflow_admin
 type: url
-url: /app/admin/permission_set/grid/permission_set
+url: /app/admin/permission_set/grid/all

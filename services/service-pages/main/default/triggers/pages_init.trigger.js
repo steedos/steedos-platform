@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-23 10:02:16
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-05-28 11:15:32
+ * @LastEditTime: 2023-02-06 10:50:08
  * @Description: 
  */
 const auth = require('@steedos/auth');
@@ -23,6 +23,22 @@ module.exports = {
                 user: user
             }
         });
+
+        // 默认添加 全组织 全设备授权
+        if(page.type != 'app'){
+            await objectql.getObject('page_assignments').insert({
+                type: "orgDefault",
+                page: id,
+                desktop: true,
+                mobile: true,
+                space: page.space,
+                owner: page.owner,
+                created_by: page.created_by,
+                modified_by: page.modified_by,
+                company_id: page.company_id,
+                company_ids: page.company_ids
+            })
+        }
 
         // const actions = broker.registry.getActionList({
         //     onlyLocal: false

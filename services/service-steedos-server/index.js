@@ -36,6 +36,13 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
+			"@steedos/standard-space",
+			"@steedos/standard-cms",
+			"@steedos/standard-object-database",
+			"@steedos/standard-process-approval",
+			"@steedos/standard-collaboration",
+			"@steedos/standard-ui",
+			"@steedos/standard-permission",
 			// "@steedos/webapp-public",
 			// "@steedos/service-ui",
 			"@steedos/service-cachers-manager", // 依赖了 steedos/core
@@ -54,13 +61,7 @@ module.exports = {
 			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
 			// "@steedos/service-files",
-			"@steedos/standard-cms",
-			"@steedos/standard-object-database",
-			"@steedos/standard-process-approval",
-			"@steedos/standard-collaboration",
-			"@steedos/standard-ui",
-			"@steedos/standard-permission",
-			"@steedos/steedos-plugin-schema-builder"
+			"@steedos/steedos-plugin-schema-builder",
 		],
 		plugins: [
 		]

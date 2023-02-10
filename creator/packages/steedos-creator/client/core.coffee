@@ -10,9 +10,6 @@ Creator.getLayout = (app_id)->
 	if app_id == "steedos"
 		return "steedosLayout"
 	else
-		if Steedos.isMobile() && false
-			return "creatorMobileLayout"
-		else
 			return "creatorLayout"
 
 Creator.createObject = (object_name,object_data)->

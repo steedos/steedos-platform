@@ -19,10 +19,8 @@ fields:
     type: lookup
     required: true
     is_wide: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-        return Steedos.getObjectsOptions();
-      }
+    reference_to: objects
+    reference_to_field: name
     name: object_name
     filterable: true
   encoding:
@@ -133,19 +131,14 @@ fields:
     depend_on:
       - object_name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if(values && values.object_name){
-                var _object = Creator.getObject(values.object_name);
-                if(_object){
-                  var icon = _object.icon;
-                  return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
-                }
-              }else{
-                return []
-              }
-            }
-    required: "{{formData.operation != 'insert' ? true : false}}"
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
+    visible_on: "{{formData.operation != 'insert' ? true : false}}"
+    required: true
     name: external_id_name
     filterable: true
   template_url:
@@ -155,6 +148,7 @@ fields:
     omit: false
     readonly: true
     disabled: true
+    is_wide: true
 list_views:
   all:
     label: All Queues

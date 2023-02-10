@@ -19,8 +19,8 @@
     };
   }
   // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/sdk.css"))
-  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
-  loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
+  // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/helper.css"))
+  // loadCss(Steedos.absoluteUrl("/unpkg.com/amis/sdk/iconfont.css"))
   loadCss(Steedos.absoluteUrl("/amis/amis.css"))
     
     try {
@@ -48,9 +48,9 @@
           }
 
         // 加载Amis SDK: 如果直接放到body中会导致 meteor 编译后的 cordova.js 加载报错
-        let amisSDKScript = document.createElement("script");
-        amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
-        document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
+        // let amisSDKScript = document.createElement("script");
+        // amisSDKScript.setAttribute("src", Steedos.absoluteUrl('/unpkg.com/amis/sdk/sdk.js'));
+        // document.getElementsByTagName("head")[0].appendChild(amisSDKScript);
     } catch (error) {
         console.error(error)
     };
@@ -73,9 +73,15 @@
             waitForThing(window, 'assetsLoaded'),
             waitForThing(window, 'amis'),
         ]).then(()=>{
-            window.React = window.__React;
-            window.ReactDOM = window.__ReactDOM;
+            // window.React = window.__React;
+            // window.ReactDOM = window.__ReactDOM;
             const AmisRenderers = [];
+            let amisLib = amisRequire('amis');
+            const registerMap = {
+              renderer: amisLib.Renderer,
+              formitem: amisLib.FormItem,
+              options: amisLib.OptionsControl,
+            };
 
             const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
             
@@ -88,7 +94,7 @@
                         if(comp.componentType === 'amisSchema'){
                             let amisReact = amisRequire('react');
                             AmisWrapper = function(props){
-                              const { body, render } = props
+                              const { $schema, body, render } = props
                               const [schema, setSchema] = amisReact.useState(null);
                               amisReact.useEffect(()=>{
                                 const result = Component.class(props);
@@ -99,17 +105,39 @@
                                 }else{
                                   setSchema(result)
                                 }
-                              }, [])
+                              }, [JSON.stringify($schema)])
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }
-                        amisRequire("amis").Renderer(
-                            {
-                                type: comp.amis?.render.type,
-                                weight: comp.amis?.render.weight,
-                                autoVar: true,
-                            }
-                        )(AmisWrapper);
+                        // 注册amis渲染器
+                        let asset = comp.amis.render;
+                        if (!registerMap[asset.usage]) {
+                          console.error(
+                            `自定义组件注册失败，不存在${asset.usage}自定义组件类型。`, comp
+                          );
+                        } else {
+                          registerMap[asset.usage]({
+                            test: new RegExp(`(^|\/)${asset.type}`),
+                            type: asset.type,
+                            weight: asset.weight,
+                            autoVar: true,
+                          })(AmisWrapper);
+                          // 记录当前创建的amis自定义组件
+                          console.info('注册了一个自定义amis组件:', {
+                            type: asset.type,
+                            weight: asset.weight,
+                            component: AmisWrapper,
+                            framework: asset.framework,
+                            usage: asset.usage,
+                          });
+                        }
+                        // amisRequire("amis").Renderer(
+                        //     {
+                        //         type: comp.amis?.render.type,
+                        //         weight: comp.amis?.render.weight,
+                        //         autoVar: true,
+                        //     }
+                        // )(AmisWrapper);
                     } catch(e){console.error(e)}
                 }
             });
@@ -151,8 +179,31 @@
               
                 return pathname + search + hash;
               };
-
-            const AmisEnv = {
+            const isCurrentUrl = (to, ctx)=>{
+              try {
+                if (!to) {
+                  return false;
+                }
+                const pathname = window.location.pathname;
+                const link = normalizeLink(to, {
+                  ...location,
+                  pathname,
+                  hash: ''
+                });
+              
+                if (!~link.indexOf('http') && ~link.indexOf(':')) {
+                  let strict = ctx && ctx.strict;
+                  return match(link, {
+                    decode: decodeURIComponent,
+                    strict: typeof strict !== 'undefined' ? strict : true
+                  })(pathname);
+                }
+                return decodeURI(pathname) === link || decodeURI(pathname).startsWith(`${link}/`);
+              } catch (error) {
+                console.error(`error`, error)
+              }
+            }
+            AmisEnv = {
                 // getModalContainer: (props)=>{
                 //     let div = document.querySelector("#amisModalContainer");
                 //     if(!div){
@@ -172,7 +223,7 @@
                 to = normalizeLink(to);
 
                 if (action && action.actionType === 'url') {
-                    action.blank === false ? (window.location.href = to) : window.open(to);
+                    action.blank === true ? window.open(to): (window.location.href = to);
                     return;
                 }
 
@@ -189,6 +240,7 @@
                 }
                 },
                 theme: 'antd',
+                isCurrentUrl: isCurrentUrl,
             };
 
             const AmisRender = function (props) {
@@ -196,6 +248,15 @@
                 const schema = props.schema;
                 const data = props.data;
                 const name = props.name;
+
+                if(SteedosUI.refs[schema.name]){
+                  if(SteedosUI.refs[schema.name].unmount){
+                    SteedosUI.refs[schema.name].unmount()
+                  }else{
+                    console.log(`not find amis scope unmount`)
+                  }
+                }
+
                 if(props.pageType === 'form'){
                     env = Object.assign({
                         getModalContainer: ()=>{
@@ -218,33 +279,80 @@
                     return scoped = ref
                   }
 
-                React.useEffect(()=>{
-                    amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                
+                let amisReact = amisRequire('react');
+
+                amisReact.useEffect(()=>{
+                    const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                    if(window.SteedosUI && schema.name){
+                      SteedosUI.refs[schema.name] = amisScope;
+                    }
                   }, [])
-                return React.createElement("div", {
+                return amisReact.createElement("div", {
                     className: "amis-scope"
-                  }, React.createElement("div", {
+                  }, amisReact.createElement("div", {
                     className: `steedos-amis-render-scope-${name}`
                   }));
             };
 
+            window.renderAmis = function (root, schema, data, env) {
+
+              if(SteedosUI.refs[schema.name]){
+                if(SteedosUI.refs[schema.name].unmount){
+                  SteedosUI.refs[schema.name].unmount()
+                }else{
+                  console.log(`not find amis scope unmount`)
+                }
+              }
+
+              // if(props.pageType === 'form'){
+              //     env = Object.assign({
+              //         getModalContainer: ()=>{
+              //             return document.querySelector('.amis-scope');
+              //         }
+              //     }, env);
+              // }
+              schema.scopeRef = (ref) => {
+                  try {
+                    if(!window.amisScopes){
+                      window.amisScopes = {};
+                    }
+                    if(name){
+                      window.amisScopes[name] = ref; 
+                    }
+                  } catch (error) {
+                    console.error('error', error)
+                  }
+                  
+                  return scoped = ref
+                }
+
+              
+                const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                if(window.SteedosUI && schema.name){
+                  SteedosUI.refs[schema.name] = amisScope;
+                }
+            };
+
             const initMonaco = ()=>{
 
-                const { detect } = require('detect-browser');
+                // const { detect } = require('detect-browser');
 
-                const browser = detect();
+                // const browser = detect();
 
-                // 低于86版的chrome 不支持code类型字段及功能
-                if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
-                    return Promise.resolve(true)
-                }
+                // // 低于86版的chrome 不支持code类型字段及功能
+                // if (browser && browser.name === 'chrome' && Number(browser.version.split(".")[0]) < 86) {
+                //     return Promise.resolve(true)
+                // }
 
-                // 手机版暂不支持code类型字段.
-                if(Meteor.isCordova){
-                    return Promise.resolve(true)
-                }else{
-                    return Builder.initMonaco()
-                }
+                // // 手机版暂不支持code类型字段.
+                // if(Meteor.isCordova){
+                //     return Promise.resolve(true)
+                // }else{
+                //     return Builder.initMonaco()
+                // }
+
+                return Promise.resolve(true)
             }
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
             initMonaco().catch((err)=>{

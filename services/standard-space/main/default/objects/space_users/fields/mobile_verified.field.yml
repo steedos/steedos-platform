@@ -1,0 +1,7 @@
+name: mobile_verified
+type: boolean
+label: Mobile Verified
+readonly: true
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+hidden: false
+sort_no: 150

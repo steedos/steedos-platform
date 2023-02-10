@@ -1,0 +1,4 @@
+name: email_notification
+label: Recieve Email Notifications
+type: boolean
+sort_no: 180

@@ -33,7 +33,7 @@ fields:
     type: file
     collection: files
     multiple: true
-    hidden: true
+    visible_on: "{{false}}"
     name: versions
   parent:
     label: Parent
@@ -183,3 +183,89 @@ actions:
     'on': record_only
     todo: !<tag:yaml.org,2002:js/function> |- 
       function (object_name, record_id) {}
+  upload:
+    label: Upload
+    on: list
+    type: amis_button
+    visible: !!js/function |
+      function(){
+        if(arguments.length > 3){
+          var ctx = arguments[3];
+          if(ctx && ctx.$master){
+            return ctx.recordPermissions.allowCreateFiles
+          }
+        }
+      }
+    amis_schema: |-
+        {
+            "type": "service",
+            "body": [
+                {
+                    "type": "form",
+                    "title": "表单",
+                    "body": [
+                        {
+                            "type": "input-file",
+                            "label": "",
+                            "name": "file",
+                            "id": "u:a58d02614e04",
+                            "btnLabel": "上传",
+                            "btnClassName": "m-0",
+                            "className": "p-0",
+                            "multiple": false,
+                            "maxLength": 10,
+                            "submitType": "asUpload",
+                            "uploadType": "fileReceptor",
+                            "proxy": false,
+                            "drag": false,
+                            "autoUpload": true,
+                            "useChunk": false,
+                            "joinValues": false,
+                            "extractValue": false,
+                            "valueField": "version_id",
+                            "receiver": {
+                                "url": "${context.rootUrl}/s3",
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                },
+                                "method": "post",
+                                "messages": {},
+                                "dataType": "form-data",
+                                "requestAdaptor": "api.data.append('record_id', api.body.masterRecordId);api.data.append('object_name', api.body.masterObjectName); api.data.append('space', api.body.global.spaceId);api.data.append('owner', api.body.global.userId);api.data.append('owner_name', api.body.global.user.name);return api;"
+                            },
+                            "onEvent": {
+                                "success": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "componentId": "u:5f901c0b917b",
+                                            "args": {},
+                                            "actionType": "clear"
+                                        },
+                                        {
+                                            "componentId": "",
+                                            "args": {
+                                                "msgType": "success",
+                                                "position": "top-right",
+                                                "closeButton": true,
+                                                "showIcon": true,
+                                                "msg": "上传成功"
+                                            },
+                                            "actionType": "toast"
+                                        },
+                                        {
+                                          "componentId": "",
+                                          "args": {},
+                                          "actionType": "custom",
+                                          "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); SteedosUI.getRef(context.props.data.scopeId).getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "id": "u:5f901c0b917b",
+                    "wrapWithPanel": false
+                }
+            ]
+        }

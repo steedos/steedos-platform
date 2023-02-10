@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-17 11:30:05
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2022-12-30 17:40:56
  * @Description: 
  */
 const express = require('express');
@@ -14,3 +14,10 @@ exports.init = function ({  }) {
     require('./src/instance_files')
     require('./src/office_convert_to_pdf_router')
 };
+
+// 声明审批王引擎所需全局变量
+exports.workflowManagers = require('./engine/manager')
+
+// 导出methods
+exports.workflowMethods = require('./engine/methods')
+

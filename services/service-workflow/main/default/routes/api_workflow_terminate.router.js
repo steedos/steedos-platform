@@ -13,6 +13,9 @@ const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const Fiber = require("fibers");
 const { excuteTriggers } = require('../utils/trigger');
+const {
+    remove_many_instance_tasks,
+} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 /**
  * 申请人取消申请
  * body {
@@ -87,6 +90,7 @@ router.post('/api/workflow/terminate', core.requireAuthentication, async functio
                         return trace.is_finished === false;
                     });
                     traces = instance.traces;
+                    const finishedApproveIds = []
                     i = 0;
                     while (i < traces.length) {
                         if (traces[i].is_finished === false) {
@@ -101,6 +105,7 @@ router.post('/api/workflow/terminate', core.requireAuthentication, async functio
                                     traces[i].approves[h].finish_date = now;
                                     traces[i].approves[h].judge = null;
                                     traces[i].approves[h].description = null;
+                                    finishedApproveIds.push(traces[i].approves[h]._id)
                                 }
                                 h++;
                             }
@@ -168,6 +173,8 @@ router.post('/api/workflow/terminate', core.requireAuthentication, async functio
                     }, {
                         $set: setObj
                     });
+                    // 删除intance_tasks
+                    remove_many_instance_tasks(finishedApproveIds)
                     if (r) {
                         ins = uuflowManager.getInstance(instance_id);
                         //通知填单人、申请人

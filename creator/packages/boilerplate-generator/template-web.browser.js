@@ -75,7 +75,7 @@ export const closeTemplate = ({
         src: rootUrlPathPrefix + pathname,
       })
   )),
-
+  '<script>window._ = window.lodash;</script>',
   '',
   '',
   '</body>',

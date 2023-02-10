@@ -1,0 +1,3 @@
+name: disable
+label: Disable
+'on': record_only

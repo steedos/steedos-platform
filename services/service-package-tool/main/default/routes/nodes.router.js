@@ -22,7 +22,7 @@ router.get('/api/nodes/install', core.requireAuthentication, async function (req
         // res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -44,7 +44,7 @@ router.post('/api/nodes/uninstall', core.requireAuthentication, async function (
         res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -66,7 +66,7 @@ router.post('/api/nodes/reload', core.requireAuthentication, async function (req
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -88,7 +88,7 @@ router.post('/api/nodes/disable', core.requireAuthentication, async function (re
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -110,7 +110,7 @@ router.post('/api/nodes/enable', core.requireAuthentication, async function (req
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 router.get('/api/nodes/versions', core.requireAuthentication, async function (req, res) {
@@ -134,7 +134,7 @@ router.get('/api/nodes/versions', core.requireAuthentication, async function (re
         res.status(200).send(result); //TODO 完善返回信息
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -154,7 +154,7 @@ router.post('/api/nodes/upgrade', core.requireAuthentication, async function (re
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -171,7 +171,7 @@ router.get('/api/nodes/cloud/saas/packages/purchased', core.requireAuthenticatio
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -187,7 +187,7 @@ router.post('/api/nodes/cloud/saas/packages/purchased', core.requireAuthenticati
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 });
 
@@ -204,7 +204,7 @@ router.post('/api/nodes/cloud/saas/packages/url', core.requireAuthentication, as
         res.status(200).send(result);
     } catch (error) {
         console.error(error);
-        res.status(500).send({error: error.message});
+        res.status(500).send(error.message);
     }
 })
 

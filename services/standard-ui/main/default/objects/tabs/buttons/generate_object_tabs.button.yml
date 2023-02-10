@@ -18,23 +18,14 @@ amis_schema: |-
                         "weight": 0
                     }
                 },
-                "className": "slds-button slds-button--neutral p-0"
+                "className": ""
             }
         ],
         "regions": [
             "body"
         ],
         "data": {
-            "context": {
-                "rootUrl": "https://5000-steedos-steedosplatform-uwiv6wkdp2o.ws-us77.gitpod.io"
-            },
-            "app_id": "",
-            "tab_id": "",
-            "object_name": "",
-            "dataComponentId": "",
-            "record_id": "",
-            "record": {},
-            "permissions": {}
+            "context": "${context}"
         },
         "id": "u:4bb4769d2fd7",
         "bodyClassName": "p-0"

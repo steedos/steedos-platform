@@ -1,43 +1,38 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-16 18:04:14
+ * @Description: 
+-->
 <template name="creatorLayout">
 	{{#if isloading}}
 	{{else}}
-		<div class="steedos skin-blue-light creator h-screen relative flex flex-col relative overflow-hidden {{#if showTrialHearder}}show-trial-header{{/if}}">
+		<div class="steedos skin-blue-light creator h-screen flex flex-col relative overflow-hidden">
 			
-			{{#unless hiddenHeader}}
-			  {{> creatorMobileHeader}}
-				{{> creatorHeader}}
-			{{/unless}}
 
-			{{> creatorSidebarLeft}}
+			<header id="header" class="steedos-global-header-root flex-none"></header>
+
 				
-			<div class="creator-content-wrapper  w-full flex-1 overflow-auto relative {{#if split}}split{{/if}}" style="{{#if hiddenHeader}}top: 0px !important;{{/if}}">
+			<div id="main" class="creator-content-wrapper {{#if split}}split{{/if}}">
 
 
 
-				{{#if split}}
+				<!-- {{#if split}}
 					<div class="split-left bg-white shadow">
 						{{> Template.dynamic template="creatorSidebar"}}
 					</div>
 					<div class="split-right">
 						{{> Template.dynamic template=main}}
 					</div>
-				{{else}}
+				{{else}} -->
 					{{> Template.dynamic template=main}}
-				{{/if}}
+				<!-- {{/if}} -->
 			</div>
 		</div>
 
 		<div class="connection-status">
 			{{> status}}
 		</div>
-
-		{{> CreatorAutoformModals}}
-		{{#CreatorAfModal formId="creatorAddForm" meteormethod="af_insert" class="btn btn-primary creator-add hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorEditForm" meteormethod="af_update" class="btn btn-primary creator-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorCellEditForm" meteormethod="af_multiple_update" class="btn btn-primary creator-cell-edit hidden" collection=collection operation="update" dialogClass="modal-lg modal-body-zoom.includes" buttonContent=updateButtonContent fields=fields collectionName=collectionName useOdataApi=true}} {{_ "Edit"}} {{/CreatorAfModal}}
-		{{#CreatorAfModal formId="creatorAddRelatedForm" meteormethod="af_insert" class="btn btn-primary creator-add-related hidden" collection=collection operation="insert" dialogClass="modal-lg modal-body-zoom.includes" saveAndInsert=saveAndInsert buttonContent=insertButtonContent collectionName=collectionName useOdataApi=true}} {{_ "Create"}} {{/CreatorAfModal}}
-		{{> templateFlowsModal}}
-		{{> flowsTreeModal}}
-		{{> gridModal}}
-	{{/if}}
+		{{/if}}
 </template>

@@ -1,0 +1,5 @@
+name: user
+label: 处理人
+type: lookup
+reference_to: users
+sort_no: 50

@@ -1291,6 +1291,14 @@ CustomLabels:
   instance_reassign: Reassign
   instance_relocate: Relocate
   instance_print: Print
+  instance_tasks_instance_name: Title
+  instance_tasks_applicant_name: Applicant
+  instance_tasks_modified: Modified
+  instance_tasks_submit_date: Submit Date
+  instance_tasks_flow_name: Workflow
+  instance_tasks_step_name: Current step
+  instance_tasks_finish_date: Modified
+  instance_tasks_start_date: Receiving time
   flow_roles: Workflow Positions
   flow_roles_name: Position Name
   flow_positions: Positions Users
@@ -1924,8 +1932,6 @@ CustomLabels:
   process_delegation_rules_enabled: Enabled
   process_delegation_rules_start_time: Strat Time
   process_delegation_rules_end_time: End Time
-  process_delegation_rules_from_name: From
-  process_delegation_rules_to_name: To
   process_delegation_rules_start_must_lt_end: Strat time must less than end time
   process_delegation_rules_description: "{$userName} delegated"
   process_delegation_rules_cannot_deltegation_eachother: Only allow one-way delegation

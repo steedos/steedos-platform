@@ -1,0 +1,7 @@
+name: mobile
+type: text
+label: Mobile
+searchable: true
+group: '-'
+index: true
+sort_no: 140

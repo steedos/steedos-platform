@@ -1,0 +1,77 @@
+name: instance_save
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "保存",
+              "id": "u:instance_save",
+              "className": "  ",
+              "onEvent": {
+                  "click": {
+                      "actions": [
+                          {
+                              "args": {
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/workflow/v2/instance/save",
+                                      "method": "post",
+                                      "sendOn": "",
+                                      "requestAdaptor": "const formValues = SteedosUI.getRef(\"amis-root-workflow\").getComponentById(\"instance_form\").getValues();\nconst approveValues = SteedosUI.getRef(\"amis-root-workflow\").getComponentById(\"instance_approval\")?.getValues();\nlet nextUsers = approveValues?.next_users;\nif (_.isString(nextUsers)) {\n  nextUsers = [approveValues.next_users];\n}\nconst instance = api.data.record;\nconsole.log(\"====instance====\", instance)\nconst body = {\n  instance: {\n    _id: instance._id,\n    applicant: formValues.applicant,\n    submitter: formValues.submitter,\n    traces: [{\n      _id: instance.trace._id,\n      step: instance.step._id,\n      approves: [{\n        _id: instance.approve._id,\n        next_steps: [{\n          step: approveValues?.next_step?._id,\n          users: nextUsers,\n        }],\n        description: approveValues?.suggestion,\n        values: formValues\n      }]\n    }]\n  }\n};\nconsole.log('body', body)\napi.data = body;\nreturn api;",
+                                      "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                      },
+                                      "data": {
+                                          "&": "$$"
+                                      }
+                                  },
+                                  "messages": {
+                                      "success": "暂存成功",
+                                      "failed": "暂存失败"
+                                  }
+                              },
+                              "actionType": "ajax",
+                              "expression": "record.box === 'draft'"
+                          },
+                          {
+                              "args": {
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/workflow/v2/approve/save",
+                                      "method": "post",
+                                      "sendOn": "",
+                                      "requestAdaptor": "const formValues = SteedosUI.getRef(\"amis-root-workflow\").getComponentById(\"instance_form\").getValues();\nconst approveValues = SteedosUI.getRef(\"amis-root-workflow\").getComponentById(\"instance_approval\")?.getValues();\nlet nextUsers = approveValues?.next_users;\nif (_.isString(nextUsers)) {\n  nextUsers = [approveValues.next_users];\n}\nconst instance = api.data.record;\nconst body = {\n  approve: {\n    id: instance.approve._id,\n    instance: instance._id,\n    trace: instance.trace._id,\n    next_steps: [{\n      step: approveValues?.next_step?._id,\n      users: nextUsers,\n    }],\n    description: approveValues?.suggestion,\n    judge: approveValues?.judge,\n    values: formValues\n  }\n};\napi.data = body;",
+                                      "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                      },
+                                      "data": {
+                                          "&": "$$"
+                                      }
+                                  },
+                                  "messages": {
+                                      "success": "暂存成功",
+                                      "failed": "暂存失败"
+                                  }
+                              },
+                              "actionType": "ajax",
+                              "expression": "record.box != 'draft'"
+                          }
+                      ],
+                      "weight": 0
+                  }
+              },
+              "hiddenOn": "record.box != 'inbox' && record.box != 'draft'"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+      },
+      "bodyClassName": "p-0",
+      "id": "u:f41c9d7ebaab"
+  }
+is_enable: true
+label: 保存
+'on': record_only
+type: amis_button
+visible: true

@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-apps",
-  "version": "2.3.5",
+  "version": "2.4.0-beta.20",
   "description": "",
   "main": "lib/apps.service.js",
   "scripts": {
@@ -14,13 +14,13 @@
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down",
-    "build": "tsc"
+    "build": "rm -rf ./lib && tsc"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/i18n": "2.3.5",
-    "@steedos/objectql": "2.3.5",
+    "@steedos/i18n": "2.4.0-beta.20",
+    "@steedos/objectql": "2.4.0-beta.20",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -34,5 +34,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a817e9bda1620c21a3da1876d01238b1fc1df828"
+  "gitHead": "21e6705921d682193a70b10a2e0e402a3ca32539"
 }

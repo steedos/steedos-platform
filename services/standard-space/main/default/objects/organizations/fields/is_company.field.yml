@@ -1,0 +1,8 @@
+name: is_company
+label: Divisional
+type: boolean
+hidden: true
+index: true
+readonly: true
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+sort_no: 190

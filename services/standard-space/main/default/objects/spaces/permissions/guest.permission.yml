@@ -1,0 +1,7 @@
+permission_set_id: guest
+allowCreate: true
+allowDelete: false
+allowEdit: false
+allowRead: true
+modifyAllRecords: false
+viewAllRecords: true

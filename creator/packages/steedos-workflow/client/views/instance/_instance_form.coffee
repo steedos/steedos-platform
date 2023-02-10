@@ -1,3 +1,4 @@
+marked = require("marked")
 InstanceformTemplate.helpers =
 	applicantContext: ->
 		steedos_instance = WorkflowManager.getInstance();

@@ -3,6 +3,13 @@ const steedosI18n = require("@steedos/i18n");
 const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require("clone");
 const auth = require("@steedos/auth");
+const objectsCache = {
+}
+const objects60sCache = {
+    data: null,
+    timestamp: 0
+}
+
 const getLng = async function(userId){
     const userSession = await auth.getSessionByUserId(userId);
     return userSession ? userSession.language : null;
@@ -84,6 +91,11 @@ exports.parserFilters = parserFilters
 async function getObjects(userId){
     let objects = {};
     let lng = await getLng(userId)
+
+    if(objectsCache[lng] && objectsCache[lng].timestamp + 1000 > new Date().getTime()){
+        return objectsCache[lng].data;
+    }
+
     let allObjectConfigs = await objectql.getSteedosSchema().getAllObject();
     _.each(allObjectConfigs, function(objectConfig) {
         var _obj = clone(objectConfig.metadata);
@@ -109,7 +121,12 @@ async function getObjects(userId){
         }
       });
       steedosI18n.translationObjects(lng, objects)
-      return _.values(objects);
+      objectsCache[lng] = {
+        data: _.values(objects),
+        timestamp: new Date().getTime()
+      };
+      return objectsCache[lng].data;
+    
 }
 
 exports.getObjects = getObjects

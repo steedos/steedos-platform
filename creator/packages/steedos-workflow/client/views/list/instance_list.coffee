@@ -5,6 +5,16 @@ Template.instance_list.helpers
 
 	is_inbox: ->
 		return Session.get("box") == "inbox"
+	is_outbox: ->
+		return Session.get("box") == "outbox"
+	is_monitor: ->
+		return Session.get("box") == "monitor"
+	is_draft: ->
+		return Session.get("box") == "draft"
+	is_pending: ->
+		return Session.get("box") == "pending"
+	is_completed: ->
+		return Session.get("box") == "completed"
 
 	spaceId: ->
 		return Session.get("spaceId");
@@ -12,6 +22,7 @@ Template.instance_list.helpers
 	selector: ->
 		unless Meteor.user()
 			return {_id: -1}
+		uid = Meteor.userId()
 		query = {space: Session.get("spaceId")}
 		if !_.isEmpty Session.get('workflow_categories')
 			query.category = {$in: Session.get('workflow_categories')}
@@ -19,29 +30,50 @@ Template.instance_list.helpers
 			query.flow = Session.get("flowId")
 		box = Session.get("box")
 		if box == "inbox"
-			query.$or = [{inbox_users: Meteor.userId()}, {cc_users: Meteor.userId()}]
+			query.handler = uid
+			query.is_finished = false
+			query.$or = [
+				{
+					instance_state: { $in: ["pending", "completed"] }
+				},
+				{
+					instance_state: 'draft',
+					$or: [
+						{
+							distribute_from_instance: { $ne : null },
+						},
+						{
+							forward_from_instance: { $ne : null },
+						}
+					]
+				}
+			]
+			# query.$or = [{inbox_users: Meteor.userId()}, {cc_users: Meteor.userId()}]
 			# query.state = {$in: ["pending", "completed"]}
 			# query.inbox_users = Meteor.userId()
 		else if box == "outbox"
-			uid = Meteor.userId()
-			query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
+			query.handler = uid
+			query.is_finished = true
+			query.is_latest_approve = true
+			# query.type = { $ne : 'distribute' }
+			# query.judge = { $nin: ['relocated', 'terminated', 'reassigned'] }
+			# uid = Meteor.userId()
+			# query.$or = [{outbox_users: uid}, {$or: [{submitter: uid}, {applicant: uid}], state: "pending"}]
 		else if box == "draft"
-			query.submitter = Meteor.userId()
+			query.submitter = uid
 			query.state = "draft"
 			query.$or = [{inbox_users: {$exists:false}}, {inbox_users: []}]
 		else if box == "pending"
-			uid = Meteor.userId()
-			query.$or = [{submitter: uid}, {applicant: uid}]
 			query.state = "pending"
+			query.$or = [{submitter: uid}, {applicant: uid}]
 		else if box == "completed"
-			query.submitter = Meteor.userId()
+			query.submitter = uid
 			query.state = "completed"
 		else if box == "monitor"
 			query.state = {$in: ["pending", "completed"]}
-			uid = Meteor.userId()
 			space = db.spaces.findOne(Session.get("spaceId"))
 			if !space
-				query.state = "none"
+				query.instance_state = "none"
 
 			if !space.admins.contains(uid)
 				flow_ids = Tracker.nonreactive(WorkflowManager.getMyAdminOrMonitorFlows)
@@ -58,9 +90,9 @@ Template.instance_list.helpers
 				# 	query.flow = {$in: flow_ids}
 
 		else
-			query.state = "none"
+			query.instance_state = "none"
 
-		query.is_deleted = false
+		# query.is_deleted = false
 
 		workflowCategory = Session.get("workflowCategory")
 
@@ -85,9 +117,9 @@ Template.instance_list.helpers
 
 #		Template.instance_list._tableColumns()
 
-		if box isnt "monitor"
-			query.is_hidden = { $ne: true }
-
+		# if box isnt "monitor"
+		# 	query.is_hidden = { $ne: true }
+		console.log('query:', query)
 		return query
 
 	is_display_search_tip: ->
@@ -315,7 +347,10 @@ Template.instance_list.events
 		rowData = dataTable.row(event.currentTarget).data();
 		if (!rowData)
 			return;
-		if Session.get("instanceId") != rowData._id
+		insId = rowData._id
+		if ['inbox', 'outbox'].includes(Session.get('box'))
+			insId = rowData.instance
+		if Session.get("instanceId") != insId
 			$("body").addClass("loading")
 
 		setTimeout ()->
@@ -334,7 +369,7 @@ Template.instance_list.events
 			# else
 			dataTable.$('tr.selected').removeClass('selected');
 			row.addClass('selected');
-			FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + rowData._id);
+			FlowRouter.go("/workflow/space/" + spaceId + "/" + box + "/" + insId);
 		, 1
 
 	'click #instance_search_tip_close_btn': (event, template) ->

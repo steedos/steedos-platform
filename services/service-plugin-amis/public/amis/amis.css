@@ -13,10 +13,6 @@
     vertical-align: initial !important;
 } */
 
-body{
-    -webkit-font-smoothing: inherit !important;
-}
-
 /* .row-main{
     border-radius: 0.25rem
 } */
@@ -52,15 +48,6 @@ body{
     min-width: 100px;
 }
 
-.steedos-amis-form .antd-Collapse .antd-Form--normal, .antd-Form--normal .antd-Tabs .antd-Tabs-content .antd-Tabs-pane .form-content{
-    display: grid!important;
-    grid-template-columns: repeat(2,minmax(0,1fr))!important;
-    grid-row-gap: 1rem!important;
-    row-gap: 1rem!important;
-    grid-column-gap: 1.5rem!important;
-    -moz-column-gap: 1.5rem!important;
-    column-gap: 1.5rem!important;
-}
 
 /* fix checkbox 隐藏时导致滚动条异常 */
 .steedos-amis-form .antd-Collapse .antd-Form--normal .antd-Checkbox input{
@@ -76,10 +63,6 @@ body{
         border-bottom: none;
     }
     
-    .steedos-amis-form .antd-Collapse .antd-Form--normal{
-        grid-template-columns: none !important;
-    }
-
     .ant-modal-root .amis-scope .antd-Panel-footerWrap{
         position: fixed;
     }

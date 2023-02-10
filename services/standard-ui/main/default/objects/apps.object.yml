@@ -123,6 +123,11 @@ fields:
     type: boolean
     defaultValue: true
 
+  showSidebar:
+    label: Show Sidebar
+    type: boolean
+    defaultValue: false
+    
   # members:
   #   type: object
   #   label: Members

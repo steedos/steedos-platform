@@ -1,0 +1,254 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-01-14 11:31:56
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-01-17 15:47:18
+ * @Description:
+ */
+const objectql = require("@steedos/objectql");
+const { getStep } = require('../uuflowManager');
+const _ = require("lodash");
+module.exports = {
+  name: "flows",
+  settings: {
+    graphql: {
+      type: `
+        """
+        This type describes a post entity.
+        """			
+        type categoriesTree {
+            _id: String
+            name: String
+            space: String
+            created: Date
+            created_by: JSON
+            modified: Date
+            modified_by: JSON
+            flows: [flows]
+        }
+      `
+    }
+  },
+  actions: {
+    flows__getList: {
+      graphql: {
+        query: `
+          #按权限获取flows数据
+          flows__getList(
+            # add || query || distribute
+            action: String,
+            # app Id
+            appId: String
+            # 搜索的关键字
+            keywords: String,
+            # distribute instance id
+            distributeInstanceId: String
+            # distribute step id
+            distributeStepId: String
+            ): [categoriesTree]
+          `,
+      },
+      async handler(ctx) {
+        try {
+          const userSession = ctx.meta.user;
+          const { resolveInfo } = ctx.meta;
+          const { action, appId, keywords, distributeInstanceId, distributeStepId} = ctx.params;
+          return await this.getFlowListData(action, {appId, keywords, distributeInstanceId, distributeStepId}, userSession)
+        } catch (error) {
+          throw error;
+        }
+      },
+    },
+  },
+  methods: {
+    formatKeywords: {
+      handler(keywords){
+        if(keywords){
+          return _.uniq(_.compact(keywords.split(' ')))
+        }
+      }
+    },
+    getKeywordsFilter: {
+      handler(keywords){
+        if(keywords){
+          const keys = this.formatKeywords(keywords);
+          if(keys && keys.length > 0){
+            const keywordsFilter = [];
+            _.each(keys, (key)=>{
+              keywordsFilter.push(['name', 'contains', key])
+            })
+            return keywordsFilter;
+          }
+        }
+      }
+    },
+    getAppCategoriesIds: {
+        async handler(appId){
+            const categories = await objectql.getObject('categories').find({filters: [['app', '=', appId]]});
+            return _.map(categories, '_id');
+        }
+    },
+    getFlowListData: {
+      async handler(action, options, userSession){
+        const { appId, keywords, distributeInstanceId, distributeStepId } = options;
+
+        const categoriesIds = await this.getAppCategoriesIds(appId);
+
+        const keywordsFilter = this.getKeywordsFilter(keywords)
+        let data = [];
+        const { is_space_admin } = userSession;
+        // TODO: 分发的流程范围处理
+        let distributeOptionalFlows = [];
+        if (action === "distribute") {
+          if(distributeInstanceId && distributeStepId){
+            const instance = await objectql.getObject('instances').findOne(distributeInstanceId);
+            if(instance){
+              const flow = await objectql.getObject('flows').findOne(instance.flow);
+              if(flow){
+                const step = getStep(instance, flow, distributeStepId);
+                if (step && step.allowDistribute == true) {
+                  distributeOptionalFlows = step.distribute_optional_flows || [];
+                }
+              }
+            }
+          }
+          if (distributeOptionalFlows.length > 0) {
+            data.flows = await objectql
+              .getObject("flows")
+              .find({
+                filters: [
+                  ["_id", "in", distributeOptionalFlows],
+                  ["state", "=", "enabled"],
+                ],
+              });
+          }else{
+            data.flows = [];
+          } 
+        }else {
+          var categories = await this.getSpaceCategories(categoriesIds, userSession);
+          for (const category of categories) {
+            const filters = [
+              ["category", "=", category._id],
+              ["state", "=", "enabled"],
+            ];
+            if(keywordsFilter){
+              filters.push(keywordsFilter)
+            }
+            console.log(`filters`, filters)
+            const categoryFlows = await objectql.getObject("flows").find({
+              filters: filters,
+              sort: "sort_no,name",
+            });
+            category.flows = [];
+            for (const flow of categoryFlows) {
+              if(this.canAdd(flow, userSession)){
+                category.flows.push(flow);
+              }else if(action == 'query'){
+                if (is_space_admin || this.canMonitor(flow, userSession) || this.canAdmin(flow, userSession)) {
+                  category.flows.push(flow);
+                }
+              }
+            }
+          }
+          data = categories;
+        }
+        return data;
+      }
+    },
+    getSpaceCategories: {
+      async handler(ids, userSession){
+        const filters = [["space", "=", userSession.spaceId]];
+        if (!_.isEmpty(ids)) {
+          filters.push(["_id", "in", ids]);
+        }
+        return await objectql
+          .getObject("categories")
+          .find({ filters: filters, sort: "sort_no desc" });
+      }
+    },
+    canAdd: {
+      handler(flow, userSession) {
+        let canAdd = false;
+        const { perms } = flow;
+        const { userId, organizations, organizations_parents } = userSession;
+        const organizationIds = _.map(organizations, "_id");
+        if (perms) {
+          if (perms.users_can_add && perms.users_can_add.includes(userId)) {
+            canAdd = true;
+          } else if (perms.orgs_can_add && perms.orgs_can_add.length > 0) {
+            if (
+              organizationIds &&
+              _.intersection(organizationIds, perms.orgs_can_add).length > 0
+            ) {
+              canAdd = true;
+            } else {
+              canAdd =
+                organizations_parents &&
+                _.intersection(organizations_parents, perms.orgs_can_add).length >
+                  0;
+            }
+          }
+        }
+        return canAdd;
+      }
+    },
+    canAdmin: {
+      handler(flow, userSession) {
+        let canAdmin = false;
+        const { perms } = flow;
+        const { userId, organizations, organizations_parents } = userSession;
+        const organizationIds = _.map(organizations, "_id");
+        if (perms) {
+          if (perms.users_can_admin && perms.users_can_admin.includes(userId)) {
+            canAdmin = true;
+          } else if (perms.orgs_can_admin && perms.orgs_can_admin.length > 0) {
+            if (
+              organizationIds &&
+              _.intersection(organizationIds, perms.orgs_can_admin).length > 0
+            ) {
+              canAdmin = true;
+            } else {
+              canAdmin =
+                organizations_parents &&
+                _.intersection(organizations_parents, perms.orgs_can_admin)
+                  .length > 0;
+            }
+          }
+        }
+        return canAdmin;
+      }
+    },
+    canMonitor: {
+      handler(flow, userSession) {
+        let canMonitor = false;
+        const { perms } = flow;
+        const { userId, organizations, organizations_parents } = userSession;
+        const organizationIds = _.map(organizations, "_id");
+        if (perms) {
+          if (
+            perms.users_can_monitor &&
+            perms.users_can_monitor.includes(userId)
+          ) {
+            canMonitor = true;
+          } else if (
+            perms.orgs_can_monitor &&
+            perms.orgs_can_monitor.length > 0
+          ) {
+            if (
+              organizationIds &&
+              _.intersection(organizationIds, perms.orgs_can_monitor).length > 0
+            ) {
+              canMonitor = true;
+            } else {
+              canMonitor =
+                organizations_parents &&
+                _.intersection(organizations_parents, perms.orgs_can_monitor)
+                  .length > 0;
+            }
+          }
+        }
+        return canMonitor;
+      }
+    },
+  },
+};

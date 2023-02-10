@@ -20,7 +20,7 @@ import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getPatternListeners } from '../dynamic-load';
 import { getCacher } from '@steedos/cachers';
-import { uniq } from 'lodash';
+import { uniq, isEmpty } from 'lodash';
 
 const clone = require('clone')
 
@@ -1047,7 +1047,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         const permissions = await this.getUserObjectPermission(userSession);
         const { userId, company_ids: user_company_ids } = userSession;
         if(record){
-            if(record.record_permissions){
+            if(!isEmpty(record.record_permissions)){
                 return record.record_permissions
             }
             let recordOwnerId = record.owner;
@@ -1689,7 +1689,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!_.isEmpty(userSession)){
             let allow = await this.allow(method, userSession)
             if (!allow) {
-                throw new Error('not find permission')
+                throw new Error(`${this.name} not find permission`)
             }
         }
 

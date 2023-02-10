@@ -38,6 +38,9 @@ Meteor.methods
 						created_by: this.userId
 						modified: new Date()
 						modified_by: this.userId
+					},
+					{
+						validate: false
 					}
 				)
 			return

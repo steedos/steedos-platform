@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-02-28 09:25:02
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-01-19 16:16:07
+ * @Description: 
+ */
 if (!db.process_delegation_rules) {
   const core = require('@steedos/core');
   db.process_delegation_rules = core.newCollection('process_delegation_rules');
@@ -57,14 +64,6 @@ if (Meteor.isServer) {
     doc.created_by = userId;
     doc.created = new Date();
     doc.from = userId;
-    return doc.to_name = (ref = db.space_users.findOne({
-      space: doc.space,
-      user: doc.to
-    }, {
-        fields: {
-          name: 1
-        }
-      })) != null ? ref.name : void 0;
   });
   db.process_delegation_rules.before.update(function (userId, doc, fieldNames, modifier, options) {
     var ref, ref1;
@@ -82,24 +81,6 @@ if (Meteor.isServer) {
     modifier.$set.modified = new Date();
     if (userId) {
       modifier.$set.modified_by = userId;
-      modifier.$set.from_name = (ref = db.space_users.findOne({
-        space: doc.space,
-        user: userId
-      }, {
-          fields: {
-            name: 1
-          }
-        })) != null ? ref.name : void 0;
-    }
-    if (modifier.$set.to) {
-      return modifier.$set.to_name = (ref1 = db.space_users.findOne({
-        space: doc.space,
-        user: modifier.$set.to
-      }, {
-          fields: {
-            name: 1
-          }
-        })) != null ? ref1.name : void 0;
     }
   });
   db.process_delegation_rules.after.update(function (userId, doc, fieldNames, modifier, options) {
@@ -115,59 +96,3 @@ if (Meteor.isServer) {
   });
 }
 
-new Tabular.Table({
-  name: "process_delegation_rules",
-  collection: db.process_delegation_rules,
-  columns: [
-    {
-      data: "from_name"
-    },
-    {
-      data: "to_name"
-    },
-    {
-      data: "enabled",
-      render: function (val,
-        type,
-        doc) {
-        if (doc.enabled) {
-          return TAPi18n.__("instance_approve_read_yes");
-        } else {
-          return TAPi18n.__("instance_approve_read_no");
-        }
-      }
-    },
-    {
-      data: "start_time",
-      render: function (val,
-        type,
-        doc) {
-        return moment(doc.start_time).format('YYYY-MM-DD HH');
-      }
-    },
-    {
-      data: "end_time",
-      render: function (val,
-        type,
-        doc) {
-        return moment(doc.end_time).format('YYYY-MM-DD HH');
-      }
-    }
-  ],
-  dom: "tp",
-  lengthChange: false,
-  ordering: false,
-  pageLength: 10,
-  info: false,
-  extraFields: ["space", "from", "to"],
-  searching: true,
-  autoWidth: false,
-  changeSelector: function (selector, userId) {
-    if (!userId) {
-      return {
-        _id: -1
-      };
-    }
-    return selector;
-  }
-});

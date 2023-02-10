@@ -70,6 +70,8 @@ fields:
         value: html
       - label: Code
         value: code
+      - label: Markdown
+        value: markdown
       - label: Select
         value: select
       - label: Boolean
@@ -167,7 +169,7 @@ fields:
     required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 210
   data_type:
-    type: select
+    type: lookup
     label: Data Type
     inlineHelpText: This field must be filled when the field type is 'Formula'
     depend_on:

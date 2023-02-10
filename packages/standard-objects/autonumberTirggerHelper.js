@@ -70,6 +70,9 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
     } else {
         // 按照新的包含rule的查询条件查询或新增
         let anDoc = null;
+        // 因为rule里面是有用大括号队来包裹规则逻辑的，所以这里必须要先encodeURIComponent，否则会按公式解析并报错
+        // 比如rule为PT{0000}时，会报错PTthis is not defined，因为会被解析为PTthis.['0000']
+        // 正常的公式配置可能是{userId}，会被解析为this['userId']
         filters.push(['rule', '=', encodeURIComponent(rule)]);
         let anDocs = await anColl.find({ filters });
         if (anDocs && anDocs.length > 0) {

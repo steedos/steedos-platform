@@ -12,16 +12,19 @@ try
 		config = objectql.getSteedosConfig();
 		settings = {
 			built_in_plugins: [
+				"@steedos/standard-space",
+				"@steedos/standard-cms",
+				"@steedos/standard-object-database",
+				"@steedos/standard-process-approval",
+				"@steedos/standard-collaboration",
+				"@steedos/standard-ui",
+				"@steedos/standard-permission",
 				"@steedos/webapp-public",
-				# "@steedos/service-ui",
 				"@steedos/service-cachers-manager",
 				"@steedos/unpkg",
 				"@steedos/workflow",
 				"@steedos/accounts",
-				# "@steedos/steedos-plugin-schema-builder",
 				"@steedos/plugin-company",
-				# "@steedos/plugin-jsreport",
-				# "@steedos/word-template",
 				"@steedos/metadata-api",
 				"@steedos/data-import",
 				# "@steedos/service-fields-indexs",
@@ -30,17 +33,11 @@ try
 				# "@steedos/service-pages",
 				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
+		    "@steedos/service-package-tool";
 				# "@steedos/standard-process",
 				"@steedos/webapp-accounts",
 				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
-				"@steedos/standard-cms",
-				"@steedos/standard-object-database",
-				"@steedos/standard-process-approval",
-				"@steedos/standard-collaboration",
-				"@steedos/standard-ui",
-				"@steedos/standard-permission",
-				"@steedos/ee_unpkg-local",
 				"@steedos/service-files",
 				"@steedos/service-identity-jwt"
 			],
@@ -97,6 +94,8 @@ try
 					},
 					skipProcessEventRegistration: true
 				});
+
+				objectql.broker.init(broker);
 				
 				projectService = broker.createService({
 					name: "project-server",

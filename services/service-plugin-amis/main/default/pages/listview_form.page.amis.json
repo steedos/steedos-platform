@@ -33,7 +33,7 @@
                 "cache": 100,
                 "adaptor": "var data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n//数据格式转换\nif (data) {\n    data.columns = lodash.map(data.columns, 'field');\n    data.sort = lodash.map(data.sort, (item) => {\n        return `${item.field_name}:${item.order || 'asc'}`\n    });\n    data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n    data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n        try {\n            data.filters = JSON.parse(data.filters);\n        }catch(e){}\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n        data._filters_type_controller = 'function';\n    } else {\n        data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n        data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n        data._filters_function = data.filters;\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
                 "data": {
-                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,filter_scope,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
+                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,requestAdaptor,adaptor,filter_scope,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
                 },
                 "sendOn": "!!this.recordId",
                 "replaceData": false,
@@ -440,6 +440,39 @@
                     "visibleOn": "!!this.object_name",
                     "en-US": {
                         "title": "searchable"
+                    }
+                },
+                {
+                    "type": "fieldSet",
+                    "title": "数据接口",
+                    "description": "获取列表数据的 api",
+                    "collapsable": true,
+                    "body": [
+                        {
+                            "type": "editor",
+                            "name": "requestAdaptor",
+                            "label": "发送适配器",
+                            "required": false,
+                            "language": "javascript",
+                            "description": "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。",
+                            "className": "col-span-2 m-1",
+                            "labelClassName": "text-left"
+                        },
+                        {
+                            "type": "editor",
+                            "name": "adaptor",
+                            "label": "接收适配器",
+                            "required": false,
+                            "language": "javascript",
+                            "description": "函数签名: (payload, response, api) => payload",
+                            "className": "col-span-2 m-1",
+                            "labelClassName": "text-left"
+                        }
+                    ],
+                    "collapsed": true,
+                    "visibleOn": "!!this.object_name",
+                    "en-US": {
+                        "title": "API"
                     }
                 },
                 {

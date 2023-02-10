@@ -332,6 +332,10 @@ list_views:
       - object_name
       - flow_id
   all:
+    columns:
+      - name
+      - object_name
+      - flow_id
     label: All Rules
     filter_scope: space
 actions:

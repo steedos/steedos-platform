@@ -1,6 +1,4 @@
 name: apps_form
-__filename: >-
-  /Users/yinlianghui/Documents/GitHub/steedos-platform2-3/services/service-plugin-amis/main/default/pages/apps_form.page.yml
 is_active: true
 label: 应用程序表单
 object_name: apps

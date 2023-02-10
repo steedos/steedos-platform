@@ -135,23 +135,12 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/sidebar_left.less', 'client');
 	api.addFiles('client/layout/sidebar_left.coffee', 'client');
 
-	api.addFiles('client/layout/mobile_header.html', 'client');
-	api.addFiles('client/layout/mobile_header.less', 'client');
-	api.addFiles('client/layout/mobile_header.coffee', 'client');
-
-	api.addFiles('client/layout/trial_header.html', 'client');
-	api.addFiles('client/layout/trial_header.less', 'client');
-	api.addFiles('client/layout/trial_header.coffee', 'client');
-
 	api.addFiles('client/layout/layout.html', 'client');
 	api.addFiles('client/layout/layout.less', 'client');
 	api.addFiles('client/layout/layout.coffee', 'client');
 	api.addFiles('client/layout/header_search.html', 'client');
 	api.addFiles('client/layout/header_search.less', 'client');
 	api.addFiles('client/layout/header_search.coffee', 'client');
-	api.addFiles('client/layout/header.html', 'client');
-	api.addFiles('client/layout/header.coffee', 'client');
-	api.addFiles('client/layout/header.less', 'client');
 	api.addFiles('client/layout/navigation.html', 'client');
 	api.addFiles('client/layout/navigation.coffee', 'client');
 	api.addFiles('client/layout/navigation.less', 'client');
@@ -172,32 +161,8 @@ Package.onUse(function (api) {
 	api.addFiles('client/mobile/admin.coffee', 'client');
 	api.addFiles('client/mobile/admin.less', 'client');
 
-	// api.addFiles('client/mobile/mobile_layout.html', 'client');
-	// api.addFiles('client/mobile/mobile_layout.coffee', 'client');
-	// api.addFiles('client/mobile/home.html', 'client');
-	// api.addFiles('client/mobile/home.coffee', 'client');
-	// api.addFiles('client/mobile/home.less', 'client');
-	// api.addFiles('client/mobile/object_menu.html', 'client');
-	// api.addFiles('client/mobile/object_menu.coffee', 'client');
-	// api.addFiles('client/mobile/object_menu.less', 'client');
-	// api.addFiles('client/mobile/common.less', 'client');
-	// api.addFiles('client/mobile/list_switch.html', 'client');
-	// api.addFiles('client/mobile/list_switch.less', 'client');
-	// api.addFiles('client/mobile/list_switch.coffee', 'client');
-	// api.addFiles('client/mobile/mobile_view.html', 'client');
-	// api.addFiles('client/mobile/mobile_view.less', 'client');
-	// api.addFiles('client/mobile/mobile_view.coffee', 'client');
-	// api.addFiles('client/mobile/related_object_list.html', 'client');
-	// api.addFiles('client/mobile/related_object_list.less', 'client');
-	// api.addFiles('client/mobile/related_object_list.coffee', 'client');
-	// api.addFiles('client/mobile/mobile_report.html', 'client');
-	// api.addFiles('client/mobile/mobile_report.less', 'client');
-	// api.addFiles('client/mobile/mobile_report.coffee', 'client');
 	api.addFiles('client/mobile/switch_space.html', 'client');
 	api.addFiles('client/mobile/switch_space.coffee', 'client');
-	api.addFiles('client/mobile/apps_modal.html', 'client');
-	api.addFiles('client/mobile/apps_modal.coffee', 'client');
-	api.addFiles('client/mobile/apps_modal.less', 'client');
 
 	api.addFiles('client/views/calendarNew.less', 'client');
 	api.addFiles('client/views/calendarNew.html', 'client');
@@ -211,7 +176,7 @@ Package.onUse(function (api) {
 	api.addFiles('client/core.coffee', 'client');
 	api.addFiles('client/colors.coffee', 'client');
 	api.addFiles('client/temp_navs.coffee', 'client');
-	api.addFiles('client/favorites.coffee', 'client');
+	// api.addFiles('client/favorites.coffee', 'client');
 	api.addFiles('client/router.coffee', 'client');
 	api.addFiles('client/subscribe.coffee', 'client');
 	api.addFiles('client/tenant.coffee', 'client');

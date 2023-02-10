@@ -1,0 +1,7 @@
+name: organizations
+label: Department
+icon: team_member
+enable_search: true
+enable_tree: true
+enable_enhanced_lookup: true
+version: 2

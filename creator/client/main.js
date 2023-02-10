@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-06 18:39:32
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-12-16 17:58:30
+ * @Description: 
+ */
 import("./browser");
 require("./tailwind.css");
 require("./theme.less");
@@ -6,12 +13,12 @@ import("./main.html");
 
 // 全局变量导入
 
-const { registerWindowLibraries, registerDefaultPlugins } = BuilderCreator
-registerWindowLibraries();
-window["ReactDom"] = ReactDOM;
-registerDefaultPlugins();
+// const { registerWindowLibraries, registerDefaultPlugins } = BuilderCreator
+// registerWindowLibraries();
+// window["ReactDom"] = ReactDOM;
+// registerDefaultPlugins();
 
-// 把组件导入才能在creator中正常使用
+// // 把组件导入才能在creator中正常使用
 import * as UI from '../imports/ui';
 
 BlazeLayout.setRoot('body');

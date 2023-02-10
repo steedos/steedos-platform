@@ -234,6 +234,11 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         }
         _.each(getLazyLoadFields(element.name), function (field) {
             util.extend(element.fields, { [field.name]: field })
+        });
+        _.each(element.fields, (field)=>{
+            if(field.omit === true && !_.has(field, 'hidden')){
+                field.hidden = true;
+            }
         })
         if (!element.actions) {
             element.actions = {}

@@ -1,0 +1,6 @@
+name: features
+type: '[text]'
+hidden: true
+omit: true
+readonly: true
+sort_no: 210

@@ -6,7 +6,7 @@ fields:
   name:
     type: text
   process_definition:
-    type: master_detail
+    type: lookup
     is_wide: true
     reference_to: process_definition
   target_object:

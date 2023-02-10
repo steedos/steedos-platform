@@ -1,0 +1,294 @@
+{
+    "type": "page",
+    "body": [
+      {
+        "type": "service",
+        "className": "p-0",
+        "name": "page_edit_${recordId}",
+        "api": {
+          "method": "post",
+          "url": "${context.rootUrl}/graphql",
+          "adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n            return payload;\n        ",
+          "data": {
+            "query": "{data:action_field_updates(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name,target_object,field_name,operation,formula,literal_value,description,reevaluate_on_change,undirect,created,created_by,modified,modified_by,_display:_ui{object_name,target_object,field_name,operation,reevaluate_on_change,undirect,created,created_by,modified,modified_by}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
+          },
+          "headers": {
+            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+          },
+          "sendOn": "!!this.recordId",
+          "cache": 100
+        },
+        "initFetch": null,
+        "body": [
+          {
+            "type": "form",
+            "title": "",
+            "body": [
+              {
+                "type": "fieldSet",
+                "id": "u:3ce1d050bcac",
+                "title": "通用",
+                "collapsable": true,
+                "body": [
+                  {
+                    "name": "name",
+                    "label": "API 名称",
+                    "required": true,
+                    "type": "input-text",
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "name",
+                    "id": "u:8ebca359c714"
+                  },
+                  {
+                    "name": "label",
+                    "label": "显示名称",
+                    "required": true,
+                    "type": "input-text",
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "label",
+                    "id": "u:124c34a09c5c"
+                  },
+                  {
+                    "name": "object_name",
+                    "label": "对象",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "autoComplete": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/graphql",
+                      "data": {
+                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
+                        "$": "$$",
+                        "$term": "$term",
+                        "$value": "$object_name._id",
+                        "rfield": "${object_name}"
+                      },
+                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
+                      "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n  return Steedos.getObjectsOptions();\n\n})(api.data);\n        return payload;\n        "
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "object_name",
+                    "id": "u:0f2e40f882e2"
+                  },
+                  {
+                    "name": "target_object",
+                    "label": "要更新的对象",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "autoComplete": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/graphql",
+                      "data": {
+                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
+                        "$": "$$",
+                        "$term": "$term",
+                        "$value": "$target_object._id",
+                        "object_name": "$object_name",
+                        "rfield": "${object_name}"
+                      },
+                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
+                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var object = Creator.objectsByName[doc.object_name];\n  if(object){\n    var _options = [{label: object.label, value: object.name}];\n    _.forEach(object.fields, function (field, fname) {\n      if(field && field.type === 'master_detail' && _.isString(field.reference_to)){\n        var referenceToObject = Creator.objectsByName[field.reference_to];\n        if(referenceToObject){\n          _options.push({\n            label: referenceToObject.label,\n            value: field.name,\n          });\n        }\n      }\n    });\n    return _options;\n  }\n return [];\n\n})(api.data);\n        return payload;\n        "
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "target_object",
+                    "id": "u:dd1c95753238"
+                  },
+                  {
+                    "name": "field_name",
+                    "label": "要更新的字段",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "autoComplete": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/graphql",
+                      "data": {
+                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
+                        "$": "$$",
+                        "$term": "$term",
+                        "$value": "$field_name._id",
+                        "object_name": "$object_name",
+                        "target_object": "$target_object",
+                        "rfield": "${object_name}"
+                      },
+                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
+                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var mainObjectName = null;\n  if(doc.target_object && doc.target_object != doc.object_name){\n    mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;\n  }else{\n    mainObjectName = doc.object_name;\n  }\n  var object = Creator.objectsByName[mainObjectName];\n  if(object){\n    var _options = [];\n    _.forEach(object.fields, function (field, fname) {\n      if([\"formula\", \"summary\", \"autonumber\"].indexOf(field.type) < 0){\n        /*公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值*/\n        _options.push({\n          label: field.label,\n          value: field.name,\n        });\n      }\n    });\n    return _options;\n  }\n  return [];\n\n})(api.data);\n        return payload;\n        "
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "field_name",
+                    "id": "u:204fadb7cef0"
+                  },
+                  {
+                    "name": "operation",
+                    "label": "新字段值类型",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "autoComplete": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/graphql",
+                      "data": {
+                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
+                        "$": "$$",
+                        "$term": "$term",
+                        "$value": "$operation._id",
+                        "field_name": "$field_name",
+                        "target_object": "$target_object",
+                        "object_name": "$object_name",
+                        "rfield": "${object_name}"
+                      },
+                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
+                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var mainObjectName = null;\n  if(doc.target_object && doc.target_object != doc.object_name){\n    mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;\n  }else{\n    mainObjectName = doc.object_name;\n  }\n  var object = Creator.objectsByName[mainObjectName];\n  if(object && doc.field_name){\n    var _options = [];\n    var field = object.fields[doc.field_name];\n    if(field && field.type != 'boolean'){\n      _options.push({\n          label: TAPi18n.__(\"action_field_updates_field_operation_options_null\"),\n          value: 'null',\n      }) \n    }\n    _options.push({\n        label: TAPi18n.__(\"action_field_updates_field_operation_options_formula\"),\n        value: 'formula',\n    });\n    _options.push({\n        label: TAPi18n.__(\"action_field_updates_field_operation_options_literal\"),\n        value: 'literal',\n    })\n    return _options;\n  }\n  return [];\n\n})(api.data);\n        return payload;\n        "
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "operation",
+                    "id": "u:627e520855b5",
+                    "multiple": false
+                  },
+                  {
+                    "name": "formula",
+                    "label": "公式",
+                    "required": false,
+                    "type": "textarea",
+                    "tpl": "<b><%=data.formula%></b>",
+                    "className": "col-span-2 m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "formula",
+                    "id": "u:20766a86a9f4",
+                    "hiddenOn": "this.operation != 'formula'"
+                  },
+                  {
+                    "type": "service",
+                    "id": "u:d201a629c160",
+                    "body": [],
+                    "messages": {},
+                    "schemaApi": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/@${object_name}/uiSchema?field_name=${field_name}&operation=${operation}",
+                      "adaptor": "const formData = api.body;\nconst target_field_name = formData.field_name;\nconst target_object_uiSchema = payload;\nconst target_fields = target_object_uiSchema && target_object_uiSchema.fields;\nconst target_field_type = target_fields && target_fields[target_field_name].type;\nlet literal_value_schema = {\n  \"type\": \"text\",\n  \"name\": \"literal_value\",\n  \"label\": \"指定新字段值\",\n  \"required\": false,\n  \"is_wide\": true,\n  \"labelClassName\": \"text-left\"\n}\nif (target_field_type) {\n  literal_value_schema = Object.assign({}, target_object_uiSchema.fields[target_field_name], {\n    name: \"literal_value\",\n    label: \"指定新字段值\",\n    disabled: false,\n    readonly: false,\n    is_wide: true\n  });\n}\npayload = {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"body\": [\n      {\n        \"type\": \"steedos-field\",\n        \"field\": literal_value_schema,\n        \"name\": \"literal_value\",\n        \"clearValueOnHidden\": true,\n        \"fieldName\": \"literal_value\",\n        \"visibleOn\": \"this.operation === 'literal'\"\n      }\n    ]\n  }\n}\nreturn payload;",
+                      "sendOn": "!!this.object_name && !!this.field_name && this.operation === 'literal'",
+                      "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                      },
+                      "data": {
+                        "&": "$$"
+                      }
+                    }
+                  },
+                  {
+                    "name": "description",
+                    "label": "描述",
+                    "required": false,
+                    "type": "textarea",
+                    "tpl": "<b><%=data.description%></b>",
+                    "className": "col-span-2 m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "description",
+                    "id": "u:16a7ebd835a6"
+                  },
+                  {
+                    "name": "reevaluate_on_change",
+                    "label": "字段更改后重新评估工作流规则",
+                    "required": false,
+                    "type": "checkbox",
+                    "tpl": null,
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "reevaluate_on_change",
+                    "id": "u:b9baf683b6b0"
+                  },
+                  {
+                    "name": "undirect",
+                    "label": "触发对象触发器、工作流规则、字段验证规则",
+                    "required": false,
+                    "type": "checkbox",
+                    "tpl": null,
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "undirect",
+                    "id": "u:b86f699bbe4f"
+                  }
+                ]
+              }
+            ],
+            "id": "u:f57077c2a95f",
+            "mode": "horizontal",
+            "persistData": false,
+            "promptPageLeave": true,
+            "name": "form_edit_${recordId}",
+            "debug": false,
+            "submitText": "",
+            "api": {
+              "method": "post",
+              "url": "${context.rootUrl}/graphql",
+              "data": {
+                "objectName": "${objectName}",
+                "$": "$$",
+                "recordId": "${recordId}",
+                "modalName": "${modalName}"
+              },
+              "requestAdaptor": "\n        \n        const formData = api.data.$;\n        for (key in formData){\n            // image、select等字段清空值后保存的空字符串转换为null。\n            if(formData[key] === ''){\n                formData[key] = null;\n            }\n        }\n        const objectName = api.data.objectName;\n        const fieldsName = Object.keys(formData);\n        delete formData.created;\n        delete formData.created_by;\n        delete formData.modified;\n        delete formData.modified_by;\n        delete formData._display;\n        delete formData.created;\r\ndelete formData.created_by;\r\ndelete formData.modified;\r\ndelete formData.modified_by;\n        \n        \n        let query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\n        if(formData.recordId && formData.recordId !='new'){\n            query = `mutation{record: ${objectName}__update(id: \"${formData._id}\", doc: {__saveData}){_id}}`;\n        };\n        delete formData._id;\n        let __saveData = JSON.stringify(JSON.stringify(formData));\n    \n        api.data = {query: query.replace('{__saveData}', __saveData)};\n        return api;\n    ",
+              "responseData": {
+                "recordId": "${record._id}"
+              },
+              "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }\n            return payload;\n        ",
+              "headers": {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+              }
+            },
+            "initFetch": true,
+            "panelClassName": "m-0 sm:rounded-lg shadow-none",
+            "bodyClassName": "p-0",
+            "className": "steedos-amis-form",
+            "onEvent": {
+              "submitSucc": {
+                "weight": 0,
+                "actions": [
+                  {
+                    "componentId": "listview_action_field_updates",
+                    "actionType": "reload",
+                    "expression": "!!listViewId"
+                  },
+                  {
+                    "actionType": "custom",
+                    "script": "\n      const { recordId, listViewId } = context.props.data;\n      const data = event.data;\n      const appId = data.appId;\n      const objectName = data.objectName;\n      // 在记录详细界面时isRecordDetail为true\n      // TODO: isRecordDetail这个判断需要优化\n      const isRecordDetail = !!data.$master && data.$master.$master?.recordId;\n      if(recordId){\n        // 编辑记录时，刷新主表单\n        doAction({\n          componentId: `detail_${recordId}`,\n          actionType: \"reload\",\n          expression: `!${listViewId}`\n        });\n      }\n      else if(!isRecordDetail){\n        // 在列表视图界面新建记录时跳转到详细页面\n        const jumpTo = event.context.env && event.context.env.jumpTo;\n        if(jumpTo){\n          const newRecordId = data.result.data?.recordId;\n          jumpTo(\"/app/\" + appId + \"/\" + objectName + \"/view/\" + newRecordId);\n        }\n      }\n    "
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "initApi": null
+      }
+    ],
+    "data": {
+      "objectName": "action_field_updates",
+      "context": {}
+    },
+    "regions": [
+      "body"
+    ],
+    "bodyClassName": ""
+  }

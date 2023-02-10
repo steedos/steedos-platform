@@ -110,10 +110,11 @@ instancesListTableTabular = (flowId, fields)->
 
 					unread = ''
 
-					isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
-					if Favorites.isRecordSelected("instances", doc._id)
-						unread = '<i class="ion ion-ios-star-outline instance-favorite-selected"></i>'
-					else if Session.get("box") == 'inbox' && doc.is_read == false
+					# isFavoriteSelected = Favorites.isRecordSelected("instances", doc._id)
+					# if Favorites.isRecordSelected("instances", doc._id)
+					# 	unread = '<i class="ion ion-ios-star-outline instance-favorite-selected"></i>'
+					# else 
+					if Session.get("box") == 'inbox' && doc.is_read == false
 						unread = '<i class="ion ion-record unread"></i>'
 					else if Session.get("box") == 'monitor' && doc.is_hidden == true
 						unread = '<i class="fa fa-lock"></i>'
@@ -305,7 +306,16 @@ instancesListTableTabular = (flowId, fields)->
 				return {_id: -1}
 			return selector
 		pagingType: "numbers"
-
+		
+		# getSort: (selector, sort) -> 
+		# 	console.log('selector:',selector)
+		# 	console.log('sort:',sort)
+		# 	newSort = []
+		# 	_.each selector, (v, k) ->
+		# 		newSort.push([k, 1])
+		# 	newSort = newSort.concat(sort)
+		# 	console.log('newSort:',newSort)
+		# 	return newSort
 	}
 
 	if flowId
@@ -358,8 +368,350 @@ instancesListTableTabular = (flowId, fields)->
 
 	return options;
 
+
+# 如果columns有加减，请修改Template.instance_list._tableColumns 函数
+instanceTasksListTableTabular = (flowId, fields)->
+	options = {
+		name: "instance_tasks",
+		collection: db.instance_tasks,
+		pub: "instance_tasks_tabular",
+		onUnload: ()->
+			Meteor.setTimeout(Template.instance_list._tableColumns, 150)
+
+		drawCallback: (settings)->
+			emptyTd = $(".dataTables_empty")
+			if emptyTd.length
+				emptyTd[0].colSpan = "6"
+			if !Steedos.isMobile() && !Steedos.isPad()
+				Meteor.setTimeout(Template.instance_list._tableColumns, 150)
+				$(".instance-list").scrollTop(0).ready ->
+					$(".instance-list").perfectScrollbar("update")
+			else
+				$(".instance-list").scrollTop(0)
+
+			title = t "pager_input_hint"
+			ellipsisLink = settings.oInstance.parent().find('.paging_numbers .pagination .disabled a')
+			ellipsisLink.attr("title", title).css("cursor", "pointer").click ->
+				if !$(this).find('input').length
+					input = $('<input class="paginate_input form-control input-sm" type="text" style="border: none; padding:0 2px;"/>')
+					if Steedos.isMobile()
+						input.css({
+							width:"52px"
+							height: "20px"
+						})
+					else
+						input.css({
+							width:"52px"
+							height: "16px"
+						})
+					input.attr("title", title).attr("placeholder", title)
+					$(this).empty().append input
+					goPage = (index)->
+						if index > 0
+							pages = Math.ceil(settings.fnRecordsDisplay() / settings._iDisplayLength)
+							if index > pages
+								# 页码超出索引时跳转到最后一页
+								index = pages
+							index--
+							settings.oInstance.DataTable().page(index).draw('page')
+					input.blur (e)->
+						currentPage = $(this).val()
+						goPage currentPage
+						$(this).parent().html '...'
+					input.keydown (e)->
+						if(e.keyCode.toString() == "13")
+							currentPage = $(this).val()
+							goPage currentPage
+
+		createdRow: (row, data, dataIndex) ->
+			if Meteor.isClient
+				if data.instance == FlowRouter.current().params.instanceId
+					row.setAttribute("class", "selected")
+		columns: [
+			{
+				data: "_id",
+				orderable: false
+				render: (val, type, doc) ->
+					modifiedString = moment(doc.modified).format('YYYY-MM-DD');
+
+					modified = doc.modified
+					if Session.get("box") == 'inbox' && doc.instance_state != 'draft'
+						modified = doc.start_date || doc.modified
+
+					if Session.get("box") == 'outbox'
+						modified = doc.submit_date || doc.modified
+
+					modifiedFromNow = Steedos.momentReactiveFromNow(modified);
+					flow_name = doc.flow_name
+					cc_view = "";
+					step_current_name_view = "";
+					# 当前用户在cc user中，但是不在inbox users时才显示'传阅'文字
+					if doc.type == 'cc' && Session.get("box") == 'inbox'
+						cc_view = "<label class='cc-label'>(" + TAPi18n.__("instance_cc_title") + ")</label> "
+						step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.step_name})</span></div>"
+					else
+						if doc.step_name
+							step_current_name_view = "<div class='flow-name'>#{flow_name}<span>(#{doc.step_name})</span></div>"
+						else
+							step_current_name_view = "<div class='flow-name'>#{flow_name}</div>"
+
+					agent_view = "";
+					if doc.agent_user_name && Session.get("box") == 'inbox'
+						agent_view = "<label class='cc-label'>(" + TAPi18n.__('process_delegation_rules_description', {userName: doc.agent_user_name}) + ")</label>"
+
+					unread = ''
+
+					if Session.get("box") == 'inbox' && doc.is_read == false
+						unread = '<i class="ion ion-record unread"></i>'
+					else if Session.get("box") == 'monitor' && doc.is_hidden == true
+						unread = '<i class="fa fa-lock"></i>'
+
+					priorityIcon = ""
+					priorityIconClass = ""
+					priorityValue = doc.values?.priority
+					switch priorityValue
+						when "特急"
+							priorityIconClass = "danger"
+						when "紧急"
+							priorityIconClass = "warning"
+						when "办文"
+							priorityIconClass = "muted"
+					if priorityIconClass
+						instanceNamePriorityClass = "color-priority color-priority-#{priorityIconClass}"
+
+					return """
+								<div class='instance-read-bar'>#{unread}</div>
+								<div class='instance-name #{instanceNamePriorityClass}'>#{doc.instance_name}#{cc_view}#{agent_view}
+									<span>#{doc.applicant_name}</span>
+								</div>
+								<div class='instance-detail'>#{step_current_name_view}
+									<span class='instance-modified' title='#{modifiedString}'>#{modifiedFromNow}</span>
+								</div>
+							"""
+			},
+			{
+				data: "applicant_organization_name",
+				title: t("instances_applicant_organization_name"),
+				visible: false,
+			},
+			{
+				data: "instance_name",
+				title: t("instances_name"),
+				render: (val, type, doc) ->
+					cc_view = "";
+					step_current_name_view = "";
+					# 当前用户在cc user中，但是不在inbox users时才显示'传阅'文字
+					if doc.is_cc && !doc.inbox_users?.includes(Meteor.userId()) && Session.get("box") == 'inbox'
+						cc_view = "<label class='cc-label'>(" + TAPi18n.__("instance_cc_title") + ")</label> "
+
+					agent_view = "";
+					if doc.agent_user_name
+						agent_view = "<label class='cc-label'>(" + TAPi18n.__('process_delegation_rules_description', {userName: doc.agent_user_name}) + ")</label>"
+
+					unread = ''
+
+					if Session.get("box") == 'inbox' && doc.is_read == false
+						unread = '<i class="ion ion-record unread"></i>'
+					else if Session.get("box") == 'monitor' && doc.is_hidden == true
+						unread = '<i class="fa fa-lock"></i>'
+
+					priorityIconClass = ""
+					priorityValue = doc.values?.priority
+					switch priorityValue
+						when "特急"
+							priorityIconClass = "danger"
+						when "紧急"
+							priorityIconClass = "warning"
+						when "办文"
+							priorityIconClass = "muted"
+					if priorityIconClass
+						instanceNamePriorityClass = "color-priority color-priority-#{priorityIconClass}"
+					return """
+							<div class='instance-read-bar'>#{unread}</div>
+							<div class='instance-name #{instanceNamePriorityClass}'>#{doc.instance_name}#{cc_view}#{agent_view}</div>
+						"""
+				visible: false,
+				orderable: false
+			},
+			{
+				data: "applicant_name",
+				title: t("instances_applicant_name"),
+				visible: false,
+				orderable: false
+			},
+			{
+				data: "submit_date",
+				title: t("instances_submit_date"),
+				render: (val, type, doc) ->
+					if doc.submit_date
+						return moment(doc.submit_date).format('YYYY-MM-DD HH:mm');
+				,
+				visible: false,
+				orderable: true
+			},
+			{
+				data: "flow_name",
+				title: t("instances_flow"),
+				visible: false,
+				orderable: false
+			},
+			{
+				data: "step_name",
+				title: t("instances_step_current_name"),
+				render: (val, type, doc) ->
+					if doc.instance_state == "completed"
+						judge = doc.judge || "approved"
+
+					step_current_name = doc.step_name || ''
+
+					cc_tag = ''
+
+					if doc.cc_count > 0
+						cc_tag = TAPi18n.__('cc_tag')
+
+					return """
+						<div class="step-current-state #{judge}">#{step_current_name}#{cc_tag}</div>
+					"""
+				visible: false,
+				orderable: false
+			},
+			{
+				data: "modified",
+				title: t("instances_modified"),
+				render: (val, type, doc) ->
+					return moment(doc.modified).format('YYYY-MM-DD HH:mm');
+				,
+				visible: false,
+				orderable: true
+			},
+			{
+				data: "start_date",
+				title: t("instances_start_date"),
+				render: (val, type, doc) ->
+					if doc.start_date
+						return moment(doc.start_date).format('YYYY-MM-DD HH:mm');
+				,
+				visible: false,
+				orderable: true
+			},
+			{
+				data: "finish_date",
+				render: (val, type, doc) ->
+					if doc.finish_date
+						return moment(doc.finish_date).format('YYYY-MM-DD HH:mm');
+				,
+				visible: false,
+				orderable: true
+			},
+			{
+				data: "modified",
+				visible: false
+			},
+			{
+				data: "keywords",
+				visible: false
+			},
+			{
+				data: "is_archived",
+				render: (val, type, doc) ->
+					if doc?.values?.record_need && doc.values.record_need == "true"
+						if doc?.is_archived
+							return t("YES")
+						return t("NO")
+				visible: false
+				orderable: false
+			}
+		],
+		dom: do ->
+			# 手机上不显示一页显示多少条记录选项
+			if Steedos.isMobile()
+				'tp'
+			else
+				'tpl'
+		order: [[4, "desc"]],
+		extraFields: ["instance", "form", "flow", "inbox_users", "instance_state", "space", "applicant", "form_version",
+			"flow_version", "type", "is_read", "step_name", "values", "keywords", "final_decision", "flow_name", "is_hidden", "agent_user_name"],
+		lengthChange: true,
+		lengthMenu: [10,15,20,25,50,100],
+		pageLength: 10,
+		info: false,
+		searching: true,
+		responsive:
+			details: false
+		autoWidth: false,
+		changeSelector: (selector, userId) ->
+			unless userId
+				return {_id: -1}
+			space = selector.space
+			unless space
+				if selector?.$and?.length > 0
+					space = selector.$and.getProperty('space')[0]
+			unless space
+				return {_id: -1}
+			space_user = db.space_users.findOne({user: userId, space: space}, {fields: {_id: 1}})
+			unless space_user
+				return {_id: -1}
+			return selector
+		pagingType: "numbers"
+
+	}
+
+	if flowId
+		key = "instanceFlow" + flowId
+
+		options.name = key
+
+		TabularTables.instance_tasks.fields = fields
+
+		ins_fields = _handleListFields TabularTables.instance_tasks.fields
+
+		ins_fields.forEach (f)->
+			if f.type != 'table' && f.is_list_display
+				options.columns.push
+					data: (f.name || f.code),
+					title: t(f.name || f.code),
+					visible: false,
+					orderable: false
+					render: (val, type, doc) ->
+
+						values = doc.values || {}
+
+						value = values[f.code]
+
+						switch f.type
+							when 'user'
+								value = value?.name
+							when 'group'
+								value = value?.fullname
+							when 'date'
+								if value
+									value = moment(value).format('YYYY-MM-DD')
+							when 'dateTime'
+								if value
+									value = moment(value).format('YYYY-MM-DD HH:mm')
+							when 'checkbox'
+								if value == true || value == 'true'
+									value = TAPi18n.__("form_field_checkbox_yes");
+								else
+									value = TAPi18n.__("form_field_checkbox_no");
+							when 'odata'
+								if value
+									if _.isArray(value)
+										value = _.pluck(value, '@label').toString()
+									else
+										value = value['@label']
+
+						return value
+
+
+	return options;
+
+
 Meteor.startup ()->
 	TabularTables.instances = new Tabular.Table instancesListTableTabular()
+	TabularTables.instance_tasks = new Tabular.Table instanceTasksListTableTabular()
+	TabularTables.inbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("inbox")
+	TabularTables.outbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("outbox")
 
 
 GetBoxInstancesTabularOptions = (box, flowId, fields)->
@@ -376,154 +728,40 @@ GetBoxInstancesTabularOptions = (box, flowId, fields)->
 		options.name = key
 	return options
 
-
-
 _get_inbox_instances_tabular_options = (flowId, fields)->
-	options = instancesListTableTabular(flowId, fields)
+	options = instanceTasksListTableTabular(flowId, fields)
 
 	if !flowId
 		options.name = "inbox_instances"
 
 	options.order = [[8, "desc"]]
-	options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
-		aggregate_operation = [
-			{
-				$match: selector
-			},
-			{
-				$project: {
-					name: 1,
-					"_approve": '$traces.approves'
-				}
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$match: {
-					'_approve.is_finished': false
-					'_approve.handler': userId,
-				}
-			}
-		]
-		if sort and sort.length > 0
-			s1 = sort[0]
-			s1_0 = s1[0]
-			s1_1 = s1[1]
-			if s1_0 == 'start_date'
 
-				findOptions.sort = [['modified', s1_1]]
-
-				aggregate_operation.push $group: {_id: "$_id", "approve_start_date": {$first: "$_approve.start_date"}}
-
-				ag_sort = 'approve_start_date': if s1_1 == 'asc' then 1 else -1
-
-				aggregate_operation.push $sort: ag_sort
-				aggregate_operation.push $skip: skip
-				aggregate_operation.push $limit: limit
-				filteredRecordIds = new Array()
-
-				aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
-					table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
-						if err
-							throw new Error(err)
-						data.forEach (doc) ->
-							filteredRecordIds.push doc._id
-							return
-						if cb
-							cb()
-						return
-					return
-
-				async_aggregate = Meteor.wrapAsync(aggregate)
-
-				async_aggregate table, aggregate_operation, filteredRecordIds
-
-				return filteredRecordIds.uniq()
-			else
-				return old_filteredRecordIds
+	options.getSort = (selector, sort) -> 
+		console.log('inbox_instances:',sort)
+		return sort
 
 	return options
 
-Meteor.startup ()->
-	TabularTables.inbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("inbox")
-
-
 _get_outbox_instances_tabular_options = (flowId, fields)->
-	options = instancesListTableTabular(flowId, fields)
+	options = instanceTasksListTableTabular(flowId, fields)
 
 	if !flowId
 		options.name = "outbox_instances"
 
-	options.order = [[9, "desc"]]
-	options.filteredRecordIds = (table, selector, sort, skip, limit, old_filteredRecordIds, userId, findOptions)->
-		aggregate_operation = [
-			{
-				$match: selector
-			},
-			{
-				$project: {
-					name: 1,
-					"_approve": '$traces.approves'
-				}
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$unwind: "$_approve"
-			},
-			{
-				$match: {
-					'_approve.is_finished': true
-					$or: [{'_approve.handler': userId},{'_approve.user': userId}]
-				}
-			}
-		]
-		if sort and sort.length > 0
-			s1 = sort[0]
-			s1_0 = s1[0]
-			s1_1 = s1[1]
-			if s1_0 == 'my_finish_date'
+	options.order = [[9, -1]]
 
-				findOptions.sort = [['modified', s1_1]]
-
-				aggregate_operation.push $group: {_id: "$_id", "approve_finish_date": {$last: "$_approve.finish_date"}}
-
-				ag_sort = 'approve_finish_date': if s1_1 == 'asc' then 1 else -1
-
-				aggregate_operation.push $sort: ag_sort
-				aggregate_operation.push $skip: skip
-				aggregate_operation.push $limit: limit
-				filteredRecordIds = new Array()
-
-				aggregate = (table, aggregate_operation, filteredRecordIds, cb) ->
-					table.collection.rawCollection().aggregate(aggregate_operation).toArray (err, data) ->
-						if err
-							throw new Error(err)
-						data.forEach (doc) ->
-							filteredRecordIds.push doc._id
-							return
-						if cb
-							cb()
-						return
-					return
-
-				async_aggregate = Meteor.wrapAsync(aggregate)
-
-				async_aggregate table, aggregate_operation, filteredRecordIds
-
-				return filteredRecordIds.uniq()
-			else
-				return old_filteredRecordIds
+	options.getSort = (selector, sort) -> 
+		console.log('outbox_instances:',sort)
+		# newSort = [ 
+		# 	['space', 1],
+		# 	['handler', 1],
+		# 	['is_finished', 1],
+		# ]
+		# newSort = newSort.concat(sort)
+		# return newSort
+		return sort
 
 	return options
-
-Meteor.startup ()->
-	TabularTables.outbox_instances = new Tabular.Table GetBoxInstancesTabularOptions("outbox")
 
 if Meteor.isClient
 	TabularTables.flowInstances = new ReactiveVar()

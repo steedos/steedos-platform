@@ -1,0 +1,6 @@
+name: instance_distribute
+is_enable: false
+label: 分发
+'on': record_only
+type: amis_button
+visible: true
