@@ -123,6 +123,10 @@ body.steedos .-mt-3 {
   margin-top: -0.75rem
 }
 
+body.steedos .mt-3 {
+  margin-top: 0.75rem
+}
+
 body.steedos .block {
   display: block
 }
@@ -246,6 +250,10 @@ body.steedos .border-r {
   border-right-width: 1px
 }
 
+body.steedos .border-b {
+  border-bottom-width: 1px
+}
+
 body.steedos .border-solid {
   border-style: solid
 }
@@ -276,6 +284,10 @@ body.steedos .p-0 {
 
 body.steedos .p-4 {
   padding: 1rem
+}
+
+body.steedos .p-0\.5 {
+  padding: 0.125rem
 }
 
 body.steedos .px-4 {
