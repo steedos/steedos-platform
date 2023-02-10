@@ -4,3 +4,4 @@ type: text
 multiple: false
 filterable: true
 sort_no: 10
+is_name: true
