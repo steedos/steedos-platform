@@ -94,7 +94,7 @@
                         if(comp.componentType === 'amisSchema'){
                             let amisReact = amisRequire('react');
                             AmisWrapper = function(props){
-                              const { body, render } = props
+                              const { $schema, body, render } = props
                               const [schema, setSchema] = amisReact.useState(null);
                               amisReact.useEffect(()=>{
                                 const result = Component.class(props);
@@ -105,7 +105,7 @@
                                 }else{
                                   setSchema(result)
                                 }
-                              }, [])
+                              }, [JSON.stringify($schema)])
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }
