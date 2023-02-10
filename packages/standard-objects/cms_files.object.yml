@@ -211,6 +211,7 @@ actions:
                             "id": "u:a58d02614e04",
                             "btnLabel": "上传",
                             "btnClassName": "m-0",
+                            "className": "p-0",
                             "multiple": false,
                             "maxLength": 10,
                             "submitType": "asUpload",
