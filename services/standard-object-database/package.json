@@ -11,7 +11,7 @@
     ],
     "description": "steedos package",
     "dependencies": {
-        "@steedos-widgets/amis-lib": "^1.0.20"
+        "@steedos-widgets/amis-lib": "^1.0.21"
     },
     "repository": {},
     "license": "MIT",
