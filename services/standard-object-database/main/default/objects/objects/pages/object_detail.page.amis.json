@@ -61,20 +61,6 @@
                     "id": "u:b2fbc13aabb8"
                 },
                 {
-                    "title": "列表视图",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-listview",
-                            "objectApiName": "objects",
-                            "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_listviews",
-                            "id": "u:c415f75c5557",
-                            "perPage": 20
-                        }
-                    ],
-                    "id": "u:df900c5f2119"
-                },
-                {
                     "title": "对象字段",
                     "body": [
                         {
@@ -89,45 +75,18 @@
                     "id": "u:f1a52545b642"
                 },
                 {
-                    "title": "页面布局",
+                    "title": "列表视图",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_layouts",
-                            "id": "u:ed9559f8aa86",
+                            "relatedObjectApiName": "object_listviews",
+                            "id": "u:c415f75c5557",
                             "perPage": 20
                         }
                     ],
-                    "id": "u:ee4ab13a92e6"
-                },
-                {
-                    "title": "流程映射",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-listview",
-                            "objectApiName": "objects",
-                            "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_workflows",
-                            "perPage": 20,
-                            "id": "u:e14df76cfa51"
-                        }
-                    ],
-                    "id": "u:cbc13e1a7033"
-                },
-                {
-                    "title": "相关子表",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-listview",
-                            "objectApiName": "objects",
-                            "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_related_list",
-                            "perPage": 20
-                        }
-                    ],
-                    "id": "u:f315ce2f6583"
+                    "id": "u:df900c5f2119"
                 },
                 {
                     "title": "操作按钮",
@@ -144,18 +103,44 @@
                     "id": "u:d75b105f6d02"
                 },
                 {
-                    "title": "触发器",
+                    "title": "页面布局",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_triggers",
-                            "perPage": 20,
-                            "id": "u:a7a077d68636"
+                            "relatedObjectApiName": "object_layouts",
+                            "id": "u:ed9559f8aa86",
+                            "perPage": 20
                         }
                     ],
-                    "id": "u:4f792dc81a67"
+                    "id": "u:ee4ab13a92e6"
+                },
+                {
+                    "title": "对象权限",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "permission_objects",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "流程映射",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_workflows",
+                            "perPage": 20,
+                            "id": "u:e14df76cfa51"
+                        }
+                    ],
+                    "id": "u:cbc13e1a7033"
                 },
                 {
                     "title": "验证规则",
@@ -167,8 +152,31 @@
                             "relatedObjectApiName": "object_validation_rules",
                             "perPage": 20
                         }
-                    ],
-                    "id": "u:225314c38616"
+                    ]
+                },
+                {
+                    "title": "限制规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "restriction_rules",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "共享规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "share_rules",
+                            "perPage": 20
+                        }
+                    ]
                 }
             ],
             "id": "u:6a3b45d7adcf",
