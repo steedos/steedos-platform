@@ -1,5 +1,5 @@
 name: instances
-label: 审批
+label: 审批单
 description: 
 fields:
   name:
