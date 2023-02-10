@@ -106,6 +106,14 @@
                 "virtual",
                 "infinite"
             ]
+        },
+        "requestAdaptor": {
+            "type": "string",
+            "description": "发送适配器"
+        },
+        "adaptor": {
+            "type": "string",
+            "description": "接收适配器"
         }
     }
 }
