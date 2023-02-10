@@ -278,7 +278,8 @@
                         now: new Date(),
                         // mode: mode //由表单提供
                     },
-                    scopeId: schema.name || schema.id
+                    scopeId: schema.name || schema.id,
+                    $scopeId : schema.name || schema.id
                 }
             });
 
