@@ -248,10 +248,10 @@
                 const schema = props.schema;
                 const data = props.data;
                 const name = props.name;
-
-                if(SteedosUI.refs[schema.name]){
-                  if(SteedosUI.refs[schema.name].unmount){
-                    SteedosUI.refs[schema.name].unmount()
+                const refName = schema.name || schema.id;
+                if(SteedosUI.refs[refName]){
+                  if(SteedosUI.refs[refName].unmount){
+                    SteedosUI.refs[refName].unmount()
                   }else{
                     console.log(`not find amis scope unmount`)
                   }
@@ -284,8 +284,9 @@
 
                 amisReact.useEffect(()=>{
                     const amisScope = amisRequire('amis/embed').embed(`.steedos-amis-render-scope-${name}`,schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
-                    if(window.SteedosUI && schema.name){
-                      SteedosUI.refs[schema.name] = amisScope;
+                    const refName = schema.name || schema.id;
+                    if(window.SteedosUI && refName){
+                      SteedosUI.refs[refName] = amisScope;
                     }
                   }, [])
                 return amisReact.createElement("div", {
@@ -296,10 +297,10 @@
             };
 
             window.renderAmis = function (root, schema, data, env) {
-
-              if(SteedosUI.refs[schema.name]){
-                if(SteedosUI.refs[schema.name].unmount){
-                  SteedosUI.refs[schema.name].unmount()
+              const refName = schema.name || schema.id;
+              if(SteedosUI.refs[refName]){
+                if(SteedosUI.refs[refName].unmount){
+                  SteedosUI.refs[refName].unmount()
                 }else{
                   console.log(`not find amis scope unmount`)
                 }
@@ -329,8 +330,8 @@
 
               
                 const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
-                if(window.SteedosUI && schema.name){
-                  SteedosUI.refs[schema.name] = amisScope;
+                if(window.SteedosUI && refName){
+                  SteedosUI.refs[refName] = amisScope;
                 }
             };
 
