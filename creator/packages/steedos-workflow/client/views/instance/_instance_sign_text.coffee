@@ -1,3 +1,4 @@
+marked = require("marked")
 InstanceSignText.helpers =
 	show: (stepName)->
 		if Meteor.isClient
