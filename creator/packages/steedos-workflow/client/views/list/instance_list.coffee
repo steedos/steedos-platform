@@ -32,22 +32,23 @@ Template.instance_list.helpers
 		if box == "inbox"
 			query.handler = uid
 			query.is_finished = false
-			query.$or = [
-				{
-					instance_state: { $in: ["pending", "completed"] }
-				},
-				{
-					instance_state: 'draft',
-					$or: [
-						{
-							distribute_from_instance: { $ne : null },
-						},
-						{
-							forward_from_instance: { $ne : null },
-						}
-					]
-				}
-			]
+			# query.$or = [
+			# 	{
+			# 		instance_state: { $in: ["pending", "completed"] }
+			# 	},
+			# 	{
+			# 		instance_state: 'draft',
+			# 		$or: [
+			# 			{
+			# 				distribute_from_instance: { $ne : null },
+			# 			},
+			# 			{
+			# 				forward_from_instance: { $ne : null },
+			# 			}
+			# 		]
+			# 	}
+			# ]
+
 			# query.$or = [{inbox_users: Meteor.userId()}, {cc_users: Meteor.userId()}]
 			# query.state = {$in: ["pending", "completed"]}
 			# query.inbox_users = Meteor.userId()

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-01-10 17:18:23
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-18 14:09:07
+ * @LastEditTime: 2023-02-11 10:49:47
  * @Description: 
  */
 'use strict'
@@ -24,7 +24,11 @@ module.exports.up = async function (next) {
     await instanceColl.find({}).forEach(async function (insDoc) {
         var docs = [];
         var latestApproveIndexMap = {}
-        insDoc.traces.forEach(function (tDoc) {
+        insDoc.traces.forEach(function (tDoc, tIdx) {
+            if (tIdx == 0 && (!insDoc.distribute_from_instance && !insDoc.forward_from_instance)) {
+                // 只有分发或转发的申请单，开始节点生成instance_tasks
+                return
+            }
             if (tDoc.approves) {
                 tDoc.approves.forEach(function (aDoc) {
                     if (aDoc.type == 'distribute' || aDoc.judge == 'relocated' || aDoc.judge == 'terminated' || aDoc.judge == 'reassigned') {

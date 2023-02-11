@@ -2101,8 +2101,6 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     }
     new_ins_id = db.instances.insert(ins_obj);
 
-    insert_instance_tasks(new_ins_id, trace_obj._id, appr_obj._id)
-
     return new_ins_id;
 };
 
@@ -2424,8 +2422,11 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
             current_no: flow.current_no + 1
         }
     });
-    // 更新当前记录
-    update_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id)
+
+    // 转发或分发，更新当前记录
+    if (instance.forward_from_instance || instance.distribute_from_instance) {
+        update_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id)
+    }
     if (nextTrace) {
         // 生成新记录
         insert_instance_tasks(instance_id, nextTrace._id, nextTrace["approves"][0]._id)

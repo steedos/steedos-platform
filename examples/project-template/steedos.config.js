@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-25 13:31:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-01 10:49:56
+ * @LastEditTime: 2023-02-10 09:56:09
  * @Description: 
  */
 let express = require("express");
@@ -18,5 +18,13 @@ module.exports = {
 	started(broker) {
 		broker.createService(require("@steedos/service-community"));
 	},
+
+	settings: {
+		public: {
+			workflow: {
+				instance_allow_distribute: true
+			}
+		}
+	}
 
 };
