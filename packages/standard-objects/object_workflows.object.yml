@@ -15,25 +15,7 @@ fields:
     required: true
     reference_to: objects
     reference_to_field: name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                if (o.enable_workflow) {
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                  });
-                }
-                
-              });
-
-              return _options;
-            }
+    filters: [["enable_workflow", "=", true]]
   flow_id:
     label: Workflow
     type: lookup
