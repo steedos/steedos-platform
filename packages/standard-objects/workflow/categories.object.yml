@@ -18,22 +18,6 @@ fields:
     type: lookup
     reference_to: apps
     reference_to_field: code
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.getVisibleApps(), function (o, index) {
-                return _options.push({
-                  label: o.label || o.name,
-                  value: o.code,
-                  icon: o.icon_slds
-                });
-              });
-
-              return _options;
-            }
     name: app
     filterable: true
 list_views:

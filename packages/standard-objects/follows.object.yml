@@ -6,19 +6,8 @@ fields:
   object_name:
     label: Object
     type: lookup
-    optionsFunction: !!js/function |
-      function () {
-              var _options;
-              _options = [];
-              _.forEach(Creator.objectsByName, function (o, object_name) {
-                return _options.push({
-                  label: o.label,
-                  value: o.name,
-                  icon: o.icon
-                });
-              });
-              return _options;
-            }
+    reference_to: objects
+    reference_to_field: name
     filterable: true
   owner:
     disabled: false

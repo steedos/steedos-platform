@@ -14,21 +14,7 @@ fields:
     label: Apps
     type: lookup
     multiple: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-              _options = [];
-              var apps = Creator.getVisibleApps(false);
-              _.forEach(apps, function (o) {
-                return _options.push({
-                  label: o.label,
-                  value: o._id,
-                  icon: o.icon_slds
-                });
-              });
-
-              return _options;
-            }
+    reference_to: apps
     filterable: true
   widgets:
     label: Widgets

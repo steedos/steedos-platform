@@ -10,10 +10,8 @@ fields:
     type: lookup
     required: true
     is_wide: true
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions();
-      }
+    reference_to: objects
+    reference_to_field: name
   name:
     type: text
     required: true

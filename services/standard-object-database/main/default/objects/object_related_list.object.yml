@@ -9,22 +9,6 @@ fields:
     required: true
     reference_to: objects
     reference_to_field: name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
   objectName:
     label: Related Object
     type: lookup

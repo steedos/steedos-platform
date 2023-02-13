@@ -15,10 +15,6 @@ fields:
     label: Object
     required: true
     index: true
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions();
-      }
   events:
     type: select
     label: Events

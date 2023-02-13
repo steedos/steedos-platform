@@ -13,12 +13,9 @@ fields:
     label: Object
     type: lookup
     multiple: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function () {
-        return Steedos.getObjectsOptions(function(o){
-          return o.enable_share
-        })
-      }
+    reference_to: objects
+    reference_to_field: name
+    filters: ["enable_share", "=", true]
     required: true
     filterable: true
   filters:
