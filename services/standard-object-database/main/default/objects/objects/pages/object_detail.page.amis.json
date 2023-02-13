@@ -181,9 +181,9 @@
             ],
             "id": "u:6a3b45d7adcf",
             "tabsMode": "vertical",
-            "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 p-0.5",
-            "toolbarClassName": "bg-white",
-            "linksClassName": "bg-white border-r",
+            "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
+            "toolbarClassName": "",
+            "linksClassName": "",
             "contentClassName": "bg-white"
         }
     ],
