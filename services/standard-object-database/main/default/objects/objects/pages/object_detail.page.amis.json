@@ -34,28 +34,16 @@
             "type": "tabs",
             "tabs": [
                 {
-                    "title": "详细信息",
+                    "title": "详情",
                     "body": [
                         {
-                            "type": "tabs",
-                            "tabs": [
-                                {
-                                    "title": "详细",
-                                    "body": [
-                                        {
-                                            "type": "steedos-object-form",
-                                            "label": "对象表单",
-                                            "mode": "read",
-                                            "objectApiName": "${objectName}",
-                                            "recordId": "${recordId}",
-                                            "labelAlign": "left",
-                                            "id": "u:4eb5fa6f6fad"
-                                        }
-                                    ],
-                                    "id": "u:55e5c732daf6"
-                                }
-                            ],
-                            "id": "u:090f4ed96ac2"
+                            "type": "steedos-object-form",
+                            "label": "对象表单",
+                            "mode": "read",
+                            "objectApiName": "${objectName}",
+                            "recordId": "${recordId}",
+                            "labelAlign": "left",
+                            "id": "u:4eb5fa6f6fad"
                         }
                     ],
                     "id": "u:b2fbc13aabb8"
