@@ -238,6 +238,10 @@ body.steedos .overflow-y-auto {
   overflow-y: auto
 }
 
+body.steedos .border {
+  border-width: 1px
+}
+
 body.steedos .border-b-\[3px\] {
   border-bottom-width: 3px
 }
