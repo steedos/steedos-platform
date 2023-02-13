@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_virus-scan",
-  "version": "2.4.0-beta.23",
+  "version": "2.4.0-beta.24",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "02fd9ceab1405e0eddbb1752882168f0f4d660f0"
+  "gitHead": "ae19a048849a7d17c374f517df5b207f663bd6e4"
 }
