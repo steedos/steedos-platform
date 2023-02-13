@@ -198,10 +198,7 @@
         }
     },
     "id": "page_objects_record_detail",
+    "name": "page_objects_record_detail",
     "bodyClassName": "",
-    "asideResizor": false,
-    "pullRefresh": {
-        "disabled": true
-    },
     "className": "object-detail-page"
 }
