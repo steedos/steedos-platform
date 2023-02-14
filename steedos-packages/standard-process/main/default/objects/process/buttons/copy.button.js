@@ -26,7 +26,8 @@ module.exports = {
         };
         Steedos.authRequest(url, options);
     },
-    copyVisible: function (object_name, record_id, permission, record) {
+    copyVisible: function (object_name, record_id, permission, data) {
+        var record = data && data.record;
         return record && !record.is_system;
     }
 }

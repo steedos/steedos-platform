@@ -24,7 +24,8 @@ module.exports = {
         };
         Steedos.authRequest(url, options);
     },
-    disableVisible: function (object_name, record_id, permission, record) {
+    disableVisible: function (object_name, record_id, permission, data) {
+        var record = data && data.record;
         return record && record.is_active && !record.is_system
     }
 }

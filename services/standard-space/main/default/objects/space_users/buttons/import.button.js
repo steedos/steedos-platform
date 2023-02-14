@@ -9,7 +9,7 @@ module.exports = {
     import: function (object_name, record_id) {
         return Modal.show('import_users_modal');
     },
-    importVisible: function (object_name, record_id, record_permissions, record) {
+    importVisible: function (object_name, record_id, record_permissions, data) {
         return false;
     },
 }

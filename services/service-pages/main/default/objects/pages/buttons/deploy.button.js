@@ -31,7 +31,8 @@ module.exports = {
         };
         Steedos.authRequest(url, options);
     },
-    deployVisible: function (object_name, record_id, permission, record) {
+    deployVisible: function (object_name, record_id, permission, data) {
+        var record = data && data.record;
         return record && !record.is_system;
     }
 }

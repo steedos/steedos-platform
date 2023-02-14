@@ -42,7 +42,8 @@ module.exports = {
     //     Steedos.openWindow(Creator.getRelativeUrl("/app/-/" + record.name + "/grid/all"))
     // }
   },
-  show_objectVisible: function(object_name, record_id, record_permissions, record){
+  show_objectVisible: function(object_name, record_id, record_permissions, data){
+    var record = data && data.record;
     if(!Creator.isSpaceAdmin()){
         return false
     }
@@ -80,7 +81,8 @@ module.exports = {
         return toastr.error('复制失败: 未启用API');
     }
   },
-  copy_odataVisible: function(object_name, record_id, record_permissions, record){
+  copy_odataVisible: function(object_name, record_id, record_permissions, data){
+    var record = data && data.record;
     if(!Creator.isSpaceAdmin()){
         return false
     }
@@ -144,7 +146,8 @@ module.exports = {
 //       }
 //   }, null, { iconPath: '/assets/icons' })
 //   },
-  delete_objectVisible: function(object_name, record_id, record_permissions, record){
+  delete_objectVisible: function(object_name, record_id, record_permissions, data){
+    var record = data && data.record;
     if(!Creator.isSpaceAdmin()){
         return false
     }
