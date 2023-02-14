@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-01-17 15:47:18
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-02-14 15:45:21
  * @Description:
  */
 const objectql = require("@steedos/objectql");
@@ -134,7 +134,7 @@ module.exports = {
             if(keywordsFilter){
               filters.push(keywordsFilter)
             }
-            console.log(`filters`, filters)
+            // console.log(`filters`, filters)
             const categoryFlows = await objectql.getObject("flows").find({
               filters: filters,
               sort: "sort_no,name",
