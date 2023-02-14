@@ -69,10 +69,6 @@ fields:
     type: lookup
     reference_to: objects
     reference_to_field: name
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
     filterable: true
     required: "{{'object' === formData.type ? true: false}}"
     visible_on: "{{'object' === formData.type ? true: false}}"

@@ -29,24 +29,6 @@ fields:
     index: true
     required: true
     create: false
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                if (!o.hidden) {
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                  });
-                }
-              });
-
-              return _options;
-            }
     name: object_name
     filterable: true
   allowRead:

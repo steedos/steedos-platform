@@ -16,10 +16,8 @@ fields:
   object_name:
     label: Object Name
     type: lookup
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions();
-      }
+    reference_to: objects
+    reference_to_field: name
   target_object:
     type: lookup
     label: Object to Update

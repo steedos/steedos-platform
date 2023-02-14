@@ -18,12 +18,8 @@ fields:
     is_wide: true
     filterable: true
     create: false
-    # reference_to: objects
+    reference_to: objects
     reference_to_field: name
-    optionsFunction: !!js/function |
-      function(){
-        return Steedos.getObjectsOptions();
-      }
   description:
     label: Description
     type: textarea
