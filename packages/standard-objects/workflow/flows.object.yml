@@ -676,11 +676,22 @@ actions:
                                                       "checkAll": false,
                                                       "searchable": true,
                                                       "source": {
-                                                          "method": "get",
-                                                          "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                                          "method": "post",
+                                                          "url": "${context.rootUrl}/graphql",
+                                                          "data": {
+                                                              "orderBy": "${orderBy}",
+                                                              "orderDir": "${orderDir}",
+                                                              "pageNo": "${page}",
+                                                              "pageSize": "${perPage}",
+                                                              "query": "{options:objects(filters: {__filters}, top: {__top}, sort: \"{__sort}\"){_id label:label value:name},count:objects__count(filters:{__filters}),defaultValueOptions:objects(filters:{__options_filters}){_id label:label value:name}}",
+                                                              "$term": "$term",
+                                                              "rfield": "${object_name}"
+                                                          },
                                                           "headers": {
                                                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                          }
+                                                          },
+                                                          "adaptor": "\n            const data = payload.data;\n            var defaultValueOptions = data.defaultValueOptions;\n            // 字段值下拉选项合并到options中\n            data.options = _.unionWith(defaultValueOptions, data.options, function(a,b){\n                return a[\"value\"]=== b[\"value\"];\n            });\n            delete data.defaultValueOptions;\n            payload.data.options = data.options;\n            return payload;\n        ",
+                                                          "requestAdaptor": "\n        var filters = [];\n        var top = 10;\n        if(api.data.$term){\n            filters = [[\"label\", \"contains\", api.data.$term]];\n        }\n        // else if(api.data.$value){\n        //     filters = [[\"_id\", \"=\", api.data.$value]];\n        // }\n\n        var fieldFilters = [\"enable_workflow\",\"=\",true];\n        if(fieldFilters && fieldFilters.length){\n            filters.push(fieldFilters);\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n        var sort = \"\";\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', top).replace('{__sort}', sort.trim());\n\n        var defaultValue = api.data.$value;\n        var optionsFiltersOp = \"=\";\n        var optionsFilters = [[\"name\", optionsFiltersOp, []]];\n        if (defaultValue && !api.data.$term) { \n            // 字段值单独请求，没值的时候在请求中返回空\n            optionsFilters = [[\"name\", optionsFiltersOp, defaultValue]];\n        }\n        api.data.query = api.data.query.replace(/{__options_filters}/g, JSON.stringify(optionsFilters));\n        return api;\n    "
                                                       },
                                                       "multiple": false
                                                   }
