@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-registrar",
-  "version": "2.4.0-beta.26",
+  "version": "2.4.0-beta.27",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@steedos/client": "2.4.0-beta.26",
+    "@steedos/client": "2.4.0-beta.27",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -38,5 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bdcc1c0dade33d528ae0d5c0552e2b66b5a1e783"
+  "gitHead": "f31ab09de33fddf37183b9764ef18a5e0913952d"
 }
