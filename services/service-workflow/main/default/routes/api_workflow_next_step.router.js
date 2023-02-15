@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-15 18:09:33
+ * @LastEditTime: 2023-02-11 13:21:43
  * @Description: 
  */
 const express = require("express");
@@ -16,7 +16,7 @@ const getFlowVersion = (flow, flowVersionId)=>{
     if (flow.current._id === flowVersionId) {
         return flow.current;
       } else {
-        return find(flow.historys, (history) => {
+        return _.find(flow.historys, (history) => {
           return history._id === flowVersionId;
         });
       }

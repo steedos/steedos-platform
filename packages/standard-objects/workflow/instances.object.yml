@@ -213,43 +213,6 @@ fields:
   cc_users:
     type: "[text]"
     hidden: true
-list_views:
-  all:
-    label: All
-    filter_scope: space
-    columns:
-      - name
-      - applicant
-      - applicant_organization
-      - modified
-      - state
-  inbox:
-    label: Inbox
-    filter_scope: space
-    filters:
-      - - inbox_users
-        - =
-        - '{userId}'
-  outbox:
-    label: Outbox
-    filter_scope: space
-    filters:
-      - - outbox_users
-        - =
-        - '{userId}'
-  draft:
-    label: Draft
-    filter_scope: space
-    filters:
-      - - submitter
-        - =
-        - '{userId}'
-      - - state
-        - =
-        - 'draft'
-      - - is_hidden
-        - <>
-        - true
 permission_set:
   user:
     allowCreate: false
