@@ -15,8 +15,8 @@ if(_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
 
-if(_.isEmpty(process.env.STEEDOS_AMIS_VERISON)) {
-	process.env.STEEDOS_AMIS_VERISON = '2.5.2';
+if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
+	process.env.STEEDOS_AMIS_VERSION = '2.5.2';
 }
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
