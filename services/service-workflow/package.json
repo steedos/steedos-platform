@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.4.0-beta.25",
+  "version": "2.4.0-beta.26",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/workflow": "2.4.0-beta.25",
+    "@steedos/workflow": "2.4.0-beta.26",
     "lodash": "^4.17.21",
     "node-schedule": "^2.0.0"
   },
@@ -12,5 +12,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1a46fbee4dd51269a59dc80ff30fde5572679c3a"
+  "gitHead": "bdcc1c0dade33d528ae0d5c0552e2b66b5a1e783"
 }
