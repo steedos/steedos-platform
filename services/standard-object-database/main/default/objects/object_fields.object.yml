@@ -14,24 +14,7 @@ fields:
     reference_to_field: name
     required: true
     write_requires_master_read: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                if(!['base','core','space_users_invite','_object_reload_logs'].includes(k)){
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                  });
-                }
-              });
-
-              return _options;
-            }
+    filters: ['name', 'notcontains', ['base','core','space_users_invite','_object_reload_logs']]
     sort_no: 110
   label:
     type: text
@@ -124,10 +107,6 @@ fields:
     label: Reference to
     reference_to: objects
     reference_to_field: name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-        return Steedos.getObjectsOptions();
-      }
     visible_on: "{{['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['master_detail'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 180

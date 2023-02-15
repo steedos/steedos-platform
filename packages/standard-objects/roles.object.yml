@@ -20,24 +20,6 @@ fields:
     type: lookup
     reference_to: roles
     reference_to_field: api_name
-    optionsFunction: !!js/function |
-      function () {
-        
-        let selects = ["name", "api_name"]
-        let options = {
-            $select: selects.toString()
-        };
-        console.log(11111)
-        let records = Creator.odata.query('roles', options, true);
-        let result = [];
-        records.forEach(function (item) {
-            result.push({
-                label: item.name,
-                value: item.api_name
-            });
-        });
-        return result;
-      }
   users:
     label: Users
     type: lookup

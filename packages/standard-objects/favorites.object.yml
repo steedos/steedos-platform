@@ -13,19 +13,8 @@ fields:
   object_name:
     type: lookup
     label: Object
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-                var _options;
-              _options = [];
-              _.forEach(Creator.Objects, function (o, k) {
-                  return _options.push({
-                    label: o.label,
-                    value: k,
-                    icon: o.icon
-                });
-              });
-              return _options;
-            }
+    reference_to: objects
+    reference_to_field: name
     required: true
     readonly: true
   record_type:

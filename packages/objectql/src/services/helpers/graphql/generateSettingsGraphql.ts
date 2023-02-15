@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-07 14:23:47
+ * @LastEditTime: 2023-02-13 10:52:16
  * @Description: 
  */
 
@@ -79,6 +79,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig) {
             }
             let objMetaData = getLocalService(refTo);
             if (refTo != objectName && (!objMetaData || objMetaData.settings.deleted)) {
+                type += `${name}: ${field.multiple ? "[JSON]" : "JSON"} `; // 未找到关联对象时仍返回字段值
                 return type;
             }
             if (field.multiple) {

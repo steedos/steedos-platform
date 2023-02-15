@@ -41,7 +41,8 @@ module.exports = {
             }
         });
     },
-    resetSchemaVisible: function (object_name, record_id, permission, record) {
+    resetSchemaVisible: function (object_name, record_id, permission, data) {
+        var record = data && data.record;
         return record && !record.is_system && record.type === 'form';
     }
 }

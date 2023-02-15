@@ -13,9 +13,11 @@ module.exports = {
         }
     });
   },
-  customizeVisible: function(object_name, record_id, record_permissions, record){
-      return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+  customizeVisible: function(object_name, record_id, record_permissions, data){
+    var record = data && data.record;
+    return Creator.baseObject.actions.standard_new.visible() && record.is_system;
   },
+  /*
   standard_new: function (object_name, record_id, fields){
 		var object = Creator.getObject(object_name);
     var gridName = this.action.gridName;
@@ -48,6 +50,7 @@ module.exports = {
       });
     }
   },
+  */
   /*
   standard_edit: function (object_name, record_id, fields){
 		var object = Creator.getObject(object_name);

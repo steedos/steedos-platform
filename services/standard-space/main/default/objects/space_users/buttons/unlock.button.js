@@ -34,7 +34,8 @@ module.exports = {
             sweetAlert.close();
         })
     },
-    unlockVisible: function (object_name, record_id, record_permissions, record) {
+    unlockVisible: function (object_name, record_id, record_permissions, data) {
+        var record = data && data.record;
         if ((record.user && record.user._id) === Steedos.userId()) {
             return;
         }

@@ -13,22 +13,6 @@ fields:
     label: Object
     create: false
     sort_no: 110
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              var _options;
-
-              _options = [];
-
-              _.forEach(Creator.objectsByName, function (o, k) {
-                return _options.push({
-                  label: o.label,
-                  value: k,
-                  icon: o.icon
-                });
-              });
-
-              return _options;
-            }
   label:
     type: text
     label: Label

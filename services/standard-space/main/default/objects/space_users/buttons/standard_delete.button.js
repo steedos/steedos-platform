@@ -6,7 +6,7 @@
  * @Description: 
  */
 module.exports = {
-    standard_deleteVisible: function (object_name, record_id, record_permissions, record) {
+    standard_deleteVisible: function (object_name, record_id, record_permissions, data) {
         return false;
     },
 }

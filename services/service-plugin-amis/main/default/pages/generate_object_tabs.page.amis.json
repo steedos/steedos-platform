@@ -20,7 +20,7 @@
                 },
                 "requestAdaptor": "const formData = api.data.$;\napi.data = { objects: formData.objects };\nreturn api;",
                 "responseData": null,
-                "adaptor": "\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n  refreshGrid && refreshGrid();\n}\nreturn payload;\n        ",
+                "adaptor": "\nif (api.body.objectName === \"tabs\") {\n  // 在tabs列表操作”对象选项卡“按钮，保存后需要刷新主列表\n}\nreturn payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -63,7 +63,7 @@
                     "actions": [
                         {
                             "actionType": "custom",
-                            "script": "const result = event.data.result;\nconst doneCount = result.data && result.data.doneCount || 0;\nconst myMsg = '已成功生成' + doneCount.toString() + \"条选项卡！\";\ndoAction({\n  actionType: 'toast',\n  args: {\n    msg: myMsg,\n    msgType: \"success\"\n  }\n});\nconst errors = result.data && result.data.errors || [];\nif (errors && errors.length) { \n  console.warn(\"以下对象未能生成选项卡：\");\n  console.warn(JSON.stringify(errors));\n}\nconst superData = event.data.__super;\nif (superData && superData.objectName === \"apps\") { \n  // 在应用表单中生成选项卡后需要触发选项卡列表组件reload重新刷新列表\n  doAction({\n    actionType: 'reload',\n    componentId: \"tabs-options-service\"\n  });\n}"
+                            "script": "const result = event.data.result;\nconst doneCount = result.data && result.data.doneCount || 0;\nconst myMsg = '已成功生成' + doneCount.toString() + \"条选项卡！\";\ndoAction({\n  actionType: 'toast',\n  args: {\n    msg: myMsg,\n    msgType: \"success\"\n  }\n});\nconst errors = result.data && result.data.errors || [];\nif (errors && errors.length) { \n  console.warn(\"以下对象未能生成选项卡：\");\n  console.warn(JSON.stringify(errors));\n}\nconst objectName = event.data.objectName;\nif (objectName === \"apps\") {\n  // 在应用表单中生成选项卡后需要触发选项卡列表组件reload重新刷新列表\n  doAction({\n    actionType: 'reload',\n    componentId: \"tabs-options-service\"\n  });\n}\nelse {\n  // 刷新主列表\n  doAction({\n    actionType: 'reload',\n    componentId: `listview_${objectName}`\n  });\n}"
                         }
                     ]
                 }
@@ -75,6 +75,7 @@
     ],
     "data": {
         "context": {
+            "rootUrl": "http://127.0.0.1:5800"
         }
     },
     "id": "u:3b0de7e88def",

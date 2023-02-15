@@ -254,6 +254,7 @@ fields:
     group: script
     blackbox: true
     is_wide: true
+    visible_on: "{{false}}"
   form.onRendered:
     type: code
     language: javascript

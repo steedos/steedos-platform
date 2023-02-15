@@ -251,7 +251,10 @@
                 const refName = schema.name || schema.id;
                 if(SteedosUI.refs[refName]){
                   if(SteedosUI.refs[refName].unmount){
-                    SteedosUI.refs[refName].unmount()
+                    try {
+                      SteedosUI.refs[refName].unmount()
+                    } catch (Exception) {
+                    }
                   }else{
                     console.log(`not find amis scope unmount`)
                   }
@@ -300,7 +303,10 @@
               const refName = schema.name || schema.id;
               if(SteedosUI.refs[refName]){
                 if(SteedosUI.refs[refName].unmount){
-                  SteedosUI.refs[refName].unmount()
+                  try {
+                    SteedosUI.refs[refName].unmount()
+                  } catch (Exception) {
+                  }
                 }else{
                   console.log(`not find amis scope unmount`)
                 }

@@ -836,24 +836,7 @@
             ],
             "panelClassName": "m-0 -mt-3",
             "bodyClassName": "p-4",
-            "actions": [
-                {
-                    "type": "button",
-                    "label": "取消",
-                    "actionType": "",
-                    "level": "default",
-                    "block": false,
-                    "onClick": "SteedosUI.getRef(props.data.__super.modalName).close();",
-                    "id": "u:bf2587b53d64"
-                },
-                {
-                    "type": "button",
-                    "label": "保存",
-                    "actionType": "submit",
-                    "level": "info",
-                    "id": "u:08afd6e53cab"
-                }
-            ],
+            "actions": [],
             "actionsClassName": "p-sm b-t b-light text-center",
             "className": "steedos-amis-form",
             "checkAll": false,

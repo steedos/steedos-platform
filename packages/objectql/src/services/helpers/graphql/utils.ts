@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-06 17:49:20
+ * @LastEditTime: 2023-02-13 13:33:53
  * @Description: 
  */
 
@@ -48,6 +48,8 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
         case 'url':
         case 'email':
         case 'html':
+        case 'markdown':
+        case 'code':
             return value || "";
         case 'boolean':
             return value ? "√" : ""
@@ -65,6 +67,7 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
         case 'password':
             return _.isString(value) ? "******" : ""
         default:
+            // console.log(field)
             console.error(
                 `Graphql Display: need to handle new field type ${field.type} for ${objectConfig.name}.`
             );
@@ -72,7 +75,7 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
     }
 }
 
-export function numberToString (number: number | string, scale: number, notThousands: boolean = false) {
+export function numberToString(number: number | string, scale: number, notThousands: boolean = false) {
     if (typeof number === "number") {
         number = number.toString();
     }
@@ -104,9 +107,9 @@ export function numberToString (number: number | string, scale: number, notThous
     }
 }
 
-export async function callObjectServiceAction(actionName, userSession, data?){
+export async function callObjectServiceAction(actionName, userSession, data?) {
     const broker = getSteedosSchema().broker;
-    return broker.call(actionName, data, { meta: { user: userSession}})
+    return broker.call(actionName, data, { meta: { user: userSession } })
 }
 
 // 获取object元数据
