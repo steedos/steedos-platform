@@ -56,12 +56,12 @@
     // Object.defineProperty(window, 'MonacoEnvironment', {set: ()=>{}, get: ()=>window.SteedosMonacoEnvironment})
 
 
-    if (window.define)
-        window.define.amd = undefined;
+    // if (window.define)
+    //     window.define.amd = undefined;
 
     // window.ReactDOM = ReactDom;
-    window.React17 = window.React;
-    window.ReactDOM17 = window.ReactDOM;
+    // window.React17 = window.React;
+    // window.ReactDOM17 = window.ReactDOM;
 
     // const BuilderSDK = BuilderReact;
 
@@ -79,10 +79,10 @@
         waitForThing(Creator, 'USER_CONTEXT'),
     ]).then(()=>{
         Builder.set({
-            rootUrl: __meteor_runtime_config__.ROOT_URL, 
-            unpkgUrl: Steedos.absoluteUrl('/unpkg.com'),
+            rootUrl: __steedos_runtime_config__.ROOT_URL, 
+            unpkgUrl: __steedos_runtime_config__.STEEDOS_UNPKG_URL,
             context: {
-                rootUrl: __meteor_runtime_config__.ROOT_URL,
+                rootUrl: __steedos_runtime_config__.ROOT_URL,
                 tenantId: Creator.USER_CONTEXT.spaceId,
                 userId: Creator.USER_CONTEXT.userId,
                 authToken: Creator.USER_CONTEXT.user.authToken

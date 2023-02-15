@@ -11,12 +11,16 @@ if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 	process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN = 'true';
 }
 
-const pageAsseturls = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.0/dist/assets.json";
-if (process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS){
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS;
+if(_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
+	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
-else {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = pageAsseturls;
+
+if(_.isEmpty(process.env.STEEDOS_AMIS_VERISON)) {
+	process.env.STEEDOS_AMIS_VERISON = '2.5.2';
+}
+
+if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.com/@steedos-widgets/amis-object@1.0/dist/assets.json";
 }
 
 /**
