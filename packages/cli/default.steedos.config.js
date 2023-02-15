@@ -19,8 +19,8 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_VERISON)) {
 	process.env.STEEDOS_AMIS_VERISON = '2.5.2';
 }
 
-if(_.isEmpty(process.env.STEEDOS_AMIS_VERISON)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.0/dist/assets.json";
+if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.com/@steedos-widgets/amis-object@1.0/dist/assets.json";
 }
 
 /**
