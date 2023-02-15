@@ -31,8 +31,9 @@ module.exports = {
       });
           
   },
-  customizeVisible: function(object_name, record_id, record_permissions, record){
-      return Creator.baseObject.actions.standard_new.visible() && record.is_system;
+  customizeVisible: function(object_name, record_id, record_permissions, data){
+    var record = data && data.record;
+    return Creator.baseObject.actions.standard_new.visible() && record.is_system;
   },
   copy: function(object_name, record_id){
     let newRecord = null; // _.clone(Creator.getListView(Session.get("object_name"), record_id));
@@ -87,7 +88,7 @@ module.exports = {
     }
     Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', t("creator_list_copy_list_view"), data, {});
   },
-  copyVisible: function(object_name, record_id, record_permissions, record){
+  copyVisible: function(object_name, record_id, record_permissions, data){
     return true;
   },
   showDesign: function (object_name, record_id) {

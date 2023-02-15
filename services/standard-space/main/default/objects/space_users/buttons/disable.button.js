@@ -72,7 +72,8 @@ module.exports = {
         });
     },
 
-    disableVisible: function (object_name, record_id, record_permissions, record) {
+    disableVisible: function (object_name, record_id, record_permissions, data) {
+        var record = data && data.record;
         var canDisable = record && record.user_accepted && (record.user && record.user._id) != Steedos.userId()
         if (!canDisable) {
             return;

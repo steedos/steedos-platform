@@ -6,7 +6,7 @@
  * @Description: 
  */
 module.exports = {
-    standard_newVisible: function (object_name, record_id, record_permissions, record) {
+    standard_newVisible: function (object_name, record_id, record_permissions, data) {
         var organization = Session.get("organization");
         var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
         if (!allowCreate) {

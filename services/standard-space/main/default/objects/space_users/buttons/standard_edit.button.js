@@ -6,7 +6,7 @@
  * @Description: 
  */
 module.exports = {
-    standard_editVisible: function (object_name, record_id, record_permissions, record) {
+    standard_editVisible: function (object_name, record_id, record_permissions, data) {
         var organization = Session.get("organization");
         var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);
         if (!allowEdit) {

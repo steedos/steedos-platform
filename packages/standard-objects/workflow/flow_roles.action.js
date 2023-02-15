@@ -24,7 +24,8 @@ module.exports = {
             }
         });
     },
-    customizeVisible: function(object_name, record_id, record_permissions, record){
+    customizeVisible: function(object_name, record_id, record_permissions, data){
+        var record = data && data.record;
         if(!record){
             record = {}
         }

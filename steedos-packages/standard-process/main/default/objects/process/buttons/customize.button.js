@@ -41,8 +41,9 @@ module.exports = {
             }
         });
     },
-    customizeVisible: function (object_name, record_id, record_permissions, record) {
+    customizeVisible: function (object_name, record_id, record_permissions, data) {
         return false;
+        // var record = data && data.record;
         // return record && Creator.baseObject.actions.standard_new.visible() && record.is_system;
     }
 }
