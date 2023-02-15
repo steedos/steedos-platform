@@ -3,6 +3,16 @@ import template from './template';
 const sri = (sri, mode) =>
   (sri && mode) ? ` integrity="sha512-${sri}" crossorigin="${mode}"` : '';
 
+const evalEnv = (function() {
+  var regexp = /\${([^{]+)}/g;
+
+  return function(str, o) {
+        return str.replace(regexp, function(ignore, key){
+              return (value = o[key]) == null ? '' : value;
+        });
+  }
+})()
+
 export const headTemplate = ({
   css,
   htmlAttributes,
@@ -11,7 +21,8 @@ export const headTemplate = ({
   head,
   dynamicHead,
 }) => {
-  var headSections = head.split(/<meteor-bundled-css[^<>]*>/, 2);
+  const replacedHead = evalEnv(head, process.env);
+  var headSections = replacedHead.split(/<meteor-bundled-css[^<>]*>/, 2);
   var cssBundle = [...(css || []).map(file =>
     template('  <link rel="stylesheet" type="text/css" class="__meteor-css__" href="<%- href %>"<%= sri %>>')({
       href: bundledJsCssUrlRewriteHook(file.url),

@@ -21,44 +21,50 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title">
 	<!-- React，可替换为 production 包 -->
-	<script src="/unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+	<!-- <script src="${STEEDOS_UNPKG_URL}/react@17.0.2/umd/react.production.min.js"></script> -->
 	<!-- React DOM，可替换为 production 包 -->
-	<script src="/unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+	<!-- <script src="${STEEDOS_UNPKG_URL}/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
 	<!-- React 向下兼容，预防物料层的依赖 -->
-	<script src="/unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+	<!-- <script src="${STEEDOS_UNPKG_URL}/prop-types@15.7.2/prop-types.js"></script> -->
 	<!-- <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script> -->
 	<!-- lodash，低代码编辑器的依赖 -->
-	<script src="/unpkg.com/lodash@4.17.21/lodash.min.js"></script>
+	<script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
 	<!-- 日期处理包，Fusion Next 的依赖 -->
-	<script src="/unpkg.com/moment@2.24.0/min/moment.min.js"></script>
-	<script src="/unpkg.com/marked@4.0.17/marked.min.js"></script>
+	<script src="${STEEDOS_UNPKG_URL}/moment@2.24.0/min/moment.min.js"></script>
+	<script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
 
-	<script src="/unpkg.com/crypto-js@4.1.1/crypto-js.js"></script>
+	<script src="${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js"></script>
 
-	<script src="/unpkg.com/axios@0.26.1/dist/axios.min.js"></script>
+	<script src="${STEEDOS_UNPKG_URL}/axios@0.26.1/dist/axios.min.js"></script>
 	
-	<!-- <script src="/unpkg.com/d3@3.5.17/d3.min.js"></script> -->
-	<!-- Steedos Builder -->
-	<script src="/unpkg.com/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
+	<!-- <script src="${STEEDOS_UNPKG_URL}/d3@3.5.17/d3.min.js"></script> -->
+	<script src="${STEEDOS_UNPKG_URL}/amis@2.5.2/sdk/sdk.js"></script>
 	<script >
+		__steedos_runtime_config__ = {};
+		__steedos_runtime_config__.STEEDOS_UNPKG_URL = "${STEEDOS_UNPKG_URL}";
+		__steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
+		window.React = amisRequire('react');
+		window.ReactDOM = amisRequire('react-dom');  	
 		window.React17 = window.React;
 		window.ReactDOM17 = window.ReactDOM;
 	</script>
+	<!-- Steedos Builder -->
+	<script src="${STEEDOS_UNPKG_URL}/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
+	
 	<meteor-bundled-css />
 
-	<script src="/unpkg.com/amis@2.5.2/sdk/sdk.js"></script>
-	<link rel="stylesheet" href="/unpkg.com/amis@2.5.2/lib/themes/antd.css" />
-	<link rel="stylesheet" href="/unpkg.com/amis@2.5.2/lib/helper.css" />
-	<link rel="stylesheet" href="/unpkg.com/amis@2.5.2/sdk/iconfont.css" />
+	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@2.5.2/lib/themes/antd.css" />
+	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@2.5.2/lib/helper.css" />
+	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@2.5.2/sdk/iconfont.css" />
 
-	<script src="/unpkg.com/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
-	<link rel="stylesheet" type="text/css" href="/unpkg.com/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
+	<script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
+	<link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
 
-	<script src="/unpkg.com/@steedos/filters@2.3.0-beta.36/dist/steedos-filters.umd.min.js"></script>
-	<!-- <script src="/unpkg.com/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/unpkg.com/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.css"> -->
+	<script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.0-beta.36/dist/steedos-filters.umd.min.js"></script>
+	<!-- <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.css"> -->
 
-	<link rel="stylesheet" href="https://unpkg.steedos.cn/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
 
 </head>
 

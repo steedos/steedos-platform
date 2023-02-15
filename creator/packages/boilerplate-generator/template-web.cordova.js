@@ -1,5 +1,15 @@
 import template from './template';
 
+const evalEnv = (function() {
+  var regexp = /\${([^{]+)}/g;
+
+  return function(str, o) {
+        return str.replace(regexp, function(ignore, key){
+              return (value = o[key]) == null ? '' : value;
+        });
+  }
+})()
+
 // Template function for rendering the boilerplate html for cordova
 export const headTemplate = ({
   meteorRuntimeConfig,
@@ -13,8 +23,8 @@ export const headTemplate = ({
   head,
   dynamicHead,
 }) => {
-  head = head.replace(/\/unpkg.com\//g, __meteor_runtime_config__.ROOT_URL + "/unpkg.com/");
-  var headSections = head.split(/<meteor-bundled-css[^<>]*>/, 2);
+  const replacedHead = evalEnv(head, process.env);
+  var headSections = replacedHead.split(/<meteor-bundled-css[^<>]*>/, 2);
   var cssBundle = [
     // We are explicitly not using bundledJsCssUrlRewriteHook: in cordova we serve assets up directly from disk, so rewriting the URL does not make sense
     ...(css || []).map(file =>
