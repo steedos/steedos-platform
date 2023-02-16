@@ -4,7 +4,7 @@ const sri = (sri, mode) =>
   (sri && mode) ? ` integrity="sha512-${sri}" crossorigin="${mode}"` : '';
 
 const evalEnv = (function() {
-  var regexp = /\${([^{]+)}/g;
+  var regexp = /\${([^}]+)}/g;
 
   return function(str, o) {
         return str.replace(regexp, function(ignore, key){
