@@ -1,59 +1,61 @@
 <style>
-		body { background-color: rgba(50, 152, 242, 1.0); }
-	</style>
-	<meta charset="utf-8">
-	<title>Steedos</title>
-	
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="theme-color" content="#000">
-	<meta name="application-name">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="apple-mobile-web-app-title">
-	<!-- React，可替换为 production 包 -->
-	<!-- <script src="${STEEDOS_UNPKG_URL}/react@17.0.2/umd/react.production.min.js"></script> -->
-	<!-- React DOM，可替换为 production 包 -->
-	<!-- <script src="${STEEDOS_UNPKG_URL}/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
-	<!-- React 向下兼容，预防物料层的依赖 -->
-	<!-- <script src="${STEEDOS_UNPKG_URL}/prop-types@15.7.2/prop-types.js"></script> -->
-	<!-- <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script> -->
-	<!-- lodash，低代码编辑器的依赖 -->
-	<script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
-	<!-- 日期处理包，Fusion Next 的依赖 -->
-	<script src="${STEEDOS_UNPKG_URL}/moment@2.24.0/min/moment.min.js"></script>
-	<script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
+    body { background-color: rgba(50, 152, 242, 1.0); }
+  </style>
+  <meta charset="utf-8">
+  <title>Steedos</title>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000">
+  <meta name="application-name">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title">
+  <!-- React，可替换为 production 包 -->
+  <!-- <script src="${STEEDOS_UNPKG_URL}/react@17.0.2/umd/react.production.min.js"></script> -->
+  <!-- React DOM，可替换为 production 包 -->
+  <!-- <script src="${STEEDOS_UNPKG_URL}/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
+  <!-- React 向下兼容，预防物料层的依赖 -->
+  <!-- <script src="${STEEDOS_UNPKG_URL}/prop-types@15.7.2/prop-types.js"></script> -->
+  <!-- <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script> -->
+  <!-- lodash，低代码编辑器的依赖 -->
+  <script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
+  <!-- 日期处理包，Fusion Next 的依赖 -->
+  <script src="${STEEDOS_UNPKG_URL}/moment@2.24.0/min/moment.min.js"></script>
+  <script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
 
-	<script src="${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js"></script>
+  <script src="${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js"></script>
 
-	<script src="${STEEDOS_UNPKG_URL}/axios@0.26.1/dist/axios.min.js"></script>
-	
-	<!-- <script src="${STEEDOS_UNPKG_URL}/d3@3.5.17/d3.min.js"></script> -->
-	<script src="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/sdk.js"></script>
-	<script >
-		__steedos_runtime_config__ = {};
-		__steedos_runtime_config__.STEEDOS_UNPKG_URL = "${STEEDOS_UNPKG_URL}";
-		__steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
-		window.React = amisRequire('react');
-		window.ReactDOM = amisRequire('react-dom');  	
-		window.React17 = window.React;
-		window.ReactDOM17 = window.ReactDOM;
-	</script>
-	<!-- Steedos Builder -->
-	<script src="${STEEDOS_UNPKG_URL}/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
-	
-	<meteor-bundled-css />
+  <script src="${STEEDOS_UNPKG_URL}/axios@0.26.1/dist/axios.min.js"></script>
+  
+  <!-- <script src="${STEEDOS_UNPKG_URL}/d3@3.5.17/d3.min.js"></script> -->
+  <script src="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/sdk.js"></script>
+  <script >
+    __steedos_runtime_config__ = {};
+    __steedos_runtime_config__.STEEDOS_VERSION = "${STEEDOS_VERSION}";
+    __steedos_runtime_config__.STEEDOS_UNPKG_URL = "${STEEDOS_UNPKG_URL}";
+    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_ASSETURLS = "${STEEDOS_PUBLIC_PAGE_ASSETURLS}";
+    __steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
+    window.React = amisRequire('react');
+    window.ReactDOM = amisRequire('react-dom');  	
+    window.React17 = window.React;
+    window.ReactDOM17 = window.ReactDOM;
+  </script>
+  <!-- Steedos Builder -->
+  <script src="${STEEDOS_UNPKG_URL}/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
+  
+  <meteor-bundled-css />
 
-	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/themes/antd.css" />
-	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/helper.css" />
-	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/iconfont.css" />
+  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/themes/antd.css" />
+  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/helper.css" />
+  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/iconfont.css" />
 
-	<script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
-	<link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
+  <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
+  <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
 
-	<script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.5/dist/steedos-filters.umd.min.js"></script>
-	<!-- <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.css"> -->
+  <script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.5/dist/steedos-filters.umd.min.js"></script>
+  <!-- <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.css"> -->
 
-	<link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
