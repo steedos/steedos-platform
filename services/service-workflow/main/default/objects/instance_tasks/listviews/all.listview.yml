@@ -1,6 +1,0 @@
-name: all
-label: 所有
-columns:
-  - instance_name
-  - modified
-filter_scope: space

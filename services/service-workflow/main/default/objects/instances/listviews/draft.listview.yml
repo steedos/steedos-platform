@@ -4,7 +4,7 @@ columns:
   - name
   - applicant
   - applicant_organization
-  - modified
+  - created
   - state
 filter_scope: space
 filters: !!js/function |
@@ -15,3 +15,4 @@ filters: !!js/function |
       });
       return result.filter;
     }
+sort: [['created','desc']]
