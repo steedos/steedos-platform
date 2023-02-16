@@ -300,7 +300,7 @@ steedosImport.objectWorkflow = function (spaceId, flowId, objectName, doc) {
 };
 
 steedosImport.workflow = function (uid, spaceId, form, enabled, company_id, options) {
-    console.log('[import.js]>>>>>>>>>>>>>>>', 'steedosImport.workflow')
+    // console.log('[import.js]>>>>>>>>>>>>>>>', 'steedosImport.workflow')
     var category, category_id, e, flows, form_id, new_category, new_flow_ids, new_form_ids, upgrade, upgradeFlowId, upgradeFormId;
     upgrade = (options != null ? options.upgrade : void 0) || false;
     upgradeFormId = options != null ? options.formId : void 0;

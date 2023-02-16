@@ -83,7 +83,7 @@ _getFlowByForm = function (form, flowId, is_copy, company_id) {
 };
 
 steedosExport.form = function (formId, flowId, is_copy, company_id) {
-    console.log('[export.js]>>>>>>>>>>>>>>>', 'steedosExport.form')
+    // console.log('[export.js]>>>>>>>>>>>>>>>', 'steedosExport.form')
     var _getFieldNumberRule, _getNumberRuleName, c_fields, category, fields, form, instance_number_rules;
     form = db.forms.findOne({
         _id: formId
