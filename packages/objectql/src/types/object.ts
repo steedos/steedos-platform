@@ -2009,7 +2009,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                         }
                         id.filters = id.filters ? `(${id.filters}) and (owner eq \'${userId}\' ${objectPermissionEditFilters})` : `(owner eq \'${userId}\' ${objectPermissionEditFilters})`;
                     }
-                } else if (objectPermissionEditFilters) {
+                } else if (!objPm.modifyAllRecords && objectPermissionEditFilters) {
+                    objectPermissionEditFilters = objectPermissionEditFilters.replace(" or ", "");
                     if (_.isString(id)) {
                         id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
                     }
@@ -2062,7 +2063,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
                 else if (!objPm.modifyAllRecords && !objPm.modifyCompanyRecords) {
                     id = { filters: `(_id eq \'${id}\') and (owner eq \'${userId}\'${objectPermissionEditFilters})` };
-                } else if (objectPermissionEditFilters) {
+                } else if (!objPm.modifyAllRecords && objectPermissionEditFilters) {
+                    objectPermissionEditFilters = objectPermissionEditFilters.replace(" or ", "");
                     if (_.isString(id)) {
                         id = { filters: `(_id eq \'${id}\') and (${objectPermissionEditFilters})` }
                     }
