@@ -1989,10 +1989,9 @@ uuflowManager.getFlowCompanyId = function (flowId) {
 };
 
 uuflowManager.create_instance = function (instance_from_client, user_info) {
-    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, instance_flow_version, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
+    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
     space_id = instance_from_client["space"];
     flow_id = instance_from_client["flow"];
-    instance_flow_version = instance_from_client["flow_version"];
     user_id = user_info._id;
     // 获取前台所传的trace
     trace_from_client = null;
