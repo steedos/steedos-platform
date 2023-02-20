@@ -15,7 +15,8 @@
     "start:ee": "cd examples && cd project-ee && steedos start",
     "bootstrap": "lerna clean --yes && lerna bootstrap",
     "build": "yarn bootstrap && lerna run build",
-    "i18n": "lerna run i18n"
+    "i18n": "lerna run i18n",
+    "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
   },
   "resolutions": {
     "@salesforce/ts-types": "1.1.2"
@@ -29,6 +30,7 @@
     "typescript": "4.6.3"
   },
   "dependencies": {
+    "cnpm": "9.0.1",
     "tslib": "^2.4.0"
   }
 }
