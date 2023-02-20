@@ -1989,10 +1989,9 @@ uuflowManager.getFlowCompanyId = function (flowId) {
 };
 
 uuflowManager.create_instance = function (instance_from_client, user_info) {
-    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, instance_flow_version, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
+    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
     space_id = instance_from_client["space"];
     flow_id = instance_from_client["flow"];
-    instance_flow_version = instance_from_client["flow_version"];
     user_id = user_info._id;
     // 获取前台所传的trace
     trace_from_client = null;
@@ -2294,7 +2293,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         // 申请单名称按照固定规则生成申请单名称：流程名称＋' '+申请单编号
         upObj.submit_date = now;
         upObj.state = "completed";
-        upObj.values = uuflowManager.getUpdatedValues(instance);
+        upObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
         upObj.code = flow.current_no + 1 + "";
         instance.code = upObj.code;
         instance.values = upObj.values;
@@ -2347,7 +2346,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
                     nextTrace.start_date = now;
                     nextTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
                     nextTrace.approves = [];
-                    updated_values = uuflowManager.getUpdatedValues(instance);
+                    updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
                     // 插入下一步trace.approve记录
                     _.each(next_step_users, function (next_step_user_id, idx) {
                         var agent, handler_id, handler_info, nextApprove, next_step_space_user, next_step_user_org_info;
