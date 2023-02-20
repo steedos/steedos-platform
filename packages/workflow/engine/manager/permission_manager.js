@@ -2,15 +2,15 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-21 15:00:07
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-21 15:00:50
+ * @LastEditTime: 2023-02-16 09:50:09
  * @Description: 
  */
 global.permissionManager = {};
 
-permissionManager.getFlowPermissions = function(flow_id, user_id) {
+permissionManager.getFlowPermissions = function (flow_id, user_id) {
   var flow, my_permissions, org_ids, organizations, orgs_can_add, orgs_can_admin, orgs_can_monitor, space_id, users_can_add, users_can_admin, users_can_monitor;
   // 根据:flow_id查到对应的flow
-  flow = uuflowManager.getFlow(flow_id);
+  flow = uuflowManager.getFlow(flow_id, { fields: { space: 1, perms: 1 } });
   space_id = flow.space;
   // 根据space_id和:user_id到organizations表中查到用户所属所有的org_id（包括上级组ID）
   org_ids = new Array;
@@ -22,10 +22,10 @@ permissionManager.getFlowPermissions = function(flow_id, user_id) {
       parents: 1
     }
   }).fetch();
-  _.each(organizations, function(org) {
+  _.each(organizations, function (org) {
     org_ids.push(org._id);
     if (org.parents) {
-      return _.each(org.parents, function(parent_id) {
+      return _.each(org.parents, function (parent_id) {
         return org_ids.push(parent_id);
       });
     }
@@ -44,7 +44,7 @@ permissionManager.getFlowPermissions = function(flow_id, user_id) {
     }
     if (flow.perms.orgs_can_add) {
       orgs_can_add = flow.perms.orgs_can_add;
-      _.each(org_ids, function(org_id) {
+      _.each(org_ids, function (org_id) {
         if (orgs_can_add.includes(org_id)) {
           return my_permissions.push("add");
         }
@@ -61,7 +61,7 @@ permissionManager.getFlowPermissions = function(flow_id, user_id) {
     }
     if (flow.perms.orgs_can_monitor) {
       orgs_can_monitor = flow.perms.orgs_can_monitor;
-      _.each(org_ids, function(org_id) {
+      _.each(org_ids, function (org_id) {
         if (orgs_can_monitor.includes(org_id)) {
           return my_permissions.push("monitor");
         }
@@ -78,7 +78,7 @@ permissionManager.getFlowPermissions = function(flow_id, user_id) {
     }
     if (flow.perms.orgs_can_admin) {
       orgs_can_admin = flow.perms.orgs_can_admin;
-      _.each(org_ids, function(org_id) {
+      _.each(org_ids, function (org_id) {
         if (orgs_can_admin.includes(org_id)) {
           return my_permissions.push("admin");
         }

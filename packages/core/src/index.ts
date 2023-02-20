@@ -11,6 +11,9 @@ import { getFromContainer } from "./container";
 import { CreatorManager } from "./creator/CreatorManager";
 
 
+const pkg = require('../package.json')
+process.env.STEEDOS_VERSION = pkg.version;
+
 /**
  * Gets a ObjectSchemaManager which creates object schema.
  */

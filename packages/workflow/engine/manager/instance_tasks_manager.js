@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-17 11:51:24
+ * @LastEditTime: 2023-02-20 11:12:37
  * @Description: 
  */
 'use strict';
@@ -13,6 +13,15 @@ const { getObject } = require('@steedos/objectql')
 function _insert(taskDoc) {
     const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
         getObject('instance_tasks').insert(taskDoc).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(taskDoc);
+    return newTaskDoc
+}
+
+function _directInsert(taskDoc) {
+    const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
+        getObject('instance_tasks').directInsert(taskDoc).then(function (resolve, reject) {
             cb(reject, resolve);
         });
     })(taskDoc);
@@ -55,7 +64,7 @@ function _find(query) {
  */
 function insert_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    const newTaskDoc = _insert(taskDoc)
+    const newTaskDoc = _directInsert(taskDoc)
     return newTaskDoc
 }
 

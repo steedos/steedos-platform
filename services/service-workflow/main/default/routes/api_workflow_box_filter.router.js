@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-10 13:49:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-11 13:26:19
+ * @LastEditTime: 2023-02-20 13:48:52
  * @Description: 
  */
 const express = require("express");
@@ -46,7 +46,7 @@ router.get('/api/workflow/v2/:box/filter', core.requireAuthentication, async fun
             filter.push([['submitter', '=', userId], 'or', ['applicant', '=', userId]]);
             break;
         case 'completed':
-			filter.push(['submitter', '=', 'uid']);
+			filter.push(['submitter', '=', userId]);
             filter.push(['state', '=', 'completed']);
             break;
         case 'monitor':
@@ -56,12 +56,12 @@ router.get('/api/workflow/v2/:box/filter', core.requireAuthentication, async fun
                 if(!flowId){
                     if(!_.includes(flowIds, flowId)){
                         filter.push([
-                            ['submitter', '=', 'uid'], 'or', ['applicant', '=', 'uid'], 'or', ['inbox_users', '=', 'uid'], 'or', ['outbox_users', '=', 'uid']
+                            ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId]
                         ])
                     }
                 }else{
                     filter.push([
-                        ['submitter', '=', 'uid'], 'or', ['applicant', '=', 'uid'], 'or', ['inbox_users', '=', 'uid'], 'or', ['outbox_users', '=', 'uid'], 'or', ['flow', 'in', flowIds]
+                        ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId], 'or', ['flow', 'in', flowIds]
                     ])
                 }
             }

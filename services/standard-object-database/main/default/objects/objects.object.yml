@@ -242,6 +242,7 @@ fields:
     omit: true
     disabled: false
     readonly: false
+    visible_on: "{{global.mode ==='read' ? true : false}}"
   reload_time:
     type: datetime
     hidden: true

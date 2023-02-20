@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-17 16:52:33
+ * @LastEditTime: 2023-02-20 09:13:05
  * @Description: 
  */
 const express = require("express");
@@ -15,6 +15,9 @@ router.post('/api/workflow/v2/draft', core.requireAuthentication, async function
     try {
         let userSession = req.user;
         const { instance } = req.body;
+        if(!instance.space){
+            instance.space = userSession.spaceId;
+        }
         Fiber(async function () {
             try {
 

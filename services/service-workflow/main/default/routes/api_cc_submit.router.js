@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-11 14:50:02
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-14 11:34:38
+ * @LastEditTime: 2023-02-15 17:12:18
  * @Description: 
  */
 const express = require("express");
@@ -25,19 +25,11 @@ router.post('/api/workflow/v2/cc_submit', core.requireAuthentication, async func
                 //TODO
                 console.log('======cc_submit=====', instanceId, description, approve);
                 const ccHasEditPermission = false;
-                workflowMethods.cc_submit.apply({
+                const result = workflowMethods.cc_submit.apply({
                     userId: userSession.userId
                 }, [
-                    instanceId, description, approve, ccHasEditPermission, (error, result)=>{
-                        if(error){
-                            res.status(200).send({
-                                error: error.message
-                            });
-                        }else{
-                            res.status(200).send(result); 
-                        }
-                    }
-                ])
+                    instanceId, description, approve, ccHasEditPermission])
+                res.status(200).send(result); 
                 // Meteor.call('cc_submit', instanceId, description, approve, ccHasEditPermission, (error, result)=>{
                 //     if(error){
                 //         res.status(200).send({

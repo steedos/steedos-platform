@@ -76,9 +76,9 @@ uuflowManager.getSpaceUser = function (space_id, user_id) {
     return space_user;
 };
 
-uuflowManager.getFlow = function (flow_id) {
+uuflowManager.getFlow = function (flow_id, options = {}) {
     var flow;
-    flow = db.flows.findOne(flow_id);
+    flow = db.flows.findOne(flow_id, options);
     if (!flow) {
         throw new Meteor.Error('error!', "id有误或此流程已经被删除");
     }
@@ -702,9 +702,9 @@ uuflowManager.getUpdatedValues = function (instance, approve_id) {
     return newest_values;
 };
 
-uuflowManager.getForm = function (form_id) {
+uuflowManager.getForm = function (form_id, options = {}) {
     var form;
-    form = db.forms.findOne(form_id);
+    form = db.forms.findOne(form_id, options);
     if (!form) {
         throw new Meteor.Error('error!', '表单ID有误或此表单已经被删除');
     }
@@ -727,8 +727,8 @@ uuflowManager.getFormVersion = function (form, form_version) {
     return form_v;
 };
 
-uuflowManager.getCategory = function (category_id) {
-    return db.categories.findOne(category_id);
+uuflowManager.getCategory = function (category_id, options = {}) {
+    return db.categories.findOne(category_id, options);
 };
 
 uuflowManager.getInstanceName = function (instance, vals) {
@@ -1989,10 +1989,9 @@ uuflowManager.getFlowCompanyId = function (flowId) {
 };
 
 uuflowManager.create_instance = function (instance_from_client, user_info) {
-    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, instance_flow_version, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
+    var appr_obj, approve_from_client, category, companyId, flow, flow_id, form, ins_obj, new_ins_id, now, permissions, space, space_id, space_user, space_user_org_info, start_step, trace_from_client, trace_obj, user_id;
     space_id = instance_from_client["space"];
     flow_id = instance_from_client["flow"];
-    instance_flow_version = instance_from_client["flow_version"];
     user_id = user_info._id;
     // 获取前台所传的trace
     trace_from_client = null;
@@ -2007,7 +2006,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     // 获取一个space
     space = uuflowManager.getSpace(space_id);
     // 获取一个flow
-    flow = uuflowManager.getFlow(flow_id);
+    flow = uuflowManager.getFlow(flow_id, { fields: { historys: 0 } });
     // 获取一个space下的一个user
     space_user = uuflowManager.getSpaceUser(space_id, user_id);
     // 获取space_user所在的部门信息
@@ -2016,7 +2015,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     uuflowManager.isFlowEnabled(flow);
     // 判断一个flow和space_id是否匹配
     uuflowManager.isFlowSpaceMatched(flow, space_id);
-    form = uuflowManager.getForm(flow.form);
+    form = uuflowManager.getForm(flow.form, { fields: { historys: 0 } });
     permissions = permissionManager.getFlowPermissions(flow_id, user_id);
     if (!permissions.includes("add")) {
         throw new Meteor.Error('error!', "当前用户没有此流程的新建权限");
@@ -2047,7 +2046,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     ins_obj.modified = now;
     ins_obj.modified_by = user_id;
     ins_obj.values = {};
-    companyId = uuflowManager.getFlowCompanyId(flow_id);
+    companyId = flow.company_id;
     if (companyId) {
         ins_obj.company_id = companyId;
     }
@@ -2093,7 +2092,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     // 新建申请单时，instances记录流程名称、流程分类名称 #1313
     ins_obj.flow_name = flow.name;
     if (form.category) {
-        category = uuflowManager.getCategory(form.category);
+        category = uuflowManager.getCategory(form.category, { fields: { _id: 1, name: 1 } });
         if (category) {
             ins_obj.category_name = category.name;
             ins_obj.category = category._id;
@@ -2161,7 +2160,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     // 校验申请人user_accepted = true
     checkApplicant = uuflowManager.getSpaceUser(space_id, applicant_id);
     // 获取一个flow
-    flow = uuflowManager.getFlow(flow_id);
+    flow = uuflowManager.getFlow(flow_id, { historys: 0 });
     // 确定instance的name
     instance_name = instance_from_client["name"];
     // 判断一个instance是否为拟稿状态
@@ -2185,7 +2184,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     approve = trace["approves"][0];
     // 先执行暂存的操作
     // ================begin================
-    form = db.forms.findOne(instance.form);
+    form = uuflowManager.getForm(instance.form, { fields: { historys: 0 } });
     // 获取Flow当前版本开始节点
     start_step = _.find(flow.current.steps, function (step) {
         return step.step_type === 'start';
@@ -2244,7 +2243,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         };
     }
     // ================end================
-    instance = db.instances.findOne(instance_id); //使用最新的instance
+    instance = uuflowManager.getInstance(instance_id); //使用最新的instance
     // 判断一个instance是否为拟稿状态
     uuflowManager.isInstanceDraft(instance, lang);
     traces = instance.traces;
@@ -2433,7 +2432,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     }
 
     if (next_step.step_type !== "end") {
-        instance = db.instances.findOne(instance_id);
+        instance = uuflowManager.getInstance(instance_id);
         //发送短消息给申请人
         pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info);
         // 发送消息给下一步处理人

@@ -1011,6 +1011,9 @@ pushManager.get_badge = function (send_from, user_id) {
 
 // 发送消息到qq
 pushManager.send_to_qq = function (to_user, from_user, space_id, instance_id, instance_state, body, i18n_obj) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var app_id, box, bqq_uri, e, employee_access_token, oauth, open_id, recv_open_ids, response, space, tips_url;
     try {
         if ((!to_user.services) || (!to_user.services['bqq']) || (!to_user.services['bqq']['id'])) {
@@ -1051,6 +1054,9 @@ pushManager.send_to_qq = function (to_user, from_user, space_id, instance_id, in
 };
 
 pushManager.send_email_to_SMTP = function (subject, content, to_user, reply_user) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var e;
     if (to_user.email && to_user.email_verified && to_user.email_notification) {
         try {
@@ -1076,6 +1082,9 @@ pushManager.checkMailFromNameLength = function (name) {
 };
 
 pushManager.send_message_by_raix_push = function (data) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var e, notification, payload;
     if (!data["data"]) {
         return;
@@ -1122,6 +1131,9 @@ pushManager.send_message_by_raix_push = function (data) {
 
 //steedos_ids 必须为数组 ； body 如果有，则必须为Hash
 pushManager.send_message = function (steedos_ids, body, current_user_info) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var data;
     if (!steedos_ids || !(steedos_ids instanceof Array)) {
         return;
@@ -1136,6 +1148,9 @@ pushManager.send_message = function (steedos_ids, body, current_user_info) {
 };
 
 pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var ref4, ref5, spaceUser;
     if (((ref4 = Meteor.settings) != null ? (ref5 = ref4.workflow) != null ? ref5.sms_notification : void 0 : void 0) && (to_user != null ? to_user.mobile : void 0) && (to_user != null ? to_user.mobile_verified : void 0)) {
         spaceUser = db.space_users.findOne({
@@ -1158,6 +1173,9 @@ pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId
 
 //通知服务
 pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     // console.log('[push_manager.js]>>>>>>>>>>>>>>>>>>>>', 'pushManager.send_instance_notification');
     var _approves_des, _approves_username, approve, approves_description, body_style_end, body_style_start, current_step, current_step_name, e, flow, flow_version, from_user, href, instance_id, lastApprove_judge, lastApprove_usersname, nextApprove_usersname, nextStep_type, parameters, space_id, to_user_change, to_users, trace;
     try {
@@ -1306,6 +1324,9 @@ pushManager.send_instance_notification = function (send_from, instance, descript
 
 // 发送给当前用户
 pushManager.send_message_current_user = function (user_info) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var badge, e, push_body;
     try {
         badge = this.get_badge("current_user", user_info._id);
@@ -1320,6 +1341,9 @@ pushManager.send_message_current_user = function (user_info) {
 
 // 发送push 并且内容只有待审核数量
 pushManager.send_message_to_specifyUser = function (send_from, to_user) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var badge, e, push_body, user_info;
     try {
         badge = this.get_badge(send_from, to_user);
@@ -1338,6 +1362,9 @@ pushManager.send_message_to_specifyUser = function (send_from, to_user) {
 };
 
 pushManager.triggerWebhook = function (flow_id, instance, current_approve, action, from_user_id, to_user_ids) {
+    if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
+        return
+    }
     var from_space_user, from_user, to_users;
     instance.attachments = cfs.instances.find({
         'metadata.instance': instance._id

@@ -26,22 +26,18 @@ module.exports = {
   },
 
   online_preview: function (object_name, record_id) {
-    var file, fileId, ref1, ref2, ref3, ref4, url;
+    var file, fileId, ref1, ref2, ref3, ref4, download_url, file_name;
     file = this.record;
 
     if (file != null ? file.versions : void 0) {
       fileId = file != null ? (ref1 = file.versions) != null ? ref1[0] : void 0 : void 0;
     } else {
-      fileId = file != null ? (ref2 = file.__super) != null ? (ref3 = ref2.record) != null ? (ref4 = ref3.versions) != null ? ref4[0] : void 0 : void 0 : void 0 : void 0;
+      fileId = file != null ? (ref2 = file.__super) != null ? (ref3 = ref2.record) != null ? (ref4 = ref3.versions) != null ? ref4[0].value : void 0 : void 0 : void 0 : void 0;
     }
     
-    url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.name);
+    download_url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.name);
+    file_name = file.name;
     
-    // 图片和网页类型附件用浏览器打开
-    if (Creator.isImageAttachment(file.name) || Creator.isHtmlAttachment(file.name)){
-      Steedos.openWindow(url);
-    }else{
-      Creator.officeOnlinePreview(url,file.name);
-    }
+    SteedosUI.previewFile({download_url, file_name, isPreviewButton:true});
   }
 }
