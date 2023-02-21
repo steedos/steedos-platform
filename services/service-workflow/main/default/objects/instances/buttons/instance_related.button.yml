@@ -33,7 +33,7 @@ amis_schema: |-
                                                   "source": {
                                                       "method": "post",
                                                       "url": "${context.rootUrl}/graphql",
-                                                      "requestAdaptor": "const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize}, skip: ${(pageNo - 1) * pageSize}){\n                _id,\n                name,\n                flow_name,\n                current_step_name,\n                applicant_name\n            },\n            count: instances__getRelatedInstances__count(keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
+                                                      "requestAdaptor": "const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize}, skip: ${(pageNo - 1) * pageSize}){\n                value: _id,\n                label: name,\n                flow_name,\n                current_step_name,\n                applicant_name\n            },\n            count: instances__getRelatedInstances__count(keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
                                                       "headers": {
                                                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                       },
@@ -83,19 +83,13 @@ amis_schema: |-
                                                       "id": "u:e6bc823233d7"
                                                   },
                                                   "joinValues": false,
-                                                  "extractValue": true,
-                                                  "labelField": "name",
-                                                  "valueField": "_id"
+                                                  "extractValue": true
                                               }
                                           ],
                                           "initApi": {
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
-                                              "data": {
-                                                  "&": "$$",
-                                                  "record_id": "${record_id}"
-                                              },
-                                              "requestAdaptor": "const { record_id } = api.data;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${record_id}\"){\n                related_instances: related_instances__expand{\n                  _id,\n                  name\n                }\n              }\n            }\n          `\n        }\n        return api;",
+                                              "requestAdaptor": "const { recordId } = api.data;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  value: _id,\n                  label: name\n                }\n              }\n            }\n          `\n        }\n        return api;",
                                               "adaptor": "payload.data = {\n  related_instances: payload.data.instance.related_instances\n};\nreturn payload;"
                                           }
                                       }
@@ -147,7 +141,7 @@ amis_schema: |-
                                                           "actionType": "custom",
                                                           "args": {},
                                                           "componentId": "",
-                                                          "script": "SteedosUI.getRef(\"amis-root-workflow\")?.getComponentByName(\"instancePage\")?.reload()"
+                                                          "script": "debugger;SteedosUI.getRef(\"amis-root-workflow\")?.getComponentByName(\"instancePage\")?.reload()"
                                                       },
                                                       {
                                                           "componentId": "",
