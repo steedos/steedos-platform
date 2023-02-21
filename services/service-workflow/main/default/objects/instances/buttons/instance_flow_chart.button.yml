@@ -13,7 +13,8 @@ amis_schema: |-
                       "actions": [
                           {
                               "args": {
-                                  "url": "${context.rootUrl}/api/workflow/chart?instance_id=${recordId}&title=${record.flow.name}"
+                                  "url": "${context.rootUrl}/api/workflow/chart?instance_id=${recordId}&title=${record.flow.name}",
+                                    "blank": true
                               },
                               "actionType": "url"
                           }
