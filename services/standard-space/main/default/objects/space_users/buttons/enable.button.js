@@ -29,7 +29,7 @@ module.exports = {
                         toastr.error(t("space_users_method_enable_error", t(data.error.reason)));
                     }
                     else {
-                        Template.creator_view.currentInstance.onEditSuccess()
+                        FlowRouter.reload();
                         toastr.success(t("space_users_method_enable_success"));
                     }
                 }
