@@ -131,31 +131,11 @@ Package.onUse(function (api) {
 
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
-	api.addFiles('client/layout/sidebar_left.html', 'client');
-	api.addFiles('client/layout/sidebar_left.less', 'client');
-	api.addFiles('client/layout/sidebar_left.coffee', 'client');
-
 	api.addFiles('client/layout/layout.html', 'client');
 	api.addFiles('client/layout/layout.less', 'client');
 	api.addFiles('client/layout/layout.coffee', 'client');
-	api.addFiles('client/layout/header_search.html', 'client');
-	api.addFiles('client/layout/header_search.less', 'client');
-	api.addFiles('client/layout/header_search.coffee', 'client');
-	api.addFiles('client/layout/navigation.html', 'client');
-	api.addFiles('client/layout/navigation.coffee', 'client');
-	api.addFiles('client/layout/navigation.less', 'client');
-	api.addFiles('client/layout/sidebar.html', 'client');
-	api.addFiles('client/layout/sidebar.coffee', 'client');
-	api.addFiles('client/layout/sidebar.less', 'client');
 	api.addFiles('client/layout/loading.html', 'client');
 	api.addFiles('client/layout/loading.less', 'client');
-
-	api.addFiles('client/layout/app_object_menu.html', 'client');
-	api.addFiles('client/layout/app_object_menu.less', 'client');
-
-	api.addFiles('client/layout/creator_app_list_modal.html', 'client');
-	api.addFiles('client/layout/creator_app_list_modal.coffee', 'client');
-	api.addFiles('client/layout/creator_app_list_modal.less', 'client');
 
 	api.addFiles('client/mobile/admin.html', 'client');
 	api.addFiles('client/mobile/admin.coffee', 'client');
