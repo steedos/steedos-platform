@@ -34,8 +34,8 @@ set_sessions = (context, redirect)->
 	Session.set("tab_name", null)
 	Session.set("pageApiName", null)
 	# 手机上record_id从老值变更为新值时，要清除record，否则list组件不会处理加载
-	if record_id != oldRecordId
-		Template.creator_view.currentInstance?.record?.set(null)
+	# if record_id != oldRecordId
+	# 	Template.creator_view.currentInstance?.record?.set(null)
 	Session.set("record_id", record_id)
 	Session.set("record_name", null)
 	# objectHomeComponent = BuilderCreator.pluginComponentSelector(BuilderCreator.store.getState(), "ObjectHome", object_name)
@@ -184,7 +184,7 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 				if responseText.errors
 					responseText.errors.forEach (e) -> 
 						toastr.error(e.errorMessage)
-					Template.creator_view.currentInstance.onEditSuccess()
+					# Template.creator_view.currentInstance.onEditSuccess()
 					return
 				else if responseText.redirect_url
 					if Meteor.settings.public.webservices?.workflow?.url
@@ -195,7 +195,7 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 			error:  (xhr, msg, ex) -> 
 				$(document.body).removeClass('loading')
 				toastr.error(msg)
-				Template.creator_view.currentInstance.onEditSuccess()
+				# Template.creator_view.currentInstance.onEditSuccess()
 		})
 
 FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
@@ -209,7 +209,7 @@ FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 	triggersExit: [(context, redirect) ->
 		Session.set("tab_name", null)
 	]
-	
+
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',

@@ -20,24 +20,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title">
-  <!-- React，可替换为 production 包 -->
-  <!-- <script src="${STEEDOS_UNPKG_URL}/react@17.0.2/umd/react.production.min.js"></script> -->
-  <!-- React DOM，可替换为 production 包 -->
-  <!-- <script src="${STEEDOS_UNPKG_URL}/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
-  <!-- React 向下兼容，预防物料层的依赖 -->
-  <!-- <script src="${STEEDOS_UNPKG_URL}/prop-types@15.7.2/prop-types.js"></script> -->
-  <!-- <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script> -->
   <!-- lodash，低代码编辑器的依赖 -->
   <script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
-  <!-- 日期处理包，Fusion Next 的依赖 -->
-  <script src="${STEEDOS_UNPKG_URL}/moment@2.24.0/min/moment.min.js"></script>
   <script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
 
   <script src="${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js"></script>
 
-  <script src="${STEEDOS_UNPKG_URL}/axios@0.26.1/dist/axios.min.js"></script>
-  
-  <!-- <script src="${STEEDOS_UNPKG_URL}/d3@3.5.17/d3.min.js"></script> -->
   <script src="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/sdk.js"></script>
   <script >
     __steedos_runtime_config__ = {};
@@ -47,10 +35,13 @@
     __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_SCRIPTS = "${STEEDOS_PUBLIC_PAGE_SCRIPTS}";
     __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_STYLES = "${STEEDOS_PUBLIC_PAGE_STYLES}";
     __steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
+    window.axios = amisRequire('axios');
+    window.moment = amisRequire('moment');
     window.React = amisRequire('react');
     window.ReactDOM = amisRequire('react-dom');  	
     window.React17 = window.React;
     window.ReactDOM17 = window.ReactDOM;
+
 
     if ("${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}") {
       let scriptTag = document.createElement("script");
@@ -93,7 +84,7 @@
   <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
   <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
 
-  <script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.5/dist/steedos-filters.umd.min.js"></script>
+  <!-- <script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.5/dist/steedos-filters.umd.min.js"></script> -->
 
 </head>
 

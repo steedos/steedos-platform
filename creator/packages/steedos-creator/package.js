@@ -181,16 +181,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 
-	api.addFiles('client/views/list_wrapper.html', 'client');
-	api.addFiles('client/views/list_wrapper.coffee', 'client');
-	api.addFiles('client/views/list_wrapper.less', 'client');
-	api.addFiles('client/views/grid.html', 'client');
-	api.addFiles('client/views/grid.coffee', 'client');
-	api.addFiles('client/views/grid.less', 'client');
-	api.addFiles('client/views/view.html', 'client');
-	api.addFiles('client/views/view.coffee', 'client');
-	api.addFiles('client/views/view.less', 'client');
-
 	api.addFiles('client/views/page_record_view.html', 'client');
 	api.addFiles('client/views/page_record_view.coffee', 'client');
 
@@ -205,10 +195,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/app_iframe.html', 'client');
 	api.addFiles('client/views/app_iframe.coffee', 'client');
 	api.addFiles('client/views/app_iframe.less', 'client');
-	
-	api.addFiles('client/views/related_object_list.html', 'client');
-	api.addFiles('client/views/related_object_list.coffee', 'client');
-	api.addFiles('client/views/related_object_list.less', 'client');
 
 	api.addFiles('client/views/initiate_approval.html', 'client');
 	api.addFiles('client/views/initiate_approval.coffee', 'client');
