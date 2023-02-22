@@ -239,8 +239,6 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 		related_object_name = FlowRouter.getParam("related_object_name")
 		data = {app_id: app_id, object_name: object_name, record_id: record_id, related_object_name: related_object_name}
 		Session.set 'related_object_name', related_object_name
-		BlazeLayout.render Creator.getLayout(),
-			main: 'recordLoading'
 		
 		main = "related_object_list"
 		page = Steedos.Page.getPage('related_list', app_id, related_object_name);
@@ -281,8 +279,6 @@ objectRoutes.route '/view/:record_id',
 				recordId: record_id
 			};
 				
-		BlazeLayout.render Creator.getLayout(),
-			main: 'recordLoading'
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
 				main: main

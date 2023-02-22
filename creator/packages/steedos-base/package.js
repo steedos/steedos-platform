@@ -158,8 +158,6 @@ Package.onUse(function(api) {
 		'client/helpers.coffee',
 		'client/tooltip.coffee',
 		'client/router.coffee',
-		'client/layout/select_users_layout.html',
-		'client/layout/select_users_layout.less',
 		'client/views/app_list_box_modal.html',
 		'client/views/app_list_box_modal.coffee',
 		'client/views/app_list_box_modal.less',
@@ -204,15 +202,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/loading.coffee', 'client');
 
 
-	api.addFiles('client/layout/notFound_layout.html', 'client');
-	api.addFiles('client/layout/notFound_layout.coffee', 'client');
-	api.addFiles('client/layout/notFound_layout.less', 'client');
-
 	api.addFiles('client/autoupdate_cordova.coffee', 'web.cordova');
-
-	api.addFiles('client/layout/login_layout.html', "client");
-	api.addFiles('client/layout/login_layout.coffee', "client");
-	api.addFiles('client/layout/login_layout.less', "client");
 
 	api.addFiles('server/startup.coffee', 'server');
 	api.addFiles('server/development.js', 'server');

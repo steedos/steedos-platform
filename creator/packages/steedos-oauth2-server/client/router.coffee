@@ -8,23 +8,3 @@ getUrlParams = ()->
 	urlParams[decode(match[1])] = decode(match[2]) while match=search.exec(query)
 	return urlParams
 	
-FlowRouter.route '/oauth2',
-	triggersEnter: [ ()->
-		urlParams = OAuth2.urlParams
-		userId = Meteor.userId()
-		clientId = urlParams?.client_id
-		if userId && clientId
-			# debugger
-			Meteor.call("isAuthorized", userId, clientId,
-				(error,result) ->
-					if result
-						OAuth2.getOAuth2Code()
-			)
-	],
-	action: (params, queryParams)->
-		if !Meteor.userId()
-			BlazeLayout.render 'loginLayout',
-				main: "atForm"
-		else
-			BlazeLayout.render 'loginLayout',
-				main: "loginAuthorize"
