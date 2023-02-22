@@ -44,11 +44,41 @@
     __steedos_runtime_config__.STEEDOS_VERSION = "${STEEDOS_VERSION}";
     __steedos_runtime_config__.STEEDOS_UNPKG_URL = "${STEEDOS_UNPKG_URL}";
     __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_ASSETURLS = "${STEEDOS_PUBLIC_PAGE_ASSETURLS}";
+    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_SCRIPTS = "${STEEDOS_PUBLIC_PAGE_SCRIPTS}";
+    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_STYLES = "${STEEDOS_PUBLIC_PAGE_STYLES}";
     __steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
     window.React = amisRequire('react');
     window.ReactDOM = amisRequire('react-dom');  	
     window.React17 = window.React;
     window.ReactDOM17 = window.ReactDOM;
+
+    if ("${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}") {
+      let scriptTag = document.createElement("script");
+      scriptTag.setAttribute("src", "${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}");
+      document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      scriptTag.onload = function(script){
+        window.vConsole = new window.VConsole();
+      }
+    }
+
+    if ("${STEEDOS_PUBLIC_SCRIPT_PLUGINS}") {
+      "${STEEDOS_PUBLIC_SCRIPT_PLUGINS}".split(',').forEach(function (src) {
+        let scriptTag = document.createElement("script");
+        scriptTag.setAttribute("src", src);
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      })
+    }
+
+    if ("${STEEDOS_PUBLIC_STYLE_PLUGINS}") {
+      "${STEEDOS_PUBLIC_STYLE_PLUGINS}".split(',').forEach(function (src) {
+        let styleTag = document.createElement("link");
+        styleTag.setAttribute("rel", "stylesheet");
+        styleTag.setAttribute("type", "text/css");
+        styleTag.setAttribute("href", src);
+        document.getElementsByTagName("head")[0].appendChild(styleTag);
+      })
+    }
+
   </script>
   <!-- Steedos Builder -->
   <script src="${STEEDOS_UNPKG_URL}/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
@@ -58,15 +88,12 @@
   <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/themes/antd.css" />
   <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/lib/helper.css" />
   <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/iconfont.css" />
+  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
 
   <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
   <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
 
   <script src="${STEEDOS_UNPKG_URL}/@steedos/filters@2.3.5/dist/steedos-filters.umd.min.js"></script>
-  <!-- <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@steedos-ui/builder-community@2.2.52/dist/builder-steedos.umd.css"> -->
-
-  <link rel="stylesheet" href="${STEEDOS_UNPKG_URL}/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
 
 </head>
 
