@@ -170,39 +170,39 @@ if Meteor.isClient
 			return {};
 
 	Steedos.applyAccountZoomValue = (accountZoomValue,isNeedToLocal)->
-		if Meteor.loggingIn() or !Steedos.userId()
-			# 如果是正在登录中或在登录界面，则取localStorage中设置，而不是直接应用空设置
-			accountZoomValue = {}
-			accountZoomValue.name = localStorage.getItem("accountZoomValue.name")
-			accountZoomValue.size = localStorage.getItem("accountZoomValue.size")
-		$("body").removeClass("zoom-normal").removeClass("zoom-large").removeClass("zoom-extra-large");
-		zoomName = accountZoomValue.name
-		zoomSize = accountZoomValue.size
-		unless zoomName
-			zoomName = "large"
-			zoomSize = 1.2
-		if zoomName && !Session.get("instancePrint")
-			$("body").addClass("zoom-#{zoomName}")
-			# if Steedos.isNode()
-			# 	if accountZoomValue.size == "1"
-			# 		# node-webkit中size为0才表示100%
-			# 		zoomSize = 0
-			# 	nw.Window.get().zoomLevel = Number.parseFloat(zoomSize)
-			# else
-			# 	$("body").addClass("zoom-#{zoomName}")
-		if isNeedToLocal
-			if Meteor.loggingIn()
-				# 正在登录中，则不做处理，因为此时Steedos.userId()不足于证明已登录状态
-				return
-			# 这里特意不在localStorage中存储Steedos.userId()，因为需要保证登录界面也应用localStorage中的设置
-			# 登录界面不设置localStorage，因为登录界面accountZoomValue肯定为空，设置的话，会造成无法保持登录界面也应用localStorage中的设置
-			if Steedos.userId()
-				if accountZoomValue.name
-					localStorage.setItem("accountZoomValue.name",accountZoomValue.name)
-					localStorage.setItem("accountZoomValue.size",accountZoomValue.size)
-				else
-					localStorage.removeItem("accountZoomValue.name")
-					localStorage.removeItem("accountZoomValue.size")
+		# if Meteor.loggingIn() or !Steedos.userId()
+		# 	# 如果是正在登录中或在登录界面，则取localStorage中设置，而不是直接应用空设置
+		# 	accountZoomValue = {}
+		# 	accountZoomValue.name = localStorage.getItem("accountZoomValue.name")
+		# 	accountZoomValue.size = localStorage.getItem("accountZoomValue.size")
+		# $("body").removeClass("zoom-normal").removeClass("zoom-large").removeClass("zoom-extra-large");
+		# zoomName = accountZoomValue.name
+		# zoomSize = accountZoomValue.size
+		# unless zoomName
+		# 	zoomName = "large"
+		# 	zoomSize = 1.2
+		# if zoomName && !Session.get("instancePrint")
+		# 	$("body").addClass("zoom-#{zoomName}")
+		# 	# if Steedos.isNode()
+		# 	# 	if accountZoomValue.size == "1"
+		# 	# 		# node-webkit中size为0才表示100%
+		# 	# 		zoomSize = 0
+		# 	# 	nw.Window.get().zoomLevel = Number.parseFloat(zoomSize)
+		# 	# else
+		# 	# 	$("body").addClass("zoom-#{zoomName}")
+		# if isNeedToLocal
+		# 	if Meteor.loggingIn()
+		# 		# 正在登录中，则不做处理，因为此时Steedos.userId()不足于证明已登录状态
+		# 		return
+		# 	# 这里特意不在localStorage中存储Steedos.userId()，因为需要保证登录界面也应用localStorage中的设置
+		# 	# 登录界面不设置localStorage，因为登录界面accountZoomValue肯定为空，设置的话，会造成无法保持登录界面也应用localStorage中的设置
+		# 	if Steedos.userId()
+		# 		if accountZoomValue.name
+		# 			localStorage.setItem("accountZoomValue.name",accountZoomValue.name)
+		# 			localStorage.setItem("accountZoomValue.size",accountZoomValue.size)
+		# 		else
+		# 			localStorage.removeItem("accountZoomValue.name")
+		# 			localStorage.removeItem("accountZoomValue.size")
 
 	Steedos.showHelp = (url)->
 		locale = Steedos.getLocale()

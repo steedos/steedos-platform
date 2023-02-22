@@ -110,33 +110,6 @@ FlowRouter.route '/app/:app_id',
 		BlazeLayout.render Creator.getLayout(),
 			main: main
 
-FlowRouter.route '/app/:app_id/home',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		Session.set("app_id", app_id)
-		Session.set("admin_template_name", null)
-		Session.set("app_home_active", true)
-		main = 'dashboard'
-		if Steedos.isMobile()
-			Session.set('hidden_header', true)
-			main = 'dashboard'
-		Steedos.setAppTitle([t("Home"), "Steedos"].join(" | "));
-		BlazeLayout.render Creator.getLayout(),
-			main: main
-	triggersExit: [(context, redirect) ->
-		Session.set("app_home_active", false);
-		if Steedos.isMobile()
-			Session.set("hidden_header", undefined)
-	]
-
-#FlowRouter.route '/app/:app_id/page/:page_id/',
-#	triggersEnter: [ checkUserSigned, checkAppPermission ],
-#	action: (params, queryParams)->
-#		app_id = FlowRouter.getParam("app_id")
-#		Session.set("app_id", app_id)
-#		BlazeLayout.render Creator.getLayout(),
-#			main: 'page'
 FlowRouter.route '/app/admin/page/:template_name',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
@@ -167,62 +140,13 @@ FlowRouter.route '/app/:app_id/page/:page_id',
 	triggersExit: [(context, redirect) ->
 		Session.set("pageApiName", null)
 	]
+
 FlowRouter.route '/page/:page_id/',
 	action: (params, queryParams)->
 		BlazeLayout.render Creator.getLayout(),
 			main: 'page'
 
-FlowRouter.route '/user_settings',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-			Session.set('headerTitle', '设置' )
-			Session.set("showBackHeader", true)
-			BlazeLayout.render Creator.getLayout(),
-					main: "adminMenu"
-	triggersExit: [(context, redirect) ->
-		Session.set("showBackHeader", false)
-		Session.set('headerTitle', undefined )
-	]
-
-
-FlowRouter.route '/user_settings/switchspace',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-			Session.set('headerTitle', '选择工作区')
-			Session.set("showBackHeader", true)
-			BlazeLayout.render Creator.getLayout(),
-				main: "switchSpace"
-	triggersExit: [(context, redirect) ->
-		Session.set("showBackHeader", false)
-		Session.set('headerTitle', undefined )
-	]
-
-FlowRouter.route '/app/:app_id/search/:search_text',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		if (app_id != "-")
-			Session.set("app_id", app_id)
-		Session.set("search_text", FlowRouter.getParam("search_text"))
-		Session.set("record_id", null) #有的地方会响应Session中record_id值，如果不清空可能会有异常现象，比如删除搜索结果中的记录后会跳转到记录对应的object的列表
-		BlazeLayout.render Creator.getLayout(),
-			main: "record_search_list"
-
-FlowRouter.route '/app/:app_id/reports/view/:record_id',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		record_id = FlowRouter.getParam("record_id")
-		object_name = FlowRouter.getParam("object_name")
-		if (app_id != "-")
-			Session.set("app_id", app_id)
-		data = {app_id: Session.get("app_id"), record_id: record_id, object_name: object_name}
-		Session.set("object_name", "reports")
-		Session.set("record_id", record_id)
-		BlazeLayout.render Creator.getLayout(),
-			main: "creator_report"
-
-FlowRouter.route '/app/:app_id/instances/grid/all',
+FlowRouter.route '/app/:app_id/instances/grid/:listview_id',
 	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
@@ -274,15 +198,6 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 				Template.creator_view.currentInstance.onEditSuccess()
 		})
 
-
-# FlowRouter.route '/app/:app_id/cms_posts/grid/all',
-# 	action: (params, queryParams)->
-# 		app_id = FlowRouter.getParam("app_id")
-# 		if (app_id != "-")
-# 			Session.set("app_id", app_id)
-# 		Session.set("object_name", "cms_posts")
-# 		FlowRouter.go '/cms'
-
 FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 	triggersEnter: [ checkUserSigned, checkAppPermission ],
 	action: (params, queryParams)->
@@ -294,7 +209,7 @@ FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 	triggersExit: [(context, redirect) ->
 		Session.set("tab_name", null)
 	]
-
+	
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
@@ -315,32 +230,6 @@ objectRoutes.route '/',
 	action: (params, queryParams)->
 		BlazeLayout.render Creator.getLayout(),
 			main: "object_home"
-
-#objectRoutes.route '/list/switch',
-#	action: (params, queryParams)->
-#		if Steedos.isMobile()  && false and $(".mobile-content-wrapper #list_switch").length == 0
-#			Tracker.autorun (c)->
-#				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
-#					c.stop()
-#					app_id = FlowRouter.getParam("app_id")
-#					object_name = FlowRouter.getParam("object_name")
-#					data = {app_id: app_id, object_name: object_name}
-#					Meteor.defer ->
-#						Blaze.renderWithData(Template.listSwitch, data, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
-
-#objectRoutes.route '/:list_view_id/list',
-#	action: (params, queryParams)->
-#		app_id = FlowRouter.getParam("app_id")
-#		object_name = FlowRouter.getParam("object_name")
-#		list_view_id = FlowRouter.getParam("list_view_id")
-#		data = {app_id: app_id, object_name: object_name, list_view_id: list_view_id}
-#		Session.set("reload_dxlist", false)
-#		if Steedos.isMobile()  && false and $("#mobile_list_#{object_name}").length == 0
-#			Tracker.autorun (c)->
-#				if Creator.bootstrapLoaded.get() and Session.get("spaceId")
-#					c.stop()
-#					Meteor.defer ->
-#						Blaze.renderWithData(Template.mobileList, data, $(".mobile-content-wrapper")[0], $(".layout-placeholder")[0])
 
 objectRoutes.route '/:record_id/:related_object_name/grid',
 	action: (params, queryParams)->
@@ -381,24 +270,16 @@ objectRoutes.route '/view/:record_id',
 		data = {app_id: app_id, object_name: object_name, record_id: record_id}
 		ObjectRecent.insert(object_name, record_id)
 		Session.set("detail_info_visible", true)
-		# if object_name == "cms_posts"
-		# 	# 文章有自己单独的详细界面
-		# 	siteId = Session.get("siteId")
-		# 	FlowRouter.go "/cms/s/#{siteId}/p/#{record_id}"
-		# 	return;
-		if object_name == "users" && !Creator.isCloudAdminSpace(Session.get("spaceId"))
-			main = "user"
-		else
-			main = "creator_view"
-			page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
-			if page
-				main = "page_record_view"
-				regions = {
-					page: page,
-					appId: Session.get("app_id"),
-					objectName: object_name,
-					recordId: record_id
-				};
+		main = "creator_view"
+		page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
+		if page
+			main = "page_record_view"
+			regions = {
+				page: page,
+				appId: Session.get("app_id"),
+				objectName: object_name,
+				recordId: record_id
+			};
 				
 		BlazeLayout.render Creator.getLayout(),
 			main: 'recordLoading'
@@ -450,20 +331,3 @@ objectRoutes.route '/grid/:list_view_id',
 		BlazeLayout.render Creator.getLayout(),
 			main: main,
 			regions: regions
-
-objectRoutes.route '/calendar/',
-	action: (params, queryParams)->
-		if Session.get("object_name") != FlowRouter.getParam("object_name")
-			Session.set("list_view_id", null)
-
-		app_id = FlowRouter.getParam("app_id")
-		if (app_id != "-")
-			Session.set("app_id", app_id)
-		Session.set("object_name", FlowRouter.getParam("object_name"))
-		Session.set("list_view_visible", false)
-
-		Tracker.afterFlush ()->
-			Session.set("list_view_visible", true)
-		
-		BlazeLayout.render Creator.getLayout(),
-			main: "creator_calendar"

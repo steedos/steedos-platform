@@ -164,12 +164,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/mobile/switch_space.html', 'client');
 	api.addFiles('client/mobile/switch_space.coffee', 'client');
 
-	api.addFiles('client/views/calendarNew.less', 'client');
-	api.addFiles('client/views/calendarNew.html', 'client');
-	api.addFiles('client/views/calendarNew.coffee', 'client');
-
-	api.addFiles('client/views/empty_template.html', 'client');
-
 	api.addFiles('client/views/page_template.html', 'client');
 	api.addFiles('client/views/page_template.coffee', 'client');
 
@@ -187,25 +181,11 @@ Package.onUse(function (api) {
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 
-	api.addFiles('client/views/home.html', 'client');
-	api.addFiles('client/views/home.coffee', 'client');
-	api.addFiles('client/views/home.less', 'client');
-	api.addFiles('client/views/list_tree.html', 'client');
-	api.addFiles('client/views/list_tree.coffee', 'client');
-	api.addFiles('client/views/list_tree_modal.html', 'client');
-	api.addFiles('client/views/list_tree_modal.coffee', 'client');
 	api.addFiles('client/views/list_wrapper.html', 'client');
 	api.addFiles('client/views/list_wrapper.coffee', 'client');
 	api.addFiles('client/views/list_wrapper.less', 'client');
 	api.addFiles('client/views/grid.html', 'client');
 	api.addFiles('client/views/grid.coffee', 'client');
-
-	api.addFiles('client/views/react_grid.html', 'client');
-	api.addFiles('client/views/react_grid.coffee', 'client');
-
-	api.addFiles('client/views/object_listview.html', 'client');
-	api.addFiles('client/views/object_listview.coffee', 'client');
-
 	api.addFiles('client/views/grid.less', 'client');
 	api.addFiles('client/views/view.html', 'client');
 	api.addFiles('client/views/view.coffee', 'client');
@@ -225,133 +205,18 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/app_iframe.html', 'client');
 	api.addFiles('client/views/app_iframe.coffee', 'client');
 	api.addFiles('client/views/app_iframe.less', 'client');
-	api.addFiles('client/views/tab_iframe.html', 'client');
-	api.addFiles('client/views/tab_iframe.coffee', 'client');
-	api.addFiles('client/views/grid_sidebar_organizations.html', 'client');
-	api.addFiles('client/views/grid_sidebar_organizations.coffee', 'client');
-	api.addFiles('client/views/grid_sidebar_organizations.less', 'client');
-	api.addFiles('client/views/grid_sidebar_sites.html', 'client');
-	api.addFiles('client/views/grid_sidebar_sites.coffee', 'client');
-	api.addFiles('client/views/grid_sidebar_sites.less', 'client');
-
-	api.addFiles('client/views/filter_logic.html', 'client');
-	api.addFiles('client/views/filter_logic.coffee', 'client');
-	api.addFiles('client/views/filter_logic.less', 'client');
-
-	api.addFiles('client/views/report_content.html', 'client');
-	api.addFiles('client/views/report_content.coffee', 'client');
-	api.addFiles('client/views/report_content.less', 'client');
-
-	api.addFiles('client/views/report.html', 'client');
-	api.addFiles('client/views/report.coffee', 'client');
-	api.addFiles('client/views/report.less', 'client');
-
-	api.addFiles('client/views/report_settings.html', 'client');
-	api.addFiles('client/views/report_settings.coffee', 'client');
-	api.addFiles('client/views/report_settings.less', 'client');
-
-	api.addFiles('client/views/reset_password.html', 'client');
-	api.addFiles('client/views/reset_password.coffee', 'client');
-	api.addFiles('client/views/reset_password.less', 'client');
-
-	api.addFiles('client/views/table_cell.html', 'client');
-	api.addFiles('client/views/table_cell.coffee', 'client');
-	api.addFiles('client/views/table_cell.less', 'client');
-	api.addFiles('client/views/table_actions.html', 'client');
-	api.addFiles('client/views/table_actions.coffee', 'client');
-	api.addFiles('client/views/table_actions.less', 'client');
-	api.addFiles('client/views/table_checkbox.html', 'client');
-	api.addFiles('client/views/table_checkbox.coffee', 'client');
-	api.addFiles('client/views/table_checkbox.less', 'client');
-
-	api.addFiles('client/views/filter_option_list.html', 'client');
-	api.addFiles('client/views/filter_option_list.coffee', 'client');
-	api.addFiles('client/views/filter_option.html', 'client');
-	api.addFiles('client/views/filter_option.coffee', 'client');
-	api.addFiles('client/views/filter_option.less', 'client');
-
-	api.addFiles('client/views/record_search_list.html', 'client');
-	api.addFiles('client/views/record_search_list.coffee', 'client');
-	api.addFiles('client/views/record_search_list.less', 'client');
-
-	api.addFiles('client/views/search_result_list.html', 'client');
-	api.addFiles('client/views/search_result_list.coffee', 'client');
-	api.addFiles('client/views/search_result_list.less', 'client');
-
+	
 	api.addFiles('client/views/related_object_list.html', 'client');
 	api.addFiles('client/views/related_object_list.coffee', 'client');
 	api.addFiles('client/views/related_object_list.less', 'client');
 
-	api.addFiles('client/views/select_fields.html', 'client');
-	api.addFiles('client/views/select_fields.coffee', 'client');
-	api.addFiles('client/views/select_fields.less', 'client');
-
-	api.addFiles('client/views/standard_query.html', 'client');
-	api.addFiles('client/views/standard_query.coffee', 'client');
-	api.addFiles('client/views/standard_query.less', 'client');
-
-	api.addFiles('client/views/custom_data_source.html', 'client');
-	api.addFiles('client/views/custom_data_source.coffee', 'client');
-	api.addFiles('client/views/odata_service.html', 'client');
-	api.addFiles('client/views/odata_service.coffee', 'client');
-
 	api.addFiles('client/views/initiate_approval.html', 'client');
 	api.addFiles('client/views/initiate_approval.coffee', 'client');
-
-	api.addFiles('client/views/user.html', 'client');
-	api.addFiles('client/views/user.coffee', 'client');
-	api.addFiles('client/views/user.less', 'client');
-
-	api.addFiles('client/views/calendar.html', 'client');
-	api.addFiles('client/views/calendar.coffee', 'client');
-	api.addFiles('client/views/calendar.less', 'client');
-	
-	api.addFiles('client/views/account_password.html', 'client');
-	api.addFiles('client/views/account_password.coffee', 'client');
-	api.addFiles('client/views/account_background.html', 'client');
-	api.addFiles('client/views/account_background.coffee', 'client');
-	api.addFiles('client/views/account_avatar.html', 'client');
-	api.addFiles('client/views/account_avatar.coffee', 'client');
-	api.addFiles('client/views/account_setting.html', 'client');
-	api.addFiles('client/views/account_setting.coffee', 'client');
-	api.addFiles('client/views/account_personal.html', 'client');
-	api.addFiles('client/views/account_personal.coffee', 'client');
-	api.addFiles('client/views/account_profile.less', 'client');
-
-	api.addFiles('client/views/contacts_settings.html', 'client');
-	api.addFiles('client/views/contacts_settings.coffee', 'client');
-	api.addFiles('client/views/contacts_settings.less', 'client');
-	api.addFiles('client/views/contacts_settings_hidden_modal.html', 'client');
-	api.addFiles('client/views/contacts_settings_hidden_modal.coffee', 'client');
-	api.addFiles('client/views/contacts_settings_limit_modal.html', 'client');
-	api.addFiles('client/views/contacts_settings_limit_modal.coffee', 'client');
-	api.addFiles('client/views/contacts_settings_no_force_phone_modal.html', 'client');
-	api.addFiles('client/views/contacts_settings_no_force_phone_modal.coffee', 'client');
-
-	api.addFiles('client/views/admin_template_wrap.html', 'client');
-	api.addFiles('client/views/admin_template_wrap.coffee', 'client');
-	api.addFiles('client/views/admin_template_wrap.less', 'client');
-	
-	api.addFiles('client/views/about.html', 'client');
-	api.addFiles('client/views/about.coffee', 'client');
-	api.addFiles('client/views/about.less', 'client');
-
-	api.addFiles('client/views/about_content.html', 'client');
-	api.addFiles('client/views/about_content.coffee', 'client');
-	api.addFiles('client/views/about_content.less', 'client');
-
-	api.addFiles('client/views/slds_illustration_preview.html', 'client');
-	api.addFiles('client/views/slds_illustration_preview.coffee', 'client');
-	api.addFiles('client/views/slds_illustration_preview.less', 'client');
 
 	api.addFiles('client/title.coffee', 'client');
 
 	api.addFiles('client/theme.less', 'client');
 	api.addFiles('client/i18n.coffee', 'client');
-
-
-	api.addFiles('client/views/detail_realted_object_list.html', 'client');
-	api.addFiles('client/views/detail_realted_object_list.coffee', 'client');
 
 	api.addFiles('client/views/amis_action.html', 'client');
 	api.addFiles('client/views/amis_action.js', 'client');
