@@ -705,6 +705,9 @@
         if(app.showSidebar && window.location.pathname.startsWith("/workflow")){
             app = {id: 'workflow'}
         }
+        if(window.location.pathname.startsWith("/workflow")){
+            document.body.classList.remove("sidebar-open")   
+        }
         try {
             const data = {
                 app,
