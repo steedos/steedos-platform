@@ -32,17 +32,17 @@ Steedos.applyAccountBgBodyValue accountBgBodyValue
 Steedos.subs["SpaceAvatar"] = new SubsManager();
 
 Meteor.startup ->
-	Tracker.autorun (c)->
-		if Steedos.subsBootstrap.ready("steedos_keyvalues")
-			accountZoomValue = Steedos.getAccountZoomValue()
-			Steedos.applyAccountZoomValue accountZoomValue,true
+	# Tracker.autorun (c)->
+	# 	if Steedos.subsBootstrap.ready("steedos_keyvalues")
+	# 		accountZoomValue = Steedos.getAccountZoomValue()
+	# 		Steedos.applyAccountZoomValue accountZoomValue,true
 
-			accountBgBodyValue = Steedos.getAccountBgBodyValue()
-			Steedos.applyAccountBgBodyValue accountBgBodyValue,true
+	# 		accountBgBodyValue = Steedos.getAccountBgBodyValue()
+	# 		Steedos.applyAccountBgBodyValue accountBgBodyValue,true
 
-	Tracker.autorun (c)->
-		locale = Steedos.locale()
-		$("body").addClass("locale-#{locale}")
+	# Tracker.autorun (c)->
+	# 	locale = Steedos.locale()
+	# 	$("body").addClass("locale-#{locale}")
 
 	Tracker.autorun (c)->
 		if Steedos.subsSpaceBase.ready("apps")
