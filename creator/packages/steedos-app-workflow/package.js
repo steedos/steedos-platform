@@ -61,17 +61,6 @@ Package.onUse(function(api) {
 	api.addFiles('server/methods/flow_copy.coffee', 'server');
 
 	api.addFiles('workflow.app.coffee', "server");
-	api.addFiles('models/Instances.coffee');
-	api.addFiles('models/forms.coffee');
-	api.addFiles('models/flows.coffee');
-	api.addFiles('models/statistic_instance.coffee');
-	api.addFiles('models/categories.coffee');
-	api.addFiles('models/flow_roles.coffee');
-	api.addFiles('models/flow_positions.coffee');
-	api.addFiles('models/space_user_signs.coffee');
-	api.addFiles('models/webhooks.coffee');
-	api.addFiles('models/instance_number_rules.coffee');
-	api.addFiles('models/process_delegation_rules.coffee');
 
 	api.addFiles('cfs/instances.coffee');
 
@@ -86,14 +75,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/flow/distribute_edit_flow_modal.less', 'client');
 	api.addFiles('server/methods/distribute.coffee', 'server');
 
-	// api.addFiles('server/lib/workflow_manager.js', 'server');
-	// api.addFiles('server/lib/uuflow_manager.coffee', 'server');
-	// api.addFiles('server/lib/push_manager.coffee', 'server');
-	// api.addFiles('server/lib/export.coffee', 'server');
-	api.addFiles('routes/export.coffee', 'server');
-	// api.addFiles('server/lib/import.coffee', 'server');
-	api.addFiles('routes/import.coffee', 'server');
 
-	// api.export(['WorkflowManager', 'uuflowManager', 'pushManager', 'steedosExport', 'steedosImport'], ['server']);
 	api.export(['Template'], ['server'])
 })
