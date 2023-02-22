@@ -92,7 +92,12 @@ try
 							}
 						}
 					},
-					skipProcessEventRegistration: true
+					skipProcessEventRegistration: true,
+
+					created: (broker)-> 
+						# Clear all cache entries
+						broker.logger.warn('Clear all cache entries on startup.')
+						broker.cacher.clean();
 				});
 
 				objectql.broker.init(broker);

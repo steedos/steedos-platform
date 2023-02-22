@@ -131,31 +131,11 @@ Package.onUse(function (api) {
 
 	api.addFiles('client/views/_helpers.coffee', 'client');
 
-	api.addFiles('client/layout/sidebar_left.html', 'client');
-	api.addFiles('client/layout/sidebar_left.less', 'client');
-	api.addFiles('client/layout/sidebar_left.coffee', 'client');
-
 	api.addFiles('client/layout/layout.html', 'client');
 	api.addFiles('client/layout/layout.less', 'client');
 	api.addFiles('client/layout/layout.coffee', 'client');
-	api.addFiles('client/layout/header_search.html', 'client');
-	api.addFiles('client/layout/header_search.less', 'client');
-	api.addFiles('client/layout/header_search.coffee', 'client');
-	api.addFiles('client/layout/navigation.html', 'client');
-	api.addFiles('client/layout/navigation.coffee', 'client');
-	api.addFiles('client/layout/navigation.less', 'client');
-	api.addFiles('client/layout/sidebar.html', 'client');
-	api.addFiles('client/layout/sidebar.coffee', 'client');
-	api.addFiles('client/layout/sidebar.less', 'client');
 	api.addFiles('client/layout/loading.html', 'client');
 	api.addFiles('client/layout/loading.less', 'client');
-
-	api.addFiles('client/layout/app_object_menu.html', 'client');
-	api.addFiles('client/layout/app_object_menu.less', 'client');
-
-	api.addFiles('client/layout/creator_app_list_modal.html', 'client');
-	api.addFiles('client/layout/creator_app_list_modal.coffee', 'client');
-	api.addFiles('client/layout/creator_app_list_modal.less', 'client');
 
 	api.addFiles('client/mobile/admin.html', 'client');
 	api.addFiles('client/mobile/admin.coffee', 'client');
@@ -181,16 +161,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/colResizable-1.6.js', 'client');
 	api.addFiles('client/jquery.ba-resize.js', 'client');
 
-	api.addFiles('client/views/list_wrapper.html', 'client');
-	api.addFiles('client/views/list_wrapper.coffee', 'client');
-	api.addFiles('client/views/list_wrapper.less', 'client');
-	api.addFiles('client/views/grid.html', 'client');
-	api.addFiles('client/views/grid.coffee', 'client');
-	api.addFiles('client/views/grid.less', 'client');
-	api.addFiles('client/views/view.html', 'client');
-	api.addFiles('client/views/view.coffee', 'client');
-	api.addFiles('client/views/view.less', 'client');
-
 	api.addFiles('client/views/page_record_view.html', 'client');
 	api.addFiles('client/views/page_record_view.coffee', 'client');
 
@@ -205,10 +175,6 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/app_iframe.html', 'client');
 	api.addFiles('client/views/app_iframe.coffee', 'client');
 	api.addFiles('client/views/app_iframe.less', 'client');
-	
-	api.addFiles('client/views/related_object_list.html', 'client');
-	api.addFiles('client/views/related_object_list.coffee', 'client');
-	api.addFiles('client/views/related_object_list.less', 'client');
 
 	api.addFiles('client/views/initiate_approval.html', 'client');
 	api.addFiles('client/views/initiate_approval.coffee', 'client');

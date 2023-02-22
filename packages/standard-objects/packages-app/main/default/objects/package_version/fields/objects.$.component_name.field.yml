@@ -1,4 +1,0 @@
-name: objects.$.component_name
-label: Component Name
-readonly: true
-type: text

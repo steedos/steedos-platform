@@ -21,10 +21,6 @@ FlowRouter.route '/steedos/sign-in',
 #		Meteor.logout ()->
 #			return
 
-FlowRouter.route '/select-users',
-	action: (params, queryParams)->
-		BlazeLayout.render 'selectUsersLayout',
-			main: "reactSelectUsers"
 
 FlowRouter.route '/steedos/springboard',
 	triggersEnter: [ ->

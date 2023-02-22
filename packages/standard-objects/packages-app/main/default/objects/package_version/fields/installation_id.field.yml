@@ -1,7 +1,0 @@
-name: installation_id
-label: 软件包ID
-type: text
-omit: false
-is_wide: true
-readonly: true
-sort_no: 9000

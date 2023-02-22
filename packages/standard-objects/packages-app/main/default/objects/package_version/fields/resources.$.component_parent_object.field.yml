@@ -1,4 +1,0 @@
-name: resources.$.component_parent_object
-label: Component Type
-readonly: true
-type: text

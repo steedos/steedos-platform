@@ -281,8 +281,8 @@ if Meteor.isClient
 									else
 										if object_name != Session.get("object_name")
 											FlowRouter.reload();
-										else
-											Template.creator_grid.refresh(dxDataGridInstance)
+										# else
+										# 	Template.creator_grid.refresh(dxDataGridInstance)
 								recordUrl = Creator.getObjectUrl(object_name, record_id)
 								tempNavRemoved = Creator.removeTempNavItem(object_name, recordUrl) #无论是在记录详细界面还是列表界面执行删除操作，都会把临时导航删除掉
 								if isOpenerRemove or !dxDataGridInstance
