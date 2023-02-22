@@ -64,7 +64,7 @@ amis_schema: |-
                                                   "hiddenOn": "this.type != 'version'"
                                               },
                                               {
-                                                  "type": "input-password",
+                                                  "type": "input-text",
                                                   "label": "认证信息",
                                                   "name": "password",
                                                   "id": "u:25e4f0cdf57b",
