@@ -402,49 +402,130 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
         for (const name of selectorFieldNames) {
             if (Object.prototype.hasOwnProperty.call(fields, name)) {
                 const field = fields[name];
-                if (_.has(doc, name)) {
-                    const fType = field.type;
-                    if (fType == "select") {
-                        let label = "";
-                        let map = {};
-                        let value = doc[name];
-                        let translatedField = getTranslatedFieldConfig(objConfig, name);
-                        let translatedFieldOptions =
-                            translatedField && translatedField.options;
-                        _.forEach(translatedFieldOptions, function (o) {
-                            map[o.value] = o.label;
-                        });
-                        if (field.multiple) {
-                            let labels = [];
-                            _.forEach(value, function (v) {
-                                labels.push(map[v]);
+                try {
+                    if (_.has(doc, name)) {
+                        const fType = field.type;
+                        if (fType == "select") {
+                            let label = "";
+                            let map = {};
+                            let value = doc[name];
+                            let translatedField = getTranslatedFieldConfig(objConfig, name);
+                            let translatedFieldOptions =
+                                translatedField && translatedField.options;
+                            _.forEach(translatedFieldOptions, function (o) {
+                                map[o.value] = o.label;
                             });
-                            label = labels.join(",");
-                        } else {
-                            label = map[value];
-                        }
-                        displayObj[name] = label;
-                    } else if (fType == "lookup" && _.isString(field.reference_to)) {
-                        let refTo = field.reference_to;
-
-                        let refField = field.reference_to_field || '_id';
-
-                        if (refTo === 'users') {
-                            refTo = 'space_users';
-                            refField = 'user'
-                        }
-
-                        let refValue = doc[name];
-                        if (!refValue) {
-                            continue;
-                        }
-                        let refObj = steedosSchema.getObject(refTo);
-                        let nameFieldKey = await refObj.getNameFieldKey();
-                        if (field.multiple) {
+                            if (field.multiple) {
+                                let labels = [];
+                                _.forEach(value, function (v) {
+                                    labels.push(map[v]);
+                                });
+                                label = labels.join(",");
+                            } else {
+                                label = map[value];
+                            }
+                            displayObj[name] = label;
+                        } else if (fType == "lookup" && _.isString(field.reference_to)) {
+                            let refTo = field.reference_to;
+    
+                            let refField = field.reference_to_field || '_id';
+    
+                            if (refTo === 'users') {
+                                refTo = 'space_users';
+                                refField = 'user'
+                            }
+    
+                            let refValue = doc[name];
+                            if (!refValue) {
+                                continue;
+                            }
+                            let refObj = steedosSchema.getObject(refTo);
+                            let nameFieldKey = await refObj.getNameFieldKey();
+                            if (field.multiple) {
+                                let refRecords = await refObj.find({
+                                    filters: [refField, "in", refValue],
+                                    fields: [nameFieldKey],
+                                });
+                                displayObj[name] = _.map(refRecords, (item) => {
+                                    return {
+                                        objectName: refTo,
+                                        value: item._id,
+                                        label: item[nameFieldKey]
+                                    }
+                                })
+                            } else {
+                                let refRecord = (
+                                    await refObj.find({
+                                        filters: [refField, "=", refValue],
+                                        fields: [nameFieldKey],
+                                    })
+                                )[0];
+                                if (refRecord) {
+                                    displayObj[name] = {
+                                        objectName: refTo,
+                                        value: refRecord._id,
+                                        label: refRecord[nameFieldKey]
+                                    };
+                                }
+                            }
+                        } else if (fType == "master_detail" && _.isString(field.reference_to)) {
+                            let refTo = field.reference_to;
+                            let refField = field.reference_to_field || '_id';
+    
+                            if (refTo === 'users') {
+                                refTo = 'space_users';
+                                refField = 'user'
+                            }
+                            let refValue = doc[name];
+                            if (!refValue) {
+                                continue;
+                            }
+                            let refObj = steedosSchema.getObject(refTo);
+                            let nameFieldKey = await refObj.getNameFieldKey();
+                            if (field.multiple) {
+                                let refRecords = await refObj.find({
+                                    filters: [refField, "in", refValue],
+                                    fields: [nameFieldKey],
+                                });
+                                displayObj[name] = _.map(refRecords, (item) => {
+                                    return {
+                                        objectName: refTo,
+                                        value: item._id,
+                                        label: item[nameFieldKey]
+                                    }
+                                })
+                            } else {
+                                let refRecord = (
+                                    await refObj.find({
+                                        filters: [refField, "=", refValue],
+                                        fields: [nameFieldKey],
+                                    })
+                                )[0];
+                                if (refRecord) {
+                                    displayObj[name] = {
+                                        objectName: refTo,
+                                        value: refRecord._id,
+                                        label: refRecord[nameFieldKey]
+                                    };
+                                }
+                            }
+                        } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {
+                            let refValue = doc[name];
+                            if (!refValue) {
+                                continue;
+                            }
+                            let refTo = refValue.o;
+                            let refValues = refValue.ids;
+                            if (!refTo) {
+                                continue;
+                            }
+                            let refObj = steedosSchema.getObject(refTo);
+                            let nameFieldKey = await refObj.getNameFieldKey();
                             let refRecords = await refObj.find({
-                                filters: [refField, "in", refValue],
-                                fields: [nameFieldKey],
+                                filters: [`_id`, "in", refValues],
+                                fields: [nameFieldKey]
                             });
+    
                             displayObj[name] = _.map(refRecords, (item) => {
                                 return {
                                     objectName: refTo,
@@ -452,177 +533,101 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                     label: item[nameFieldKey]
                                 }
                             })
-                        } else {
-                            let refRecord = (
-                                await refObj.find({
-                                    filters: [refField, "=", refValue],
-                                    fields: [nameFieldKey],
-                                })
-                            )[0];
-                            if (refRecord) {
-                                displayObj[name] = {
-                                    objectName: refTo,
-                                    value: refRecord._id,
-                                    label: refRecord[nameFieldKey]
-                                };
+                        } else if (fType == "formula") {
+                            displayObj[name] = formatBasicFieldValue(field.data_type, field, doc[name], objConfig, userSession);
+                        } else if (fType == "summary") {
+                            displayObj[name] = formatBasicFieldValue('number', field, doc[name], objConfig, userSession);
+                        } else if (fType == "image" || fType == "file" || fType === 'avatar') {
+                            let fileValue: any = null;
+                            let value = doc[name];
+                            if (!value) {
+                                continue;
                             }
-                        }
-                    } else if (fType == "master_detail" && _.isString(field.reference_to)) {
-                        let refTo = field.reference_to;
-                        let refField = field.reference_to_field || '_id';
-
-                        if (refTo === 'users') {
-                            refTo = 'space_users';
-                            refField = 'user'
-                        }
-                        let refValue = doc[name];
-                        if (!refValue) {
-                            continue;
-                        }
-                        let refObj = steedosSchema.getObject(refTo);
-                        let nameFieldKey = await refObj.getNameFieldKey();
-                        if (field.multiple) {
-                            let refRecords = await refObj.find({
-                                filters: [refField, "in", refValue],
-                                fields: [nameFieldKey],
-                            });
-                            displayObj[name] = _.map(refRecords, (item) => {
-                                return {
-                                    objectName: refTo,
-                                    value: item._id,
-                                    label: item[nameFieldKey]
-                                }
-                            })
-                        } else {
-                            let refRecord = (
-                                await refObj.find({
-                                    filters: [refField, "=", refValue],
-                                    fields: [nameFieldKey],
-                                })
-                            )[0];
-                            if (refRecord) {
-                                displayObj[name] = {
-                                    objectName: refTo,
-                                    value: refRecord._id,
-                                    label: refRecord[nameFieldKey]
-                                };
-                            }
-                        }
-                    } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {
-                        let refValue = doc[name];
-                        if (!refValue) {
-                            continue;
-                        }
-                        let refTo = refValue.o;
-                        let refValues = refValue.ids;
-                        if (!refTo) {
-                            continue;
-                        }
-                        let refObj = steedosSchema.getObject(refTo);
-                        let nameFieldKey = await refObj.getNameFieldKey();
-                        let refRecords = await refObj.find({
-                            filters: [`_id`, "in", refValues],
-                            fields: [nameFieldKey]
-                        });
-
-                        displayObj[name] = _.map(refRecords, (item) => {
-                            return {
-                                objectName: refTo,
-                                value: item._id,
-                                label: item[nameFieldKey]
-                            }
-                        })
-                    } else if (fType == "formula") {
-                        displayObj[name] = formatBasicFieldValue(field.data_type, field, doc[name], objConfig, userSession);
-                    } else if (fType == "summary") {
-                        displayObj[name] = formatBasicFieldValue('number', field, doc[name], objConfig, userSession);
-                    } else if (fType == "image" || fType == "file" || fType === 'avatar') {
-                        let fileValue: any = null;
-                        let value = doc[name];
-                        if (!value) {
-                            continue;
-                        }
-                        // TODO: cfs_images_filerecord对象不存在，需要额外处理
-                        let storageName = getFileStorageName(fType)
-                        let fileObjectName = `cfs_${storageName}_filerecord`;
-                        let fileObject = steedosSchema.getObject(fileObjectName);
-                        const fileNameFieldKey = "original.name";
-                        if (field.multiple) {
-                            let fileRecords = await fileObject.find({
-                                filters: [`_id`, "in", value],
-                                fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
-                            });
-                            fileValue = _.map(fileRecords, (fileRecord) => {
-                                return {
-                                    name: fileRecord.original?.name,
-                                    url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}`),
-                                    size: fileRecord.original?.size,
-                                    type: fileRecord.original?.type,
-                                };
-                            });
-                        } else {
-                            let fileRecord = (
-                                await fileObject.find({
-                                    filters: [`_id`, "=", value],
+                            // TODO: cfs_images_filerecord对象不存在，需要额外处理
+                            let storageName = getFileStorageName(fType)
+                            let fileObjectName = `cfs_${storageName}_filerecord`;
+                            let fileObject = steedosSchema.getObject(fileObjectName);
+                            const fileNameFieldKey = "original.name";
+                            if (field.multiple) {
+                                let fileRecords = await fileObject.find({
+                                    filters: [`_id`, "in", value],
                                     fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
-                                })
-                            )[0];
-                            if (fileRecord) {
-                                fileValue = {
-                                    name: fileRecord["original"]["name"],
-                                    url: absoluteUrl(`/api/files/${storageName}/${value}`),
-                                    size: fileRecord.original?.size,
-                                    type: fileRecord.original?.type
-                                };
+                                });
+                                fileValue = _.map(fileRecords, (fileRecord) => {
+                                    return {
+                                        name: fileRecord.original?.name,
+                                        url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}`),
+                                        size: fileRecord.original?.size,
+                                        type: fileRecord.original?.type,
+                                    };
+                                });
+                            } else {
+                                let fileRecord = (
+                                    await fileObject.find({
+                                        filters: [`_id`, "=", value],
+                                        fields: ['_id', fileNameFieldKey, 'original.size', 'original.type'],
+                                    })
+                                )[0];
+                                if (fileRecord) {
+                                    fileValue = {
+                                        name: fileRecord["original"]["name"],
+                                        url: absoluteUrl(`/api/files/${storageName}/${value}`),
+                                        size: fileRecord.original?.size,
+                                        type: fileRecord.original?.type
+                                    };
+                                }
                             }
+                            displayObj[name] = fileValue;
+                        } else if (fType == "filesize") {
+                            displayObj[name] = formatFileSize(doc[name]);
                         }
-                        displayObj[name] = fileValue;
-                    } else if (fType == "filesize") {
-                        displayObj[name] = formatFileSize(doc[name]);
-                    }
-                    else if (fType === 'object') {
-                        if (doc[name] && _.isObject(doc[name])) {
-                            const _doc = {}
-                            _.each(doc[name], function (v, k) {
-                                const newKey = `${name}.${k}`
-                                _doc[newKey] = v
-                            })
-                            const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
-                            const objectDoc = {}
-                            _.each(objectFieldDoc, function (v, k) {
-                                const newKey = k.replace(`${name}.`, '')
-                                objectDoc[newKey] = v
-                            })
-                            displayObj[name] = objectDoc
-                        }
-                    }
-                    else if (fType === 'grid') {
-                        if (doc[name] && _.isArray(doc[name])) {
-                            const gridDocs = []
-                            for (const gridDoc of doc[name]) {
+                        else if (fType === 'object') {
+                            if (doc[name] && _.isObject(doc[name])) {
                                 const _doc = {}
-                                _.each(gridDoc, function (v, k) {
-                                    const newKey = `${name}.$.${k}`
+                                _.each(doc[name], function (v, k) {
+                                    const newKey = `${name}.${k}`
                                     _doc[newKey] = v
                                 })
                                 const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
                                 const objectDoc = {}
                                 _.each(objectFieldDoc, function (v, k) {
-                                    const newKey = k.replace(`${name}.$.`, '')
+                                    const newKey = k.replace(`${name}.`, '')
                                     objectDoc[newKey] = v
                                 })
-                                gridDocs.push(objectDoc)
+                                displayObj[name] = objectDoc
                             }
-
-                            displayObj[name] = gridDocs
+                        }
+                        else if (fType === 'grid') {
+                            if (doc[name] && _.isArray(doc[name])) {
+                                const gridDocs = []
+                                for (const gridDoc of doc[name]) {
+                                    const _doc = {}
+                                    _.each(gridDoc, function (v, k) {
+                                        const newKey = `${name}.$.${k}`
+                                        _doc[newKey] = v
+                                    })
+                                    const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
+                                    const objectDoc = {}
+                                    _.each(objectFieldDoc, function (v, k) {
+                                        const newKey = k.replace(`${name}.$.`, '')
+                                        objectDoc[newKey] = v
+                                    })
+                                    gridDocs.push(objectDoc)
+                                }
+    
+                                displayObj[name] = gridDocs
+                            }
+                        }
+                        else {
+                            displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
                         }
                     }
                     else {
-                        displayObj[name] = formatBasicFieldValue(fType, field, doc[name], objConfig, userSession);
+                        displayObj[name] = ""; // 如果值为空，均返回空字符串
                     }
-                }
-                else {
-                    displayObj[name] = ""; // 如果值为空，均返回空字符串
+                } catch (error) {
+                    displayObj[name] = doc[name];
+                    // console.warn(error)
                 }
             }
         }
