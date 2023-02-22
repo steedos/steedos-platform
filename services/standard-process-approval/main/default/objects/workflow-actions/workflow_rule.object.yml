@@ -50,7 +50,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   workflow_notifications_actions:
@@ -66,7 +66,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   workflow_outbound_messages_actions:
@@ -82,7 +82,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   # boolean_filter: # TODO 暂不支持
@@ -172,7 +172,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   time_triggers.$.workflow_notifications_actions:
@@ -187,7 +187,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   time_triggers.$.workflow_outbound_messages_actions:
@@ -202,7 +202,7 @@ fields:
     filtersFunction: !!js/function |
       function (filters, dependValues) {
         if(dependValues && dependValues.object_name){
-          return "object_name eq '" + dependValues.object_name + "'";
+          return ['object_name','=',dependValues.object_name];
         }
       }
   description:
