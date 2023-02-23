@@ -9,7 +9,7 @@ export const sendPackageFlowToDb = async (broker, packagePath: string, name: str
         const flowFilePath = flow.__filename;
         delete flow.__filename;
         try {
-            await broker.call('steedos-server.importFlow', {flow: flow}, {meta: {name: name}})
+            await broker.call('service-package-loader.importFlow', {flow: flow}, {meta: {name: name}})
         } catch (error) {
             console.error(`importFlow error`, flowFilePath, error)
         }
