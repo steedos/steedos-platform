@@ -139,7 +139,7 @@ module.exports = {
                             set_obj['traces.$.approves.' + idx + '.is_read'] = true
                             set_obj['traces.$.approves.' + idx + '.read_date'] = new Date()
                             
-                            finishedApproveIds.push(a._id)
+                            finishedApproveIds.push(forward_instance.traces[0].approves[0]._id)
                         }
 
                         exists = true
