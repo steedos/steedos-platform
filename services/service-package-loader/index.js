@@ -1,16 +1,18 @@
 "use strict";
 
 const objectql = require('@steedos/objectql');
+const Future = require('fibers/future');
 const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
-const sendPackageFlowToDb = require('./lib/loadPackageFlow').sendPackageFlowToDb;
 const path = require('path');
 const _ = require('lodash');
 const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
+const loadFlowFile = new metaDataCore.LoadFlowFile();
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -62,6 +64,80 @@ module.exports = {
      * Methods
      */
     methods: {
+
+        sendPackageFlowToDb: async function(packagePath, name) {
+            const flows = loadFlowFile.load(path.join(packagePath, '**'));
+            for (const apiName in flows) {
+                const flow = flows[apiName];
+                const flowFilePath = flow.__filename;
+                delete flow.__filename;
+                try {
+                    await this.importFlow(flow, name);
+                } catch (error) {
+                    console.error(`importFlow error`, flowFilePath, error)
+                }
+            }
+        },
+
+        importFlow: async function(flow, name) {
+            await Future.task(() => {
+                try {
+                    try {
+                        if(!db){
+                            return
+                        }
+                        if(!steedosImport){
+                            return
+                        }
+                    } catch (error) {
+                        return ;
+                    }
+                    
+                    if(db && db.flows && steedosImport){
+                        const steedosConfig = objectql.getSteedosConfig();
+                        let space;
+                        if(steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
+                            space = db.spaces.findOne(steedosConfig.tenant._id)
+                        }
+                        if(!space){
+                            space = db.spaces.findOne()
+                        }
+                        if(!space){
+                            this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
+                            return ;
+                        }
+                        if(!flow.api_name){
+                            this.logger.warn(`not find api_name in file`);
+                            return ;
+                        }
+                        const dbFlow = db.flows.findOne({api_name: flow.api_name});
+                        if(!dbFlow){
+                            if(flow && flow.current){
+                                if(!_.has(flow.current,'fields')){
+                                    flow.current.fields = [];
+                                }
+                            }
+                            this.logger.info(`insert flow ${flow.api_name} from ${name}`);
+
+                            let company_id = null;
+                            if(flow.company_id){
+                                let count = Creator.getCollection("company").find({ _id: flow.company_id, space: space._id }).count();
+                                if(count > 0){
+                                    company_id = flow.company_id
+                                }
+                            }
+
+                            return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
+                        }
+                        this.logger.debug(`not import flow. find flow `, dbFlow._id)
+                    }
+
+                } catch (error) {
+                    this.logger.error(error)
+                }
+            }).promise();
+            
+        }, 
         loadDataOnServiceStarted: async function(){
             let packageInfo = this.settings.packageInfo;
             if (!packageInfo) {
@@ -71,7 +147,7 @@ module.exports = {
 
             this.loadPackagePublicFiles(_path);
             if(_path){
-                sendPackageFlowToDb(this.broker, _path)
+                this.sendPackageFlowToDb(_path)
                 processLoader.sendPackageProcessToDb(_path);
             }
         },
