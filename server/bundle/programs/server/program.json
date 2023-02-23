@@ -359,12 +359,6 @@
       "path": "packages/steedos_autoform-bs-datetimepicker.js"
     },
     {
-      "path": "packages/momentjs_moment.js"
-    },
-    {
-      "path": "packages/steedos_bootstrap3-datetimepicker.js"
-    },
-    {
       "sourceMap": "packages/steedos_creator-autoform-modals.js.map",
       "path": "packages/steedos_creator-autoform-modals.js"
     },
@@ -444,6 +438,9 @@
     },
     {
       "path": "packages/dburles_collection-helpers.js"
+    },
+    {
+      "path": "packages/momentjs_moment.js"
     },
     {
       "path": "packages/mrt_moment.js"
