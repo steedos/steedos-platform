@@ -1806,3 +1806,5 @@ CustomLabels:
   import_flow_error: 导入失败
   import_flow_info: 请选择需要导入的流程
   base_error_start_end_date: 开始时间必须小于结束时间
+  instance_approve_handler_work_phone: 处理人电话
+  instance_approve_handler_mobile: 处理人手机

@@ -18,7 +18,7 @@ InstanceMacro.run = (macro) ->
 		try
 			return macro();
 		catch e
-			console.log "InstanceMacro.run error." , e
+			console.log "InstanceMacro.run error." , e, macro
 			return ;
 
 
@@ -37,6 +37,6 @@ InstanceMacro.run = (macro) ->
 			return eval(macro)
 	catch  e
 
-		console.log "InstanceMacro.run error." , e
+		console.log "InstanceMacro.run error." , e, macro
 
 		return ;

@@ -20,21 +20,34 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title">
+
+  <link rel="stylesheet" href="${ROOT_URL}/tailwind/tailwind-base.css" />
+
   <!-- lodash，低代码编辑器的依赖 -->
   <script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
   <script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
 
   <script src="${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js"></script>
 
+  <!-- Steedos Builder -->
+  <script src="${STEEDOS_UNPKG_URL}/@steedos-builder/sdk@0.2.36/dist/index.umd.js"></script>
+
   <script src="${STEEDOS_UNPKG_URL}/amis@${STEEDOS_AMIS_VERSION}/sdk/sdk.js"></script>
   <script >
-    __steedos_runtime_config__ = {};
-    __steedos_runtime_config__.STEEDOS_VERSION = "${STEEDOS_VERSION}";
-    __steedos_runtime_config__.STEEDOS_UNPKG_URL = "${STEEDOS_UNPKG_URL}";
-    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_ASSETURLS = "${STEEDOS_PUBLIC_PAGE_ASSETURLS}";
-    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_SCRIPTS = "${STEEDOS_PUBLIC_PAGE_SCRIPTS}";
-    __steedos_runtime_config__.STEEDOS_PUBLIC_PAGE_STYLES = "${STEEDOS_PUBLIC_PAGE_STYLES}";
-    __steedos_runtime_config__.ROOT_URL = "${ROOT_URL}";
+
+    window.Builder = BuilderSDK.Builder;
+    window.builder = BuilderSDK.builder;
+    window.builder.init('steedos');
+
+    const assetUrls = localStorage.getItem('assetUrls')? localStorage.getItem('assetUrls') : "${STEEDOS_PUBLIC_PAGE_ASSETURLS}"
+    Builder.set({
+      nodeEnv: "${NODE_ENV}", 
+      rootUrl: "${ROOT_URL}", 
+      unpkgUrl: "${STEEDOS_UNPKG_URL}",
+      steedosVersion: "${STEEDOS_VERSION}",
+      assetUrls,
+    });
+
     window.axios = amisRequire('axios');
     window.moment = amisRequire('moment');
     window.React = amisRequire('react');
@@ -42,6 +55,12 @@
     window.React17 = window.React;
     window.ReactDOM17 = window.ReactDOM;
 
+    window.addEventListener('message', function (event) {
+    const { data } = event;
+    if (data.type === 'Builder.loaded') {
+            Builder.registerRemoteAssets(Builder.settings.assetUrls);
+        }
+    })
 
     if ("${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}") {
       let scriptTag = document.createElement("script");
@@ -71,8 +90,6 @@
     }
 
   </script>
-  <!-- Steedos Builder -->
-  <script src="${STEEDOS_UNPKG_URL}/@steedos-builder/react@0.2.36/dist/builder-react.unpkg.js"></script>
   
   <meteor-bundled-css />
 
@@ -84,6 +101,8 @@
   <script src="${STEEDOS_UNPKG_URL}/@steedos-ui/design-system@2.2.53/dist/design-system.umd.js"></script>
   <link rel="stylesheet" type="text/css" href="${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.17.5/assets/styles/salesforce-lightning-design-system.min.css">
 
+  <link rel="stylesheet" href="${ROOT_URL}/tailwind/tailwind-steedos.css" />
+  <link rel="stylesheet" href="${ROOT_URL}/amis/amis.css" />
 </head>
 
 <body class="skin-blue-light fixed steedos sidebar-mini three-columns loading">

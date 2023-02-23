@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-02-23 10:08:05
+ * @Description: 
+ */
 AutoForm.addInputType("select", {
   template: "afSelect",
   valueOut: function () {
@@ -92,8 +99,6 @@ AutoForm.addInputType("select", {
     if("readonly" in context.atts){
       context.atts.disabled = "";
     }
-
-    context.atts.class = "slds-select"
 
     return context;
   }

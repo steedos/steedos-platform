@@ -195,6 +195,24 @@
 							{{/if}}
 						{{/unless}}
 					{{/if}}
+					{{#with handlerDoc this.handler}}
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<span class="weui-label">{{_t "instance_approve_handler_work_phone"}}</span>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary text-muted">
+							<span class="weui-input">{{this.work_phone}}</span>
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<span class="weui-label">{{_t "instance_approve_handler_mobile"}}</span>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary text-muted">
+							<span class="weui-input">{{this.mobile}}</span>
+						</div>
+					</div>
+				{{/with}}
 				</div>
 				<div class="modal-footer">
 					{{#if showDeleteButton this}}

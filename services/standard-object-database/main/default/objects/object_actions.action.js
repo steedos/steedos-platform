@@ -7,7 +7,7 @@
  */
 module.exports = {
   showDesign: function (object_name, record_id) {
-    document.location = Steedos.absoluteUrl(`/api/amisButtonDesign?id=${record_id}&object=${this.record.object}`);
+    document.location = Steedos.absoluteUrl(`/api/amisButtonDesign?id=${record_id}&object=${this.record.object}&assetUrls=${Builder.settings.assetUrls}`);
   },
   showDesignVisible: function (object_name, record_id, record_permissions) {
       var perms;

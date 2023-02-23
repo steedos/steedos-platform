@@ -22,3 +22,13 @@
 .flex {
     display: flex!important;
 }
+
+/* 修复全局样式.collapse引起的 日期时间选择异常问题 */
+.bootstrap-datetimepicker-widget .collapse{
+    visibility: visible !important;
+}
+
+/*申请单中使用 旧版中的 inline-block样式 */
+.instance-wrapper .instance-form .inline-block{
+    display: block !important;
+}

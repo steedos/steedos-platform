@@ -1,17 +1,22 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-02-23 13:43:08
+ * @Description: 
+-->
 <template name="instance_attachments" >
 	{{#if showAttachments}}
 		<div class="instance_attachments col-md-12">
-			{{#if showMainTitle}}
-			<div class="attachments-btns">
-				<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "instance_main_attachment"}}</span>
-
-				{{#if enabled_add_main_attachment}}
+			<div>
+				{{#if showMainTitle}}
+					<span class="box-title" style="display: inline-block;font-weight: bold;">{{_t "instance_main_attachment"}}</span>
+				{{/if}}
 				<div class="slds-button slds-button_neutral slds-m-left_x-small ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none{{/if}}">
 					<input type="file" name="file" class="ins-file-input" id="ins_upload_main_attach">
 					{{> steedos_icon class="slds-button__icon" wrapClassName="leading-none" source="utility-sprite" name="upload" size="xx-small"}}
 					<span>&nbsp;{{_ "workflow_attach_upload"}}</span>
 				</div>
-				{{/if}}
 				{{#if isNode}}
 					<div class="slds-button slds-button_neutral ins-upload" title='{{_ "instance_main_attachment"}}' style="{{#if enabled_add_main_attachment}}{{else}}display: none;{{/if}}margin-left: 0.5rem;">
 						<button type="button" class="ins-file-input" id="ins_new_main_file"></button>
@@ -21,7 +26,6 @@
 					</div>
 				{{/if}}
 			</div>
-			{{/if}}
 			{{#if main_attachment}}
 			<div class="attachments-list">
 				<table class='table table-condensed attachments' style="margin-bottom: 0px;">

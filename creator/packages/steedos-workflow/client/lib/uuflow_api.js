@@ -774,3 +774,35 @@ UUflow_api.getPDFData = function (fileId, callback) {
 	});
 	return;
 };
+
+// 获取user.name
+UUflow_api.getContactInfoForUser = function (userId, spaceId) {
+	var data = {
+		userId,
+		spaceId
+	};
+	var user;
+	data = JSON.stringify(data);
+	$.ajax({
+		url: Steedos.absoluteUrl('api/workflow/getContactInfoForUser'),
+		type: 'POST',
+		async: false,
+		data: data,
+		dataType: 'json',
+		processData: false,
+		contentType: "application/json",
+		success: function (responseText, status) {
+			if (responseText.errors) {
+				toastr.error(responseText.errors);
+				return;
+			}
+
+			user = responseText.user;
+		},
+		error: function (xhr, msg, ex) {
+			toastr.error(msg);
+		}
+	});
+
+	return user;
+};

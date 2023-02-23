@@ -46,8 +46,7 @@ try {
     })
   }
   setTimeout(function () {
-    var ref = SteedosUI;
-    if (!ref) {
+    if (typeof SteedosUI === 'undefined') {
       SteedosUI = {}
     }
     SteedosUI.previewFile = function ({ download_url, file_name, file_size, object_name, record_id, file_id, isPreviewButton }) {

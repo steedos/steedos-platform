@@ -1958,4 +1958,5 @@ CustomLabels:
   import_flow_error: import_flow_error
   import_flow_info: import_flow_info
   base_error_start_end_date: The start time must be earlier than the end time
-
+  instance_approve_handler_work_phone: Handler Phone
+  instance_approve_handler_mobile: Handler Mobile

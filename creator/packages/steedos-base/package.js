@@ -181,7 +181,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('client/lib/jquery-touch-events/jquery.mobile-events.js', 'client');
 
-	// api.addFiles('client/momentjs/zh-cn.js', 'client');
+	api.addFiles('client/momentjs/zh-cn.js', 'client');
 
 	api.addFiles('client/bootstrap_3_modal.js', 'client');
 

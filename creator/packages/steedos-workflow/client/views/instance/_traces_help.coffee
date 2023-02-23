@@ -307,6 +307,12 @@ TracesTemplate.helpers =
 	objectUrl: (object_name, record_id, app_id)->
 		return Creator.getObjectUrl(object_name, record_id, app_id)
 
+	handlerDoc: (handlerId)->
+		if Meteor.isClient
+			return UUflow_api.getContactInfoForUser(handlerId, Session.get('spaceId'))
+		else if Meteor.isServer
+			return db.users.findOne(handlerId)
+
 if Meteor.isServer
 	TracesTemplate.helpers.dateFormat = (date)->
 		if date
