@@ -9,6 +9,9 @@
         },
         "page": {
             "assetUrls": "https://unpkg.steedos.cn/@steedos-widgets/amis-object@latest/dist/assets.json"
+        },
+        "phone": {
+            "showRemindButton": true
         }
     },
     "cron": {
