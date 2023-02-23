@@ -397,13 +397,15 @@ fields:
     name: print_template
   field_map:
     label: Mapping
-    type: textarea
+    type: code
+    language: json
     is_wide: true
     group: Synchronization
     name: field_map
   events:
     label: Events
-    type: textarea
+    type: code
+    language: javascript
     is_wide: true
     group: Script
     name: events
