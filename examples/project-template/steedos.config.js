@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-25 13:31:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-10 09:56:09
+ * @LastEditTime: 2023-02-23 11:49:44
  * @Description: 
  */
 let express = require("express");
@@ -21,6 +21,9 @@ module.exports = {
 
 	settings: {
 		public: {
+			phone: {
+				showRemindButton: true
+			},
 			workflow: {
 				instance_allow_distribute: true
 			}

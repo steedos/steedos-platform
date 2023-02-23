@@ -741,3 +741,16 @@ WorkflowManager.getMyAdminOrMonitorFlows = function(spaceId, userId) {
 	}
 	return flow_ids;
 };
+
+WorkflowManager.getContactInfoForUser = function (userId, spaceId) {
+	check(userId, String);
+	return db.space_users.findOne({
+		space: spaceId,
+		user: userId
+	}, {
+		fields: {
+			work_phone: 1,
+			mobile: 1
+		}
+	});
+}
