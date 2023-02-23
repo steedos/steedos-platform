@@ -673,9 +673,9 @@
         let logoSrc = '';
         const space = db.spaces.findOne(Steedos.getSpaceId())
         if(space?.avatar){
-            logoSrc = Steedos.absoluteUrl(space.avatar) 
+            logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar) 
         }else if(space?.avatar_square){
-            logoSrc = Steedos.absoluteUrl(space.avatar_square) 
+            logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar_square) 
         }else{
             var settings = Session.get("tenant_settings");
             if(settings){
