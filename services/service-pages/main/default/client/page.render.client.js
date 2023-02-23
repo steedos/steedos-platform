@@ -316,7 +316,6 @@
 
             Promise.all([
                 waitForThing(window, 'renderAmis'),
-                waitForThing(window, 'BuilderComponent'),
                 waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
             ]).then(()=>{
                 //渲染page
@@ -326,41 +325,6 @@
                         schema,
                         data,
                     )
-                }else{
-                    if(root === SteedosUI.Drawer){
-                        data.drawerName = data.drawerName || lodash.uniqueId(`drawer-${page.object_name}`);
-                        SteedosUI.Drawer(Object.assign({
-                            name: data.drawerName,
-                            title: data.title,
-                            destroyOnClose: true,
-                            maskClosable: false,
-                            footer: null,
-                            bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React17.createElement(BuilderComponent, {
-                                model: "page", content: {
-                                    "data": pageContentData
-                                }
-                            })
-                        }, options.props)).show();
-                    }else{
-                        data.modalName = data.modalName || lodash.uniqueId(`modal-${page.object_name}`);
-                        SteedosUI.Modal(Object.assign({
-                            name: data.modalName,
-                            title: data.title,
-                            destroyOnClose: true,
-                            maskClosable: false,
-                            keyboard: false, // 禁止 esc 关闭
-                            footer: null,
-                            bodyStyle: {padding: "0px", paddingTop: "12px"},
-                            children: React17.createElement(BuilderComponent, {
-                                model: "page", content: {
-                                    "data": pageContentData
-                                }
-                            })
-                        }, options.props)).show();
-                    }
-
-                    
                 }
             });
         }

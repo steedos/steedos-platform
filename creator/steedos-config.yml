@@ -8,9 +8,6 @@ public:
     local: 
       folder: "./storage"
   templateSpaceId: template
-  page:
-    assetUrls: ${STEEDOS_PUBLIC_PAGE_ASSETURLS}
-    unpkgUrl: ${STEEDOS_PUBLIC_PAGE_UNPKGURL}
 plugins:
   - "@steedos/plugin-company"
 enable_holidays: true
