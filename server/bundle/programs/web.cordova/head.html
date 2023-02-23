@@ -31,7 +31,12 @@
     window.builder = BuilderSDK.builder;
     window.builder.init('steedos');
 
-    const assetUrls = localStorage.getItem('assetUrls')? localStorage.getItem('assetUrls') : "${STEEDOS_PUBLIC_PAGE_ASSETURLS}"
+    let searchParams = new URLSearchParams(location.search);
+    if (searchParams.get('assetUrls')) {
+      sessionStorage.setItem('assetUrls', searchParams.get('assetUrls'))
+    }
+
+    const assetUrls = sessionStorage.getItem('assetUrls')? sessionStorage.getItem('assetUrls') : "${STEEDOS_PUBLIC_PAGE_ASSETURLS}"
     Builder.set({
       nodeEnv: "${NODE_ENV}", 
       rootUrl: "${ROOT_URL}", 
