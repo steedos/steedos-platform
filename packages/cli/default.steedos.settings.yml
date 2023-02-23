@@ -15,9 +15,6 @@ public:
       urlProvideForJsreport: ${JSREPORT_TO_ACQUIRE_DATA_URL}
     app_exchange:
       url: ${STEEDOS_APP_EXCHANGE_URL}
-  page:
-    assetUrls: ${STEEDOS_PUBLIC_PAGE_ASSETURLS}
-    unpkgUrl: ${STEEDOS_PUBLIC_PAGE_UNPKGURL}
   analytics:
     enabled: ${STEEDOS_PUBLIC_ANALYTICS_ENABLED}
     baidu:
