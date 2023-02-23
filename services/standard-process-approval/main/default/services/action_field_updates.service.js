@@ -126,7 +126,8 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    mainObjectName = await objectql.getObjectConfig(objectName).fields[targetObject]?.reference_to;
+                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
@@ -163,7 +164,8 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    mainObjectName = await objectql.getObjectConfig(objectName).fields[targetObject]?.reference_to;
+                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
@@ -206,7 +208,8 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    mainObjectName = await objectql.getObjectConfig(objectName).fields[targetObject]?.reference_to;
+                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
