@@ -948,7 +948,9 @@ InstanceManager.submitIns = function () {
 
 			var ccHasEditPermission = InstanceManager.ccHasEditPermission();
 			var myApprove = InstanceManager.getMyApprove();
+			$(document.body).addClass("loading");
 			Meteor.call('cc_submit', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
+				$(document.body).removeClass("loading");
 				if (error) {
 					toastr.error(error);
 					Session.set("instance_submitting", false);
