@@ -120,112 +120,37 @@ var s_autoform = function (schema, field) {
         case 'date':
             schema.type = String;
             autoform.disabled = (permission == 'readonly');
-            if (Steedos.isMobile() || Steedos.isPad()){
-                if (Steedos.isiOS()) {
-                    // Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
-                    autoform.afFieldInput = {
-                        type: "dx-date-box",
-                        dxDateBoxOptions: {
-                            type: "date",
-                            displayFormat: "yyyy-MM-dd",
-                            dateSerializationFormat: "yyyy-MM-dd",
-                            pickerType: "rollers",
-                            onOpened: function(){
-                                // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
-                                $("body").addClass("dx-date-box-opened");
-                            },
-                            onClosed: function(){
-                                $("body").removeClass("dx-date-box-opened");
-                            }
-                        }
-                    };
-                } else {
-                    // autoform.type = 'date';
-                    // 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-                    autoform.afFieldInput = {
-                        type: "steedos-date-mobile",
-                        dateMobileOptions: {
-                            type: "date"
-                        }
-                    };
-                }
-            }
+            if (Steedos.isMobile() || Steedos.isPad())
+                autoform.type = 'date';
             else {
-                // autoform.type = 'coreform-datepicker';
-                // autoform.outFormat = 'yyyy-MM-dd';
-                // autoform.dateTimePickerOptions = {
-                //     showClear: true,
-                //     format: "YYYY-MM-DD",
-                //     locale: Session.get("TAPi18n::loaded_lang"),
-                //     widgetPositioning: {
-                //         // horizontal: 'right'
-                //     }
-                // }
+                autoform.type = 'coreform-datepicker';
                 autoform.outFormat = 'yyyy-MM-dd';
-                // 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-                autoform.afFieldInput = {
-                    type: "dx-date-box",
-                    timezoneId: "utc",
-                    dxDateBoxOptions: {
-                        type: "date",
-                        displayFormat: "yyyy-MM-dd",
-                        dateSerializationFormat: "yyyy-MM-dd"
+                autoform.dateTimePickerOptions = {
+                    showClear: true,
+                    format: "YYYY-MM-DD",
+                    locale: Session.get("steedos-locale"),
+                    widgetPositioning:{
+                        // horizontal: 'right'
                     }
-                };
+                }
             }
             break;
         case 'dateTime':
             schema.type = Date;
             autoform.disabled = (permission == 'readonly');
-            if (Steedos.isMobile() || Steedos.isPad()){
-                // autoform.type = 'datetime-local';
-                if (Steedos.isiOS()) {
-                    // Fix ios 14, 手机客户端待审核文件日期控件显示故障 #991，ios统一用PC端一样的js控件
-                    autoform.afFieldInput = {
-                        type: "dx-date-box",
-                        dxDateBoxOptions: {
-                            type: "datetime",
-                            displayFormat: "yyyy-MM-dd HH:mm",
-                            dateSerializationFormat: "yyyy-MM-ddTHH:mm:ssZ",
-                            pickerType: "rollers",
-                            onOpened: function(){
-                                // fix dx-date-box控件pickerType为rollers时，打开后，滚动控件时，审批界面会触发审批单界面滚动
-                                $("body").addClass("dx-date-box-opened");
-                            },
-                            onClosed: function(){
-                                $("body").removeClass("dx-date-box-opened");
-                            }
-                        }
-                    };
-                } else {
-                    // autoform.type = 'datetime-local';
-                    // 这里用afFieldInput而不直接用autoform的原因是当字段被hidden的时候去执行dxDateBoxOptions参数会报错
-                    autoform.afFieldInput = {
-                        type: "steedos-date-mobile",
-                        dateMobileOptions: {
-                            type: "datetime"
-                        }
-                    };
-                }
-            }
+            if (Steedos.isMobile() || Steedos.isPad())
+                autoform.type = 'datetime-local';
             else {
-                // autoform.type = 'bootstrap-datetimepicker';
-                // autoform.dateTimePickerOptions = {
-                //     showClear: true,
-                //     format: "YYYY-MM-DD HH:mm",
-                //     locale: Session.get("TAPi18n::loaded_lang"),
-                //     widgetPositioning: {
-                //         // horizontal: 'right'
-                //     }
-                // }
-                autoform.afFieldInput = {
-                    type: "dx-date-box",
-                    dxDateBoxOptions: {
-                        type: "datetime",
-                        displayFormat: "yyyy-MM-dd HH:mm",
-                        dateSerializationFormat: "yyyy-MM-ddTHH:mm:ssZ"
+                autoform.type = 'bootstrap-datetimepicker';
+                autoform.dateTimePickerOptions = {
+                    showClear: true,
+                    format: "YYYY-MM-DD HH:mm",
+                    locale: Session.get("steedos-locale"),
+                    keepOpen: true,
+                    widgetPositioning:{
+                        // horizontal: 'right'
                     }
-                };
+                }
             }
             break;
         case 'checkbox':
