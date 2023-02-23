@@ -29,6 +29,6 @@
 }
 
 /*申请单中使用 旧版中的 inline-block样式 */
-.instance-wrapper .instanceform .inline-block{
+.instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
