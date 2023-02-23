@@ -132,8 +132,9 @@ Template.instance_cc_modal.events
 			return ;
 
 		Session.set("instance_submitting", true);
-
+		$(document.body).addClass("loading");
 		Meteor.call 'cc_do', myApprove, val, description, (error, result) ->
+			$(document.body).removeClass("loading");
 			WorkflowManager.instanceModified.set false
 			if error
 				Modal.hide template
