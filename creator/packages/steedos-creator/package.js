@@ -38,7 +38,6 @@ Package.onUse(function (api) {
 	api.use('kadira:flow-router@2.10.1');
 	api.use('steedos:api');
 	api.use('steedos:autoform-bs-datetimepicker@1.0.6');
-	api.use('steedos:bootstrap3-datetimepicker@4.17.47');
 	api.use('steedos:autoform-bs-minicolors@1.0.0');
 
 	// api.use('summernote:summernote@0.8.1');

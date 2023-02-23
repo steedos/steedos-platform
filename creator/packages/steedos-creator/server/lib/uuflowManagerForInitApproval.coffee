@@ -1,8 +1,5 @@
 _eval = require('eval')
 objectql = require('@steedos/objectql');
-{
-    insert_instance_tasks,
-} = require('@steedos/workflow').workflowManagers.instance_tasks_manager
 
 getObjectConfig = (objectApiName) ->
 	return objectql.getObject(objectApiName).toConfig()
@@ -245,8 +242,6 @@ uuflowManagerForInitApproval.create_instance = (instance_from_client, user_info)
 			ins_obj.category = category._id
 
 	new_ins_id = Creator.Collections.instances.insert(ins_obj)
-
-	insert_instance_tasks(new_ins_id, trace_obj._id, appr_obj._id)
 
 	uuflowManagerForInitApproval.initiateRecordInstanceInfo(ins_obj.record_ids[0], new_ins_id, space_id)
 

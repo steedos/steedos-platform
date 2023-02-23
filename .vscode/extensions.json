@@ -1,5 +1,5 @@
 {
     "recommendations": [
-        "redhat.vscode-yaml", "cweijan.vscode-mysql-client2", "gruntfuggly.todo-tree"
+        "redhat.vscode-yaml", "cweijan.vscode-mysql-client2", "gruntfuggly.todo-tree", "eamodio.gitlens", "OBKoro1.korofileheader"
     ]
 }
