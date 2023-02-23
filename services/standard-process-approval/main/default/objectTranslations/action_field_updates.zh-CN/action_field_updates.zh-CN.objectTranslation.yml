@@ -25,6 +25,13 @@ fields:
   operation:
     label: 新字段值类型
     help: 
+    options:
+      - label: 空值 (null)
+        value: 'null'
+      - label: 使用公式设置新值
+        value: formula
+      - label: 特定值
+        value: literal
     description: 
   formula:
     label: 公式

@@ -59,18 +59,26 @@
                     "type": "select",
                     "joinValues": false,
                     "extractValue": true,
-                    "autoComplete": {
+                    "searchable": true,
+                    "source": {
                       "method": "post",
                       "url": "${context.rootUrl}/graphql",
                       "data": {
-                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                        "$": "$$",
+                        "orderBy": "${orderBy}",
+                        "orderDir": "${orderDir}",
+                        "pageNo": "${page}",
+                        "pageSize": "${perPage}",
+                        "query": "{options:objects(filters: {__filters}, top: {__top}, sort: \"{__sort}\"){_id label:label value:name},count:objects__count(filters:{__filters}),defaultValueOptions:objects(filters:{__options_filters}){_id label:label value:name}}",
                         "$term": "$term",
-                        "$value": "$object_name._id",
+                        "$value": "$object_name",
+                        "$": "$$",
                         "rfield": "${object_name}"
                       },
-                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                      "adaptor": "\n        payload.data.options = eval(function anonymous(\n) {\n\n  return Steedos.getObjectsOptions();\n\n})(api.data);\n        return payload;\n        "
+                      "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                      },
+                      "adaptor": "\n            const data = payload.data;\n            var defaultValueOptions = data.defaultValueOptions;\n            // 字段值下拉选项合并到options中\n            data.options = _.unionWith(defaultValueOptions, data.options, function(a,b){\n                return a[\"value\"]=== b[\"value\"];\n            });\n            delete data.defaultValueOptions;\n            payload.data.options = data.options;\n            return payload;\n        ",
+                      "requestAdaptor": "\n        var filters = [];\n        var top = 10;\n        if(api.data.$term){\n            filters = [[\"label\", \"contains\", api.data.$term]];\n        }\n        // else if(api.data.$value){\n        //     filters = [[\"_id\", \"=\", api.data.$value]];\n        // }\n\n        var fieldFilters = undefined;\n        if(fieldFilters && fieldFilters.length){\n            filters.push(fieldFilters);\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n        var sort = \"\";\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', top).replace('{__sort}', sort.trim());\n\n        var defaultValue = api.data.$value;\n        var optionsFiltersOp = \"=\";\n        var optionsFilters = [[\"name\", optionsFiltersOp, []]];\n        if (defaultValue && !api.data.$term) { \n            // 字段值单独请求，没值的时候在请求中返回空\n            optionsFilters = [[\"name\", optionsFiltersOp, defaultValue]];\n        }\n        api.data.query = api.data.query.replace(/{__options_filters}/g, JSON.stringify(optionsFilters));\n        return api;\n    "
                     },
                     "className": "m-1",
                     "labelClassName": "text-left",
@@ -85,19 +93,10 @@
                     "type": "select",
                     "joinValues": false,
                     "extractValue": true,
-                    "autoComplete": {
-                      "method": "post",
-                      "url": "${context.rootUrl}/graphql",
-                      "data": {
-                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                        "$": "$$",
-                        "$term": "$term",
-                        "$value": "$target_object._id",
-                        "object_name": "$object_name",
-                        "rfield": "${object_name}"
-                      },
-                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var object = Creator.objectsByName[doc.object_name];\n  if(object){\n    var _options = [{label: object.label, value: object.name}];\n    _.forEach(object.fields, function (field, fname) {\n      if(field && field.type === 'master_detail' && _.isString(field.reference_to)){\n        var referenceToObject = Creator.objectsByName[field.reference_to];\n        if(referenceToObject){\n          _options.push({\n            label: referenceToObject.label,\n            value: field.name,\n          });\n        }\n      }\n    });\n    return _options;\n  }\n return [];\n\n})(api.data);\n        return payload;\n        "
+                    "searchable": true,
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/target_object/options?objectName=${object_name}"
                     },
                     "className": "m-1",
                     "labelClassName": "text-left",
@@ -112,20 +111,10 @@
                     "type": "select",
                     "joinValues": false,
                     "extractValue": true,
-                    "autoComplete": {
-                      "method": "post",
-                      "url": "${context.rootUrl}/graphql",
-                      "data": {
-                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                        "$": "$$",
-                        "$term": "$term",
-                        "$value": "$field_name._id",
-                        "object_name": "$object_name",
-                        "target_object": "$target_object",
-                        "rfield": "${object_name}"
-                      },
-                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var mainObjectName = null;\n  if(doc.target_object && doc.target_object != doc.object_name){\n    mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;\n  }else{\n    mainObjectName = doc.object_name;\n  }\n  var object = Creator.objectsByName[mainObjectName];\n  if(object){\n    var _options = [];\n    _.forEach(object.fields, function (field, fname) {\n      if([\"formula\", \"summary\", \"autonumber\"].indexOf(field.type) < 0){\n        /*公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值*/\n        _options.push({\n          label: field.label,\n          value: field.name,\n        });\n      }\n    });\n    return _options;\n  }\n  return [];\n\n})(api.data);\n        return payload;\n        "
+                    "searchable": true,
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/field_name/options?objectName=${object_name}&targetObject=${target_object}"
                     },
                     "className": "m-1",
                     "labelClassName": "text-left",
@@ -140,21 +129,9 @@
                     "type": "select",
                     "joinValues": false,
                     "extractValue": true,
-                    "autoComplete": {
-                      "method": "post",
-                      "url": "${context.rootUrl}/graphql",
-                      "data": {
-                        "query": "{objects(filters: [\"_id\", \"=\", \"-1\"]){_id}}",
-                        "$": "$$",
-                        "$term": "$term",
-                        "$value": "$operation._id",
-                        "field_name": "$field_name",
-                        "target_object": "$target_object",
-                        "object_name": "$object_name",
-                        "rfield": "${object_name}"
-                      },
-                      "requestAdaptor": "\n        var filters = '[]';\n        var top = 10;\n        if(api.data.$term){\n            filters = '[\"name\", \"contains\", \"'+ api.data.$term +'\"]';\n        }else if(api.data.$value){\n            filters = '[\"_id\", \"=\", \"'+ api.data.$value +'\"]';\n        }\n        api.data.query = api.data.query.replace(/{__filters}/g, filters).replace('{__top}', top);\n        return api;\n    ",
-                      "adaptor": "\n        payload.data.options = eval(function anonymous(doc\n) {\n\n  var mainObjectName = null;\n  if(doc.target_object && doc.target_object != doc.object_name){\n    mainObjectName = Creator.objectsByName[doc.object_name].fields[doc.target_object].reference_to;\n  }else{\n    mainObjectName = doc.object_name;\n  }\n  var object = Creator.objectsByName[mainObjectName];\n  if(object && doc.field_name){\n    var _options = [];\n    var field = object.fields[doc.field_name];\n    if(field && field.type != 'boolean'){\n      _options.push({\n          label: TAPi18n.__(\"action_field_updates_field_operation_options_null\"),\n          value: 'null',\n      }) \n    }\n    _options.push({\n        label: TAPi18n.__(\"action_field_updates_field_operation_options_formula\"),\n        value: 'formula',\n    });\n    _options.push({\n        label: TAPi18n.__(\"action_field_updates_field_operation_options_literal\"),\n        value: 'literal',\n    })\n    return _options;\n  }\n  return [];\n\n})(api.data);\n        return payload;\n        "
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/operation/options?objectName=${object_name}&targetObject=${target_object}&fieldName=${field_name}"
                     },
                     "className": "m-1",
                     "labelClassName": "text-left",
@@ -183,12 +160,7 @@
                     "messages": {},
                     "schemaApi": {
                       "method": "get",
-                      "url": "${context.rootUrl}/service/api/@${object_name}/uiSchema?field_name=${field_name}&operation=${operation}",
-                      "adaptor": "const formData = api.body;\nconst target_field_name = formData.field_name;\nconst target_object_uiSchema = payload;\nconst target_fields = target_object_uiSchema && target_object_uiSchema.fields;\nconst target_field_type = target_fields && target_fields[target_field_name].type;\nlet literal_value_schema = {\n  \"type\": \"text\",\n  \"name\": \"literal_value\",\n  \"label\": \"指定新字段值\",\n  \"required\": false,\n  \"is_wide\": true,\n  \"labelClassName\": \"text-left\"\n}\nif (target_field_type) {\n  literal_value_schema = Object.assign({}, target_object_uiSchema.fields[target_field_name], {\n    name: \"literal_value\",\n    label: \"指定新字段值\",\n    disabled: false,\n    readonly: false,\n    is_wide: true\n  });\n}\npayload = {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"body\": [\n      {\n        \"type\": \"steedos-field\",\n        \"field\": literal_value_schema,\n        \"name\": \"literal_value\",\n        \"clearValueOnHidden\": true,\n        \"fieldName\": \"literal_value\",\n        \"visibleOn\": \"this.operation === 'literal'\"\n      }\n    ]\n  }\n}\nreturn payload;",
-                      "sendOn": "!!this.object_name && !!this.field_name && this.operation === 'literal'",
-                      "headers": {
-                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                      },
+                      "url": "${context.rootUrl}/service/api/action_field_updates/literal_value/options?objectName=${object_name}&targetObject=${target_object}&fieldName=${field_name}&operation=${operation}",
                       "data": {
                         "&": "$$"
                       }
