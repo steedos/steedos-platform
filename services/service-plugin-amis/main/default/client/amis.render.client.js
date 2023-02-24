@@ -241,9 +241,14 @@
 
                 // 手机版暂不支持code类型字段.
                 if(Meteor.isCordova){
-                    return Promise.resolve(true)
+                  return Promise.resolve(true)
                 }else{
-                    return Builder.initMonaco()
+                    try {
+                      Builder.initMonaco()
+                    } catch (err) {
+                      console.error(`Builder.initMonaco error: ${err}`);
+                    }
+                    return Promise.resolve(true)
                 }
             }
             //Amis SDK 中已清理了monaco, 所以这里需要提前注册,否则会导致amis code类型报错
