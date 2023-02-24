@@ -10,7 +10,7 @@
 <p align="center">
 <a href="./README_en.md">English</a>
 <a href="https://www.steedos.cn/docs/"> · 文档</a>
-<a href="https://www.steedos.cn/docs/deploy/"> · 本地部署</a>
+<a href="https://www.steedos.cn/videos/"> · 视频</a>
 <a href="https://demo.steedos.cn"> · 试用</a>
 </p>
 
@@ -26,23 +26,17 @@
 ## Salesforce 开源替代方案
 
 - [Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)： 基于百度 Amis 开发，扩展实现面向业务模型的动态组件，并提供可视化设计工具。
-
 - [Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)： 实现模型引擎、权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。
-
 - [Salesforce Metadata](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)： 基于 Steedos VSCode 插件，实现可视化工具设计的元数据和代码双向同步。
-
-- [Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)：服务端编写 nodejs 代码，实现任何需要的业务逻辑。参考：
-
+- [Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)：服务端编写 nodejs 代码，实现任何需要的业务逻辑。
 - [Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)： 元数据以及自定义的代码组合成为软件包。实现软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。
 
 
 ## 基于元数据
 
-元数据是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
+[元数据](https://www.steedos.cn/docs/protocol/metadata-object)是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
 
 ![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
-
-[点击了解华炎魔方元数据类型](https://www.steedos.cn/docs/developer/meta-types)
 
 ## 快速向导
 
@@ -67,7 +61,7 @@ yarn build
 yarn start
 ```
 
-## 功能
+## 平台功能
 
 华炎魔方社区版基于MIT协议，包含开发工具的所有必备功能，不限制用户数。基于华炎魔方开发的软件包可以任意销售而无需支付授权费用。
 
@@ -92,8 +86,7 @@ yarn start
 - [Node.js](https://nodejs.org/en/download/) 版本 >= 12。华炎魔方平台源码运行于 nodejs 环境。
 - [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
 - [Moleculer](https://moleculer.services/zh/): 基于 Node.js 的响应式微服务框架。
-- [GraphQL](https://graphql.org/): 华炎魔方自动为业务对象生成 GraphQL API。
-- [Lerna](https://github.com/lerna/lerna): 多包管理工具，用于管理和批量发布 npm 软件包。
+- [Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components): 百度 Amis 前端低代码框架。
 
 ## 学习华炎魔方
 
