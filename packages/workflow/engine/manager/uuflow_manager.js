@@ -2293,7 +2293,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         // 申请单名称按照固定规则生成申请单名称：流程名称＋' '+申请单编号
         upObj.submit_date = now;
         upObj.state = "completed";
-        upObj.values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
+        upObj.values = uuflowManager.getUpdatedValues(instance);
         upObj.code = flow.current_no + 1 + "";
         instance.code = upObj.code;
         instance.values = upObj.values;
@@ -2346,7 +2346,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
                     nextTrace.start_date = now;
                     nextTrace.due_date = uuflowManager.getDueDate(next_step.timeout_hours, space_id);
                     nextTrace.approves = [];
-                    updated_values = uuflowManager.getUpdatedValues(uuflowManager.getInstance(instance_id));
+                    updated_values = uuflowManager.getUpdatedValues(instance);
                     // 插入下一步trace.approve记录
                     _.each(next_step_users, function (next_step_user_id, idx) {
                         var agent, handler_id, handler_info, nextApprove, next_step_space_user, next_step_user_org_info;

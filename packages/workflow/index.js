@@ -21,3 +21,4 @@ exports.workflowManagers = require('./engine/manager')
 // 导出methods
 exports.workflowMethods = require('./engine/methods')
 
+exports.desingerManager = require('./src/designerManager')
