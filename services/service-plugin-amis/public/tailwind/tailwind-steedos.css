@@ -205,10 +205,6 @@ body.steedos .-translate-x-0 {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
-body.steedos .transform {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
 body.steedos .flex-col {
   flex-direction: column
 }
@@ -240,10 +236,6 @@ body.steedos .overflow-hidden {
 
 body.steedos .overflow-y-auto {
   overflow-y: auto
-}
-
-body.steedos .border {
-  border-width: 1px
 }
 
 body.steedos .border-b-\[3px\] {
