@@ -53,7 +53,7 @@ export const loadClientScripts = ()=>{
     
             clientCodes = clientCodes + objectql.getClientScripts();
     
-            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = clientCodes
+            WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = `$.getScript('${objectql.absoluteUrl("/steedos-init.js")}', function(){${clientCodes}})`
         }
     } catch (error) {
         // console.log(`loadClientScripts error: ${error}`);

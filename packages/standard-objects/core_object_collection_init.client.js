@@ -1,5 +1,3 @@
-db.apps = new Meteor.Collection('apps');
-
   db.apps.isInternalApp = function(url) {
     var app_url, i, len, ref;
     if (url && db.apps.INTERNAL_APPS) {
@@ -13,7 +11,6 @@ db.apps = new Meteor.Collection('apps');
     }
     return false;
   };
-
   db.users = Meteor.users;
 
   db.users.allow({
@@ -51,7 +48,6 @@ db.apps = new Meteor.Collection('apps');
     }
   });
 
-  db.spaces = new Meteor.Collection('spaces');
 
   db.spaces.helpers({
     owner_name: function() {
@@ -83,7 +79,6 @@ db.apps = new Meteor.Collection('apps');
     }
   });
 
-  db.space_users = new Meteor.Collection('space_users');
 
   db.space_users._simpleSchema = new SimpleSchema;
 
@@ -136,7 +131,6 @@ db.apps = new Meteor.Collection('apps');
     });
   });
 
-  db.organizations = new Meteor.Collection('organizations');
 
   db.organizations._sortFunction = function(doc1, doc2) {
     var ref;
@@ -297,7 +291,6 @@ db.apps = new Meteor.Collection('apps');
     }
   });
 
-  db.audit_logs = new Meteor.Collection('audit_logs');
 
   db.audit_logs._simpleSchema = new SimpleSchema({
     c_name: {
@@ -335,7 +328,6 @@ db.apps = new Meteor.Collection('apps');
 
   db.audit_logs._simpleSchema.i18n("audit_logs");
 
-  db.space_settings = new Meteor.Collection('space_settings');
 
   db.space_settings._simpleSchema = new SimpleSchema({
     space: {
@@ -353,7 +345,6 @@ db.apps = new Meteor.Collection('apps');
     }
   });
 
-  db.steedos_keyvalues = new Meteor.Collection('steedos_keyvalues');
 
   db.steedos_keyvalues._simpleSchema = new SimpleSchema({
     space: {

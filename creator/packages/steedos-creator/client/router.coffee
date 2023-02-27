@@ -47,16 +47,6 @@ set_sessions = (context, redirect)->
 		# 切换object_name且是详细界面，说明是点击进入了相关详细记录界面，强制加一条临时导航栏项
 		Session.set("temp_navs_force_create", true)
 
-checkAppPermission = (context, redirect)->
-	app_id = context.params.app_id
-	if app_id == "admin" || app_id == "-"
-		return
-	apps = _.pluck(Creator.getVisibleApps(true),"_id")
-	if apps.indexOf(app_id) < 0
-		console.log(app_id + " app access denied")
-		Session.set("app_id", Creator.getVisibleApps(true)[0]._id)
-		redirect "/"
-
 checkAppId = (context, redirect)->
 	app_id = context.params.app_id
 	if app_id == "admin" and Steedos.isMobile()
@@ -64,15 +54,6 @@ checkAppId = (context, redirect)->
 		redirect "/user_settings"
 		# urlQuery.pop的原因是手机上user_settings界面返回按钮应该正常返回到上个界面而不是返回到/app/admin
 		urlQuery.pop()
-
-checkObjectPermission = (context, redirect)->
-	object_name = context.params.object_name
-	allowRead = Creator.getObject(object_name)?.permissions?.get()?.allowRead
-	unless allowRead
-		console.log(object_name + " object access denied")
-		Session.set("object_name", null)
-		redirect "/"
-
 
 FlowRouter.route '/app',
 	triggersEnter: [ checkUserSigned ],
@@ -93,7 +74,7 @@ FlowRouter.route '/app/menu',
 	]
 
 FlowRouter.route '/app/:app_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		app_id = FlowRouter.getParam("app_id")
 		if (app_id != "-")
@@ -121,7 +102,7 @@ FlowRouter.route '/app/admin/page/:template_name',
 				main: template_name
 
 FlowRouter.route '/app/:app_id/page/:page_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		console.log('params', params)
 		app_id = FlowRouter.getParam("app_id")
@@ -199,7 +180,7 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 		})
 
 FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
-	triggersEnter: [ checkUserSigned, checkAppPermission ],
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		tab_id = FlowRouter.getParam("tab_id")
 		Session.set("tab_name", tab_id)
@@ -213,19 +194,19 @@ FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 objectRoutes = FlowRouter.group
 	prefix: '/app/:app_id/:object_name',
 	name: 'objectRoutes',
-	triggersEnter: [checkUserSigned, checkAppPermission, checkObjectPermission, set_sessions]
+	triggersEnter: [checkUserSigned, set_sessions]
 
 objectRoutes.route '/',
 	triggersEnter: [ 
 		# 自动跳转到对象的第一个视图
 		(context, redirect) -> 
 			object_name = context.params.object_name
-			unless Session.get("object_home_component")
-				list_view = Creator.getObjectFirstListView(object_name)
-				list_view_id = list_view?._id
-				app_id = context.params.app_id
-				url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
-				redirect(url)
+			listview = window.getFirstListView(object_name)
+			console.log("getFirstListView listview",listview)
+			list_view_id = listview?.name || listview?._id
+			app_id = context.params.app_id
+			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
+			FlowRouter.go(url)
 	 ],
 	action: (params, queryParams)->
 		BlazeLayout.render Creator.getLayout(),
