@@ -58,12 +58,6 @@
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
         let objectInfo = null;
-        if (type != 'list' && objectApiName) {
-            objectInfo = Creator.getObject(objectApiName);
-            if (objectInfo && objectInfo.version < 2) {
-                return;
-            }
-        }
         if(!objectApiName){
             objectApiName = ''
         }
@@ -658,6 +652,9 @@
 
     Steedos.Page.Header.render = function(appId, tabId){
         let app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        if(_.isEmpty(app)){
+            return ;
+        }
         if (appId === 'admin' || (window.innerWidth < 768))
             app.showSidebar = true;
         if (app.showSidebar)

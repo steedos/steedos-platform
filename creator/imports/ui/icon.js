@@ -1,5 +1,11 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-19 11:38:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-02-24 16:07:33
+ * @Description: 
+ */
 import './icon.html';
-const { Icon } = DesignSystem;
 
 const getSourceName = (source, name) => {
 	var foo;
@@ -13,9 +19,6 @@ const getSourceName = (source, name) => {
 };
 
 Template.steedos_icon.helpers({
-	component: function () {
-		return Icon;
-	},
 	data: function () {
 		let assistiveText;
 		if(this.assistiveText){
@@ -30,34 +33,46 @@ Template.steedos_icon.helpers({
 			className: this.className || this.class,
 			assistiveText
 		}, {component: Icon})
-	}
+	},
 	// component: function () {
 	// 	return Icon;
 	// },
-	// category: function () {
-	// 	return this.category || getSourceName(this.source, this.name);
-	// },
-	// name: function () {
-	// 	return this.name;
-	// },
-	// size: function () {
-	// 	return this.size;
-	// },
-	// title: function () {
-	// 	return this.title;
-	// },
+	category: function () {
+		return this.category || getSourceName(this.source, this.name);
+	},
+	name: function () {
+		return this.name;
+	},
+	size: function () {
+		return this.size;
+	},
+	title: function () {
+		return this.title;
+	},
 	// // icon: function () {
 	// // 	return this.icon;
 	// // },
-	// colorVariant: function () {
-	// 	return this.colorVariant;
-	// },
-	// className: function () {
-	// 	return this.className || this.class;
-	// },
-	// containerClassName: function () {
-	// 	return this.containerClassName;
-	// },
+	colorVariant: function () {
+		return this.colorVariant;
+	},
+	className: function () {
+		return this.className || this.class;
+	},
+	basePath: function(){
+		var basePath = Steedos.absoluteUrl();
+		if(basePath && basePath.endsWith('/')){
+			return basePath.substr(0, basePath.length - 1);
+		}
+		return basePath;
+	},
+	containerClassName: function () {
+		var className = this.className || this.class;
+		if(className && className.indexOf("slds-input") > -1){
+			return ''
+		}else{
+			return 'slds-icon_container'
+		}
+	},
 	// style: function () {
 	// 	return this.style;
 	// },

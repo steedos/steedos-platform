@@ -10,7 +10,7 @@ Meteor.startup ()->
 	Tracker.autorun ()->
 		workflow_categories = null
 		appId = Steedos.getCurrentAppId()
-		if appId
+		if appId && db.categories
 			workflow_categories = _.pluck(db.categories.find({app: appId}).fetch(), '_id')
 		Session.set('workflow_categories', workflow_categories)
 
