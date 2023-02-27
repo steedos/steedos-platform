@@ -58,12 +58,6 @@
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
         let objectInfo = null;
-        if (type != 'list' && objectApiName) {
-            objectInfo = Creator.getObject(objectApiName);
-            if (objectInfo) {
-                return;
-            }
-        }
         if(!objectApiName){
             objectApiName = ''
         }
