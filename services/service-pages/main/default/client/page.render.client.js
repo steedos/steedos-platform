@@ -60,7 +60,7 @@
         let objectInfo = null;
         if (type != 'list' && objectApiName) {
             objectInfo = Creator.getObject(objectApiName);
-            if (objectInfo && objectInfo.version < 2) {
+            if (objectInfo) {
                 return;
             }
         }
