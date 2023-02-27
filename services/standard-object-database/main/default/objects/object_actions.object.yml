@@ -57,7 +57,7 @@ fields:
               }, {
                 label: "显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中",
                 value: "record_more",
-                icon: "action.more"
+                icon: "lead_list"
               }, {
                 label: "显示在列表视图中每项的下拉菜单中",
                 value: "list_item",
@@ -69,7 +69,7 @@ fields:
               }, {
                 label: "显示在记录查看页右上角的“更多”下拉菜单中",
                 value: "record_only_more",
-                icon: "action.more"
+                icon: "lead_list"
               }];
             }
   type: 
