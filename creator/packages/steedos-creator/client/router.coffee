@@ -231,7 +231,8 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 				appId: Session.get("app_id"),
 				objectName: object_name,
 				recordId: record_id,
-				relatedObjectName: related_object_name
+				relatedObjectName: related_object_name,
+				__timestamp: new Date().getTime()
 			};
 
 		Meteor.setTimeout ()->
@@ -258,7 +259,8 @@ objectRoutes.route '/view/:record_id',
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: object_name,
-				recordId: record_id
+				recordId: record_id,
+				__timestamp: new Date().getTime()
 			};
 				
 		Meteor.setTimeout ()->
@@ -302,7 +304,8 @@ objectRoutes.route '/grid/:list_view_id',
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: objectName,
-				listViewId: Session.get("list_view_id")
+				listViewId: Session.get("list_view_id"),
+				__timestamp: new Date().getTime()
 			};
 		
 		BlazeLayout.render Creator.getLayout(),
