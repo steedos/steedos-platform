@@ -36,7 +36,10 @@
       sessionStorage.setItem('assetUrls', searchParams.get('assetUrls'))
     }
 
-    const assetUrls = sessionStorage.getItem('assetUrls')? sessionStorage.getItem('assetUrls') : "${STEEDOS_PUBLIC_PAGE_ASSETURLS}"
+    let assetUrls = sessionStorage.getItem('assetUrls')? sessionStorage.getItem('assetUrls') : "${STEEDOS_PUBLIC_PAGE_ASSETURLS}"
+    if(_.isString(assetUrls)){
+      assetUrls = assetUrls.split(',');
+    }
     Builder.set({
       nodeEnv: "${NODE_ENV}", 
       rootUrl: "${ROOT_URL}", 

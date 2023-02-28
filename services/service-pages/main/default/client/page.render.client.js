@@ -614,6 +614,7 @@
             logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar_square) 
         }else{
             var settings = Session.get("tenant_settings");
+            var avatar_url = "";
             if(settings){
                 avatar_url = settings?.logo_square_url;
             }
