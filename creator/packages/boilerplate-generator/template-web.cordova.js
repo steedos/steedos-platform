@@ -1,7 +1,7 @@
 import template from './template';
 
 const evalEnv = (function() {
-  var regexp = /\${([^{]+)}/g;
+  var regexp = /\${([^}]+)}/g;
 
   return function(str, o) {
         return str.replace(regexp, function(ignore, key){
