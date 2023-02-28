@@ -11,9 +11,9 @@ Template.creator_app_home.onRendered ()->
 	this.autorun ->
 		isBootstrapLoaded = Creator.bootstrapLoaded.get()
 		if !_.has(FlowRouter.current().params,'app_id')
-			firstApp = Steedos.getSpaceFirstApp()
+			firstApp = Steedos.getFirstApp()
 			if isBootstrapLoaded && firstApp
-					autoGoApp(firstApp.code)
+					autoGoApp(firstApp.code || firstApp.id)
 		else
 			appId = Session.get('app_id')
 			if isBootstrapLoaded && appId

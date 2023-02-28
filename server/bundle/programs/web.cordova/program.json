@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "0e5e5bb4e684ce1b5f2e84a6b7f7b46abd9e0f9b.js",
+      "path": "6436793ccabceb771c80d1356e7b537d35b72ab6.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/0e5e5bb4e684ce1b5f2e84a6b7f7b46abd9e0f9b.js?meteor_js_resource=true",
-      "size": 5766865,
-      "hash": "0e5e5bb4e684ce1b5f2e84a6b7f7b46abd9e0f9b",
-      "sri": "ydGgO97XWGBXRosgp8GSHhLg0mNNEzIRniQEF1t+C12NXjct9aksFyjJo9A5kSUj7GNT+4fdRJpiyPzgKXruXg=="
+      "url": "/__cordova/6436793ccabceb771c80d1356e7b537d35b72ab6.js?meteor_js_resource=true",
+      "size": 5766976,
+      "hash": "6436793ccabceb771c80d1356e7b537d35b72ab6",
+      "sri": "Z0viNC4On5I2RdwSO7K0GXve+ssoG7zsoq6mOoTuU9e3Gq8vRmv3FV7xOqp0LIK/mKhl+JwqBYtlFWeIRgUfJw=="
     },
     {
-      "path": "0e5e5bb4e684ce1b5f2e84a6b7f7b46abd9e0f9b.stats.json",
+      "path": "6436793ccabceb771c80d1356e7b537d35b72ab6.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/0e5e5bb4e684ce1b5f2e84a6b7f7b46abd9e0f9b.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/6436793ccabceb771c80d1356e7b537d35b72ab6.stats.json?meteor_js_resource=true",
       "size": 109437,
-      "hash": "8e2c27568bc3c37d1b5ca9bbdedfe35eeafb3dba",
-      "sri": "MOBqQZh44vKmcJjaSWQPt6Ymqi1UZw5OtriR09Dq4PR+CFb04++jdAK+auXRSm7xsq8d8FN7INzapyOshLe70Q=="
+      "hash": "9b5927eace62e55bb6f303b93780e2642674d3a9",
+      "sri": "tnRBKrd27SoM0s4fb+anEROyCtl/rGDqjj/q9r+4PixIF90GZT9ebsyFbLZ0zT6tefIIpZyRx0jl9OEJgMYUKA=="
     },
     {
       "path": "ab3e2abc4301c433baab3109dcb2da3094b35839.css",
@@ -752,10 +752,170 @@
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
+      "path": "assets/icons/License-for-icons.txt",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/License-for-icons.txt",
+      "size": 14384,
+      "hash": "5d75f4079a7062147a0e2f5dc6bda46af23538d5",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/License-for-icons.txt",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/License-for-icons.txt",
+      "size": 14384,
+      "hash": "5d75f4079a7062147a0e2f5dc6bda46af23538d5",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/README-dist.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/README-dist.md",
+      "size": 307,
+      "hash": "6058395918e612d9366a62cca85a28002624196c",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/README-dist.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/README-dist.md",
+      "size": 307,
+      "hash": "6058395918e612d9366a62cca85a28002624196c",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111623,
+      "hash": "7f418144d2845aa686219c1883609f0459956fa7",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111623,
+      "hash": "7f418144d2845aa686219c1883609f0459956fa7",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68073,
+      "hash": "77d533a4f9cbb543106b9263e5bc582a1b6270eb",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68073,
+      "hash": "77d533a4f9cbb543106b9263e5bc582a1b6270eb",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 44473,
+      "hash": "bca8778929891ccd5d4f100c4562729c08756f5e",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 44473,
+      "hash": "bca8778929891ccd5d4f100c4562729c08756f5e",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 340555,
+      "hash": "12a1e0797cdd8add016a9da2d5659f00ce5b0658",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 340555,
+      "hash": "12a1e0797cdd8add016a9da2d5659f00ce5b0658",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 333366,
+      "hash": "7c2aec0b9e5761cb952dd697e6bfe646b36f1bd3",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 333366,
+      "hash": "7c2aec0b9e5761cb952dd697e6bfe646b36f1bd3",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/__cordova/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 333516,
+      "hash": "906cafc5662a086aeec5e7ea734c89681d3c0182",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 333516,
+      "hash": "906cafc5662a086aeec5e7ea734c89681d3c0182",
+      "sri": null
+    },
+    {
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "9a8a7314b25845bd6c0b971bd11056728120ffcb"
+      "hash": "c12ba86701c885a3c5a1598c06aedb912185c78f"
     }
   ],
   "cordovaCompatibilityVersions": {

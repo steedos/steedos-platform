@@ -3,6 +3,9 @@ checkUserSigned = (context, redirect) ->
 	if Meteor.userId()
 		Creator.pushCurrentPathToUrlQuery();
 		# Meteor.defer(Favorites.changeState);
+		app_id = context.params.app_id
+		if (app_id != "-") && app_id && Session.get("app_id") != app_id
+			Session.set("app_id", app_id)
 	return
 	# listTreeCompany = localStorage.getItem("listTreeCompany")
 	# if listTreeCompany
@@ -23,9 +26,7 @@ checkUserSigned = (context, redirect) ->
 	# 	Setup.validate();
 
 set_sessions = (context, redirect)->
-	app_id = context.params.app_id
-	if (app_id != "-")
-		Session.set("app_id", app_id)
+	
 	oldObjectName = Tracker.nonreactive ()-> return Session.get("object_name")
 	oldRecordId = Tracker.nonreactive ()-> return Session.get("record_id")
 	object_name = context.params.object_name
@@ -230,7 +231,8 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 				appId: Session.get("app_id"),
 				objectName: object_name,
 				recordId: record_id,
-				relatedObjectName: related_object_name
+				relatedObjectName: related_object_name,
+				__timestamp: new Date().getTime()
 			};
 
 		Meteor.setTimeout ()->
@@ -257,7 +259,8 @@ objectRoutes.route '/view/:record_id',
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: object_name,
-				recordId: record_id
+				recordId: record_id,
+				__timestamp: new Date().getTime()
 			};
 				
 		Meteor.setTimeout ()->
@@ -294,7 +297,6 @@ objectRoutes.route '/grid/:list_view_id',
 			Session.set("list_view_visible", true)
 
 		
-		main = "creator_list_wrapper";
 		page = Steedos.Page.getPage('list',Session.get("app_id"), objectName);
 		if page
 			main = "page_list_view"
@@ -302,7 +304,8 @@ objectRoutes.route '/grid/:list_view_id',
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: objectName,
-				listViewId: Session.get("list_view_id")
+				listViewId: Session.get("list_view_id"),
+				__timestamp: new Date().getTime()
 			};
 		
 		BlazeLayout.render Creator.getLayout(),

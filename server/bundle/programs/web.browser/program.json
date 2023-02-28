@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "30792c0a6c9a266f072992a875e5093199348546.js",
+      "path": "6649184d9961b0e39a36e4608c9808ce7e956d36.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/30792c0a6c9a266f072992a875e5093199348546.js?meteor_js_resource=true",
-      "size": 5485802,
-      "hash": "30792c0a6c9a266f072992a875e5093199348546",
-      "sri": "M8/E/qxNP2xJgIgtCYlAgQ99MSimCzo0SPaYRqng7pignNaoFI3UDF8v3cgjQx/1IXNUjX8d32Up23XMpFAg1A=="
+      "url": "/6649184d9961b0e39a36e4608c9808ce7e956d36.js?meteor_js_resource=true",
+      "size": 5485913,
+      "hash": "6649184d9961b0e39a36e4608c9808ce7e956d36",
+      "sri": "pMZt4YwZLsswZNZ9YHU31gSitpwNFHRLBYmNxunhKyj/NSDkPKzNzdYfFMT6UyDocHznznanNCORcIgbVoXWmg=="
     },
     {
-      "path": "30792c0a6c9a266f072992a875e5093199348546.stats.json",
+      "path": "6649184d9961b0e39a36e4608c9808ce7e956d36.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/30792c0a6c9a266f072992a875e5093199348546.stats.json?meteor_js_resource=true",
+      "url": "/6649184d9961b0e39a36e4608c9808ce7e956d36.stats.json?meteor_js_resource=true",
       "size": 109052,
-      "hash": "996e9b75347e013ff1ee3f90f19c6d36edb35cbb",
-      "sri": "0k83z2JZPyLaT9Po57LR+1PB49sDyr2H18Aiy2fKps8swXWOe/IA5V7oAcz5vnkNORT6Nl/oX2iRq7R2cBF9Dg=="
+      "hash": "e2c95c4a431f99a14b385b549d15eb3faeaa5203",
+      "sri": "kt4+KLepJaLt11affNTAjnKknEjIKQHQMkUlp3LpdfhDmGLAAILk7P21qAjisqvKsHjHMc+/1Ih3k0xak3sKdA=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
@@ -432,10 +432,90 @@
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
+      "path": "assets/icons/License-for-icons.txt",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/License-for-icons.txt",
+      "size": 14384,
+      "hash": "5d75f4079a7062147a0e2f5dc6bda46af23538d5",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/README-dist.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/README-dist.md",
+      "size": 307,
+      "hash": "6058395918e612d9366a62cca85a28002624196c",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111623,
+      "hash": "7f418144d2845aa686219c1883609f0459956fa7",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68073,
+      "hash": "77d533a4f9cbb543106b9263e5bc582a1b6270eb",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 44473,
+      "hash": "bca8778929891ccd5d4f100c4562729c08756f5e",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 340555,
+      "hash": "12a1e0797cdd8add016a9da2d5659f00ce5b0658",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 333366,
+      "hash": "7c2aec0b9e5761cb952dd697e6bfe646b36f1bd3",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 333516,
+      "hash": "906cafc5662a086aeec5e7ea734c89681d3c0182",
+      "sri": null
+    },
+    {
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "9a8a7314b25845bd6c0b971bd11056728120ffcb"
+      "hash": "c12ba86701c885a3c5a1598c06aedb912185c78f"
     }
   ]
 }
