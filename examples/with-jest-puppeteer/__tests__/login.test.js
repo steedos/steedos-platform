@@ -9,7 +9,6 @@ describe('Login', () => {
   describe('Test page title and header', () => {
     test('page title', async () => {
       const title = await page.title(); 
-      console.log(title)
       await page.waitForTimeout(5000);
       expect(title).toBe('登录您的账户 | 华炎软件'); 
     }, timeout); 
@@ -22,9 +21,11 @@ describe('Login', () => {
       await page.type('#loginId', 'test@example.com');
       await page.type('#password', '123456');
       await page.waitForTimeout(1000);
-      await page.$eval('[type=submit]', el => el.click())
-      await page.waitForTimeout(5000);
-      const msg = await page.$('#client-snackbar').innerText;
+      await page.click('[type=submit]')
+      await page.waitForTimeout(1000);
+      const snackbar = await page.$('#client-snackbar');
+      const msg = await page.evaluate(snackbar => snackbar.innerText, snackbar); 
+      console.log(msg)
       expect(msg).toBe("账号或密码错。"); 
     }, timeout); 
   });

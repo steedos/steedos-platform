@@ -1,6 +1,9 @@
 module.exports = {
   launch: { 
-    headless: false, 
+    headless: true, 
+    args: [
+        '--lang=zh-CN' 
+    ],
     slowMo: 30, 
   } 
 }
