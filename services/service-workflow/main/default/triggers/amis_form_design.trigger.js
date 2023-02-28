@@ -101,9 +101,31 @@ function getFormInputFields(formSchema) {
         }
 
     })
-    console.log('inputFields', inputFields);
     return inputFields;
 }
+
+// transformFormFieldsOut() 对获取的字段进行转换
+function transformFormFields(formFieldsItem) {
+
+    switch (formFieldsItem.type) {
+
+        case 'input-table':  
+            // 对每个字段进行遍历
+            _.each(formFieldsItem,(key)=>{
+                console.log(key);
+                // 若某字段为数组
+                if(_.isArray(key)){
+                    // 则再遍历取出嵌套的组件
+                    _.each(key,(keyItem)=>{
+                        transformFormFields(keyItem);
+                    })
+                }
+            });
+
+            
+
+    }
+} 
 
 module.exports = {
     listenTo: 'forms',
@@ -125,6 +147,14 @@ module.exports = {
             delete form.historys;
             // 数据库更新操作：将forms表current的fields更新为formFields
             form.current.fields = formFields;
+
+            console.log('formFields:', formFields);
+
+            // 数据格式转换
+            _.each(formFields, (formFieldsItem) => {
+                transformFormFields(formFieldsItem);
+            })
+
 
 
             // 以下为将解析字段存储的功能,为将解析字段存储至数据库forms表的功能
