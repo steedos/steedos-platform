@@ -1,13 +1,11 @@
 {
   "name": "with-puppeteer",
-  "version": "1.0.0",
+  "version": "2.4.0-beta.35",
   "main": "index.js",
   "private": true,
   "license": "MIT",
   "scripts": {
     "test": "jest"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "jest": "29.4.3",
