@@ -85,7 +85,10 @@ Creator.getCollection = (object_name, spaceId)->
 	if !object_name
 		object_name = Session.get("object_name")
 	if object_name
-		return Creator.Collections[Creator.getObject(object_name, spaceId)?._collection_name || object_name]
+		if Meteor.isClient
+			return db[object_name]
+		else
+			return Creator.Collections[Creator.getObject(object_name, spaceId)?._collection_name || object_name]
 
 Creator.removeCollection = (object_name)->
 	delete Creator.Collections[object_name]
