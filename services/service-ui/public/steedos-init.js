@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-27 17:42:19
+ * @LastEditTime: 2023-02-28 11:04:32
  * @Description:
  */
 try {
@@ -136,11 +136,24 @@ try {
     return getUISchemaCache(objectName);
   };
 
-  window.getFirstListView = (objectName)=>{
+  window.getFirstListView = (objectName) => {
     const uiSchema = window.getUISchemaSync(objectName);
-    return _.first(_.sortBy(_.values(uiSchema.list_views) , 'sort_no'));
-  }
+    return _.first(_.sortBy(_.values(uiSchema.list_views), "sort_no"));
+  };
 
+  window.getAppsSync = () => {
+    const url = "/service/api/apps/menus";
+    const apps = Steedos.authRequest(url, {
+      type: "GET",
+      async: false,
+    });
+    return apps;
+  };
+
+  window.Steedos.getFirstApp = ()=>{
+    const apps = window.getAppsSync();
+    return _.first(apps);
+  }
 
   Creator.steedosInit.set(true);
 } catch (error) {

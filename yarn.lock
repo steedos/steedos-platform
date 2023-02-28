@@ -4395,14 +4395,7 @@
     "@salesforce/ts-types" "^1.1.2"
     tslib "^1"
 
-"@salesforce/ts-types@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmmirror.com/@salesforce/ts-types/-/ts-types-1.1.1.tgz#7e61050ff6dc7ce6b73e6b1fdca53392fe17ab27"
-  integrity sha512-w9+5wpCRmbxWV/WiYOVnY9Y13zXzbcfC5rabVC/1Lvd2Qp9mcRVHQyWZt+9668OYYTVNLqRjA+bq4wLtaS1CQw==
-  dependencies:
-    tslib "^1"
-
-"@salesforce/ts-types@1.1.2", "@salesforce/ts-types@^1.1.2":
+"@salesforce/ts-types@1.1.1", "@salesforce/ts-types@1.1.2", "@salesforce/ts-types@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-1.1.2.tgz#3b5a2f54ca2d9820c9785ee51f9fa84e86cb228a"
   integrity sha512-sZ6CiX6sZ1EOa+XzNWSiy5fXYtDd8qqRD3MZQdUypPa+VMWQ9Cr3THr37VndxV+SRNN4iuzsf5rUJQjKh0DgeQ==

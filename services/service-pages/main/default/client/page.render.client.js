@@ -4,28 +4,6 @@
 * @Description: 提供自定义page渲染能力, 供内部使用, 内容会迭代调整, 不对用户开放. 
 */
 ;(function(){
-
-
-    const withModalWrap = (component, provideProps) => {
-        return (props) => {
-          const ModalComponent = component;
-          return React.createElement(ModalComponent, props);
-        }
-      }
-      const render = (component, componentProps, container, provideProps = {} ) => {
-          try {
-            const wrapComponent = withModalWrap(component, provideProps);
-            const contentEle = React.createElement(wrapComponent,{
-                ...componentProps
-                });
-            setTimeout(()=>{
-                ReactDOM.render(contentEle, container);
-            }, 100)
-          } catch (error) {
-            console.log(`error`, error)
-          }
-      }
-
     Steedos.Page = {
         App: {},
         Record: {},
@@ -248,7 +226,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        
+        console.log(`Steedos.Page.render`, root, page)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
