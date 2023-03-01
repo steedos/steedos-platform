@@ -2,12 +2,11 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-21 18:19:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-01 10:12:51
+ * @LastEditTime: 2023-03-01 10:15:14
  * @Description: 
  */
 module.exports = {
   showDesign: function (object_name, record_id) {
-    console.log('show'); debugger;
     document.location = Steedos.absoluteUrl(`/api/amisButtonDesign?id=${record_id}&object=${this.record.record.object}&assetUrls=${Builder.settings.assetUrls}`);
   },
   showDesignVisible: function (object_name, record_id, record_permissions) {
