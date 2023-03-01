@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-28 11:04:32
+ * @LastEditTime: 2023-03-01 10:08:58
  * @Description:
  */
 try {
@@ -153,6 +153,10 @@ try {
   window.Steedos.getFirstApp = ()=>{
     const apps = window.getAppsSync();
     return _.first(apps);
+  }
+
+  window.Creator.getObjectRecord = (objectName, recordId, select_fields, expand)=>{
+    return Creator.odata.get(objectName, recordId, select_fields, expand)
   }
 
   Creator.steedosInit.set(true);
