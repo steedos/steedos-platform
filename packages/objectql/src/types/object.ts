@@ -1314,6 +1314,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             delete dbListView.modified_by;
             objectConfig.list_views[dbListView.name] = dbListView;
         })
+        _.each(objectConfig.list_views, (value, key)=>{
+            if(!value.name){
+                value.name = key;
+            }
+        })
+        const listViews = {}
+        _.map(_.sortBy(_.values(objectConfig.list_views) , 'sort_no'), (listView)=>{
+            listViews[listView.name] = listView;
+        })
+        objectConfig.list_views = listViews;
+
         delete objectConfig.listeners
         delete objectConfig.__filename
         delete objectConfig.extend
