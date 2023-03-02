@@ -39,7 +39,7 @@
         }
     },
     "id": "u:d37465183f56",
-    "bodyClassName": "p-0",
+    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3",
     "name": "amis-root-workflow",
     "initApi": null,
     "initFetch": null,
