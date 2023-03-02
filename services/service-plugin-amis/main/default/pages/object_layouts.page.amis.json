@@ -88,7 +88,7 @@
                                             "id": "u:4e769995f638",
                                             "source": {
                                                 "method": "get",
-                                                "url": "/service/api/amis-metadata-objects/objects/options",
+                                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
                                                 "headers": {
                                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                 }
