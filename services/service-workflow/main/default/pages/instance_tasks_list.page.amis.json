@@ -4,6 +4,7 @@
         {
             "type": "steedos-object-listview",
             "objectApiName": "instance_tasks",
+            "visibleOn": "${objectName === 'instance_tasks'}",
             "columnsTogglable": false,
             "showHeader": true,
             "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
@@ -124,9 +125,9 @@
             }
         ]
     },
+    "id": "u:2e5dc3e1d567",
     "name": "page_instances_list",
     "bodyClassName": "",
-    "id": "u:2e5dc3e1d567",
     "css": {
         ".antd-Nav-Menu-item-wrap .antd-Badge": {
             "width": "80%"

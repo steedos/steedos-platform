@@ -6,7 +6,6 @@
             "objectApiName": "instances",
             "columnsTogglable": false,
             "showHeader": true,
-            "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
             "id": "u:d29cef0d1007",
             "sideSchema": [
                 {
@@ -43,7 +42,7 @@
                         "adaptor": ""
                     },
                     "onEvent": {
-                        "data_change_instance_tasks": {
+                        "data_change_instances": {
                             "actions": [
                                 {
                                     "actionType": "reload"
@@ -53,7 +52,9 @@
                     }
                 }
             ],
-            "showDisplayAs": 3
+            "showDisplayAs": 3,
+            "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
+            "visibleOn": "${objectName === 'instances'}"
         },
         {
             "type": "button",
