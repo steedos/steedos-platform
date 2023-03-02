@@ -8,6 +8,6 @@
 
 module.exports = {
     instance_filter_flowVisible: function (object_name, record_id, permission, data) {
-        return !!window.Creator
+        return false //!!window.Creator
     }
 }

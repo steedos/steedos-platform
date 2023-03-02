@@ -21,7 +21,7 @@
         }
     },
     "id": "u:d37465183f56",
-    "bodyClassName": "p-0",
+    "bodyClassName": "p-0 bg-white",
     "name": "amis-root-workflow",
     "initApi": null,
     "initFetch": null,

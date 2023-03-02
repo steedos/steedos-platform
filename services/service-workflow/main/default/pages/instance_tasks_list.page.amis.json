@@ -6,7 +6,7 @@
             "objectApiName": "instance_tasks",
             "columnsTogglable": false,
             "showHeader": true,
-            "className": "bg-white",
+            "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
             "id": "u:d29cef0d1007",
             "sideSchema": [
                 {
