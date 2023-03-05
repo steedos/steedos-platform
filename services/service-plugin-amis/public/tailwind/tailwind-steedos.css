@@ -69,6 +69,10 @@ body.steedos .top-0 {
   top: 0px
 }
 
+body.steedos .bottom-0 {
+  bottom: 0px
+}
+
 body.steedos .z-40 {
   z-index: 40
 }
@@ -87,6 +91,10 @@ body.steedos .m-1 {
 
 body.steedos .m-0 {
   margin: 0px
+}
+
+body.steedos .m-3 {
+  margin: 0.75rem
 }
 
 body.steedos .mx-4 {
@@ -155,16 +163,16 @@ body.steedos .hidden {
   display: none
 }
 
+body.steedos .h-full {
+  height: 100%
+}
+
 body.steedos .h-\[50px\] {
   height: 50px
 }
 
 body.steedos .h-10 {
   height: 2.5rem
-}
-
-body.steedos .h-full {
-  height: 100%
 }
 
 body.steedos .w-full {
@@ -187,6 +195,14 @@ body.steedos .w-6\/12 {
   width: 50%
 }
 
+body.steedos .w-72 {
+  width: 18rem
+}
+
+body.steedos .w-1\/2 {
+  width: 50%
+}
+
 body.steedos .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content
@@ -202,10 +218,6 @@ body.steedos .flex-none {
 
 body.steedos .-translate-x-0 {
   --tw-translate-x: -0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
-body.steedos .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
@@ -273,9 +285,19 @@ body.steedos .border-slate-200 {
   border-color: rgb(226 232 240 / var(--tw-border-opacity))
 }
 
+body.steedos .border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity))
+}
+
 body.steedos .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+body.steedos .bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
 body.steedos .p-0 {
