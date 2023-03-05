@@ -82,7 +82,7 @@ fields:
         value: amis_button
       # - label: 打印模板(word)
       #   value: word-print
-    defaultValue: script
+    defaultValue: amis_button
   # word_template:
   #   type: lookup
   #   reference_to: word_templates
@@ -105,6 +105,7 @@ fields:
     language: json
     required: false
     is_wide: true
+    hidden: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
 paging:
   enabled: false
