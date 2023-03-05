@@ -88,7 +88,7 @@
                                             "id": "u:4e769995f638",
                                             "source": {
                                                 "method": "get",
-                                                "url": "/service/api/amis-metadata-objects/objects/options",
+                                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
                                                 "headers": {
                                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                 }
@@ -241,7 +241,7 @@
                                             "id": "u:bef2e378d96f",
                                             "api": {
                                                 "method": "get",
-                                                "url": "/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
+                                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
                                                 "adaptor": "let data = payload.data;\ndata.buttons_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                                 "sendOn": "!!this.object_name",
                                                 "headers": {
@@ -496,7 +496,7 @@
                                             "affixFooter": false,
                                             "api": {
                                                 "method": "get",
-                                                "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options",
+                                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options",
                                                 "adaptor": "let data = payload.data;\ndata.fields_options = data.options;\ndata.field_groups_options = lodash.uniq(lodash.compact(lodash.map(data.options, \"group\"))) || [];\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                                 "sendOn": "!!this.object_name",
                                                 "data": null,
@@ -536,7 +536,7 @@
                                             "id": "u:dbadaff47153",
                                             "api": {
                                                 "method": "get",
-                                                "url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
+                                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
                                                 "sendOn": "!!this.object_name",
                                                 "adaptor": "let data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                                 "headers": {

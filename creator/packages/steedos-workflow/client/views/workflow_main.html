@@ -4,13 +4,7 @@
 	<div class="flex w-full h-full">
 		<div class="workflow-main flex w-full h-full {{#if isWorkflowSidebarOpen}}sidebar-open{{/if}}">
 			{{> instance_list_wrapper}}
-			{{#if instanceId}}
-			<div class="instance-wrapper flex flex-col shadow">
-				{{#if isNeedToShowInstance}}
-					{{> instance_view}}
-				{{/if}}
-			</div>
-			{{/if}}
+			{{> instance_view_wrapper}}
 		</div>
 	</div>
 </template>

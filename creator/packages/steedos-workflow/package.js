@@ -183,6 +183,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/instance/instance_form_table.html', 'client');
 	api.addFiles('client/views/instance/instance_form_table.coffee', 'client');
 
+	api.addFiles('client/views/instance/instance_view_wrapper.html', 'client');
+	api.addFiles('client/views/instance/instance_view_wrapper.coffee', 'client');
+
 	api.addFiles('client/views/instance/instance_suggestion.html', 'client');
 	api.addFiles('client/views/instance/instance_suggestion.coffee', 'client');
 	api.addFiles('client/views/instance/instance_view.html', 'client');

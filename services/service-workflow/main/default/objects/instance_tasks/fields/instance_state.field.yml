@@ -1,5 +1,5 @@
 name: instance_state
-label: 分类名称
+label: 申请单状态
 type: select
 options:
   - label: 草稿

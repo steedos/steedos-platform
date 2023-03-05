@@ -1,13 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:29:54
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-12 13:44:14
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-05 10:36:36
  * @Description: 
  */
 module.exports = { 
     updateOrgs: function (object_name, record_id) {
-        if (!this.record.organization) {
+        const record = this.record ? this.record.record : this.record;
+        if (!record.organization) {
             toastr.warning("该分部的关联组织未设置，未更新任何数据");
             return;
         }
@@ -73,7 +74,7 @@ module.exports = {
 
         var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属分部更新为本分部，组织中的人员所属分部也都更新为本分部。是否继续";
         swal({
-            title: "更新“" + this.record.name + "”组织信息",
+            title: "更新“" + record.name + "”组织信息",
             text: "<div>" + text + "？</div>",
             html: true,
             showCancelButton: true,

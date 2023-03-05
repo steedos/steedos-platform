@@ -5,16 +5,5 @@ reference_to: datasources
 reference_to_field: name
 showIcon: false
 required: true
-# firstOption: false
 sort_no: 300
-optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function(){
-        var options = [{
-            label: window.t('objects_field_datasource_defaultValue'),
-            value: 'default'}];
-        var spaceDatasources = Creator.getCollection("datasources").find({space: Session.get("spaceId")}, {fields: {_id:1, name: 1, label:1}}).fetch();
-        _.each(spaceDatasources, function(doc){
-            options.push({label: doc.label || doc.name, value: doc.name})
-        })
-        return options;
-      }
+defaultValue: 'default'
