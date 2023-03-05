@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:29:54
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-01 15:21:54
+ * @LastEditTime: 2023-03-05 10:36:36
  * @Description: 
  */
 module.exports = { 
     updateOrgs: function (object_name, record_id) {
-        const record = this.record?.record || this.record;
+        const record = this.record ? this.record.record : this.record;
         if (!record.organization) {
             toastr.warning("该分部的关联组织未设置，未更新任何数据");
             return;

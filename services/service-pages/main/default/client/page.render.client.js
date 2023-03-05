@@ -381,6 +381,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full')
                 $(".page-record-view-root")[0].appendChild(modalRoot);
             }
 
