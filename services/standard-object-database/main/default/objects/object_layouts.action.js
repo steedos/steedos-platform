@@ -1,16 +1,16 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-08 11:12:24
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-03-05 16:47:05
  * @Description: 
  */
 module.exports = {
   listenTo: 'objects',
 
   createDefaultRecordView: function (object_name, record_id, item_element) {
-    if(object_name === 'objects' && this.record){
-      const objectApiName = this.record.name;
+    if(object_name === 'objects' && this.record && this.record.record){
+      const objectApiName = this.record.record.name;
       $("body").addClass("loading");
       const res = Steedos.authRequest(`/service/api/@${objectApiName}/defUiSchema`, { type: 'post', async: false});
       $("body").removeClass("loading");
