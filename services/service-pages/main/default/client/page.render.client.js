@@ -257,27 +257,6 @@
 
             schema = lodash.defaultsDeep(defData , schema);
 
-            const pageContentData = {
-                "blocks": [
-                    {
-                        "@type": "@builder.io/sdk:Element",
-                        "@version": 2,
-                        "id": `builder-${page._id}`,
-                        "component": {
-                            "name": upperFirst(page.render_engine),
-                            "options": {
-                                "schema": schema,
-                                "data": data,
-                                "name": page.name,
-                                "pageType": page.type
-                            }
-                        },
-                    }
-                ],
-                "inputs": [
-                ]
-            }
-
             const findComponent = (obj, componentName)=>{
                 return lodash.find(obj, {name : componentName})
             }
@@ -670,7 +649,7 @@
         }
     }
     Steedos.Page.Header.getPage = function(appId, tabId){
-        const logoSrc = getSpaceLogo()
+        const logoSrc = Tracker.nonreactive(getSpaceLogo);
         return {
             render_engine: 'amis',
             name: 'steedosGlobalHeaderPage',

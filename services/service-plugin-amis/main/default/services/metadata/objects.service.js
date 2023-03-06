@@ -302,9 +302,10 @@ module.exports = {
                     actionsArr.push(action)
                 })
                 return _.uniq(_.compact(_.map(_.sortBy(actionsArr, "sort"), (action)=>{
+                    const label = action.label || action.name
                     return {
                         value: action.name,
-                        label: action.label || action.name
+                        label: `${label}(${action.name})`
                     }
                 })));
             }

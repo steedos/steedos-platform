@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-12-27 10:49:33
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-20 16:51:05
+ * @LastEditors: 廖大雪 2291335922@qq.com
+ * @LastEditTime: 2023-03-05 18:11:32
  * @Description: 
  */
 module.exports = {
@@ -36,8 +36,9 @@ module.exports = {
         Creator.odata.update(object_name, record_id, newRecord);
         FlowRouter.reload();
     },
-    resetVisible: function(object_name, record_id, record_permissions, record){
-        if(Creator.baseObject.actions.standard_edit.visible()){
+    resetVisible: function(object_name, record_id, record_permissions, data){
+        const record = data && data.record;
+        if(Creator.baseObject.actions.standard_edit.visible(object_name, record_id, record_permissions)){
             return record.from_code_id;
         }
     },

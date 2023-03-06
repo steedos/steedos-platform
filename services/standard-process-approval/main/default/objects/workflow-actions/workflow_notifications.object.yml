@@ -49,7 +49,7 @@ fields:
       - object_name
     optionsFunction: !!js/function |
       function (doc){
-        var object = Creator.objectsByName[doc.object_name];
+        var object = Creator.getObject(doc.object_name);
         var options = [];
         if(object){
           var userFields = _.filter(object.fields, function(field){
