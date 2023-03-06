@@ -228,7 +228,8 @@
                                                                 "id": "u:a0027ac6f8c1",
                                                                 "closeOnEsc": false,
                                                                 "closeOnOutside": false,
-                                                                "showCloseButton": true
+                                                                "showCloseButton": true,
+                                                                "size": "md"
                                                             },
                                                             "label": "设置按钮",
                                                             "id": "u:1ac8afc8a9bb"
