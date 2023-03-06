@@ -85,6 +85,9 @@ tab_items:
   admin_workflow_notifications:
     group: 流程自动化
     index: 24
+  admin_workflow_outbound_messages:
+    group: 流程自动化
+    index: 25
   admin_roles:
     group: 审批王
     index: 25
