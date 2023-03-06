@@ -308,6 +308,9 @@ TracesTemplate.helpers =
 		return Creator.getObjectUrl(object_name, record_id, app_id)
 
 	handlerDoc: (handlerId)->
+		users_can_read_cc_handler_detail_info = Meteor.settings.public?.workflow?.users_can_read_cc_handler_detail_info
+		if !users_can_read_cc_handler_detail_info or !users_can_read_cc_handler_detail_info.includes(Meteor.userId())
+			return
 		if Meteor.isClient
 			return UUflow_api.getContactInfoForUser(handlerId, Session.get('spaceId'))
 		else if Meteor.isServer
