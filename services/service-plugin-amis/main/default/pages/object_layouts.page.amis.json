@@ -701,7 +701,9 @@
                                                             "name": "filters",
                                                             "label": "过滤规则",
                                                             "quickEdit": {
-                                                                "type": "input-text",
+                                                                "type": "editor",
+                                                                "language": "javascript",
+                                                                "description": "函数签名：(filters, data) => 自定义过滤条件， 数据在 data 中，修改后返回 自定义过滤条件",
                                                                 "tpl": "<b><%=data.filters%></b>",
                                                                 "className": "col-span-2 m-0",
                                                                 "labelClassName": "text-left",
