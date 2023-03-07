@@ -3,16 +3,12 @@ label: 要发送的字段
 type: lookup
 multiple: true
 is_wide: true
+reference_to: object_fields
+reference_to_field: name
 depend_on:
   - object_name
-optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  function (values) {
-          if (!(values != null ? values.object_name : void 0)) {
-            values.object_name = Session.get("object_name");
-          }
-          if(values.object_name && !_.isString(values.object_name)){
-            values.object_name = values.object_name.name
-          }
-          return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0);
-        }
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function(filters, values){
+    return ['object', '=', values.object_name]
+  }
 sort_no: 70

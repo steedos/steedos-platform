@@ -3,9 +3,7 @@ label: 对象
 type: lookup
 required: true
 is_wide: true
-optionsFunction: !!js/function |
-  function () {
-    return Steedos.getObjectsOptions();
-  }
+reference_to: objects
+reference_to_field: name
 index: true
 sort_no: 10
