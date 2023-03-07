@@ -563,6 +563,13 @@ fields:
     is_wide: true
     group: Advanced
     sort_no: 470
+  amis:
+    label: Amis 属性
+    type: code
+    language: json
+    is_wide: true
+    group: Advanced
+    sort_no: 465
 paging:
   enabled: false
 list_views:
