@@ -78,52 +78,6 @@
     "regions": [
         "body"
     ],
-    "data": {
-        "objectName": "instances",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800"
-        },
-        "nav": [
-            {
-                "label": "待审核111",
-                "to": "/app/oa/instance_tasks/grid/inbox",
-                "icon": "fa fa-download",
-                "badge": "188"
-            },
-            {
-                "label": "已审核",
-                "to": "/app/oa/instance_tasks/grid/outbox",
-                "icon": "fa fa-check"
-            },
-            {
-                "label": "监控箱",
-                "to": "/app/oa/instances/grid/monitor",
-                "icon": "fa fa-eye"
-            },
-            {
-                "label": "我的文件",
-                "unfolded": true,
-                "children": [
-                    {
-                        "label": "草稿",
-                        "to": "/app/oa/instances/grid/draft",
-                        "icon": "fa fa-pencil",
-                        "badge": 0
-                    },
-                    {
-                        "label": "进行中",
-                        "to": "/app/oa/instances/grid/pending",
-                        "icon": "fa fa-circle"
-                    },
-                    {
-                        "label": "已完成",
-                        "to": "/app/oa/instances/grid/completed",
-                        "icon": "fa fa-check-square"
-                    }
-                ]
-            }
-        ]
-    },
     "id": "u:2e5dc3e1d567",
     "name": "page_instances_list",
     "bodyClassName": "",
@@ -131,6 +85,5 @@
         ".antd-Nav-Menu-item-wrap .antd-Badge": {
             "width": "80%"
         }
-    },
-    "className__": "absolute top-0 bottom-0 w-1/2 border-r border-slate-300 border-solid bg-gray-100"
+    }
 }
