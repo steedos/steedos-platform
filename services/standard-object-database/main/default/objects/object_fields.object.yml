@@ -569,7 +569,7 @@ fields:
     language: json
     is_wide: true
     group: Advanced
-    sort_no: 465
+    sort_no: 455
 paging:
   enabled: false
 list_views:
