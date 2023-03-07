@@ -305,35 +305,37 @@ fields:
     type: lookup
     label: Object to Summarize
     inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+    reference_to: objects
+    reference_to_field: name
     depend_on:
       - object
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        if(!values.object){
-          return [];
-        }
-        /*在lookup控件编辑的时候values.object为字符串，在记录详细界面为对象*/
-        var objectName = typeof values.object === "string" ? values.object : values.object.name;
-        var object = Creator.getObject(objectName);
-        if(!object){
-          return [];
-        }
-        var relatedObjects = object.related_objects;
-        var _options = [];
-        _.forEach(relatedObjects, function (item, index) {
-          var relatedObject = Creator.Objects[item.object_name];
-          var relatedField = relatedObject && relatedObject.fields[item.foreign_key];
-          /*只需要支持master_detail类型的相关对象，也不支持multiple（本身就不允许配置master_detail为multiple）*/
-          if(relatedField && relatedField.type === "master_detail" && !relatedField.multiple){
-            _options.push({
-              label: relatedObject.label,
-              value: relatedObject.name,
-              icon: relatedObject.icon
-            });
-          }
-        });
-        return _options;
-      }
+    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
+    #   function (values) {
+    #     if(!values.object){
+    #       return [];
+    #     }
+    #     /*在lookup控件编辑的时候values.object为字符串，在记录详细界面为对象*/
+    #     var objectName = typeof values.object === "string" ? values.object : values.object.name;
+    #     var object = Creator.getObject(objectName);
+    #     if(!object){
+    #       return [];
+    #     }
+    #     var relatedObjects = object.related_objects;
+    #     var _options = [];
+    #     _.forEach(relatedObjects, function (item, index) {
+    #       var relatedObject = Creator.Objects[item.object_name];
+    #       var relatedField = relatedObject && relatedObject.fields[item.foreign_key];
+    #       /*只需要支持master_detail类型的相关对象，也不支持multiple（本身就不允许配置master_detail为multiple）*/
+    #       if(relatedField && relatedField.type === "master_detail" && !relatedField.multiple){
+    #         _options.push({
+    #           label: relatedObject.label,
+    #           value: relatedObject.name,
+    #           icon: relatedObject.icon
+    #         });
+    #       }
+    #     });
+    #     return _options;
+    #   }
     visible_on: "{{formData.type === 'summary' ? true: false}}"
     required: "{{formData.type === 'summary' ? true: false}}"
     sort_no: 300
