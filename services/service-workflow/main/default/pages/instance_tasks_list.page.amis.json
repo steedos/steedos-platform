@@ -34,7 +34,7 @@
                         "text": "${badge | toInt}"
                     },
                     "onEvent": {
-                        "data_change_instance_tasks": {
+                        "@data.changed.instance_tasks": {
                             "actions": [
                                 {
                                     "actionType": "reload"
@@ -42,7 +42,6 @@
                             ]
                         }
                     },
-                    "source__": "${nav}",
                     "source": {
                         "method": "get",
                         "url": "${context.rootUrl}/api/workflow/nav",
@@ -51,11 +50,11 @@
                         },
                         "responseData": null,
                         "adaptor": ""
-                    }
+                    },
+                    "source__": "${nav}"
                 }
             ],
-            "showDisplayAs": 3,
-            "className__": "sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid"
+            "showDisplayAs": false
         },
         {
             "type": "button",
@@ -66,7 +65,7 @@
                         {
                             "actionType": "broadcast",
                             "args": {
-                                "eventName": "data_change_instance_tasks"
+                                "eventName": "@data.changed.instance_tasks"
                             }
                         }
                     ]
@@ -80,7 +79,7 @@
         "body"
     ],
     "data": {
-        "objectName": "instances",
+        "objectName": "instance_tasks",
         "context": {
             "rootUrl": "http://127.0.0.1:5800"
         },

@@ -42,7 +42,7 @@
                         "adaptor": ""
                     },
                     "onEvent": {
-                        "data_change_instances": {
+                        "@data.changed.instance_tasks": {
                             "actions": [
                                 {
                                     "actionType": "reload"
@@ -52,7 +52,7 @@
                     }
                 }
             ],
-            "showDisplayAs": 3,
+            "showDisplayAs": false,
             "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
             "visibleOn": "${objectName === 'instances'}"
         },
@@ -66,7 +66,7 @@
                         {
                             "actionType": "broadcast",
                             "args": {
-                                "eventName": "data_change_instance_tasks"
+                                "eventName": "@data.changed.instance_tasks"
                             }
                         }
                     ]
