@@ -91,19 +91,7 @@
                             "objectApiName": "${objectName}",
                             "recordId": "${recordId}",
                             appId: appId,
-                            "id": "u:48d2c28eb755",
-                            onEvent: {
-                                "recordLoaded": {
-                                    "actions": [
-                                        {
-                                            "actionType": "reload",
-                                            "data": {
-                                              "name": `\${record.${objectInfo?.NAME_FIELD_KEY || 'name'}}`
-                                            }
-                                        }
-                                    ]
-                                  }
-                            },
+                            "id": "u:48d2c28eb755"
                           }
                         ],
                         "regions": [

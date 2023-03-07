@@ -1,13 +1,14 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-01 22:53:08
+ * @LastEditors: 何夏鹏 hexiapeng@steedos.com
+ * @LastEditTime: 2023-03-06 16:37:21
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 'use strict';
 // @ts-check
+const objectql = require('@steedos/objectql');
 const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
@@ -29,14 +30,30 @@ const _ = require('underscore');
       errors: [{ errorMessage: e.message }]
     }
  */
+
+
+
+  
+    
 router.get('/api/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
+    let userSession = req.user;
+    const spaceId = userSession.spaceId;
+    const userId = userSession.userId;
+
+    let query = {
+      filters: [['user','=', userId], ['space','=', spaceId], ['key', '=', 'badge']]
+    }; 
+    const steedosKeyValues =  await objectql.getObject('steedos_keyvalues').find(query);
+      
+    let sum = steedosKeyValues[0].value.workflow;
+  
     var links = [
       {
         "label": "待审核",
         "to": "/app/oa/instance_tasks/grid/inbox",
         "icon": "fa fa-download",
-        // "badge": "188"
+        "badge": sum
       },
       {
         "label": "已审核",
