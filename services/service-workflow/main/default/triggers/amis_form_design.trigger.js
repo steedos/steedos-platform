@@ -1,14 +1,15 @@
 const _ = require('lodash');
 const workflow = require('@steedos/workflow');
 const objectql = require("@steedos/objectql");
+const { ObjectId } = require("mongodb");
+const { log } = require('console');
 const AmisInputTypes = [
-    //44个表单项
+    //41个表单项
     'input-image',
     'input-number',
     'input-group',
     'input-file',
     'input-text',
-    'submit',
     'uuid',
     'checkbox',
     'checkboxes',
@@ -16,9 +17,6 @@ const AmisInputTypes = [
     'list-select',
     'input-tag',
     'switch',
-    'static',
-    'button-toolbar',
-    'button',
     'input-city',
     'input-color',
     'matrix-checkboxes',
@@ -44,11 +42,13 @@ const AmisInputTypes = [
     'textarea',
     'tabs-transfer',
     'select',
-    'fieldset',
+    'fieldset',//section
     'formula',
-    'hidden',
     'location-picker',
-    'tabs-transfer'
+    'input-table',
+    'editor',
+    'steedos-field'
+
 ];
 
 // getInstanceFormSchema() 在用户创建的表单中获取到type为form name为instanceForm的表单，其他的表单不要
@@ -69,28 +69,29 @@ function getInstanceFormSchema(amis_schema) {
 
 }
 
-// getInputFiled() 对符合条件的formSchema做解析处理,得到{label:"F1", name: 'f1', type: 'text'}对象作为数组元素
+// getInputFiled() 对符合条件的formSchema做解析处理,{},{},{}格式
 function getInputFiled(bodyItem) {
     if (!_.isArray(bodyItem)) {
         if (_.includes(AmisInputTypes, bodyItem.type)) {
-            // console.log(bodyItem);
-            return bodyItem
+
+            return bodyItem;
         }
     }
 }
 
 // getFormInputFields() 得到一个存有formSchema.body，即存有用户创建表单内各组建字段的数组
+let inputFields = [];
 function getFormInputFields(formSchema) {
-
-    const inputFields = [];
 
     _.each(formSchema.body, (bodyItem) => {
 
         let flag = true;
-        const field = getInputFiled(bodyItem);
+        // 对符合条件的formSchema做解析处理
+        const field = getInputFiled(bodyItem);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         if (field) {
-            //加个判断条件：如果要添加的field
+            //进入if说明是表单项 
             _.each(inputFields, (item) => {
+                // 如果要添加的field重复 无需再添加
                 if (field.name === item.name) {
                     flag = false;
                 }
@@ -98,34 +99,243 @@ function getFormInputFields(formSchema) {
             if (flag) {
                 inputFields.push(field);
             }
+        }else{
+            //else schema中有嵌套表单项的元素 对其进行递归
+            if(_.isArray(bodyItem.body)){
+                getFormInputFields(bodyItem);
+            }
         }
 
     })
-    return inputFields;
+    // return inputFields;
+}
+
+// getFinalFormFields() 得到最终符合条件的数组
+function getFinalFormFields(inputFields) {
+
+    const finalFormFields = [];
+
+    _.each(inputFields, (amisField) => {
+        const temp = transformFormFields(amisField);
+        finalFormFields.push(temp)
+    })
+
+    console.log('最终存入数据库的数组==>', finalFormFields);
+
+    return finalFormFields
 }
 
 // transformFormFieldsOut() 对获取的字段进行转换
-function transformFormFields(formFieldsItem) {
-
-    switch (formFieldsItem.type) {
-
-        case 'input-table':  
-            // 对每个字段进行遍历
-            _.each(formFieldsItem,(key)=>{
-                console.log(key);
-                // 若某字段为数组
-                if(_.isArray(key)){
-                    // 则再遍历取出嵌套的组件
-                    _.each(key,(keyItem)=>{
-                        transformFormFields(keyItem);
-                    })
-                }
-            });
-
-            
-
+function transformFormFields(amisField) {
+    let formFieldsItem = {
+        _id: new ObjectId().toHexString(),
+        code: amisField.name,
+        name: amisField.label,
+        is_wide: amisField.is_wide
     }
-} 
+    if(_.includes(amisField.className, "is_wide") || formFieldsItem.is_wide){
+        formFieldsItem.is_wide = true;
+    }else{
+        formFieldsItem.is_wide = false;
+    }
+
+    switch (amisField.type) {
+
+        case 'input-table':
+            formFieldsItem.type = 'table';
+            formFieldsItem.fields = _.map(amisField.columns, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'input-kv':
+            // 把他们赋值到新属性fields中
+            formFieldsItem.type = 'input';
+            formFieldsItem.fields = _.map(amisField.items, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'combo':
+            formFieldsItem.type = 'input';
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.items, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'input-kv':
+            formFieldsItem.type = 'input';
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.items, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'transfer':
+            formFieldsItem.type = 'input';
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.options, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'tabs-transfer':
+            formFieldsItem.type = 'input';
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.options, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'input-sub-form':
+            formFieldsItem.type = 'input';
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.form.body, (item) => {
+                return transformFormFields(item);
+            })
+            break
+        case 'input-group':
+            formFieldsItem.type = 'input'
+            formFieldsItem.fields = _.map(amisField.body, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'fieldset':
+            formFieldsItem.type = 'input'
+            formFieldsItem.name = amisField.title
+            formFieldsItem.code = 'fieldset'
+            // 把他们赋值到新属性fields中
+            formFieldsItem.fields = _.map(amisField.body, (item) => {
+                return transformFormFields(item);
+            })
+            break
+
+        case 'input-rich-text':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-image':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-number':
+            formFieldsItem.type = 'number'
+            break
+        case 'input-text':
+            formFieldsItem.type = 'input'
+            break
+        case 'uuid':
+            formFieldsItem.type = 'input'
+            formFieldsItem.name = 'UUID'
+            break
+        case 'list-select':
+            formFieldsItem.type = 'select'
+            break
+        case 'input-tag':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-city':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-color':
+            formFieldsItem.type = 'input'
+            break
+        case 'picker':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-repeat':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-rich-text':
+            formFieldsItem.type = 'input'
+            break
+        case 'textarea':
+            formFieldsItem.type = 'input'
+            break
+        case 'chained-select':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-tree':
+            formFieldsItem.type = 'select'
+            break
+        case 'tree-select':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-excel':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-date-range':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-date':
+            formFieldsItem.type = 'date'
+            break
+        case 'formula':
+            formFieldsItem.type = 'input'
+            formFieldsItem.name = '公式'
+            break
+        case 'location-picker':
+            formFieldsItem.type = 'input'
+            break
+        case 'checkbox':
+            formFieldsItem.type = 'checkbox'
+            formFieldsItem.name = amisField.option
+            // 如果是旧表单设计器中创建的checkbox没有option属性，应用name属性赋值给新的name
+            if(!formFieldsItem.name){
+                formFieldsItem.name = amisField.name
+            }
+            break
+        case 'checkboxes':
+            formFieldsItem.type = 'select'
+            break
+        case 'matrix-checkboxes':
+            formFieldsItem.type = 'input'
+            break
+        case 'switch':
+            formFieldsItem.type = 'switch'
+            break
+        case 'radios':
+            formFieldsItem.type = 'select'
+            break
+        case 'nested-select':
+            formFieldsItem.type = 'input'
+            break
+        case 'input-range':
+            formFieldsItem.type = 'number'
+            break
+        case 'input-rating':
+            formFieldsItem.type = 'number'
+            break
+        case 'input-file':
+            formFieldsItem.type = 'input'
+            break
+        case 'editor':
+            formFieldsItem.type = 'input'
+            break
+        case 'steedos-field':
+            
+            let fieldsAdd = {
+                field: amisField.field
+            }
+            const steedosField = Object.assign(fieldsAdd,formFieldsItem);
+
+            tempField = JSON.parse(steedosField.field)
+            
+            if (tempField.reference_to === "organizations") {
+                steedosField.type = 'group'
+            }else if(tempField.reference_to === "space_users"){
+                steedosField.type = 'user'
+            }
+            // return steedosField
+            formFieldsItem = steedosField
+            break
+    }
+
+    return formFieldsItem
+}
+
+
+
 
 module.exports = {
     listenTo: 'forms',
@@ -138,24 +348,28 @@ module.exports = {
             const amis_schema = JSON.parse(this.doc.amis_schema);
             // 在amis_schema中提取符合条件的amis_schema,若不符合则返回空
             const formSchema = getInstanceFormSchema(amis_schema);
+            
+            console.log('amis_schema', amis_schema);
+            
+            console.log('formSchema', formSchema);
+
             if (!formSchema) {
                 return;
             }
-            const formFields = getFormInputFields(formSchema);
+            // 得到符合条件但未进行数据处理的数组
+            // const formFields = getFormInputFields(formSchema);
+            getFormInputFields(formSchema);
+            console.log('inputFields', inputFields);
+            // const formFields = inputFields;
+
             // 先通过id得到forms对象存下来
             const form = await objectql.getObject('forms').findOne(this.id);
             delete form.historys;
-            // 数据库更新操作：将forms表current的fields更新为formFields
-            form.current.fields = formFields;
-
-            console.log('formFields:', formFields);
-
-            // 数据格式转换
-            _.each(formFields, (formFieldsItem) => {
-                transformFormFields(formFieldsItem);
-            })
 
 
+            // 数据库更新操作：将forms表current的fields字段更新为最终数组
+            form.current.fields = getFinalFormFields(inputFields);
+            inputFields = []
 
             // 以下为将解析字段存储的功能,为将解析字段存储至数据库forms表的功能
             let updatedForms = [];
@@ -167,7 +381,6 @@ module.exports = {
             workflow.desingerManager.checkSpaceUserBeforeUpdate(spaceId, userId, roles);
             // 更新表单
             workflow.desingerManager.updateForm(this.id, form, updatedForms, updatedFlows, userId);
-
         }
 
     },
