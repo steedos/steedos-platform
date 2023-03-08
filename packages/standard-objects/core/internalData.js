@@ -12,7 +12,7 @@ const objects60sCache = {
 
 const getLng = async function(userId){
     const userSession = await auth.getSessionByUserId(userId);
-    return userSession ? userSession.language : null;
+    return userSession ? userSession.language : 'zh-CN';
 }
 const permissions = {
     allowEdit: false,
