@@ -33,6 +33,14 @@ export class SteedosSqlServerDriver extends SteedosTypeormDriver {
     }
 
     getConnectionOptions(): ConnectionOptions {
+        if(this.config.options){
+            this.config.options.encrypt = false;
+        }
+        else{
+            this.config.options={
+                encrypt: false,
+            }
+        }
         return  {
             type: "mssql",
             url: this._url,
