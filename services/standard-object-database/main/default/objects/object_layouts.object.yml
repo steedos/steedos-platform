@@ -61,23 +61,10 @@ fields:
       - object_name
   buttons.$.button_name:
     type: lookup
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        if (!(values != null ? values.object_name : void 0)) {
-          values.object_name = Session.get("object_name");
-        }
-        if(values.object_name && !_.isString(values.object_name)){
-          values.object_name = values.object_name.name
-        }
-        const options = [];
-        if(values){
-          var actions = Creator.getObject(values.object_name).actions;
-          _.each(actions, function(action){
-            options.push({label: action.label, value: action.name})
-          })
-        }
-        return options;
-      }
+    reference_to: object_actions
+    reference_to_field: name
+    depend_on:
+      - object_name
   buttons.$.visible_on:
     label: Visible on
     type: textarea
@@ -109,24 +96,6 @@ fields:
     reference_to_field: name
     depend_on:
       - object_name
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-      function (filters, values) {
-        if(values && values.object_name){
-          if(values._grid_row_id){
-            var selected = _.find(values.fields, function(item){return item._id==values._grid_row_id});
-            var selectedAll = _.pluck(values.fields, 'field_name');
-            if(selected){
-              selectedAll = _.difference(selectedAll, [selected.field_name]);
-            }
-            if(selectedAll && selectedAll.length > 0){
-              return [['object', '=', values.object_name], ['name', '!=', selectedAll]]
-            }
-          }
-          return ['object', '=', values.object_name]
-        }else{
-          return ['_id', '=', 'no']
-        }
-      }
   fields.$.is_readonly:
     label: Readonly
     type: boolean

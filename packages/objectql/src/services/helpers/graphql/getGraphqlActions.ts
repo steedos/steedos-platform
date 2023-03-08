@@ -397,7 +397,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
     translationObject(lng, objConfig.name, objConfig, true);
-    async function _translateToUI(doc, selectorFieldNames) {
+    async function _translateToUI(doc, selectorFieldNames, parentDoc?) {
         let displayObj = {};
         for (const name of selectorFieldNames) {
             if (Object.prototype.hasOwnProperty.call(fields, name)) {
@@ -439,11 +439,40 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                             if (!refValue) {
                                 continue;
                             }
+
+                            let refFilters = null;
+
+                            if(field.multiple){
+                                refFilters = [refField, "in", refValue]
+                            }else{
+                                refFilters = [refField, "=", refValue]
+                            }
+
+                            // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                            if(refTo === 'object_fields' && refField == 'name'){
+                                const refToObjectsField = _.find(fields, (_field)=>{
+                                    return _field.reference_to === 'objects'
+                                })
+                                if(refToObjectsField){
+                                    refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                }
+                            }
+
+                            // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                            if(refTo === 'object_actions' && refField == 'name'){
+                                const refToObjectsField = _.find(fields, (_field)=>{
+                                    return _field.reference_to === 'objects'
+                                })
+                                if(refToObjectsField){
+                                    refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                }
+                            }
+
                             let refObj = steedosSchema.getObject(refTo);
                             let nameFieldKey = await refObj.getNameFieldKey();
                             if (field.multiple) {
                                 let refRecords = await refObj.find({
-                                    filters: [refField, "in", refValue],
+                                    filters: refFilters,
                                     fields: [nameFieldKey],
                                 });
                                 displayObj[name] = _.map(refRecords, (item) => {
@@ -456,7 +485,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                             } else {
                                 let refRecord = (
                                     await refObj.find({
-                                        filters: [refField, "=", refValue],
+                                        filters: refFilters,
                                         fields: [nameFieldKey],
                                     })
                                 )[0];
@@ -588,7 +617,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                     const newKey = `${name}.${k}`
                                     _doc[newKey] = v
                                 })
-                                const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
+                                const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc), doc)
                                 const objectDoc = {}
                                 _.each(objectFieldDoc, function (v, k) {
                                     const newKey = k.replace(`${name}.`, '')
@@ -606,7 +635,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                         const newKey = `${name}.$.${k}`
                                         _doc[newKey] = v
                                     })
-                                    const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc))
+                                    const objectFieldDoc = await _translateToUI(_doc, Object.keys(_doc), doc)
                                     const objectDoc = {}
                                     _.each(objectFieldDoc, function (v, k) {
                                         const newKey = k.replace(`${name}.$.`, '')
@@ -634,7 +663,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
         return displayObj
     }
 
-    let uiDoc = await _translateToUI(doc, selectorFieldNames)
+    let uiDoc = await _translateToUI(doc, selectorFieldNames, doc)
     uiDoc['_id'] = doc._id;
     return uiDoc;
 }
