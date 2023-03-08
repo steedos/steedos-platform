@@ -391,7 +391,7 @@
                                                 {
                                                     "name": "url",
                                                     "label": "外部链接",
-                                                    "type": "input-url",
+                                                    "type": "input-text",
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
                                                     "id": "u:d7116a113670"
