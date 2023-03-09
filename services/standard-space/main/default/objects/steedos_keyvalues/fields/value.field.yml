@@ -15,3 +15,4 @@ searchable: false
 sort_no: 130
 sortable: false
 type: object
+blackbox: true
