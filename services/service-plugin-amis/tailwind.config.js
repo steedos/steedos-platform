@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    important: "body.steedos",
+    // important: "body.steedos",
     content: [
         // '../../creator/**/*.{html,coffee,js,jsx,tsx,json}',
         '../../services/**/*.{json,client.js}',

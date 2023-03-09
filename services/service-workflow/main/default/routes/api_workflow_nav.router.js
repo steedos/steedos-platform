@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-08 15:38:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-09 17:59:18
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -41,7 +41,7 @@ router.get('/api/workflow/nav', core.requireAuthentication, async function (req,
       filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
     };
     const steedosKeyValues = await objectql.getObject('steedos_keyvalues').find(query);
-    let sum = steedosKeyValues && steedosKeyValues[0]?.value?.workflow;
+    let sum = steedosKeyValues && steedosKeyValues[0] && steedosKeyValues[0].value && steedosKeyValues[0].value.workflow;
     var links = [
       {
         "label": "待审核",
