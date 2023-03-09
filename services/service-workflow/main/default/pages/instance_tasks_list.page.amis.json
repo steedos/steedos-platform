@@ -66,6 +66,10 @@
                             "actionType": "broadcast",
                             "args": {
                                 "eventName": "@data.changed.instance_tasks"
+                            },
+                            "data": {
+                                "objectName": "instance_tasks",
+                                "recordId": "abc"
                             }
                         }
                     ]
