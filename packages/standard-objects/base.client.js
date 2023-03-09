@@ -56,7 +56,7 @@ Steedos.StandardObjects = {
                         return false;
                     }
                     var object = Creator.getObject(object_name);
-                    var perms = object && object.permissions.get();
+                    var perms = object && object.permissions;
                     return perms && perms["allowDelete"];
                 },
                 todo: function () {
@@ -309,7 +309,7 @@ Steedos.StandardObjects = {
                         console.error("未找到当前对象：" + values._object_name);
                         return [];
                     }
-                    var perms = object.permissions.get();
+                    var perms = object.permissions;
                     var options, result, companys, queryFilters;
                     result = [];
                     options = {
@@ -388,7 +388,7 @@ Steedos.StandardObjects = {
                         console.error("未找到当前对象：" + values._object_name);
                         return [];
                     }
-                    var perms = object.permissions.get();
+                    var perms = object.permissions;
                     var options, result, companys, queryFilters;
                     result = [];
                     options = {

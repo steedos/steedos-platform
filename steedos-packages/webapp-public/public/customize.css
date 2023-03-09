@@ -58,3 +58,7 @@ body {
     margin-top: 50px;
   }
 }
+
+.antd-Form-item.form-control {
+  height: auto;
+}

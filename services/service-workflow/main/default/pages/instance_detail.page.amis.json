@@ -1,32 +1,55 @@
 {
     "type": "page",
     "body": [
-        {
+      {
+        "type": "wrapper",
+        "body": [
+          {
             "type": "steedos-instance-detail",
             "id": "u:40052b3812c1",
             "label": "Instance Detail",
             "instanceId": "${recordId}",
             "boxName": "${side_listview_id}",
             "hiddenOn": "!!!this.recordId"
-        }
+          }
+        ],
+        "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}",
+        "id": "u:829a40757f0a"
+      },
+      {
+        "type": "wrapper",
+        "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
+        "visibleOn": "${window:InstanceDetailEnabledAmisRender == false}",
+        "body": [
+          {
+            "type": "custom",
+            "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
+            "onMount":"try{\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.recordId);\nSession.set(\"box\", props.data.side_listview_id);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])}catch(error){console.error(error)}",
+            "id": "u:a6e0685d1da3",
+            "onUnmount": "if(window.instanceDetailBlazeRenderView){Blaze.remove(window.instanceDetailBlazeRenderView)}"
+          }
+        ],
+        "id": "u:16cf880c925a",
+        "style": {
+          "position": "static",
+          "display": "block"
+        },
+        "isFixedHeight": false,
+        "isFixedWidth": false
+      }
     ],
     "regions": [
-        "body"
+      "body"
     ],
     "data": {
-        "objectName": "instances",
-        "recordId": "7wn3W2KcFvnvALkgz",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5300"
-        }
     },
     "id": "u:d37465183f56",
-    "bodyClassName": "p-0",
+    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3 p-0",
     "name": "amis-root-workflow",
     "initApi": null,
     "initFetch": null,
     "asideResizor": false,
     "pullRefresh": {
-        "disabled": true
+      "disabled": true
     }
-}
+  }

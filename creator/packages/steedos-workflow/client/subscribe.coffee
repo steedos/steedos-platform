@@ -56,7 +56,7 @@ Meteor.startup ()->
 			if Session.get("instanceId")
 				instance = db.instances.findOne({_id: Session.get("instanceId")});
 				if !instance
-					console.error "instance not find ,id is instanceId"
+					console.error "instance not find ,id is " + Session.get("instanceId")
 					FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box") + "/")
 					Session.set("instance_loading", false);
 				else

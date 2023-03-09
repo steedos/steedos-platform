@@ -4,28 +4,6 @@
 * @Description: 提供自定义page渲染能力, 供内部使用, 内容会迭代调整, 不对用户开放. 
 */
 ;(function(){
-
-
-    const withModalWrap = (component, provideProps) => {
-        return (props) => {
-          const ModalComponent = component;
-          return React.createElement(ModalComponent, props);
-        }
-      }
-      const render = (component, componentProps, container, provideProps = {} ) => {
-          try {
-            const wrapComponent = withModalWrap(component, provideProps);
-            const contentEle = React.createElement(wrapComponent,{
-                ...componentProps
-                });
-            setTimeout(()=>{
-                ReactDOM.render(contentEle, container);
-            }, 100)
-          } catch (error) {
-            console.log(`error`, error)
-          }
-      }
-
     Steedos.Page = {
         App: {},
         Record: {},
@@ -58,12 +36,13 @@
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
         let objectInfo = null;
-        if (type != 'list' && objectApiName) {
-            objectInfo = Creator.getObject(objectApiName);
-            if (objectInfo && objectInfo.version < 2) {
-                return;
-            }
-        }
+        let searchParams = FlowRouter.current().queryParams;
+
+        const display = searchParams['display']
+        const listViewId = searchParams['listview_id']
+        const sideObject = searchParams['side_object']
+        const sideListviewId = searchParams['side_listview_id']
+        
         if(!objectApiName){
             objectApiName = ''
         }
@@ -82,26 +61,14 @@
             return {
                 render_engine: 'amis',
                 name: 'steedosListviewPage',
-                schema: {
-                    "type": "page",
-                    name: `amis-${appId}-${objectApiName}-listview`,
-                    "title": "Welcome to Steedos",
-                    bodyClassName: 'steedos-listview p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid	sm:m-3 flex flex-1 flex-col',
-                    "body": [
-                      {
-                        "type": "steedos-object-listview",
-                        showHeader: true,
-                        "label": "列表视图",
-                        "objectApiName": "${objectName}",
-                        "columnsTogglable": false,
-                        "listName": "all",
-                        "id": "u:be7c6341cd11"
-                      }
-                    ],
-                    "regions": [
-                      "body"
-                    ],
-                    "id": "u:7b47b6042b0d"
+                schema:{
+                    "type": "steedos-page-listview",
+                    "showHeader": true,
+                    "objectApiName": objectApiName,
+                    "appId": appId,
+                    "display": display,
+                    "columnsTogglable": false,
+                    "listName": "all",
                 }
             }
         }else if(type === 'record'){
@@ -109,36 +76,14 @@
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
                     schema: {
-                        "type": "service",
-                        "className": 'sm:p-3',
-                        "name": `amis-${appId}-${objectApiName}-detail`,
-                        "title": "Welcome to Steedos",
-                        "body": [
-                          {
-                            "type": "steedos-record-detail",
-                            "objectApiName": "${objectName}",
-                            "recordId": "${recordId}",
-                            appId: appId,
-                            "id": "u:48d2c28eb755",
-                            onEvent: {
-                                "recordLoaded": {
-                                    "actions": [
-                                        {
-                                            "actionType": "reload",
-                                            "data": {
-                                              "name": `\${record.${objectInfo?.NAME_FIELD_KEY || 'name'}}`
-                                            }
-                                        }
-                                    ]
-                                  }
-                            },
-                          }
-                        ],
-                        "regions": [
-                          "body"
-                        ],
-                        "id": "u:d138f5276481"
-                      }
+                        "type": "steedos-page-record-detail",
+                        "objectApiName": objectApiName,
+                        "sideObject": sideObject,
+                        "sideListviewId": sideListviewId,
+                        "recordId": recordId,
+                        "display": display,
+                        "appId": appId,
+                    }
                 }
             
         }else if(type === 'related_list'){
@@ -254,7 +199,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        
+        console.log(`Steedos.Page.render`, root, page)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
@@ -284,27 +229,6 @@
             });
 
             schema = lodash.defaultsDeep(defData , schema);
-
-            const pageContentData = {
-                "blocks": [
-                    {
-                        "@type": "@builder.io/sdk:Element",
-                        "@version": 2,
-                        "id": `builder-${page._id}`,
-                        "component": {
-                            "name": upperFirst(page.render_engine),
-                            "options": {
-                                "schema": schema,
-                                "data": data,
-                                "name": page.name,
-                                "pageType": page.type
-                            }
-                        },
-                    }
-                ],
-                "inputs": [
-                ]
-            }
 
             const findComponent = (obj, componentName)=>{
                 return lodash.find(obj, {name : componentName})
@@ -383,6 +307,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full')
                 $(".page-list-view-root")[0].appendChild(modalRoot);
             }
 
@@ -409,6 +334,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full')
                 $(".page-record-view-root")[0].appendChild(modalRoot);
             }
 
@@ -642,6 +568,7 @@
             logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar_square) 
         }else{
             var settings = Session.get("tenant_settings");
+            var avatar_url = "";
             if(settings){
                 avatar_url = settings?.logo_square_url;
             }
@@ -658,6 +585,9 @@
 
     Steedos.Page.Header.render = function(appId, tabId){
         let app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        if(_.isEmpty(app)){
+            return ;
+        }
         if (appId === 'admin' || (window.innerWidth < 768))
             app.showSidebar = true;
         if (app.showSidebar)
@@ -693,7 +623,7 @@
         }
     }
     Steedos.Page.Header.getPage = function(appId, tabId){
-        const logoSrc = getSpaceLogo()
+        const logoSrc = Tracker.nonreactive(getSpaceLogo);
         return {
             render_engine: 'amis',
             name: 'steedosGlobalHeaderPage',

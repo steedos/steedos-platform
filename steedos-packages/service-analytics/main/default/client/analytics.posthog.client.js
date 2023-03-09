@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-22 09:50:56
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-23 15:15:17
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-02-27 14:00:17
  * @Description: 
  */
 (function () {
@@ -29,7 +29,7 @@
   }
   try {
     Meteor.startup(function () {
-      if (!window.posthog.capture) {
+      if (!window.posthog.capture || !window.posthog.group) {
         return;
       }
       Tracker.autorun(function () {
@@ -55,12 +55,10 @@
         FlowRouter.watchPathChange();
         if (FlowRouter.current().path) {
           setTimeout(function(){
-            var currentApp = Creator.getApp();
-            var currentObject = Creator.getObject();
             window.posthog.capture('$pageview', {
               path: FlowRouter.current().path,
-              app: currentApp && currentApp.code,
-              object: currentObject && currentObject.name
+              app: FlowRouter.current().params.app_id,
+              object: FlowRouter.current().params.object_name
             });
           }, 200);
         }

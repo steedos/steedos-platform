@@ -115,6 +115,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/lib/billing_manager.coffee', 'server');
 
 	api.addFiles('client/bootstrap.coffee', 'client');
+	api.addFiles('client/collections.js', 'client');
 	api.addFiles('client/lib/printThis/printThis.js', 'client');
 
 	api.addFiles('lib/methods/apps_init.coffee', 'server');

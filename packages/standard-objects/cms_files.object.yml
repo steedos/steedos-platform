@@ -191,7 +191,7 @@ actions:
       function(){
         if(arguments.length > 3){
           var ctx = arguments[3];
-          if(ctx && ctx.$master){
+          if(ctx && ctx._isRelated){
             return ctx.recordPermissions.allowCreateFiles
           }
         }

@@ -11,7 +11,7 @@ SpaceUsersCore = {
             // 用户详细界面拿不到当前选中组织时，只能从记录本身所属分部的管理员中判断，只要当前用户是任何一个所属分部的管理员则有权限
             var record = Creator.getObjectRecord("space_users", spaceUserId);
             if(record && record.company_ids && record.company_ids.length){
-                return _.any(record.company_ids,function(item){
+                return _.some(record.company_ids,function(item){
                     return item.admins && item.admins.indexOf(userId) > -1
                 });
             }

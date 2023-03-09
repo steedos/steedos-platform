@@ -15,7 +15,8 @@ fields:
   api_name:
     type: text
     label: Api Name
-    required: true
+    required: false
+    inlineHelpText: "配置了Api Name 的流程才能同步为元数据"
     searchable: true
     name: api_name
   form:
@@ -705,9 +706,25 @@ actions:
                                                       "&": "$$",
                                                       "space": "${spaceId}"
                                                   },
-                                                  "requestAdaptor": "const {id, name, space} = api.body;var form = {\n  id,\n  name,\n  space,\n  is_valid: true,\n  app: 'workflow',\n  current: {\n    id\n  }\n\n};\nvar body = api.body;\nif (body.category) {\n  form.category = body.category\n}\n\nlet companyId = body.company_id\nif (companyId) {\n  form.company_id = companyId\n}\n\nif (body.object_name2) {\n  form.object_name = body.object_name2\n}\n\napi.data = {\n  Forms: [form]\n};\n\nconsole.log(`api`, api)\nreturn api;",
-                                                  "adaptor": "let flows = payload.ChangeSet.inserts.Flows;let newFlow = _.find(flows, function (flow) {return flow.form == api.body.id});WorkflowCore.openFlowDesign(Steedos.locale(), newFlow.space, newFlow._id, Creator.getUserCompanyId());return payload;"
+                                                  "requestAdaptor": "const {id, name, space} = api.body;var form = {\n  id,\n  name,\n  space,\n  is_valid: true,\n  app: 'workflow',\n  current: {\n    id\n  }\n\n};\nvar body = api.body;\nif (body.category) {\n  form.category = body.category\n}\n\nlet companyId = body.company_id\nif (companyId) {\n  form.company_id = companyId\n}\n\nif (body.object_name2) {\n  form.object_name = body.object_name2\n}\n\napi.data = {\n  Forms: [form]\n};\n\nconsole.log(`api`, api)\nreturn api;"
+                                              },
+                                              "onEvent": {
+                                              "submitSucc": {
+                                                "weight": 0,
+                                                "actions": [
+                                                  {
+                                                    "actionType": "broadcast",
+                                                    "args": {
+                                                      "eventName": "@data.changed.flows",
+                                                      "recordId": "newFlow"
+                                                    },
+                                                    "data": {
+                                                      "objectName": "flows"
+                                                    }
+                                                  }
+                                                ]
                                               }
+                                            }
                                           }
                                       ],
                                       "id": "u:85b77731ab26"

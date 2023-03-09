@@ -31,6 +31,7 @@ fields:
     type: boolean
     label: Enable
     sort_no: 140
+    defaultValue: true
   visible:
     type: boolean
     omit: true
@@ -57,7 +58,7 @@ fields:
               }, {
                 label: "显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中",
                 value: "record_more",
-                icon: "action.more"
+                icon: "lead_list"
               }, {
                 label: "显示在列表视图中每项的下拉菜单中",
                 value: "list_item",
@@ -69,7 +70,7 @@ fields:
               }, {
                 label: "显示在记录查看页右上角的“更多”下拉菜单中",
                 value: "record_only_more",
-                icon: "action.more"
+                icon: "lead_list"
               }];
             }
   type: 
@@ -82,7 +83,7 @@ fields:
         value: amis_button
       # - label: 打印模板(word)
       #   value: word-print
-    defaultValue: script
+    defaultValue: amis_button
   # word_template:
   #   type: lookup
   #   reference_to: word_templates
@@ -105,6 +106,7 @@ fields:
     language: json
     required: false
     is_wide: true
+    hidden: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
 paging:
   enabled: false

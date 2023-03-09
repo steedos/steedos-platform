@@ -49,7 +49,7 @@ async function checkMultiple(permission_set, tab, action, id) {
     if (!permission_set || !tab) return
 
     const pTabObj = objectql.getObject('permission_tabs')
-    const pTabDocs = await pTabObj.find({
+    const pTabDocs = await pTabObj.directFind({
         filters: [
             ['permission_set', '=', permission_set],
             ['tab', '=', tab]
@@ -70,7 +70,8 @@ module.exports = {
 
     beforeInsert: async function () {
         const { doc, id } = this
-        await checkMultiple(doc.permission_set, doc.tab, 'beforeInsert', id)
+
+        await checkMultiple(doc.permission_set, doc.tab, 'beforeInsert', null)
     },
 
     beforeUpdate: async function () {

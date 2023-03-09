@@ -134,7 +134,7 @@ fields:
     required: true
   time_triggers.$.date_field:
     label: 日期字段
-    type: select
+    type: lookup
     depend_on:
       - object_name
     optionsFunction: !!js/function |

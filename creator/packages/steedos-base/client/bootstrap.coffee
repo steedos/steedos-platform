@@ -10,6 +10,9 @@ getCookie = (name)->
 
 @Setup = {}
 Creator.__l = new ReactiveVar({})
+Creator.bootstrapLoaded = new ReactiveVar(false)
+Creator.validated = new ReactiveVar(false);
+Creator.steedosInit = new ReactiveVar(false);
 
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
@@ -133,7 +136,7 @@ Setup.validate = (onSuccess)->
 		if !Meteor.loggingIn()
 			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
 			Setup.bootstrap(Session.get("spaceId"))
-		
+		Creator.validated.set(true);
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->
@@ -217,61 +220,22 @@ Meteor.startup ->
 
 	Tracker.autorun (c)->
 		#console.log("app_id change: " + Session.get("app_id"))
-		localStorage.setItem("app_id", Session.get("app_id"))
+		if Session.get("app_id")
+			localStorage.setItem("app_id", Session.get("app_id"))
 		return
 
 	return
 
-Creator.bootstrapLoaded = new ReactiveVar(false)
+Tracker.autorun ()->
+	if Creator.steedosInit.get() && Creator.validated.get()
+		Creator.bootstrapLoaded.set(true)
+		if (!FlowRouter._initialized)
+			FlowRouter.initialize();
 
 handleBootstrapData = (result, callback)->
-	requestLicense(result?.space?._id);
-	Creator._recordSafeObjectCache = []; # 切换工作区时，情况object缓存
-	Creator.Objects = result.objects;
-	Creator.baseObject = Creator.Objects.base;
-	Creator.objectsByName = {};
-	object_listviews = result.object_listviews
-	Creator.object_workflows = result.object_workflows
-	isSpaceAdmin = Steedos.isSpaceAdmin()
-
-	Session.set "user_permission_sets", result.user_permission_sets
-
-	_.each Creator.Objects, (object, object_name)->
-		_object_listviews = object_listviews[object_name]
-		_.each _object_listviews, (_object_listview)->
-			if _.isString(_object_listview.options)
-				_object_listview.options = JSON.parse(_object_listview.options)
-			if _object_listview.name
-				_key = _object_listview.name
-			else
-				_key = _object_listview._id
-			if !object.list_views
-				object.list_views = {}
-			object.list_views[_key] = _object_listview
-		Creator.loadObjects object, object_name
-
-	Creator.Apps = Creator.creatorAppsSelector(result.apps, result.assigned_apps)
-	Creator.Menus = result.assigned_menus
-	if Steedos.isMobile()
-		mobileApps = _.filter Creator.getVisibleApps(true), (item)->
-			return item._id !='admin' && !_.isEmpty(item.mobile_objects)
-		appIds = _.pluck(mobileApps, "_id")
-	else
-		appIds = _.pluck(Creator.getVisibleApps(true), "_id")
-	if (appIds && appIds.length>0)
-		if (!Session.get("app_id") || appIds.indexOf(Session.get("app_id"))<0)
-			Session.set("app_id", appIds[0])
-	Creator.Dashboards = if result.dashboards then result.dashboards else {};
-	Creator.Plugins = if result.plugins then result.plugins else {};
-
-	Creator.appendObjectFieldsColorStyles()
-
+	requestLicense(result.spaceId);
 	if _.isFunction(callback)
 		callback()
-
-	Creator.bootstrapLoaded.set(true)
-	if (!FlowRouter._initialized)
-		FlowRouter.initialize();
 
 	if FlowRouter.current()?.context?.pathname == "/steedos/sign-in"
 		if FlowRouter.current()?.queryParams?.redirect
@@ -310,55 +274,12 @@ requestLicense = (spaceId)->
 requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()
 		return
-	userId = Meteor.userId()
-	authToken = Accounts._storedLoginToken()
-	url = Steedos.absoluteUrl "/api/bootstrap/#{spaceId}"
-	# debugger
-	headers = {}
-	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
-	headers['X-User-Id'] = userId
-	headers['X-Auth-Token'] = authToken
-	$.ajax
-		type: "get"
-		url: url
-		dataType: "json"
-		headers: headers
-		error: (jqXHR, textStatus, errorThrown) ->
-			FlowRouter.initialize();
-			error = jqXHR.responseJSON
-			console.error error
-			if error?.reason
-				toastr?.error?(TAPi18n.__(error.reason))
-			else if error?.message
-				toastr?.error?(TAPi18n.__(error.message))
-			else
-				toastr?.error?(error)
-		success: (result) ->
-			handleBootstrapData(result, callback);
+	handleBootstrapData({spaceId: spaceId}, callback)
 
 
-# requestBootstrapDataUseAction = (spaceId)->
-# 	BuilderCreator.store.dispatch(BuilderCreator.loadBootstrapEntitiesData({spaceId: spaceId}))
 
 requestBootstrapData = (spaceId, callback)->
-	# if BuilderCreator.store
-	# 	requestBootstrapDataUseAction(spaceId);
-	# # else
 	requestBootstrapDataUseAjax(spaceId, callback);
 
 Setup.bootstrap = (spaceId, callback)->
 	requestBootstrapData(spaceId, callback)
-
-
-
-# Meteor.startup ()->
-# 	RequestStatusOption = BuilderCreator.RequestStatusOption
-# 	lastBootStrapRequestStatus = '';
-# 	BuilderCreator.store?.subscribe ()->
-# 		state = BuilderCreator.store.getState();
-# 		if lastBootStrapRequestStatus == RequestStatusOption.STARTED
-# 			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state); # 由于handleBootstrapData函数执行比较慢，因此在handleBootstrapData执行前，给lastBootStrapRequestStatus更新值
-# 			if BuilderCreator.isRequestSuccess(state)
-# 				handleBootstrapData(clone(BuilderCreator.getBootstrapData(state)));
-# 		else
-# 			lastBootStrapRequestStatus = BuilderCreator.getRequestStatus(state);

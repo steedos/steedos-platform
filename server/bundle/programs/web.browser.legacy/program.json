@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "05b30daa85a5e6f81ae39a43c3289ca5b21f2cfc.js",
+      "path": "5781607105c4040d47a2f6d2b9eba1c553ce2ca3.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/05b30daa85a5e6f81ae39a43c3289ca5b21f2cfc.js?meteor_js_resource=true",
-      "size": 5614702,
-      "hash": "05b30daa85a5e6f81ae39a43c3289ca5b21f2cfc",
-      "sri": "TwvGTl4km5CphyOxeFJq3y8/EUx5dbHKBS3mygb+DvPATXQSH03YOO4dX/hSwQ88Q40q8RutpCrqGlr4b5IAHA=="
+      "url": "/5781607105c4040d47a2f6d2b9eba1c553ce2ca3.js?meteor_js_resource=true",
+      "size": 5611774,
+      "hash": "5781607105c4040d47a2f6d2b9eba1c553ce2ca3",
+      "sri": "pMuW1eVVwiVGY1RvLIBu5OpVC9ZttRTgQCQQ2ukLAjnhjzTT7e1Y1Kkv7oaqxszc/RM/Jn0sIy7fqZXNWcZIWQ=="
     },
     {
-      "path": "05b30daa85a5e6f81ae39a43c3289ca5b21f2cfc.stats.json",
+      "path": "5781607105c4040d47a2f6d2b9eba1c553ce2ca3.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/05b30daa85a5e6f81ae39a43c3289ca5b21f2cfc.stats.json?meteor_js_resource=true",
-      "size": 109334,
-      "hash": "87863595288cb4b3e057dea63da211cf5e7a63c0",
-      "sri": "LX5IB/ceBDfHt68nidxAXvMDyQGLNpsbBX/2eckAlj+hBeclQ/hidMmaQoMXPaIsn7SZs70XTbTB/3mTPCBpWA=="
+      "url": "/5781607105c4040d47a2f6d2b9eba1c553ce2ca3.stats.json?meteor_js_resource=true",
+      "size": 109450,
+      "hash": "5715860d0d09f7721fe41451fc75c68a137d4656",
+      "sri": "50kUzj9Sbmo5mtWeuLpVknTfSm6LPkQk9BmYgT3mXfccawcCQ8PdU7xgCfnfs2JhHUk6cCS1g7HkH9PmFGFMCQ=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
@@ -62,14 +62,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "ab3e2abc4301c433baab3109dcb2da3094b35839.css",
+      "path": "de0a3ddd523f90a3f676ca6ddfb3bd102e3b6d08.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/ab3e2abc4301c433baab3109dcb2da3094b35839.css?meteor_css_resource=true",
-      "size": 1553823,
-      "hash": "ab3e2abc4301c433baab3109dcb2da3094b35839",
-      "sri": "YDiPv+/GUY6dlxBkeWxatiOZyKrcbphOFkqpwarh7knZJILRBkkm7JtSmAstdoirD7aaQlyzVitL7+YQd29YNQ=="
+      "url": "/de0a3ddd523f90a3f676ca6ddfb3bd102e3b6d08.css?meteor_css_resource=true",
+      "size": 1553895,
+      "hash": "de0a3ddd523f90a3f676ca6ddfb3bd102e3b6d08",
+      "sri": "9y9WAZYF/RR2s/ELjAD1P+7thyGlnbj9CYG3pTx5qC2Ny72PNWseAJKuzj7iCCoNOo805DF6HFhUBr/WYv1cEQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -432,10 +432,90 @@
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
+      "path": "assets/icons/License-for-icons.txt",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/License-for-icons.txt",
+      "size": 14384,
+      "hash": "5d75f4079a7062147a0e2f5dc6bda46af23538d5",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/README-dist.md",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/README-dist.md",
+      "size": 307,
+      "hash": "6058395918e612d9366a62cca85a28002624196c",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/action-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/action-sprite/svg/symbols.svg",
+      "size": 111623,
+      "hash": "7f418144d2845aa686219c1883609f0459956fa7",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/custom-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/custom-sprite/svg/symbols.svg",
+      "size": 68073,
+      "hash": "77d533a4f9cbb543106b9263e5bc582a1b6270eb",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/doctype-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/doctype-sprite/svg/symbols.svg",
+      "size": 44473,
+      "hash": "bca8778929891ccd5d4f100c4562729c08756f5e",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/standard-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/standard-sprite/svg/symbols.svg",
+      "size": 340555,
+      "hash": "12a1e0797cdd8add016a9da2d5659f00ce5b0658",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols-rtl.svg",
+      "size": 333366,
+      "hash": "7c2aec0b9e5761cb952dd697e6bfe646b36f1bd3",
+      "sri": null
+    },
+    {
+      "path": "assets/icons/utility-sprite/svg/symbols.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/assets/icons/utility-sprite/svg/symbols.svg",
+      "size": 333516,
+      "hash": "906cafc5662a086aeec5e7ea734c89681d3c0182",
+      "sri": null
+    },
+    {
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "9a8a7314b25845bd6c0b971bd11056728120ffcb"
+      "hash": "c12ba86701c885a3c5a1598c06aedb912185c78f"
     }
   ]
 }
