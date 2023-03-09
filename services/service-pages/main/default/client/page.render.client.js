@@ -53,7 +53,14 @@
             pageId = ''
         }
         const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
-       
+
+        if(type != 'list' && type != 'record'){
+            const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&pageId=${pageId}&formFactor=${formFactor}`, { async: false });
+            if (page && page.schema) {
+                return page;
+            }
+        }
+        
         if(type === 'list'){
             return {
                 render_engine: 'amis',
