@@ -207,7 +207,7 @@ objectRoutes.route '/',
 			list_view_id = listview?.name || listview?._id
 			app_id = context.params.app_id
 			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
-			FlowRouter.go(url)
+			redirect(url)
 	 ],
 	action: (params, queryParams)->
 		BlazeLayout.render Creator.getLayout(),
