@@ -30,7 +30,8 @@ html {
 }
 
 :root {
-  --body-bg: top / cover no-repeat url(/images/defaultBackground.svg); 
+  --body-bg: rgb(225, 239, 254);
+  /* --body-bg: top / cover no-repeat url(/images/defaultBackground.svg);  */
 }
 
 @media only screen and (max-width: 768px) {
