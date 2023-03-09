@@ -151,6 +151,17 @@
       return options;
     };
 
+    const startsWith = (url, str) => {
+      
+      let flag = false
+      if(url.substr(0,4) === str){
+        flag = true
+      }else{
+        flag = false
+      }
+      return flag
+
+    }
 
     //将原数据字段转换为amis字段
     const getFieldEditTpl = async (field) => {
@@ -159,7 +170,7 @@
         label: field.name,
         name: field.code,
         required: field.is_required,
-        is_wide: field.is_wide
+        className: field.is_wide ? 'is_wide' : ''
       };
 
       switch (field.type) {
@@ -282,6 +293,7 @@
           // tpl.labelField = labelField;
           // tpl.valueField = "_value";
           tpl.source = {
+            //判断该field.url是否为http开头
             url: startsWith(field.url, "http")
               ? field.url
               : `\${context.rootUrl}${field.url}`,
@@ -316,7 +328,7 @@
           }
           break;
         case "table":
-          tpl.type = "input-table"; //TODO
+          tpl.type = "input-table"; 
           tpl.addable = field.permission === "editable";
           tpl.editable = tpl.addable;
           tpl.copyable = tpl.addable;
@@ -324,7 +336,7 @@
           for (const sField of field.fields) {
             if (sField.type != "hidden") {
               sField.permission = field.permission
-              const column = await getTdInputTpl(sField, true);
+              const column = await getFieldEditTpl(sField, true);
               tpl.columns.push(column);
             }
           }

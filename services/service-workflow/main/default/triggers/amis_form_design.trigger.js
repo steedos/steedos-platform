@@ -131,13 +131,13 @@ function transformFormFields(amisField) {
         _id: new ObjectId().toHexString(),
         code: amisField.name,
         name: amisField.label,
-        is_wide: amisField.is_wide
+        is_wide: _.includes(amisField.className, "is_wide")
     }
-    if(_.includes(amisField.className, "is_wide") || formFieldsItem.is_wide){
-        formFieldsItem.is_wide = true;
-    }else{
-        formFieldsItem.is_wide = false;
-    }
+    // if( || formFieldsItem.is_wide){
+    //     formFieldsItem.is_wide = true;
+    // }else{
+    //     formFieldsItem.is_wide = false;
+    // }
 
     switch (amisField.type) {
 
@@ -311,6 +311,9 @@ function transformFormFields(amisField) {
             break
         case 'editor':
             formFieldsItem.type = 'input'
+            break
+        case 'select':
+            formFieldsItem.type = 'select'
             break
         case 'steedos-field':
             
