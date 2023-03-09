@@ -1,136 +1,70 @@
 {
     "type": "service",
     "body": [
-        {
-            "type": "steedos-object-listview",
-            "objectApiName": "instances",
-            "columnsTogglable": false,
-            "showHeader": true,
-            "id": "u:d29cef0d1007",
-            "sideSchema": [
-                {
-                    "type": "wrapper",
-                    "size": "none",
-                    "id": "u:78e36deff0d5",
-                    "style": {
-                        "height": "46px"
-                    },
-                    "className": "border-gray-300 bg-gray-100 border-solid border-b block"
-                },
-                {
-                    "type": "nav",
-                    "id": "u:9f3dd961ca12",
-                    "className": "w-72 border-r border-slate-300 border-solid",
-                    "stacked": true,
-                    "itemBadge": {
-                        "mode": "text",
-                        "offset": [
-                            -24,
-                            20
-                        ],
-                        "visibleOn": "this.badge > 0",
-                        "text": "${badge | toInt}"
-                    },
-                    "source__": "${nav}",
-                    "source": {
-                        "method": "get",
-                        "url": "${context.rootUrl}/api/workflow/nav",
-                        "headers": {
-                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                        },
-                        "responseData": null,
-                        "adaptor": ""
-                    },
-                    "onEvent": {
-                        "data_change_instances": {
-                            "actions": [
-                                {
-                                    "actionType": "reload"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ],
-            "showDisplayAs": 3,
-            "className": "p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid sm:m-3 flex flex-1 flex-col",
-            "visibleOn": "${objectName === 'instances'}"
-        },
-        {
-            "type": "button",
-            "label": "模拟刷新",
-            "visibleOn": "false",
+      {
+        "type": "steedos-object-listview",
+        "objectApiName": "${objectName}",
+        "columnsTogglable": false,
+        "showHeader": true,
+        "id": "u:d29cef0d1007",
+        "sideSchema": 
+          {
+            "type": "nav",
+            "className": "bg-white h-full",
+            "id": "u:9f3dd961ca12",
+            "stacked": true,
+            "itemBadge": {
+              "mode": "text",
+              "offset": [
+                -24,
+                20
+              ],
+              "visibleOn": "this.badge > 0",
+              "text": "${badge | toInt}"
+            },
             "onEvent": {
-                "click": {
-                    "actions": [
-                        {
-                            "actionType": "broadcast",
-                            "args": {
-                                "eventName": "data_change_instance_tasks"
-                            }
-                        }
-                    ]
-                }
-            },
-            "id": "u:987c489f7126"
-        }
-    ],
-    "regions": [
-        "body"
-    ],
-    "data": {
-        "objectName": "instances",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800"
-        },
-        "nav": [
-            {
-                "label": "待审核111",
-                "to": "/app/oa/instance_tasks/grid/inbox",
-                "icon": "fa fa-download",
-                "badge": "188"
-            },
-            {
-                "label": "已审核",
-                "to": "/app/oa/instance_tasks/grid/outbox",
-                "icon": "fa fa-check"
-            },
-            {
-                "label": "监控箱",
-                "to": "/app/oa/instances/grid/monitor",
-                "icon": "fa fa-eye"
-            },
-            {
-                "label": "我的文件",
-                "unfolded": true,
-                "children": [
-                    {
-                        "label": "草稿",
-                        "to": "/app/oa/instances/grid/draft",
-                        "icon": "fa fa-pencil",
-                        "badge": 0
-                    },
-                    {
-                        "label": "进行中",
-                        "to": "/app/oa/instances/grid/pending",
-                        "icon": "fa fa-circle"
-                    },
-                    {
-                        "label": "已完成",
-                        "to": "/app/oa/instances/grid/completed",
-                        "icon": "fa fa-check-square"
-                    }
+              "@data.changed.instance_tasks": {
+                "actions": [
+                  {
+                    "actionType": "reload"
+                  }
                 ]
-            }
-        ]
-    },
-    "id": "u:2e5dc3e1d567",
-    "name": "page_instances_list",
-    "bodyClassName": "",
-    "css": {
-        ".antd-Nav-Menu-item-wrap .antd-Badge": {
-            "width": "80%"
-        }
-    },
-    "className__": "absolute top-0 bottom-0 w-1/2 border-r border-slate-300 border-solid bg-gray-100"
-}
+              }
+            },
+            "source": {
+              "method": "get",
+              "url": "${context.rootUrl}/api/workflow/nav",
+              "headers": {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+              },
+              "responseData": null,
+              "adaptor": ""
+            },
+            "source__": "${nav}"
+          }
+        ,
+        "showDisplayAs": true,
+        "className": "h-full"
+      },
+      {
+        "type": "button",
+        "label": "模拟刷新",
+        "onEvent": {
+          "click": {
+            "actions": [
+              {
+                "actionType": "broadcast",
+                "args": {
+                  "eventName": "@data.changed.instance_tasks"
+                }
+              }
+            ]
+          }
+        },
+        "id": "u:987c489f7126",
+        "visibleOn": "false"
+      }
+    ],
+    "className": "h-full",
+    "id": "u:4dd57bf1a99a"
+  }

@@ -18,12 +18,12 @@
               }
             ],
             "id": "u:dc5cb678096b",
-            "visibleOn": "${window:InstanceDetailEnabledAmisRender}"
+            "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}"
           },
           {
             "type": "wrapper",
             "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
-            "visibleOn": "${window:InstanceDetailEnabledAmisRender!=true  && instanceId}",
+            "visibleOn": "${window:InstanceDetailEnabledAmisRender == false  && instanceId}",
             "body": [
               {
                 "type": "custom",

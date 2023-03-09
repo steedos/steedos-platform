@@ -36,6 +36,13 @@
 
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
         let objectInfo = null;
+        let searchParams = FlowRouter.current().queryParams;
+
+        const display = searchParams['display']
+        const listViewId = searchParams['listview_id']
+        const sideObject = searchParams['side_object']
+        const sideListviewId = searchParams['side_listview_id']
+        
         if(!objectApiName){
             objectApiName = ''
         }
@@ -46,34 +53,19 @@
             pageId = ''
         }
         const formFactor = Steedos.isMobile() ? "SMALL" : "LARGE";
-        const page = Steedos.authRequest(`/api/pageSchema/${type}?app=${appId}&objectApiName=${objectApiName}&recordId=${recordId}&pageId=${pageId}&formFactor=${formFactor}`, { async: false });
-        if (page && page.schema) {
-            return page;
-        }
-        else if(type === 'list'){
+       
+        if(type === 'list'){
             return {
                 render_engine: 'amis',
                 name: 'steedosListviewPage',
-                schema: {
-                    "type": "page",
-                    name: `amis-${appId}-${objectApiName}-listview`,
-                    "title": "Welcome to Steedos",
-                    bodyClassName: 'steedos-listview p-0 sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid	sm:m-3 flex flex-1 flex-col',
-                    "body": [
-                      {
-                        "type": "steedos-object-listview",
-                        showHeader: true,
-                        "label": "列表视图",
-                        "objectApiName": "${objectName}",
-                        "columnsTogglable": false,
-                        "listName": "all",
-                        "id": "u:be7c6341cd11"
-                      }
-                    ],
-                    "regions": [
-                      "body"
-                    ],
-                    "id": "u:7b47b6042b0d"
+                schema:{
+                    "type": "steedos-page-listview",
+                    "showHeader": true,
+                    "objectApiName": objectApiName,
+                    "appId": appId,
+                    "display": display,
+                    "columnsTogglable": false,
+                    "listName": "all",
                 }
             }
         }else if(type === 'record'){
@@ -81,24 +73,14 @@
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
                     schema: {
-                        "type": "service",
-                        "className": 'sm:p-3',
-                        "name": `amis-${appId}-${objectApiName}-detail`,
-                        "title": "Welcome to Steedos",
-                        "body": [
-                          {
-                            "type": "steedos-record-detail",
-                            "objectApiName": "${objectName}",
-                            "recordId": "${recordId}",
-                            appId: appId,
-                            "id": "u:48d2c28eb755"
-                          }
-                        ],
-                        "regions": [
-                          "body"
-                        ],
-                        "id": "u:d138f5276481"
-                      }
+                        "type": "steedos-page-record-detail",
+                        "objectApiName": objectApiName,
+                        "sideObject": sideObject,
+                        "sideListviewId": sideListviewId,
+                        "recordId": recordId,
+                        "display": display,
+                        "appId": appId,
+                    }
                 }
             
         }else if(type === 'related_list'){
@@ -322,6 +304,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full')
                 $(".page-list-view-root")[0].appendChild(modalRoot);
             }
 

@@ -742,6 +742,10 @@
                 },
                 "visible_on": {
                     "type": "string"
+                },
+                "amis": {
+                    "type": "object",
+                    "description": "amis属性"
                 }
             }
         },

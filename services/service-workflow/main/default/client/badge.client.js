@@ -2,12 +2,19 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-06 22:51:38
+ * @LastEditTime: 2023-03-09 16:28:00
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/client/badge.client.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 ; (function () {
     try {
+        var rootId = "steedosWorkflowBadgeRoot";
+        var modalRoot = document.getElementById(rootId);
+        if (!modalRoot) {
+            modalRoot = document.createElement('div');
+            modalRoot.setAttribute('id', rootId);
+            $("body")[0].appendChild(modalRoot);
+        }
         const page = {
             name: "steedosWorkflowBadge",
             render_engine: "amis",
@@ -15,12 +22,35 @@
                 name: "serviceSteedosWorkflowBadge",
                 id: "serviceSteedosWorkflowBadge",
                 type: "service",
-                className: "hidden service-steedos-workflow-badge"
+                className: "service-steedos-workflow-badge hidden",
+                body: [{
+                    "type": "button",
+                    "label": "触发@data.changed",
+                    "name": "buttonTriggerDataChange",
+                    "className": "button-trigger-data-change-instance_tasks",
+                    "onEvent": {
+                        "click": {
+                            "actions": [
+                                {
+                                    "actionType": "broadcast",
+                                    "args": {
+                                        "eventName": "@data.changed.instance_tasks"
+                                    },
+                                    "data": {
+                                        "objectName": "instance_tasks",
+                                        "recordId": "reload"//不定义recordId的话会跳转到记录详细页面，是规则，所以这里传入一个假的recordId值
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "id": "u:987c489f7126"
+                }]
             }
         };
-        const root = "body";
-        Tracker.autorun(function(c){
-            if (Creator.steedosInit.get() && Creator.validated.get()){
+        const root = $("#" + rootId)[0];
+        Tracker.autorun(function (c) {
+            if (Creator.steedosInit.get() && Creator.validated.get()) {
                 Steedos.Page.render(root, page, {});
                 Promise.all([
                     waitForThing(window, 'SteedosUI')
@@ -32,8 +62,8 @@
                         Promise.all([
                             waitForThing(scope, 'getComponentByName')
                         ]).then(() => {
-                            var service = scope.getComponentByName("serviceSteedosWorkflowBadge");
-                            observeBadgeCount(service && service.doAction);
+                            var button = scope.getComponentByName("serviceSteedosWorkflowBadge.buttonTriggerDataChange");
+                            button && observeBadgeCount(button);
                         });
                     });
                 });
@@ -45,18 +75,10 @@
 })();
 
 
-function observeBadgeCount(doAction) {
+function observeBadgeCount(button) {
     var reload = function (type) {
-        console.log("doAction broadcast for observeBadgeCount:", type);
-        doAction({
-            "actionType": "broadcast",
-            "args": {
-                "eventName": "@data.changed.instance_tasks"
-            },
-            "data": {
-                "objectName": "instance_tasks"
-            }
-        });
+        console.log("handleAction broadcast for observeBadgeCount:", type);
+        button.props.dispatchEvent('click', {})
     };
     var callbacks = {
         changed: function (newDoc) {

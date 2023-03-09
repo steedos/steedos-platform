@@ -436,6 +436,10 @@
         "visible_on": {
             "type": "string",
             "description": "函数表达式，控制是否显示此字段"
+        },
+        "amis": {
+            "type": "object",
+            "description": "amis属性"
         }
     }
 }

@@ -12,7 +12,7 @@ const objects60sCache = {
 
 const getLng = async function(userId){
     const userSession = await auth.getSessionByUserId(userId);
-    return userSession ? userSession.language : null;
+    return userSession ? userSession.language : 'zh-CN';
 }
 const permissions = {
     allowEdit: false,
@@ -229,11 +229,11 @@ async function getObjectActions(objectName, userId){
     let object = await getObject(objectName, userId);
     if(object){
         let actions = [];
-        let originalActions = _.keys(getOriginalObjectActions(objectName))
+        // let originalActions = _.keys(getOriginalObjectActions(objectName))
         _.each(object.actions, function(action){
-            if(!action._id && _.include(originalActions, action.name)){ //
+            // if(!action._id && _.include(originalActions, action.name)){ //
                 actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
-            }
+            // }
         })
         return actions
     }
