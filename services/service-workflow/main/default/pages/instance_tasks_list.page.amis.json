@@ -10,7 +10,7 @@
         "sideSchema": 
           {
             "type": "nav",
-            "className": "bg-white h-full",
+            "className": "bg-white h-full w-full",
             "id": "u:9f3dd961ca12",
             "stacked": true,
             "itemBadge": {
@@ -44,7 +44,7 @@
           }
         ,
         "showDisplayAs": true,
-        "className": "h-full"
+        "className": "h-full w-full bg-white"
       },
       {
         "type": "button",
@@ -65,6 +65,6 @@
         "visibleOn": "false"
       }
     ],
-    "className": "h-full",
+    "className": "h-full w-full",
     "id": "u:4dd57bf1a99a"
   }
