@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-09 15:20:13
+ * @LastEditTime: 2023-03-09 16:28:00
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/client/badge.client.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -22,7 +22,7 @@
                 name: "serviceSteedosWorkflowBadge",
                 id: "serviceSteedosWorkflowBadge",
                 type: "service",
-                className: "service-steedos-workflow-badge",
+                className: "service-steedos-workflow-badge hidden",
                 body: [{
                     "type": "button",
                     "label": "触发@data.changed",
