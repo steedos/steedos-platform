@@ -784,21 +784,21 @@ actions:
       function (object_name, record_id, fields) {
               return WorkflowCore.openFlowDesign(Steedos.locale().toLocaleLowerCase(), Steedos.spaceId(), record_id, Creator.getUserCompanyId());
             }
-  designForm:
-    label: Form Designer
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions, data) {
-              const record = data.data;
-              if (record && record.object_name){
-                return false;
-              };
-              return true;
-            }
-    'on': record
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, fields) {
-              return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
-            }
+  # designForm:
+  #   label: Form Designer
+  #   visible: !<tag:yaml.org,2002:js/function> |-
+  #     function (object_name, record_id, record_permissions, data) {
+  #             const record = data.data;
+  #             if (record && record.object_name){
+  #               return false;
+  #             };
+  #             return true;
+  #           }
+  #   'on': record
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function (object_name, record_id, fields) {
+  #             return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
+  #           }
   enableFlow:
     label: Enable Flow
     visible: !<tag:yaml.org,2002:js/function> |-

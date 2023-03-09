@@ -216,12 +216,12 @@ body.steedos .flex-none {
   flex: none
 }
 
-body.steedos .-translate-x-0 {
-  --tw-translate-x: -0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+body.steedos .flex-1 {
+  flex: 1 1 0%
 }
 
-body.steedos .transform {
+body.steedos .-translate-x-0 {
+  --tw-translate-x: -0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
@@ -258,10 +258,6 @@ body.steedos .overflow-y-auto {
   overflow-y: auto
 }
 
-body.steedos .border {
-  border-width: 1px
-}
-
 body.steedos .border-b-\[3px\] {
   border-bottom-width: 3px
 }
@@ -278,11 +274,6 @@ body.steedos .border-solid {
   border-style: solid
 }
 
-body.steedos .border-slate-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity))
-}
-
 body.steedos .border-sky-500 {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity))
@@ -291,6 +282,11 @@ body.steedos .border-sky-500 {
 body.steedos .border-slate-200 {
   --tw-border-opacity: 1;
   border-color: rgb(226 232 240 / var(--tw-border-opacity))
+}
+
+body.steedos .border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity))
 }
 
 body.steedos .border-gray-300 {
@@ -458,20 +454,16 @@ body.steedos .ease-in-out {
     width: 220px
   }
 
-  body.steedos .sm\:rounded {
-    border-radius: 0.25rem
-  }
-
   body.steedos .sm\:rounded-lg {
     border-radius: 0.5rem
   }
 
-  body.steedos .sm\:border {
-    border-width: 1px
+  body.steedos .sm\:rounded {
+    border-radius: 0.25rem
   }
 
-  body.steedos .sm\:p-3 {
-    padding: 0.75rem
+  body.steedos .sm\:border {
+    border-width: 1px
   }
 
   body.steedos .sm\:shadow {
