@@ -4685,6 +4685,15 @@
   dependencies:
     axios "^0.21.4"
 
+"@steedos/filters@2.4.0-beta.39":
+  version "2.4.0-beta.39"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.4.0-beta.39.tgz#273e275111a5fe13388d82442de6997ed5953785"
+  integrity sha512-wNAsTAChjJkZKefVLTa7rF6mzp7uYWc2qdYqQu9y5M+n+Y8VqXvKGNJxH4Hnsc6zZkBx6mZZYZgpvV6Om/o19g==
+  dependencies:
+    "@babel/runtime" "7.12.18"
+    lodash "4.17.21"
+    moment "^2.24.0"
+
 "@steedos/license@2.2.8":
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.8.tgz#6933c932dc809c3b0c85cf35d2045d035d6a2969"
