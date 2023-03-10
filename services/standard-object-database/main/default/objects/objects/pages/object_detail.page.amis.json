@@ -178,13 +178,6 @@
     "regions": [
         "body"
     ],
-    "data": {
-        "objectName": "objects",
-        "recordId": "contract_bidding_information",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5200"
-        }
-    },
     "id": "page_objects_record_detail",
     "name": "page_objects_record_detail",
     "bodyClassName": "",
