@@ -3,6 +3,10 @@
   "version": "2.4.0-beta.42",
   "main": "package.service.js",
   "scripts": {},
+  "files": [
+    "package.service.js",
+    "public"
+  ],
   "license": "MIT",
   "private": false,
   "publishConfig": {
