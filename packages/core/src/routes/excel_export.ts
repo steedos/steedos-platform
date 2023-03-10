@@ -1,5 +1,6 @@
 import querystring = require('querystring');
 import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
+import { formatFiltersToODataQuery } from "@steedos/filters";
 import { requireAuthentication } from './';
 const Fiber = require('fibers');
 const moment = require('moment');
@@ -20,6 +21,11 @@ const exportRecordData = async function (req, res) {
         if (!filename) {
             filename = "导出"
         }
+        
+        if(queryParams.filters){
+            queryParams.$filter = formatFiltersToODataQuery(JSON.parse(queryParams.filters));
+        }
+
         
         const objectName = urlParams.objectName
         
