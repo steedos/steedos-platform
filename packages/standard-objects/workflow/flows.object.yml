@@ -830,11 +830,8 @@ actions:
           success: function (data) {
             window.$("body").removeClass("loading");
             toastr.success("操作已成功！");
-            if (Template.creator_view.currentInstance) {
-              Template.creator_view.currentInstance.onEditSuccess();
-            } else {
-              FlowRouter.reload();
-            }
+            SteedosUI.reloadRecord(object_name, record_id);
+            FlowRouter.reload();
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
             window.$("body").removeClass("loading");
@@ -873,11 +870,8 @@ actions:
           success: function (data) {
             window.$("body").removeClass("loading");
             toastr.success("操作已成功！");
-            if (Template.creator_view.currentInstance) {
-              Template.creator_view.currentInstance.onEditSuccess();
-            } else {
-              FlowRouter.reload();
-            }
+            SteedosUI.reloadRecord(object_name, record_id);
+            FlowRouter.reload();
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
             window.$("body").removeClass("loading");

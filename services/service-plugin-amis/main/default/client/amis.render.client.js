@@ -89,6 +89,23 @@
                                   setSchema(result)
                                 }
                               }, [JSON.stringify($schema)])
+
+                              if (!schema)
+                              return render('body', {
+                                "type": "wrapper",
+                                "className": "h-full flex items-center justify-center",
+                                "body": {
+                                  "type": "spinner",
+                                  "show": true
+                                }
+                              })
+
+                              if (props.env.enableAMISDebug && schema) {
+                                console.groupCollapsed("steedos debug", `Render ${asset.componentName}`);
+                                console.trace('Component: ', props, 'Generated Amis Schema: ', schema);
+                                console.groupEnd();
+                              }
+                              
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }

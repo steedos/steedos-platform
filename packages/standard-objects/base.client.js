@@ -138,7 +138,7 @@ Steedos.StandardObjects = {
                     var data, instanceId, uobj, url;
                     if (!this.record.instances || !this.record.instances[0]) {
                         toastr.error('申请单已删除');
-                        Template.creator_view.currentInstance.onEditSuccess();
+                        // Template.creator_view.currentInstance.onEditSuccess();
                         return;
                     }
                     instanceId = this.record.instances[0]._id;
@@ -171,7 +171,7 @@ Steedos.StandardObjects = {
                                 responseText.errors.forEach(function (e) {
                                     toastr.error(e.errorMessage);
                                 });
-                                Template.creator_view.currentInstance.onEditSuccess();
+                                // Template.creator_view.currentInstance.onEditSuccess();
                                 return;
                             } else if (responseText.redirect_url) {
                                 if (Meteor.settings.public.webservices && Meteor.settings.public.webservices.workflow && Meteor.settings.public.webservices.workflow.url) {
@@ -185,7 +185,7 @@ Steedos.StandardObjects = {
                         error: function (xhr, msg, ex) {
                             $(document.body).removeClass('loading');
                             toastr.error(msg);
-                            Template.creator_view.currentInstance.onEditSuccess();
+                            // Template.creator_view.currentInstance.onEditSuccess();
                         }
                     });
                 }

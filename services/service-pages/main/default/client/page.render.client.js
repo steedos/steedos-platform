@@ -66,6 +66,7 @@
                 render_engine: 'amis',
                 name: 'steedosListviewPage',
                 schema:{
+                    "name": `${objectApiName}-listview-${listViewId}`,
                     "type": "steedos-page-listview",
                     "showHeader": true,
                     "objectApiName": objectApiName,
@@ -80,6 +81,7 @@
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
                     schema: {
+                        "name": `${objectApiName}-recordDetail-${recordId}`,
                         "type": "steedos-page-record-detail",
                         "objectApiName": objectApiName,
                         "sideObject": sideObject,

@@ -18,10 +18,10 @@
                     "modalName": "${modalName}"
                 },
                 "requestAdaptor": "\n        \n        const formData = api.data.$;\n        for (key in formData){\n            // image、select等字段清空值后保存的空字符串转换为null。\n            if(formData[key] === ''){\n                formData[key] = null;\n            }\n        }\n        const objectName = api.data.objectName;\n        const fieldsName = Object.keys(formData);\n        delete formData.created;\n        delete formData.created_by;\n        delete formData.modified;\n        delete formData.modified_by;\n        delete formData._display;\n        delete formData.sort_order_options;\n        delete formData.buttons_options;\n        delete formData.fields_options;\n        delete formData.field_groups_options;\n        delete formData.related_lists_options;\n        delete formData.related_object_fields_options;\n        delete formData.isLookup;\n\n        let query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\n        if(formData.recordId){\n            query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n        };\n        delete formData._id;\n        let __saveData = JSON.stringify(JSON.stringify(formData));\n    \n        api.data = {query: query.replace('{__saveData}', __saveData)};\n        return api;\n    ",
+                "adaptor": "if (payload.errors) {\n    payload.status = 2;\n    payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
                 "responseData": {
                     "recordId": "${record._id}"
                 },
-                "adaptor": "var modal = SteedosUI.getRef(api.body.modalName);\nmodal && modal.close();\n            SteedosUI.router.go({objectName: api.body.objectName, recordId: payload.data.record._id, type: api.body.recordId ? 'edit': 'new'});\n            return payload;\n        ",
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
@@ -861,6 +861,20 @@
                         {
                             "actionType": "custom",
                             "script": "// 新建页面布局时初始化related_lists默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultRelatedLists = function (input, rowValue, prop_name) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    related_lists: superValues.related_lists,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultRelatedLists(eventData)\n  }\n});\n"
+                        }
+                    ]
+                },
+                "submitSucc": {
+                    "weight": 0,
+                    "actions": [
+                        {
+                            "actionType": "broadcast",
+                            "args": {
+                                "eventName": "@data.changed.object_layouts"
+                            },
+                            "data": {
+                                "objectName": "object_layouts"
+                            }
                         }
                     ]
                 }
