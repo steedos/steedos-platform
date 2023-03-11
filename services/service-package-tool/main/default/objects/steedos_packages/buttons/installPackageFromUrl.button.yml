@@ -90,7 +90,24 @@ amis_schema: |-
                                               "fetchFailed": "初始化失败",
                                               "saveSuccess": "安装成功",
                                               "saveFailed": "安装失败"
-                                          }
+                                          },
+                                          "onEvent": {
+                                            "submitSucc": {
+                                                "weight": 0,
+                                                "actions": [
+                                                    {
+                                                        "actionType": "broadcast",
+                                                        "args": {
+                                                            "eventName": "@data.changed.steedos_packages"
+                                                        },
+                                                        "data": {
+                                                            "objectName": "steedos_packages",
+                                                            "recordId": "install"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                            }
                                       }
                                   ],
                                   "id": "u:efa30bace722",
