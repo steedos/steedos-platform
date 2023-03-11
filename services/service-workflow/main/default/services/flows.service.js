@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-14 15:45:21
+ * @LastEditTime: 2023-03-11 17:02:38
  * @Description:
  */
 const objectql = require("@steedos/objectql");
@@ -52,8 +52,8 @@ module.exports = {
         try {
           const userSession = ctx.meta.user;
           const { resolveInfo } = ctx.meta;
-          const { action, appId, keywords, distributeInstanceId, distributeStepId} = ctx.params;
-          return await this.getFlowListData(action, {appId, keywords, distributeInstanceId, distributeStepId}, userSession)
+          const { action, appId, keywords, distributeInstanceId, distributeStepId } = ctx.params;
+          return await this.getFlowListData(action, { appId, keywords, distributeInstanceId, distributeStepId }, userSession)
         } catch (error) {
           throw error;
         }
@@ -62,19 +62,19 @@ module.exports = {
   },
   methods: {
     formatKeywords: {
-      handler(keywords){
-        if(keywords){
+      handler(keywords) {
+        if (keywords) {
           return _.uniq(_.compact(keywords.split(' ')))
         }
       }
     },
     getKeywordsFilter: {
-      handler(keywords){
-        if(keywords){
+      handler(keywords) {
+        if (keywords) {
           const keys = this.formatKeywords(keywords);
-          if(keys && keys.length > 0){
+          if (keys && keys.length > 0) {
             const keywordsFilter = [];
-            _.each(keys, (key)=>{
+            _.each(keys, (key) => {
               keywordsFilter.push(['name', 'contains', key])
             })
             return keywordsFilter;
@@ -83,13 +83,13 @@ module.exports = {
       }
     },
     getAppCategoriesIds: {
-        async handler(appId){
-            const categories = await objectql.getObject('categories').find({filters: [['app', '=', appId]]});
-            return _.map(categories, '_id');
-        }
+      async handler(appId) {
+        const categories = await objectql.getObject('categories').find({ filters: [['app', '=', appId]] });
+        return _.map(categories, '_id');
+      }
     },
     getFlowListData: {
-      async handler(action, options, userSession){
+      async handler(action, options, userSession) {
         const { appId, keywords, distributeInstanceId, distributeStepId } = options;
 
         const categoriesIds = await this.getAppCategoriesIds(appId);
@@ -97,14 +97,14 @@ module.exports = {
         const keywordsFilter = this.getKeywordsFilter(keywords)
         let data = [];
         const { is_space_admin } = userSession;
-        // TODO: 分发的流程范围处理
+        // 分发的流程范围处理
         let distributeOptionalFlows = [];
         if (action === "distribute") {
-          if(distributeInstanceId && distributeStepId){
+          if (distributeInstanceId && distributeStepId) {
             const instance = await objectql.getObject('instances').findOne(distributeInstanceId);
-            if(instance){
+            if (instance) {
               const flow = await objectql.getObject('flows').findOne(instance.flow);
-              if(flow){
+              if (flow) {
                 const step = getStep(instance, flow, distributeStepId);
                 if (step && step.allowDistribute == true) {
                   distributeOptionalFlows = step.distribute_optional_flows || [];
@@ -113,37 +113,48 @@ module.exports = {
             }
           }
           if (distributeOptionalFlows.length > 0) {
-            data.flows = await objectql
+            const dflows = await objectql
               .getObject("flows")
               .find({
                 filters: [
                   ["_id", "in", distributeOptionalFlows],
                   ["state", "=", "enabled"],
                 ],
+                fields: ['_id', 'name', 'sort_no', 'category', 'distribute_optional_users', 'distribute_to_self', 'distribute_end_notification'], // 只取必要字段
+                sort: "sort_no,name"
               });
-          }else{
-            data.flows = [];
-          } 
-        }else {
+            const dCategoryIds = _.map(dflows, 'category')
+            const dCategoryDocs = await this.getSpaceCategories(dCategoryIds, userSession);
+            for (const category of dCategoryDocs) {
+              category.flows = [];
+              for (const flow of dflows) {
+                if (flow.category === category._id)
+                  category.flows.push(flow);
+              }
+            }
+            data = dCategoryDocs;
+          }
+        } else {
           var categories = await this.getSpaceCategories(categoriesIds, userSession);
           for (const category of categories) {
             const filters = [
               ["category", "=", category._id],
               ["state", "=", "enabled"],
             ];
-            if(keywordsFilter){
+            if (keywordsFilter) {
               filters.push(keywordsFilter)
             }
             // console.log(`filters`, filters)
             const categoryFlows = await objectql.getObject("flows").find({
               filters: filters,
+              fields: ['_id', 'name', 'sort_no', 'category', 'perms'],
               sort: "sort_no,name",
             });
             category.flows = [];
             for (const flow of categoryFlows) {
-              if(this.canAdd(flow, userSession)){
+              if (this.canAdd(flow, userSession)) {
                 category.flows.push(flow);
-              }else if(action == 'query'){
+              } else if (action == 'query') {
                 if (is_space_admin || this.canMonitor(flow, userSession) || this.canAdmin(flow, userSession)) {
                   category.flows.push(flow);
                 }
@@ -156,7 +167,7 @@ module.exports = {
       }
     },
     getSpaceCategories: {
-      async handler(ids, userSession){
+      async handler(ids, userSession) {
         const filters = [["space", "=", userSession.spaceId]];
         if (!_.isEmpty(ids)) {
           filters.push(["_id", "in", ids]);
@@ -185,7 +196,7 @@ module.exports = {
               canAdd =
                 organizations_parents &&
                 _.intersection(organizations_parents, perms.orgs_can_add).length >
-                  0;
+                0;
             }
           }
         }
