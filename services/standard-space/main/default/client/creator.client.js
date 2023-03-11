@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-27 19:09:19
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-03 09:11:56
+ * @LastEditors: 廖大雪 2291335922@qq.com
+ * @LastEditTime: 2023-03-11 13:29:34
  * @Description: 
  */
 if(window.Meteor){
@@ -37,5 +37,8 @@ if(window.Meteor){
         }
         return db[objectName]
     }
+    window.refreshGrid = ()=>{
+        return FlowRouter.reload();
+    };
 }
 	
