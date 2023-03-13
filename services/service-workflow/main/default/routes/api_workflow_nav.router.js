@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-09 17:59:18
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-03-13 11:39:25
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,9 +32,10 @@ const _ = require('underscore');
  */
 
 
-router.get('/api/workflow/nav', core.requireAuthentication, async function (req, res) {
+router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
     let userSession = req.user;
+    const { appId } = req.params;
     const spaceId = userSession.spaceId;
     const userId = userSession.userId;
     let query = {
@@ -45,18 +46,18 @@ router.get('/api/workflow/nav', core.requireAuthentication, async function (req,
     var links = [
       {
         "label": "待审核",
-        "to": "/app/oa/instance_tasks/grid/inbox",
+        "to": `/app/${appId}/instance_tasks/grid/inbox`,
         "icon": "fa fa-download",
         "badge": sum
       },
       {
         "label": "已审核",
-        "to": "/app/oa/instance_tasks/grid/outbox",
+        "to": `/app/${appId}/instance_tasks/grid/outbox`,
         "icon": "fa fa-check"
       },
       {
         "label": "监控箱",
-        "to": "/app/oa/instances/grid/monitor",
+        "to": `/app/${appId}/instances/grid/monitor`,
         "icon": "fa fa-eye"
       },
       {
@@ -65,17 +66,17 @@ router.get('/api/workflow/nav', core.requireAuthentication, async function (req,
         "children": [
           {
             "label": "草稿",
-            "to": "/app/oa/instances/grid/draft",
+            "to": `/app/${appId}/instances/grid/draft`,
             "icon": "fa fa-pencil"
           },
           {
             "label": "进行中",
-            "to": "/app/oa/instances/grid/pending",
+            "to": `/app/${appId}/instances/grid/pending`,
             "icon": "fa fa-circle"
           },
           {
             "label": "已完成",
-            "to": "/app/oa/instances/grid/completed",
+            "to": `/app/${appId}/instances/grid/completed`,
             "icon": "fa fa-check-square"
           }
         ]
