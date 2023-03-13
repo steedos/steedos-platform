@@ -101,11 +101,11 @@
                               })
 
                               if (props.env.enableAMISDebug && schema) {
-                                console.groupCollapsed("steedos debug", `Render ${asset.componentName}`);
+                                console.groupCollapsed(`[steedos render ${comp.amis?.render.type}]`);
                                 console.trace('Component: ', props, 'Generated Amis Schema: ', schema);
                                 console.groupEnd();
                               }
-                              
+
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }
