@@ -717,7 +717,14 @@
                                           "className": "slds-button_icon slds-global-header__icon"
                                         }
                                       ],
-                                    },]
+                                    },
+                                    {
+                                        "type": "steedos-app-launcher",
+                                        "showAppName": false,
+                                        "appId": "${app.id}",
+                                        "visibleOn": "${isMobile}",
+                                    },
+                                ]
                                 }
                               ],
                             },
