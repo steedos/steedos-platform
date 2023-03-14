@@ -355,17 +355,19 @@ TracesTemplate.events =
 	'click .instance-trace-detail-modal .btn-cc-approve-remove': (event, template) ->
 		instanceId = Session.get('instanceId')
 		approveId = event.target.dataset.approve
-		# CALL 删除approve函数。
-		$("body").addClass("loading")
-		Meteor.call 'cc_remove', instanceId, approveId, (err, result) ->
-			$("body").removeClass("loading")
-			if err
-				toastr.error err
-			if result == true
-				toastr.success(TAPi18n.__("remove_cc_approve"));
-				Modal.hide "instance_trace_detail_modal"
-			return
-		return
+		# # CALL 删除approve函数。
+		# $("body").addClass("loading")
+		# Meteor.call 'cc_remove', instanceId, approveId, (err, result) ->
+		# 	$("body").removeClass("loading")
+		# 	if err
+		# 		toastr.error err
+		# 	if result == true
+		# 		toastr.success(TAPi18n.__("remove_cc_approve"));
+		# 		Modal.hide "instance_trace_detail_modal"
+		# 	return
+		# return
+		Modal.allowMultiple = true
+		Modal.show 'cancel_cc_modal'
 
 	'click .approve-item,.approve-description': (event, template) ->
 		# PC上链接允许直接点开，不再打开签批历程详细

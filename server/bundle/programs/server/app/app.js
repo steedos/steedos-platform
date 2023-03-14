@@ -96,6 +96,7 @@ WebApp.rawConnectHandlers.use(function (req, res, next) {
     ".js",
     ".json",
     ".mjs",
+    ".jsx",
     ".coffee"
   ]
 });

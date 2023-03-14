@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-05-21 15:56:26
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-13 10:57:37
  * @Description: 
  */
 import { Dictionary } from '@salesforce/ts-types';
@@ -52,7 +52,7 @@ export type SteedosDriverConfig = {
     /**
      * Database options.
      */
-    readonly options?: any;
+    options?: any;
     /**
      * Print sql log for driver.
      */
@@ -61,6 +61,7 @@ export type SteedosDriverConfig = {
      * collection locale.
      */
     readonly locale?: string;
+
 };
 
 
