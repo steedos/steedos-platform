@@ -66,6 +66,7 @@
                 render_engine: 'amis',
                 name: 'steedosListviewPage',
                 schema:{
+                    "name": `${objectApiName}-listview-${listViewId}`,
                     "type": "steedos-page-listview",
                     "showHeader": true,
                     "objectApiName": objectApiName,
@@ -80,6 +81,7 @@
                     render_engine: 'amis',
                     name: 'steedosRecordPage',
                     schema: {
+                        "name": `${objectApiName}-recordDetail-${recordId}`,
                         "type": "steedos-page-record-detail",
                         "objectApiName": objectApiName,
                         "sideObject": sideObject,
@@ -203,7 +205,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        console.log(`Steedos.Page.render`, root, page)
+        // console.log(`Steedos.Page.render`, root, page)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
@@ -247,6 +249,7 @@
                 waitForThing(Builder.components, upperFirst(page.render_engine), findComponent)
             ]).then(()=>{
                 //渲染page
+                // console.log(`renderAmis`, schema, data)
                 if(!lodash.isFunction(root)){
                     renderAmis(
                         root,
@@ -600,10 +603,10 @@
             document.body.classList.remove("sidebar")   
         if (window.innerWidth >= 768) 
             document.body.classList.add('sidebar-open')
-        if(app.showSidebar && window.location.pathname.startsWith("/workflow")){
+        if(app.showSidebar && FlowRouter.current().path.startsWith("/workflow")){
             app = {id: 'workflow'}
         }
-        if(window.location.pathname.startsWith("/workflow")){
+        if(FlowRouter.current().path.startsWith("/workflow")){
             document.body.classList.remove("sidebar-open")   
         }
         try {
@@ -620,6 +623,7 @@
                 $(".steedos-global-header-root")[0].appendChild(modalRoot);
             }
             if (page.render_engine && page.render_engine != 'redash') {
+                // console.log("Steedos.Page.Header.render", appId, tabId, page)
                 return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, data));
             }
         } catch (error) {
@@ -713,7 +717,14 @@
                                           "className": "slds-button_icon slds-global-header__icon"
                                         }
                                       ],
-                                    },]
+                                    },
+                                    {
+                                        "type": "steedos-app-launcher",
+                                        "showAppName": false,
+                                        "appId": "${app.id}",
+                                        "visibleOn": "${isMobile}",
+                                    },
+                                ]
                                 }
                               ],
                             },

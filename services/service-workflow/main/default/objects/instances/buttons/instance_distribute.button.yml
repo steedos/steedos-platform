@@ -41,6 +41,9 @@ amis_schema: |-
                         {
                           "type": "steedos-select-flow",
                           "label": "流程名称",
+                          "action": "distribute",
+                          "distributeInstanceId": "${record._id}",
+                          "distributeStepId": "${record.traces | last | pick:step}",
                           "name": "flow_id",
                           "id": "instanceForwardFlow",
                           "multiple": false,

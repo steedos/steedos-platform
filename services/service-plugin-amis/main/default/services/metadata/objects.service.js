@@ -89,6 +89,16 @@ module.exports = {
                 return { status: 0, data: { options } }
             }
         },
+        getObjectDetailListsOptions: {
+            rest: {
+                method: "GET",
+                path: "/objects/:objectName/detailLists/options"
+            },
+            async handler(ctx) {
+                const options = await this.getObjectDetailListsOptions(ctx);
+                return { status: 0, data: { options } }
+            }
+        },
         getObjectRelatedListsOptions: {
             rest: {
                 method: "GET",
@@ -308,6 +318,35 @@ module.exports = {
                         label: `${label}(${action.name})`
                     }
                 })));
+            }
+        },
+        getObjectDetailListsOptions: {
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const lng = userSession.language || 'zh-CN';
+                const objectName = ctx.params.objectName;
+                const object = await objectql.getSteedosSchema().getObject(objectName);
+                const objectConfig = object.toConfig();
+                steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
+
+                const options = [];
+                /*
+                    object.details是一个字符串，形如：testb__c.testa__c
+                */
+                const relationsInfo = await object.getRelationsInfo();
+                const details = relationsInfo && relationsInfo.details;
+
+                _.each(details, async function(related){
+                    if (!related) return;
+                    let foo = related.split('.');
+                    let rObjectName = foo[0];
+                    // let rFieldName = foo[1];
+                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).toConfig();
+                    steedosI18n.translationObject(lng, rObjectConfig.name, rObjectConfig);
+                    let rObjectLable = rObjectConfig.label;
+                    options.push({label: rObjectLable, value: rObjectName})
+                })
+                return options;
             }
         },
         getObjectRelatedListsOptions: {

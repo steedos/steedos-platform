@@ -109,11 +109,11 @@ fields:
   is_creator:
     type: boolean
     label: Show this app for Desktop
-    defaultValue: true
+    # defaultValue: true
   mobile:
     type: boolean
     label: Show this app for Mobile
-    defaultValue: true
+    # defaultValue: true
   icon:
     label: Icon
     type: text
@@ -121,7 +121,7 @@ fields:
   visible:
     label: Visible
     type: boolean
-    defaultValue: true
+    # defaultValue: true
 
   showSidebar:
     label: Show Sidebar

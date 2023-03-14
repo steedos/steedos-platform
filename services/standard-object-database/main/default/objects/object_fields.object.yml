@@ -91,7 +91,7 @@ fields:
         value: file
       - label: Formula
         value: formula
-      - label: Roll-Up Summary
+      - label: 累计汇总
         value: summary
     sort_no: 150
   defaultValue:
@@ -309,6 +309,23 @@ fields:
     reference_to_field: name
     depend_on:
       - object
+    amis:
+      "source": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/detailLists/options?depend_on_object=${object}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        "adaptor": ""
+        "sendOn": "this.object"
+        "requestAdaptor": ""
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/detailLists/options?depend_on_object=${object}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        "adaptor": ""
+        "sendOn": "this.object"
+        "requestAdaptor": ""
     # optionsFunction: !<tag:yaml.org,2002:js/function> |-
     #   function (values) {
     #     if(!values.object){
