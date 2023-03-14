@@ -150,7 +150,7 @@ fields:
     label: Required
     type: boolean
     readonly: true
-    name: current.fields.$.is_requiredW
+    name: current.fields.$.is_required
   current.fields.$.is_wide:
     label: Wide
     type: boolean
