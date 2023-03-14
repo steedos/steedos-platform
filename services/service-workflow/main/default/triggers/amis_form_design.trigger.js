@@ -2,7 +2,6 @@ const _ = require('lodash');
 const workflow = require('@steedos/workflow');
 const objectql = require("@steedos/objectql");
 const { ObjectId } = require("mongodb");
-const { log } = require('console');
 const AmisInputTypes = [
     //41个表单项
     'input-image',
@@ -120,8 +119,6 @@ function getFinalFormFields(inputFields) {
         finalFormFields.push(temp)
     })
 
-    console.log('最终存入数据库的数组==>', finalFormFields);
-
     return finalFormFields
 }
 
@@ -133,11 +130,6 @@ function transformFormFields(amisField) {
         name: amisField.label,
         is_wide: _.includes(amisField.className, "is_wide")
     }
-    // if( || formFieldsItem.is_wide){
-    //     formFieldsItem.is_wide = true;
-    // }else{
-    //     formFieldsItem.is_wide = false;
-    // }
 
     switch (amisField.type) {
 
@@ -351,19 +343,13 @@ module.exports = {
             const amis_schema = JSON.parse(this.doc.amis_schema);
             // 在amis_schema中提取符合条件的amis_schema,若不符合则返回空
             const formSchema = getInstanceFormSchema(amis_schema);
-            
-            console.log('amis_schema', amis_schema);
-            
-            console.log('formSchema', formSchema);
 
             if (!formSchema) {
                 return;
             }
             // 得到符合条件但未进行数据处理的数组
-            // const formFields = getFormInputFields(formSchema);
+
             getFormInputFields(formSchema);
-            console.log('inputFields', inputFields);
-            // const formFields = inputFields;
 
             // 先通过id得到forms对象存下来
             const form = await objectql.getObject('forms').findOne(this.id);
