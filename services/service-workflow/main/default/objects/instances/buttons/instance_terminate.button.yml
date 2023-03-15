@@ -67,7 +67,7 @@ amis_schema: |-
                                                             "componentId": "",
                                                             "args": {
                                                                 "blank": false,
-                                                                "url": "/app/${appId}/${objectName}/view/${recordId}?display=split&side_object=${side_object}&side_listview_id=${side_listview_id}"
+                                                                "url": "/app/${appId}/instance_tasks/grid/${side_listview_id}"
                                                             },
                                                             "actionType": "url"
                                                         }
