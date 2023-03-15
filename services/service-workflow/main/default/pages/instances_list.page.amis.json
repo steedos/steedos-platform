@@ -1,70 +1,74 @@
 {
     "type": "service",
     "body": [
-      {
-        "type": "steedos-object-listview",
-        "objectApiName": "${objectName}",
-        "columnsTogglable": false,
-        "showHeader": true,
-        "id": "u:d29cef0d1007",
-        "sideSchema": 
-          {
-            "type": "nav",
-            "className": "bg-white h-full w-full",
-            "id": "u:9f3dd961ca12",
-            "stacked": true,
-            "itemBadge": {
-              "mode": "text",
-              "offset": [
-                -24,
-                20
-              ],
-              "visibleOn": "this.badge > 0",
-              "text": "${badge | toInt}"
+        {
+            "type": "steedos-object-listview",
+            "objectApiName": "${objectName}",
+            "columnsTogglable": false,
+            "showHeader": true,
+            "id": "u:d29cef0d1007",
+            "sideSchema": {
+                "type": "nav",
+                "className": "bg-white h-full w-full",
+                "id": "u:9f3dd961ca12",
+                "stacked": true,
+                "itemBadge": {
+                    "mode": "text",
+                    "offset": [
+                        -24,
+                        20
+                    ],
+                    "visibleOn": "this.badge > 0",
+                    "text": "${badge | toInt}"
+                },
+                "onEvent": {
+                    "@data.changed.instance_tasks": {
+                        "actions": [
+                            {
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                },
+                "source": {
+                    "method": "get",
+                    "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+                    "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    },
+                    "responseData": null,
+                    "adaptor": ""
+                },
+                "source__": "${nav}"
             },
-            "onEvent": {
-              "@data.changed.instance_tasks": {
-                "actions": [
-                  {
-                    "actionType": "reload"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "method": "get",
-              "url": "${context.rootUrl}/api/workflow/nav",
-              "headers": {
-                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-              },
-              "responseData": null,
-              "adaptor": ""
-            },
-            "source__": "${nav}"
-          }
-        ,
-        "showDisplayAs": true,
-        "className": "h-full w-full bg-white"
-      },
-      {
-        "type": "button",
-        "label": "模拟刷新",
-        "onEvent": {
-          "click": {
-            "actions": [
-              {
-                "actionType": "broadcast",
-                "args": {
-                  "eventName": "@data.changed.instance_tasks"
-                }
-              }
-            ]
-          }
+            "showDisplayAs": true,
+            "className": "h-full w-full bg-white"
         },
-        "id": "u:987c489f7126",
-        "visibleOn": "false"
-      }
+        {
+            "type": "button",
+            "label": "模拟刷新",
+            "onEvent": {
+                "click": {
+                    "actions": [
+                        {
+                            "actionType": "broadcast",
+                            "args": {
+                                "eventName": "@data.changed.instance_tasks"
+                            }
+                        }
+                    ]
+                }
+            },
+            "id": "u:987c489f7126",
+            "visibleOn": "false"
+        }
     ],
+    "data": {
+        "objectName": "instances",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800"
+        }
+    },
     "className": "h-full w-full",
     "id": "u:4dd57bf1a99a"
-  }
+}

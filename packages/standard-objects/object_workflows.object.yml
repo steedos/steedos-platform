@@ -33,75 +33,20 @@ fields:
     type: lookup
     depend_on:
       - flow_id
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              var fields, flowId, form_fields, form_id, instance_fields, options, res_flow, res_form;
-              instance_fields = [];
-              form_fields = [];
+    amis: 
+      "source": 
+        "method": "get"
+        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        "sendOn": "!!this.flow_id"
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.flow_id"
 
-              if (values != null ? values.flow_id : void 0) {
-                flowId = _.isObject(values.flow_id) ? values.flow_id._id : values.flow_id;
-
-                if (!window.ObjectWorkflowsDataCache) {
-                  window.ObjectWorkflowsDataCache = {};
-                }
-
-                if (!window.ObjectWorkflowsDataCache.flowsMap) {
-                  window.ObjectWorkflowsDataCache.flowsMap = {};
-                }
-
-                var flowCache = window.ObjectWorkflowsDataCache.flowsMap[flowId];
-
-                if (!flowCache || flowCache._EXPIREDATE < new Date().getTime()) {
-                  var flow = Creator.odata.get("flows", flowId, "form");
-
-                  if (flow && flow.form) {
-                    var form = Creator.odata.get("forms", flow.form, "current");
-
-                    if (form && form.current) {
-                      window.ObjectWorkflowsDataCache.flowsMap[flowId] = Object.assign({
-                        _EXPIREDATE: new Date().getTime() + 60 * 1000
-                      }, form);
-                    }
-                  }
-                }
-
-                var res_form = window.ObjectWorkflowsDataCache.flowsMap[flowId];
-
-                if (res_form != null ? res_form.current : void 0) {
-                  fields = (res_form != null ? res_form.current.fields : void 0) || [];
-                  fields.forEach(function (f) {
-                    if (f.type === 'section') {
-                      if (f.fields) {
-                        return f.fields.forEach(function (ff) {
-                          return form_fields.push({
-                            'label': ff.name || ff.code,
-                            'value': ff.code
-                          });
-                        });
-                      }
-                    } else if (f.type === 'table') {
-                      if (f.fields) {
-                        return f.fields.forEach(function (ff) {
-                          return form_fields.push({
-                            'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
-                            'value': f.code + '.' + ff.code
-                          });
-                        });
-                      }
-                    } else {
-                      return form_fields.push({
-                        'label': f.name || f.code,
-                        'value': f.code
-                      });
-                    }
-                  });
-                }
-              }
-
-              options = _.union(instance_fields, form_fields);
-              return options;
-            }
   field_map.$.object_field:
     label: Field of Object
     type: lookup

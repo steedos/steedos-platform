@@ -245,7 +245,6 @@ router.put('/am/forms', async function (req, res) {
             // 更新表单
             await designerManager.updateForm(form["id"], form, updatedForms, updatedFlows, userId)
         }
-
         res.send({
             "ChangeSet": {
                 "updates": {

@@ -13,9 +13,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@steedos-widgets/amis-lib": "^1.0.22"
-  },
   "gitHead": "70a4e7417d8d86c47cf5c7e3bbe0e89f2cee4222",
   "devDependencies": {
     "tailwindcss": "3.2.4"

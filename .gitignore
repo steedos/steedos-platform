@@ -28,3 +28,4 @@
 
 !/server/bundle/**/node_modules/formBuilder/dist
 !/server/bundle/**/node_modules
+docker-volumes/**

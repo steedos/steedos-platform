@@ -209,14 +209,14 @@
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
-
+            const rootUrl = __meteor_runtime_config__.ROOT_URL;
             const defData = lodash.defaultsDeep({}, data , {data: data} , {
                 data: {
                     app_id: data.appId,
                     object_name: data.objectName,
                     record_id: data.recordId,
                     context: {
-                        rootUrl: __meteor_runtime_config__.ROOT_URL,
+                        rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
                         tenantId: Creator.USER_CONTEXT.spaceId,
                         userId: Creator.USER_CONTEXT.userId,
                         authToken: Creator.USER_CONTEXT.user.authToken,
@@ -717,7 +717,14 @@
                                           "className": "slds-button_icon slds-global-header__icon"
                                         }
                                       ],
-                                    },]
+                                    },
+                                    {
+                                        "type": "steedos-app-launcher",
+                                        "showAppName": false,
+                                        "appId": "${app.id}",
+                                        "visibleOn": "${isMobile}",
+                                    },
+                                ]
                                 }
                               ],
                             },
