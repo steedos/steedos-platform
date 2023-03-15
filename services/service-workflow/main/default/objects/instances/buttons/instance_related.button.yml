@@ -37,7 +37,7 @@ amis_schema: |-
                                                       "headers": {
                                                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                       },
-                                                      "adaptor": "",
+                                                      "adaptor": "return payload",
                                                       "data": {
                                                           "orderBy": "${orderBy}",
                                                           "orderDir": "${orderDir}",
@@ -52,7 +52,7 @@ amis_schema: |-
                                                       "mode": "table",
                                                       "columns": [
                                                           {
-                                                              "name": "name",
+                                                              "name": "label",
                                                               "label": "标题",
                                                               "type": "text",
                                                               "id": "u:07d63d9a65d4",
@@ -138,10 +138,13 @@ amis_schema: |-
                                                           "actionType": "ajax"
                                                       },
                                                       {
-                                                          "actionType": "custom",
-                                                          "args": {},
-                                                          "componentId": "",
-                                                          "script": "debugger;SteedosUI.getRef(\"amis-root-workflow\")?.getComponentByName(\"instancePage\")?.reload()"
+                                                        "actionType": "broadcast",
+                                                        "args": {
+                                                            "eventName": "@data.@instanceDetail.changed"
+                                                        },
+                                                        "data": {
+                                                            
+                                                        }
                                                       },
                                                       {
                                                           "componentId": "",
@@ -171,18 +174,6 @@ amis_schema: |-
       "regions": [
           "body"
       ],
-      "data": {
-          "context": {
-              "rootUrl": "http://127.0.0.1:5000"
-          },
-          "app_id": "",
-          "tab_id": "",
-          "object_name": "",
-          "dataComponentId": "",
-          "record_id": "",
-          "record": {},
-          "permissions": {}
-      },
       "bodyClassName": "p-0",
       "id": "u:f215e4c0c4ed",
       "messages": {}
