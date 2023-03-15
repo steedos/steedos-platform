@@ -9,7 +9,7 @@ const { randomInt } = require("crypto");
 
 router.get('/api/object_workflows/workflow_field/options', core.requireAuthentication, async function (req, res) {
     try {
-      
+
         let flowId, fields, form_fields, form, output;
         let values = req.query;
         form_fields = [];
@@ -40,7 +40,7 @@ router.get('/api/object_workflows/workflow_field/options', core.requireAuthentic
                 if (f.fields) {
                   f.fields.forEach(function (ff) {
                     form_fields.push({
-                      'label': (f.name || f.code) + (ff.name || ff.code),
+                      'label': (f.name || f.code) + "=>" + (ff.name || ff.code),
                       'value': f.code + '.' + ff.code
                     });
                   });
