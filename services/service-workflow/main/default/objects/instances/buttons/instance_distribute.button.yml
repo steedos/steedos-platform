@@ -12,6 +12,7 @@ amis_schema: |-
         "type": "button",
         "label": "分发",
         "id": "u:instance_distribute",
+        "hiddenOn": "!(record.approve.type != 'cc' && record.step && record.step.allowDistribute == true)",
         "className": "  ",
         "onEvent": {
           "click": {
