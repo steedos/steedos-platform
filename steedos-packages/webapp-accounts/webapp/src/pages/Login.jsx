@@ -29,23 +29,23 @@ const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
   }
   return (
 
-  <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
-    id={id}
-    disabled={restTime > 0}
-    type="button"
-    onClick={(e) => {
+    <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
+      id={id}
+      disabled={restTime > 0}
+      type="button"
+      onClick={(e) => {
         resetCountdown();
-        if(onClick){
+        if (onClick) {
           onClick();
         }
-    }}>
+      }}>
       <span className="">
         <FormattedMessage
           id='accounts.sendCode'
-          defaultMessage='Get Verify code' 
+          defaultMessage='Get Verify code'
         />{restTime > 0 ? ` (${restTime})` : null}
       </span>
-  </button>
+    </button>
 
   );
 };
@@ -67,42 +67,42 @@ class Login extends React.Component {
       spaceId = this.props.settingsTenantId
     }
 
-    if(this.props.location.search.indexOf(".meteor.local") > -1){
+    if (this.props.location.search.indexOf(".meteor.local") > -1) {
       inApp = true;
     }
 
     this.state = {
-        // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
-        // samlEnabled: this.props.isLicensed && this.props.enableSaml,
-        spaceId,
-        email,
-        username: '',
-        mobile: '',
-        loginId: '',
-        userId: '',
-        password: '',
-        verifyCode: '',
-        sessionExpired: false,
-        loginSuccess: false,
+      // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
+      // samlEnabled: this.props.isLicensed && this.props.enableSaml,
+      spaceId,
+      email,
+      username: '',
+      mobile: '',
+      loginId: '',
+      userId: '',
+      password: '',
+      verifyCode: '',
+      sessionExpired: false,
+      loginSuccess: false,
 
-        loginByEmail: true,
-        loginByMobile: true,
-        loginBy: "mobile",
-        
-        loginWith: this.props.tenant.enable_password_login? 'password':'code',
-        loginWithCode: this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login,
-        loginWithPassword: this.props.tenant.enable_password_login,
+      loginByEmail: true,
+      loginByMobile: true,
+      loginBy: "mobile",
 
-        serverError: '',
-        loading: false,
-        MFA: false,
-        mobile_verified: false,
-        // brandImageError: false,
-        inApp: inApp,
+      loginWith: this.props.tenant.enable_password_login ? 'password' : 'code',
+      loginWithCode: this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login,
+      loginWithPassword: this.props.tenant.enable_password_login,
+
+      serverError: '',
+      loading: false,
+      MFA: false,
+      mobile_verified: false,
+      // brandImageError: false,
+      inApp: inApp,
     };
 
-    
-    
+
+
     // if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
     //   this.state.loginWithCode = true;
     //   this.state.loginByEmail = true;
@@ -146,15 +146,15 @@ class Login extends React.Component {
     let inputLabel = '';
     if (this.state.loginBy == "mobile")
       inputLabel = 'accounts.mobile';
-    else if (this.state.loginBy == "email") 
+    else if (this.state.loginBy == "email")
       inputLabel = 'accounts.email';
-    
+
     return Utils.localizeMessage(inputLabel)
   }
 
   handleLoginIdChange = (e) => {
     const loginId = e.target.value;
-    if(this.state.MFA){
+    if (this.state.MFA) {
       this.setState({
         loginId,
         mobile: e.target.value,
@@ -173,7 +173,7 @@ class Login extends React.Component {
         loginBy: 'email'
       });
     } else {
-      if(new RegExp('^[0-9]{11}$').test(e.target.value)){
+      if (new RegExp('^[0-9]{11}$').test(e.target.value)) {
         this.setState({
           loginId,
           mobile: e.target.value,
@@ -181,7 +181,7 @@ class Login extends React.Component {
           email: null,
           loginBy: 'mobile'
         });
-      }else{
+      } else {
         this.setState({
           loginId,
           username: e.target.value,
@@ -207,80 +207,99 @@ class Login extends React.Component {
 
   switchLoginWithCode = (e) => {
     this.setState({
-        loginWith: 'code',
+      loginWith: 'code',
     });
   }
 
   switchLoginWithPassword = (e) => {
     this.setState({
-        loginWith: 'password',
+      loginWith: 'password',
     });
   }
 
   sendVerificationToken = (e) => {
 
-    this.setState({serverError: null, loading: true});
-    if(this.state.loginBy === 'email' && !this.state.email.trim()){
+
+    this.setState({ serverError: null, loading: true });
+    if (this.state.loginBy === 'email' && !this.state.email.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidEmail'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidEmail'
+          />
+        ),
       });
       return
     }
-    if(this.state.loginBy === 'mobile' && (!this.state.mobile || !this.state.mobile.trim() || !new RegExp('^[0-9]{11}$').test(this.state.mobile))){
+    if (this.state.loginBy === 'mobile' && (!this.state.mobile || !this.state.mobile.trim() || !new RegExp('^[0-9]{11}$').test(this.state.mobile))) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidMobile'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidMobile'
+          />
+        ),
       });
       return
     }
 
     const user = {
-      email: this.state.loginBy === 'email'?this.state.email.trim():'',
-      mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
+      email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
+      mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
-    this.props.actions.sendVerificationToken(user).then(async (userId) => {
-      this.state.userId = userId;
-      if (!userId)
-        this.setState({
-            serverError: (
-                <FormattedMessage
+
+    const rs = ''
+    var captchaId = "647f5ed2ed8acb4be36784e01556bb71"   // gt_id
+    var product = "float"
+    window.initGeetest4({
+      captchaId: captchaId,
+      product: product,
+    }, (gt) => {
+      window.gt = gt
+      gt
+        .appendTo("#captcha")
+        .onSuccess((e) => {
+          var result = gt.getValidate();
+          console.log('结果是', result)
+          this.props.actions.sendVerificationToken(user, result).then(async (userId) => {
+            // console.log('xxxxxx')
+            this.state.userId = userId;
+            if (!userId)
+              this.setState({
+                serverError: (
+                  <FormattedMessage
                     id='accounts.userNotFound'
                     defaultMessage='User not found.'
-                />
-            ),
-        });
+                  />
+                ),
+              });
+          });
+        })
+      // gt.showBox();
     });
+
   }
-
   onSubmit = async (e) => {
-    this.setState({serverError: null, loading: true});
+    this.setState({ serverError: null, loading: true });
     e.preventDefault();
-    this.setState({error: null});
+    this.setState({ error: null });
 
-    if(this.state.loginBy === 'email' && !this.state.email.trim()){
+    if (this.state.loginBy === 'email' && !this.state.email.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidEmail'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidEmail'
+          />
+        ),
       });
       return
     }
-    if(this.state.loginBy === 'mobile' && !this.state.mobile.trim()){
+    if (this.state.loginBy === 'mobile' && !this.state.mobile.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidMobile'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidMobile'
+          />
+        ),
       });
       return
     }
@@ -290,16 +309,17 @@ class Login extends React.Component {
     // }
 
     const user = {
-      email: this.state.loginBy === 'email'?this.state.email.trim():'',
-      mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
-      username: (this.state.loginWith === 'password' && this.state.loginBy === 'username')?this.state.username.trim():'',
+      email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
+      mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
+      username: (this.state.loginWith === 'password' && this.state.loginBy === 'username') ? this.state.username.trim() : '',
       spaceId: this.state.spaceId,
     }
-    this.props.actions.login(user, this.state.password?this.state.password.trim():this.state.password, this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode).then(async (args) => {
-      const {error, mobile_verified, mobile} = args;
-      if(error === 'TO_MOBILE_CODE_LOGIN'){
+    this.props.actions.login(user, this.state.password ? this.state.password.trim() : this.state.password, this.state.verifyCode ? this.state.verifyCode.trim() : this.state.verifyCode).then(async (args) => {
+      const { error, mobile_verified, mobile } = args;
+      if (error === 'TO_MOBILE_CODE_LOGIN') {
         return this.setState({
           loginByEmail: false,
+
           loginByMobile: true,
           loginBy: "mobile",
           loginWith: 'code',
@@ -309,22 +329,22 @@ class Login extends React.Component {
           email: null,
           username: null
         });
-      }else if(error === 'TO_VERIFY_MOBILE'){
+      } else if (error === 'TO_VERIFY_MOBILE') {
         const location = this.props.location;
         GlobalAction.redirectUserToVerifyMobile(location)
       }
       if (error) {
         this.setState({
-            serverError: (
-                <FormattedMessage
-                    id={error.message}
-                />
-            ),
+          serverError: (
+            <FormattedMessage
+              id={error.message}
+            />
+          ),
         });
         return;
       }
       this.finishSignin();
-      
+
     });
   };
 
@@ -336,14 +356,14 @@ class Login extends React.Component {
     GlobalAction.finishSignin(currentUser, tenant, location)
   }
 
-  goSignup = ()=>{
+  goSignup = () => {
     let state = {};
-    if(this.state.email && this.state.email.trim().length > 0){
-      state =  { email: this.state.email.trim() }
+    if (this.state.email && this.state.email.trim().length > 0) {
+      state = { email: this.state.email.trim() }
     }
 
-    if(this.state.mobile && this.state.mobile.trim().length > 0){
-      state =  { mobile: this.state.mobile.trim() }
+    if (this.state.mobile && this.state.mobile.trim().length > 0) {
+      state = { mobile: this.state.mobile.trim() }
     }
     this.props.history.push({
       pathname: `/signup`,
@@ -355,146 +375,151 @@ class Login extends React.Component {
   render() {
 
     return (
-    <>
-    <Background/>
-    <Card>
-        <Logo/>
-        <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
-          {this.state.MFA && <FormattedMessage
+      <>
+        <Background />
+        <Card>
+          <Logo />
+          <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
+            {this.state.MFA && <FormattedMessage
               id='accounts.signin-MFA'
               defaultMessage='Multi-Factor Authentication'
             />}
-          {!this.state.MFA && <FormattedMessage
+            {!this.state.MFA && <FormattedMessage
               id='accounts.signin'
               defaultMessage='Login'
             />}
-          
-        </h2>
 
-        <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
-          <div className="rounded-md shadow-sm my-2">
-            <div style={this.state.MFA && this.state.mobile_verified ? {"display": "none"} : {}}>
-              <LocalizedInput 
-                id="loginId"
-                name="loginId" 
-                ref={this.loginIdInput}
-                value={this.state.loginId}
-                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                placeholder={this.state.MFA ? {id: 'accounts.mobile', defaultMessage: 'Mobile'} : {id: 'accounts.email_mobile', defaultMessage: 'Email or mobile'}}
-                onChange={this.handleLoginIdChange}
-              />
-            </div>
+          </h2>
 
-            {this.state.MFA && this.state.mobile_verified &&
-              <div>
-              <LocalizedInput 
-                id="loginIdShow"
-                name="loginIdShow" 
-                value={isString(this.state.loginId) ? this.state.loginId.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : this.state.loginId }
-                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                placeholder={this.state.MFA ? {id: 'accounts.mobile', defaultMessage: 'Mobile'} : {id: 'accounts.email_mobile', defaultMessage: 'Email or mobile'}}
-                disabled={true}
-              />
-            </div>
-            }
-
-            {this.state.loginWith == 'password' && (
-              <div className="-mt-px">
-                <LocalizedInput 
-                  type="password"
-                  id="password"
-                  name="password" 
-                  value={this.state.password}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.password_placeholder', defaultMessage: 'Password'}}
-                  onChange={this.handlePasswordChange}
-                  autocomplete="new-password"
+          <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
+            <div className="rounded-md shadow-sm my-2">
+              <div style={this.state.MFA && this.state.mobile_verified ? { "display": "none" } : {}}>
+                <LocalizedInput
+                  id="loginId"
+                  name="loginId"
+                  ref={this.loginIdInput}
+                  value={this.state.loginId}
+                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                  placeholder={this.state.MFA ? { id: 'accounts.mobile', defaultMessage: 'Mobile' } : { id: 'accounts.email_mobile', defaultMessage: 'Email or mobile' }}
+                  onChange={this.handleLoginIdChange}
                 />
+              </div>
+
+              {this.state.MFA && this.state.mobile_verified &&
+                <div>
+                  <LocalizedInput
+                    id="loginIdShow"
+                    name="loginIdShow"
+                    value={isString(this.state.loginId) ? this.state.loginId.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : this.state.loginId}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                    placeholder={this.state.MFA ? { id: 'accounts.mobile', defaultMessage: 'Mobile' } : { id: 'accounts.email_mobile', defaultMessage: 'Email or mobile' }}
+                    disabled={true}
+                  />
+                </div>
+              }
+
+              {this.state.loginWith == 'password' && (
+                <div className="-mt-px">
+                  <LocalizedInput
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={this.state.password}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                    placeholder={{ id: 'accounts.password_placeholder', defaultMessage: 'Password' }}
+                    onChange={this.handlePasswordChange}
+                    autocomplete="new-password"
+                  />
+                </div>
+              )}
+
+              {this.state.loginWith == 'code' && (
+                <>
+                  <div className="-mt-px grid grid-cols-5">
+                    <LocalizedInput
+                      id="verifyCode"
+                      name="verifyCode"
+                      value={this.state.verifyCode}
+                      className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                      placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
+                      onChange={this.handleCodeChange}
+                    />
+                    <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} />
+                    {/* <ReApplyCodeBtn onClick={this.test} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/> */}
+
+
+                  </div>
+                  <div id='captcha'>弹出框</div>
+                </>
+              )}
+            </div>
+
+            {this.state.serverError && <FormError error={this.state.serverError} />}
+
+
+            {!this.state.MFA && this.state.loginWithPassword && this.state.loginWith === 'code' && (
+              <div className="text-sm leading-5 my-4">
+                <button type="button" onClick={this.switchLoginWithPassword}
+                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                  <FormattedMessage
+                    id='accounts.switch_password'
+                    defaultMessage='Login with password'
+                  />
+                </button>
               </div>
             )}
 
-            {this.state.loginWith == 'code' && (
-                <div className="-mt-px grid grid-cols-5">
-                  <LocalizedInput 
-                    id="verifyCode"
-                    name="verifyCode" 
-                    value={this.state.verifyCode}
-                    className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                    placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
-                    onChange={this.handleCodeChange}
-                  />
-                  <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/>
 
-                </div>
-            )}
-          </div>
-          
-          {this.state.serverError && <FormError error={this.state.serverError} />}
-
-
-          {!this.state.MFA && this.state.loginWithPassword && this.state.loginWith === 'code' && (
-            <div className="text-sm leading-5 my-4">
-              <button type="button" onClick={this.switchLoginWithPassword}
-                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+            <div className="mt-6 flex justify-end">
+              <button type="submit" className=" group relative w-full justify-center rounded-md py-2 px-4 border border-transparent text-sm leading-5 font-medium text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
                 <FormattedMessage
-                    id='accounts.switch_password'
-                    defaultMessage='Login with password'
+                  id='accounts.submit'
+                  defaultMessage='Submit'
                 />
               </button>
             </div>
-          )}
 
-
-          <div className="mt-6 flex justify-end">
-            <button type="submit" className=" group relative w-full justify-center rounded-md py-2 px-4 border border-transparent text-sm leading-5 font-medium text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
-              <FormattedMessage
-                id='accounts.submit'
-                defaultMessage='Submit'
-              />
-            </button>
-          </div>
-
-          {!this.state.MFA && this.props.tenant.enable_register && this.props.tenant.disabled_account_register !== true &&
-          <div className="text-sm leading-5 mt-6 text-center">
-            <FormattedMessage
+            {!this.state.MFA && this.props.tenant.enable_register && this.props.tenant.disabled_account_register !== true &&
+              <div className="text-sm leading-5 mt-6 text-center">
+                <FormattedMessage
                   id='accounts.no_account'
                   defaultMessage='No Account?'
-              />
-            <button type="button" onClick={this.goSignup}
-              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-              <FormattedMessage
-                  id='accounts.signup'
-                  defaultMessage='Sign Up'
-              />
-            </button>
-          </div>}
+                />
+                <button type="button" onClick={this.goSignup}
+                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                  <FormattedMessage
+                    id='accounts.signup'
+                    defaultMessage='Sign Up'
+                  />
+                </button>
+              </div>}
 
-          {this.state.inApp !== true && compact(values(this.props.tenant.sso_providers)).length > 0 && <>
-            <div class="mt-6 mb-6 relative">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
+            {this.state.inApp !== true && compact(values(this.props.tenant.sso_providers)).length > 0 && <>
+              <div class="mt-6 mb-6 relative">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm text-slate-700">
+                  <span class="px-2 bg-white text-gray-500">
+                    使用以下账户
+                  </span>
+                </div>
               </div>
-              <div class="relative flex justify-center text-sm text-slate-700">
-                <span class="px-2 bg-white text-gray-500">
-                使用以下账户
-                </span>
-              </div>
-            </div>
-            <>
+              <>
                 {compact(values(this.props.tenant.sso_providers)).map((provider) => {
                   return <div className="flex">
-                            <a href={provider.url} title={provider.label} className="w-full  border border-gray-300 justify-center hover:bg-gray-50 text-gray-800 py-2 px-4 rounded inline-flex items-center">
-                              <img className="w-4 h-4 mr-2" src={provider.logo}></img>
-                              <span className='text-sm'>{provider.label}</span>
-                            </a>
-                          </div>
+                    <a href={provider.url} title={provider.label} className="w-full  border border-gray-300 justify-center hover:bg-gray-50 text-gray-800 py-2 px-4 rounded inline-flex items-center">
+                      <img className="w-4 h-4 mr-2" src={provider.logo}></img>
+                      <span className='text-sm'>{provider.label}</span>
+                    </a>
+                  </div>
                 })}
+              </>
             </>
-          </>
-          }
-          
-        </form>
-      </Card>
+            }
+
+          </form>
+        </Card>
       </>
     );
   };
@@ -513,10 +538,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-      actions: bindActionCreators({
-          login,
-          sendVerificationToken,
-      }, dispatch),
+    actions: bindActionCreators({
+      login,
+      sendVerificationToken,
+    }, dispatch),
   };
 }
 

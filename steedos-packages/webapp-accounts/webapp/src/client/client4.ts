@@ -274,13 +274,13 @@ export default class Client4 {
         return auth
     };
 
-    sendVerificationToken = (user: string) => {
+    sendVerificationToken = (user: string, geetest:any) => {
         this.trackEvent('api', 'api_users_verify');
-
+        console.log('拿到的geetes是',geetest)
         const body: any = {
             user: user,
+            geetest: geetest,
         };
-
         return this.doFetch<UserProfile>(
             `${this.getAccountsRoute()}/password/sendVerificationCode`,
             {method: 'POST', body: JSON.stringify(body)},
@@ -329,7 +329,6 @@ export default class Client4 {
 
     doFetch = async <T>(url: string, options: Options): Promise<T> => {
         const {data} = await this.doFetchWithResponse<T>(url, options);
-
         return data;
     };
 
