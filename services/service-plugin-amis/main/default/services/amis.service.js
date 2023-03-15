@@ -1,21 +1,11 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-19 11:38:30
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-01 16:20:59
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-03-15 17:37:05
  * @Description: 
  */
-const AmisSchema = require('./utils/amis-schema');
-const objectql = require("@steedos/objectql");
-
-const callObjectServiceAction = async function(actionName, userSession, data){
-    const broker = objectql.getSteedosSchema().broker;
-    return broker.call(actionName, data || {}, { meta: { user: userSession}})
-}
-
-const getUISchema = async function(objectName, userSession){
-    return await callObjectServiceAction(`@${objectName}.getRecordView`, userSession);
-}
+const PageSchema = require('./utils/page-schema');
 
 module.exports = {
     name: "amis",
@@ -40,14 +30,14 @@ module.exports = {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { type, app, objectApiName, recordId, formFactor } = ctx.params;
-                return this.getDefaultSchema({type, app, objectApiName, recordId, formFactor, userSession});
+                return this.getDefaultSchema({ type, app, objectApiName, recordId, formFactor, userSession });
             }
         },
         getInitSchema: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
                 const { type, objectApiName, formFactor } = ctx.params;
-                return this.getInitSchema({type, objectApiName, formFactor, userSession} );
+                return this.getInitSchema({ type, objectApiName, formFactor, userSession });
             }
         }
     },
@@ -64,7 +54,7 @@ module.exports = {
      */
     methods: {
         getDefaultSchema: {
-            handler({type, app, objectApiName, recordId, formFactor, userSession}) {
+            handler({ type, app, objectApiName, recordId, formFactor, userSession }) {
                 // if(type === 'list'){
                 //     return {
                 //         type: 'page',
@@ -98,23 +88,23 @@ module.exports = {
             }
         },
         getInitSchema: {
-            async handler({type, objectApiName, formFactor, userSession}) {
+            async handler({ type, objectApiName, formFactor, userSession }) {
 
-                const AmisLib = require('@steedos-widgets/amis-lib');
-                AmisLib.setUISchemaFunction(async function(objectName, force){
-                    return await getUISchema(objectName, userSession);
-                });
-                if(objectApiName){
+                // const AmisLib = require('@steedos-widgets/amis-lib');
+                // AmisLib.setUISchemaFunction(async function (objectName, force) {
+                //     return await getUISchema(objectName, userSession);
+                // });
+                if (objectApiName) {
                     let schema;
-                    switch(type){
+                    switch (type) {
                         case "form":
-                            schema = await AmisLib.getFormPageInitSchema(objectApiName);
+                            schema = PageSchema.getFormPageInitSchema(objectApiName)
                             break;
                         case "list":
-                            schema = await AmisLib.getListPageInitSchema(objectApiName);
+                            schema = PageSchema.getListPageInitSchema(objectApiName);
                             break;
                         case "record":
-                            schema = await AmisLib.getRecordPageInitSchema(objectApiName);
+                            schema = await PageSchema.getRecordPageInitSchema(objectApiName, userSession);
                             break;
                     }
                     return schema;

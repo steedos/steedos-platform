@@ -3,9 +3,9 @@ version: "3.9"
 services:
 
   vscode:
-    image: steedos/vscode-server:1.76
+    image: steedos/vscode-server
     ports:
-      - "3000:3000"
+      - "5555:3000"
       - "5100:5100"
     environment:
       - PORT=5100

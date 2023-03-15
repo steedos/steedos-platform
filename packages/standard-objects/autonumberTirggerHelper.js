@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 const _ = require('underscore');
 const moment = require(`moment`);
+const { getDataSource } = require('@steedos/objectql');
 
 const caculateAutonumber = async function (objectName, fieldName, rule, spaceId) {
     var padding = function (num, length) {
@@ -54,6 +55,12 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
     if (records && records.length > 0) {
         anData = records[0];
     }
+
+    const datasource = getDataSource('default');
+    const adapter = datasource.adapter;
+    await adapter.connect()
+    const atColl = adapter.collection('autonumber');
+
     /**
      * autonunber增加编码规则字段（rule）存储 编号规则公式计算后的结果，作为联合查找autonumber记录的条件；
      * 根据时间段先查autonumber记录，如查到rule为空的记录则更新rule；如未查到则按照新的包含rule的查询条件查询或新增。
@@ -61,7 +68,7 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
     var anId;
     if (anData && !anData.rule) { // 查询到记录，但rule为空，则更新rule，目的是为了更新旧的自动编号记录
         anId = anData._id;
-        await anColl.directUpdate(anId, {
+        var { current_no: currentNo } = await anColl.directUpdate(anId, {
             $inc: {
                 current_no: 1
             },
@@ -74,37 +81,93 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
         // 比如rule为PT{0000}时，会报错PTthis is not defined，因为会被解析为PTthis.['0000']
         // 正常的公式配置可能是{userId}，会被解析为this['userId']
         filters.push(['rule', '=', encodeURIComponent(rule)]);
-        let anDocs = await anColl.find({ filters });
+        let anDocs = await anColl.directFind({ filters });
         if (anDocs && anDocs.length > 0) {
             anDoc = anDocs[0];
         }
         if (anDoc) {
             // 更新
             anId = anDoc._id;
-            await anColl.directUpdate(anId, {
-                $inc: {
-                    current_no: 1
+            const result = await atColl.findOneAndUpdate(
+                {
+                    _id: anId
+                },
+                {
+                    $inc: {
+                        current_no: 1
+                    }
+                },
+                {
+                    returnDocument: 'after',
+                    projection: {
+                        current_no: 1
+                    }
                 }
-            });
+            )
+            var { current_no: currentNo } = result.value;
         } else {
-            anId = await anColl._makeNewID();
-            var insertObj = {
-                _id: anId,
+            var setDoc = {
                 object_name: objectName,
                 field_name: fieldName,
                 space: spaceId,
                 rule: rule,
-                current_no: 1 // defaultValue 规则调整为触发器实现，这里使用directInsert新增数据，故这里手动设置默认值为1
-            };
-            if (date_from && date_to) {
-                insertObj.date_from = date_from;
-                insertObj.date_to = date_to;
             }
-            await anColl.directInsert(insertObj);
+            if (date_from && date_to) {
+                setDoc.date_from = date_from;
+                setDoc.date_to = date_to;
+            }
+            const id = Buffer.from(`${spaceId}-${objectName}-${fieldName}-${rule}`, 'utf-8').toString('base64')
+            try {
+                // 新增
+                const result = await atColl.findOneAndUpdate(
+                    {
+                        _id: id
+                    },
+                    {
+                        $set: setDoc,
+                        $inc: {
+                            current_no: 1
+                        }
+                    },
+                    {
+                        upsert: true,
+                        returnDocument: 'after',
+                        projection: {
+                            current_no: 1
+                        }
+                    }
+                )
+                // console.log('upsert:', result)
+                var { current_no: currentNo } = result.value;
+            } catch (error) {
+                if (error.message.indexOf('E11000 duplicate key') > -1) {
+                    // 更新
+                    const result = await atColl.findOneAndUpdate(
+                        {
+                            _id: id
+                        },
+                        {
+                            $inc: {
+                                current_no: 1
+                            }
+                        },
+                        {
+                            returnDocument: 'after',
+                            projection: {
+                                current_no: 1
+                            }
+                        }
+                    )
+                    // console.log('update:', result)
+                    var { current_no: currentNo } = result.value;
+                } else {
+                    throw new Error(error)
+                }
+            }
         }
 
     }
-    var { current_no: currentNo } = await anColl.findOne(anId);
+
     var numberFormatMethod = function ($1) {
         return padding(currentNo, $1.length - 2);
     };
