@@ -63,12 +63,3 @@ Template.cancel_cc_modal.onCreated ->
 	Tracker.autorun () ->
 		if Steedos.subs["instance_traces"].ready()
 			$("body").removeClass("loading")
-
-Template.cancel_cc_modal.onRendered ->
-
-	Modal.allowMultiple = true
-
-Template.cancel_cc_modal.onDestroyed ->
-	console.log("Template.cancel_cc_modal.onDestroyed...")
-	Modal.allowMultiple = false
-	Steedos.subs["instance_traces"].clear()
