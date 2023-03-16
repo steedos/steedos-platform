@@ -313,6 +313,8 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			value = InstanceReadOnlyTemplate.formatDate(value, utcOffset);
 		when 'input'
 			if field.is_textarea
+				if Meteor.isServer
+					marked = Npm.require('marked')
 				value = Spacebars.SafeString(marked.parse(value))
 		when 'select'
 			selectedOption = fieldOptions.find((item) -> return item.value == value)
