@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-16 11:13:04
+ * @LastEditTime: 2023-03-16 15:10:37
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/client/badge.client.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -37,7 +37,8 @@
                                         "eventName": "@data.changed.steedos_keyvalues"
                                     },
                                     "data": {
-                                        "steedos_keyvalues": []
+                                        "type": "${event.data.type}",
+                                        "keyvalue": "${event.data.keyvalue}"
                                     }
                                 }
                             ]
@@ -80,7 +81,10 @@ function observeBadgeCount(button) {
         if(doc.space){
             console.log("handleAction broadcast for observeBadgeCount");
             // space为null的订阅不触发事件，后续有需要再单独处理
-            button.props.dispatchEvent('click', {});
+            button.props.dispatchEvent('click', {
+                type: type,
+                keyvalue: doc
+            });
         }
     };
     var callbacks = {
