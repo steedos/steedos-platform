@@ -128,7 +128,20 @@ const util = {
     }
     return url;
   },
-
+  /**
+   * Returns the object record Relative url
+   */
+   getObjectRecordRelativeUrl: (objectName: string, recordId: string, spaceId: string = null, options: any = {})=>{
+    let appId = '-';
+    if(options.appId){
+      appId = options.appId;
+    }
+    let url = `/app/${appId}/${objectName}/view/${recordId}`;
+    if (objectName === "instances"){
+        url = `/workflow/space/${spaceId}/inbox/${recordId}`;
+    }
+    return url;
+  },
   /**
    * Returns the locale string of the user
    */

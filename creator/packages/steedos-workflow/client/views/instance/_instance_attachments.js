@@ -3,6 +3,9 @@ InstanceAttachmentTemplate.helpers = {
 	showMainTitle: function() {
 		return Template.instance().workflowMainAttachTitle.get();
 	},
+	isClient: function() {
+		return Meteor.isClient
+	},
 	enabled_add_main_attachment: function() {
 		var ins = WorkflowManager.getInstance();
 		if (!ins)
