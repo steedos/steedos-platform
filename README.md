@@ -33,32 +33,32 @@
 - [Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)： 元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。
 
 
-## 系统架构
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
-
 ## 快速向导
 
-### 部署华炎魔方
+运行华炎魔方需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
 
-部署华炎魔方平台后，可以下载、安装和运行华炎魔方软件包，可以使用低代码可视化设计工具创建自定义应用程序。如需同步和编写代码，请参考后续步骤部署开发环境。
-
-- [快速向导](https://www.steedos.cn/docs/deploy/getting-started)
-- [创建新项目](https://www.steedos.cn/docs/deploy/create-steedos-app)
-- [Docker 部署](https://www.steedos.cn/docs/deploy/deploy-docker)
-
-### 调试平台源码
-
-在本地调试平台源码，需使用 Mac 或linux环境。且需先安装 mongodb 和 redis。
-
-您也可以使用 Gitpod 运行平台源码。(https://gitpod.io/#https://github.com/steedos/steedos-platform/)
+### 启动远程开发环境
 
 ```shell
+docker-compose up
+```
+
+### 访问远程开发环境
+打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-platform ，进入VS Code远程开发环境。
+
+### 启动模版项目
+
+在 VS Code 中进入控制台，输入启动命令。 
+
+```
 yarn
-yarn bootstrap
 yarn build
 yarn start
 ```
+
+## 系统架构
+
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 ## 平台功能
 

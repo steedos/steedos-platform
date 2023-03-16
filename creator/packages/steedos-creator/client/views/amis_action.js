@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-01-03 15:00:45
+ * @LastEditTime: 2023-03-15 16:22:10
  * @Description: 
  */
 const normalizeLink = (to, location = window.location) => {
@@ -144,10 +144,11 @@ Template.amis_action.onRendered(()=>{
             "body"
           ]
         };
+    const rootUrl = __meteor_runtime_config__.ROOT_URL;
     const defData = lodash.defaultsDeep({}, {data: data} , {
         data: {
             context: {
-                rootUrl: __meteor_runtime_config__.ROOT_URL,
+                rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
                 tenantId: Creator.USER_CONTEXT.spaceId,
                 userId: Creator.USER_CONTEXT.userId,
                 authToken: Creator.USER_CONTEXT.user.authToken

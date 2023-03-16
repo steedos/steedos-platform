@@ -1,58 +1,40 @@
-version: "3"
+version: "3.9"
 
 services:
-  steedos:
-    image: steedos/steedos-project-template:latest
-    restart: always
+
+  vscode:
+    image: steedos/vscode-server
     ports:
-      - "3000:3000"
-    volumes:
-      - "./docker-volumes/steedos/storage:/app/storage"
-      - "./.steedos:/app/.steedos"
+      - "5555:3000"
+      - "5100:5100"
     environment:
-      - PORT=3000
-      - ROOT_URL=http://localhost:3000
-      - MONGO_URL=mongodb://mongo:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-      - STEEDOS_CFS_STORE=local
-      - STEEDOS_STORAGE_DIR=/app/storage
-      - TRANSPORTER=redis://redis:6379
-      - CACHER=redis://redis/2
-    depends_on:
-      - mongo
-      - redis
-  
-  redis:
-    image: redis:6.2.4
-    restart: always
-    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no"]
-    ports:
-      - "6389:6379"
-
-  mongo:
-    image: mongo:4.2
-    restart: always
+      - PORT=5100
+      - ROOT_URL=http://127.0.0.1:5100
+      - MONGO_URL=mongodb://mongodb:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
+      - TRANSPORTER=redis://redis:6379/1
+      - CACHER=redis://redis:6379
     volumes:
-      - "./docker-volumes/mongo/data/db:/data/db"
-    command: mongod --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all
+      - '.:/home/workspace/steedos-platform'
+      
+  redis:
+    image: redis:6.2
     ports:
-      - "27018:27017"
+      - "6379:6379"
+  
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - 27017:27017
+    command: --replSet steedos
+    healthcheck:
+      test: echo 'rs.initiate(); db.runCommand("ping").ok' | mongo --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - 'steedos-mongo-data:/data/db'
 
-  # this container's job is just run the command to initialize the replica set.
-  # it will run the command and remove himself (it will not stay running)
-  mongo-init-replica:
-    image: mongo:4.2
-    command: >
-      bash -c
-        "for i in `seq 1 30`; do
-          mongo mongo/steedos --eval \"
-            rs.initiate({
-              _id: 'rs0',
-              version: 1,
-              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
-          s=$$? && break || s=$$?;
-          echo \"Tried $$i times. Waiting 5 secs...\";
-          sleep 5;
-        done; (exit $$s)"
-    depends_on:
-      - mongo
+volumes:
+  steedos-mongo-data:
+    driver: local

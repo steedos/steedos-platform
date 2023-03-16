@@ -2,6 +2,15 @@ name: inbox
 label: 待审批
 columns:
   - instance_name
+  - submitter_name
+  - submit_date
+  - flow_name
+  - step_name
+  - start_date
+mobile_columns:
+  - instance_name
+  - submitter_name
+  - flow_name
   - start_date
 filter_scope: space
 filters: !!js/function |

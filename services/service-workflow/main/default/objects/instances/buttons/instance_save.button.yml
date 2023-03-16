@@ -31,7 +31,7 @@ amis_schema: |-
                                   }
                               },
                               "actionType": "ajax",
-                              "expression": "record.box === 'draft'"
+                              "expression": "record.box === 'draft' || record.state == 'draft'"
                           },
                           {
                               "args": {
@@ -53,7 +53,7 @@ amis_schema: |-
                                   }
                               },
                               "actionType": "ajax",
-                              "expression": "record.box != 'draft'"
+                              "expression": "record.box != 'draft' && record.state != 'draft'"
                           }
                       ],
                       "weight": 0

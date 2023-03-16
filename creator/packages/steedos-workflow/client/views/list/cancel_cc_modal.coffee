@@ -6,16 +6,19 @@ Template.cancel_cc_modal.helpers
 
 		traces = []
 		userId = Meteor.userId()
-		_.each ins.traces, (t) ->
-			newt = { _id: t._id, name: t.name, cc_approves: [] }
-			if t.approves
-				_.each t.approves, (a) ->
-					if a.type is 'cc' and (a.from_user is userId) and !a.is_finished
-						newt.cc_approves.push(a)
+		ins_traces = db.instance_traces.find().fetch()
+		_.each ins_traces, (ins_t) ->
+			if ins_t._id == ins._id
+				_.each ins_t.traces, (t) ->
+					newt = { _id: t._id, name: t.name, cc_approves: [] }
+					if t.approves
+						_.each t.approves, (a) ->
+							if a.type is 'cc' and (a.from_user is userId) and !a.is_finished
+								newt.cc_approves.push(a)
 
-			if not _.isEmpty(newt.cc_approves)
-				traces.push(newt)
-		console.log('traces:', traces)
+					if not _.isEmpty(newt.cc_approves)
+						traces.push(newt)
+
 		return traces
 
 	dateFormat: (date) ->
@@ -50,3 +53,13 @@ Template.cancel_cc_modal.events
 					toastr.success(TAPi18n.__("instance_approve_forward_remove_success"))
 					Modal.hide(template)
 					Modal.allowMultiple = false
+
+Template.cancel_cc_modal.onCreated ->
+
+	$("body").addClass("loading")
+
+	Steedos.subs["instance_traces"].subscribe("instance_traces", Session.get("instanceId"))
+
+	Tracker.autorun () ->
+		if Steedos.subs["instance_traces"].ready()
+			$("body").removeClass("loading")
