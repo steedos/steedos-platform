@@ -107,6 +107,7 @@ class Login extends React.Component {
       mobile_verified: false,
       // brandImageError: false,
       inApp: inApp,
+
     };
 
 
@@ -225,7 +226,7 @@ class Login extends React.Component {
     });
   }
 
-  sendVerificationToken = (e) => {
+  sendVerificationToken = (geetestValidate) => {
 
 
     this.setState({ serverError: null, loading: true });
@@ -254,6 +255,22 @@ class Login extends React.Component {
       email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
+
+
+
+    this.props.actions.sendVerificationToken(user, geetestValidate).then(async (userId) => {
+      // console.log('xxxxxx')
+      this.state.userId = userId;
+      if (!userId)
+        this.setState({
+          serverError: (
+            <FormattedMessage
+              id='accounts.userNotFound'
+              defaultMessage='User not found.'
+            />
+          ),
+        });
+    });
     // // demo gt_id
     // var captchaId = "647f5ed2ed8acb4be36784e01556bb71" ;   
     // my gt_id
@@ -289,60 +306,6 @@ class Login extends React.Component {
 
     //     })
     // });
-
-      var handler = function (captchaObj) {
-        window.$("#submit").click(function (e) {
-          console.log('点击拉按钮')
-            var result = captchaObj.getValidate();
-            if (!result) {
-              window.$("#notice").show();
-                setTimeout(function () {
-                  window.$("#notice").hide();
-                }, 2000);
-                e.preventDefault();
-            }
-        });
-        // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
-        captchaObj.appendTo("#captcha");
-        captchaObj.onReady(function () {
-          window.$("#wait").hide();
-        });
-    };
-    // const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL as string : '' ;
-    window.$.ajax({
-      // url: process.env.REACT_APP_API_URL+"geetest/geetset-init?t=" + (new Date()).getTime(), // 加随机数防止缓存
-      url: process.env.REACT_APP_API_URL + "/accounts/geetest/geetest-init", // 加随机数防止缓存
-      type: "post",
-      dataType: "json",
-      success:  (data)=>{
-        console.log('得到的数据是', data)
-        // 调用 initGeetest 初始化参数
-        // 参数1：配置参数
-        // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
-        window.initGeetest({
-          gt: data.gt,
-          challenge: data.challenge,
-          new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
-          offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-          product: "float", // 产品形式，包括：float，popup
-          width: "100%"
-        },handler);
-        this.props.actions.sendVerificationToken(user,data).then(async (userId) => {
-          // console.log('xxxxxx')
-          this.state.userId = userId;
-          if (!userId)
-            this.setState({
-              serverError: (
-                <FormattedMessage
-                  id='accounts.userNotFound'
-                  defaultMessage='User not found.'
-                />
-              ),
-            });
-        });
-      }
-    });
-
 
   }
   onSubmit = async (e) => {
@@ -439,8 +402,59 @@ class Login extends React.Component {
     })
   }
 
+
+  handlerGeetest =  (captchaObj) => {
+    window.$("#reApplyCodeBtn").click(function (e) {
+      console.log('点击拉按钮')
+        var geetestValidate = captchaObj.getValidate();
+        this.sendVerificationToken(geetestValidate)
+        if (!result) {
+          window.$("#notice").show();
+            setTimeout(function () {
+              window.$("#notice").hide();
+            }, 2000);
+            e.preventDefault();
+        }
+    });
+    // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
+    captchaObj.appendTo("#captcha");
+    captchaObj.onReady(function () {
+      window.$("#wait").hide();
+    });
+  };
+
+  initGeetest = () => {
+
+    // const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL as string : '' ;
+    window.$.ajax({
+      // url: process.env.REACT_APP_API_URL+"geetest/geetset-init?t=" + (new Date()).getTime(), // 加随机数防止缓存
+      url: process.env.REACT_APP_API_URL + "/accounts/geetest/geetest-init", // 加随机数防止缓存
+      type: "post",
+      dataType: "json",
+      success:  (data)=>{
+        console.log('得到的数据是', data)
+        // 调用 initGeetest 初始化参数
+        // 参数1：配置参数
+        // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
+        window.initGeetest({
+          gt: data.gt,
+          challenge: data.challenge,
+          new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
+          offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+          product: "float", // 产品形式，包括：float，popup
+          width: "100%"
+        }, this.handlerGeetest);
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.initGeetest()
+  }
+
   render() {
 
+  
     return (
       <>
         <Background />
@@ -511,7 +525,7 @@ class Login extends React.Component {
                       placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
                       onChange={this.handleCodeChange}
                     />
-                    <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} />
+                    <ReApplyCodeBtn id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} />
                     {/* <ReApplyCodeBtn onClick={this.test} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/> */}
 
 
