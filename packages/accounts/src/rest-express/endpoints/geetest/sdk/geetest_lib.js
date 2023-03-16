@@ -52,6 +52,7 @@ class GeetestLib {
             "sdk": GeetestLib.VERSION
         });
         const register_url = GeetestLib.API_URL + GeetestLib.REGISTER_URL;
+        console.log('register_url是', register_url)
         this.gtlog(`requestRegister(): 验证初始化, 向极验发送请求, url=${register_url}, params=${JSON.stringify(params)}.`);
         let origin_challenge;
         try {
@@ -60,17 +61,18 @@ class GeetestLib {
                 method: "GET",
                 timeout: GeetestLib.HTTP_TIMEOUT_DEFAULT,
                 params: params
-            });
+            })
+            console.log('返回值是', res)
             const resBody = (res.status === 200) ? res.data : "";
             this.gtlog(`requestRegister(): 验证初始化, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
             origin_challenge = resBody["challenge"];
         } catch (e) {
-            this.gtlog("requestRegister(): 验证初始化, 请求异常，后续流程走宕机模式, " + e.message);
+            this.gtlog("requestRegister(): 验证初始化, 请求异常，后续流程走宕机模式!, " + e.message);
             origin_challenge = "";
         }
         return origin_challenge;
     }
-    async localRegister(){
+    async localRegister() {
         this.gtlog("获取当前缓存中bypass状态为fail，后续流程走宕机模式 ");
         this.buildRegisterResult("", "")
         this.gtlog(`register(): 验证初始化, lib包返回信息=${this.libResult}.`);
@@ -168,7 +170,9 @@ class GeetestLib {
                 method: "POST",
                 timeout: GeetestLib.HTTP_TIMEOUT_DEFAULT,
                 data: qs.stringify(params),
-                headers: {"Content-Type": "application/x-www-form-urlencoded"}
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            }).catch(err => {
+                // console.log(err)
             });
             const resBody = (res.status === 200) ? res.data : "";
             this.gtlog(`requestValidate(): 二次验证 正常模式, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);

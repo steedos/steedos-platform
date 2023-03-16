@@ -10,7 +10,7 @@ export const geetest_init = (data: any) => async (
 ) => {
     try {
         console.log('初始化数据')
-        console.log('得到的数据是', data)
+        // console.log('得到的数据是', data)
 
         /*
    必传参数
@@ -23,6 +23,7 @@ export const geetest_init = (data: any) => async (
         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
         const digestmod = "md5";
         const userId = "test";
+        // const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
         const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
         const bypasscache = 'success'
         let result;
@@ -33,7 +34,6 @@ export const geetest_init = (data: any) => async (
         }
         res.set('Content-Type', 'application/json;charset=UTF-8')
         res.send(result.data)
-        // res.send('xxxxx')
     } catch (err) {
         console.log('err', err)
     }
@@ -41,36 +41,39 @@ export const geetest_init = (data: any) => async (
 };
 
 // 二次验证接口，POST请求
-export const geetest_validate = (data: any) => async (
-    req: express.Request,
-    res: express.Response
-) => {
-    try {
-        const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
-        const challenge = req.body[GeetestLib.GEETEST_CHALLENGE];
-        const validate = req.body[GeetestLib.GEETEST_VALIDATE];
-        const seccode = req.body[GeetestLib.GEETEST_SECCODE];
-        const bypasscache = 'success';
-        let result;
-        var params = new Array();
-        if (bypasscache === "success") {
-            result = await gtLib.successValidate(challenge, validate, seccode, params);
-        } else {
-            result = gtLib.failValidate(challenge, validate, seccode);
-        }
-        // 注意，不要更改返回的结构和值类型
-        if (result.status === 1) {
-            return res.json({ "result": "success", "version": GeetestLib.VERSION });
-        } else {
-            return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
-        }
+// export const geetest_validate = (data: any) => async(
+//     req: express.Request,
+//     res: express.Response,
+// ) => {
+//     try {
+//         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
+//         const challenge = req.body[GeetestLib.GEETEST_CHALLENGE];
+//         const validate = req.body[GeetestLib.GEETEST_VALIDATE];
+//         const seccode = req.body[GeetestLib.GEETEST_SECCODE];
+//         const bypasscache = 'success';
+//         let result;
+//         var params = new Array();
+//         if (bypasscache === "success") {
+//             result = await gtLib.successValidate(challenge, validate, seccode, params);
+//         } else {
+//             result = gtLib.failValidate(challenge, validate, seccode);
+//         }
+//         // 注意，不要更改返回的结构和值类型
+//         if (result.status === 1) {
+//             return res.json({ "result": "success", "version": GeetestLib.VERSION });
+//         } else {
+//             return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
+//         }
+//     } catch (err) {
+//         console.log('err', err)
+//     }
+//     return
+// };
 
-    } catch (err) {
-        console.log('err', err)
-    }
-    return
-};
-
+export const geetest_validate = function(res,req,next){
+    console.log('二次验证',req)
+    next()
+}
 
 
 async function sendRequest(params) {

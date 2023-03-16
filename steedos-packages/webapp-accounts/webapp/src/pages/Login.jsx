@@ -290,50 +290,56 @@ class Login extends React.Component {
     //     })
     // });
 
-    // const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
-    // const digestmod = "md5";
-    // const userId = "test";
-    // const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
-    // let result;
-
-    // result =  gtLib.register(digestmod, params);
-
-    // let result = geetsetinit()
-    // console.log('result是', result)
-    // this.props.actions.sendVerificationToken(user).then(async (userId) => {
-    //   // console.log('xxxxxx')
-    //   this.state.userId = userId;
-    //   if (!userId)
-    //     this.setState({
-    //       serverError: (
-    //         <FormattedMessage
-    //           id='accounts.userNotFound'
-    //           defaultMessage='User not found.'
-    //         />
-    //       ),
-    //     });
-    // });
-
+      var handler = function (captchaObj) {
+        window.$("#submit").click(function (e) {
+          console.log('点击拉按钮')
+            var result = captchaObj.getValidate();
+            if (!result) {
+              window.$("#notice").show();
+                setTimeout(function () {
+                  window.$("#notice").hide();
+                }, 2000);
+                e.preventDefault();
+            }
+        });
+        // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
+        captchaObj.appendTo("#captcha");
+        captchaObj.onReady(function () {
+          window.$("#wait").hide();
+        });
+    };
     // const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL as string : '' ;
     window.$.ajax({
       // url: process.env.REACT_APP_API_URL+"geetest/geetset-init?t=" + (new Date()).getTime(), // 加随机数防止缓存
-      url: process.env.REACT_APP_API_URL+"geetest/geetset-init/, // 加随机数防止缓存
-
-      type: "get",
+      url: process.env.REACT_APP_API_URL + "/accounts/geetest/geetest-init", // 加随机数防止缓存
+      type: "post",
       dataType: "json",
-      success: function (data) {
-        console.log('得到的数据是',data)
+      success:  (data)=>{
+        console.log('得到的数据是', data)
         // 调用 initGeetest 初始化参数
         // 参数1：配置参数
         // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
-        // initGeetest({
-        //     gt: data.gt,
-        //     challenge: data.challenge,
-        //     new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
-        //     offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-        //     product: "float", // 产品形式，包括：float，popup
-        //     width: "100%"
-        // }, handler);
+        window.initGeetest({
+          gt: data.gt,
+          challenge: data.challenge,
+          new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
+          offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+          product: "float", // 产品形式，包括：float，popup
+          width: "100%"
+        },handler);
+        this.props.actions.sendVerificationToken(user,data).then(async (userId) => {
+          // console.log('xxxxxx')
+          this.state.userId = userId;
+          if (!userId)
+            this.setState({
+              serverError: (
+                <FormattedMessage
+                  id='accounts.userNotFound'
+                  defaultMessage='User not found.'
+                />
+              ),
+            });
+        });
       }
     });
 

@@ -24,8 +24,7 @@ import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
 import { getMySpaces } from './endpoints/spaces';
 import { verify_email, verify_mobile} from './endpoints/password/verify';
-import { VerificationCode } from './verification-code/verification-code'
-import {geetest_init} from './endpoints/geetest/geetest-init'
+import { geetest_init,geetest_validate } from './endpoints/geetest/geetest-init'
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -83,7 +82,7 @@ const accountsExpress = (
 
     router.post(`${path}/password/sendVerificationEmail`, sendVerificationEmail(accountsServer));
 
-    router.post(`${path}/password/sendVerificationCode`, VerificationCode, sendVerificationCode(accountsServer));
+    router.post(`${path}/password/sendVerificationCode`,geetest_validate, sendVerificationCode(accountsServer));
 
     router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
 
