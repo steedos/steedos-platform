@@ -115,7 +115,10 @@ async function checkBypassStatus() {
         await sleep();
     }
 }
-checkBypassStatus()
+
+if (process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED === 'true') {
+    checkBypassStatus()
+}
 
 
 

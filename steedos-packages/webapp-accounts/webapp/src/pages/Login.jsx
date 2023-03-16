@@ -404,11 +404,11 @@ class Login extends React.Component {
 
 
   handlerGeetest =  (captchaObj) => {
-    window.$("#reApplyCodeBtn").click(function (e) {
+    window.$("#reApplyCodeBtn").click( (e) => {
       console.log('点击拉按钮')
         var geetestValidate = captchaObj.getValidate();
         this.sendVerificationToken(geetestValidate)
-        if (!result) {
+        if (!geetestValidate) {
           window.$("#notice").show();
             setTimeout(function () {
               window.$("#notice").hide();
