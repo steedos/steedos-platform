@@ -6,61 +6,13 @@ const router = express.Router();
 const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const { randomInt } = require("crypto");
-const { JSONStringify } = require("@steedos/objectql");
 
 router.get('/api/object_workflows/workflow_field/options', core.requireAuthentication, async function (req, res) {
     try {
-        const userSession = req.user;
-        const lng = userSession.language || 'zh-CN';
-        let flowId, fields, form_fields, form, output, instance_fields;
+
+        let flowId, fields, form_fields, form, output;
         let values = req.query;
         form_fields = [];
-        
-        if(values.instance_fields){
-          instance_fields = [{
-            value: "instance.name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_instance_name",{},lng)
-          }, {
-            value: "instance.submitter_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_submitter_name",{},lng)
-          }, {
-            value: "instance.applicant_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_name",{},lng)
-          }, {
-            value: "instance.applicant_company",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_company",{},lng)
-          }, {
-            value: "instance.applicant_organization",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization",{},lng)
-          }, {
-            value: "instance.applicant_organization_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization_name",{},lng)
-          }, {
-            value: "instance.applicant_organization_fullname",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname",{},lng)
-          }, {
-            value: "instance.state",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_state",{},lng)
-          }, {
-            value: "instance.current_step_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_current_step_name",{},lng)
-          }, {
-            value: "instance.flow_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_flow_name",{},lng)
-          }, {
-            value: "instance.category_name",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_category_name",{},lng)
-          }, {
-            value: "instance.submit_date",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_submit_date",{},lng)
-          }, {
-            value: "instance.finish_date",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_finish_date",{},lng)
-          }, {
-            value: "instance.final_decision",
-            label: TAPi18n.__("object_workflows_field_field_map_$_workflow_field_final_decision",{},lng)
-          }];
-        }
         
         // 根据flow_id 查询数据
         if (values != null ? values.flow_id : void 0) {
@@ -102,21 +54,16 @@ router.get('/api/object_workflows/workflow_field/options', core.requireAuthentic
             });
         }
         
-        if(instance_fields){
-          form_fields = _.union(instance_fields, form_fields);
-        }
-
         // 根据用户关键字进行过滤
         output = [];
         if( values.term ) {
-          form_fields.forEach((item) => {
+          form_fields.forEach((item, index) => {
             if(item.label.toLowerCase().indexOf(values.term.toLowerCase()) !== -1)
               output.push(item); 
           })
         } else {
           output = form_fields;
         }
-
         res.status(200).send(output);
         
     } catch (error) {

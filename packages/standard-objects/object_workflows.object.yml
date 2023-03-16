@@ -55,31 +55,17 @@ fields:
     reference_to: object_fields
     reference_to_field: name
     defaultIcon: service_contract
-    amis: 
-      "source": 
-        "method": "get"
-        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/object_workflows/fields/options"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-        "sendOn": "!!this.flow_id"
-      "autoComplete": 
-        "method": "get"
-        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/object_workflows/fields/options"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
-        "sendOn": "!!this.flow_id"
-
-    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
-    #   function (values) {
-    #           var object_name = null;
-    #           if(values && values.object_name){
-    #             object_name = values.object_name;
-    #             if(_.isObject(object_name)){
-    #               object_name = object_name.name
-    #             }
-    #           }
-    #           return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
-    #         }
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var object_name = null;
+              if(values && values.object_name){
+                object_name = values.object_name;
+                if(_.isObject(object_name)){
+                  object_name = object_name.name
+                }
+              }
+              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
+            }
   field_map_back:
     label: Field Mappings（from Workflow to Object）
     type: grid
@@ -95,49 +81,133 @@ fields:
     reference_to: object_fields
     reference_to_field: name
     defaultIcon: service_contract
-    amis: 
-      "source": 
-        "method": "get"
-        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/object_workflows/fields/options"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-        "sendOn": "!!this.flow_id"
-      "autoComplete": 
-        "method": "get"
-        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/object_workflows/fields/options?"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
-        "sendOn": "!!this.flow_id"
-
-    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
-    #   function (values) {
-    #     var object_name = null;
-    #           if(values && values.object_name){
-    #             object_name = values.object_name;
-    #             if(_.isObject(object_name)){
-    #               object_name = object_name.name
-    #             }
-    #           }
-    #           return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
-    #         }
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+        var object_name = null;
+              if(values && values.object_name){
+                object_name = values.object_name;
+                if(_.isObject(object_name)){
+                  object_name = object_name.name
+                }
+              }
+              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
+            }
   field_map_back.$.workflow_field:
     label: Field of Workflow
     type: lookup
     depend_on:
       - flow_id
-    amis: 
-      "source": 
-        "method": "get"
-        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-        "sendOn": "!!this.flow_id"
-      "autoComplete": 
-        "method": "get"
-        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
-        "sendOn": "!!this.flow_id"
+    optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      function (values) {
+              var fields, flowId, form_fields, form_id, instance_fields, options, res_flow, res_form;
+              instance_fields = [{
+                value: "instance.name",
+                label: t("object_workflows_field_field_map_$_workflow_field_instance_name")
+              }, {
+                value: "instance.submitter_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_submitter_name")
+              }, {
+                value: "instance.applicant_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_name")
+              }, {
+                value: "instance.applicant_company",
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_company")
+              }, {
+                value: "instance.applicant_organization",
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization")
+              }, {
+                value: "instance.applicant_organization_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_name")
+              }, {
+                value: "instance.applicant_organization_fullname",
+                label: t("object_workflows_field_field_map_$_workflow_field_applicant_organization_fullname")
+              }, {
+                value: "instance.state",
+                label: t("object_workflows_field_field_map_$_workflow_field_state")
+              }, {
+                value: "instance.current_step_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_current_step_name")
+              }, {
+                value: "instance.flow_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_flow_name")
+              }, {
+                value: "instance.category_name",
+                label: t("object_workflows_field_field_map_$_workflow_field_category_name")
+              }, {
+                value: "instance.submit_date",
+                label: t("object_workflows_field_field_map_$_workflow_field_submit_date")
+              }, {
+                value: "instance.finish_date",
+                label: t("object_workflows_field_field_map_$_workflow_field_finish_date")
+              }, {
+                value: "instance.final_decision",
+                label: t("object_workflows_field_field_map_$_workflow_field_final_decision")
+              }];
+              form_fields = [];
+
+              if (values != null ? values.flow_id : void 0) {
+                flowId = _.isObject(values.flow_id) ? values.flow_id._id : values.flow_id;
+
+                if (!window.ObjectWorkflowsDataCache) {
+                  window.ObjectWorkflowsDataCache = {};
+                }
+
+                if (!window.ObjectWorkflowsDataCache.flowsMap) {
+                  window.ObjectWorkflowsDataCache.flowsMap = {};
+                }
+
+                var flowCache = window.ObjectWorkflowsDataCache.flowsMap[flowId];
+
+                if (!flowCache || flowCache._EXPIREDATE < new Date().getTime()) {
+                  var flow = Creator.odata.get("flows", flowId, "form");
+
+                  if (flow && flow.form) {
+                    var form = Creator.odata.get("forms", flow.form, "current");
+
+                    if (form && form.current) {
+                      window.ObjectWorkflowsDataCache.flowsMap[flowId] = Object.assign({
+                        _EXPIREDATE: new Date().getTime() + 60 * 1000
+                      }, form);
+                    }
+                  }
+                }
+
+                var res_form = window.ObjectWorkflowsDataCache.flowsMap[flowId];
+
+                if (res_form != null ? res_form.current : void 0) {
+                  fields = (res_form != null ? res_form.current.fields : void 0) || [];
+                  fields.forEach(function (f) {
+                    if (f.type === 'section') {
+                      if (f.fields) {
+                        return f.fields.forEach(function (ff) {
+                          return form_fields.push({
+                            'label': ff.name || ff.code,
+                            'value': ff.code
+                          });
+                        });
+                      }
+                    } else if (f.type === 'table') {
+                      if (f.fields) {
+                        return f.fields.forEach(function (ff) {
+                          return form_fields.push({
+                            'label': (f.name || f.code) + '=>' + (ff.name || ff.code),
+                            'value': f.code + '.' + ff.code
+                          });
+                        });
+                      }
+                    } else {
+                      return form_fields.push({
+                        'label': f.name || f.code,
+                        'value': f.code
+                      });
+                    }
+                  });
+                }
+              }
+
+              options = _.union(instance_fields, form_fields);
+              return options;
+            }
   field_map_script:
     label: Synchronization Script（from Object to Workflow）
     type: textarea
