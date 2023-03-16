@@ -17,6 +17,14 @@ import { useCountDown } from "../components/countdown";
 import LocalStorageStore from '../stores/local_storage_store';
 import { isString, each, compact, values } from 'lodash'
 
+// import { geetsetinit } from './geetest/geetest_init';
+// import { GeetestConfig} from './geetest/geetest_config'
+// import {GeetestLib} from './geetest/geetest_lib'
+// const GeetestConfig = require('./geetest/geetest_config')
+// const GeetestLib = require('./geetest/geetest_lib')
+
+// var axios = require('axios');
+
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
@@ -246,36 +254,89 @@ class Login extends React.Component {
       email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
+    // // demo gt_id
+    // var captchaId = "647f5ed2ed8acb4be36784e01556bb71" ;   
+    // my gt_id
+    // var captchaId = "f8c0716720d7c266d1ca498ee36ff76f";   
+    // var product = "float"
+    // window.initGeetest4({
+    //   captchaId: captchaId,
+    //   product: product,
+    // }, (gt) => {
+    //   window.gt = gt
+    //   gt
+    //     .appendTo("#captcha")
+    //     .onSuccess((e) => {
+    //       var result = gt.getValidate();
+    //       console.log('结果是', result)
 
-    const rs = ''
-    var captchaId = "647f5ed2ed8acb4be36784e01556bb71"   // gt_id
-    var product = "float"
-    window.initGeetest4({
-      captchaId: captchaId,
-      product: product,
-    }, (gt) => {
-      window.gt = gt
-      gt
-        .appendTo("#captcha")
-        .onSuccess((e) => {
-          var result = gt.getValidate();
-          console.log('结果是', result)
-          this.props.actions.sendVerificationToken(user, result).then(async (userId) => {
-            // console.log('xxxxxx')
-            this.state.userId = userId;
-            if (!userId)
-              this.setState({
-                serverError: (
-                  <FormattedMessage
-                    id='accounts.userNotFound'
-                    defaultMessage='User not found.'
-                  />
-                ),
-              });
-          });
-        })
-      // gt.showBox();
+    //       ////
+    //       this.props.actions.sendVerificationToken(user, result).then(async (userId) => {
+    //         this.state.userId = userId;
+    //         // console.log('userId',userId)
+    //         if (!userId)
+    //           this.setState({
+    //             serverError: (
+    //               <FormattedMessage
+    //                 id='accounts.userNotFound'
+    //                 defaultMessage='User not found.'
+    //               />
+    //             ),
+    //           });
+    //       });
+    //       ////
+
+
+    //     })
+    // });
+
+    // const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
+    // const digestmod = "md5";
+    // const userId = "test";
+    // const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
+    // let result;
+
+    // result =  gtLib.register(digestmod, params);
+
+    // let result = geetsetinit()
+    // console.log('result是', result)
+    // this.props.actions.sendVerificationToken(user).then(async (userId) => {
+    //   // console.log('xxxxxx')
+    //   this.state.userId = userId;
+    //   if (!userId)
+    //     this.setState({
+    //       serverError: (
+    //         <FormattedMessage
+    //           id='accounts.userNotFound'
+    //           defaultMessage='User not found.'
+    //         />
+    //       ),
+    //     });
+    // });
+
+    // const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL as string : '' ;
+    window.$.ajax({
+      // url: process.env.REACT_APP_API_URL+"geetest/geetset-init?t=" + (new Date()).getTime(), // 加随机数防止缓存
+      url: process.env.REACT_APP_API_URL+"geetest/geetset-init/, // 加随机数防止缓存
+
+      type: "get",
+      dataType: "json",
+      success: function (data) {
+        console.log('得到的数据是',data)
+        // 调用 initGeetest 初始化参数
+        // 参数1：配置参数
+        // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
+        // initGeetest({
+        //     gt: data.gt,
+        //     challenge: data.challenge,
+        //     new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
+        //     offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+        //     product: "float", // 产品形式，包括：float，popup
+        //     width: "100%"
+        // }, handler);
+      }
     });
+
 
   }
   onSubmit = async (e) => {
