@@ -1,5 +1,5 @@
 name: instance_name
-label: 申请单名称
+label: 文件标题
 type: text
 multiple: false
 filterable: true

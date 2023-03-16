@@ -1,4 +1,4 @@
 name: submit_date
-label: 申请单提交时间
+label: 提交时间
 type: datetime
 sort_no: 320

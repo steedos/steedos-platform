@@ -89,8 +89,8 @@ amis_schema: |-
                                           "initApi": {
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
-                                              "requestAdaptor": "const { recordId } = api.data;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  value: _id,\n                  label: name\n                }\n              }\n            }\n          `\n        }\n        return api;",
-                                              "adaptor": "payload.data = {\n  related_instances: payload.data.instance.related_instances\n};\nreturn payload;"
+                                              "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  value: _id,\n                  label: name\n                }\n              }\n            }\n          `\n        }\n        return api;",
+                                              "adaptor": "payload.data = {\n  related_instances: payload.data.instance?.related_instances\n};\nreturn payload;"
                                           }
                                       }
                                   ],
