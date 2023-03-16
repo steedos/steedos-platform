@@ -139,7 +139,7 @@ fields:
     readonly: true
     name: current.steps.$.disableCC
   current.steps.$.allowDistribute:
-    label: Can Distribute Instance 
+    label: Can Distribute Instance
     type: boolean
     readonly: true
     visible_on: "{{global.mode !='read' ? false : true}}"
@@ -202,6 +202,7 @@ fields:
     is_wide: true
     blackbox: true
     name: perms
+    group: Permissions
   perms.users_can_add:
     label: Users that Can Initiate New Request
     type: lookup
@@ -210,6 +211,7 @@ fields:
     is_wide: true
     name: perms.users_can_add
     filterable: true
+    group: Permissions
   perms.orgs_can_add:
     label: 'Departments that Can Initiate New Request'
     type: lookup
@@ -218,6 +220,7 @@ fields:
     is_wide: true
     name: perms.orgs_can_add
     filterable: true
+    group: Permissions
   perms.users_can_monitor:
     label: Users that Can Read All the Reqests
     type: lookup
@@ -226,6 +229,7 @@ fields:
     is_wide: true
     name: perms.users_can_monitor
     filterable: true
+    group: Permissions
   perms.orgs_can_monitor:
     label: Departments that Can Read All the Reqests
     type: lookup
@@ -234,6 +238,7 @@ fields:
     is_wide: true
     name: perms.orgs_can_monitor
     filterable: true
+    group: Permissions
   perms.users_can_admin:
     label: Users that Can Read , Relocat, Reassign or Delete  All the Reqests
     type: lookup
@@ -242,6 +247,7 @@ fields:
     is_wide: true
     name: perms.users_can_admin
     filterable: true
+    group: Permissions
   perms.orgs_can_admin:
     label: Departments that Can Read , Relocat, Reassign or Delete  All the Reqests
     type: lookup
@@ -250,6 +256,7 @@ fields:
     is_wide: true
     name: perms.orgs_can_admin
     filterable: true
+    group: Permissions
   app:
     label: App
     type: text
