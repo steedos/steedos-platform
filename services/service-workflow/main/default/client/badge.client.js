@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-16 15:10:37
+ * @LastEditTime: 2023-03-16 17:04:42
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/client/badge.client.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -52,20 +52,25 @@
         Tracker.autorun(function (c) {
             if (Creator.steedosInit.get() && Creator.validated.get() && Steedos.subsBootstrap.ready("steedos_keyvalues")) {
                 Steedos.Page.render(root, page, {});
+                const findVars = (obj, vars)=>{
+                    try{
+                        return vars.length === vars.filter(function(item){
+                            return item.split(".").reduce(function(sum, n){
+                                return sum[n];
+                            }, obj) !== undefined;
+                        }).length;
+                    }
+                    catch(ex){
+                        return false;
+                    }
+                }
+                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName", "SteedosUI.refs.globalHeader.getComponentByName"];
                 Promise.all([
-                    waitForThing(window, 'SteedosUI')
+                    waitForThing(window, waittingVars, findVars)
                 ]).then(() => {
-                    Promise.all([
-                        waitForThing(SteedosUI.refs, 'serviceSteedosKeyvaluesSubscribe')
-                    ]).then(() => {
-                        var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
-                        Promise.all([
-                            waitForThing(scope, 'getComponentByName')
-                        ]).then(() => {
-                            var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
-                            button && observeBadgeCount(button);
-                        });
-                    });
+                    var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
+                    var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
+                    button && observeBadgeCount(button);
                 });
             }
         });
