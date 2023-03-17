@@ -2,10 +2,9 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-16 17:04:42
- * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/client/badge.client.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @LastEditTime: 2023-03-17 12:12:50
  */
+let keyvalues = {};
 ; (function () {
     try {
         var rootId = "steedosKeyvaluesSubscribeRoot";
@@ -22,7 +21,7 @@
                 name: "serviceSteedosKeyvaluesSubscribe",
                 id: "serviceSteedosKeyvaluesSubscribe",
                 type: "service",
-                className: "service-steedos-workflow-badge hidden",
+                className: "service-steedos-keyvalues-subscribe hidden",
                 body: [{
                     "type": "button",
                     "label": "触发@data.changed",
@@ -38,7 +37,8 @@
                                     },
                                     "data": {
                                         "type": "${event.data.type}",
-                                        "keyvalue": "${event.data.keyvalue}"
+                                        "keyvalue": "${event.data.keyvalue}",
+                                        "keyvalues": "${ss:keyvalues}"
                                     }
                                 }
                             ]
@@ -64,7 +64,7 @@
                         return false;
                     }
                 }
-                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName", "SteedosUI.refs.globalHeader.getComponentByName"];
+                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
                 Promise.all([
                     waitForThing(window, waittingVars, findVars)
                 ]).then(() => {
@@ -82,8 +82,23 @@
 
 function observeBadgeCount(button) {
     var reload = function (type, doc) {
+        /*
+        doc格式：
+        {
+            "user": "62ede4f62161e377e35de58c",
+            "space": "hKdnwE55WcnWveYxS",
+            "key": "badge",
+            "value": {
+                "workflow": 4
+            },
+            "modified": "2023-03-16T14:10:27.622Z",
+            "_id": "Y8dTQRuyaqkRebFPz"
+        }
+        */
         console.log("observed steedos_keyvalues change:", type, doc);
         if(doc.space){
+            keyvalues[doc.key] = doc;
+            sessionStorage.setItem("keyvalues", JSON.stringify(keyvalues));
             console.log("handleAction broadcast for observeBadgeCount");
             // space为null的订阅不触发事件，后续有需要再单独处理
             button.props.dispatchEvent('click', {
@@ -104,4 +119,11 @@ function observeBadgeCount(button) {
         }
     };
     db.steedos_keyvalues.find().observe(callbacks);
+}
+
+// Steedos.getKeyvalues('badge').value.workflow
+// amis表达式：${window:Steedos.getKeyvalues('badge').value.workflow},未能生效
+// amis表达式：${ss:keyvalues.badge.value.workflow},可以生效
+Steedos.getKeyvalues = function(key){
+    return keyvalues[key];
 }

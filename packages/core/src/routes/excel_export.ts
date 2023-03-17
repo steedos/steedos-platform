@@ -113,7 +113,8 @@ const exportRecordData = async function (req, res) {
                 res.writeHead(200, {
                     'Content-Type': 'application/octet-stream',
                     'Content-Disposition': 'attachment;filename=' + encodeURI(filename + '.xlsx'),
-                    'Content-Length': xls.length
+                    'Content-Length': xls.length,
+                    'Access-Control-Expose-Headers': 'Content-Disposition'
                 });
                 res.end(xls, 'binary');
 
