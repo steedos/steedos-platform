@@ -7,6 +7,7 @@ services:
     ports:
       - "5555:3000"
       - "5100:5100"
+      - "3001:3001" 
     environment:
       - PORT=5100
       - ROOT_URL=http://127.0.0.1:5100
@@ -14,11 +15,15 @@ services:
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - TRANSPORTER=redis://redis:6379/1
       - CACHER=redis://redis:6379
+    depends_on:
+      mongodb-init:
+        condition: service_started
     volumes:
-      - '.:/home/workspace/steedos-platform'
+      - '.:/home/workspace/steedos-platform:cached'
       
   redis:
     image: redis:6.2
+    command: ["redis-server", "--save"]  # disable persistence
     ports:
       - "6379:6379"
   
@@ -26,14 +31,25 @@ services:
     image: mongo:4.4
     ports:
       - 27017:27017
-    command: --replSet steedos
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "steedos" ]
     healthcheck:
-      test: echo 'rs.initiate(); db.runCommand("ping").ok' | mongo --quiet | grep 1
+      test: echo 'db.runCommand("ping").ok' | mongo --quiet | grep 1
       interval: 10s
       timeout: 10s
       retries: 5
     volumes:
       - 'steedos-mongo-data:/data/db'
+
+  mongodb-init:
+    image: mongo:4.4
+    restart: "no"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    command: >
+      mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})"
+
+
 
 volumes:
   steedos-mongo-data:
