@@ -2,9 +2,9 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-17 11:42:22
+ * @LastEditTime: 2023-03-17 12:12:50
  */
-window.keyvalues = {};
+let keyvalues = {};
 ; (function () {
     try {
         var rootId = "steedosKeyvaluesSubscribeRoot";
@@ -38,7 +38,7 @@ window.keyvalues = {};
                                     "data": {
                                         "type": "${event.data.type}",
                                         "keyvalue": "${event.data.keyvalue}",
-                                        "keyvalues": "${window:keyvalues}"
+                                        "keyvalues": "${ss:keyvalues}"
                                     }
                                 }
                             ]
@@ -97,7 +97,8 @@ function observeBadgeCount(button) {
         */
         console.log("observed steedos_keyvalues change:", type, doc);
         if(doc.space){
-            window.keyvalues[doc.key] = doc;
+            keyvalues[doc.key] = doc;
+            sessionStorage.setItem("keyvalues", JSON.stringify(keyvalues));
             console.log("handleAction broadcast for observeBadgeCount");
             // space为null的订阅不触发事件，后续有需要再单独处理
             button.props.dispatchEvent('click', {
@@ -122,7 +123,7 @@ function observeBadgeCount(button) {
 
 // Steedos.getKeyvalues('badge').value.workflow
 // amis表达式：${window:Steedos.getKeyvalues('badge').value.workflow},未能生效
-// amis表达式：${window:keyvalues.badge.value.workflow},可以生效
+// amis表达式：${ss:keyvalues.badge.value.workflow},可以生效
 Steedos.getKeyvalues = function(key){
-    return window.keyvalues[key];
+    return keyvalues[key];
 }
