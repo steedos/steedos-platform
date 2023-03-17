@@ -62,7 +62,7 @@ class GeetestLib {
                 timeout: GeetestLib.HTTP_TIMEOUT_DEFAULT,
                 params: params
             })
-            console.log('返回值是', res)
+            // console.log('返回值是', res)
             const resBody = (res.status === 200) ? res.data : "";
             this.gtlog(`requestRegister(): 验证初始化, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
             origin_challenge = resBody["challenge"];

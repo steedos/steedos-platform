@@ -2,6 +2,9 @@ import * as express from 'express';
 const axios = require("axios");
 const GeetestConfig = require('./sdk/geetest_config')
 const GeetestLib = require('./sdk/geetest_lib')
+const validator = require('validator');
+
+let geetest_status = null
 
 //初始化
 export const geetest_init = (data: any) => async (
@@ -25,7 +28,7 @@ export const geetest_init = (data: any) => async (
         const userId = "test";
         // const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
         const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
-        const bypasscache = 'success'
+        const bypasscache = geetest_status
         let result;
         if (bypasscache === "success") {
             result = await gtLib.register(digestmod, params);
@@ -41,38 +44,32 @@ export const geetest_init = (data: any) => async (
 };
 
 // 二次验证接口，POST请求
-// export const geetest_validate = (data: any) => async(
-//     req: express.Request,
-//     res: express.Response,
-// ) => {
-//     try {
-//         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
-//         const challenge = req.body[GeetestLib.GEETEST_CHALLENGE];
-//         const validate = req.body[GeetestLib.GEETEST_VALIDATE];
-//         const seccode = req.body[GeetestLib.GEETEST_SECCODE];
-//         const bypasscache = 'success';
-//         let result;
-//         var params = new Array();
-//         if (bypasscache === "success") {
-//             result = await gtLib.successValidate(challenge, validate, seccode, params);
-//         } else {
-//             result = gtLib.failValidate(challenge, validate, seccode);
-//         }
-//         // 注意，不要更改返回的结构和值类型
-//         if (result.status === 1) {
-//             return res.json({ "result": "success", "version": GeetestLib.VERSION });
-//         } else {
-//             return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
-//         }
-//     } catch (err) {
-//         console.log('err', err)
-//     }
-//     return
-// };
+export const geetest_validate = async function (req, res, next) {
+    console.log('环境变量是', process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED)
+    if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
+        const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
+        const challenge = req.body.geetest[GeetestLib.GEETEST_CHALLENGE];
+        const validate = req.body.geetest[GeetestLib.GEETEST_VALIDATE];
+        const seccode = req.body.geetest[GeetestLib.GEETEST_SECCODE];
+        const bypasscache = geetest_status;
+        let result;
+        var params = new Array();
+        if (bypasscache === "success") {
+            result = await gtLib.successValidate(challenge, validate, seccode, params);
+        } else {
+            result = gtLib.failValidate(challenge, validate, seccode);
+        }
+        // 注意，不要更改返回的结构和值类型
+        if (result.status === 1) {
+            next()
+            return res.json({ "result": "success", "version": GeetestLib.VERSION });
+        } else {
+            return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
+        }
 
-export const geetest_validate = function(res,req,next){
-    console.log('二次验证',req)
-    next()
+    } else {
+        next()
+    }
 }
 
 
@@ -104,13 +101,13 @@ let bypass_status = 'success';
 async function checkBypassStatus() {
     while (true) {
         bypass_status = await sendRequest({ "gt": GeetestConfig.GEETEST_ID });
-        // if (bypass_status === "success"){
-        //     client.set(GeetestConfig.GEETEST_BYPASS_STATUS_KEY, bypass_status);
-        // }
-        // else{
-        //     bypass_status = "fail"
-        //     client.set(GeetestConfig.GEETEST_BYPASS_STATUS_KEY, bypass_status);
-        // }
+        if (bypass_status === "success") {
+            geetest_status = bypass_status
+        }
+        else {
+            bypass_status = "fail"
+            geetest_status = 'fail'
+        }
         console.log(bypass_status)
         await sleep();
     }

@@ -24,7 +24,7 @@ import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
 import { getMySpaces } from './endpoints/spaces';
 import { verify_email, verify_mobile} from './endpoints/password/verify';
-import { geetest_init,geetest_validate } from './endpoints/geetest/geetest-init'
+import { geetest_init,geetest_validate } from './endpoints/geetestV3/geetest-init'
 
 
 const defaultOptions: AccountsExpressOptions = {
