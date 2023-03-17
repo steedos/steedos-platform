@@ -6,11 +6,9 @@ services:
     image: steedos/vscode-server
     ports:
       - "5555:3000"
-      - "5100:5100"
+      - "5000:5000"
       - "3001:3001" 
     environment:
-      - PORT=5100
-      - ROOT_URL=http://127.0.0.1:5100
       - MONGO_URL=mongodb://mongodb:27017/steedos
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - TRANSPORTER=redis://redis:6379/1
@@ -23,7 +21,7 @@ services:
       
   redis:
     image: redis:6.2
-    command: ["redis-server", "--save"]  # disable persistence
+    command: ["redis-server", "--save", "--appendonly no",  "--loglevel warning"]  # disable persistence
     ports:
       - "6379:6379"
   
