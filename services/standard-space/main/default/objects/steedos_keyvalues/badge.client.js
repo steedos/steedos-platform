@@ -2,8 +2,9 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-16 22:03:37
+ * @LastEditTime: 2023-03-17 11:42:22
  */
+window.keyvalues = {};
 ; (function () {
     try {
         var rootId = "steedosKeyvaluesSubscribeRoot";
@@ -36,7 +37,8 @@
                                     },
                                     "data": {
                                         "type": "${event.data.type}",
-                                        "keyvalue": "${event.data.keyvalue}"
+                                        "keyvalue": "${event.data.keyvalue}",
+                                        "keyvalues": "${window:keyvalues}"
                                     }
                                 }
                             ]
@@ -62,7 +64,7 @@
                         return false;
                     }
                 }
-                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName", "SteedosUI.refs.globalHeader.getComponentByName"];
+                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
                 Promise.all([
                     waitForThing(window, waittingVars, findVars)
                 ]).then(() => {
@@ -80,8 +82,22 @@
 
 function observeBadgeCount(button) {
     var reload = function (type, doc) {
+        /*
+        doc格式：
+        {
+            "user": "62ede4f62161e377e35de58c",
+            "space": "hKdnwE55WcnWveYxS",
+            "key": "badge",
+            "value": {
+                "workflow": 4
+            },
+            "modified": "2023-03-16T14:10:27.622Z",
+            "_id": "Y8dTQRuyaqkRebFPz"
+        }
+        */
         console.log("observed steedos_keyvalues change:", type, doc);
         if(doc.space){
+            window.keyvalues[doc.key] = doc;
             console.log("handleAction broadcast for observeBadgeCount");
             // space为null的订阅不触发事件，后续有需要再单独处理
             button.props.dispatchEvent('click', {
@@ -102,4 +118,11 @@ function observeBadgeCount(button) {
         }
     };
     db.steedos_keyvalues.find().observe(callbacks);
+}
+
+// Steedos.getKeyvalues('badge').value.workflow
+// amis表达式：${window:Steedos.getKeyvalues('badge').value.workflow},未能生效
+// amis表达式：${window:keyvalues.badge.value.workflow},可以生效
+Steedos.getKeyvalues = function(key){
+    return window.keyvalues[key];
 }
