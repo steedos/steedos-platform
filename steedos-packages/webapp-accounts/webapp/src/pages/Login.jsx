@@ -415,10 +415,9 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.settings.tenant)
-    // if(this.props.settings.tenant.enable_open_geetest === true){
+    if(this.props.settings.tenant.enable_open_geetest === true){
       this.initGeetest()
-    // }
+    }
   }
 
   render() {

@@ -62,7 +62,6 @@ export const geetest_validate = async function (req, res, next) {
         // 注意，不要更改返回的结构和值类型
         if (result.status === 1) {
             next()
-            return res.json({ "result": "success", "version": GeetestLib.VERSION });
         } else {
             return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
         }

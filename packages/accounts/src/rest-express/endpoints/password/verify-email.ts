@@ -35,10 +35,9 @@ export const sendVerificationCode = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   try {
-    const { user,geetest } = req.body;
-    // console.log('geeetest',geetest)
+    const { user} = req.body;
     const password: any = accountsServer.getServices().password;
-    const userId = await password.sendVerificationCode(user,geetest);
+    const userId = await password.sendVerificationCode(user);
     res.json(userId);
   } catch (err) {
     sendError(res, err);
