@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-17 16:26:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-16 17:37:05
  * @Description:
  */
 const express = require("express");
@@ -102,7 +102,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
             );
           }
 
-          var new_ins_ids = new Array();
+          var new_ins_data = new Array();
 
           var current_trace = null;
           if (action_type == "distribute") {
@@ -668,7 +668,10 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
               forward_approves.push(appr);
             }
 
-            new_ins_ids.push(new_ins_id);
+            new_ins_data.push({
+              instanceId: new_ins_id,
+              instanceTasksId: appr_obj._id
+            });
             pushManager.send_message_to_specifyUser("current_user", user_id);
           });
 
@@ -710,7 +713,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
               }
             });
           }
-          res.status(200).send({ new_ins_ids: new_ins_ids });
+          res.status(200).send({ data: new_ins_data });
         } catch (error) {
           console.error(error);
           res.status(200).send({

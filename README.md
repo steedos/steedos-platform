@@ -52,6 +52,7 @@ docker-compose up
 
 ```
 yarn
+yarn build
 yarn start
 ```
 

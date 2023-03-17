@@ -43,7 +43,7 @@ Creator.Objects['notifications'].methods = {
             let record = await getSteedosSchema().getObject("notifications").findOne(record_id, { fields: ['owner', 'is_read', 'related_to', 'space', 'url'] });
             if(!record){
                 // 跳转到通知记录界面会显示为404效果
-                let redirectUrl = util.getObjectRecordUrl("notifications", record_id);
+                let redirectUrl = util.getObjectRecordRelativeUrl("notifications", record_id);
                 if(req.get("X-Requested-With") === 'XMLHttpRequest'){
                     return res.status(200).send({
                         "status": 404,
@@ -63,12 +63,12 @@ Creator.Objects['notifications'].methods = {
                 // 没有权限时，只是不修改is_read值，但是允许跳转到相关记录查看
                 await getSteedosSchema().getObject('notifications').update(record_id, { 'is_read': true, modified: new Date() })
             }
-            let redirectUrl = record.url ? record.url : util.getObjectRecordUrl(record.related_to.o, record.related_to.ids[0], record.space, {
+            let redirectUrl = record.url ? record.url : util.getObjectRecordRelativeUrl(record.related_to.o, record.related_to.ids[0], record.space, {
                 rootUrl, appId
             });
             if(req_async){ // || req.get("X-Requested-With") === 'XMLHttpRequest'
                 return res.status(200).send({
-                    "status": 302,
+                    "status": 200,
                     "redirect": redirectUrl
                 });
             }else{
