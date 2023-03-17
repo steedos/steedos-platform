@@ -53,7 +53,7 @@ class Home extends React.PureComponent {
   }
 
   goHome = async () => {
-    this.props.actions.goSpaceHome(this.props.location);
+    this.props.actions.goSpaceHome(this.props.location, this.props.settings);
   };
 
   render() {
