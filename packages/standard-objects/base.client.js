@@ -67,7 +67,7 @@ Steedos.StandardObjects = {
                 }
             },
             standard_approve:{
-                visible: function (object_name, record_id, record_permissions) {
+                visible: function (object_name, record_id, record_permissions, props) {
                     if (!Session.get("record_id")) {
                         /*只在详细界面显示这个action*/
                         return false;
@@ -76,7 +76,7 @@ Steedos.StandardObjects = {
                     if (record_permissions && !record_permissions["allowEdit"]) {
                         return false;
                     }
-                    record = Creator.getObjectRecord(object_name, record_id);
+                    record = props.record;
                     record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
                     if (record_permissions && !record_permissions["allowEdit"]) {
                         return false;
@@ -87,18 +87,7 @@ Steedos.StandardObjects = {
                     if (!object_workflow) {
                         return false;
                     }
-                    var queryResult = Steedos.authRequest("/graphql", {
-                        type: 'POST',
-                        async: false,
-                        data: JSON.stringify({
-                            query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
-                        }),
-                        type: 'POST',
-                        contentType: 'application/json',
-                        error: function () { }
-                    });
-                    var recordDoc = queryResult && queryResult.data && queryResult.data.record;
-                    if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
+                    if (record && record.instances && record.instances.length > 0) {
                         return false;
                     }
                     return true;
@@ -111,37 +100,27 @@ Steedos.StandardObjects = {
                 }
             },
             standard_view_instance:{
-                visible: function (object_name, record_id, record_permissions) {
+                visible: function (object_name, record_id, record_permissions, props) {
                     if (!Session.get("record_id")) {
                         /*只在详细界面显示这个action*/
                         return false;
                     }
-                    var record;
-                    // record = Creator.getObjectRecord(object_name, record_id);
-                    var queryResult = Steedos.authRequest("/graphql", {
-                        type: 'POST',
-                        async: false,
-                        data: JSON.stringify({
-                            query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
-                        }),
-                        type: 'POST',
-                        contentType: 'application/json',
-                        error: function () { }
-                    });
-                    record = queryResult && queryResult.data && queryResult.data.record;
+                    var record = props.record;
                     if (record && !_.isEmpty(record.instances)) {
                         return true;
                     }
                     return false;
                 },
                 todo: function () {
+                    console.log(this)
+                    var record = this.record.record;
                     var data, instanceId, uobj, url;
-                    if (!this.record.instances || !this.record.instances[0]) {
+                    if (!record.instances || !record.instances[0]) {
                         toastr.error('申请单已删除');
                         // Template.creator_view.currentInstance.onEditSuccess();
                         return;
                     }
-                    instanceId = this.record.instances[0]._id;
+                    instanceId = record.instances[0]._id;
                     if (!instanceId) {
                         console.error('instanceId not exists');
                         return;

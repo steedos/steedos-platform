@@ -73,18 +73,15 @@ fields:
   instances:
     label: Instances
     type: grid
-    omit: true
-    hidden: true
+    visible_on: "{{false}}"
   instances.$._id:
     label: Instance ID
     type: text
-    omit: true
-    hidden: true
+    visible_on: "{{false}}"
   instances.$.state:
     label: State
     type: text
-    omit: true
-    hidden: true
+    visible_on: "{{false}}"
   sharing:
     label: Record Level Permission
     type: grid
