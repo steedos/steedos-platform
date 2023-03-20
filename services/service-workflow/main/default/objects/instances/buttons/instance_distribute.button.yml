@@ -55,10 +55,6 @@ amis_schema: |-
                           "distributeStepId": "${record.traces | last | pick:step}"
                         },
                         {
-                          "type": "tpl",
-                          "tpl": "${distribute_optional_users}"
-                        },
-                        {
                           "type": "steedos-select-user",
                           "label": "分发对象",
                           "name": "users",
@@ -151,7 +147,6 @@ amis_schema: |-
                               "componentId": "u:742f9c0dc8a1",
                               "args": {
                                 "value": {
-                                  "users": [],
                                   "distribute_optional_users": "${event.data.flow.distribute_optional_users|pick:id}"
                                 }
                               },
