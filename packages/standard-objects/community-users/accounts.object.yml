@@ -155,6 +155,8 @@ fields:
         value: Transportation
       - label: 公用事业
         value: Utilities
+      - label: 软件
+        value: Software
     filterable: true
   number_of_employees:
     type: number

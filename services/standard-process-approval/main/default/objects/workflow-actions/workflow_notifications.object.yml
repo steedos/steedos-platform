@@ -79,6 +79,7 @@ list_views:
     label: All Notifications
     filter_scope: space
     columns:
+      - label
       - object_name
       - name
       - title

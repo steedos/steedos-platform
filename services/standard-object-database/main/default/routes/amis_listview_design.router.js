@@ -24,7 +24,7 @@ router.get('/api/amisListviewDesign', core.requireAuthentication, async function
         //     authToken: userSession.authToken
         // }
 
-        const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/objects/${req.query.object}/object_listviews/grid?related_field_name=object`
+        const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}`;
 
