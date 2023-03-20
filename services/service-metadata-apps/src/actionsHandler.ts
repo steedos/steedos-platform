@@ -424,7 +424,7 @@ async function getAppsMenus(ctx) {
             menus.push(menu);
         }
     }
-    if (!mobile) {
+    // if (!mobile) {
         const setupApp = {
             code: 'admin',
             name: '设置',
@@ -434,7 +434,7 @@ async function getAppsMenus(ctx) {
         }
         const menu = await transformAppToMenus(ctx, setupApp, mobile, userSession, context);
         menus.push(menu);
-    }
+    // }
     return menus;
 }
 
