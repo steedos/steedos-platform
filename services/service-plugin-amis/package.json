@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "2.3.8",
+  "version": "2.3.9",
   "main": "package.service.js",
   "scripts": {
     "build": "node .scripts/build.tailwind.js"
@@ -13,5 +13,5 @@
   "dependencies": {
     "@steedos-widgets/amis-lib": "^1.0.10"
   },
-  "gitHead": "b2393877080bbb08d758ce883522d37bc0a12ba2"
+  "gitHead": "41e4b726e53a58ca651c4a513c51b7ea4301a0a1"
 }
