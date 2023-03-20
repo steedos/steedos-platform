@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-15 10:15:34
+ * @LastEditTime: 2023-03-17 15:28:17
  * @Description: 
  */
 import * as express from 'express';
@@ -35,6 +35,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     enable_bind_email: false,
     enable_saas: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true),
     enable_open_geetest: validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED)
+
   }
 
   if (config.tenant) {
@@ -87,6 +88,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     root_url: process.env.ROOT_URL,
     already_mail_service: already_mail_service,
     already_sms_service: already_sms_service,
-    serverInitInfo: serverInitInfo
+    serverInitInfo: serverInitInfo,
+    redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST
   })
 }

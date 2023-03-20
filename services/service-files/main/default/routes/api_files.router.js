@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-08-05 14:18:09
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-03-17 10:18:04
  * @Description: 
  */
 
@@ -17,7 +17,9 @@ const steedosAuth = require('@steedos/auth');
 
 /**
  * 下载文件
- * 增加环境变量 FILE_DOWNLOAD_NEED_AUTH 判断下载是否需要认证，如果此变量值为'false'则无需认证，否则需要认证
+ * 添加环境变量process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC，用于记录不需要认证的collectionName；
+    如：STEEDOS_CFS_DOWNLOAD_PUBLIC=avatars,images,files
+    默认值为avatars
  */
 
 /**

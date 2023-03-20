@@ -150,6 +150,7 @@
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "restriction_rules",
+                            "relatedKey": "object_name",
                             "perPage": 20
                         }
                     ]
@@ -162,6 +163,7 @@
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "share_rules",
+                            "relatedKey": "object_name",
                             "perPage": 20
                         }
                     ]

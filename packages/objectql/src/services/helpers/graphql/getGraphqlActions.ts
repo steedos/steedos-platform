@@ -604,6 +604,10 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                         size: fileRecord.original?.size,
                                         type: fileRecord.original?.type
                                     };
+                                }else{
+                                    fileValue = {
+                                        url: value
+                                    };
                                 }
                             }
                             displayObj[name] = fileValue;

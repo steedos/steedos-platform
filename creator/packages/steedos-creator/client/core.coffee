@@ -943,10 +943,13 @@ if Meteor.isClient
 			return false
 		userId = Meteor.userId();
 		spaceId = Steedos.spaceId();
-		token = Accounts._storedLoginToken();
+		authToken = Accounts._storedLoginToken();
 
 		# url添加验证参数
-		fileUrl = fileUrl + "?X-Space-Id=" + spaceId + "&X-User-Id=" + userId + "&X-Auth-Token=" + token;
+		authObject = { authToken : authToken }
+		token = window.btoa(JSON.stringify(authObject))
+		
+		fileUrl = fileUrl + '?token=' + token;
 
 		# pdf类型文件调用pdfjs进行在线预览
 		if Steedos.isPdfFile(fileName)
@@ -957,7 +960,6 @@ if Meteor.isClient
 			return Steedos.openWindow(openUrl);
 
 		openUrl = officeOnlineUrl + encodeURIComponent(fileUrl);
-		# console.log("-----openUrl------: ",openUrl);
 		return Steedos.openWindow(openUrl);
 	
 	Creator.isImageAttachment = (filename)->

@@ -14,6 +14,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Home from './pages/Home';
+import Link from './pages/Link';
 import Init from './pages/Init';
 import UpdatePassword from './pages/updatePassword';
 import CreateTenant from './pages/CreateTenant';
@@ -126,6 +127,8 @@ class Root extends React.PureComponent {
             {/* <LoggedInRoute path="/verify-mobile/:token" component={VerifyMobile} /> */}
             <LoggedInRoute path="/home" component={Home} />
             <LoggedInRoute path="/home/:spaceId" component={Home} />
+            <LoggedInRoute path="/link" component={Link} />
+
             <Redirect
               to={{
                 ...this.props.location,
