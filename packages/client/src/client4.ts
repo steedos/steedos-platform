@@ -289,7 +289,7 @@ export default class SteedosClient {
         return auth
     };
 
-    sendVerificationToken = (user: string,geetest:any) => {
+    sendVerificationToken = (user: string) => {
         this.trackEvent('api', 'api_users_verify');
         // console.log('执行了sendverficationtoken')
         const body: any = {

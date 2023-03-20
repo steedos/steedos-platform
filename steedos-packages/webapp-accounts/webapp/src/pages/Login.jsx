@@ -49,7 +49,6 @@ const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
   );
 };
 
-
 class Login extends React.Component {
 
   constructor(props, context) {
@@ -367,10 +366,8 @@ class Login extends React.Component {
         disabledSendVerificationstate: false,
         geetestValidate: geetestValidate
       })
-      console.log("onSuccess.....")
       captchaObj.reset()
     }).onError(() => {
-      console.log("onError....")
     })
   };
 
