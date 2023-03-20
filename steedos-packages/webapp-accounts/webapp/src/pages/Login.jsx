@@ -38,7 +38,7 @@ const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
   return (
     <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
       id={id}
-      disabled={(restTime > 0 || disabled) ? 'disabled': ''}
+      disabled={(restTime > 0 || disabled) ? 'disabled' : ''}
       type="button"
       onClick={(e) => {
         resetCountdown();
@@ -375,40 +375,36 @@ class Login extends React.Component {
 
   handlerGeetest = (captchaObj) => {
     captchaObj.appendTo("#captcha");
-    captchaObj.onReady( ()=> {
-    }).onSuccess( ()=> {
+    captchaObj.onReady(() => {
+    }).onSuccess(() => {
       var geetestValidate = captchaObj.getValidate();
       this.setState({
         canSendVerificationstate: false,
-        geetestValidate : geetestValidate
+        geetestValidate: geetestValidate
       })
       console.log("onSuccess.....")
-    }).onError( ()=> {
+    }).onError(() => {
       console.log("onError....")
     })
   };
 
   initGeetest = () => {
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
-    window.$.ajax({
-      url: url + "/accounts/geetest/geetest-init", // 加随机数防止缓存
-      type: "post",
-      dataType: "json",
-      success: (data) => {
-        // console.log('得到的数据是', data)
-        // 调用 initGeetest 初始化参数
-        // 参数1：配置参数
-        // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
+      fetch(url + "/accounts/geetest/geetest-init", {
+        method: 'POST',
+      }).then((response)=> {
+        return response.text()
+      }).then((data)=> {
+        // console.log('data',JSON.parse(data))
         window.initGeetest({
-          gt: data.gt,
-          challenge: data.challenge,
-          new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
-          offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+          gt: JSON.parse(data).gt,
+          challenge: JSON.parse(data).challenge,
+          new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
+          offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
           product: "float", // 产品形式，包括：float，popup
           width: "100%"
         }, this.handlerGeetest);
-      }
-    });
+      })
   }
 
   componentDidMount() {
