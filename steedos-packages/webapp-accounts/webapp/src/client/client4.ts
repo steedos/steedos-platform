@@ -276,8 +276,6 @@ export default class Client4 {
 
     sendVerificationToken = (user: string, geetest:any) => {
         this.trackEvent('api', 'api_users_verify');
-        console.log('拿到的user是',user)
-        console.log('拿到的geetes是',geetest)
         const body: any = {
             user: user,
             geetest: geetest,

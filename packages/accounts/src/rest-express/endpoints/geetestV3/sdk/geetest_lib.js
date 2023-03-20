@@ -35,10 +35,10 @@ class GeetestLib {
      * 验证初始化
      */
     async register(digestmod, params) {
-        this.gtlog(`register(): 开始验证初始化, digestmod=${digestmod}.`);
+        // this.gtlog(`register(): 开始验证初始化, digestmod=${digestmod}.`);
         const origin_challenge = await this.requestRegister(params);
         this.buildRegisterResult(origin_challenge, digestmod)
-        this.gtlog(`register(): 验证初始化, lib包返回信息=${this.libResult}.`);
+        // this.gtlog(`register(): 验证初始化, lib包返回信息=${this.libResult}.`);
         return this.libResult
     }
 
@@ -52,8 +52,8 @@ class GeetestLib {
             "sdk": GeetestLib.VERSION
         });
         const register_url = GeetestLib.API_URL + GeetestLib.REGISTER_URL;
-        console.log('register_url是', register_url)
-        this.gtlog(`requestRegister(): 验证初始化, 向极验发送请求, url=${register_url}, params=${JSON.stringify(params)}.`);
+        // console.log('register_url是', register_url)
+        // this.gtlog(`requestRegister(): 验证初始化, 向极验发送请求, url=${register_url}, params=${JSON.stringify(params)}.`);
         let origin_challenge;
         try {
             const res = await axios({
@@ -64,18 +64,18 @@ class GeetestLib {
             })
             // console.log('返回值是', res)
             const resBody = (res.status === 200) ? res.data : "";
-            this.gtlog(`requestRegister(): 验证初始化, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
+            // this.gtlog(`requestRegister(): 验证初始化, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
             origin_challenge = resBody["challenge"];
         } catch (e) {
-            this.gtlog("requestRegister(): 验证初始化, 请求异常，后续流程走宕机模式!, " + e.message);
+            // this.gtlog("requestRegister(): 验证初始化, 请求异常，后续流程走宕机模式!, " + e.message);
             origin_challenge = "";
         }
         return origin_challenge;
     }
     async localRegister() {
-        this.gtlog("获取当前缓存中bypass状态为fail，后续流程走宕机模式 ");
+        // this.gtlog("获取当前缓存中bypass状态为fail，后续流程走宕机模式 ");
         this.buildRegisterResult("", "")
-        this.gtlog(`register(): 验证初始化, lib包返回信息=${this.libResult}.`);
+        // this.gtlog(`register(): 验证初始化, lib包返回信息=${this.libResult}.`);
         return this.libResult
     }
     /**
@@ -118,7 +118,7 @@ class GeetestLib {
      * 正常流程下（即验证初始化成功），二次验证
      */
     async successValidate(challenge, validate, seccode, params) {
-        this.gtlog(`successValidate(): 开始二次验证 正常模式, challenge=${challenge}, validate=${validate}, seccode=${validate}.`);
+        // this.gtlog(`successValidate(): 开始二次验证 正常模式, challenge=${challenge}, validate=${validate}, seccode=${validate}.`);
         if (!this.checkParam(challenge, validate, seccode)) {
             this.libResult.setAll(0, "", "正常模式，本地校验，参数challenge、validate、seccode不可为空");
         } else {
@@ -131,7 +131,7 @@ class GeetestLib {
                 this.libResult.setAll(1, "", "");
             }
         }
-        this.gtlog(`successValidate(): 二次验证 正常模式, lib包返回信息=${this.libResult}.`);
+        // this.gtlog(`successValidate(): 二次验证 正常模式, lib包返回信息=${this.libResult}.`);
         return this.libResult;
     }
 
@@ -140,13 +140,13 @@ class GeetestLib {
      * 注意：由于是宕机模式，初衷是保证验证业务不会中断正常业务，所以此处只作简单的参数校验，可自行设计逻辑。
      */
     failValidate(challenge, validate, seccode) {
-        this.gtlog(`failValidate(): 开始二次验证 宕机模式, challenge=${challenge}, validate=${validate}, seccode=${seccode}.`);
+        // this.gtlog(`failValidate(): 开始二次验证 宕机模式, challenge=${challenge}, validate=${validate}, seccode=${seccode}.`);
         if (!this.checkParam(challenge, validate, seccode)) {
             this.libResult.setAll(0, "", "宕机模式，本地校验，参数challenge、validate、seccode不可为空.");
         } else {
             this.libResult.setAll(1, "", "");
         }
-        this.gtlog(`failValidate(): 二次验证 宕机模式, lib包返回信息=${this.libResult}.`);
+        // this.gtlog(`failValidate(): 二次验证 宕机模式, lib包返回信息=${this.libResult}.`);
         return this.libResult;
     }
 
@@ -162,7 +162,7 @@ class GeetestLib {
             "captchaid": this.geetest_id
         });
         const validate_url = GeetestLib.API_URL + GeetestLib.VALIDATE_URL;
-        this.gtlog(`requestValidate(): 二次验证 正常模式, 向极验发送请求, url=${validate_url}, params=${JSON.stringify(params)}.`);
+        // this.gtlog(`requestValidate(): 二次验证 正常模式, 向极验发送请求, url=${validate_url}, params=${JSON.stringify(params)}.`);
         let response_seccode;
         try {
             const res = await axios({
@@ -175,10 +175,10 @@ class GeetestLib {
                 // console.log(err)
             });
             const resBody = (res.status === 200) ? res.data : "";
-            this.gtlog(`requestValidate(): 二次验证 正常模式, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
+            // this.gtlog(`requestValidate(): 二次验证 正常模式, 与极验网络交互正常, 返回码=${res.status}, 返回body=${JSON.stringify(resBody)}.`);
             response_seccode = resBody["seccode"];
         } catch (e) {
-            this.gtlog("requestValidate(): 二次验证 正常模式, 请求异常, " + e.message);
+            // this.gtlog("requestValidate(): 二次验证 正常模式, 请求异常, " + e.message);
             response_seccode = "";
         }
         return response_seccode;

@@ -26,20 +26,19 @@ import { isString, each, compact, values } from 'lodash'
 // var axios = require('axios');
 
 const totalSeconds = 60;
-const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
+const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
     total: totalSeconds,
     lifecycle: "session"
   });
   let textColor = "text-blue-600 hover:text-blue-600"
-  if (restTime > 0) {
+  if (restTime > 0 || disabled) {
     textColor = "text-gray-300 hover:text-gray-300"
   }
   return (
-
     <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
       id={id}
-      disabled={restTime > 0}
+      disabled={(restTime > 0 || disabled) ? 'disabled': ''}
       type="button"
       onClick={(e) => {
         resetCountdown();
@@ -62,6 +61,7 @@ const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
 class Login extends React.Component {
 
   constructor(props, context) {
+
     super(props, context);
     let inApp = false
     let email = '';
@@ -78,6 +78,7 @@ class Login extends React.Component {
     if (this.props.location.search.indexOf(".meteor.local") > -1) {
       inApp = true;
     }
+
 
     this.state = {
       // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
@@ -107,9 +108,13 @@ class Login extends React.Component {
       mobile_verified: false,
       // brandImageError: false,
       inApp: inApp,
-      geetestValidate:''
-
+      geetestValidate: '',
+      canSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
     };
+    // if(this.props.tenant.enable_open_geetest
+    //   === true){
+    //   this.state.sendVerificationstate = 'disabled'
+    // }
 
 
 
@@ -368,37 +373,29 @@ class Login extends React.Component {
     })
   }
 
-
   handlerGeetest = (captchaObj) => {
-    window.$("#reApplyCodeBtn").click((e) => {
-      console.log('点击了按钮')
-      var geetestValidate = captchaObj.getValidate();
-      this.state.geetestValidate = geetestValidate
-      // this.sendVerificationToken(geetestValidate)
-      if (!geetestValidate) {
-        window.$("#notice").show();
-        setTimeout(function () {
-          window.$("#notice").hide();
-        }, 2000);
-        e.preventDefault();
-      }
-    });
-    // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
     captchaObj.appendTo("#captcha");
-    captchaObj.onReady(function () {
-      window.$("#wait").hide();
-    });
+    captchaObj.onReady( ()=> {
+    }).onSuccess( ()=> {
+      var geetestValidate = captchaObj.getValidate();
+      this.setState({
+        canSendVerificationstate: false,
+        geetestValidate : geetestValidate
+      })
+      console.log("onSuccess.....")
+    }).onError( ()=> {
+      console.log("onError....")
+    })
   };
 
   initGeetest = () => {
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
     window.$.ajax({
-      // url: process.env.REACT_APP_API_URL+"geetest/geetset-init?t=" + (new Date()).getTime(), // 加随机数防止缓存
       url: url + "/accounts/geetest/geetest-init", // 加随机数防止缓存
       type: "post",
       dataType: "json",
       success: (data) => {
-        console.log('得到的数据是', data)
+        // console.log('得到的数据是', data)
         // 调用 initGeetest 初始化参数
         // 参数1：配置参数
         // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
@@ -415,14 +412,13 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.settings.tenant.enable_open_geetest === true){
+    console.log()
+    if (this.props.settings.tenant.enable_open_geetest === true) {
       this.initGeetest()
     }
   }
 
   render() {
-
-
     return (
       <>
         <Background />
@@ -493,13 +489,14 @@ class Login extends React.Component {
                       placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
                       onChange={this.handleCodeChange}
                     />
-                    <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} />
+                    <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={this.state.canSendVerificationstate} />
+                    {/* <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={'dsiabled'} /> */}
                     {/* <ReApplyCodeBtn onClick={this.test} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/> */}
 
 
                   </div>
                   {/* <p id="notice" class="hide">请先完成验证</p> */}
-                  <div id='captcha'>
+                  <div id='captcha' onClick={this.onClickCaptcha}>
                     {/* <p id="wait" class="show">正在加载验证码......</p> */}
                   </div>
                 </>
