@@ -17,14 +17,6 @@ import { useCountDown } from "../components/countdown";
 import LocalStorageStore from '../stores/local_storage_store';
 import { isString, each, compact, values } from 'lodash'
 
-// import { geetsetinit } from './geetest/geetest_init';
-// import { GeetestConfig} from './geetest/geetest_config'
-// import {GeetestLib} from './geetest/geetest_lib'
-// const GeetestConfig = require('./geetest/geetest_config')
-// const GeetestLib = require('./geetest/geetest_lib')
-
-// var axios = require('axios');
-
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
@@ -111,11 +103,6 @@ class Login extends React.Component {
       geetestValidate: '',
       disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
     };
-    // if(this.props.tenant.enable_open_geetest
-    //   === true){
-    //   this.state.sendVerificationstate = 'disabled'
-    // }
-
 
 
     // if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
@@ -233,8 +220,6 @@ class Login extends React.Component {
   }
 
   sendVerificationToken = () => {
-
-
     this.setState({ serverError: null, loading: true });
     if (this.state.loginBy === 'email' && !this.state.email.trim()) {
       this.setState({
@@ -349,7 +334,6 @@ class Login extends React.Component {
 
     });
   };
-
 
   finishSignin = (team) => {
     const currentUser = this.props.currentUser;
@@ -487,9 +471,6 @@ class Login extends React.Component {
                       onChange={this.handleCodeChange}
                     />
                     <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate} />
-                    {/* <ReApplyCodeBtn onClick={this.test} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/> */}
-
-
                   </div>
                   <div id='captcha' onClick={this.onClickCaptcha}>
                   </div>

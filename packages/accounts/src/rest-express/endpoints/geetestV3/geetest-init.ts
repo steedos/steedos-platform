@@ -23,7 +23,6 @@ export const geetest_init = (data: any) => async (
         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
         const digestmod = "md5";
         const userId = "test";
-        // const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
         const params = { "digestmod": digestmod, "user_id": userId, "client_type": "web", "ip_address": "127.0.0.1" }
         const bypasscache = geetest_status
         let result;
@@ -42,7 +41,6 @@ export const geetest_init = (data: any) => async (
 
 // 二次验证接口，POST请求
 export const geetest_validate = async function (req, res, next) {
-    // console.log('环境变量是', process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED)
     if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
         const challenge = req.body.geetest[GeetestLib.GEETEST_CHALLENGE];
@@ -80,7 +78,6 @@ async function sendRequest(params) {
             params: params
         });
         const resBody = (res.status === 200) ? res.data : "";
-        // console.log(resBody)
         bypass_res = resBody["status"];
     } catch (e) {
         bypass_res = "";
@@ -104,7 +101,6 @@ async function checkBypassStatus() {
             bypass_status = "fail"
             geetest_status = 'fail'
         }
-        // console.log(bypass_status)
         await sleep();
     }
 }
