@@ -109,7 +109,7 @@ class Login extends React.Component {
       // brandImageError: false,
       inApp: inApp,
       geetestValidate: '',
-      canSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
+      disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
     };
     // if(this.props.tenant.enable_open_geetest
     //   === true){
@@ -262,10 +262,11 @@ class Login extends React.Component {
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
 
-
+    this.setState({
+      disabledSendVerificationstate:true
+    })
 
     this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
-      // console.log('xxxxxx')
       this.state.userId = userId;
       if (!userId)
         this.setState({
@@ -379,10 +380,11 @@ class Login extends React.Component {
     }).onSuccess(() => {
       var geetestValidate = captchaObj.getValidate();
       this.setState({
-        canSendVerificationstate: false,
+        disabledSendVerificationstate: false,
         geetestValidate: geetestValidate
       })
       console.log("onSuccess.....")
+      captchaObj.reset()
     }).onError(() => {
       console.log("onError....")
     })
@@ -395,7 +397,6 @@ class Login extends React.Component {
       }).then((response)=> {
         return response.text()
       }).then((data)=> {
-        // console.log('data',JSON.parse(data))
         window.initGeetest({
           gt: JSON.parse(data).gt,
           challenge: JSON.parse(data).challenge,
@@ -485,15 +486,12 @@ class Login extends React.Component {
                       placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
                       onChange={this.handleCodeChange}
                     />
-                    <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={this.state.canSendVerificationstate} />
-                    {/* <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={'dsiabled'} /> */}
+                    <ReApplyCodeBtn id="reApplyCodeBtn" onClick={this.sendVerificationToken} loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate} />
                     {/* <ReApplyCodeBtn onClick={this.test} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/> */}
 
 
                   </div>
-                  {/* <p id="notice" class="hide">请先完成验证</p> */}
                   <div id='captcha' onClick={this.onClickCaptcha}>
-                    {/* <p id="wait" class="show">正在加载验证码......</p> */}
                   </div>
                 </>
               )}
