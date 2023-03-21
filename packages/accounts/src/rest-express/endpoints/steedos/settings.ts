@@ -11,6 +11,7 @@ import { AccountsServer } from '../../../server';
 import { getSteedosConfig, getSteedosSchema } from '@steedos/objectql'
 import { db } from '../../../db';
 import { canSendEmail, canSendSMS, getSteedosService } from '../../../core';
+const validator = require('validator');
 
 const clone = require('clone');
 
@@ -32,6 +33,9 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     enable_email_code_login: false,
     enable_bind_mobile: false,
     enable_bind_email: false,
+    enable_saas: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true),
+    enable_open_geetest: validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED || 'false')
+    
   }
 
   if (config.tenant) {
@@ -80,6 +84,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     root_url: process.env.ROOT_URL,
     already_mail_service: already_mail_service,
     already_sms_service: already_sms_service,
-    serverInitInfo: serverInitInfo
+    serverInitInfo: serverInitInfo,
+    redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST
   })
 }

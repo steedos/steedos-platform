@@ -24,6 +24,7 @@ import { changeUserFullname } from './endpoints/put-user-name';
 import { login } from './endpoints/login';
 import { getMySpaces } from './endpoints/spaces';
 import { verify_email, verify_mobile} from './endpoints/password/verify';
+import { geetest_init,geetest_validate } from './endpoints/geetestV3/geetest-init'
 
 
 const defaultOptions: AccountsExpressOptions = {
@@ -80,12 +81,13 @@ const accountsExpress = (
 
     router.post(`${path}/password/sendVerificationEmail`, sendVerificationEmail(accountsServer));
 
-    router.post(`${path}/password/sendVerificationCode`, sendVerificationCode(accountsServer));
+    router.post(`${path}/password/sendVerificationCode`,geetest_validate ,sendVerificationCode(accountsServer));
 
     router.post(`${path}/password/sendResetPasswordEmail`, sendResetPasswordEmail(accountsServer));
 
     router.post(`${path}/password/verify/email`, userLoader(accountsServer), verify_email(accountsServer));
     router.post(`${path}/password/verify/mobile`, userLoader(accountsServer), verify_mobile(accountsServer));
+    router.post(`${path}/geetest/geetest-init`, geetest_init(accountsServer));
     
     router.post(
       `${path}/password/changePassword`,
