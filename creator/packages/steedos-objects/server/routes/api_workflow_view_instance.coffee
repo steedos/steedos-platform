@@ -65,7 +65,7 @@ JsonRoutes.add 'post', '/api/workflow/view/:instanceId', (req, res, next) ->
 					}
 				})
 
-				throw new Meteor.Error('error', '申请单已删除')
+				throw new Meteor.Error('error', '未找到申请单，可能已被删除，请重新发起审批。')
 
 	catch e
 		JsonRoutes.sendResult res, {

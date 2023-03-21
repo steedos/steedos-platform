@@ -118,6 +118,7 @@ Steedos.StandardObjects = {
                     if (!record.instances || !record.instances[0]) {
                         toastr.error('申请单已删除');
                         // Template.creator_view.currentInstance.onEditSuccess();
+                        FlowRouter.reload();
                         return;
                     }
                     instanceId = record.instances[0]._id;
@@ -151,6 +152,7 @@ Steedos.StandardObjects = {
                                     toastr.error(e.errorMessage);
                                 });
                                 // Template.creator_view.currentInstance.onEditSuccess();
+                                FlowRouter.reload();
                                 return;
                             } else if (responseText.redirect_url) {
                                 if (Meteor.settings.public.webservices && Meteor.settings.public.webservices.workflow && Meteor.settings.public.webservices.workflow.url) {
@@ -165,6 +167,7 @@ Steedos.StandardObjects = {
                             $(document.body).removeClass('loading');
                             toastr.error(msg);
                             // Template.creator_view.currentInstance.onEditSuccess();
+                            FlowRouter.reload();
                         }
                     });
                 }

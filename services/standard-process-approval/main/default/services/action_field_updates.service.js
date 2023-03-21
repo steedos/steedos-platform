@@ -137,7 +137,7 @@ module.exports = {
                 if (objectConfig) {
                     steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
                     _.forEach(objectConfig.fields, function (field, fname) {
-                        if (["formula", "summary", "autonumber"].indexOf(field.type) < 0 && !field.hidden && !field.omit && !field.readonly && field.visible_on !== '{{false}}') {
+                        if (["formula", "summary", "autonumber"].indexOf(field.type) < 0 ) {
                             /*公式、累计汇总、自动编号三种字段类型是只读的，不允许字段更新来变更其值*/
                             options.push({
                                 label: field.label,
