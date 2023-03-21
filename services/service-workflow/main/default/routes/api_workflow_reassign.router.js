@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 14:38:27
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-07 15:32:38
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-18 14:32:35
  * @Description: 
  */
 'use strict';
@@ -49,7 +49,7 @@ router.post('/api/workflow/reassign', core.requireAuthentication, async function
                     // 验证instance为审核中状态
                     uuflowManager.isInstancePending(instance);
                     // 验证当前执行转签核的trace未结束
-                    last_trace_from_client = _.last(instance_from_client["traces"]);
+                    last_trace_from_client = _.last(instance["traces"]);
                     last_trace = _.find(instance.traces, function (t) {
                         return t._id === last_trace_from_client["_id"];
                     });

@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-space",
-    "version": "2.4.0",
+    "version": "2.4.3",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "70a4e7417d8d86c47cf5c7e3bbe0e89f2cee4222"
+    "gitHead": "802cae87c7da664458bf1d2321d65808ed1d243a"
 }

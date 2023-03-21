@@ -462,6 +462,8 @@ InstanceformTemplate.helpers =
 			# renderer = new Markdown.Renderer();
 			# renderer.link = ( href, title, text ) ->
 			# 	return "<a target='_blank' href='#{href}' title='#{title}'>#{text}</a>"
+			if Meteor.isServer
+				marked = Npm.require('marked')
 			return Spacebars.SafeString(marked.parse(markDownString))
 
 	f_label: (that)->

@@ -61,7 +61,39 @@ amis_schema: |-
                                                   "option": "将原表单存储为附件"
                                               }
                                           ],
-                                          "mode": "normal"
+                                          "mode": "normal",
+                                          "api": {
+                                                "url": "${context.rootUrl}/api/workflow/v2/instance/forward",
+                                                "method": "post",
+                                                "data": {
+                                                    "&": "$$",
+                                                    "record": "${record}",
+                                                    "context": "${context}"
+                                                },
+                                                "requestAdaptor": "console.log('====', api);const { record, flow_id, description, context } = api.data; var from_approve_id = null; if(record.approve && record.approve._id){from_approve_id = record.approve._id}else if(window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id){from_approve_id = window.InstanceManager.getCurrentApprove()._id} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": true,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [context.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                },
+                                                "messages": {
+                                                    "success": "分发成功!",
+                                                    "failed": "分发失败"
+                                                }
+                                            },
+                                          "onEvent": {
+                                                "submitSucc": {
+                                                    "actions": [
+                                                        {
+                                                          "componentId": "",
+                                                          "args": {},
+                                                          "actionType": "closeDialog"
+                                                        },
+                                                        {
+                                                          "actionType": "custom",
+                                                          "script": "/* 自定义JS使用说明： \n * 1.动作执行函数doAction，可以执行所有类型的动作\n * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n * 3.事件对象event，在doAction之后执行event.stopPropagation = true;可以阻止后续动作执行\n*/\nconsole.log('doAction context', context)\nconsole.log('doAction event', event)\n_.each(event.data.result.data, (item) => {\n  let url = `/app/${event.data.appId}/instance_tasks/view/${item.instanceTasksId}`;\n   if(window.Meteor){url=`/workflow/space/${context.props.scope.context.tenantId}/inbox/${item.instanceId}`}\n   doAction({\n actionType: 'url',\n    args: {\n      url: url,\n      blank: true\n    }\n  });\n});\n\n"
+                                                        }
+                                                    ]
+                                                }
+                                            }
                                       }
                                   ],
                                   "id": "u:dde7a246d6ee",
@@ -94,31 +126,11 @@ amis_schema: |-
                                                           "actionType": "validate"
                                                       },
                                                       {
-                                                          "componentId": "",
-                                                          "args": {
-                                                              "api": {
-                                                                  "url": "${context.rootUrl}/api/workflow/v2/instance/forward",
-                                                                  "method": "post",
-                                                                  "data": {
-                                                                      "&": "$$",
-                                                                      "record": "${record}",
-                                                                      "context": "${context}"
-                                                                  },
-                                                                  "requestAdaptor": "console.log('====', api);const { record, flow_id, description, context } = api.data; var from_approve_id = null; if(record.approve && record.approve._id){from_approve_id = record.approve._id}else if(window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id){from_approve_id = window.InstanceManager.getCurrentApprove()._id} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": true,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [context.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;"
-                                                              },
-                                                              "messages": {}
-                                                          },
-                                                          "actionType": "ajax"
-                                                      },
-                                                      {
-                                                          "actionType": "custom",
-                                                          "script": "/* 自定义JS使用说明： \n * 1.动作执行函数doAction，可以执行所有类型的动作\n * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n * 3.事件对象event，在doAction之后执行event.stopPropagation = true;可以阻止后续动作执行\n*/\nconsole.log('doAction context', context)\nconsole.log('doAction event', event)\n_.each(event.data.new_ins_ids, (new_ins_id) => {\n  doAction({\n    actionType: 'url',\n    args: {\n      url: `/workflow/space/${context.props.scope.context.tenantId}/inbox/${new_ins_id}`,\n      blank: true\n    }\n  });\n});\n\n"
-                                                      },
-                                                      {
-                                                          "componentId": "",
-                                                          "args": {},
-                                                          "actionType": "closeDrawer"
-                                                      }
+                                                        "componentId": "u:64543b9b5f6d",
+                                                        "args": {
+                                                        },
+                                                        "actionType": "submit"
+                                                       }
                                                   ]
                                               }
                                           },

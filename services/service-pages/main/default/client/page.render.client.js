@@ -209,14 +209,14 @@
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
-
+            const rootUrl = __meteor_runtime_config__.ROOT_URL;
             const defData = lodash.defaultsDeep({}, data , {data: data} , {
                 data: {
                     app_id: data.appId,
                     object_name: data.objectName,
                     record_id: data.recordId,
                     context: {
-                        rootUrl: __meteor_runtime_config__.ROOT_URL,
+                        rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
                         tenantId: Creator.USER_CONTEXT.spaceId,
                         userId: Creator.USER_CONTEXT.userId,
                         authToken: Creator.USER_CONTEXT.user.authToken,
@@ -779,7 +779,7 @@
                           hiddenOn: "${app.showSidebar != true}",
                           body: [{
                             type: "wrapper",
-                            className: 'sidebar-wrapper px-0 pt-4 pb-16 fixed z-20 h-full ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64',
+                            className: 'sidebar-wrapper px-0 pt-4 pb-24 fixed z-20 h-full ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64',
                             body: [
                                 {
                                   "type": "steedos-app-launcher",

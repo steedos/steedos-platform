@@ -1,5 +1,6 @@
 {
     "type": "page",
+    "className": "steedos-instance-wrapper",
     "body": [
       {
         "type": "service",
@@ -7,6 +8,7 @@
         "body": [
           {
             "type": "wrapper",
+            "className": "p-0",
             "body": [
               {
                 "type": "steedos-instance-detail",

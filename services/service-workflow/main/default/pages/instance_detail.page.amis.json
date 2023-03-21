@@ -1,8 +1,10 @@
 {
     "type": "page",
+    "className": "steedos-instance-wrapper",
     "body": [
       {
         "type": "wrapper",
+        "className": "p-0",
         "body": [
           {
             "type": "steedos-instance-detail",

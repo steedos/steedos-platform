@@ -21,15 +21,6 @@
                     "visibleOn": "this.badge > 0",
                     "text": "${badge | toInt}"
                 },
-                "onEvent": {
-                    "@data.changed.instance_tasks": {
-                        "actions": [
-                            {
-                                "actionType": "reload"
-                            }
-                        ]
-                    }
-                },
                 "source": {
                     "method": "get",
                     "url": "${context.rootUrl}/api/${appId}/workflow/nav",
@@ -39,7 +30,15 @@
                     "responseData": null,
                     "adaptor": ""
                 },
-                "source__": "${nav}"
+                "onEvent": {
+                    "@data.changed.instance_tasks": {
+                        "actions": [
+                            {
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
             },
             "showDisplayAs": true,
             "className": "h-full w-full bg-white"
@@ -70,5 +69,21 @@
         }
     },
     "className": "h-full w-full",
-    "id": "u:4dd57bf1a99a"
+    "id": "u:4dd57bf1a99a",
+    "onEvent": {
+        "@data.changed.steedos_keyvalues": {
+            "actions": [
+                {
+                    "actionType": "broadcast",
+                    "args": {
+                        "eventName": "@data.changed.instance_tasks"
+                    },
+                    "data": {
+                        "objectName": "instance_tasks",
+                        "recordId": "reload"
+                    }
+                }
+            ]
+        }
+    }
 }

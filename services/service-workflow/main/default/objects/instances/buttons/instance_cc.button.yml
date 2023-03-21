@@ -74,18 +74,19 @@ amis_schema: |-
                                             "onEvent": {
                                                 "submitSucc": {
                                                     "actions": [
-                                                        {
+                                                       {
+                                                        "actionType": "broadcast",
+                                                        "args": {
+                                                            "eventName": "@data.@instanceDetail.changed"
+                                                        },
+                                                        "data": {
+                                                            
+                                                        }
+                                                      },
+                                                       {
                                                           "componentId": "",
                                                           "args": {},
                                                           "actionType": "closeDialog"
-                                                        },
-                                                        {
-                                                            "componentId": "",
-                                                            "args": {
-                                                                "blank": false,
-                                                                "url": "/workflow/space/${context.tenantId}/${record.box}"
-                                                            },
-                                                            "actionType": "url"
                                                         }
                                                     ]
                                                 }
