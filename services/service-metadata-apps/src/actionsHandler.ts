@@ -130,11 +130,13 @@ function checkTabMobile(tab, mobile) {
 }
 function checkAppMobile(app, mobile) {
     let isChecked = false;
+    // 手机端访问
     if (mobile === true || mobile === "true") {
-        isChecked = app.mobile !== false;
+        isChecked = app.mobile === true;
     }
     else {
-        isChecked = app.is_creator !== false;
+        // 桌面端访问
+        isChecked = app.is_creator === true
     }
     return isChecked;
 }
@@ -383,7 +385,7 @@ async function getAppsMenus(ctx) {
         assigned_apps = allApps;
     }
     const _userApps = _.filter(assigned_apps, function (config) {
-        if (!config.is_creator || !config.visible) {
+        if (!config.visible) {
             return false;
         }
 
@@ -430,7 +432,9 @@ async function getAppsMenus(ctx) {
             name: '设置',
             icon_slds: 'settings',
             description: '管理员设置公司、人员、权限等。',
-            children: []
+            children: [],
+            mobile: true,
+            is_creator: true,
         }
         const menu = await transformAppToMenus(ctx, setupApp, mobile, userSession, context);
         menus.push(menu);
