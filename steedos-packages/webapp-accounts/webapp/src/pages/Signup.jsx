@@ -238,9 +238,11 @@ class Signup extends React.Component {
       email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
-    this.setState({
-      disabledSendVerificationstate: true
-    })
+    if(this.props.settings.tenant.enable_open_geetest === true){
+      this.setState({
+        disabledSendVerificationstate:true
+      })
+    }
 
     this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
       this.state.userId = userId;

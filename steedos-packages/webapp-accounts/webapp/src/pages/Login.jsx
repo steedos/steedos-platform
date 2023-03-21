@@ -246,10 +246,11 @@ class Login extends React.Component {
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
 
-    this.setState({
-      disabledSendVerificationstate:true
-    })
-
+    if(this.props.settings.tenant.enable_open_geetest === true){
+      this.setState({
+        disabledSendVerificationstate:true
+      })
+    }
     this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
       this.state.userId = userId;
       if (!userId)
