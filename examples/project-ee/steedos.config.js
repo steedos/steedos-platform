@@ -16,5 +16,16 @@ module.exports = {
 	started(broker) {
 		broker.createService(require("@steedos/service-enterprise"));
 	},
+	// 添加settings自定义配置
+    settings: {
+        sms: {
+            qcloud: {
+                smsqueue_interval: 1000, //默认1秒轮询一次短信队列
+                sdkappid: process.env.STEEDOS_SMS_QCLOUD_SDKAPPID,
+                appkey: process.env.STEEDOS_SMS_QCLOUD_APPKEY,
+                signname: process.env.STEEDOS_SMS_QCLOUD_SIGNNAME
+            }
+        }
+    }
 
 };

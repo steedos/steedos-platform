@@ -34,6 +34,8 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     enable_bind_mobile: false,
     enable_bind_email: false,
     enable_saas: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true),
+    enable_open_geetest: validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED || 'false')
+
   }
 
   if (config.tenant) {

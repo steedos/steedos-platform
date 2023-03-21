@@ -169,13 +169,12 @@ export function getMe(): ActionFunc {
   };
 }
 
-export function sendVerificationToken(loginId: string): ActionFunc {
+export function sendVerificationToken(loginId: string, geetest:any): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         const deviceId = getState().entities.general.deviceToken;
         let data;
-  
         try {
-            data = await Client4.sendVerificationToken(loginId);
+            data = await Client4.sendVerificationToken(loginId, geetest);
         } catch (error: any) {
             dispatch(batchActions([
                 {
@@ -184,9 +183,8 @@ export function sendVerificationToken(loginId: string): ActionFunc {
                 },
                 //logError(error),
             ]));
-            return {error};
+            return {error}
         }
-  
         return data;
     };
   }

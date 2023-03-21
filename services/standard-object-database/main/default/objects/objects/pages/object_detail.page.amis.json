@@ -112,6 +112,7 @@
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "permission_objects",
+                            "relatedKey": "object_name",
                             "perPage": 20
                         }
                     ]

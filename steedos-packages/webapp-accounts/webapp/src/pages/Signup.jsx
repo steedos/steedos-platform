@@ -17,34 +17,34 @@ import { useCountDown } from "../components/countdown";
 import { validatePassword } from '../client/password';
 
 const totalSeconds = 60;
-const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
+const ReApplyCodeBtn = ({ onClick, id, loginId,disabled }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
     total: totalSeconds,
     lifecycle: "session"
   });
   let textColor = "text-blue-600 hover:text-blue-600"
-  if (restTime > 0) {
+  if (restTime > 0 || disabled) {
     textColor = "text-gray-300 hover:text-gray-300"
   }
   return (
 
-  <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
-    id={id}
-    disabled={restTime > 0}
-    type="button"
-    onClick={(e) => {
+    <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
+      id={id}
+      disabled={(restTime > 0 || disabled) ? 'disabled' : ''}
+      type="button"
+      onClick={(e) => {
         resetCountdown();
-        if(onClick){
+        if (onClick) {
           onClick();
         }
-    }}>
+      }}>
       <span className="">
         <FormattedMessage
           id='accounts.sendCode'
-          defaultMessage='Get Verify code' 
+          defaultMessage='Get Verify code'
         />{restTime > 0 ? ` (${restTime})` : null}
       </span>
-  </button>
+    </button>
 
   );
 };
@@ -71,33 +71,35 @@ class Signup extends React.Component {
     let spaceId = this.props.settingsTenantId
 
     this.state = {
-        // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
-        // samlEnabled: this.props.isLicensed && this.props.enableSaml,
-        invite_token,
-        spaceId,
-        email,
-        mobile,
-        userId: '',
-        password: '',
-        verifyCode: '',
-        sessionExpired: false,
-        loginSuccess: false,
+      // ldapEnabled: this.props.isLicensed && this.props.enableLdap,
+      // samlEnabled: this.props.isLicensed && this.props.enableSaml,
+      invite_token,
+      spaceId,
+      email,
+      mobile,
+      userId: '',
+      password: '',
+      verifyCode: '',
+      sessionExpired: false,
+      loginSuccess: false,
 
-        loginByEmail: false,
-        loginByMobile: false,
-        loginBy: "mobile",
-        
-        loginWithCode: false,
-        loginWithPassword: false,
+      loginByEmail: false,
+      loginByMobile: false,
+      loginBy: "mobile",
 
-        serverError: '',
-        loading: false
+      loginWithCode: false,
+      loginWithPassword: false,
 
-        // brandImageError: false,
+      serverError: '',
+      loading: false,
+      geetestValidate: '',
+      disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
+
+      // brandImageError: false,
     };
 
-    
-    
+
+
     if (this.props.tenant.enable_mobile_code_login && this.props.tenant.enable_email_code_login) {
       this.state.loginWithCode = true;
       this.state.loginByEmail = true;
@@ -118,7 +120,7 @@ class Signup extends React.Component {
       this.state.loginByEmail = true;
       this.state.loginByMobile = false;
       this.state.loginBy = "email"
-    } 
+    }
 
     // this.state.loginWithCode = false
     // this.state.loginWithPassword = true
@@ -141,33 +143,33 @@ class Signup extends React.Component {
     let inputLabel = '';
     if (this.state.loginBy == "mobile")
       inputLabel = 'accounts.mobile';
-    else if (this.state.loginBy == "email") 
+    else if (this.state.loginBy == "email")
       inputLabel = 'accounts.email';
-    
+
     return Utils.localizeMessage(inputLabel)
   }
 
   handleEmailChange = (e) => {
     this.setState({
-        email: e.target.value,
+      email: e.target.value,
     });
   }
 
   handleNameChange = (e) => {
     this.setState({
-        name: e.target.value,
+      name: e.target.value,
     });
   }
 
   switchLoginByMobile = (e) => {
     this.setState({
-        loginBy: 'mobile',
+      loginBy: 'mobile',
     });
   }
 
   switchLoginByEmail = (e) => {
     this.setState({
-        loginBy: 'email',
+      loginBy: 'email',
     });
   }
 
@@ -180,7 +182,7 @@ class Signup extends React.Component {
 
   handleMobileChange = (e) => {
     this.setState({
-        mobile: e.target.value,
+      mobile: e.target.value,
     });
   }
 
@@ -196,7 +198,7 @@ class Signup extends React.Component {
     });
   }
 
-  goLogin = ()=>{
+  goLogin = () => {
     let state = {
       email: this.state.email,
       mobile: this.state.mobile,
@@ -210,33 +212,39 @@ class Signup extends React.Component {
 
   sendVerificationToken = (e) => {
 
-    this.setState({serverError: null, loading: true});
-    if(this.state.loginBy === 'email' && !this.state.email.trim()){
+    this.setState({ serverError: null, loading: true });
+    if (this.state.loginBy === 'email' && !this.state.email.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidEmail'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidEmail'
+          />
+        ),
       });
       return
     }
-    if(this.state.loginBy === 'mobile' && !this.state.mobile.trim()){
+    if (this.state.loginBy === 'mobile' && !this.state.mobile.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidMobile'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidMobile'
+          />
+        ),
       });
       return
     }
 
     const user = {
-      email: this.state.loginBy === 'email'?this.state.email.trim():'',
-      mobile: this.state.loginBy === 'mobile'?this.state.mobile.trim():'',
+      email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
+      mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
-    this.props.actions.sendVerificationToken(user).then(async (userId) => {
+    if(this.props.settings.tenant.enable_open_geetest === true){
+      this.setState({
+        disabledSendVerificationstate:true
+      })
+    }
+
+    this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
       this.state.userId = userId;
       // if (!userId)
       //   this.setState({
@@ -251,27 +259,27 @@ class Signup extends React.Component {
   }
 
   onSubmit = async (e) => {
-    this.setState({serverError: null, loading: true});
+    this.setState({ serverError: null, loading: true });
     e.preventDefault();
-    this.setState({error: null});
+    this.setState({ error: null });
 
-    if(this.state.loginBy === 'email' && !this.state.email.trim()){
+    if (this.state.loginBy === 'email' && !this.state.email.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidEmail'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidEmail'
+          />
+        ),
       });
       return
     }
-    if(this.state.loginBy === 'mobile' && !this.state.mobile.trim()){
+    if (this.state.loginBy === 'mobile' && !this.state.mobile.trim()) {
       this.setState({
-          serverError: (
-              <FormattedMessage
-                  id='accounts.invalidMobile'
-              />
-          ),
+        serverError: (
+          <FormattedMessage
+            id='accounts.invalidMobile'
+          />
+        ),
       });
       return
     }
@@ -291,8 +299,8 @@ class Signup extends React.Component {
     //   throw new Error('accounts.passwordRequired');
     // }
 
-    if(this.state.loginWithCode){
-      if(!this.state.verifyCode.trim()){
+    if (this.state.loginWithCode) {
+      if (!this.state.verifyCode.trim()) {
         this.setState({
           serverError: (
             <FormattedMessage
@@ -305,48 +313,48 @@ class Signup extends React.Component {
     }
 
     const user = {
-      password: this.state.password?this.state.password.trim():this.state.password,
+      password: this.state.password ? this.state.password.trim() : this.state.password,
       name: this.state.name.trim(),
       locale: Utils.getBrowserLocale(),
-      verifyCode: this.state.verifyCode?this.state.verifyCode.trim():this.state.verifyCode,
+      verifyCode: this.state.verifyCode ? this.state.verifyCode.trim() : this.state.verifyCode,
     }
 
-    if(user.password){
+    if (user.password) {
       try {
         validatePassword(this.props.settings.password, user.password, user.name)
       } catch (error) {
         this.setState({
           serverError: (
-              <FormattedMessage
-                  id={error.message}
-              />
+            <FormattedMessage
+              id={error.message}
+            />
           ),
         });
         return
       }
     }
 
-    if(this.state.spaceId){
+    if (this.state.spaceId) {
       user.spaceId = this.state.spaceId;
     }
-    
-    if(this.state.invite_token){
+
+    if (this.state.invite_token) {
       user.invite_token = this.state.invite_token
     }
 
-    if (this.state.loginBy === 'mobile'){
+    if (this.state.loginBy === 'mobile') {
       user.mobile = this.state.mobile
-    } else if (this.state.loginBy === 'email'){
+    } else if (this.state.loginBy === 'email') {
       user.email = this.state.email
     }
-    this.props.actions.createUser(user).then(async ({error, _next}) => {
+    this.props.actions.createUser(user).then(async ({ error, _next }) => {
       if (error) {
         this.setState({
-            serverError: (
-                <FormattedMessage
-                    id={error.message}
-                />
-            ),
+          serverError: (
+            <FormattedMessage
+              id={error.message}
+            />
+          ),
         });
         return;
       }
@@ -356,7 +364,7 @@ class Signup extends React.Component {
 
 
   finishSignin = (_next) => {
-    if(_next === 'TO_VERIFY_MOBILE'){
+    if (_next === 'TO_VERIFY_MOBILE') {
       const location = this.props.location;
       return GlobalAction.redirectUserToVerifyMobile(location)
     }
@@ -371,19 +379,19 @@ class Signup extends React.Component {
 
     if (redirectTo && redirectTo.match(/^\/([^/]|$)/)) {
       this.props.history.push(redirectTo);
-    // } else if (team) {
-    //     browserHistory.push(`/${team.name}`);
+      // } else if (team) {
+      //     browserHistory.push(`/${team.name}`);
     } else {
       this.state.loginSuccess = true;
       GlobalAction.redirectUserToDefaultSpace(this.props.location);
-      
+
     }
   }
 
-  goSignup = ()=>{
+  goSignup = () => {
     let state = {};
-    if(this.state.email.trim().length > 0){
-      state =  { email: this.state.email.trim() }
+    if (this.state.email.trim().length > 0) {
+      state = { email: this.state.email.trim() }
     }
     this.props.history.push({
       pathname: `/signup`,
@@ -391,24 +399,61 @@ class Signup extends React.Component {
       state: state
     })
   }
+  handlerGeetest = (captchaObj) => {
+    captchaObj.appendTo("#captcha");
+    captchaObj.onReady(() => {
+    }).onSuccess(() => {
+      var geetestValidate = captchaObj.getValidate();
+      this.setState({
+        disabledSendVerificationstate: false,
+        geetestValidate: geetestValidate
+      })
+      captchaObj.reset()
+    }).onError(() => {
+    })
+  };
+
+  initGeetest = () => {
+    const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
+    fetch(url + "/accounts/geetest/geetest-init", {
+      method: 'POST',
+    }).then((response) => {
+      return response.text()
+    }).then((data) => {
+      window.initGeetest({
+        gt: JSON.parse(data).gt,
+        challenge: JSON.parse(data).challenge,
+        new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
+        offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+        product: "float", // 产品形式，包括：float，popup
+        width: "100%"
+      }, this.handlerGeetest);
+    })
+  }
+
+  componentDidMount() {
+    if (this.props.settings.tenant.enable_open_geetest === true) {
+      this.initGeetest()
+    }
+  }
 
 
   render() {
 
     return (
-    <>
-    <Background/>
-    <Card>
-        <Logo/>
-        <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
-          <FormattedMessage
+      <>
+        <Background />
+        <Card>
+          <Logo />
+          <h2 className="mt-2 text-left text-2xl leading-9 font-extrabold text-gray-900">
+            <FormattedMessage
               id='accounts.signup'
               defaultMessage='Sign Up'
             />
-        </h2>
+          </h2>
 
-        <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
-          {/* {this.state.loginByMobile && this.state.loginByEmail && (
+          <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
+            {/* {this.state.loginByMobile && this.state.loginByEmail && (
           <nav className="flex -mb-px py-2">
             {this.state.loginByMobile && (
               <button
@@ -438,130 +483,134 @@ class Signup extends React.Component {
             }
           </nav>
           )} */}
-            
-          <div className="rounded-md shadow-sm my-2">
-            {this.state.loginBy === 'email' && (
-              <div>
-                <LocalizedInput 
-                  id="email"
-                  name="email" 
-                  ref={this.emailInput}
-                  value={this.state.email}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.email_placeholder', defaultMessage: 'Please enter email'}}
-                  onChange={this.handleEmailChange}
-                />
-              </div>
-            )}
 
-            {this.state.loginBy === 'mobile' && (
-              <div>
-                <LocalizedInput 
-                  id="mobile"
-                  name="mobile" 
-                  ref={this.mobileInput}
-                  value={this.state.mobile}
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                  placeholder={{id: 'accounts.mobile_placeholder', defaultMessage: 'Please enter mobile'}}
-                  onChange={this.handleMobileChange}
-                />
-              </div>
-            )}
-
-            <div className="-mt-px">
-              <LocalizedInput 
-                type="password"
-                id="password"
-                name="password" 
-                autocomplete="new-password"
-                value={this.state.password}
-                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                placeholder={{id: 'accounts.password_create', defaultMessage: 'Set Password'}}
-                onChange={this.handlePasswordChange}
-              />
-            </div>
-
-            {this.state.loginWithCode && (
-                <div className="-mt-px grid grid-cols-5">
-                  <LocalizedInput 
-                    id="verifyCode"
-                    name="verifyCode" 
-                    value={this.state.verifyCode}
-                    className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                    placeholder={{id: 'accounts.verifyCode', defaultMessage: 'Verify Code'}}
-                    onChange={this.handleCodeChange}
+            <div className="rounded-md shadow-sm my-2">
+              {this.state.loginBy === 'email' && (
+                <div>
+                  <LocalizedInput
+                    id="email"
+                    name="email"
+                    ref={this.emailInput}
+                    value={this.state.email}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                    placeholder={{ id: 'accounts.email_placeholder', defaultMessage: 'Please enter email' }}
+                    onChange={this.handleEmailChange}
                   />
-                  <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile}/>
-
                 </div>
-            )}
+              )}
 
-            <div className="-mt-px">
-              <LocalizedInput 
-                id="name"
-                name="name" 
-                value={this.state.name}
-                className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5" 
-                placeholder={{id: 'accounts.name_placeholder', defaultMessage: 'Name'}}
-                onChange={this.handleNameChange}
-              />
+              {this.state.loginBy === 'mobile' && (
+                <div>
+                  <LocalizedInput
+                    id="mobile"
+                    name="mobile"
+                    ref={this.mobileInput}
+                    value={this.state.mobile}
+                    className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                    placeholder={{ id: 'accounts.mobile_placeholder', defaultMessage: 'Please enter mobile' }}
+                    onChange={this.handleMobileChange}
+                  />
+                </div>
+              )}
+
+              <div className="-mt-px">
+                <LocalizedInput
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="new-password"
+                  value={this.state.password}
+                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                  placeholder={{ id: 'accounts.password_create', defaultMessage: 'Set Password' }}
+                  onChange={this.handlePasswordChange}
+                />
+              </div>
+
+              {this.state.loginWithCode && (
+                <>
+                  <div className="-mt-px grid grid-cols-5">
+                    <LocalizedInput
+                      id="verifyCode"
+                      name="verifyCode"
+                      value={this.state.verifyCode}
+                      className="col-span-3 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                      placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
+                      onChange={this.handleCodeChange}
+                    />
+                    <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate} />
+
+                  </div>
+                  <div id='captcha' onClick={this.onClickCaptcha}>
+                  </div>
+                </>
+              )}
+
+              <div className="-mt-px">
+                <LocalizedInput
+                  id="name"
+                  name="name"
+                  value={this.state.name}
+                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-md sm:leading-5"
+                  placeholder={{ id: 'accounts.name_placeholder', defaultMessage: 'Name' }}
+                  onChange={this.handleNameChange}
+                />
+              </div>
             </div>
-          </div>
-          
-          {this.state.serverError && <FormError error={this.state.serverError} />}
 
-          {this.state.loginByEmail && this.state.loginBy === 'mobile' && (
-            <div className="text-sm leading-5 my-4">
-              <button type="button" onClick={this.switchLoginByEmail}
-                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-                <FormattedMessage
+            {this.state.serverError && <FormError error={this.state.serverError} />}
+
+            {this.state.loginByEmail && this.state.loginBy === 'mobile' && (
+              <div className="text-sm leading-5 my-4">
+                <button type="button" onClick={this.switchLoginByEmail}
+                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                  <FormattedMessage
                     id='accounts.switch_email'
                     defaultMessage='Use email'
-                />
-              </button>
-            </div>
-          )}
+                  />
+                </button>
+              </div>
+            )}
 
-          {this.state.loginByMobile && this.state.loginBy === 'email' && (
-            <div className="text-sm leading-5 my-4">
-              <button type="button" onClick={this.switchLoginByMobile}
-                className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-                <FormattedMessage
+            {this.state.loginByMobile && this.state.loginBy === 'email' && (
+              <div className="text-sm leading-5 my-4">
+                <button type="button" onClick={this.switchLoginByMobile}
+                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                  <FormattedMessage
                     id='accounts.switch_mobile'
                     defaultMessage='Use mobile'
+                  />
+                </button>
+              </div>
+            )}
+
+
+            <div className="mt-6 flex justify-end">
+              <button type="submit" className=" group relative w-full justify-center rounded-md py-2 px-4 border border-transparent text-sm leading-5 font-medium text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+                <FormattedMessage
+                  id='accounts.submit'
+                  defaultMessage='Submit'
                 />
               </button>
             </div>
-          )}
-          
 
-          <div className="mt-6 flex justify-end">
-            <button type="submit" className=" group relative w-full justify-center rounded-md py-2 px-4 border border-transparent text-sm leading-5 font-medium text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
-              <FormattedMessage
-                id='accounts.submit'
-                defaultMessage='Submit'
-              />
-            </button>
-          </div>
-
-          {!(this.props.settings && this.props.settings.serverInitInfo && this.props.settings.serverInitInfo.allow_init) && 
-            <div className="text-sm leading-5 mt-6 text-center">
-            <FormattedMessage
+            {!(this.props.settings && this.props.settings.serverInitInfo && this.props.settings.serverInitInfo.allow_init) &&
+              <div className="text-sm leading-5 mt-6 text-center">
+                <FormattedMessage
                   id='accounts.has_account'
                   defaultMessage='Has Account?'
-              />
-            <button type="button" onClick={this.goLogin}
-              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-              <FormattedMessage
-                  id='accounts.signin'
-                  defaultMessage='Login'
-              />
-            </button>
-          </div>
-          }
-        </form>
-      </Card>
-    </>
+                />
+                <button type="button" onClick={this.goLogin}
+                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
+                  <FormattedMessage
+                    id='accounts.signin'
+                    defaultMessage='Login'
+                  />
+                </button>
+              </div>
+            }
+          </form>
+        </Card>
+      </>
     );
   };
 
@@ -578,10 +627,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-      actions: bindActionCreators({
-        createUser,
-        sendVerificationToken,
-      }, dispatch),
+    actions: bindActionCreators({
+      createUser,
+      sendVerificationToken,
+    }, dispatch),
   };
 }
 

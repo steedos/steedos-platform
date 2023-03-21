@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "lib/exports.js",
   "scripts": {
-    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=/ react-scripts start",
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true PORT=3001 PUBLIC_URL=/ react-scripts start",
     "build": "yarn build:react && yarn copy-to-public",
     "build:react": "cross-env GENERATE_SOURCEMAP=false NODE_ENV=production SKIP_PREFLIGHT_CHECK=true PUBLIC_URL=../../ react-scripts build && yarn build-after",
     "build-after": "mkdirp build/accounts && mkdirp build/accounts/a && mv build/index.html build/accounts/a/",

@@ -4,6 +4,14 @@ const objectql = require('@steedos/objectql');
 const objectTree = require('../objects/objects.tree.js');
 
 module.exports = {
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
+    beforeAggregate: async function () {
+        delete this.query.fields;
+    },
+
     afterFind: async function(){
         let userId = this.userId
         let spaceId = this.spaceId;

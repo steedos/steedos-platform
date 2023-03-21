@@ -16,20 +16,20 @@ import { getCurrentUserId, getCurrentUser } from '../selectors/entities/users';
 import { useCountDown } from "../components/countdown";
 
 const totalSeconds = 60;
-const ReApplyCodeBtn = ({ onClick, id, loginId }) => {
+const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
     const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
         total: totalSeconds,
         lifecycle: "session"
     });
     let textColor = "text-blue-600 hover:text-blue-600"
-    if (restTime > 0) {
+    if (restTime > 0 || disabled) {
         textColor = "text-gray-300 hover:text-gray-300"
     }
     return (
 
         <button className={"justify-center col-span-2 -ml-px relative inline-flex items-center px-3 py-3 border border-gray-300 text-sm leading-5 font-medium rounded-br-md bg-gray-100 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 transition ease-in-out duration-150 " + textColor}
             id={id}
-            disabled={restTime > 0}
+            disabled={(restTime > 0 || disabled) ? 'disabled' : ''}
             type="button"
             onClick={(e) => {
                 resetCountdown();
@@ -61,7 +61,9 @@ class VerifyMobile extends React.Component {
             mobile: '',
             verifyCode: '',
             serverError: '',
-            loading: false
+            loading: false,
+            geetestValidate: '',
+            disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
         };
         window.browserHistory = this.props.history;
         document.title = Utils.localizeMessage(`accounts.verify_${verifyBy}`) + ` | ${this.props.tenant.name}`;
@@ -110,12 +112,18 @@ class VerifyMobile extends React.Component {
         }
 
         const user = {
-            email: this.state.verifyBy === 'email'?this.state.email.trim():'',
-            mobile: this.state.verifyBy === 'mobile'?this.state.mobile.trim():'',
+            email: this.state.verifyBy === 'email' ? this.state.email.trim() : '',
+            mobile: this.state.verifyBy === 'mobile' ? this.state.mobile.trim() : '',
         }
+        if(this.props.settings.tenant.enable_open_geetest === true){
+            this.setState({
+              disabledSendVerificationstate:true
+            })
+        }
+
         this.props.actions.sendVerificationToken(user).then(async (userId) => {
-            if(userId && userId !== this.props.currentUserId){
-                if(this.state.verifyBy === 'email'){
+            if (userId && userId !== this.props.currentUserId) {
+                if (this.state.verifyBy === 'email') {
                     this.setState({
                         serverError: (
                             <FormattedMessage
@@ -125,7 +133,7 @@ class VerifyMobile extends React.Component {
                     });
                 }
 
-                if(this.state.verifyBy === 'mobile'){
+                if (this.state.verifyBy === 'mobile') {
                     this.setState({
                         serverError: (
                             <FormattedMessage
@@ -134,7 +142,7 @@ class VerifyMobile extends React.Component {
                         ),
                     });
                 }
-                
+
                 return
             }
         });
@@ -155,7 +163,7 @@ class VerifyMobile extends React.Component {
             });
             return
         }
-        
+
         if (this.state.verifyBy === 'mobile' && !this.state.mobile.trim()) {
             this.setState({
                 serverError: (
@@ -167,7 +175,7 @@ class VerifyMobile extends React.Component {
             return
         }
 
-        if(!this.state.verifyCode || !this.state.verifyCode.trim()){
+        if (!this.state.verifyCode || !this.state.verifyCode.trim()) {
             this.setState({
                 serverError: (
                     <FormattedMessage
@@ -178,7 +186,7 @@ class VerifyMobile extends React.Component {
             return
         }
 
-        if(this.state.verifyBy === 'email'){
+        if (this.state.verifyBy === 'email') {
             this.props.actions.verifyEmail(this.state.email.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
@@ -194,7 +202,7 @@ class VerifyMobile extends React.Component {
             });
         }
 
-        if(this.state.verifyBy === 'mobile'){
+        if (this.state.verifyBy === 'mobile') {
             this.props.actions.verifyMobile(this.state.mobile.trim(), this.state.verifyCode.trim()).then(async ({ error }) => {
                 if (error) {
                     this.setState({
@@ -217,6 +225,44 @@ class VerifyMobile extends React.Component {
         const tenant = this.props.tenant;
         const location = this.props.location;
         GlobalAction.finishSignin(currentUser, tenant, location)
+    }
+    handlerGeetest = (captchaObj) => {
+        captchaObj.appendTo("#captcha");
+        captchaObj.onReady(() => {
+        }).onSuccess(() => {
+            var geetestValidate = captchaObj.getValidate();
+            this.setState({
+                disabledSendVerificationstate: false,
+                geetestValidate: geetestValidate
+            })
+            captchaObj.reset()
+        }).onError(() => {
+        })
+    };
+
+    initGeetest = () => {
+        const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
+        fetch(url + "/accounts/geetest/geetest-init", {
+            method: 'POST',
+        }).then((response) => {
+            return response.text()
+        }).then((data) => {
+            window.initGeetest({
+                gt: JSON.parse(data).gt,
+                challenge: JSON.parse(data).challenge,
+                new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
+                offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                product: "float", // 产品形式，包括：float，popup
+                width: "100%"
+            }, this.handlerGeetest);
+        })
+    }
+
+    componentDidMount() {
+        console.log()
+        if (this.props.settings.tenant.enable_open_geetest === true) {
+            this.initGeetest()
+        }
     }
 
     render() {
@@ -272,9 +318,9 @@ class VerifyMobile extends React.Component {
                                     placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
                                     onChange={this.handleCodeChange}
                                 />
-                                <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} />
-
+                                <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate}/>
                             </div>
+                            <div id='captcha' onClick={this.onClickCaptcha}></div>
                         </div>
 
                         {this.state.serverError && <FormError error={this.state.serverError} />}
