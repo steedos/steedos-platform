@@ -34,19 +34,12 @@ fields:
     depend_on:
       - flow_id
     amis: 
-      "source": 
-        "method": "get"
-        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-        "sendOn": "!!this.flow_id"
       "autoComplete": 
         "method": "get"
         "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.flow_id"
-
   field_map.$.object_field:
     label: Field of Object
     type: lookup
@@ -55,17 +48,13 @@ fields:
     reference_to: object_fields
     reference_to_field: name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              var object_name = null;
-              if(values && values.object_name){
-                object_name = values.object_name;
-                if(_.isObject(object_name)){
-                  object_name = object_name.name
-                }
-              }
-              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
-            }
+    amis: 
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
   field_map_back:
     label: Field Mappings（from Workflow to Object）
     type: grid
@@ -81,29 +70,19 @@ fields:
     reference_to: object_fields
     reference_to_field: name
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        var object_name = null;
-              if(values && values.object_name){
-                object_name = values.object_name;
-                if(_.isObject(object_name)){
-                  object_name = object_name.name
-                }
-              }
-              return Creator.getObjectLookupFieldOptions(object_name, true, false, true);
-            }
+    amis: 
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
   field_map_back.$.workflow_field:
     label: Field of Workflow
     type: lookup
     depend_on:
       - flow_id
     amis: 
-      "source": 
-        "method": "get"
-        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
-        "headers": 
-          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-        "sendOn": "!!this.flow_id"
       "autoComplete": 
         "method": "get"
         "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
