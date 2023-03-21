@@ -285,6 +285,20 @@
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.select-all {
+  -webkit-user-select: all;
+     -moz-user-select: all;
+          user-select: all
+}
+
+.resize {
+  resize: both
+}
+
 .flex-col {
   flex-direction: column
 }
@@ -432,8 +446,8 @@
   padding-top: 1rem
 }
 
-.pb-16 {
-  padding-bottom: 4rem
+.pb-24 {
+  padding-bottom: 6rem
 }
 
 .pb-4 {
