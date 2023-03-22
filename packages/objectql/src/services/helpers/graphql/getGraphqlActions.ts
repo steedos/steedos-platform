@@ -240,7 +240,7 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
                     } else if (fType == "currency") {
                         displayObj[name] = doc[name] ? numberToString(doc[name], field.scale) : "";
                     } else if (fType == "percent") {
-                        displayObj[name] = `${doc[name] * 100}%`;
+                        displayObj[name] = doc[name] ? `${doc[name] * 100}%` : "";
                     } else if (fType == "password") {
                         displayObj[name] = "";
                         if (_.isString(doc[name])) {
