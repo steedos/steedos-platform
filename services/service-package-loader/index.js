@@ -159,7 +159,9 @@ module.exports = {
             objectql.getSteedosSchema(this.broker);
             packagePath = path.join(packagePath, '**');
             const datasource = objectql.getDataSource(datasourceName);
-            await datasource.init();
+            if(datasource){
+                await datasource.init();
+            }
             await objectql.loadStandardMetadata(name, datasourceName);
             await objectql.addAllConfigFiles(packagePath, datasourceName, name);
             await triggerLoader.load(this.broker, packagePath, name);
