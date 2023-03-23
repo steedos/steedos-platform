@@ -26,15 +26,19 @@
                     "url": "${context.rootUrl}/api/${appId}/workflow/nav",
                     "headers": {
                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                    },
-                    "responseData": null,
-                    "adaptor": ""
+                    }
                 },
                 "onEvent": {
-                    "@data.changed.instance_tasks": {
-                        "actions": [
+                    "click":{
+                        "actions":[
                             {
-                                "actionType": "reload"
+                                "actionType":"setValue",
+                                "componentId":"u:4dd57bf1a99a",
+                                "args":{
+                                    "value":{
+                                        "a":"aaaa"
+                                    }
+                                }
                             }
                         ]
                     }
@@ -60,6 +64,10 @@
             },
             "id": "u:987c489f7126",
             "visibleOn": "false"
+        },
+        {
+            "type":"tpl",
+            "tpl":"====${additionalFilters}"
         }
     ],
     "className": "h-full w-full",

@@ -246,9 +246,9 @@ class Login extends React.Component {
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
 
-    if(this.props.settings.tenant.enable_open_geetest === true){
+    if (this.props.settings.tenant.enable_open_geetest === true) {
       this.setState({
-        disabledSendVerificationstate:true
+        disabledSendVerificationstate: true
       })
     }
     this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
@@ -357,37 +357,38 @@ class Login extends React.Component {
       state: state
     })
   }
-
   handlerGeetest = (captchaObj) => {
-    captchaObj.appendTo("#captcha");
-    captchaObj.onReady(() => {
-    }).onSuccess(() => {
-      var geetestValidate = captchaObj.getValidate();
-      this.setState({
-        disabledSendVerificationstate: false,
-        geetestValidate: geetestValidate
+    var div = document.getElementById("#captcha");
+    if (div) {
+      captchaObj.appendTo("#captcha");
+      captchaObj.onReady(() => {
+      }).onSuccess(() => {
+        var geetestValidate = captchaObj.getValidate();
+        this.setState({
+          disabledSendVerificationstate: false,
+          geetestValidate: geetestValidate
+        })
+        captchaObj.reset()
+      }).onError(() => {
       })
-      captchaObj.reset()
-    }).onError(() => {
-    })
+    }
   };
-
   initGeetest = () => {
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
-      fetch(url + "/accounts/geetest/geetest-init", {
-        method: 'POST',
-      }).then((response)=> {
-        return response.text()
-      }).then((data)=> {
-        window.initGeetest({
-          gt: JSON.parse(data).gt,
-          challenge: JSON.parse(data).challenge,
-          new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
-          offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-          product: "float", // 产品形式，包括：float，popup
-          width: "100%"
-        }, this.handlerGeetest);
-      })
+    fetch(url + "/accounts/geetest/geetest-init", {
+      method: 'POST',
+    }).then((response) => {
+      return response.text()
+    }).then((data) => {
+      window.initGeetest({
+        gt: JSON.parse(data).gt,
+        challenge: JSON.parse(data).challenge,
+        new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
+        offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+        product: "float", // 产品形式，包括：float，popup
+        width: "100%"
+      }, this.handlerGeetest);
+    })
   }
 
   componentDidMount() {

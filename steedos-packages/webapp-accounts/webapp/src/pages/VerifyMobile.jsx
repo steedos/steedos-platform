@@ -115,9 +115,9 @@ class VerifyMobile extends React.Component {
             email: this.state.verifyBy === 'email' ? this.state.email.trim() : '',
             mobile: this.state.verifyBy === 'mobile' ? this.state.mobile.trim() : '',
         }
-        if(this.props.settings.tenant.enable_open_geetest === true){
+        if (this.props.settings.tenant.enable_open_geetest === true) {
             this.setState({
-              disabledSendVerificationstate:true
+                disabledSendVerificationstate: true
             })
         }
 
@@ -227,17 +227,20 @@ class VerifyMobile extends React.Component {
         GlobalAction.finishSignin(currentUser, tenant, location)
     }
     handlerGeetest = (captchaObj) => {
-        captchaObj.appendTo("#captcha");
-        captchaObj.onReady(() => {
-        }).onSuccess(() => {
-            var geetestValidate = captchaObj.getValidate();
-            this.setState({
-                disabledSendVerificationstate: false,
-                geetestValidate: geetestValidate
+        var div = document.getElementById("#captcha");
+        if (div) {
+            captchaObj.appendTo("#captcha");
+            captchaObj.onReady(() => {
+            }).onSuccess(() => {
+                var geetestValidate = captchaObj.getValidate();
+                this.setState({
+                    disabledSendVerificationstate: false,
+                    geetestValidate: geetestValidate
+                })
+                captchaObj.reset()
+            }).onError(() => {
             })
-            captchaObj.reset()
-        }).onError(() => {
-        })
+        }
     };
 
     initGeetest = () => {
@@ -318,7 +321,7 @@ class VerifyMobile extends React.Component {
                                     placeholder={{ id: 'accounts.verifyCode', defaultMessage: 'Verify Code' }}
                                     onChange={this.handleCodeChange}
                                 />
-                                <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate}/>
+                                <ReApplyCodeBtn onClick={this.sendVerificationToken} id="reApplyCodeBtn" loginId={this.state.email + this.state.mobile} disabled={this.state.disabledSendVerificationstate} />
                             </div>
                             <div id='captcha' onClick={this.onClickCaptcha}></div>
                         </div>

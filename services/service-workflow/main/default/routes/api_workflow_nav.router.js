@@ -13,6 +13,8 @@ const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
+const lodash = require('lodash');
+const { link } = require('fs');
 
 /**
 @api {get} /api/workflow/nav 获取用户
@@ -37,76 +39,44 @@ const _ = require('underscore');
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategoriesInbox = async (userId) => {
-  // console.log('取数据')
-  const filters = objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
+const getCategoriesInbox = async (userSession,req) => {
+  const { appId } = req.params;
+  const userId = userSession.userId;
+  const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
     box: "inbox", flowId: null, userId
   })
   const  data = await objectql.getObject('instance_tasks').find({
     filters: filters
+  }, userSession)
+  // console.log('得到的数据是',filters)
+ 
+  const output = [];
+  const categoryGroups = lodash.groupBy(data, 'category_name');
+  // console.log('分类后的数据是',categoryGroups)
+  lodash.each(categoryGroups, (v, k)=>{
+    let categoryBadge = 0;
+    const flowGroups = lodash.groupBy(v, 'flow_name');
+    const flows = [];
+    lodash.each(flowGroups, (v2, k2)=>{
+      categoryBadge += v2.length
+      flows.push({
+        label: k2,
+        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
+        flow_name: k2,
+        badge: v2.length
+      })
+    })
+    output.push({
+      label: k,
+      children: flows,
+        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
+      category_name:k,
+      badge: categoryBadge
+    })
   })
-  // console.log('得到的数据是',data)
-  // let data = [
-  //   {
-  //     category_name: "业务伙伴管理",
-  //     flow_name: '业务'
-
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理",
-  //     flow_name: '业务'
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理2",
-  //     flow_name: '业务'
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理2",
-  //     flow_name: '业务2'
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理2",
-  //     flow_name: '业务3'
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理2",
-  //     flow_name: '业务'
-  //   },
-  //   {
-  //     category_name: "业务伙伴管理3",
-  //     flow_name: '业务'
-  //   }
-
-  // ]
-
-  let arr = new Array()
-  for (let i = 0; i < data.length; i++) {
-    arr.push(data[i].category_name)
-  }
-  arr = [...new Set(arr)]
-  const output = arr.map((item) => ({
-    label: item,
-    children: []
-  }));
-
-  for (let i = 0; i < output.length; i++) {
-    let myarr = []
-    for (let j = 0; j < data.length; j++) {
-      if (data[j].category_name == output[i].label) {
-        myarr.push(data[j].flow_name)
-      }
-    }
-    myarr = [...new Set(myarr)]
-    for (let z = 0; z < myarr.length; z++) {
-      let obj = {}
-      obj.label = myarr[z]
-      output[i].children.push(obj)
-    }
-  }
-
+  // console.log('output',output)
   return output
 }
-
 
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
@@ -115,18 +85,17 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     const { appId } = req.params;
     const spaceId = userSession.spaceId;
     const userId = userSession.userId;
-    let mychildren = await getCategoriesInbox(userId)
-    console.log('mychidren', mychildren)
-    mychildren.forEach(item => {
-      console.log('mychildren.children', item.children)
-    })
+    let mychildren = await getCategoriesInbox(userSession,req)
+    // console.log('mychidren', mychildren)
+    // mychildren.forEach(item => {
+    //   console.log('mychildren.children', item.children)
+    // })
     let query = {
       filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
     };
     const steedosKeyValues = await objectql.getObject('steedos_keyvalues').find(query);
-    // console.log('数据是:',steedosKeyValues)
     let sum = steedosKeyValues && steedosKeyValues[0] && steedosKeyValues[0].value && steedosKeyValues[0].value.workflow;
-    var links = [
+    var options = [
       {
         "label": "待审核",
         "to": `/app/${appId}/instance_tasks/grid/inbox`,
@@ -168,12 +137,14 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     ];
     res.status(200).send({
       data: {
-        links: links
+        // links:ink
+        options:options
       },
       msg: "",
       status: 0
     });
   } catch (e) {
+    console.log(`e`, e)
     res.status(200).send({
       errors: [{ errorMessage: e.message }]
     });
