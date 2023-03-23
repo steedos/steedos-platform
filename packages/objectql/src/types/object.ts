@@ -1930,7 +1930,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 //共享规则
                 shareRuleFilters = await ShareRules.getUserObjectFilters(this.name, userSession);
 
-                if (!_.isEmpty(shareRuleFilters)) {
+                if (!_.isEmpty(shareRuleFilters) && !objPm.viewAllRecords) { // 如果用户没有查看所有的权限，才考虑共享规则；如有查看所有的权限，则无需考虑共享规则。
                     permissionFilters.push(`(${shareRuleFilters.join(' or ')})`);
                 }
 
@@ -1938,7 +1938,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 restrictionRuleFilters = await RestrictionRule.getUserObjectFilters(this.name, userSession);
 
                 if (!_.isEmpty(restrictionRuleFilters)) {
-                    userFilters.push(`(${restrictionRuleFilters.join(' or ')})`);
+                    userFilters.push(`(${restrictionRuleFilters.join(' and ')})`);
                 }
                 // objectPermissionFilters = this.getObjectPermissionFilters(objPm, userSession, false);
 
