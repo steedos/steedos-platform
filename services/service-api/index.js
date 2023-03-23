@@ -3,6 +3,7 @@
 const ApiGateway = require("moleculer-web");
 const steedosAuth = require('@steedos/auth');
 const { ApolloService } = require("moleculer-apollo-server");
+const { MoleculerServerError } = require("moleculer").Errors;
 const GraphQLJSON = require('graphql-type-json');
 const {
 	// GraphQLDate,
@@ -11,6 +12,75 @@ const {
 } = require('graphql-iso-date');
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
+
+const mixinOptions = {
+
+	// Global GraphQL typeDefs
+	typeDefs: ['scalar Date', `scalar JSON`],
+
+	// Global resolvers
+	resolvers: {
+		JSON: GraphQLJSON,
+		Date: GraphQLDateTime
+	},
+
+	// API Gateway route options
+	routeOptions: {
+		path: "/graphql",
+		// cors: true, //会导致response返回 access-control-allow-origin: *, 并进一步导致客户端请求时withCredentials: true参数带来的跨域错误
+		whitelist: [
+			"graphql"
+		],
+		// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
+		use: [],
+		// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
+		authentication: true,
+		// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
+		authorization: true,
+		// The auto-alias feature allows you to declare your route alias directly in your services.
+		// The gateway will dynamically build the full routes from service schema.
+		autoAliases: true,
+		aliases: {},
+		// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
+		callingOptions: {},
+		bodyParsers: {
+			json: {
+				strict: false,
+				limit: "10MB"
+			},
+			urlencoded: {
+				extended: true,
+				limit: "10MB"
+			}
+		},
+		// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
+		mappingPolicy: "all", // Available values: "all", "restrict"
+		// Enable/disable logging
+		logging: true,
+		// Route error handler
+		onError(req, res, err) {
+			res.setHeader("Content-Type", "application/json; charset=utf-8");
+			res.writeHead(err.code || 500);
+			res.end(JSON.stringify(err));
+		}
+	},
+
+	// https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html
+	serverOptions: {
+		tracing: process.env.NODE_ENV !== 'production',
+
+		engine: {
+			apiKey: process.env.APOLLO_ENGINE_KEY
+		},
+		subscriptions: false,
+		playground: {
+			settings: {
+				'request.credentials': 'same-origin'
+			}
+		},
+		introspection: true
+	}
+}
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -21,74 +91,7 @@ module.exports = {
 	name: "api",
 	mixins: [ApiGateway,
 		// GraphQL Apollo Server
-		ApolloService({
-
-			// Global GraphQL typeDefs
-			typeDefs: ['scalar Date', `scalar JSON`],
-
-			// Global resolvers
-			resolvers: {
-				JSON: GraphQLJSON,
-				Date: GraphQLDateTime
-			},
-
-			// API Gateway route options
-			routeOptions: {
-				path: "/graphql",
-				// cors: true, //会导致response返回 access-control-allow-origin: *, 并进一步导致客户端请求时withCredentials: true参数带来的跨域错误
-				whitelist: [
-					"graphql"
-				],
-				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
-				use: [],
-				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
-				authentication: true,
-				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
-				authorization: true,
-				// The auto-alias feature allows you to declare your route alias directly in your services.
-				// The gateway will dynamically build the full routes from service schema.
-				autoAliases: true,
-				aliases: {},
-				// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
-				callingOptions: {},
-				bodyParsers: {
-					json: {
-						strict: false,
-						limit: "10MB"
-					},
-					urlencoded: {
-						extended: true,
-						limit: "10MB"
-					}
-				},
-				// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
-				mappingPolicy: "all", // Available values: "all", "restrict"
-				// Enable/disable logging
-				logging: true,
-				// Route error handler
-				onError(req, res, err) {
-					res.setHeader("Content-Type", "application/json; charset=utf-8");
-					res.writeHead(err.code || 500);
-					res.end(JSON.stringify(err));
-				}
-			},
-
-			// https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html
-			serverOptions: {
-				tracing: process.env.NODE_ENV !== 'production',
-
-				engine: {
-					apiKey: process.env.APOLLO_ENGINE_KEY
-				},
-				subscriptions: false,
-				playground: {
-					settings: {
-						'request.credentials': 'same-origin'
-					}
-				},
-				introspection: true
-			}
-		})
+		ApolloService(mixinOptions)
 	],
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
@@ -107,7 +110,7 @@ module.exports = {
 		routes: [
 			{
 				aliases: {
-					"GET /api/health"(req, res){
+					"GET /api/health"(req, res) {
 						res.writeHead(200, { 'Content-Type': 'application/json' });
 						res.end(JSON.stringify({ status: 'ok' }));
 					}
@@ -259,7 +262,7 @@ module.exports = {
 		 * @param {String} actionName
 		 * @param {Object?} def
 		 */
-		 createActionResolver(actionName, def = {}) {
+		createActionResolver(actionName, def = {}) {
 			const {
 				dataLoader: useDataLoader = false,
 				nullIfError = false,
@@ -361,7 +364,7 @@ module.exports = {
 							);
 						}
 
-						return await context.ctx.call(actionName, mergedParams, { meta: {resolveInfo} });
+						return await context.ctx.call(actionName, mergedParams, { meta: { resolveInfo } });
 					}
 				} catch (err) {
 					if (nullIfError) {
@@ -376,11 +379,267 @@ module.exports = {
 			};
 		},
 
+		/**
+		 * Generate GraphQL Schema
+		 *
+		 * @param {Object[]} services
+		 * @returns {Object} Generated schema
+		 */
+		generateGraphQLSchema(services) {
+			let str;
+			try {
+				let typeDefs = [];
+				let resolvers = {};
+				let schemaDirectives = null;
+
+				if (mixinOptions.typeDefs) {
+					typeDefs = typeDefs.concat(mixinOptions.typeDefs);
+				}
+
+				if (mixinOptions.resolvers) {
+					resolvers = _.cloneDeep(mixinOptions.resolvers);
+				}
+
+				if (mixinOptions.schemaDirectives) {
+					schemaDirectives = _.cloneDeep(mixinOptions.schemaDirectives);
+				}
+
+				let queries = [];
+				let mutations = [];
+				let subscriptions = [];
+				let types = [];
+				let interfaces = [];
+				let unions = [];
+				let enums = [];
+				let inputs = [];
+
+				const processedServices = new Set();
+
+				services.forEach(service => {
+					const serviceName = this.getServiceName(service);
+
+					// Skip multiple instances of services
+					if (processedServices.has(serviceName)) return;
+					processedServices.add(serviceName);
+
+					if (service.settings && service.settings.graphql) {
+						// --- COMPILE SERVICE-LEVEL DEFINITIONS ---
+						if (_.isObject(service.settings.graphql)) {
+							const globalDef = service.settings.graphql;
+
+							if (globalDef.query) {
+								queries = queries.concat(globalDef.query);
+							}
+
+							if (globalDef.mutation) {
+								mutations = mutations.concat(globalDef.mutation);
+							}
+
+							if (globalDef.subscription) {
+								subscriptions = subscriptions.concat(globalDef.subscription);
+							}
+
+							if (globalDef.type) {
+								types = types.concat(globalDef.type);
+							}
+
+							if (globalDef.interface) {
+								interfaces = interfaces.concat(globalDef.interface);
+							}
+
+							if (globalDef.union) {
+								unions = unions.concat(globalDef.union);
+							}
+
+							if (globalDef.enum) {
+								enums = enums.concat(globalDef.enum);
+							}
+
+							if (globalDef.input) {
+								inputs = inputs.concat(globalDef.input);
+							}
+
+							if (globalDef.resolvers) {
+								resolvers = Object.entries(globalDef.resolvers).reduce(
+									(acc, [name, resolver]) => {
+										acc[name] = _.merge(
+											acc[name] || {},
+											this.createServiceResolvers(serviceName, resolver)
+										);
+										return acc;
+									},
+									resolvers
+								);
+							}
+						}
+					}
+
+					// --- COMPILE ACTION-LEVEL DEFINITIONS ---
+					const resolver = {};
+
+					Object.values(service.actions).forEach(action => {
+						const { graphql: def } = action;
+						if (
+							mixinOptions.checkActionVisibility &&
+							action.visibility != null &&
+							action.visibility != "published"
+						)
+							return;
+
+						if (def && _.isObject(def)) {
+							if (def.query) {
+								if (!resolver["Query"]) resolver.Query = {};
+
+								_.castArray(def.query).forEach(query => {
+									const name = this.getFieldName(query);
+									queries.push(query);
+									resolver.Query[name] = this.createActionResolver(
+										action.name
+									);
+								});
+							}
+
+							if (def.mutation) {
+								if (!resolver["Mutation"]) resolver.Mutation = {};
+
+								_.castArray(def.mutation).forEach(mutation => {
+									const name = this.getFieldName(mutation);
+									mutations.push(mutation);
+									resolver.Mutation[name] = this.createActionResolver(
+										action.name,
+										{
+											fileUploadArg: def.fileUploadArg,
+										}
+									);
+								});
+							}
+
+							if (def.subscription) {
+								if (!resolver["Subscription"]) resolver.Subscription = {};
+
+								_.castArray(def.subscription).forEach(subscription => {
+									const name = this.getFieldName(subscription);
+									subscriptions.push(subscription);
+									resolver.Subscription[name] =
+										this.createAsyncIteratorResolver(
+											action.name,
+											def.tags,
+											def.filter
+										);
+								});
+							}
+
+							if (def.type) {
+								types = types.concat(def.type);
+							}
+
+							if (def.interface) {
+								interfaces = interfaces.concat(def.interface);
+							}
+
+							if (def.union) {
+								unions = unions.concat(def.union);
+							}
+
+							if (def.enum) {
+								enums = enums.concat(def.enum);
+							}
+
+							if (def.input) {
+								inputs = inputs.concat(def.input);
+							}
+						}
+					});
+
+					if (Object.keys(resolver).length > 0) {
+						resolvers = _.merge(resolvers, resolver);
+					}
+				});
+
+				if (
+					queries.length > 0 ||
+					types.length > 0 ||
+					mutations.length > 0 ||
+					subscriptions.length > 0 ||
+					interfaces.length > 0 ||
+					unions.length > 0 ||
+					enums.length > 0 ||
+					inputs.length > 0
+				) {
+					str = "";
+					if (queries.length > 0) {
+						str += `
+							type Query {
+								${queries.join("\n")}
+							}
+						`;
+					}
+
+					if (mutations.length > 0) {
+						str += `
+							type Mutation {
+								${mutations.join("\n")}
+							}
+						`;
+					}
+
+					if (subscriptions.length > 0) {
+						str += `
+							type Subscription {
+								${subscriptions.join("\n")}
+							}
+						`;
+					}
+
+					if (types.length > 0) {
+						str += `
+							${types.join("\n")}
+						`;
+					}
+
+					if (interfaces.length > 0) {
+						str += `
+							${interfaces.join("\n")}
+						`;
+					}
+
+					if (unions.length > 0) {
+						str += `
+							${unions.join("\n")}
+						`;
+					}
+
+					if (enums.length > 0) {
+						str += `
+							${enums.join("\n")}
+						`;
+					}
+
+					if (inputs.length > 0) {
+						str += `
+							${inputs.join("\n")}
+						`;
+					}
+
+					typeDefs.push(str);
+				}
+
+				return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
+			} catch (err) {
+				throw new MoleculerServerError(
+					"Unable to compile GraphQL schema",
+					500,
+					"UNABLE_COMPILE_GRAPHQL_SCHEMA",
+					{ err }
+				);
+			}
+		},
+
 	},
-	created(){
+	created() {
 		this.app = SteedosRouter.staticRouter();
 	},
-	async started (){
+	async started() {
 
 		this.broker.createService(require("@steedos/service-ui"));
 
@@ -396,7 +655,7 @@ module.exports = {
 		// 	});
 		// }
 
-		this.broker.waitForServices('~packages-@steedos/service-ui').then(()=>{
+		this.broker.waitForServices('~packages-@steedos/service-ui').then(() => {
 			this.app.use("/", this.express());
 		})
 
