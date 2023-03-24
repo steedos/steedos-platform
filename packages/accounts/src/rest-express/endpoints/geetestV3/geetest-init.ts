@@ -41,8 +41,7 @@ export const geetest_init = (data: any) => async (
 
 // 二次验证
 export const geetest_validate = async function (req, res, next) {
-    if(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED){
-        if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
+        if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED || 'false') === true) {
             const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
     
             if (req.body.geetest) {
@@ -64,15 +63,12 @@ export const geetest_validate = async function (req, res, next) {
                     return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
                 }
             } else {
-                next()
+                return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": '无验证信息' });
             }
         } else {
             next()
         }
-
-    }else{
-        next()
-    }
+        
 }
 
 
