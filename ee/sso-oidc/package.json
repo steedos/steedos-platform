@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_sso-oidc",
-  "version": "2.2.66",
+  "version": "2.2.67",
   "main": "package.service.js",
   "scripts": {
     "build": "tsc"
@@ -11,15 +11,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/accounts": "2.2.66",
+    "@steedos/accounts": "2.2.67",
     "@steedos/license": "2.2.8",
-    "@steedos/objectql": "2.2.66",
-    "@steedos/service-package-loader": "2.2.66",
+    "@steedos/objectql": "2.2.67",
+    "@steedos/service-package-loader": "2.2.67",
     "@techpass/passport-openidconnect": "^0.3.2",
     "express": "4.18.1",
     "node-fetch": "^2.6.7",
     "passport": "^0.6.0",
     "request-ip": "^2.2.0"
   },
-  "gitHead": "68611c701a604b49326233c5f8d34c9b17212066"
+  "gitHead": "ce423f1b673d9f0d1d42d364c15de7da226257f0"
 }
