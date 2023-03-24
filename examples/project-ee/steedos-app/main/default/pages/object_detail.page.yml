@@ -1,0 +1,14 @@
+name: object_detail
+__filename: >-
+  /workspace/steedos-platform/services/standard-object-database/main/default/objects/objects/pages/object_detail.page.yml
+is_active: true
+label: 对象详细页面
+object_name: objects
+pageAssignments:
+  - type: orgDefault
+    page: object_detail
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []

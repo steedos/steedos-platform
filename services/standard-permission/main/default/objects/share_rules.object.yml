@@ -26,7 +26,7 @@ fields:
     sort_no: 130
   entry_criteria:
     label: 指定条目条件
-    inlineHelpText: "满足此条件的时，使用该记录过滤器。语法为函数表达式, 例如: {{$user.profile !='user'}}"
+    inlineHelpText: "满足此条件时，使用该记录过滤器。语法为函数表达式, 例如: {{$user.profile !='user'}}"
     type: textarea
     is_wide: true
     sort_no: 140

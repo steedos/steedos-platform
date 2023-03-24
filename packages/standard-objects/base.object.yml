@@ -128,9 +128,36 @@ fields:
       function(){
         return Steedos.StandardObjects.Base.Fields.companyId.defaultValue.apply(this, arguments)
       }
-    optionsFunction: !!js/function |
-      function (values) {
-        return Steedos.StandardObjects.Base.Fields.companyId.optionsFunction.apply(this, arguments)
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        const uiSchema = values.uiSchema;
+        const permissions = uiSchema && uiSchema.permissions;
+        const modifyAllRecords = permissions && permissions.modifyAllRecords;
+        let queryFilter = [];
+        if(!modifyAllRecords){
+          let company_ids =  [];
+          const globalUser = values.global && values.global.user;
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || permissions.modifyCompanyRecords){
+              company_ids = globalUser.company_ids;
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          const modifyAssignCompanysRecords = permissions.modifyAssignCompanysRecords || [];
+          company_ids = _.uniq(company_ids.concat(modifyAssignCompanysRecords));
+  
+          if(!company_ids.length){
+              console.warn("当前用户不属于任何分部，无权修改该字段。");
+              queryFilter = ["_id", "=", -1];
+          }else{
+              queryFilter = ["_id", "in", company_ids];
+          }
+        }
+        if(!_.isEmpty(queryFilter) && values.company_id){
+            queryFilter = [queryFilter, 'or', ["_id", "=", values.company_id]];
+        }
+        return queryFilter;
       }
     hidden: true
     sort_no: 1200
@@ -145,9 +172,36 @@ fields:
       function(){
         return Steedos.StandardObjects.Base.Fields.companyIds.defaultValue.apply(this, arguments)
       }
-    optionsFunction: !!js/function |
-      function (values) {
-        return Steedos.StandardObjects.Base.Fields.companyIds.optionsFunction.apply(this, arguments)
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        const uiSchema = values.uiSchema;
+        const permissions = uiSchema && uiSchema.permissions;
+        const modifyAllRecords = permissions && permissions.modifyAllRecords;
+        let queryFilter = [];
+        if(!modifyAllRecords){
+          let company_ids =  [];
+          const globalUser = values.global && values.global.user;
+
+          /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
+          if(true || permissions.modifyCompanyRecords){
+              company_ids = globalUser.company_ids;
+          }
+
+          /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
+          const modifyAssignCompanysRecords = permissions.modifyAssignCompanysRecords || [];
+          company_ids = _.uniq(company_ids.concat(modifyAssignCompanysRecords));
+  
+          if(!company_ids.length){
+              console.warn("当前用户不属于任何分部，无权修改该字段。");
+              queryFilter = ["_id", "=", -1];
+          }else{
+              queryFilter = ["_id", "in", company_ids];
+          }
+        }
+        if(!_.isEmpty(queryFilter) && values.company_id){
+            queryFilter = [queryFilter, 'or', ["_id", "=", values.company_id]];
+        }
+        return queryFilter;
       }
     hidden: true
     sort_no: 1300
