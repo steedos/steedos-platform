@@ -400,7 +400,7 @@ class Signup extends React.Component {
     })
   }
   handlerGeetest = (captchaObj) => {
-    var div = document.getElementById("#captcha");
+    var div = document.getElementById("captcha");
     if (div) {
       captchaObj.appendTo("#captcha");
       captchaObj.onReady(() => {
@@ -417,6 +417,9 @@ class Signup extends React.Component {
   };
 
   initGeetest = () => {
+    if(this.props.settings.tenant.enable_open_geetest != true){
+      return ;
+    }
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
     fetch(url + "/accounts/geetest/geetest-init", {
       method: 'POST',
@@ -435,9 +438,7 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.settings.tenant.enable_open_geetest === true) {
       this.initGeetest()
-    }
   }
 
 

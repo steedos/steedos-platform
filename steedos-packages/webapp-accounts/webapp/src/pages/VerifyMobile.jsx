@@ -227,8 +227,9 @@ class VerifyMobile extends React.Component {
         GlobalAction.finishSignin(currentUser, tenant, location)
     }
     handlerGeetest = (captchaObj) => {
-        var div = document.getElementById("#captcha");
+        var div = document.getElementById("captcha");
         if (div) {
+            console.log('div存在')
             captchaObj.appendTo("#captcha");
             captchaObj.onReady(() => {
             }).onSuccess(() => {
@@ -244,6 +245,9 @@ class VerifyMobile extends React.Component {
     };
 
     initGeetest = () => {
+        if(this.props.settings.tenant.enable_open_geetest != true){
+            return ;
+          }
         const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
         fetch(url + "/accounts/geetest/geetest-init", {
             method: 'POST',
@@ -262,10 +266,7 @@ class VerifyMobile extends React.Component {
     }
 
     componentDidMount() {
-        console.log()
-        if (this.props.settings.tenant.enable_open_geetest === true) {
             this.initGeetest()
-        }
     }
 
     render() {

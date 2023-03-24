@@ -304,7 +304,8 @@ class Login extends React.Component {
     this.props.actions.login(user, this.state.password ? this.state.password.trim() : this.state.password, this.state.verifyCode ? this.state.verifyCode.trim() : this.state.verifyCode).then(async (args) => {
       const { error, mobile_verified, mobile } = args;
       if (error === 'TO_MOBILE_CODE_LOGIN') {
-        return this.setState({
+
+        this.setState({
           loginByEmail: false,
 
           loginByMobile: true,
@@ -312,10 +313,13 @@ class Login extends React.Component {
           loginWith: 'code',
           MFA: true,
           loginId: mobile,
+          mobile: mobile,
           mobile_verified: mobile_verified,
           email: null,
           username: null
         });
+        this.initGeetest()
+        return ;
       } else if (error === 'TO_VERIFY_MOBILE') {
         const location = this.props.location;
         GlobalAction.redirectUserToVerifyMobile(location)
@@ -358,7 +362,7 @@ class Login extends React.Component {
     })
   }
   handlerGeetest = (captchaObj) => {
-    var div = document.getElementById("#captcha");
+    var div = document.getElementById("captcha");
     if (div) {
       captchaObj.appendTo("#captcha");
       captchaObj.onReady(() => {
@@ -374,6 +378,9 @@ class Login extends React.Component {
     }
   };
   initGeetest = () => {
+    if(this.props.settings.tenant.enable_open_geetest != true){
+      return ;
+    }
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
     fetch(url + "/accounts/geetest/geetest-init", {
       method: 'POST',
@@ -392,10 +399,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    console.log()
-    if (this.props.settings.tenant.enable_open_geetest === true) {
-      this.initGeetest()
-    }
+    this.initGeetest()
   }
 
   render() {
