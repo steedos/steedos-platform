@@ -114,11 +114,12 @@ fields:
     options:
       - label: Checkbox
         value: checkbox
-      - label: DateTimeE
-        value: dateTimeD
+      - label: DateTime
+        value: dateTime
       - label: Date
         value: date
-      - label: EmailGM
+      - label: Email
+        value: email
       - label: Group
         value: group
       - label: Input
@@ -141,8 +142,8 @@ fields:
         value: url
       - label: User
         value: user
-      - label: GeolocationR
-        value: geolocationR
+      - label: Geolocation
+        value: geolocation
     readonly: true
     name: current.fields.$.type
     filterable: true
