@@ -121,7 +121,7 @@ class VerifyMobile extends React.Component {
             })
         }
 
-        this.props.actions.sendVerificationToken(user).then(async (userId) => {
+        this.props.actions.sendVerificationToken(user,this.state.geetestValidate).then(async (userId) => {
             if (userId && userId !== this.props.currentUserId) {
                 if (this.state.verifyBy === 'email') {
                     this.setState({
