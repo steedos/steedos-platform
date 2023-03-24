@@ -1,8 +1,8 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
- * @LastEditors: 李海龙 220 lihailong@steedos.com
- * @LastEditTime: 2023-03-14 01:44:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-21 12:47:58
  * @Description: 
 -->
 <html>
@@ -66,7 +66,6 @@
             headers: { Authorization: `Bearer ${tenantId},${authToken}` },
           }
         );
-
         if (result?.data?.data?.record) {
           let schema = JSON.parse(result.data.data.record.amis_schema);
 
@@ -81,14 +80,14 @@
               "actions": [],
               "wrapWithPanel": false
             }
+            if(result.data.data.record.current.fields){
+              for (let i = 0; i < result.data.data.record.current.fields.length; i++) {
+                const temp = await getFieldEditTpl(result.data.data.record.current.fields[i]);
+                if (temp) {
+                  schema.body.push(temp);
+                }
 
-            for (let i = 0; i < result.data.data.record.current.fields.length; i++) {
-
-              const temp = await getFieldEditTpl(result.data.data.record.current.fields[i]);
-              if (temp) {
-                schema.body.push(temp);
               }
-
             }
           }
 

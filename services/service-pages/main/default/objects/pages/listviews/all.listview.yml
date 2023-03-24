@@ -4,6 +4,7 @@ columns:
   - field: name
   - field: render_engine
   - field: type
+  - field: object_name
   - field: is_active
   - field: version
   - field: is_system
