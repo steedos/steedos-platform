@@ -8,7 +8,8 @@
             "showHeader": true,
             "id": "u:d29cef0d1007",
             "sideSchema": {
-                "type": "nav",
+                "type": "input-tree",
+                "name":"tree",
                 "className": "bg-white h-full w-full",
                 "id": "u:9f3dd961ca12",
                 "stacked": true,
@@ -26,9 +27,7 @@
                     "url": "${context.rootUrl}/api/${appId}/workflow/nav",
                     "headers": {
                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                    },
-                    "responseData": null,
-                    "adaptor": ""
+                    }
                 },
                 "onEvent": {
                     "@data.changed.instance_tasks": {

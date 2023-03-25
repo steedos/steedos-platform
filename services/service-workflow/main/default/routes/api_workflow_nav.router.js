@@ -13,6 +13,8 @@ const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
+const lodash = require('lodash');
+const { link } = require('fs');
 
 /**
 @api {get} /api/workflow/nav 获取用户
@@ -32,36 +34,111 @@ const _ = require('underscore');
  */
 
 
+/**
+ * 1 查询instance_tasks数据
+ * 2 结算出分类
+ * 3 按要求返回数据结构
+ */
+const getCategoriesInbox = async (userSession,req) => {
+  const { appId } = req.params;
+  const userId = userSession.userId;
+  const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
+    box: "inbox", flowId: null, userId
+  })
+  const  data = await objectql.getObject('instance_tasks').find({
+    filters: filters
+  }, userSession)
+  // console.log('得到的数据是',filters)
+ 
+  const output = [];
+  const categoryGroups = lodash.groupBy(data, 'category_name');
+  // console.log('分类后的数据是',categoryGroups)
+  lodash.each(categoryGroups, (v, k)=>{
+    let categoryBadge = 0;
+    const flowGroups = lodash.groupBy(v, 'flow_name');
+    const flows = [];
+    lodash.each(flowGroups, (v2, k2)=>{
+      categoryBadge += v2.length
+      flows.push({
+        label: k2,
+        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
+        flow_name: k2,
+        badge: v2.length,
+        value:{
+          level:11,
+          // to: `/app/${appId}/instance_tasks/grid/inbox`
+        },
+      })
+    })
+    output.push({
+      label: k,
+      children: flows,
+        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
+      category_name:k,
+      badge: categoryBadge,
+      value:{
+        level:10,
+        // to: `/app/${appId}/instance_tasks/grid/inbox`
+      },
+    })
+  })
+  // console.log('output',output)
+  return output
+}
+
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
+
     let userSession = req.user;
     const { appId } = req.params;
     const spaceId = userSession.spaceId;
     const userId = userSession.userId;
+    let mychildren = await getCategoriesInbox(userSession,req)
+    // console.log('mychidren', mychildren)
+    // mychildren.forEach(item => {
+    //   console.log('mychildren.children', item.children)
+    // })
     let query = {
       filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
     };
     const steedosKeyValues = await objectql.getObject('steedos_keyvalues').find(query);
     let sum = steedosKeyValues && steedosKeyValues[0] && steedosKeyValues[0].value && steedosKeyValues[0].value.workflow;
-    var links = [
+    var options = [
       {
         "label": "待审核",
         "to": `/app/${appId}/instance_tasks/grid/inbox`,
         "icon": "fa fa-download",
-        "badge": sum
+        "badge": sum,
+        "value":{
+          "level":1,
+          "to": `/app/${appId}/instance_tasks/grid/inbox`
+        },
+        "children":mychildren
       },
       {
         "label": "已审核",
+        "value":{
+          "level":2,
+          "to": `/app/${appId}/instance_tasks/grid/outbox`
+        },
         "to": `/app/${appId}/instance_tasks/grid/outbox`,
         "icon": "fa fa-check"
       },
       {
         "label": "监控箱",
         "to": `/app/${appId}/instances/grid/monitor`,
-        "icon": "fa fa-eye"
+        "icon": "fa fa-eye",
+        "value":{
+          "level":3,
+          "to": `/app/${appId}/instances/grid/monitor`,
+        }
       },
       {
         "label": "我的文件",
+        "value":{
+          "level":4,
+          // "to": `/app/${appId}/instance_tasks/grid/inbox`
+        },
         "unfolded": true,
         "children": [
           {
@@ -84,12 +161,14 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     ];
     res.status(200).send({
       data: {
-        links: links
+        // links:options
+        options:options
       },
       msg: "",
       status: 0
     });
   } catch (e) {
+    console.log(`e`, e)
     res.status(200).send({
       errors: [{ errorMessage: e.message }]
     });
