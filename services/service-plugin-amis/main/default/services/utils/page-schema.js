@@ -114,7 +114,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
                             {
                                 "actionType": "reload",
                                 "data": {
-                                    "name": `\${event.data.record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
+                                    "name": `\${event.data.record.${uiSchema.NAME_FIELD_KEY || 'name'}}`,
                                     "record": `\${event.data.record}`,
                                     "recordLoaded": true,
                                 }
@@ -123,7 +123,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
                                 "actionType": "reload",
                                 "componentId": `page_readonly_${objectApiName}_header`,  //刷新标题, 详细页面header service 嵌套太多, 导致仅刷新第一层service无法更新recordName
                                 "data": {
-                                    "name": `\${event.data.record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
+                                    "name": `\${event.data.record.${uiSchema.NAME_FIELD_KEY || 'name'}}`,
                                     "record": `\${event.data.record}`,
                                     "recordLoaded": true,
                                 }
@@ -144,7 +144,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
                     {
                         "actionType": "reload",
                         "data": {
-                            "name": `\${record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
+                            "name": `\${record.${uiSchema.NAME_FIELD_KEY || 'name'}}`,
                             "_master.record": `\${record}`,
                             // 不清楚reload 如何给对象下的某个key复制, 所以此处重复设置_master的objectName、recordId
                             "_master.objectName": "${objectName}",
