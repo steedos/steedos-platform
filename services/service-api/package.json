@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@steedos/auth": "2.4.5",
+    "@steedos/service-object-graphql": "2.4.5",
     "@steedos/router": "2.4.5",
     "@steedos/service-ui": "2.4.5",
     "graphql": "^15.8.0",
