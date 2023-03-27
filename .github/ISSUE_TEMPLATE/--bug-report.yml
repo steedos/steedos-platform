@@ -9,12 +9,12 @@ body:
   attributes:
     value: |
       Thanks for taking the time to fill out this bug report! 感谢您填写此bug报告！
-- type: checkboxes
-  attributes:
-    label: Is there an existing issue for this? 是否已有相关Issue？
-    options:
-    - label: I have searched the existing issues. 我已经搜索过相关Issue。
-      required: true
+# - type: checkboxes
+#   attributes:
+#     label: Is there an existing issue for this? 是否已有相关Issue？
+#     options:
+#     - label: I have searched the existing issues. 我已经搜索过相关Issue。
+#       required: true
 - type: textarea
   attributes:
     label: Description

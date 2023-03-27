@@ -3,13 +3,13 @@ description: Create a task for the team to work on 创建开发任务
 title: "[Task]: "
 labels: [Task]
 body:
-- type: checkboxes
-  attributes:
-    label: Is there an existing issue for this? 你是否已经搜索过类似的任务？
-    description: Please search to see if an issue related to this feature request already exists. 请搜索是否已经有用户提出过类似的任务。
-    options:
-    - label: I have searched the existing issues. 我已经搜索过了。
-      required: true
+# - type: checkboxes
+#   attributes:
+#     label: Is there an existing issue for this? 你是否已经搜索过类似的任务？
+#     description: Please search to see if an issue related to this feature request already exists. 请搜索是否已经有用户提出过类似的任务。
+#     options:
+#     - label: I have searched the existing issues. 我已经搜索过了。
+#       required: true
 - type: textarea
   attributes:
     label: SubTasks 子任务
