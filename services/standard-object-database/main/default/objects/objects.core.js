@@ -241,6 +241,7 @@ function loadObject(doc, oldDoc) {
                     loadObjectTriggers(doc);
                     loadObjectPermission(doc);
                 }
+                objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
         
@@ -366,6 +367,7 @@ function reloadObject(changeLog){
                 } catch (error) {
                     console.log('error', error);
                 }
+                objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
     }

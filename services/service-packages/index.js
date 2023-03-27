@@ -69,7 +69,7 @@ module.exports = {
             },
 			async handler(ctx) {
                 await ctx.broker.call('metadata.delete', {key: getCacherKey(ctx.params.serviceInfo)}, {meta: ctx.meta})
-				await this.activatedPackagesCount();
+				await this.statisticsActivatedPackages();
 			}
 		},
         online: {
@@ -78,7 +78,7 @@ module.exports = {
             },
 			async handler(ctx) {
                 await ctx.broker.call('metadata.add', {key: getCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
-				await this.activatedPackagesCount();
+				await this.statisticsActivatedPackages();
 			}
 		},
 		install: {
@@ -141,7 +141,11 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-
+		"$packages.statisticsActivatedPackages": {
+			handler(){
+				return this.statisticsActivatedPackages()
+			}
+		}
 	},
 
 	/**
@@ -149,17 +153,18 @@ module.exports = {
 	 */
 	methods: {
 		//统计已启动的软件包
-		activatedPackagesCount: {
+		statisticsActivatedPackages: {
 			async handler(){
 				if(this.countTimeoutId){
 					clearTimeout(this.countTimeoutId);
 				}
+				console.log(`statisticsActivatedPackages`);
 				this.countTimeoutId = setTimeout(async()=>{
 					const startingPackages = await Register.filterList(this.broker, {key: getStartingCacherKey()});
 					const startedPackages = await Register.filterList(this.broker, {key: getStartedCacherKey()});
-					// console.log(`startingPackages`, startingPackages.length, startedPackages.length);
+					console.log(`startingPackages`, startingPackages.length, startedPackages.length);
 					if(startingPackages.length <= startedPackages.length){
-						// console.log(`broadcast $packages.changed========`)
+						console.log(`broadcast $packages.changed========`)
 						this.broker.broadcast("$packages.changed", {});
 					}
 				}, 1000 * 3)
