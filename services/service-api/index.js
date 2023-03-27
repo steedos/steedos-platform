@@ -12,6 +12,7 @@ const {
 } = require('graphql-iso-date');
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
+const ServiceObjectGraphql = require('@steedos/service-object-graphql')
 
 const mixinOptions = {
 
@@ -91,7 +92,8 @@ module.exports = {
 	name: "api",
 	mixins: [ApiGateway,
 		// GraphQL Apollo Server
-		ApolloService(mixinOptions)
+		ApolloService(mixinOptions),
+		ServiceObjectGraphql
 	],
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
@@ -402,6 +404,10 @@ module.exports = {
 
 				if (mixinOptions.schemaDirectives) {
 					schemaDirectives = _.cloneDeep(mixinOptions.schemaDirectives);
+				}
+
+				if (this.globalTypeDefs) {
+					typeDefs = typeDefs.concat(this.globalTypeDefs);
 				}
 
 				let queries = [];
