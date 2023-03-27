@@ -25,13 +25,29 @@
 
 ## Salesforce 开源替代方案
 
-- [Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)： 实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)，基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具。
-- [Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)： 实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。
-- [Salesforce Metadata](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)： [元数据](https://www.steedos.cn/docs/protocol/metadata-object)是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
-- [Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience), 实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。
-- [Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)：支持 [服务端开发](https://www.steedos.cn/docs/developer/getting-started)，通过编写触发器、自定义API，实现任何需要的业务逻辑。
-- [Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)： 元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。
+### 可视化设计微页面
 
+基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具，实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)。
+
+![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
+
+### 可视化创建业务对象
+
+实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)。
+
+![对象管理](https://console.steedos.cn/api/files/images/64216644671028003e75f90e)
+
+### VS Code 插件
+
+实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
+
+![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
+
+### 软件包管理
+
+元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)。
+
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 ## 快速向导
 
@@ -55,10 +71,6 @@ yarn
 yarn build
 yarn start
 ```
-
-## 系统架构
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 ## 平台功能
 
