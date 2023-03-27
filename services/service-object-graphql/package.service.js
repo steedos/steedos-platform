@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-26 20:39:07
+ * @LastEditTime: 2023-03-27 14:19:46
  * @Description: 
  */
 
@@ -12,13 +12,7 @@ const { getDataSource, SteedosDatabaseDriverType, getObject } = require('@steedo
 const {
     generateActionGraphqlProp,
     generateSettingsGraphql,
-    RELATED_PREFIX,
-    _getRelatedType,
-    correctName,
     getGraphqlActions,
-    getRelatedResolver,
-    dealWithRelatedFields,
-    getLocalService,
     getQueryFields
 } = require('./lib');
 
@@ -279,7 +273,51 @@ module.exports = {
      * Events
      */
     events: {
+        // 此事件表示软件包发生变化（包括加载、卸载、对象发生变化），接收到此事件后重新生成graphql schema
+        "$packages.changed": {
+            params: {},
+            async handler(ctx) {
+                // console.log("Payload:", ctx.params);
+                // console.log("Sender:", ctx.nodeID);
+                // console.log("Metadata:", ctx.meta);
+                // console.log("The called event name:", ctx.eventName);
 
+                // const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
+
+                // let globalTypeDefs = []
+                // let query = []
+                // let mutation = []
+                // let resolvers = {}
+                // let resolversQuery = {}
+                // let resolversMutation = {}
+
+                // for (const objectName in objGraphqlMap) {
+                //     if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
+                //         const gMap = objGraphqlMap[objectName];
+                //         globalTypeDefs.push(gMap.type)
+                //         query = query.concat(gMap.query)
+                //         mutation = mutation.concat(gMap.mutation)
+                //         resolvers = Object.assign(resolvers, gMap.resolvers)
+                //         resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
+                //         resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
+                //     }
+                // }
+
+                // this.globalTypeDefs = globalTypeDefs
+
+                // this.settings.graphql = {
+                //     query: query,
+                //     mutation: mutation,
+                //     resolvers: {
+                //         ...resolvers,
+                //         Query: resolversQuery,
+                //         Mutation: resolversMutation
+                //     }
+                // }
+
+                // console.log('graphql:', new Date())
+            }
+        }
     },
 
     /**
@@ -293,13 +331,26 @@ module.exports = {
                 if (objectName == 'users') {
                     return await obj.find(query)
                 }
-                return await obj.find(query, userSession)
+                // return await obj.find(query, userSession)
+                return await this.broker.call("objectql.find", {
+                    objectName: objectName,
+                    query: query
+                }, {
+                    meta: {
+                        user: userSession
+                    }
+                })
             }
         },
         count: {
             async handler(objectName, query, userSession) {
                 const obj = getObject(objectName)
                 return await obj.count(query, userSession)
+                await this.broker.call("objectql.count", {
+                    objectName: objectName,
+                    query: query,
+                    userSession: userSession
+                })
             }
         },
         findOne: {
@@ -309,18 +360,42 @@ module.exports = {
                     return await obj.findOne(id, query)
                 }
                 return await obj.findOne(id, query, userSession)
+
+                await this.broker.call("objectql.findOne", {
+                    objectName: objectName,
+                    id: id,
+                    query: query,
+                    userSession: userSession
+                })
             }
         },
         insert: {
             async handler(objectName, doc, userSession) {
                 const obj = getObject(objectName)
                 return await obj.insert(doc, userSession)
+
+                await this.broker.call("objectql.insert", {
+                    objectName: objectName,
+                    doc: doc,
+                    userSession: userSession
+                })
             }
         },
         update: {
             async handler(objectName, id, doc, userSession) {
                 const obj = getObject(objectName)
                 return await obj.update(id, doc, userSession)
+
+                await this.broker.call("objectql.update", {
+                    objectName: objectName,
+                    id: id,
+                    doc: doc,
+                    userSession: userSession
+                })
+                
+
+
+
             }
         },
         delete: {
@@ -343,6 +418,7 @@ module.exports = {
             }
             const objectConfigs = await this.broker.call("objects.getAll");
             for (const object of objectConfigs) {
+                console.log('===>object.metadata.name: ', object.metadata.name)
                 const objectConfig = object.metadata
                 const objectName = objectConfig.name
                 // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT

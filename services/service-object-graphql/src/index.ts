@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:49:44
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-06 17:42:45
+ * @LastEditTime: 2023-03-27 11:04:25
  * @Description: 
  */
 
@@ -12,4 +12,3 @@ export { getQueryFields } from './getQueryFields'
 export { generateActionGraphqlProp } from './generateActionGraphqlProp'
 export { generateSettingsGraphql } from './generateSettingsGraphql'
 export { getGraphqlActions } from './getGraphqlActions'
-export { dealWithRelatedFields, getRelatedResolver } from './dealWithRelatedFields'
