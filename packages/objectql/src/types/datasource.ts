@@ -194,7 +194,7 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         this._objects[objectApiName] = object;
-        await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
+        // await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
         return object;
     }
 

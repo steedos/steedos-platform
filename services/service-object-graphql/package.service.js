@@ -2,13 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 14:51:35
+ * @LastEditTime: 2023-03-27 16:41:11
  * @Description: 
  */
 
 "use strict";
-const { moleculerGql: gql } = require("moleculer-apollo-server");
-const { getDataSource, SteedosDatabaseDriverType, getObject } = require('@steedos/objectql');
+const { SteedosDatabaseDriverType, getObject } = require('@steedos/objectql');
 const {
     generateActionGraphqlProp,
     generateSettingsGraphql,
@@ -27,21 +26,12 @@ module.exports = {
     globalTypeDefs: [], // service-api 里generateGraphQLSchema使用 
 
     /**
-     * {
-     *  [objectName]: {
-     *      type,
-     *      resolvers
-     *  }
-     * }
-     */
-    objGraphqlMap: {},
-
-    /**
      * Settings
      */
     settings: {
         graphql: {
             // query: ['spaces(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [spaces]'],
+            // mutation: mutation,
             // resolvers: {
             //     Query: {
             //         spaces: {
@@ -74,7 +64,7 @@ module.exports = {
                 sort: { type: 'string', optional: true }
             },
             // graphql: {
-            //     query: 
+            //     query:
             //     [
             //         gql`
             //             users(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [space_users]
@@ -345,11 +335,14 @@ module.exports = {
         count: {
             async handler(objectName, query, userSession) {
                 const obj = getObject(objectName)
-                return await obj.count(query, userSession)
-                await this.broker.call("objectql.count", {
+                // return await obj.count(query, userSession)
+                return await this.broker.call("objectql.count", {
                     objectName: objectName,
                     query: query,
-                    userSession: userSession
+                }, {
+                    meta: {
+                        user: userSession
+                    }
                 })
             }
         },
@@ -359,73 +352,73 @@ module.exports = {
                 if (objectName == 'users') {
                     return await obj.findOne(id, query)
                 }
-                return await obj.findOne(id, query, userSession)
-
-                await this.broker.call("objectql.findOne", {
+                // return await obj.findOne(id, query, userSession)
+                return await this.broker.call("objectql.findOne", {
                     objectName: objectName,
                     id: id,
                     query: query,
-                    userSession: userSession
+                }, {
+                    meta: {
+                        user: userSession
+                    }
                 })
             }
         },
         insert: {
             async handler(objectName, doc, userSession) {
                 const obj = getObject(objectName)
-                return await obj.insert(doc, userSession)
-
-                await this.broker.call("objectql.insert", {
+                // return await obj.insert(doc, userSession)
+                return await this.broker.call("objectql.insert", {
                     objectName: objectName,
                     doc: doc,
-                    userSession: userSession
+                }, {
+                    meta: {
+                        user: userSession
+                    }
                 })
             }
         },
         update: {
             async handler(objectName, id, doc, userSession) {
                 const obj = getObject(objectName)
-                return await obj.update(id, doc, userSession)
-
-                await this.broker.call("objectql.update", {
+                // return await obj.update(id, doc, userSession)
+                return await this.broker.call("objectql.update", {
                     objectName: objectName,
                     id: id,
                     doc: doc,
-                    userSession: userSession
+                }, {
+                    meta: {
+                        user: userSession
+                    }
                 })
-                
-
-
-
             }
         },
         delete: {
             async handler(objectName, id, userSession) {
                 const obj = getObject(objectName)
-                return await obj.delete(id, userSession)
+                // return await obj.delete(id, userSession)
+                return await this.broker.call("objectql.delete", {
+                    objectName: objectName,
+                    id: id,
+                }, {
+                    meta: {
+                        user: userSession
+                    }
+                })
             }
         },
 
-
         async generateObjGraphqlMap(graphqlServiceName) {
-            // let type = ''
-            let resolvers = {}
             const objGraphqlMap = {}
-            const settingsGraphqlQuery = []
-            const settingsGraphqlMutation = []
-            const settingsGraphqlResolvers = {
-                Query: {},
-                Mutation: {}
-            }
             const objectConfigs = await this.broker.call("objects.getAll");
             for (const object of objectConfigs) {
-                console.log('===>object.metadata.name: ', object.metadata.name)
+                // console.log('===>object.metadata.name: ', object.metadata.name)
                 const objectConfig = object.metadata
                 const objectName = objectConfig.name
                 // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
                 if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
                     continue
                 }
-
                 /**
                  * objGraphqlMap[objectName] 结构
                 {
@@ -463,12 +456,6 @@ module.exports = {
                 const gMap = {}
 
                 const typeAndResolves = await generateSettingsGraphql(objectConfig, graphqlServiceName)
-                // type += typeAndResolves.type
-                // resolvers = {
-                //     ...resolvers,
-                //     ...typeAndResolves.resolvers
-                // }
-                // objGraphqlMap[objectName] = typeAndResolves
 
                 gMap.type = typeAndResolves.type
                 gMap.resolvers = typeAndResolves.resolvers
@@ -515,7 +502,6 @@ module.exports = {
     },
 
     merged(schema) {
-        // schema.actions.find.graphql.query = ['space_users(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [space_users]']
     },
 
     /**
