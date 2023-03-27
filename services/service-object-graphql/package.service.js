@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 16:41:11
+ * @LastEditTime: 2023-03-27 17:54:09
  * @Description: 
  */
 
@@ -77,7 +77,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName
-                console.log('find:', objectName)
                 const objectConfig = await getObject(objectName).getConfig()
                 // filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
                 if (objectConfig.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || objectConfig.datasource.driver === SteedosDatabaseDriverType.Mongo) {
@@ -122,7 +121,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__count', '')
-                console.log('count:', objectName)
                 const objectConfig = await getObject(objectName).getConfig()
                 // filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
                 if (objectConfig.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || objectConfig.datasource.driver === SteedosDatabaseDriverType.Mongo) {
@@ -156,7 +154,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__findOne', '')
-                console.log('findOne:', objectName)
                 const userSession = ctx.meta.user;
                 const { id, query } = ctx.params;
                 return this.findOne(objectName, id, query, userSession)
@@ -172,7 +169,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__insert', '')
-                console.log('insert:', objectName)
                 const object = getObject(objectName)
                 const userSession = ctx.meta.user;
                 const { doc } = ctx.params;
@@ -199,7 +195,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__update', '')
-                console.log('update:', objectName)
                 const userSession = ctx.meta.user;
                 const { id, doc } = ctx.params;
                 let data = '';
@@ -219,7 +214,6 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__delete', '')
-                console.log('delete:', objectName)
                 const objectConfig = await getObject(objectName).getConfig()
                 const userSession = ctx.meta.user;
                 const { id } = ctx.params;
@@ -267,10 +261,10 @@ module.exports = {
         "$packages.changed": {
             params: {},
             async handler(ctx) {
-                console.log("Payload:", ctx.params);
-                console.log("Sender:", ctx.nodeID);
-                console.log("Metadata:", ctx.meta);
-                console.log("The called event name:", ctx.eventName);
+                // console.log("Payload:", ctx.params);
+                // console.log("Sender:", ctx.nodeID);
+                // console.log("Metadata:", ctx.meta);
+                // console.log("The called event name:", ctx.eventName);
 
                 const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
 
@@ -321,7 +315,6 @@ module.exports = {
                 if (objectName == 'users') {
                     return await obj.find(query)
                 }
-                // return await obj.find(query, userSession)
                 return await this.broker.call("objectql.find", {
                     objectName: objectName,
                     query: query
@@ -335,7 +328,6 @@ module.exports = {
         count: {
             async handler(objectName, query, userSession) {
                 const obj = getObject(objectName)
-                // return await obj.count(query, userSession)
                 return await this.broker.call("objectql.count", {
                     objectName: objectName,
                     query: query,
@@ -352,7 +344,6 @@ module.exports = {
                 if (objectName == 'users') {
                     return await obj.findOne(id, query)
                 }
-                // return await obj.findOne(id, query, userSession)
                 return await this.broker.call("objectql.findOne", {
                     objectName: objectName,
                     id: id,
@@ -367,7 +358,6 @@ module.exports = {
         insert: {
             async handler(objectName, doc, userSession) {
                 const obj = getObject(objectName)
-                // return await obj.insert(doc, userSession)
                 return await this.broker.call("objectql.insert", {
                     objectName: objectName,
                     doc: doc,
@@ -381,7 +371,6 @@ module.exports = {
         update: {
             async handler(objectName, id, doc, userSession) {
                 const obj = getObject(objectName)
-                // return await obj.update(id, doc, userSession)
                 return await this.broker.call("objectql.update", {
                     objectName: objectName,
                     id: id,
@@ -396,7 +385,6 @@ module.exports = {
         delete: {
             async handler(objectName, id, userSession) {
                 const obj = getObject(objectName)
-                // return await obj.delete(id, userSession)
                 return await this.broker.call("objectql.delete", {
                     objectName: objectName,
                     id: id,

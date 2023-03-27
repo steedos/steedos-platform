@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-09 10:19:47
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-28 17:59:54
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-03-27 17:19:57
  * @Description: 
  */
 import { getSteedosSchema } from "@steedos/objectql";
@@ -58,7 +58,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
         const { objectServiceName } = req.params;
         const objectName = objectServiceName.substring(1);
         const [ result, hasImportTemplates ] = await Promise.all([
-            callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession),
+            callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
             callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
                 objectName: objectName
             })
