@@ -139,6 +139,10 @@
   margin-top: 0.75rem
 }
 
+.mb-4 {
+  margin-bottom: 1rem
+}
+
 .block {
   display: block
 }
@@ -446,6 +450,11 @@
 
   .sm\:border {
     border-width: 1px
+  }
+
+  .sm\:border-gray-300 {
+    --tw-border-opacity: 1;
+    border-color: rgb(209 213 219 / var(--tw-border-opacity))
   }
 
   .sm\:shadow {

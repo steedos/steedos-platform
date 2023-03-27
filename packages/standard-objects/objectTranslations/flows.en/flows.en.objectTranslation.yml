@@ -1,256 +1,256 @@
 name: flows
 label: Workflow
-description: 
+description:
 fields:
   name:
     label: Name
-    help: 
-    description: 
+    help:
+    description:
   form:
     label: Form
-    help: 
-    description: 
+    help:
+    description:
   category:
     label: Category
-    help: 
-    description: 
+    help:
+    description:
   state:
     label: State
-    help: 
+    help:
     options:
       - label: Enabled
         value: enabled
       - label: Disabled
         value: disabled
-    description: 
+    description:
   is_valid:
     label: Valid
-    help: 
-    description: 
+    help:
+    description:
   current_no:
     label: Current Number
-    help: 
-    description: 
+    help:
+    description:
   description:
     label: Description
-    help: 
-    description: 
+    help:
+    description:
   help_text:
     label: Help
-    help: 
-    description: 
+    help:
+    description:
   company_id:
     label: Main Division
-    help: 
-    description: 
+    help:
+    description:
   created_by:
     label: Created by
-    help: 
-    description: 
+    help:
+    description:
   modified_by:
     label: Modified by
-    help: 
-    description: 
+    help:
+    description:
   current:
     label: Current
-    help: 
-    description: 
+    help:
+    description:
   current.modified:
     label: Modification Time of Current
-    help: 
-    description: 
+    help:
+    description:
   current.modified_by:
     label: Modified Currently by
-    help: 
-    description: 
+    help:
+    description:
   current.created:
     label: Creation Time of Current
-    help: 
-    description: 
+    help:
+    description:
   current.created_by:
     label: Created Currently by
-    help: 
-    description: 
+    help:
+    description:
   current.steps:
     label: Current Steps
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$._id:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   current.steps.$.name:
     label: Name
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.disableCC:
     label: Disable CC
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.allowDistribute:
     label: Can Distribute Instance
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.can_edit_main_attach:
     label: Can Edit Main Attach
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.can_edit_normal_attach:
     label: Can Edit Normal Attach
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.distribute_optional_flows:
     label: Workflows of Distribution
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.cc_must_finished:
     label: Must Wait for CC finished
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.cc_alert:
     label: Pop up CC Alert
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.allowBatch:
     label: Batch Processing
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.oneClickApproval:
     label: One Click Approval
-    help: 
-    description: 
+    help:
+    description:
   current.steps.$.oneClickRejection:
     label: One Click Rejection
-    help: 
-    description: 
+    help:
+    description:
   perms:
     label: Permissions
-    help: 
-    description: 
+    help:
+    description:
   perms.users_can_add:
     label: Users that Can Initiate New Request
-    help: 
-    description: 
+    help:
+    description:
   perms.orgs_can_add:
     label: Departments that Can Initiate New Request
-    help: 
-    description: 
+    help:
+    description:
   perms.users_can_monitor:
     label: Users that Can Read All the Reqests
-    help: 
-    description: 
+    help:
+    description:
   perms.orgs_can_monitor:
     label: Departments that Can Read All the Reqests
-    help: 
-    description: 
+    help:
+    description:
   perms.users_can_admin:
     label: 'Users that Can Read , Relocat, Reassign or Delete  All the Reqests'
-    help: 
-    description: 
+    help:
+    description:
   perms.orgs_can_admin:
     label: 'Departments that Can Read , Relocat, Reassign or Delete  All the Reqests'
-    help: 
-    description: 
+    help:
+    description:
   app:
     label: App
-    help: 
-    description: 
+    help:
+    description:
   historys:
     label: History Workflows
-    help: 
-    description: 
+    help:
+    description:
   instance_template:
     label: Instance Template
-    help: 
-    description: 
+    help:
+    description:
   print_template:
     label: Print Template
-    help: 
-    description: 
+    help:
+    description:
   field_map:
     label: Mapping
-    help: 
-    description: 
+    help:
+    description:
   events:
     label: Events
-    help: 
-    description: 
+    help:
+    description:
   distribute_optional_users:
     label: Users to be Distributed
-    help: 
-    description: 
+    help:
+    description:
   distribute_to_self:
     label: Distribute to myself
-    help: 
-    description: 
+    help:
+    description:
   upload_after_being_distributed:
     label: Allow upload after being distributed
-    help: 
-    description: 
+    help:
+    description:
   name_formula:
     label: Formula of Title
-    help: 
-    description: 
+    help:
+    description:
   code_formula:
     label: Formula of Code
-    help: 
-    description: 
+    help:
+    description:
   auto_remind:
     label: Auto Remind
-    help: 
-    description: 
+    help:
+    description:
   sort_no:
     label: Sort Number
-    help: 
-    description: 
+    help:
+    description:
   timeout_auto_submit:
     label: Auto Commit if Time Out
-    help: 
-    description: 
+    help:
+    description:
   allow_select_step:
     label: Applicant can Select Steps and Handlers
     help: >-
       Allow the applicant to specify the flow steps and step handlers when
       submitting the application form. You need to modify the properties on the
       step through the Workflow Designer.
-    description: 
+    description:
   object_name:
     label: Bind Object
   instance_fields:
     label: Instance Fields
-    help: 
-    description: 
+    help:
+    description:
   instance_fields.$:
     label: Instance Field
-    help: 
-    description: 
+    help:
+    description:
   instance_fields.$.name:
     label: Instance Field Name
-    help: 
-    description: 
+    help:
+    description:
   instance_fields.$.readonly:
     label: Readonly
-    help: 
-    description: 
+    help:
+    description:
   instance_fields.$.required:
     label: Required
-    help: 
+    help:
     description:
   instance_table_fields:
     label: Related Lists
-    help: 
-    description: 
+    help:
+    description:
   instance_table_fields.$.label:
     label: Label
     help:
     description:
   instance_table_fields.$.detail_field_fullname:
     label: Related Field FullName
-    help: 
+    help:
     description:
   instance_table_fields.$.field_names:
     label: Field Names
-    help: 
+    help:
     description:
 groups:
   template: Template
@@ -259,6 +259,7 @@ groups:
   distribution: Distribution
   others: Others
   flowbindobject: Flow Bind Object
+  permissions: Permissions
 listviews:
   all:
     label: All Workflows

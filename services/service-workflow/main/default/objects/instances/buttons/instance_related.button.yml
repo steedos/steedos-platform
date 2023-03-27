@@ -20,77 +20,47 @@ amis_schema: |-
                                       {
                                           "type": "form",
                                           "body": [
-                                              {
-                                                  "type": "picker",
-                                                  "id": "u:abd427206c5b",
-                                                  "label": false,
+                                            {
+                                                "type": "steedos-field",
+                                                "config": {
+                                                  "type": "lookup",
+                                                  "label": "字段1",
                                                   "name": "related_instances",
-                                                  "options": [],
-                                                  "inline": false,
-                                                  "embed": true,
-                                                  "modalMode": "dialog",
-                                                  "multiple": true,
-                                                  "source": {
+                                                  "id": "u:ff88cc3375b5",
+                                                  "reference_to": "instances",
+                                                  "amis": {
+                                                    "id": "u:f0273e374d19",
+                                                    "embed": true,
+                                                    "label": false,
+                                                    "multiple": true,
+                                                    "source": {
                                                       "method": "post",
                                                       "url": "${context.rootUrl}/graphql",
-                                                      "requestAdaptor": "const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize}, skip: ${(pageNo - 1) * pageSize}){\n                value: _id,\n                label: name,\n                flow_name,\n                current_step_name,\n                applicant_name\n            },\n            count: instances__getRelatedInstances__count(keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
+                                                      "requestAdaptor": "const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize}, skip: ${(pageNo - 1) * pageSize}){\n                 _id,\n    name,\n    flow,\n    form,\n    submit_date,\n    submitter\n    _display:_ui{\n      flow,\n      form,\n      submit_date,\n      submitter\n    }\n            },\n            count: instances__getRelatedInstances__count(keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
                                                       "headers": {
-                                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                       },
                                                       "adaptor": "return payload",
                                                       "data": {
-                                                          "orderBy": "${orderBy}",
-                                                          "orderDir": "${orderDir}",
-                                                          "pageNo": "${page}",
-                                                          "pageSize": "${perPage}",
-                                                          "$self": "$$",
-                                                          "keywords": "${keywords}",
-                                                          "ids": "${ids}"
+                                                        "orderBy": "${orderBy}",
+                                                        "orderDir": "${orderDir}",
+                                                        "pageNo": "${page}",
+                                                        "pageSize": "${perPage}",
+                                                        "$self": "$$",
+                                                        "keywords": "${keywords}",
+                                                        "ids": "${ids}"
                                                       }
-                                                  },
-                                                  "pickerSchema": {
-                                                      "mode": "table",
-                                                      "columns": [
-                                                          {
-                                                              "name": "label",
-                                                              "label": "标题",
-                                                              "type": "text",
-                                                              "id": "u:07d63d9a65d4",
-                                                              "placeholder": "-"
-                                                          },
-                                                          {
-                                                              "name": "applicant_name",
-                                                              "label": "提交人",
-                                                              "type": "text",
-                                                              "id": "u:54b6ef26f99a",
-                                                              "placeholder": "-"
-                                                          },
-                                                          {
-                                                              "name": "flow_name",
-                                                              "label": "流程",
-                                                              "type": "text",
-                                                              "id": "u:416e22bfdd81",
-                                                              "placeholder": "-"
-                                                          },
-                                                          {
-                                                              "name": "current_step_name",
-                                                              "label": "当前步骤",
-                                                              "type": "text",
-                                                              "id": "u:487166104b24",
-                                                              "placeholder": "-"
-                                                          }
-                                                      ],
-                                                      "id": "u:e6bc823233d7"
-                                                  },
-                                                  "joinValues": false,
-                                                  "extractValue": true
+                                                    }
+                                                  }
+                                                },
+                                                "id": "u:774bdcbde030"
                                               }
                                           ],
                                           "initApi": {
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
-                                              "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  value: _id,\n                  label: name\n                }\n              }\n            }\n          `\n        }\n        return api;",
-                                              "adaptor": "payload.data = {\n  related_instances: payload.data.instance?.related_instances\n};\nreturn payload;"
+                                              "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  _id,\n                 name\n                }\n              }\n            }\n          `\n        }\n        return api;",
+                                              "adaptor": "payload.data = {\n  related_instances: payload.data.instance?.related_instances\n};console.log('====payload', payload);\nreturn payload;"
                                           }
                                       }
                                   ],
@@ -143,7 +113,7 @@ amis_schema: |-
                                                             "eventName": "@data.@instanceDetail.changed"
                                                         },
                                                         "data": {
-                                                            
+
                                                         }
                                                       },
                                                       {
