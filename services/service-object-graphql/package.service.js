@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 14:19:46
+ * @LastEditTime: 2023-03-27 14:51:35
  * @Description: 
  */
 
@@ -277,45 +277,45 @@ module.exports = {
         "$packages.changed": {
             params: {},
             async handler(ctx) {
-                // console.log("Payload:", ctx.params);
-                // console.log("Sender:", ctx.nodeID);
-                // console.log("Metadata:", ctx.meta);
-                // console.log("The called event name:", ctx.eventName);
+                console.log("Payload:", ctx.params);
+                console.log("Sender:", ctx.nodeID);
+                console.log("Metadata:", ctx.meta);
+                console.log("The called event name:", ctx.eventName);
 
-                // const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
+                const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
 
-                // let globalTypeDefs = []
-                // let query = []
-                // let mutation = []
-                // let resolvers = {}
-                // let resolversQuery = {}
-                // let resolversMutation = {}
+                let globalTypeDefs = []
+                let query = []
+                let mutation = []
+                let resolvers = {}
+                let resolversQuery = {}
+                let resolversMutation = {}
 
-                // for (const objectName in objGraphqlMap) {
-                //     if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
-                //         const gMap = objGraphqlMap[objectName];
-                //         globalTypeDefs.push(gMap.type)
-                //         query = query.concat(gMap.query)
-                //         mutation = mutation.concat(gMap.mutation)
-                //         resolvers = Object.assign(resolvers, gMap.resolvers)
-                //         resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
-                //         resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
-                //     }
-                // }
+                for (const objectName in objGraphqlMap) {
+                    if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
+                        const gMap = objGraphqlMap[objectName];
+                        globalTypeDefs.push(gMap.type)
+                        query = query.concat(gMap.query)
+                        mutation = mutation.concat(gMap.mutation)
+                        resolvers = Object.assign(resolvers, gMap.resolvers)
+                        resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
+                        resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
+                    }
+                }
 
-                // this.globalTypeDefs = globalTypeDefs
+                this.globalTypeDefs = globalTypeDefs
 
-                // this.settings.graphql = {
-                //     query: query,
-                //     mutation: mutation,
-                //     resolvers: {
-                //         ...resolvers,
-                //         Query: resolversQuery,
-                //         Mutation: resolversMutation
-                //     }
-                // }
+                this.settings.graphql = {
+                    query: query,
+                    mutation: mutation,
+                    resolvers: {
+                        ...resolvers,
+                        Query: resolversQuery,
+                        Mutation: resolversMutation
+                    }
+                }
 
-                // console.log('graphql:', new Date())
+                console.log('graphql:', new Date())
             }
         }
     },
@@ -522,43 +522,43 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        const that = this;
-        setTimeout(async function () {
-            const objGraphqlMap = await that.generateObjGraphqlMap(that.name)
+        // const that = this;
+        // setTimeout(async function () {
+        //     const objGraphqlMap = await that.generateObjGraphqlMap(that.name)
 
-            let globalTypeDefs = []
-            let query = []
-            let mutation = []
-            let resolvers = {}
-            let resolversQuery = {}
-            let resolversMutation = {}
+        //     let globalTypeDefs = []
+        //     let query = []
+        //     let mutation = []
+        //     let resolvers = {}
+        //     let resolversQuery = {}
+        //     let resolversMutation = {}
 
-            for (const objectName in objGraphqlMap) {
-                if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
-                    const gMap = objGraphqlMap[objectName];
-                    globalTypeDefs.push(gMap.type)
-                    query = query.concat(gMap.query)
-                    mutation = mutation.concat(gMap.mutation)
-                    resolvers = Object.assign(resolvers, gMap.resolvers)
-                    resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
-                    resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
-                }
-            }
+        //     for (const objectName in objGraphqlMap) {
+        //         if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
+        //             const gMap = objGraphqlMap[objectName];
+        //             globalTypeDefs.push(gMap.type)
+        //             query = query.concat(gMap.query)
+        //             mutation = mutation.concat(gMap.mutation)
+        //             resolvers = Object.assign(resolvers, gMap.resolvers)
+        //             resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
+        //             resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
+        //         }
+        //     }
 
-            that.globalTypeDefs = globalTypeDefs
+        //     that.globalTypeDefs = globalTypeDefs
 
-            that.settings.graphql = {
-                query: query,
-                mutation: mutation,
-                resolvers: {
-                    ...resolvers,
-                    Query: resolversQuery,
-                    Mutation: resolversMutation
-                }
-            }
+        //     that.settings.graphql = {
+        //         query: query,
+        //         mutation: mutation,
+        //         resolvers: {
+        //             ...resolvers,
+        //             Query: resolversQuery,
+        //             Mutation: resolversMutation
+        //         }
+        //     }
 
-            console.log('graphql:', new Date())
-        }, 20000)
+        //     console.log('graphql:', new Date())
+        // }, 20000)
     },
 
     /**
