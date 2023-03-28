@@ -7,7 +7,7 @@ const callObjectServiceAction = async function (actionName, userSession, data) {
 }
 
 const getUISchema = async function (objectName, userSession) {
-    return await callObjectServiceAction(`@${objectName}.getRecordView`, userSession);
+    return await callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName });
 }
 
 const getScopeId = function (objectApiName, type) {
