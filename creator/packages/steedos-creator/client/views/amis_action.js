@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-15 16:22:10
+ * @LastEditTime: 2023-03-27 15:23:04
  * @Description: 
  */
 const normalizeLink = (to, location = window.location) => {
@@ -156,7 +156,7 @@ Template.amis_action.onRendered(()=>{
         }
       });
     schema = lodash.defaultsDeep(defData , schema);
-    console.log(`amisAction`, schema)
+    // console.log(`amisAction`, schema)
     return amis.embed(rootName, schema, {}, Object.assign(getEvn(), env));
   })
 })

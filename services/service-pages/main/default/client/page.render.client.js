@@ -334,7 +334,7 @@
             if (!template.data.regions || !objectApiName || !recordId) {
                 return;
             }
-            const { page, ...data } = template.data.regions();
+            const { page, ...data } = Tracker.nonreactive(template.data.regions);
             var rootId = "steedosPageRecordRoot";
             var modalRoot = document.getElementById(rootId);
             // if(modalRoot){

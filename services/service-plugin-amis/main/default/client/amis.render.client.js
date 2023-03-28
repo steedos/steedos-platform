@@ -77,18 +77,22 @@
                         if(comp.componentType === 'amisSchema'){
                             let amisReact = amisRequire('react');
                             AmisWrapper = function(props){
+                              // console.log(`AmisWrapper===>`, props)
                               const { $schema, body, render } = props
                               const [schema, setSchema] = amisReact.useState(null);
                               amisReact.useEffect(()=>{
+                                console.log("AmisWrapper===>==useEffect==", comp.amis.render.type, JSON.stringify(props.data?.recordId))
                                 const result = Component.class(props);
                                 if(result.then && typeof result.then === 'function'){
                                   result.then((data)=>{
+                                    // console.log("AmisWrapper===>==useEffect==setSchema", data)
                                     setSchema(data);
                                   })
                                 }else{
+                                  // console.log("AmisWrapper===>==useEffect==result", result)
                                   setSchema(result)
                                 }
-                              }, [JSON.stringify($schema)]) //, JSON.stringify(props.data)
+                              }, [JSON.stringify($schema), JSON.stringify(props.data?.recordId)]) //, JSON.stringify(props.data)
 
                               if (!schema)
                               return render('body', {

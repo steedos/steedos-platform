@@ -2,6 +2,7 @@ Template.instance_view_wrapper.helpers
 	instanceId: ->
 		return Session.get("instanceId")
 	isNeedToShowInstance: ->
+		$("body").removeClass("loading")
 		if Steedos.subs["Instance"].ready() && Steedos.subs["instance_data"].ready()
 			Session.set("instance_loading", false);
 			# $("body").removeClass("loading")
@@ -29,3 +30,6 @@ Template.instance_view_wrapper.helpers
 			else # 订阅完成 instance 不存在，则认为instance 已经被删除
 				FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box") + "/")
 		return false
+
+Template.instance_view_wrapper.onDestroyed ->
+	console.log('Template.instance_view_wrapper.onDestroyed......')

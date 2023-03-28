@@ -41,6 +41,8 @@ Meteor.startup ()->
 
 	Tracker.autorun (c)->
 		instanceId = Session.get("instanceId")
+		Steedos.subs["instance_data"].clear()
+		console.log("Tracker.autorun instanceId====", instanceId)
 		#	Steedos.instanceSpace.clear(); # 清理已订阅数据
 		if instanceId
 			Steedos.subs["Instance"].subscribe("cfs_instances", [instanceId])
