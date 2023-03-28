@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-28 10:31:04
+ * @LastEditTime: 2023-03-28 15:04:49
  * @Description: 
  */
 
@@ -24,6 +24,8 @@ module.exports = {
     mixins: [],
 
     globalTypeDefs: [], // service-api 里generateGraphQLSchema使用 
+
+    projectStarted: false,
 
     /**
      * Settings
@@ -304,6 +306,13 @@ module.exports = {
 
                 // 发送事件，通知ApolloService重新加载graphql schema
                 ctx.emit('$services.changed');
+
+                if (!this.projectStarted) {
+                    this.projectStarted = true
+                    console.log('');
+                    console.log(`Project is running at ${process.env.ROOT_URL}`);
+                    console.log('');
+                }
             }
         }
     },
@@ -480,9 +489,6 @@ module.exports = {
                 gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
 
                 objGraphqlMap[objectName] = gMap
-                if (objectName == 'xxx__c') {
-                    console.log('===>gMap: ', gMap)
-                }
             };
 
             return objGraphqlMap
