@@ -206,9 +206,14 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
-                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                const object = await objectql.getSteedosSchema().getObject(objectName);
+                const objectConfig = object.toConfig();
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
+                const include_deep = ctx.params.include_deep === "true";
+                const include_hide = ctx.params.include_hide === "true";
+                const include_related = ctx.params.include_related === "true";
+                
                 if(objectConfig.enable_workflow){
                     try {
                         objectConfig.fields.instance_state.hidden = false;
@@ -216,22 +221,153 @@ module.exports = {
                         console.log("error", error)
                     }
                 }
-
-                const fieldsArr = [];
+                
+                // 设置主表
+                let fieldsArr = [];
                 _.each(objectConfig.fields , (field, field_name)=>{
                     if(!_.has(field, "name")){
                         field.name = field_name
                     }
                     fieldsArr.push(field)
                 })
-                return _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
-                    if(!field.hidden && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
+
+                let output = [];
+                output =  _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
+                    if((include_hide || !field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
+                        // 隐藏的字段 和 字段类型 判断
                         return {
                             value: field.name,
                             label: field.label || field.name
                         }
                     }
                 })));
+                
+                if(include_deep) {
+                    for( let i = 0; i < fieldsArr.length; i ++ ) {
+                        if(!include_hide && fieldsArr[i].hidden) continue;
+                        if((fieldsArr[i].type == 'lookup' || fieldsArr[i].type == 'master_detail') && fieldsArr[i].reference_to && _.isString(fieldsArr[i].reference_to)) {
+                            const r_object = await objectql.getSteedosSchema().getObject(fieldsArr[i].reference_to).toConfig();
+                            steedosI18n.translationObject(lng, r_object.name, r_object);
+                            if (r_object){
+                                _.forEach(r_object.fields, (f2, k2)=>{
+                                    if(!include_hide && f2.hidden) return;
+                                    output.push({
+                                        'value': fieldsArr[i].name + '.' + k2,
+                                        'label': (fieldsArr[i].label || fieldsArr[i].name) + '=>' + (f2.label || k2)
+                                    });
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                if(include_related){
+                    const relationsInfo = await object.getRelationsInfo();
+                    const lookupDetails = relationsInfo && relationsInfo.lookup_details;
+                    let details = relationsInfo && relationsInfo.details;
+
+                    details = _.uniq(details.concat(lookupDetails));
+                    
+                    let relatedListObjects = [];
+                    _.each(details, (related)=>{
+                        let foo = related.split('.');
+                        let rObjectName = foo[0];
+                        let foreign_key = foo[1];
+                        relatedListObjects.push({object_name: rObjectName, foreign_key: foreign_key});
+                    });
+                    
+                    if(objectConfig.enable_files){
+                        relatedListObjects.push({
+                            object_name: 'cms_files', 
+                            foreign_key: 'parent'
+                        })
+                    }
+                    if(objectConfig.enable_tasks){
+                        relatedListObjects.push({
+                            object_name: 'tasks', 
+                            foreign_key: 'related_to'
+                        })
+                    }
+                    if(objectConfig.enable_notes){
+                        relatedListObjects.push({
+                            object_name: 'notes', 
+                            foreign_key: 'related_to'
+                        })
+                    }
+                    if(objectConfig.enable_events){
+                        relatedListObjects.push({
+                            object_name: 'events', 
+                            foreign_key: 'related_to'
+                        })
+                    }
+                    if(objectConfig.enable_instances){
+                        relatedListObjects.push({
+                            object_name: 'instances', 
+                            foreign_key: 'record_ids'
+                        })
+                    }
+                    if(objectConfig.enable_approvals){
+                        relatedListObjects.push({
+                            object_name: 'approvals', 
+                            foreign_key: 'related_to'
+                        })
+                    }
+                    if(objectConfig.enable_process){
+                        relatedListObjects.push({
+                            object_name: 'process_instance_history', 
+                            foreign_key: 'target_object'
+                        })
+                    }
+                    if(objectConfig.enable_audit){
+                        relatedListObjects.push({
+                            object_name: 'audit_records', 
+                            foreign_key: 'related_to'
+                        })
+                    }
+
+                    for( let i = 0; i < relatedListObjects.length; i ++ ) {
+                        // 获得相关对象的字段
+                        const relatedObject = await objectql.getSteedosSchema().getObject(relatedListObjects[i].object_name);
+                        const relatedObjectConfig = relatedObject.toConfig();
+                        steedosI18n.translationObject(lng, relatedObjectConfig.name, relatedObjectConfig);
+                        const fieldsArr = [];
+                        _.each(relatedObjectConfig.fields, (field, field_name) => {
+                            if (!_.has(field, "name")) {
+                                field.name = field_name;
+                            }
+                            fieldsArr.push(field);
+                        })
+                        let relatedOptions = [];
+                        relatedOptions = _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field) => {
+                            if ((!field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)) {
+                                return {
+                                    'value': field.name,
+                                    'label': field.label || field.name
+                                }
+                            }
+                        })));
+
+                        _.each(relatedOptions, (relatedOption)=>{
+                            if (relatedListObjects[i].foreign_key != relatedOption.value){
+                                output.push({
+                                    'value': relatedObjectConfig.name + '.' + relatedOption.value,
+                                    'label': (relatedObjectConfig.label || relatedObjectConfig.name) + '=>' + relatedOption.label
+                                })
+                            }                        
+                        })
+                    }
+                }
+                // 根据用户关键字进行过滤
+                if( ctx.params.term ) {
+                    let form_fields = output;
+                    output = [];
+                    form_fields.forEach((item) => {
+                      if(item.label.toLowerCase().indexOf(ctx.params.term.toLowerCase()) !== -1)
+                        output.push(item); 
+                    })
+                }
+                output = _.uniqWith(_.compact(output), _.isEqual);
+                return output;
             }
         },
         getObjectFieldsLayoutOptions: {

@@ -4,7 +4,7 @@
     "body": [
       {
         "type": "wrapper",
-        "className": "p-0",
+        "className": "p-0 h-full",
         "body": [
           {
             "type": "steedos-instance-detail",
@@ -46,7 +46,7 @@
     "data": {
     },
     "id": "u:d37465183f56",
-    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3 p-0",
+    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3 p-0 h-fill",
     "name": "amis-root-workflow",
     "initApi": null,
     "initFetch": null,

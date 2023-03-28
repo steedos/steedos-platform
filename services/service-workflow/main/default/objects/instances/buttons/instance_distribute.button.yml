@@ -48,7 +48,11 @@ amis_schema: |-
                           "required": true,
                           "options": [],
                           "searchable": true,
-                          "autoFill": {},
+                          "amis": {
+                            "autoFill": {
+                              "users": []
+                            }
+                          },
                           "onlyLeaf": true,
                           "action": "distribute",
                           "distributeInstanceId": "${record._id}",
@@ -61,7 +65,7 @@ amis_schema: |-
                           "id": "u:c3ad733db360",
                           "multiple": true,
                           "required": true,
-                          "idsTrackOn": "distribute_optional_users"
+                          "idsDependOn": "distribute_optional_users"
                         },
                         {
                           "type": "textarea",

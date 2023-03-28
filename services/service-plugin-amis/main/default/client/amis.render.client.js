@@ -88,7 +88,7 @@
                                 }else{
                                   setSchema(result)
                                 }
-                              }, [JSON.stringify($schema)])
+                              }, [JSON.stringify($schema)]) //, JSON.stringify(props.data)
 
                               if (!schema)
                               return render('body', {

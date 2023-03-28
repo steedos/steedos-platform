@@ -470,7 +470,7 @@ var runMain = Profile("Run main()", function () {
   console.log('');
   console.log(`Project is running at ${process.env.ROOT_URL}`);
   console.log('');
-  if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开
+  if (process.env.STEEDOS_AUTO_OPEN_BROWSER == 'true') { // 默认不打开
     try {
       open(process.env.ROOT_URL);
     } catch (error) {

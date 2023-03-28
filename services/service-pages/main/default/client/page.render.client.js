@@ -28,6 +28,7 @@
         let modalRoot = document.getElementById(`steedos-page-modal-root-${name}`);
         if (!modalRoot) {
         modalRoot = document.createElement('div');
+        modalRoot.setAttribute('class', 'h-full');
         modalRoot.setAttribute('id', `steedos-page-modal-root-${name}`);
         document.body.appendChild(modalRoot)
         }
@@ -275,6 +276,7 @@
         if (!modalRoot) {
             modalRoot = document.createElement('div');
             modalRoot.setAttribute('id', rootId);
+            modalRoot.setAttribute('class', 'h-full');
             $(".page-template-root")[0].appendChild(modalRoot);
         }
 
@@ -368,6 +370,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full');
                 $(".page-related-list-view-root")[0].appendChild(modalRoot);
             }
 
@@ -620,6 +623,7 @@
             if (!modalRoot) {
                 modalRoot = document.createElement('div');
                 modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full');
                 $(".steedos-global-header-root")[0].appendChild(modalRoot);
             }
             if (page.render_engine && page.render_engine != 'redash') {
