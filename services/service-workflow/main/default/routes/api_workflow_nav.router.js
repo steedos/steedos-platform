@@ -48,11 +48,9 @@ const getCategoriesInbox = async (userSession,req) => {
   const  data = await objectql.getObject('instance_tasks').find({
     filters: filters
   }, userSession)
-  // console.log('得到的数据是',filters)
- 
+
   const output = [];
   const categoryGroups = lodash.groupBy(data, 'category_name');
-  // console.log('分类后的数据是',categoryGroups)
   lodash.each(categoryGroups, (v, k)=>{
     let categoryBadge = 0;
     const flowGroups = lodash.groupBy(v, 'flow_name');
@@ -63,10 +61,10 @@ const getCategoriesInbox = async (userSession,req) => {
         label: k2,
         // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
         flow_name: k2,
-        badge: v2.length,
+        tag:v2.length,
         value:{
-          level:11,
-          // to: `/app/${appId}/instance_tasks/grid/inbox`
+          level:3,
+          value:k2,
         },
       })
     })
@@ -75,14 +73,13 @@ const getCategoriesInbox = async (userSession,req) => {
       children: flows,
         // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
       category_name:k,
-      badge: categoryBadge,
+      tag:v.length,
       value:{
-        level:10,
-        // to: `/app/${appId}/instance_tasks/grid/inbox`
+        level:2,
+        value:k,
       },
     })
   })
-  // console.log('output',output)
   return output
 }
 
@@ -94,10 +91,6 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     const spaceId = userSession.spaceId;
     const userId = userSession.userId;
     let mychildren = await getCategoriesInbox(userSession,req)
-    // console.log('mychidren', mychildren)
-    // mychildren.forEach(item => {
-    //   console.log('mychildren.children', item.children)
-    // })
     let query = {
       filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
     };
@@ -106,9 +99,8 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     var options = [
       {
         "label": "待审核",
-        "to": `/app/${appId}/instance_tasks/grid/inbox`,
         "icon": "fa fa-download",
-        "badge": sum,
+        "tag":sum,
         "value":{
           "level":1,
           "to": `/app/${appId}/instance_tasks/grid/inbox`
@@ -118,42 +110,49 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
       {
         "label": "已审核",
         "value":{
-          "level":2,
+          "level":1,
           "to": `/app/${appId}/instance_tasks/grid/outbox`
         },
-        "to": `/app/${appId}/instance_tasks/grid/outbox`,
         "icon": "fa fa-check"
       },
       {
         "label": "监控箱",
-        "to": `/app/${appId}/instances/grid/monitor`,
         "icon": "fa fa-eye",
         "value":{
-          "level":3,
+          "level":1,
           "to": `/app/${appId}/instances/grid/monitor`,
         }
       },
       {
         "label": "我的文件",
         "value":{
-          "level":4,
-          // "to": `/app/${appId}/instance_tasks/grid/inbox`
+          "level":1,
+          "to": `/app/${appId}/instance_tasks/grid/inbox`
         },
         "unfolded": true,
         "children": [
           {
             "label": "草稿",
-            "to": `/app/${appId}/instances/grid/draft`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/draft`
+            },
             "icon": "fa fa-pencil"
           },
           {
             "label": "进行中",
-            "to": `/app/${appId}/instances/grid/pending`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/pending`,
+            },
             "icon": "fa fa-circle"
           },
           {
             "label": "已完成",
-            "to": `/app/${appId}/instances/grid/completed`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/completed`,
+            },
             "icon": "fa fa-check-square"
           }
         ]
@@ -161,7 +160,6 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     ];
     res.status(200).send({
       data: {
-        // links:options
         options:options
       },
       msg: "",
