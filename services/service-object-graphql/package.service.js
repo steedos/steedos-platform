@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 17:54:09
+ * @LastEditTime: 2023-03-28 10:31:04
  * @Description: 
  */
 
@@ -299,7 +299,11 @@ module.exports = {
                     }
                 }
 
-                console.log('graphql:', new Date())
+                // console.log('graphql:', new Date())
+                // console.log(JSON.stringify(query, null, 2))
+
+                // 发送事件，通知ApolloService重新加载graphql schema
+                ctx.emit('$services.changed');
             }
         }
     },
@@ -476,7 +480,9 @@ module.exports = {
                 gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
 
                 objGraphqlMap[objectName] = gMap
-
+                if (objectName == 'xxx__c') {
+                    console.log('===>gMap: ', gMap)
+                }
             };
 
             return objGraphqlMap
