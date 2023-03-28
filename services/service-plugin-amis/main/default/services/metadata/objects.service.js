@@ -327,8 +327,11 @@ module.exports = {
 
                     for( let i = 0; i < relatedListObjects.length; i ++ ) {
                         // 获得相关对象的字段
+                        const relatedObject = await objectql.getSteedosSchema().getObject(relatedListObjects[i].object_name);
+                        const relatedObjectConfig = relatedObject.toConfig();
+                        steedosI18n.translationObject(lng, relatedObjectConfig.name, relatedObjectConfig);
                         const fieldsArr = [];
-                        _.each(objectConfig.fields, (field, field_name) => {
+                        _.each(relatedObjectConfig.fields, (field, field_name) => {
                             if (!_.has(field, "name")) {
                                 field.name = field_name;
                             }
@@ -344,12 +347,11 @@ module.exports = {
                             }
                         })));
 
-                        let relatedObject = await objectql.getSteedosSchema().getObject(relatedListObjects[i].object_name);
                         _.each(relatedOptions, (relatedOption)=>{
                             if (relatedListObjects[i].foreign_key != relatedOption.value){
                                 output.push({
-                                    'value': relatedObject.name + '.' + relatedOption.value,
-                                    'label': (relatedObject.label || relatedObject.name) + '=>' + relatedOption.label
+                                    'value': relatedObjectConfig.name + '.' + relatedOption.value,
+                                    'label': (relatedObjectConfig.label || relatedObjectConfig.name) + '=>' + relatedOption.label
                                 })
                             }                        
                         })
