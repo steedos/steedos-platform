@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-26 14:12:40
+ * @LastEditTime: 2023-03-28 15:53:33
  * @Description: 
  */
 
@@ -65,8 +65,14 @@ export async function generateSettingsGraphql(objectConfig: SteedosObjectTypeCon
                 // TODO: cfs_images_filerecord对象不存在，需要额外处理
                 refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
             }
-            let objMetaData = getLocalService(refTo);
-            if (refTo != objectName && (!objMetaData || objMetaData.settings.deleted)) {
+            try {
+                let obj = getObject(refTo);
+                if (refTo != objectName && (!obj)) {
+                    type += `${name}: ${field.multiple ? "[JSON]" : "JSON"} `; // 未找到关联对象时仍返回字段值
+                    return type;
+                }
+            } catch (error) {
+                // console.error(error.message);
                 type += `${name}: ${field.multiple ? "[JSON]" : "JSON"} `; // 未找到关联对象时仍返回字段值
                 return type;
             }

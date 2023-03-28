@@ -1,5 +1,5 @@
 {
-    "name": "@steedos/standard-ui",
+    "name": "@steedos/service-objectql",
     "version": "2.4.7",
     "main": "package.service.js",
     "private": false,
@@ -9,8 +9,13 @@
     "keywords": [
         "steedos"
     ],
+    "scripts": {
+    },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "a58a5e537a2ff15dda57bf1c31d00f8a9ae19879"
+    "gitHead": "f7a60f4fedc134e362a2db5903db606fc61802b2",
+    "dependencies": {
+        "@steedos/objectql": "2.4.6"
+    }
 }

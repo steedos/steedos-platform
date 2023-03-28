@@ -165,7 +165,8 @@ export function getGraphqlActions(
             let params = ctx.params;
             let { __objectName } = params;
             let userSession = ctx.meta.user;
-            return await callObjectServiceAction(`@${__objectName}.getRecordPermissionsById`, userSession, {
+            return await callObjectServiceAction(`objectql.getRecordPermissionsById`, userSession, {
+                objectName: __objectName,
                 recordId: params._id
             });;
         },

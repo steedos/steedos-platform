@@ -59,7 +59,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
             const { objectServiceName } = req.params;
             const objectName = objectServiceName.substring(1);
             const [result, hasImportTemplates] = yield Promise.all([
-                callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession),
+                callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
                 callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
                     objectName: objectName
                 })

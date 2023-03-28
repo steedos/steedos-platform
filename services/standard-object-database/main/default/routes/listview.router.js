@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:20:24
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-29 11:59:40
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-03-27 17:08:55
  * @Description: 
  */
 const express = require('express');
@@ -16,7 +16,7 @@ const callObjectServiceAction = async function(actionName, userSession, data){
 }
 
 const getUISchema = async function(objectName, userSession){
-    return await callObjectServiceAction(`@${objectName}.getRecordView`, userSession);
+    return await callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName });
 }
 
 router.post('/api/listview/filters', core.requireAuthentication, async function (req, res) {

@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-object-graphql",
-    "version": "2.4.5",
+    "version": "2.4.7",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -17,7 +17,7 @@
     "license": "MIT",
     "gitHead": "f7a60f4fedc134e362a2db5903db606fc61802b2",
     "dependencies": {
-        "@steedos/objectql": "2.4.5",
-        "@steedos/service-package-loader": "2.4.5"
+        "@steedos/objectql": "2.4.6",
+        "@steedos/service-package-loader": "2.4.6"
     }
 }
