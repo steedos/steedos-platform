@@ -1356,6 +1356,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(this.enable_process){
             objectConfig.details.push("process_instance_history.target_object")
         }
+        if(this.enable_audit){
+            objectConfig.details.push("audit_records.related_to")
+        }
 
         objectConfig.details = uniq(objectConfig.details)
 
