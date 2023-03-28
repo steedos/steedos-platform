@@ -131,7 +131,7 @@ export class SteedosSchema {
             if(!objectMap){
                 // const services = require('../services');
                 // return services.getObjectDispatcher(object_name)
-                throw new Error('Object is not found');
+                throw new Error(`Object ${name} is not found`);
             }
             datasource_name = objectMap.datasourceName
         }
