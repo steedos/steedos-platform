@@ -2,8 +2,6 @@ name: 🐞 Bug report 错误报告
 description: Create a bug report to help us improve Steedos. 填写bug报告，帮助我们改进华炎魔方。
 title: "[Bug]: "
 labels: [bug, needs triaging]
-assignees:
-- hotlong
 body:
 - type: markdown
   attributes:
