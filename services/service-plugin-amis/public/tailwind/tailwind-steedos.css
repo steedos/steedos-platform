@@ -54,10 +54,6 @@
   position: absolute
 }
 
-.relative {
-  position: relative
-}
-
 .sticky {
   position: sticky
 }
@@ -71,10 +67,6 @@
 
 .top-0 {
   top: 0px
-}
-
-.isolate {
-  isolation: isolate
 }
 
 .z-40 {
@@ -109,6 +101,11 @@
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem
+}
+
+.-mx-11 {
+  margin-left: -2.75rem;
+  margin-right: -2.75rem
 }
 
 .mr-4 {
@@ -221,8 +218,8 @@
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
-.transform {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+.flex-row {
+  flex-direction: row
 }
 
 .flex-col {

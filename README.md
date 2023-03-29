@@ -91,7 +91,7 @@ yarn start
 - [开发文档](https://www.steedos.cn/docs/developer/)
 - [客户案例](https://www.steedos.cn/customer-success-stories/)
 - [解决方案](https://www.steedos.cn/collections/steedos-packages)
-- [试用解决方案(SaaS版）)](https://demo.steedos.cn/)
+- [试用解决方案(SaaS版）](https://demo.steedos.cn/)
 
 ## 为华炎魔方做贡献
 
