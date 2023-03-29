@@ -922,20 +922,20 @@ actions:
                 }
               }
             }
-  importFlow:
-    label: Import Workflow
-    visible: true
-    'on': list
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Modal.show("admin_import_flow_modal", {
-                onSuccess: function (flows) {
-                  if (flows.length > 0) {
-                    return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
-                  }
-                }
-              });
-            }
+  # importFlow:
+  #   label: Import Workflow
+  #   visible: true
+  #   'on': list
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return Modal.show("admin_import_flow_modal", {
+  #               onSuccess: function (flows) {
+  #                 if (flows.length > 0) {
+  #                   return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
+  #                 }
+  #               }
+  #             });
+  #           }
   exportFlows:
     label: Export Workflows
     visible: true
