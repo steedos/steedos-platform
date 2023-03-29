@@ -428,78 +428,105 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                 label = map[value];
                             }
                             displayObj[name] = label;
-                        } else if (fType == "lookup" && _.isString(field.reference_to)) {
-                            let refTo = field.reference_to;
+                        } else if (fType == "lookup") {
+                            if(_.isString(field.reference_to)){
+                                let refTo = field.reference_to;
 
-                            let refField = field.reference_to_field || '_id';
+                                let refField = field.reference_to_field || '_id';
 
-                            if (refTo === 'users') {
-                                refTo = 'space_users';
-                                refField = 'user'
-                            }
-
-                            let refValue = doc[name];
-                            if (!refValue) {
-                                continue;
-                            }
-
-                            let refFilters = null;
-
-                            if (field.multiple) {
-                                refFilters = [refField, "in", refValue]
-                            } else {
-                                refFilters = [refField, "=", refValue]
-                            }
-
-                            // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
-                            if (refTo === 'object_fields' && refField == 'name') {
-                                const refToObjectsField = _.find(fields, (_field) => {
-                                    return _field.reference_to === 'objects'
-                                })
-                                if (refToObjectsField) {
-                                    refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                if (refTo === 'users') {
+                                    refTo = 'space_users';
+                                    refField = 'user'
                                 }
-                            }
 
-                            // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
-                            if (refTo === 'object_actions' && refField == 'name') {
-                                const refToObjectsField = _.find(fields, (_field) => {
-                                    return _field.reference_to === 'objects'
-                                })
-                                if (refToObjectsField) {
-                                    refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                let refValue = doc[name];
+                                if (!refValue) {
+                                    continue;
                                 }
-                            }
 
-                            let refObj = steedosSchema.getObject(refTo);
-                            let nameFieldKey = await refObj.getNameFieldKey();
-                            if (field.multiple) {
-                                let refRecords = await refObj.find({
-                                    filters: refFilters,
-                                    fields: [nameFieldKey],
-                                });
-                                displayObj[name] = _.map(refRecords, (item) => {
-                                    return {
-                                        objectName: refTo,
-                                        value: item._id,
-                                        label: item[nameFieldKey]
+                                let refFilters = null;
+
+                                if (field.multiple) {
+                                    refFilters = [refField, "in", refValue]
+                                } else {
+                                    refFilters = [refField, "=", refValue]
+                                }
+
+                                // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                                if (refTo === 'object_fields' && refField == 'name') {
+                                    const refToObjectsField = _.find(fields, (_field) => {
+                                        return _field.reference_to === 'objects'
+                                    })
+                                    if (refToObjectsField) {
+                                        refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
                                     }
-                                })
-                            } else {
-                                let refRecord = (
-                                    await refObj.find({
+                                }
+
+                                // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                                if (refTo === 'object_actions' && refField == 'name') {
+                                    const refToObjectsField = _.find(fields, (_field) => {
+                                        return _field.reference_to === 'objects'
+                                    })
+                                    if (refToObjectsField) {
+                                        refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                    }
+                                }
+
+                                let refObj = steedosSchema.getObject(refTo);
+                                let nameFieldKey = await refObj.getNameFieldKey();
+                                if (field.multiple) {
+                                    let refRecords = await refObj.find({
                                         filters: refFilters,
                                         fields: [nameFieldKey],
+                                    });
+                                    displayObj[name] = _.map(refRecords, (item) => {
+                                        return {
+                                            objectName: refTo,
+                                            value: item ? item._id : refValue,
+                                            label: item ? item[nameFieldKey] : refValue
+                                        }
                                     })
-                                )[0];
-                                if (refRecord) {
+                                } else {
+                                    let refRecord = (
+                                        await refObj.find({
+                                            filters: refFilters,
+                                            fields: [nameFieldKey],
+                                        })
+                                    )[0];
+                                    if (refRecord) {
+                                        displayObj[name] = {
+                                            objectName: refTo,
+                                            value: refRecord._id,
+                                            label: refRecord[nameFieldKey]
+                                        };
+                                    }else{
+                                        displayObj[name] = {
+                                            objectName: refTo,
+                                            value: refValue,
+                                            label: refValue
+                                        };
+                                    }
+                                }
+                            }else{
+                                let refValue = doc[name];
+                                if (!refValue) {
+                                    continue;
+                                }
+                                if(field.multiple && _.isArray(refValue)){
+                                    _.each(refValue, (item)=>{
+                                        displayObj[name] = {
+                                            value: item,
+                                            label: item
+                                        };
+                                    })
+                                }else{
                                     displayObj[name] = {
-                                        objectName: refTo,
-                                        value: refRecord._id,
-                                        label: refRecord[nameFieldKey]
+                                        value: refValue,
+                                        label: refValue
                                     };
                                 }
                             }
+                            
                         } else if (fType == "master_detail" && _.isString(field.reference_to)) {
                             let refTo = field.reference_to;
                             let refField = field.reference_to_field || '_id';
