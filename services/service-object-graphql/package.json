@@ -24,6 +24,7 @@
         "moleculer": "^0.14.25",
         "moleculer-apollo-server": "^0.3.6",
         "moment": "^2.29.1",
+        "open": "^7.3.0",
         "underscore": "1.5.2"
     }
 }

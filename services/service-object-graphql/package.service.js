@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-28 15:04:49
+ * @LastEditTime: 2023-03-29 13:18:59
  * @Description: 
  */
 
@@ -14,6 +14,7 @@ const {
     getGraphqlActions,
     getQueryFields
 } = require('./lib');
+const open = require('open');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -312,6 +313,14 @@ module.exports = {
                     console.log('');
                     console.log(`Project is running at ${process.env.ROOT_URL}`);
                     console.log('');
+                    if (process.env.STEEDOS_AUTO_OPEN_BROWSER == 'true') { // 默认不打开
+                        try {
+                            open(process.env.ROOT_URL);
+                        } catch (error) {
+                            console.error(error);
+                            console.error('auto open browser failed.');
+                        }
+                    }
                 }
             }
         }
