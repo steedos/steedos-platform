@@ -65,6 +65,7 @@ const getCategoriesInbox = async (userSession,req) => {
         value:{
           level:3,
           value:k2,
+          name: 'flow_name',
         },
       })
     })
@@ -77,6 +78,7 @@ const getCategoriesInbox = async (userSession,req) => {
       value:{
         level:2,
         value:k,
+        name: 'category_name',
       },
     })
   })
