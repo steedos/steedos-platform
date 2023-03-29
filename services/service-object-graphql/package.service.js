@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-29 13:18:59
+ * @LastEditTime: 2023-03-29 14:59:59
  * @Description: 
  */
 
@@ -313,7 +313,7 @@ module.exports = {
                     console.log('');
                     console.log(`Project is running at ${process.env.ROOT_URL}`);
                     console.log('');
-                    if (process.env.STEEDOS_AUTO_OPEN_BROWSER == 'true') { // 默认不打开
+                    if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
                         try {
                             open(process.env.ROOT_URL);
                         } catch (error) {
