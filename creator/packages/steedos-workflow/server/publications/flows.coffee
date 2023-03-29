@@ -23,6 +23,30 @@ Meteor.publish 'flows', (spaceId)->
 		}
 	})
 
+Meteor.publish 'instance_flow', (spaceId, flowId)->
+	unless this.userId
+		return this.ready()
+
+	unless spaceId
+		return this.ready()
+
+	unless flowId
+		return this.ready()
+
+	return db.flows.find({_id: flowId, space: spaceId}, {
+		fields: {
+			name: 1,
+			form: 1,
+			state: 1,
+			perms: 1,
+			space: 1,
+			company_id: 1,
+			sort_no: 1,
+			distribute_optional_users: 1,
+			distribute_to_self: 1
+		}
+	})
+
 
 Meteor.publish 'flow_version', (spaceId, flowId, versionId) ->
 	unless this.userId

@@ -8,6 +8,16 @@ Meteor.publish 'forms', (spaceId)->
 
 	return db.forms.find({space: spaceId}, {fields: {name: 1, category: 1, state: 1, description: 1, instance_style: 1}})
 
+Meteor.publish 'instance_form', (spaceId, formId)->
+	unless this.userId
+		return this.ready()
+
+	unless spaceId
+		return this.ready()
+
+
+	return db.forms.find({_id: formId, space: spaceId}, {fields: {name: 1, category: 1, state: 1, description: 1, instance_style: 1}})
+
 
 Meteor.publish 'form_version', (spaceId, formId, versionId) ->
 	unless this.userId
