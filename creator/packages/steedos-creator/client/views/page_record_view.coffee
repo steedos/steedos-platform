@@ -1,5 +1,4 @@
 Template.page_record_view.onRendered ->
-    console.log("Template.page_record_view.onRendered====>")
     self = this;
     objectName = Session.get("object_name");
     recordId = Session.get("record_id");
@@ -12,7 +11,6 @@ Template.page_record_view.onRendered ->
                 # SteedosUI.refs[self.pageName].unmount()
                 
                 if SteedosUI.refs[self.pageName]
-                    console.log("Template.page_record_view.onRendered====>updateProps====>", regions)
                     return SteedosUI.refs[self.pageName].updateProps({
                         data: {
                             recordId: regions.page.schema.recordId,
@@ -29,14 +27,12 @@ Template.page_record_view.onRendered ->
                 if _.isString(schema)
                     schema = JSON.parse(schema)
                 self.pageName = schema.name
-                console.log("Template.page_record_view.onRendered====>render====>")
         container = Steedos.Page.Record.render(self, objectName, recordId);
         if container 
             self.containerList.push(container)
 
 
 Template.page_record_view.onDestroyed ->
-    console.log('Template.page_record_view.onDestroyed=====>')
     try 
         SteedosUI.refs[this.pageName].unmount()
     catch e

@@ -115,12 +115,10 @@ Template.instance_view.helpers
 		return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
 	
 Template.instance_view.onCreated ->
-	console.log('Template.instance_view.onCreated......')
 	Form_formula.initFormScripts()
 	Session.set("instance_submitting", false);
 
 Template.instance_view.onRendered ->
-	console.log('Template.instance_view.onRendered......')
 	ins = WorkflowManager.getInstance();
 
 	form_version = db.form_versions.findOne({_id: ins.form_version})
