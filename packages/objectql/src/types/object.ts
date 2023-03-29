@@ -1298,6 +1298,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
+            this.enable_process = true
         }
         //清理数据
         _.each(objectConfig.triggers, function(trigger, key){
