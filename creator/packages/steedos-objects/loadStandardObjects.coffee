@@ -101,6 +101,8 @@ try
 				});
 
 				objectql.broker.init(broker);
+
+				objectqlService = broker.createService(require("@steedos/service-objectql"));
 				
 				projectService = broker.createService({
 					name: "project-server",
@@ -160,6 +162,7 @@ try
 				Meteor.wrapAsync((cb)->
 					broker.start().then(()->
 						if !broker.started 
+							broker._restartService(objectqlService);
 							broker._restartService(standardObjectsPackageLoaderService);
 							broker._restartService(uiService);
 
