@@ -22,7 +22,7 @@
           {
             "type": "input-tree",
             "name": "tree",
-            "className": "instance-tasks-tree bg-white h-full w-full",
+            "className": "instance-inbox-tree bg-white h-full w-full",
             "id": "u:9f3dd961ca12",
             "stacked": true,
             "multiple": false,
@@ -50,10 +50,10 @@
                   },
                   {
                     "args": {
-                      "url": "${event.data.value.to}",
+                      "link": "${event.data.value.to}",
                       "blank": false
                     },
-                    "actionType": "url",
+                    "actionType": "link",
                     "expression": "${event.data.value.level<2}"
                   }
                 ]
@@ -99,34 +99,10 @@
       "showDisplayAs": true,
       "className": "h-full w-full bg-white",
       "formFactor": "LARGE"
-    },
-    {
-      "type": "button",
-      "label": "模拟刷新",
-      "onEvent": {
-        "click": {
-          "actions": [
-            {
-              "actionType": "broadcast",
-              "args": {
-                "eventName": "@data.changed.instance_tasks"
-              }
-            }
-          ]
-        }
-      },
-      "id": "u:987c489f7126",
-      "visibleOn": "false"
     }
   ],
   "data": {
-    "objectName": "instance_tasks",
-    "context": {
-      "rootUrl": "http://127.0.0.1:5000",
-      "tenantId": "64217d239dcd7011ece72fca",
-      "userId": "7b0af4b0-c553-41fb-9a16-358add63a2d8",
-      "authToken": "1bdca854ce4df1f57ee438358c8ad25cbcd83bb1bd3fdc957922b3d4a4f6b25595b3f367d5d99298f8cb85"
-    }
+    "objectName": "instance_tasks"
   },
   "className": "h-full w-full p-0 m-0",
   "id": "u:4dd57bf1a99a",

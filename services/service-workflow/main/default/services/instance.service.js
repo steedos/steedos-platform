@@ -73,7 +73,7 @@ module.exports = {
     },
     getBoxFilters: {
         async handler(ctx){
-            const { box, flowId, userId } = ctx.params;
+            const { box, flowId, userId, is_space_admin } = ctx.params;
             const filter = [];
             switch (box) {
                 case 'inbox':

@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-13 11:39:25
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-03-29 15:22:19
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -41,9 +41,9 @@ const { link } = require('fs');
  */
 const getCategoriesInbox = async (userSession,req) => {
   const { appId } = req.params;
-  const userId = userSession.userId;
+  const { userId, is_space_admin} = userSession;
   const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-    box: "inbox", flowId: null, userId
+    box: "inbox", flowId: null, userId, is_space_admin
   })
   const  data = await objectql.getObject('instance_tasks').find({
     filters: filters

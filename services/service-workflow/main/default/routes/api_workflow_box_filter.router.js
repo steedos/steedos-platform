@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-10 13:49:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-20 13:48:52
+ * @LastEditTime: 2023-03-29 15:11:44
  * @Description: 
  */
 const express = require("express");
@@ -17,7 +17,7 @@ router.get('/api/workflow/v2/:box/filter', core.requireAuthentication, async fun
     const { appId, flowId } = req.query;
     const { box } = req.params;
     const filter = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-        box, flowId, userId
+        box, flowId, userId, is_space_admin
     })
     return res.send({
         filter
