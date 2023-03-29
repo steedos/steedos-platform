@@ -29,14 +29,15 @@ workflowSpaceRoutes = FlowRouter.group
 	prefix: '/workflow/space/:spaceId',
 	name: 'workflowSpace',
 	triggersEnter: [checkUserSigned, (context, redirect)->
+		appId = Session.get("app_id") || 'workflow'
 		if context.params.instanceId 
-			return redirect('/app/workflow/instances/view/' + context.params.instanceId + '?' + context.context.querystring)
+			return redirect('/app/'+appId+'/instances/view/' + context.params.instanceId + '?' + context.context.querystring)
 		else
 			if context.params.box
 				if context.params.box == 'inbox' ||  context.params.box == 'outbox'
-					return redirect('/app/workflow/instance_tasks/grid/' + context.params.box + '?' + context.context.querystring)
+					return redirect('/app/'+appId+'/instance_tasks/grid/' + context.params.box + '?' + context.context.querystring)
 				else
-					return redirect('/app/workflow/instances/grid/' + context.params.box + '?' + context.context.querystring)
+					return redirect('/app/'+appId+'/instances/grid/' + context.params.box + '?' + context.context.querystring)
 		
 		# 申请单界面直接刷新或从首页直接进入申请单时未高亮选中”审批“为当前对象
 		# 这里加Meteor.defer是因为从其他对象记录详细界面直接进入申请单界面（比如在任务详细界面点击顶部搜索栏最近查看中的某个申请单）的时候会有问题
