@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 17:53:55
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-17 09:24:21
+ * @LastEditTime: 2023-03-29 16:09:20
  * @Description: 执行工作流时间触发器队列
  */
 
@@ -24,13 +24,19 @@ module.exports = {
         }
     */
     run: async function (options = {}) {
+        // STEEDOS_CRON_WORKFLOW_RULE='*/10 * * * * *'
+        const rule = process.env.STEEDOS_CRON_WORKFLOW_RULE
+        if (!rule) {
+            return;
+        }
+
         console.log('time_trigger_queue schedule running...')
         const opt = {
             excuteBatchSize: 10,
             keepDocs: true,
             ...options
         }
-        const rule = `*/10 * * * * *` // 每十秒执行一次
+        // const rule = `*/10 * * * * *` // 每十秒执行一次
         let next = true;
         schedule.scheduleJob(rule, async function () {
             try {
