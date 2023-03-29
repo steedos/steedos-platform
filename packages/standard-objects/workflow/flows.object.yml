@@ -936,20 +936,20 @@ actions:
   #               }
   #             });
   #           }
-  exportFlows:
-    label: Export Workflows
-    visible: true
-    'on': list
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
-              let ids = _.pluck(selectedRows, '_id');
-              if(ids && ids.length > 0){
-                window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
-              }else{
-                toastr.warning("请选择要导出的流程");
-              }
-            }
+  # exportFlows:
+  #   label: Export Workflows
+  #   visible: true
+  #   'on': list
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
+  #             let ids = _.pluck(selectedRows, '_id');
+  #             if(ids && ids.length > 0){
+  #               window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
+  #             }else{
+  #               toastr.warning("请选择要导出的流程");
+  #             }
+  #           }
   upgradeFlow:
     label: Upgrade Workflow
     visible: true
