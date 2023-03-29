@@ -60,7 +60,9 @@ module.exports = {
 		started: {	
 			async handler(ctx) {
 				const { serviceInfo } = ctx.params;
-				return await Register.rpush(ctx.broker, { key: getStartedCacherKey(), data: [serviceInfo] })
+				const res = await Register.rpush(ctx.broker, { key: getStartedCacherKey(), data: [serviceInfo] });
+				await this.statisticsActivatedPackages();
+				return res;
 			}
 		},
         offline: {
