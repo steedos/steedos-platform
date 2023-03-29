@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+
+  vscode:
+    image: steedos/vscode-server:1.76.2
+    ports:
+      - "5555:3000"
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://host.docker.internal:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://host.docker.internal:27017/local
+      - TRANSPORTER=redis://host.docker.internal:6379/1
+      - CACHER=redis://host.docker.internal:6379
+    volumes:
+      - '.:/home/workspace/steedos-platform:cached'
+      
