@@ -30,15 +30,18 @@
                 "method": "post",
                 "url": "${context.rootUrl}/graphql",
                 "cache": 100,
-                "adaptor": "const recordId = api.body.recordId;\nvar data;\nif (recordId) {\n    data = payload.data.data[0];\n    if (data) {\n        data.object_name = data.object_name ? data.object_name.name : null;\n    }\n}else{\n    const defaultData = api.body.defaultData;\n    let defaultValues = {};\n    // TODO:字段默认值后期添加\n    if (defaultData && _.isObject(defaultData) && !_.isArray(defaultData)) {\n        data = Object.assign({}, defaultValues, defaultData)\n    }\n}\n\n//初始化接口返回的字段移除字段值为null的字段\nfor (key in data){\n    if(data[key] === null){\n        delete data[key];\n    }\n}\n\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n",
+                "adaptor": "\n\nconst recordId = api.body.recordId;\nlet initialValues = {};\nif (recordId && payload.data.data) {\n    var data = payload.data.data[0];\n    const dataKeys = _.keys(data);\n    const uiSchema = api.body.uiSchema;\n    const fieldKeys = uiSchema && _.keys(uiSchema.fields);\n    if (data) {\n        _.each(dataKeys, function (key) {\n            if (fieldKeys.indexOf(key) < 0) {\n                delete data[key];\n            }\n        })\n\n        //初始化接口返回的字段移除字段值为null的字段\n        for (key in data) {\n            if (data[key] === null) {\n                delete data[key];\n            }\n        }\n    };\n    initialValues = data;\n}\nelse {\n    var uiSchema = api.body.uiSchema;\n    var defaultData = api.body.defaultData;\n    var defaultValues = {};\n    _.each(uiSchema?.fields, function (field) {\n        var value = SteedosUI.getFieldDefaultValue(field, api.body.global);\n        if (value) {\n            defaultValues[field.name] = value;\n        }\n    });\n    if (defaultData && _.isObject(defaultData) && !_.isArray(defaultData)) {\n        defaultValues = Object.assign({}, defaultValues, defaultData)\n    }\n    if (uiSchema.form) {\n        try {\n            var objectFormConfig = JSON.parse(uiSchema.form);\n            initialValues = objectFormConfig.initialValues;\n            if (initialValues) {\n                initialValues = new Function(\"return \" + initialValues)();\n            }\n            if (typeof initialValues === \"function\") {\n                initialValues = initialValues.apply({ doc: defaultValues || {} })\n            }\n        }\n        catch (ex) {\n            console.warn(ex);\n        }\n    }\n    if (_.isObject(initialValues)) {\n        // uiSchema.form.initialValues为函数且执行后为json，则优先取initialValues中的默认值\n        initialValues = Object.assign({}, defaultValues, initialValues);\n    }\n    else {\n        initialValues = defaultValues;\n    }\n}\n\npayload.data = initialValues;\ndelete payload.extensions;\nreturn payload;\n",
                 "data": {
                     "recordId": "${recordId}",
                     "defaultData": "${defaultData}",
-                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name:object_name__expand{name,label},profiles,buttons,fields,related_lists,field_groups,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{created,modified}}}"
+                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name,profiles,buttons,fields,related_lists,is_system,created,created_by,modified,modified_by,instances,instance_state,_display:_ui{object_name,profiles,buttons,fields,related_lists,is_system,created,created_by,modified,modified_by,instances,instance_state}}}",
+                    "uiSchema": "${uiSchema}",
+                    "objectName": "${objectName}"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                }
+                },
+                "requestAdaptor": "\n// 所有不想在network请求中发送的数据都应该从data中分离出来，data变量只需要留下query才需要发送出去\nvar { recordId, objectName, uiSchema, global, context, ...data } = api.data;\nif (!recordId) {\n  // 新建则不请求任何数据\n  data.query = \"{data:\" + objectName + \"(filters: \" + JSON.stringify([\"_id\", \"=\", null]) + \", top: 1){_id}}\";\n}\napi.data = data;\nreturn api;"
             },
             "initFetch": true,
             "body": [
@@ -849,18 +852,16 @@
                 "inited": {
                     "actions": [
                         {
-                            "actionType": "custom",
-                            "script": "// 新建页面布局时初始化buttons默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultButtons = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    buttons: superValues.buttons,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultButtons(eventData)\n  }\n});\n"
+                          "actionType": "custom",
+                          "script": "// 新建页面布局时初始化buttons默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultButtons = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    buttons: input.buttons,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultButtons(eventData)\n  }\n});\n"
                         },
                         {
-                            "actionType": "custom",
-                            "script": "// 新建页面布局时初始化fields默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultFields = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    fields: superValues.fields,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultFields(eventData)\n  }\n});\n",
-                            "componentId": "",
-                            "args": {}
+                          "actionType": "custom",
+                          "script": "// 新建页面布局时初始化fields默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultFields = function (input) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    fields: input.fields,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultFields(eventData)\n  }\n});\n"
                         },
                         {
-                            "actionType": "custom",
-                            "script": "// 新建页面布局时初始化related_lists默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultRelatedLists = function (input, rowValue, prop_name) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    related_lists: superValues.related_lists,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultRelatedLists(eventData)\n  }\n});\n"
+                          "actionType": "custom",
+                          "script": "// 新建页面布局时初始化related_lists默认值，字段值是CRUD表格控件渲染，新建页面布局时，不会自动填充到form中，需要手动填充\nconst initDefaultRelatedLists = function (input, rowValue, prop_name) {\n  const superValues = input.__super.__super || {};\n  if (superValues.recordId) {\n    // 编辑记录本来就会初始化相关字段值，不需要再初始化\n    return;\n  }\n  return {\n    related_lists: input.related_lists,\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"object-layout-form\",\n  args: {\n    value: initDefaultRelatedLists(eventData)\n  }\n});\n"
                         }
                     ]
                 },

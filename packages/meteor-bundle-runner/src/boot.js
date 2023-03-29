@@ -467,9 +467,9 @@ var runMain = Profile("Run main()", function () {
   if (process.env.METEOR_PARENT_PID) {
     startCheckForLiveParent(process.env.METEOR_PARENT_PID);
   }
-  console.log('');
-  console.log(`Project is running at ${process.env.ROOT_URL}`);
-  console.log('');
+  // console.log('');
+  // console.log(`Project is running at ${process.env.ROOT_URL}`);
+  // console.log('');
   if (process.env.STEEDOS_AUTO_OPEN_BROWSER == 'true') { // 默认不打开
     try {
       open(process.env.ROOT_URL);
