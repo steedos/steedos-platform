@@ -15,7 +15,8 @@ Template.page_record_view.onRendered ->
                     console.log("Template.page_record_view.onRendered====>updateProps====>", regions)
                     return SteedosUI.refs[self.pageName].updateProps({
                         data: {
-                            recordId: regions.page.schema.recordId
+                            recordId: regions.page.schema.recordId,
+                            objectName: regions.page.schema.objectApiName,
                         }
                     })
                 
