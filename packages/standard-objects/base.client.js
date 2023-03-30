@@ -198,6 +198,7 @@ Steedos.StandardObjects = {
             },
             standard_import_data:{
                 visible: function(objectName){
+                    return false;
                     var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
                     var objectName = objectName || this.objectName || FlowRouter.current().params.object_name;
                     if(allowCreate){
