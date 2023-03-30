@@ -116,7 +116,7 @@ export class SteedosSchema {
      * @returns
      * @memberof SteedosSchema
      */
-    getObject(name: string): any{
+    getObject(name: string) {
         let datasource_name: string, object_name: string;
         if (!name) {
             throw new Error('Object name is required');
@@ -129,9 +129,8 @@ export class SteedosSchema {
             object_name = name
             let objectMap = this.getObjectMap(name);
             if(!objectMap){
-                // const services = require('../services');
-                // return services.getObjectDispatcher(object_name)
-                throw new Error(`Object ${name} is not found`);
+                const services = require('../services');
+                return services.getObjectDispatcher(object_name)
             }
             datasource_name = objectMap.datasourceName
         }

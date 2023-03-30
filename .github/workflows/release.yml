@@ -36,31 +36,25 @@ jobs:
           echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
 
       - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
+        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.1') && !startsWith(steps.branch-name.outputs.tag, '2.2') && !startsWith(steps.branch-name.outputs.tag, '2.3') && !startsWith(steps.branch-name.outputs.tag, '2.4')  }}
         run: exit 1
 
-      
-      # checkout branch 2.6
-      - name: Checkout branch 2.6
-        uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.6') }} 
-        with: 
-          ref: '2.6'
+      - name: Merge 2.4 -> master
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }} 
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: 2.4
+          target_branch: master
+          github_token: ${{ github.token }}
 
-      # checkout branch 2.5
-      - name: Checkout branch 2.5
-        uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.5') }} 
-        with: 
-          ref: '2.5'
-
-      # checkout branch 2.4
-      - name: Checkout branch 2.4
+      # checkout branch master(2.4)
+      - name: Checkout branch master(2.4)
         uses: actions/checkout@v2
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}
         with: 
-          ref: '2.4'
-
+          ref: 'master'
+      
       # checkout branch 2.3
       - name: Checkout branch 2.3
         uses: actions/checkout@v2
@@ -87,6 +81,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+
+      # - name: Lerna version
+      #   run: |
+      #     lerna version ${{ steps.branch-name.outputs.tag }} --no-git-tag-version --force-publish --exact --yes
 
       - run: yarn --frozen-lockfile
 
@@ -141,50 +139,7 @@ jobs:
         env:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        
-
-      - name: Lerna publish 2.4
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') && steps.version.outputs.is_stable == 'true' }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes
-          git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
-          git push
-        env:
-          CI: false
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-            
-      - name: Lerna publish 2.5
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.5') && steps.version.outputs.is_stable == 'true' }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag next
-          git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
-          git push
-        env:
-          CI: false
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-            
-      - name: Lerna publish 2.6
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.6') && steps.version.outputs.is_stable == 'true' }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes --dist-tag next
-          git add . 
-          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
-          git push
-        env:
-          CI: false
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-            
+          
       - name: Lerna publish beta
         if: ${{ steps.version.outputs.is_stable != 'true' }}
         run: |
@@ -199,13 +154,27 @@ jobs:
           CI: false
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: Merge 2.4 -> master
+      - name: Lerna publish 2.4
+        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') && steps.version.outputs.is_stable == 'true' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          lerna publish ${{ steps.branch-name.outputs.tag }}  --no-git-tag-version --no-git-reset --force-publish --exact --yes
+          git add . 
+          git commit -m "action: release ${{ steps.branch-name.outputs.tag }}"
+          git push
+        env:
+          CI: false
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          
+      - name: Merge master -> 2.4
         if: ${{ startsWith(steps.branch-name.outputs.tag, '2.4') }}  # && steps.version.outputs.is_stable == 'true'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: 2.4
-          target_branch: master
+          from_branch: master
+          target_branch: 2.4
           github_token: ${{ github.token }}
 
       - name: Sleep 120s, wait for npm cache
@@ -214,7 +183,7 @@ jobs:
           time: 120s
 
       - name: Create Docker Release
-        if: steps.version.outputs.is_stable == 'true'
+        # if: steps.version.outputs.is_stable == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:

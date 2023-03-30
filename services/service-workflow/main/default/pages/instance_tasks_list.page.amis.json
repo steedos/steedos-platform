@@ -1,149 +1,89 @@
 {
-  "type": "service",
-  "body": [
-    {
-      "type": "steedos-object-listview",
-      "objectApiName": "${objectName}",
-      "columnsTogglable": false,
-      "showHeader": true,
-      "id": "u:d29cef0d1007",
-      "sideSchema": {
-        "type": "service",
-        "onEvent": {
-          "@data.changed.instance_tasks": {
-            "actions": [
-              {
-                "actionType": "reload"
-              }
-            ]
-          }
-        },
-        "body": [
-          {
-            "type": "input-tree",
-            "name": "tree",
-            "className": "instance-tasks-tree bg-white h-full w-full",
-            "id": "u:9f3dd961ca12",
-            "stacked": true,
-            "multiple": false,
-            "enableNodePath": false,
-            "hideRoot": true,
-            "showIcon": true,
-            "initiallyOpen": false,
-            "size": "md",
-            "onEvent": {
-              "change": {
-                "actions": [
-                  {
-                    "actionType": "setValue",
-                    "componentId": "u:4dd57bf1a99a",
-                    "args": {
-                      "value": {
-                        "additionalFilters": [
-                          "${event.data.value.name}",
-                          "=",
-                          "${event.data.value.value}"
-                        ]
-                      }
-                    },
-                    "expression": "${event.data.value.level>=2}"
-                  },
-                  {
-                    "args": {
-                      "url": "${event.data.value.to}",
-                      "blank": false
-                    },
-                    "actionType": "url",
-                    "expression": "${event.data.value.level<2}"
-                  }
-                ]
-              }
-            },
-            "menuTpl": {
-              "type": "wrapper",
-              "className": "flex flex-row  p-0 m-0",
-              "body": [
-                {
-                  "type": "tpl",
-                  "className": "flex-1 w-6/12",
-                  "tpl": "${label}"
-                },
-                {
-                  "type": "tpl",
-                  "className": "-mx-11 ",
-                  "tpl": "",
-                  "badge": {
-                    "offset": [
-                      -13,
-                      13
-                    ],
-                    "mode": "text",
-                    "text": "${tag}"
-                  }
-                }
-              ]
-            },
-            "unfoldedLevel": 2,
-            "source": "${options}"
-          }
-        ],
-        "id": "u:aa4f4dc5f439",
-        "api": {
-          "method": "get",
-          "url": "${context.rootUrl}/api/${appId}/workflow/nav",
-          "headers": {
-            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-          }
-        }
-      },
-      "showDisplayAs": true,
-      "className": "h-full w-full bg-white",
-      "formFactor": "LARGE"
-    },
-    {
-      "type": "button",
-      "label": "模拟刷新",
-      "onEvent": {
-        "click": {
-          "actions": [
-            {
-              "actionType": "broadcast",
-              "args": {
-                "eventName": "@data.changed.instance_tasks"
-              }
-            }
-          ]
-        }
-      },
-      "id": "u:987c489f7126",
-      "visibleOn": "false"
-    }
-  ],
-  "data": {
-    "objectName": "instance_tasks",
-    "context": {
-      "rootUrl": "http://127.0.0.1:5000",
-      "tenantId": "64217d239dcd7011ece72fca",
-      "userId": "7b0af4b0-c553-41fb-9a16-358add63a2d8",
-      "authToken": "1bdca854ce4df1f57ee438358c8ad25cbcd83bb1bd3fdc957922b3d4a4f6b25595b3f367d5d99298f8cb85"
-    }
-  },
-  "className": "h-full w-full p-0 m-0",
-  "id": "u:4dd57bf1a99a",
-  "onEvent": {
-    "@data.changed.steedos_keyvalues": {
-      "actions": [
+    "type": "service",
+    "body": [
         {
-          "actionType": "broadcast",
-          "args": {
-            "eventName": "@data.changed.instance_tasks"
-          },
-          "data": {
-            "objectName": "instance_tasks",
-            "recordId": "reload"
-          }
+            "type": "steedos-object-listview",
+            "objectApiName": "${objectName}",
+            "columnsTogglable": false,
+            "showHeader": true,
+            "id": "u:d29cef0d1007",
+            "sideSchema": {
+                "type": "nav",
+                "className": "bg-white h-full w-full",
+                "id": "u:9f3dd961ca12",
+                "stacked": true,
+                "itemBadge": {
+                    "mode": "text",
+                    "offset": [
+                        -24,
+                        20
+                    ],
+                    "visibleOn": "this.badge > 0",
+                    "text": "${badge | toInt}"
+                },
+                "source": {
+                    "method": "get",
+                    "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+                    "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    },
+                    "responseData": null,
+                    "adaptor": ""
+                },
+                "onEvent": {
+                    "@data.changed.instance_tasks": {
+                        "actions": [
+                            {
+                                "actionType": "reload"
+                            }
+                        ]
+                    }
+                }
+            },
+            "showDisplayAs": true,
+            "className": "h-full w-full bg-white"
+        },
+        {
+            "type": "button",
+            "label": "模拟刷新",
+            "onEvent": {
+                "click": {
+                    "actions": [
+                        {
+                            "actionType": "broadcast",
+                            "args": {
+                                "eventName": "@data.changed.instance_tasks"
+                            }
+                        }
+                    ]
+                }
+            },
+            "id": "u:987c489f7126",
+            "visibleOn": "false"
         }
-      ]
+    ],
+    "className": "h-full w-full",
+    "id": "u:4dd57bf1a99a",
+    "data": {
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800"
+        },
+        "objectName": "instance_tasks"
+    },
+    "onEvent": {
+        "@data.changed.steedos_keyvalues": {
+            "actions": [
+                {
+                    "actionType": "broadcast",
+                    "args": {
+                        "eventName": "@data.changed.instance_tasks"
+                    },
+                    "data": {
+                        "objectName": "instance_tasks",
+                        "recordId": "reload"
+                    }
+                }
+            ]
+        }
     }
-  }
 }

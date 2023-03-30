@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 14:21:32
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-18 17:58:40
  * @Description: 
  */
 "use strict";
@@ -72,8 +72,6 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started(ctx) {
-		this.broker.createService(require("@steedos/service-objectql"));
-
 		//ApiGateway
 		this.broker.createService(require('@steedos/service-api'));
 		

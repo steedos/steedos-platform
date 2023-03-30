@@ -703,24 +703,23 @@ export const objectBaseService = {
         }
     },
     async started() {
-        // const objectConfig: any = this.getObjectConfig() || this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
-        // const objectApiName = objectConfig.name;
-        // // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
-        // let steedosSchema = getSteedosSchema();
-        // let obj = steedosSchema.getObject(objectApiName);
-        // const relationsInfo = await obj.getRelationsInfo();
-        // let detailsInfo = relationsInfo.details || [];
-        // let lookupsInfo = relationsInfo.lookup_details || [];
-        // let relatedInfos = detailsInfo.concat(lookupsInfo);
-        // for (const info of relatedInfos) {
-        //     if (!info.startsWith("__")) {
-        //         let infos = info.split(".");
-        //         let detailObjectApiName = infos[0];
-        //         this.broker.emit(`${getObjectServiceName(detailObjectApiName)}.refresh`, {});
-        //     }
-        // }
+        const objectConfig: any = this.getObjectConfig() || this.settings.objectConfig || getObjectConfig(this.settings.objectApiName);
+        const objectApiName = objectConfig.name;
+        // 通知以lookup或master_detail字段关联此对象的对象刷新graphql schema
+        let steedosSchema = getSteedosSchema();
+        let obj = steedosSchema.getObject(objectApiName);
+        const relationsInfo = await obj.getRelationsInfo();
+        let detailsInfo = relationsInfo.details || [];
+        let lookupsInfo = relationsInfo.lookup_details || [];
+        let relatedInfos = detailsInfo.concat(lookupsInfo);
+        for (const info of relatedInfos) {
+            if (!info.startsWith("__")) {
+                let infos = info.split(".");
+                let detailObjectApiName = infos[0];
+                this.broker.emit(`${getObjectServiceName(detailObjectApiName)}.refresh`, {});
+            }
+        }
     },
-    /*
     events: {
         "metadata.objects.deleted": {
             async handler(ctx) {
@@ -866,5 +865,4 @@ export const objectBaseService = {
             }
         }
     },
-    */
 }

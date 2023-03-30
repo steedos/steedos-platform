@@ -1,5 +1,4 @@
 "use strict";
-const  { Register } = require('@steedos/metadata-registrar');
 const project = require('./package.json');
 const packageName = project.name;
 /**
@@ -10,15 +9,6 @@ const packageName = project.name;
 const getCacherKey = (serviceInfo)=>{
     return `#packages.${serviceInfo.name}.${serviceInfo.instanceID}`
 }
-
-const getStartingCacherKey = ()=>{
-    return `#packages_starting`
-}
-
-const getStartedCacherKey = ()=>{
-    return `#packages_started`
-}
-
 const getInstallCacherKey = (serviceInfo)=>{
     return `#packages_install.${serviceInfo.name}.${serviceInfo.nodeID}`
 }
@@ -28,7 +18,6 @@ const getRoutersInfoCacherKey = (packageName)=>{
 }
 
 module.exports = {
-	countTimeoutId: null,
 	name: packageName,
 	namespace: "steedos",
 	mixins: [],
@@ -51,27 +40,12 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		starting: {	
-			async handler(ctx) {
-				const { serviceInfo } = ctx.params;
-				return await Register.rpush(ctx.broker, { key: getStartingCacherKey(), data: [serviceInfo] })
-			}
-		},
-		started: {	
-			async handler(ctx) {
-				const { serviceInfo } = ctx.params;
-				const res = await Register.rpush(ctx.broker, { key: getStartedCacherKey(), data: [serviceInfo] });
-				await this.statisticsActivatedPackages();
-				return res;
-			}
-		},
         offline: {
 			params: {
                 serviceInfo: { type: "object"},
             },
 			async handler(ctx) {
                 await ctx.broker.call('metadata.delete', {key: getCacherKey(ctx.params.serviceInfo)}, {meta: ctx.meta})
-				await this.statisticsActivatedPackages();
 			}
 		},
         online: {
@@ -80,7 +54,6 @@ module.exports = {
             },
 			async handler(ctx) {
                 await ctx.broker.call('metadata.add', {key: getCacherKey(ctx.params.serviceInfo), data: ctx.params.serviceInfo}, {meta: ctx.meta})
-				await this.statisticsActivatedPackages();
 			}
 		},
 		install: {
@@ -143,35 +116,14 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-		"$packages.statisticsActivatedPackages": {
-			handler(){
-				return this.statisticsActivatedPackages()
-			}
-		}
+
 	},
 
 	/**
 	 * Methods
 	 */
 	methods: {
-		//统计已启动的软件包
-		statisticsActivatedPackages: {
-			async handler(){
-				if(this.countTimeoutId){
-					clearTimeout(this.countTimeoutId);
-				}
-				// console.log(`statisticsActivatedPackages`);
-				this.countTimeoutId = setTimeout(async()=>{
-					const startingPackages = await Register.filterList(this.broker, {key: getStartingCacherKey()});
-					const startedPackages = await Register.filterList(this.broker, {key: getStartedCacherKey()});
-					// console.log(`startingPackages`, startingPackages.length, startedPackages.length);
-					if(startingPackages.length <= startedPackages.length){
-						// console.log(`broadcast $packages.changed========`)
-						this.broker.broadcast("$packages.changed", {});
-					}
-				}, 1000 * 3)
-			}
-		}
+
 	},
 
 	/**
