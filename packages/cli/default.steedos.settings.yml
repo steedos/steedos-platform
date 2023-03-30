@@ -66,7 +66,7 @@ tenant:
   refreshTokenExpiresIn: ${STEEDOS_TENANT_REFRESH_TOKEN_EXPIRES_IN} # 默认值 7d
 sms:
   qcloud:
-    smsqueue_interval: ${STEEDOS_CRON_SMSQUEUE_INTERVAL}
+    smsqueue_interval: 1000
     sdkappid: ${STEEDOS_SMS_QCLOUD_SDKAPPID}
     appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
     signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
@@ -80,11 +80,11 @@ email:
   secure: ${STEEDOS_EMAIL_PASSWORD}
   signname: ${STEEDOS_EMAIL_SIGNNAME}
 cron:
-  instancerecordqueue_interval: ${STEEDOS_CRON_INSTANCERECORDQUEUE_INTERVAL}
-  mailqueue_interval: ${STEEDOS_CRON_MAILQUEUE_INTERVAL}
-  push_interval: ${STEEDOS_CRON_PUSH_INTERVAL}
-  webhookqueue_interval: ${STEEDOS_CRON_WEBHOOKQUEUE_INTERVAL}
-  build_index: ${STEEDOS_CRON_BUILD_INDEX}
+  instancerecordqueue_interval: 10000
+  mailqueue_interval: 10000
+  # push_interval: 1000
+  webhookqueue_interval: 1000
+  build_index: "0 0 * * * *"
 instances_stat:
   schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
 dingtalk:

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 13:18:28
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-29 16:06:23
+ * @LastEditTime: 2022-11-17 09:47:40
  * @Description: 工作流时间触发器定时任务，用于将工作流规则中配置的时间触发器放入工作流操作执行队列
  */
 'use strict';
@@ -15,10 +15,6 @@ const _eval = require('eval')
 
 module.exports = {
     run: async function () {
-        if (!process.env.STEEDOS_CRON_WORKFLOW_RULE) {
-            return;
-        }
-
         console.log('time_trigger schedule running...')
         const intervalMinitues = 5 // 每5分钟执行一次
         const rule = `0 */${intervalMinitues} * * * *`

@@ -1,9 +1,9 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-29 16:04:49
- * @Description:
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-11-18 17:58:40
+ * @Description: 
  */
 "use strict";
 const project = require('./package.json');
@@ -74,15 +74,15 @@ module.exports = {
 	async started(ctx) {
 		//ApiGateway
 		this.broker.createService(require('@steedos/service-api'));
-
+		
 		this.broker.createService(require("@steedos/webapp-public"));
 
 		this.broker.createService(require("@steedos/service-accounts"));
-
+		
 		this.broker.createService(require("@steedos/service-charts"));
-
+		
 		this.broker.createService(require("@steedos/service-pages"));
-
+		
 		this.broker.createService(require("@steedos/service-cloud-init"));
 
 		this.broker.createService(require("@steedos/service-workflow"));
@@ -135,15 +135,12 @@ module.exports = {
 		if (this.settings.saas.enable) {
 			this.broker.createService(require('@steedos/service-saas'));
 		}
-
-		// 启动时间触发器服务
-		this.broker.createService(require("@steedos/workflow_time_trigger"));
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-
+		
 	}
 };
