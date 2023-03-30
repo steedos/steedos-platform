@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-14 16:06:17
+ * @LastEditTime: 2023-03-30 17:55:29
  * @Description: 
 -->
 <html>
@@ -37,9 +37,6 @@
         const initialContent = {
           type: "service",
           bodyClassName: 'p-0',
-          regions: [
-            "body"
-          ]
         };
 
         if (id) {
@@ -69,7 +66,10 @@
             let schema = button?.amis_schema ;
             if(!schema){
               schema = Object.assign({}, initialContent, {body: [
-                
+                {
+                  "type": "steedos-object-table",
+                  "objectApiName": "${objectName}"
+              }
               ]});
             }
 
@@ -88,7 +88,7 @@
 
             schema.data.app_id = '';
             schema.data.tab_id = '';
-            schema.data.object_name = '';
+            schema.data.objectName = '<%=object_name%>';
             schema.data.dataComponentId = '';
             schema.data.record_id = '';
             schema.data.record = {};
@@ -151,6 +151,7 @@
         if (data) {
           if (data.type === 'builder.loadContent') {
             loadPage().then((content)=>{
+              console.log("loadPage====", content)
               comp.messageFrame('builder.contentChanged', { AmisSchema : content } )
             })
           }
