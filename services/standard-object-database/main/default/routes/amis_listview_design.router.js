@@ -10,6 +10,7 @@ const ejs = require('ejs');
 const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
+const objectql = require('@steedos/objectql');
 
 router.get('/api/amisListviewDesign', core.requireAuthentication, async function (req, res) {
     try {
@@ -27,7 +28,7 @@ router.get('/api/amisListviewDesign', core.requireAuthentication, async function
         const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}`;
-
+        const record = await objectql.getObject('object_listviews').findOne(req.query.id);
         // let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
         // res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));
 
@@ -40,6 +41,7 @@ router.get('/api/amisListviewDesign', core.requireAuthentication, async function
             userId: userSession.userId,
             authToken: userSession.authToken,
             id: req.query.id,
+            object_name: record?.object_name
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){
