@@ -87,7 +87,7 @@ fields:
     help: 
     description: 
   instance_state:
-    label: 审批状态
+    label: 申请单审批状态
     help: 
     options:
       - label: 草稿

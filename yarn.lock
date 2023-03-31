@@ -4022,13 +4022,6 @@
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha512-/5O7Fq6Vnv8L6ucmPjaWbVG1XkP4FO+w5glqfkIsq3Xw4oyNAdJddbnYodNDAfjVUvo/rrSCTom4kAND7T1o5Q==
 
-"@steedos-widgets/amis-lib@^1.0.22":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@steedos-widgets/amis-lib/-/amis-lib-1.0.22.tgz#2d4ae106d959b0569d35e157113d6ab54b66fdd4"
-  integrity sha512-qG21rIx9zkDwibvr9GMH7WdnxVTDfnNeIUxFUud08AZtRdQS363cBOCFJocqi+cN4Z77x1hHwfQz9BlAsZu/sQ==
-  dependencies:
-    lodash "^4.17.21"
-
 "@steedos/ee_service-plugin-license@^2.2.5":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@steedos/ee_service-plugin-license/-/ee_service-plugin-license-2.2.5.tgz#4ad564648ddb955f80362fe5bddc7cc976f39c08"
