@@ -85,6 +85,7 @@ cron:
   push_interval: ${STEEDOS_CRON_PUSH_INTERVAL}
   webhookqueue_interval: ${STEEDOS_CRON_WEBHOOKQUEUE_INTERVAL}
   build_index: ${STEEDOS_CRON_BUILD_INDEX}
+  objectwebhooksqueue_interval: ${STEEDOS_CRON_OBJECTWEBHOOKSQUEUE_INTERVAL}
 instances_stat:
   schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
 dingtalk:
