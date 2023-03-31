@@ -87,7 +87,7 @@
                         "objectApiName": objectApiName,
                         "sideObject": sideObject,
                         "sideListviewId": sideListviewId,
-                        "recordId": recordId,
+                        // "recordId": recordId,
                         "display": display,
                         "appId": appId,
                     }
@@ -206,12 +206,12 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        // console.log(`Steedos.Page.render`, root, page)
+        // console.log(`Steedos.Page.render`, root, page, data)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
             const rootUrl = __meteor_runtime_config__.ROOT_URL;
-            const defData = lodash.defaultsDeep({}, data , {data: data} , {
+            const defData = lodash.defaultsDeep({}, {data: data} , {
                 data: {
                     app_id: data.appId,
                     object_name: data.objectName,
@@ -348,7 +348,7 @@
             }
 
             if (page.render_engine && page.render_engine != 'redash') {
-                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data));
+                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data, {recordId}));
             }
         } catch (error) {
 

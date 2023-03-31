@@ -9,11 +9,12 @@ Template.page_record_view.onRendered ->
         if(self.pageName)
             try
                 # SteedosUI.refs[self.pageName].unmount()
-                
                 if SteedosUI.refs[self.pageName]
                     return SteedosUI.refs[self.pageName].updateProps({
                         data: {
-                            recordId: regions.page.schema.recordId,
+                            recordId: Tracker.nonreactive ()->
+                                Session.get("record_id")
+                            ,
                             objectName: regions.page.schema.objectApiName,
                         }
                     })

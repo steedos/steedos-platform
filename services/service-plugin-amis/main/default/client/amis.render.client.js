@@ -77,7 +77,7 @@
                         if(comp.componentType === 'amisSchema'){
                             let amisReact = amisRequire('react');
                             AmisWrapper = function(props){
-                              // console.log(`AmisWrapper===>`, props)
+                              console.log(`AmisWrapper===>`, props)
                               const { $schema, body, render } = props
                               const [schema, setSchema] = amisReact.useState(null);
                               amisReact.useEffect(()=>{
@@ -92,7 +92,7 @@
                                   // console.log("AmisWrapper===>==useEffect==result", result)
                                   setSchema(result)
                                 }
-                              }, [JSON.stringify($schema), JSON.stringify(props.data?.recordId)]) //, JSON.stringify(props.data)
+                              }, [JSON.stringify($schema)]) //, JSON.stringify(props.data)
 
                               if (!schema)
                               return render('body', {
@@ -109,7 +109,6 @@
                                 console.trace('Component: ', props, 'Generated Amis Schema: ', schema);
                                 console.groupEnd();
                               }
-
                               return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
                             }
                           }
@@ -338,7 +337,6 @@
                   return scoped = ref
                 }
 
-              
                 const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
                 if(window.SteedosUI && refName){
                   SteedosUI.refs[refName] = amisScope;
