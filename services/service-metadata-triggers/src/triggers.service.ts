@@ -1,5 +1,6 @@
 "use strict";
 import { ActionHandlers, METADATA_TYPE } from './actionsHandler';
+import _ = require('lodash');
 
 module.exports = {
 	name: "triggers",
@@ -188,7 +189,68 @@ module.exports = {
             async handler(ctx) {
                 return await ActionHandlers.refresh(ctx);
             }
-        }
+        },
+		/**
+		 * 监听 $services.changed 事件，扫描services下的actions，对于其中定义的trigger参数进行解析，注入到trigger注册中心。
+		 */
+		"$packages.changed": {
+			async handler(ctx) {
+				const { broker } = ctx
+				const services = broker.registry.getServiceList({ skipInternal: true, withActions: true })
+				for (const service of services) {
+					const { name: serviceName, actions } = service
+					/**
+					actions 结构
+					{
+						'test.triggerSpaceUsers': {
+							trigger: { objectName: 'test__c', when: [Array] },
+							rawName: 'triggerSpaceUsers',
+							name: 'test.triggerSpaceUsers'
+						}
+					}
+					 */
+					for (const key in actions) {
+						if (Object.prototype.hasOwnProperty.call(actions, key)) {
+							const action = actions[key];
+							if (action.trigger) {
+								const { trigger, rawName, name } = action
+								const { objectName, when } = trigger
+								if (objectName && when && _.isArray(when)) {
+									for (const w of when) {
+										const data = {
+											name: name,
+											listenTo: objectName,
+											when: w,
+											action: rawName
+										};
+										const meta = {
+											metadataServiceName: serviceName,
+											caller: {
+												nodeID: broker.nodeID + '',
+												service: {
+													name: serviceName
+												}
+											}
+										};
+										await ActionHandlers.add({
+											broker: ctx.broker,
+											params: {
+												data: data
+											},
+											meta: meta
+										});
+									}
+
+
+								}
+
+							}
+						}
+					}
+
+				}
+			}
+		},
 	},
 
 	/**
