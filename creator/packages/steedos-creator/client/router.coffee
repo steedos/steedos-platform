@@ -203,7 +203,7 @@ objectRoutes.route '/',
 		(context, redirect) -> 
 			object_name = context.params.object_name
 			listview = window.getFirstListView(object_name)
-			console.log("getFirstListView listview",listview)
+			# console.log("getFirstListView listview",listview)
 			list_view_id = listview?.name || listview?._id
 			app_id = context.params.app_id
 			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id
@@ -243,7 +243,7 @@ objectRoutes.route '/:record_id/:related_object_name/grid',
 
 objectRoutes.route '/view/:record_id',
 	action: (params, queryParams)->
-		console.log('objectRoutes=====>/view/:record_id', )
+		# console.log('objectRoutes=====>/view/:record_id', )
 		if queryParams["X-Space-Id"]
 			Steedos.setSpaceId(queryParams["X-Space-Id"])
 		app_id = FlowRouter.getParam("app_id")

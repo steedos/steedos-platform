@@ -206,7 +206,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        console.log(`Steedos.Page.render`, root, page, data)
+        // console.log(`Steedos.Page.render`, root, page, data)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
