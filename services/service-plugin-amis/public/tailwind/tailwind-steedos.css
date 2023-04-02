@@ -247,6 +247,10 @@
        column-gap: 0.75rem
 }
 
+.overflow-auto {
+  overflow: auto
+}
+
 .overflow-hidden {
   overflow: hidden
 }

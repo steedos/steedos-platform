@@ -13,7 +13,6 @@ fields:
     type: text
     searchable: true
     index: true
-    required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
   object_name:
     label: Object
