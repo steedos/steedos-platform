@@ -46,7 +46,7 @@
                           ]
                         }
                       },
-                      "expression": "${event.data.value.level>=2}"
+                      "expression": "${event.data.value.level>=10}"
                     },
                     {
                       "args": {
@@ -54,7 +54,7 @@
                         "blank": false
                       },
                       "actionType": "link",
-                      "expression": "${event.data.value.level<2}"
+                      "expression": "${event.data.value.level<10}"
                     }
                   ]
                 }
