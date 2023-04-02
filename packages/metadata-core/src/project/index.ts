@@ -11,6 +11,7 @@ import { deleteFolderRecursive } from '../folderUtil';
 const STEEDOS_PROJECT_JSON = 'steedos-config.yml';
 const STEEDOS_PROJECT_JS = 'steedos.config.js';
 const STEEDOS_PACKAGE_FOLDER_NAME = 'steedos-packages';
+const STEEDOS_SERVICE_FOLDER_NAME = 'services'
 
 function traverseForFileSync(dir: string, file: string, file2: string) {
   let foundProjectDir: string | null = null;
@@ -83,6 +84,24 @@ export function getAllPackages(projectPath) {
   return packageList;
 }
 
+export function getServicesPackages(projectPath) {
+  
+  var packageList:String[] = [];
+  var serviceFolder = getServiceFolder(projectPath);
+  if (fs.existsSync(serviceFolder)) {
+    var members = fs.readdirSync(serviceFolder);
+    for(var i=0; i<members.length; i++){
+        var member = path.join(serviceFolder, members[i]);
+        var memberStat = fs.lstatSync(member);
+        if(!memberStat.isDirectory()){
+            continue;
+        }
+        packageList.push(member);
+    }
+  }
+  return packageList;
+}
+
 export function scanPackages(projectPath) {
   
   var packageList:String[] = [];
@@ -117,6 +136,12 @@ function getPackageFolder(projectPath) {
   // }
   return packageFolder;
 }
+
+function getServiceFolder(projectPath){
+  var packageFolder = path.join(projectPath, STEEDOS_SERVICE_FOLDER_NAME);
+  return packageFolder;
+}
+
 export async function uncompressPackages(projectPath) {
 
   var packageFolder = getPackageFolder(projectPath);
