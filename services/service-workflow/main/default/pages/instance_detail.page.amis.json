@@ -10,7 +10,7 @@
             "type": "steedos-instance-detail",
             "id": "u:40052b3812c1",
             "label": "Instance Detail",
-            "instanceId": "${recordId}",
+            "instanceId": "\\${recordId}",
             "boxName": "${side_listview_id}",
             "hiddenOn": "!!!this.recordId"
           }

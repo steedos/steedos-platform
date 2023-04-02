@@ -14,7 +14,7 @@
                 "type": "steedos-instance-detail",
                 "label": "Instance Detail",
                 "id": "u:40052b3812c1",
-                "instanceId": "${instanceId}",
+                "instanceId": "\\${instanceId}",
                 "boxName": "${boxName}",
                 "hiddenOn": "!!!this.instanceId"
               }
@@ -29,15 +29,10 @@
             "body": [
               {
                 "type": "custom",
-                "instanceId": "${instanceId}",
-                "data": {
-                  "instanceId": "${instanceId}"
-                },
                 "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
-                "onMount": "\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.instanceId);\nSession.set(\"box\", props.data.boxName);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])",
-                "onMount":"console.log('=onMount===props', props);try{\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"box\", props.data.side_listview_id);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])}catch(error){console.error(error)}; window.instanceDetailBlazeRenderView?.autorun(()=>{console.log('====onMount=', props); Session.get(\"record_id\"); Session.set(\"instanceId\", Session.get(\"_record_id_instanceId\"))}); ",
+                "onMount":"try{\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"box\", props.data.side_listview_id);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])}catch(error){console.error(error)}; window.instanceDetailBlazeRenderView?.autorun(()=>{Session.set(\"instanceId\", Session.get(\"_record_id_instanceId\"))}); ",
                 "id": "u:a6e0685d1da3",
-                "onUnmount": "if(window.instanceDetailBlazeRenderView){console.log('Blaze.remove===>instanceDetailBlazeRenderView');Blaze.remove(window.instanceDetailBlazeRenderView); window.instanceDetailBlazeRenderView = null;}"
+                "onUnmount": "if(window.instanceDetailBlazeRenderView){Blaze.remove(window.instanceDetailBlazeRenderView); window.instanceDetailBlazeRenderView = null;}"
               }
             ],
             "id": "u:16cf880c925a",
@@ -52,7 +47,7 @@
         "messages": {
         },
         "api": {
-          "url": "${context.rootUrl}/graphql?recordId=${recordId}",
+          "url": "${context.rootUrl}/graphql?recordId=\\${recordId}",
           "method": "post",
           "messages": {
           },
@@ -61,7 +56,7 @@
             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
           },
           "requestAdaptor": "\nconst { recordId } = api.body;\napi.data = {\n  query: `{instance_task:instance_tasks__findOne(id: \"${recordId}\"){_id,instance}}`\n};\n\nreturn api;",
-          "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}; console.log('=========ssssss======'); setTimeout(()=>{window.Session.set('_record_id_instanceId', payload.data.instanceId)}, 300); \nreturn payload;"
+          "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}; setTimeout(()=>{window.Session.set('_record_id_instanceId', payload.data.instanceId)}, 300); \nreturn payload;"
         },
         "className": "h-full"
       }

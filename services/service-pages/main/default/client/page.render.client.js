@@ -74,7 +74,7 @@
                     "appId": appId,
                     "display": display,
                     "columnsTogglable": false,
-                    "listName": "all",
+                    // "listName": "all",
                 }
             }
         }else if(type === 'record'){
@@ -206,7 +206,7 @@
     }
 
     Steedos.Page.render = function (root, page, data, options = {}) {
-        // console.log(`Steedos.Page.render`, root, page, data)
+        console.log(`Steedos.Page.render`, root, page, data)
         if (page.render_engine && page.render_engine != 'redash') {
 
             let schema = typeof page.schema === 'string' ? JSON.parse(page.schema) : page.schema;
@@ -236,6 +236,10 @@
             });
 
             schema = lodash.defaultsDeep(defData , schema);
+
+            delete schema.data.recordId
+            delete schema.data.record_id
+
 
             const findComponent = (obj, componentName)=>{
                 return lodash.find(obj, {name : componentName})
@@ -276,7 +280,7 @@
         if (!modalRoot) {
             modalRoot = document.createElement('div');
             modalRoot.setAttribute('id', rootId);
-            modalRoot.setAttribute('class', 'h-full');
+            modalRoot.setAttribute('class', 'h-full overflow-auto');
             $(".page-template-root")[0].appendChild(modalRoot);
         }
 
