@@ -280,7 +280,7 @@
         if (!modalRoot) {
             modalRoot = document.createElement('div');
             modalRoot.setAttribute('id', rootId);
-            modalRoot.setAttribute('class', 'h-full');
+            modalRoot.setAttribute('class', 'h-full overflow-auto');
             $(".page-template-root")[0].appendChild(modalRoot);
         }
 
