@@ -8,7 +8,7 @@ import { SteedosMetadataTypeInfoKeys as TypeInfoKeys,
     getMetadataTypeInfoByDirectory, getMetadataTypeInfos, getAllowSyncMetadataKeys } from './typeInfo'
 
 import { getDefaultPackagePath } from './packages/index'
-import { getAllPackages, getProjectWorkPath } from './project/index'
+import { getAllPackages, getProjectWorkPath, getServicesPackages } from './project/index'
 
 export { SteedosMetadataTypeInfoKeys, getMetadataKeys, getMetadataTypeInfo, getAllowSyncMetadataKeys } from './typeInfo'
 export * from './metadata'
@@ -313,7 +313,8 @@ export function getPackagePath(dir?: string) {
 export function getPackageDirectoryPaths(workspace){
     let packageDirs = [getPackagePath(workspace)];
     let packages = getAllPackages(workspace);
-    return packageDirs.concat(packages)
+    let services = getServicesPackages(workspace);
+    return packageDirs.concat(packages).concat(services)
 }
 
 export function getPackagePaths(packagePath?: string) {

@@ -59,10 +59,10 @@ export function setDefaultPackagePath(defaultPackagePath, workspace?: string){
     }catch(err){
         
     }finally{
-        if(!localEnv['package']){
-            localEnv['package'] = {}
+        if(!localEnv){
+            localEnv = {}
         }
-        localEnv['package']['DEFAULT_PACKAGE_PATH'] = defaultPackagePath
+        localEnv['DEFAULT_PACKAGE_PATH'] = defaultPackagePath
     }
 
     fs.writeFileSync(localEnvPath, ini.stringify(localEnv))
@@ -73,7 +73,7 @@ export function getDefaultPackagePath(dir?: string){
     try{
         var localEnv = ini.parse(fs.readFileSync(localEnvPath, 'utf-8'))
 
-        var defaultPackagePath = localEnv['package']['DEFAULT_PACKAGE_PATH'];
+        var defaultPackagePath = localEnv['package']?.DEFAULT_PACKAGE_PATH || localEnv['DEFAULT_PACKAGE_PATH'];
         if(path.isAbsolute(defaultPackagePath)){
             defaultPackagePath = path.relative(getProjectWorkPath(dir), defaultPackagePath);
         }

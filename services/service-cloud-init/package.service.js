@@ -503,18 +503,12 @@ module.exports = {
 					await this.initProject(ctx, spaceId, apiKey);
 
 					var localEnv = getLocalEnv();
-					if (!localEnv['steedos-cloud']) {
-						localEnv['steedos-cloud'] = {}
-					}
-					localEnv['steedos-cloud']['STEEDOS_CLOUD_SPACE_ID'] = spaceId;
-					localEnv['steedos-cloud']['STEEDOS_CLOUD_API_KEY'] = apiKey;
+					localEnv['STEEDOS_CLOUD_SPACE_ID'] = spaceId;
+					localEnv['STEEDOS_CLOUD_API_KEY'] = apiKey;
 
-					if (!localEnv['metadata']) {
-						localEnv['metadata'] = {}
-					}
 
-					localEnv['metadata']['METADATA_SERVER'] = localEnv['metadata']['METADATA_SERVER'] || process.env.ROOT_URL;
-					localEnv['metadata']['METADATA_APIKEY'] = localEnv['metadata']['METADATA_APIKEY'] || apiKey;
+					localEnv['METADATA_SERVER'] = localEnv['METADATA_SERVER'] || process.env.ROOT_URL;
+					localEnv['METADATA_APIKEY'] = localEnv['METADATA_APIKEY'] || apiKey;
 
 					try {
 						saveLocalEnv(localEnv);

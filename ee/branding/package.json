@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_branding",
-  "version": "2.4.6",
+  "version": "2.4.9",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -11,5 +11,5 @@
   "dependencies": {
     "@steedos/license": "2.2.8"
   },
-  "gitHead": "baf2b26509111eb49b56ea563ce9b86fde8753f7"
+  "gitHead": "ca983c69238290c9e43468d335362d8a1cbc5ded"
 }

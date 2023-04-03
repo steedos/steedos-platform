@@ -83,23 +83,23 @@ export async function doLogin(username, password){
 
 export function saveSourceConfig(config){
     var localEnv = getLocalEnv();
-    if(!localEnv['metadata']){
-        localEnv['metadata'] = {}
+    if(!localEnv){
+        localEnv = {}
     }
-    localEnv['metadata']['METADATA_SERVER'] = config.server
-    localEnv['metadata']['METADATA_APIKEY'] = config.apikey
+    localEnv['METADATA_SERVER'] = config.server
+    localEnv['METADATA_APIKEY'] = config.apikey
     saveLocalEnv(localEnv);
 }
 
 export function saveUserProfile(profile){
 
     var localEnv = getLocalEnv();
-    if(!localEnv['metadata']){
-        localEnv['metadata'] = {}
+    if(!localEnv){
+        localEnv = {}
     }
 
     for(const key in profile){
-        localEnv['metadata'][key] = profile[key]
+        localEnv[key] = profile[key]
     }
     saveLocalEnv(localEnv);
 }
@@ -118,9 +118,9 @@ export function getUserProfile(){
 
 export function getMetadataConfig(workspace?: string){
     var localEnv = getLocalEnv(workspace);
-    var metadata = localEnv['metadata'];
+    var metadata = localEnv;
     if(metadata){
-        return metadata;
+        return Object.assign({}, metadata, localEnv['metadata']);
     }else{
         return {
             METADATA_SERVER: process.env.METADATA_SERVER,
