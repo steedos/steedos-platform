@@ -235,9 +235,6 @@ module.exports = {
                 output =  _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
                     if((include_hide || !field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
                         // 隐藏的字段 和 字段类型 判断
-
-                        // 如果 字段不可见 且 不包含隐藏，则跳过
-                        if(field.visible_on == '{{false}}' && !include_hide) return;
                         return {
                             value: field.name,
                             label: field.label || field.name
