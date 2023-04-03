@@ -68,12 +68,11 @@ export function setDefaultPackagePath(defaultPackagePath, workspace?: string){
     fs.writeFileSync(localEnvPath, ini.stringify(localEnv))
 }
 
-export function getDefaultPackagePath(dir?: string){
-    var localEnvPath = getLocalEnvPath(dir)
+export function getDefaultPackagePath(dir?: string): any{
     try{
-        var localEnv = ini.parse(fs.readFileSync(localEnvPath, 'utf-8'))
+        var localEnv = getLocalEnv(dir)
 
-        var defaultPackagePath = localEnv['package']?.DEFAULT_PACKAGE_PATH || localEnv['DEFAULT_PACKAGE_PATH'];
+        var defaultPackagePath = localEnv['DEFAULT_PACKAGE_PATH'];
         if(path.isAbsolute(defaultPackagePath)){
             defaultPackagePath = path.relative(getProjectWorkPath(dir), defaultPackagePath);
         }
@@ -87,7 +86,21 @@ export function saveLocalEnv(localEnv, workspace?: string){
     var localEnvPath = getLocalEnvPath(workspace)
     fs.writeFileSync(localEnvPath, ini.stringify(localEnv));
 }
+
 export function getLocalEnv(workspace?: string){
+    try{
+        require('dotenv-flow').config(
+        {
+            path: workspace ? workspace : null,
+            silent: true
+        });
+    }catch(err){
+
+    }
+    return process.env;
+}
+
+export function getLocalEnvFile(workspace?: string){
     var localEnvPath = getLocalEnvPath(workspace)
     var localEnv = {}
     try{
