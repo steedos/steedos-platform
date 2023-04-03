@@ -95,10 +95,6 @@ fields:
       - object_name
     reference_to: object_fields
     reference_to_field: name
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-      function(filters, values){
-        return ['object', '=', values.object_name]
-      }
   sort:
     label: Default Sort Order
     type: grid
@@ -203,10 +199,6 @@ fields:
     is_wide: false
     reference_to: object_fields
     reference_to_field: name
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-      function(filters, values){
-        return ['object', '=', values.object_name]
-      }
   searchable_fields:
     label: Searchable Fields
     type: grid
@@ -224,10 +216,6 @@ fields:
     is_wide: false
     reference_to: object_fields
     reference_to_field: name
-    filtersFunction: !<tag:yaml.org,2002:js/function> |-
-      function(filters, values){
-        return ['object', '=', values.object_name]
-      }
   sort_no:
     label: Sort no
     type: number
