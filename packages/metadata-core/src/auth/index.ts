@@ -4,7 +4,7 @@ const ini = require('ini')
 
 import { SteedosClient } from '@steedos/client';
 import { resolveProjectPathSync } from '../project/index'
-import { getLocalEnv, saveLocalEnv } from '../packages/index'
+import { getLocalEnv, saveLocalEnv, getLocalEnvFile } from '../packages/index'
 
 export function loadENV(workspace?: string){
     const options: any = {silent: true};
@@ -82,7 +82,7 @@ export async function doLogin(username, password){
 }
 
 export function saveSourceConfig(config){
-    var localEnv = getLocalEnv();
+    var localEnv = getLocalEnvFile();
     if(!localEnv){
         localEnv = {}
     }
@@ -93,7 +93,7 @@ export function saveSourceConfig(config){
 
 export function saveUserProfile(profile){
 
-    var localEnv = getLocalEnv();
+    var localEnv = getLocalEnvFile();
     if(!localEnv){
         localEnv = {}
     }

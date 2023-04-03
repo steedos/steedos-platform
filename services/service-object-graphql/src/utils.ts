@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-23 17:26:19
+ * @LastEditTime: 2023-04-03 10:40:40
  * @Description: 
  */
 
@@ -60,7 +60,7 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
             return value ? moment.utc(value).format("HH:mm") : '';
         case 'number':
         case 'currency':
-            return value ? numberToString(value, field.scale) : "";
+            return numberToString(value, field.scale);
         case 'percent':
             return value ? `${value * 100}%` : ''
         case 'password':
