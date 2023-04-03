@@ -428,7 +428,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                 label = map[value];
                             }
                             displayObj[name] = label;
-                        } else if (fType == "lookup") {
+                        } else if (fType == "lookup" && (_.isString(field.reference_to) || !_.has(field, ''reference_to))) {
                             if(_.isString(field.reference_to)){
                                 let refTo = field.reference_to;
 
