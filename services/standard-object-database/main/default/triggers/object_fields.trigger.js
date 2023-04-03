@@ -222,7 +222,7 @@ module.exports = {
             objectName = filters._id.split('.')[0];
         }
         if(objectName){
-            let fields = await InternalData.getObjectFields(objectName, this.userId);
+            let fields = await InternalData.getObjectFields(objectName, this.userId, true);
             if(fields){
                 _.each(fields, (field)=>{
                     this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
@@ -254,7 +254,7 @@ module.exports = {
             objectName = filters._id.split('.')[0];
         }
         if(objectName){
-            let fields = await InternalData.getObjectFields(objectName, this.userId);
+            let fields = await InternalData.getObjectFields(objectName, this.userId, true);
             if(fields){
                 _.each(fields, (field)=>{
                     this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))

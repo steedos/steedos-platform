@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-03 10:40:40
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-03 16:17:49
  * @Description: 
  */
 
@@ -62,7 +62,8 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
         case 'currency':
             return numberToString(value, field.scale);
         case 'percent':
-            return value ? `${value * 100}%` : ''
+            const str = numberToString(value * 100, field.scale);
+            return str ? `${str}%` : ''
         case 'password':
             return _.isString(value) ? "******" : ""
         default:
