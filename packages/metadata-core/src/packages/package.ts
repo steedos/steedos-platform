@@ -78,7 +78,7 @@ export function getDefaultPackagePath(dir?: string): any{
         }
         return defaultPackagePath;
     }catch(err){
-        
+        // console.log('getDefaultPackagePath',dir, err)
     }
 }
 
@@ -89,6 +89,15 @@ export function saveLocalEnv(localEnv, workspace?: string){
 
 export function getLocalEnv(workspace?: string){
     try{
+        delete process.env.DEFAULT_PACKAGE_PATH;
+
+        delete process.env.METADATA_USERNAME;
+        delete process.env.METADATA_AUTH_TOKEN;
+        delete process.env.METADATA_SPACE_ID;
+
+        delete process.env.METADATA_SERVER;
+        delete process.env.METADATA_APIKEY;
+        
         require('dotenv-flow').config(
         {
             path: workspace ? workspace : null,

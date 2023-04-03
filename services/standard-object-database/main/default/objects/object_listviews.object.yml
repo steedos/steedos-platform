@@ -77,18 +77,8 @@ fields:
     required: true
     depend_on:
       - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
   columns.$.width:
     label: Width
     type: text
@@ -103,16 +93,12 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
   sort:
     label: Default Sort Order
     type: grid
@@ -126,32 +112,8 @@ fields:
   sort.$.field_name:
     label: Field Name
     type: lookup
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              var _object, _options, fields, icon;
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-              _options = [];
-              _object = Creator.getObject(values != null ? values.object_name : void 0);
-              fields = Creator.getFields(values != null ? values.object_name : void 0);
-              icon = _object.icon;
-
-              _.forEach(fields, function (f) {
-                var label;
-
-                if (!_object.fields[f].hidden) {
-                  label = _object.fields[f].label;
-                  return _options.push({
-                    label: label || f,
-                    value: f,
-                    icon: icon
-                  });
-                }
-              });
-
-              return _options;
-            }
+    reference_to: object_fields
+    reference_to_field: name
   sort.$.order:
     label: Sort Order
     type: select
@@ -239,18 +201,12 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
   searchable_fields:
     label: Searchable Fields
     type: grid
@@ -266,18 +222,12 @@ fields:
     type: lookup
     multiple: false
     is_wide: false
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              if (!(values != null ? values.object_name : void 0)) {
-                values.object_name = Session.get("object_name");
-              }
-
-              if(values.object_name && !_.isString(values.object_name)){
-                values.object_name = values.object_name.name
-              }
-
-              return Creator.getObjectFieldOptions(values != null ? values.object_name : void 0, true);
-            }
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
   sort_no:
     label: Sort no
     type: number
