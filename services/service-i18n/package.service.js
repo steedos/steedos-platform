@@ -2,17 +2,13 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-26 11:45:49
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-04 09:14:25
+ * @LastEditTime: 2023-04-04 18:58:40
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
-
-const objectql = require("@steedos/objectql");
-const steedosI18n = require("@steedos/i18n");
-const core = require('@steedos/core');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -42,21 +38,6 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		testObjectTranslation: {
-			rest: {
-                method: "GET",
-                path: "/test/object-translation/:objectName"
-            },
-			async handler(ctx) {
-				console.log('====',core)
-				const userSession = ctx.meta.user;
-				const { objectName } = ctx.params;
-                const lng = userSession.language || 'zh-CN';
-				const objectConfig = await objectql.getObjectConfig(objectName);
-				steedosI18n.translationObject(lng, objectConfig.name, objectConfig, false, false, true);
-                return objectConfig
-            }
-		}
 	},
 
 	/**
