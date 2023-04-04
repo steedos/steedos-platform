@@ -1,9 +1,9 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-21 12:47:58
- * @Description: 
+ * @LastEditors: 李海龙 lihailong@steedos.com
+ * @LastEditTime: 2023-04-03 16:50:11
+ * @Description:
 -->
 <html>
 
@@ -149,7 +149,7 @@
     };
 
     const startsWith = (url, str) => {
-      
+
       let flag = false
       if(url.substr(0,4) === str){
         flag = true
@@ -282,10 +282,22 @@
           tpl.options = getSelectOptions(field);
           break;
         case "odata":
+		  console.log('field', field);
           var labelField = field.formula.substr(1, field.formula.length - 2);
           labelField = labelField.substr(labelField.indexOf(".") + 1);
+		  // 加入odata标签以示区别 把field-老表单设计器的元素加入
           tpl.type = "select";
-          tpl.multiple = field.is_multiselect;
+		  tpl.description = field.description
+		  tpl.detail_url = field.detail_url
+		  tpl.filters = field.filters
+		  tpl.formula = field.formula
+		  tpl.is_list_display = field.is_list_display
+		  tpl.is_multiselect = field.is_multiselect
+		  tpl.is_required = field.is_required
+		  tpl.is_searchable = field.is_searchable
+		  tpl.is_wide = field.is_wide
+		  tpl.search_field = field.search_field
+		  tpl._id = field._id
           // tpl.labelField = labelField;
           // tpl.valueField = "_value";
           tpl.source = {
@@ -324,7 +336,7 @@
           }
           break;
         case "table":
-          tpl.type = "input-table"; 
+          tpl.type = "input-table";
           tpl.addable = field.permission === "editable";
           tpl.editable = tpl.addable;
           tpl.copyable = tpl.addable;
