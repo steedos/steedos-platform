@@ -76,11 +76,11 @@ Steedos.StandardObjects = {
                     if (record_permissions && !record_permissions["allowEdit"]) {
                         return false;
                     }
-                    // record = props.record;
-                    // record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-                    // if (record_permissions && !record_permissions["allowEdit"]) {
-                    //     return false;
-                    // }
+                    record = props.record;
+                    record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
+                    if (record_permissions && !record_permissions["allowEdit"]) {
+                        return false;
+                    }
                     object_workflow = _.find(Creator.object_workflows, function (ow) {
                         return ow.object_name === object_name;
                     });
@@ -160,7 +160,7 @@ Steedos.StandardObjects = {
                                 } else {
                                     Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
                                 }
-
+    
                             }
                         },
                         error: function (xhr, msg, ex) {
@@ -201,14 +201,14 @@ Steedos.StandardObjects = {
                     var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
                     var objectName = objectName || this.objectName || FlowRouter.current().params.object_name;
                     if(allowCreate){
-                        var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import",
+                        var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import", 
                             {
-                                type: 'get', async: false,
+                                type: 'get', async: false, 
                                 data: {
                                     $filter: `(object_name eq '${objectName}')`,
                                     $count: true,
                                     $select: '_id'
-                                },
+                                }, 
                                 error: function(){}
                             }
                         );
@@ -267,7 +267,7 @@ Steedos.StandardObjects = {
                     //                     console.log(e)
                     //                     toastr.error(e.message)
                     //                     resolve(false);
-                    //                 })
+                    //                 }) 
                     //             } catch (error) {
                     //                 console.error(`e2`, error);
                     //                 reject(false);
@@ -297,23 +297,23 @@ Steedos.StandardObjects = {
                     options = {
                       $select: 'name'
                     };
-
+                    
                     if(perms.modifyAllRecords){
                         /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
                     }
                     else{
                         /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
                         var company_ids =  [];
-
+                
                         /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
                         if(true || perms.modifyCompanyRecords){
                             company_ids = Creator.USER_CONTEXT.user.company_ids
                         }
-
+                
                         /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
                         var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
                         company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
-
+                
                         if(!company_ids.length){
                             console.warn("当前用户不属于任何分部，无权修改该字段。");
                             queryFilters = ["_id", "=", -1];
@@ -332,8 +332,8 @@ Steedos.StandardObjects = {
                     }
                     if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
                         var _value = this.template.data._value;
-                        /*
-                            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回
+                        /* 
+                            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
                             values.company_id 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
                         */
                         queryFilters = [queryFilters, 'or', ["_id", "=", _value]];
@@ -376,23 +376,23 @@ Steedos.StandardObjects = {
                     options = {
                       $select: 'name'
                     };
-
+                    
                     if(perms.modifyAllRecords){
                         /* 如果当前用户对当前业务对象的权限为 modifyAllRecords，那选择分部时可以能从所有分部中选择。*/
                     }
                     else{
                         /* 如果当前用户对当前业务对象的权限为 modifyCompanyRecords，那选择分部时只能从当前用户所属分部中选择。此规则只用于前端限制, 服务端有触发器给记录处理company_id*/
                         var company_ids =  [];
-
+                
                         /* 防止规则改动导致旧系统对象编辑异常，先放开此判断 */
                         if(true || perms.modifyCompanyRecords){
                             company_ids = Creator.USER_CONTEXT.user.company_ids
                         }
-
+                
                         /* 如果当前用户对当前业务对象的有修改指定分部，则允许选择指定分部。*/
                         var modifyAssignCompanysRecords = perms.modifyAssignCompanysRecords || [];
                         company_ids = window._.uniq(company_ids.concat(modifyAssignCompanysRecords));
-
+                
                         if(!company_ids.length){
                             console.warn("当前用户不属于任何分部，无权修改该字段。");
                             queryFilters = ["_id", "=", -1];
@@ -411,8 +411,8 @@ Steedos.StandardObjects = {
                     }
                     if(!_.isEmpty(queryFilters) && this.template && this.template.data && this.template.data._value && this.template.data._value.length){
                         var _value = this.template.data._value;
-                        /*
-                            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回
+                        /* 
+                            this.template.data._value为原来数据库中返回的选项值，需要始终能兼容返回 
                             values.company_ids 及 this.template.data.value为当前用户选中的选项，能选中肯定是本来就在列表中的，所以不需要兼容返回
                         */
                         queryFilters = [queryFilters, 'or', ["_id", "in", _value]];
@@ -433,4 +433,4 @@ Steedos.StandardObjects = {
             }
         }
     }
-}
+} 

@@ -1310,6 +1310,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
+            this.enable_process = true
         }
         //清理数据
         _.each(objectConfig.triggers, function(trigger, key){
@@ -1367,6 +1368,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         if(this.enable_process){
             objectConfig.details.push("process_instance_history.target_object")
+        }
+        if(this.enable_audit){
+            objectConfig.details.push("audit_records.related_to")
         }
 
         objectConfig.details = uniq(objectConfig.details)

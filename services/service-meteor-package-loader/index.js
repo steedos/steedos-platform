@@ -25,7 +25,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server'],
+    dependencies: ['metadata-server', '@steedos/service-packages'],
 
     /**
      * Actions
@@ -105,6 +105,25 @@ module.exports = {
                 }
             }
         },
+        async onStarted(){
+            console.time(`service ${this.name} started`)
+            let packageInfo = this.settings.packageInfo;
+            if (!packageInfo) {
+                return;
+            }
+            const { path } = packageInfo;
+            if (!path) {
+                this.logger.info(`Please config packageInfo in your settings.`);
+                console.log(`service ${this.name} started`);
+                return;
+            }
+            await this.loadPackageMetadataFiles(path, this.name);
+
+            await this.loadPackageMetadataServices(path);
+
+            console.timeEnd(`service ${this.name} started`)
+            // console.log(`service ${this.name} started`);
+        }
 	},
 
     /**
@@ -123,23 +142,9 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        console.time(`service ${this.name} started`)
-        let packageInfo = this.settings.packageInfo;
-        if (!packageInfo) {
-            return;
-        }
-        const { path } = packageInfo;
-        if (!path) {
-            this.logger.info(`Please config packageInfo in your settings.`);
-            console.log(`service ${this.name} started`);
-            return;
-        }
-        await this.loadPackageMetadataFiles(path, this.name);
-
-        await this.loadPackageMetadataServices(path);
-
-        console.timeEnd(`service ${this.name} started`)
-        // console.log(`service ${this.name} started`);
+        await this.broker.call(`@steedos/service-packages.starting`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
+        await this.onStarted();
+        await this.broker.call(`@steedos/service-packages.started`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
     },
 
     /**

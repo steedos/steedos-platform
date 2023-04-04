@@ -325,6 +325,6 @@ form:
   initialValues: !<tag:yaml.org,2002:js/function> |-
     function () {
       const objectApiName = this.doc.object_name;
-      const res = Steedos.authRequest(`/service/api/@${objectApiName}/uiSchemaTemplate`, { type: 'get', async: false});
+      const res = Steedos.authRequest("/service/api/@" + objectApiName +"/uiSchemaTemplate", { type: 'get', async: false});
       return res || {}
     }
