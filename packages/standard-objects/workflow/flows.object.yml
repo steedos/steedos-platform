@@ -704,7 +704,7 @@ actions:
                                                           "requestAdaptor": "\n        var filters = [];\n        var top = 10;\n        if(api.data.$term){\n            filters = [[\"label\", \"contains\", api.data.$term]];\n        }\n        // else if(api.data.$value){\n        //     filters = [[\"_id\", \"=\", api.data.$value]];\n        // }\n\n        var fieldFilters = [\"enable_workflow\",\"=\",true];\n        if(fieldFilters && fieldFilters.length){\n            filters.push(fieldFilters);\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n        var sort = \"\";\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', top).replace('{__sort}', sort.trim());\n\n        var defaultValue = api.data.$value;\n        var optionsFiltersOp = \"=\";\n        var optionsFilters = [[\"name\", optionsFiltersOp, []]];\n        if (defaultValue && !api.data.$term) { \n            // 字段值单独请求，没值的时候在请求中返回空\n            optionsFilters = [[\"name\", optionsFiltersOp, defaultValue]];\n        }\n        api.data.query = api.data.query.replace(/{__options_filters}/g, JSON.stringify(optionsFilters));\n        return api;\n    "
                                                       },
                                                       "multiple": false
-                                                  }
+                                                  },{"type": "checkbox","option": "","name": "enable_amisform","id": "u:f581950a606a","label": "启用amis表单"}
                                               ],
                                               "api": {
                                                   "method": "post",
@@ -713,7 +713,7 @@ actions:
                                                       "&": "$$",
                                                       "space": "${spaceId}"
                                                   },
-                                                  "requestAdaptor": "const {id, name, space} = api.body;var form = {\n  id,\n  name,\n  space,\n  is_valid: true,\n  app: 'workflow',\n  current: {\n    id\n  }\n\n};\nvar body = api.body;\nif (body.category) {\n  form.category = body.category\n}\n\nlet companyId = body.company_id\nif (companyId) {\n  form.company_id = companyId\n}\n\nif (body.object_name2) {\n  form.object_name = body.object_name2\n}\n\napi.data = {\n  Forms: [form]\n};\n\nconsole.log(`api`, api)\nreturn api;"
+                                                  "requestAdaptor": "const {id, name, space, enable_amisform} = api.body;var form = {\n  id,\n  name,\n  space,\n  enable_amisform,\n  is_valid: true,\n  app: 'workflow',\n  current: {\n    id\n  }\n\n};\nvar body = api.body;\nif (body.category) {\n  form.category = body.category\n}\n\nlet companyId = body.company_id\nif (companyId) {\n  form.company_id = companyId\n}\n\nif (body.object_name2) {\n  form.object_name = body.object_name2\n}\n\napi.data = {\n  Forms: [form]\n};\n\nconsole.log(`api`, api)\nreturn api;"
                                               },
                                               "onEvent": {
                                               "submitSucc": {
@@ -791,21 +791,21 @@ actions:
       function (object_name, record_id, fields) {
               return WorkflowCore.openFlowDesign(Steedos.locale().toLocaleLowerCase(), Steedos.spaceId(), record_id, Creator.getUserCompanyId());
             }
-  # designForm:
-  #   label: Form Designer
-  #   visible: !<tag:yaml.org,2002:js/function> |-
-  #     function (object_name, record_id, record_permissions, data) {
-  #             const record = data.data;
-  #             if (record && record.object_name){
-  #               return false;
-  #             };
-  #             return true;
-  #           }
-  #   'on': record
-  #   todo: !<tag:yaml.org,2002:js/function> |-
-  #     function (object_name, record_id, fields) {
-  #             return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
-  #           }
+  designForm:
+    label: Form Designer
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions, data) {
+              const record = Creator.getObjectRecord(object_name, record_id);console.log('record===>',record);
+              if(record.enable_amisform){
+                return false;
+              };
+              return true;
+            }
+    'on': record
+    todo: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, fields) {
+              return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
+            }
   enableFlow:
     label: Enable Flow
     visible: !<tag:yaml.org,2002:js/function> |-
