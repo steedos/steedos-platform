@@ -99,8 +99,6 @@ router.post('/am/forms', async function (req, res) {
             let form = data['Forms'][i];
             let objectName = form["object_name"];
 			let useAmis = form["enable_amisform"]
-			// console.log('form====>', form);
-			console.log('useAmis====>', useAmis);
             const instance_table_fields = form['instance_table_fields'] || []
             const instanceFields = await designerManager.getBusinessFields(objectName)
             const formFields = await designerManager.transformObjectFieldsToFormFields(instanceFields);

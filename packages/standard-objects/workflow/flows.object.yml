@@ -795,7 +795,7 @@ actions:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, data) {
-              const record = Creator.getObjectRecord(object_name, record_id);console.log('record===>',record);
+              const record = Creator.getObjectRecord(object_name, record_id);
               if(record.enable_amisform){
                 return false;
               };
