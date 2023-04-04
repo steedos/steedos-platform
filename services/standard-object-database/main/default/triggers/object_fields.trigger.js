@@ -222,7 +222,7 @@ module.exports = {
             objectName = filters._id.split('.')[0];
         }
         if(objectName){
-            let fields = await InternalData.getObjectFields(objectName, this.userId, true);
+            let fields = await InternalData.getObjectFields(objectName, this.userId, filters.name ? true : false);
             if(fields){
                 _.each(fields, (field)=>{
                     this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
