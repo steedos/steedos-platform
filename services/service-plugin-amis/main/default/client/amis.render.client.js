@@ -245,7 +245,7 @@
                 theme: 'antd',
                 isCurrentUrl: isCurrentUrl,
             };
-
+            // 已弃用
             const AmisRender = function (props) {
                 let env = props.env;
                 const schema = props.schema;
@@ -340,6 +340,7 @@
                 const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
                 if(window.SteedosUI && refName){
                   SteedosUI.refs[refName] = amisScope;
+                  SteedosUI.refs[refName].__$schema = schema;
                 }
             };
 

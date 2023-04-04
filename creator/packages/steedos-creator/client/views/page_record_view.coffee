@@ -10,13 +10,14 @@ Template.page_record_view.onRendered ->
             try
                 # SteedosUI.refs[self.pageName].unmount()
                 if SteedosUI.refs[self.pageName]
+                    updatePropsData = {
+                        objectName: objectName
+                    }
+                    updatePropsData.recordId = Tracker.nonreactive ()->
+                        Session.get("record_id")
+                    lastData = SteedosUI.refs[self.pageName]?.__$schema?.data || {};
                     return SteedosUI.refs[self.pageName].updateProps({
-                        data: {
-                            recordId: Tracker.nonreactive ()->
-                                Session.get("record_id")
-                            ,
-                            objectName: regions.page.schema.objectApiName,
-                        }
+                        data: window._.defaultsDeep(updatePropsData, lastData)
                     })
                 
             catch e
