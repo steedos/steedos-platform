@@ -100,7 +100,7 @@ export function getLocalEnv(workspace?: string){
         
         require('dotenv-flow').config(
         {
-            path: workspace ? workspace : null,
+            path: resolveProjectPathSync(workspace),
             silent: true
         });
     }catch(err){
