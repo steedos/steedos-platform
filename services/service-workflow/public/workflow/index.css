@@ -32,3 +32,13 @@
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
+
+.flow-modal .modal-lg{
+	width: 100%
+}
+
+.flow-modal .modal-lg .slds-modal__container{
+    width: 90% !important;
+    max-width: 90% !important;
+    min-width: 90% !important;
+}
