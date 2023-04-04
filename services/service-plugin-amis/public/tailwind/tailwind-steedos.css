@@ -54,10 +54,6 @@
   position: absolute
 }
 
-.relative {
-  position: relative
-}
-
 .sticky {
   position: sticky
 }
@@ -71,10 +67,6 @@
 
 .top-0 {
   top: 0px
-}
-
-.isolate {
-  isolation: isolate
 }
 
 .z-40 {
