@@ -23,83 +23,42 @@
  🤖 🎨 🚀
 </h3>
 
-## 可视化设计微页面
+## Salesforce 开源替代方案
 
-基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具，实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)。
+- [Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)： 实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)，基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具。
+- [Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)： 实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。
+- [Salesforce Metadata](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_intro.htm)： [元数据](https://www.steedos.cn/docs/protocol/metadata-object)是华炎魔方技术架构的核心。华炎魔方使用元数据定义对象，字段，配置，代码，逻辑和页面布局，并基于这些元数据自动生成系统的数据结构以及Steedos应用程序的用户界面和自动化逻辑。
+- [Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience), 实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。
+- [Salesforce Functions](https://developer.salesforce.com/docs/platform/functions/guide/dev-guide-intro.html)：支持 [服务端开发](https://www.steedos.cn/docs/developer/getting-started)，通过编写触发器、自定义API，实现任何需要的业务逻辑。
+- [Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)： 元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。
 
-![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
 
-## 可视化创建业务对象
+## 快速向导
 
-实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)。
+运行华炎魔方需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
 
-![对象管理](https://console.steedos.cn/api/files/images/64216644671028003e75f90e)
+### 启动远程开发环境
 
-## VS Code 插件
-
-实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
-
-![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
-
-## 软件包管理
-
-元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)。
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
-
-# 快速向导
-
-本项目仓库为平台源码，我们会定期发布版本，在项目中直接引用即可。
-
-## 运行模版项目
-
-使用华炎魔方开发企业应用，建议Fork华炎魔方模版项目。
-
-[华炎魔方模版项目(Github)](https://github.com/steedos/steedos-project-template)
-[华炎魔方模版项目(Gitlab)](https://gitlab.steedos.cn/steedos/steedos-project-template)
-
-## 调试平台源码
-
-调试平台源码需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
-
-### 使用 docker 启动数据库
-
-华炎魔方运行依赖 mongodb 和 redis，需先在本地安装运行相关服务。
-
-```bash
-docker-compose -f docker-compose-db.yml up
+```shell
+docker-compose up
 ```
 
-### 使用本地 nodejs 调试平台源码
+### 访问远程开发环境
+打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-platform ，进入VS Code远程开发环境。
 
-运行华炎魔方需要在本地安装 nodejs 14 和 python 等编译环境，如果本地有环境，可以本地启动华炎魔方。
+### 启动模版项目
 
-```bash
+在 VS Code 中进入控制台，输入启动命令。 
+
+```
 yarn
 yarn build
 yarn start
 ```
 
-## 使用 VSCode Server 远程调试平台源码
+## 系统架构
 
-可以在服务器上部署远程开发环境，实现远程开发。
-
-```bash
-docker-compose -f docker-compose-vscode.yml up
-```
-
-打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-project-template ，进入VS Code远程开发环境。
-
-此时可以在浏览器中操作 VS Code，运行华炎魔方。
-
-## 访问华炎魔方
-
-打开浏览器，访问 http://127.0.0.1:5000，进入华炎魔方。
-
-进入设置应用，可以：
-- 创建自定义对象
-- 创建应用
-- 创建微页面
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 ## 平台功能
 
@@ -122,7 +81,7 @@ docker-compose -f docker-compose-vscode.yml up
 - [开发文档](https://www.steedos.cn/docs/developer/)
 - [客户案例](https://www.steedos.cn/customer-success-stories/)
 - [解决方案](https://www.steedos.cn/collections/steedos-packages)
-- [试用解决方案(SaaS版）](https://demo.steedos.cn/)
+- [试用解决方案(SaaS版）)](https://demo.steedos.cn/)
 
 ## 为华炎魔方做贡献
 

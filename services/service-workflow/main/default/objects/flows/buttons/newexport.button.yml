@@ -1,0 +1,45 @@
+name: newexport
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "导出流程",
+              "id": "u:newexport",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "script": "// SteedosUI.refs(\"flows-listview-undefined\")\n// debugger;\nconst ids = SteedosUI.getRef(event.data.$scopeId).getComponentById(\"listview_flows\").props.store.selectedItems.toJSON();\n\nif (ids && ids.length > 0) {\n    \n  window.open(Steedos.absoluteUrl(\"/api/workflow/export/form?flows=\" + _.map(ids,\"_id\").join(',')), '_blank');\n    \n} else {\n    \n  alert(\"请选择要导出的流程\")\n    \n  }\n\n\n",
+                              "actionType": "custom"
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {
+              "rootUrl": "http://127.0.0.1:5000"
+          },
+          "app_id": "",
+          "tab_id": "",
+          "object_name": "",
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:0db8173c5972"
+  }
+is_enable: true
+label: 新导出
+'on': list
+type: amis_button
+visible: true
