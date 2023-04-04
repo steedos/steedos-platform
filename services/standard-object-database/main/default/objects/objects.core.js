@@ -225,22 +225,24 @@ function loadObject(doc, oldDoc) {
         objectql.loadObjectLazyListenners(doc.name);
         objectql.loadObjectLazyButtons(doc.name);
         //获取到继承后的对象
-        const _doc = objectql.getObjectConfig(doc.name);
+        // const _doc = objectql.getObjectConfig(doc.name);
+        // console.log(`loadObject===>`, doc.name)
         objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
             if(res){
-                datasource.setObject(doc.name, _doc);
-                try {
-                    if (!datasourceName || datasourceName == defaultDatasourceName) {
-                        Creator.Objects[doc.name] = _doc;
-                        Creator.loadObjects(_doc, _doc.name);
-                    }
-                } catch (error) {
-                    console.log('error', error);
-                }
-                if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
-                    loadObjectTriggers(doc);
-                    loadObjectPermission(doc);
-                }
+                // datasource.setObject(doc.name, _doc);
+                // try {
+                //     if (!datasourceName || datasourceName == defaultDatasourceName) {
+                //         Creator.Objects[doc.name] = _doc;
+                //         Creator.loadObjects(_doc, _doc.name);
+                //     }
+                // } catch (error) {
+                //     console.log('error', error);
+                // }
+                // if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
+                //     loadObjectTriggers(doc);
+                //     loadObjectPermission(doc);
+                // }
+                
                 objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
@@ -342,7 +344,7 @@ function reloadObject(changeLog){
             return 
         }
         //获取到最新的对象
-        const object = objectql.getObjectConfig(objectName);
+        const object = objectql.getOriginalObjectConfig(objectName);
 
         let _mf =  _.max(_.values(object.fields), function (field) { return field.sort_no; });
         if(_mf && object.name){
@@ -355,18 +357,18 @@ function reloadObject(changeLog){
         if(deleted.actions.length == 0){
             deleted.actions = null;
         }
-
+        // console.log(`reloadObject===>`, object.name)
         objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, Object.assign({}, object, {isMain:false, __deleted: deleted})).then(function(res){            
             if(res){
-                datasource.setObject(object.name, object);
-                try {
-                    if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
-                        Creator.Objects[object.name] = object;
-                        Creator.loadObjects(object, object.name);
-                    }
-                } catch (error) {
-                    console.log('error', error);
-                }
+                // datasource.setObject(object.name, object);
+                // try {
+                //     if(!objectDataSourceName || objectDataSourceName == defaultDatasourceName){
+                //         Creator.Objects[object.name] = object;
+                //         Creator.loadObjects(object, object.name);
+                //     }
+                // } catch (error) {
+                //     console.log('error', error);
+                // }
                 objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
