@@ -246,9 +246,9 @@ class Login extends React.Component {
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
 
-    if (this.props.settings.tenant.enable_open_geetest === true) {
+    if(this.props.settings.tenant.enable_open_geetest === true){
       this.setState({
-        disabledSendVerificationstate: true
+        disabledSendVerificationstate:true
       })
     }
     this.props.actions.sendVerificationToken(user, this.state.geetestValidate).then(async (userId) => {
@@ -304,8 +304,7 @@ class Login extends React.Component {
     this.props.actions.login(user, this.state.password ? this.state.password.trim() : this.state.password, this.state.verifyCode ? this.state.verifyCode.trim() : this.state.verifyCode).then(async (args) => {
       const { error, mobile_verified, mobile } = args;
       if (error === 'TO_MOBILE_CODE_LOGIN') {
-
-        this.setState({
+        return this.setState({
           loginByEmail: false,
 
           loginByMobile: true,
@@ -313,13 +312,10 @@ class Login extends React.Component {
           loginWith: 'code',
           MFA: true,
           loginId: mobile,
-          mobile: mobile,
           mobile_verified: mobile_verified,
           email: null,
           username: null
         });
-        this.initGeetest()
-        return ;
       } else if (error === 'TO_VERIFY_MOBILE') {
         const location = this.props.location;
         GlobalAction.redirectUserToVerifyMobile(location)
@@ -361,45 +357,44 @@ class Login extends React.Component {
       state: state
     })
   }
+
   handlerGeetest = (captchaObj) => {
-    var div = document.getElementById("captcha");
-    if (div) {
-      captchaObj.appendTo("#captcha");
-      captchaObj.onReady(() => {
-      }).onSuccess(() => {
-        var geetestValidate = captchaObj.getValidate();
-        this.setState({
-          disabledSendVerificationstate: false,
-          geetestValidate: geetestValidate
-        })
-        captchaObj.reset()
-      }).onError(() => {
+    captchaObj.appendTo("#captcha");
+    captchaObj.onReady(() => {
+    }).onSuccess(() => {
+      var geetestValidate = captchaObj.getValidate();
+      this.setState({
+        disabledSendVerificationstate: false,
+        geetestValidate: geetestValidate
       })
-    }
-  };
-  initGeetest = () => {
-    if(this.props.settings.tenant.enable_open_geetest != true){
-      return ;
-    }
-    const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
-    fetch(url + "/accounts/geetest/geetest-init", {
-      method: 'POST',
-    }).then((response) => {
-      return response.text()
-    }).then((data) => {
-      window.initGeetest({
-        gt: JSON.parse(data).gt,
-        challenge: JSON.parse(data).challenge,
-        new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
-        offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-        product: "float", // 产品形式，包括：float，popup
-        width: "100%"
-      }, this.handlerGeetest);
+      captchaObj.reset()
+    }).onError(() => {
     })
+  };
+
+  initGeetest = () => {
+    const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
+      fetch(url + "/accounts/geetest/geetest-init", {
+        method: 'POST',
+      }).then((response)=> {
+        return response.text()
+      }).then((data)=> {
+        window.initGeetest({
+          gt: JSON.parse(data).gt,
+          challenge: JSON.parse(data).challenge,
+          new_captcha: JSON.parse(data).new_captcha, // 用于宕机时表示是新验证码的宕机
+          offline: !JSON.parse(data).success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+          product: "float", // 产品形式，包括：float，popup
+          width: "100%"
+        }, this.handlerGeetest);
+      })
   }
 
   componentDidMount() {
-    this.initGeetest()
+    console.log()
+    if (this.props.settings.tenant.enable_open_geetest === true) {
+      this.initGeetest()
+    }
   }
 
   render() {

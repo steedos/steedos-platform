@@ -12,7 +12,6 @@ const {
 } = require('graphql-iso-date');
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
-const ServiceObjectGraphql = require('@steedos/service-object-graphql')
 
 const mixinOptions = {
 
@@ -92,8 +91,7 @@ module.exports = {
 	name: "api",
 	mixins: [ApiGateway,
 		// GraphQL Apollo Server
-		ApolloService(mixinOptions),
-		ServiceObjectGraphql
+		ApolloService(mixinOptions)
 	],
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
@@ -107,18 +105,7 @@ module.exports = {
 		// ip: "0.0.0.0",
 
 		// Global Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
-		use: [
-			function(req, res, next) {
-				// 如果service-object-grapqhl未结算完成，则提示服务未就绪，刷新重试
-				if (!this.projectStarted) {
-					const message = 'service is not ready, please refresh later.';
-					res.writeHead(503, { 'Content-Type': 'application/json' });
-					res.end(JSON.stringify({ status: 1, msg: message, data: {}, errors: [{ message: message }] }));
-					return;
-				}
-				next();
-			}
-		],
+		use: [],
 
 		routes: [
 			{
@@ -415,10 +402,6 @@ module.exports = {
 
 				if (mixinOptions.schemaDirectives) {
 					schemaDirectives = _.cloneDeep(mixinOptions.schemaDirectives);
-				}
-
-				if (this.globalTypeDefs) {
-					typeDefs = typeDefs.concat(this.globalTypeDefs);
 				}
 
 				let queries = [];

@@ -32,47 +32,13 @@
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
-.instance-tasks-tree .antd-TreeControl{
-    padding: 0;
-    border-bottom: 0px;
-    border-radius: 0px;
-    border-right: 0px;
-    max-height: 100%;
-    padding-top: 8px;
-    padding-left: 4px;
-}
-.instance-tasks-tree .antd-Tree {
-    max-height: 100%;
-}
-.instance-tasks-tree .antd-Tree-itemLabel{
-    padding-left: 0;
+
+.flow-modal .modal-lg{
+	width: 100%
 }
 
-.instance-tasks-tree .antd-Tree-itemLabel-item{
-    padding-left: 0;
-}
-.instance-tasks-tree .antd-Tree-itemArrow{
-    margin-right: 0;
-}
-.instance-tasks-tree .antd-Tree-itemIcon{
-    margin-right: 4px;
-}
-.instance-tasks-tree  .antd-Badge-text{
-    background: #D3D6DD;
-}
-.instance-tasks-tree .antd-Tree-item:nth-child(1) .antd-Badge-text{
-    background: #DF4D46;
-}
-.instance-tasks-tree .antd-Tree-itemLabel-item{
-    height: 1.6rem;
-}
-.instance-tasks-tree .antd-TplField span{
-    width: 85%;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.instance-tasks-tree .antd-Tree-itemText{
-    margin: auto;
+.flow-modal .modal-lg .slds-modal__container{
+    width: 90% !important;
+    max-width: 90% !important;
+    min-width: 90% !important;
 }
