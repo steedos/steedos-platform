@@ -522,10 +522,11 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 
 				relatedFieldName = relatedField.name
 
-				selector = {}
-				selector[relatedFieldName] = recordId
-				relatedCollection = Creator.getCollection(relatedObjectName, spaceId)
-				relatedRecords = relatedCollection.find(selector)
+				relatedRecords = objectFind(relatedObjectName, {
+					filters: [
+						[relatedFieldName, '=', recordId]
+					]
+				})
 
 				relatedRecords.forEach (rr) ->
 					tableValueItem = {}
