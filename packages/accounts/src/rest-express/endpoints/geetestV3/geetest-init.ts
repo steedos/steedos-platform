@@ -41,33 +41,38 @@ export const geetest_init = (data: any) => async (
 
 // 二次验证接口，POST请求
 export const geetest_validate = async function (req, res, next) {
-    if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
-        const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
-        if (req.body.geetest) {
-            const challenge = req.body.geetest[GeetestLib.GEETEST_CHALLENGE];
-            const validate = req.body.geetest[GeetestLib.GEETEST_VALIDATE];
-            const seccode = req.body.geetest[GeetestLib.GEETEST_SECCODE];
-            const bypasscache = geetest_status;
-            let result;
-            var params = new Array();
-            if (bypasscache === "success") {
-                result = await gtLib.successValidate(challenge, validate, seccode, params);
+    if(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED){
+        if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
+            const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
+    
+            if (req.body.geetest) {
+                const challenge = req.body.geetest[GeetestLib.GEETEST_CHALLENGE];
+                const validate = req.body.geetest[GeetestLib.GEETEST_VALIDATE];
+                const seccode = req.body.geetest[GeetestLib.GEETEST_SECCODE];
+                const bypasscache = geetest_status;
+                let result;
+                var params = new Array();
+                if (bypasscache === "success") {
+                    result = await gtLib.successValidate(challenge, validate, seccode, params);
+                } else {
+                    result = gtLib.failValidate(challenge, validate, seccode);
+                }
+                // 注意，不要更改返回的结构和值类型
+                if (result.status === 1) {
+                    next()
+                } else {
+                    return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
+                }
             } else {
-                result = gtLib.failValidate(challenge, validate, seccode);
-            }
-            // 注意，不要更改返回的结构和值类型
-            if (result.status === 1) {
                 next()
-            } else {
-                return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": result.msg });
             }
         } else {
-            return res.json({ "result": "fail", "version": GeetestLib.VERSION, "msg": '无验证信息' });
+            next()
         }
-    } else {
+
+    }else{
         next()
     }
-
 }
 
 

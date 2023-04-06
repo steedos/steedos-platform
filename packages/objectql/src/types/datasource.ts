@@ -159,13 +159,12 @@ export class SteedosDataSourceType implements Dictionary {
         this._objects[objectApiName] = object;
     }
 
-    getObject(objectApiName: string): any{
-        return this.getLocalObject(objectApiName);
-        // const localObject = this.getLocalObject(objectApiName);
-        // if(localObject){
-        //     return localObject;
-        // }
-        // return getObjectDispatcher(objectApiName)
+    getObject(objectApiName: string){
+        const localObject = this.getLocalObject(objectApiName);
+        if(localObject){
+            return localObject;
+        }
+        return getObjectDispatcher(objectApiName)
     }
 
     getLocalObject(objectApiName: string) {
@@ -195,7 +194,7 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         this._objects[objectApiName] = object;
-        // await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
+        await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
         return object;
     }
 

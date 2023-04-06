@@ -39,7 +39,7 @@ fields:
     name: form_version
   submitter:
     label: Submitter
-    type: lookup
+    type: master_detail
     reference_to: users
     readonly: true
     name: submitter

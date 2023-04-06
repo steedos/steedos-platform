@@ -35,7 +35,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server', '~packages-project-server', '@steedos/service-packages'],
+    dependencies: ['metadata-server', '~packages-project-server'],
 
     /**
      * Actions
@@ -246,53 +246,6 @@ module.exports = {
                 module: this.schema.packageName
             })
             return await this.broker.destroyService(this);
-        },
-        async onStarted(){
-            if(this.beforeStart){
-                try {
-                    await this.beforeStart()
-                } catch (error) {
-                    return await this.errorHandler(error);
-                }
-            }
-    
-            console.time(`service ${this.name} started`)
-            let packageInfo = this.settings.packageInfo;
-            if (!packageInfo) {
-                return;
-            }
-            const { path : _path, datasource, isPackage } = packageInfo;
-            if (!_path) {
-                this.logger.error(`Please config packageInfo in your settings.`);
-                console.log(`service ${this.name} started`);
-                return;
-            }
-            this.broker.waitForServices("steedos-server").then(async () => {
-                await this.loadDataOnServiceStarted()
-            });
-            
-            await this.loadPackageMetadataFiles(_path, this.name, datasource);
-            if(isPackage !== false){
-                try {
-                    const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
-                    await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
-                } catch (error) {
-                    
-                }    
-            }
-    
-            await this.loadPackageMetadataServices(_path);
-    
-            // await this.loadPackagePublicFiles(_path);
-            this.started = true;
-            console.timeEnd(`service ${this.name} started`)
-            if(this.afterStart){
-                try {
-                    await this.afterStart();
-                } catch (error) {
-                    this.broker.logger.error(`[${this.name}]: ${error.message}`);
-                }
-            }
         }
     },
 
@@ -313,9 +266,51 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        await this.broker.call(`@steedos/service-packages.starting`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
-        await this.onStarted();
-        await this.broker.call(`@steedos/service-packages.started`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
+        if(this.beforeStart){
+            try {
+                await this.beforeStart()
+            } catch (error) {
+                return await this.errorHandler(error);
+            }
+        }
+
+        console.time(`service ${this.name} started`)
+        let packageInfo = this.settings.packageInfo;
+        if (!packageInfo) {
+            return;
+        }
+        const { path : _path, datasource, isPackage } = packageInfo;
+        if (!_path) {
+            this.logger.error(`Please config packageInfo in your settings.`);
+            console.log(`service ${this.name} started`);
+            return;
+        }
+        this.broker.waitForServices("steedos-server").then(async () => {
+            await this.loadDataOnServiceStarted()
+        });
+        
+        await this.loadPackageMetadataFiles(_path, this.name, datasource);
+        if(isPackage !== false){
+            try {
+                const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
+                await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
+            } catch (error) {
+                
+            }    
+        }
+
+        await this.loadPackageMetadataServices(_path);
+
+        // await this.loadPackagePublicFiles(_path);
+        this.started = true;
+        console.timeEnd(`service ${this.name} started`)
+        if(this.afterStart){
+            try {
+                await this.afterStart();
+            } catch (error) {
+                this.broker.logger.error(`[${this.name}]: ${error.message}`);
+            }
+        }
     },
 
     /**

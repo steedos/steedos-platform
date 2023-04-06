@@ -73,7 +73,7 @@ const exportRecordData = async function (req, res) {
             }
             if (entities) {
 
-                const fieldConfigs = (await objectql.getSteedosSchema().broker.call(`objectql.getRecordView`, { objectName }, { meta: { user: userSession }})).fields
+                const fieldConfigs = (await objectql.getSteedosSchema().broker.call(`@${objectName}.getRecordView`, {}, { meta: { user: userSession }})).fields
 
                 for (let i=0; i<entities.length; i++) {
                     let record = entities[i]

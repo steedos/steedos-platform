@@ -11,15 +11,12 @@ const callObjectServiceAction = function (actionName, userSession, data) {
         return broker.call(actionName, data, { meta: { user: userSession } });
     });
 };
-const getObjectName = function (objectServiceName) {
-    return objectServiceName.substring(1);
-};
 router.get('/service/api/:objectServiceName/fields', core.requireAuthentication, function (req, res) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`objectql.getFields`, userSession, { objectName: getObjectName(objectServiceName) });
+            const result = yield callObjectServiceAction(`${objectServiceName}.getFields`, userSession);
             res.status(200).send(result);
         }
         catch (error) {
@@ -32,7 +29,7 @@ router.get('/service/api/:objectServiceName/getUserObjectPermission', core.requi
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`objectql.getUserObjectPermission`, userSession, { objectName: getObjectName(objectServiceName) });
+            const result = yield callObjectServiceAction(`${objectServiceName}.getUserObjectPermission`, userSession);
             res.status(200).send(result);
         }
         catch (error) {
@@ -45,8 +42,7 @@ router.get('/service/api/:objectServiceName/recordPermissions/:recordId', core.r
         const userSession = req.user;
         try {
             const { objectServiceName, recordId } = req.params;
-            const result = yield callObjectServiceAction(`objectql.getRecordPermissionsById`, userSession, {
-                objectName: getObjectName(objectServiceName),
+            const result = yield callObjectServiceAction(`${objectServiceName}.getRecordPermissionsById`, userSession, {
                 recordId: recordId
             });
             res.status(200).send(result);
@@ -63,7 +59,7 @@ router.get('/service/api/:objectServiceName/uiSchema', core.requireAuthenticatio
             const { objectServiceName } = req.params;
             const objectName = objectServiceName.substring(1);
             const [result, hasImportTemplates] = yield Promise.all([
-                callObjectServiceAction(`objectql.getRecordView`, userSession, { objectName }),
+                callObjectServiceAction(`${objectServiceName}.getRecordView`, userSession),
                 callObjectServiceAction(`~packages-@steedos/data-import.hasImportTemplates`, userSession, {
                     objectName: objectName
                 })
@@ -81,7 +77,7 @@ router.post('/service/api/:objectServiceName/defUiSchema', core.requireAuthentic
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`objectql.createDefaultRecordView`, userSession, { objectName: getObjectName(objectServiceName) });
+            const result = yield callObjectServiceAction(`${objectServiceName}.createDefaultRecordView`, userSession);
             res.status(200).send(result);
         }
         catch (error) {
@@ -94,7 +90,7 @@ router.get('/service/api/:objectServiceName/uiSchemaTemplate', core.requireAuthe
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`objectql.getDefaultRecordView`, userSession, { objectName: getObjectName(objectServiceName) });
+            const result = yield callObjectServiceAction(`${objectServiceName}.getDefaultRecordView`, userSession);
             res.status(200).send(result);
         }
         catch (error) {
@@ -107,7 +103,7 @@ router.get('/service/api/:objectServiceName/relateds', core.requireAuthenticatio
         const userSession = req.user;
         try {
             const { objectServiceName } = req.params;
-            const result = yield callObjectServiceAction(`objectql.getRelateds`, userSession, { objectName: getObjectName(objectServiceName) });
+            const result = yield callObjectServiceAction(`${objectServiceName}.getRelateds`, userSession);
             res.status(200).send(result);
         }
         catch (error) {

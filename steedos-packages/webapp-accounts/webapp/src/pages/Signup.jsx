@@ -17,7 +17,7 @@ import { useCountDown } from "../components/countdown";
 import { validatePassword } from '../client/password';
 
 const totalSeconds = 60;
-const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
+const ReApplyCodeBtn = ({ onClick, id, loginId,disabled }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
     total: totalSeconds,
     lifecycle: "session"
@@ -238,9 +238,9 @@ class Signup extends React.Component {
       email: this.state.loginBy === 'email' ? this.state.email.trim() : '',
       mobile: this.state.loginBy === 'mobile' ? this.state.mobile.trim() : '',
     }
-    if (this.props.settings.tenant.enable_open_geetest === true) {
+    if(this.props.settings.tenant.enable_open_geetest === true){
       this.setState({
-        disabledSendVerificationstate: true
+        disabledSendVerificationstate:true
       })
     }
 
@@ -400,26 +400,20 @@ class Signup extends React.Component {
     })
   }
   handlerGeetest = (captchaObj) => {
-    var div = document.getElementById("captcha");
-    if (div) {
-      captchaObj.appendTo("#captcha");
-      captchaObj.onReady(() => {
-      }).onSuccess(() => {
-        var geetestValidate = captchaObj.getValidate();
-        this.setState({
-          disabledSendVerificationstate: false,
-          geetestValidate: geetestValidate
-        })
-        captchaObj.reset()
-      }).onError(() => {
+    captchaObj.appendTo("#captcha");
+    captchaObj.onReady(() => {
+    }).onSuccess(() => {
+      var geetestValidate = captchaObj.getValidate();
+      this.setState({
+        disabledSendVerificationstate: false,
+        geetestValidate: geetestValidate
       })
-    }
+      captchaObj.reset()
+    }).onError(() => {
+    })
   };
 
   initGeetest = () => {
-    if(this.props.settings.tenant.enable_open_geetest != true){
-      return ;
-    }
     const url = (process.env.NODE_ENV == 'development' && process.env.REACT_APP_API_URL) ? process.env.REACT_APP_API_URL : '';
     fetch(url + "/accounts/geetest/geetest-init", {
       method: 'POST',
@@ -438,7 +432,9 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.settings.tenant.enable_open_geetest === true) {
       this.initGeetest()
+    }
   }
 
 

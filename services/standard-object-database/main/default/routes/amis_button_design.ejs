@@ -127,6 +127,7 @@
           delete schema.data.context.tenantId;
           delete schema.data.context.authToken;
           delete schema.data.context.user;
+          delete schema.data.context.rootUrl;
         }
         return await axios.post(
           `${rootUrl}/graphql`,

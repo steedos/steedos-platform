@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-21 12:47:58
+ * @LastEditTime: 2023-04-04 16:01:43
  * @Description: 
 -->
 <html>
@@ -364,6 +364,7 @@
         delete schema.data.context.tenantId;
         delete schema.data.context.authToken;
         delete schema.data.context.user;
+        delete schema.data.context.rootUrl;
       }
       return await axios.post(
         `${rootUrl}/graphql`,

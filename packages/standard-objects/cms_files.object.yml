@@ -231,7 +231,7 @@ actions:
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "api.data.append('record_id', api.body._master.recordId);api.data.append('object_name', api.body._master.objectName); api.data.append('space', api.body.global.spaceId);api.data.append('owner', api.body.global.userId);api.data.append('owner_name', api.body.global.user.name);return api;"
+                                "requestAdaptor": "api.data.append('record_id', api.body.masterRecordId);api.data.append('object_name', api.body.masterObjectName); api.data.append('space', api.body.global.spaceId);api.data.append('owner', api.body.global.userId);api.data.append('owner_name', api.body.global.user.name);return api;"
                             },
                             "onEvent": {
                                 "success": {

@@ -446,11 +446,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         
         for (const trigger of triggers) {
-            let params = generateActionParams(when, context); //参考sf
-            // TODO 讨论参数格式
-            // TODO 1、确定action trigger的返回值格式
-            // TODO 2、返回值合并至context
-            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
+            let params = generateActionParams(when, context);
+            const result = await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
                 //如果action trigger 下线，则只打印error
                 if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
                     console.error(`runTriggerActions error`, error)
@@ -458,6 +455,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     throw error
                 }
             })
+            if (when == 'before.insert' || when == 'before.update') {
+                if (result && result.doc && _.isObject(result.doc)) {
+                    Object.assign(context.doc, result.doc)
+                }
+            }
+            if (when == 'before.find') {
+                if (result && result.query && _.isObject(result.query)) {
+                    Object.assign(context.query, result.query)
+                }
+            }
+            if (when == 'after.find') {
+                if (result && result.data && _.isObject(result.data)) {
+                    Object.assign(context.data, result.data)
+                }
+            }
         }
 
     }
@@ -1298,7 +1310,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
-            this.enable_process = true
         }
         //清理数据
         _.each(objectConfig.triggers, function(trigger, key){
@@ -1356,9 +1367,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         if(this.enable_process){
             objectConfig.details.push("process_instance_history.target_object")
-        }
-        if(this.enable_audit){
-            objectConfig.details.push("audit_records.related_to")
         }
 
         objectConfig.details = uniq(objectConfig.details)
