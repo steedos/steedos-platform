@@ -10,6 +10,7 @@ function onDestroyObjectService(objectApiName) {
 }
 
 export async function createObjectService(broker, serviceName, objectConfig) {
+    return
     if (LocalObjectServices[serviceName]) {
         return;
     }

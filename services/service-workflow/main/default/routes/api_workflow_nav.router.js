@@ -13,6 +13,8 @@ const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
 const _ = require('underscore');
+const lodash = require('lodash');
+const { link } = require('fs');
 
 /**
 @api {get} /api/workflow/nav 获取用户
@@ -32,51 +34,127 @@ const _ = require('underscore');
  */
 
 
+/**
+ * 1 查询instance_tasks数据
+ * 2 结算出分类
+ * 3 按要求返回数据结构
+ */
+const getCategoriesInbox = async (userSession,req) => {
+  const { appId } = req.params;
+  const userId = userSession.userId;
+  const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
+    box: "inbox", flowId: null, userId
+  })
+  const  data = await objectql.getObject('instance_tasks').find({
+    filters: filters
+  }, userSession)
+
+  const output = [];
+  const categoryGroups = lodash.groupBy(data, 'category_name');
+  lodash.each(categoryGroups, (v, k)=>{
+    let categoryBadge = 0;
+    const flowGroups = lodash.groupBy(v, 'flow_name');
+    const flows = [];
+    lodash.each(flowGroups, (v2, k2)=>{
+      categoryBadge += v2.length
+      flows.push({
+        label: k2,
+        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
+        flow_name: k2,
+        tag:v2.length,
+        value:{
+          level:3,
+          value:k2,
+          name: 'flow_name',
+        },
+      })
+    })
+    output.push({
+      label: k,
+      children: flows,
+        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
+      category_name:k,
+      tag:v.length,
+      value:{
+        level:2,
+        value:k,
+        name: 'category_name',
+      },
+    })
+  })
+  return output
+}
+
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
+
     let userSession = req.user;
     const { appId } = req.params;
     const spaceId = userSession.spaceId;
     const userId = userSession.userId;
+    let mychildren = await getCategoriesInbox(userSession,req)
     let query = {
       filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
     };
     const steedosKeyValues = await objectql.getObject('steedos_keyvalues').find(query);
     let sum = steedosKeyValues && steedosKeyValues[0] && steedosKeyValues[0].value && steedosKeyValues[0].value.workflow;
-    var links = [
+    var options = [
       {
         "label": "待审核",
-        "to": `/app/${appId}/instance_tasks/grid/inbox`,
         "icon": "fa fa-download",
-        "badge": sum
+        "tag":sum,
+        "value":{
+          "level":1,
+          "to": `/app/${appId}/instance_tasks/grid/inbox`
+        },
+        "children":mychildren
       },
       {
         "label": "已审核",
-        "to": `/app/${appId}/instance_tasks/grid/outbox`,
+        "value":{
+          "level":1,
+          "to": `/app/${appId}/instance_tasks/grid/outbox`
+        },
         "icon": "fa fa-check"
       },
       {
         "label": "监控箱",
-        "to": `/app/${appId}/instances/grid/monitor`,
-        "icon": "fa fa-eye"
+        "icon": "fa fa-eye",
+        "value":{
+          "level":1,
+          "to": `/app/${appId}/instances/grid/monitor`,
+        }
       },
       {
         "label": "我的文件",
+        "value":{
+          "level":1,
+          "to": `/app/${appId}/instance_tasks/grid/inbox`
+        },
         "unfolded": true,
         "children": [
           {
             "label": "草稿",
-            "to": `/app/${appId}/instances/grid/draft`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/draft`
+            },
             "icon": "fa fa-pencil"
           },
           {
             "label": "进行中",
-            "to": `/app/${appId}/instances/grid/pending`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/pending`,
+            },
             "icon": "fa fa-circle"
           },
           {
             "label": "已完成",
-            "to": `/app/${appId}/instances/grid/completed`,
+            "value":{
+              "level":1,
+              "to": `/app/${appId}/instances/grid/completed`,
+            },
             "icon": "fa fa-check-square"
           }
         ]
@@ -84,12 +162,13 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     ];
     res.status(200).send({
       data: {
-        links: links
+        options:options
       },
       msg: "",
       status: 0
     });
   } catch (e) {
+    console.log(`e`, e)
     res.status(200).send({
       errors: [{ errorMessage: e.message }]
     });

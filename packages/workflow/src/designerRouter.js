@@ -98,7 +98,6 @@ router.post('/am/forms', async function (req, res) {
         for (let i = 0; i < data['Forms'].length; i++) {
             let form = data['Forms'][i];
             let objectName = form["object_name"];
-			let useAmis = form["enable_amisform"]
             const instance_table_fields = form['instance_table_fields'] || []
             const instanceFields = await designerManager.getBusinessFields(objectName)
             const formFields = await designerManager.transformObjectFieldsToFormFields(instanceFields);
@@ -175,7 +174,6 @@ router.post('/am/forms', async function (req, res) {
                             name: form["name"],
                             app: form["app"],
                             category: form["category"],
-							enable_amisform: useAmis
                         }
                         if (companyId) {
                             flow.company_id = companyId;
@@ -923,7 +921,7 @@ router.post('/am/forms/addFieldFromObject', async function (req, res) {
  *      [{
  *        name 对象名
  *        label 对象显示名
- *        fields 对象字段数组
+ *        fields 对象字段数组  
  *      }]
  *  formId 表单ID
  * }

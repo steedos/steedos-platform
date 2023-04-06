@@ -1,0 +1,51 @@
+name: 🐞 Bug report 错误报告
+description: Create a bug report to help us improve Steedos. 填写bug报告，帮助我们改进华炎魔方。
+title: "[Bug]: "
+labels: [bug, needs triaging]
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for taking the time to fill out this bug report! 
+      感谢您填写此bug报告！
+# - type: checkboxes
+#   attributes:
+#     label: Is there an existing issue for this? 是否已有相关Issue？
+#     options:
+#     - label: I have searched the existing issues. 我已经搜索过相关Issue。
+#       required: true
+- type: textarea
+  attributes:
+    label: Description
+    description: |
+      A concise description of what you're experiencing and what you expect.
+      请详细描述你遇到的问题和预期的效果。
+    placeholder: |
+      When I do <X>, <Y> happens and I see the error message attached below:
+      ```...```
+      What I expect is <Z>
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps To Reproduce 重现步骤
+    description: | 
+      Add steps to reproduce this behaviour, include console / network logs & videos. 
+      请描述重现此问题的具体步骤，包括服务端和和浏览器日志，最好能提供截图或视频。
+    placeholder: |
+      1. Go to '...'
+      2. Click on '....'
+      3. Scroll down to '....'
+      4. See error
+  validations:
+    required: true
+- type: input
+  id: version
+  attributes:
+    label: Version 版本
+    description: |
+      The version of your Steedos Platform Instance. 
+      您当前使用的华炎魔方版本号。
+    placeholder: "Cloud / Self Hosted - 2.4.3"
+  validations:
+    required: true
