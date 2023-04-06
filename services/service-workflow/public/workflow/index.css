@@ -30,7 +30,9 @@
 
 /* 增加旧表单设计器的宽度 */
 .flow-modal .modal-lg{
-	width: 100%
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
 .flow-modal .modal-lg .slds-modal__container{
