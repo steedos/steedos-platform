@@ -2,62 +2,64 @@
     "type": "page",
     "body": [
         {
-            "className": "steedos-amis-form",
-            "type": "form",
-            "mode": "normal",
-            "persistData": false,
-            "promptPageLeave": true,
-            "name": "form_edit_${recordId}",
-            "title": "",
+            "type": "service",
+            "className": "col-span-2 m-0",
+            "id": "tabs-options-service",
+            "affixFooter": false,
             "api": {
                 "method": "post",
                 "url": "${context.rootUrl}/graphql",
+                "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                 "data": {
-                    "$": "$$",
-                    "recordId": "${recordId}",
-                    "modalName": "${modalName}",
-                    "objectName": "${objectName}"
-                },
-                "requestAdaptor": "\nconst formData = api.data.$;\nconst recordId = formData.recordId;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\ndelete formData.sldsIconsOptions;\ndelete formData.recordId;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\n/*\ntab_items存储为：\ntab_items: {\n  test1:{\n    group:\"xxx\"\n  },\n  test3:{\n    group:\"yyy\"\n  }\n}\n而不是：\ntab_items: [\n  {\n    \"index\":1,\n    \"group\":\"xxx\"\n  },\n  {\n    \"index\":2,\n    \"group\":\"yyy\"\n  }\n]\n*/\nif (formData.tab_items) { \n    formData.tab_items = _.keyBy(formData.tab_items, \"tab_name\")\n    let tempIndex = 0;\n    _.each(formData.tab_items, function (n, k) {\n      tempIndex++;\n      n.index = tempIndex;\n      delete n.tab_name;\n    });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
-                "responseData": {
-                    "recordId": "${record._id}"
-                },
-                "adaptor": "\nif (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
-                "headers": {
-                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                }
-            },
-            "initApi": {
-                "method": "post",
-                "url": "${context.rootUrl}/graphql",
-                "sendOn": "!!this.recordId",
-                "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\nif (data.tab_items && !_.isArray(data.tab_items)) {\n    // 数据库中存储的是对象格式而不是数组，转换为数组用于界面显示\n    let arrTabItems = [];\n    _.each(data.tab_items, function (n, k) {\n        n.tab_name = k;\n        delete n.index;\n        arrTabItems.push(n);\n    });\n    data.tab_items = arrTabItems;\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
-                "data": {
-                    "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible, showSidebar, description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 }
             },
-            "initFetch": true,
+            "placeholder": "-",
+            "messages": {},
             "body": [
                 {
-                    "type": "service",
-                    "className": "col-span-2 m-0",
-                    "id": "tabs-options-service",
-                    "affixFooter": false,
+                    "className": "steedos-amis-form",
+                    "type": "form",
+                    "mode": "normal",
+                    "persistData": false,
+                    "canAccessSuperData": false,
+                    "promptPageLeave": true,
+                    "name": "form_edit_${recordId}",
+                    "title": "",
                     "api": {
                         "method": "post",
                         "url": "${context.rootUrl}/graphql",
-                        "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                         "data": {
-                            "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
+                            "$": "$$",
+                            "recordId": "${recordId}",
+                            "modalName": "${modalName}",
+                            "objectName": "${objectName}"
+                        },
+                        "requestAdaptor": "\nconst formData = api.data.$;\nconst recordId = formData.recordId;\nfor (key in formData){\n    // image、select等字段清空值后保存的空字符串转换为null。\n    if(formData[key] === ''){\n        formData[key] = null;\n    }\n}\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\ndelete formData.tabs_options;\ndelete formData.tab_groups_options;\ndelete formData.sldsIconsOptions;\ndelete formData.recordId;\n\n// 新加字段tab_items，值同步回传到老字段tabs中兼容老UI界面\nformData.tabs = [];\nif (formData.tab_items && formData.tab_items.length) { \n    formData.tabs = formData.tab_items.map(function (item) { return item.tab_name; });\n}\n\n/*\ntab_items存储为：\ntab_items: {\n  test1:{\n    group:\"xxx\"\n  },\n  test3:{\n    group:\"yyy\"\n  }\n}\n而不是：\ntab_items: [\n  {\n    \"index\":1,\n    \"group\":\"xxx\"\n  },\n  {\n    \"index\":2,\n    \"group\":\"yyy\"\n  }\n]\n*/\nif (formData.tab_items) { \n    formData.tab_items = _.keyBy(formData.tab_items, \"tab_name\")\n    let tempIndex = 0;\n    _.each(formData.tab_items, function (n, k) {\n      tempIndex++;\n      n.index = tempIndex;\n      delete n.tab_name;\n    });\n}\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif(recordId){\n    query = `mutation{record: ${objectName}__update(id: \"${recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = {query: query.replace('{__saveData}', __saveData)};\nreturn api;\n",
+                        "responseData": {
+                            "recordId": "${record._id}"
+                        },
+                        "adaptor": "\nif (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
+                        "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        }
+                    },
+                    "initApi": {
+                        "method": "post",
+                        "url": "${context.rootUrl}/graphql",
+                        "sendOn": "!!this.recordId",
+                        "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\nif (data.tab_items && !_.isArray(data.tab_items)) {\n    // 数据库中存储的是对象格式而不是数组，转换为数组用于界面显示\n    let arrTabItems = [];\n    _.each(data.tab_items, function (n, k) {\n        n.tab_name = k;\n        delete n.index;\n        arrTabItems.push(n);\n    });\n    data.tab_items = arrTabItems;\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
+                        "data": {
+                            "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible, showSidebar, description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
                         },
                         "headers": {
                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                         }
                     },
-                    "placeholder": "-",
+                    "initFetch": true,
                     "body": [
                         {
                             "type": "tabs",
@@ -518,39 +520,38 @@
                             "contentClassName": ""
                         }
                     ],
-                    "messages": {}
-                }
-            ],
-            "panelClassName": "m-0 -mt-3",
-            "actions": false,
-            "actionsClassName": "p-sm b-t b-light text-center",
-            "affixFooter": false,
-            "debug": false,
-            "onEvent": {
-                "inited": {
-                    "actions": [
-                        {
-                            "actionType": "custom",
-                            "script": "const data = context.props.data;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\nconst tabOptions = data.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
-                        }
-                    ]
-                },
-                "submitSucc": {
-                    "weight": 0,
-                    "actions": [
-                      {
-                        "actionType": "broadcast",
-                        "args": {
-                            "eventName": "@data.changed.apps"
+                    "panelClassName": "m-0 -mt-3",
+                    "actions": false,
+                    "actionsClassName": "p-sm b-t b-light text-center",
+                    "affixFooter": false,
+                    "debug": false,
+                    "onEvent": {
+                        "inited": {
+                            "actions": [
+                                {
+                                    "actionType": "custom",
+                                    "script": "const data = context.props.data;\nif (!data._id) { \n  return;\n}\nif (data.tab_items) {\n  return;\n}\n\nconst tabOptions = data.tabs_options || [];\nconst tabItems = [];\n// 把应用中原来tabs属性值添加到新的tab_items属性的默认值中\nif (data.tabs && data.tabs.length) {\n  data.tabs.forEach(function (item) {\n    tabItems.push({ tab_name: item });\n  });\n}\nconst pushObjectsToTabItems = function (objects) {\n  objects.forEach(function (item) {\n    // 已经有绑定到指定对象的选项卡就不添加\n    let existObjectItem = !!tabItems.find(function (tabItem) {\n      return !!tabOptions.find(function (option) {\n        return tabItem.tab_name === tabItem.value && option.object === item;\n      });\n    });\n    if (existObjectItem) {\n      return;\n    }\n    // 找到指向指定对象的选项卡\n    let tempOption = tabOptions.find(function (option) {\n      return option.type === \"object\" && option.object === item;\n    });\n    if (!tempOption) {\n      return;\n    }\n    // 选项卡名称如果重复了就不添加\n    let existTabItem = !!tabItems.find(function (tabItem) {\n      return tabItem.tab_name === tempOption.value;\n    });\n    if (existTabItem) {\n      return;\n    }\n    if (tempOption) {\n      tabItems.push({ tab_name: tempOption.value });\n    }\n  });\n}\n// 把应用中原来objects属性值添加到新的tab_items属性的默认值中\nif (data.objects && data.objects.length) {\n  pushObjectsToTabItems(data.objects);\n}\n// 把应用中原来mobile_objects属性值添加到新的tab_items属性的默认值中\nif (data.mobile_objects && data.mobile_objects.length) {\n  pushObjectsToTabItems(data.mobile_objects);\n}\n\ndoAction({\n  actionType: 'setValue',\n  args: {\n    \"value\": { tab_items: tabItems }\n  }\n});"
+                                }
+                            ]
                         },
-                        "data": {
-                            "objectName": "apps"
-                        }
-                      }
-                    ]
-                  }
-            },
-            "id": "apps-form"
+                        "submitSucc": {
+                            "weight": 0,
+                            "actions": [
+                              {
+                                "actionType": "broadcast",
+                                "args": {
+                                    "eventName": "@data.changed.apps"
+                                },
+                                "data": {
+                                    "objectName": "apps"
+                                }
+                              }
+                            ]
+                          }
+                    },
+                    "id": "apps-form"
+                }
+            ]
         }
     ],
     "regions": [
