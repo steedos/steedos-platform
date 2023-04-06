@@ -922,34 +922,34 @@ actions:
                 }
               }
             }
-  importFlow:
-    label: Import Workflow
-    visible: true
-    'on': list
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return Modal.show("admin_import_flow_modal", {
-                onSuccess: function (flows) {
-                  if (flows.length > 0) {
-                    return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
-                  }
-                }
-              });
-            }
-  exportFlows:
-    label: Export Workflows
-    visible: true
-    'on': list
-    todo: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
-              let ids = _.pluck(selectedRows, '_id');
-              if(ids && ids.length > 0){
-                window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
-              }else{
-                toastr.warning("请选择要导出的流程");
-              }
-            }
+  # importFlow:
+  #   label: Import Workflow
+  #   visible: true
+  #   'on': list
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             return Modal.show("admin_import_flow_modal", {
+  #               onSuccess: function (flows) {
+  #                 if (flows.length > 0) {
+  #                   return FlowRouter.go("/app/admin/flows/view/" + flows[0]);
+  #                 }
+  #               }
+  #             });
+  #           }
+  # exportFlows:
+  #   label: Export Workflows
+  #   visible: true
+  #   'on': list
+  #   todo: !<tag:yaml.org,2002:js/function> |-
+  #     function () {
+  #             let selectedRows = SteedosUI.getTableSelectedRows(`listview_flows_${Session.get("list_view_id")}`);
+  #             let ids = _.pluck(selectedRows, '_id');
+  #             if(ids && ids.length > 0){
+  #               window.open(Steedos.absoluteUrl("/api/workflow/export/form?flows=" + ids.join(',')), '_blank');
+  #             }else{
+  #               toastr.warning("请选择要导出的流程");
+  #             }
+  #           }
   upgradeFlow:
     label: Upgrade Workflow
     visible: true
