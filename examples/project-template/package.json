@@ -1,12 +1,12 @@
 {
   "name": "project-template",
-  "version": "2.4.10-beta.6",
+  "version": "2.4.10-beta.7",
   "private": true,
   "scripts": {
     "start": "steedos start",
     "dev": "steedos start --hot"
   },
   "dependencies": {
-    "@steedos/service-community": "2.4.10-beta.6"
+    "@steedos/service-community": "2.4.10-beta.7"
   }
 }
