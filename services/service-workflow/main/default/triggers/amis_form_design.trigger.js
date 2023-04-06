@@ -86,9 +86,9 @@ function getFormInputFields(formSchema) {
 
         let flag = true;
         // 对符合条件的formSchema做解析处理
-        const field = getInputFiled(bodyItem);
+        const field = getInputFiled(bodyItem);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         if (field) {
-            //进入if说明是表单项
+            //进入if说明是表单项 
             _.each(inputFields, (item) => {
                 // 如果要添加的field重复 无需再添加
                 if (field.name === item.name) {
@@ -305,34 +305,17 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'select':
-			if(amisField?.source){
-				formFieldsItem.type = 'odata'
-		  		formFieldsItem.description = amisField.description
-		  		formFieldsItem.detail_url = amisField.detail_url
-		  		formFieldsItem.filters = amisField.filters
-		  		formFieldsItem.formula = amisField.formula
-		  		formFieldsItem.is_list_display = amisField.is_list_display
-		  		formFieldsItem.is_multiselect = amisField.is_multiselect
-		  		formFieldsItem.is_required = amisField.is_required
-		  		formFieldsItem.is_searchable = amisField.is_searchable
-		  		// formFieldsItem.is_wide = amisField.is_wide
-		  		formFieldsItem.search_field = amisField.search_field
-				formFieldsItem._id = amisField._id
-
-				formFieldsItem.url = amisField.source.url.replace('${context.rootUrl}','')
-			}else{
-				formFieldsItem.type = 'select'
-			}
+            formFieldsItem.type = 'select'
             break
         case 'steedos-field':
-
+            
             let fieldsAdd = {
                 field: amisField.field
             }
             const steedosField = Object.assign(fieldsAdd,formFieldsItem);
 
             tempField = JSON.parse(steedosField.field)
-
+            
             if (tempField.reference_to === "organizations") {
                 steedosField.type = 'group'
             }else if(tempField.reference_to === "space_users"){

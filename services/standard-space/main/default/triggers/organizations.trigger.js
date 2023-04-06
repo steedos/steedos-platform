@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-06 15:30:08
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-09 13:48:13
+ * @LastEditTime: 2023-03-28 16:50:27
  * @Description: 
  */
 "use strict";
@@ -135,13 +135,14 @@ module.exports = {
         if (doc.space && beforeUpdateDoc.space !== doc.space) {
             throw new Error("organizations_error_space_readonly");
         }
-        if (doc.parents) {
+        
+        if (doc.parents && !_.isEqual(beforeUpdateDoc.parents, doc.parents)) {
             throw new Error("organizations_error_parents_readonly");
         }
-        if (doc.children) {
+        if (doc.children && !_.isEqual(beforeUpdateDoc.children, doc.children)) {
             throw new Error("organizations_error_children_readonly");
         }
-        if (doc.fullname) {
+        if (doc.fullname && !_.isEqual(beforeUpdateDoc.fullname, doc.fullname)) {
             throw new Error("organizations_error_fullname_readonly");
         }
 
