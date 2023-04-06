@@ -28,6 +28,19 @@
     visibility: visible !important;
 }
 
+/* 增加旧表单设计器的宽度 */
+.flow-modal .modal-lg{
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.flow-modal .modal-lg .slds-modal__container{
+    width: 90% !important;
+    max-width: 90% !important;
+    min-width: 90% !important;
+}
+
 /*申请单中使用 旧版中的 inline-block样式 */
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
@@ -76,3 +89,4 @@
 .instance-tasks-tree .antd-Tree-itemText{
     margin: auto;
 }
+
