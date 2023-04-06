@@ -1,259 +1,243 @@
 {
-    "type": "page",
-    "body": [
-        {
-            "type": "steedos-record-detail-header",
-            "label": "标题面板",
-            "objectApiName": "${objectName}",
-            "recordId": "${recordId}",
-            "onEvent": {
-                "recordLoaded": {
-                    "actions": [
-                        {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": {
-                                    "recordLoaded": true
-                                }
-                            }
-                        },
-                        {
-                            "actionType": "reload",
-                            "data": {
-                                "name": "${record.name}",
-                                "record": "${record}",
-                                "recordLoaded": true
-                            }
-                        }
-                    ]
-                }
-            },
-            "id": "u:20cc46831734"
-        },
-        {
-            "type": "tabs",
-            "tabs": [
-                {
-                    "title": "详情",
-                    "body": [
-                        {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
-                            "mode": "read",
-                            "objectApiName": "flows",
-                            "recordId": "${recordId}",
-                            "labelAlign": "left",
-                            "id": "u:46f4dc4412c0",
-                            "className": "mb-4",
-                            "excludedFields": [
-                                "object_name",
-                                "instance_fields",
-                                "instance_fields.$.name",
-                                "instance_fields.$.required",
-                                "instance_table_fields",
-                                "instance_table_fields.$.detail_field_fullname",
-                                "instance_table_fields.$.label",
-                                "instance_table_fields.$.field_names",
-                                "created_by",
-                                "modified_by",
-                                "current",
-                                "current.steps.$.name",
-                                "current.steps.$.disableCC",
-                                "current.steps.$.allowDistribute",
-                                "current.steps.$.can_edit_main_attach",
-                                "current.steps.$.can_edit_normal_attach",
-                                "current.steps.$.cc_must_finished",
-                                "current.steps.$.cc_alert",
-                                "current.steps.$.allowBatch",
-                                "current.steps.$.oneClickApproval",
-                                "current.steps.$.oneClickRejection",
-                                "perms",
-                                "perms.users_can_add",
-                                "perms.orgs_can_add",
-                                "perms.users_can_monitor",
-                                "perms.orgs_can_monitor",
-                                "perms.users_can_admin",
-                                "perms.orgs_can_admin"
-                            ],
-                            "fields": []
-                        }
-                    ],
-                    "id": "u:c072a969328c"
-                },
-                {
-                    "title": "权限",
-                    "body": [
-                        {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
-                            "objectApiName": "flows",
-                            "recordId": "${recordId}",
-                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
-                            "id": "u:3b769ba2695e",
-                            "mode": "edit",
-                            "fields": [
-                                "perms",
-                                "perms.users_can_add",
-                                "perms.orgs_can_add",
-                                "perms.users_can_monitor",
-                                "perms.orgs_can_monitor",
-                                "perms.orgs_can_admin",
-                                "perms.users_can_admin"
-                            ],
-                            "fieldsExtend": "{\n  \"perms\": {\n    \"label\": false\n  }\n}",
-                            "actions": [
-                                {
-                                    "actionType": "submit",
-                                    "type": "button",
-                                    "label": "保存",
-                                    "level": "info",
-                                    "id": "u:08afd6e53cab"
-                                }
-                            ],
-                            "$$comments": {
-                                "$actions": {
-                                    "0": [
-                                        [
-                                            "\n    // {\n    ",
-                                            "//   \"actionType\": \"\",\n    ",
-                                            "//   \"type\": \"button\",\n    ",
-                                            "//   \"label\": \"取消\",\n    ",
-                                            "//   \"level\": \"default\",\n    ",
-                                            "//   \"block\": false,\n    ",
-                                            "//   \"onClick\": \"SteedosUI.getRef(props.data.__super.modalName).close();\",\n    ",
-                                            "//   \"id\": \"u:bf2587b53d64\"\n    ",
-                                            "// },\n    "
-                                        ]
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    "id": "u:8464a589ecf0"
-                },
-                {
-                    "title": "步骤",
-                    "body": [
-                        {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
-                            "objectApiName": "flows",
-                            "recordId": "${recordId}",
-                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
-                            "id": "u:3b769ba2695e",
-                            "mode": "read",
-                            "fields": [
-                                "current",
-                                "current.steps",
-                                "current.steps.$.name",
-                                "current.steps.$.disableCC",
-                                "current.steps.$.allowDistribute",
-                                "current.steps.$.can_edit_main_attach",
-                                "current.steps.$.can_edit_normal_attach",
-                                "current.steps.$.cc_must_finished",
-                                "current.steps.$.cc_alert",
-                                "current.steps.$.allowBatch",
-                                "current.steps.$.oneClickApproval",
-                                "current.steps.$.oneClickRejection"
-                            ],
-                            "fieldsExtend": "{\n  \"current\": {\n    \"group\": null,\n    \"label\": false\n  },\n  \n  \"current.steps\": {\n    \"label\": false\n  }\n}"
-                        }
-                    ],
-                    "id": "u:9acfaaba0412"
-                },
-                {
-                    "title": "字段",
-                    "body": [
-                        {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
-                            "objectApiName": "forms",
-                            "recordId": "${form}",
-                            "id": "u:5df987ad9bc8",
-                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
-                            "mode": "read",
-                            "fields": [
-                                "current",
-                                "current.fields",
-                                "current.fields.$.name",
-                                "current.fields.$.type",
-                                "current.fields.$.is_required",
-                                "current.fields.$.is_wide",
-                                "current.fields.$.is_list_display",
-                                "current.fields.$.is_searchable",
-                                "current.fields.$.is_multiselect"
-                            ],
-                            "fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}"
-                        }
-                    ],
-                    "id": "u:827750209c5d"
-                },
-                {
-                    "title": "绑定对象",
-                    "body": [
-                        {
-                            "type": "steedos-object-form",
-                            "label": "对象表单",
-                            "objectApiName": "flows",
-                            "recordId": "${recordId}",
-                            "id": "u:31a417c79ce2",
-                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
-                            "mode": "read",
-                            "fields": [
-                                "object_name",
-                                "instance_fields",
-                                "instance_fields.$.name",
-                                "instance_fields.$.required",
-                                "instance_table_fields",
-                                "instance_table_fields.$.detail_field_fullname",
-                                "instance_table_fields.$.label",
-                                "instance_table_fields.$.field_names"
-                            ],
-                            "fieldsExtend": ""
-                        }
-                    ],
-                    "id": "u:fa2adcce8268",
-                    "visibleOn": "${!!object_name}"
-                },
-                {
-                    "title": "正文模版",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-lists",
-                            "label": "所有相关表",
-                            "objectApiName": "${objectName}",
-                            "recordId": "${recordId}",
-                            "id": "u:4da6b72d60dc"
-                        }
-                    ],
-                    "id": "u:ae482c3f33a5"
-                }
-            ],
-            "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
-            "linksClassName": "",
-            "id": "u:87e566922df2",
-            "tabsMode": "vertical",
-            "contentClassName": "bg-white",
-            "onEvent": {
-                "change": {
-                    "weight": 0,
-                    "actions": []
-                }
-            },
-            "hidden": false
-        }
-    ],
-    "regions": [
-        "body"
-    ],
-    "data": {
-        "objectName": "flows",
-        "recordId": "a47f0611b7ab3958f4ba0767",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5000"
-        }
-    },
-    "id": "page_flows_record_detail",
-    "name": "page_flows_record_detail",
-    "bodyClassName": ""
-}
+	"type": "page",
+	"body": [
+	  {
+		"type": "steedos-record-detail-header",
+		"label": "标题面板",
+		"objectApiName": "${objectName}",
+		"recordId": "${recordId}",
+		"onEvent": {
+		  "recordLoaded": {
+			"actions": [
+			  {
+				"actionType": "setValue",
+				"args": {
+				  "value": {
+					"recordLoaded": true
+				  }
+				}
+			  },
+			  {
+				"actionType": "reload",
+				"data": {
+				  "name": "${record.name}",
+				  "record": "${record}",
+				  "recordLoaded": true
+				}
+			  }
+			]
+		  }
+		},
+		"id": "u:20cc46831734"
+	  },
+	  {
+		"type": "tabs",
+		"tabs": [
+		  {
+			"title": "详情",
+			"body": [
+			  {
+				"type": "steedos-object-form",
+				"label": "对象表单",
+				"mode": "read",
+				"objectApiName": "flows",
+				"recordId": "${recordId}",
+				"labelAlign": "left",
+				"id": "u:46f4dc4412c0",
+				"className": "mb-4",
+				"excludedFields": [
+				  "object_name",
+				  "instance_fields",
+				  "instance_fields.$.name",
+				  "instance_fields.$.required",
+				  "instance_table_fields",
+				  "instance_table_fields.$.detail_field_fullname",
+				  "instance_table_fields.$.label",
+				  "instance_table_fields.$.field_names",
+				  "created_by",
+				  "modified_by",
+				  "current",
+				  "current.steps.$.name",
+				  "current.steps.$.disableCC",
+				  "current.steps.$.allowDistribute",
+				  "current.steps.$.can_edit_main_attach",
+				  "current.steps.$.can_edit_normal_attach",
+				  "current.steps.$.cc_must_finished",
+				  "current.steps.$.cc_alert",
+				  "current.steps.$.allowBatch",
+				  "current.steps.$.oneClickApproval",
+				  "current.steps.$.oneClickRejection",
+				  "perms",
+				  "perms.users_can_add",
+				  "perms.orgs_can_add",
+				  "perms.users_can_monitor",
+				  "perms.orgs_can_monitor",
+				  "perms.users_can_admin",
+				  "perms.orgs_can_admin"
+				],
+				"fields": []
+			  }
+			],
+			"id": "u:c072a969328c"
+		  },
+		  {
+			"title": "权限",
+			"body": [
+			  {
+				"type": "steedos-object-form",
+				"label": "对象表单",
+				"objectApiName": "flows",
+				"recordId": "${recordId}",
+				"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+				"id": "u:3b769ba2695e",
+				"mode": "edit",
+				"fields": [
+				  "perms",
+				  "perms.users_can_add",
+				  "perms.orgs_can_add",
+				  "perms.users_can_monitor",
+				  "perms.orgs_can_monitor",
+				  "perms.orgs_can_admin",
+				  "perms.users_can_admin"
+				],
+				"fieldsExtend": "{\n  \"perms\": {\n    \"label\": false\n  }\n}",
+				"actions": [
+				  {
+					"actionType": "submit",
+					"type": "button",
+					"label": "保存",
+					"level": "info",
+					"id": "u:08afd6e53cab"
+				  }
+				]
+			  }
+			],
+			"id": "u:8464a589ecf0"
+		  },
+		  {
+			"title": "步骤",
+			"body": [
+			  {
+				"type": "steedos-object-form",
+				"label": "对象表单",
+				"objectApiName": "flows",
+				"recordId": "${recordId}",
+				"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+				"id": "u:3b769ba2695e",
+				"mode": "read",
+				"fields": [
+				  "current",
+				  "current.steps",
+				  "current.steps.$.name",
+				  "current.steps.$.disableCC",
+				  "current.steps.$.allowDistribute",
+				  "current.steps.$.can_edit_main_attach",
+				  "current.steps.$.can_edit_normal_attach",
+				  "current.steps.$.cc_must_finished",
+				  "current.steps.$.cc_alert",
+				  "current.steps.$.allowBatch",
+				  "current.steps.$.oneClickApproval",
+				  "current.steps.$.oneClickRejection"
+				],
+				"fieldsExtend": "{\n  \"current\": {\n    \"group\": null,\n    \"label\": false\n  },\n  \n  \"current.steps\": {\n    \"label\": false\n  }\n}"
+			  }
+			],
+			"id": "u:9acfaaba0412"
+		  },
+		  {
+			"title": "字段",
+			"body": [
+			  {
+				"type": "steedos-object-form",
+				"label": "对象表单",
+				"objectApiName": "forms",
+				"recordId": "${form}",
+				"id": "u:5df987ad9bc8",
+				"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+				"mode": "read",
+				"fields": [
+				  "current",
+				  "current.fields",
+				  "current.fields.$.name",
+				  "current.fields.$.type",
+				  "current.fields.$.is_required",
+				  "current.fields.$.is_wide",
+				  "current.fields.$.is_list_display",
+				  "current.fields.$.is_searchable",
+				  "current.fields.$.is_multiselect"
+				],
+				"fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}"
+			  }
+			],
+			"id": "u:827750209c5d"
+		  },
+		  {
+			"title": "绑定对象",
+			"body": [
+			  {
+				"type": "steedos-object-form",
+				"label": "对象表单",
+				"objectApiName": "flows",
+				"recordId": "${recordId}",
+				"id": "u:31a417c79ce2",
+				"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+				"mode": "read",
+				"fields": [
+				  "object_name",
+				  "instance_fields",
+				  "instance_fields.$.name",
+				  "instance_fields.$.required",
+				  "instance_table_fields",
+				  "instance_table_fields.$.detail_field_fullname",
+				  "instance_table_fields.$.label",
+				  "instance_table_fields.$.field_names"
+				],
+				"fieldsExtend": ""
+			  }
+			],
+			"id": "u:fa2adcce8268",
+			"visibleOn": "${!!object_name}"
+		  },
+		  {
+			"title": "正文模版",
+			"body": [
+			  {
+				"type": "steedos-object-related-lists",
+				"label": "所有相关表",
+				"objectApiName": "${objectName}",
+				"recordId": "${recordId}",
+				"id": "u:4da6b72d60dc"
+			  }
+			],
+			"id": "u:ae482c3f33a5"
+		  }
+		],
+		"className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
+		"linksClassName": "",
+		"id": "u:87e566922df2",
+		"tabsMode": "vertical",
+		"contentClassName": "bg-white",
+		"onEvent": {
+		  "change": {
+			"weight": 0,
+			"actions": []
+		  }
+		},
+		"hidden": false
+	  }
+	],
+	"regions": ["body"],
+	"data": {
+	  "objectName": "flows",
+	  "recordId": "a47f0611b7ab3958f4ba0767",
+	  "context": {
+		"rootUrl": "http://127.0.0.1:5000",
+		"tenantId": "641051437c642833cb9db124",
+		"userId": "fe6709f9-0568-4aec-8bed-1800990f38fc",
+		"authToken": "1dd572927e9c328e5cf3d1edc7e06adda91020851e93a27ee024c57ccdf5631390cdbcb5e47d8c7e3ac331"
+	  }
+	},
+	"id": "page_flows_record_detail",
+	"name": "page_flows_record_detail",
+	"bodyClassName": ""
+  }
