@@ -1,7 +1,7 @@
 {
   "name": "@steedos/standard-objects",
   "private": false,
-  "version": "2.4.10-beta.5",
+  "version": "2.4.10-beta.6",
   "description": "Standard objects for steedos",
   "main": "index.js",
   "license": "Apache",
@@ -9,12 +9,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6af4954a8952eeb36d10cb6db7722bdc243cfa97",
+  "gitHead": "203c2c77721188aa722c8454ec968466ba490606",
   "dependencies": {
-    "@steedos/auth": "2.4.10-beta.5",
-    "@steedos/core": "2.4.10-beta.5",
-    "@steedos/filters": "2.4.10-beta.5",
-    "@steedos/i18n": "2.4.10-beta.5",
-    "@steedos/metadata-core": "2.4.10-beta.5"
+    "@steedos/auth": "2.4.10-beta.6",
+    "@steedos/core": "2.4.10-beta.6",
+    "@steedos/filters": "2.4.10-beta.6",
+    "@steedos/i18n": "2.4.10-beta.6",
+    "@steedos/metadata-core": "2.4.10-beta.6"
   }
 }
