@@ -29,7 +29,7 @@ amis_schema: |-
                                   "showCloseButton": true,
                                   "data": {
                                       "&": "$$",
-                                      "record": "${record}"
+                                      "recordId": "${recordId}"
                                   },
                                   "onEvent": {
                                       "confirm": {
@@ -43,9 +43,9 @@ amis_schema: |-
                                                           "method": "post",
                                                           "data": {
                                                                 "&": "$$",
-                                                                "record": "${record}"
+                                                                "recordId": "${recordId}"
                                                             },
-                                                          "requestAdaptor": "console.log(`api`, api);const record = api.body.record; \napi.data = {\n  query: `\n    mutation{\n    objects__delete(id: \"${record._id}\")\n  }\n  `\n}",
+                                                          "requestAdaptor": "const recordId = api.data.recordId; \napi.data = {\n  query: `\n    mutation{\n    objects__delete(id: \"${recordId}\")\n  }\n  `\n}",
                                                           "headers": {
                                                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                           }
@@ -55,12 +55,15 @@ amis_schema: |-
                                                   "actionType": "ajax"
                                               },
                                               {
-                                                "componentId": "",
+                                                "actionType": "broadcast",
                                                 "args": {
-                                                    "url": "/app/admin/objects/grid/all"
+                                                    "eventName": "@data.changed.objects"
                                                 },
-                                                "actionType": "link"
+                                                "data": {
+                                                    "objectName": "objects",
+                                                    "__deletedRecord": true
                                                 }
+                                            }
                                           ]
                                       }
                                   }
