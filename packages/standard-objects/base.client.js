@@ -76,7 +76,7 @@ Steedos.StandardObjects = {
                     if (record_permissions && !record_permissions["allowEdit"]) {
                         return false;
                     }
-                    // record = props.record;
+                    record = props.record;
                     // record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
                     // if (record_permissions && !record_permissions["allowEdit"]) {
                     //     return false;
@@ -89,7 +89,23 @@ Steedos.StandardObjects = {
                     }
                     if (record && record.instances && record.instances.length > 0) {
                         return false;
-                    }
+                    }else if(record && !_.has(record,'instances') ){
+						// 如果record存在，且record的instances字段不存在，则再查询一次
+						var queryResult = Steedos.authRequest("/graphql", {
+							type: 'POST',
+							async: false,
+							data: JSON.stringify({
+								query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
+							}),
+							type: 'POST',
+							contentType: 'application/json',
+							error: function () { }
+						});
+						var recordDoc = queryResult && queryResult.data && queryResult.data.record;
+						if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
+							return false;
+						}
+					}
                     return true;
                 },
                 todo: function () {
@@ -108,7 +124,23 @@ Steedos.StandardObjects = {
                     var record = props.record;
                     if (record && !_.isEmpty(record.instances)) {
                         return true;
-                    }
+                    }else if(record && !_.has(record,'instances') ){
+						// 如果record存在且record的instances字段不存在，则再查询一次
+						var queryResult = Steedos.authRequest("/graphql", {
+							type: 'POST',
+							async: false,
+							data: JSON.stringify({
+								query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
+							}),
+							type: 'POST',
+							contentType: 'application/json',
+							error: function () { }
+						});
+						var recordDoc = queryResult && queryResult.data && queryResult.data.record;
+						if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
+							return false;
+						}
+					}
                     return false;
                 },
                 todo: function () {
