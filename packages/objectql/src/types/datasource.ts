@@ -25,11 +25,14 @@ import {
     getDashboardConfigs,
     getSteedosSchema,
     getObjectConfig,
-    addAllConfigFiles
+    addAllConfigFiles,
+    MONGO_BASE_OBJECT,
+    SQL_BASE_OBJECT
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
 import path = require('path');
+import { transformListenersToTriggers, extend } from '../util';
 const clone = require('clone')
 let Fiber = require('fibers');
 const defaultDatasourceName = 'default';
@@ -258,6 +261,25 @@ export class SteedosDataSourceType implements Dictionary {
         if (localObjectConfig) {
             objectConfig.listeners = localObjectConfig.listeners;
             objectConfig.methods = localObjectConfig.methods;
+        }
+        else {
+            if (this.name === "meteor" || this.name === "default") {
+                let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
+                let _baseObjectConfig = clone(baseObjectConfig);
+                delete _baseObjectConfig.hidden;
+                if(this.name === 'meteor'){
+                    _.each(_baseObjectConfig.listeners, function(license){
+                        const triggers = transformListenersToTriggers(objectConfig, license)
+                        extend(objectConfig, {triggers, _baseTriggers: triggers})
+                    })
+                }
+                objectConfig = extend(objectConfig, _baseObjectConfig, clone(objectConfig));
+            } else {
+                let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
+                let _coreObjectConfig = clone(coreObjectConfig)
+                delete _coreObjectConfig.hidden;
+                objectConfig = extend(objectConfig, _coreObjectConfig, clone(objectConfig));
+            }
         }
         if (this.name === "meteor") {
             try {

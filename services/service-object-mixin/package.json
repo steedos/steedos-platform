@@ -1,5 +1,5 @@
 {
-    "name": "@steedos/standard-object-database",
+    "name": "@steedos/service-object-mixin",
     "version": "2.4.10",
     "main": "package.service.js",
     "private": false,
@@ -9,8 +9,11 @@
     "keywords": [
         "steedos"
     ],
+    "scripts": {},
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "1ee65d966cd75599e20a8aa520327a05fd326ca2"
+    "gitHead": "6af4954a8952eeb36d10cb6db7722bdc243cfa97",
+    "dependencies": {
+    }
 }
