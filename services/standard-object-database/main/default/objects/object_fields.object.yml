@@ -433,7 +433,7 @@ fields:
     is_wide: true
     depend_on:
       - summary_object
-    visible_on: "{{formData.type === 'summary' ? true: false}}"
+    visible_on: "{{formData.type === 'summary' && global.mode !='read' ? true: false}}"
     sort_no: 330
   summary_filters.$:
     label: Filter Criteria

@@ -1,5 +1,5 @@
 {
-    "name": "@steedos/standard-permission",
+    "name": "@steedos/service-object-mixin",
     "version": "2.4.11-beta.1",
     "main": "package.service.js",
     "private": false,
@@ -9,6 +9,7 @@
     "keywords": [
         "steedos"
     ],
+    "scripts": {},
     "description": "steedos package",
     "repository": {},
     "license": "MIT",

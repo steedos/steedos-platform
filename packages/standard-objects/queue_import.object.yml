@@ -102,19 +102,28 @@ fields:
     required: false
     depend_on:
       - object_name
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-        if(values && values.object_name){
-          var _object = Creator.getObject(values.object_name);
-          if(_object){
-            var icon = _object.icon;
-            return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
-          }
-        }else{
-          return []
-        }
-      }
-  
+    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
+    #   function (values) {
+    #     if(values && values.object_name){
+    #       var _object = Creator.getObject(values.object_name);
+    #       if(_object){
+    #         var icon = _object.icon;
+    #         return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+    #       }
+    #     }else{
+    #       return []
+    #     }
+    #   }
+    reference_to: object_fields
+    reference_to_field: name
+    amis: 
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
+        "adaptor": "payload.data.options = [{ label: \"Primary Key ( _id )\", value: \"_id\" }].concat(payload.data.options);\nreturn payload;"
   field_mappings.$.matched_by:
     label: Matched By
     type: text
