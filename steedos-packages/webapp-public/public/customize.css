@@ -36,7 +36,7 @@ html {
 
 @media only screen and (max-width: 768px) {
   :root {
-      --body-bg: white; 
+      --body-bg: white;
   }
 }
 
@@ -45,7 +45,7 @@ body {
 }
 
 .creator-content-wrapper {
-  overflow: scroll;
+  overflow: auto !important;
   position: absolute;
   top: 0;
   right: 0;
