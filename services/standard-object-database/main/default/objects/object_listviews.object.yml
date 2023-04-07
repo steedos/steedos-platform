@@ -124,7 +124,7 @@ fields:
     type: code
     is_wide: true
     hidden: false
-    readonly: true
+    readonly: false
     visible_on: "{{global.mode ==='read' ? true : false}}"
     depend_on:
       - object_name
