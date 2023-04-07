@@ -1,6 +1,7 @@
 "use strict";
 import { ActionHandlers, METADATA_TYPE } from './actionsHandler';
 import _ = require('lodash');
+import { _TRIGGERKEYS } from "@steedos/objectql"
 
 module.exports = {
 	name: "triggers",
@@ -196,6 +197,7 @@ module.exports = {
 		"$packages.changed": {
 			async handler(ctx) {
 				const { broker } = ctx
+				const logger = this.logger
 				const services = broker.registry.getServiceList({ skipInternal: true, withActions: true })
 				for (const service of services) {
 					const { name: serviceName, actions } = service
@@ -203,7 +205,7 @@ module.exports = {
 					actions 结构
 					{
 						'test.triggerSpaceUsers': {
-							trigger: { objectName: 'test__c', when: [Array] },
+							trigger: { listenTo: 'test__c', when: [Array] },
 							rawName: 'triggerSpaceUsers',
 							name: 'test.triggerSpaceUsers'
 						}
@@ -214,9 +216,13 @@ module.exports = {
 							const action = actions[key];
 							if (action.trigger) {
 								const { trigger, rawName, name } = action
-								const { objectName, when } = trigger
+								const { listenTo: objectName, when } = trigger
 								if (objectName && when && _.isArray(when)) {
 									for (const w of when) {
+										if (!_TRIGGERKEYS.includes(w)) {
+											logger.warn(`trigger when '${w}' is not supported.`)
+											continue
+										}
 										const data = {
 											name: name,
 											listenTo: objectName,

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-06 16:24:59
+ * @LastEditTime: 2023-04-07 11:53:24
  * @Description: 
  */
 
@@ -236,25 +236,25 @@ module.exports = {
             }
         },
 
-        /**
-         * @api {get} /service/api/graphql/generateGraphqlSchemaInfo 生成graphql schema
-         * @apiName generateGraphqlSchemaInfo
-         * @apiGroup service-object-graphql
-         * @apiSuccess {Object} 
-         */
-        generateGraphqlSchemaInfo: {
-            rest: {
-                method: 'GET',
-                path: '/generateGraphqlSchemaInfo'
-            },
-            params: {
-            },
-            async handler(ctx) {
-                this.broker.logger.info('[service][graphql]===>', 'generateGraphqlSchemaInfo', ctx.params.name)
-                const settingsGraphql = await this.generateObjGraphqlMap(this.name)
-                return settingsGraphql
-            }
-        },
+        // /**
+        //  * @api {get} /service/api/graphql/generateGraphqlSchemaInfo 生成graphql schema
+        //  * @apiName generateGraphqlSchemaInfo
+        //  * @apiGroup service-object-graphql
+        //  * @apiSuccess {Object} 
+        //  */
+        // generateGraphqlSchemaInfo: {
+        //     rest: {
+        //         method: 'GET',
+        //         path: '/generateGraphqlSchemaInfo'
+        //     },
+        //     params: {
+        //     },
+        //     async handler(ctx) {
+        //         this.broker.logger.info('[service][graphql]===>', 'generateGraphqlSchemaInfo', ctx.params.name)
+        //         const settingsGraphql = await this.generateObjGraphqlMap(this.name)
+        //         return settingsGraphql
+        //     }
+        // },
 
     },
 

@@ -455,17 +455,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     throw error
                 }
             })
-            if (when == 'before.insert' || when == 'before.update') {
+            if (when == 'beforeInsert' || when == 'beforeUpdate') {
                 if (result && result.doc && _.isObject(result.doc)) {
                     Object.assign(context.doc, result.doc)
                 }
             }
-            if (when == 'before.find') {
+            if (when == 'beforeFind') {
                 if (result && result.query && _.isObject(result.query)) {
                     Object.assign(context.query, result.query)
                 }
             }
-            if (when == 'after.find') {
+            if (when == 'afterFind') {
                 if (result && result.data && _.isObject(result.data)) {
                     Object.assign(context.data, result.data)
                 }
@@ -1572,16 +1572,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        let when = `before.${method}`;
         await this.runTriggers(meteorWhen, context);
-        return await this.runTriggerActions(when, context)
+        return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        let when = `after.${method}`;
         await this.runTriggers(meteorWhen, context);
-        return await this.runTriggerActions(when, context)
+        return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async appendRecordPermission(records, userSession) {
