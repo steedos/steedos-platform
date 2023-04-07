@@ -1,0 +1,171 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "service",
+            "messages": {},
+            "body": [
+                {
+                    "type": "wrapper",
+                    "size": "none",
+                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:shadow sm:rounded",
+                    "body": [
+                        {
+                            "type": "wrapper",
+                            "size": "none",
+                            "className": "flex-shrink-0 min-w-[200px] overflow-y-auto border-r border-gray-200 lg:order-first lg:flex lg:flex-col hidden",
+                            "body": [
+                                {
+                                    "type": "input-tree",
+                                    "id": "u:7fd77b7915b0",
+                                    "className": "",
+                                    "source": {
+                                        "method": "post",
+                                        "url": "${context.rootUrl}/graphql",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "adaptor": "        if (payload.data.cache == true) {\n                return payload;\n        }\n        const records = payload.data.options;\n        const treeRecords = [];\n        const getChildren = (records, childrenIds) => {\n                if (!childrenIds) {\n                        return;\n                }\n                const children = _.filter(records, (record) => {\n                        return _.includes(childrenIds, record.value)\n                });\n                _.each(children, (item) => {\n                        if (item.children) {\n                                item.children = getChildren(records, item.children)\n                        }\n                })\n                return children;\n        }\n\n        const getRoot = (records) => {\n                for (var i = 0; i < records.length; i++){\n                        records[i].noParent = 0;\n                        if (!!records[i].parent) {\n                                biaozhi = 1\n                                for (var j = 0; j < records.length; j++){\n                                        if (records[i].parent == records[j].value)\n                                                biaozhi = 0;\n                                }\n                                if (biaozhi == 1) records[i].noParent = 1;\n                        } else records[i].noParent = 1;\n                }\n        }\n        getRoot(records);\n\n        _.each(records, (record) => {\n                if (record.noParent ==1) {\n                        treeRecords.push(Object.assign({}, record, { children: getChildren(records, record.children) }));\n                }\n        });\n\n        payload.data.options = treeRecords;\n        payload.data.cache = true;\n        return payload;\n    ",
+                                        "requestAdaptor": "\n    ",
+                                        "data": {
+                                            "query": "{options:organizations(filters:[\"hidden\", \"!=\", true],sort:\"sort_no desc\"){value:_id label:name,parent,children}}"
+                                        },
+                                        "messages": {},
+                                        "cache": 300000
+                                    },
+                                    "onEvent": {
+                                        "change": {
+                                            "actions": [
+                                                {
+                                                    "actionType": "setValue",
+                                                    "componentId": "u:f6a209c8cf61",
+                                                    "args": {
+                                                        "value": {
+                                                            "additionalFilters": [
+                                                                "organizations_parents",
+                                                                "in",
+                                                                "${event.data.value.value | asArray}"
+                                                            ],
+                                                            "organizations": "${event.data.value.value}"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "label": "",
+                                    "name": "organizations",
+                                    "multiple": false,
+                                    "joinValues": false,
+                                    "clearValueOnHidden": false,
+                                    "fieldName": "organizations",
+                                    "hideRoot": true,
+                                    "initiallyOpen": false,
+                                    "extractValue": true,
+                                    "onlyChildren": true,
+                                    "treeContainerClassName": "no-border",
+                                    "showIcon": false,
+                                    "enableNodePath": false,
+                                    "autoCheckChildren": false,
+                                    "searchable": true,
+                                    "searchConfig": {
+                                        "sticky": true
+                                    },
+                                    "unfoldedLevel": 2,
+                                    "inputClassName": "",
+                                    "labelClassName": "",
+                                    "staticClassName": "",
+                                    "originPosition": "left-top",
+                                    "style": {
+                                        "min-height": "500px",
+                                        "max-height": "100%",
+                                        "background-color": "white"
+                                    }
+                                }
+                            ],
+                            "id": "u:fd659f5c3657",
+                            "visibleOn": "${isVisible}"
+                        },
+                        {
+                            "type": "wrapper",
+                            "size": "none",
+                            "className": "flex-1 overflow-y-auto focus:outline-none lg:order-last w-96",
+                            "body": [
+                                {
+                                    "type": "steedos-object-listview",
+                                    "objectApiName": "space_users",
+                                    "id": "u:d29cef0d1007",
+                                    "columnsTogglable": false,
+                                    "showHeader": true,
+                                    "showDisplayAs": true,
+                                    "headerToolbarItems": [
+                                        {
+                                            "type": "button",
+                                            "label": "",
+                                            "align": "right",
+                                            "icon": "fa fa-bars",
+                                            "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
+                                            "onEvent": {
+                                                "click": {
+                                                    "actions": [
+                                                        {
+                                                            "actionType": "setValue",
+                                                            "componentId": "u:f6a209c8cf61",
+                                                            "args": {
+                                                                "value": {
+                                                                    "isVisible": "${!isVisible}"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "id": "u:6f237cc36419"
+                                        }
+                                    ],
+                                    "className": "bg-gray-100"
+                                }
+                            ],
+                            "id": "u:ca495ec221e7"
+                        }
+                    ],
+                    "id": "u:9526a450d59b",
+                    "style": {
+                        "border-width": "${displayAs == 'split'?'0px':''}",
+                        "box-shadow": "${displayAs == 'split'?'none':''}",
+                        "--tw-shadow-colored": "${displayAs == 'split'?'none':''}",
+                        "--tw-shadow": "${displayAs == 'split'?'none':''}"
+                    }
+                }
+            ],
+            "data": {
+                "isVisible": true
+            },
+            "id": "u:f6a209c8cf61"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "objectName": "space_users",
+        "context": {}
+    },
+    "name": "page_space_users_list",
+    "bodyClassName": "p-0",
+    "id": "u:b7167e2fcaf0",
+    "asideResizor": false,
+    "pullRefresh": {
+        "disabled": true
+    },
+    "className": "space-users-list sm:p-3",
+    "css": {
+        ".space-users-list .antd-Tree": {
+            "max-height": "80vh !important",
+            "overflow": "visible !important"
+        }
+    },
+    "style": {
+        "padding": "${displayAs == 'grid'?'':'0px'}"
+    }
+}

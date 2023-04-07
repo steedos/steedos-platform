@@ -1,0 +1,12 @@
+name: space_users_list
+is_active: true
+label: 人员列表
+object_name: space_users
+pageAssignments:
+  - type: orgDefault
+    page: space_users_list
+    desktop: true
+    mobile: true
+render_engine: amis
+type: list
+widgets: []
