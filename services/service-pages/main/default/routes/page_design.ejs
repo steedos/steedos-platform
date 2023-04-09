@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-08-31 12:01:11
+ * @LastEditTime: 2023-04-04 16:02:16
  * @Description: 
 -->
 <html>
@@ -120,6 +120,8 @@
           delete schema.data.context.userId;
           delete schema.data.context.tenantId;
           delete schema.data.context.authToken;
+          delete schema.data.context.user;
+          delete schema.data.context.rootUrl;
         }
         return await axios.put(
             `${rootUrl}/service/api/page/pageVersion/${pageId}`,

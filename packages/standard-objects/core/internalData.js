@@ -194,13 +194,13 @@ function getOriginalObjectFields(objectName){
     return objectql.getOriginalObjectConfig(objectName).fields || {}
 }
 
-async function getObjectFields(objectName, userId){
+async function getObjectFields(objectName, userId, all){
     let object = await getObject(objectName, userId);
     if(object){
         let fields = [];
         let originalFieldsName = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state'].concat(_.keys(getOriginalObjectFields(objectName))); //'created', 'modified', 'owner'
         _.each(object.fields, function(field){
-            if(!field._id && _.include(originalFieldsName, field.name)){
+            if(!field._id && (all || _.include(originalFieldsName, field.name))){
                 fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
             }
         })

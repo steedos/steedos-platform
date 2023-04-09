@@ -226,6 +226,7 @@ module.exports = {
                 if (objectConfig) {
                     steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
                     const field = objectConfig.fields[fieldName];
+                    delete field.visible_on; // visible_on属性为false时始终不显示
                     literal_value_schema = Object.assign({}, field, {
                         name: "literal_value",
                         label: "指定新字段值",

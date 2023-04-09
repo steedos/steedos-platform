@@ -1,22 +1,30 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-03-28 17:09:19
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-04-07 10:50:37
+ * @Description: 
+ */
 import { JsonMap } from "@salesforce/ts-types";
-import { SteedosIDType } from "..";
+import { SteedosIDType, SteedosQueryOptions } from "..";
 
 export type TriggerActionParams = {
-    objectName?: string
-    isExecuting?: boolean,
     isInsert?: boolean,
     isUpdate?: boolean,
     isDelete?: boolean,
+    isFind?: boolean,
     isBefore?: boolean,
     isAfter?: boolean,
     isUndelete?: boolean,
-    new?: [JsonMap],
-    newMap?: [SteedosIDType],
-    old?: [JsonMap],
-    oldMap?: [SteedosIDType],
-    operationType?: "BEFORE_FIND" | "BEFORE_AGGREGATE" | "BEFORE_INSERT" | "BEFORE_UPDATE" | "BEFORE_DELETE" | "AFTER_FIND" | "AFTER_AGGREGATE" | "AFTER_COUNT" | "AFTER_FINDONE" | "AFTER_INSERT" | "AFTER_UPDATE" | "AFTER_DELETE" | "AFTER_UNDELETE",
+    when?: 'beforeFind' | 'beforeInsert' | 'beforeUpdate' | 'beforeDelete' | 'afterFind' | 'afterCount' | 'afterFindOne' | 'afterInsert' | 'afterUpdate' | 'afterDelete' | 'beforeAggregate' | 'afterAggregate',
+    id?: SteedosIDType,          // 记录的唯一标识
+    doc?: JsonMap,               // 需要新增/修改的记录内容
+    previousDoc?: JsonMap,       // 修改/删除前的记录, 仅afterUpdate, afterDelete时存在此属性
     size?: number,
-    userId: SteedosIDType,
-    spaceId?: SteedosIDType,
+    userId: SteedosIDType,       // 当前用户唯一标识
+    spaceId?: SteedosIDType,     // 当前工作区
+    objectName?: string          // 当前对象名称
+    query?: SteedosQueryOptions, // 查询数据相关参数, 仅beforeFind时存在此属性
+    data?: JsonMap               // 仅afterFind，afterCount时存在此属性
 }
 

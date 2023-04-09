@@ -79,7 +79,9 @@ const loadPackages = async ()=>{
                 }
                 if(packagePath){
                     const packageInfo = await loadPackage(packageName, packagePath);
-                    appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                    if(packageInfo){
+                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                    }
                 }
             }
         }
@@ -164,6 +166,13 @@ const loadPackage = async (packageName, packagePath)=>{
                 paths: [path.join(userDir, 'node_modules')]
             }))
         }
+        let schema = objectql.getSteedosSchema();
+        let broker = schema.broker;
+        if(!fs.existsSync(packagePath) || !fs.existsSync(path.join(packagePath, 'package.json'))){
+            broker.logger.warn(`已经从 steedos-packages.yml 文件中删除无效的软件包配置 ${packageName} : ${packagePath}`)
+            removePackageConfig(packageName);
+            return ;
+        }
         const packageInfo = require(path.join(packagePath, 'package.json'));
         await destroyExistThePackageService(packageInfo);
         await steedos.loadPackage(packagePath);
@@ -209,6 +218,10 @@ const removePackage = async (packageName)=>{
     if(service){
         await broker.destroyService(service);
     }
+    removePackageConfig(packageName);
+}
+
+const removePackageConfig = (packageName)=>{
     const packages = loadPackagesConfig();
     delete packages[packageName];
     let data = yaml.dump(packages);

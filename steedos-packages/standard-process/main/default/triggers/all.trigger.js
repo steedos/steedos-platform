@@ -18,13 +18,13 @@ module.exports = {
     when: ['after.insert', 'after.update'],
     handler: async function (ctx) {
         const params = ctx.params;
-        const { objectName, operationType, userId, spaceId } = params;
+        const { objectName, when: tWhen, userId, spaceId } = params;
         if (!userId) {
             return;
         }
         const processObj = objectql.getObject('process');
         const processVersionsObj = objectql.getObject('process_versions');
-        const newDoc = params['new'][0];
+        const newDoc = doc;
         const userSession = await auth.getSessionByUserId(userId, spaceId);
         const processDocs = await processObj.find({ filters: [['space', '=', spaceId], ['object_name', '=', objectName], ['is_active', '=', true]] }, userSession);
         for (const pDoc of processDocs) {
@@ -33,7 +33,7 @@ module.exports = {
             // 流程已启用，且有已发布的版本才执行发起
             if (lastVersion) {
                 const { when, entry_criteria } = lastVersion;
-                if (('AFTER_INSERT' == operationType && 'afterInsert' == when || 'AFTER_UPDATE' == operationType && 'afterUpdate' == when || (['AFTER_INSERT', 'AFTER_UPDATE'].includes(operationType) && 'afterInsertOrUpdate' == when))) {
+                if (('after.insert' == tWhen && 'afterInsert' == when || 'after.update' == tWhen && 'afterUpdate' == when || (['after.insert', 'after.update'].includes(tWhen) && 'afterInsertOrUpdate' == when))) {
                     // 执行入口公式
                     const result = await objectql.computeSimpleFormula(entry_criteria, newDoc, userSession);
                     if (result) {

@@ -81,11 +81,11 @@ router.post('/api/workflow/engine', core.requireAuthentication, async function (
 
         Fiber(async function () {
             try {
-                uuflowManager.workflow_engine(approve_from_client, userSession, userId);
+                const instance = uuflowManager.workflow_engine(approve_from_client, userSession, userId);
                 // afterStepSubmit
                 await excuteTriggers({ when: 'afterStepSubmit', userId, flowId, insId });
                 // afterEnd
-                if (next_step_type === 'end') {
+                if (instance.state === 'completed') {
                     await excuteTriggers({ when: 'afterEnd', userId, flowId, insId });
                 }
                 res.status(200).send({});

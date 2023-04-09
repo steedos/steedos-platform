@@ -1,11 +1,9 @@
 import * as _ from "underscore";
 import * as path from "path";
 import * as objectql from "@steedos/objectql";
-import { getMD5, JSONStringify } from "@steedos/objectql";
+import { getMD5, JSONStringify, _TRIGGERKEYS } from "@steedos/objectql";
 import { Action, Meta, Trigger, TriggerData } from "./types";
 import { Context } from 'moleculer';
-
-const ENUM_WHEN = ['before.find', 'before.insert', 'before.update', 'before.delete', 'after.find', 'after.count', 'after.findOne', 'after.insert', 'after.delete', 'after.update', 'before.aggregate', 'after.aggregate'];
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let actions = {};
@@ -48,7 +46,7 @@ export async function load(broker: any, packagePath: string, packageServiceName:
 }
 
 function generateAction(trigger: Trigger): Action {
-    if (!_.contains(ENUM_WHEN, trigger.when)) {
+    if (!_.contains(_TRIGGERKEYS, trigger.when)) {
         console.warn(`invalid value ${trigger.when}, please check your trigger.`);
         return;
     }

@@ -226,7 +226,7 @@
                 to = normalizeLink(to);
 
                 if (action && action.actionType === 'url') {
-                    action.blank === true ? window.open(to): (window.location.href = to);
+                    action.blank === false ? (window.location.href = to) : window.open(to);
                     return;
                 }
 

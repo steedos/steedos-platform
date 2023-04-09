@@ -446,11 +446,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         
         for (const trigger of triggers) {
-            let params = generateActionParams(when, context); //参考sf
-            // TODO 讨论参数格式
-            // TODO 1、确定action trigger的返回值格式
-            // TODO 2、返回值合并至context
-            await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
+            let params = generateActionParams(when, context);
+            const result = await this._schema.metadataBroker.call(`${trigger.service.name}.${trigger.metadata.action}`, params).catch((error)=>{
                 //如果action trigger 下线，则只打印error
                 if(error && _.isObject(error) && error.type === 'SERVICE_NOT_AVAILABLE'){
                     console.error(`runTriggerActions error`, error)
@@ -458,6 +455,21 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     throw error
                 }
             })
+            if (when == 'beforeInsert' || when == 'beforeUpdate') {
+                if (result && result.doc && _.isObject(result.doc)) {
+                    Object.assign(context.doc, result.doc)
+                }
+            }
+            if (when == 'beforeFind') {
+                if (result && result.query && _.isObject(result.query)) {
+                    Object.assign(context.query, result.query)
+                }
+            }
+            if (when == 'afterFind') {
+                if (result && result.data && _.isObject(result.data)) {
+                    Object.assign(context.data, result.data)
+                }
+            }
         }
 
     }
@@ -1560,16 +1572,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        let when = `before.${method}`;
         await this.runTriggers(meteorWhen, context);
-        return await this.runTriggerActions(when, context)
+        return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        let when = `after.${method}`;
         await this.runTriggers(meteorWhen, context);
-        return await this.runTriggerActions(when, context)
+        return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async appendRecordPermission(records, userSession) {

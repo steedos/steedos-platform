@@ -1,5 +1,7 @@
 "use strict";
 import { ActionHandlers, METADATA_TYPE } from './actionsHandler';
+import _ = require('lodash');
+import { _TRIGGERKEYS } from "@steedos/objectql"
 
 module.exports = {
 	name: "triggers",
@@ -188,7 +190,73 @@ module.exports = {
             async handler(ctx) {
                 return await ActionHandlers.refresh(ctx);
             }
-        }
+        },
+		/**
+		 * 监听 $services.changed 事件，扫描services下的actions，对于其中定义的trigger参数进行解析，注入到trigger注册中心。
+		 */
+		"$packages.changed": {
+			async handler(ctx) {
+				const { broker } = ctx
+				const logger = this.logger
+				const services = broker.registry.getServiceList({ skipInternal: true, withActions: true })
+				for (const service of services) {
+					const { name: serviceName, actions } = service
+					/**
+					actions 结构
+					{
+						'test.triggerSpaceUsers': {
+							trigger: { listenTo: 'test__c', when: [Array] },
+							rawName: 'triggerSpaceUsers',
+							name: 'test.triggerSpaceUsers'
+						}
+					}
+					 */
+					for (const key in actions) {
+						if (Object.prototype.hasOwnProperty.call(actions, key)) {
+							const action = actions[key];
+							if (action.trigger) {
+								const { trigger, rawName, name } = action
+								const { listenTo: objectName, when } = trigger
+								if (objectName && when && _.isArray(when)) {
+									for (const w of when) {
+										if (!_TRIGGERKEYS.includes(w)) {
+											logger.warn(`trigger when '${w}' is not supported.`)
+											continue
+										}
+										const data = {
+											name: name,
+											listenTo: objectName,
+											when: w,
+											action: rawName
+										};
+										const meta = {
+											metadataServiceName: serviceName,
+											caller: {
+												nodeID: broker.nodeID + '',
+												service: {
+													name: serviceName
+												}
+											}
+										};
+										await ActionHandlers.add({
+											broker: ctx.broker,
+											params: {
+												data: data
+											},
+											meta: meta
+										});
+									}
+
+
+								}
+
+							}
+						}
+					}
+
+				}
+			}
+		},
 	},
 
 	/**

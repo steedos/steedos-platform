@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-29 14:59:59
+ * @LastEditTime: 2023-04-07 11:53:24
  * @Description: 
  */
 
@@ -16,13 +16,15 @@ const {
 } = require('./lib');
 const open = require('open');
 
+const serviceObjectMixin = require('@steedos/service-object-mixin');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 module.exports = {
     name: 'graphql',
     namespace: "steedos",
-    mixins: [],
+    mixins: [serviceObjectMixin],
 
     globalTypeDefs: [], // service-api 里generateGraphQLSchema使用 
 
@@ -234,25 +236,25 @@ module.exports = {
             }
         },
 
-        /**
-         * @api {get} /service/api/graphql/generateGraphqlSchemaInfo 生成graphql schema
-         * @apiName generateGraphqlSchemaInfo
-         * @apiGroup service-object-graphql
-         * @apiSuccess {Object} 
-         */
-        generateGraphqlSchemaInfo: {
-            rest: {
-                method: 'GET',
-                path: '/generateGraphqlSchemaInfo'
-            },
-            params: {
-            },
-            async handler(ctx) {
-                this.broker.logger.info('[service][graphql]===>', 'generateGraphqlSchemaInfo', ctx.params.name)
-                const settingsGraphql = await this.generateObjGraphqlMap(this.name)
-                return settingsGraphql
-            }
-        },
+        // /**
+        //  * @api {get} /service/api/graphql/generateGraphqlSchemaInfo 生成graphql schema
+        //  * @apiName generateGraphqlSchemaInfo
+        //  * @apiGroup service-object-graphql
+        //  * @apiSuccess {Object} 
+        //  */
+        // generateGraphqlSchemaInfo: {
+        //     rest: {
+        //         method: 'GET',
+        //         path: '/generateGraphqlSchemaInfo'
+        //     },
+        //     params: {
+        //     },
+        //     async handler(ctx) {
+        //         this.broker.logger.info('[service][graphql]===>', 'generateGraphqlSchemaInfo', ctx.params.name)
+        //         const settingsGraphql = await this.generateObjGraphqlMap(this.name)
+        //         return settingsGraphql
+        //     }
+        // },
 
     },
 
@@ -333,88 +335,44 @@ module.exports = {
 
         find: {
             async handler(objectName, query, userSession) {
-                const obj = getObject(objectName)
+                const obj = this.getObject(objectName)
                 if (objectName == 'users') {
                     return await obj.find(query)
                 }
-                return await this.broker.call("objectql.find", {
-                    objectName: objectName,
-                    query: query
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                return await obj.find(query, userSession)
             }
         },
         count: {
             async handler(objectName, query, userSession) {
-                const obj = getObject(objectName)
-                return await this.broker.call("objectql.count", {
-                    objectName: objectName,
-                    query: query,
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                const obj = this.getObject(objectName)
+                return await obj.count(query, userSession)
             }
         },
         findOne: {
             async handler(objectName, id, query, userSession) {
-                const obj = getObject(objectName)
+                const obj = this.getObject(objectName)
                 if (objectName == 'users') {
                     return await obj.findOne(id, query)
                 }
-                return await this.broker.call("objectql.findOne", {
-                    objectName: objectName,
-                    id: id,
-                    query: query,
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                return await obj.findOne(id, query, userSession)
             }
         },
         insert: {
             async handler(objectName, doc, userSession) {
-                const obj = getObject(objectName)
-                return await this.broker.call("objectql.insert", {
-                    objectName: objectName,
-                    doc: doc,
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                const obj = this.getObject(objectName)
+                return await obj.insert(doc, userSession)
             }
         },
         update: {
             async handler(objectName, id, doc, userSession) {
-                const obj = getObject(objectName)
-                return await this.broker.call("objectql.update", {
-                    objectName: objectName,
-                    id: id,
-                    doc: doc,
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                const obj = this.getObject(objectName)
+                return await obj.update(id, doc, userSession)
             }
         },
         delete: {
             async handler(objectName, id, userSession) {
-                const obj = getObject(objectName)
-                return await this.broker.call("objectql.delete", {
-                    objectName: objectName,
-                    id: id,
-                }, {
-                    meta: {
-                        user: userSession
-                    }
-                })
+                const obj = this.getObject(objectName)
+                return await obj.delete(id, userSession)
             }
         },
 

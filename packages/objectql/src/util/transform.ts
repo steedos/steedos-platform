@@ -156,80 +156,76 @@ export function transformListenersToTriggers(object: SteedosObjectTypeConfig, js
 }
 
 export function generateActionParams(when: string, context: SteedosTriggerContextConfig): TriggerActionParams {
-    let params: TriggerActionParams = { objectName: context.objectName, isExecuting: true, userId: context.userId, spaceId: context.spaceId };
+    let params: TriggerActionParams = {
+        id: context.id,
+        objectName: context.objectName,
+        userId: context.userId,
+        spaceId: context.spaceId,
+        doc: context.doc,
+        previousDoc: context.previousDoc,
+        query: context.query,
+        data: context.data,
+    };
     switch (when) {
-        case 'before.find':
+        case 'beforeFind':
             params.isBefore = true;
-            params.operationType = 'BEFORE_FIND';
+            params.isFind = true;
+            params.when = when;
             break;
-        case 'before.aggregate':
+        case 'beforeAggregate':
             params.isBefore = true;
-            params.operationType = 'BEFORE_AGGREGATE';
+            params.when = when;
             break;
-        case 'before.insert':
+        case 'beforeInsert':
             params.isBefore = true;
             params.isInsert = true;
-            params.new = [context.doc];
-            params.newMap = [context.id];
-            params.operationType = 'BEFORE_INSERT';
+            params.when = when;
             params.size = 1;
             break;
-        case 'before.update':
+        case 'beforeUpdate':
             params.isBefore = true;
             params.isUpdate = true;
-            params.new = [context.doc];
-            params.newMap = [context.id];
-            params.operationType = 'BEFORE_UPDATE';
+            params.when = when;
             params.size = 1;
             break;
-        case 'before.delete':
+        case 'beforeDelete':
             params.isBefore = true;
             params.isDelete = true;
-            params.old = [context.doc];
-            params.oldMap = [context.id];
-            params.operationType = 'BEFORE_DELETE';
+            params.when = when;
             params.size = 1;
             break;
-        case 'after.find':
+        case 'afterFind':
             params.isAfter = true;
-            params.operationType = 'AFTER_FIND';
+            params.isFind = true;
+            params.when = when;
             break;
-        case 'after.aggregate':
+        case 'afterAggregate':
             params.isAfter = true;
-            params.operationType = 'AFTER_AGGREGATE';
+            params.when = when;
             break;
-        case 'after.count':
+        case 'afterCount':
             params.isAfter = true;
-            params.operationType = 'AFTER_COUNT';
+            params.when = when;
             break;
-        case 'after.findOne':
+        case 'afterFindOne':
             params.isAfter = true;
-            params.operationType = 'AFTER_FINDONE';
+            params.when = when;
             break;
-        case 'after.insert':
+        case 'afterInsert':
             params.isAfter = true;
             params.isInsert = true;
-            params.new = [context.doc];
-            params.newMap = [context.id];
-            params.operationType = 'AFTER_INSERT';
+            params.when = when;
             params.size = 1;
             break;
-        case 'after.update':
+        case 'afterUpdate':
             params.isAfter = true;
-            params.isExecuting = true;
-            params.new = [context.doc];
-            params.newMap = [context.id];
-            params.old = [context.previousDoc];
-            params.oldMap = [context.id];
-            params.operationType = 'AFTER_UPDATE';
+            params.when = when;
             params.size = 1;
             break;
-        case 'after.delete':
+        case 'afterDelete':
             params.isAfter = true;
             params.isDelete = true;
-            params.old = [context.previousDoc];
-            params.oldMap = [context.id];
-            params.operationType = 'AFTER_DELETE';
+            params.when = when;
             params.size = 1;
             break;
         default:

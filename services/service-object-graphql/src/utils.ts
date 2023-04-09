@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-23 17:26:19
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-03 16:17:49
  * @Description: 
  */
 
@@ -60,9 +60,10 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
             return value ? moment.utc(value).format("HH:mm") : '';
         case 'number':
         case 'currency':
-            return value ? numberToString(value, field.scale) : "";
+            return numberToString(value, field.scale);
         case 'percent':
-            return value ? `${value * 100}%` : ''
+            const str = numberToString(value * 100, field.scale);
+            return str ? `${str}%` : ''
         case 'password':
             return _.isString(value) ? "******" : ""
         default:
