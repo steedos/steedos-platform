@@ -12,6 +12,21 @@ const getEmptyNodeTitle = async function(userId){
 }
 
 module.exports = {
+
+  beforeFind: async function(){
+    const { query } = this;
+    if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'step_node')){
+        query.fields.push('step_node')
+    }
+  },
+
+  beforeFindOne: async function(){
+    const { query } = this;
+    if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'step_node')){
+        query.fields.push('step_node')
+    }
+  },
+
   afterFindOne: async function () {
     let userId = this.userId;
     if(this.data.values && !this.data.values.step_node){
