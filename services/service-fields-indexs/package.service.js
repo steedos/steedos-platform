@@ -103,7 +103,7 @@ module.exports = {
 	 */
 	async started(ctx) {
 		try {
-			let indexScheduleCron = "0 0 * * * *"; // 默认每小时执行一次
+			let indexScheduleCron = "0 0 2 * * *"; // 默认每天凌晨2点
 			const steedosConfig = objectql.getSteedosConfig() || {};
 			const cron = steedosConfig.cron;
 			if (cron && cron.build_index) {
