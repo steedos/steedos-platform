@@ -2,33 +2,33 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "6d7530a2503d113f4d4be9eee64e8419cfd72465.js",
+      "path": "1beab92ea2d7ce115e42a96e000601eb653150a1.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/6d7530a2503d113f4d4be9eee64e8419cfd72465.js?meteor_js_resource=true",
-      "size": 5492483,
-      "hash": "6d7530a2503d113f4d4be9eee64e8419cfd72465",
-      "sri": "EKIFKj7PSSXgGhCsqC1How5+mPgisKKcjT3AXtxRGw6PoTq3qD4QTjWqI5TGLoBlpe0ybpo2jOahkORNMxtKkA=="
+      "url": "/1beab92ea2d7ce115e42a96e000601eb653150a1.js?meteor_js_resource=true",
+      "size": 5492485,
+      "hash": "1beab92ea2d7ce115e42a96e000601eb653150a1",
+      "sri": "BxiAPpy44sgWMIr842AHI5zGPIbqLx0COBTx2m/7jeGpaEA1FID5vKje9BpouLET6QSMLOXHbadb99Gc+2mo3g=="
     },
     {
-      "path": "6d7530a2503d113f4d4be9eee64e8419cfd72465.stats.json",
+      "path": "1beab92ea2d7ce115e42a96e000601eb653150a1.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/6d7530a2503d113f4d4be9eee64e8419cfd72465.stats.json?meteor_js_resource=true",
+      "url": "/1beab92ea2d7ce115e42a96e000601eb653150a1.stats.json?meteor_js_resource=true",
       "size": 109280,
-      "hash": "14a28920a26428011bbaf0bb70b344226ed1f167",
-      "sri": "bDT1iiviYH2CDpZOcr7Nys60fn+EqsK2nXodJwG3qx71wRbno1US3+rTWKFPYLtkLflRK/R2SY962f1uZ+XPRA=="
+      "hash": "b695db218b4852aff0b7b50f1fe5cc0d1cee86a4",
+      "sri": "hWO+8JWLu2u7C40j8XPqp3MP1tg+mu8J06raW5xOcv/9zpsrqsSXt1TqmbCed7L7omoTUkHtBaRxQc43PTG3tw=="
     },
     {
       "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/drop_down_box.js?hash=ea13fda1193ed9397a9f08242a6dac40e020291d",
+      "url": "/dynamic/node_modules/devextreme/ui/drop_down_box.js?hash=bc6d21c27bb9cfa1f439908440323c720410e2de",
       "size": 4099,
-      "hash": "ea13fda1193ed9397a9f08242a6dac40e020291d",
+      "hash": "bc6d21c27bb9cfa1f439908440323c720410e2de",
       "sri": "RxJXAwdwLik9jV82uIQAUOpM1x05kCDvNawUZaxnJV/rC4GFN9O/FW9MVk5SJA9m2cqO0dcJ4vZ9xr2hYvjsTQ=="
     },
     {
@@ -36,9 +36,9 @@
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/overlay/utils.js?hash=dfcb92ee1f9cd3d5afb863a6351c1467edc79352",
+      "url": "/dynamic/node_modules/devextreme/ui/overlay/utils.js?hash=2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
       "size": 438,
-      "hash": "dfcb92ee1f9cd3d5afb863a6351c1467edc79352",
+      "hash": "2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
       "sri": "zzibV6UI+lfCT3W7kep62HkoHEbYYHDxTQKOUlcJAdFw9zN3mDqX0W9d1EJ60nAGgt/GCNoiFGEdEr9IE1JV/Q=="
     },
     {
@@ -62,14 +62,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "0548483febee541acfbaf00a7019665c7321b8fe.css",
+      "path": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/0548483febee541acfbaf00a7019665c7321b8fe.css?meteor_css_resource=true",
-      "size": 1554096,
-      "hash": "0548483febee541acfbaf00a7019665c7321b8fe",
-      "sri": "nqPZ8z8J1Vs6Gh8kDyX85TyBN3/RiM/HO1k1UfxR1WjWLaZUfqNYFCraRsJPJpAtBkoRnPCJUvkVLMoKpzM9pQ=="
+      "url": "/c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css?meteor_css_resource=true",
+      "size": 1554154,
+      "hash": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff",
+      "sri": "0QiI9WSAlKRqs4nL51qDWVqVx197ONmpFBdmq17i0WLzMEX/V2erou8bBe0pwZoWxlTNawdggD9EprNAZE1/+g=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -457,8 +457,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/add_contact.svg",
-      "size": 856,
-      "hash": "9aee52658f7af30a0d5cae91edb4a45745262a12",
+      "size": 845,
+      "hash": "77bed60dda627799a182862ccac5ab8af2929622",
       "sri": null
     },
     {
@@ -607,8 +607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/announcement.svg",
-      "size": 668,
-      "hash": "6d9c2d3b70a44ed86e979e77b170692ec46895f1",
+      "size": 658,
+      "hash": "a02d5e37468ff1fb1090070e86da99655684cc68",
       "sri": null
     },
     {
@@ -637,8 +637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/apex.svg",
-      "size": 565,
-      "hash": "c35bc175d19305281b8ad2e033e74d58d0523f1f",
+      "size": 556,
+      "hash": "25661948b0a0d9a865e002f86f9ad32648256dcc",
       "sri": null
     },
     {
@@ -667,8 +667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/approval.svg",
-      "size": 417,
-      "hash": "793a1db6b4007e389ba7ee75066da37d5ba7bd3e",
+      "size": 410,
+      "hash": "abcdc6ea03e8991ff15a5f238cdfef7ad3580faf",
       "sri": null
     },
     {
@@ -697,8 +697,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/back.svg",
-      "size": 485,
-      "hash": "8e1b5b2002a913cf395fbd90cffeee29df5c3fc6",
+      "size": 479,
+      "hash": "0a84abc34ce291a3e51f57a37a075c5c2bb97ab1",
       "sri": null
     },
     {
@@ -757,8 +757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/call.svg",
-      "size": 530,
-      "hash": "a472c4bb341c1959216ee79034ccbca5f48236e8",
+      "size": 524,
+      "hash": "5aa11ee93a9a86f570e53fcdccb65371eee50695",
       "sri": null
     },
     {
@@ -787,8 +787,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/canvas.svg",
-      "size": 854,
-      "hash": "ca8d8fd5a5de745288dc08493ee5cf5d1a0be6ab",
+      "size": 843,
+      "hash": "22bd2b6dca1d094e95c0a1aa629cdf85338b3eda",
       "sri": null
     },
     {
@@ -817,8 +817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/change_owner.svg",
-      "size": 710,
-      "hash": "99d15b7b7f073024cb871dac67c12b336ed52eb8",
+      "size": 698,
+      "hash": "a306d8512af0313dd6e1a7c9fe07dfae2002d1f3",
       "sri": null
     },
     {
@@ -847,8 +847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/change_record_type.svg",
-      "size": 791,
-      "hash": "cb367fd6baa7af46e98cdfc288189e89ddf45ffd",
+      "size": 780,
+      "hash": "d5758207136675f11f8b46b131f92cec10c1c21e",
       "sri": null
     },
     {
@@ -877,8 +877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/check.svg",
-      "size": 424,
-      "hash": "32d458d560e32ae8a6012a5522e0475bd334e280",
+      "size": 416,
+      "hash": "3aeb5579b591f4ab4e01f91acf33747d50c1f481",
       "sri": null
     },
     {
@@ -907,8 +907,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/clone.svg",
-      "size": 740,
-      "hash": "08731d2c28cf355941215f3a66b4c0c9548bf9d2",
+      "size": 729,
+      "hash": "f25075038b61409f74de4701385ef8ff50c9b9f3",
       "sri": null
     },
     {
@@ -937,8 +937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/close.svg",
-      "size": 601,
-      "hash": "fc712ce235229562fa60b25fddebda0010e9fb71",
+      "size": 594,
+      "hash": "40d59ec91c0462a94100dfbf887fbfaa9263313c",
       "sri": null
     },
     {
@@ -967,8 +967,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/defer.svg",
-      "size": 568,
-      "hash": "ee07ca990918202760df389a639192e6ac6321fa",
+      "size": 559,
+      "hash": "3903df3a93d03d17f7e0e065283fbf3448c7ff9d",
       "sri": null
     },
     {
@@ -997,8 +997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/delete.svg",
-      "size": 723,
-      "hash": "8461f482572a7c3383c741235f9f16ef2f870320",
+      "size": 713,
+      "hash": "e5f79fcfb9dde2e306338ed8f46d1eb89d729935",
       "sri": null
     },
     {
@@ -1027,8 +1027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/description.svg",
-      "size": 720,
-      "hash": "c1cde987fbd29eb024aba1fcab1eb82f18fdefa0",
+      "size": 712,
+      "hash": "2f9ad752cd10c65fe2d906d21c8288e6f68da88b",
       "sri": null
     },
     {
@@ -1057,8 +1057,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/dial_in.svg",
-      "size": 623,
-      "hash": "819c6ba1673f8018d97415374066e9728d9a819c",
+      "size": 609,
+      "hash": "bc2d239d1b6743472146c59b4f4627ac055eb657",
       "sri": null
     },
     {
@@ -1087,8 +1087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/download.svg",
-      "size": 731,
-      "hash": "6bedc52211c87b1c5c0224f203e9f6d788d554fd",
+      "size": 721,
+      "hash": "4cba1232b554038c6ffa122788a7f0efb4d70723",
       "sri": null
     },
     {
@@ -1117,8 +1117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/edit.svg",
-      "size": 519,
-      "hash": "22d16f96bde39d428515688de9625e6c8d12af17",
+      "size": 510,
+      "hash": "0a175e213dc4a585fbd523b6a877a495e3ca2361",
       "sri": null
     },
     {
@@ -1147,8 +1147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/edit_groups.svg",
-      "size": 1240,
-      "hash": "e94ce5a416cd6e42833d384324dbd6b33d260683",
+      "size": 1224,
+      "hash": "ce94608763c2be1364db9485c096ed83d996eab0",
       "sri": null
     },
     {
@@ -1177,8 +1177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/edit_relationship.svg",
-      "size": 958,
-      "hash": "3a70e2db7a1cc7b0cca275830969b66309b9867a",
+      "size": 944,
+      "hash": "e7f4f96e2ac113da04a62622052e23736bb4c468",
       "sri": null
     },
     {
@@ -1207,8 +1207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/email.svg",
-      "size": 536,
-      "hash": "d38179f758b63e1789915c11c67b8b2fdfe70b23",
+      "size": 527,
+      "hash": "9fa939e17bbec7011d89a777161c3515ad976dfc",
       "sri": null
     },
     {
@@ -1237,8 +1237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/fallback.svg",
-      "size": 389,
-      "hash": "77475d0d15ed2b85b8eb9bbe7aa6e349955307d6",
+      "size": 384,
+      "hash": "e26069b7cead2df9aafdf7040fc724c47970caa8",
       "sri": null
     },
     {
@@ -1267,8 +1267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/filter.svg",
-      "size": 371,
-      "hash": "89305bb96fcae7f85a5d0d7ccd94fb99e6eaff31",
+      "size": 366,
+      "hash": "362f699ac363d7d253be1a90bd4b6fdbcd61cf33",
       "sri": null
     },
     {
@@ -1297,8 +1297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/flow.svg",
-      "size": 992,
-      "hash": "f894b387e69e8e467e683fdbdd970065c664093b",
+      "size": 977,
+      "hash": "55d3640cf570a57b0473a90bc62051b6d9b53b75",
       "sri": null
     },
     {
@@ -1327,8 +1327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/follow.svg",
-      "size": 1116,
-      "hash": "c78c3b739a4901524fde92a7474df82a5868b4e2",
+      "size": 1102,
+      "hash": "c059d0be05bd31fa4751e8215f77fa52a49c8aea",
       "sri": null
     },
     {
@@ -1357,8 +1357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/following.svg",
-      "size": 1154,
-      "hash": "e298265ac496ab3f7d7af973138ee2a29ec7d8dd",
+      "size": 1140,
+      "hash": "3f684cbee4d13e86829cdb4321a6249e2f9f663b",
       "sri": null
     },
     {
@@ -1387,8 +1387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/freeze_user.svg",
-      "size": 1737,
-      "hash": "563b283413ba697b1b5149a6ed0398f34b7fee4e",
+      "size": 1717,
+      "hash": "fb8063538d3d7de617939ac9f03410fddaeace29",
       "sri": null
     },
     {
@@ -1417,8 +1417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/goal.svg",
-      "size": 1156,
-      "hash": "2d236df4abc56e57bb019b5d9a81167eb24d2163",
+      "size": 1142,
+      "hash": "e1b1d812f25f8b2ff36833966a7a463f9c3b3658",
       "sri": null
     },
     {
@@ -1447,8 +1447,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/google_news.svg",
-      "size": 951,
-      "hash": "7f27ff2464977765ce923e9dd7bd2e4c1d774390",
+      "size": 941,
+      "hash": "77f9518b2be6862c4467da353bbdff7a79482e77",
       "sri": null
     },
     {
@@ -1477,8 +1477,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/info.svg",
-      "size": 593,
-      "hash": "36192ad230337bd74d85d776c25f1619b6e386c6",
+      "size": 586,
+      "hash": "bad157c1a863a71743c97bcdf9b89ce407d224a9",
       "sri": null
     },
     {
@@ -1507,8 +1507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/join_group.svg",
-      "size": 1127,
-      "hash": "ed75d99e91aa9f3b3863c6e48aa37c7e74b8779c",
+      "size": 1113,
+      "hash": "8f7974a6e2efe359571eca18197b3c62dc913a7d",
       "sri": null
     },
     {
@@ -1537,8 +1537,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/lead_convert.svg",
-      "size": 590,
-      "hash": "47f08debc8e58d2e8619888454626f1e7a4431d1",
+      "size": 583,
+      "hash": "6dc19df6b9f421044af90a7b6a4ab03071e07816",
       "sri": null
     },
     {
@@ -1567,8 +1567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/leave_group.svg",
-      "size": 1011,
-      "hash": "ad18069cda52ebfddb25d89c49108c33b16eaa03",
+      "size": 998,
+      "hash": "32df453f41d6efd247cb240e04546a752c8efb06",
       "sri": null
     },
     {
@@ -1597,8 +1597,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/log_a_call.svg",
-      "size": 805,
-      "hash": "c84fa5e04493b187e7ed23a1395674ee943d64d8",
+      "size": 794,
+      "hash": "f92b7b1eaa075ab498ceaf51a7d77a724c8998e6",
       "sri": null
     },
     {
@@ -1627,8 +1627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/log_event.svg",
-      "size": 1022,
-      "hash": "7f3e6fb65c8a44a4b1d371d229a02d0610de14d1",
+      "size": 1008,
+      "hash": "77c61682e75e76da8d78db9b0e3f320531dd4fcd",
       "sri": null
     },
     {
@@ -1657,8 +1657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/manage_perm_sets.svg",
-      "size": 1126,
-      "hash": "5a47d645c935a144415b447495c9eba50cd7b542",
+      "size": 1101,
+      "hash": "db8b56c2d2adf89cb932858a82bbfc682a2850e5",
       "sri": null
     },
     {
@@ -1687,8 +1687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/map.svg",
-      "size": 1015,
-      "hash": "c284a3ee92a141754a02d44ff1e286b60af0a1b8",
+      "size": 1005,
+      "hash": "6c6b1cfa360908a97dfd769ba18e8d572a91257d",
       "sri": null
     },
     {
@@ -1717,8 +1717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/more.svg",
-      "size": 379,
-      "hash": "6f20d28a5afe9e642b8ceae834e5b9b8c8c321ee",
+      "size": 374,
+      "hash": "2639980307c4013bef36b6f403e3c8bffab2e18b",
       "sri": null
     },
     {
@@ -1747,8 +1747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new.svg",
-      "size": 496,
-      "hash": "84905915bde4d637c76d70094b5d3f45ec1eb1c1",
+      "size": 490,
+      "hash": "3f0136ff71870e55424d5afb8dd6cda17e074f68",
       "sri": null
     },
     {
@@ -1777,8 +1777,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_account.svg",
-      "size": 2062,
-      "hash": "f06c062f72f5a25a2645135ef4f8dc98cbaac054",
+      "size": 2041,
+      "hash": "5489f35fc3e35084f740277309fcb1a5fb690dc2",
       "sri": null
     },
     {
@@ -1807,8 +1807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_campaign.svg",
-      "size": 596,
-      "hash": "7af1daeb68e4ac7c2b13e91428a8d4e1b1667f89",
+      "size": 586,
+      "hash": "aeb04210d8e9db526c023a7b04847c4db450f6f5",
       "sri": null
     },
     {
@@ -1837,8 +1837,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_case.svg",
-      "size": 477,
-      "hash": "98ca7cc5e324e5ff733435704daeeea58295b520",
+      "size": 469,
+      "hash": "bf42d029a41c4d1ab96c8f13238feda14b4b6abd",
       "sri": null
     },
     {
@@ -1867,8 +1867,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_child_case.svg",
-      "size": 867,
-      "hash": "240241b9ad920133438c25e07e84883a2c6596b2",
+      "size": 855,
+      "hash": "7c7ae26228641c086b7f884141f5a67dbed0aa53",
       "sri": null
     },
     {
@@ -1897,8 +1897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_contact.svg",
-      "size": 856,
-      "hash": "9aee52658f7af30a0d5cae91edb4a45745262a12",
+      "size": 845,
+      "hash": "77bed60dda627799a182862ccac5ab8af2929622",
       "sri": null
     },
     {
@@ -1927,8 +1927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom1.svg",
-      "size": 492,
-      "hash": "8522a8be6cdc572b26569d2d9c6e30b9f8b33c70",
+      "size": 482,
+      "hash": "780fc4e482dd0517485332f539abdafb6140a36b",
       "sri": null
     },
     {
@@ -1937,8 +1937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom10.svg",
-      "size": 383,
-      "hash": "26c0d165077ebd5b48cad7603703a2e3b641b26e",
+      "size": 378,
+      "hash": "9709cabad6a3bed7da7948e920e0a34e95da01cc",
       "sri": null
     },
     {
@@ -1947,8 +1947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom100.svg",
-      "size": 595,
-      "hash": "37a28b3be7dc514210a811d87978841b9f34f668",
+      "size": 585,
+      "hash": "05097614723ac004396e69bcd3e471b3fa6efb1a",
       "sri": null
     },
     {
@@ -1997,8 +1997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom11.svg",
-      "size": 419,
-      "hash": "e9bebdfc126ef9178fd928486bab0c421a4207bd",
+      "size": 414,
+      "hash": "85fa8bfc4d8638cde5333474ded5d8ebe3daca3c",
       "sri": null
     },
     {
@@ -2027,8 +2027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom12.svg",
-      "size": 220,
-      "hash": "793de8fe9e54ad193800186eb2bda73f8bf6bd80",
+      "size": 216,
+      "hash": "4982d39fd6be8d764c545c4296c013960fd9c3b5",
       "sri": null
     },
     {
@@ -2057,8 +2057,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom13.svg",
-      "size": 610,
-      "hash": "c5fa89cb0c671ae1868a69c262505d161d4c56da",
+      "size": 600,
+      "hash": "e6b080d8b56c1694b0b5f4179acb52551ce27ce7",
       "sri": null
     },
     {
@@ -2087,8 +2087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom14.svg",
-      "size": 1094,
-      "hash": "c61ea967d50dee8aac10604f79a990880208f2a4",
+      "size": 1080,
+      "hash": "493021997058754d5f23113a848dd815018f61fb",
       "sri": null
     },
     {
@@ -2117,8 +2117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom15.svg",
-      "size": 854,
-      "hash": "b80efe6598464ae44af8cbb8e4ab8672b1171643",
+      "size": 843,
+      "hash": "9ba207895a4bad16466ce8ce061a832de550937e",
       "sri": null
     },
     {
@@ -2147,8 +2147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom16.svg",
-      "size": 910,
-      "hash": "d57a228b0a6f52dd466b0736a94beab717d7ace9",
+      "size": 898,
+      "hash": "893cbef9986d60703a0d92b904152918f0c42258",
       "sri": null
     },
     {
@@ -2177,8 +2177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom17.svg",
-      "size": 1082,
-      "hash": "8a01e49cb4d76461ffe78a584a130ae1ce1465db",
+      "size": 1069,
+      "hash": "c9459e7c90aae478b78b0ee934c0fa65d52a2e34",
       "sri": null
     },
     {
@@ -2207,8 +2207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom18.svg",
-      "size": 1264,
-      "hash": "2b8afb4da34372c3b432c6631ef8704edaa8874b",
+      "size": 1249,
+      "hash": "22a6bbf7102114d8e3b68cd72b9070a2872396f4",
       "sri": null
     },
     {
@@ -2237,8 +2237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom19.svg",
-      "size": 555,
-      "hash": "4137aa4866e20026eef0158ac5038b88c75c08de",
+      "size": 548,
+      "hash": "1f66b987d7b8b45e8f026d6567135cfe50b277ee",
       "sri": null
     },
     {
@@ -2287,8 +2287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom2.svg",
-      "size": 1166,
-      "hash": "2441f7addbb2d7c3014c7d1107c3bf0be222fbdb",
+      "size": 1150,
+      "hash": "9a425bdfbd419324b650529250a1f74db134e39f",
       "sri": null
     },
     {
@@ -2297,8 +2297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom20.svg",
-      "size": 798,
-      "hash": "7d1fdb2e55c73398fe3f9c3e69c1a9c4c33e1d36",
+      "size": 786,
+      "hash": "1e571599261ad934c01ecfc57380d059dad0c336",
       "sri": null
     },
     {
@@ -2327,8 +2327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom21.svg",
-      "size": 706,
-      "hash": "872600c3687fa0846c369b2b7385b3691a520301",
+      "size": 696,
+      "hash": "706153d602321fcafef7aed7acd819086e4a8a31",
       "sri": null
     },
     {
@@ -2357,8 +2357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom22.svg",
-      "size": 517,
-      "hash": "b5e057d041f452950ef767472688905edde3268f",
+      "size": 511,
+      "hash": "118830cea476b254e5db91795c49cba5386d1e26",
       "sri": null
     },
     {
@@ -2387,8 +2387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom23.svg",
-      "size": 544,
-      "hash": "f72cbed4842f135480c35964d4a0cefe059dff4a",
+      "size": 536,
+      "hash": "ab82522b9218d49e6d5e3ce15890d01899111498",
       "sri": null
     },
     {
@@ -2417,8 +2417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom24.svg",
-      "size": 1083,
-      "hash": "e8f85cedf5c384337dd49b28192e80f87eb533cd",
+      "size": 1069,
+      "hash": "711003ab86109d329072bcf17041d6a146f229ca",
       "sri": null
     },
     {
@@ -2447,8 +2447,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom25.svg",
-      "size": 1157,
-      "hash": "5f68872a37979c9a95a55421f95c71027ddbd7c8",
+      "size": 1142,
+      "hash": "76da74167d9130cf507cfc8aebef2b35e50f3dd8",
       "sri": null
     },
     {
@@ -2477,8 +2477,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom26.svg",
-      "size": 562,
-      "hash": "4c9e2f0fe525f0e9579fce00368542bbdab72acd",
+      "size": 553,
+      "hash": "b1270cffccabfde37addd9debb4bd9c853653f85",
       "sri": null
     },
     {
@@ -2507,8 +2507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom27.svg",
-      "size": 680,
-      "hash": "4b271e80225652bcfd0e2cd8bb1732118bf467f1",
+      "size": 671,
+      "hash": "e07efad015705a487a8e69348a4227346ba3b22d",
       "sri": null
     },
     {
@@ -2537,8 +2537,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom28.svg",
-      "size": 515,
-      "hash": "541c870d4215bce099efa92e31d438d38318ad97",
+      "size": 509,
+      "hash": "4b307dfecba425756916c9d2ae00d7b53062015d",
       "sri": null
     },
     {
@@ -2567,8 +2567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom29.svg",
-      "size": 709,
-      "hash": "b8a9344da4cb8839d6eb3840ec85252598707d2e",
+      "size": 699,
+      "hash": "b90847c362a510ba90ae3b33d959a1f061ace6e6",
       "sri": null
     },
     {
@@ -2617,8 +2617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom3.svg",
-      "size": 766,
-      "hash": "11d7725053268a932572ab9aa44c2ced85da16f2",
+      "size": 756,
+      "hash": "ae7bed1beb694b6a69f76588fbc5c3978f2f9eca",
       "sri": null
     },
     {
@@ -2627,8 +2627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom30.svg",
-      "size": 882,
-      "hash": "1a21f631c6f2b5cd51ac207529cd39ffafabb523",
+      "size": 870,
+      "hash": "d52a97e5ea36183c274a69129418f78d24cb929e",
       "sri": null
     },
     {
@@ -2657,8 +2657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom31.svg",
-      "size": 793,
-      "hash": "6dc93bbf813ba6e43e430748921ce054a4786d93",
+      "size": 785,
+      "hash": "8a3d56e21d9cd38b75d0f7d90cfa0724387876fb",
       "sri": null
     },
     {
@@ -2687,8 +2687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom32.svg",
-      "size": 1154,
-      "hash": "7445fc7bf5c6d2a4e753e5182c74c4264ae61dc8",
+      "size": 1143,
+      "hash": "25f2f6f04bf50de513c1f19aba0804f56a206356",
       "sri": null
     },
     {
@@ -2717,8 +2717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom33.svg",
-      "size": 677,
-      "hash": "ba810fde21ad5395160fc06234cec45a1b71e08e",
+      "size": 668,
+      "hash": "53192c7ef350ff621f54c12494fb0e6bba02d98b",
       "sri": null
     },
     {
@@ -2747,8 +2747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom34.svg",
-      "size": 1026,
-      "hash": "a1401de15ce2b47746d56bf579934db76940c45f",
+      "size": 1014,
+      "hash": "9e88fcf72eab383155f15e40683298f34337f47f",
       "sri": null
     },
     {
@@ -2777,8 +2777,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom35.svg",
-      "size": 669,
-      "hash": "cd72ec395ae122c83c3676f6e888382beeb15144",
+      "size": 659,
+      "hash": "5b6eefca18766ac47aaa3b1333ebad5a1a8583ba",
       "sri": null
     },
     {
@@ -2807,8 +2807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom36.svg",
-      "size": 967,
-      "hash": "6d177df3f9e447aeb3f730259176987ff2cd798b",
+      "size": 954,
+      "hash": "e28adbbf9136c2f3071b8b6a468d3fedaa59f8f7",
       "sri": null
     },
     {
@@ -2837,8 +2837,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom37.svg",
-      "size": 996,
-      "hash": "c971c9b9490f1f953d7ecd3585595a8fefe8892e",
+      "size": 986,
+      "hash": "c21659675b07ac815f2c69bb9dfaa066a49bc345",
       "sri": null
     },
     {
@@ -2867,8 +2867,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom38.svg",
-      "size": 639,
-      "hash": "e4a841614a61fb4419c2d5620c60dfc916c6c8d2",
+      "size": 630,
+      "hash": "b60517a9da28da6a3fd005e43d8980d944cef9c9",
       "sri": null
     },
     {
@@ -2897,8 +2897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom39.svg",
-      "size": 783,
-      "hash": "52556c382218479c15e6d0fe3982a1d4251a3078",
+      "size": 772,
+      "hash": "d065e21f8652dc13decb7ea884f6edcdca54bcc8",
       "sri": null
     },
     {
@@ -2947,8 +2947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom4.svg",
-      "size": 396,
-      "hash": "d045df02c74416dbc3c1589889ac165e2bf82b3b",
+      "size": 391,
+      "hash": "b2c5583f6b00787ab811b13cff1ce1b3aa122431",
       "sri": null
     },
     {
@@ -2957,8 +2957,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom40.svg",
-      "size": 863,
-      "hash": "3195a7a232ee3b9b787b4b7101225ad5c6d4e569",
+      "size": 851,
+      "hash": "59824dd9768cda9626599b166155cde2c922c796",
       "sri": null
     },
     {
@@ -2987,8 +2987,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom41.svg",
-      "size": 484,
-      "hash": "7e8ff9860e63553428272223ef61569b1be8af0a",
+      "size": 478,
+      "hash": "60ccb3b36ba19bd80bb46d0dea03c5e2136c444b",
       "sri": null
     },
     {
@@ -3017,8 +3017,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom42.svg",
-      "size": 610,
-      "hash": "c5fa89cb0c671ae1868a69c262505d161d4c56da",
+      "size": 600,
+      "hash": "e6b080d8b56c1694b0b5f4179acb52551ce27ce7",
       "sri": null
     },
     {
@@ -3047,8 +3047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom43.svg",
-      "size": 1607,
-      "hash": "fdb7b435394bbd42dc2c3c2ceb6e636d9c925cc0",
+      "size": 1592,
+      "hash": "0e2ccea828ae88c577c3acb16102a13cb0f0753a",
       "sri": null
     },
     {
@@ -3077,8 +3077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom44.svg",
-      "size": 665,
-      "hash": "cbf2b43a02d32916596afd5a0c6da30c4106eafd",
+      "size": 657,
+      "hash": "23aa3423ce2fb9651c1b450a5bedf0a2e062273c",
       "sri": null
     },
     {
@@ -3107,8 +3107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom45.svg",
-      "size": 695,
-      "hash": "0d6652bebe775feb875995c425c9302cd49c9c1f",
+      "size": 685,
+      "hash": "7ea2882bce4c13f563a34ead28ca7edee24a7985",
       "sri": null
     },
     {
@@ -3137,8 +3137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom46.svg",
-      "size": 1725,
-      "hash": "1e772c27c412239d166fef3eceb7558b54cc22ec",
+      "size": 1706,
+      "hash": "f54f2220ba111f16a9b5c50fc10703289d8600c2",
       "sri": null
     },
     {
@@ -3167,8 +3167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom47.svg",
-      "size": 745,
-      "hash": "6a2da128257403f142f03a506416974a475dc4ab",
+      "size": 734,
+      "hash": "5c9ffb0279e2d900e2b1ead3f5734677fe952b8a",
       "sri": null
     },
     {
@@ -3197,8 +3197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom48.svg",
-      "size": 855,
-      "hash": "3294562a73d15bd45034087538d86007e6e361ba",
+      "size": 843,
+      "hash": "3f48f28fa6601771ac9560d5e8e5c4c6450a2583",
       "sri": null
     },
     {
@@ -3227,8 +3227,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom49.svg",
-      "size": 853,
-      "hash": "d41f7ff49bdf0b34f04684f3637db5ffdd99e29b",
+      "size": 841,
+      "hash": "c1541588f079a69293f1dc21c24ce0f76eac591c",
       "sri": null
     },
     {
@@ -3277,8 +3277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom5.svg",
-      "size": 749,
-      "hash": "ca64c4499de643bf31bdbdff1d2f64349bb1a2c2",
+      "size": 741,
+      "hash": "f2d83a1edda37affd8a01466233646fd05ca7da4",
       "sri": null
     },
     {
@@ -3287,8 +3287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom50.svg",
-      "size": 983,
-      "hash": "34b60985ec96cfbf26d6b7184c35e374b27c4837",
+      "size": 970,
+      "hash": "9dd31fe508c135a5416177d2f554ed8129517e89",
       "sri": null
     },
     {
@@ -3317,8 +3317,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom51.svg",
-      "size": 698,
-      "hash": "d4894cfbf375e6cf7737d7e32a43c87a914f1274",
+      "size": 688,
+      "hash": "ff66fdf6d936bc77ce42dd17d754bf46509fe7c2",
       "sri": null
     },
     {
@@ -3347,8 +3347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom52.svg",
-      "size": 1105,
-      "hash": "829e1122354709d7411e1a1f0cf2c9dd63638b7b",
+      "size": 1091,
+      "hash": "4c03b7d7b3034085304d471dcabdffe59b2914a3",
       "sri": null
     },
     {
@@ -3377,8 +3377,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom53.svg",
-      "size": 589,
-      "hash": "f4d4ea23047f786246a9e598ce785bf6b437f5b5",
+      "size": 579,
+      "hash": "c61abc02865d3c030a000817cd7e7176c78f9630",
       "sri": null
     },
     {
@@ -3407,8 +3407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom54.svg",
-      "size": 812,
-      "hash": "57910fdf54203c45ddd2ae43522240cc4c11dfdd",
+      "size": 801,
+      "hash": "7db4e009a098eb8439fa31d6ee180d87d7f2b1f5",
       "sri": null
     },
     {
@@ -3437,8 +3437,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom55.svg",
-      "size": 805,
-      "hash": "2963165becb4ce7e2a04bccd8cdadc5fdc47e45d",
+      "size": 793,
+      "hash": "5cb5e576f03732c34b25705460a742a9f054ba17",
       "sri": null
     },
     {
@@ -3467,8 +3467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom56.svg",
-      "size": 768,
-      "hash": "747b36c9ef78b9754cfc82a1fec6f17140bfe355",
+      "size": 757,
+      "hash": "3eca27b3e7b223feca898b976001caa3b383ccd0",
       "sri": null
     },
     {
@@ -3497,8 +3497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom57.svg",
-      "size": 747,
-      "hash": "6d4d70dfd839a4e29167d9531431c986a791a671",
+      "size": 736,
+      "hash": "0f3277f7489907994f19b03fb82b76382ee6c81b",
       "sri": null
     },
     {
@@ -3527,8 +3527,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom58.svg",
-      "size": 1010,
-      "hash": "2b6058d53567bd9f4b99c2d5f94c57f87ece46a2",
+      "size": 1000,
+      "hash": "c0321bd7df889679a7ba50241881aed9c5d5cc44",
       "sri": null
     },
     {
@@ -3557,8 +3557,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom59.svg",
-      "size": 742,
-      "hash": "e862c16c2f4ddcf1fabb0f12aafa1693ec650523",
+      "size": 731,
+      "hash": "1b13d20c940d81f98db5b9c40f9aafba988857f0",
       "sri": null
     },
     {
@@ -3607,8 +3607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom6.svg",
-      "size": 300,
-      "hash": "55a543afbf71a52cfef64fc36f9a90c39649d365",
+      "size": 296,
+      "hash": "c7657dd5626bd09696660afc391405b3ecfc5b31",
       "sri": null
     },
     {
@@ -3617,8 +3617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom60.svg",
-      "size": 749,
-      "hash": "d6acdba174a91acb65eb2f9d8a5df821012a3760",
+      "size": 739,
+      "hash": "e2ec6eb7c1a3380bbec13830ebdbedb50ba68447",
       "sri": null
     },
     {
@@ -3647,8 +3647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom61.svg",
-      "size": 908,
-      "hash": "4777a5925af7ea1f331b4f23dee238d1ba146575",
+      "size": 897,
+      "hash": "b0dcf2d4c9e422638872c0ff8933ae667a9ca11a",
       "sri": null
     },
     {
@@ -3677,8 +3677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom62.svg",
-      "size": 788,
-      "hash": "8766a1b92a468eded9275648a65f498784047b59",
+      "size": 777,
+      "hash": "2c3ffeb97ee08f79297ea63ddd31af3cb20b3403",
       "sri": null
     },
     {
@@ -3707,8 +3707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom63.svg",
-      "size": 1133,
-      "hash": "e05190451f75d050a1ef7de6f599ce118e502c7d",
+      "size": 1119,
+      "hash": "11c9095450c1b9d1ebf151d59f7e8e1237a7eb12",
       "sri": null
     },
     {
@@ -3737,8 +3737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom64.svg",
-      "size": 636,
-      "hash": "dfdd4a9fd81ec092c4a3df965876b5c58e221bcd",
+      "size": 626,
+      "hash": "541bad9d1c9892967176eea4399b9a49cb21d9c4",
       "sri": null
     },
     {
@@ -3767,8 +3767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom65.svg",
-      "size": 731,
-      "hash": "efeaec3fb8e80ae3a8836fdad5ee61ff6e6ceb05",
+      "size": 720,
+      "hash": "5c5c306d47f63664a6da70894c3af05ddf525b63",
       "sri": null
     },
     {
@@ -3797,8 +3797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom66.svg",
-      "size": 1311,
-      "hash": "da3f29a51bb5cf0df8cb7e3aa6b9b220750517ba",
+      "size": 1295,
+      "hash": "b21b6334afca0aa7a0e18a2978fc0fd8950ea6be",
       "sri": null
     },
     {
@@ -3827,8 +3827,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom67.svg",
-      "size": 1834,
-      "hash": "70b0abfe864be97623e58634c694f3886c107fd1",
+      "size": 1815,
+      "hash": "421b86073b661265332250c63b96497276c1e33f",
       "sri": null
     },
     {
@@ -3857,8 +3857,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom68.svg",
-      "size": 769,
-      "hash": "9e52b1bb331286d0524221a3d103adf5a6364d10",
+      "size": 761,
+      "hash": "a143f4c30bf9d6e9d5d54003d357d1f75eb82c62",
       "sri": null
     },
     {
@@ -3887,8 +3887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom69.svg",
-      "size": 1004,
-      "hash": "f5a8261794eed0766454a7e42c1ab8ab23548ccd",
+      "size": 991,
+      "hash": "cab50dcf9a486589a8da9bb2b25473455fb3517f",
       "sri": null
     },
     {
@@ -3937,8 +3937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom7.svg",
-      "size": 311,
-      "hash": "dbcc80c27d70190d7a1a95afb1351e13887f1c99",
+      "size": 306,
+      "hash": "dd1c866637406ef0da9f1e5dc48957a961373e1d",
       "sri": null
     },
     {
@@ -3947,8 +3947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom70.svg",
-      "size": 938,
-      "hash": "6dee6ef267fe11ebba28916eab789d3892bf2e87",
+      "size": 926,
+      "hash": "08040e9cdd60a84317a12a76a3fadb1af241ace0",
       "sri": null
     },
     {
@@ -3977,8 +3977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom71.svg",
-      "size": 686,
-      "hash": "e91b506c21eff6fcd4fda3b27f5d97803c4963de",
+      "size": 678,
+      "hash": "bb9ae8d6b41110a2b6bfdcd75c5d6c92f4861008",
       "sri": null
     },
     {
@@ -4007,8 +4007,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom72.svg",
-      "size": 706,
-      "hash": "481ecac16eec25cfaa8193e824809f91b00e08a2",
+      "size": 695,
+      "hash": "42bcbfdeac18d53ce1376c275976f2d2bfcd780b",
       "sri": null
     },
     {
@@ -4037,8 +4037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom73.svg",
-      "size": 654,
-      "hash": "5477aafdcb7dd0ce883468c1c37b585e894cf20d",
+      "size": 644,
+      "hash": "24851cdfb7ed3b31bf032cf9ef6cfdeea5cf76e1",
       "sri": null
     },
     {
@@ -4067,8 +4067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom74.svg",
-      "size": 982,
-      "hash": "e3c55e5bb64d40e46e9ea7a684fa135fe8bb87f4",
+      "size": 969,
+      "hash": "771bd0a334ac55f0532c3368dc6b13ef3d8aa6d5",
       "sri": null
     },
     {
@@ -4097,8 +4097,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom75.svg",
-      "size": 904,
-      "hash": "cd4a94a98eeebba03bd67609ee431e657162278e",
+      "size": 893,
+      "hash": "949a88c6bdd3e7de663a0b73c57372a92f76810c",
       "sri": null
     },
     {
@@ -4127,8 +4127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom76.svg",
-      "size": 1234,
-      "hash": "0121ce41eaa8015f8765633b4dfd69a857ac49cc",
+      "size": 1219,
+      "hash": "3947120ddda3f758efd1631e3276793cc4430ff2",
       "sri": null
     },
     {
@@ -4157,8 +4157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom77.svg",
-      "size": 818,
-      "hash": "e090548e461e716b66e7e86ed7dac07f31e28a4b",
+      "size": 806,
+      "hash": "0f273b0a314c02cfb42c9d647a73852efa278919",
       "sri": null
     },
     {
@@ -4187,8 +4187,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom78.svg",
-      "size": 1045,
-      "hash": "0ccc229d495e5860f995b794b37eabc3afe0a171",
+      "size": 1034,
+      "hash": "ace59fa5b3151a63026da8808a339ed4bd328117",
       "sri": null
     },
     {
@@ -4217,8 +4217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom79.svg",
-      "size": 664,
-      "hash": "8500b3f46004d4e184ddec5905529a1ff5cb2ebf",
+      "size": 655,
+      "hash": "5f23e293069a553a896144e5513b8cf47c5eba84",
       "sri": null
     },
     {
@@ -4267,8 +4267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom8.svg",
-      "size": 337,
-      "hash": "564b41580459e8f63edc4dc024867238151a3b98",
+      "size": 332,
+      "hash": "5debb10c74001d8d61f6868a70e39211a24d7668",
       "sri": null
     },
     {
@@ -4277,8 +4277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom80.svg",
-      "size": 1353,
-      "hash": "9aa895e1b17ae3be5485a7326840cd4c8b19bdf0",
+      "size": 1336,
+      "hash": "668511e04f7d69f99b89b5093254cab9dbffce29",
       "sri": null
     },
     {
@@ -4307,8 +4307,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom81.svg",
-      "size": 698,
-      "hash": "af87c2632b3f843c3d8192aa50bf13bdebeeb3d0",
+      "size": 690,
+      "hash": "7f1c8c0f2d55521162f696dbf6d1ae58480b585f",
       "sri": null
     },
     {
@@ -4337,8 +4337,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom82.svg",
-      "size": 1242,
-      "hash": "4524ba1498274277c36c8a3b9b0cfd204c7da2cc",
+      "size": 1226,
+      "hash": "4b180c92d1c7d8109adad3c68971400f6b4ac3be",
       "sri": null
     },
     {
@@ -4367,8 +4367,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom83.svg",
-      "size": 733,
-      "hash": "c34229b4b9242c149ab33c5bf3a22930827ae439",
+      "size": 723,
+      "hash": "e778f42009bca2e275c55445767943369f32bde5",
       "sri": null
     },
     {
@@ -4397,8 +4397,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom84.svg",
-      "size": 821,
-      "hash": "a046a72c6a7586436643a64e51b9ac87770bc988",
+      "size": 810,
+      "hash": "ef15154daac13dfdeaf4678fb1aaabb3c20a9064",
       "sri": null
     },
     {
@@ -4427,8 +4427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom85.svg",
-      "size": 862,
-      "hash": "9ffde7cd58d34014f7bd0b21ef23193102abb75f",
+      "size": 850,
+      "hash": "b8ef76a6befdc7edac5cb534c52906cec3e27026",
       "sri": null
     },
     {
@@ -4457,8 +4457,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom86.svg",
-      "size": 917,
-      "hash": "626db3ca903663c4d7c8616c1915a507c553d0f2",
+      "size": 905,
+      "hash": "cddf14f663eaf892f26b17cb0a5b4067d9e1bfc3",
       "sri": null
     },
     {
@@ -4487,8 +4487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom87.svg",
-      "size": 848,
-      "hash": "964dd94ea8aed946f66b1d4af922eb3b71093557",
+      "size": 837,
+      "hash": "bcaae2d1d71b1e4cdea978c9fdf6498c8f14fa26",
       "sri": null
     },
     {
@@ -4517,8 +4517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom88.svg",
-      "size": 609,
-      "hash": "5ab4e576bdf3f9789fee4984900d5b47d08dd3f1",
+      "size": 599,
+      "hash": "9aff88917cd0e5babe1f142f4faacd715b3825e4",
       "sri": null
     },
     {
@@ -4547,8 +4547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom89.svg",
-      "size": 892,
-      "hash": "b286d2d0ed71470dfaf0ffcf1529efb6dba534b6",
+      "size": 880,
+      "hash": "855bcc8d26a4ace3036fd610cc2d0c9e455839df",
       "sri": null
     },
     {
@@ -4597,8 +4597,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom9.svg",
-      "size": 592,
-      "hash": "48c97f3314a44aa29caea1dc17216fb822009fda",
+      "size": 585,
+      "hash": "61b0cdfce72b8d52eaf03c06e86f0a664528e263",
       "sri": null
     },
     {
@@ -4607,8 +4607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom90.svg",
-      "size": 1152,
-      "hash": "bc9f1d058bb58fc917cbb5b0253512f3dd218cb4",
+      "size": 1138,
+      "hash": "3942f9d7a709d514bb7bb8fe7f6f1f5f085f9df3",
       "sri": null
     },
     {
@@ -4637,8 +4637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom91.svg",
-      "size": 986,
-      "hash": "7209d03ac3e7e2f4ee4eb1f751e3f297eef3e9be",
+      "size": 974,
+      "hash": "7d124657356bb22ea8114f9b45cf22a8d01e8693",
       "sri": null
     },
     {
@@ -4667,8 +4667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom92.svg",
-      "size": 1128,
-      "hash": "b24a10fb6cdf9754721c3b79716ba19750bf7ddd",
+      "size": 1114,
+      "hash": "41378bfcea9b63cd8611a16c6ea4e86f7dfc8d85",
       "sri": null
     },
     {
@@ -4697,8 +4697,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom93.svg",
-      "size": 631,
-      "hash": "0fcb765d39204adcb45d7da3e03870dba047db08",
+      "size": 621,
+      "hash": "16baa503bf41012dc83b798e34cc1dd384886154",
       "sri": null
     },
     {
@@ -4727,8 +4727,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom94.svg",
-      "size": 806,
-      "hash": "2cf33f7f7ae02584680b3d8fea8af1e8d197572f",
+      "size": 796,
+      "hash": "acbdfd731fc913628f8c4bb16cd7d78041c4caef",
       "sri": null
     },
     {
@@ -4757,8 +4757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom95.svg",
-      "size": 718,
-      "hash": "8b152a6ee03850b93689b9363dbb35789d447b31",
+      "size": 708,
+      "hash": "045cb5e5b6432c8237a88f13d0ec4a092e381a22",
       "sri": null
     },
     {
@@ -4787,8 +4787,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom96.svg",
-      "size": 930,
-      "hash": "295ef48d16f41eab2c131823c2b7221a623b7025",
+      "size": 917,
+      "hash": "9751ce6644ed023019f0c2493aa008c2a31f7f84",
       "sri": null
     },
     {
@@ -4817,8 +4817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom97.svg",
-      "size": 712,
-      "hash": "d2f3489bced19d0a4ca9702ea3f3bb748bce4e4c",
+      "size": 704,
+      "hash": "7ba48f2508effc9144c0b1772b92245e0e1a23e4",
       "sri": null
     },
     {
@@ -4847,8 +4847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom98.svg",
-      "size": 806,
-      "hash": "46499cb4f86b9ca4ea3473a7bf3668cf19e7e83a",
+      "size": 794,
+      "hash": "efed1d7a294234a7c6fd68fa57865525dfd62636",
       "sri": null
     },
     {
@@ -4877,8 +4877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_custom99.svg",
-      "size": 849,
-      "hash": "3456966795ef3df2eb725a4e5f08ee96a737bcb9",
+      "size": 840,
+      "hash": "e7c4cf9cad3f75c339593ae129bb9db7cfff09e6",
       "sri": null
     },
     {
@@ -4927,8 +4927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_event.svg",
-      "size": 1060,
-      "hash": "252dd6fdc4f2b6f58b8ecfd1474fa7c2369483c5",
+      "size": 1047,
+      "hash": "0324009c16a684c10c4eda3d11febfe7d92d9b9f",
       "sri": null
     },
     {
@@ -4957,8 +4957,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_group.svg",
-      "size": 1160,
-      "hash": "d282afe2596e04f686a61b4b1e9dfcf67386cb44",
+      "size": 1146,
+      "hash": "4ab1071bd5dc567700999a16a9919b5c65a6dd95",
       "sri": null
     },
     {
@@ -4987,8 +4987,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_lead.svg",
-      "size": 539,
-      "hash": "585b6aca651003ae52593f951374d400818d0a79",
+      "size": 526,
+      "hash": "0c6bb8de0b091de7f3fceb6f81e159cb9ffb5aa6",
       "sri": null
     },
     {
@@ -5017,8 +5017,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_note.svg",
-      "size": 1190,
-      "hash": "61e66c2aafd72ac4a2187fbda98b790b6feba5c0",
+      "size": 1176,
+      "hash": "1a9967dec4e5b6792f8a370477779ca6e3d92dde",
       "sri": null
     },
     {
@@ -5047,8 +5047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_notebook.svg",
-      "size": 647,
-      "hash": "33a1e1afdb6976994e12ee8db4d81c7a7db8be89",
+      "size": 640,
+      "hash": "e44792444083f8c309a0d3f64185ae38f928244a",
       "sri": null
     },
     {
@@ -5077,8 +5077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_opportunity.svg",
-      "size": 860,
-      "hash": "7d6a207397d04675624b4b318649d02191a7da26",
+      "size": 845,
+      "hash": "771a5bdbe8b0e8feb73096b71e254b07b0f4be38",
       "sri": null
     },
     {
@@ -5107,8 +5107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_person_account.svg",
-      "size": 1593,
-      "hash": "94c060628685bfb1eaacf0d9a97bd69f127fb514",
+      "size": 1577,
+      "hash": "0721e063c344857105613933e7def8328386e694",
       "sri": null
     },
     {
@@ -5137,8 +5137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/new_task.svg",
-      "size": 1249,
-      "hash": "d86f3ec3a1decfd064b58187c3e95f0201324282",
+      "size": 1220,
+      "hash": "2f150a95a6eef4bd4793a68b6d7bc0922478f8af",
       "sri": null
     },
     {
@@ -5167,8 +5167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/password_unlock.svg",
-      "size": 734,
-      "hash": "c04f27539b9482f546e98cc5db23e35db513ec9d",
+      "size": 724,
+      "hash": "0c1791339b370ee4c6c94de404080e19bb760d3f",
       "sri": null
     },
     {
@@ -5197,8 +5197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/preview.svg",
-      "size": 518,
-      "hash": "fc64eaf7b7828283c7c7e05f473e793cb827dcb9",
+      "size": 510,
+      "hash": "be17b27d55e4c68019b01752df4a69745af0fcc8",
       "sri": null
     },
     {
@@ -5227,8 +5227,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/priority.svg",
-      "size": 508,
-      "hash": "c147320cfa14258b3cc8770ffc68aa7c3139785e",
+      "size": 500,
+      "hash": "674b064506b2146b7853916e72e6f191fd64f9e0",
       "sri": null
     },
     {
@@ -5257,8 +5257,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/question_post_action.svg",
-      "size": 741,
-      "hash": "638ea9b459e5390ecf939d8ac52aefc512a64b61",
+      "size": 728,
+      "hash": "120a285c985b4a125fa313c18cf6a2650bd6acdf",
       "sri": null
     },
     {
@@ -5287,8 +5287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/quote.svg",
-      "size": 826,
-      "hash": "e388e77e69ee7f68abc5f3ff0f67a0282e5f7ee3",
+      "size": 815,
+      "hash": "ecbc92a7f477b1c236800d4360a97286b38818d8",
       "sri": null
     },
     {
@@ -5347,8 +5347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/record.svg",
-      "size": 1374,
-      "hash": "fdaeb4d4debacdfbc43696edd648c0357b8ab496",
+      "size": 1355,
+      "hash": "83cb47e77cd8a7de1e930bf8239943fa95c4bcad",
       "sri": null
     },
     {
@@ -5377,8 +5377,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/refresh.svg",
-      "size": 783,
-      "hash": "61cf5e8ee25781f7bda6e36d5caf4623b014c607",
+      "size": 774,
+      "hash": "cc674e5479144d23f9225dd5fd8ea0519e3bdf3f",
       "sri": null
     },
     {
@@ -5407,8 +5407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/reject.svg",
-      "size": 601,
-      "hash": "fc712ce235229562fa60b25fddebda0010e9fb71",
+      "size": 594,
+      "hash": "40d59ec91c0462a94100dfbf887fbfaa9263313c",
       "sri": null
     },
     {
@@ -5437,8 +5437,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/remove.svg",
-      "size": 601,
-      "hash": "fc712ce235229562fa60b25fddebda0010e9fb71",
+      "size": 594,
+      "hash": "40d59ec91c0462a94100dfbf887fbfaa9263313c",
       "sri": null
     },
     {
@@ -5467,8 +5467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/remove_relationship.svg",
-      "size": 550,
-      "hash": "8f59582280b0ed75c3bf2540bbee78f84709a76c",
+      "size": 544,
+      "hash": "42db1acd44c80caf101dc1212075e2ea46b5733e",
       "sri": null
     },
     {
@@ -5497,8 +5497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/reset_password.svg",
-      "size": 783,
-      "hash": "61cf5e8ee25781f7bda6e36d5caf4623b014c607",
+      "size": 774,
+      "hash": "cc674e5479144d23f9225dd5fd8ea0519e3bdf3f",
       "sri": null
     },
     {
@@ -5617,8 +5617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share.svg",
-      "size": 845,
-      "hash": "51a9ab8f1f52aaa6e3ecbae74ac4e70c0dc05ea4",
+      "size": 833,
+      "hash": "2e6ea77f16eddf2fd95a4a7024316dacf5fe464f",
       "sri": null
     },
     {
@@ -5647,8 +5647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share_file.svg",
-      "size": 1103,
-      "hash": "7d768e74c7bd4fb8959d2a67745654d9c5eb31ab",
+      "size": 1090,
+      "hash": "c93511daf6025aca0c20d8c615324f534779d6d9",
       "sri": null
     },
     {
@@ -5677,8 +5677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share_link.svg",
-      "size": 1278,
-      "hash": "0a0bb11375eff6d53eb910335d3158320ecfbf27",
+      "size": 1263,
+      "hash": "c842b6c3a81bfc77b2524206288e965466293f1a",
       "sri": null
     },
     {
@@ -5707,8 +5707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share_poll.svg",
-      "size": 766,
-      "hash": "a5351856dbb484d099283dbd313923b7a9bfd651",
+      "size": 749,
+      "hash": "90327659bd810ae39721b48a583bb57af107026f",
       "sri": null
     },
     {
@@ -5737,8 +5737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share_post.svg",
-      "size": 407,
-      "hash": "64dbf9d9c4e7d85a7022b8592326127444b70a7f",
+      "size": 400,
+      "hash": "8b5df6fe47d639fe9f10be665b75cb02510afd38",
       "sri": null
     },
     {
@@ -5767,8 +5767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/share_thanks.svg",
-      "size": 1111,
-      "hash": "6ce53cdb031e036518400ab939885e2687e76da1",
+      "size": 1092,
+      "hash": "809141d6185372abd8ceacfd94bd400673324782",
       "sri": null
     },
     {
@@ -5797,8 +5797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/sort.svg",
-      "size": 816,
-      "hash": "d4a76e14730b5ae0aef8ca2258e619cd47caf259",
+      "size": 805,
+      "hash": "04b2fc49d4cbd07ee43905a0c0de07019b18a13c",
       "sri": null
     },
     {
@@ -5827,8 +5827,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/submit_for_approval.svg",
-      "size": 677,
-      "hash": "4dccc3e08e25e07ae86511d332a56f379ddb4f60",
+      "size": 663,
+      "hash": "5895bac60c92323918ce17e7bf448c60ff2c6a87",
       "sri": null
     },
     {
@@ -5857,8 +5857,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/update.svg",
-      "size": 624,
-      "hash": "81ef7aecbbc607602abdb188981e90e2b5ecee05",
+      "size": 617,
+      "hash": "2362f131ff0e16b4ffb6d71b0f1e553ea034fa95",
       "sri": null
     },
     {
@@ -5887,8 +5887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/update_status.svg",
-      "size": 904,
-      "hash": "ca0f93ab41b8c413fc6504fd9966dbce1a050ed8",
+      "size": 891,
+      "hash": "630fc697ead30f1dee942a137c4dd563e083db69",
       "sri": null
     },
     {
@@ -5917,8 +5917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/upload.svg",
-      "size": 724,
-      "hash": "4202a37be8c41d8801e755774d21e71d3f2b6e47",
+      "size": 714,
+      "hash": "72b226eb3ebe0b285376d997e045ea2d8d9fe31f",
       "sri": null
     },
     {
@@ -5947,8 +5947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/user.svg",
-      "size": 530,
-      "hash": "e9d6d51c08541b99e59c2bb56a7d6263bec8d7be",
+      "size": 523,
+      "hash": "b8a92dd4e7520bf9f4793b877eef0dbb7d752878",
       "sri": null
     },
     {
@@ -5977,8 +5977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/user_activation.svg",
-      "size": 1048,
-      "hash": "d887d8cbc7514c31796e34956d141cb6120d8bcc",
+      "size": 1035,
+      "hash": "1695d47558f6f0c5865e5751d383c3b68bb44430",
       "sri": null
     },
     {
@@ -6037,8 +6037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/action/web_link.svg",
-      "size": 1071,
-      "hash": "00eabe671f698b2ac43314a9809e3ffa8a32e3b7",
+      "size": 1060,
+      "hash": "331dd0e4e0bef2fb152fcbbbaa425e2426f6afe5",
       "sri": null
     },
     {
@@ -6067,8 +6067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom1.svg",
-      "size": 530,
-      "hash": "08f5901949f97fe10754de0701da39ae6b76d8e3",
+      "size": 522,
+      "hash": "a52b3d4a56b468728940d5216767cdacfa760413",
       "sri": null
     },
     {
@@ -6077,8 +6077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom10.svg",
-      "size": 400,
-      "hash": "a9ca2dfdc9440b8eb8270fb8799c7852b106b7dc",
+      "size": 395,
+      "hash": "c59b6e0058583a561c3ae3578d5e4b7fff51be13",
       "sri": null
     },
     {
@@ -6087,8 +6087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom100.svg",
-      "size": 537,
-      "hash": "f3b95234c69ff14ac27167ae68a0b791138f1777",
+      "size": 528,
+      "hash": "82e94d98de7891e36f4164170da1ddc5b0226a11",
       "sri": null
     },
     {
@@ -6407,8 +6407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom11.svg",
-      "size": 427,
-      "hash": "e3cf3d07bf1c12902c900012dbbf1bc33c6ffaf5",
+      "size": 422,
+      "hash": "c9ecce294ad3f539fad0283127e1537492dc7bf9",
       "sri": null
     },
     {
@@ -6557,8 +6557,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom12.svg",
-      "size": 226,
-      "hash": "6eda3271fef6f6b7bcfb612be4c9a9a975f242a6",
+      "size": 222,
+      "hash": "139c99e5b16abf81d7af5093d0ca661f7b6d244a",
       "sri": null
     },
     {
@@ -6587,8 +6587,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom13.svg",
-      "size": 526,
-      "hash": "2bc366c8b407a0b860858e0850d416a14345c861",
+      "size": 518,
+      "hash": "63a29c5ef11d05d27eabfd64108ebbdf7e52004c",
       "sri": null
     },
     {
@@ -6617,8 +6617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom14.svg",
-      "size": 1088,
-      "hash": "d7be826dffaa16d0aabbaa1739799b5c5fa340d3",
+      "size": 1074,
+      "hash": "638dc8e05db48a18addbb7ee7293cf5ba980a65e",
       "sri": null
     },
     {
@@ -6647,8 +6647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom15.svg",
-      "size": 899,
-      "hash": "06d55a817c353a718c7f5772363d24c0c91df979",
+      "size": 887,
+      "hash": "94cc9ed2bae471cf3ea1a8331454ba73aceec8b5",
       "sri": null
     },
     {
@@ -6677,8 +6677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom16.svg",
-      "size": 777,
-      "hash": "24f27d3f840660ad715e088ea7125a5093ea78d9",
+      "size": 766,
+      "hash": "3b9b013ea3dae4e6518bc6930d492e30a07f1e16",
       "sri": null
     },
     {
@@ -6707,8 +6707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom17.svg",
-      "size": 1091,
-      "hash": "3b365db0fa261ee6a40813a58529a4104027cb0e",
+      "size": 1077,
+      "hash": "8ded41ce81f18b55483c3cd619e14aca36c82844",
       "sri": null
     },
     {
@@ -6737,8 +6737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom18.svg",
-      "size": 1125,
-      "hash": "b4c57209528b586310674cdbb664b507e7ece11d",
+      "size": 1111,
+      "hash": "fbd69489d9720f5919df7ea76acae2267f690a23",
       "sri": null
     },
     {
@@ -6767,8 +6767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom19.svg",
-      "size": 580,
-      "hash": "9431cfd40a22e3a8a140058097d4453f84eaec4f",
+      "size": 573,
+      "hash": "93a643600bfc75e00f3eee9a06345224efecc31b",
       "sri": null
     },
     {
@@ -6817,8 +6817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom2.svg",
-      "size": 1106,
-      "hash": "18452c2a80bcb21d45b90a5d0444163a197f6eeb",
+      "size": 1092,
+      "hash": "eb18a4670e353c05c8f143f728439ed83b55e695",
       "sri": null
     },
     {
@@ -6827,8 +6827,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom20.svg",
-      "size": 799,
-      "hash": "089a0e40159b1139c642beb5fbf7254a933014bb",
+      "size": 787,
+      "hash": "789eb98495a88ff6b0affea50d037f92639147d7",
       "sri": null
     },
     {
@@ -6857,8 +6857,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom21.svg",
-      "size": 637,
-      "hash": "f447be593820f3ce2eaae5d3d9c4b9828d34646e",
+      "size": 627,
+      "hash": "9a2d18913ce853f1253eadc4b139f59271c196c4",
       "sri": null
     },
     {
@@ -6887,8 +6887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom22.svg",
-      "size": 540,
-      "hash": "660d0ebd82f6372081bba5002b252baedf7b18c3",
+      "size": 534,
+      "hash": "4d7579a2c002a258d2d2bd7e709c012bc80e882a",
       "sri": null
     },
     {
@@ -6917,8 +6917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom23.svg",
-      "size": 555,
-      "hash": "cf1f3bdde01ea63ac63fabd9ee3f79a24b22bbcd",
+      "size": 546,
+      "hash": "25e0aa9cd07e44c04f4f521aa2dd4741b3d4c45d",
       "sri": null
     },
     {
@@ -6947,8 +6947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom24.svg",
-      "size": 886,
-      "hash": "77e38816846d2a95e85dd687d0890bac30287b18",
+      "size": 874,
+      "hash": "f6cf2aaa3f23aa31e86f87aaeb491d23ccdd7a16",
       "sri": null
     },
     {
@@ -6977,8 +6977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom25.svg",
-      "size": 1137,
-      "hash": "450e6598e21f270a00b42c7f9e5a8573ab59e09e",
+      "size": 1123,
+      "hash": "f228adb7e65b9f86c41d74c90fed0202aca49e16",
       "sri": null
     },
     {
@@ -7007,8 +7007,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom26.svg",
-      "size": 550,
-      "hash": "37c71c68cdd1a4aeeeaee00104e6ad4b227450aa",
+      "size": 541,
+      "hash": "9a7508e8cc0269557ba1515eba4388d552b6709e",
       "sri": null
     },
     {
@@ -7037,8 +7037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom27.svg",
-      "size": 595,
-      "hash": "f02b5ae1ac1f9b99080d8aec938fcbbb2c603e37",
+      "size": 586,
+      "hash": "282b80725398a699839e7954397fb525e8688459",
       "sri": null
     },
     {
@@ -7067,8 +7067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom28.svg",
-      "size": 446,
-      "hash": "497691253a77bd2802e4515e59cce38467f81bd9",
+      "size": 440,
+      "hash": "8f1b669bcbae920dcf19450c0edb1fb9ac0c9cdc",
       "sri": null
     },
     {
@@ -7097,8 +7097,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom29.svg",
-      "size": 646,
-      "hash": "cda585f5215c41bba169d08a3ce23ad671aeaeb6",
+      "size": 636,
+      "hash": "3ffb084249febe093d94f942544346f47735c88d",
       "sri": null
     },
     {
@@ -7147,8 +7147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom3.svg",
-      "size": 832,
-      "hash": "54ae75feed12617756216bd2bf7c76a2bb4479b0",
+      "size": 821,
+      "hash": "b69785fdffca8fb18cb481d690bcea9e4d3836fc",
       "sri": null
     },
     {
@@ -7157,8 +7157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom30.svg",
-      "size": 814,
-      "hash": "afde3898af9bb6a9a05a89ebd588825bc9d2b767",
+      "size": 802,
+      "hash": "da5512d9f94941914dd03e3ecec5044da0d0712b",
       "sri": null
     },
     {
@@ -7187,8 +7187,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom31.svg",
-      "size": 729,
-      "hash": "0a18db327c7036178169c2edff99cb380e4669e6",
+      "size": 721,
+      "hash": "504dd92a3a0068d3f9a32708d05dee6ed0bf6324",
       "sri": null
     },
     {
@@ -7217,8 +7217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom32.svg",
-      "size": 967,
-      "hash": "96f035ee41cb9205c38f3b1844cc6fc7684fec28",
+      "size": 957,
+      "hash": "81e3c43f3bfec674ef735c188c372ee3015d5b2d",
       "sri": null
     },
     {
@@ -7247,8 +7247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom33.svg",
-      "size": 580,
-      "hash": "dbfc2d25415a437b7501b3f5f2db3d674033d8cb",
+      "size": 571,
+      "hash": "041a0662883d43686ff1ebedb538767717551d42",
       "sri": null
     },
     {
@@ -7277,8 +7277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom34.svg",
-      "size": 1048,
-      "hash": "d1f03c3bdcaa0b0e2cc35848c2d1fb2380fffd61",
+      "size": 1035,
+      "hash": "2c149cc0f951d795a896467114923262edf9b8ce",
       "sri": null
     },
     {
@@ -7307,8 +7307,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom35.svg",
-      "size": 601,
-      "hash": "f0c6253ff95824ce698aedcf125a18b3fd75c700",
+      "size": 591,
+      "hash": "056ff2ed149d2f9bf4f06a494620ba2f01c09e20",
       "sri": null
     },
     {
@@ -7337,8 +7337,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom36.svg",
-      "size": 869,
-      "hash": "2fc4ec09ab2ca490261c631f3678fe4a1c8b06fb",
+      "size": 857,
+      "hash": "d3b57d55f161246463fd5394698f7b1774e7532b",
       "sri": null
     },
     {
@@ -7367,8 +7367,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom37.svg",
-      "size": 869,
-      "hash": "24e5f0b1666ff200be2b43238317f2d0d0e3e339",
+      "size": 860,
+      "hash": "818d068db9e7769b83e5ef4464ccb34c630e501a",
       "sri": null
     },
     {
@@ -7397,8 +7397,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom38.svg",
-      "size": 620,
-      "hash": "30f639477ce27eed0d1ece9fce0015cfaad3baca",
+      "size": 611,
+      "hash": "7d4db825bebfe3c84f42cff9aaa7c44fe65f9bc1",
       "sri": null
     },
     {
@@ -7427,8 +7427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom39.svg",
-      "size": 831,
-      "hash": "a89d113ea42a1885d1a4f9ccd30677e22799d275",
+      "size": 820,
+      "hash": "98d443d3375843d20c2f6bc634c17d4621736504",
       "sri": null
     },
     {
@@ -7477,8 +7477,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom4.svg",
-      "size": 422,
-      "hash": "68879e312ce0cbb5be2a6c581f5f16acd2e55743",
+      "size": 416,
+      "hash": "e696deb4fa14f4a8e7bcfc68d383263e3cb1a971",
       "sri": null
     },
     {
@@ -7487,8 +7487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom40.svg",
-      "size": 763,
-      "hash": "685f1536da1b9ce7c88c8886fa73e3aa355b7e92",
+      "size": 752,
+      "hash": "530d9cb8de564942492db554a88e925dca5e449a",
       "sri": null
     },
     {
@@ -7517,8 +7517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom41.svg",
-      "size": 447,
-      "hash": "ca02ecfb5faf72ef3202d6077fe06b05e6ae55e3",
+      "size": 439,
+      "hash": "dcb6352a9633efc0bd57b48e452aa1ac454bd867",
       "sri": null
     },
     {
@@ -7547,8 +7547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom42.svg",
-      "size": 526,
-      "hash": "2bc366c8b407a0b860858e0850d416a14345c861",
+      "size": 518,
+      "hash": "63a29c5ef11d05d27eabfd64108ebbdf7e52004c",
       "sri": null
     },
     {
@@ -7577,8 +7577,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom43.svg",
-      "size": 1587,
-      "hash": "4083c2466fbcaba88debcbfa893fbbd933ce388e",
+      "size": 1572,
+      "hash": "7f676eec70e8e6c5c6423e13659aa2b9517116d1",
       "sri": null
     },
     {
@@ -7607,8 +7607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom44.svg",
-      "size": 592,
-      "hash": "3a2781e535c755e1a22bc6235f3cddeb71f37863",
+      "size": 585,
+      "hash": "1f20829d857e1cddf1953e0299d26407b78bcf89",
       "sri": null
     },
     {
@@ -7637,8 +7637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom45.svg",
-      "size": 636,
-      "hash": "258b5a8ef34664870be3e51fe68019f6cc03f12f",
+      "size": 626,
+      "hash": "9f025c7fda881f72e472b5ddc47cd8e268c49665",
       "sri": null
     },
     {
@@ -7667,8 +7667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom46.svg",
-      "size": 1642,
-      "hash": "8f605900c5ff9cccb975c54f9b983568920004a6",
+      "size": 1624,
+      "hash": "2ea6a0c0dadfaf26b3884e386a9a737cc1fdd442",
       "sri": null
     },
     {
@@ -7697,8 +7697,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom47.svg",
-      "size": 718,
-      "hash": "e5230a752f8baeaf0c1dc7e4233cfded39e990fc",
+      "size": 707,
+      "hash": "b1418760bc3995b62c763b291a39def60179d7b3",
       "sri": null
     },
     {
@@ -7727,8 +7727,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom48.svg",
-      "size": 732,
-      "hash": "2846f1821dffeb838a78b5aa5bc3f2de91be1729",
+      "size": 721,
+      "hash": "dabb2b5c2736c8f2e3d6c86279fdc422a1d65091",
       "sri": null
     },
     {
@@ -7757,8 +7757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom49.svg",
-      "size": 828,
-      "hash": "32c948f176481a1a74f65df685d9715311733ab9",
+      "size": 817,
+      "hash": "20f8a58d4bc3fc7722eb735bb56dd79241bb09a3",
       "sri": null
     },
     {
@@ -7807,8 +7807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom5.svg",
-      "size": 817,
-      "hash": "1c94b9dbf2c97e826850be5043be7e71ef3caabc",
+      "size": 808,
+      "hash": "38eb7c80cf7ebe527182f0f0503771e881e696c9",
       "sri": null
     },
     {
@@ -7817,8 +7817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom50.svg",
-      "size": 1018,
-      "hash": "9b78986579a5997a168b51deb3d438e6bc6d6c60",
+      "size": 1005,
+      "hash": "773596cdba7952d8a03fb26945e3eb3ba0ac0fa7",
       "sri": null
     },
     {
@@ -7847,8 +7847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom51.svg",
-      "size": 724,
-      "hash": "7a9a7de922488c18c3c677d518ea09b3337bb0b2",
+      "size": 714,
+      "hash": "07fa42b76e921364010ecbe79b274951390393d4",
       "sri": null
     },
     {
@@ -7877,8 +7877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom52.svg",
-      "size": 1225,
-      "hash": "9db02e5f3ef17d341d5034fb1100f66ddce03d31",
+      "size": 1210,
+      "hash": "f129ae165121b233bcaa3db74ee47e4d85ab4684",
       "sri": null
     },
     {
@@ -7907,8 +7907,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom53.svg",
-      "size": 593,
-      "hash": "0e518fcad0150c3f7c676ceeb7f47cd6e20d6437",
+      "size": 583,
+      "hash": "7a1955b75c5ae48e2672c93477baf83d26b7f0a4",
       "sri": null
     },
     {
@@ -7937,8 +7937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom54.svg",
-      "size": 780,
-      "hash": "f8b4a2c0f6a31571bb53d69a10065996d80a0178",
+      "size": 769,
+      "hash": "03cd0b2342a5a1c65baebad202f0d8933cfb6f0f",
       "sri": null
     },
     {
@@ -7967,8 +7967,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom55.svg",
-      "size": 680,
-      "hash": "b5b7026657f141e32eb1ed9ce01259d39a0ee096",
+      "size": 671,
+      "hash": "a22a3e54469ae05b4f68d10a331f0a00c407ccf3",
       "sri": null
     },
     {
@@ -7997,8 +7997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom56.svg",
-      "size": 763,
-      "hash": "e4d16f50fe35ed883033138ab7ee17437d402ae1",
+      "size": 752,
+      "hash": "acc8287b1738e0dae8840e48be0bb9df10881456",
       "sri": null
     },
     {
@@ -8027,8 +8027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom57.svg",
-      "size": 761,
-      "hash": "41df65642308907cf8c0dbca871fa64d70bfc9a9",
+      "size": 750,
+      "hash": "03027f1712b3a66ca0cca972fb17320ac86dd5a3",
       "sri": null
     },
     {
@@ -8057,8 +8057,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom58.svg",
-      "size": 1008,
-      "hash": "4c436394cdba7e491fa2328da83d3ab0fe36dc88",
+      "size": 998,
+      "hash": "637a317c3604ef63dbf3a4bf6978ee751aa2b537",
       "sri": null
     },
     {
@@ -8087,8 +8087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom59.svg",
-      "size": 708,
-      "hash": "c989f999ba1dde7b6df3419d00e95f4fcc7c5dc9",
+      "size": 697,
+      "hash": "8c4f6571051ebddfe3af18a5f9a46d694221a63f",
       "sri": null
     },
     {
@@ -8137,8 +8137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom6.svg",
-      "size": 292,
-      "hash": "f6c3db441f374e7e67cf222ce4aeac11ca0d12c1",
+      "size": 288,
+      "hash": "a6bcc0dcd4380455c8aca977b4800c0efdaa1c78",
       "sri": null
     },
     {
@@ -8147,8 +8147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom60.svg",
-      "size": 739,
-      "hash": "22aae6931e6bdc0ca376badae1f642934fda4970",
+      "size": 728,
+      "hash": "30407ce658cc09b4dee1a5aa3038c5e5b8d90cc1",
       "sri": null
     },
     {
@@ -8177,8 +8177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom61.svg",
-      "size": 803,
-      "hash": "e976304df1baf85842675bbbbcc41ce2ca3c3626",
+      "size": 792,
+      "hash": "a909481ebbbba63c72f40b2887df3e9059f9f3a6",
       "sri": null
     },
     {
@@ -8207,8 +8207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom62.svg",
-      "size": 648,
-      "hash": "2033884e011fe3f60c41c29953a3765040df8e00",
+      "size": 639,
+      "hash": "58efbd32a127c60676ed870808c6c5776a3ae1c4",
       "sri": null
     },
     {
@@ -8237,8 +8237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom63.svg",
-      "size": 933,
-      "hash": "eb288efc8299f75ca1d8b432f7ee6b2cdd30084d",
+      "size": 922,
+      "hash": "349fd76de1b751af0f9c84322c2a40165f4663fe",
       "sri": null
     },
     {
@@ -8267,8 +8267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom64.svg",
-      "size": 625,
-      "hash": "305383635bb5823f2872d4c32524bd8b82e864b7",
+      "size": 616,
+      "hash": "02d158a19efe9f90daf79f4e8c6bfc73ed1356cc",
       "sri": null
     },
     {
@@ -8297,8 +8297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom65.svg",
-      "size": 691,
-      "hash": "6216bdf7027bd75cf3ba8248274261d5e591e655",
+      "size": 681,
+      "hash": "c13be320251be395b8f066e2bab916f7ea11ff11",
       "sri": null
     },
     {
@@ -8327,8 +8327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom66.svg",
-      "size": 1296,
-      "hash": "eddb47d9577ae50f8d6fca71e0c82ef487499d19",
+      "size": 1281,
+      "hash": "02009891b828bf527794edf36d2109e5540f6fa2",
       "sri": null
     },
     {
@@ -8357,8 +8357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom67.svg",
-      "size": 1900,
-      "hash": "e0dc43a5ad7cecdcf52837a8e0f6b8810e2d8b1d",
+      "size": 1880,
+      "hash": "d8667fbc25307e941f045a9965b77b5208b6cf13",
       "sri": null
     },
     {
@@ -8387,8 +8387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom68.svg",
-      "size": 737,
-      "hash": "fe2fd970db902535dc4c0344c0f86cf5e9ab1d43",
+      "size": 729,
+      "hash": "13d088a6a744eff0376bc2eb811a0abbc7943728",
       "sri": null
     },
     {
@@ -8417,8 +8417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom69.svg",
-      "size": 1036,
-      "hash": "3dd014ef6dda61a860bba874e03a458ce1536ac8",
+      "size": 1023,
+      "hash": "a4d2d6c4a05c0986b14fee8d9a5eed497da090f0",
       "sri": null
     },
     {
@@ -8467,8 +8467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom7.svg",
-      "size": 290,
-      "hash": "87c1fcbaa5e050709c5759b345544bc46821d692",
+      "size": 286,
+      "hash": "d788459b4f321144dc0230fa984655484bbea086",
       "sri": null
     },
     {
@@ -8477,8 +8477,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom70.svg",
-      "size": 996,
-      "hash": "67245acfc671dd4a5665d853400b80947f0684e0",
+      "size": 984,
+      "hash": "4d3c0895b086cec5e52a1fce598fdcc9e3aabeeb",
       "sri": null
     },
     {
@@ -8507,8 +8507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom71.svg",
-      "size": 676,
-      "hash": "96db18f0b28018df27bc9fd0f85c9f23265efd71",
+      "size": 668,
+      "hash": "6a997a55c471e49c9b35847ef7362072aeecd617",
       "sri": null
     },
     {
@@ -8537,8 +8537,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom72.svg",
-      "size": 703,
-      "hash": "8fea4b0ee466e690f5d1a7bd4aa3a3327a54e0fe",
+      "size": 692,
+      "hash": "38e2047fc973640cc4a4e20e55b9dce6d5baa535",
       "sri": null
     },
     {
@@ -8567,8 +8567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom73.svg",
-      "size": 665,
-      "hash": "f3f5ca28c12ba9448d1adcc4f250a8998cc592f8",
+      "size": 655,
+      "hash": "847d6df0b64e3f752923c506e43170110b3026cf",
       "sri": null
     },
     {
@@ -8597,8 +8597,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom74.svg",
-      "size": 997,
-      "hash": "94f1a5531457b7c118f14e9857184494c372710a",
+      "size": 985,
+      "hash": "cae5c8e02fd37a8bd27012174927607442f473b1",
       "sri": null
     },
     {
@@ -8627,8 +8627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom75.svg",
-      "size": 911,
-      "hash": "f4c978757e2f6562de81297bb023abc7b419ef8e",
+      "size": 900,
+      "hash": "c0123c9ce2f9bc69390c4c05117eff6e1bde2cfd",
       "sri": null
     },
     {
@@ -8657,8 +8657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom76.svg",
-      "size": 1227,
-      "hash": "b6160788212f865f038ecf7f2092553a5f714b69",
+      "size": 1213,
+      "hash": "572d54df7f296266d60e2f8bb68c88004db0f22d",
       "sri": null
     },
     {
@@ -8687,8 +8687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom77.svg",
-      "size": 752,
-      "hash": "d66902b58cfc6c96900b328c6248d4d5365c29d2",
+      "size": 742,
+      "hash": "68f18710832d65c18eb5d1d22b89127ea302490d",
       "sri": null
     },
     {
@@ -8717,8 +8717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom78.svg",
-      "size": 987,
-      "hash": "f9c1e89cfa8f7819bf24c843801db88a82e5fe31",
+      "size": 977,
+      "hash": "5242db004a6fc000e2a7bbce6137d3a9fae66bee",
       "sri": null
     },
     {
@@ -8747,8 +8747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom79.svg",
-      "size": 600,
-      "hash": "794c8a9ec489d08bbd593fddf0e5ca8c28d683a1",
+      "size": 591,
+      "hash": "65cc17c74361d2611aa00e4aa36fbd5f7be342b3",
       "sri": null
     },
     {
@@ -8797,8 +8797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom8.svg",
-      "size": 343,
-      "hash": "7b4994cc7059177baa3924e7c08841188e19182d",
+      "size": 338,
+      "hash": "6c7224f8fac1b3c26ecbd9595d2f52f0c530a5ee",
       "sri": null
     },
     {
@@ -8807,8 +8807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom80.svg",
-      "size": 1240,
-      "hash": "b35add6fb1956247376dc4bfa46b8c02e1b0844d",
+      "size": 1223,
+      "hash": "75b950c2a151d8d806b87322b7381243dbbf94c2",
       "sri": null
     },
     {
@@ -8837,8 +8837,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom81.svg",
-      "size": 720,
-      "hash": "e73005fbce8a03a861d2082a4ef7f34ea3dcaf36",
+      "size": 712,
+      "hash": "9436423e499a19b1e442833bc541bd95662c4885",
       "sri": null
     },
     {
@@ -8867,8 +8867,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom82.svg",
-      "size": 1143,
-      "hash": "98561e7a93f34129106081fb8e5ac25b61e43b6f",
+      "size": 1128,
+      "hash": "9876f08c160644f06bc109b80c67995c8b26e15a",
       "sri": null
     },
     {
@@ -8897,8 +8897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom83.svg",
-      "size": 760,
-      "hash": "a16581f8932224c38fbea4e5a68a149240bde43d",
+      "size": 749,
+      "hash": "f169f58cd9f6e9196b32ec9e799d3d0bde64ae2b",
       "sri": null
     },
     {
@@ -8927,8 +8927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom84.svg",
-      "size": 759,
-      "hash": "08a6379bbb67f0d363915ded6495c61676351c52",
+      "size": 748,
+      "hash": "205f4199f4a06bae8af634dde7d39a5211de2e17",
       "sri": null
     },
     {
@@ -8957,8 +8957,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom85.svg",
-      "size": 739,
-      "hash": "55f3c34cfe10e12ac80f0b667688514b7d756844",
+      "size": 729,
+      "hash": "f66ba4ad2c5238ccf878cdc45d98e0f897bc565b",
       "sri": null
     },
     {
@@ -8987,8 +8987,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom86.svg",
-      "size": 751,
-      "hash": "bb87bb35f2f9095c683115cd3c91aff62611dce5",
+      "size": 740,
+      "hash": "bcf9dffc266c534e5f29d24a15c15eab4dea8219",
       "sri": null
     },
     {
@@ -9017,8 +9017,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom87.svg",
-      "size": 727,
-      "hash": "9fa2a6b25f825b1c73b29208204e8237a0296b47",
+      "size": 717,
+      "hash": "b3b9edf92fcb1e5e0c0f51f4d96876a007a19602",
       "sri": null
     },
     {
@@ -9047,8 +9047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom88.svg",
-      "size": 596,
-      "hash": "108c58ca330a216793d762dfa373a987e285b613",
+      "size": 586,
+      "hash": "cb843f5f2cc6dfb2aade319b26571fcab85bdc21",
       "sri": null
     },
     {
@@ -9077,8 +9077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom89.svg",
-      "size": 922,
-      "hash": "2947f7e73d4c12ce46cdc10ade5cca9d3e5f6fdd",
+      "size": 910,
+      "hash": "c8ba7605971b1d75b65fd3f312cee4d5351086f0",
       "sri": null
     },
     {
@@ -9127,8 +9127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom9.svg",
-      "size": 381,
-      "hash": "4972fc02cb3b08fa1a7b257a0c4836753974cedf",
+      "size": 376,
+      "hash": "672ae560088e6767c4b1cadb68ad9e4ee05c1e93",
       "sri": null
     },
     {
@@ -9137,8 +9137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom90.svg",
-      "size": 1131,
-      "hash": "ce0cac6694bc1dcaf7f8a2701f260b6405cef709",
+      "size": 1117,
+      "hash": "797564605f3355e202a941c1301fd6819c1ca163",
       "sri": null
     },
     {
@@ -9167,8 +9167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom91.svg",
-      "size": 1004,
-      "hash": "5a2472f3ac106c653fb67c9d15b1612823d861a2",
+      "size": 991,
+      "hash": "eb6ae64980ca75b613cc916c0759977e33a6900c",
       "sri": null
     },
     {
@@ -9197,8 +9197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom92.svg",
-      "size": 1027,
-      "hash": "ab94d311cf5ce42cc29446d0b7b3883c2fba51ab",
+      "size": 1014,
+      "hash": "64813b2d3e5cbda91ac2310bbbb96c91f968afed",
       "sri": null
     },
     {
@@ -9227,8 +9227,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom93.svg",
-      "size": 635,
-      "hash": "e5bc04ed9e7090661c595ffc09f0e5eaeea6e046",
+      "size": 625,
+      "hash": "47515739eca46b47991f9221403db834f43906cb",
       "sri": null
     },
     {
@@ -9257,8 +9257,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom94.svg",
-      "size": 732,
-      "hash": "0515baa75c1b85387c456ea5ca0d78fe1679913b",
+      "size": 722,
+      "hash": "c07094ec362848fb16fc188a9440d3e6ec8db3c4",
       "sri": null
     },
     {
@@ -9287,8 +9287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom95.svg",
-      "size": 665,
-      "hash": "5aba5ae3ab0bb80c2d998ebef529d6008cbfd550",
+      "size": 655,
+      "hash": "b4d1b71d5710ce53e4cb46f7d74e95b931b2af58",
       "sri": null
     },
     {
@@ -9317,8 +9317,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom96.svg",
-      "size": 847,
-      "hash": "ef927d278741f3255abbb3014c94e43fe22b1b93",
+      "size": 836,
+      "hash": "d841a1dac737189fe2a087741f25a3458597159d",
       "sri": null
     },
     {
@@ -9347,8 +9347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom97.svg",
-      "size": 685,
-      "hash": "24dd20779db468125a17d58bd27a98c433e79eec",
+      "size": 677,
+      "hash": "6a86d847ab8485503f71f37212d65406311cc807",
       "sri": null
     },
     {
@@ -9377,8 +9377,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom98.svg",
-      "size": 749,
-      "hash": "4158311a6c40fd43be8383fd624432aab133fc56",
+      "size": 738,
+      "hash": "2abd243a5222ecafba90e8d40bdd8519bf5a76fc",
       "sri": null
     },
     {
@@ -9407,8 +9407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/custom/custom99.svg",
-      "size": 729,
-      "hash": "28e9d862a8b523c27b0c14cca40166350797ff6d",
+      "size": 721,
+      "hash": "69ad064193f0964663c0cba4575d246f038c202b",
       "sri": null
     },
     {
@@ -9547,8 +9547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/doctype/box_notes.svg",
-      "size": 1837,
-      "hash": "88a54075443bedd171010a1eccee05c25d4efc93",
+      "size": 1817,
+      "hash": "82a7838a0aaf138d457957b4d28c6311596c8376",
       "sri": null
     },
     {
@@ -10177,8 +10177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/doctype/pdf.svg",
-      "size": 1163,
-      "hash": "d1337f2743e84c4e31ad9133a8388e177de42438",
+      "size": 1149,
+      "hash": "9d268994fd1eeef67755225a36e189201440220f",
       "sri": null
     },
     {
@@ -10687,8 +10687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/account.svg",
-      "size": 1627,
-      "hash": "a347847cec240f04bfaea6be9170795d26fdfb2a",
+      "size": 1614,
+      "hash": "f95105722ed579c4b3ca46f3a5d68e4cd5cdcf42",
       "sri": null
     },
     {
@@ -11047,8 +11047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/announcement.svg",
-      "size": 678,
-      "hash": "24d8f38402f96834a790f9a8b7736618bd79d4cc",
+      "size": 668,
+      "hash": "ea514ffdb55971f5ceeab5401d297857dc2761e5",
       "sri": null
     },
     {
@@ -11077,8 +11077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/answer_best.svg",
-      "size": 1162,
-      "hash": "a045138247d623299b70a65141d2be83a377f4cc",
+      "size": 1149,
+      "hash": "4e9e7b102e1710f0d9b507d5ff77906a7a933e2b",
       "sri": null
     },
     {
@@ -11107,8 +11107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/answer_private.svg",
-      "size": 1075,
-      "hash": "2574c02cf0870f621297054feb5604050fcedee5",
+      "size": 1061,
+      "hash": "9d39484ac57341b50a27c814b8d52f4c0da90f34",
       "sri": null
     },
     {
@@ -11137,8 +11137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/answer_public.svg",
-      "size": 643,
-      "hash": "c32daaa6358a8abd1c243ade5d343fbd73d8903e",
+      "size": 633,
+      "hash": "1f958ac277c984a38b4f9f13dd4f729d00aa40d3",
       "sri": null
     },
     {
@@ -11257,8 +11257,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/approval.svg",
-      "size": 616,
-      "hash": "7784d539d682ef1c38df34fd004f47b8f6132226",
+      "size": 602,
+      "hash": "f1fa46c7962588b207b93c6c05e90bd3ca366ae4",
       "sri": null
     },
     {
@@ -11287,8 +11287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/apps.svg",
-      "size": 1381,
-      "hash": "9df0b28ddacc1a91125d717ce7d4f542f4c47da2",
+      "size": 1348,
+      "hash": "68c3c60fd673f8a6d1431535c50c1427fdc8bd3b",
       "sri": null
     },
     {
@@ -11317,8 +11317,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/apps_admin.svg",
-      "size": 961,
-      "hash": "89ef0cbde90c2637893452fc88834373834463f0",
+      "size": 939,
+      "hash": "13032099719b4436a0cf3c0ab288b7db10a5e8c0",
       "sri": null
     },
     {
@@ -11347,8 +11347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/article.svg",
-      "size": 724,
-      "hash": "858366afe9c47fb2e03fc9cba8116365e315ecd4",
+      "size": 708,
+      "hash": "964fcc6c3ff1bb9d7fce2732f649f65ef2ac0ed6",
       "sri": null
     },
     {
@@ -11707,8 +11707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/avatar.svg",
-      "size": 574,
-      "hash": "c54d7e25a7b1a8ffe034bc91675e69f59f04e005",
+      "size": 560,
+      "hash": "230834f67b0271db3069201e28c2e0ace2d62ab7",
       "sri": null
     },
     {
@@ -11737,8 +11737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/avatar_loading.svg",
-      "size": 577,
-      "hash": "ab5c0fd05133e06c77a3cfa288858e9c24631a01",
+      "size": 564,
+      "hash": "dd7aff077378c56d3fb8609891710eef3e36b499",
       "sri": null
     },
     {
@@ -12127,8 +12127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/calibration.svg",
-      "size": 1308,
-      "hash": "72a9965547c3ea1c43630053ba8d8a61b970fc14",
+      "size": 1278,
+      "hash": "7111ea643b5a8dc6242995633c3b85cd61166b25",
       "sri": null
     },
     {
@@ -12157,8 +12157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/call.svg",
-      "size": 540,
-      "hash": "660d0ebd82f6372081bba5002b252baedf7b18c3",
+      "size": 534,
+      "hash": "4d7579a2c002a258d2d2bd7e709c012bc80e882a",
       "sri": null
     },
     {
@@ -12217,8 +12217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/call_history.svg",
-      "size": 1105,
-      "hash": "57332f1d546901d8ae4c0f552cc98a1f320b10cf",
+      "size": 1085,
+      "hash": "7f5ce0ea696d426e5c4e436514d199c9e98c2e9e",
       "sri": null
     },
     {
@@ -12247,8 +12247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/campaign.svg",
-      "size": 671,
-      "hash": "76033c030dc6783b6d4018cbad2ad699194b5721",
+      "size": 654,
+      "hash": "af861d2a86fa87010e595abb0ddce0300c8f0bbe",
       "sri": null
     },
     {
@@ -12277,8 +12277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/campaign_members.svg",
-      "size": 1001,
-      "hash": "fb8b28424ee0f9aedb099335435fefbf1a18df6e",
+      "size": 984,
+      "hash": "7320fd66ba52237e3838d6ddeff606d688221080",
       "sri": null
     },
     {
@@ -12337,8 +12337,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/canvas.svg",
-      "size": 902,
-      "hash": "2bd310d412145d5ec037397d33cc62d2f50095de",
+      "size": 891,
+      "hash": "989884288acdc62a1d67c797d93eb3443280cf5a",
       "sri": null
     },
     {
@@ -12457,8 +12457,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case.svg",
-      "size": 506,
-      "hash": "8a07c1f381fcf5281365b0b122109e57a8fb4056",
+      "size": 493,
+      "hash": "65235db12847a2d06526e47c0bdef494f7eba89e",
       "sri": null
     },
     {
@@ -12487,8 +12487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case_change_status.svg",
-      "size": 696,
-      "hash": "25db073835251b966596aab352514dfa2105c82e",
+      "size": 681,
+      "hash": "b1ae30cea8c6247f8ecde0e983899a9aeebd45e6",
       "sri": null
     },
     {
@@ -12517,8 +12517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case_comment.svg",
-      "size": 718,
-      "hash": "7d179c4a264682db149fc7538cda445efd7a8185",
+      "size": 703,
+      "hash": "546c3413e4cda8fe8a618a4844f17377fb20f373",
       "sri": null
     },
     {
@@ -12547,8 +12547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case_email.svg",
-      "size": 820,
-      "hash": "a7fcff20ed9dd15b89a5dcb0e22194680f2eb36e",
+      "size": 804,
+      "hash": "0b72546a8e9dc84faa12858edbc0688b35874862",
       "sri": null
     },
     {
@@ -12577,8 +12577,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case_log_a_call.svg",
-      "size": 830,
-      "hash": "1b32b982e26e7950a6ff4c1885a80d3cda6eb3f0",
+      "size": 814,
+      "hash": "e05bde30f92a8ca60df92a54ebb5878af56995a0",
       "sri": null
     },
     {
@@ -12637,8 +12637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/case_transcript.svg",
-      "size": 786,
-      "hash": "0d5a6ae17fb46c4029dddc0f07c715c72f7b95ed",
+      "size": 770,
+      "hash": "4ce92b9afc2d0aea9a90db360739cdee1b1c7690",
       "sri": null
     },
     {
@@ -12997,8 +12997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/client.svg",
-      "size": 909,
-      "hash": "fc338e8d1fae01b1907bec79576b009eadf51ef2",
+      "size": 897,
+      "hash": "e66a6fd1fcccac95fec1625199baea0392ae7e74",
       "sri": null
     },
     {
@@ -13057,8 +13057,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/coaching.svg",
-      "size": 977,
-      "hash": "67de88186a780290b2820bb34ffc860ade0f21e7",
+      "size": 960,
+      "hash": "236d2aa7c5c2e456a9c126437ae675d7d92cf05d",
       "sri": null
     },
     {
@@ -13267,8 +13267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/connected_apps.svg",
-      "size": 653,
-      "hash": "5c6712a185d7c16520d5c1aec4ef15dcae17a49a",
+      "size": 639,
+      "hash": "59245e77cb6708831dec388085604994d34b7bab",
       "sri": null
     },
     {
@@ -13327,8 +13327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/contact.svg",
-      "size": 762,
-      "hash": "f709d412e6a20794d714b28d7aebb643d88edd05",
+      "size": 752,
+      "hash": "709917a9d0e2272288e6e7fce02a0ea72210851b",
       "sri": null
     },
     {
@@ -13417,8 +13417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/contract.svg",
-      "size": 1086,
-      "hash": "915e9c19cdf8a4f1a2cfd4947ee258c47a702852",
+      "size": 1068,
+      "hash": "9ffa66b07720e15e9293e73219c58ad5c6d1d6eb",
       "sri": null
     },
     {
@@ -13927,8 +13927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/custom.svg",
-      "size": 580,
-      "hash": "9431cfd40a22e3a8a140058097d4453f84eaec4f",
+      "size": 573,
+      "hash": "93a643600bfc75e00f3eee9a06345224efecc31b",
       "sri": null
     },
     {
@@ -14197,8 +14197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/dashboard.svg",
-      "size": 663,
-      "hash": "71375272a67d56b834532ed3d9acc26713308c59",
+      "size": 648,
+      "hash": "12c6bc8e8690327d9f688476fc9e22bb309d87c0",
       "sri": null
     },
     {
@@ -14557,8 +14557,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/default.svg",
-      "size": 637,
-      "hash": "898705cd973580b5f4f917804182b2293322f55c",
+      "size": 627,
+      "hash": "f48f3c37b1d9200316be4f898a988c7b531de623",
       "sri": null
     },
     {
@@ -14737,8 +14737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/document.svg",
-      "size": 565,
-      "hash": "2bbdc78d31d1df4cd8eca3191eb95f6190492b1d",
+      "size": 551,
+      "hash": "b88b9fdc456718c4d4eedea57c053cad2597172a",
       "sri": null
     },
     {
@@ -14797,8 +14797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/drafts.svg",
-      "size": 771,
-      "hash": "c121db81859dcb3e638bb028ba0100eed2f1bf49",
+      "size": 755,
+      "hash": "1e38d4d0c9429f91ae759095f3224345de0c7c7d",
       "sri": null
     },
     {
@@ -14947,8 +14947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/email.svg",
-      "size": 568,
-      "hash": "eeb7ad4e0147aefa4fcbe0b6ec21a59cfd1be130",
+      "size": 555,
+      "hash": "e3de4785903efc2424253c26cdcecbe19f477f6d",
       "sri": null
     },
     {
@@ -14977,8 +14977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/email_chatter.svg",
-      "size": 568,
-      "hash": "eeb7ad4e0147aefa4fcbe0b6ec21a59cfd1be130",
+      "size": 555,
+      "hash": "e3de4785903efc2424253c26cdcecbe19f477f6d",
       "sri": null
     },
     {
@@ -15187,8 +15187,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/empty.svg",
-      "size": 439,
-      "hash": "16f5b6e673ecd1265345a9f0d2a006a07cdf9e49",
+      "size": 429,
+      "hash": "8374798bd7becec3e699b6b1f611062e76656a64",
       "sri": null
     },
     {
@@ -15217,8 +15217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/endorsement.svg",
-      "size": 588,
-      "hash": "2117dfd3775c94f4dde17216dd6cf3c8a56e52e1",
+      "size": 575,
+      "hash": "bd0a57aa91085fff1e8db0a2cf0598b2489d1689",
       "sri": null
     },
     {
@@ -15427,8 +15427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/environment_hub.svg",
-      "size": 900,
-      "hash": "8aad36642a488842baac7c1873cc9d7948bd8428",
+      "size": 890,
+      "hash": "056bc61f91d2b2c1c6a3da18fd537827b6f43294",
       "sri": null
     },
     {
@@ -15457,8 +15457,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/event.svg",
-      "size": 1064,
-      "hash": "2e7ff7ebcf4eb9678fb6fe8c57859623db04f66c",
+      "size": 1046,
+      "hash": "0e21229d697944dae1065e8ee5ff3b1d3d98049f",
       "sri": null
     },
     {
@@ -15607,8 +15607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/feed.svg",
-      "size": 619,
-      "hash": "262d6c21d652a93c517d853c50a1862b6d07d113",
+      "size": 607,
+      "hash": "ea0a70d4cc530f05e29ef127d9701fc79024d2a7",
       "sri": null
     },
     {
@@ -15637,8 +15637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/feedback.svg",
-      "size": 983,
-      "hash": "555c9204cb285b5e05efff566dac718a90235321",
+      "size": 966,
+      "hash": "6371b5e6620613c71bbf74d47f78b7dd1308b582",
       "sri": null
     },
     {
@@ -15697,8 +15697,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/file.svg",
-      "size": 650,
-      "hash": "b0eb2025712a812708e186b6a82bdefe0471086b",
+      "size": 640,
+      "hash": "328a8d4350b92d7d0c760e40cbf2aebbbb1ee344",
       "sri": null
     },
     {
@@ -15847,8 +15847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/flow.svg",
-      "size": 968,
-      "hash": "14b640b9fbc589c44c97f22cc394d18609c6be52",
+      "size": 954,
+      "hash": "1bc0d9a72a831859014d80dcc54104226b5cfcae",
       "sri": null
     },
     {
@@ -15877,8 +15877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/folder.svg",
-      "size": 555,
-      "hash": "00fc64dd31855fa327b65134e935ac0a0bf53eb1",
+      "size": 548,
+      "hash": "01df48b3c4ab32b0dbee2793f94e5b4324aca7ce",
       "sri": null
     },
     {
@@ -16027,8 +16027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/generic_loading.svg",
-      "size": 1578,
-      "hash": "a10a9929b5472a2bbd12cc4c39b1c18abf075173",
+      "size": 1556,
+      "hash": "8361b3608941c5e9f373dc121e9a0143a64438ab",
       "sri": null
     },
     {
@@ -16087,8 +16087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/goals.svg",
-      "size": 1261,
-      "hash": "df99389d46c62dae606dc0c06f78c231b8adb8d7",
+      "size": 1240,
+      "hash": "bbfbc23d1ca0a62640de5e78d6642f60329d3f9b",
       "sri": null
     },
     {
@@ -16117,8 +16117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/group_loading.svg",
-      "size": 1227,
-      "hash": "75567c8de692ea458326a1e8544c11b19c53c4e6",
+      "size": 1206,
+      "hash": "69afd5ae0db5d565abad6d494909ea2348c81cce",
       "sri": null
     },
     {
@@ -16147,8 +16147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/groups.svg",
-      "size": 1185,
-      "hash": "15cbcf1ae2c2815f303f4e3af1604e6967aa02d7",
+      "size": 1164,
+      "hash": "f28b0d38b5a08700e3b0955e988de22752ffc0b1",
       "sri": null
     },
     {
@@ -16207,8 +16207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/hierarchy.svg",
-      "size": 790,
-      "hash": "07901652e93ac6eb837e14af14563b164db8823a",
+      "size": 782,
+      "hash": "5f62c16247242fc7efd511591ad0bfc89a4c710e",
       "sri": null
     },
     {
@@ -16327,8 +16327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/home.svg",
-      "size": 501,
-      "hash": "b99c08a01175a5c275049ff67c1b32ced74e450b",
+      "size": 493,
+      "hash": "16f25b8e1c044e62151b9af21d037dfa1036893d",
       "sri": null
     },
     {
@@ -16357,8 +16357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/household.svg",
-      "size": 1233,
-      "hash": "b9c701e5cffe32e35e9cd47f78bcb3fb2cd5afa4",
+      "size": 1220,
+      "hash": "4c47a7ac569fd70cad9f02e8444ea060382a2a3c",
       "sri": null
     },
     {
@@ -16507,8 +16507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/insights.svg",
-      "size": 1061,
-      "hash": "358c0f199c19ac02fec959e14813e72d3e16ca5e",
+      "size": 1050,
+      "hash": "259bc5cbde3801176a9514a8559a6a002407a09e",
       "sri": null
     },
     {
@@ -16567,8 +16567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/investment_account.svg",
-      "size": 552,
-      "hash": "db7022512510c044e002b1eda6551f032dbec6aa",
+      "size": 545,
+      "hash": "a00ffb8d1ee6b7bf87a1d2b17f349c0b347fb577",
       "sri": null
     },
     {
@@ -16897,8 +16897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/lead.svg",
-      "size": 526,
-      "hash": "620bd0a68394cb0d890d45f3a84841adbb14cde5",
+      "size": 513,
+      "hash": "2a1ffe6c7fbfdafd68b38f343796d436cc089fdb",
       "sri": null
     },
     {
@@ -17107,8 +17107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/link.svg",
-      "size": 1340,
-      "hash": "693beb6de8f10270ba9fecf7cd5f34a835fd35f3",
+      "size": 1320,
+      "hash": "f57b88efaf5d930bbac57e85b199da1f8e0b3c7b",
       "sri": null
     },
     {
@@ -17287,8 +17287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/log_a_call.svg",
-      "size": 769,
-      "hash": "cb89ca74837188624b71fb01708f30208f7a7241",
+      "size": 758,
+      "hash": "d856b5a108119ec7bc629e73e3b68328786e07b8",
       "sri": null
     },
     {
@@ -17497,8 +17497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/marketing_actions.svg",
-      "size": 1042,
-      "hash": "99041e27291259951fe1eea9c6525a1223dbf6bf",
+      "size": 1020,
+      "hash": "bf76f0c92b7b0b79a5034ff35012156baf9df695",
       "sri": null
     },
     {
@@ -17857,8 +17857,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/metrics.svg",
-      "size": 661,
-      "hash": "7e2939181136e3d14a810647b3bb0634b38e6a9f",
+      "size": 651,
+      "hash": "e1dda62abb9ddaa0d6fb1dcec4800e008b03d9b7",
       "sri": null
     },
     {
@@ -17977,8 +17977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/news.svg",
-      "size": 1061,
-      "hash": "358c0f199c19ac02fec959e14813e72d3e16ca5e",
+      "size": 1050,
+      "hash": "259bc5cbde3801176a9514a8559a6a002407a09e",
       "sri": null
     },
     {
@@ -18067,8 +18067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/note.svg",
-      "size": 1038,
-      "hash": "97a3ca0c8d6dd8acaf704b72d43d38cccdbbd71a",
+      "size": 1025,
+      "hash": "c797166735e7f6cb815cb3f421e4fbb5b5e65724",
       "sri": null
     },
     {
@@ -18217,8 +18217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/opportunity.svg",
-      "size": 854,
-      "hash": "347e50c8dd6323e1f98a8e428740ac9c058a4fe3",
+      "size": 839,
+      "hash": "da12b7068c1b87719ff60111e03dedd8f2fcf341",
       "sri": null
     },
     {
@@ -18367,8 +18367,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/orders.svg",
-      "size": 914,
-      "hash": "6b0b23a5672603af20636f229f0645f16f87dfa7",
+      "size": 894,
+      "hash": "b4e6b63016a9ce2b1fe08bce8bfd8f104081fbc0",
       "sri": null
     },
     {
@@ -18727,8 +18727,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/people.svg",
-      "size": 574,
-      "hash": "c54d7e25a7b1a8ffe034bc91675e69f59f04e005",
+      "size": 560,
+      "hash": "230834f67b0271db3069201e28c2e0ace2d62ab7",
       "sri": null
     },
     {
@@ -18757,8 +18757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/performance.svg",
-      "size": 812,
-      "hash": "b35ce2c20dff8737377e435cf5715ba9abbf966a",
+      "size": 797,
+      "hash": "a1ac8beb56909655a9b4f54464f3d8fd18badc36",
       "sri": null
     },
     {
@@ -18787,8 +18787,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/person_account.svg",
-      "size": 1410,
-      "hash": "d65ee216c02c7aa7025f030fec7504cabc04e00d",
+      "size": 1396,
+      "hash": "4f71c14cd21d3716a104e69d452b034e99801bb4",
       "sri": null
     },
     {
@@ -18877,8 +18877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/photo.svg",
-      "size": 680,
-      "hash": "f7f8bab3b286b60b2c56cdcfe8467f88df517d98",
+      "size": 663,
+      "hash": "f1b5b20e8ea872db708d28ea9e8c43b105257353",
       "sri": null
     },
     {
@@ -18997,8 +18997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/poll.svg",
-      "size": 670,
-      "hash": "4e84895f04cf5695869c562df0b6afa44f006f62",
+      "size": 652,
+      "hash": "1f077df43f2dff662e4563b5225a287d47dd4a49",
       "sri": null
     },
     {
@@ -19027,8 +19027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/portal.svg",
-      "size": 490,
-      "hash": "eaa75d8d889549e3152201a9d55906f3f5e21310",
+      "size": 481,
+      "hash": "c195a0188c4409a4896e7612cbc0a3188d6b68f9",
       "sri": null
     },
     {
@@ -19117,8 +19117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/post.svg",
-      "size": 437,
-      "hash": "8710b33dcb42e59a2fd753b7f85418030dcf5e1b",
+      "size": 429,
+      "hash": "02bb02d6700cd9e4d929c6b355e34915f8ff5fef",
       "sri": null
     },
     {
@@ -19237,8 +19237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/pricebook.svg",
-      "size": 769,
-      "hash": "d522293c1e282386b32382145c4c5b1927ca8506",
+      "size": 761,
+      "hash": "9c3847f6f75d0d8fa702b2672b757570e34095c8",
       "sri": null
     },
     {
@@ -19387,8 +19387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/process.svg",
-      "size": 614,
-      "hash": "2d541675abb46881da2eb28cc968c284ff591609",
+      "size": 605,
+      "hash": "83b1ea02d6b4ee0e871c91bcc5619fe449701488",
       "sri": null
     },
     {
@@ -19447,8 +19447,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/product.svg",
-      "size": 1109,
-      "hash": "173d9cb80b89fb0ccea377f5e8504eb2a8c2b170",
+      "size": 1082,
+      "hash": "b651c6a8001be0975f6fa37906c8ee555e2c9a61",
       "sri": null
     },
     {
@@ -20167,8 +20167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/question_feed.svg",
-      "size": 882,
-      "hash": "c403216ce1ac4eec75c558513af055df2ee6bc42",
+      "size": 870,
+      "hash": "c7f312e3ae44664dbc5e531afa0879e6f37501a0",
       "sri": null
     },
     {
@@ -20317,8 +20317,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/quotes.svg",
-      "size": 725,
-      "hash": "602f82d59386ce07a63b26e526e932c12c0a9a65",
+      "size": 714,
+      "hash": "bdffdb0dc6ce45c70597556e5bf0f7910aa4a52e",
       "sri": null
     },
     {
@@ -20407,8 +20407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/recent.svg",
-      "size": 949,
-      "hash": "d3e436c070e8ecf27396e470c6f8f8284aa7a7d3",
+      "size": 930,
+      "hash": "2f511ed363209f889539fe8f677c1b45d10cbe51",
       "sri": null
     },
     {
@@ -20467,8 +20467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/record.svg",
-      "size": 1069,
-      "hash": "671a58c669a93824d7750cb9b544fcfa4b6aa3c8",
+      "size": 1052,
+      "hash": "b24377dde17d1be710127d90309526e1e697a5b4",
       "sri": null
     },
     {
@@ -20677,8 +20677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/related_list.svg",
-      "size": 1006,
-      "hash": "e258606ff0736cd943074d78436bc026b3ab021a",
+      "size": 990,
+      "hash": "94c28f8b750a19d90e4ab88d49b1454118b41481",
       "sri": null
     },
     {
@@ -20707,8 +20707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/relationship.svg",
-      "size": 625,
-      "hash": "b86fe638cf8be93a7677ca5c82e173adac314df1",
+      "size": 615,
+      "hash": "7e3d40e44d47a0b4c4f477ca6bcb569893756655",
       "sri": null
     },
     {
@@ -20767,8 +20767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/report.svg",
-      "size": 804,
-      "hash": "a71d6481a84bbcd2b16ce95bc2078fbfdf195cd2",
+      "size": 789,
+      "hash": "e316604e16eb9e66d2ccc9008611a43c685a958f",
       "sri": null
     },
     {
@@ -21037,8 +21037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/reward.svg",
-      "size": 964,
-      "hash": "944678b75ed6e521b0ef17190a337bf1fb4c8b7d",
+      "size": 954,
+      "hash": "9dcbc4d22adb1b4cc884c346b5cb781f15e908ed",
       "sri": null
     },
     {
@@ -21277,8 +21277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/scan_card.svg",
-      "size": 615,
-      "hash": "11a165ed8d57386d906dd6e0d0a35cf8c9198a20",
+      "size": 601,
+      "hash": "6c7eb18926dcab1f84d7b3f0826b955c7c1c0fad",
       "sri": null
     },
     {
@@ -22327,8 +22327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/skill_entity.svg",
-      "size": 882,
-      "hash": "2491ee51a54b274c0da843a92af2582fcb786198",
+      "size": 870,
+      "hash": "b9f68812221ca7b64d9d64fc39c650e339c995d3",
       "sri": null
     },
     {
@@ -22627,8 +22627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/social.svg",
-      "size": 920,
-      "hash": "e0cdcfbd9d598e9c4c9e725f11af94c352daa218",
+      "size": 902,
+      "hash": "df9e5d37cadc07cbd0fbab57a877ebfe496eba6f",
       "sri": null
     },
     {
@@ -22657,8 +22657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/solution.svg",
-      "size": 595,
-      "hash": "278b802c1fc7d5e2a878c671a7655f58e72e5200",
+      "size": 580,
+      "hash": "bfeabc72a787ec0eab102de2bcefd88213912e24",
       "sri": null
     },
     {
@@ -22747,8 +22747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/sossession.svg",
-      "size": 990,
-      "hash": "0ebd405c8c411cf1cbf30aeb9ccf39e4d6909013",
+      "size": 979,
+      "hash": "655bad5b807366616da39a47fd617d0e81a2d3c1",
       "sri": null
     },
     {
@@ -23137,8 +23137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/task.svg",
-      "size": 1096,
-      "hash": "39f20bf1a004a0b66e1e67af7a161db964a83e94",
+      "size": 1072,
+      "hash": "c6a1d3c30efe989c8ab23c8c9ed2f05b4f277060",
       "sri": null
     },
     {
@@ -23147,8 +23147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/task2.svg",
-      "size": 437,
-      "hash": "92c9c7fb1125880f2eaf2897b1bf3326520a5c23",
+      "size": 427,
+      "hash": "72183e6f0623da1068c2654b5c5b748df2181fed",
       "sri": null
     },
     {
@@ -23287,8 +23287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/team_member.svg",
-      "size": 1331,
-      "hash": "22f032a364281205246e70fed66200b5940b9818",
+      "size": 1302,
+      "hash": "32f99fa1317f3b17af5f52beb2ebc74a5431d51f",
       "sri": null
     },
     {
@@ -23467,8 +23467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/thanks.svg",
-      "size": 1094,
-      "hash": "18b2c6abcd43076fefe9907e49f94e231add66f3",
+      "size": 1074,
+      "hash": "925751e38ee4978549b71183b35584f52683fa72",
       "sri": null
     },
     {
@@ -23497,8 +23497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/thanks_loading.svg",
-      "size": 1136,
-      "hash": "2e3f117c256dcc3b14daa4bcac15804519ea7a15",
+      "size": 1116,
+      "hash": "d4d037730d1988588f1fa297188e5d6c2d38b35b",
       "sri": null
     },
     {
@@ -23617,8 +23617,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/today.svg",
-      "size": 571,
-      "hash": "d95518a17061930aa5fcbda53e99e96b0b8de793",
+      "size": 557,
+      "hash": "16227ec88664bbefa32141ac15f343e6f2f8ab86",
       "sri": null
     },
     {
@@ -23677,8 +23677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/topic.svg",
-      "size": 1356,
-      "hash": "1de9e6e6e769702a09ceaa22cae36af7e214b2fa",
+      "size": 1328,
+      "hash": "c56cb389b02a10e7fed240ad13410529a2e9c2ab",
       "sri": null
     },
     {
@@ -23917,8 +23917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/unmatched.svg",
-      "size": 619,
-      "hash": "eaf720309d9b583252f06f0a42806c268252450c",
+      "size": 605,
+      "hash": "b07ac30731441922fb6b432298df36a7c84dad42",
       "sri": null
     },
     {
@@ -23947,8 +23947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/user.svg",
-      "size": 574,
-      "hash": "c54d7e25a7b1a8ffe034bc91675e69f59f04e005",
+      "size": 560,
+      "hash": "230834f67b0271db3069201e28c2e0ace2d62ab7",
       "sri": null
     },
     {
@@ -24487,8 +24487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/work_order.svg",
-      "size": 770,
-      "hash": "811a84c2af6cb72035c5481eb087b2cdd4b6ff33",
+      "size": 761,
+      "hash": "0aae917aaf6077b4ae476c2cd89e76eb8809c5dd",
       "sri": null
     },
     {
@@ -24517,8 +24517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/standard/work_order_item.svg",
-      "size": 719,
-      "hash": "bd121adcfe29ec9eba4a16b4722e1a31c8641e13",
+      "size": 709,
+      "hash": "ddb11e702b8bfa6949de058bd3f3785f39ab3075",
       "sri": null
     },
     {
@@ -24907,8 +24907,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/add.svg",
-      "size": 496,
-      "hash": "84905915bde4d637c76d70094b5d3f45ec1eb1c1",
+      "size": 490,
+      "hash": "3f0136ff71870e55424d5afb8dd6cda17e074f68",
       "sri": null
     },
     {
@@ -24937,8 +24937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/adduser.svg",
-      "size": 809,
-      "hash": "c315ce30e888df098b68054732360fa0506b53a2",
+      "size": 798,
+      "hash": "de9cbffc8e09b75efb70786c9a9492b6cafe3af7",
       "sri": null
     },
     {
@@ -25267,8 +25267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/announcement.svg",
-      "size": 668,
-      "hash": "6d9c2d3b70a44ed86e979e77b170692ec46895f1",
+      "size": 658,
+      "hash": "a02d5e37468ff1fb1090070e86da99655684cc68",
       "sri": null
     },
     {
@@ -25297,8 +25297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/answer.svg",
-      "size": 636,
-      "hash": "ab2d49bf0b2cfb26e7ff27fea75d5b967be91106",
+      "size": 629,
+      "hash": "64bd5adb001580283da4eafc961077d7ea75b92f",
       "sri": null
     },
     {
@@ -25507,8 +25507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/apps.svg",
-      "size": 1205,
-      "hash": "e666e07bd9171b7d4c309bc8fb4a69a5589a0d8f",
+      "size": 1193,
+      "hash": "ee57fa2cac77a12017203ce565cbf90bc72328c2",
       "sri": null
     },
     {
@@ -25687,8 +25687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/arrowdown.svg",
-      "size": 458,
-      "hash": "4f0c9f3a3bf57cec9ae51acac8eb26de707ec217",
+      "size": 452,
+      "hash": "b53a456dd1fe947fae60931569c18ec04732d557",
       "sri": null
     },
     {
@@ -25717,8 +25717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/arrowup.svg",
-      "size": 455,
-      "hash": "4d13f35bd33796f8f07cf59c86cafdd95b52aa07",
+      "size": 449,
+      "hash": "6b215003c387d5adf64a9411b27087c5ff4daa2a",
       "sri": null
     },
     {
@@ -25837,8 +25837,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/attach.svg",
-      "size": 764,
-      "hash": "5ddb44919b41df310812d7630c4f8d7613b72065",
+      "size": 754,
+      "hash": "50987a94e423b89b1be09ab0b5f878f608391801",
       "sri": null
     },
     {
@@ -25927,8 +25927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/back.svg",
-      "size": 482,
-      "hash": "a03866bbbb4f3c2737123044e8cf2cdee21789f1",
+      "size": 476,
+      "hash": "4ad576f19224d5bf8879027bd5aa80dfb341a721",
       "sri": null
     },
     {
@@ -25957,8 +25957,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/ban.svg",
-      "size": 436,
-      "hash": "6e0f3d4e08394658b90620b35ef0a4e07f21470f",
+      "size": 430,
+      "hash": "4a8e21b6e65aabcf69e86c7bea43e2e03da561b7",
       "sri": null
     },
     {
@@ -26017,8 +26017,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/bold.svg",
-      "size": 456,
-      "hash": "21a09ace4a7be415e2f5bf53f544c5991c558bd6",
+      "size": 450,
+      "hash": "956ee46df2f31ed9323940af8eab009b2d4b327f",
       "sri": null
     },
     {
@@ -26047,8 +26047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/bookmark.svg",
-      "size": 347,
-      "hash": "6bffbafed96b5852f25af996c93f6b1a4a147a9b",
+      "size": 342,
+      "hash": "39808245f8c18e9260728d2c94237867a737ca36",
       "sri": null
     },
     {
@@ -26167,8 +26167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/broadcast.svg",
-      "size": 1751,
-      "hash": "6a40b11fd398c6bc1ae389cbd4d0959417b7967a",
+      "size": 1729,
+      "hash": "1ea7f5527bae36b101bed0150ee36c8d37faf757",
       "sri": null
     },
     {
@@ -26197,8 +26197,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/brush.svg",
-      "size": 612,
-      "hash": "b8d49750bda26d52a222b858402ae8e4252eede7",
+      "size": 602,
+      "hash": "8fefd884a4e6585efc89d156ed317fe084fa479d",
       "sri": null
     },
     {
@@ -26227,8 +26227,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/bucket.svg",
-      "size": 815,
-      "hash": "c5504256d2574b766cf245b499e587fb0b694999",
+      "size": 806,
+      "hash": "686f12c9e32855f3d9913b334a32a026ee25c9f0",
       "sri": null
     },
     {
@@ -26287,8 +26287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/builder.svg",
-      "size": 590,
-      "hash": "c1e3c0524c1a137f2420da0974966d0303c65eb0",
+      "size": 580,
+      "hash": "9b2962e74f8b1759e0c81a4feb8a1ee111b36c29",
       "sri": null
     },
     {
@@ -26437,8 +26437,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/call.svg",
-      "size": 520,
-      "hash": "cb13b508e8801249cea7806614eacbed31bec7f5",
+      "size": 514,
+      "hash": "5e9e64ca26dc9508da6e7e46fa092db73c920620",
       "sri": null
     },
     {
@@ -26587,8 +26587,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/capslock.svg",
-      "size": 527,
-      "hash": "59e1b255785611f581477193a24cd375f2be6a1d",
+      "size": 518,
+      "hash": "449735980250b15a22c809e7897ee3f936cd236d",
       "sri": null
     },
     {
@@ -26707,8 +26707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/cases.svg",
-      "size": 1250,
-      "hash": "997396eb314670a822e4aa9ab6e999f09ea98d1a",
+      "size": 1233,
+      "hash": "d2805acb70f3f06f38c05eba366ba96c1af8ac0d",
       "sri": null
     },
     {
@@ -26767,8 +26767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/center_align_text.svg",
-      "size": 735,
-      "hash": "852f1224ae0d24ce650bf5a9e41c715012046deb",
+      "size": 724,
+      "hash": "4f26be6a23259bb274df807119bc05f4dab45b8e",
       "sri": null
     },
     {
@@ -26827,8 +26827,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/change_record_type.svg",
-      "size": 791,
-      "hash": "cb367fd6baa7af46e98cdfc288189e89ddf45ffd",
+      "size": 780,
+      "hash": "d5758207136675f11f8b46b131f92cec10c1c21e",
       "sri": null
     },
     {
@@ -26887,8 +26887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chart.svg",
-      "size": 558,
-      "hash": "49761f9e8f7365581e87df29e3e072556610ee9c",
+      "size": 549,
+      "hash": "5910eedc546b1817bda20ab2762eff5f09d88753",
       "sri": null
     },
     {
@@ -26917,8 +26917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chat.svg",
-      "size": 599,
-      "hash": "f015c90913352ce19bcd975205f064dda53188e7",
+      "size": 592,
+      "hash": "d2ec38e2b0b3a69031f0195156cadba8582338dd",
       "sri": null
     },
     {
@@ -26947,8 +26947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/check.svg",
-      "size": 420,
-      "hash": "e22445b751c9ff066aa4b9c770e9babe23f2e0d2",
+      "size": 413,
+      "hash": "d5ba851806cc5eaa0d5d48e8b951c8173566ab04",
       "sri": null
     },
     {
@@ -26977,8 +26977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/checkin.svg",
-      "size": 384,
-      "hash": "eed470f9fb2001f0e0764bf8624e70f14f5b0ef4",
+      "size": 379,
+      "hash": "b46b86f227cbe3e0342383a1f79b80c241a9675d",
       "sri": null
     },
     {
@@ -27037,8 +27037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chevrondown.svg",
-      "size": 414,
-      "hash": "ef8a0a3ddb5ca3550c57e59791a3f9dab5c57a88",
+      "size": 408,
+      "hash": "6f5380c5d4dde924c2431e38bb3e0668c557978a",
       "sri": null
     },
     {
@@ -27067,8 +27067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chevronleft.svg",
-      "size": 427,
-      "hash": "d297dff9455f7b33fc56729e8165de78c3515a2d",
+      "size": 419,
+      "hash": "ccc6b08e59640a91899393e4620edbd5c03cd5fd",
       "sri": null
     },
     {
@@ -27097,8 +27097,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chevronright.svg",
-      "size": 422,
-      "hash": "5b445152d750b7987bd027856bb405d5033ee402",
+      "size": 415,
+      "hash": "d5f582bf5d74d67e65d9c5b4f9f07e9991346755",
       "sri": null
     },
     {
@@ -27127,8 +27127,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/chevronup.svg",
-      "size": 413,
-      "hash": "2b79ade82b43396136101392a350c81ebc575b56",
+      "size": 407,
+      "hash": "9c6cc4c214d701ebd070767e1dba4d47166ca3f9",
       "sri": null
     },
     {
@@ -27217,8 +27217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/clear.svg",
-      "size": 641,
-      "hash": "30384166b2a39d0220b806bd8df6c1780f75c7d1",
+      "size": 634,
+      "hash": "94819fdd7a78437c2e7fc1616c32d499a68d8f3b",
       "sri": null
     },
     {
@@ -27247,8 +27247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/clock.svg",
-      "size": 568,
-      "hash": "ee07ca990918202760df389a639192e6ac6321fa",
+      "size": 559,
+      "hash": "3903df3a93d03d17f7e0e065283fbf3448c7ff9d",
       "sri": null
     },
     {
@@ -27277,8 +27277,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/close.svg",
-      "size": 587,
-      "hash": "c4167c28090407307290aecf87d744a46c3e0329",
+      "size": 580,
+      "hash": "18bd92b0594bd068da3fe0ac0be96d08da822661",
       "sri": null
     },
     {
@@ -27457,8 +27457,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/comments.svg",
-      "size": 718,
-      "hash": "e1ec9109d6dc76b004ab6f9161e32d36e4461a0e",
+      "size": 705,
+      "hash": "2a57827a6d062f651349774bb37db03ec2f53b26",
       "sri": null
     },
     {
@@ -27487,8 +27487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/company.svg",
-      "size": 1693,
-      "hash": "636a34ec8094d3708be3c0ec1e523544c0ab34eb",
+      "size": 1676,
+      "hash": "955bbf536e59d168eb581d48d7a5bda65aa5face",
       "sri": null
     },
     {
@@ -27547,8 +27547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/connected_apps.svg",
-      "size": 416,
-      "hash": "36387e83c2ea19c5d2d295785957eb2ee4a1ec9b",
+      "size": 411,
+      "hash": "f2f08899740f7d62e7c16246d691fd950f253336",
       "sri": null
     },
     {
@@ -27637,8 +27637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/contract.svg",
-      "size": 949,
-      "hash": "9ecebf210ab13c6725a01ca8cfe600e672d71e18",
+      "size": 938,
+      "hash": "a49703958a0a2089b06b794f7edfb8454a900664",
       "sri": null
     },
     {
@@ -27667,8 +27667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/contract_alt.svg",
-      "size": 567,
-      "hash": "e169dee9d14e016789a085ffbab269ae0d990f76",
+      "size": 560,
+      "hash": "c53867493b27bc9d2d1bd0e8395705c1a9e0ce2c",
       "sri": null
     },
     {
@@ -27817,8 +27817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/copy.svg",
-      "size": 661,
-      "hash": "1af7224e663c5647d0f78c3a303af1ac0583c408",
+      "size": 654,
+      "hash": "82bbf16f14c80677d1a616bc067ff376c8a84273",
       "sri": null
     },
     {
@@ -27907,8 +27907,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/crossfilter.svg",
-      "size": 635,
-      "hash": "124480d205ba84cbfd615d5b801c8c8490afc745",
+      "size": 624,
+      "hash": "9e438939abc27c405b7f0d193064785e1641fd33",
       "sri": null
     },
     {
@@ -27997,8 +27997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/custom_apps.svg",
-      "size": 551,
-      "hash": "a94363da8c1e981ff62cea19fe572945fd0a316b",
+      "size": 545,
+      "hash": "b4b2a6b8e5f91134db237babc205be417bead57f",
       "sri": null
     },
     {
@@ -28087,8 +28087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/cut.svg",
-      "size": 1012,
-      "hash": "80f39bf1c12c005897d01d9d1e10c6be5fe250b6",
+      "size": 999,
+      "hash": "e8a17d6b274495b627fe7c9db16de654233cf943",
       "sri": null
     },
     {
@@ -28117,8 +28117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/dash.svg",
-      "size": 326,
-      "hash": "e5a3d0e38fa9f195048875c858431fdc4e0e4561",
+      "size": 319,
+      "hash": "7c99f7694b0d2fef06a64d5bdc918ebee92694c1",
       "sri": null
     },
     {
@@ -28237,8 +28237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/datadotcom.svg",
-      "size": 676,
-      "hash": "db2abe36e358963ac153d744de7af76420e4e214",
+      "size": 667,
+      "hash": "eaa54948ae3d0cc0f832bed388752842710f248e",
       "sri": null
     },
     {
@@ -28327,8 +28327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/dayview.svg",
-      "size": 708,
-      "hash": "5bb132dddcf40f32636425a00d4a849eea6e9375",
+      "size": 700,
+      "hash": "b448f9ee52c9780efd408494005c44c3b140758b",
       "sri": null
     },
     {
@@ -28357,8 +28357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/delete.svg",
-      "size": 723,
-      "hash": "8461f482572a7c3383c741235f9f16ef2f870320",
+      "size": 713,
+      "hash": "e5f79fcfb9dde2e306338ed8f46d1eb89d729935",
       "sri": null
     },
     {
@@ -28387,8 +28387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/deprecate.svg",
-      "size": 510,
-      "hash": "ca8a60305e6dd7e6ca550966bc8b361208e63641",
+      "size": 504,
+      "hash": "fddefa7630d6f220997122a176853564538e9070",
       "sri": null
     },
     {
@@ -28417,8 +28417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/description.svg",
-      "size": 720,
-      "hash": "c1cde987fbd29eb024aba1fcab1eb82f18fdefa0",
+      "size": 712,
+      "hash": "2f9ad752cd10c65fe2d906d21c8288e6f68da88b",
       "sri": null
     },
     {
@@ -28447,8 +28447,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/desktop.svg",
-      "size": 621,
-      "hash": "1ca25fdad7b3f07a9f9385fc2bade8e986208e2f",
+      "size": 612,
+      "hash": "7c99899f0fa7d67c9bff1bb7718ef0a7e4724fe2",
       "sri": null
     },
     {
@@ -28747,8 +28747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/dock_panel.svg",
-      "size": 890,
-      "hash": "66772d6de69b1e26c66dac7fba1bed711217bd88",
+      "size": 880,
+      "hash": "2509c09dbe43c64a32d4e44722dede37fb5d077f",
       "sri": null
     },
     {
@@ -28777,8 +28777,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/down.svg",
-      "size": 298,
-      "hash": "724d19989f2fc6cfed35d1be31b556e2d8ec14c2",
+      "size": 294,
+      "hash": "ceced60ade3c99a5f5842362914fc6ab0183f545",
       "sri": null
     },
     {
@@ -28807,8 +28807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/download.svg",
-      "size": 731,
-      "hash": "6bedc52211c87b1c5c0224f203e9f6d788d554fd",
+      "size": 721,
+      "hash": "4cba1232b554038c6ffa122788a7f0efb4d70723",
       "sri": null
     },
     {
@@ -28957,8 +28957,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/edit.svg",
-      "size": 723,
-      "hash": "00f97dead7a25b5c264dfc3fd865592b143aa481",
+      "size": 712,
+      "hash": "afdb4b18b2a0c877a0a67acd7a3c21c5ea9594c5",
       "sri": null
     },
     {
@@ -28987,8 +28987,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/edit_form.svg",
-      "size": 1264,
-      "hash": "2b8afb4da34372c3b432c6631ef8704edaa8874b",
+      "size": 1249,
+      "hash": "22a6bbf7102114d8e3b68cd72b9070a2872396f4",
       "sri": null
     },
     {
@@ -29077,8 +29077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/email.svg",
-      "size": 534,
-      "hash": "bd949d26e52a32d156821c67528b71ce92c8d1f3",
+      "size": 525,
+      "hash": "187f79490d02c6381d4a9749f8515b987d1eed96",
       "sri": null
     },
     {
@@ -29167,8 +29167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/end_call.svg",
-      "size": 709,
-      "hash": "da95d1bd996b61b7829435615dbb54542f2dfdb4",
+      "size": 701,
+      "hash": "99408dfc2b4f09e718096feee398252c10541cb1",
       "sri": null
     },
     {
@@ -29347,8 +29347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/erect_window.svg",
-      "size": 312,
-      "hash": "6d091b27a484df59d3804aec509e37c9f4395c57",
+      "size": 306,
+      "hash": "56ac94d577d81719b0067e827bf1e755db52ed6f",
       "sri": null
     },
     {
@@ -29377,8 +29377,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/error.svg",
-      "size": 457,
-      "hash": "9e8689c0f1c89d515abaf77589d23e1a243a261a",
+      "size": 451,
+      "hash": "375ff2d65fa173dc4056c780600c0020b920bf88",
       "sri": null
     },
     {
@@ -29407,8 +29407,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/event.svg",
-      "size": 1062,
-      "hash": "3ddccf19c5cdbe2e780fc3928629264f976ab4e9",
+      "size": 1049,
+      "hash": "7209898ce08c90c70eb02f9be897daa933f777e2",
       "sri": null
     },
     {
@@ -29497,8 +29497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/expand.svg",
-      "size": 938,
-      "hash": "67a1d21e9b9a732733b678afd109ac16573a1ee7",
+      "size": 927,
+      "hash": "fd38b1d8dfd3e775971688714b038764a1901e8c",
       "sri": null
     },
     {
@@ -29557,8 +29557,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/expand_alt.svg",
-      "size": 555,
-      "hash": "2c7dd7c3cddab23cbbca7722f88d8b048e453657",
+      "size": 548,
+      "hash": "886354e97118f2339f0b46b68852c53ae6d9aa46",
       "sri": null
     },
     {
@@ -29647,8 +29647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/feed.svg",
-      "size": 637,
-      "hash": "79e547123b462de43e7364be1c29446532231337",
+      "size": 626,
+      "hash": "946bf2a10d7ad20ac8fd122c743ba0561226b3ae",
       "sri": null
     },
     {
@@ -29707,8 +29707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/file.svg",
-      "size": 731,
-      "hash": "61cbbcd97d541e32cb9380f871077a85deeeb806",
+      "size": 720,
+      "hash": "0fa9e847c8a23bc8302005e91f6912e5b5a0c1e2",
       "sri": null
     },
     {
@@ -29737,8 +29737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/filter.svg",
-      "size": 934,
-      "hash": "505e7542d2dcfc0b81bb5a3d0eec0a095bc878d8",
+      "size": 920,
+      "hash": "552dcb31f62729c34152e3fc8d5ac12fe7aea708",
       "sri": null
     },
     {
@@ -29747,8 +29747,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/filterList.svg",
-      "size": 379,
-      "hash": "9cbbab7da082f95ec5f1427694c417db9da260b0",
+      "size": 374,
+      "hash": "30fc7238e26b704602f4b55f07cc116da9cd4c52",
       "sri": null
     },
     {
@@ -30007,8 +30007,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/forward.svg",
-      "size": 475,
-      "hash": "905372930c51efbe996eeadf9886d8f74245ef76",
+      "size": 469,
+      "hash": "2705ecd3c1a4c5d80f175a4962fac6832262b782",
       "sri": null
     },
     {
@@ -30247,8 +30247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/groups.svg",
-      "size": 1148,
-      "hash": "9bf4de8d6be63fa30c4440ba3eba88901836f451",
+      "size": 1134,
+      "hash": "cd3a5a61b968a0295fdb20b7f6f3c2d78db94440",
       "sri": null
     },
     {
@@ -30307,8 +30307,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/help.svg",
-      "size": 741,
-      "hash": "638ea9b459e5390ecf939d8ac52aefc512a64b61",
+      "size": 728,
+      "hash": "120a285c985b4a125fa313c18cf6a2650bd6acdf",
       "sri": null
     },
     {
@@ -30547,8 +30547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/home.svg",
-      "size": 432,
-      "hash": "fe777fce7641fc4d540fc64735a10ec91a1a542c",
+      "size": 425,
+      "hash": "0ffa98fb0890e5342bc25da7be92c9dd75959f13",
       "sri": null
     },
     {
@@ -30577,8 +30577,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/identity.svg",
-      "size": 935,
-      "hash": "bd468e4050f1c786b39607393aa7d5d8d58db457",
+      "size": 923,
+      "hash": "108115ba7c0e951242937d1d45233106389e96f7",
       "sri": null
     },
     {
@@ -30607,8 +30607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/image.svg",
-      "size": 512,
-      "hash": "40bdcb6d899ed39ad42f8f67d2ebf2ad8399d91b",
+      "size": 506,
+      "hash": "5eb5bd602d4e3f1bbbced9dddbc87b2a3e8f1caa",
       "sri": null
     },
     {
@@ -30667,8 +30667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/inbox.svg",
-      "size": 623,
-      "hash": "be177ac845d6fb0ec7ae6410b445dc36da035819",
+      "size": 616,
+      "hash": "5381d05d19471b305c420ef7d398d565b4e658c9",
       "sri": null
     },
     {
@@ -30757,8 +30757,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/info.svg",
-      "size": 593,
-      "hash": "36192ad230337bd74d85d776c25f1619b6e386c6",
+      "size": 586,
+      "hash": "bad157c1a863a71743c97bcdf9b89ce407d224a9",
       "sri": null
     },
     {
@@ -30817,8 +30817,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/insert_tag_field.svg",
-      "size": 788,
-      "hash": "9dc08b5b4b8967bc67423de310c6ad589ef65872",
+      "size": 779,
+      "hash": "44f0765baf871be9bd7e167e4703dd8b026bec94",
       "sri": null
     },
     {
@@ -30847,8 +30847,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/insert_template.svg",
-      "size": 850,
-      "hash": "0752991538edc0e48693a50473103d12b7a25896",
+      "size": 840,
+      "hash": "42b90e92b15ff528a7f9821ee81a486423240cdd",
       "sri": null
     },
     {
@@ -30937,8 +30937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/italic.svg",
-      "size": 486,
-      "hash": "574271d6c7ce7dc2c30dbafdc9b7eaa67c032beb",
+      "size": 480,
+      "hash": "3435e19621f9fb5d408882b07630a0faa5d623c9",
       "sri": null
     },
     {
@@ -31087,8 +31087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/justify_text.svg",
-      "size": 729,
-      "hash": "4074f6200f5386f2623776fcdc673a063fbd3936",
+      "size": 718,
+      "hash": "07bb44fdf941167d277a6f968dc5131cedc54443",
       "sri": null
     },
     {
@@ -31117,8 +31117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/kanban.svg",
-      "size": 731,
-      "hash": "1eba704fc2401606f6e26762fe259a6a67334a75",
+      "size": 720,
+      "hash": "5dcf18c7d2fe8099fb0a1781c757fc33897e1ef5",
       "sri": null
     },
     {
@@ -31207,8 +31207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/keyboard_dismiss.svg",
-      "size": 3043,
-      "hash": "268a6b654441aaed39cabd7bfd6d790f7ad8503a",
+      "size": 3006,
+      "hash": "1d9307d566a7dac4b4e8635607a46c1807f08995",
       "sri": null
     },
     {
@@ -31267,8 +31267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/knowledge_base.svg",
-      "size": 814,
-      "hash": "664e393fa369aeb4e78bf4f286f13171548d1b08",
+      "size": 802,
+      "hash": "6f9ff954d7cb86d92a2bc286503acc33682c9fd6",
       "sri": null
     },
     {
@@ -31357,8 +31357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/layers.svg",
-      "size": 405,
-      "hash": "0dced7b4065198117d805111ac1cbca9e34a7f31",
+      "size": 400,
+      "hash": "d7288ff24ab60f2f48a5652ec1e5807f5256ceae",
       "sri": null
     },
     {
@@ -31387,8 +31387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/layout.svg",
-      "size": 712,
-      "hash": "bf538ffb422f191595b3cf3f624550f269ff4fd1",
+      "size": 696,
+      "hash": "365e5c2677ac903f87c93a5865ed927d2ca06585",
       "sri": null
     },
     {
@@ -31567,8 +31567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/left.svg",
-      "size": 298,
-      "hash": "573cb0e3271b0526dcd76742bec0f67e15af716a",
+      "size": 294,
+      "hash": "05e62652c30fec6797b623cdf44a27b736027298",
       "sri": null
     },
     {
@@ -31627,8 +31627,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/left_align_text.svg",
-      "size": 729,
-      "hash": "a39d472d7436f81fa3722fdec6a5947b91db227b",
+      "size": 718,
+      "hash": "1bd058685ff091ef80de050c1bf1600359eda350",
       "sri": null
     },
     {
@@ -31807,8 +31807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/like.svg",
-      "size": 572,
-      "hash": "9a55967e5564ab13d3a95ef5b011834f81c8f88a",
+      "size": 563,
+      "hash": "b8c2d849bb4c7dde0beae9ee3ef52d8b7934b251",
       "sri": null
     },
     {
@@ -31837,8 +31837,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/link.svg",
-      "size": 1278,
-      "hash": "0a0bb11375eff6d53eb910335d3158320ecfbf27",
+      "size": 1263,
+      "hash": "c842b6c3a81bfc77b2524206288e965466293f1a",
       "sri": null
     },
     {
@@ -31897,8 +31897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/list.svg",
-      "size": 1023,
-      "hash": "fd73a5da4eb43fab0769c7f2f03726e03ee9998f",
+      "size": 1007,
+      "hash": "5b0c5ca7cfe976fca4c4234adbc4558e2b2daf53",
       "sri": null
     },
     {
@@ -31987,8 +31987,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/location.svg",
-      "size": 1015,
-      "hash": "c284a3ee92a141754a02d44ff1e286b60af0a1b8",
+      "size": 1005,
+      "hash": "6c6b1cfa360908a97dfd769ba18e8d572a91257d",
       "sri": null
     },
     {
@@ -32047,8 +32047,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/lock.svg",
-      "size": 773,
-      "hash": "51231a1402b29e5b875ce1a7157ef621ab98e789",
+      "size": 762,
+      "hash": "e24b2d1198f575172ac30190d25474a881cbe573",
       "sri": null
     },
     {
@@ -32137,8 +32137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/log_a_call.svg",
-      "size": 794,
-      "hash": "33d52c8054d4bc45a6e2f264942b34f2a9b8ff79",
+      "size": 783,
+      "hash": "945b9e1852d074ab087499b7b04c5fd87c877036",
       "sri": null
     },
     {
@@ -32167,8 +32167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/logout.svg",
-      "size": 726,
-      "hash": "30a3480abd62ece5e13d0404ddd6ec7e921f483c",
+      "size": 716,
+      "hash": "fc7f7f5a024bb45eff81f6bb1d3321f8054428e6",
       "sri": null
     },
     {
@@ -32287,8 +32287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/magicwand.svg",
-      "size": 1191,
-      "hash": "5aee05c2a72621b944c5ea9e04971a0ddf4a69f9",
+      "size": 1176,
+      "hash": "2407515e47dea48395f5b85cf711b615a3d9cb23",
       "sri": null
     },
     {
@@ -32347,8 +32347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/matrix.svg",
-      "size": 2050,
-      "hash": "7ee715b69195dfd91242610e11f85e6e995da47f",
+      "size": 1981,
+      "hash": "b4f8bebefa0dfdc0ee287a8288adbdbfe111ce67",
       "sri": null
     },
     {
@@ -32527,8 +32527,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/merge.svg",
-      "size": 597,
-      "hash": "5b3a7a7a1911be14a08a9ea7731cb4ef6f0901f6",
+      "size": 590,
+      "hash": "52ddd1d6e3b9378e77c243a3f623fbd47df0b064",
       "sri": null
     },
     {
@@ -32587,8 +32587,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/metrics.svg",
-      "size": 817,
-      "hash": "83acaa3d7f532901fa42156588d34bf108430c28",
+      "size": 806,
+      "hash": "affc4ce5fb17b7b5dc379165e32914f9e7bcf90d",
       "sri": null
     },
     {
@@ -32647,8 +32647,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/minimize_window.svg",
-      "size": 326,
-      "hash": "0aecbf4a767c6bf18bba4fa30a47ef7123c32a2f",
+      "size": 319,
+      "hash": "707ea027954793d49a92c95feb851e4522efad19",
       "sri": null
     },
     {
@@ -32737,8 +32737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/moneybag.svg",
-      "size": 1063,
-      "hash": "93269f79c7e46e8b4e4d66f4551f9a49c0f8f20e",
+      "size": 1052,
+      "hash": "14b780ce9a12d5e54f53f5d122039eea9f357a38",
       "sri": null
     },
     {
@@ -32767,8 +32767,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/monthlyview.svg",
-      "size": 1192,
-      "hash": "899a3113ba9757dffc25aa520ab7c5e457656acc",
+      "size": 1180,
+      "hash": "f1494087720779fc74917164c875f13bb3f344aa",
       "sri": null
     },
     {
@@ -32797,8 +32797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/move.svg",
-      "size": 665,
-      "hash": "a461d500935001bbb65734248d97e6d9e5737cc1",
+      "size": 657,
+      "hash": "aea07b5d3f7d56fd04055a0443c81e97c5de58a9",
       "sri": null
     },
     {
@@ -32887,8 +32887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/muted.svg",
-      "size": 799,
-      "hash": "a228ae44c58a3c49123266c00670ba189d6a6a93",
+      "size": 790,
+      "hash": "995902d97eeb2e85560ddefd496a03551a353320",
       "sri": null
     },
     {
@@ -32917,8 +32917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/new.svg",
-      "size": 544,
-      "hash": "6b04a45e6cadfacf799e179b6707dd9951d55cf4",
+      "size": 538,
+      "hash": "7984265e5b627ad3b572089167b3236977c672cd",
       "sri": null
     },
     {
@@ -32977,8 +32977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/new_window.svg",
-      "size": 774,
-      "hash": "5ecd916f020c087c7de9be9fbcd66029bb0423a9",
+      "size": 763,
+      "hash": "6b1e784b644fad81aa384ba29139515288056026",
       "sri": null
     },
     {
@@ -33007,8 +33007,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/news.svg",
-      "size": 825,
-      "hash": "d350f03c8dd73629829328638b1ec54978b496b5",
+      "size": 816,
+      "hash": "5b40fd535e9e86b6bf3047240034810e14e435d6",
       "sri": null
     },
     {
@@ -33037,8 +33037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/note.svg",
-      "size": 1170,
-      "hash": "b42ee385269535729c38fad60a3941554a60b7ff",
+      "size": 1158,
+      "hash": "f8426aceab1a32a037877451b764bf79fa752519",
       "sri": null
     },
     {
@@ -33067,8 +33067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/notebook.svg",
-      "size": 647,
-      "hash": "33a1e1afdb6976994e12ee8db4d81c7a7db8be89",
+      "size": 640,
+      "hash": "e44792444083f8c309a0d3f64185ae38f928244a",
       "sri": null
     },
     {
@@ -33097,8 +33097,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/notification.svg",
-      "size": 551,
-      "hash": "482009c153a385b6261fa77c0fa3464b5130ea7d",
+      "size": 543,
+      "hash": "f83145448ac53053d6b24353ca11d3ce95207fea",
       "sri": null
     },
     {
@@ -33157,8 +33157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/office365.svg",
-      "size": 729,
-      "hash": "026600bcfe17a91cec2420601c3e0b10fd482c58",
+      "size": 717,
+      "hash": "d69d1ea91fefc34a69a5432ab208249519047439",
       "sri": null
     },
     {
@@ -33187,8 +33187,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/offline.svg",
-      "size": 1085,
-      "hash": "1474378acc5fdf2b744e1724cd3dfd8e9c1cd22c",
+      "size": 1072,
+      "hash": "0c8b995c279affd123d2febc7e29c854742cb37c",
       "sri": null
     },
     {
@@ -33307,8 +33307,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/open.svg",
-      "size": 898,
-      "hash": "9823826e103a9bc97ed3351913a0dab4f3bdd5e7",
+      "size": 886,
+      "hash": "5b0bbfc300dcd8e333c44cbc3c8a7c4edb569dbf",
       "sri": null
     },
     {
@@ -33337,8 +33337,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/open_folder.svg",
-      "size": 528,
-      "hash": "e6e45137b1e2a9ec56e448d02f5720c1a5a6af51",
+      "size": 519,
+      "hash": "64e07fab48bab18566c1bba90da0047b5f85573d",
       "sri": null
     },
     {
@@ -33367,8 +33367,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/opened_folder.svg",
-      "size": 462,
-      "hash": "11a2485ddfa1616515416939a87edc846faf8193",
+      "size": 454,
+      "hash": "38636f3ce4a83424590cf75a2c80e249df154df1",
       "sri": null
     },
     {
@@ -33517,8 +33517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/overflow.svg",
-      "size": 786,
-      "hash": "50a1cca6a7a1a132a8acfe5bf62eec97659a0a51",
+      "size": 771,
+      "hash": "7c0a1fa640acb70d6876471bf219681f874ef91f",
       "sri": null
     },
     {
@@ -33547,8 +33547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/package.svg",
-      "size": 542,
-      "hash": "7a8ef90953d063267eca92bbe962acf10957cadb",
+      "size": 533,
+      "hash": "93aa22200e3f5e70940c02dff1b3750aed30f4aa",
       "sri": null
     },
     {
@@ -33577,8 +33577,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/package_org.svg",
-      "size": 540,
-      "hash": "5a3bf920c385ff0048f0363bd5a3b92085c66147",
+      "size": 533,
+      "hash": "e5e0aa3e1557f139c2b503b71ab9eca41ca94ea6",
       "sri": null
     },
     {
@@ -33607,8 +33607,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/package_org_beta.svg",
-      "size": 651,
-      "hash": "5a959304053ec4e437b5952dad43d3cbb07e6b68",
+      "size": 643,
+      "hash": "0f673078d0597660194aaaecc4401a240c6d50ea",
       "sri": null
     },
     {
@@ -33637,8 +33637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/page.svg",
-      "size": 600,
-      "hash": "b66ac6ef934ff23532ea6e7da1ac333c20d93265",
+      "size": 587,
+      "hash": "17804156afc4c98cb061bd85f594e361312b17da",
       "sri": null
     },
     {
@@ -33667,8 +33667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/palette.svg",
-      "size": 592,
-      "hash": "48c97f3314a44aa29caea1dc17216fb822009fda",
+      "size": 585,
+      "hash": "61b0cdfce72b8d52eaf03c06e86f0a664528e263",
       "sri": null
     },
     {
@@ -33727,8 +33727,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/paste.svg",
-      "size": 784,
-      "hash": "395650f0ae8fc34789f6f4ac1d3faaef33e2f8b7",
+      "size": 774,
+      "hash": "43a5b3f14529388d927ae2e7cc7a6de4e4f7fde6",
       "sri": null
     },
     {
@@ -33877,8 +33877,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/people.svg",
-      "size": 859,
-      "hash": "4c73e5e962d8f4c3da6c6e7c17681bce6a1d7e5f",
+      "size": 848,
+      "hash": "f446be84984686da12ddb7cbe85b2b2c666aae1d",
       "sri": null
     },
     {
@@ -33937,8 +33937,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/phone_landscape.svg",
-      "size": 460,
-      "hash": "e1ce9cca05e29b9a860e70975baa08948e293c67",
+      "size": 454,
+      "hash": "9fe47e9a0a38021c354746286fb8f15d88d62eee",
       "sri": null
     },
     {
@@ -33967,8 +33967,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/phone_portrait.svg",
-      "size": 460,
-      "hash": "c87885d9f94d4c197bad1ec339a023dd8603f468",
+      "size": 454,
+      "hash": "8a6bbc652ed7f0709d0ddb82b77c5d6dd7b76d11",
       "sri": null
     },
     {
@@ -33997,8 +33997,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/photo.svg",
-      "size": 581,
-      "hash": "b955d0c0caa6689fd889ebe15f6779fb2927bb03",
+      "size": 572,
+      "hash": "9569b04b413e3e1aee43eb6b0cb6e046eb4d8230",
       "sri": null
     },
     {
@@ -34027,8 +34027,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/picklist.svg",
-      "size": 430,
-      "hash": "f3f12aabd1bd32014140f8838b1bf663822312e9",
+      "size": 425,
+      "hash": "3a331be02cb3d6553c153e2962a02e4d1c954565",
       "sri": null
     },
     {
@@ -34297,8 +34297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/power.svg",
-      "size": 651,
-      "hash": "45ebe293193ac78e2dccd63d784bcbf53e7d8ac8",
+      "size": 641,
+      "hash": "97e288003bb9f35bd8fbd4ead86a800c1d3377c1",
       "sri": null
     },
     {
@@ -34327,8 +34327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/preview.svg",
-      "size": 518,
-      "hash": "fc64eaf7b7828283c7c7e05f473e793cb827dcb9",
+      "size": 510,
+      "hash": "be17b27d55e4c68019b01752df4a69745af0fcc8",
       "sri": null
     },
     {
@@ -34477,8 +34477,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/priority.svg",
-      "size": 508,
-      "hash": "c147320cfa14258b3cc8770ffc68aa7c3139785e",
+      "size": 500,
+      "hash": "674b064506b2146b7853916e72e6f191fd64f9e0",
       "sri": null
     },
     {
@@ -34567,8 +34567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/process.svg",
-      "size": 630,
-      "hash": "1ed0949cc1922f74bc70d7d7a28cb7c17f6f9255",
+      "size": 623,
+      "hash": "54aa32df85c2446d64acca0d5fedd062af9d4495",
       "sri": null
     },
     {
@@ -35077,8 +35077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/push.svg",
-      "size": 927,
-      "hash": "196fdc30a526c2b91279223bf6bca1311924b0da",
+      "size": 915,
+      "hash": "b613d7f2caac51ead4a73a7894ffb28d9ead397a",
       "sri": null
     },
     {
@@ -35107,8 +35107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/puzzle.svg",
-      "size": 854,
-      "hash": "ca8d8fd5a5de745288dc08493ee5cf5d1a0be6ab",
+      "size": 843,
+      "hash": "22bd2b6dca1d094e95c0a1aa629cdf85338b3eda",
       "sri": null
     },
     {
@@ -35167,8 +35167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/question.svg",
-      "size": 741,
-      "hash": "638ea9b459e5390ecf939d8ac52aefc512a64b61",
+      "size": 728,
+      "hash": "120a285c985b4a125fa313c18cf6a2650bd6acdf",
       "sri": null
     },
     {
@@ -35227,8 +35227,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/questions_and_answers.svg",
-      "size": 740,
-      "hash": "eb0cee9de8a4e1310fecc61893a5993ab4988ecd",
+      "size": 732,
+      "hash": "c02e11ed20b864546f2d8109901847220be46a73",
       "sri": null
     },
     {
@@ -35497,8 +35497,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/record.svg",
-      "size": 263,
-      "hash": "c3bd000858f157382db3b280466f28c8954d5cf3",
+      "size": 259,
+      "hash": "db2bb91abca8d5647f876c075d765ac96b297af2",
       "sri": null
     },
     {
@@ -35797,8 +35797,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/refresh.svg",
-      "size": 783,
-      "hash": "61cf5e8ee25781f7bda6e36d5caf4623b014c607",
+      "size": 774,
+      "hash": "cc674e5479144d23f9225dd5fd8ea0519e3bdf3f",
       "sri": null
     },
     {
@@ -35827,8 +35827,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/relate.svg",
-      "size": 654,
-      "hash": "1c3e18c59edbd455d4e64f48486c23682a477e54",
+      "size": 642,
+      "hash": "ab8abf6c960c838c7f3351c542da5be241b1fa58",
       "sri": null
     },
     {
@@ -35887,8 +35887,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/remove_formatting.svg",
-      "size": 840,
-      "hash": "d7ac018346399b257966c5f71999988410e42558",
+      "size": 830,
+      "hash": "e434d22b562fa6c9f95be80af140a750dc8f8907",
       "sri": null
     },
     {
@@ -35917,8 +35917,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/remove_link.svg",
-      "size": 1571,
-      "hash": "0e18141727cde42b7378c6ae3c7bbc645fd3fe79",
+      "size": 1555,
+      "hash": "f8b87cec41d4e134437abd66ec43b39538e6674d",
       "sri": null
     },
     {
@@ -35947,8 +35947,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/replace.svg",
-      "size": 791,
-      "hash": "cb367fd6baa7af46e98cdfc288189e89ddf45ffd",
+      "size": 780,
+      "hash": "d5758207136675f11f8b46b131f92cec10c1c21e",
       "sri": null
     },
     {
@@ -35977,8 +35977,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/reply.svg",
-      "size": 537,
-      "hash": "5e3f9869c01886a3112c7766b228bc83578478ed",
+      "size": 531,
+      "hash": "dae54e4d9ad81efeb20bf7fb9ce0f079c4b7f91b",
       "sri": null
     },
     {
@@ -36067,8 +36067,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/reset_password.svg",
-      "size": 982,
-      "hash": "1f34f28af94fb1391520a0849fd5a13b2bbfb546",
+      "size": 970,
+      "hash": "f27241d9ecf3b28af274f0a13d18bdec2d95ae3d",
       "sri": null
     },
     {
@@ -36247,8 +36247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/retweet.svg",
-      "size": 928,
-      "hash": "54b0c812f950fb4693d83b437ba6ca6c2d5fd4bc",
+      "size": 916,
+      "hash": "d20c0c920a442fe94b30ad28ce9b10c97c43345d",
       "sri": null
     },
     {
@@ -36307,8 +36307,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/richtextbulletedlist.svg",
-      "size": 862,
-      "hash": "c4523d16ddaeffe0ec65806ff8a704db70f8f573",
+      "size": 853,
+      "hash": "1b746217d0bbe1ed3242c708461facdb9ab5e90b",
       "sri": null
     },
     {
@@ -36337,8 +36337,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/richtextindent.svg",
-      "size": 918,
-      "hash": "c578975c151626d3a6e6f5d54f0b26a7fba28b48",
+      "size": 905,
+      "hash": "6e35aa4ffa87147908a726c0fd14b6afc613b1a8",
       "sri": null
     },
     {
@@ -36367,8 +36367,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/richtextnumberedlist.svg",
-      "size": 981,
-      "hash": "704716b3b5fe9fcd3f51e9f6208b297075f1ef26",
+      "size": 971,
+      "hash": "8b770dbc07f4a9d71c1a370434be522ad1521cae",
       "sri": null
     },
     {
@@ -36397,8 +36397,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/richtextoutdent.svg",
-      "size": 924,
-      "hash": "9e37a4ee4442a794175777312b2ea9bab9feffe2",
+      "size": 911,
+      "hash": "6e7043fffc2625b71b9becec10292419d3be8dfb",
       "sri": null
     },
     {
@@ -36427,8 +36427,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/right.svg",
-      "size": 301,
-      "hash": "85c286fe03c4831663182874edcbc52de1b73d09",
+      "size": 297,
+      "hash": "937f3d63cd171354377fcc15d4063b66b09b7866",
       "sri": null
     },
     {
@@ -36487,8 +36487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/right_align_text.svg",
-      "size": 734,
-      "hash": "df206837afeb22ba38cdcc7e0228b226844fd323",
+      "size": 723,
+      "hash": "82ddcb08c2ed5d77442788c9f7050885f37afd3a",
       "sri": null
     },
     {
@@ -36517,8 +36517,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/rotate.svg",
-      "size": 1040,
-      "hash": "b474a509ad307af3f3616011f53c469193dafed7",
+      "size": 1027,
+      "hash": "9bf29fae04f931c52eaf0a2d2a10ef0774ff2859",
       "sri": null
     },
     {
@@ -36577,8 +36577,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/rows.svg",
-      "size": 598,
-      "hash": "d8ef9c456ba194ad8d2763145cd1e19e70bbc680",
+      "size": 589,
+      "hash": "631ecc99102adae99dc0e0749009a70421523d16",
       "sri": null
     },
     {
@@ -36637,8 +36637,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/salesforce1.svg",
-      "size": 574,
-      "hash": "a9817a2ad1a97ab46210d4811740d9155294b78e",
+      "size": 567,
+      "hash": "c61b96b59730e7f49e8dd58270172463a8241921",
       "sri": null
     },
     {
@@ -37057,8 +37057,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/settings.svg",
-      "size": 1123,
-      "hash": "d46d49a9b6c768067f8b2245bd044412d692d797",
+      "size": 1110,
+      "hash": "01d0291f81e92e40a949c6cc26d57d7ceac9e0cb",
       "sri": null
     },
     {
@@ -37087,8 +37087,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/setup.svg",
-      "size": 1236,
-      "hash": "6588e86f204337ba78e6dfad78a58bf7919287a1",
+      "size": 1222,
+      "hash": "c5184514a9823b9ce2c8d51b052d8d1922119227",
       "sri": null
     },
     {
@@ -37117,8 +37117,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/setup_assistant_guide.svg",
-      "size": 1050,
-      "hash": "e005e0e995494ac36307bc3b98b8aeb9f763e8e4",
+      "size": 1036,
+      "hash": "70e45e73e14bea42c28d168b01b2a58a7d5b7bcf",
       "sri": null
     },
     {
@@ -37237,8 +37237,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/share_mobile.svg",
-      "size": 812,
-      "hash": "6f6844a3a74e3b9bf9a7db5f1701dfdf3d5e1433",
+      "size": 801,
+      "hash": "e444f17a73b5d9c90f181fc9c7d176091ac638a4",
       "sri": null
     },
     {
@@ -37267,8 +37267,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/share_post.svg",
-      "size": 407,
-      "hash": "64dbf9d9c4e7d85a7022b8592326127444b70a7f",
+      "size": 400,
+      "hash": "8b5df6fe47d639fe9f10be665b75cb02510afd38",
       "sri": null
     },
     {
@@ -37297,8 +37297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/shield.svg",
-      "size": 646,
-      "hash": "fd0e9ac6490aeefb8613eb19d409dadc0d5ea1d6",
+      "size": 636,
+      "hash": "5fa0cee325e800a4e7dd7d6d2de9e6457527bf87",
       "sri": null
     },
     {
@@ -37507,8 +37507,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/side_list.svg",
-      "size": 868,
-      "hash": "5389d907e9ce69666e28d40c6bbd244ea1ef4f26",
+      "size": 855,
+      "hash": "5dd42de78af3ceaff07f56f55da2b09d00df034a",
       "sri": null
     },
     {
@@ -37567,8 +37567,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/signpost.svg",
-      "size": 930,
-      "hash": "295ef48d16f41eab2c131823c2b7221a623b7025",
+      "size": 917,
+      "hash": "9751ce6644ed023019f0c2493aa008c2a31f7f84",
       "sri": null
     },
     {
@@ -37777,8 +37777,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/sms.svg",
-      "size": 2669,
-      "hash": "657bfc420f1127e630eae3c97f09bbe82ce77736",
+      "size": 2645,
+      "hash": "5afab49a97563d10b7aaec85a095142b9a21da8d",
       "sri": null
     },
     {
@@ -37807,8 +37807,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/snippet.svg",
-      "size": 1020,
-      "hash": "2f2b3fccf25e37fbb244c870cfdc43d53291d594",
+      "size": 1005,
+      "hash": "6ebfa522d4461f09b2922887bc4248eab7dd11f1",
       "sri": null
     },
     {
@@ -37897,8 +37897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/socialshare.svg",
-      "size": 510,
-      "hash": "b2e797a5d4e9d2fc030074fb934398fbbf2f24b3",
+      "size": 504,
+      "hash": "93e3de8f26bf7c0bd85d46860bc6a46bf2e4dad1",
       "sri": null
     },
     {
@@ -37927,8 +37927,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/sort.svg",
-      "size": 816,
-      "hash": "d4a76e14730b5ae0aef8ca2258e619cd47caf259",
+      "size": 805,
+      "hash": "04b2fc49d4cbd07ee43905a0c0de07019b18a13c",
       "sri": null
     },
     {
@@ -38017,8 +38017,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/spinner.svg",
-      "size": 1412,
-      "hash": "c70b381918704739d1842796aef801961d075497",
+      "size": 1391,
+      "hash": "4a8b51ad92b07c4250a5608491f739596b5ffb5a",
       "sri": null
     },
     {
@@ -38107,8 +38107,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/standard_objects.svg",
-      "size": 839,
-      "hash": "b64a5cf7ac7b507868b8a8b64001f7cc7dfebba8",
+      "size": 830,
+      "hash": "ac11476b18cdeba6710f46ce45436bfc966974da",
       "sri": null
     },
     {
@@ -38167,8 +38167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/stop.svg",
-      "size": 215,
-      "hash": "23bbae51b55f02ce1dce5a4a00fa279efc8ef827",
+      "size": 211,
+      "hash": "dbad562fb52d9c282a42e9dc71a11fae81bb8dd5",
       "sri": null
     },
     {
@@ -38257,8 +38257,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/strikethrough.svg",
-      "size": 1299,
-      "hash": "52e11e78d8c05317e266cd51efe0075495cb6cc4",
+      "size": 1286,
+      "hash": "654f7f45f22e10bd9a75f49725e4e3f3d0857f2e",
       "sri": null
     },
     {
@@ -38287,8 +38287,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/success.svg",
-      "size": 471,
-      "hash": "d5583d140d65f165443d7f43caa2ffb67e218d7c",
+      "size": 465,
+      "hash": "b472bb14862f284d94af4cfda9ca14415902ac17",
       "sri": null
     },
     {
@@ -38317,8 +38317,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/summary.svg",
-      "size": 1165,
-      "hash": "30da6daba206c953ace9daa265ed346666fad765",
+      "size": 1130,
+      "hash": "4071a0dc5dbeb2d19aa284082ec9b247e4fcf763",
       "sri": null
     },
     {
@@ -38347,8 +38347,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/summarydetail.svg",
-      "size": 1800,
-      "hash": "aa44ab746b61f587055c37a3fad115ba4fa4ff53",
+      "size": 1743,
+      "hash": "a237f20cac1f2a762046bae73276a7216389111f",
       "sri": null
     },
     {
@@ -38467,8 +38467,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/switch.svg",
-      "size": 428,
-      "hash": "6d0a458c251c840cf265d9706fff1267b98230a8",
+      "size": 420,
+      "hash": "feeac4402a8cc5acbd9f07c8539109ac561011b4",
       "sri": null
     },
     {
@@ -38587,8 +38587,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/table.svg",
-      "size": 2360,
-      "hash": "c4374a736ac17f075a343323a838e59154718efe",
+      "size": 2279,
+      "hash": "7e4f30ae40794172ae4eb3f69d2fce082d8e6da9",
       "sri": null
     },
     {
@@ -38677,8 +38677,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/tablet_landscape.svg",
-      "size": 464,
-      "hash": "5f3b9d595d25c883f02b940b2b203e9c31bdaae7",
+      "size": 458,
+      "hash": "04f485ccf95a2d7500813289f156d8de4cb30b81",
       "sri": null
     },
     {
@@ -38707,8 +38707,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/tablet_portrait.svg",
-      "size": 463,
-      "hash": "b6ffe1a60f199371cb48508e556ffea1e127e327",
+      "size": 457,
+      "hash": "05fd4edfbd0fa035500e978992f7c22a5d532805",
       "sri": null
     },
     {
@@ -38737,8 +38737,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/tabset.svg",
-      "size": 710,
-      "hash": "b2d0fede636393488232df23ce0ed1d63731566a",
+      "size": 695,
+      "hash": "3ace517004d027e3b5a7b1cbc8ecac4333f41b06",
       "sri": null
     },
     {
@@ -38857,8 +38857,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/task.svg",
-      "size": 1249,
-      "hash": "d86f3ec3a1decfd064b58187c3e95f0201324282",
+      "size": 1220,
+      "hash": "2f150a95a6eef4bd4793a68b6d7bc0922478f8af",
       "sri": null
     },
     {
@@ -39007,8 +39007,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/text_background_color.svg",
-      "size": 525,
-      "hash": "c1fd93b1503fc7bad79c65336ee407c6af16920d",
+      "size": 519,
+      "hash": "d869864a114eb3ea62a301a200ddb512ee8d97b6",
       "sri": null
     },
     {
@@ -39037,8 +39037,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/text_color.svg",
-      "size": 569,
-      "hash": "b8843bd62f8ffc16a56655dc7fa6ce575dd4fc68",
+      "size": 561,
+      "hash": "a80635820786662309266c2cd755fbc588e3cf0a",
       "sri": null
     },
     {
@@ -39157,8 +39157,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/threedots.svg",
-      "size": 379,
-      "hash": "6f20d28a5afe9e642b8ceae834e5b9b8c8c321ee",
+      "size": 374,
+      "hash": "2639980307c4013bef36b6f403e3c8bffab2e18b",
       "sri": null
     },
     {
@@ -39217,8 +39217,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/thunder.svg",
-      "size": 871,
-      "hash": "251a9ca76e99a4b635aa4cd9f8822bd8d5a01473",
+      "size": 860,
+      "hash": "200f5065e128950583713ef945f99fa7a04037ed",
       "sri": null
     },
     {
@@ -39247,8 +39247,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/tile_card_list.svg",
-      "size": 1010,
-      "hash": "368f533c4f2fe90ffd4861ba30a3045a942782f6",
+      "size": 995,
+      "hash": "45bf21637b6da63a6f9bf3ab1b92f3511e3ccfe7",
       "sri": null
     },
     {
@@ -39487,8 +39487,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/topic.svg",
-      "size": 1252,
-      "hash": "9e47b95ca0d44d28750cb7281e2f833521ea4b20",
+      "size": 1236,
+      "hash": "e8e56780eab9f3602f2537813252a1d658f64f08",
       "sri": null
     },
     {
@@ -39547,8 +39547,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/touch_action.svg",
-      "size": 824,
-      "hash": "0ae10ee79ffde1e5cebcd27270de01060f52085d",
+      "size": 809,
+      "hash": "cc831e9b45525806edfb9cc3eb160115835a6c46",
       "sri": null
     },
     {
@@ -39667,8 +39667,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/trail.svg",
-      "size": 1063,
-      "hash": "04b14ee8cbef4a40d22bef553504af816906a5e9",
+      "size": 1051,
+      "hash": "33c262c94dc80fb3c6f795881aecc15abaea2420",
       "sri": null
     },
     {
@@ -40147,8 +40147,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/undelete.svg",
-      "size": 806,
-      "hash": "900b1e57d349d957fbdaddab31a62ec4992afe16",
+      "size": 795,
+      "hash": "d5c2514e38d0b175c89c06f788d6187d37446b0c",
       "sri": null
     },
     {
@@ -40177,8 +40177,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/undeprecate.svg",
-      "size": 459,
-      "hash": "b474faa7e76197ae5b9cbc63980ce2bfc1a5e000",
+      "size": 453,
+      "hash": "d25995946f0e43bee88072704ae605941576d1e9",
       "sri": null
     },
     {
@@ -40207,8 +40207,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/underline.svg",
-      "size": 545,
-      "hash": "fcf00fca8c334a1b51b5969b72d5c3355aaf1611",
+      "size": 536,
+      "hash": "bbbc694ee2516bdcb02c18f6ae6e3344c6d221c4",
       "sri": null
     },
     {
@@ -40297,8 +40297,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/unlock.svg",
-      "size": 734,
-      "hash": "c04f27539b9482f546e98cc5db23e35db513ec9d",
+      "size": 724,
+      "hash": "0c1791339b370ee4c6c94de404080e19bb760d3f",
       "sri": null
     },
     {
@@ -40327,8 +40327,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/unmuted.svg",
-      "size": 660,
-      "hash": "e8d89b7d64a590477a389656997b2efd927a0af5",
+      "size": 650,
+      "hash": "1a97e9aa32654c1e34a8d0a778c387ea95430097",
       "sri": null
     },
     {
@@ -40357,8 +40357,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/up.svg",
-      "size": 305,
-      "hash": "16624b524e481c4b29e8737ec240cc900943d1e0",
+      "size": 300,
+      "hash": "f7b8145bfea5d0afaf0b4f5a67fc7638a0109367",
       "sri": null
     },
     {
@@ -40387,8 +40387,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/upload.svg",
-      "size": 724,
-      "hash": "4202a37be8c41d8801e755774d21e71d3f2b6e47",
+      "size": 714,
+      "hash": "72b226eb3ebe0b285376d997e045ea2d8d9fe31f",
       "sri": null
     },
     {
@@ -40417,8 +40417,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/user.svg",
-      "size": 530,
-      "hash": "e9d6d51c08541b99e59c2bb56a7d6263bec8d7be",
+      "size": 523,
+      "hash": "b8a92dd4e7520bf9f4793b877eef0dbb7d752878",
       "sri": null
     },
     {
@@ -40657,8 +40657,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/volume_high.svg",
-      "size": 813,
-      "hash": "14e619bebadb764c8703b7dbcc8fc85b775ba067",
+      "size": 802,
+      "hash": "32ecbcfd275351e29a4912ea8ec2a5af7b707e14",
       "sri": null
     },
     {
@@ -40687,8 +40687,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/volume_low.svg",
-      "size": 567,
-      "hash": "cad2eca8708a06b4d65402399c0ed3008eeefba3",
+      "size": 558,
+      "hash": "3a71b19524cf12ff6a8057c1a54c454e508b78eb",
       "sri": null
     },
     {
@@ -40717,8 +40717,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/volume_off.svg",
-      "size": 643,
-      "hash": "256deb1d8aab19a079914d19ad8dbeca7f57baee",
+      "size": 633,
+      "hash": "f4609334a4c6f077f61897c34c596ffdf10ed561",
       "sri": null
     },
     {
@@ -40897,8 +40897,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/weeklyview.svg",
-      "size": 731,
-      "hash": "0f58f5f7b934317ed80f403cc840e18539b580bd",
+      "size": 723,
+      "hash": "8783c916dfe9096a42b1322aabfe5269667a5694",
       "sri": null
     },
     {
@@ -41077,8 +41077,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/world.svg",
-      "size": 1016,
-      "hash": "6604b40f0907197f0415dd37aaf3d445e877dadf",
+      "size": 1006,
+      "hash": "2b426f55e4dcaffbcb21c86fee44ffcbb392b1cb",
       "sri": null
     },
     {
@@ -41137,8 +41137,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/zoomin.svg",
-      "size": 666,
-      "hash": "7a02cbf4fb18848300ea41b14e53a16bd790144c",
+      "size": 656,
+      "hash": "712ad9aef9241aac1a54f25fa858b4cb6b670bdb",
       "sri": null
     },
     {
@@ -41167,8 +41167,8 @@
       "type": "asset",
       "cacheable": false,
       "url": "/assets/icons/utility/zoomout.svg",
-      "size": 623,
-      "hash": "d38c45a974911a6fbb98cf29a700c90593b73d0c",
+      "size": 611,
+      "hash": "c314d2e8c48e73e4bcfd7ac9573a3c87d2187783",
       "sri": null
     },
     {
