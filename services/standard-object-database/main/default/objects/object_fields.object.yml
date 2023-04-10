@@ -600,7 +600,7 @@ list_views:
     columns:
       - label
       - name
-      - column_name
+      - group
       - type
       - object
       - sort_no

@@ -184,5 +184,5 @@
     "id": "page_objects_record_detail",
     "name": "page_objects_record_detail",
     "bodyClassName": "",
-    "className": "object-detail-page"
+    "className": "object-detail-page overflow-y-auto"
 }

@@ -1,8 +1,0 @@
-name: titleflows
-is_active: true
-label: 新标题面板
-object_name: flows
-pageAssignments: []
-render_engine: amis
-type: form
-widgets: []

@@ -90,3 +90,11 @@
     margin: auto;
 }
 
+
+.steedos-table-modal-body{
+    display: initial !important;
+}
+
+.instance-trace-detail-modal .modal-body{
+    display: initial !important;
+}
