@@ -277,7 +277,10 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         app.code = app._id;
     }
     translationApp(userSession.language, app.code, app);
-    const appPath = `/app/${app.code}`
+    var appPath = `/app/${app.code}`
+    if(app.url){
+        appPath = app.url
+    }
     const menu = {
         id: app.code,
         path: appPath,
