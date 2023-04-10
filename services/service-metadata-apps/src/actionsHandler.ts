@@ -288,7 +288,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         icon: app.icon_slds,
         showSidebar: app.showSidebar,
         description: app.description,
-        children: []
+        children: [],
+        blank: app.is_new_window
     }
     const hiddenTabNames = context.hiddenTabNames || []
     if (app.tab_items) {
