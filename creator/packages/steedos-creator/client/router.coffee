@@ -263,7 +263,7 @@ objectRoutes.route '/view/:record_id',
 				# recordId: record_id,
 				# __timestamp: new Date().getTime()
 			};
-				
+		# console.log('regions===>', regions)			
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
 				main: main
