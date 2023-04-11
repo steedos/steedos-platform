@@ -417,10 +417,6 @@ module.exports = {
 					schemaDirectives = _.cloneDeep(mixinOptions.schemaDirectives);
 				}
 
-				if (this.globalTypeDefs) {
-					typeDefs = typeDefs.concat(this.globalTypeDefs);
-				}
-
 				let queries = [];
 				let mutations = [];
 				let subscriptions = [];
@@ -429,6 +425,59 @@ module.exports = {
 				let unions = [];
 				let enums = [];
 				let inputs = [];
+
+				if (this.globalGraphQLSettings) {
+					if (_.isObject(this.globalGraphQLSettings)) {
+						const globalDef = this.globalGraphQLSettings;
+						const thisServiceName = this.name;
+						// console.log('thisServiceName', thisServiceName)
+
+						if (globalDef.query) {
+							queries = queries.concat(globalDef.query);
+						}
+
+						if (globalDef.mutation) {
+							mutations = mutations.concat(globalDef.mutation);
+						}
+
+						if (globalDef.subscription) {
+							subscriptions = subscriptions.concat(globalDef.subscription);
+						}
+
+						if (globalDef.type) {
+							types = types.concat(globalDef.type);
+						}
+
+						if (globalDef.interface) {
+							interfaces = interfaces.concat(globalDef.interface);
+						}
+
+						if (globalDef.union) {
+							unions = unions.concat(globalDef.union);
+						}
+
+						if (globalDef.enum) {
+							enums = enums.concat(globalDef.enum);
+						}
+
+						if (globalDef.input) {
+							inputs = inputs.concat(globalDef.input);
+						}
+
+						if (globalDef.resolvers) {
+							resolvers = Object.entries(globalDef.resolvers).reduce(
+								(acc, [name, resolver]) => {
+									acc[name] = _.merge(
+										acc[name] || {},
+										this.createServiceResolvers(thisServiceName, resolver)
+									);
+									return acc;
+								},
+								resolvers
+							);
+						}
+					}
+				}
 
 				const processedServices = new Set();
 

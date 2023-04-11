@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-07 11:53:24
+ * @LastEditTime: 2023-04-11 11:44:41
  * @Description: 
  */
 
@@ -26,7 +26,7 @@ module.exports = {
     namespace: "steedos",
     mixins: [serviceObjectMixin],
 
-    globalTypeDefs: [], // service-api 里generateGraphQLSchema使用 
+    globalGraphQLSettings: {}, // service-api 里generateGraphQLSchema使用 
 
     projectStarted: false,
 
@@ -34,17 +34,6 @@ module.exports = {
      * Settings
      */
     settings: {
-        graphql: {
-            // query: ['spaces(fields: JSON, filters: JSON, top: Int, skip: Int, sort: String): [spaces]'],
-            // mutation: mutation,
-            // resolvers: {
-            //     Query: {
-            //         spaces: {
-            //             action: "find"
-            //         }              
-            //     }
-            // }
-        }
     },
 
     /**
@@ -273,7 +262,7 @@ module.exports = {
 
                 const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
 
-                let globalTypeDefs = []
+                let type = []
                 let query = []
                 let mutation = []
                 let resolvers = {}
@@ -283,7 +272,7 @@ module.exports = {
                 for (const objectName in objGraphqlMap) {
                     if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
                         const gMap = objGraphqlMap[objectName];
-                        globalTypeDefs.push(gMap.type)
+                        type.push(gMap.type)
                         query = query.concat(gMap.query)
                         mutation = mutation.concat(gMap.mutation)
                         resolvers = Object.assign(resolvers, gMap.resolvers)
@@ -292,9 +281,8 @@ module.exports = {
                     }
                 }
 
-                this.globalTypeDefs = globalTypeDefs
-
-                this.settings.graphql = {
+                this.globalGraphQLSettings = {
+                    type: type,
                     query: query,
                     mutation: mutation,
                     resolvers: {
