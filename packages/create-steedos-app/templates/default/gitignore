@@ -4,8 +4,6 @@
 
 **/node_modules
 
-.npmrc
-.yarnrc
 **/npm-error.log
 **/yarn-error.log
 **/lerna-debug.log
@@ -16,5 +14,6 @@ logs
 
 .env.local
 .steedos
+.node-red
 
 yarn.lock
