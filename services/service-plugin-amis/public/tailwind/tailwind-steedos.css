@@ -200,9 +200,17 @@
   width: 50%
 }
 
+.w-96 {
+  width: 24rem
+}
+
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content
+}
+
+.min-w-\[200px\] {
+  min-width: 200px
 }
 
 .flex-none {
@@ -211,6 +219,10 @@
 
 .flex-1 {
   flex: 1 1 0%
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0
 }
 
 .-translate-x-0 {
@@ -263,6 +275,10 @@
   overflow-y: auto
 }
 
+.rounded {
+  border-radius: 0.25rem
+}
+
 .border-b-\[3px\] {
   border-bottom-width: 3px
 }
@@ -294,9 +310,24 @@
   border-color: rgb(203 213 225 / var(--tw-border-opacity))
 }
 
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity))
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity))
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
 .p-0 {
@@ -305,6 +336,10 @@
 
 .p-4 {
   padding: 1rem
+}
+
+.p-2 {
+  padding: 0.5rem
 }
 
 .px-4 {
@@ -398,6 +433,11 @@
   color: rgb(0 0 0 / var(--tw-text-opacity))
 }
 
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity))
+}
+
 .underline {
   text-decoration-line: underline
 }
@@ -436,6 +476,11 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
 }
 
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px
+}
+
 @media (min-width: 640px) {
   .sm\:mt-\[90px\] {
     margin-top: 90px
@@ -462,6 +507,10 @@
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
   }
 
+  .sm\:p-3 {
+    padding: 0.75rem
+  }
+
   .sm\:shadow {
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -472,5 +521,21 @@
 @media (min-width: 1024px) {
   .lg\:z-50 {
     z-index: 50
+  }
+
+  .lg\:order-first {
+    order: -9999
+  }
+
+  .lg\:order-last {
+    order: 9999
+  }
+
+  .lg\:flex {
+    display: flex
+  }
+
+  .lg\:flex-col {
+    flex-direction: column
   }
 }
