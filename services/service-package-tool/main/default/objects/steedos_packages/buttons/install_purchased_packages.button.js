@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-18 16:32:30
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-18 17:42:32
+ * @LastEditTime: 2023-04-11 11:14:56
  * @Description: 
  */
 module.exports = {
@@ -74,6 +74,6 @@ module.exports = {
         
     },
     install_purchased_packagesVisible: function (object_name, record_id) {
-        return true;
+        return false;
     }
 }
