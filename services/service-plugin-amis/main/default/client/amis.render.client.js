@@ -109,7 +109,7 @@
                                 console.trace('Component: ', props, 'Generated Amis Schema: ', schema);
                                 console.groupEnd();
                               }
-                              return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''), amisReact.createElement(amisReact.Fragment, null, render ? render('body', body) : ''));
+                              return amisReact.createElement(amisReact.Fragment, null, amisReact.createElement(amisReact.Fragment, null, schema && render ? render('body', schema) : ''));
                             }
                           }
                         // 注册amis渲染器
