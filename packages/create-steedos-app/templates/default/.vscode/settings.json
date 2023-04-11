@@ -13,8 +13,5 @@
         "./node_modules/@steedos/schemas/permissionset/schema.json": "/*.permissionset.yml",
         "./node_modules/@steedos/schemas/profile/schema.json": "/*.profile.yml",
         "./node_modules/@steedos/schemas/dashboard/schema.json": "/*.dashboard.yml"
-    },
-    "cSpell.words": [
-        "OIDC"
-    ]
+    }
 }

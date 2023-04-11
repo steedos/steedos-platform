@@ -53,7 +53,7 @@
                         "sendOn": "!!this.recordId",
                         "adaptor": "var data = payload.data.data[0];\nif(data){\n    //初始化接口返回的字段移除字段值为null的字段\n    for (key in data){\n        if(data[key] === null){\n            delete data[key];\n        }\n    }\n};\nif (data.tab_items && !_.isArray(data.tab_items)) {\n    // 数据库中存储的是对象格式而不是数组，转换为数组用于界面显示\n    let arrTabItems = [];\n    _.each(data.tab_items, function (n, k) {\n        n.tab_name = k;\n        delete n.index;\n        arrTabItems.push(n);\n    });\n    data.tab_items = arrTabItems;\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;\n        ",
                         "data": {
-                            "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible, showSidebar, description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
+                            "query": "{data:apps(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,code,icon_slds,visible, showSidebar, enable_nav_schema, description,tabs,tab_items,tab_groups,objects,mobile_objects,is_creator,mobile,sort,url,is_use_ie,is_use_iframe,is_new_window,on_click,auth_name,secret,is_system,from_code_id,instance_state,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},_display{visible,is_creator,mobile,is_use_ie,is_use_iframe,is_new_window,is_system,instance_state,created,modified}}}"
                         },
                         "headers": {
                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -508,6 +508,15 @@
                                                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                         }
                                                     }
+                                                },
+                                                {
+                                                    "name": "enable_nav_schema",
+                                                    "label": "启用自定义导航",
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "id": "u:07a8a4c5f89"
                                                 }
                                             ],
                                             "size": "none"

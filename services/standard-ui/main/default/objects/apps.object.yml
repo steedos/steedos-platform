@@ -124,10 +124,18 @@ fields:
     # defaultValue: true
 
   showSidebar:
-    label: Show Sidebar
+    label: 显示左侧导航
     type: boolean
     defaultValue: false
-    
+  enable_nav_schema: 
+    label: 启用自定义导航
+    type: boolean
+    required: false
+  nav_schema:
+    label: 自定义导航
+    type: code
+    language: json
+    visible_on: "{{false}}"
   # members:
   #   type: object
   #   label: Members
