@@ -214,7 +214,7 @@ jobs:
           time: 120s
 
       - name: Create Docker Release
-        if: steps.version.outputs.is_stable == 'true'
+        # if: steps.version.outputs.is_stable == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:
