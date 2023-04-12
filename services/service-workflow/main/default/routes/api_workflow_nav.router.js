@@ -131,7 +131,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "label": "我的文件",
         "value":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/inbox`
+          // "to": `/app/${appId}/instance_tasks/grid/inbox`
         },
         "unfolded": true,
         "children": [

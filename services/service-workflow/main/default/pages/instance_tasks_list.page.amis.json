@@ -1,14 +1,17 @@
 {
   "type": "service",
+  "pageGridClassName": "h-full m-0",
   "body": [
     {
       "type": "steedos-object-listview",
       "objectApiName": "${objectName}",
       "columnsTogglable": false,
       "showHeader": true,
+      "filterVisible": false,
       "id": "u:d29cef0d1007",
       "sideSchema": {
         "type": "service",
+        "className": "h-full",
         "onEvent": {
           "@data.changed.instance_tasks": {
             "actions": [
@@ -21,8 +24,9 @@
         "body": [
           {
             "type": "input-tree",
+            "treeContainerClassName": "h-full",
             "name": "tree",
-            "className": "instance-inbox-tree bg-white h-full w-full",
+            "className": "instance-box-tree bg-white h-full w-full",
             "id": "u:9f3dd961ca12",
             "stacked": true,
             "multiple": false,

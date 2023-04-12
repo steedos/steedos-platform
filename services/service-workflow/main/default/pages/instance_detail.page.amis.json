@@ -1,57 +1,144 @@
 {
-    "type": "page",
-    "className": "steedos-instance-wrapper",
-    "body": [
-      {
-        "type": "wrapper",
-        "className": "p-0 h-full",
-        "body": [
-          {
-            "type": "steedos-instance-detail",
-            "id": "u:40052b3812c1",
-            "label": "Instance Detail",
-            "instanceId": "\\${recordId}",
-            "boxName": "${side_listview_id}",
-            "hiddenOn": "!!!this.recordId"
+  "type": "page",
+  "className": "steedos-instance-wrapper",
+  "body": [
+    {
+      "type": "wrapper",
+      "visibleOn": "${display != 'split'}",
+      "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col",
+      "body": {
+        "type": "service",
+        "className": "w-full h-full",
+        "onEvent": {
+          "@data.changed.instance_tasks": {
+            "actions": [
+              {
+                "actionType": "reload"
+              }
+            ]
           }
-        ],
-        "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}",
-        "id": "u:829a40757f0a"
-      },
-      {
-        "type": "wrapper",
-        "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
-        "visibleOn": "${window:InstanceDetailEnabledAmisRender == false}",
-        "body": [
-          {
-            "type": "custom",
-            "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
-            "onMount":"try{\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"box\", props.data.side_listview_id);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])}catch(error){console.error(error)}; window.instanceDetailBlazeRenderView?.autorun(()=>{console.log('====onMount=', props); Session.set(\"instanceId\", Session.get(\"record_id\"))}); ",
-            "id": "u:a6e0685d1da3",
-            "onUnmount": "if(window.instanceDetailBlazeRenderView){console.log('Blaze.remove===>instanceDetailBlazeRenderView');Blaze.remove(window.instanceDetailBlazeRenderView); window.instanceDetailBlazeRenderView = null;}"
-          }
-        ],
-        "id": "u:16cf880c925a",
-        "style": {
-          "position": "static",
-          "display": "block"
         },
-        "isFixedHeight": false,
-        "isFixedWidth": false
+        "body": [
+          {
+            "type": "input-tree",
+            "treeContainerClassName": "h-full",
+            "name": "tree",
+            "className": "instance-box-tree bg-white w-full",
+            "id": "u:9f3dd961ca12",
+            "stacked": true,
+            "multiple": false,
+            "enableNodePath": false,
+            "hideRoot": true,
+            "showIcon": true,
+            "initiallyOpen": false,
+            "size": "md",
+            "onEvent": {
+              "change": {
+                "actions": [
+                  {
+                    "args": {
+                      "link": "${event.data.value.to}",
+                      "blank": false
+                    },
+                    "actionType": "link"
+                  }
+                ]
+              }
+            },
+            "menuTpl": {
+              "type": "wrapper",
+              "className": "flex flex-row  p-0 m-0",
+              "body": [
+                {
+                  "type": "tpl",
+                  "className": "flex-1 w-6/12",
+                  "tpl": "${label}"
+                },
+                {
+                  "type": "tpl",
+                  "className": "-mx-11 ",
+                  "tpl": "",
+                  "badge": {
+                    "offset": [
+                      -13,
+                      13
+                    ],
+                    "mode": "text",
+                    "text": "${tag}"
+                  }
+                }
+              ]
+            },
+            "unfoldedLevel": 2,
+            "source": "${options}"
+          }
+        ],
+        "id": "u:aa4f4dc5f439",
+        "api": {
+          "method": "get",
+          "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+          "headers": {
+            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+          }
+        }
       }
-    ],
-    "regions": [
-      "body"
-    ],
-    "data": {
     },
-    "id": "u:d37465183f56",
-    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3 p-0 h-fill",
-    "name": "amis-root-workflow",
-    "initApi": null,
-    "initFetch": null,
-    "asideResizor": false,
-    "pullRefresh": {
-      "disabled": true
+    {
+      "type": "wrapper",
+      "className": "steedos-instance-detail-wrapper bg-white m-0 p-0 flex-1 focus:outline-none lg:order-last",
+      "body": {
+        "type": "service",
+        "id": "u:d6db0c84f150",
+        "body": [
+          {
+            "type": "wrapper",
+            "className": "p-0 h-full",
+            "body": [
+              {
+                "type": "steedos-instance-detail",
+                "id": "u:40052b3812c1",
+                "label": "Instance Detail",
+                "instanceId": "\\${recordId}",
+                "boxName": "${side_listview_id}",
+                "hiddenOn": "!!!this.recordId"
+              }
+            ],
+            "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}",
+            "id": "u:829a40757f0a"
+          },
+          {
+            "type": "wrapper",
+            "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
+            "visibleOn": "${window:InstanceDetailEnabledAmisRender == false}",
+            "body": [
+              {
+                "type": "custom",
+                "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
+                "onMount":"try{\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"box\", props.data.side_listview_id);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])}catch(error){console.error(error)}; window.instanceDetailBlazeRenderView?.autorun(()=>{console.log('====onMount=', props); Session.set(\"instanceId\", Session.get(\"record_id\"))}); ",
+                "id": "u:a6e0685d1da3",
+                "onUnmount": "if(window.instanceDetailBlazeRenderView){console.log('Blaze.remove===>instanceDetailBlazeRenderView');Blaze.remove(window.instanceDetailBlazeRenderView); window.instanceDetailBlazeRenderView = null;}"
+              }
+            ],
+            "id": "u:16cf880c925a",
+            "style": {
+              "position": "static",
+              "display": "block"
+            },
+            "isFixedHeight": false,
+            "isFixedWidth": false
+          }
+        ],
+        "className": "h-full"
+      }
     }
+  ],
+  "id": "u:d37465183f56",
+  "bodyClassName": "p-0 flex flex-1 overflow-hidden h-full",
+  "name": "amis-root-workflow",
+  "initApi": null,
+  "initFetch": null,
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
   }
+}

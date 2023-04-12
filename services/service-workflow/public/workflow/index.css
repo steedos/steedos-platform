@@ -45,7 +45,10 @@
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
-.instance-inbox-tree .antd-TreeControl{
+.instance-box-tree .antd-TreeControl{
+    padding-top: 15px;
+}
+/* .instance-box-tree .antd-TreeControl{
     padding: 0;
     border-bottom: 0px;
     border-radius: 0px;
@@ -54,39 +57,39 @@
     padding-top: 8px;
     padding-left: 4px;
 }
-.instance-inbox-tree .antd-Tree {
+.instance-box-tree .antd-Tree {
     max-height: 100%;
 }
-.instance-inbox-tree .antd-Tree-itemLabel{
+.instance-box-tree .antd-Tree-itemLabel{
     padding-left: 0;
 }
 
-.instance-inbox-tree .antd-Tree-itemLabel-item{
+.instance-box-tree .antd-Tree-itemLabel-item{
     padding-left: 0;
 }
-.instance-inbox-tree .antd-Tree-itemArrow{
+.instance-box-tree .antd-Tree-itemArrow{
     margin-right: 0;
 }
-.instance-inbox-tree .antd-Tree-itemIcon{
+.instance-box-tree .antd-Tree-itemIcon{
     margin-right: 4px;
-}
-.instance-inbox-tree  .antd-Badge-text{
+} */
+.instance-box-tree  .antd-Badge-text{
     background: #D3D6DD;
 }
-.instance-inbox-tree .antd-Tree-item:nth-child(1) .antd-Badge-text{
+.instance-box-tree .antd-Tree-item:nth-child(1) .antd-Badge-text{
     background: #DF4D46;
 }
-.instance-inbox-tree .antd-Tree-itemLabel-item{
+/* .instance-box-tree .antd-Tree-itemLabel-item{
     height: 1.6rem;
-}
-.instance-inbox-tree .antd-TplField span{
+} */
+.instance-box-tree .antd-TplField span{
     width: 85%;
     display: block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.instance-inbox-tree .antd-Tree-itemText{
+.instance-box-tree .antd-Tree-itemText{
     margin: auto;
 }
 
@@ -98,3 +101,16 @@
 .instance-trace-detail-modal .modal-body{
     display: initial !important;
 }
+
+.instance-box-tree .antd-Tree{
+    max-height: 100% !important;
+}
+
+.instance-box-tree .antd-TreeControl{
+    border: none !important;
+}
+
+.steedos-instance-detail-wrapper .instance-wrapper{
+    border-radius: 0px !important;
+}
+
