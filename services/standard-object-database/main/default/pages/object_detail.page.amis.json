@@ -2,7 +2,7 @@
     "type": "page",
     "body": [
         {
-            "type": "steedos-record-detail",
+            "type": "steedos-record-service",
             "body": [
                 {
                     "type": "steedos-record-detail-header",
