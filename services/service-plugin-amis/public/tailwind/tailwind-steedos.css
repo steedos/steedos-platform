@@ -89,10 +89,6 @@
   margin: 0px
 }
 
-.m-3 {
-  margin: 0.75rem
-}
-
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
@@ -207,6 +203,10 @@
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content
+}
+
+.min-w-\[240px\] {
+  min-width: 240px
 }
 
 .min-w-\[200px\] {
