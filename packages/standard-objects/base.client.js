@@ -97,7 +97,6 @@ Steedos.StandardObjects = {
 							data: JSON.stringify({
 								query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
 							}),
-							type: 'POST',
 							contentType: 'application/json',
 							error: function () { }
 						});
@@ -132,7 +131,6 @@ Steedos.StandardObjects = {
 							data: JSON.stringify({
 								query: `{record:${object_name}__findOne(id: "${record_id}"){instances}}`
 							}),
-							type: 'POST',
 							contentType: 'application/json',
 							error: function () { }
 						});
