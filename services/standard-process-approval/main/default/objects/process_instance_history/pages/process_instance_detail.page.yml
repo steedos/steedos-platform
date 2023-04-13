@@ -1,0 +1,12 @@
+name: process_instance_detail
+is_active: true
+label: 批准过程记录详情页
+object_name: process_instance_history
+pageAssignments:
+  - type: orgDefault
+    page: process_instance_detail
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []

@@ -73,7 +73,7 @@ fields:
     required: "{{'object' === formData.type ? true: false}}"
     visible_on: "{{'object' === formData.type ? true: false}}"
   url:
-    type: url
+    type: text
     label: Url
     required: "{{'url' === formData.type ? true: false}}"
     visible_on: "{{'url' === formData.type ? true: false}}"

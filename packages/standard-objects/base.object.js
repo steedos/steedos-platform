@@ -150,10 +150,14 @@ module.exports = {
                                                             {
                                                               "actionType": "custom",
                                                               "script": `
-                                                                const id = SteedosUI.getRef(event.data.scopeId).getComponents()[0].props.id
                                                                 doAction({
-                                                                    "actionType": "reload",
-                                                                    "componentId": id,
+                                                                    "actionType": "broadcast",
+                                                                    "args": {
+                                                                    "eventName": \`@data.changed.\${event.data.objectName}\`
+                                                                    },
+                                                                    "data": {
+                                                                        "objectName": \`\${event.data.objectName}\`
+                                                                    }
                                                                   });
                                                               `
                                                             }
