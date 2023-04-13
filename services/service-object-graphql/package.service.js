@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-11 11:44:41
+ * @LastEditTime: 2023-04-13 18:48:20
  * @Description: 
  */
 
 "use strict";
-const { SteedosDatabaseDriverType, getObject } = require('@steedos/objectql');
+const { SteedosDatabaseDriverType, getObject, getDataSource } = require('@steedos/objectql');
 const {
     generateActionGraphqlProp,
     generateSettingsGraphql,
@@ -15,6 +15,8 @@ const {
     getQueryFields
 } = require('./lib');
 const open = require('open');
+
+const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
@@ -71,26 +73,8 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName
-                const objectConfig = await getObject(objectName).getConfig()
                 // filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
-                if (objectConfig.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || objectConfig.datasource.driver === SteedosDatabaseDriverType.Mongo) {
-                    const { filters } = ctx.params;
-                    if (filters) {
-                        if (_.isString(filters)) {
-                            if (filters.indexOf('(is_deleted eq true)') < 0) {
-                                ctx.params.filters = `(${filters}) and (is_deleted ne true)`;
-                            }
-                        }
-                        if (_.isArray(filters)) {
-                            const filtersStr = formatFiltersToODataQuery(filters);
-                            if (filtersStr.indexOf('(is_deleted eq true)') < 0) {
-                                ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
-                            }
-                        }
-                    } else {
-                        ctx.params.filters = '(is_deleted ne true)'
-                    }
-                }
+                ctx.params.filters = await this.dealWithFilters(ctx.params.filters, objectName)
                 if (_.isEmpty(ctx.params.fields)) {
                     const { resolveInfo } = ctx.meta;
 
@@ -115,26 +99,8 @@ module.exports = {
             async handler(ctx) {
                 const resolveInfo = ctx.meta.resolveInfo
                 const objectName = resolveInfo.fieldName.replace('__count', '')
-                const objectConfig = await getObject(objectName).getConfig()
                 // filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
-                if (objectConfig.datasource.driver === SteedosDatabaseDriverType.MeteorMongo || objectConfig.datasource.driver === SteedosDatabaseDriverType.Mongo) {
-                    const { filters } = ctx.params;
-                    if (filters) {
-                        if (_.isString(filters)) {
-                            if (filters.indexOf('(is_deleted eq true)') < 0) {
-                                ctx.params.filters = `(${filters}) and (is_deleted ne true)`;
-                            }
-                        }
-                        if (_.isArray(filters)) {
-                            const filtersStr = formatFiltersToODataQuery(filters);
-                            if (filtersStr.indexOf('(is_deleted eq true)') < 0) {
-                                ctx.params.filters = [ctx.params.filters, ['is_deleted', '!=', true]]
-                            }
-                        }
-                    } else {
-                        ctx.params.filters = '(is_deleted ne true)'
-                    }
-                }
+                ctx.params.filters = await this.dealWithFilters(ctx.params.filters, objectName)
 
                 const userSession = ctx.meta.user;
                 return this.count(objectName, ctx.params, userSession)
@@ -447,6 +413,31 @@ module.exports = {
             };
 
             return objGraphqlMap
+        },
+
+        // filters: 如果filters中没有查询 is_deleted 则自动添加is_deleted != true 条件
+        async dealWithFilters(filters, objectName) {
+            let newFilters = filters
+            const objectConfig = await getObject(objectName).getConfig()
+            const datasource = getDataSource(objectConfig.datasource)
+            if (datasource.driver === SteedosDatabaseDriverType.MeteorMongo || datasource.driver === SteedosDatabaseDriverType.Mongo) {
+                if (filters) {
+                    if (_.isString(filters)) {
+                        if (filters.indexOf('(is_deleted eq true)') < 0) {
+                            newFilters = `(${filters}) and (is_deleted ne true)`;
+                        }
+                    }
+                    if (_.isArray(filters)) {
+                        const filtersStr = formatFiltersToODataQuery(filters);
+                        if (filtersStr.indexOf('(is_deleted eq true)') < 0) {
+                            newFilters = [filters, ['is_deleted', '!=', true]]
+                        }
+                    }
+                } else {
+                    newFilters = '(is_deleted ne true)'
+                }
+            }
+            return newFilters
         }
     },
 
