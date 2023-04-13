@@ -17,6 +17,7 @@
     "license": "MIT",
     "gitHead": "9e0c93d90964dc1a7aef679c64f977d2352ef013",
     "dependencies": {
+        "@steedos/filters": "2.4.12",
         "@steedos/i18n": "2.4.12",
         "@steedos/objectql": "2.4.12",
         "@steedos/service-object-mixin": "2.4.12",
