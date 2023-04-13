@@ -90,7 +90,7 @@ var sendWorker = function (task, interval) {
                 try {
                     task();
                 } catch (error) {
-                    this.logger.error(error)
+                    console.error(error)
                 }
             }).promise();
 
