@@ -136,7 +136,7 @@ fields:
     label: Lock record after approval
     type: boolean
     defaultValue: false
-    required: true
+    required: false
 list_views:
   default:
     columns:
