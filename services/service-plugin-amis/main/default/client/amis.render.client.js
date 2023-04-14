@@ -219,28 +219,28 @@
                 //     return div;
                 // },
                 jumpTo: (to, action) => {
-                if (to === 'goBack') {
-                    return window.history.back();
-                }
+                  if (to === 'goBack') {
+                      return window.history.back();
+                  }
 
-                to = normalizeLink(to);
+                  to = normalizeLink(to);
 
-                if (action && action.actionType === 'url') {
-                    action.blank === false ? (window.location.href = to) : window.open(to);
-                    return;
-                }
+                  if (action && action.actionType === 'url') {
+                      action.blank === false ? (window.location.href = to) : window.open(to);
+                      return;
+                  }
 
-                // 主要是支持 nav 中的跳转
-                if (action && to && action.target) {
-                    window.open(to, action.target);
-                    return;
-                }
+                  // 主要是支持 nav 中的跳转
+                  if (action && to && action.target) {
+                      window.open(to, action.target);
+                      return;
+                  }
 
-                if (/^https?:\/\//.test(to)) {
-                    window.location.replace(to);
-                } else {
-                    FlowRouter.go(to);
-                }
+                  if (/^https?:\/\//.test(to)) {
+                      window.location.replace(to);
+                  } else {
+                      FlowRouter.go(to);
+                  }
                 },
                 theme: 'antd',
                 isCurrentUrl: isCurrentUrl,

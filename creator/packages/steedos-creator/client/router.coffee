@@ -255,11 +255,12 @@ objectRoutes.route '/view/:record_id',
 		main = "creator_view"
 		page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
 		if page
-			main = "page_record_view"
+			main = "page_object"
 			regions = {
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: object_name,
+				pageType: "record"
 				# recordId: record_id,
 				# __timestamp: new Date().getTime()
 			};
@@ -300,13 +301,14 @@ objectRoutes.route '/grid/:list_view_id',
 		
 		page = Steedos.Page.getPage('list',Session.get("app_id"), objectName);
 		if page
-			main = "page_list_view"
+			main = "page_object"
 			regions = {
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: objectName,
 				listViewId: Session.get("list_view_id"),
-				__timestamp: new Date().getTime()
+				pageType: "list"
+				# __timestamp: new Date().getTime()
 			};
 		
 		BlazeLayout.render Creator.getLayout(),

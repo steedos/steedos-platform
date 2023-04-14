@@ -6,6 +6,9 @@
 ;(function(){
     Steedos.Page = {
         App: {},
+        Object: {
+            Template: {}
+        },
         Record: {},
         Listview: {},
         Header: {},
@@ -65,32 +68,42 @@
         if(type === 'list'){
             return {
                 render_engine: 'amis',
-                name: 'steedosListviewPage',
-                schema:{
-                    "name": `${objectApiName}-listview-${listViewId}`,
-                    "type": "steedos-page-listview",
-                    "showHeader": true,
-                    "objectApiName": objectApiName,
-                    "appId": appId,
-                    "display": display,
-                    "columnsTogglable": false,
-                    // "listName": "all",
+                name: "steedosPageObjectControl",
+                schema: {
+                    "type": "steedos-page-object-control",
+                    "name": "steedosPageObjectControl"
                 }
+                // name: 'steedosListviewPage',
+                // schema:{
+                //     "name": `${objectApiName}-listview-${listViewId}`,
+                //     "type": "steedos-page-listview",
+                //     "showHeader": true,
+                //     "objectApiName": objectApiName,
+                //     "appId": appId,
+                //     "display": display,
+                //     "columnsTogglable": false,
+                //     // "listName": "all",
+                // }
             }
         }else if(type === 'record'){
             return {
                     render_engine: 'amis',
-                    name: 'steedosRecordPage',
+                    name: "steedosPageObjectControl",
                     schema: {
-                        "name": `${objectApiName}-recordDetail-${recordId}`,
-                        "type": "steedos-page-record-detail",
-                        "objectApiName": objectApiName,
-                        "sideObject": sideObject,
-                        "sideListviewId": sideListviewId,
-                        // "recordId": recordId,
-                        "display": display,
-                        "appId": appId,
+                        "type": "steedos-page-object-control",
+                        "name": "steedosPageObjectControl"
                     }
+                    // name: 'steedosRecordPage',
+                    // schema: {
+                    //     "name": `${objectApiName}-recordDetail-${recordId}`,
+                    //     "type": "steedos-page-record-detail",
+                    //     "objectApiName": objectApiName,
+                    //     "sideObject": sideObject,
+                    //     "sideListviewId": sideListviewId,
+                    //     // "recordId": recordId,
+                    //     "display": display,
+                    //     "appId": appId,
+                    // }
                 }
             
         }else if(type === 'related_list'){
@@ -300,6 +313,133 @@
         }, container);
         return container
     };
+
+    Steedos.Page.Object.Template.onRendered = function(){
+        var objectName, recordId, self;
+        self = this;
+        objectName = Session.get("object_name");
+        recordId = Session.get("record_id");
+        this.containerList = [];
+        this.pageName = null;
+        return this.autorun(function() {
+            Session.get("record_id");
+          var container, e, lastData, ref, ref1, ref2, regions, schema, updateProps, updatePropsData;
+          regions = self.data.regions();
+          console.log('regions====>', regions, this.lastRegions);
+          updateProps = true;
+          if (regions.objectName !== ((ref = this.lastRegions) != null ? ref.objectName : void 0)) {
+            updateProps = false;
+          }
+          this.lastRegions = regions;
+          if (updateProps && self.pageName) {
+            try {
+              if (SteedosUI.refs[self.pageName]) {
+                updatePropsData = {
+                  objectName: objectName,
+                  pageType: regions.pageType,
+                  listViewId: regions.listViewId,
+                };
+                if(FlowRouter.current().queryParams.side_listview_id){
+                    updatePropsData.listName=FlowRouter.current().queryParams.side_listview_id
+                }else if(regions.listViewId){
+                    updatePropsData.listName=regions.listViewId
+                }
+                if(FlowRouter.current().queryParams.display){
+                    updatePropsData.display = FlowRouter.current().queryParams.display
+                }
+                updatePropsData.recordId = Tracker.nonreactive(function() {
+                  return Session.get("record_id");
+                });
+                lastData = ((ref1 = SteedosUI.refs[self.pageName]) != null ? (ref2 = ref1.__$schema) != null ? ref2.data : void 0 : void 0) || {};
+                console.log("page_object Steedos.Page.Record.updateProps", {
+                    data: window._.defaultsDeep(updatePropsData, lastData)
+                  });
+                return SteedosUI.refs[self.pageName].updateProps({
+                  data: window._.defaultsDeep(updatePropsData, lastData)
+                });
+              }
+            } catch (error) {
+              e = error;
+              console.error(self.pageName + ": " + e);
+            }
+          }
+          if (!updateProps && self.pageName && SteedosUI.refs[self.pageName]) {
+            try {
+              SteedosUI.refs[self.pageName].unmount();
+            } catch (error) {
+              e = error;
+              console.error(self.pageName + ": " + e);
+            }
+          }
+          if (self.data.regions) {
+            regions = Tracker.nonreactive(self.data.regions);
+            this.lastRegions = regions;
+            if (regions && regions.page && regions.page.schema) {
+              schema = regions.page.schema;
+              if (_.isString(schema)) {
+                schema = JSON.parse(schema);
+              }
+              self.pageName = schema.name;
+            }
+          }
+          objectName = Tracker.nonreactive(function() {
+            return Session.get("object_name");
+          });
+          recordId = Tracker.nonreactive(function() {
+            return Session.get("record_id");
+          });
+          container = Steedos.Page.Object.render(self, objectName, recordId);
+          console.log("page_object Steedos.Page.Object.render");
+          if (container) {
+            return self.containerList.push(container);
+          }
+        });
+    };
+    Steedos.Page.Object.Template.onDestroyed = function(){
+        var e, self;
+        self = this;
+        try {
+        SteedosUI.refs[this.pageName].unmount();
+        } catch (error) {
+        e = error;
+        console.error(this.pageName + ": " + e);
+        }
+        return _.each(this.containerList, function(container) {
+        if (container) {
+            return ReactDOM.unmountComponentAtNode(container);
+        }
+        });
+    };
+    Steedos.Page.Object.render = function(template, objectApiName, recordId = null, options){
+        try {
+            if (!template.data.regions || !objectApiName) {
+                return;
+            }
+            const { page, ...data } = Tracker.nonreactive(template.data.regions);
+            var rootId = "steedosPageObjetRoot";
+            var modalRoot = document.getElementById(rootId);
+            // if(modalRoot){
+            //     modalRoot.remove();
+            // }
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full')
+                $(".page-object-root")[0].appendChild(modalRoot);
+            }
+
+            if (page.render_engine && page.render_engine != 'redash') {
+                if(FlowRouter.current().queryParams.side_listview_id){
+                    data.listName = FlowRouter.current().queryParams.side_listview_id;
+                }else if(data.listViewId){
+                    data.listName = data.listViewId;
+                }
+                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data, {recordId}));
+            }
+        } catch (error) {
+
+        }
+    }
 
     Steedos.Page.Listview.getDefaultName = function (objectApiName, listViewName) {
         return `listview_${objectApiName}_${listViewName}`;
