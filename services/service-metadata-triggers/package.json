@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-triggers",
-  "version": "2.5.0-beta.6",
+  "version": "2.5.0-beta.7",
   "description": "",
   "main": "lib/triggers.service.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/objectql": "2.5.0-beta.6",
+    "@steedos/objectql": "2.5.0-beta.7",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -34,5 +34,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2bdc2b57b63d3b78e5181cc93fd3c482ba69a85e"
+  "gitHead": "17a14d482aaed86c7604cdbfa769a1618579283d"
 }
