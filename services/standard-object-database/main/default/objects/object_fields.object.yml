@@ -381,48 +381,23 @@ fields:
   summary_field:
     type: lookup
     label: Field to Aggregate
+    reference_to: object_fields
+    reference_to_field: name
     inlineHelpText: If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT, this field must be filled in, Only fields that aggregate number, currency, date, and datetime types are supported.
     depend_on:
       - summary_object
       - summary_type
     defaultIcon: service_contract
-    optionsFunction: !<tag:yaml.org,2002:js/function> |- 
-      function (values) {
-        if(!values.summary_object){
-          return [];
-        }
-        if(values.summary_type && values.summary_type !== "count"){
-          var options = Creator.getObjectLookupFieldOptions(values.summary_object, false, true);
-          var object = Creator.getObject(values.summary_object);
-          var fields = object ? object.fields : null;
-          if(!fields){
-            return [];
-          }
-          if(values.summary_type === "sum" || values.summary_type === "avg"){
-            /*sum/avg类型可以汇总数值、金额、百分比字段*/
-            options = options.filter(function(option){
-              var optionFieldType = fields[option.value] && fields[option.value].type;
-              if(["formula", "summary"].indexOf(optionFieldType) > -1){
-                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
-                optionFieldType = fields[option.value].data_type;
-              }
-              return ["number", "currency", "percent"].indexOf(optionFieldType) > -1
-            });
-          }
-          else{
-            /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/
-            options = options.filter(function(option){
-              var optionFieldType = fields[option.value] && fields[option.value].type;
-              if(["formula", "summary"].indexOf(optionFieldType) > -1){
-                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
-                optionFieldType = fields[option.value].data_type;
-              }
-              return ["number", "currency", "percent", "date", "datetime"].indexOf(optionFieldType) > -1
-            });
-          }
-          return options;
-        }
-      }
+    amis:
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}"
+        "data": 
+          "summary_type": "${summary_type}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.summary_object && !!this.summary_type"
+        "adaptor": "const summary_type = api.body.summary_type;\nconst term = api.query.term;\nlet fields = payload.fields;\nlet options = [];\nif (fields) {\n  if (summary_type && summary_type !== \"count\") {\n    if (summary_type === \"sum\" || summary_type === \"avg\") {\n      /*sum/avg类型可以汇总数值、金额、百分比字段*/\n      _.forEach(fields, (value, key) => {\n        let fieldType = value.type;\n        if ([\"formula\", \"summary\"].indexOf(fieldType) > -1) {\n          /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/\n          fieldType = value.data_type;\n        }\n        if ([\"number\", \"currency\", \"percent\"].indexOf(fieldType) > -1) {\n          options.push({ label: value.label, value: value.name });\n        }\n      })\n    }\n    else {\n      /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/\n      _.forEach(fields, (value, key) => {\n        let fieldType = value.type;\n        if ([\"formula\", \"summary\"].indexOf(fieldType) > -1) {\n          /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/\n          fieldType = value.data_type;\n        }\n        if ([\"number\", \"currency\", \"percent\", \"date\", \"datetime\"].indexOf(fieldType) > -1) {\n          options.push({ label: value.label, value: value.name });\n        }\n      })\n    }\n  }\n  if (term) {\n    options = _.filter(options, (item) => {\n      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;\n    })\n  }\n}\npayload = {\n  data: { options: options },\n  msg: \"\",\n  status: 0\n}\nreturn payload;"
     visible_on: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
     required: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
     sort_no: 320
