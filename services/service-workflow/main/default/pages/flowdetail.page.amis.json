@@ -231,6 +231,9 @@
 			}
 		}
 	],
+	"regions": [
+		"body"
+	],
 	"data": {
 		"objectName": "flows",
 		"recordId": "BayiYu3sk2hv3M2HW",
