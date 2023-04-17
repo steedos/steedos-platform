@@ -256,15 +256,14 @@ objectRoutes.route '/view/:record_id',
 		page = Steedos.Page.getPage('record', Session.get("app_id"), object_name, record_id);
 		if page
 			main = "page_object"
-			regions = {
+			regions =  window._.defaultsDeep({display: Steedos.Page.getDisplay(object_name)}, FlowRouter.current().queryParams , {
 				page: page,
 				appId: Session.get("app_id"),
+				recordId: record_id,
 				objectName: object_name,
 				pageType: "record"
-				# recordId: record_id,
-				# __timestamp: new Date().getTime()
-			};
-		# console.log('regions===>', regions)			
+			});;
+		# console.log('/view/:record_id regions===>', regions)			
 		Meteor.setTimeout ()->
 			BlazeLayout.render Creator.getLayout(),
 				main: main
@@ -302,15 +301,14 @@ objectRoutes.route '/grid/:list_view_id',
 		page = Steedos.Page.getPage('list',Session.get("app_id"), objectName);
 		if page
 			main = "page_object"
-			regions = {
+			regions = window._.defaultsDeep({display: Steedos.Page.getDisplay(objectName)}, FlowRouter.current().queryParams, {
 				page: page,
 				appId: Session.get("app_id"),
 				objectName: objectName,
 				listViewId: Session.get("list_view_id"),
-				pageType: "list"
-				# __timestamp: new Date().getTime()
-			};
-		
+				pageType: "list",
+			});
+		# console.log('/grid/:list_view_id regions===>', regions)	
 		BlazeLayout.render Creator.getLayout(),
 			main: main,
 			regions: regions
