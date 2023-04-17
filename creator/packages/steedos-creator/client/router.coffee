@@ -161,6 +161,9 @@ FlowRouter.route '/app/:app_id/instances/view/:record_id',
 			dataType: 'json',
 			processData: false,
 			contentType: 'application/json',
+			beforeSend: (request) ->
+				request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+			,
 			success:  (responseText, status) -> 
 				$(document.body).removeClass('loading')
 				if responseText.errors
