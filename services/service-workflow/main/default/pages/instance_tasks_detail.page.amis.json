@@ -140,7 +140,7 @@
               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
             },
             "requestAdaptor": "\nconst { recordId } = api.body;\napi.data = {\n  query: `{instance_task:instance_tasks__findOne(id: \"${recordId}\"){_id,instance}}`\n};\n\nreturn api;",
-            "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}\n; \nSession.set('instanceId', payload.data.instanceId)  \nreturn payload;"
+            "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}\n; \nSession.set('box', boxName); Session.set('instanceId', payload.data.instanceId); console.log('=======>payload===>', payload);  \nreturn payload;"
           },
           "className": "h-full"
         }
