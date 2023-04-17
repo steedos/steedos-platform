@@ -38,6 +38,23 @@
         return modalRoot;
     }
 
+    Steedos.Page.getDisplay = (objectName)=>{
+
+        let display = FlowRouter.current().queryParams.display;
+        // console.log('=====getDisplay====>', display)
+        // const key = `tab.${objectName}.display`;
+        const key = 'page.display'
+        if(display){
+            // console.log('=====getDisplay===setItem=>', key, display)
+            localStorage.setItem(key, display)
+        }else{
+            display = localStorage.getItem(key);
+        }
+
+        return display;
+        
+    }
+
     Steedos.Page.getPage = function (type, appId, objectApiName, recordId, pageId) {
         let objectInfo = null;
         let searchParams = FlowRouter.current().queryParams;
@@ -318,14 +335,14 @@
         var objectName, recordId, self;
         self = this;
         objectName = Session.get("object_name");
-        recordId = Session.get("record_id");
         this.containerList = [];
         this.pageName = null;
-        return this.autorun(function() {
-            Session.get("record_id");
+        return this.autorun(function(computation) {
+        //   console.log('autorun=====>computation:', computation)
+            // Session.get("record_id");
           var container, e, lastData, ref, ref1, ref2, regions, schema, updateProps, updatePropsData;
           regions = self.data.regions();
-          console.log('regions====>', regions, this.lastRegions);
+        //   console.log('regions====>', regions, this.lastRegions);
           updateProps = true;
           if (regions.objectName !== ((ref = this.lastRegions) != null ? ref.objectName : void 0)) {
             updateProps = false;
@@ -338,22 +355,23 @@
                   objectName: objectName,
                   pageType: regions.pageType,
                   listViewId: regions.listViewId,
+                  ...FlowRouter.current().queryParams
                 };
                 if(FlowRouter.current().queryParams.side_listview_id){
                     updatePropsData.listName=FlowRouter.current().queryParams.side_listview_id
                 }else if(regions.listViewId){
                     updatePropsData.listName=regions.listViewId
                 }
-                if(FlowRouter.current().queryParams.display){
-                    updatePropsData.display = FlowRouter.current().queryParams.display
-                }
+                
+                updatePropsData.display = Steedos.Page.getDisplay()
+
                 updatePropsData.recordId = Tracker.nonreactive(function() {
-                  return Session.get("record_id");
-                });
-                lastData = ((ref1 = SteedosUI.refs[self.pageName]) != null ? (ref2 = ref1.__$schema) != null ? ref2.data : void 0 : void 0) || {};
-                console.log("page_object Steedos.Page.Record.updateProps", {
-                    data: window._.defaultsDeep(updatePropsData, lastData)
+                    return Session.get("record_id");
                   });
+                lastData = ((ref1 = SteedosUI.refs[self.pageName]) != null ? (ref2 = ref1.__$schema) != null ? ref2.data : void 0 : void 0) || {};
+                // console.log("page_object Steedos.Page.Record.updateProps", {
+                //     data: window._.defaultsDeep(updatePropsData, lastData)
+                //   });
                 return SteedosUI.refs[self.pageName].updateProps({
                   data: window._.defaultsDeep(updatePropsData, lastData)
                 });
@@ -389,7 +407,7 @@
             return Session.get("record_id");
           });
           container = Steedos.Page.Object.render(self, objectName, recordId);
-          console.log("page_object Steedos.Page.Object.render");
+        //   console.log("page_object Steedos.Page.Object.render");
           if (container) {
             return self.containerList.push(container);
           }
