@@ -261,7 +261,8 @@ objectRoutes.route '/view/:record_id',
 				appId: Session.get("app_id"),
 				recordId: record_id,
 				objectName: object_name,
-				pageType: "record"
+				pageType: "record",
+				__timestamp: new Date().getTime()
 			});;
 		# console.log('/view/:record_id regions===>', regions)			
 		Meteor.setTimeout ()->
@@ -307,6 +308,7 @@ objectRoutes.route '/grid/:list_view_id',
 				objectName: objectName,
 				listViewId: Session.get("list_view_id"),
 				pageType: "list",
+				__timestamp: new Date().getTime()
 			});
 		# console.log('/grid/:list_view_id regions===>', regions)	
 		BlazeLayout.render Creator.getLayout(),
