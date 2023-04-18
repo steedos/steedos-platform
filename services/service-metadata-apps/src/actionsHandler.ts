@@ -281,7 +281,7 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     if(app.url){
         appPath = app.url
     }
-    const menu = {
+    const menu: any = {
         id: app.code,
         path: appPath,
         name: `${app.label || app.name}`,
@@ -291,55 +291,60 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         children: [],
         blank: app.is_new_window
     }
-    const hiddenTabNames = context.hiddenTabNames || []
-    if (app.tab_items) {
-        // app.tab_items is array
-        if (_.isArray(app.tab_items)) {
-            for (const item of app.tab_items) {
-                try {
-                    if (hiddenTabNames.includes(item.tab_name)) continue;
-                    await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
-                } catch (error) {
-                    ctx.broker.logger.info(error.message);
+    if(app.enable_nav_schema && app.nav_schema){
+        menu.nav_schema = _.isString(app.nav_schema) ? JSON.parse(app.nav_schema) : app.nav_schema
+    }else{
+        const hiddenTabNames = context.hiddenTabNames || []
+        if (app.tab_items) {
+            // app.tab_items is array
+            if (_.isArray(app.tab_items)) {
+                for (const item of app.tab_items) {
+                    try {
+                        if (hiddenTabNames.includes(item.tab_name)) continue;
+                        await tabMenus(ctx, appPath, item.tab_name, menu, mobile, userSession, context, item)
+                    } catch (error) {
+                        ctx.broker.logger.info(error.message);
+                    }
+                }
+            } else {
+                for (const tabApiName in app.tab_items) {
+                    try {
+                        if (hiddenTabNames.includes(tabApiName)) continue;
+                        const props = app.tab_items[tabApiName]
+                        await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
+                    } catch (error) {
+                        ctx.broker.logger.info(error.message);
+                    }
                 }
             }
-        } else {
-            for (const tabApiName in app.tab_items) {
+        } else if (_.isArray(app.tabs)) {
+            for (const tabApiName of app.tabs) {
                 try {
                     if (hiddenTabNames.includes(tabApiName)) continue;
-                    const props = app.tab_items[tabApiName]
-                    await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context, props)
+                    await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context)
                 } catch (error) {
                     ctx.broker.logger.info(error.message);
                 }
             }
         }
-    } else if (_.isArray(app.tabs)) {
-        for (const tabApiName of app.tabs) {
-            try {
-                if (hiddenTabNames.includes(tabApiName)) continue;
-                await tabMenus(ctx, appPath, tabApiName, menu, mobile, userSession, context)
-            } catch (error) {
-                ctx.broker.logger.info(error.message);
+        const objects = mobile ? app.mobile_objects : app.objects
+        // const objectsConfigs = context.objects;
+        if (_.isArray(objects)) {
+            const getChildrenPromises = []
+            for (const objectApiName of objects) {
+                getChildrenPromises.push(getMenuChildren({
+                    objectApiName, userSession, ctx, appPath, app
+                }))
+            }
+            const children = await Promise.all(getChildrenPromises)
+            for (const child of children) {
+                if (child) {
+                    menu.children.push(child)
+                }
             }
         }
     }
-    const objects = mobile ? app.mobile_objects : app.objects
-    // const objectsConfigs = context.objects;
-    if (_.isArray(objects)) {
-        const getChildrenPromises = []
-        for (const objectApiName of objects) {
-            getChildrenPromises.push(getMenuChildren({
-                objectApiName, userSession, ctx, appPath, app
-            }))
-        }
-        const children = await Promise.all(getChildrenPromises)
-        for (const child of children) {
-            if (child) {
-                menu.children.push(child)
-            }
-        }
-    }
+    
     return menu;
 }
 

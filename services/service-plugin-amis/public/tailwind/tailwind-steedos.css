@@ -482,6 +482,10 @@
     margin-top: 90px
   }
 
+  .sm\:mt-3 {
+    margin-top: 0.75rem
+  }
+
   .sm\:w-\[220px\] {
     width: 220px
   }

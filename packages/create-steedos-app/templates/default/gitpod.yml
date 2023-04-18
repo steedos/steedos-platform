@@ -1,0 +1,40 @@
+image: ecr.aws.steedos.cn/dockerhub/steedos/gitpod-workspace-base:2.2.3
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 5000
+    onOpen: ignore
+    visibility: public
+  - port: 6379
+    onOpen: ignore
+  - port: 27017
+    onOpen: ignore
+    visibility: public
+  - port: 4222
+    onOpen: ignore
+  - port: 8222
+    onOpen: ignore
+    
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - name: Docker
+    command: |
+      echo "ROOT_URL=$(gp url 5000)" >> .env.local
+      echo "METADATA_SERVER=$(gp url 5000)" >> .env.local
+      yarn
+      docker-compose up
+  - name: Nodejs Services
+    command: |
+      gp await-port 5000
+      yarn start
+  - name: Node-RED
+    command: |
+      gp await-port 5000
+      yarn nodered
+
+vscode:
+  extensions:
+    - redhat.vscode-yaml
+    - steedos.steedosdx-vscode
+    - steedos.steedosdx-vscode-core
+    - ms-ceintl.vscode-language-pack-zh-hans

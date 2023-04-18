@@ -24,6 +24,7 @@ amis_schema: |-
                                           "showRadio": false,
                                           "onlyLeaf": true,
                                           "name": "flow",
+                                          "action": "new",
                                           "treeContainerClassName": "!max-h-[80vh]",
                                           "onEvent": {
                                                 "change": {

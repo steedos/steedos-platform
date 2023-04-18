@@ -1,26 +1,26 @@
 name: process_instance_history
-label: 批准历史
-description: 
+label: 批准步骤
+description:
 fields:
   name:
     label: 步骤名称
-    help: 
-    description: 
+    help:
+    description:
   created_by:
     label: 提交人
-    help: 
-    description: 
+    help:
+    description:
   process_instance:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   process_instance_node:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   step_status:
     label: 状态
-    help: 
+    help:
     options:
       - label: 已批准
         value: approved
@@ -40,47 +40,47 @@ fields:
         value: removed
       - label: 已提交
         value: started
-    description: 
+    description:
   original_actor:
     label: 被分配人
-    help: 
-    description: 
+    help:
+    description:
   actor:
     label: 实际审批人
-    help: 
-    description: 
+    help:
+    description:
   target_object:
     label: 审批细节
-    help: 
-    description: 
+    help:
+    description:
   comments:
     label: 意见
-    help: 
-    description: 
+    help:
+    description:
   step_node:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   elapsed_time_in_days:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   elapsed_time_in_hours:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   elapsed_time_in_minutes:
-    label: 
-    help: 
-    description: 
+    label:
+    help:
+    description:
   modified:
     label: 修改时间
-    help: 
-    description: 
+    help:
+    description:
   modified_by:
     label: 修改人
-    help: 
-    description: 
+    help:
+    description:
 listviews:
   all:
     label: 所有

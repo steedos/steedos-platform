@@ -51,12 +51,14 @@
 
 本项目仓库为平台源码，我们会定期发布版本，在项目中直接引用即可。
 
-## 运行模版项目
+## 开发软件包
 
-使用华炎魔方开发企业应用，建议Fork华炎魔方模版项目。
+使用华炎魔方开发企业应用，建议克隆华炎魔方模版项目。
 
-[华炎魔方模版项目(Github)](https://github.com/steedos/steedos-project-template)
-[华炎魔方模版项目(Gitlab)](https://gitlab.steedos.cn/steedos/steedos-project-template)
+- [克隆项目模版@github.com](github.com/steedos/steedos-project-template)
+- [克隆项目模版@gitlab.steedos.cn](gitlab.steedos.cn/steedos/steedos-project-template)
+- [create-steedos-app]( ./create-steedos-app)
+- [Gitpod 远程开发环境](./devops.mdx)
 
 ## 调试平台源码
 

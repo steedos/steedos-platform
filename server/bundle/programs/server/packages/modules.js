@@ -465,7 +465,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "lib/index.js"
 };
 
@@ -492,7 +496,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "lib/index.js"
 };
 
@@ -519,7 +527,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "index.js"
 };
 
@@ -546,7 +558,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "index.js"
 };
 
@@ -573,7 +589,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "index.js"
 };
 
@@ -600,7 +620,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "package.service.js"
 };
 
@@ -654,7 +678,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-ui",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "package.service.js"
 };
 
@@ -681,7 +709,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-pages",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "package.service.js"
 };
 
@@ -708,7 +740,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/router",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "lib/index.js"
 };
 
@@ -735,7 +771,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "lib/index.js"
 };
 
@@ -762,7 +802,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "lib/index.js"
 };
 
@@ -789,7 +833,11 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/workflow",
+<<<<<<< HEAD
   "version": "2.5.0-beta.6",
+=======
+  "version": "2.4.14-beta.1",
+>>>>>>> 2.4
   "main": "index.js"
 };
 

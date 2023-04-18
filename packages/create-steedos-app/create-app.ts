@@ -209,9 +209,15 @@ export async function createApp({
       name: appName,
       version: '0.1.0',
       private: true,
+      workspaces: [
+        "services/*" 
+      ],
       scripts: {
-        start: 'steedos start'
-      },
+        docker: "docker-compose up",
+        start: "moleculer-runner services/*/package.service.js --hot --repl",
+        repl: "moleculer-runner --repl",
+        nodered: "node-red --settings nodered.config.js"
+      }
     }
     /**
      * Write it to disk.
@@ -227,7 +233,13 @@ export async function createApp({
     /**
      * Default dependencies.
      */
-    const dependencies = ['@steedos/service-community']
+    const dependencies = [
+      '@steedos/service-package-loader',
+      '@steedos/node-red-contrib-steedos',
+      'dotenv-flow',
+      'moleculer-repl',
+      'node-red'
+    ]
     /**
      * Default devDependencies.
      */
@@ -281,6 +293,9 @@ export async function createApp({
         switch (name) {
           case 'env':
           case 'gitignore':
+          case 'gitpod.yml':
+          case 'npmrc':
+          case 'yarnrc':
           case 'eslintrc.json': {
             return '.'.concat(name)
           }

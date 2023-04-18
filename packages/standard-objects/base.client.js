@@ -175,6 +175,9 @@ Steedos.StandardObjects = {
                         dataType: 'json',
                         processData: false,
                         contentType: 'application/json',
+                        beforeSend: function(request) {
+                            request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+                        },
                         success: function (responseText, status) {
                             $(document.body).removeClass('loading');
                             if (responseText.errors) {

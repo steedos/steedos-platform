@@ -17,4 +17,5 @@ defaultValue: !<tag:yaml.org,2002:js/function> |-
   }
 required: true
 filterable: true
+searchable: true
 sort_no: 160
