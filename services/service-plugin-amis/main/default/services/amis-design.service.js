@@ -234,15 +234,15 @@ module.exports = {
                 */
                 const relatedListObjects = [];
                 const relationsInfo = await object.getRelationsInfo();
-                const details = relationsInfo && relationsInfo.details;
-                // const lookupDetails = relationsInfo && relationsInfo.lookup_details;
-                // const relatedLists = _.union(details, lookupDetails);
+                let details = relationsInfo && relationsInfo.details;
+                const lookupDetails = relationsInfo && relationsInfo.lookup_details;
+                details = _.union(details, lookupDetails);
 
                 _.each(details, function(related){
                     /*related可能是一个lookup_details，它是对象而不是字符串，从中取出key值*/
-                    // if(typeof related !== "string"){
-                    //     relatedListObjects.push(related.objectName)
-                    // }
+                    if(typeof related !== "string"){
+                        relatedListObjects.push(related.objectName)
+                    }
                     let foo = related.split('.');
                     let rObjectName = foo[0];
                     relatedListObjects.push(rObjectName);
