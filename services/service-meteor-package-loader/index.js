@@ -135,7 +135,9 @@ module.exports = {
     },
 
     merged (schema) {
-        schema.name = `~packages-${schema.name}`;
+        if(!schema.metadata?.$package){
+            schema.name = `~packages-${schema.name}`;
+        }
     },
 
     /**

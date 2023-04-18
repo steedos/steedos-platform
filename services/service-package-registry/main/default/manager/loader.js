@@ -108,6 +108,11 @@ const destroyExistThePackageService = async (packageInfo)=>{
     let svc = broker.getLocalService({
         name: `~packages-${packageInfo.name}`
     });
+    if(!svc){
+        svc = broker.getLocalService({
+            name: packageInfo.name
+        });
+    }
     if (svc) {
         broker.logger.info(`Destroy previous '${schema.name}' service...`);
         await broker.destroyService(svc);
@@ -193,7 +198,7 @@ const disablePackage = async (packageName)=>{
     let schema = objectql.getSteedosSchema();
     let broker = schema.broker;
     const serviceList = broker.registry.getServiceList({ withActions: true });
-    const service = _.find(serviceList, (_service)=>{return _service.name == `~packages-${packageName}`;})
+    const service = _.find(serviceList, (_service)=>{return _service.name == `~packages-${packageName}` || _service.name == packageName;})
     if(service){
         await broker.destroyService(service);
     }
@@ -214,7 +219,7 @@ const removePackage = async (packageName)=>{
     let schema = objectql.getSteedosSchema();
     let broker = schema.broker;
     const serviceList = broker.registry.getServiceList({ withActions: true });
-    const service = _.find(serviceList, (_service)=>{return _service.name == `~packages-${packageName}`;})
+    const service = _.find(serviceList, (_service)=>{return _service.name == `~packages-${packageName}` || _service.name == packageName;})
     if(service){
         await broker.destroyService(service);
     }

@@ -306,7 +306,14 @@ module.exports = {
 
     merged(schema) {
         schema.packageName = schema.name;
-        schema.name = `~packages-${schema.name}`;
+        if(!schema.metadata?.$package){
+            schema.name = `~packages-${schema.name}`;
+        }
+
+        schema.settings.packageInfo = {
+            ...schema.settings.packageInfo,
+            ...schema.metadata?.$package
+        }
     },
 
     /**
