@@ -58,7 +58,10 @@
     "redlock": "^4.2.0",
     "steedos-cli": "2.4.15-beta.1",
     "tslib": "^2.4.0",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "bcrypt": "^5.1.0",
+    "pg": "^8.10.0",
+    "sqlite3": "^5.1.6"
   },
   "homepage": "https://www.steedos.com",
   "publishConfig": {
