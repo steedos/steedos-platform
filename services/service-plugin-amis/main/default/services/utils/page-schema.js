@@ -100,67 +100,22 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     if (hasRelatedLists) {
         content.tabs.push(related)
     }
-    const amisSchema = {
-        "type": "service",
-        "body": [
-            {
-                "type": "steedos-record-detail-header",
-                "label": "标题面板",
-                "objectApiName": "${objectName}",
-                "recordId": "${recordId}",
-                onEvent: {
-                    "recordLoaded": {
-                        "actions": [
-                            {
-                                "actionType": "reload",
-                                "data": {
-                                    "name": `\${event.data.record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
-                                    "record": `\${event.data.record}`,
-                                    "recordLoaded": true,
-                                }
-                            },
-                            {
-                                "actionType": "reload",
-                                "componentId": `page_readonly_${objectApiName}_header`,  //刷新标题, 详细页面header service 嵌套太多, 导致仅刷新第一层service无法更新recordName
-                                "data": {
-                                    "name": `\${event.data.record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
-                                    "record": `\${event.data.record}`,
-                                    "recordLoaded": true,
-                                }
-                            }
-                        ]
-                    }
-                },
-            },
-            content
-        ],
-        data: {
-            "_master.objectName": "${objectName}",
-            "_master.recordId": "${recordId}"
+    body = [
+        {
+            "type": "steedos-record-detail-header",
+            "label": "标题面板",
+            "objectApiName": "${objectName}",
+            "recordId": "${recordId}"
         },
-        onEvent: {
-            "recordLoaded": {
-                "actions": [
-                    {
-                        "actionType": "reload",
-                        "data": {
-                            "name": `\${record.${uiSchema?.NAME_FIELD_KEY || 'name'}}`,
-                            "_master.record": `\${record}`,
-                            // 不清楚reload 如何给对象下的某个key复制, 所以此处重复设置_master的objectName、recordId
-                            "_master.objectName": "${objectName}",
-                            "_master.recordId": "${recordId}"
-                        }
-                    }
-                ]
-            }
-        },
-    }
-    body.push(amisSchema);
+        content
+    ];
     return {
-        type: 'page',
+        type: 'steedos-record-service',
         id: `page_${objectApiName}_record_detail`,
         name: getScopeId(objectApiName, "record_detail"),
+        objectApiName: "${objectName}",
         bodyClassName: '',
+        className: "object-detail-page",
         regions: [
             "body"
         ],

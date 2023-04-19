@@ -1,213 +1,174 @@
 {
-    "type": "page",
+    "type": "steedos-record-service",
     "body": [
         {
-            "type": "service",
-            "body": [
+            "type": "steedos-record-detail-header",
+            "id": "u:bc56cf9d43bc",
+            "label": "标题面板",
+            "objectApiName": "${objectName}",
+            "recordId": "${recordId}"
+        },
+        {
+            "type": "tabs",
+            "tabs": [
                 {
-                    "type": "steedos-record-detail-header",
-                    "label": "标题面板",
-                    "objectApiName": "${objectName}",
-                    "recordId": "${recordId}",
-                    "onEvent": {
-                        "recordLoaded": {
-                        "actions": [
-                            {
-                            "actionType": "reload",
-                            "data": {
-                                "name": "${event.data.record.label}",
-                                "record": "${event.data.record}",
-                                "recordLoaded": true
-                            }
-                            },
-                            {
-                            "actionType": "reload",
-                            "componentId": "page_readonly_objects_header",
-                            "data": {
-                                "name": "${event.data.record.label}",
-                                "record": "${event.data.record}",
-                                "recordLoaded": true
-                            }
-                            }
-                        ]
-                        }
-                    },
-                    "id": "u:bc56cf9d43bc"
-                },
-                {
-                    "type": "tabs",
-                    "tabs": [
+                    "title": "详情",
+                    "body": [
                         {
-                            "title": "详情",
-                            "body": [
-                                {
-                                    "type": "steedos-object-form",
-                                    "label": "对象表单",
-                                    "mode": "read",
-                                    "objectApiName": "${objectName}",
-                                    "recordId": "${recordId}",
-                                    "labelAlign": "left",
-                                    "id": "u:4eb5fa6f6fad"
-                                }
-                            ],
-                            "id": "u:b2fbc13aabb8"
-                        },
-                        {
-                            "title": "对象字段",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_fields",
-                                    "id": "u:6bef459155bd",
-                                    "top": 2000
-                                }
-                            ],
-                            "id": "u:f1a52545b642"
-                        },
-                        {
-                            "title": "列表视图",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_listviews",
-                                    "id": "u:c415f75c5557",
-                                    "perPage": 20
-                                }
-                            ],
-                            "id": "u:df900c5f2119"
-                        },
-                        {
-                            "title": "操作按钮",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_actions",
-                                    "perPage": 20,
-                                    "id": "u:e1a8b77a140c"
-                                }
-                            ],
-                            "id": "u:d75b105f6d02"
-                        },
-                        {
-                            "title": "页面布局",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_layouts",
-                                    "id": "u:ed9559f8aa86",
-                                    "perPage": 20
-                                }
-                            ],
-                            "id": "u:ee4ab13a92e6"
-                        },
-                        {
-                            "title": "对象权限",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "permission_objects",
-                                    "relatedKey": "object_name",
-                                    "perPage": 20
-                                }
-                            ]
-                        },
-                        {
-                            "title": "流程映射",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_workflows",
-                                    "perPage": 20,
-                                    "id": "u:e14df76cfa51"
-                                }
-                            ],
-                            "id": "u:cbc13e1a7033"
-                        },
-                        {
-                            "title": "验证规则",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "object_validation_rules",
-                                    "perPage": 20
-                                }
-                            ]
-                        },
-                        {
-                            "title": "限制规则",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "restriction_rules",
-                                    "relatedKey": "object_name",
-                                    "perPage": 20
-                                }
-                            ]
-                        },
-                        {
-                            "title": "共享规则",
-                            "body": [
-                                {
-                                    "type": "steedos-object-related-listview",
-                                    "objectApiName": "objects",
-                                    "recordId": "${recordId}",
-                                    "relatedObjectApiName": "share_rules",
-                                    "relatedKey": "object_name",
-                                    "perPage": 20
-                                }
-                            ]
+                            "type": "steedos-object-form",
+                            "label": "对象表单",
+                            "mode": "read",
+                            "objectApiName": "${objectName}",
+                            "labelAlign": "left",
+                            "id": "u:4eb5fa6f6fad",
+                            "recordId": "${recordId}"
                         }
                     ],
-                    "id": "u:6a3b45d7adcf",
-                    "tabsMode": "vertical",
-                    "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
-                    "toolbarClassName": "",
-                    "linksClassName": "",
-                    "contentClassName": "bg-white"
-                }
-            ],
-            "data": {
-                "_master.objectName": "${objectName}",
-                "_master.recordId": "${recordId}"
-            },
-            "onEvent": {
-                "recordLoaded": {
-                    "actions": [
+                    "id": "u:b2fbc13aabb8"
+                },
+                {
+                    "title": "对象字段",
+                    "body": [
                         {
-                            "actionType": "reload",
-                            "data": {
-                                "name": "${record.label}",
-                                "_master.record": "${record}",
-                                "_master.objectName": "${objectName}",
-                                "_master.recordId": "${recordId}"
-                            }
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "relatedObjectApiName": "object_fields",
+                            "id": "u:6bef459155bd",
+                            "top": 2000,
+                            "recordId": "${recordId}"
+                        }
+                    ],
+                    "id": "u:f1a52545b642"
+                },
+                {
+                    "title": "列表视图",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "relatedObjectApiName": "object_listviews",
+                            "id": "u:c415f75c5557",
+                            "perPage": 20,
+                            "recordId": "${recordId}"
+                        }
+                    ],
+                    "id": "u:df900c5f2119"
+                },
+                {
+                    "title": "操作按钮",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "relatedObjectApiName": "object_actions",
+                            "perPage": 20,
+                            "id": "u:e1a8b77a140c",
+                            "recordId": "${recordId}"
+                        }
+                    ],
+                    "id": "u:d75b105f6d02"
+                },
+                {
+                    "title": "页面布局",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "relatedObjectApiName": "object_layouts",
+                            "id": "u:ed9559f8aa86",
+                            "perPage": 20,
+                            "recordId": "${recordId}"
+                        }
+                    ],
+                    "id": "u:ee4ab13a92e6"
+                },
+                {
+                    "title": "对象权限",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "permission_objects",
+                            "relatedKey": "object_name",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "流程映射",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_workflows",
+                            "perPage": 20,
+                            "id": "u:e14df76cfa51"
+                        }
+                    ],
+                    "id": "u:cbc13e1a7033"
+                },
+                {
+                    "title": "验证规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_validation_rules",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "限制规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "restriction_rules",
+                            "relatedKey": "object_name",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
+                    "title": "共享规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "share_rules",
+                            "relatedKey": "object_name",
+                            "perPage": 20
                         }
                     ]
                 }
-            }
+            ],
+            "id": "u:6a3b45d7adcf",
+            "tabsMode": "vertical",
+            "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
+            "toolbarClassName": "",
+            "linksClassName": "",
+            "contentClassName": "bg-white"
         }
     ],
-    "regions": [
-        "body"
-    ],
+    "objectApiName": "${objectName}",
+    "data": {
+        "objectName": "objects",
+        "recordId": "space_users",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800",
+            "tenantId": "hKdnwE55WcnWveYxS",
+            "userId": "62ede4f62161e377e35de58c",
+            "authToken": "b6475c5536a26d23d3db84e96536e08e82e1e726380cdd5cb09fc977e1d6e57c08fb23d7a1090006189d3d"
+        }
+    },
     "id": "page_objects_record_detail",
     "name": "page_objects_record_detail",
     "bodyClassName": "",
-    "className": "object-detail-page overflow-y-auto"
+    "className": "object-detail-page"
 }
