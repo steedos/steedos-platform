@@ -43,7 +43,7 @@
         let display = FlowRouter.current().queryParams.display;
         // console.log('=====getDisplay====>', display)
         // const key = `tab.${objectName}.display`;
-        const key = 'page.display'
+        const key = 'page_display'
         if(display){
             // console.log('=====getDisplay===setItem=>', key, display)
             localStorage.setItem(key, display)
