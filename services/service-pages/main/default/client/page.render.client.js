@@ -351,14 +351,32 @@
           if (updateProps && self.pageName) {
             try {
               if (SteedosUI.refs[self.pageName]) {
+                let queryParams = FlowRouter.current().queryParams
+
+                if(_.isArray(queryParams.side_object)){
+                    if(queryParams.side_object.length >= 1){
+                        queryParams.side_object = queryParams.side_object[0]
+                    }else{
+                        queryParams.side_object = ''
+                    }
+                }
+
+                if(_.isArray(queryParams.side_listview_id)){
+                    if(queryParams.side_listview_id.length >= 1){
+                        queryParams.side_listview_id = queryParams.side_listview_id[0]
+                    }else{
+                        queryParams.side_listview_id = ''
+                    }
+                };
+
                 updatePropsData = {
                   objectName: objectName,
                   pageType: regions.pageType,
                   listViewId: regions.listViewId,
-                  ...FlowRouter.current().queryParams
+                  ...queryParams
                 };
-                if(FlowRouter.current().queryParams.side_listview_id){
-                    updatePropsData.listName=FlowRouter.current().queryParams.side_listview_id
+                if(queryParams.side_listview_id){
+                    updatePropsData.listName=queryParams.side_listview_id
                 }else if(regions.listViewId){
                     updatePropsData.listName=regions.listViewId
                 }
@@ -447,11 +465,36 @@
             }
 
             if (page.render_engine && page.render_engine != 'redash') {
+                if(_.isArray(data.side_object)){
+                    if(data.side_object.length >= 1){
+                        data.side_object = data.side_object[0]
+                    }else{
+                        data.side_object = ''
+                    }
+                }
+
+                if(_.isArray(data.side_listview_id)){
+                    if(data.side_listview_id.length >= 1){
+                        data.side_listview_id = data.side_listview_id[0]
+                    }else{
+                        data.side_listview_id = ''
+                    }
+                }
+
                 if(FlowRouter.current().queryParams.side_listview_id){
                     data.listName = FlowRouter.current().queryParams.side_listview_id;
                 }else if(data.listViewId){
                     data.listName = data.listViewId;
                 }
+
+                if(_.isArray(data.listName)){
+                    if(data.listName.length >= 1){
+                        data.listName = data.listName[0]
+                    }else{
+                        data.listName = ''
+                    }
+                }
+
                 return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, options, data, {recordId}));
             }
         } catch (error) {
