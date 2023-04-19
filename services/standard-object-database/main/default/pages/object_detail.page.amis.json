@@ -1,34 +1,12 @@
 {
-    "type": "page",
+    "type": "steedos-record-service",
     "body": [
         {
             "type": "steedos-record-detail-header",
+            "id": "u:bc56cf9d43bc",
             "label": "标题面板",
             "objectApiName": "${objectName}",
-            "recordId": "${recordId}",
-            "onEvent": {
-                "recordLoaded": {
-                    "actions": [
-                        {
-                            "actionType": "setValue",
-                            "args": {
-                                "value": {
-                                    "recordLoaded": true
-                                }
-                            }
-                        },
-                        {
-                            "actionType": "reload",
-                            "data": {
-                                "name": "${record.label}",
-                                "record": "${record}",
-                                "recordLoaded": true
-                            }
-                        }
-                    ]
-                }
-            },
-            "id": "u:bc56cf9d43bc"
+            "recordId": "${recordId}"
         },
         {
             "type": "tabs",
@@ -41,9 +19,9 @@
                             "label": "对象表单",
                             "mode": "read",
                             "objectApiName": "${objectName}",
-                            "recordId": "${recordId}",
                             "labelAlign": "left",
-                            "id": "u:4eb5fa6f6fad"
+                            "id": "u:4eb5fa6f6fad",
+                            "recordId": "${recordId}"
                         }
                     ],
                     "id": "u:b2fbc13aabb8"
@@ -54,10 +32,10 @@
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
-                            "recordId": "${recordId}",
                             "relatedObjectApiName": "object_fields",
                             "id": "u:6bef459155bd",
-                            "top": 2000
+                            "top": 2000,
+                            "recordId": "${recordId}"
                         }
                     ],
                     "id": "u:f1a52545b642"
@@ -68,10 +46,10 @@
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
-                            "recordId": "${recordId}",
                             "relatedObjectApiName": "object_listviews",
                             "id": "u:c415f75c5557",
-                            "perPage": 20
+                            "perPage": 20,
+                            "recordId": "${recordId}"
                         }
                     ],
                     "id": "u:df900c5f2119"
@@ -82,13 +60,28 @@
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
-                            "recordId": "${recordId}",
                             "relatedObjectApiName": "object_actions",
                             "perPage": 20,
-                            "id": "u:e1a8b77a140c"
+                            "id": "u:e1a8b77a140c",
+                            "recordId": "${recordId}"
                         }
                     ],
                     "id": "u:d75b105f6d02"
+                },
+                {
+                    "title": "对象页面",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "relatedObjectApiName": "pages",
+                            "relatedKey": "object_name",
+                            "perPage": 20,
+                            "id": "u:e1a8b77a140c2",
+                            "recordId": "${recordId}"
+                        }
+                    ],
+                    "id": "u:d75b105f6d042"
                 },
                 {
                     "title": "页面布局",
@@ -96,10 +89,10 @@
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
-                            "recordId": "${recordId}",
                             "relatedObjectApiName": "object_layouts",
                             "id": "u:ed9559f8aa86",
-                            "perPage": 20
+                            "perPage": 20,
+                            "recordId": "${recordId}"
                         }
                     ],
                     "id": "u:ee4ab13a92e6"
@@ -178,11 +171,19 @@
             "contentClassName": "bg-white"
         }
     ],
-    "regions": [
-        "body"
-    ],
+    "objectApiName": "${objectName}",
+    "data": {
+        "objectName": "objects",
+        "recordId": "space_users",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800",
+            "tenantId": "hKdnwE55WcnWveYxS",
+            "userId": "62ede4f62161e377e35de58c",
+            "authToken": "b6475c5536a26d23d3db84e96536e08e82e1e726380cdd5cb09fc977e1d6e57c08fb23d7a1090006189d3d"
+        }
+    },
     "id": "page_objects_record_detail",
     "name": "page_objects_record_detail",
     "bodyClassName": "",
-    "className": "object-detail-page overflow-y-auto"
+    "className": "object-detail-page"
 }
