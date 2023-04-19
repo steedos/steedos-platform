@@ -27,6 +27,18 @@
                     "id": "u:b2fbc13aabb8"
                 },
                 {
+                    "title": "选项卡",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "tabs",
+                            "relatedKey": "object"
+                        }
+                    ]
+                },
+                {
                     "title": "对象字段",
                     "body": [
                         {
