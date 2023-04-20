@@ -73,32 +73,32 @@ fields:
                 icon: "lead_list"
               }];
             }
-  type: 
-    type: select
-    sort_no: 170
-    options:
-      - label: Custom JavaScript
-        value: script
-      - label: Amis Button
-        value: amis_button
-      # - label: 打印模板(word)
-      #   value: word-print
-    defaultValue: amis_button
+  # type: 
+  #   type: select
+  #   sort_no: 170
+  #   options:
+  #     - label: Custom JavaScript
+  #       value: script
+  #     - label: Amis Button
+  #       value: amis_button
+  #     # - label: 打印模板(word)
+  #     #   value: word-print
+  #   defaultValue: amis_button
   # word_template:
   #   type: lookup
   #   reference_to: word_templates
   #   visible_on: "{{formData.type === 'word-print' ? true: false}}"
   #   create: false
-  todo:
-    label: Execute Script
-    sort_no: 180
-    type: code
-    language: javascript
-    required: "{{formData.type != 'amis_button' ? true: false}}"
-    # omit: true
-    # hidden: true
-    is_wide: true
-    visible_on: "{{formData.type != 'amis_button' ? true: false}}"
+  # todo:
+  #   label: Execute Script
+  #   sort_no: 180
+  #   type: code
+  #   language: javascript
+  #   required: "{{formData.type != 'amis_button' ? true: false}}"
+  #   # omit: true
+  #   # hidden: true
+  #   is_wide: true
+  #   visible_on: "{{formData.type != 'amis_button' ? true: false}}"
   amis_schema: 
     label: Amis Schema
     sort_no: 180
@@ -108,6 +108,11 @@ fields:
     is_wide: true
     hidden: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+form:
+  initialValues: !!js/function |
+    function(){
+      return {type: 'amis_button'}
+    }
 paging:
   enabled: false
 actions: 
