@@ -46,35 +46,8 @@
   position: static
 }
 
-.fixed {
-  position: fixed
-}
-
-.absolute {
-  position: absolute
-}
-
 .sticky {
   position: sticky
-}
-
-.inset-0 {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px
-}
-
-.top-0 {
-  top: 0px
-}
-
-.z-40 {
-  z-index: 40
-}
-
-.z-20 {
-  z-index: 20
 }
 
 .col-span-2 {
@@ -102,18 +75,6 @@
 .-mx-11 {
   margin-left: -2.75rem;
   margin-right: -2.75rem
-}
-
-.mr-4 {
-  margin-right: 1rem
-}
-
-.mb-\[-3px\] {
-  margin-bottom: -3px
-}
-
-.mt-\[50px\] {
-  margin-top: 50px
 }
 
 .mt-0\.5 {
@@ -176,32 +137,16 @@
   height: 100%
 }
 
-.h-\[50px\] {
-  height: 50px
-}
-
-.h-10 {
-  height: 2.5rem
-}
-
-.w-full {
-  width: 100%
-}
-
-.w-auto {
-  width: auto
-}
-
-.w-64 {
-  width: 16rem
-}
-
 .w-10 {
   width: 2.5rem
 }
 
 .w-6\/12 {
   width: 50%
+}
+
+.w-full {
+  width: 100%
 }
 
 .w-96 {
@@ -221,10 +166,6 @@
   min-width: 200px
 }
 
-.flex-none {
-  flex: none
-}
-
 .flex-1 {
   flex: 1 1 0%
 }
@@ -233,21 +174,12 @@
   flex-shrink: 0
 }
 
-.-translate-x-0 {
-  --tw-translate-x: -0px;
+.transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
 .flex-row {
   flex-direction: row
-}
-
-.flex-col {
-  flex-direction: column
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap
 }
 
 .items-center {
@@ -256,15 +188,6 @@
 
 .justify-center {
   justify-content: center
-}
-
-.justify-between {
-  justify-content: space-between
-}
-
-.gap-x-3 {
-  -moz-column-gap: 0.75rem;
-       column-gap: 0.75rem
 }
 
 .overflow-auto {
@@ -283,30 +206,16 @@
   border-radius: 0.25rem
 }
 
-.border-b-\[3px\] {
-  border-bottom-width: 3px
+.border-b {
+  border-bottom-width: 1px
 }
 
 .border-r {
   border-right-width: 1px
 }
 
-.border-b {
-  border-bottom-width: 1px
-}
-
 .border-solid {
   border-style: solid
-}
-
-.border-sky-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(14 165 233 / var(--tw-border-opacity))
-}
-
-.border-slate-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity))
 }
 
 .border-slate-300 {
@@ -346,16 +255,6 @@
   padding: 0.5rem
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem
-}
-
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px
-}
-
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem
@@ -386,28 +285,9 @@
   padding-bottom: 0.25rem
 }
 
-.pr-4 {
-  padding-right: 1rem
-}
-
-.pl-4 {
-  padding-left: 1rem
-}
-
-.pb-0 {
-  padding-bottom: 0px
-}
-
-.pt-4 {
-  padding-top: 1rem
-}
-
-.pb-24 {
-  padding-bottom: 6rem
-}
-
-.pb-4 {
-  padding-bottom: 1rem
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px
 }
 
 .pl-1\.5 {
@@ -446,10 +326,6 @@
   font-style: italic
 }
 
-.leading-5 {
-  line-height: 1.25rem
-}
-
 .leading-none {
   line-height: 1
 }
@@ -478,46 +354,14 @@
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
 }
 
-.backdrop-blur {
-  --tw-backdrop-blur: blur(8px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-          backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)
-}
-
-.transition-colors {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms
-}
-
-.duration-500 {
-  transition-duration: 500ms
-}
-
-.duration-300 {
-  transition-duration: 300ms
-}
-
-.ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
-}
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px
 }
 
 @media (min-width: 640px) {
-  .sm\:mt-\[90px\] {
-    margin-top: 90px
-  }
-
   .sm\:mt-3 {
     margin-top: 0.75rem
-  }
-
-  .sm\:w-\[220px\] {
-    width: 220px
   }
 
   .sm\:rounded-lg {
@@ -549,10 +393,6 @@
 }
 
 @media (min-width: 1024px) {
-  .lg\:z-50 {
-    z-index: 50
-  }
-
   .lg\:order-first {
     order: -9999
   }
