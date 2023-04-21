@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_unpkg-local",
-  "version": "2.4.15-beta.3",
+  "version": "2.4.15-beta.4",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -30,5 +30,5 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "gitHead": "a5c845a8f2ffb1c662c1f3a7caf5252ba8a3080a"
+  "gitHead": "e194dfdd0682b117f8442cd72db0c55414885f4c"
 }
