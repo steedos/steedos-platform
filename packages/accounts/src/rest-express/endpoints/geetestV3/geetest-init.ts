@@ -41,7 +41,7 @@ export const geetest_init = (data: any) => async (
 
 // 二次验证接口，POST请求
 export const geetest_validate = async function (req, res, next) {
-    if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED) === true) {
+    if (validator.toBoolean(process.env.STEEDOS_CAPTCHA_GEETEST_ENABLED || '') === true) {
         const gtLib = new GeetestLib(GeetestConfig.GEETEST_ID, GeetestConfig.GEETEST_KEY);
         if (req.body.geetest) {
             const challenge = req.body.geetest[GeetestLib.GEETEST_CHALLENGE];

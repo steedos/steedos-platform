@@ -136,6 +136,14 @@
   margin-top: 0.75rem
 }
 
+.mb-0 {
+  margin-bottom: 0px
+}
+
+.ml-2 {
+  margin-left: 0.5rem
+}
+
 .block {
   display: block
 }
@@ -368,6 +376,16 @@
   padding-bottom: 0.5rem
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem
+}
+
 .pr-4 {
   padding-right: 1rem
 }
@@ -406,6 +424,18 @@
 
 .text-center {
   text-align: center
+}
+
+.text-lg {
+  font-size: 16px
+}
+
+.text-xl {
+  font-size: 18px
+}
+
+.font-bold {
+  font-weight: 700
 }
 
 .lowercase {
