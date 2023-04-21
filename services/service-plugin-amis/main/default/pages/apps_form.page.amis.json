@@ -161,12 +161,23 @@
                                                 },
                                                 {
                                                     "name": "showSidebar",
-                                                    "label": "菜单显示在左侧",
+                                                    "label": "显示左侧导航",
                                                     "type": "checkbox",
                                                     "tpl": null,
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
                                                     "id": "u:07a8a4c5f877"
+                                                },
+                                                {
+                                                    "name": "enable_nav_schema",
+                                                    "label": "启用自定义导航",
+                                                    "required": false,
+                                                    "type": "checkbox",
+                                                    "tpl": null,
+                                                    "className": "m-0",
+                                                    "labelClassName": "text-left",
+                                                    "clearValueOnHidden": true,
+                                                    "fieldName": "enable_nav_schema"
                                                 },
                                                 {
                                                     "name": "description",
