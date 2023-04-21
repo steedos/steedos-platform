@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-26 19:28:09
+ * @LastEditors: hexiapeng@steedos.com
+ * @LastEditTime: 2023-04-21 14:09
  * @Description: 复制已有简档来创建新简档
  */
 'use strict';
@@ -39,8 +39,11 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         const psObj = objectql.getObject('permission_set');
         const poObj = objectql.getObject('permission_objects');
         const pfObj = objectql.getObject('permission_fields');
+        const ptObj = objectql.getObject('permission_tabs');
 
-        const originalPermissionSet = await psObj.findOne(originalPermissionSetId, {}, userSession);
+        const originalPermissionSet = (await psObj.find({ filters:[  ['name', '=',  originalPermissionSetId], ['space', '=', spaceId] ] }, userSession))[0]
+
+        // const originalPermissionSet = await psObj.findOne(originalPermissionSetId, {}, userSession);
         if (!originalPermissionSet) {
             throw new Error("permission_set not found");
         }
@@ -60,15 +63,21 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         };
 
         // 创建新简档
-        delete originalPermissionSet._id;
-        const newPermissionSet = await psObj.insert({
+        let newPermissionSetData = {
             ...originalPermissionSet,
-            ...baseInfo,
+            ...baseInfo,  
+            is_system: false,
             name,
             label
-        });
+        };
 
-        // 创建对象权限
+        delete newPermissionSetData._id;
+        delete newPermissionSetData.record_permissions;
+        const newPermissionSet = await psObj.insert(newPermissionSetData);
+
+        console.log('newPermissionSet', newPermissionSet);
+
+        // 创建对象权限和选项卡权限
         if (newPermissionSet) {
             const orininalPermissionSetName = originalPermissionSet.name;
             const { _id: newPermissionSetId, name: newPermissionSetName } = newPermissionSet;
@@ -101,9 +110,26 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                 // }
             }
 
+
+            // 创建选项卡权限
+            const originalPermissionTabs = await ptObj.find({ filters: [['space', '=', spaceId], ['permission_set', '=', originalPermissionSet.name]] }, userSession);
+            // 遍历原有的选项卡权限
+            for (const ptDoc of originalPermissionTabs) {
+                delete ptDoc._id;
+                ptDoc.permission_set = name;
+                const newPermissionTabs = await ptObj.insert({
+                    ...ptDoc,
+                    ...baseInfo,
+                });
+            }
+
         }
 
-        res.status(200).send({ message: 'success' });
+        res.status(200).send({ 
+            message: 'success' , 
+            recordId: newPermissionSet._id
+        });
+        
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: error.message });
