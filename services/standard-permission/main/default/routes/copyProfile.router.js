@@ -75,7 +75,6 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         delete newPermissionSetData.record_permissions;
         const newPermissionSet = await psObj.insert(newPermissionSetData);
 
-        console.log('newPermissionSet', newPermissionSet);
 
         // 创建对象权限和选项卡权限
         if (newPermissionSet) {
