@@ -12,6 +12,7 @@
         Record: {},
         Listview: {},
         Header: {},
+        Footer: {},
         RelatedListview: {},
         Form: {
             StandardNew: {},
@@ -849,175 +850,64 @@
                 name: "globalHeader",
                 body: [
                     {
-                      "type": "wrapper",
-                      "className": 'p-0',
-                      body: [
-                        {
-                          "type": "wrapper",
-                          "className": "bg-white sticky p-0 top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 sm:shadow  border-b-[3px] border-sky-500 border-solid steedos-header-container",
-                          body: [
-                            {
-                              "type": "wrapper",
-                              "className": 'flex w-full px-4 h-[50px] p-0 justify-between items-center steedos-header-container-line-one',
-                              "body": [
-                                {
-                                  type: "wrapper",
-                                  className: 'p-0 flex flex-1 items-center',
-                                  body: [
-                                    {
-                                      "type": "button",
-                                      "className": "toggle-sidebar flex items-center pr-4",
-                                      "hiddenOn": "${!isMobile}",
-                                      "onEvent": {
-                                        "click": {
-                                          "actions": [
-                                            {
-                                              "actionType": "custom",
-                                              "script": "document.body.classList.toggle('sidebar-open')",
-                                            }
-                                          ]
-                                        }
-                                      },
-                                      "body": [
-                                        {
-                                          "type": "steedos-icon",
-                                          "category": "utility",
-                                          "name": "rows",
-                                          "colorVariant": "default",
-                                          "id": "u:afc3a08e8cf3",
-                                          "className": "slds-button_icon slds-global-header__icon"
-                                        }
-                                      ],
-                                    },
-                                    {
-                                        "className": 'block h-10 w-auto mr-4',
-                                        "type": "tpl",
-                                        "tpl": `<a href='/app' class='flex items-center '><img class='block h-10 w-auto' src='${logoSrc}'></a>`,      
-                                    },
-                                  ],
-                                },
-                                {
-                                  "type": "steedos-global-header",
-                                  "label": "Global Header",
-                                  className: 'flex flex-nowrap gap-x-3 items-center',
-                                  logoutScript: "window.Steedos.logout();",
-                                  customButtons: [
-                                    {
-                                      "type": "button",
-                                      "className": "toggle-sidebar",
-                                      "visibleOn": "${AND(app.showSidebar,!isMobile)}",
-                                      "onEvent": {
-                                        "click": {
-                                          "actions": [
-                                            {
-                                              "actionType": "custom",
-                                              "script": "document.body.classList.toggle('sidebar-open')",
-                                            }
-                                          ]
-                                        }
-                                      },
-                                      "body": [
-                                        {
-                                          "type": "steedos-icon",
-                                          "category": "utility",
-                                          "name": "rows",
-                                          "colorVariant": "default",
-                                          "id": "u:afc3a08e8cf3",
-                                          "className": "slds-button_icon slds-global-header__icon"
-                                        }
-                                      ],
-                                    },
-                                    {
-                                        "type": "steedos-app-launcher",
-                                        "showAppName": false,
-                                        "appId": "${app.id}",
-                                        "visibleOn": "${isMobile}",
-                                    },
-                                ]
-                                }
-                              ],
-                            },
-            
-                            {
-                              "type": "grid",
-                              "hiddenOn": "${isMobile}",
-                              "className": 'steedos-context-bar flex flex-nowrap h-10 leading-5 pl-4 mb-[-3px] steedos-header-container-line-two',
-                              "columns": [
-                                {
-                                  "columnClassName": "items-center flex pb-0",
-                                  "body": [
-                                    {
-                                      "type": "steedos-app-launcher",
-                                      "showAppName": true,
-                                      "appId": "${app.id}",
-                                    }
-                                  ],
-                                  "md": "auto",
-                                  "valign": "middle"
-                                },
-                                {
-                                  hiddenOn: "${app.showSidebar === true}",
-                                  "columnClassName": "flex overflow-hidden",
-                                  "body": [
-                                    {
-                                      "type": "steedos-app-menu",
-                                      "stacked": false,
-                                      showIcon: false,
-                                      "appId": "${app.id}",
-                                      hiddenOn: "${app.showSidebar === true}",
-                                      overflow: {
-                                          enable: false,
-                                          itemWidth: 80,
-                                      },
-                                      "id": "u:77851eb4aa89",
-                                    }
-                                  ],
-                                  "id": "u:5367229505d8",
-                                  "md": "",
-                                  "valign": "middle",
-                                }
-                              ],
-                            },
-                          ],
-                        },
-        
-                        {
-        
-                          "type": "button",
-                          "className": 'p-0 absolute inset-0 mt-[50px] sm:mt-[90px]',
-                          hiddenOn: "${app.showSidebar != true}",
-                          body: [{
-                            type: "wrapper",
-                            className: 'sidebar-wrapper px-0 pt-4 pb-24 fixed z-20 h-full ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64',
-                            body: [
-                                {
-                                  "type": "steedos-app-launcher",
-                                  "className": "px-4 pb-4",
-                                  "visibleOn": "${isMobile}",
-                                  "showAppName": true
-                                },
-                                {
-                                    "type": "steedos-app-menu",
-                                    "stacked": true,
-                                    "appId": "${app.id}",
-                                },
-                            ]
-                          }],
-                          "onEvent": {
-                            "click": {
-                              "actions": [
-                                {
-                                  "actionType": "custom",
-                                  "script": "console.log(event.target); if(window.innerWidth < 768){ document.body.classList.remove('sidebar-open'); }",
-                                }
-                              ]
-                            }
-                          },
-                        }
-                      ],
+                      "type": "steedos-global-header",
+                      "logoSrc": logoSrc
                     },
                   ]
               }
+        }
+    }
+
+
+    
+    Steedos.Page.Footer.render = function(appId, tabId){
+        let app = _.find(Session.get('app_menus'), {id: appId}) || {}
+        if(_.isEmpty(app)){
+            return ;
+        }
+
+        try {
+            const data = {
+                app,
+                isMobile: window.innerWidth <= 768
+            };
+            const page = Steedos.Page.Footer.getPage(appId, tabId);
+            var rootId = "steedosGlobalFooterRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                modalRoot.setAttribute('class', 'h-full');
+                $(".steedos-global-footer-root")[0].appendChild(modalRoot);
+            }
+            if (page.render_engine && page.render_engine != 'redash') {
+                // console.log("Steedos.Page.Header.render", appId, tabId, page)
+                return Steedos.Page.render($("#" + rootId)[0], page, Object.assign({}, data));
+            }
+        } catch (error) {
+            console.error(`Steedos.Page.Footer.render`, error)
+        }
+    }
+    Steedos.Page.Footer.getPage = function(appId, tabId){
+        return {
+            render_engine: 'amis',
+            name: 'steedosGlobalFooterPage',
+            schema: {
+                "type": "service",
+                "name": "globalFooter",
+                "body": [
+                    {
+                        "type": "steedos-global-Footer",
+                        overflow: {
+                            enable: false,
+                            maxVisibleCount: 4,
+                            overflowPopoverClassName: "footer-popup"
+                        },
+                        "id": "u:77851eb4aa89",
+                        "appId": "${app.id}"
+                    },
+                ]
+            }
         }
     }
 })();

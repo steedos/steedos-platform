@@ -70,6 +70,8 @@ Template.creatorLayout.onRendered ->
 	this.autorun ->
 		Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
+	this.autorun ->
+		Steedos.Page.Footer.render(Session.get('app_id'), tabId)
 	# $(window).resize ->
 	# 	Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
