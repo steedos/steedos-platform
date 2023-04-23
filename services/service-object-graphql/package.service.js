@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-13 18:48:20
+ * @LastEditTime: 2023-04-23 11:37:48
  * @Description: 
  */
 
@@ -29,6 +29,7 @@ module.exports = {
     mixins: [serviceObjectMixin],
 
     globalGraphQLSettings: {}, // service-api 里generateGraphQLSchema使用 
+    getGraphqlFields: getQueryFields,
 
     projectStarted: false,
 

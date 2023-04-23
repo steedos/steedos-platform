@@ -4,7 +4,7 @@ import { Broker } from './broker'
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-18 15:30:29
+ * @LastEditTime: 2023-04-23 11:35:29
  * @Description: 
  */
 export * from './types'
@@ -25,7 +25,5 @@ export * from './metadata-register/permissionFields'
 export * from './metadata-register/process'
 export * from './metadata-register/processTrigger'
 export * from './ts-types'
-
-export { getQueryFields as getGraphqlFields} from './services/helpers/graphql/getQueryFields'
 
 export const broker = new Broker();

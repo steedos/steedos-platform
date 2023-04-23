@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-27 17:15:39
+ * @LastEditTime: 2023-04-23 11:26:57
  * @Description: 
  */
 "use strict";
@@ -34,19 +34,6 @@ module.exports = {
      * Actions
      */
     actions: {
-        aggregate: {
-            params: {
-                objectName: { type: "string" },
-                query: { type: "object" },
-                externalPipeline: { type: "array", items: "object" }
-            },
-            async handler(ctx) {
-                const userSession = ctx.meta.user;
-                const { objectName, query, externalPipeline } = ctx.params;
-                const obj = getObject(objectName)
-                return await obj.aggregate(query, externalPipeline, userSession)
-            }
-        },
         find: {
             params: {
                 objectName: { type: "string" },
@@ -205,32 +192,6 @@ module.exports = {
                     }
                     return await obj.update(id, data, userSession)
                 }
-            }
-        },
-        directAggregate: {
-            params: {
-                objectName: { type: "string" },
-                query: { type: "object" },
-                externalPipeline: { type: "array", items: "object" }
-            },
-            async handler(ctx) {
-                const userSession = ctx.meta.user;
-                const { objectName, query, externalPipeline } = ctx.params;
-                const obj = getObject(objectName)
-                return await obj.directAggregate(query, externalPipeline, userSession)
-            }
-        },
-        directAggregatePrefixalPipeline: {
-            params: {
-                objectName: { type: "string" },
-                query: { type: "object" },
-                prefixalPipeline: { type: "array", items: "object" }
-            },
-            async handler(ctx) {
-                const userSession = ctx.meta.user;
-                const { objectName, query, prefixalPipeline } = ctx.params;
-                const obj = getObject(objectName)
-                return await obj.directAggregatePrefixalPipeline(query, prefixalPipeline, userSession)
             }
         },
         directFind: {
