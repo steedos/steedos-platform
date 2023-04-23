@@ -32,3 +32,11 @@ body {
 .creator-content-wrapper .split-left .dx-treeview-node-container li[data-item-id=about]{
   display: none;
 }
+
+/*
+2.3版本升级@steedos-builder/react到版本0.2.37以锁定monaco-editor@0.33.0版本后顶部导航ul位置显示异常（2.2没有这个问题）
+因为saleforce的ul样式被antd的global.less覆盖了
+*/
+.steedos ul{
+  margin: 0;
+}
