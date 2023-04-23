@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-28 17:09:19
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-07 10:50:37
+ * @LastEditTime: 2023-04-21 11:17:05
  * @Description: 
  */
 import { JsonMap } from "@salesforce/ts-types";
@@ -15,8 +15,8 @@ export type TriggerActionParams = {
     isFind?: boolean,
     isBefore?: boolean,
     isAfter?: boolean,
-    isUndelete?: boolean,
-    when?: 'beforeFind' | 'beforeInsert' | 'beforeUpdate' | 'beforeDelete' | 'afterFind' | 'afterCount' | 'afterFindOne' | 'afterInsert' | 'afterUpdate' | 'afterDelete' | 'beforeAggregate' | 'afterAggregate',
+    isFindOne?: boolean,
+    isCount?: boolean,
     id?: SteedosIDType,          // 记录的唯一标识
     doc?: JsonMap,               // 需要新增/修改的记录内容
     previousDoc?: JsonMap,       // 修改/删除前的记录, 仅afterUpdate, afterDelete时存在此属性

@@ -465,7 +465,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     Object.assign(context.query, result.query)
                 }
             }
-            if (when == 'afterFind') {
+            if (when == 'afterFind' || when == 'afterFindOne' || when == 'afterCount') {
                 if (result && result.data && _.isObject(result.data)) {
                     Object.assign(context.data, result.data)
                 }
@@ -1572,13 +1572,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
