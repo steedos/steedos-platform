@@ -1572,13 +1572,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
