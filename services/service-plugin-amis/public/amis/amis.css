@@ -87,3 +87,7 @@
 .ant-message{
     z-index: 2600;
 }
+
+.antd-Form-item.p-0{
+    padding: 0;
+} 
