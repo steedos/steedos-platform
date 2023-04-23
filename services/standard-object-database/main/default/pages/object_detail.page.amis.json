@@ -35,7 +35,8 @@
                             "relatedObjectApiName": "object_fields",
                             "id": "u:6bef459155bd",
                             "top": 2000,
-                            "recordId": "${recordId}"
+                            "recordId": "${recordId}",
+                            "relatedKey": "object"
                         }
                     ],
                     "id": "u:f1a52545b642"

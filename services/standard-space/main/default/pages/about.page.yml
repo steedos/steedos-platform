@@ -1,0 +1,7 @@
+name: about
+is_active: true
+label: 关于
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []
