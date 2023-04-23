@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-12 19:08:48
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-21 20:39:54
+ * @LastEditTime: 2023-04-23 10:28:35
  * @Description: 加载*.trigger.js文件注册为新版action trigger
  */
 import * as _ from "underscore";
@@ -50,11 +50,6 @@ export async function load(broker: any, packagePath: string, packageServiceName:
         actions[actionTriggerName] = generateActionTrigger(trigger)
     }
 
-    if (packageServiceName === '~packages-my-steedos-package') {
-        console.log('objTriggers', objTriggers);
-        console.log('actions', actions);
-    }
-
     let serviceConfig = {
         name: serviceName,
         actions: actions
@@ -88,8 +83,6 @@ function generateActionTrigger(trigger) {
                 id, doc, previousDoc,
                 // size, 
                 userId, spaceId, objectName, query, data }: TriggerActionParams = ctx.params;
-
-            console.log('actionTrigger called:', objectName)
 
             const context: SteedosTriggerContextConfig = {
                 id,

@@ -262,7 +262,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
 
     if(getSteedosSchema().metadataBroker){
 
-        loadObjectTriggers(packagePath, serviceName);
+        // loadObjectTriggers(packagePath, serviceName);
         //此功能不支持微服务模式
         loadObjectMethods(packagePath);
 
