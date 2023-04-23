@@ -18,3 +18,5 @@ icon: contract
 is_enable: true
 label: 微页面
 version: 2
+paging:
+  enabled: false
