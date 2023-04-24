@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-12 19:08:48
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-23 10:28:35
+ * @LastEditTime: 2023-04-24 12:22:16
  * @Description: 加载*.trigger.js文件注册为新版action trigger
  */
 import * as _ from "underscore";
@@ -12,6 +12,7 @@ import { getMD5, JSONStringify, TriggerActionParams, SteedosTriggerContextConfig
 const TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterInsert', 'afterUpdate', 'afterDelete', 'afterFindOne', 'afterCount']
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
+    return;
     let actions = {};
     let serviceName = `~triggers-${packageServiceName}`;
     let filePath = path.join(packagePath, "**");
