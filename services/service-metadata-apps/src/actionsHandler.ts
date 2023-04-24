@@ -17,7 +17,8 @@ async function getSpaceApp(ctx: any, appApiName: string) {
     const spaceId = userSession.spaceId;
     const userApps = _.filter(allApps, function (metadataConfig) {
         const config = metadataConfig.metadata;
-        if (!config.is_creator || !config.visible) {
+        //只判断是否启用
+        if (!config.visible) {
             return false;
         }
         if (_.has(config, 'space') && config.space) {
@@ -49,7 +50,8 @@ async function get(ctx: any) {
             const spaceId = userSession.spaceId;
             const userApps = _.filter(allApps, function (metadataConfig) {
                 const config = metadataConfig.metadata;
-                if (!config.is_creator || !config.visible) {
+                //只判断是否启用
+                if (!config.visible) {
                     return false;
                 }
                 if (_.has(config, 'space') && config.space) {
