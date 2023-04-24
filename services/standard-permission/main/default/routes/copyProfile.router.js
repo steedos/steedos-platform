@@ -41,9 +41,9 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         const pfObj = objectql.getObject('permission_fields');
         const ptObj = objectql.getObject('permission_tabs');
 
-        const originalPermissionSet = (await psObj.find({ filters:[  ['name', '=',  originalPermissionSetId], ['space', '=', spaceId] ] }, userSession))[0]
+        // const originalPermissionSet = (await psObj.find({ filters:[  ['name', '=',  originalPermissionSetId], ['space', '=', spaceId] ] }, userSession))[0]
 
-        // const originalPermissionSet = await psObj.findOne(originalPermissionSetId, {}, userSession);
+        const originalPermissionSet = await psObj.findOne(originalPermissionSetId, {}, userSession);
         if (!originalPermissionSet) {
             throw new Error("permission_set not found");
         }
