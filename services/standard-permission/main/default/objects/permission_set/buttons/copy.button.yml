@@ -1,0 +1,111 @@
+name: copy
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "复制",
+              "id": "u:copy",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "复制 当前简档记录",
+                                  "body": [
+                                      {
+                                          "type": "form",
+                                          "title": "表单",
+                                          "body": [
+                                              {
+                                                  "label": "显示名称",
+                                                  "type": "input-text",
+                                                  "value": "${record.label} 的副本",
+                                                  "name": "label_input",
+                                                  "id": "u:24e89a11d437",
+                                                  "required": true
+                                              },
+                                              {
+                                                  "type": "input-text",
+                                                  "name": "name_input",
+                                                  "value": "${record.name}_copy",
+                                                  "label": "api名称",
+                                                  "id": "u:27bd7cfe3e12",
+                                                  "required": true
+                                              }
+                                          ],
+                                          "api": {
+                                              "url": "${context.rootUrl}/api/permission/permission_set/copy",
+                                              "method": "post",
+                                              "messages": {},
+                                              "requestAdaptor": "delete api.body.label_input;\ndelete api.body.name_input;",
+                                              "data": {
+                                                  "&": "$$",
+                                                  "label": "${label_input}",
+                                                  "name": "${name_input}",
+                                                  "originalPermissionSetId": "${record.name}"
+                                              },
+                                              "headers": {
+                                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                              }
+                                          },
+                                          "onEvent": {
+                                            "submitSucc": {
+                                            "weight": 0,
+                                            "actions": [
+                                                {
+                                                "args": {
+                                                    "url": "${context.rootUrl}/app/${appId}/${objectName}/view/${result.data.recordId}",
+                                                    "blank": false
+                                                },
+                                                "actionType": "url"
+                                                }
+                                            ]
+                                            }
+                                        },
+                                          "id": "u:818f7b68417b",
+                                          "mode": "normal"
+                                      }
+                                  ],
+                                  "showCloseButton": true,
+                                  "showErrorMsg": true,
+                                  "showLoading": true,
+                                  "id": "u:9f9b042404a1",
+                                  "closeOnEsc": false,
+                                  "dataMapSwitch": false,
+                                  "size": "md"
+                              },
+                              "actionType": "dialog"
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "app_id": "",
+          "tab_id": "",
+          "object_name": "",
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:4b81eda72f12"
+  }
+is_enable: true
+label: 复制
+'on': record_only
+type: amis_button
+visible: !!js/function |
+    function (object_name, record_id, record_permissions, record) {
+        return record.record.type == 'profile';
+    }
