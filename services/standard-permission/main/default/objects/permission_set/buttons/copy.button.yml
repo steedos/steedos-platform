@@ -38,7 +38,7 @@ amis_schema: |-
                                               }
                                           ],
                                           "api": {
-                                              "url": "http://127.0.0.1:5800/api/permission/permission_set/copy",
+                                              "url": "${context.rootUrl}/api/permission/permission_set/copy",
                                               "method": "post",
                                               "messages": {},
                                               "requestAdaptor": "delete api.body.label_input;\ndelete api.body.name_input;",
