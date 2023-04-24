@@ -6,7 +6,7 @@
         "type": "steedos-object-listview",
         "objectApiName": "${objectName}",
         "columnsTogglable": false,
-        "filterVisible": false,
+        "filterVisible": true,
         "showHeader": true,
         "id": "u:d29cef0d1007",
         "sideSchema": {

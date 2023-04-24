@@ -7,7 +7,7 @@
       "objectApiName": "${objectName}",
       "columnsTogglable": false,
       "showHeader": true,
-      "filterVisible": false,
+      "filterVisible": true,
       "id": "u:d29cef0d1007",
       "sideSchema": {
         "type": "service",
