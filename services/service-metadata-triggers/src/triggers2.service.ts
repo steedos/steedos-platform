@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-11 13:44:55
+ * @LastEditTime: 2023-04-20 10:08:46
  * @Description: 
  */
 "use strict";
 import { METADATA_TYPE } from './actionsHandler';
 import _ = require('lodash');
-import { _TRIGGERKEYS } from "@steedos/objectql"
+import { TRIGGERKEYS } from "./constants";
 
 module.exports = {
     name: "triggers",
@@ -72,7 +72,7 @@ module.exports = {
                                 const { listenTo, when } = trigger
                                 if (listenTo && when && _.isArray(when)) {
                                     for (const w of when) {
-                                        if (!_TRIGGERKEYS.includes(w)) {
+                                        if (!TRIGGERKEYS.includes(w)) {
                                             logger.warn(`trigger when '${w}' is not supported.`)
                                             continue
                                         }

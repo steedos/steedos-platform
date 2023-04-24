@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
+const serviceObjectGraphql = require('@steedos/service-object-graphql');
 module.exports = {
   name: "instance",
   actions: {
@@ -32,7 +33,7 @@ module.exports = {
 
         let fields = [];
 
-        const fieldNames = objectql.getGraphqlFields(resolveInfo);
+        const fieldNames = serviceObjectGraphql.getGraphqlFields(resolveInfo);
 
         if (!_.isEmpty(fieldNames)) {
             fields = fieldNames;
