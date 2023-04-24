@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-21 16:46:57
+ * @Description: 
+ */
 
 function isRepeatedName(doc, name) {
     var other = Creator.getCollection("object_triggers").find({
@@ -54,7 +61,7 @@ Creator.Objects.object_triggers.triggers = {
       when: "before.insert",
       todo: function(userId, doc) {
         check(userId, doc);
-        if(true){
+        if(true && false){
           throw new Meteor.Error(500, "请在代码中定义trigger");
         }
         if (isRepeatedName(doc)) {

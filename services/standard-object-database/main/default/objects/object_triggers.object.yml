@@ -1,7 +1,6 @@
 name: object_triggers
 icon: apex
 label: Object Triggers
-hidden: true
 fields:
   name:
     type: text
@@ -9,35 +8,18 @@ fields:
     searchable: true
     index: true
     required: true
-  # label:
-  #   label: 显示名称
-  #   type: text
-  object:
+  listenTo:
     label: Object
     type: master_detail
     reference_to: objects
     reference_to_field: name
     required: true
-  # on:
-  #   label: 运行于
-  #   type: lookup
-  #   required: true
-  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  #     function () {
-  #             return [{
-  #               label: "客户端",
-  #               value: "client",
-  #               icon: "address"
-  #             }, {
-  #               label: "服务端",
-  #               value: "server",
-  #               icon: "address"
-  #             }];
-  #           }
   when:
     label: Execution Time Option
     type: lookup
     required: true
+    multiple: true
+    is_wide: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
               return [{
@@ -73,11 +55,40 @@ fields:
   is_enable:
     label: Enable
     type: boolean
-  todo:
-    label: Execute Script  <a target="_blank" href="https://developer.steedos.com/developer/object_trigger">View Help</a>
-    type: textarea
-    required: true
+  handler:
+    label: Handler
+    type: code
+    language: javascript
     is_wide: true
+    required: true
+    defaultValue: |-
+      const {isInsert, isUpdate, isDelete, isFind, isBefore, isAfter} = ctx.params;
+      const {objectName, query, data, id, doc, previousDoc, userId, spaceId} = ctx.params;
+    amis:
+      editorDidMount: |-
+        monaco.languages.registerCompletionItemProvider('javascript', {
+          provideCompletionItems: (model, position) => {
+            const intellisense = {
+              "myCustomIntelliSense": {
+                "prefix": "myCodeSnippet",
+                "body": [
+                  "console.log('Hello World!');"
+                ],
+                "description": "My custom IntelliSense for logging 'Hello World!' to the console"
+              }
+            }
+            const suggestions = Object.keys(intellisense).map(key => {
+              const item = intellisense[key];
+              return {
+                label: item.prefix,
+                documentation: item.description,
+                kind: monaco.languages.CompletionItemKind.Snippet,
+                insertText: new monaco.SnippetString(item.body.join('\n'))
+              };
+            });
+            return { suggestions };
+          }
+        });
 paging:
   enabled: false
 list_views:

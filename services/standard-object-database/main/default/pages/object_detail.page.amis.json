@@ -112,6 +112,19 @@
                     ]
                 },
                 {
+                    "title": "触发器",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_triggers",
+                            "relatedKey": "listenTo",
+                            "perPage": 20
+                        }
+                    ]
+                },
+                {
                     "title": "流程映射",
                     "body": [
                         {
