@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-02 11:21:01
+ * @LastEditTime: 2023-04-24 14:52:26
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -39,14 +39,15 @@ const { link } = require('fs');
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategoriesInbox = async (userSession,req) => {
+const getCategoriesInbox = async (userSession, req) => {
   const { appId } = req.params;
   const { userId, is_space_admin} = userSession;
   const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-    box: "inbox", flowId: null, userId, is_space_admin
+    box: "inbox", flowId: null, userId, is_space_admin, appId
   })
-  const  data = await objectql.getObject('instance_tasks').find({
-    filters: filters
+  const data = await objectql.getObject('instance_tasks').find({
+    filters: filters,
+    fields: ['_id', 'flow_name', 'category_name']
   }, userSession)
 
   const output = [];
@@ -84,7 +85,10 @@ const getCategoriesInbox = async (userSession,req) => {
       },
     })
   })
-  return output
+  return {
+    schema: output,
+    count: data.length,
+  }
 }
 
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
@@ -92,24 +96,17 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
 
     let userSession = req.user;
     const { appId } = req.params;
-    const spaceId = userSession.spaceId;
-    const userId = userSession.userId;
-    let mychildren = await getCategoriesInbox(userSession,req)
-    let query = {
-      filters: [['user', '=', userId], ['space', '=', spaceId], ['key', '=', 'badge']]
-    };
-    const steedosKeyValues = await objectql.getObject('steedos_keyvalues').find(query);
-    let sum = steedosKeyValues && steedosKeyValues[0] && steedosKeyValues[0].value && steedosKeyValues[0].value.workflow;
+    let {schema, count} = await getCategoriesInbox(userSession,req)
     var options = [
       {
         "label": "待审核",
         "icon": "fa fa-download",
-        "tag":sum,
+        "tag":count,
         "value":{
           "level":1,
           "to": `/app/${appId}/instance_tasks/grid/inbox`
         },
-        "children":mychildren
+        "children":schema
       },
       {
         "label": "已审核",

@@ -74,7 +74,8 @@ module.exports = {
     },
     getBoxFilters: {
         async handler(ctx){
-            const { box, flowId, userId, is_space_admin } = ctx.params;
+            const { appId, box, flowId, userId, is_space_admin } = ctx.params;
+            const categoriesIds = await this.getAppCategoriesIds(appId);
             const filter = [];
             switch (box) {
                 case 'inbox':
@@ -129,6 +130,16 @@ module.exports = {
                     filter.push(['instance_state', '=', 'none']);
                     break;
             }
+
+            if(categoriesIds && categoriesIds.length > 0){
+                const forms = await objectql.getObject('forms').find({filters: ['category', 'in', categoriesIds], fields: ['_id']});
+                if(forms.length > 0){
+                    filter.push(['form', 'in', _.map(forms, '_id')])
+                }else{
+                    filter.push(['form', 'in',  ['no']])
+                }
+            }
+
             return filter;
         }
     }
@@ -223,6 +234,12 @@ module.exports = {
                 });
             }
         }
-    }
+    },
+    getAppCategoriesIds: {
+        async handler(appId) {
+          const categories = await objectql.getObject('categories').find({ filters: [['app', '=', appId]] });
+          return _.map(categories, '_id');
+        }
+    },
   }
 };
