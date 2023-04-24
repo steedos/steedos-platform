@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 10:58:08
+ * @LastEditTime: 2023-04-24 11:43:06
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -120,16 +120,6 @@ module.exports = {
 				const globalServicesVars = {};
                 for (const service of _services) {
                     const { name: serviceName, actions } = service
-                    /**
-                    actions 结构
-                    {
-                        'test.triggerSpaceUsers': {
-                            trigger: { listenTo: 'test__c', when: [Array] },
-                            rawName: 'triggerSpaceUsers',
-                            name: 'test.triggerSpaceUsers'
-                        }
-                    }
-                     */
 					if(!globalServicesVars[serviceName]){
 						globalServicesVars[serviceName] = {};
 					}
