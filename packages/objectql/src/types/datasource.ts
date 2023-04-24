@@ -30,7 +30,7 @@ import {
     SQL_BASE_OBJECT
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
+import { createDataSourceService } from '../services/index';
 import path = require('path');
 import { transformListenersToTriggers, extend } from '../util';
 const clone = require('clone')
@@ -164,11 +164,6 @@ export class SteedosDataSourceType implements Dictionary {
 
     getObject(objectApiName: string): any{
         return this.getLocalObject(objectApiName);
-        // const localObject = this.getLocalObject(objectApiName);
-        // if(localObject){
-        //     return localObject;
-        // }
-        // return getObjectDispatcher(objectApiName)
     }
 
     getLocalObject(objectApiName: string) {
@@ -198,7 +193,6 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         this._objects[objectApiName] = object;
-        // await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
         return object;
     }
 

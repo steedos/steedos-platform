@@ -19,6 +19,8 @@ const loadFlowFile = new metaDataCore.LoadFlowFile();
 
 module.exports = {
     name: "service-package-loader",
+    
+    triggerLoader,
 
     /**
      * Settings
