@@ -2,10 +2,11 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 10:44:42
+ * @LastEditTime: 2023-04-24 11:47:45
  * @Description: 
  */
 const { NodeVM } = require('vm2');
+import { ObjectId } from "mongodb";
 
 function str2function(
     contents,
@@ -35,6 +36,9 @@ export const runTriggerFunction = (code, thisArg, ...args)=>{
             },
             services: (global as any).services,
             objects: (global as any).objects,
+            makeNewID: ()=>{
+                return new ObjectId().toHexString();
+            }
         },
         require: {
             external: true,
