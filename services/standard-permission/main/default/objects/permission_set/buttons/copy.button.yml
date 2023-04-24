@@ -46,7 +46,7 @@ amis_schema: |-
                                                   "&": "$$",
                                                   "label": "${label_input}",
                                                   "name": "${name_input}",
-                                                  "originalPermissionSetId": "${record.name}"
+                                                  "originalPermissionSetId": "${record._id}"
                                               },
                                               "headers": {
                                                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
