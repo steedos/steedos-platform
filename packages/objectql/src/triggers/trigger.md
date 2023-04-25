@@ -1,12 +1,12 @@
 
 # Trigger
 
-## xxx.trigger.yml
+## .trigger.yml
 ```yaml
 name:
 listenTo:
 when: []
-isEnable: 
+isEnabled: 
 handler: |-
     // 函数签名 async (ctx)=>{}
 ```

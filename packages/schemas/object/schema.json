@@ -746,6 +746,10 @@
                 "amis": {
                     "type": "object",
                     "description": "amis属性"
+                },
+                "editorDidMount":{
+                    "type": "string",
+                    "description": "编辑器渲染完成后执行"
                 }
             }
         },

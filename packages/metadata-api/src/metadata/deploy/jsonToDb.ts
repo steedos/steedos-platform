@@ -23,6 +23,8 @@ import { TabCollection } from '../collection/tab'
 import { ShareRuleCollection } from '../collection/shareRule'
 import { RestrictionRuleCollection } from '../collection/restrictionRule'
 import { ProcessCollection } from '../collection/process'
+import { TriggerCollection } from '../collection/trigger'
+
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -31,6 +33,7 @@ const tabCollection = new TabCollection();
 const shareRuleCollection = new ShareRuleCollection();
 const restrictionRuleCollection = new RestrictionRuleCollection();
 const processCollection = new ProcessCollection();
+const triggerCollection = new TriggerCollection();
 
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo, hasChild, getChilds } from '@steedos/metadata-core';
 
@@ -124,6 +127,9 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
             break;
         case TypeInfoKeys.RestrictionRule:
             await restrictionRuleCollection.deploy(dbManager, metatdataRecords);
+            break;
+        case TypeInfoKeys.Trigger:
+            await triggerCollection.deploy(dbManager, metatdataRecords);
             break;
         default:
             break;

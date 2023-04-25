@@ -46,8 +46,20 @@
   position: static
 }
 
+.absolute {
+  position: absolute
+}
+
+.relative {
+  position: relative
+}
+
 .sticky {
   position: sticky
+}
+
+.isolate {
+  isolation: isolate
 }
 
 .col-span-2 {
@@ -172,6 +184,10 @@
 
 .flex-shrink-0 {
   flex-shrink: 0
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
 .flex-row {

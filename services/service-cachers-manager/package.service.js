@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 11:43:06
+ * @LastEditTime: 2023-04-24 15:55:25
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -82,7 +82,7 @@ module.exports = {
 				this.loadActionTriggers(ctx.broker);
 			}
 		},
-		"metadata.object_triggers.add": {
+		"metadata.object_triggers.change": {
 			handler(ctx){
 				this.loadTriggers(ctx.broker);
 			}

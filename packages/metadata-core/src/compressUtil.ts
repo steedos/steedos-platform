@@ -443,7 +443,7 @@ export async function decompressAndDeploy(zipBuffer, projectDir){
                 // }else 
                 var fullFileName;
                 if(metadata == TypeInfoKeys.Server || metadata == TypeInfoKeys.Client 
-                    || metadata == TypeInfoKeys.Router || metadata == TypeInfoKeys.Trigger
+                    || metadata == TypeInfoKeys.Router
                     || metadata == TypeInfoKeys.Function || metadata == TypeInfoKeys.ActionScript ){
                     fullFileName = fileName + '.js'
                 }else if (metadata == TypeInfoKeys.Flow){
