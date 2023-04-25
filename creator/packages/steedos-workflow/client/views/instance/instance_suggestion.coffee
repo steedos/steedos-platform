@@ -469,5 +469,6 @@ Template.instance_suggestion.onRendered ->
 			$("#nextStepUsers_div").hide();
 
 Template.instance_suggestion.onDestroyed ->
+	console.log("instance_suggestion onDestroyed...");
 	Session.set("instance_suggestion_ready", false)
 	Session.set("instance_my_approve_description", null)
