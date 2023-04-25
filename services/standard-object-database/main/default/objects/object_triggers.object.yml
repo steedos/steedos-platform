@@ -52,8 +52,8 @@ fields:
                 icon: "asset_relationship"
               }];
             }
-  is_enable:
-    label: Enable
+  isEnabled:
+    label: Enabled
     type: boolean
   handler:
     label: Handler
@@ -62,33 +62,39 @@ fields:
     is_wide: true
     required: true
     defaultValue: |-
-      const {isInsert, isUpdate, isDelete, isFind, isBefore, isAfter} = ctx.params;
-      const {objectName, query, data, id, doc, previousDoc, userId, spaceId} = ctx.params;
-    amis:
-      editorDidMount: |-
-        monaco.languages.registerCompletionItemProvider('javascript', {
-          provideCompletionItems: (model, position) => {
-            const intellisense = {
-              "myCustomIntelliSense": {
-                "prefix": "myCodeSnippet",
-                "body": [
-                  "console.log('Hello World!');"
-                ],
-                "description": "My custom IntelliSense for logging 'Hello World!' to the console"
-              }
-            }
-            const suggestions = Object.keys(intellisense).map(key => {
-              const item = intellisense[key];
-              return {
-                label: item.prefix,
-                documentation: item.description,
-                kind: monaco.languages.CompletionItemKind.Snippet,
-                insertText: new monaco.SnippetString(item.body.join('\n'))
-              };
-            });
-            return { suggestions };
-          }
-        });
+      const { params, getObject, getUser, call } = ctx;
+    editorDidMount: |-
+      const result = Steedos.authRequest("/service/api/suggestions/trigger", {async: false});
+      const objectSuggestions = [{
+        label: "objects",
+        insertText: "objects"
+      }];
+      _.each(result.objects.data, (item)=>{
+          objectSuggestions.push({
+            label: `objects.${item.label}`,
+            insertText: `objects.${item.insertText}`,
+            documentation: item.documentation
+          });
+          _.each(result.objects.props, (prop)=>{
+            objectSuggestions.push({
+              label: `objects.${item.label}.${prop.label}`,
+              kind: monaco.languages.CompletionItemKind.Function,
+              insertText: `objects.${item.insertText}.${prop.label}`,
+              documentation: prop.documentation,
+            })
+        })
+      })
+      return monaco.languages.registerCompletionItemProvider('javascript', {
+        provideCompletionItems: function(model, position) {
+          const lineContent = model.getLineContent(position.lineNumber);
+          var arr = lineContent.split(" ");
+          var lastWord = arr.pop();
+          var afterLastSpaceText = lineContent.substring(lineContent.lastIndexOf(" ") + 1);
+          return { suggestions: _.cloneDeep(_.filter(objectSuggestions, (sug)=>{
+            return sug.label.startsWith(afterLastSpaceText)
+          })) };
+        }
+      });
 paging:
   enabled: false
 list_views:
