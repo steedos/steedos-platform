@@ -3,7 +3,7 @@ const workflow = require('@steedos/workflow');
 const objectql = require("@steedos/objectql");
 const { ObjectId } = require("mongodb");
 const AmisInputTypes = [
-    //41个表单项
+    //44个表单项
     'input-image',
     'input-number',
     'input-group',
@@ -46,8 +46,10 @@ const AmisInputTypes = [
     'location-picker',
     'input-table',
     'editor',
-    'steedos-field'
-
+    'steedos-field',
+	'input-password',
+	'input-email',
+	'input-url'
 ];
 
 // getInstanceFormSchema() 在用户创建的表单中获取到type为form name为instanceForm的表单，其他的表单不要
@@ -96,6 +98,7 @@ function getFormInputFields(formSchema) {
                 }
             })
             if (flag) {
+				console.log("field==",field);
                 inputFields.push(field);
             }
         }else{
@@ -216,6 +219,15 @@ function transformFormFields(amisField) {
         case 'input-text':
             formFieldsItem.type = 'input'
             break
+		case 'input-url':
+			formFieldsItem.type = 'url'
+			break
+		case 'input-password':
+			formFieldsItem.type = 'password'
+			break
+		case 'input-email':
+            formFieldsItem.type = 'email'
+            break
         case 'uuid':
             formFieldsItem.type = 'input'
             formFieldsItem.name = 'UUID'
@@ -243,6 +255,7 @@ function transformFormFields(amisField) {
             break
         case 'textarea':
             formFieldsItem.type = 'input'
+			formFieldsItem.is_textarea = true
             break
         case 'chained-select':
             formFieldsItem.type = 'input'
@@ -271,14 +284,15 @@ function transformFormFields(amisField) {
             break
         case 'checkbox':
             formFieldsItem.type = 'checkbox'
-            formFieldsItem.name = amisField.option
-            // 如果是旧表单设计器中创建的checkbox没有option属性，应用name属性赋值给新的name
-            if(!formFieldsItem.name){
-                formFieldsItem.name = amisField.name
-            }
+			formFieldsItem.name = amisField.option
+			formFieldsItem.code = amisField.name
             break
         case 'checkboxes':
-            formFieldsItem.type = 'select'
+            formFieldsItem.type = 'multiSelect'
+			formFieldsItem.name = amisField.label
+			formFieldsItem.code = amisField.name
+			formFieldsItem.is_multiselect = amisField.multiple
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'matrix-checkboxes':
             formFieldsItem.type = 'input'
@@ -287,7 +301,10 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'switch'
             break
         case 'radios':
-            formFieldsItem.type = 'select'
+            formFieldsItem.type = 'radio'
+			formFieldsItem.name = amisField.label
+			formFieldsItem.code = amisField.name
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'nested-select':
             formFieldsItem.type = 'input'
@@ -305,6 +322,7 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'select':
+			//select类型如果有source 说明为旧表单的odata字段
 			if(amisField?.source){
 				formFieldsItem.type = 'odata'
 		  		formFieldsItem.description = amisField.description
@@ -321,7 +339,11 @@ function transformFormFields(amisField) {
 
 				formFieldsItem.url = amisField.source.url.replace('${context.rootUrl}','')
 			}else{
+				// 反之为按下拉框字段处理
 				formFieldsItem.type = 'select'
+				formFieldsItem.name = amisField.label
+				formFieldsItem.code = amisField.name
+				formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
 			}
             break
         case 'steedos-field':
@@ -331,7 +353,7 @@ function transformFormFields(amisField) {
             }
             const steedosField = Object.assign(fieldsAdd,formFieldsItem);
 
-            tempField = JSON.parse(steedosField.field)
+            let tempField = JSON.parse(steedosField.field)
 
             if (tempField.reference_to === "organizations") {
                 steedosField.type = 'group'
