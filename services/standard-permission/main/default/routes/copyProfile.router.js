@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
- * @LastEditors: hexiapeng@steedos.com
- * @LastEditTime: 2023-04-21 14:09
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-04-25 17:13:09
  * @Description: 复制已有简档来创建新简档
  */
 'use strict';
@@ -85,7 +85,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             for (const poDoc of originalPermissionObjects) {
                 // 创建新的对象权限
                 delete poDoc._id;
-                const newPermissionObject = await poObj.insert({
+                const newPermissionObject = await poObj.directInsert({
                     ...poDoc,
                     ...baseInfo,
                     permission_set_id: newPermissionSetId,
@@ -116,7 +116,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             for (const ptDoc of originalPermissionTabs) {
                 delete ptDoc._id;
                 ptDoc.permission_set = name;
-                const newPermissionTabs = await ptObj.insert({
+                const newPermissionTabs = await ptObj.directInsert({
                     ...ptDoc,
                     ...baseInfo,
                 });
