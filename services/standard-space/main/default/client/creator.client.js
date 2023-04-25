@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-27 19:09:19
- * @LastEditors: snow 2291335922@qq.com
- * @LastEditTime: 2023-04-06 06:25:48
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2023-04-25 14:05:15
  * @Description: 
  */
 if(window.Meteor){
@@ -46,5 +46,8 @@ if(window.Meteor){
     window.refreshGrid = ()=>{
         return FlowRouter.reload();
     };
+    if(!window.signOut){
+        window.signOut = window.Steedos.logout;
+    }
 }
 	
