@@ -9,67 +9,124 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-        triggerSuggestions: {
+        triggerTSExtraLib: {
             rest: {
                 method: "GET",
-                path: "/trigger",
+                path: "/trigger.d.ts",
             },
             async handler(ctx) {
-                
-                const objectsSug = [];
-                const objectsProps = [];
-                const _tplObj = getObject('spaces');
-                _.each(global.objects, (v, k)=>{
-                    objectsSug.push({
-                        label: k, // 对象label ?
-                        insertText: k, 
-                        documentation: "", // 对象documentation ?
-                    });
-                    if(_.isEmpty(objectsProps)){
-                        _.each(v, (v2, k2)=>{
-                            objectsProps.push({
-                                label: k2, // 对象label ?
-                                insertText: `${k2}(${this.getParameterNames(_tplObj[k2])})`, 
-                                documentation: "", // 对象documentation ?
-                                // insertText: `${k2}(\${1:arg1}, \${2:args});`, 
-                                // arguments: [
-                                //     { label: 'query', documentation: 'Objectql Query' },
-                                //     { label: 'userSession', documentation: 'User Session' },
-                                //   ]
-                            })
-                        })
-                    }
-                })
-
-                // console.log('global.services', global.services)
-                const servicesSug = [];
+                let servicesTypes = 'declare const services: {';
                 _.each(global.services, (v, k)=>{
                     if(this.checkVariableName(k)){
-                        servicesSug.push({
-                            label: k, // 对象label ?
-                            insertText: k, 
-                            documentation: "", // 对象documentation ?
-                        });
+                        servicesTypes = `${servicesTypes} ${k}: {`
                         _.each(v, (v2, k2)=>{
-                            servicesSug.push({
-                                label: `${k}.${k2}`, // 对象label ?
-                                insertText: `${k}.${k2}(${this.getParameterNames(v2)})`, 
-                                documentation: ""
-                            })
+                            servicesTypes = `${servicesTypes} ${k2}: (${this.getParameterNames(v2)}) => any`
                         })
+                        servicesTypes = servicesTypes + '}'
                     }
-                })
-                return {
-                    objects: {
-                        data: objectsSug,
-                        props: objectsProps
-                    },
-                    services:{
-                        data: servicesSug
+                });
+
+                servicesTypes = servicesTypes + '}'
+
+                let objectsTypes = 'declare const objects: {';
+                _.each(global.objects, (v, k)=>{
+                    objectsTypes = `${objectsTypes} ${k}: SteedosObjectType;`
+                });
+
+                objectsTypes = objectsTypes + '}'
+
+                return `
+                    declare var _: any;
+                    declare var moment: any;
+                    declare var validator: any;
+                    declare var Filters: any;
+
+                    declare type TriggerParams = {
+                        isInsert?: boolean;
+                        isUpdate?: boolean;
+                        isDelete?: boolean;
+                        isFind?: boolean;
+                        isBefore?: boolean;
+                        isAfter?: boolean;
+                        isFindOne?: boolean;
+                        isCount?: boolean;
+                        id?: SteedosIDType;
+                        doc?: JsonMap;
+                        previousDoc?: JsonMap;
+                        size?: number;
+                        userId: SteedosIDType;
+                        spaceId?: SteedosIDType;
+                        objectName?: string;
+                        query?: SteedosQueryOptions;
+                        data?: JsonMap;
                     }
-                }
 
+                    declare type CTXType = {
+                        params: TriggerParams;
+                        meta: any;
+                        call: any;
+                        emit: any;
+                        broadcast: any;
+                        broker: {
+                            namespace: string;
+                            nodeID: string;
+                            instanceID: string;
+                            logger: any;
+                            metadata: any;
+                        },
+                        getObject(objectName: string): any;
+                        getUser(userId: string, spaceId: string): Promise<SteedosUserSession>;
+                        makeNewID(): string;
+                    };
 
+                    declare var ctx: CTXType;
+
+                    declare type SteedosQueryFilters = any;
+                    declare type SteedosIDType = number | string;
+                    declare type SteedosQueryOptions = {
+                        fields?: Array<string> | string;
+                        readonly filters?: SteedosQueryFilters;
+                        readonly top?: number;
+                        readonly skip?: number;
+                        readonly sort?: string;
+                    };
+                    declare type SteedosUserSession = {
+                        userId: SteedosIDType;
+                        spaceId?: string;
+                        name: string;
+                        username?: string;
+                        mobile?: string;
+                        email?: string;
+                        utcOffset?: number;
+                        locale?: string;
+                        roles?: string[];
+                        space?: any;
+                        spaces?: any;
+                        company?: any;
+                        companies?: any;
+                        organization?: any;
+                        organizations?: any;
+                        permission_shares?: any;
+                        company_id?: string;
+                        company_ids?: string[];
+                        is_space_admin?: boolean;
+                        steedos_id?: string;
+                    };
+                    declare class SteedosObjectType {
+                        find(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        findOne(id: SteedosIDType, query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        insert(doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        delete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
+                        directFind(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        directInsert(doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
+                        directDelete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
+                        count(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                    }
+                    ${objectsTypes}
+                    ${servicesTypes}
+                `
             }
         }
 	},

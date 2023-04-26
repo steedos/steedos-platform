@@ -67,48 +67,10 @@ fields:
         return ;
       }
       window._registerCompletionItemProviderTrigger = true;
-      const result = Steedos.authRequest("/service/api/suggestions/trigger", {async: false});
-      const suggestions = [{
-        label: "objects",
-        insertText: "objects"
-      },{
-        label: "services",
-        insertText: "services"
-      }];
-      _.each(result.objects.data, (item)=>{
-          suggestions.push({
-            label: `objects.${item.label}`,
-            insertText: `objects.${item.insertText}`,
-            documentation: item.documentation
-          });
-          _.each(result.objects.props, (prop)=>{
-            suggestions.push({
-              label: `objects.${item.label}.${prop.label}`,
-              kind: monaco.languages.CompletionItemKind.Function,
-              insertText: `objects.${item.insertText}.${prop.insertText}`,
-              documentation: prop.documentation,
-            })
-        })
-      })
-      _.each(result.services.data, (item)=>{
-          suggestions.push({
-            label: `services.${item.label}`,
-            insertText: `services.${item.insertText}`,
-            kind: monaco.languages.CompletionItemKind.Function,
-            documentation: item.documentation
-          });
-      });
-      monaco.languages.registerCompletionItemProvider('javascript', {
-        provideCompletionItems: function(model, position) {
-          const lineContent = model.getLineContent(position.lineNumber);
-          var arr = lineContent.split(" ");
-          var lastWord = arr.pop();
-          var afterLastSpaceText = lineContent.substring(lineContent.lastIndexOf(" ") + 1);
-          return { suggestions: _.cloneDeep(_.filter(suggestions, (sug)=>{
-            return sug.label.startsWith(afterLastSpaceText)
-          })) };
-        }
-      });
+      const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts", {async: false});
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        result
+      );
   record_permissions: 
     type: object
     visible_on: "{{global.mode ==='read' ? true : false}}"
