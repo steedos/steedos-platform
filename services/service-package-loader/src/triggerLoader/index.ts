@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-12 19:08:48
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-23 10:28:35
+ * @LastEditTime: 2023-04-24 13:09:55
  * @Description: 加载*.trigger.js文件注册为新版action trigger
  */
 import * as _ from "underscore";

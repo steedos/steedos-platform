@@ -8,7 +8,7 @@ fields:
     sortable: true
     index: true
     defaultValue: "{userId}"
-    hidden: true
+    visible_on: "{{false}}"
     sort_no: 1000
   space:
     type: lookup
@@ -77,11 +77,11 @@ fields:
   instances.$._id:
     label: Instance ID
     type: text
-    visible_on: "{{false}}"
+    hidden: true
   instances.$.state:
     label: State
     type: text
-    visible_on: "{{false}}"
+    hidden: true
   sharing:
     label: Record Level Permission
     type: grid
@@ -159,7 +159,7 @@ fields:
         }
         return queryFilter;
       }
-    hidden: true
+    visible_on: "{{false}}"
     sort_no: 1200
   company_ids:
     label: All Divisions

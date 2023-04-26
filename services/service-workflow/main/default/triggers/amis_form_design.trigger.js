@@ -305,7 +305,7 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'select':
-			if(amisField?.source){
+			if(amisField && amisField.source){
 				formFieldsItem.type = 'odata'
 		  		formFieldsItem.description = amisField.description
 		  		formFieldsItem.detail_url = amisField.detail_url

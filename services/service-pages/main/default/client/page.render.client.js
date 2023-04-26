@@ -898,11 +898,6 @@
                 "body": [
                     {
                         "type": "steedos-global-Footer",
-                        overflow: {
-                            enable: false,
-                            maxVisibleCount: 4,
-                            overflowPopoverClassName: "footer-popup"
-                        },
                         "id": "u:77851eb4aa89",
                         "appId": "${app.id}"
                     },

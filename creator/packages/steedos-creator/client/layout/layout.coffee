@@ -87,6 +87,18 @@ Template.creatorLayout.onRendered ->
 						console.log("amisScope.updateProps callback.......")
 					);
 				, 100
+	this.autorun ->
+		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		if window.SteedosUI
+			amisScope = SteedosUI.refs.globalFooter;
+			if amisScope
+				Meteor.setTimeout ()->
+					amisScope.updateProps( {
+						location: FlowRouter.current()
+					}, ()->
+						console.log("amisScope.updateProps callback.......")
+					);
+				, 100
 
 
 isCalendarView = ()->

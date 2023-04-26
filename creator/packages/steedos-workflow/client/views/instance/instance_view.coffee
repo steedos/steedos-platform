@@ -115,6 +115,7 @@ Template.instance_view.helpers
 		return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
 	
 Template.instance_view.onCreated ->
+	console.log('Template.instance_view.onCreated......')
 	Form_formula.initFormScripts()
 	Session.set("instance_submitting", false);
 
