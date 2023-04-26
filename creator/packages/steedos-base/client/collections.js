@@ -40,6 +40,7 @@ try {
     db.process_delegation_rules = new Mongo.Collection("process_delegation_rules");
     db.webhooks = new Mongo.Collection("webhooks");
     db.my_approves = new Meteor.Collection('my_approves');
+    db.cms_files = new Meteor.Collection('cms_files');
 
   } catch (error) {
     console.error('new workflow Collection ',error)
