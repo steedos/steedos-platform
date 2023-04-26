@@ -322,11 +322,11 @@ Template.creator_grid_sidebar_sites.onRendered ->
 				if selectionInfo.node.selected
 					# 如果选项已经选中则不需要变更状态，即不可以把已经选中的状态变更为未选中
 					selectionInfo.event.preventDefault()
-				targetDropdown = $(event.target).closest(".creator-table-actions")
+				targetDropdown = $(selectionInfo.event.target).closest(".creator-table-actions")
 				if targetDropdown.length
 					# 如果点击的是右侧下拉箭头，则弹出菜单
 					selectionInfo.event.preventDefault()
-					_itemDropdownClick.call(self, event, selectionInfo)
+					_itemDropdownClick.call(self, selectionInfo.event, selectionInfo)
 
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				if selectionInfo.node.selected
