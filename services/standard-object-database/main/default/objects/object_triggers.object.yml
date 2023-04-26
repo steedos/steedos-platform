@@ -63,33 +63,48 @@ fields:
     defaultValue: |-
       const { params, getObject, getUser, call } = ctx;
     editorDidMount: |-
+      if(window._registerCompletionItemProviderTrigger){
+        return ;
+      }
+      window._registerCompletionItemProviderTrigger = true;
       const result = Steedos.authRequest("/service/api/suggestions/trigger", {async: false});
-      const objectSuggestions = [{
+      const suggestions = [{
         label: "objects",
         insertText: "objects"
+      },{
+        label: "services",
+        insertText: "services"
       }];
       _.each(result.objects.data, (item)=>{
-          objectSuggestions.push({
+          suggestions.push({
             label: `objects.${item.label}`,
             insertText: `objects.${item.insertText}`,
             documentation: item.documentation
           });
           _.each(result.objects.props, (prop)=>{
-            objectSuggestions.push({
+            suggestions.push({
               label: `objects.${item.label}.${prop.label}`,
               kind: monaco.languages.CompletionItemKind.Function,
-              insertText: `objects.${item.insertText}.${prop.label}`,
+              insertText: `objects.${item.insertText}.${prop.insertText}`,
               documentation: prop.documentation,
             })
         })
       })
-      return monaco.languages.registerCompletionItemProvider('javascript', {
+      _.each(result.services.data, (item)=>{
+          suggestions.push({
+            label: `services.${item.label}`,
+            insertText: `services.${item.insertText}`,
+            kind: monaco.languages.CompletionItemKind.Function,
+            documentation: item.documentation
+          });
+      });
+      monaco.languages.registerCompletionItemProvider('javascript', {
         provideCompletionItems: function(model, position) {
           const lineContent = model.getLineContent(position.lineNumber);
           var arr = lineContent.split(" ");
           var lastWord = arr.pop();
           var afterLastSpaceText = lineContent.substring(lineContent.lastIndexOf(" ") + 1);
-          return { suggestions: _.cloneDeep(_.filter(objectSuggestions, (sug)=>{
+          return { suggestions: _.cloneDeep(_.filter(suggestions, (sug)=>{
             return sug.label.startsWith(afterLastSpaceText)
           })) };
         }
@@ -109,6 +124,7 @@ list_views:
   all:
     columns:
       - name
+      - listenTo
       - when
       - isEnabled
       - is_system

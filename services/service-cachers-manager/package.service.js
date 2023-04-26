@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 15:55:25
+ * @LastEditTime: 2023-04-26 12:06:14
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -162,8 +162,8 @@ module.exports = {
 						}
 					})
 				};
-				console.log('===========global.objects===========');
-				console.log(objects)
+				// console.log('===========global.objects===========');
+				// console.log(objects)
 				global.objects = objects;
 			}
 		}

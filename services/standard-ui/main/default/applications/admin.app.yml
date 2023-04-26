@@ -12,6 +12,7 @@ tab_groups:
   - group_name: 对象设置
   - group_name: 用户界面
   - group_name: 统计分析
+  - group_name: 开发
   - group_name: 流程自动化
   - group_name: 审批王
   - group_name: 高级设置
@@ -70,6 +71,12 @@ tab_items:
   admin_stimulsoft_reports:
     group: 统计分析
     index: 19
+  admin_developer:
+    group: 开发
+    index: 19.50
+  admin_developer_triggers:
+    group: 开发
+    index: 19.51
   admin_process_definition:
     group: 流程自动化
     index: 20
