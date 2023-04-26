@@ -131,7 +131,8 @@ function transformFormFields(amisField) {
         _id: new ObjectId().toHexString(),
         code: amisField.name,
         name: amisField.label,
-        is_wide: _.includes(amisField.className, "is_wide")
+        is_wide: _.includes(amisField.className, "is_wide"),
+		default_value: _.get(amisField, 'value', '')
     }
 
     switch (amisField.type) {
@@ -215,6 +216,8 @@ function transformFormFields(amisField) {
             break
         case 'input-number':
             formFieldsItem.type = 'number'
+			formFieldsItem.default_value = _.toString(amisField.value)
+			formFieldsItem.digits = amisField.precision
             break
         case 'input-text':
             formFieldsItem.type = 'input'
