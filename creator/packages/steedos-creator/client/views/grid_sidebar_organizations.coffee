@@ -207,11 +207,11 @@ Template.creator_grid_sidebar_organizations.onRendered ->
 			dxOptions.selectionMode = if sidebar_multiple then "multiple" else "single"
 			dxOptions.showCheckBoxesMode = if sidebar_multiple then "normal" else "none"
 			dxOptions.onItemClick = (selectionInfo)->
-				targetDropdown = $(event.target).closest(".creator-table-actions")
+				targetDropdown = $(selectionInfo.event.target).closest(".creator-table-actions")
 				if targetDropdown.length
 					# 如果点击的是右侧下拉箭头，则弹出菜单
 					selectionInfo.event.preventDefault()
-					_itemDropdownClick.call(self, event, selectionInfo)
+					_itemDropdownClick.call(self, selectionInfo.event, selectionInfo)
 			dxOptions.onItemSelectionChanged = (selectionInfo)->
 				selectionItemData = if selectionInfo.node.selected then selectionInfo.itemData else null;
 				if selectionItemData?._id
