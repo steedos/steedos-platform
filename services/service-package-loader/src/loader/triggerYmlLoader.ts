@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-25 16:52:28
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-25 17:10:45
+ * @LastEditTime: 2023-04-26 15:22:58
  * @Description: 
  */
 
@@ -18,7 +18,6 @@ export async function load(broker: any, packagePath: string, packageServiceName:
     if (_.isEmpty(triggers)) {
         return;
     }
-    console.log(`triggers`, triggers)
     for (const apiName in triggers) {
         const trigger = triggers[apiName];
         await broker.call(`object_triggers.add`, { apiName: `${trigger.listenTo}.${trigger.name}`, data: trigger }, {

@@ -112,20 +112,17 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-        console.log('suggestions====>created...')
 	},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        console.log('suggestions====>started...')
 	},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
 	async stopped() {
-        console.log('suggestions====>stopped...')
 	}
 }
