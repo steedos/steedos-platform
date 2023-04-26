@@ -1,129 +1,231 @@
 {
-  "type": "service",
-  "pageGridClassName": "h-full m-0",
+  "type": "page",
   "body": [
     {
-      "type": "steedos-object-listview",
-      "objectApiName": "${objectName}",
-      "columnsTogglable": false,
-      "showHeader": true,
-      "filterVisible": true,
-      "id": "u:d29cef0d1007",
-      "sideSchema": {
-        "type": "service",
-        "className": "h-full",
-        "onEvent": {
-          "@data.changed.instance_tasks": {
-            "actions": [
-              {
-                "actionType": "reload"
-              }
-            ]
-          }
+      "type": "service",
+      "id": "u:4dd57bf1a99a",
+      "className": "h-full w-full p-0 m-0",
+      "pageGridClassName": "h-full m-0",
+      "body": [
+        {
+          "type": "steedos-object-listview",
+          "objectApiName": "instance_tasks",
+          "columnsTogglable": false,
+          "filterVisible": true,
+          "showHeader": true,
+          "id": "u:d29cef0d1007",
+          "showDisplayAs": true,
+          "className": "h-full w-full bg-white",
+          "formFactor": "LARGE",
+          "headerToolbarItems": [
+            {
+              "type": "button",
+              "label": "",
+              "icon": "fa fa-bars",
+              "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
+              "align": "right",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "custom",
+                      "script": "console.log(event.target);document.querySelector('.instances-customPage').classList.toggle('instances-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.add('inset-0')}"
+                    }
+                  ]
+                }
+              },
+              "id": "u:115e270cae4d"
+            }
+          ],
+          "listName": "inbox"
         },
-        "body": [
-          {
-            "type": "input-tree",
-            "treeContainerClassName": "h-full",
-            "name": "tree",
-            "className": "instance-box-tree bg-white h-full w-full",
-            "id": "u:9f3dd961ca12",
-            "stacked": true,
-            "multiple": false,
-            "enableNodePath": false,
-            "hideRoot": true,
-            "showIcon": true,
-            "initiallyOpen": false,
-            "size": "md",
-            "onEvent": {
-              "change": {
-                "actions": [
-                  {
-                    "actionType": "setValue",
-                    "componentId": "u:4dd57bf1a99a",
-                    "args": {
-                      "value": {
-                        "additionalFilters": [
-                          "${event.data.value.name}",
-                          "=",
-                          "${event.data.value.value}"
-                        ]
-                      }
-                    },
-                    "expression": "${event.data.value.level>=2}"
-                  },
-                  {
-                    "args": {
-                      "link": "${event.data.value.to}",
-                      "blank": false
-                    },
-                    "actionType": "link",
-                    "expression": "${event.data.value.level<2}"
-                  }
-                ]
-              }
-            },
-            "menuTpl": {
+        {
+          "type": "button",
+          "body": [
+            {
               "type": "wrapper",
-              "className": "flex flex-row  p-0 m-0",
+              "className": "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64 py-0",
               "body": [
                 {
-                  "type": "tpl",
-                  "className": "flex-1 w-6/12",
-                  "tpl": "${label}"
-                },
+                  "type": "service",
+                  "id": "u:aa4f4dc5f439",
+                  "className": "w-full h-full",
+                  "onEvent": {
+                    "@data.changed.instance_tasks": {
+                      "actions": [
+                        {
+                          "actionType": "reload"
+                        }
+                      ]
+                    },
+                    "fetchInited": {
+                      "weight": 0,
+                      "actions": [
+                        {
+                          "args": {},
+                          "script": "document.querySelector('.instances-customPage').classList.add('instances-sidebar');\nif(window.innerWidth > 768){ document.querySelector('.instances-customPage').classList.add('pc');document.querySelector('.instances-customPage').classList.add('instances-sidebar-open');document.querySelector('.instances-sidebar-wrapper').classList.add('pcCss')}else{document.querySelector('.instances-sidebar-wrapper').classList.add('mobileCss')}",
+                          "actionType": "custom"
+                        }
+                      ]
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "input-tree",
+                      "name": "tree",
+                      "treeContainerClassName": "h-full",
+                      "className": "instance-box-tree bg-white h-full w-full",
+                      "id": "u:9f3dd961ca12",
+                      "stacked": true,
+                      "multiple": false,
+                      "enableNodePath": false,
+                      "hideRoot": true,
+                      "showIcon": true,
+                      "initiallyOpen": false,
+                      "size": "md",
+                      "onEvent": {
+                        "change": {
+                          "actions": [
+                            {
+                              "actionType": "setValue",
+                              "componentId": "u:4dd57bf1a99a",
+                              "args": {
+                                "value": {
+                                  "additionalFilters": [
+                                    "${event.data.value.name}",
+                                    "=",
+                                    "${event.data.value.value}"
+                                  ]
+                                }
+                              },
+                              "expression": "${event.data.value.level>=10}"
+                            },
+                            {
+                              "args": {
+                                "link": "${event.data.value.to}",
+                                "blank": false
+                              },
+                              "actionType": "link",
+                              "expression": "${event.data.value.level<10}"
+                            }
+                          ]
+                        }
+                      },
+                      "menuTpl": {
+                        "type": "wrapper",
+                        "className": "flex flex-row  p-0 m-0",
+                        "body": [
+                          {
+                            "type": "tpl",
+                            "className": "flex-1 w-6/12",
+                            "tpl": "${label}"
+                          },
+                          {
+                            "type": "tpl",
+                            "className": "-mx-11 ",
+                            "tpl": "",
+                            "badge": {
+                              "offset": [
+                                -13,
+                                13
+                              ],
+                              "mode": "text",
+                              "text": "${tag | toInt}"
+                            }
+                          }
+                        ]
+                      },
+                      "unfoldedLevel": 2,
+                      "source": "${options}"
+                    }
+                  ],
+                  "api": {
+                    "method": "get",
+                    "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+                    "headers": {
+                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    },
+                    "messages": {}
+                  },
+                  "messages": {}
+                }
+              ],
+              "id": "u:2d9e1dabb059"
+            }
+          ],
+          "onEvent": {
+            "click": {
+              "actions": [
                 {
-                  "type": "tpl",
-                  "className": "-mx-11 ",
-                  "tpl": "",
-                  "badge": {
-                    "offset": [
-                      -13,
-                      13
-                    ],
-                    "mode": "text",
-                    "text": "${tag}"
-                  }
+                  "actionType": "custom",
+                  "script": "console.log(event.target); if(window.innerWidth < 768){ document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
                 }
               ]
-            },
-            "unfoldedLevel": 2,
-            "source": "${options}"
-          }
-        ],
-        "id": "u:aa4f4dc5f439",
-        "api": {
-          "method": "get",
-          "url": "${context.rootUrl}/api/${appId}/workflow/nav",
-          "headers": {
-            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-          }
+            }
+          },
+          "id": "u:ff96393e3a63",
+          "className": "absolute isInset"
         }
-      },
-      "showDisplayAs": true,
-      "className": "h-full w-full bg-white",
-      "formFactor": "LARGE"
+      ],
+      "onEvent": {
+        "@data.changed.steedos_keyvalues": {
+          "actions": [
+            {
+              "actionType": "broadcast",
+              "args": {
+                "eventName": "@data.changed.instance_tasks"
+              },
+              "data": {
+                "objectName": "instance_tasks",
+                "recordId": "reload"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "data": {
-    "objectName": "instance_tasks"
+    "objectName": "instances",
+    "context": {
+      "rootUrl": "http://127.0.0.1:5000",
+      "tenantId": "644484b7aff6100247b3e6cf",
+      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
+      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
+    },
+    "initialValues": {},
+    "title": ""
   },
-  "className": "h-full w-full p-0 m-0",
-  "id": "u:4dd57bf1a99a",
-  "onEvent": {
-    "@data.changed.steedos_keyvalues": {
-      "actions": [
-        {
-          "actionType": "broadcast",
-          "args": {
-            "eventName": "@data.changed.instance_tasks"
-          },
-          "data": {
-            "objectName": "instance_tasks",
-            "recordId": "reload"
-          }
-        }
-      ]
+  "id": "u:7e20ab64163e",
+  "title": "Welcome to Steedos",
+  "regions": [
+    "body"
+  ],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "bodyClassName": "p-0 instances-customPage",
+  "css": {
+    ".instances-customPage.instances-sidebar.instances-sidebar-open.pc": {
+      "margin-left": "220px"
+    },
+    ".instances-sidebar-wrapper": {
+      "transition": "0.5s ease translate",
+      "translate": "-100% 0",
+      "will-change": "transform"
+    },
+    ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
+      "translate": "0 0"
+    },
+    ".pcCss": {
+      "top": "90px",
+      "left": "0px"
+    },
+    ".mobileCss": {
+      "top": "50px",
+      "left": "0px",
+      "padding-bottom": "65px"
     }
   }
 }
