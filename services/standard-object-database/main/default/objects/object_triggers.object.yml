@@ -1,13 +1,21 @@
 name: object_triggers
 icon: apex
 label: Object Triggers
+version: 2.0
+hidden: true
 fields:
-  name:
+  _name:
     type: text
     label: Name
     searchable: true
     index: true
     required: true
+  name: 
+    data_type: text
+    formula: listenTo.name+"_"+_name
+    formula_blank_value: blanks
+    type: formula
+    visible_on: "{{false}}"
   listenTo:
     label: Object
     type: master_detail
@@ -16,45 +24,36 @@ fields:
     required: true
   when:
     label: Execution Time Option
-    type: lookup
+    type: select
     required: true
     multiple: true
     is_wide: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return [{
+    options: [{
                 label: "新增记录之前",
-                value: "beforeInsert",
-                icon: "asset_relationship"
+                value: "beforeInsert"
               }, {
                 label: "新增记录之后",
-                value: "afterInsert",
-                icon: "asset_relationship"
+                value: "afterInsert"
               }, {
                 label: "修改记录之前",
-                value: "beforeUpdate",
-                icon: "asset_relationship"
+                value: "beforeUpdate"
               }, {
                 label: "修改记录之后",
-                value: "afterUpdate",
-                icon: "asset_relationship"
+                value: "afterUpdate"
               }, {
                 label: "删除记录之前",
-                value: "beforeDelete",
-                icon: "asset_relationship"
+                value: "beforeDelete"
               }, {
                 label: "删除记录之后",
-                value: "afterDelete",
-                icon: "asset_relationship"
+                value: "afterDelete"
               }, {
                 label: "查下记录之前",
-                value: "beforeFind",
-                icon: "asset_relationship"
-              }];
-            }
+                value: "beforeFind"
+              }]
   isEnabled:
     label: Enabled
     type: boolean
+    defaultValue: true
   handler:
     label: Handler
     type: code
@@ -95,17 +94,24 @@ fields:
           })) };
         }
       });
+  record_permissions: 
+    type: object
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 paging:
   enabled: false
 list_views:
   all:
     columns:
       - name
-      # - label
-      - object
-      # - 'on'
       - when
-      - is_enable
+      - isEnabled
+      - is_system
     label: All
     filter_scope: space
 permission_set:

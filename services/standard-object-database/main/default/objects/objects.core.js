@@ -2,8 +2,6 @@ var objectql = require('@steedos/objectql');
 const clone = require('clone');
 const defaultDatasourceName = 'default';
 const defaultDatasourcesName = ['default','meteor'];
-var triggerCore = require('./object_triggers.core.js');
-var permissionCore = require('./permission_objects.core.js');
 
 const DB_OBJECT_SERVICE_NAME = '~database-objects';
 
@@ -42,32 +40,6 @@ function getDataSourceName(doc) {
         return doc.datasource
     }
     return defaultDatasourceName
-}
-
-function loadObjectTriggers(object) {
-    Creator.getCollection("object_triggers").find({ space: object.space, object: object.name, is_enable: true }, {
-        fields: {
-            created: 0,
-            created_by: 0,
-            modified: 0,
-            modified_by: 0
-        }
-    }).forEach(function (trigger) {
-        triggerCore.loadObjectTrigger(trigger);
-    })
-}
-
-function loadObjectPermission(object) {
-    Creator.getCollection("permission_objects").find({ space: object.space, object_name: object.name }, {
-        fields: {
-            created: 0,
-            created_by: 0,
-            modified: 0,
-            modified_by: 0
-        }
-    }).forEach(function (permission) {
-        permissionCore.loadObjectPermission(permission);
-    })
 }
 
 

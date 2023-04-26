@@ -63,7 +63,7 @@ module.exports = {
         },
         subTriggers: {
             async handler(){
-                return Creator.getCollection("object_triggers").find({isEnabled: true}, {
+                return Creator.getCollection("object_triggers").find({}, {
                     fields: {
                         created: 0,
                         created_by: 0,

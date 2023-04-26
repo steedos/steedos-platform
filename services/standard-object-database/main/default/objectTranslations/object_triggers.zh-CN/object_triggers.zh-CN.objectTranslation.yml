@@ -14,14 +14,12 @@ fields:
     label: 运行时
     help: 
     description: 
-  is_enable:
+  isEnabled:
     label: 已启用
     help: 
     description: 
-  todo:
-    label: >-
-      执行的脚本 <a target="_blank"
-      href="https://developer.steedos.com/developer/object_trigger">查看帮助</a>
+  handler:
+    label: 内容
     help: 
     description: 
 listviews:

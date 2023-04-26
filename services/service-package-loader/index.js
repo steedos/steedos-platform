@@ -6,6 +6,7 @@ const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
+const triggerYmlLoader = require('./lib').triggerYmlLoader;
 const path = require('path');
 const _ = require('lodash');
 const express = require('express');
@@ -168,6 +169,7 @@ module.exports = {
             await objectql.addAllConfigFiles(packagePath, datasourceName, name);
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
+            await triggerYmlLoader.load(this.broker, packagePath, name);
             core.loadClientScripts();
             let routersData = objectql.loadRouters(packagePath);
             let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})

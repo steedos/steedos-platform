@@ -1,5 +1,5 @@
 metadataName: Trigger
-defaultDirectory: trigger
+defaultDirectory: triggers
 ext: trigger
 hasStandardMembers: true
 hasContent: false
