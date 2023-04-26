@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-process-approval",
-    "version": "2.2.70-beta.1",
+    "version": "2.2.70",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "1a07c422f8a763ea05c39f3a33ba51cadff2fed1"
+    "gitHead": "483b0d793a3de6f5c1ba5859f1d9cdba54057fd1"
 }
