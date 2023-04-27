@@ -54,7 +54,7 @@ amis_schema: |-
                                                         },
                                                         {
                                                             "actionType": "custom",
-                                                            "script": "\nconst {instance, appId, objectName} = event.data;\nconsole.log(`instance===`);if(window.Meteor && false){\ndoAction({\n  actionType: 'link',\n  args: {\n    blank: false,\n    url: `/workflow/space/${instance.space}/draft/${instance._id}?display=split&side_object=instances&side_listview_id=draft`\n  }\n});\n return ;}\ndoAction({\n  actionType: 'link',\n  args: {\n    blank: false,\n    link: `/app/${appId}/${objectName}/view/${instance._id}?display=split&side_object=instances&side_listview_id=draft`\n  }\n});\n"
+                                                            "script": "\nconst {instance, appId, objectName} = event.data;\nconsole.log(`instance===`);if(window.Meteor && false){\ndoAction({\n  actionType: 'link',\n  args: {\n    blank: false,\n    url: `/workflow/space/${instance.space}/draft/${instance._id}?side_object=instances&side_listview_id=draft`\n  }\n});\n return ;}\ndoAction({\n  actionType: 'link',\n  args: {\n    blank: false,\n    link: `/app/${appId}/${objectName}/view/${instance._id}?side_object=instances&side_listview_id=draft`\n  }\n});\n"
                                                         },
                                                         {
                                                         "componentId": "",
