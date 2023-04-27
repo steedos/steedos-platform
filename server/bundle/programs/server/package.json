@@ -2,7 +2,7 @@
   "name": "meteor-dev-bundle",
   "private": true,
   "dependencies": {
-    "fibers": "4.0.3",
+    "fibers": "5.0.3",
     "meteor-promise": "0.8.7",
     "promise": "8.0.2",
     "reify": "0.20.12",
