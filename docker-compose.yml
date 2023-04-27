@@ -35,8 +35,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-    volumes:
-      - 'steedos-mongo-data:/data/db'
+    # volumes:
+    #   - 'steedos-mongo-data:/data/db'
 
   mongodb-init:
     image: mongo:4.4
