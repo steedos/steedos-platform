@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: 李海龙 lihailong@steedos.com
- * @LastEditTime: 2023-04-27 15:21:31
+ * @LastEditTime: 2023-04-27 17:40:17
  * @Description:
 -->
 <html>
@@ -193,14 +193,8 @@
           tpl.format = 'YYYY-MM-DDTHH:mm:ss.SSSZ';
           break;
         case "checkbox":
-          const checkboxtpl = {
-            type: "checkbox",
-            option: field.name,
-            name: field.code,
-            required: field.is_required
-          };
-          // break;
-          return checkboxtpl;
+		  tpl.type = "checkbox";
+          break;
 
         case "email":
           tpl.type = "input-email";
@@ -352,7 +346,16 @@
           }
           break;
         case "section":
-          tpl.type = "input-text";
+          tpl.type = "fieldset";
+		  tpl.title = field.name;
+		  tpl.collapsable = true;
+		  tpl.body = []
+		  if(field.fields){
+			for(let i = 0;i<field.fields.length;i++){
+				let fieldsItem = await getFieldEditTpl(field.fields[i], true)
+				tpl.body.push(fieldsItem)
+			}
+		  }
           break;
         default:
           break;
