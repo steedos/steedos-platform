@@ -233,6 +233,12 @@ Steedos.StandardObjects = {
                 visible: function(objectName){
                     var allowCreate = Creator.baseObject.actions.standard_new.visible.apply(this, arguments);
                     var objectName = objectName || this.objectName || FlowRouter.current().params.object_name;
+                    if(!window._hasImportTemplates){
+                        window._hasImportTemplates = {};
+                    }
+                    if(_.has(window._hasImportTemplates, objectName)){
+                        return window._hasImportTemplates[objectName];
+                    }
                     if(allowCreate){
                         var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import",
                             {
@@ -246,9 +252,11 @@ Steedos.StandardObjects = {
                             }
                         );
                         if(hasImportTemplates && hasImportTemplates.value && hasImportTemplates.value.length > 0){
-                        return true;
+                            window._hasImportTemplates[objectName] = true;
+                            return true;
                         }
                     }
+                    window._hasImportTemplates[objectName] = false;
                     return false;
                 },
                 todo: function(object_name){
