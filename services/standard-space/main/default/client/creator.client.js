@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-27 19:09:19
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-27 11:28:37
+ * @LastEditTime: 2023-04-27 15:51:14
  * @Description: 
  */
 if(window.Meteor){
@@ -46,11 +46,15 @@ if(window.Meteor){
     window.refreshGrid = ()=>{
         return FlowRouter.reload();
     };
-    
+
     FlowRouter.reload = function(){window.location.reload()}
 
     if(!window.signOut){
         window.signOut = window.Steedos.logout;
+    }
+
+    if(Meteor.isCordova && !window.DragEvent){
+        window.DragEvent = {}
     }
 }
 	
