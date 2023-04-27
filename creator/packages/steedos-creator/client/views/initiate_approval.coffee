@@ -38,7 +38,8 @@ Template.initiate_approval.events
                     return
                 instance = responseText.inserts[0]
                 # 跳转到APPS草稿
-                Steedos.openWindow Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id)
+                # Steedos.openWindow Steedos.absoluteUrl('workflow/space/' + Session.get('spaceId') + '/draft/' + instance._id)
+                Steedos.openWindow Steedos.absoluteUrl('/app/'+FlowRouter.current().params.app_id+'/instances/view/'+instance._id+'?display='+FlowRouter.current().queryParams.display+'&side_object=instances&side_listview_id=draft')
                 Modal.hide(t)
                 SteedosUI.reloadRecord(object_name, record_id)
                 FlowRouter.reload()
