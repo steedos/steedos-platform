@@ -136,7 +136,7 @@ Steedos.StandardObjects = {
 						});
 						var recordDoc = queryResult && queryResult.data && queryResult.data.record;
 						if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
-							return false;
+							return true;
 						}
 					}
                     return false;
