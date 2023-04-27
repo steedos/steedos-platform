@@ -19,7 +19,8 @@
     "sync": "lerna exec --no-private  -- cnpm sync \\$LERNA_PACKAGE_NAME"
   },
   "resolutions": {
-    "@salesforce/ts-types": "1.1.2"
+    "@salesforce/ts-types": "1.1.2",
+    "**/fibers": "5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
