@@ -98,7 +98,6 @@ function getFormInputFields(formSchema) {
                 }
             })
             if (flag) {
-				console.log("field==",field);
                 inputFields.push(field);
             }
         }else{
@@ -132,17 +131,44 @@ function transformFormFields(amisField) {
         code: amisField.name,
         name: amisField.label,
         is_wide: _.includes(amisField.className, "is_wide"),
-		default_value: _.get(amisField, 'value', '')
+		default_value: _.get(amisField, 'value', ''),
+        is_required: amisField.required == true ? true : false,
+		is_list_display: _.includes(amisField.className, "is_list_display"),
+        is_searchable: _.includes(amisField.className, "is_searchable"),
+        is_multiselect: _.includes(amisField.className, "is_multiselect")
     }
 
     switch (amisField.type) {
 
         case 'input-table':
             formFieldsItem.type = 'table';
+			formFieldsItem.is_wide = true;
             formFieldsItem.fields = _.map(amisField.columns, (item) => {
                 return transformFormFields(item);
             })
             break
+		//对amis设计器表格编辑框行组件的转换
+		case 'tpl':
+			formFieldsItem.type = 'input'
+			break
+		case 'image':
+			formFieldsItem.type = 'input'
+			break
+		case 'progress':
+			formFieldsItem.type = 'input'
+			break
+		case 'status':
+			formFieldsItem.type = 'input'
+			break
+		case 'mapping':
+			formFieldsItem.type = 'input'
+			break
+		case 'operation':
+			formFieldsItem.type = 'input'
+			break
+		case 'text':
+			formFieldsItem.type = 'input'
+			break
 
         case 'input-kv':
             // 把他们赋值到新属性fields中
