@@ -1,5 +1,6 @@
 {
   "type": "page",
+  "title": "Welcome to Steedos",
   "body": [
     {
       "type": "service",
@@ -29,7 +30,7 @@
                   "actions": [
                     {
                       "actionType": "custom",
-                      "script": "console.log(event.target);document.querySelector('.instances-customPage').classList.toggle('instances-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.add('inset-0')}"
+                      "script": "console.log(event.target);document.querySelector('.instances-customPage').classList.toggle('instances-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.toggle('inset-0')}"
                     }
                   ]
                 }
@@ -44,7 +45,11 @@
           "body": [
             {
               "type": "wrapper",
-              "className": "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64 py-0",
+              "className": {
+                "mobileCss": "${window:innerWidth < 768}",
+                "pcCss": "${window:innerWidth > 768}",
+                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64 py-0": "true"
+              },
               "body": [
                 {
                   "type": "service",
@@ -55,16 +60,6 @@
                       "actions": [
                         {
                           "actionType": "reload"
-                        }
-                      ]
-                    },
-                    "fetchInited": {
-                      "weight": 0,
-                      "actions": [
-                        {
-                          "args": {},
-                          "script": "document.querySelector('.instances-customPage').classList.add('instances-sidebar');\nif(window.innerWidth > 768){ document.querySelector('.instances-customPage').classList.add('pc');document.querySelector('.instances-customPage').classList.add('instances-sidebar-open');document.querySelector('.instances-sidebar-wrapper').classList.add('pcCss')}else{document.querySelector('.instances-sidebar-wrapper').classList.add('mobileCss')}",
-                          "actionType": "custom"
                         }
                       ]
                     }
@@ -145,9 +140,11 @@
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
-                    "messages": {}
+                    "messages": {
+                    }
                   },
-                  "messages": {}
+                  "messages": {
+                  }
                 }
               ],
               "id": "u:2d9e1dabb059"
@@ -164,7 +161,9 @@
             }
           },
           "id": "u:ff96393e3a63",
-          "className": "absolute isInset"
+          "className": {
+            "absolute isInset": "true"
+          }
         }
       ],
       "onEvent": {
@@ -185,27 +184,30 @@
       }
     }
   ],
+  "regions": [
+    "body"
+  ],
   "data": {
-    "objectName": "instances",
+    "objectName": "instance_tasks",
+    "initialValues": {
+    },
+    "title": "",
     "context": {
       "rootUrl": "http://127.0.0.1:5000",
       "tenantId": "644484b7aff6100247b3e6cf",
       "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
       "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
-    },
-    "initialValues": {},
-    "title": ""
+    }
   },
   "id": "u:7e20ab64163e",
-  "title": "Welcome to Steedos",
-  "regions": [
-    "body"
-  ],
   "asideResizor": false,
   "pullRefresh": {
     "disabled": true
   },
-  "bodyClassName": "p-0 instances-customPage",
+  "bodyClassName": {
+    "p-0 instances-customPage instances-sidebar": "true",
+    "pc instances-sidebar-open instances-minwidth": "${window:innerWidth > 768}"
+  },
   "css": {
     ".instances-customPage.instances-sidebar.instances-sidebar-open.pc": {
       "margin-left": "220px"
@@ -226,6 +228,9 @@
       "top": "50px",
       "left": "0px",
       "padding-bottom": "65px"
+    },
+    ".instances-minwidth": {
+      "min-width": "388px"
     }
   }
 }

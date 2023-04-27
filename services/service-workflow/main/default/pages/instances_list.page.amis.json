@@ -28,7 +28,7 @@
                   "actions": [
                     {
                       "actionType": "custom",
-                      "script": "console.log(event.target);document.querySelector('.instances-customPage').classList.toggle('instances-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.add('inset-0')}"
+                      "script": "console.log(event.target);document.querySelector('.instances-customPage').classList.toggle('instances-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.toggle('inset-0')}"
                     }
                   ]
                 }
@@ -43,7 +43,11 @@
           "body": [
             {
               "type": "wrapper",
-              "className": "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64 py-0",
+              "className": {
+                "mobileCss": "${window:innerWidth < 768}",
+                "pcCss": "${window:innerWidth > 768}",
+                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[220px] w-64 py-0": "true"
+              },
               "body": [
                 {
                   "type": "service",
@@ -54,16 +58,6 @@
                       "actions": [
                         {
                           "actionType": "reload"
-                        }
-                      ]
-                    },
-                    "fetchInited": {
-                      "weight": 0,
-                      "actions": [
-                        {
-                          "args": {},
-                          "script": "document.querySelector('.instances-customPage').classList.add('instances-sidebar');\nif(window.innerWidth > 768){ document.querySelector('.instances-customPage').classList.add('pc');document.querySelector('.instances-customPage').classList.add('instances-sidebar-open');document.querySelector('.instances-sidebar-wrapper').classList.add('pcCss')}else{document.querySelector('.instances-sidebar-wrapper').classList.add('mobileCss')}",
-                          "actionType": "custom"
                         }
                       ]
                     }
@@ -143,7 +137,11 @@
                     "url": "${context.rootUrl}/api/${appId}/workflow/nav",
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                    },
+                    "messages": {
                     }
+                  },
+                  "messages": {
                   }
                 }
               ],
@@ -161,7 +159,9 @@
             }
           },
           "id": "u:ff96393e3a63",
-          "className": "absolute isInset"
+          "className": {
+            "absolute isInset": "true"
+          }
         }
       ],
       "className": "h-full w-full p-0 m-0",
@@ -188,8 +188,9 @@
     "body"
   ],
   "data": {
-    "objectName": "instances",
-    "initialValues": {},
+    "objectName": "instance_tasks",
+    "initialValues": {
+    },
     "title": "",
     "context": {
       "rootUrl": "http://127.0.0.1:5000",
@@ -203,7 +204,10 @@
   "pullRefresh": {
     "disabled": true
   },
-  "bodyClassName": "p-0 instances-customPage",
+  "bodyClassName": {
+    "p-0 instances-customPage instances-sidebar": "true",
+    "pc instances-sidebar-open instances-minwidth": "${window:innerWidth > 768}"
+  },
   "css": {
     ".instances-customPage.instances-sidebar.instances-sidebar-open.pc": {
       "margin-left": "220px"
@@ -224,6 +228,9 @@
       "top": "50px",
       "left": "0px",
       "padding-bottom": "65px"
+    },
+    ".instances-minwidth": {
+      "min-width": "388px"
     }
   }
 }
