@@ -225,17 +225,19 @@ function transformFormFields(amisField) {
             break
 
         case 'fieldset':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'section'
             formFieldsItem.name = amisField.title
             formFieldsItem.code = 'fieldset'
+			formFieldsItem.is_wide = true
+			fieldset_item = amisField.body ? amisField.body : amisField.field
             // 把他们赋值到新属性fields中
-            formFieldsItem.fields = _.map(amisField.body, (item) => {
+            formFieldsItem.fields = _.map(fieldset_item, (item) => {
                 return transformFormFields(item);
             })
             break
 
         case 'input-rich-text':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'html'
             break
         case 'input-image':
             formFieldsItem.type = 'input'
