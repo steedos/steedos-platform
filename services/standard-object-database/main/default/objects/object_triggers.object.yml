@@ -6,7 +6,7 @@ hidden: true
 fields:
   _name:
     type: text
-    label: Name
+    label: Api Name
     searchable: true
     index: true
     required: true

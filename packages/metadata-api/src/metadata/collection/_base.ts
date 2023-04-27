@@ -6,6 +6,14 @@ export class MetadataBaseCollection{
     metadataName: string;
     collectionName: string;
     relatedProperties: Array<string>;
+
+    formatDataOnRetrieve(metadata){
+        return metadata;
+    }
+
+    formatDataOnDeploy(metadata){
+        return metadata;
+    }
     
     constructor(metadataName, relatedProperties: Array<string> = []){
         this.metadataName = metadataName;
@@ -22,7 +30,7 @@ export class MetadataBaseCollection{
             for(var i=0; i<metadataList.length; i++){
                 var metadataItem = metadataList[i]
                 var metadataFullName = getFullName(this.metadataName, metadataItem)
-                packageMetadata[metadataFullName] = metadataItem
+                packageMetadata[metadataFullName] = this.formatDataOnRetrieve(metadataItem)
             }
         }else{
     
@@ -32,14 +40,14 @@ export class MetadataBaseCollection{
            
                 var metadataItem = await this.get(dbManager, metadataApiName);
                 var metadataFullName = getFullName(this.metadataName, metadataItem)
-                packageMetadata[metadataFullName] = metadataItem;
+                packageMetadata[metadataFullName] = this.formatDataOnRetrieve(metadataItem);
             }
         }
     }
 
     async deploy(dbManager, metadataList){
         for(const metadataName in metadataList){
-            var metadata = metadataList[metadataName];
+            var metadata = this.formatDataOnDeploy(metadataList[metadataName]);
             // await checkComponentsExist(dbManager, layout);
             delete metadata.__filename
             await this.save(dbManager, metadata);

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-26 11:45:44
+ * @LastEditTime: 2023-04-27 17:41:52
  * @Description: 
  */
 const Cache = require('@steedos/cachers');
@@ -20,14 +20,34 @@ const PERMISSIONS = {
   };
 
 const getSourceTriggers = async()=>{
-    return _.map(Cache.getCacher('triggers').get('triggers'), (item)=>{
+    const data = _.map(_.filter(Cache.getCacher('triggers').get('triggers'), (item)=>{
+        return !item.metadata._id || item.metadata._id == item.metadata.name
+    }), (item)=>{
         return {
             ...item.metadata,
             _id: item.metadata.name,
             ...BASERECORD
         };
-    }) 
+    });
+    return data;
 }
+
+function checkVariableName(variableName){
+    if(variableName.length > 50){
+        throw new Error("名称长度不能大于50个字符");
+    }
+    var reg = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+    if(reg.test(variableName)){
+      var keywords = ['break', 'case', 'catch', 'continue', 'debugger', 'default', 'delete', 'do', 'else', 'finally', 'for', 'function', 'if', 'in', 'instanceof', 'new', 'return', 'switch', 'this', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'true', 'false', 'null', 'undefined', 'NaN', 'Infinity'];
+      if(keywords.indexOf(variableName) === -1){
+        return true;
+      } else {
+        throw new Error("名称不能包含关键字");
+      }
+    } else {
+        throw new Error("名称只能包含字母、数字，必须以字母开头");
+    }
+  }
 
 module.exports = {
     beforeFind: async function () {
@@ -54,6 +74,7 @@ module.exports = {
     },
     beforeInsert: async function(){
         const doc = this.doc;
+        checkVariableName(doc._name)
         const count = await objectql.getObject('object_triggers').count({filters: [['_name', '=', doc._name], ['listenTo','=', doc.listenTo]]}) 
         if(count > 0){
             throw new Error('触发器名称不能重复')
@@ -61,6 +82,9 @@ module.exports = {
     },
     beforeUpdate: async function () {
         const doc = this.doc;
+        if(doc._name){
+            checkVariableName(doc._name)
+        }
         const count = await objectql.getObject('object_triggers').count({filters: [['_name', '=', doc._name], ['listenTo','=', doc.listenTo], ['_id', '!=', this.id]]}) 
         if(count > 0){
             throw new Error('触发器名称不能重复')
