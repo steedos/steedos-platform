@@ -16,6 +16,17 @@
 
     <script src="%PUBLIC_URL%/geetest/gt3.js"></script>
     <title>Steedos</title>
+    <script >
+      var vConsoleURL = "%REACT_APP_STEEDOS_PUBLIC_SCRIPT_VCONSOLE%";
+      if (vConsoleURL) {
+        let scriptTag = document.createElement("script");
+        scriptTag.setAttribute("src", vConsoleURL);
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+        scriptTag.onload = function(script){
+          window.vConsole = new window.VConsole();
+        }
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
