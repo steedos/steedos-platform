@@ -1,12 +1,12 @@
 {
-    "type": "page",
-    "className": "steedos-instance-wrapper",
-    "body": [
-      {
-        "type": "wrapper",
-        "visibleOn": "${display != 'split'}",
-        "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col",
-        "body": {
+  "type": "page",
+  "body": [
+    {
+      "type": "wrapper",
+      "visibleOn": "${AND(display != 'split', ${window:innerWidth > 768})}",
+      "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col",
+      "body": [
+        {
           "type": "service",
           "className": "w-full h-full",
           "onEvent": {
@@ -82,11 +82,14 @@
             }
           }
         }
-      },
-      {
-        "type": "wrapper",
-        "className": "steedos-instance-detail-wrapper bg-white m-0 p-0 flex-1 focus:outline-none lg:order-last",
-        "body": {
+      ],
+      "id": "u:339eb21f368c"
+    },
+    {
+      "type": "wrapper",
+      "className": "steedos-instance-detail-wrapper bg-white m-0 p-0 flex-1 focus:outline-none lg:order-last",
+      "body": [
+        {
           "type": "service",
           "id": "u:d6db0c84f150",
           "body": [
@@ -144,15 +147,31 @@
           },
           "className": "h-full"
         }
-      }
-    ],
-    "id": "u:d37465183f56",
-    "bodyClassName": "p-0 flex flex-1 overflow-hidden h-full",
-    "name": "amis-root-workflow",
-    "initApi": null,
-    "initFetch": null,
-    "asideResizor": false,
-    "pullRefresh": {
-      "disabled": true
+      ],
+      "id": "u:45d3529bdfd0"
     }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    "objectName": "instance_tasks",
+    "recordId": "5f032f591d4951790b84f3a0",
+    "context": {
+      "rootUrl": "http://127.0.0.1:5000",
+      "tenantId": "644484b7aff6100247b3e6cf",
+      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
+      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
+    }
+  },
+  "className": "steedos-instance-wrapper",
+  "id": "u:d37465183f56",
+  "bodyClassName": "p-0 flex flex-1 overflow-hidden h-full",
+  "name": "amis-root-workflow",
+  "initApi": null,
+  "initFetch": null,
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
   }
+}
