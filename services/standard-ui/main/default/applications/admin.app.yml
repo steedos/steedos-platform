@@ -125,29 +125,29 @@ tab_items:
   admin_sessions:
     group: 高级设置
     index: 34
-  admin_dashboard:
-    group: 高级设置
-    index: 35
+  # admin_dashboard:
+  #   group: 高级设置
+  #   index: 35
   admin_audit_records:
     group: 高级设置
     index: 36
   admin_autonumber:
     group: 高级设置
     index: 37
-  admin_web_forms:
-    group: 高级设置
-    index: 38
+  # admin_web_forms:
+  #   group: 高级设置
+  #   index: 38
   admin_holidays:
     group: 高级设置
     index: 39
   admin_business_hours:
     group: 高级设置
     index: 40
-  admin_object_webhooks:
-    group: 高级设置
-    index: 41
+  # admin_object_webhooks:
+  #   group: 高级设置
+  #   index: 41
   admin_api_keys:
-    group: 高级设置
+    group: 开发
     index: 42
 objects: []
 sort: 9100
