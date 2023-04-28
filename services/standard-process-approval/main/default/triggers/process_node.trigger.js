@@ -100,6 +100,18 @@ const getProcessNodeObjectName = async function(processId){
     }
 }
 
+
+const getSourceApprovalProcessNodes = ()=>{
+    const nodes = [];
+    _.each(objectql.getSourceApprovalProcesses(), (item)=>{
+        _.each(item.process_nodes, (pNode)=>{
+            nodes.push(Object.assign({}, pNode, {process_definition: item._id, _id: `${item.name}.${pNode.name}`}))
+        })
+
+    })
+    return nodes;
+}
+
 module.exports = {
     beforeInsert: async function () {
 
@@ -170,62 +182,26 @@ module.exports = {
         await reviseRecordOrder(this.previousDoc.process_definition);
     },
     afterFind: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let processNodes = [];
-        if(filters.process_definition){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
-            if(approvalProcess){
-                processNodes = approvalProcess.process_nodes
-            }
-            delete filters.process_definition
+        let spaceId = this.spaceId;
+        let sourceData = getSourceApprovalProcessNodes();
+        this.data.values = this.data.values.concat(sourceData);
+        const values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
+        for(let node of values){
+            setSpaceAndOwner(node, this);
         }
+        this.data.values = values
 
-        if(processNodes){
-            for(let node of processNodes){
-                setSpaceAndOwner(node, this);
-            }
-            this.data.values = this.data.values.concat(processNodes)
-        }
-    },
-    afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let processNodes = [];
-        if(filters.process_definition){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
-            if(approvalProcess){
-                processNodes = approvalProcess.process_nodes
-            }
-            delete filters.process_definition
-        }
-
-        if(processNodes){
-            this.data.values = this.data.values.concat(processNodes)
-        }
     },
     afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let processNodes = [];
-        if(filters.process_definition){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.process_definition);
-            if(approvalProcess){
-                processNodes = approvalProcess.process_nodes
-            }
-            delete filters.process_definition
-        }
-
-        if(processNodes){
-            this.data.values = this.data.values + processNodes.length
-        }
+        let spaceId = this.spaceId;
+        this.data.values = this.data.values + objectql.getSteedosSchema().metadataDriver.count(getSourceApprovalProcessNodes(), this.query, spaceId);
     },
     afterFindOne: async function(){
+        let spaceId = this.spaceId;
         if(_.isEmpty(this.data.values)){
-            let id = this.id
-            let objectName = id.substr(0, id.indexOf("."));
-            if(objectName){
-                let processNode = objectql.getSourceProcessNode(objectName, id.substr(id.indexOf(".")+1));
-                if(processNode){
-                    this.data.values = processNode;
-                }
+            const records = objectql.getSteedosSchema().metadataDriver.find(getSourceApprovalProcessNodes(), {filters: ['_id', '=', this.id]}, spaceId);
+            if(records.length > 0){
+                this.data.values = records[0]
             }
         }
     }
