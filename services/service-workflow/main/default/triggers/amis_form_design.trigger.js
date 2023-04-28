@@ -92,8 +92,10 @@ function getFormInputFields(formSchema) {
         if (field) {
             //进入if说明是表单项
             _.each(inputFields, (item) => {
+				// 考虑使用steedos-field组件时 name配置到config的情况
+				field.name = field.name || field.config.name;
                 // 如果要添加的field重复 无需再添加
-                if (field.name === item.name) {
+				if (field.name === item.name) {
                     flag = false;
                 }
             })
@@ -133,9 +135,9 @@ function transformFormFields(amisField) {
         is_wide: _.includes(amisField.className, "is_wide"),
 		default_value: _.get(amisField, 'value', ''),
         is_required: amisField.required == true ? true : false,
+        is_multiselect: amisField.multiple == true ? true : false,
 		is_list_display: _.includes(amisField.className, "is_list_display"),
-        is_searchable: _.includes(amisField.className, "is_searchable"),
-        is_multiselect: _.includes(amisField.className, "is_multiselect")
+        is_searchable: _.includes(amisField.className, "is_searchable")
     }
 
     switch (amisField.type) {
@@ -379,21 +381,57 @@ function transformFormFields(amisField) {
             break
         case 'steedos-field':
 
-            let fieldsAdd = {
-                field: amisField.field
-            }
-            const steedosField = Object.assign(fieldsAdd,formFieldsItem);
+			// 从新表单用steedos-field创建user,group组件的情况
+			if(amisField.config){
+				let tempConfig = amisField.config;
 
-            let tempField = JSON.parse(steedosField.field)
+				let steedosField = {
+					_id: amisField.id,
+					code: tempConfig.name || amisField.name,
+					name: tempConfig.label,
+					default_value: _.get(amisField, 'value', ''),
+					is_multiselect: amisField.multiple == true ? true : false,
+					is_required: amisField.required == true ? true : false,
 
-            if (tempField.reference_to === "organizations") {
-                steedosField.type = 'group'
-            }else if(tempField.reference_to === "space_users"){
-                steedosField.type = 'user'
-            }
-            // return steedosField
-            formFieldsItem = steedosField
-            break
+					is_wide: _.includes(amisField.className, "is_wide"),
+					is_list_display: _.includes(amisField.className, "is_list_display"),
+					is_searchable: _.includes(amisField.className, "is_searchable"),
+				}
+
+				if (tempConfig.reference_to === "organizations") {
+					steedosField.type = 'group'
+				}else if(tempConfig.reference_to === "space_users"){
+					//  && tempConfig.reference_to_field === 'user'
+					steedosField.type = 'user'
+				}
+				return steedosField
+
+			}else if(amisField.field){
+				// 在旧表单设置后 打开新表单 再进行设计更改 保存转换格式
+				let tempField = JSON.parse(amisField.field)
+				let steedosField = {
+					_id: amisField.id,
+					code: tempField.name || amisField.name,
+					name: tempField.label,
+					default_value: _.get(amisField, 'value', ''),
+					is_multiselect: amisField.multiple == true ? true : false,
+					is_required: amisField.required == true ? true : false,
+
+					is_wide: _.includes(amisField.className, "is_wide"),
+					is_list_display: _.includes(amisField.className, "is_list_display"),
+					is_searchable: _.includes(amisField.className, "is_searchable"),
+				}
+
+				if (tempField.reference_to === "organizations") {
+					steedosField.type = 'group'
+				}else if(tempField.reference_to === "space_users"){
+					//  && tempField.reference_to_field === 'user'
+					steedosField.type = 'user'
+				}
+				return steedosField
+
+			}
+
     }
 
     return formFieldsItem
