@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#000000" />
     <script >
       var vConsoleURL = "%REACT_APP_STEEDOS_PUBLIC_SCRIPT_VCONSOLE%";
-      if (vConsoleURL) {
+      if (vConsoleURL && !/^%/.test(vConsoleURL)) {
         let scriptTag = document.createElement("script");
         scriptTag.setAttribute("src", vConsoleURL);
         document.getElementsByTagName("head")[0].appendChild(scriptTag);
