@@ -34,7 +34,7 @@
                 "data": {
                     "recordId": "${recordId}",
                     "defaultData": "${defaultData}",
-                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name,profiles,buttons,fields,related_lists,is_system,created,created_by,modified,modified_by,instances,instance_state,_display:_ui{object_name,profiles,buttons,fields,related_lists,is_system,created,created_by,modified,modified_by,instances,instance_state}}}",
+                    "query": "{data:object_layouts(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name,profiles,buttons,fields,related_lists,field_groups,is_system,created,created_by,modified,modified_by,instances,instance_state,_display:_ui{object_name,profiles,buttons,fields,related_lists,is_system,created,created_by,modified,modified_by,instances,instance_state}}}",
                     "uiSchema": "${uiSchema}",
                     "objectName": "${objectName}"
                 },
