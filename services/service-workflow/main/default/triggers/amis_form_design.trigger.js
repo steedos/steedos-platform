@@ -38,6 +38,7 @@ const AmisInputTypes = [
     'input-rating',
     'input-sub-form',
     'input-date',
+	'input-datetime',
     'textarea',
     'tabs-transfer',
     'select',
@@ -308,6 +309,9 @@ function transformFormFields(amisField) {
         case 'input-date':
             formFieldsItem.type = 'date'
             break
+		case 'input-datetime':
+			formFieldsItem.type = 'dateTime'
+			break
         case 'formula':
             formFieldsItem.type = 'input'
             formFieldsItem.name = '公式'
