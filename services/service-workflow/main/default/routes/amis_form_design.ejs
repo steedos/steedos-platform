@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: 李海龙 lihailong@steedos.com
- * @LastEditTime: 2023-04-27 17:40:17
+ * @LastEditTime: 2023-04-28 10:58:22
  * @Description:
 -->
 <html>
@@ -166,10 +166,10 @@
         label: field.name,
         name: field.code,
         required: field.is_required,
+		multiple: field.is_multiselect,
         className: (field.is_wide ? 'is_wide' : '') +
 		(field.is_list_display ? ' is_list_display' : '') +
-		(field.is_searchable ? ' is_searchable' : '') +
-		(field.is_multiselect ? ' is_multiselect' : '')
+		(field.is_searchable ? ' is_searchable' : '')
       };
       switch (field.type) {
         case "input":
