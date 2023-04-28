@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-09-22 15:10:22
+ * @LastEditTime: 2023-04-28 10:35:46
  * @Description: 
 -->
 <html>
@@ -77,8 +77,7 @@
               ]});
             }
 
-            let objectName = result.data.object;
-            let pageType = result.data.type;
+            let objectName = button.object;
             if (typeof schema === "string") {
               schema = JSON.parse(schema);
             }
@@ -90,10 +89,9 @@
             if (!schema.data.context) {
               schema.data.context = {};
             }
-
             schema.data.app_id = '';
             schema.data.tab_id = '';
-            schema.data.object_name = '';
+            schema.data.objectName = objectName;
             schema.data.dataComponentId = '';
             schema.data.record_id = '';
             schema.data.record = {};
@@ -128,6 +126,9 @@
           delete schema.data.context.authToken;
           delete schema.data.context.user;
           delete schema.data.context.rootUrl;
+          delete schema.data.objectName;
+          delete schema.data.app_id;
+          delete schema.data.tab_id;
         }
         return await axios.post(
           `${rootUrl}/graphql`,

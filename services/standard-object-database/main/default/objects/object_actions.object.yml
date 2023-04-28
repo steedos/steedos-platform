@@ -73,17 +73,18 @@ fields:
                 icon: "lead_list"
               }];
             }
-  # type: 
-  #   type: select
-  #   sort_no: 170
-  #   options:
-  #     - label: Custom JavaScript
-  #       value: script
-  #     - label: Amis Button
-  #       value: amis_button
-  #     # - label: 打印模板(word)
-  #     #   value: word-print
-  #   defaultValue: amis_button
+  type: 
+    type: select
+    sort_no: 170
+    hidden: true
+    options:
+      - label: Custom JavaScript
+        value: script
+      - label: Amis Button
+        value: amis_button
+      # - label: 打印模板(word)
+      #   value: word-print
+    defaultValue: amis_button
   # word_template:
   #   type: lookup
   #   reference_to: word_templates
