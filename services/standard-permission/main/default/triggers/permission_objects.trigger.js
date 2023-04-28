@@ -99,7 +99,11 @@ module.exports = {
             if (matches) {
                 const permissionSetId = matches[0];
                 // 查找permissionSetId对应的permissionSet
-                const permissionSetDoc = await objectql.getObject('permission_set').findOne(permissionSetId);
+                const permissionSetDoc = (await objectql.getObject('permission_set').directFind({
+                    filters: [
+                        ['_id', '=', permissionSetId],
+                    ]
+                })[0]);
                 if (permissionSetDoc) {
                     // 替换this.query.filters中全部的的permission_set_id为permissionSetDoc.name
                     this.query.filters = this.query.filters.replace(regex, permissionSetDoc.name).replace(`permission_set_id eq '${permissionSetDoc.name}'`, `(permission_set_id eq '${permissionSetDoc.name}') or (permission_set_id eq '${permissionSetId}')`);
