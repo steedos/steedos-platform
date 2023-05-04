@@ -74,7 +74,7 @@ module.exports = {
     },
     getBoxFilters: {
         async handler(ctx){
-            const { appId, box, flowId, userId, is_space_admin } = ctx.params;
+            const { appId, box, flowId, userId, is_space_admin, spaceId } = ctx.params;
             const categoriesIds = await this.getAppCategoriesIds(appId);
             const filter = [];
             switch (box) {
@@ -112,7 +112,15 @@ module.exports = {
                 case 'monitor':
                     filter.push(['state', 'in', ["pending", "completed"]]);
                     if(!is_space_admin){
-                        const flowIds = WorkflowManager.getMyAdminOrMonitorFlows();
+                        const flowIds = await new Promise(function (resolve, reject) {
+                            Fiber(function () {
+                                try {
+                                    resolve(WorkflowManager.getMyAdminOrMonitorFlows(spaceId, userId));
+                                } catch (error) {
+                                    reject(error);
+                                }
+                            }).run()
+                        })
                         if(!flowId){
                             if(!_.includes(flowIds, flowId)){
                                 filter.push([
