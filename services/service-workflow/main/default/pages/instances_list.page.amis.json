@@ -213,12 +213,20 @@
       "margin-left": "220px"
     },
     ".instances-sidebar-wrapper": {
-      "transition": "0.5s ease translate",
-      "translate": "-100% 0",
-      "will-change": "transform"
+      "transition": "0.5s ease transform",
+      "will-change": "transform",
+      "transform":"translate(-100%,0)",
+      "-webkit-transform":"translate(-100%,0)",
+      "-moz-transform":"translate(-100%,0)",
+      "-ms-transform":"translate(-100%,0)",
+      "-o-transform":"translate(-100%,0)"
     },
     ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
-      "translate": "0 0"
+      "transform":"translate(0,0)",
+      "-webkit-transform":"translate(0,0)",
+      "-moz-transform":"translate(0,0)",
+      "-ms-transform":"translate(0,0)",
+      "-o-transform":"translate(0,0)"
     },
     ".pcCss": {
       "top": "90px",
