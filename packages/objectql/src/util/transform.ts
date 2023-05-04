@@ -205,6 +205,7 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
             break;
         case 'afterUpdate':
             params.isAfter = true;
+            params.isUpdate = true;
             params.size = 1;
             break;
         case 'afterDelete':

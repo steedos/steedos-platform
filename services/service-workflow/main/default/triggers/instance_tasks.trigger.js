@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:16:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-18 16:50:20
+ * @LastEditTime: 2023-05-04 14:04:06
  * @Description: 
  */
 'use strict';
@@ -11,14 +11,6 @@ const { getObject } = require('@steedos/objectql');
 
 module.exports = {
     listenTo: 'instance_tasks',
-
-    beforeInsert: async function () { },
-
-    beforeUpdate: async function () { },
-
-    beforeDelete: async function () { },
-
-    afterInsert: async function () { },
 
     afterUpdate: async function () {
         // console.log('[trigger][instance_tasks]', 'afterUpdate')
@@ -41,7 +33,5 @@ module.exports = {
             })
         }
     },
-
-    afterDelete: async function () { },
 
 }
