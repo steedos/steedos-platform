@@ -2,8 +2,7 @@ name: user
 type: master_detail
 reference_to: users
 index: true
-omit: true
-hidden: true
+visible_on: "{{false}}"
 label: User
 filterable: true
 sort_no: 350
