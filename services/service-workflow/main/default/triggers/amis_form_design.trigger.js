@@ -268,9 +268,11 @@ function transformFormFields(amisField) {
             break
         case 'list-select':
             formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-tag':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-city':
             formFieldsItem.type = 'input'
@@ -279,7 +281,8 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'picker':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-repeat':
             formFieldsItem.type = 'input'
@@ -326,8 +329,6 @@ function transformFormFields(amisField) {
             break
         case 'checkboxes':
             formFieldsItem.type = 'multiSelect'
-			formFieldsItem.name = amisField.label
-			formFieldsItem.code = amisField.name
 			formFieldsItem.is_multiselect = amisField.multiple
 			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
@@ -339,8 +340,6 @@ function transformFormFields(amisField) {
             break
         case 'radios':
             formFieldsItem.type = 'radio'
-			formFieldsItem.name = amisField.label
-			formFieldsItem.code = amisField.name
 			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'nested-select':
@@ -378,8 +377,6 @@ function transformFormFields(amisField) {
 			}else{
 				// 反之为按下拉框字段处理
 				formFieldsItem.type = 'select'
-				formFieldsItem.name = amisField.label
-				formFieldsItem.code = amisField.name
 				formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
 			}
             break
@@ -394,9 +391,11 @@ function transformFormFields(amisField) {
 					code: tempConfig.name || amisField.name,
 					name: tempConfig.label,
 					default_value: _.get(amisField, 'value', ''),
+
+					// 配置steedos-field时 若存在config属性 required multiple需要配置在和config同层级
 					is_multiselect: amisField.multiple == true ? true : false,
 					is_required: amisField.required == true ? true : false,
-
+					// 在className 配置is_wide is_list_display is_searchable属性 在className也需要配置在config同层级
 					is_wide: _.includes(amisField.className, "is_wide"),
 					is_list_display: _.includes(amisField.className, "is_list_display"),
 					is_searchable: _.includes(amisField.className, "is_searchable"),
