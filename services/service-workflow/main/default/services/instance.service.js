@@ -121,7 +121,7 @@ module.exports = {
                                 }
                             }).run()
                         })
-                        if(!flowId){
+                        if(flowId){
                             if(!_.includes(flowIds, flowId)){
                                 filter.push([
                                     ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId]
