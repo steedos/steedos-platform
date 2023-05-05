@@ -88,7 +88,15 @@
                                             "visibleOn": "${!!target_object}"
                                         }
                                     ]
-                                }
+                                },
+								{
+									"type": "steedos-object-form",
+									"id": "u:d1f15744313b",
+									"className": "antd-Form antd-Form--normal steedos-amis-form bg-white hidden",
+									"label": "对象表单",
+									"objectApiName": "${objectName}",
+									"recordId": "${recordId}"
+								}
                             ],
                             "id": "u:2828559659a3"
                         },
