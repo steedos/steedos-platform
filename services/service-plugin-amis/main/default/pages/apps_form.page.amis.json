@@ -408,15 +408,6 @@
                                                     "id": "u:44fa8ee006c1"
                                                 },
                                                 {
-                                                    "name": "is_use_iframe",
-                                                    "label": "使用iframe打开",
-                                                    "type": "checkbox",
-                                                    "tpl": null,
-                                                    "className": "m-0",
-                                                    "labelClassName": "text-left",
-                                                    "id": "u:ba806048fa36"
-                                                },
-                                                {
                                                     "name": "is_new_window",
                                                     "label": "在新窗口打开",
                                                     "type": "checkbox",

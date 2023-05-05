@@ -167,6 +167,7 @@ fields:
     label: Open with iframe
     defaultValue: false
     group: External Application
+    visible_on: "{{false}}"
   is_new_window:
     type: boolean
     label: Open in New Window
