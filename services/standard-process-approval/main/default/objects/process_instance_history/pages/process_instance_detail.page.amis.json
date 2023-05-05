@@ -85,7 +85,7 @@
                                             "label": "所有相关表",
                                             "recordId": "${target_object.ids[0]}",
                                             "objectApiName": "${target_object.o}",
-                                            "visableOn": "${!!target_object}"
+                                            "visibleOn": "${!!target_object}"
                                         }
                                     ]
                                 }
