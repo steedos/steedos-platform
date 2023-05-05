@@ -1,0 +1,153 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "form",
+            "title": {
+                "type": "tpl",
+                "id": "u:ac3fb514988e",
+                "tpl": "<div class='flex' style='align-items: center;'><div style='margin-right: 10px;'><span><span><svg class='slds-icon slds-icon_container slds-icon-standard-team-member slds-page-header__icon' aria-hidden='true'><use xlink:href='/assets/icons/standard-sprite/svg/symbols.svg#team_member'></use></svg></span></span></div><div class='text-lg leading-none text-black font-bold'><span>关于</span></div></div>"
+            },
+            "body": [
+                {
+                    "label": "华炎魔方",
+                    "type": "input-text",
+                    "name": "huayan",
+                    "id": "u:99d7bf1d8d24",
+                    "static": true,
+                    "value": "华炎魔方，创新的使用配置文件描述业务模型和业务功能，开发人员只需要编写简单的配置文件就可以构建自定义应用程序，并部署到电脑、平板、 手机三个平台。",
+                    "mode": "normal",
+                    "labelClassName": "text-xl font-bold m-0",
+                    "className": "m-0 border-b py-5",
+                    "inputClassName": "",
+                    "staticClassName": ""
+                },
+                {
+                    "type": "input-text",
+                    "label": "版本",
+                    "name": "banben",
+                    "id": "u:c7ec8dbb7f07",
+                    "value": "${window:Builder.settings.steedosVersion}",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "label": "资产包",
+                    "type": "input-text",
+                    "name": "zichan",
+                    "id": "u:65ad5545aeda",
+                    "value": "${window:Builder.settings.assetUrls}",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "type": "input-text",
+                    "label": "Amis版本",
+                    "name": "Amis",
+                    "id": "u:8a4d0a674931",
+                    "value": "${window:Builder.settings.steedosAmisVersion}",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "label": "CDN服务器",
+                    "name": "CDN",
+                    "type": "input-text",
+                    "id": "u:5491c057ce27",
+                    "value": "${window:Builder.settings.unpkgUrl}",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "label": "RootUrl",
+                    "name": "RootUrl",
+                    "type": "input-text",
+                    "id": "u:184e9280ea50",
+                    "value": "${window:Builder.settings.rootUrl}",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "type": "button-toolbar",
+                    "label": "技术支持",
+                    "name": "jishu",
+                    "id": "u:4ec6939b92c6",
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2",
+                    "buttons": [
+                        {
+                            "type": "link",
+                            "id": "u:6526f14f8fa1",
+                            "body": "上海华炎软件有限公司",
+                            "href": "https://www.steedos.com"
+                        }
+                    ],
+                    "inputClassName": "antd-Form-static m-0"
+                },
+                {
+                    "label": "客服热线",
+                    "name": "rexian",
+                    "type": "input-text",
+                    "id": "u:27b9745bd047",
+                    "value": "400-820-1612",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2"
+                },
+                {
+                    "type": "button-toolbar",
+                    "label": "客服邮箱",
+                    "name": "youxiang",
+                    "id": "u:a847a1dbb74e",
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2",
+                    "buttons": [
+                        {
+                            "type": "link",
+                            "id": "u:f0fb70113398",
+                            "body": "support@steedos.com",
+                            "href": "Mailto:support@steedos.com"
+                        }
+                    ],
+                    "inputClassName": "antd-Form-static m-0"
+                }
+            ],
+            "id": "u:d8ce1cb3156a",
+            "mode": "horizontal",
+            "actions": [],
+            "labelAlign": "left"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "recordId": "",
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {}
+    },
+    "id": "u:8768402a5203",
+    "asideResizor": false,
+    "pullRefresh": {
+        "disabled": true
+    },
+    "onEvent": {
+        "init": {
+            "weight": 0,
+            "actions": [
+                {
+                    "script": "console.log(\"steedosVersion\",Builder.settings.steedosVersion)",
+                    "actionType": "custom"
+                }
+            ]
+        }
+    }
+}
