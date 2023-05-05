@@ -1,14 +1,14 @@
 {
   "name": "@steedos/service-cachers-manager",
-  "version": "2.5.0-beta.18",
+  "version": "2.5.0-beta.19",
   "main": "package.service.js",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@steedos/cachers": "2.5.0-beta.18"
+    "@steedos/cachers": "2.5.0-beta.19"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5567aff68a838502b3e7bb9cab229a3575d1c3ed"
+  "gitHead": "99f85803376a6096f0262ff47689572818bf655b"
 }
