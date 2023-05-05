@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-charts",
   "private": false,
-  "version": "2.4.15-beta.5",
+  "version": "2.4.15-beta.6",
   "description": "Enterprise plugin for steedos",
   "main": "package.service.js",
   "repository": {
@@ -17,9 +17,9 @@
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/app-admin"
   },
   "devDependencies": {
-    "@steedos/service-metadata-server": "2.4.15-beta.5",
-    "@steedos/service-package-loader": "2.4.15-beta.5",
-    "@steedos/service-steedos-server": "2.4.15-beta.5",
+    "@steedos/service-metadata-server": "2.4.15-beta.6",
+    "@steedos/service-package-loader": "2.4.15-beta.6",
+    "@steedos/service-steedos-server": "2.4.15-beta.6",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",
@@ -34,7 +34,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7d713965886e2c37d1fcb1f2986b26f1cc678b58",
+  "gitHead": "40555dddc4ac402d3419e0e26564a391130e497d",
   "dependencies": {
     "duration": "^0.2.2",
     "json2csv": "5.0.6",
