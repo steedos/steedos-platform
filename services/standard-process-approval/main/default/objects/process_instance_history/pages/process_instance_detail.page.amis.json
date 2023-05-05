@@ -18,7 +18,8 @@
                                         "name": "${event.data.record.name}",
                                         "record": "${event.data.record}",
                                         "recordLoaded": true
-                                    }
+                                    },
+									"expression": "${event.data.objectName == \"process_instance_history\"}"
                                 },
                                 {
                                     "actionType": "reload",
@@ -27,7 +28,8 @@
                                         "name": "${event.data.record.name}",
                                         "record": "${event.data.record}",
                                         "recordLoaded": true
-                                    }
+                                    },
+									"expression": "${event.data.objectName == \"process_instance_history\"}"
                                 }
                             ]
                         }
@@ -51,7 +53,7 @@
                                             "id": "u:d1f14744310b",
                                             "label": "对象表单",
                                             "recordId": "${target_object.ids[0]}",
-                                            "visableOn": "${!!target_object}",
+                                            "visibleOn": "${!!target_object}",
                                             "className": "antd-Form antd-Form--normal steedos-amis-form bg-white",
                                             "mode": "read"
                                         }
@@ -83,7 +85,7 @@
                                             "label": "所有相关表",
                                             "recordId": "${target_object.ids[0]}",
                                             "objectApiName": "${target_object.o}",
-                                            "visableOn": "${!!target_object}"
+                                            "visibleOn": "${!!target_object}"
                                         }
                                     ]
                                 }
