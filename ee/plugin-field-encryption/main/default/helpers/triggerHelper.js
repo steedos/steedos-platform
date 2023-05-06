@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 19:46:49
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-30 13:55:09
+ * @LastEditTime: 2023-05-06 16:28:41
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -44,8 +44,8 @@ async function encryptFieldValue(objectName, doc) {
         for (const key in requireEncryptionFields) {
             if (Object.hasOwnProperty.call(requireEncryptionFields, key)) {
                 const field = requireEncryptionFields[key];
-                // 判断是加密字段并且值不为空
-                if (field.enable_encryption && _.has(doc, key) && doc[key]) {
+                // 判断是加密字段并且值不为空，且还未加密过
+                if (field.enable_encryption && _.has(doc, key) && doc[key] && !doc[key].buffer && !doc[key].sub_type) {
                     doc[key] = await datasource.adapter.encryptValue(doc[key]);
                 }
             }
