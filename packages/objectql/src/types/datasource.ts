@@ -34,6 +34,7 @@ import { getObjectDispatcher, createObjectService, createDataSourceService } fro
 import path = require('path');
 import { transformListenersToTriggers, extend } from '../util';
 const clone = require('clone')
+const cachers = require('@steedos/cachers');
 let Fiber = require('fibers');
 const defaultDatasourceName = 'default';
 // const meteorDatasourceName = 'meteor';
@@ -379,9 +380,18 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     getObjectSpaceRolesPermission(object_name: string, spaceId: string) {
-        if(this._objectsSpaceRolesPermission[object_name]){
-            return this._objectsSpaceRolesPermission[object_name][spaceId]
-        }
+        // if(this._objectsSpaceRolesPermission[object_name]){
+        //     return this._objectsSpaceRolesPermission[object_name][spaceId]
+        // }
+        const permission = {};
+        
+        _.each(_.filter(cachers.getCacher('permission_objects').get('permission_objects')[spaceId], function(objectPermission){
+            return objectPermission.object_name === object_name
+        }), (item)=>{
+            permission[item.name] = new SteedosObjectPermissionType(object_name, item)
+        })
+
+        return permission;
     }
 
     removeObjectSpacePermission(object_name: string, spaceId: string, objectRolePermissionName: string){

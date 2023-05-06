@@ -1,13 +1,45 @@
-var permissionCore = require('./permission_objects.core.js');
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-05 14:13:57
+ * @Description: 
+ */
 
+const cachers = require('@steedos/cachers');
+const objectql = require("@steedos/objectql");
+const _ = require('lodash');
+let permissionObjectsLoadSetTimeoutId = null;
 Meteor.startup(function () {
     var _change, _remove;
+    const permissionSets = Creator.getCollection("permission_set").find({}).fetch();
     _change = function (document) {
-        permissionCore.loadObjectPermission(document)
+        if(permissionObjectsLoadSetTimeoutId){
+            clearTimeout(permissionObjectsLoadSetTimeoutId);
+            permissionObjectsLoadSetTimeoutId = null;
+        }
+        permissionObjectsLoadSetTimeoutId = setTimeout(()=>{
+            objectql.getObject("permission_objects").directFind({}).then((records)=>{
+                records = _.map(records, (doc)=>{
+                    if(_.includes(['admin', 'user', 'customer', 'supplier'], doc.permission_set_id)){
+                        doc.name = doc.permission_set_id
+                    }else{
+                        const record = _.find(permissionSets, (item)=>{
+                            return doc.permission_set_id == item._id
+                        })
+                        if(record){
+                            doc.name = record.name;
+                        }else{
+                            doc.name = _.last(doc.name.split('.'));
+                        }
+                    }
+                    return doc;
+                })
+                cachers.getCacher('permission_objects').set('permission_objects', _.groupBy(records, 'space'));
+            })
+        }, 1000 * 3)
     };
-    _remove = function (document) {
-        permissionCore.removeObjectPermission(document);
-    };
+   
     Creator.getCollection("permission_objects").find({}, {
         fields: {
             created: 0,
@@ -23,7 +55,7 @@ Meteor.startup(function () {
             return _change(newDocument);
         },
         removed: function (oldDocument) {
-            return _remove(oldDocument);
+            return _change(oldDocument);
         }
     });
 });
