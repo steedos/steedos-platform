@@ -30,13 +30,13 @@ workflowSpaceRoutes = FlowRouter.group
 	name: 'workflowSpace',
 	triggersEnter: [checkUserSigned, (context, redirect)->
 		appId = Session.get("app_id") || 'workflow'
-		if context.params.instanceId 
+		if context.params.instanceId && context.route.path != "/workflow/space/:spaceId/print/:instanceId"
 			return redirect('/app/'+appId+'/instances/view/' + context.params.instanceId + '?' + context.context.querystring)
 		else
 			if context.params.box
 				if context.params.box == 'inbox' ||  context.params.box == 'outbox'
 					return redirect('/app/'+appId+'/instance_tasks/grid/' + context.params.box + '?' + context.context.querystring)
-				else
+				else if context.route.path != "/workflow/space/:spaceId/print/:instanceId"
 					return redirect('/app/'+appId+'/instances/grid/' + context.params.box + '?' + context.context.querystring)
 		
 		# 申请单界面直接刷新或从首页直接进入申请单时未高亮选中”审批“为当前对象
