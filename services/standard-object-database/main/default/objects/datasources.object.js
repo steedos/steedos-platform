@@ -1,4 +1,5 @@
 const _ = require("underscore");
+const lodash = require("lodash");
 var objectql = require('@steedos/objectql');
 var schema = objectql.getSteedosSchema();
 const datasourceCore = require('./datasources.core');
@@ -20,6 +21,9 @@ Creator.Objects['datasources'].methods = {
     testConnection: async function (req, res) {
         var userSession = req.user
             var recordId = req.params._id;
+            if(lodash.includes(defaultDatasourceName, recordId)){
+                return res.send({ok: 1});
+            }
             var spaceId = userSession.spaceId
             let doc = await objectql.getObject('datasources').findOne(recordId, {filters: `(space eq \'${spaceId}\')`});
             if(doc){
