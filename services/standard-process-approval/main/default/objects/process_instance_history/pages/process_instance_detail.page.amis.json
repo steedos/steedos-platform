@@ -71,37 +71,9 @@
                             "id": "u:78283d8a88a6",
                             "className": "px-0"
                         },
+
                         {
-                            "title": "相关表",
-                            "body": [
-                                {
-                                    "type": "group",
-                                    "id": "u:731d4077557a",
-                                    "className": "px-0",
-                                    "body": [
-                                        {
-                                            "type": "steedos-object-related-lists",
-                                            "id": "u:f3101a683d9e",
-                                            "label": "所有相关表",
-                                            "recordId": "${target_object.ids[0]}",
-                                            "objectApiName": "${target_object.o}",
-                                            "visibleOn": "${!!target_object}"
-                                        }
-                                    ]
-                                },
-								{
-									"type": "steedos-object-form",
-									"id": "u:d1f15744313b",
-									"className": "antd-Form antd-Form--normal steedos-amis-form bg-white hidden",
-									"label": "对象表单",
-									"objectApiName": "${objectName}",
-									"recordId": "${recordId}"
-								}
-                            ],
-                            "id": "u:2828559659a3"
-                        },
-                        {
-                            "title": "当前记录",
+                            "title": "批准步骤",
                             "body": [
                                 {
                                     "type": "steedos-object-form",
