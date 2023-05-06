@@ -6,7 +6,7 @@ columns:
   - submit_date
   - flow_name
   - step_name
-  - finish_date
+  - modified
 mobile_columns:
   - instance_name
   - submitter_name
@@ -21,4 +21,12 @@ filters: !!js/function |
       });
       return result.filter;
     }
-sort: [['finish_date','desc']]
+sort: [['modified','desc']]
+searchable_fields:
+  - field: instance_name
+  - field: submitter_name
+  - field: flow
+  - field: applicant_organization_name
+  - field: submit_date
+  - field: instance_state
+  - field: is_archived

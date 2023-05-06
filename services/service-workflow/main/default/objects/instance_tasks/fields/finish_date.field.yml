@@ -2,3 +2,4 @@ name: finish_date
 label: 完成时间
 type: datetime
 sort_no: 250
+sortable: true

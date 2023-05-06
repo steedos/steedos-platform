@@ -3,9 +3,11 @@ label: 监控箱
 columns:
   - name
   - applicant
-  - applicant_organization
   - submit_date
-  - state
+  - flow_name
+  - current_step_name
+  - modified
+  - is_archived
 filter_scope: space
 filters: !!js/function |
     function(filters, data){
@@ -16,3 +18,11 @@ filters: !!js/function |
       return result.filter;
     }
 sort: [['submit_date','desc']]
+searchable_fields:
+  - field: name
+  - field: submitter_name
+  - field: flow
+  - field: applicant_organization_name
+  - field: submit_date
+  - field: state
+  - field: is_archived

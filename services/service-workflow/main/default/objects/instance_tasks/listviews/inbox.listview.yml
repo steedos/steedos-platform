@@ -6,6 +6,7 @@ columns:
   - submit_date
   - flow_name
   - step_name
+  - modified
   - start_date
 mobile_columns:
   - instance_name
@@ -22,3 +23,11 @@ filters: !!js/function |
       return result.filter;
     }
 sort: [['start_date','desc']]
+searchable_fields:
+  - field: instance_name
+  - field: submitter_name
+  - field: flow
+  - field: applicant_organization_name
+  - field: submit_date
+  - field: instance_state
+  - field: is_archived

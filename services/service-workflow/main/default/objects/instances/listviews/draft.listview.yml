@@ -2,10 +2,8 @@ name: draft
 label: 草稿
 columns:
   - name
-  - applicant
-  - applicant_organization
-  - created
-  - state
+  - flow_name
+  - modified
 filter_scope: space
 filters: !!js/function |
     function(filters, data){
@@ -15,4 +13,12 @@ filters: !!js/function |
       });
       return result.filter;
     }
-sort: [['created','desc']]
+sort: [['modified','desc']]
+searchable_fields:
+  - field: name
+  - field: submitter_name
+  - field: flow
+  - field: applicant_organization_name
+  - field: submit_date
+  - field: state
+  - field: is_archived
