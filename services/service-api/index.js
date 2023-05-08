@@ -692,6 +692,19 @@ module.exports = {
 
 				return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
 			} catch (err) {
+				// 用于调试异常GraphQL schema
+				// const fs = require('fs');
+				// // 写入的文件路径
+				// const filePath = `UNABLE_COMPILE_GRAPHQL_SCHEMA.${new Date().getTime()}.txt`;
+				// // 使用fs.writeFile方法写入文件
+				// fs.writeFile(filePath, str, (err) => {
+				// 	if (err) {
+				// 		console.error(err);
+				// 		return;
+				// 	}
+				// 	console.log('文件已写入');
+				// });
+
 				throw new MoleculerServerError(
 					"Unable to compile GraphQL schema",
 					500,

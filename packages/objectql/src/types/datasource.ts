@@ -197,10 +197,14 @@ export class SteedosDataSourceType implements Dictionary {
         return object;
     }
 
+    removeLocalObject(objectApiName: string) {
+        delete this._objectsConfig[objectApiName];
+        delete this._objects[objectApiName];
+        this.schema.removeObjectMap(objectApiName);
+    }
+
     removeObject(object_name: string){
-        delete this._objectsConfig[object_name];
-        delete this._objects[object_name];
-        this.schema.removeObjectMap(object_name);
+        this.removeLocalObject(object_name);
         this.schema.metadataRegister.removeObject(object_name)
     }
 
