@@ -801,7 +801,13 @@
     }
 
     Steedos.Page.Header.render = function(appId, tabId){
-        let app = _.find(Session.get('app_menus'), {id: appId}) || {}
+
+        const defApps = Session.get('app_menus'); //触发 autorun
+
+        const apps = Tracker.nonreactive(()=>{
+            return Session.get('_app_menus') || defApps || []
+        })
+        let app = _.find(apps, {id: appId}) || {}
         if(_.isEmpty(app)){
             return ;
         }
@@ -854,7 +860,17 @@
                       "type": "steedos-global-header",
                       "logoSrc": logoSrc
                     },
-                  ]
+                  ],
+                onEvent: {
+                    "@appsLoaded": {
+                        "actions": [
+                            {
+                              "actionType": "custom",
+                              "script": "Session.set('_app_menus', event.data.apps)"
+                            }
+                          ]
+                    }
+                }
               }
         }
     }

@@ -296,7 +296,7 @@ Creator.getAppMenuUrl = (menu)->
 		return menu.path
 
 Creator.getAppMenus = (app_id)->
-	appMenus = Session.get("app_menus");
+	appMenus = Session.get("_app_menus") || Session.get("app_menus");
 	unless appMenus
 		return []
 	curentAppMenus = appMenus.find (menuItem) ->
