@@ -48,32 +48,35 @@ let keyvalues = {};
                 }]
             }
         };
-        const root = $("#" + rootId)[0];
-        Tracker.autorun(function (c) {
-            if (Creator.steedosInit.get() && Creator.validated.get() && Steedos.subsBootstrap.ready("steedos_keyvalues")) {
-                Steedos.Page.render(root, page, {});
-                const findVars = (obj, vars)=>{
-                    try{
-                        return vars.length === vars.filter(function(item){
-                            return item.split(".").reduce(function(sum, n){
-                                return sum[n];
-                            }, obj) !== undefined;
-                        }).length;
+        Meteor.startup(function () {
+            const root = $("#" + rootId)[0];
+            Tracker.autorun(function (c) {
+                if (Creator.steedosInit.get() && Creator.validated.get() && Steedos.subsBootstrap.ready("steedos_keyvalues")) {
+                    Steedos.Page.render(root, page, {});
+                    const findVars = (obj, vars) => {
+                        try {
+                            return vars.length === vars.filter(function (item) {
+                                return item.split(".").reduce(function (sum, n) {
+                                    return sum[n];
+                                }, obj) !== undefined;
+                            }).length;
+                        }
+                        catch (ex) {
+                            return false;
+                        }
                     }
-                    catch(ex){
-                        return false;
-                    }
+                    const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
+                    Promise.all([
+                        waitForThing(window, waittingVars, findVars)
+                    ]).then(() => {
+                        var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
+                        var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
+                        button && observeBadgeCount(button);
+                    });
                 }
-                const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
-                Promise.all([
-                    waitForThing(window, waittingVars, findVars)
-                ]).then(() => {
-                    var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
-                    var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
-                    button && observeBadgeCount(button);
-                });
-            }
+            });
         });
+        
     } catch (error) {
         console.error(error)
     };
