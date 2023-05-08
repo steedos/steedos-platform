@@ -146,12 +146,23 @@ Steedos.StandardObjects = {
                     var record = this.record.record;
                     var data, instanceId, uobj, url;
                     if (!record.instances || !record.instances[0]) {
-                        toastr.error('申请单已删除');
-                        // Template.creator_view.currentInstance.onEditSuccess();
-                        FlowRouter.reload();
-                        return;
+                        // 如果record存在且record的instances字段不存在，则再查询一次
+                        var queryResult = Steedos.authRequest("/graphql", {
+                            type: 'POST',
+                            async: false,
+                            data: JSON.stringify({
+                                query: `{record:${this.object_name}__findOne(id: "${this.record_id}"){instances}}`
+                            }),
+                            contentType: 'application/json',
+                            error: function () { }
+                        });
+                        var recordDoc = queryResult && queryResult.data && queryResult.data.record;
+                        if (recordDoc && recordDoc.instances && recordDoc.instances.length > 0) {
+                            instanceId = recordDoc.instances[0]._id;
+                        }
+                    } else {
+                        instanceId = record.instances[0]._id;
                     }
-                    instanceId = record.instances[0]._id;
                     if (!instanceId) {
                         console.error('instanceId not exists');
                         return;
