@@ -377,9 +377,13 @@ export class SteedosDataSourceType implements Dictionary {
         // if(this._objectsSpaceRolesPermission[object_name]){
         //     return this._objectsSpaceRolesPermission[object_name][spaceId]
         // }
+        const cacherPermissionObjects = cachers.getCacher('permission_objects').get('permission_objects')
+        if (_.isEmpty(cacherPermissionObjects)){
+            return;
+        }
         const permission = {};
         
-        _.each(_.filter(cachers.getCacher('permission_objects').get('permission_objects')[spaceId], function(objectPermission){
+        _.each(_.filter(cacherPermissionObjects[spaceId], function(objectPermission){
             return objectPermission.object_name === object_name
         }), (item)=>{
             permission[item.name] = new SteedosObjectPermissionType(object_name, item)
