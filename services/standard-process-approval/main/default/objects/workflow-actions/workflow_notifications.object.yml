@@ -53,7 +53,7 @@ fields:
         var options = [];
         if(object){
           var userFields = _.filter(object.fields, function(field){
-            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && field.reference_to === 'users'
+            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && (field.reference_to === 'users' || 'space_users' === field.reference_to)
           });
           _.each(userFields, function(field){
             options.push({label:field.label, value:field.name});
