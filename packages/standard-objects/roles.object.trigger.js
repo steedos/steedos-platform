@@ -1,100 +1,30 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-06-23 17:58:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-27 18:05:47
+ * @Description: 
+ */
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
-const InternalData = require('./core/internalData');
-const util = require('./util');
-
-const getInternalRoles = function(sourceRoles, filters){
-    let dbRoles = Creator.getCollection("roles").find(filters, {fields:{_id:1, api_name:1}}).fetch();
-    let roles = [];
-
-    if(!filters.is_system){
-        _.forEach(sourceRoles, function(doc){
-            if(!_.find(dbRoles, function(p){
-                return p.api_name === doc.api_name
-            })){
-                roles.push(doc);
-            }
-        })
-    }
-    return roles;
-}
 
 module.exports = {
     afterFind: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let roles = [];
-        if(filters.api_name){
-            role = objectql.getSourceRole(filters.api_name);
-            if(role){
-                roles.push(role);
-            }
-        }else if(filters._id){
-            roles = Creator.getCollection("roles").find({api_name: filters._id}).fetch();
-        }else{
-            roles = objectql.getSourceRoles();
-        }
-
-        roles = getInternalRoles(roles, filters);
-
-        if(roles){
-            this.data.values = this.data.values.concat(roles)
-        }
-    },
-    afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let roles = [];
-        if(filters.api_name){
-            role = objectql.getSourceRole(filters.api_name);
-            if(role){
-                roles.push(role);
-            }
-        }else if(filters._id){
-            roles = Creator.getCollection("roles").find({api_name: filters._id}).fetch();
-        }else{
-            roles = objectql.getSourceRoles();
-        }
-
-        roles = getInternalRoles(roles, filters);
-
-        if(roles){
-            this.data.values = this.data.values.concat(roles)
-        }
+        let spaceId = this.spaceId;
+        let sourceData = objectql.getSourceRoles();
+        this.data.values = this.data.values.concat(sourceData);
+        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
     },
     afterCount: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let roles = [];
-        if(filters.api_name){
-            role = objectql.getSourceRole(filters.api_name);
-            if(role){
-                roles.push(role);
-            }
-        }else if(filters._id){
-            roles = Creator.getCollection("roles").find({api_name: filters._id}).fetch();
-        }else{
-            roles = objectql.getSourceRoles();
-        }
-
-        roles = getInternalRoles(roles, filters);
-
-        if(roles){
-            this.data.values = this.data.values + roles.length
-        }
+        let spaceId = this.spaceId;
+        this.data.values = this.data.values + objectql.getSteedosSchema().metadataDriver.count(objectql.getSourceRoles(), this.query, spaceId);
     },
     afterFindOne: async function(){
+        let spaceId = this.spaceId;
         if(_.isEmpty(this.data.values)){
-            let id = this.id
-            if(id){
-
-                let dbRole = Creator.getCollection("roles").find({api_name: id}).fetch();
-                if(dbRole && dbRole.length > 0){
-                    this.data.values = dbRole[0];
-                    return;
-                }
-
-                let role = objectql.getSourceRole(id);
-                if(role){
-                    this.data.values = role;
-                }
+            const records = objectql.getSteedosSchema().metadataDriver.find(objectql.getSourceRoles(), {filters: ['_id', '=', this.id]}, spaceId);
+            if(records.length > 0){
+                this.data.values = records[0]
             }
         }
     }
