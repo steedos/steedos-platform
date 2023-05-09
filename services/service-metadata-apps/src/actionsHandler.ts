@@ -1,7 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import { translationApp, translationObjectLabel } from '@steedos/i18n';
-import { getAssignedApps, getObject as _getObject } from "@steedos/objectql";
+import { getAssignedApps, getObject as _getObject, absoluteUrl } from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -281,7 +281,15 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     translationApp(userSession.language, app.code, app);
     var appPath = `/app/${app.code}`
     if(app.url){
-        appPath = app.url
+        if(/^http(s?):\/\//.test(app.url)){
+            if(app.secret){
+				appPath = absoluteUrl("/api/external/app/" + (app._id || app.code))
+            }else{
+                appPath = app.url
+            }
+        }else{
+            appPath = app.url
+        }
     }
     const menu: any = {
         id: app.code,
