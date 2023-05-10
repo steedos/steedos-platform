@@ -3,7 +3,7 @@ const workflow = require('@steedos/workflow');
 const objectql = require("@steedos/objectql");
 const { ObjectId } = require("mongodb");
 const AmisInputTypes = [
-    //41个表单项
+    //44个表单项
     'input-image',
     'input-number',
     'input-group',
@@ -38,6 +38,7 @@ const AmisInputTypes = [
     'input-rating',
     'input-sub-form',
     'input-date',
+	'input-datetime',
     'textarea',
     'tabs-transfer',
     'select',
@@ -46,8 +47,10 @@ const AmisInputTypes = [
     'location-picker',
     'input-table',
     'editor',
-    'steedos-field'
-
+    'steedos-field',
+	'input-password',
+	'input-email',
+	'input-url'
 ];
 
 // getInstanceFormSchema() 在用户创建的表单中获取到type为form name为instanceForm的表单，其他的表单不要
@@ -90,8 +93,10 @@ function getFormInputFields(formSchema) {
         if (field) {
             //进入if说明是表单项
             _.each(inputFields, (item) => {
+				// 考虑使用steedos-field组件时 name配置到config的情况
+				field.name = field.name || field.config.name;
                 // 如果要添加的field重复 无需再添加
-                if (field.name === item.name) {
+				if (field.name === item.name) {
                     flag = false;
                 }
             })
@@ -128,17 +133,45 @@ function transformFormFields(amisField) {
         _id: new ObjectId().toHexString(),
         code: amisField.name,
         name: amisField.label,
-        is_wide: _.includes(amisField.className, "is_wide")
+        is_wide: _.includes(amisField.className, "is_wide"),
+		default_value: _.get(amisField, 'value', ''),
+        is_required: amisField.required == true ? true : false,
+        is_multiselect: amisField.multiple == true ? true : false,
+		is_list_display: _.includes(amisField.className, "is_list_display"),
+        is_searchable: _.includes(amisField.className, "is_searchable")
     }
 
     switch (amisField.type) {
 
         case 'input-table':
             formFieldsItem.type = 'table';
+			formFieldsItem.is_wide = true;
             formFieldsItem.fields = _.map(amisField.columns, (item) => {
                 return transformFormFields(item);
             })
             break
+		//对amis设计器表格编辑框行组件的转换
+		case 'tpl':
+			formFieldsItem.type = 'input'
+			break
+		case 'image':
+			formFieldsItem.type = 'input'
+			break
+		case 'progress':
+			formFieldsItem.type = 'input'
+			break
+		case 'status':
+			formFieldsItem.type = 'input'
+			break
+		case 'mapping':
+			formFieldsItem.type = 'input'
+			break
+		case 'operation':
+			formFieldsItem.type = 'input'
+			break
+		case 'text':
+			formFieldsItem.type = 'input'
+			break
 
         case 'input-kv':
             // 把他们赋值到新属性fields中
@@ -195,26 +228,39 @@ function transformFormFields(amisField) {
             break
 
         case 'fieldset':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'section'
             formFieldsItem.name = amisField.title
             formFieldsItem.code = 'fieldset'
+			formFieldsItem.is_wide = true
+			fieldset_item = amisField.body ? amisField.body : amisField.field
             // 把他们赋值到新属性fields中
-            formFieldsItem.fields = _.map(amisField.body, (item) => {
+            formFieldsItem.fields = _.map(fieldset_item, (item) => {
                 return transformFormFields(item);
             })
             break
 
         case 'input-rich-text':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'html'
             break
         case 'input-image':
             formFieldsItem.type = 'input'
             break
         case 'input-number':
             formFieldsItem.type = 'number'
+			formFieldsItem.default_value = _.toString(amisField.value)
+			formFieldsItem.digits = amisField.precision
             break
         case 'input-text':
             formFieldsItem.type = 'input'
+            break
+		case 'input-url':
+			formFieldsItem.type = 'url'
+			break
+		case 'input-password':
+			formFieldsItem.type = 'password'
+			break
+		case 'input-email':
+            formFieldsItem.type = 'email'
             break
         case 'uuid':
             formFieldsItem.type = 'input'
@@ -222,9 +268,11 @@ function transformFormFields(amisField) {
             break
         case 'list-select':
             formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-tag':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-city':
             formFieldsItem.type = 'input'
@@ -233,7 +281,8 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'picker':
-            formFieldsItem.type = 'input'
+            formFieldsItem.type = 'select'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'input-repeat':
             formFieldsItem.type = 'input'
@@ -243,6 +292,7 @@ function transformFormFields(amisField) {
             break
         case 'textarea':
             formFieldsItem.type = 'input'
+			formFieldsItem.is_textarea = true
             break
         case 'chained-select':
             formFieldsItem.type = 'input'
@@ -262,6 +312,9 @@ function transformFormFields(amisField) {
         case 'input-date':
             formFieldsItem.type = 'date'
             break
+		case 'input-datetime':
+			formFieldsItem.type = 'dateTime'
+			break
         case 'formula':
             formFieldsItem.type = 'input'
             formFieldsItem.name = '公式'
@@ -271,14 +324,13 @@ function transformFormFields(amisField) {
             break
         case 'checkbox':
             formFieldsItem.type = 'checkbox'
-            formFieldsItem.name = amisField.option
-            // 如果是旧表单设计器中创建的checkbox没有option属性，应用name属性赋值给新的name
-            if(!formFieldsItem.name){
-                formFieldsItem.name = amisField.name
-            }
+			formFieldsItem.name = amisField.option
+			formFieldsItem.code = amisField.name
             break
         case 'checkboxes':
-            formFieldsItem.type = 'select'
+            formFieldsItem.type = 'multiSelect'
+			formFieldsItem.is_multiselect = amisField.multiple
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'matrix-checkboxes':
             formFieldsItem.type = 'input'
@@ -287,7 +339,8 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'switch'
             break
         case 'radios':
-            formFieldsItem.type = 'select'
+            formFieldsItem.type = 'radio'
+			formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
             break
         case 'nested-select':
             formFieldsItem.type = 'input'
@@ -321,26 +374,66 @@ function transformFormFields(amisField) {
 
 				formFieldsItem.url = amisField.source.url.replace('${context.rootUrl}','')
 			}else{
+				// 反之为按下拉框字段处理
 				formFieldsItem.type = 'select'
+				formFieldsItem.options = _.map(amisField.options, option => `${option.label}:${option.value}`).join('\n');
 			}
             break
         case 'steedos-field':
 
-            let fieldsAdd = {
-                field: amisField.field
-            }
-            const steedosField = Object.assign(fieldsAdd,formFieldsItem);
+			// 从新表单用steedos-field创建user,group组件的情况
+			if(amisField.config){
+				let tempConfig = amisField.config;
 
-            tempField = JSON.parse(steedosField.field)
+				let steedosField = {
+					_id: amisField.id,
+					code: tempConfig.name || amisField.name,
+					name: tempConfig.label,
+					default_value: _.get(amisField, 'value', ''),
 
-            if (tempField.reference_to === "organizations") {
-                steedosField.type = 'group'
-            }else if(tempField.reference_to === "space_users"){
-                steedosField.type = 'user'
-            }
-            // return steedosField
-            formFieldsItem = steedosField
-            break
+					// 配置steedos-field时 若存在config属性 required multiple需要配置在和config同层级
+					is_multiselect: amisField.multiple == true ? true : false,
+					is_required: amisField.required == true ? true : false,
+					// 在className 配置is_wide is_list_display is_searchable属性 在className也需要配置在config同层级
+					is_wide: _.includes(amisField.className, "is_wide"),
+					is_list_display: _.includes(amisField.className, "is_list_display"),
+					is_searchable: _.includes(amisField.className, "is_searchable"),
+				}
+
+				if (tempConfig.reference_to === "organizations") {
+					steedosField.type = 'group'
+				}else if(tempConfig.reference_to === "space_users"){
+					//  && tempConfig.reference_to_field === 'user'
+					steedosField.type = 'user'
+				}
+				return steedosField
+
+			}else if(amisField.field){
+				// 在旧表单设置后 打开新表单 再进行设计更改 保存转换格式
+				let tempField = JSON.parse(amisField.field)
+				let steedosField = {
+					_id: amisField.id,
+					code: tempField.name || amisField.name,
+					name: tempField.label,
+					default_value: _.get(amisField, 'value', ''),
+					is_multiselect: amisField.multiple == true ? true : false,
+					is_required: amisField.required == true ? true : false,
+
+					is_wide: _.includes(amisField.className, "is_wide"),
+					is_list_display: _.includes(amisField.className, "is_list_display"),
+					is_searchable: _.includes(amisField.className, "is_searchable"),
+				}
+
+				if (tempField.reference_to === "organizations") {
+					steedosField.type = 'group'
+				}else if(tempField.reference_to === "space_users"){
+					//  && tempField.reference_to_field === 'user'
+					steedosField.type = 'user'
+				}
+				return steedosField
+
+			}
+
     }
 
     return formFieldsItem
