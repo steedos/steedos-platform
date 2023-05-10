@@ -59,7 +59,8 @@
 									"fields": []
 								}
 							],
-							"id": "u:c072a969328c"
+							"id": "u:c072a969328c",
+							"unmountOnExit": true
 						},
 						{
 							"title": "权限",
@@ -71,7 +72,7 @@
 									"recordId": "${recordId}",
 									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
 									"id": "u:3b769ba2695e",
-									"mode": "edit",
+									"mode": "read",
 									"fields": [
 										"perms",
 										"perms.users_can_add",
@@ -81,19 +82,11 @@
 										"perms.orgs_can_admin",
 										"perms.users_can_admin"
 									],
-									"fieldsExtend": "{\n  \"perms\": {\n    \"label\": false\n  }\n}",
-									"actions": [
-										{
-											"actionType": "submit",
-											"type": "button",
-											"label": "保存",
-											"level": "info",
-											"id": "u:08afd6e53cab"
-										}
-									]
+									"fieldsExtend": "{\n  \"perms\": {\n    \"label\": false\n  }\n}"
 								}
 							],
-							"id": "u:8464a589ecf0"
+							"id": "u:8464a589ecf0",
+							"unmountOnExit": true
 						},
 						{
 							"title": "步骤",
@@ -123,7 +116,8 @@
 									"fieldsExtend": "{\n  \"current\": {\n    \"group\": null,\n    \"label\": false\n  },\n  \n  \"current.steps\": {\n    \"label\": false\n  }\n}"
 								}
 							],
-							"id": "u:9acfaaba0412"
+							"id": "u:9acfaaba0412",
+							"unmountOnExit": true
 						},
 						{
 							"title": "字段",
@@ -199,6 +193,7 @@
 								}
 							],
 							"id": "u:fa2adcce8268",
+							"unmountOnExit": true,
 							"visibleOn": "${!!object_name}"
 						},
 						{
@@ -212,7 +207,8 @@
 									"id": "u:4da6b72d60dc"
 								}
 							],
-							"id": "u:ae482c3f33a5"
+							"id": "u:ae482c3f33a5",
+							"unmountOnExit": true
 						}
 					],
 					"className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
