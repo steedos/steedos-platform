@@ -57,10 +57,16 @@ amis_schema: |-
                                             "submitSucc": {
                                                 "weight": 0,
                                                 "actions": [
-                                                {
-                                                    "actionType": "custom",
-                                                    "script": "const id = SteedosUI.getRef(event.data.scopeId).getComponents()[0].props.id;doAction({'actionType': 'reload','componentId': id,});"
-                                                }
+                                                    {
+                                                        "actionType": "broadcast",
+                                                        "args": {
+                                                          "eventName": "@data.changed.process_instance_history"
+                                                        },
+                                                        "data": {
+                                                          "objectName": "process_instance_history",
+                                                          "displayAs": "${displayAs}"
+                                                        }
+                                                    }
                                                 ]
                                             }
                                         }
