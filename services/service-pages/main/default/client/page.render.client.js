@@ -129,6 +129,7 @@
             const masterObject = Creator.getObject(FlowRouter.getParam("object_name"))
             const object = Creator.getObject(objectApiName)
             const idFieldName = masterObject.idFieldName;
+            relatedKeyRefToField = object.fields[relatedKey].reference_to_field || idFieldName || '_id';
             return {
                 render_engine: 'amis',
                 name: 'steedosRelatedListPage',
@@ -142,7 +143,7 @@
                             api.data = {
                                 query: \`{
                                     data: ${masterObject.name}(filters:["${idFieldName}", "=", "${FlowRouter.getParam("record_id")}"]){
-                                        ${idFieldName}
+                                        ${idFieldName === relatedKeyRefToField ? idFieldName : idFieldName+','+relatedKeyRefToField},
                                         ${masterObject.NAME_FIELD_KEY},
                                         recordPermissions: _permissions{
                                             allowCreate,
@@ -177,6 +178,15 @@
                             if(payload.data.data){
                                 var data = payload.data.data[0];
                                 payload.data = data;
+                                payload.data._master = {
+                                    objectName: "${masterObject.name}",
+                                    recordId: data["${idFieldName}"],
+                                    record: {
+                                        "${idFieldName}": data["${idFieldName}"], 
+                                        "${masterObject.NAME_FIELD_KEY}": data["${masterObject.NAME_FIELD_KEY}"], 
+                                        "${relatedKeyRefToField}": data["${relatedKeyRefToField}"]
+                                    }
+                                };
                             }
                             payload.data.$breadcrumb = [
                                 {

@@ -46,7 +46,7 @@
     display: block !important;
 }
 .instance-box-tree .antd-TreeControl{
-    padding-top: 15px;
+    padding: 15px 0;
 }
 /* .instance-box-tree .antd-TreeControl{
     padding: 0;
