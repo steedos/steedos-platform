@@ -168,10 +168,6 @@
   width: 100%
 }
 
-.w-64 {
-  width: 16rem
-}
-
 .w-96 {
   width: 24rem
 }
@@ -322,11 +318,6 @@
   padding-bottom: 0px
 }
 
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
@@ -350,10 +341,6 @@
 
 .text-lg {
   font-size: 16px
-}
-
-.text-xl {
-  font-size: 18px
 }
 
 .font-bold {
@@ -422,8 +409,8 @@
     margin-top: 0.75rem
   }
 
-  .sm\:w-\[220px\] {
-    width: 220px
+  .sm\:w-\[240px\] {
+    width: 240px
   }
 
   .sm\:rounded-lg {
@@ -445,6 +432,15 @@
 
   .sm\:p-3 {
     padding: 0.75rem
+  }
+
+  .sm\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem
+  }
+
+  .sm\:pt-3 {
+    padding-top: 0.75rem
   }
 
   .sm\:shadow {
