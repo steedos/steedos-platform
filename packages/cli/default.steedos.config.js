@@ -16,11 +16,11 @@ if(_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 }
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-	process.env.STEEDOS_AMIS_VERSION = '2.7.2';
+	process.env.STEEDOS_AMIS_VERSION = '2.9.0';
 }
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.6-beta.11/dist/assets.json";
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.6/dist/assets.json";
 }
 
 /**
