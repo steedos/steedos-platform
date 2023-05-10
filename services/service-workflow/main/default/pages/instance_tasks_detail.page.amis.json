@@ -87,7 +87,7 @@
     },
     {
       "type": "wrapper",
-      "className": "steedos-instance-detail-wrapper bg-white m-0 p-0 flex-1 focus:outline-none lg:order-last",
+      "className": "steedos-instance-detail-wrapper m-0 p-0 flex-1 focus:outline-none lg:order-last sm:pt-3 sm:px-3",
       "body": [
         {
           "type": "service",
