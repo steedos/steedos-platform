@@ -54,8 +54,8 @@ tab_items:
     group: 对象设置
     index: 13
   admin_queue_import:
-    group: 对象设置
-    index: 14
+    group: 高级设置
+    index: 38
   admin_pages:
     group: 用户界面
     index: 15
@@ -77,6 +77,9 @@ tab_items:
   admin_developer_triggers:
     group: 开发
     index: 19.51
+  admin_developer_graphql:
+    group: 开发
+    index: 19.52
   admin_process_definition:
     group: 流程自动化
     index: 20
