@@ -91,3 +91,20 @@
 .antd-Form-item.p-0{
     padding: 0;
 } 
+
+.antd-Crud .antd-Table-toolbar.antd-Table-footToolbar{
+    padding: 0.75rem 0.5rem;
+}
+@media (max-width: 768px) {
+    .antd-Crud .antd-Table-toolbar.antd-Table-footToolbar{
+        padding: 0;
+    }
+}
+
+.antd-Table-footToolbar .antd-Crud-toolbar .antd-Crud-toolbar-item--left:not(:first-child){
+    margin-left: 0.625rem;
+}
+
+.antd-Table-footToolbar .antd-Crud-pager .antd-Pagination > li > a{
+    display: block;
+}
