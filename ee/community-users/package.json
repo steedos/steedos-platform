@@ -1,6 +1,6 @@
 {
   "name": "@steedos/ee_community-users",
-  "version": "2.5.0-beta.22",
+  "version": "2.5.0-beta.23",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -8,5 +8,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5a309a822879b8eaa81fb847326765f48e8e84a9"
+  "gitHead": "49ef7bdf5fca9be70922ebb2275ed0c20bca4ec6"
 }
