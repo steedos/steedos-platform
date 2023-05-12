@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-22 10:23:14
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-05-12 09:33:27
  * @Description: 
  */
 const objectql = require("@steedos/objectql");
@@ -13,7 +13,7 @@ Meteor.startup(function () {
         // 重置字段权限延迟10秒,防止对象服务未上线
         setTimeout(()=>{
             try {
-                console.log("====resetAllPermissionSetFieldPermissions====")
+                // console.log("====resetAllPermissionSetFieldPermissions====")
                 objectql.getSteedosSchema().broker.call(`permission_fields.resetAllPermissionSetFieldPermissions`, {
                     objectName: document.object
                 }, {
