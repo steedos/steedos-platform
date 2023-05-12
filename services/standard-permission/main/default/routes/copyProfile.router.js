@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-28 14:59:28
+ * @LastEditTime: 2023-05-12 16:11:10
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -52,6 +52,9 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         if (originalPermissionSet.type !== 'profile') {
             throw new Error("permission_set is not profile type");
         }
+
+        const { name:originalPermissionSetName } = originalPermissionSet;
+
         // API名称不能重复
         const existPermissionSetCount = await psObj.count({
             filters: [
@@ -152,6 +155,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                             editable: fieldPermission ? fieldPermission.editable : getFieldDefaultEditable(field),
                             readable: fieldPermission ? fieldPermission.readable : getFieldDefaultReadable(field),
                             _id: driver._makeNewID(),
+                            copy_from: fieldPermission ? fieldPermission._id : `${originalPermissionSetName}.${newPermissionObject.object_name}.${field.name}`
                         })
                     }
                 }
@@ -181,6 +185,12 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
 
                 // 批量创建选项卡权限
                 await permissionTabsColl.insertMany(newPermissionTabs, { session });
+
+                // 批量注册字段权限
+                const schema = objectql.getSteedosSchema();
+                const objectName = "permission_fields";
+                const SERVICE_NAME = `~database-${objectName}`;
+                await objectql.registerPermissionFields.mregister(schema.broker, SERVICE_NAME, newPermissionFields)
             }
 
         } catch (error) {
