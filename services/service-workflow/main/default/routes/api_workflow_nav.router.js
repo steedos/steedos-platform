@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-04 10:27:20
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-12 10:32:01
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,7 +15,7 @@ const core = require('@steedos/core');
 const _ = require('underscore');
 const lodash = require('lodash');
 const { link } = require('fs');
-
+const { t } = require('@steedos/i18n')
 /**
 @api {get} /api/workflow/nav 获取用户
 @apiVersion 0.0.0
@@ -99,7 +99,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     let {schema, count} = await getCategoriesInbox(userSession,req)
     var options = [
       {
-        "label": "待审核",
+        "label": t('inbox', {}, userSession.language),
         "icon": "fa fa-download",
         "tag":count,
         "value":{
@@ -109,7 +109,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "children":schema
       },
       {
-        "label": "已审核",
+        "label": t('outbox', {}, userSession.language),
         "value":{
           "level":1,
           "to": `/app/${appId}/instance_tasks/grid/outbox`
@@ -117,7 +117,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "icon": "fa fa-check"
       },
       {
-        "label": "监控箱",
+        "label": t('monitor', {}, userSession.language),
         "icon": "fa fa-eye",
         "value":{
           "level":1,
@@ -133,7 +133,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "unfolded": true,
         "children": [
           {
-            "label": "草稿",
+            "label": t('draft', {}, userSession.language),
             "value":{
               "level":1,
               "to": `/app/${appId}/instances/grid/draft`
@@ -141,7 +141,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "icon": "fa fa-pencil"
           },
           {
-            "label": "进行中",
+            "label": t('pending', {}, userSession.language),
             "value":{
               "level":1,
               "to": `/app/${appId}/instances/grid/pending`,
@@ -149,7 +149,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "icon": "fa fa-circle"
           },
           {
-            "label": "已完成",
+            "label": t('completed', {}, userSession.language),
             "value":{
               "level":1,
               "to": `/app/${appId}/instances/grid/completed`,
