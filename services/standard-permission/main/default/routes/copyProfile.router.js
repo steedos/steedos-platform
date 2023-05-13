@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-12 16:11:10
+ * @LastEditTime: 2023-05-13 17:00:38
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -115,7 +115,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             delete newPermissionSetData.record_permissions;
             const insertPermissionSetResult = await permissionSetColl.insertOne(newPermissionSetData);
             newPermissionSet = insertPermissionSetResult.ops[0];
-            console.log('newPermissionSet', newPermissionSet)
+            // console.log('newPermissionSet', newPermissionSet)
 
             // 创建对象权限和选项卡权限
             if (newPermissionSet) {

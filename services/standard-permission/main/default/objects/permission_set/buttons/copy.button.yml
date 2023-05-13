@@ -107,6 +107,6 @@ label: 复制
 type: amis_button
 visible: !!js/function |
     function (object_name, record_id, record_permissions, record) {
-        return false;
+
         return record.record.type == 'profile';
     }
