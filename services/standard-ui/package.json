@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-ui",
-    "version": "2.2.70",
+    "version": "2.2.71",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "483b0d793a3de6f5c1ba5859f1d9cdba54057fd1"
+    "gitHead": "fe6a26e57b97c8358d5d269227fbf4f648bcd1e4"
 }
