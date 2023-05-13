@@ -373,10 +373,6 @@ Template.instance_suggestion.events
 		Session.set("instance_change", true);
 		InstanceManager.checkSuggestion();
 
-		sign_field_code = InstanceManager.getOpinionFieldsCode()
-
-		InstanceManager.updateApproveSign(sign_field_code, $("#suggestion").val(), "update", InstanceSignText.helpers.getLastSignApprove())
-
 		Session.set("instance_my_approve_description", $("#suggestion").val())
 
 	'click #instance_submit': (event)->
@@ -467,6 +463,10 @@ Template.instance_suggestion.onRendered ->
 		nextStep = WorkflowManager.getInstanceStep(next_step_id)
 		if nextStep && nextStep.step_type == 'end'
 			$("#nextStepUsers_div").hide();
+
+	sign_field_code = InstanceManager.getOpinionFieldsCode()
+
+	InstanceManager.updateApproveSign(sign_field_code, $("#suggestion").val(), "update", InstanceSignText.helpers.getLastSignApprove())
 
 Template.instance_suggestion.onDestroyed ->
 	Session.set("instance_suggestion_ready", false)
