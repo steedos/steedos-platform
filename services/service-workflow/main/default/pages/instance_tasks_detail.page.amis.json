@@ -1,76 +1,175 @@
 {
-    "type": "page",
-    "className": "steedos-instance-wrapper",
-    "body": [
-      {
-        "type": "service",
-        "id": "u:d6db0c84f150",
-        "body": [
-          {
-            "type": "wrapper",
-            "className": "p-0 h-full",
-            "body": [
-              {
-                "type": "steedos-instance-detail",
-                "label": "Instance Detail",
-                "id": "u:40052b3812c1",
-                "instanceId": "${instanceId}",
-                "boxName": "${boxName}",
-                "hiddenOn": "!!!this.instanceId"
-              }
-            ],
-            "id": "u:dc5cb678096b",
-            "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}"
+  "type": "page",
+  "body": [
+    {
+      "type": "wrapper",
+      "visibleOn": "${AND(display != 'split', ${window:innerWidth > 768})}",
+      "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col",
+      "body": [
+        {
+          "type": "service",
+          "className": "w-full h-full",
+          "onEvent": {
+            "@data.changed.instance_tasks": {
+              "actions": [
+                {
+                  "actionType": "reload"
+                }
+              ]
+            }
           },
-          {
-            "type": "wrapper",
-            "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
-            "visibleOn": "${window:InstanceDetailEnabledAmisRender == false  && instanceId}",
-            "body": [
-              {
-                "type": "custom",
-                "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
-                "onMount": "\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.instanceId);\nSession.set(\"box\", props.data.boxName);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])",
-                "id": "u:a6e0685d1da3",
-                "onUnmount": "if(window.instanceDetailBlazeRenderView){Blaze.remove(window.instanceDetailBlazeRenderView)}"
-              }
-            ],
-            "id": "u:16cf880c925a",
-            "style": {
-              "position": "static",
-              "display": "block"
-            },
-            "isFixedHeight": false,
-            "isFixedWidth": false
+          "body": [
+            {
+              "type": "input-tree",
+              "treeContainerClassName": "h-full",
+              "name": "tree",
+              "className": "instance-box-tree bg-white w-full",
+              "id": "u:9f3dd961ca12",
+              "stacked": true,
+              "multiple": false,
+              "enableNodePath": false,
+              "hideRoot": true,
+              "showIcon": true,
+              "initiallyOpen": false,
+              "size": "md",
+              "onEvent": {
+                "change": {
+                  "actions": [
+                    {
+                      "args": {
+                        "link": "${event.data.value.to}",
+                        "blank": false
+                      },
+                      "actionType": "link"
+                    }
+                  ]
+                }
+              },
+              "menuTpl": {
+                "type": "wrapper",
+                "className": "flex flex-row  p-0 m-0",
+                "body": [
+                  {
+                    "type": "tpl",
+                    "className": "flex-1 w-6/12",
+                    "tpl": "${label}"
+                  },
+                  {
+                    "type": "tpl",
+                    "className": "-mx-11 ",
+                    "tpl": "",
+                    "badge": {
+                      "offset": [
+                        -13,
+                        13
+                      ],
+                      "mode": "text",
+                      "text": "${tag}"
+                    }
+                  }
+                ]
+              },
+              "unfoldedLevel": 2,
+              "source": "${options}"
+            }
+          ],
+          "id": "u:aa4f4dc5f439",
+          "api": {
+            "method": "get",
+            "url": "${context.rootUrl}/api/${appId}/workflow/nav",
+            "headers": {
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+            }
           }
-        ],
-        "messages": {
-        },
-        "api": {
-          "url": "${context.rootUrl}/graphql",
-          "method": "post",
-          "messages": {
+        }
+      ],
+      "id": "u:339eb21f368c"
+    },
+    {
+      "type": "wrapper",
+      "className": "steedos-instance-detail-wrapper m-0 p-0 flex-1 focus:outline-none lg:order-last sm:pt-3 sm:px-3",
+      "body": [
+        {
+          "type": "service",
+          "id": "u:d6db0c84f150",
+          "body": [
+            {
+              "type": "wrapper",
+              "className": "p-0 h-full",
+              "body": [
+                {
+                  "type": "steedos-instance-detail",
+                  "label": "Instance Detail",
+                  "id": "u:40052b3812c1",
+                  "instanceId": "${instanceId}",
+                  "boxName": "${boxName}",
+                  "hiddenOn": "!!!this.instanceId"
+                }
+              ],
+              "id": "u:dc5cb678096b",
+              "visibleOn": "${window:InstanceDetailEnabledAmisRender != false}"
+            },
+            {
+              "type": "wrapper",
+              "className": "workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper",
+              "visibleOn": "${window:InstanceDetailEnabledAmisRender == false  && instanceId}",
+              "body": [
+                {
+                  "type": "custom",
+                  "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
+                  "onMount": "console.log('custom props.data====>', props.data);\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.instanceId);\nSession.set(\"box\", props.data.boxName);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])",
+                  "id": "u:a6e0685d1da3",
+                  "onUnmount": "if(window.instanceDetailBlazeRenderView){Blaze.remove(window.instanceDetailBlazeRenderView)}"
+                }
+              ],
+              "id": "u:16cf880c925a",
+              "style": {
+                "position": "static",
+                "display": "block"
+              },
+              "isFixedHeight": false,
+              "isFixedWidth": false
+            }
+          ],
+          "messages": {},
+          "api": {
+            "url": "${context.rootUrl}/graphql?recordId=${recordId}",
+            "method": "post",
+            "messages": {},
+            "dataType": "json",
+            "headers": {
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+            },
+            "requestAdaptor": "\nconst { recordId } = api.body;\napi.data = {\n  query: `{instance_task:instance_tasks__findOne(id: \"${recordId}\"){_id,instance}}`\n};\n\nreturn api;",
+            "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}\n; \nSession.set('box', boxName); Session.set('instanceId', payload.data.instanceId); console.log('=======>payload===>', payload);  \nreturn payload;"
           },
-          "dataType": "json",
-          "headers": {
-            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-          },
-          "requestAdaptor": "\nconst { recordId } = api.body;\napi.data = {\n  query: `{instance_task:instance_tasks__findOne(id: \"${recordId}\"){_id,instance}}`\n};\n\nreturn api;",
-          "adaptor": "\nlet boxName = api.body.side_listview_id === 'inbox' ? 'inbox' : 'outbox';\npayload.data = {\n  instanceId: payload.data.instance_task.instance,\n  boxName: boxName\n}\nreturn payload;"
-        },
-        "className": "h-full"
-      }
-    ],
-    "regions": [
-      "body"
-    ],
-    "id": "u:d37465183f56",
-    "bodyClassName": "bg-white border-b sm:shadow sm:rounded sm:border border-slate-300 m-3 p-0 h-fill",
-    "name": "amis-root-workflow",
-    "initApi": null,
-    "initFetch": null,
-    "asideResizor": false,
-    "pullRefresh": {
-      "disabled": true
+          "className": "h-full"
+        }
+      ],
+      "id": "u:45d3529bdfd0"
     }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    "objectName": "instance_tasks",
+    "recordId": "5f032f591d4951790b84f3a0",
+    "context": {
+      "rootUrl": "http://127.0.0.1:5000",
+      "tenantId": "644484b7aff6100247b3e6cf",
+      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
+      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
+    }
+  },
+  "className": "steedos-instance-wrapper",
+  "id": "u:d37465183f56",
+  "bodyClassName": "p-0 flex flex-1 overflow-hidden h-full",
+  "name": "amis-root-workflow",
+  "initApi": null,
+  "initFetch": null,
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
   }
+}

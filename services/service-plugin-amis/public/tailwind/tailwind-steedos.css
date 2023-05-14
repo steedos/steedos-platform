@@ -46,6 +46,25 @@
   position: static
 }
 
+.fixed {
+  position: fixed
+}
+
+.absolute {
+  position: absolute
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px
+}
+
+.z-20 {
+  z-index: 20
+}
+
 .col-span-2 {
   grid-column: span 2 / span 2
 }
@@ -56,10 +75,6 @@
 
 .m-0 {
   margin: 0px
-}
-
-.m-3 {
-  margin: 0.75rem
 }
 
 .mx-4 {
@@ -154,12 +169,33 @@
   min-width: max-content
 }
 
+.min-w-\[240px\] {
+  min-width: 240px
+}
+
 .flex-1 {
   flex: 1 1 0%
 }
 
+.flex-shrink-0 {
+  flex-shrink: 0
+}
+
+.-translate-x-0 {
+  --tw-translate-x: -0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
 .flex-row {
   flex-direction: row
+}
+
+.flex-col {
+  flex-direction: column
 }
 
 .items-center {
@@ -174,13 +210,39 @@
   overflow: auto
 }
 
+.overflow-hidden {
+  overflow: hidden
+}
+
+.overflow-y-auto {
+  overflow-y: auto
+}
+
+.rounded {
+  border-radius: 0.25rem
+}
+
 .border-b {
   border-bottom-width: 1px
+}
+
+.border-r {
+  border-right-width: 1px
 }
 
 .border-slate-300 {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity))
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity))
+}
+
+.border-slate-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity))
 }
 
 .bg-white {
@@ -194,6 +256,10 @@
 
 .p-4 {
   padding: 1rem
+}
+
+.p-2 {
+  padding: 0.5rem
 }
 
 .px-1 {
@@ -216,6 +282,16 @@
   padding-bottom: 0.5rem
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px
+}
+
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem
@@ -224,11 +300,6 @@
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
-}
-
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px
 }
 
 .pl-1\.5 {
@@ -276,6 +347,11 @@
   color: rgb(0 0 0 / var(--tw-text-opacity))
 }
 
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity))
+}
+
 .underline {
   text-decoration-line: underline
 }
@@ -290,9 +366,34 @@
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
 }
 
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.duration-300 {
+  transition-duration: 300ms
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px
+}
+
 @media (min-width: 640px) {
   .sm\:mt-3 {
     margin-top: 0.75rem
+  }
+
+  .sm\:w-\[240px\] {
+    width: 240px
   }
 
   .sm\:rounded-lg {
@@ -312,9 +413,36 @@
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
   }
 
+  .sm\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem
+  }
+
+  .sm\:pt-3 {
+    padding-top: 0.75rem
+  }
+
   .sm\:shadow {
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:order-first {
+    order: -9999
+  }
+
+  .lg\:order-last {
+    order: 9999
+  }
+
+  .lg\:flex {
+    display: flex
+  }
+
+  .lg\:flex-col {
+    flex-direction: column
   }
 }
