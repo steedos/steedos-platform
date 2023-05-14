@@ -2,13 +2,17 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-08 11:48:11
+ * @LastEditTime: 2023-05-14 09:58:14
  * @Description: 
  */
 import * as _ from 'underscore';
 import { getDataSourceServiceName } from './index';
 import { jsonToObject } from '../util/convert';
 import { getDataSource } from '../types/datasource';
+import { addOriginalObjectConfigs, getOriginalObjectConfig } from '../types/object_dynamic_load';
+
+const clone = require('clone');
+
 const LocalDataSourceServices = {};
 
 
@@ -27,6 +31,12 @@ export async function createDataSourceService(broker, dataSource) {
                 handler(ctx) {
                     let objectConfig = ctx.params.data;
                     jsonToObject(objectConfig)
+
+                    if(!getOriginalObjectConfig(objectConfig.name)){
+                        // 此处的objectConfig是已继承了base之后的结果. 已无法识别出原始定义.
+                        addOriginalObjectConfigs(objectConfig.name, dataSourceName, clone(objectConfig));
+                    }
+                    
                     dataSource.initObject(objectConfig)
                     /**
                      * 每次都需要初始化，TypeORM不适用于微服务模式
