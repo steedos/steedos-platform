@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-27 17:41:52
+ * @LastEditTime: 2023-05-15 09:26:19
  * @Description: 
  */
 const Cache = require('@steedos/cachers');
@@ -78,7 +78,8 @@ module.exports = {
         const count = await objectql.getObject('object_triggers').count({filters: [['_name', '=', doc._name], ['listenTo','=', doc.listenTo]]}) 
         if(count > 0){
             throw new Error('触发器名称不能重复')
-        }       
+        }
+        doc.name = `${doc.listenTo}_${doc._name}` 
     },
     beforeUpdate: async function () {
         const doc = this.doc;
@@ -88,6 +89,7 @@ module.exports = {
         const count = await objectql.getObject('object_triggers').count({filters: [['_name', '=', doc._name], ['listenTo','=', doc.listenTo], ['_id', '!=', this.id]]}) 
         if(count > 0){
             throw new Error('触发器名称不能重复')
-        }  
+        }
+        doc.name = `${doc.listenTo}_${doc._name}`  
     }
 }

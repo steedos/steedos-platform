@@ -12,9 +12,7 @@ fields:
     required: true
   name: 
     data_type: text
-    formula: listenTo.name+"_"+_name
-    formula_blank_value: blanks
-    type: formula
+    type: text
     visible_on: "{{false}}"
   listenTo:
     label: Object
