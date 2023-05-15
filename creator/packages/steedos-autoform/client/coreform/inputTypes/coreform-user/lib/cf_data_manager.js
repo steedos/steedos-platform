@@ -453,7 +453,8 @@ CFDataManager.getRoot = function (spaceId, options) {
 			fullname: 1,
 			parent: 1,
 			children: 1,
-			childrens: 1
+			childrens: 1,
+			hidden: 1,
 		}
 	});
 };
