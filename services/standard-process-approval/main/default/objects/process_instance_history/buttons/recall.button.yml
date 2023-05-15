@@ -32,7 +32,7 @@ amis_schema: |-
                                           "mode": "normal",
                                           "api": {
                                               "method": "post",
-                                              "url": "${context.rootUrl}/api/v4/process/recall/${objectName}/${recordId}",
+                                              "url": "${context.rootUrl}/api/v4/process/recall/${record.target_object.o}/${record.target_object.ids[0]}",
                                               "data": {
                                                   "&": "$$"
                                               },
