@@ -11,7 +11,7 @@ var EJSON = Package.ejson.EJSON;
 var HTTP = Package['steedos:cfs-http-methods'].HTTP;
 
 /* Package-scope variables */
-var rootUrlPathPrefix, baseUrl, getHeaders, getHeadersByCollection, _existingMountPoints, mountUrls;
+var rootUrlPathPrefix, baseUrl, getHeaders, getHeadersByCollection, _existingMountPoints, mountUrls, Images;
 
 (function(){
 
