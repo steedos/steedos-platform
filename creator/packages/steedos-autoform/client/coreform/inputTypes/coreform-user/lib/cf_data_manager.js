@@ -417,6 +417,10 @@ CFDataManager.getRoot = function (spaceId, options) {
 
 	var query = {parent: null}
 
+	if(!Steedos.isSpaceAdmin()){
+		query.hidden = {$ne: true}
+	}
+
 	if(spaceId){
 		query.space = spaceId
 	}else{
