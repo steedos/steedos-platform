@@ -65,7 +65,7 @@
         },
         "extra_columns": {
             "type": "array",
-            "description": "额外在列表显示的字段"
+            "description": "额外查询的字段"
         },
         "sort": {
             "type": "array",
