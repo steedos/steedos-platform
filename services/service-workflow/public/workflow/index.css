@@ -118,3 +118,8 @@
 .steedos-instance-wrapper input[disabled], input:disabled, input.disabled, input.is-disabled {
     -webkit-text-fill-color: inherit !important;
 }
+
+
+.instance-trace-detail-modal .weui-input{
+    color: #777;
+}
