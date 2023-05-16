@@ -63,16 +63,20 @@ Meteor.startup ->
 				onClick: (event) ->
 					console.log(event)
 					if (event.target.tag)
-						FlowRouter.go(event.target.tag)
+						if (event.target.tag.startsWith("/api/v4/notifications"))
+							Steedos.openWindow(event.target.tag)
+						else
+							FlowRouter.go(event.target.tag)
 					window.focus();
 					this.close();
 					return;
-
+			
 			if notification.payload
-
 				if notification.payload.requireInteraction
 					options.requireInteraction = payload.requireInteraction
 
+				if notification.payload.notifications_id
+					options.tag = "/api/v4/notifications/" + notification.payload.notifications_id + "/read"
 				if notification.payload.app == "calendar"
 					options.tag = "/calendar/inbox"
 				if notification.payload.instance
