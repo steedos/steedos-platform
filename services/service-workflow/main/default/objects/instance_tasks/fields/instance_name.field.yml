@@ -5,3 +5,8 @@ multiple: false
 filterable: true
 sort_no: 10
 is_name: true
+amis:
+  className:
+    'color-priority-danger': "${extras && extras.priority == '特急'}"
+    'color-priority-warning': "${extras && extras.priority == '紧急'}"
+    'color-priority-muted': "${extras && extras.priority == '办文'}" 

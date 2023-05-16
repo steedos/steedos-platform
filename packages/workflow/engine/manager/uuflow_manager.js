@@ -1,3 +1,4 @@
+'use strict';
 const {
     insert_instance_tasks,
     insert_many_instance_tasks,
@@ -943,6 +944,8 @@ uuflowManager.workflow_engine = function (approve_from_client, current_user_info
         }
         form = db.forms.findOne(instance.form);
         updateObj.$set.keywords = uuflowManager.caculateKeywords(updateObj.$set.values, form, instance.form_version);
+        // 计算extras
+        updateObj.$set.extras = uuflowManager.caculateExtras(updateObj.$set.values, form, instance.form_version);
         db.instances.update(instance_id, updateObj);
         // 新增
         if (updateObj.$push && updateObj.$push.traces && updateObj.$push.traces.approves) {
@@ -2409,6 +2412,8 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         }
     }
     upObj.keywords = uuflowManager.caculateKeywords(upObj.values, form, instance.form_version);
+    // 计算extras
+    upObj.extras = uuflowManager.caculateExtras(upObj.values, form, instance.form_version);
     db.instances.update({
         _id: instance_id
     }, {
@@ -3679,3 +3684,47 @@ uuflowManager.draft_save_instance = function (ins, userId) {
     update_instance_tasks(ins_id, trace_id, approve_id)
     return result;
 };
+
+// 计算出在表单字段中选择了列表显示的字段
+uuflowManager.caculateExtras = function (values, formDoc, formVersionId) {
+    if (_.isEmpty(values)) {
+        return
+    }
+    
+    const extras = {}
+    const formVersion = uuflowManager.getFormVersion(formDoc, formVersionId)
+    _.each(formVersion.fields, function (field) {
+        if (field.is_list_display) {
+            extras[field.code] = values[field.code]
+        } else if (field.type === 'table') {
+            // 表格
+            if (values[field.code]) {
+                const tableExtras = []
+                _.each(values[field.code], function (s_value) {
+                    const rowValues = {}
+                    _.each(field.fields, function (s_field) {
+                        if (s_field.is_list_display) {
+                            rowValues[s_field.code] = s_value[s_field.code]
+                        }
+                    });
+                    if (_.isEmpty(rowValues)) {
+                        tableExtras.push(rowValues)
+                    }
+                });
+            }
+        } else if (field.type === 'section') {
+            // 分组
+            _.each(field.fields, function (s_field) {
+                if (s_field.is_list_display) {
+                    extras[s_field.code] = values[s_field.code]
+                }
+            });
+        }
+    });
+
+    if (_.isEmpty(extras)) {
+        return
+    }
+
+    return extras
+}

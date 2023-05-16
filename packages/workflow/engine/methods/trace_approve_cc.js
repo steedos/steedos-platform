@@ -224,6 +224,9 @@ module.exports = {
                 var updated_values = uuflowManager.getUpdatedValues(ins, approve_id);
                 setObj.values = updated_values;
                 setObj.name = uuflowManager.getInstanceName(instance);
+                // 计算extras
+                var form = db.forms.findOne(instance.form);
+                setObj.extras = uuflowManager.caculateExtras(setObj.values, form, instance.form_version);
             }
 
             db.instances.update({
@@ -447,6 +450,9 @@ module.exports = {
             var change_values = approveManager.getChangeValues(instance.values, permissions_values);
 
             setObj.values = _.extend((instance.values || {}), permissions_values);
+            // 计算extras
+            var form = db.forms.findOne(instance.form);
+            setObj.extras = uuflowManager.caculateExtras(setObj.values, form, instance.form_version);
 
             if (!_.isEmpty(change_values)) {
                 var pushObj = {};
