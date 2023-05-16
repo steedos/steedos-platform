@@ -1,6 +1,8 @@
 "use strict";
 const _ = require("lodash")
 
+global.__startDate = new Date();
+
 require('dotenv-flow').config(
 	{
 		path: process.cwd(),
