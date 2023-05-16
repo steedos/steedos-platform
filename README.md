@@ -35,19 +35,19 @@
 
 ![管理数据访问权限](https://console.steedos.cn/api/files/images/hiRT2YQZYjKPvqL6o)
 
-## VS Code 插件
-
-实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
-
-![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
-
 ## 可视化设计微页面
 
 基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具，实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)。
 
 ![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
 
-## 软件包管理
+## 元数据同步为代码
+
+实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
+
+![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
+
+## 软件包版本管理
 
 元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)。
 
