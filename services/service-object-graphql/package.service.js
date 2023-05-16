@@ -268,7 +268,7 @@ module.exports = {
                 if (!this.projectStarted) {
                     this.projectStarted = true
                     // 开发环境, 显示耗时
-                    if(process.env.NODE_ENV == 'development'){
+                    if(process.env.NODE_ENV == 'development' && global.__startDate){
                         console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
                     }
                     console.log(`Project is running at ${process.env.ROOT_URL}`);
