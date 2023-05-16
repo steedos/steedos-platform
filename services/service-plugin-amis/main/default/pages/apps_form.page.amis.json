@@ -337,6 +337,7 @@
                                                                         "addable": true,
                                                                         "draggable": true,
                                                                         "editable": true,
+                                                                        "needConfirm": false,
                                                                         "columns": [
                                                                             {
                                                                                 "name": "group_name",
