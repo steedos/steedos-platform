@@ -690,7 +690,12 @@ module.exports = {
 					typeDefs.push(str);
 				}
 
-				return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
+				try {
+					return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
+				} catch (error) {
+					this.logger.error(error);
+					return this.graphqlSchema
+				}
 			} catch (err) {
 				// 用于调试异常GraphQL schema
 				// const fs = require('fs');
