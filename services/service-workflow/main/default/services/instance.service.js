@@ -10,6 +10,8 @@ module.exports = {
           `
           #获取可选取的相关申请单列表
           instances__getRelatedInstances(
+            #过滤条件
+            filters: JSON,
             #按流程过滤
             flowId: String,
             #按状态过滤 
@@ -27,9 +29,13 @@ module.exports = {
       async handler(ctx) {
         const userSession = ctx.meta.user;
         const { resolveInfo } = ctx.meta;
-        const { flowId, state, keywords , top , skip , sort} = ctx.params;
+        const { flowId, state, keywords , top , skip , sort, filters: userFilters} = ctx.params;
 
         const filters = await this.getRelatedFilters(flowId, state, keywords, userSession)
+
+        if(!_.isEmpty(userFilters)){
+            filters.push(userFilters);
+        }
 
         let fields = [];
 
@@ -53,12 +59,15 @@ module.exports = {
     instances__getRelatedInstances__count: {
         graphql: {
             query:
-            " instances__getRelatedInstances__count(flowId: String, state: String, keywords: String): Int"
+            " instances__getRelatedInstances__count(flowId: String, state: String, keywords: String, filters: JSON): Int"
         },
         async handler(ctx) {
             const userSession = ctx.meta.user;
-            const { flowId, state, keywords } = ctx.params;
+            const { flowId, state, keywords, filters: userFilters } = ctx.params;
             const filters = await this.getRelatedFilters(flowId, state, keywords, userSession);
+            if(!_.isEmpty(userFilters)){
+                filters.push(userFilters);
+            }
             const query = {
                 filters: filters
             }
