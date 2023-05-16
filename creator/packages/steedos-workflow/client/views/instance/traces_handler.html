@@ -1,17 +1,7 @@
 <template name="instance_traces_handler">
-	{{#if isMobile}}
-		{{#if (showSignImage handler is_finished judge)}}
-			{{> imageSign user=handler user_name=handler_name}}
-		{{else}}
-			{{handler_name}}
-		{{/if}}
+	{{#if (showSignImage handler is_finished judge)}}
+		{{> imageSign user=handler user_name=handler_name}}
 	{{else}}
-		<a class="btn-link" href="{{objectUrl 'users' handler '-'}}">
-			{{#if (showSignImage handler is_finished judge)}}
-				{{> imageSign user=handler user_name=handler_name}}
-			{{else}}
-				{{handler_name}}
-			{{/if}}
-		</a>
+		{{handler_name}}
 	{{/if}}
 </template>
