@@ -1,4 +1,5 @@
 
+db.notifications = new Mongo.Collection('notifications');
 Creator.subs["CreatorNotifications"] = new SubsManager();
 
 Meteor.startup(function(){
@@ -106,3 +107,105 @@ var handleMyNotifications = function(id, notification){
 //         }
 //     });
 // });
+
+
+    ; (function () {
+        try {
+            var rootId = "NotificationsSubscribeRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $("body")[0].appendChild(modalRoot);
+            }
+            const page = {
+                name: "pageNotificationsSubscribe",
+                render_engine: "amis",
+                schema: {
+                    name: "serviceNotificationsSubscribe",
+                    id: "serviceNotificationsSubscribe",
+                    type: "service",
+                    className: "service-notifications-subscribe hidden",
+                    body: [{
+                        "type": "button",
+                        "label": "触发@data.changed",
+                        "name": "buttonTriggerDataChange",
+                        "className": "button-trigger-data-change-notifications",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@data.changed.notifications"
+                                        },
+                                        "data": {
+                                            "type": "${event.data.type}",
+                                            "objectName": "notifications",
+                                            "recordId": "sss"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                    }]
+                }
+            };
+            Meteor.startup(function () {
+                const root = $("#" + rootId)[0];
+                Tracker.autorun(function (c) {
+                    if (Creator.steedosInit.get() && Creator.validated.get() && Creator.subs["CreatorNotifications"].ready("my_notifications")) {
+                        Steedos.Page.render(root, page, {});
+                        const findVars = (obj, vars) => {
+                            try {
+                                return vars.length === vars.filter(function (item) {
+                                    return item.split(".").reduce(function (sum, n) {
+                                        return sum[n];
+                                    }, obj) !== undefined;
+                                }).length;
+                            }
+                            catch (ex) {
+                                return false;
+                            }
+                        }
+                        const waittingVars = ["SteedosUI.refs.serviceNotificationsSubscribe.getComponentByName"];
+                        Promise.all([
+                            waitForThing(window, waittingVars, findVars)
+                        ]).then(() => {
+                            var scope = SteedosUI.refs["serviceNotificationsSubscribe"];
+                            var button = scope.getComponentByName("serviceNotificationsSubscribe.buttonTriggerDataChange");
+                            button && observeBadgeCount(button);
+                        });
+                    }
+                });
+            });
+
+        } catch (error) {
+            console.error(error)
+        };
+    })();
+
+
+function observeBadgeCount(button) {
+    var reload = function (type, doc) {
+        console.log("observed notifications change:", type, doc);
+        if (doc.space) {
+            // space为null的订阅不触发事件，后续有需要再单独处理
+            button.props.dispatchEvent('click', {
+                type: type
+            });
+        }
+    };
+    var callbacks = {
+        changed: function (newDoc) {
+            reload("changed", newDoc);
+        },
+        added: function (newDoc) {
+            reload("added", newDoc);
+        },
+        removed: function (oldDoc) {
+            reload("removed", oldDoc);
+        }
+    };
+    db.notifications.find().observe(callbacks);
+}
