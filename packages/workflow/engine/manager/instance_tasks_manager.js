@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-20 11:12:37
+ * @LastEditTime: 2023-05-16 09:13:00
  * @Description: 
  */
 'use strict';
@@ -211,6 +211,7 @@ function _generateTaskDoc(insDoc, traceDoc, approveDoc) {
         'keywords': insDoc.keywords,
         'is_archived': insDoc.is_archived,
         'category': insDoc.category,
+        'extras': insDoc.extras,
     }
 }
 

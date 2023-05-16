@@ -13,6 +13,11 @@ fields:
     searchable: true
     is_wide: true
     name: name
+    amis:
+      className:
+        'color-priority-danger': "${extras && extras.priority == '特急'}"
+        'color-priority-warning': "${extras && extras.priority == '紧急'}"
+        'color-priority-muted': "${extras && extras.priority == '办文'}" 
   flow:
     label: Workflow
     type: lookup
@@ -214,6 +219,12 @@ fields:
     hidden: true
   cc_users:
     type: "[text]"
+    hidden: true
+  extras:
+    type: Object
+    blackbox: true
+    omit: true
+    label: Extras
     hidden: true
 permission_set:
   user:

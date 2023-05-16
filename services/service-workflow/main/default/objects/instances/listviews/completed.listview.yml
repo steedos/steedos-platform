@@ -25,3 +25,5 @@ searchable_fields:
   - field: submit_date
   - field: state
   - field: is_archived
+extra_columns:
+  - extras

@@ -123,3 +123,15 @@
 .instance-trace-detail-modal .weui-input{
     color: #777;
 }
+
+tbody .color-priority-danger *{
+    color: red !important;
+}
+
+tbody .color-priority-warning *{
+    color: purple !important;
+}
+
+tbody .color-priority-muted *{
+    color: blue !important;
+}

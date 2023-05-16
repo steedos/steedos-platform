@@ -31,3 +31,5 @@ searchable_fields:
   - field: submit_date
   - field: instance_state
   - field: is_archived
+extra_columns:
+  - extras
