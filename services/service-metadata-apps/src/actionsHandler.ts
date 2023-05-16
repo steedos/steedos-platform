@@ -300,7 +300,8 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         description: app.description,
         children: [],
         blank: app.is_new_window,
-        on_click: app.on_click
+        on_click: app.on_click,
+        isExternalUrl: !!app.url
     }
     if(app.enable_nav_schema && app.nav_schema){
         menu.nav_schema = _.isString(app.nav_schema) ? JSON.parse(app.nav_schema) : app.nav_schema

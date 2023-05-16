@@ -225,11 +225,12 @@ Creator.getObjectRecordName = (record, object_name)->
 			return record.label || record[name_field_key]
 
 Creator.getApp = (app_id)->
-	if !app_id
-		app_id = Session.get("app_id")
-	app = Creator.Apps[app_id]
-	Creator.deps?.app?.depend()
-	return app
+	appMenus = Session.get("_app_menus") || Session.get("app_menus");
+	unless appMenus
+		return {}
+	currentApp = appMenus.find (menuItem) ->
+		return menuItem.id == app_id
+	return currentApp
 
 Creator.getAppDashboard = (app_id)->
 	app = Creator.getApp(app_id)
