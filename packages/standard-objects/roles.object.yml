@@ -31,6 +31,15 @@ fields:
     type: textarea
     rows: 3
     is_wide: true
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+paging:
+  enabled: false
 list_views:
   all:
     label: All Roles
