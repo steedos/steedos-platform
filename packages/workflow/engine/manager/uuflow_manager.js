@@ -3707,10 +3707,13 @@ uuflowManager.caculateExtras = function (values, formDoc, formVersionId) {
                             rowValues[s_field.code] = s_value[s_field.code]
                         }
                     });
-                    if (_.isEmpty(rowValues)) {
+                    if (!_.isEmpty(rowValues)) {
                         tableExtras.push(rowValues)
                     }
                 });
+                if (!_.isEmpty(tableExtras)) {
+                    extras[field.code] = tableExtras
+                }
             }
         } else if (field.type === 'section') {
             // 分组
