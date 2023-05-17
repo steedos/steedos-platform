@@ -198,7 +198,7 @@ module.exports = {
 						result = await this.getCloudSaasPurchasedPackages();
 					}
 					//同步软件包许可证
-					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+					// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					if(result){
 						for (const _package of result.packages) {
 							try {
@@ -236,7 +236,7 @@ module.exports = {
 			async handler(ctx) {
 				const { module, version } = ctx.params
 				//同步软件包许可证
-				await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+				// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 				return await this.upgradePackage(module, version);
             }
 		},
@@ -256,7 +256,7 @@ module.exports = {
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
 					//同步软件包许可证
-					await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+					// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
 				} catch (error) {
 					let errorInfo = error.message || '';
@@ -572,7 +572,7 @@ module.exports = {
 			// console.error(`login steedos registry fail: `, error.message);
 		}
 
-		await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
+		// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
  
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){

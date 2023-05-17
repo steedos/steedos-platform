@@ -24,7 +24,6 @@
     "@steedos/core": "2.5.0-beta.25",
     "@steedos/filters": "2.5.0-beta.25",
     "@steedos/i18n": "2.5.0-beta.25",
-    "@steedos/license": "2.2.8",
     "@steedos/meteor-bundle-dependencies": "2.5.0-beta.25",
     "@steedos/meteor-bundle-runner": "2.5.0-beta.25",
     "@steedos/objectql": "2.5.0-beta.25",

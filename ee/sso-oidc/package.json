@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@steedos/accounts": "2.5.0-beta.25",
-    "@steedos/license": "2.2.8",
     "@steedos/objectql": "2.5.0-beta.25",
     "@steedos/service-package-loader": "2.5.0-beta.25",
     "@techpass/passport-openidconnect": "^0.3.2",

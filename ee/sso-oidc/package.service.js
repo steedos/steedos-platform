@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:03:59
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-04 11:44:19
+ * @LastEditTime: 2023-05-17 14:32:43
  * @Description: 
  */
 "use strict";
@@ -12,7 +12,6 @@ const packageLoader = require('@steedos/service-package-loader');
 const objectql = require('@steedos/objectql');
 const authController = require("./main/default/routes/auth");
 const core = require("./main/default/routes/core");
-const license = require('@steedos/license');
 const _ = require('lodash');
 
 const { passport } = core.auth;
@@ -118,17 +117,7 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        // try {
-        //     if(this.__stop) {
-        //         throw new Error(this.__stop_message);
-        //     }
-        //     const allow = await license.isPlatformEnterPrise(objectql.getSteedosConfig().tenant._id)
-        //     if(!allow){
-        //         throw new Error('请购买企业版许可证，以使用「oidc sso」功能。')
-        //     }
-        // } catch (error) {
-        //     return await this.errorHandler(error);
-        // }
+        
     },
 
     /**

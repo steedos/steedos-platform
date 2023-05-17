@@ -3,7 +3,6 @@ const chalk = require('chalk');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const createHash = require('crypto').createHash;
-const steedosLicense = require("@steedos/license");
 const objectql = require('@steedos/objectql');
 const fs = require('fs')
 const path = require('path')
@@ -437,26 +436,26 @@ module.exports = {
 			}
 		},
 
-		saveLicenses: {
-			params: {
-				spaceId: { type: 'string', optional: false },
-				apiKey: { type: 'string', optional: false },
-				consoleUrl: { type: 'string', optional: false }
-			},
-			handler: async function (ctx) {
-				const { spaceId, apiKey, consoleUrl } = ctx.params;
-				// 给工作区添加许可证，调用导入许可证接口
-				const licenses = await this.getLicenses(spaceId, apiKey, consoleUrl);
-				for (const license of licenses) {
-					const licenseInfo = license.split(',');
-					let license_decrypt = steedosLicense.verifyLicenseFile(licenseInfo[0], licenseInfo[1], spaceId);
-					if (license_decrypt.verify_error) {
-						throw new Error(license_decrypt.verify_error);
-					}
-					await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
-				}
-			}
-		},
+		// saveLicenses: {
+		// 	params: {
+		// 		spaceId: { type: 'string', optional: false },
+		// 		apiKey: { type: 'string', optional: false },
+		// 		consoleUrl: { type: 'string', optional: false }
+		// 	},
+		// 	handler: async function (ctx) {
+		// 		const { spaceId, apiKey, consoleUrl } = ctx.params;
+		// 		// 给工作区添加许可证，调用导入许可证接口
+		// 		const licenses = await this.getLicenses(spaceId, apiKey, consoleUrl);
+		// 		for (const license of licenses) {
+		// 			const licenseInfo = license.split(',');
+		// 			let license_decrypt = steedosLicense.verifyLicenseFile(licenseInfo[0], licenseInfo[1], spaceId);
+		// 			if (license_decrypt.verify_error) {
+		// 				throw new Error(license_decrypt.verify_error);
+		// 			}
+		// 			await steedosLicense.save({ license: licenseInfo[0], is_local: license_decrypt.is_local, key: licenseInfo[1], verify_status: license_decrypt.verify_status, verify_error: license_decrypt.verify_erro, license_last_verify: new Date(), _id: license_decrypt._id, product: license_decrypt.product }, spaceId);
+		// 		}
+		// 	}
+		// },
 		serverInitInfo: {
 			handler: async function (ctx) {
 				try {
