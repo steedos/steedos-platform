@@ -90,14 +90,6 @@ module.exports = {
                 case 'inbox':
                     filter.push(['handler', '=', userId]);
                     filter.push(['is_finished', '=', false]);
-                    // task中未结束的就是 待办 , 无需其他查询
-                    filter.push([
-                        ['instance_state', 'in', ["pending", "completed"]], 
-                        'or', 
-                        [['instance_state', '=', 'draft'], [
-                            ['distribute_from_instance', '!=', null], 'or', ['forward_from_instance', '!=', null]
-                        ],]
-                    ]);
                     break;
                 case 'outbox':
                     filter.push(['handler', '=', userId]);
