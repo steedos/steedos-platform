@@ -1,0 +1,162 @@
+/*
+ * @Author: 殷亮辉 yinlianghui@hotoa.com
+ * @Date: 2023-05-16 17:00:38
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-05-17 17:42:02
+ */
+var buttonTriggerHistoryPathsChange;
+; (function () {
+    try {
+        var rootId = "steedosHistoryPathsRoot";
+        var modalRoot = document.getElementById(rootId);
+        if (!modalRoot) {
+            modalRoot = document.createElement('div');
+            modalRoot.setAttribute('id', rootId);
+            $("body")[0].appendChild(modalRoot);
+        }
+        const page = {
+            name: "pageSteedosHistoryPaths",
+            render_engine: "amis",
+            schema: {
+                name: "serviceSteedosHistoryPaths",
+                id: "serviceSteedosHistoryPaths",
+                type: "service",
+                className: "service-steedos-history-paths",
+                body: [{
+                    "type": "button",
+                    "label": "触发@history_paths.changed",
+                    "name": "buttonTriggerHistoryPathsChange",
+                    "className": "button-trigger-history-paths-change hidden",
+                    "onEvent": {
+                        "click": {
+                            "actions": [
+                                {
+                                    "actionType": "broadcast",
+                                    "args": {
+                                        "eventName": "@history_paths.changed"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }]
+            }
+        };
+        Meteor.startup(function () {
+            const root = $("#" + rootId)[0];
+            Tracker.autorun(function (c) {
+                if (Creator.steedosInit.get() && Creator.validated.get()) {
+                    Steedos.Page.render(root, page, {});
+                    const findVars = (obj, vars) => {
+                        try {
+                            return vars.length === vars.filter(function (item) {
+                                return item.split(".").reduce(function (sum, n) {
+                                    return sum[n];
+                                }, obj) !== undefined;
+                            }).length;
+                        }
+                        catch (ex) {
+                            return false;
+                        }
+                    }
+                    const waittingVars = ["SteedosUI.refs.serviceSteedosHistoryPaths.getComponentByName"];
+                    Promise.all([
+                        waitForThing(window, waittingVars, findVars)
+                    ]).then(() => {
+                        var scope = SteedosUI.refs["serviceSteedosHistoryPaths"];
+                        buttonTriggerHistoryPathsChange = scope.getComponentByName("serviceSteedosHistoryPaths.buttonTriggerHistoryPathsChange");
+                        Object.assign(Steedos, {
+                            goBack
+                        });
+                    });
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error(error)
+    };
+})();
+
+const historyPathsStoreKey = "history_paths";
+
+// 使用debounce防抖动函数，连续多次自动触发enter事件时，只需要捕获最后一次
+FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
+    const path = context.path;
+    const params = context.params || {};
+    // const pathDef = context.route.pathDef;
+    const recordId = params.record_id;
+    if (recordId) {
+        // 触发广播事件，把当前path和params累加存入amis变量historyPaths中
+        pushHistoryPath(path, params);
+    }
+    else {
+        // 触发广播事件重围amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
+        resetHistoryPath(path, params);
+    }
+    triggerBroadcastHistoryPathsChanged(buttonTriggerHistoryPathsChange);
+}, 200));
+
+function goBack(){
+    let prevPath = popHistoryPath();
+    if(prevPath && prevPath.path){
+        FlowRouter.go(prevPath.path);
+    }
+}
+
+function popHistoryPath() {
+    var paths = getHistoryPaths() || [];
+    paths.pop();
+    setHistoryPaths(paths);
+    return paths[paths.length - 1];
+}
+
+function pushHistoryPath(path, params) {
+    let paths = getHistoryPaths() || [];
+    let lastPath = paths && paths[paths.length - 1];
+    if(lastPath && lastPath.path === path){
+        // 点返回按钮执行goBack函数触发FlowRouter.triggers.enter从而进入该函数，此时lastPath肯定跟传入的path值一样，正好排除掉不重复加入paths
+        return;
+    }
+    paths.push({ path, params });
+    setHistoryPaths(paths);
+}
+
+function resetHistoryPath(path, params) {
+    setHistoryPaths([{ path, params }]);
+}
+
+function getHistoryPaths() {
+    if (!window.historyPaths) {
+        var paths = sessionStorage.getItem(historyPathsStoreKey);
+        if (paths) {
+            window.historyPaths = JSON.parse(paths);
+        }else{
+            window.historyPaths = [];
+        }
+    }
+    return window.historyPaths;
+}
+
+function setHistoryPaths(paths) {
+    window.historyPaths = paths;
+    sessionStorage.setItem(historyPathsStoreKey, JSON.stringify(paths));
+}
+
+function triggerBroadcastHistoryPathsChanged(button) {
+    if (button) {
+        button.props.dispatchEvent('click', {});
+    }
+}
+
+function debounce(fn, delay) {
+    let time = null;
+    return function (...args) {
+        if (time) {
+            clearTimeout(time);
+        }
+        time = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay)
+    }
+}
