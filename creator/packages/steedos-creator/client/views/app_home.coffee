@@ -2,7 +2,13 @@
 autoGoApp = (appId)->
 	currentApp = Creator.getApp(appId)
 	if currentApp?.isExternalUrl
-		FlowRouter.go currentApp.path
+		if /^http(s?):\/\//.test(currentApp.path)
+			if currentApp.blank
+				window.open(currentApp.path)
+			else
+				window.location.href = currentApp.path
+		else
+			FlowRouter.go currentApp.path
 	else
 		menus = Creator.getAppMenus(appId)
 		first_menu = _.first(menus)
