@@ -59,9 +59,10 @@
                     "className": "-mx-11 ",
                     "tpl": "",
                     "badge": {
+                      "className": "h-0",
                       "offset": [
                         -13,
-                        13
+                        12
                       ],
                       "mode": "text",
                       "text": "${tag}"
