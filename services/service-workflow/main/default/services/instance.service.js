@@ -141,7 +141,7 @@ module.exports = {
             }
 
             if(categoriesIds && categoriesIds.length > 0){
-                const forms = await objectql.getObject('forms').find({filters: ['category', 'in', categoriesIds], fields: ['_id']});
+                const forms = await objectql.getObject('forms').directFind({filters: ['category', 'in', categoriesIds], fields: ['_id']});
                 if(forms.length > 0){
                     filter.push(['form', 'in', _.map(forms, '_id')])
                 }else{
@@ -246,7 +246,7 @@ module.exports = {
     },
     getAppCategoriesIds: {
         async handler(appId) {
-          const categories = await objectql.getObject('categories').find({ filters: [['app', '=', appId]] });
+          const categories = await objectql.getObject('categories').directFind({ filters: [['app', '=', appId]] });
           return _.map(categories, '_id');
         }
     },
