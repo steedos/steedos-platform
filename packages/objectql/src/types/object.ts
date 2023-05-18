@@ -483,7 +483,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(_triggers, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.isEnabled){
+                    if(metadata.isEnabled && (metadata.when === when || includes(metadata.when, when))){
                         if(metadata.isPattern){
                             try {
                                 if(metadata.listenTo === '*'){
@@ -504,7 +504,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                                 console.log(`error`, error);
                             }
                         }else{
-                            if((metadata.when === when || includes(metadata.when, when)) && metadata.listenTo === this.name){
+                            if( metadata.listenTo === this.name ){
                                 triggers.push(item);
                             }
                         }
@@ -563,31 +563,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(triggerActions, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.isPattern){
-                        try {
-                            if(metadata.listenTo === '*'){
-                                triggers.push(item);
-                            }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
-                                triggers.push(item);
-                            }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
-                                triggers.push(item);
-                            }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
-                                try {
-                                    if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
-                                        triggers.push(item);
+                    if(metadata.when === when || includes(metadata.when, when)){
+                        if(metadata.isPattern){
+                            try {
+                                if(metadata.listenTo === '*'){
+                                    triggers.push(item);
+                                }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
+                                    triggers.push(item);
+                                }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
+                                    triggers.push(item);
+                                }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                                    try {
+                                        if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
+                                            triggers.push(item);
+                                        }
+                                    } catch (error) {
                                     }
-                                } catch (error) {
                                 }
+                            } catch (error) {
+                                console.log(`error`, error);
                             }
-                        } catch (error) {
-                            console.log(`error`, error);
-                        }
-                    }else{
-                        if(metadata.when === when && metadata.listenTo === this.name){
-                            triggers.push(item);
+                        }else{
+                            if(metadata.listenTo === this.name){
+                                triggers.push(item);
+                            }
                         }
                     }
-                    
                 }
             })
         }
