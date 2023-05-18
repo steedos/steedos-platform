@@ -10,7 +10,7 @@ fields:
     reference_to: objects
     reference_to_field: name
   queue_import:
-    type: lookup
+    type: master_detail
     label: queue import
     required: true
     depend_on:
@@ -18,6 +18,9 @@ fields:
     reference_to: queue_import
     filtersFunction: !!js/function |
       function(filters, values){
+        if(!values.object_name){
+          return filters
+        }
         return ['object_name', '=', values.object_name]
       }
   success_count:
@@ -102,3 +105,11 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
+form:
+  initialValues: !!js/function |
+    function(){
+      console.log(this)
+      return {
+        queue_import: ''
+      }
+    }

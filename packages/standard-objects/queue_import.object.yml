@@ -189,5 +189,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-relatedList:
-  - queue_import_history
