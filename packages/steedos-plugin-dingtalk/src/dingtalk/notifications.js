@@ -101,9 +101,9 @@ let workflowPush = async function (options, spaceId, corpId) {
     let insObj = steedosSchema.getObject('instances');
     let instance = await insObj.findOne({ filters: [["_id", "=", instanceId]] });
 
-    let inboxUrl = oauthUrl + corpId + '&redirect_url=/workflow/space/' + spaceId + '/inbox/' + options.payload.instance;
+    let inboxUrl = oauthUrl + corpId + '&redirect_url=/api/workflow/instance/' + options.payload.instance;
 
-    let outboxUrl = oauthUrl + corpId + '&redirect_url=/workflow/space/' + spaceId + '/outbox/' + options.payload.instance;
+    let outboxUrl = oauthUrl + corpId + '&redirect_url=/api/workflow/instance/' + options.payload.instance;
 
     info.text = '请审批 ' + options.text;
     info.url = inboxUrl;
