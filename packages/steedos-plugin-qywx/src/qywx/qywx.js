@@ -517,9 +517,9 @@ exports.workflowPush = async function (options, spaceId, oauthUrl) {
     let insObj = steedosSchema.getObject("instances");
     let instance = await insObj.findOne(instanceId);
 
-    let inboxUrl = oauthUrl + '/app/approve_workflow/instance_tasks/view/' + options.payload.instance;
+    let inboxUrl = oauthUrl + '/api/workflow/instance/' + options.payload.instance;
 
-    let outboxUrl = oauthUrl + '/app/approve_workflow/instance_tasks/view/' + options.payload.instance;
+    let outboxUrl = oauthUrl + '/api/workflow/instance/' + options.payload.instance;
 
     info.text = '请审批 ' + options.text;
     info.url = inboxUrl;
