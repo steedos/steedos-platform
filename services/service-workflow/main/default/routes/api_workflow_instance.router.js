@@ -28,7 +28,7 @@ router.get('/api/workflow/instance/:instanceId', core.requireAuthentication, asy
         const ins = await insObj.findOne(insId);
         if (ins) {
             let box = '';
-            const appCode = 'approve_workflow'; // 默认值
+            let appCode = 'approve_workflow'; // 默认值
             let objectName = 'instances';
             let docId = insId;
             const spaceId = ins.space;
