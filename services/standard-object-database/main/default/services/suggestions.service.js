@@ -63,11 +63,13 @@ module.exports = {
 
                     declare type CTXType = {
                         params: TriggerParams;
-                        meta: any;
-                        call: any;
-                        emit: any;
-                        broadcast: any;
                         broker: {
+                            meta: any;
+                            call: any;
+                            mcall: any;
+                            emit: any;
+                            broadcast: any;
+                            broadcastLocal: any;
                             namespace: string;
                             nodeID: string;
                             instanceID: string;

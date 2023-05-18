@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 11:47:45
+ * @LastEditTime: 2023-05-18 09:45:50
  * @Description: 
  */
 const { NodeVM } = require('vm2');
@@ -23,7 +23,7 @@ function str2function(
 
 
 export const runTriggerFunction = (code, thisArg, ...args)=>{
-    console.log('runTriggerFunction', code);
+    // console.log('runTriggerFunction', code);
     const vm = new NodeVM({
         sandbox: {
             str2function,

@@ -16,11 +16,11 @@ handler: |-
 
 ### ctx
 - `params`: Trigger Params
-- `meta`: broker.meta,
-- `call`: broker.call,
-- `emit`: broker.emit,
-- `broadcast`: broker.broadcast,
 - `broker`: {
+    meta: broker.meta,
+    call: broker.call,
+    emit: broker.emit,
+    broadcast: broker.broadcast,
     namespace: broker.namespace,
     nodeID: broker.nodeID,
     instanceID: broker.instanceID,

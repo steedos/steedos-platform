@@ -528,17 +528,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 
             }, {
                 params: params,
-                meta: broker.meta,
-                call: broker.call,
-                emit: broker.emit,
-                broadcast: broker.broadcast,
-                broker: {
-                    namespace: broker.namespace,
-                    nodeID: broker.nodeID,
-                    instanceID: broker.instanceID,
-                    logger: broker.logger,
-                    metadata: broker.metadata
-                },
+                broker: broker,
                 getObject: getObject,
                 getUser: auth.getSessionByUserId
             })
