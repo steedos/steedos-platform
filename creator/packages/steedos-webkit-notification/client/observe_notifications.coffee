@@ -63,7 +63,7 @@ Meteor.startup ->
 				onClick: (event) ->
 					console.log(event)
 					if (event.target.tag)
-						if (event.target.tag.startsWith("/api/v4/notifications"))
+						if (event.target.tag.startsWith("/api/v4/notifications") || event.target.tag.startsWith("/api/workflow/instance/"))
 							Steedos.openWindow(event.target.tag)
 						else
 							FlowRouter.go(event.target.tag)
@@ -80,7 +80,7 @@ Meteor.startup ->
 				if notification.payload.app == "calendar"
 					options.tag = "/calendar/inbox"
 				if notification.payload.instance
-					options.tag = "/workflow/space/" + notification.payload.space + "/inbox/" + notification.payload.instance
+					options.tag = "/api/workflow/instance/" + notification.payload.instance
 			
 			if options.title
 				Steedos.Push.create(options.title, options);
