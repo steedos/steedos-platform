@@ -2,13 +2,14 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 11:29:53
+ * @LastEditTime: 2023-05-18 14:33:09
  * @Description: 
  */
 "use strict";
 // @ts-check
+const objectql = require('@steedos/objectql');
+const { getObject } = objectql;
 
-const { getObject } = require('@steedos/objectql');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -482,6 +483,16 @@ module.exports = {
                 const obj = getObject(objectName)
                 return await obj.allowDelete(userSession);
             }
+        },
+        encryptFieldValue: {
+            params: {
+                objectName: { type: "string" },
+                doc: { type: "object", optional: true },
+            },
+            async handler(ctx) {
+                const { objectName, doc } = ctx.params;
+                return await this.encryptFieldValue(objectName, doc);
+            }
         }
 
     },
@@ -497,8 +508,50 @@ module.exports = {
      * Methods
      */
     methods: {
+        /**
+         * 获取需要加密的字段
+         * @param {*} objectName 
+         * @returns 
+         */
+        getRequireEncryptionFields: async function (objectName) {
+            const objFields = await objectql.getObject(objectName).getFields();
+            const requireEncryptionFields = {};
+            // 遍历所有字段，整理出要求加密的字段
+            for (const key in objFields) {
+                if (Object.hasOwnProperty.call(objFields, key)) {
+                    const field = objFields[key];
+                    if (field.enable_encryption) {
+                        requireEncryptionFields[key] = field;
+                    }
+                }
+            }
+            return requireEncryptionFields;
+        },
 
-
+        /**
+         * 加密字段值
+         * @param {*} objectName 
+         * @param {*} doc 
+         */
+        encryptFieldValue: async function (objectName, doc) {
+            try {
+                const datasource = objectql.getDataSource('default');
+                const requireEncryptionFields = await this.getRequireEncryptionFields(objectName);
+                for (const key in requireEncryptionFields) {
+                    if (Object.hasOwnProperty.call(requireEncryptionFields, key)) {
+                        const field = requireEncryptionFields[key];
+                        // 判断是加密字段并且值不为空，且还未加密过
+                        if (field.enable_encryption && _.has(doc, key) && doc[key] && !doc[key].buffer && !doc[key].sub_type) {
+                            doc[key] = await datasource.adapter.encryptValue(doc[key]);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('encryptFieldValue error', objectName, doc)
+                console.error(`[字段级加密] 对象${objectName}中字段加密失败：`, error);
+            }
+            return doc;
+        }
     },
 
     /**

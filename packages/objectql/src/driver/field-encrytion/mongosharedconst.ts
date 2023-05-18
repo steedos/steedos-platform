@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-03 11:37:54
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-21 15:32:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-18 11:30:59
  * @Description: 
  */
 
@@ -23,9 +23,9 @@ export function getMongoFieldEncryptionConsts() {
         }
     }
 
-    const defaultuUriObj = parse(MONGO_URL);
+    const defaultUriObj = parse(MONGO_URL);
     // 密钥保管库库名
-    const keyVaultDb = process.env.STEEDOS_CSFLE_KEY_VAULT_DB || defaultuUriObj.database; // 默认当前MONGO_URL的db
+    const keyVaultDb = process.env.STEEDOS_CSFLE_KEY_VAULT_DB || defaultUriObj.database; // 默认当前MONGO_URL的db
     // 密钥保管库表名
     const keyVaultCollection = process.env.STEEDOS_CSFLE_KEY_VAULT_COLLECTION || '__keystore'; // 默认 __keystore
     // 密钥保管库命名空间
