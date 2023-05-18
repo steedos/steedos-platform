@@ -725,14 +725,16 @@ WorkflowManager.getMyAdminOrMonitorFlows = function(spaceId, userId) {
 	curSpaceUser = db.space_users.findOne({
 		space: spaceId,
 		'user': userId
-	});
+	}, { user: 1, organizations: 1 });
 	if (curSpaceUser) {
 		organizations = db.organizations.find({
 			_id: {
 				$in: curSpaceUser.organizations
 			}
-		}).fetch();
-		flows = db.flows.find();
+		}, { parents: 1 }).fetch();
+		flows = db.flows.find({
+			space: spaceId
+		}, { fields: { perms: 1 } });
 		flows.forEach(function(fl) {
 			if (WorkflowManager.canMonitor(fl, curSpaceUser, organizations) || WorkflowManager.canAdmin(fl, curSpaceUser, organizations)) {
 				flow_ids.push(fl._id);
