@@ -47,7 +47,7 @@ const getCategoriesInbox = async (userSession, req) => {
   })
   const data = await objectql.getObject('instance_tasks').find({
     filters: filters,
-    fields: ['_id', 'flow_name', 'category_name']
+    fields: ['_id', 'flow', 'category','flow_name','category_name']
   }, userSession)
 
   const output = [];
@@ -65,23 +65,23 @@ const getCategoriesInbox = async (userSession, req) => {
         tag:v2.length,
         value:{
           level:3,
-          value:k2,
-          name: 'flow_name',
-          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
+          value: v2[0].flow,
+          name: 'flow',
+          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']`,
         },
       })
     })
     output.push({
       label: k,
       children: flows,
-        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
-      category_name:k,
-      tag:v.length,
-      value:{
-        level:2,
-        value:k,
-        name: 'category_name',
-        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
+      // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
+      category_name: k,
+      tag: v.length,
+      value: {
+        level: 2,
+        value: v[0].category,
+        name: 'category',
+        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']`,
       },
     })
   })
