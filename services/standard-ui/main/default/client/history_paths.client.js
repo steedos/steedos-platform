@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-05-17 17:42:02
+ * @LastEditTime: 2023-05-18 23:12:37
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
@@ -104,11 +104,36 @@ function goBack(){
     }
 }
 
+/**
+ * 移除最后一个path，并且返回要返回的上一个path
+ * 如果是从推送通知中点开进入记录详细页面，则返回当前记录所属对象的列表页面
+ */
 function popHistoryPath() {
     var paths = getHistoryPaths() || [];
+    let lastPath = paths && paths[paths.length - 1];
     paths.pop();
     setHistoryPaths(paths);
-    return paths[paths.length - 1];
+    let prevPath = paths && paths[paths.length - 1];
+    if(!prevPath && lastPath){
+        // 如果是从推送通知中点开进入记录详细页面，在paths.pop()前的paths肯定只有当前记录详细页面的path
+        // 此时lastPath肯定是记录详细页面，值如以下格式：
+        /**{
+            "path": "/app/projects/project_program/view/6465c790f85da77bbccefbe6",
+            "params": {
+                "app_id": "projects",
+                "object_name": "project_program",
+                "record_id": "6465c790f85da77bbccefbe6"
+            }
+        }**/
+        prevPath = {
+            path: `/app/${lastPath.params.app_id || "-"}/${lastPath.params.object_name}`,
+            params: {
+                app_id: lastPath.params.app_id,
+                object_name: lastPath.params.object_name
+            }
+        }
+    }
+    return prevPath;
 }
 
 function pushHistoryPath(path, params) {
