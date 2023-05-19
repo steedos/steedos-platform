@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-13 10:16:05
+ * @LastEditTime: 2023-05-19 16:25:47
  * @Description: 
  */
 module.exports = {
@@ -14,9 +14,9 @@ module.exports = {
             address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
         }
 
-        var clipboard = new Clipboard('.list-action-custom-invite_space_users');
+        var clipboard = new Clipboard('.button_invite_space_users');
 
-        $(".list-action-custom-invite_space_users").attr("data-clipboard-text", address);
+        $(".button_invite_space_users").attr("data-clipboard-text", address);
 
         clipboard.on('success', function (e) {
             toastr.success(t("space_users_aciton_invite_space_users_success"));
