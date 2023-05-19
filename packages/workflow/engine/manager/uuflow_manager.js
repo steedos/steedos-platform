@@ -748,6 +748,37 @@ uuflowManager.getInstanceName = function (instance, vals) {
     form = uuflowManager.getForm(form_id);
     form_v = uuflowManager.getFormVersion(form, form_version);
     name_forumla = form_v.name_forumla;
+    // 显示下拉框字段类型的label
+    if (form_v.fields) {
+        for (const field of form_v.fields) {
+            if(["select", "multiSelect", "radio"].indexOf(field.type) > -1){
+                var fieldOptions = field.options.split("\n").map(function(n){
+                    var itemSplits = n.split(":")
+                    return {
+                        label: itemSplits[0],
+                        value: itemSplits[1] || n
+                    }
+                });
+                const value = values[field.code];
+                switch (field.type) {
+                    case 'select':
+                    case 'radio':
+                        var selectedOption = fieldOptions.find(function(item){ return item.value == value; })
+                        if(selectedOption){
+                            values[field.code] = selectedOption.label
+                        }
+                        break;
+                    case 'multiSelect':
+                        var splitedValues = value.split(",");
+                        var selectedOptions = fieldOptions.filter(function(item){ return splitedValues.indexOf(item.value) > -1; });
+                        if(selectedOptions.length){
+                            values[field.code] = selectedOptions.map(function(item){ return item.label; }).join(",");
+                        }
+                        break;
+                }
+            }
+        }
+    }
     rev = default_value;
     if (name_forumla) {
         if (name_forumla.indexOf("{applicant.") > -1) {
