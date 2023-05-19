@@ -162,6 +162,18 @@ module.exports = {
 					// this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
+
+					// 给Push添加微服务事件
+					Push.originalSend = Push.send;
+					Push.send = async function (options) {
+						Push.originalSend(options);
+						try {
+							await this.broker.emit('push.send', options)
+						} catch (error) {
+
+						}
+					}
+
 				} catch (error) {
 					this.logger.error(error)
 				}
