@@ -109,6 +109,11 @@ form:
   initialValues: !!js/function |
     function(){
       console.log(this)
+      if (this.master && this.master.record && this.master.record.object_name) {
+        return {
+          object_name: this.master.record.object_name
+        }
+      }
       return {
         queue_import: ''
       }
