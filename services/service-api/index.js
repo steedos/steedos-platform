@@ -238,7 +238,10 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authenticate(ctx, route, req, res) {
+		async authenticate(ctx, route, req, res, alias) {
+			if(alias.authentication === false){
+				return null;
+			}
 			let user = await steedosAuth.auth(req, res);
 			if (user && user.userId) {
 				return user;
@@ -255,7 +258,10 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authorize(ctx, route, req, res) {
+		async authorize(ctx, route, req, res, alias) {
+			if(alias.authorization === false){
+				return ;
+			}
 			// Get the authenticated user.
 			const user = ctx.meta.user;
 
