@@ -59,7 +59,12 @@ fields:
     is_wide: true
     required: true
     defaultValue: |-
-      const { params, getObject, getUser, call } = ctx;
+      // _ : lodash
+      // moment: moment
+      // validator: validator
+      // ctx
+      // objects
+      // services
     editorDidMount: |-
       if(window._registerCompletionItemProviderTrigger){
         return ;
