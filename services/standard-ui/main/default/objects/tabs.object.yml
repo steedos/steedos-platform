@@ -18,7 +18,7 @@ fields:
     type: lookup
     required: true
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
+      function (params) {
               var options;
               options = [];
 
@@ -29,7 +29,12 @@ fields:
                   icon: svg
                 });
               });
-
+              if(params.term && params.value && (params.term === params.value)){
+                options = _.filter(options, function(o) { 
+                  var label = o.label || o.value;
+                  return label.toLowerCase().indexOf(params.term.toLowerCase()) > -1;
+                });
+              }
               return options;
             }
   parent:
