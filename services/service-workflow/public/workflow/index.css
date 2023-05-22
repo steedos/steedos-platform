@@ -110,6 +110,14 @@
     border: none !important;
 }
 
+.instance-box-tree .antd-Tree-item .is-checked{
+    background-color: rgba(21,137,238,.1);
+}
+
+.instance-box-tree .antd-Tree-item .is-checked .antd-Tree-itemLabel-item{
+    background-color: unset;
+}
+
 .steedos-instance-detail-wrapper .instance-wrapper{
     border-radius: 0px !important;
 }
