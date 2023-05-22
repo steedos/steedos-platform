@@ -119,7 +119,7 @@ const getProcessNodeApprover = async (instanceId: string, processNode: any, user
 }
 
 const getProcessNodes = async (processDefinitionId: string, spaceId: string)=>{
-    return await objectql.getObject('process_node').find({filters: [['process_definition', '=', processDefinitionId], ['space', '=', spaceId]], sort: "order asc"});
+    return await objectql.getObject('process_node').find({filters: [['process_definition', '=', processDefinitionId]], sort: "order asc"});
 }
 
 const addInstanceHistory = async (spaceId: string, instanceId: string, status: string, comment: string, options: any, userSession)=>{
