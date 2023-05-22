@@ -63,12 +63,13 @@ const getCategoriesInbox = async (userSession, req) => {
         // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
         flow_name: k2,
         tag:v2.length,
-        value:{
+        options:{
           level:3,
           value: v2[0].flow,
           name: 'flow',
           to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']`,
         },
+        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']`
       })
     })
     output.push({
@@ -77,12 +78,13 @@ const getCategoriesInbox = async (userSession, req) => {
       // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
       category_name: k,
       tag: v.length,
-      value: {
+      options: {
         level: 2,
         value: v[0].category,
         name: 'category',
         to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']`,
       },
+      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']`
     })
   })
   return {
@@ -102,31 +104,34 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "label": t('inbox', {}, userSession.language),
         "icon": "fa fa-download",
         "tag":count,
-        "value":{
+        "options":{
           "level":1,
           "to": `/app/${appId}/instance_tasks/grid/inbox`
         },
+        "value": `/app/${appId}/instance_tasks/grid/inbox`,
         "children":schema
       },
       {
         "label": t('outbox', {}, userSession.language),
-        "value":{
+        "options":{
           "level":1,
           "to": `/app/${appId}/instance_tasks/grid/outbox`
         },
+        "value": `/app/${appId}/instance_tasks/grid/outbox`,
         "icon": "fa fa-check"
       },
       {
         "label": t('monitor', {}, userSession.language),
         "icon": "fa fa-eye",
-        "value":{
+        "options":{
           "level":1,
           "to": `/app/${appId}/instances/grid/monitor`,
-        }
+        },
+        "value": `/app/${appId}/instances/grid/monitor`
       },
       {
         "label": "我的文件",
-        "value":{
+        "options":{
           "level":1,
           // "to": `/app/${appId}/instance_tasks/grid/inbox`
         },
@@ -134,26 +139,29 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "children": [
           {
             "label": t('draft', {}, userSession.language),
-            "value":{
+            "options":{
               "level":1,
               "to": `/app/${appId}/instances/grid/draft`
             },
+            "value": `/app/${appId}/instances/grid/draft`,
             "icon": "fa fa-pencil"
           },
           {
             "label": t('pending', {}, userSession.language),
-            "value":{
+            "options":{
               "level":1,
               "to": `/app/${appId}/instances/grid/pending`,
             },
+            "value": `/app/${appId}/instances/grid/pending`,
             "icon": "fa fa-circle"
           },
           {
             "label": t('completed', {}, userSession.language),
-            "value":{
+            "options":{
               "level":1,
               "to": `/app/${appId}/instances/grid/completed`,
             },
+            "value": `/app/${appId}/instances/grid/completed`,
             "icon": "fa fa-check-square"
           }
         ]

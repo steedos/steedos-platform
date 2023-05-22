@@ -77,6 +77,7 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
+                      "value":"${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
                       "size": "md",
                       "onEvent": {
                         "change": {
@@ -91,21 +92,20 @@
                               "args": {
                                 "value": {
                                   "additionalFilters": [
-                                    "${event.data.value.name}",
+                                    "${event.data.options.name}",
                                     "=",
-                                    "${event.data.value.value}"
+                                    "${event.data.options.value}"
                                   ]
                                 }
                               },
-                              "expression": "${event.data.value.level>=10}"
+                              "expression": "${event.data.options.level>=10}"
                             },
                             {
                               "args": {
-                                "link": "${event.data.value.to}",
+                                "link": "${event.data.value}",
                                 "blank": false
                               },
-                              "actionType": "link",
-                              "expression": "${event.data.value.level<10}"
+                              "actionType": "link"
                             }
                           ]
                         }
