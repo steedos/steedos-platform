@@ -118,3 +118,13 @@
 .antd-Table-footToolbar .antd-Crud-pager .antd-Pagination > li > a{
     display: block;
 }
+
+@media (max-width: 768px) {
+    .record-detail-header-name{
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
