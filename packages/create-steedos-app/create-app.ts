@@ -209,9 +209,6 @@ export async function createApp({
       name: appName,
       version: '0.1.0',
       private: true,
-      workspaces: [
-        "services/*" 
-      ],
       scripts: {
         docker: "docker-compose up",
         start: "moleculer-runner services/*/package.service.js --hot --repl",
