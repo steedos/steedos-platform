@@ -78,10 +78,13 @@ var buttonTriggerHistoryPathsChange;
     };
 })();
 
-const historyPathsStoreKey = "history_paths";
+let historyPathsStoreKey = "history_paths";
 
 // 使用debounce防抖动函数，连续多次自动触发enter事件时，只需要捕获最后一次
 FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
+    if(!!window.opener){
+        historyPathsStoreKey = "history_paths_opener_level" + getOpenerLevel(window,0);
+    }
     const path = context.path;
     const params = context.params || {};
     // const pathDef = context.route.pathDef;
@@ -183,5 +186,13 @@ function debounce(fn, delay) {
         time = setTimeout(() => {
             fn.apply(this, args);
         }, delay)
+    }
+}
+
+function getOpenerLevel(opener,level){
+    if (!!opener['opener']) {
+        return getOpenerLevel(opener['opener'], level + 1);
+    }else{
+       return level; 
     }
 }
