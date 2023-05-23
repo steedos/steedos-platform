@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 14:15:29
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-08 14:38:13
+ * @LastEditTime: 2023-05-23 16:03:50
  * @Description: 
  */
 "use strict";
@@ -26,7 +26,7 @@ module.exports = {
     listenTo: 'users',
 
     beforeInsert: async function () {
-        const { doc } = this
+        const { doc, userId } = this
         const broker = getSteedosSchema().broker
         const spaceObj = getObject('spaces');
 
@@ -102,8 +102,10 @@ module.exports = {
         if (!doc.utcOffset) {
             doc.utcOffset = 8;
         }
-        for (const obj of doc.emails) {
-            await checkEmailValid(obj.address)
+        if (!_.isEmpty(doc.emails)) {
+            for (const obj of doc.emails) {
+                await checkEmailValid(obj.address)
+            }
         }
     },
 
@@ -123,13 +125,10 @@ module.exports = {
     },
 
     afterInsert: async function () {
-        const { id } = this
-        const userObj = getObject('users');
+        const { doc } = this
         const orgObj = getObject('organizations');
         const suObj = getObject('space_users');
         const spaceObj = getObject('spaces');
-
-        const doc = await userObj.findOne(id)
 
         var newId, ref, ref1, ref2, rootOrg, space_name, space_registered, user_email;
         space_registered = (ref = doc.profile) != null ? ref.space_registered : void 0;
