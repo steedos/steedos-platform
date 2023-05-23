@@ -251,8 +251,9 @@ Template.instance_view.events
 		$("#ins_upload_normal_attach").val('')
 
 	'click .btn-instance-back': (event)->
-		backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
-		FlowRouter.go(backURL)
+		# backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
+		# FlowRouter.go(backURL)
+		Steedos.goBack()
 
 
 	'click #ins_new_main_file': (event, template)->
