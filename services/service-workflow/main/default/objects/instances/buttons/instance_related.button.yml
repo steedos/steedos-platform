@@ -34,6 +34,7 @@ amis_schema: |-
                                                     "embed": true,
                                                     "label": false,
                                                     "multiple": true,
+                                                    "visibleOn": "initApiFinished == true",
                                                     "source": {
                                                       "method": "post",
                                                       "url": "${context.rootUrl}/graphql",
@@ -61,7 +62,7 @@ amis_schema: |-
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
                                               "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  _id,\n                 name\n                }\n              }\n            }\n          `\n        }\n        return api;",
-                                              "adaptor": "payload.data = {\n  related_instances: _.map(payload.data.instance?.related_instances, '_id')\n};console.log('====payload', payload);\nreturn payload;"
+                                              "adaptor": "payload.data = {initApiFinished: true, \n  related_instances: _.map(payload.data.instance?.related_instances, '_id')\n};console.log('====payload', payload);\nreturn payload;"
                                           }
                                       }
                                   ],
