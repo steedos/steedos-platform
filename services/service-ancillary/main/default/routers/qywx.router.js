@@ -7,7 +7,12 @@ const objectql = require('@steedos/objectql');
 const xmlparser = require('express-xml-bodyparser');
 const xml2js = require('xml2js');
 const fetch =  require('node-fetch');
-const qywxSync = require('./sync.js');
+
+const qywxSync = {
+    write: async function (content) {
+        return broker.call('qywx.write', {content})
+    }
+}
 
 router.use("/qywx", async function (req, res, next) {
     await next();
@@ -265,7 +270,7 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     var aesKey = AES_KEY;
     var suiteKey = CORPID;
 
-    data = await broker.call('qywxSync.decrypt', {
+    data = await broker.call('qywx.decrypt', {
         signature: signature,
         nonce: nonce,
         timeStamp: timeStamp,
@@ -279,13 +284,13 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     // console.log(data)
     console.log(data.UserID)
     if (data.ChangeType == "create_user" || data.ChangeType == "update_user") {
-        await broker.call('qywxSync.userinfoPush', {userId: data.UserID})
+        await broker.call('qywx.userinfoPush', {userId: data.UserID})
     } else if (data.ChangeType == "create_party" || data.ChangeType == "update_party") {
-        await broker.call('qywxSync.deptinfoPush', {deptId: data.Id, name: data.name, parentId: data.ParentId})
+        await broker.call('qywx.deptinfoPush', {deptId: data.Id, name: data.name, parentId: data.ParentId})
     } else if (data.ChangeType == "delete_user") {
-        await broker.call('qywxSync.userinfoPush', {userId: data.UserID, status: 2})
+        await broker.call('qywx.userinfoPush', {userId: data.UserID, status: 2})
     } else if (data.ChangeType == "delete_party") {
-        await broker.call('qywxSync.deptinfoPush', {deptId: data.Id, name: "", parentId: "", status: 2})
+        await broker.call('qywx.deptinfoPush', {deptId: data.Id, name: "", parentId: "", status: 2})
     }
 
 
@@ -321,7 +326,7 @@ router.get('/api/sync/qywxId', async function (req, res) {
         for (let ui = 0; ui < userListRes.length; ui++) {
             // console.log("space._id: ",space._id);
             qywxSync.write("用户ID:" + userListRes[ui]['userid'])
-            await qywxSync.useridPush(access_token, userListRes[ui]['userid'], userListRes[ui]['mobile'])
+            await broker.call('qywx.useridPush', {accessToken: access_token, userId: userListRes[ui]['userid'], mobile: userListRes[ui]['mobile']})
         }
 
     }
