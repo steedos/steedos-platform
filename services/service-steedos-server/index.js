@@ -56,7 +56,6 @@ module.exports = {
 			// "@steedos/service-accounts",
 			// "@steedos/service-charts",
 			// "@steedos/service-pages",
-			// "@steedos/service-cloud-init",
 			// "@steedos/service-workflow",
 			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
@@ -90,6 +89,16 @@ module.exports = {
 	events: {
 		async 'service-cloud-init.succeeded'(ctx) {
 			await this.setMasterSpaceId()
+		},
+		'steedos-server.started': async function (ctx) {
+			// console.log(chalk.blue('steedos-server.started'));
+			const records = await objectql.getObject('spaces').directFind({ top: 1, fields: ['_id'], sort: { created: -1 } });
+			const steedosConfig = objectql.getSteedosConfig();
+			if (records.length > 0) {
+				steedosConfig.setTenant({ _id: records[0]._id });
+			} else {
+				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
+			}
 		}
 	},
 

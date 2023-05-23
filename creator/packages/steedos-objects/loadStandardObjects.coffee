@@ -31,7 +31,6 @@ try
 				"@steedos/service-accounts",
 				"@steedos/service-charts",
 				# "@steedos/service-pages",
-				"@steedos/service-cloud-init",
 				"@steedos/service-package-registry",
 		    "@steedos/service-package-tool";
 				# "@steedos/standard-process",
