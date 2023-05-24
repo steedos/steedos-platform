@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-enterprise",
   "main": "package.service.js",
-  "version": "2.4.18-beta.1",
+  "version": "2.4.18-beta.2",
   "private": false,
   "repository": "https://github.com/steedos/steedos-platform.git",
   "description": "",
@@ -11,14 +11,14 @@
   "author": "steedos",
   "license": "MIT",
   "dependencies": {
-    "@steedos/ee_audit-records": "2.4.18-beta.1",
-    "@steedos/ee_branding": "2.4.18-beta.1",
-    "@steedos/ee_mongodb-bi-connector": "2.4.18-beta.1",
+    "@steedos/ee_audit-records": "2.4.18-beta.2",
+    "@steedos/ee_branding": "2.4.18-beta.2",
+    "@steedos/ee_mongodb-bi-connector": "2.4.18-beta.2",
     "@steedos/ee_service-plugin-license": "^2.2.5",
-    "@steedos/ee_sso-oidc": "2.4.18-beta.1",
-    "@steedos/ee_stimulsoft-reports": "2.4.18-beta.1",
-    "@steedos/ee_virus-scan": "2.4.18-beta.1",
-    "@steedos/service-community": "2.4.18-beta.1",
+    "@steedos/ee_sso-oidc": "2.4.18-beta.2",
+    "@steedos/ee_stimulsoft-reports": "2.4.18-beta.2",
+    "@steedos/ee_virus-scan": "2.4.18-beta.2",
+    "@steedos/service-community": "2.4.18-beta.2",
     "mongodb": "^3.7.3",
     "mssql": "^8.1.2",
     "nats": "^1.4.12",
@@ -28,5 +28,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "adaec558dd3ac1ffea319ba64ca29b40a3eb48af"
+  "gitHead": "7662554351c1ddd72f5bac1280a7a5bab1c7932c"
 }
