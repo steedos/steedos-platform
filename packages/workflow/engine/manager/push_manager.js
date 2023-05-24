@@ -1365,6 +1365,9 @@ pushManager.triggerWebhook = function (flow_id, instance, current_approve, actio
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
     }
+    if (!pushManager.hasWebhooks(flow_id)) { // 没有webhook，不需要发送
+        return;
+    }
     var from_space_user, from_user, to_users;
     instance.attachments = cfs.instances.find({
         'metadata.instance': instance._id
@@ -1436,3 +1439,13 @@ pushManager.triggerWebhook = function (flow_id, instance, current_approve, actio
         });
     });
 };
+
+pushManager.hasWebhooks = function (flow_id) {
+    var webhookDocsCount = db.webhooks.find({
+        flow: {
+            $in: [flow_id, null]
+        },
+        active: true
+    }).count();
+    return webhookDocsCount > 0;
+}
