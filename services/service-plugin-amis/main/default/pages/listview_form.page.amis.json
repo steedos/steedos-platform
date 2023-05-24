@@ -560,13 +560,7 @@
         "body"
     ],
     "data": {
-        "objectName": "object_listviews",
-        "context": {
-            "rootUrl": "http://127.0.0.1:5800",
-            "tenantId": "hKdnwE55WcnWveYxS",
-            "userId": "62ede4f62161e377e35de58c",
-            "authToken": "7773c3b108c371bdc83354ec15bf0e952aabdc712a323c5760fe4fd6536e739b0d12032180e91f474c45ca"
-        }
+        "objectName": "object_listviews"
     },
     "bodyClassName": "p-0",
     "name": "page_edit_${recordId}",
