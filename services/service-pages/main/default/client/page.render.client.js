@@ -247,6 +247,7 @@
                     app_id: data.appId,
                     object_name: data.objectName,
                     record_id: data.recordId,
+                    formFactor: Steedos.isMobile() ? "SMALL" : "LARGE",
                     context: {
                         rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
                         tenantId: Creator.USER_CONTEXT.spaceId,

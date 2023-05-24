@@ -1,6 +1,6 @@
 {
   "name": "project-ee",
-  "version": "2.4.18-beta.2",
+  "version": "2.4.18-beta.3",
   "private": true,
   "scripts": {
     "start": "steedos start",
@@ -8,6 +8,6 @@
     "inspect": "cross-env NODE_OPTIONS='--inspect' steedos start --hot"
   },
   "dependencies": {
-    "@steedos/service-enterprise": "2.4.18-beta.2"
+    "@steedos/service-enterprise": "2.4.18-beta.3"
   }
 }
