@@ -21,14 +21,15 @@
                             "recordId": "${recordId}",
                             "modalName": "${modalName}"
                         },
-                        "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n    return { field: item };\n});\n\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
+                        "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n    return { field: item };\n});\n\nif (!formData._filters_type_controller) {\n    formData._filters_type_controller = 'conditions';\n}\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
                         "adaptor": "if (payload.errors) {\n    payload.status = 2;\n    payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
                         "responseData": {
                             "recordId": "${record._id}"
                         },
                         "headers": {
                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                        }
+                        },
+                        "messages": {}
                     },
                     "initFetch": true,
                     "body": [
@@ -553,7 +554,8 @@
             },
             "data": {
                 "editFormInited": false
-            }
+            },
+            "messages": {}
         }
     ],
     "regions": [
