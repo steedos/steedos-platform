@@ -1162,7 +1162,7 @@ pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId
 };
 
 //通知服务
-pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids) {
+pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids, flowDoc) {
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
     }
@@ -1173,7 +1173,7 @@ pushManager.send_instance_notification = function (send_from, instance, descript
         space_id = instance.space;
         instance_id = instance._id;
         flow_version = instance.flow_version;
-        flow = uuflowManager.getFlow(instance.flow);
+        flow = flowDoc || uuflowManager.getFlow(instance.flow);
         to_users = pushManager.get_to_users(send_from, instance, cc_user_ids, current_user_info);
         href = Meteor.absoluteUrl() + `workflow/space/${space_id}/inbox/${instance_id}`;
         body_style_start = "<div style='border:1px solid #bbb;padding:10px;'>";

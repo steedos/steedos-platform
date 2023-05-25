@@ -2541,9 +2541,9 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     if (next_step.step_type !== "end") {
         instance = uuflowManager.getInstance(instance_id);
         //发送短消息给申请人
-        pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info);
+        pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info, null, flow);
         // 发送消息给下一步处理人
-        pushManager.send_instance_notification("first_submit_inbox", instance, "", user_info);
+        pushManager.send_instance_notification("first_submit_inbox", instance, "", user_info, null, flow);
     }
 
     if (process.env.STEEDOS_DEBUG) {
