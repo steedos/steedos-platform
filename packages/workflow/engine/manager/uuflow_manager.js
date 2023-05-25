@@ -2116,7 +2116,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     // 判断一个flow和space_id是否匹配
     uuflowManager.isFlowSpaceMatched(flow, space_id);
     form = uuflowManager.getForm(flow.form, { fields: { historys: 0 } });
-    permissions = permissionManager.getFlowPermissions(flow_id, user_id);
+    permissions = permissionManager.getFlowPermissions(flow_id, user_id, flow);
     if (!permissions.includes("add")) {
         throw new Meteor.Error('error!', "当前用户没有此流程的新建权限");
     }
@@ -2340,7 +2340,6 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     }, {
         $set: setObj
     });
-    update_instance_tasks(instance_id, instance_traces[0]._id, instance_traces[0]["approves"][0]._id)
     if (flow_has_upgrade) {
         return {
             alerts: TAPi18n.__('flow.point_upgraded', {}, lang)
