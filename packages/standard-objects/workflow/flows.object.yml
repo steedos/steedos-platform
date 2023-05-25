@@ -62,6 +62,12 @@ fields:
     type: textarea
     is_wide: true
     name: description
+  enable_amisform:
+    label: 启用amis表单
+    type: boolean
+    is_wide: false
+    name: description
+    visible_on: "{{false}}"
   help_text:
     label: Help
     type: textarea
