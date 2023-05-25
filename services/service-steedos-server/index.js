@@ -138,6 +138,7 @@ module.exports = {
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
 			// const logger = this.logger;
+			const broker = this.broker;
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
@@ -177,7 +178,7 @@ module.exports = {
 					Push.send = async function (options) {
 						Push.originalSend(options);
 						try {
-							await this.broker.emit('push.send', options)
+							await broker.emit('push.send', options)
 						} catch (error) {
 
 						}
