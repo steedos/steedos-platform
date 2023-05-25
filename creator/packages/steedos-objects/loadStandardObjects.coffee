@@ -32,7 +32,7 @@ try
 				"@steedos/service-charts",
 				# "@steedos/service-pages",
 				"@steedos/service-package-registry",
-		    "@steedos/service-package-tool";
+		   		"@steedos/service-package-tool",
 				# "@steedos/standard-process",
 				"@steedos/webapp-accounts",
 				"@steedos/service-workflow",
