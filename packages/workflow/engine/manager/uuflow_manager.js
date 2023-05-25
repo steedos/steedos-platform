@@ -77,7 +77,7 @@ uuflowManager.getSpace = function (space_id) {
     return space;
 };
 
-uuflowManager.getSpaceUser = function (space_id, user_id) {
+uuflowManager.getSpaceUser = function (space_id, user_id, options) {
     if (process.env.STEEDOS_DEBUG) {
         console.time('uuflowManager.getSpaceUser');
     }
@@ -85,7 +85,7 @@ uuflowManager.getSpaceUser = function (space_id, user_id) {
     space_user = db.space_users.findOne({
         space: space_id,
         user: user_id
-    });
+    }, options);
     if (!space_user) {
         throw new Meteor.Error('error!', "user_id对应的用户不属于当前space");
     }
@@ -95,7 +95,7 @@ uuflowManager.getSpaceUser = function (space_id, user_id) {
     return space_user;
 };
 
-uuflowManager.getFlow = function (flow_id, options = {}) {
+uuflowManager.getFlow = function (flow_id, options) {
     if (process.env.STEEDOS_DEBUG) {
         var now = new Date().toISOString();
         console.time('uuflowManager.getFlow' + now);
@@ -239,12 +239,12 @@ uuflowManager.isSpaceAdmin = function (space_id, user_id) {
     }
 };
 
-uuflowManager.getUser = function (user_id) {
+uuflowManager.getUser = function (user_id, options) {
     if (process.env.STEEDOS_DEBUG) {
         console.time('uuflowManager.getUser');
     }
     var user;
-    user = db.users.findOne(user_id);
+    user = db.users.findOne(user_id, options);
     if (!user) {
         throw new Meteor.Error('error!', "用户ID有误或此用户已经被删除");
     }
@@ -252,6 +252,20 @@ uuflowManager.getUser = function (user_id) {
         console.timeEnd('uuflowManager.getUser');
     }
     return user;
+};
+
+uuflowManager.getOrganization = function (orgId, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getOrganization');
+    }
+    var orgDoc = db.organizations.findOne(orgId, options);
+    if (!orgDoc) {
+        throw new Meteor.Error('error!', "组织ID有误或此组织已经被删除");
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getOrganization');
+    }
+    return orgDoc;
 };
 
 uuflowManager.getUserOrganization = function (user_id, space_id) {
@@ -746,7 +760,7 @@ uuflowManager.getUpdatedValues = function (instance, approve_id) {
     return newest_values;
 };
 
-uuflowManager.getForm = function (form_id, options = {}) {
+uuflowManager.getForm = function (form_id, options) {
     if (process.env.STEEDOS_DEBUG) {
         console.time('uuflowManager.getForm');
     }
@@ -777,7 +791,7 @@ uuflowManager.getFormVersion = function (form, form_version) {
     return form_v;
 };
 
-uuflowManager.getCategory = function (category_id, options = {}) {
+uuflowManager.getCategory = function (category_id, options) {
     return db.categories.findOne(category_id, options);
 };
 

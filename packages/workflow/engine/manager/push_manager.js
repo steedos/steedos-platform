@@ -1120,7 +1120,7 @@ pushManager.send_message_by_raix_push = function (data) {
 };
 
 //steedos_ids 必须为数组 ； body 如果有，则必须为Hash
-pushManager.send_message = function (steedos_ids, body, current_user_info) {
+pushManager.send_message = function (steedos_ids, body) {
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
     }
@@ -1341,9 +1341,13 @@ pushManager.send_message_to_specifyUser = function (send_from, to_user) {
         push_body["badge"] = badge;
         user_info = db.users.findOne({
             _id: to_user
+        }, {
+            fields: {
+                steedos_id: 1
+            }
         });
         if (user_info) {
-            return this.send_message([user_info.steedos_id], push_body, user_info);
+            return this.send_message([user_info.steedos_id], push_body);
         }
     } catch (error) {
         e = error;
