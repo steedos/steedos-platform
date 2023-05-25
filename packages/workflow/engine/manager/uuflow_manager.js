@@ -48,24 +48,39 @@ uuflowManager.checkNestStepUsersIsValid = function (selected, scope, nextStep) {
 };
 
 uuflowManager.getInstance = function (instance_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getInstance');
+    }
     var ins;
     ins = db.instances.findOne(instance_id);
     if (!ins) {
         throw new Meteor.Error('error!', `申请单ID：${instance_id}有误或此申请单已经被删除`);
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getInstance');
+    }
     return ins;
 };
 
 uuflowManager.getSpace = function (space_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpace');
+    }
     var space;
     space = db.spaces.findOne(space_id);
     if (!space) {
         throw new Meteor.Error('error!', "space_id有误或此space已经被删除");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpace');
+    }
     return space;
 };
 
 uuflowManager.getSpaceUser = function (space_id, user_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpaceUser');
+    }
     var space_user;
     space_user = db.space_users.findOne({
         space: space_id,
@@ -74,19 +89,33 @@ uuflowManager.getSpaceUser = function (space_id, user_id) {
     if (!space_user) {
         throw new Meteor.Error('error!', "user_id对应的用户不属于当前space");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpaceUser');
+    }
     return space_user;
 };
 
 uuflowManager.getFlow = function (flow_id, options = {}) {
+    console.log("uuflowManager.getFlow", flow_id, options);
+    if (process.env.STEEDOS_DEBUG) {
+        var now = new Date().toISOString();
+        console.time('uuflowManager.getFlow' + now);
+    }
     var flow;
     flow = db.flows.findOne(flow_id, options);
     if (!flow) {
         throw new Meteor.Error('error!', "id有误或此流程已经被删除");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getFlow' + now);
+    }
     return flow;
 };
 
 uuflowManager.getSpaceUserOrgInfo = function (space_user) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpaceUserOrgInfo');
+    }
     var info, org;
     info = {};
     info.organization = space_user.organization;
@@ -98,6 +127,9 @@ uuflowManager.getSpaceUserOrgInfo = function (space_user) {
     });
     info.organization_name = org.name;
     info.organization_fullname = org.fullname;
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpaceUserOrgInfo');
+    }
     return info;
 };
 
@@ -209,10 +241,16 @@ uuflowManager.isSpaceAdmin = function (space_id, user_id) {
 };
 
 uuflowManager.getUser = function (user_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getUser');
+    }
     var user;
     user = db.users.findOne(user_id);
     if (!user) {
         throw new Meteor.Error('error!', "用户ID有误或此用户已经被删除");
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getUser');
     }
     return user;
 };
@@ -675,6 +713,9 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
 };
 
 uuflowManager.getUpdatedValues = function (instance, approve_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getUpdatedValues');
+    }
     var newest_values, trace_approve;
     // 取得最新的approve
     trace_approve = null;
@@ -700,14 +741,23 @@ uuflowManager.getUpdatedValues = function (instance, approve_id) {
     } else {
         newest_values = _.extend(_.clone(instance.values), trace_approve.values);
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getUpdatedValues');
+    }
     return newest_values;
 };
 
 uuflowManager.getForm = function (form_id, options = {}) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getForm');
+    }
     var form;
     form = db.forms.findOne(form_id, options);
     if (!form) {
         throw new Meteor.Error('error!', '表单ID有误或此表单已经被删除');
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getForm');
     }
     return form;
 };
@@ -733,7 +783,22 @@ uuflowManager.getCategory = function (category_id, options = {}) {
 };
 
 uuflowManager.getInstanceName = function (instance, vals) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getInstanceName');
+    }
     var applicant, default_value, e, flow, form, form_id, form_v, form_version, func, iscript, name_forumla, rev, script, values;
+    default_value = instance.flow_name + ' ' + instance.code;
+    form_id = instance.form;
+    form_version = instance.form_version;
+    form = uuflowManager.getForm(form_id);
+    form_v = uuflowManager.getFormVersion(form, form_version);
+    name_forumla = form_v.name_forumla;
+    if (!name_forumla) {
+        if (process.env.STEEDOS_DEBUG) {
+            console.time('uuflowManager.getInstanceName');
+        }
+        return default_value.trim();
+    }
     values = _.clone(vals || instance.values) || {};
     applicant = WorkflowManager.getFormulaUserObject(instance.space, instance.applicant);
     values["applicant"] = applicant;
@@ -742,13 +807,6 @@ uuflowManager.getInstanceName = function (instance, vals) {
     values["applicant_organization_fullname"] = instance.applicant_organization_fullname;
     values["applicant_organization_name"] = instance.applicant_organization_name;
     values["submit_date"] = moment(instance.submit_date).utcOffset(0, false).format("YYYY-MM-DD");
-    form_id = instance.form;
-    flow = uuflowManager.getFlow(instance.flow);
-    default_value = flow.name + ' ' + instance.code;
-    form_version = instance.form_version;
-    form = uuflowManager.getForm(form_id);
-    form_v = uuflowManager.getFormVersion(form, form_version);
-    name_forumla = form_v.name_forumla;
     // 显示下拉框字段类型的label
     if (form_v.fields) {
         for (const field of form_v.fields) {
@@ -798,10 +856,16 @@ uuflowManager.getInstanceName = function (instance, vals) {
             console.log(e);
         }
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getInstanceName');
+    }
     return rev.trim();
 };
 
 uuflowManager.getApproveValues = function (approve_values, permissions, form_id, form_version) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getApproveValues');
+    }
     var form_v, instance_form;
     // 如果permissions为null，则approve_values为{}
     if (permissions === null) {
@@ -839,6 +903,9 @@ uuflowManager.getApproveValues = function (approve_values, permissions, form_id,
                 }
             }
         });
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getApproveValues');
     }
     return approve_values;
 };
@@ -2162,6 +2229,10 @@ uuflowManager.getDueDate = function (hours, spaceId) {
 };
 
 uuflowManager.submit_instance = function (instance_from_client, user_info) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.log('[submit_instance] start');
+        console.time('submit_instance');
+    }
     var applicant, applicant_id, applicant_org_info, approve, approve_id, attachments, checkApplicant, checkUsers, current_user, description, flow, flow_has_upgrade, flow_id, form, instance, instance_id, instance_name, instance_traces, lang, newTrace, nextSteps, nextTrace, next_step, next_step_users, next_steps, permissions, setObj, space, space_id, space_user, space_user_org_info, start_step, step, submitter_id, trace, trace_id, traces, upObj, updated_values, user, values;
     const now = new Date()
     current_user = user_info._id;
@@ -2265,7 +2336,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     setObj.traces = instance_traces;
     setObj.modified = now;
     setObj.modified_by = current_user;
-    db.instances.update({
+    db.instances.direct.update({
         _id: instance_id
     }, {
         $set: setObj
@@ -2473,6 +2544,11 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info);
         // 发送消息给下一步处理人
         pushManager.send_instance_notification("first_submit_inbox", instance, "", user_info);
+    }
+
+    if (process.env.STEEDOS_DEBUG) {
+        console.log('[submit_instance] end');
+        console.timeEnd('submit_instance');
     }
     return {};
 };
@@ -2987,6 +3063,8 @@ uuflowManager.triggerRecordInstanceQueue = function (ins_id, record_ids, step_na
     var newObj, owDoc, syncType;
     owDoc = Creator.getCollection('object_workflows').findOne({
         flow_id: flow_id
+    }, {
+        fields: { sync_type: 1 }
     });
     if (owDoc) {
         syncType = owDoc.sync_type;
