@@ -9,9 +9,10 @@
             "api": {
                 "method": "post",
                 "url": "${context.rootUrl}/graphql",
-                "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\nif (!api.body.recordId) {\n  const defaultValues = {\n    is_creator: true,\n    mobile: true,\n    visible: true,\n    sort: 9100\n  }\n  data = Object.assign({}, data, defaultValues);\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                 "data": {
-                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
+                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}",
+                    "recordId": "${recordId}"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
