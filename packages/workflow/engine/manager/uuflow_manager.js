@@ -96,7 +96,6 @@ uuflowManager.getSpaceUser = function (space_id, user_id) {
 };
 
 uuflowManager.getFlow = function (flow_id, options = {}) {
-    console.log("uuflowManager.getFlow", flow_id, options);
     if (process.env.STEEDOS_DEBUG) {
         var now = new Date().toISOString();
         console.time('uuflowManager.getFlow' + now);
