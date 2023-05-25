@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-23 11:02:13
+ * @LastEditTime: 2023-05-25 14:13:07
  * @Description: 
  */
 "use strict";
@@ -90,6 +90,8 @@ module.exports = {
 		this.broker.createService(require("@steedos/service-plugin-amis"));
 
 		this.broker.createService(require("@steedos/service-files"));
+
+		this.broker.createService(require("@steedos/service-ancillary"));
 
         // 故障报告服务
 		this.broker.createService(require("@steedos/service-sentry"));
