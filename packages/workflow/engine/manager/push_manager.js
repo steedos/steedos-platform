@@ -842,7 +842,7 @@ pushManager.get_badge = function (send_from, user_id) {
         return null;
     }
     badge = 0;
-    user_spaces = db.space_users.find({
+    user_spaces = db.space_users.direct.find({
         user: user_id,
         user_accepted: true
     }, {
@@ -853,36 +853,26 @@ pushManager.get_badge = function (send_from, user_id) {
     user_spaces.forEach(function (user_space) {
         var appCategories, c, categories, ref4, sk, sk_new, spaceId;
         spaceId = user_space.space;
-        categories = db.categories.find({
+
+        categories = db.categories.direct.find({
             space: spaceId,
             app: {
                 $ne: null
             }
+        }, {
+            fields: { app: 1 }
         }).fetch();
         if (categories.length > 0) {
             appCategories = _.groupBy(categories, 'app');
             _.each(appCategories, function (categorys, appName) {
-                var _set, appKeyValue, appKeyValueNew, categoryBadge, categoryForms, categoryFormsIds, categorysIds, ref4;
+                var _set, appKeyValue, appKeyValueNew, categoryBadge, categorysIds, ref4;
                 categorysIds = _.pluck(categorys, '_id');
                 if (appName) {
-                    categoryFormsIds = [];
-                    categoryForms = db.forms.find({
-                        category: {
-                            $in: categorysIds
-                        }
-                    }, {
-                        fields: {
-                            _id: 1
-                        }
-                    }).fetch();
-                    if (categoryForms.length > 0) {
-                        categoryFormsIds = categoryForms.getProperty('_id');
-                    }
-                    if (categoryFormsIds.length > 0) {
-                        categoryBadge = db.instances.find({
+                    if (categorysIds.length > 0) {
+                        categoryBadge = db.instances.direct.find({
                             space: user_space.space,
-                            form: {
-                                $in: categoryFormsIds
+                            category: {
+                                $in: categorysIds
                             },
                             $or: [
                                 {
@@ -897,7 +887,7 @@ pushManager.get_badge = function (send_from, user_id) {
                                 _id: 1
                             }
                         }).count();
-                        appKeyValue = db.steedos_keyvalues.findOne({
+                        appKeyValue = db.steedos_keyvalues.direct.findOne({
                             user: user_id,
                             space: user_space.space,
                             key: 'badge'
@@ -911,7 +901,7 @@ pushManager.get_badge = function (send_from, user_id) {
                             if (((ref4 = appKeyValue.value) != null ? ref4[appName] : void 0) !== categoryBadge) {
                                 _set = {};
                                 _set['value.' + appName] = categoryBadge;
-                                return db.steedos_keyvalues.update({
+                                return db.steedos_keyvalues.direct.update({
                                     _id: appKeyValue._id
                                 }, {
                                     $set: _set
@@ -924,7 +914,7 @@ pushManager.get_badge = function (send_from, user_id) {
                             appKeyValueNew.key = 'badge';
                             appKeyValueNew.value = {};
                             appKeyValueNew.value[appName] = categoryBadge;
-                            return db.steedos_keyvalues.insert(appKeyValueNew);
+                            return db.steedos_keyvalues.direct.insert(appKeyValueNew);
                         }
                     }
                 }
@@ -932,7 +922,7 @@ pushManager.get_badge = function (send_from, user_id) {
         }
 
         // workflow 记录所有待办数量
-        c = db.instances.find({
+        c = db.instances.direct.find({
             space: user_space.space,
             $or: [
                 {
@@ -948,7 +938,7 @@ pushManager.get_badge = function (send_from, user_id) {
             }
         }).count();
         badge += c;
-        sk = db.steedos_keyvalues.findOne({
+        sk = db.steedos_keyvalues.direct.findOne({
             user: user_id,
             space: user_space.space,
             key: 'badge'
@@ -960,7 +950,7 @@ pushManager.get_badge = function (send_from, user_id) {
         });
         if (sk) {
             if (((ref4 = sk.value) != null ? ref4.workflow : void 0) !== c) {
-                return db.steedos_keyvalues.update({
+                return db.steedos_keyvalues.direct.update({
                     _id: sk._id
                 }, {
                     $set: {
@@ -976,10 +966,10 @@ pushManager.get_badge = function (send_from, user_id) {
             sk_new.value = {
                 'workflow': c
             };
-            return db.steedos_keyvalues.insert(sk_new);
+            return db.steedos_keyvalues.direct.insert(sk_new);
         }
     });
-    sk_all = db.steedos_keyvalues.findOne({
+    sk_all = db.steedos_keyvalues.direct.findOne({
         user: user_id,
         space: null,
         key: 'badge'
@@ -989,7 +979,7 @@ pushManager.get_badge = function (send_from, user_id) {
         }
     });
     if (sk_all) {
-        db.steedos_keyvalues.update({
+        db.steedos_keyvalues.direct.update({
             _id: sk_all._id
         }, {
             $set: {
@@ -1004,7 +994,7 @@ pushManager.get_badge = function (send_from, user_id) {
         sk_all_new.value = {
             'workflow': badge
         };
-        db.steedos_keyvalues.insert(sk_all_new);
+        db.steedos_keyvalues.direct.insert(sk_all_new);
     }
     return badge;
 };
