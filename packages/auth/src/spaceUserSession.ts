@@ -203,18 +203,7 @@ async function getSpaces(userSpaceIds: string[]) {
 export function deleteSpaceUserSessionCacheByChangedProp (newDoc: any, oldDoc: any): void {
     const { space: spaceId, user: userId } = oldDoc
     // 由于space_users和users是单独缓存，故这里分别判断清除
-    // space_users session
-    const suProps = [
-        'company_id',    // 主分部
-        'company_ids',   // 所属公司
-        'organization',  // 主部门
-        'organizations', // 所属部门
-        'profile',       // 简档
-    ]
-    const suChanged = isPropValueChanged(newDoc, oldDoc, suProps)
-    if (suChanged) {
-        removeSpaceUserSessionFromCache(spaceId, userId)
-    }
+    
     // user session
     const uProps = [
         'locale',        // 语言
@@ -223,6 +212,21 @@ export function deleteSpaceUserSessionCacheByChangedProp (newDoc: any, oldDoc: a
         'username',      // 用户名
         'email'          // 邮箱
     ]
+
+    // space_users session
+    const suProps = [
+        'company_id',    // 主分部
+        'company_ids',   // 所属公司
+        'organization',  // 主部门
+        'organizations', // 所属部门
+        'profile',       // 简档
+        ...uProps
+    ]
+    const suChanged = isPropValueChanged(newDoc, oldDoc, suProps)
+    if (suChanged) {
+        removeSpaceUserSessionFromCache(spaceId, userId)
+    }
+    
     const uChanged = isPropValueChanged(newDoc, oldDoc, uProps)
     if (uChanged) {
         removeUserSessionFromCache(userId)

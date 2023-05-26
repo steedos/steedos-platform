@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-26 12:06:14
+ * @LastEditTime: 2023-05-26 11:29:13
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -94,9 +94,9 @@ module.exports = {
 		"@space_users.updated": {
 			handler(ctx){
 				const params = ctx.params
-				const operationType = params.operationType
-				if (operationType === 'AFTER_UPDATE') {
-					auth.deleteSpaceUserSessionCacheByChangedProp(params.new[0], params.old[0])
+				const { isUpdate, isAfter} = params;
+				if (isAfter && isUpdate) {
+					auth.deleteSpaceUserSessionCacheByChangedProp(params.doc, params.previousDoc)
 				}
 			}
 		},
@@ -107,9 +107,9 @@ module.exports = {
 		 "@spaces.updated": {
 			handler(ctx){
 				const params = ctx.params
-				const operationType = params.operationType
-				if (operationType === 'AFTER_UPDATE') {
-					auth.deleteSpaceCacheByChangedProp(params.new[0], params.old[0])
+				const { isUpdate, isAfter} = params;
+				if (isAfter && isUpdate) {
+					auth.deleteSpaceCacheByChangedProp(params.doc, params.previousDoc)
 				}
 			}
 		},
