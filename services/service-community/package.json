@@ -13,6 +13,7 @@
   "dependencies": {
     "@steedos/ee_sso-oidc": "2.5.0-beta.30",
     "@steedos/service-analytics": "2.5.0-beta.30",
+    "@steedos/service-ancillary": "2.5.0-beta.30",
     "@steedos/service-charts": "2.5.0-beta.30",
     "@steedos/service-i18n": "2.5.0-beta.30",
     "@steedos/service-identity-jwt": "2.5.0-beta.30",
