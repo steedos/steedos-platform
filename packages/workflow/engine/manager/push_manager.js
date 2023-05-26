@@ -1257,15 +1257,7 @@ pushManager.send_instance_notification = function (send_from, instance, descript
             }
             inscribed = TAPi18n.__('instance.email.inscribed', {}, lang);
             footnote = "<p style='text-align:left;color:#bbb;'>" + TAPi18n.__('instance.email.footnote', {}, lang) + "</p>";
-            if (db.space_users.find({
-                space: space_id,
-                user: to_user._id
-            }).count() === 0) {
-                return;
-            }
-            if (db.users.find(to_user._id).count() === 0) {
-                return;
-            }
+
             parameters["to_username"] = to_user.name;
             ins_html = '';
             if (['first_submit_inbox', 'submit_pending_inbox', 'submit_pending_rejected_inbox', 'submit_pending_rejected_applicant_inbox', 'reassign_new_inbox_users', 'trace_approve_cc', 'auto_submit_pending_inbox'].includes(send_from)) {
