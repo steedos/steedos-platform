@@ -31,6 +31,60 @@ Steedos =
 		# reg = /^[^!"#$%&'()*+,./:;<=>?@[\]^`{|}~]+$/g
 		reg = new RegExp("^[^!\"#$%&'()*\+,\.\/:;<=>?@[\\]^`{|}~]+$")
 		return reg.test(str)
+	authRequest: (url, options) ->
+		userSession = Creator.USER_CONTEXT
+		spaceId = userSession.spaceId
+		authToken = if userSession.authToken then userSession.authToken else userSession.user.authToken
+		result = null
+		url = Steedos.absoluteUrl(url)
+		try
+			authorization = 'Bearer ' + spaceId + ',' + authToken
+			headers = [
+				{
+					name: 'Content-Type'
+					value: 'application/json'
+				}
+				{
+					name: 'Authorization'
+					value: authorization
+				}
+			]
+			defOptions = 
+			type: 'get'
+			url: url
+			dataType: 'json'
+			contentType: 'application/json'
+			beforeSend: (XHR) ->
+				if headers and headers.length
+					return headers.forEach((header) ->
+						XHR.setRequestHeader header.name, header.value
+					)
+				return
+			success: (data) ->
+				result = data
+				return
+			error: (XMLHttpRequest, textStatus, errorThrown) ->
+				console.error XMLHttpRequest.responseJSON
+				if XMLHttpRequest.responseJSON and XMLHttpRequest.responseJSON.error
+					errorInfo = XMLHttpRequest.responseJSON.error
+					result = error: errorInfo
+					errorMsg = undefined
+					if errorInfo.reason
+						errorMsg = errorInfo.reason
+					else if errorInfo.message
+						errorMsg = errorInfo.message
+					else
+						errorMsg = errorInfo
+						toastr.error t(errorMsg.replace(/:/g, '：'))
+				else
+					toastr.error XMLHttpRequest.responseJSON
+				return
+			$.ajax Object.assign({}, defOptions, options)
+			return result
+		catch err
+			console.error err
+			toastr.error err
+		return
 
 ###
 # Kick off the global namespace for Steedos.
