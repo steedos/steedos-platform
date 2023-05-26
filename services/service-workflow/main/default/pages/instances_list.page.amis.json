@@ -39,14 +39,14 @@
           "listName": "completed"
         },
         {
-          "type": "button",
+          "type": "action",
           "body": [
             {
-              "type": "wrapper",
+              "type": "action",
               "className": {
                 "mobileCss": "${window:innerWidth < 768}",
                 "pcCss": "${window:innerWidth > 768}",
-                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 sm:w-[240px] py-0": "true"
+                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0": "true"
               },
               "body": [
                 {
@@ -75,31 +75,35 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
+                      "value":"${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
                       "size": "md",
                       "onEvent": {
                         "change": {
                           "actions": [
+                            {
+                              "actionType": "custom",
+                              "script": "if(window.innerWidth < 768){document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
+                            },
                             {
                               "actionType": "setValue",
                               "componentId": "u:4dd57bf1a99a",
                               "args": {
                                 "value": {
                                   "additionalFilters": [
-                                    "${event.data.value.name}",
+                                    "${event.data.options.name}",
                                     "=",
-                                    "${event.data.value.value}"
+                                    "${event.data.options.value}"
                                   ]
                                 }
                               },
-                              "expression": "${event.data.value.level>=10}"
+                              "expression": "${event.data.options.level>=10}"
                             },
                             {
                               "args": {
-                                "link": "${event.data.value.to}",
+                                "link": "${event.data.value}",
                                 "blank": false
                               },
-                              "actionType": "link",
-                              "expression": "${event.data.value.level<10}"
+                              "actionType": "link"
                             }
                           ]
                         }
@@ -118,9 +122,10 @@
                             "className": "-mx-11 ",
                             "tpl": "",
                             "badge": {
+                              "className": "h-0",
                               "offset": [
                                 -13,
-                                13
+                                12
                               ],
                               "mode": "text",
                               "text": "${tag | toInt}"
@@ -144,8 +149,7 @@
                   "messages": {
                   }
                 }
-              ],
-              "id": "u:2d9e1dabb059"
+              ]
             }
           ],
           "onEvent": {
@@ -153,12 +157,11 @@
               "actions": [
                 {
                   "actionType": "custom",
-                  "script": "console.log(event.target); if(window.innerWidth < 768){ document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
+                  "script": " if(window.innerWidth < 768){ document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
                 }
               ]
             }
           },
-          "id": "u:ff96393e3a63",
           "className": {
             "absolute isInset": "true"
           }
@@ -219,7 +222,8 @@
       "-webkit-transform":"translate(-100%,0)",
       "-moz-transform":"translate(-100%,0)",
       "-ms-transform":"translate(-100%,0)",
-      "-o-transform":"translate(-100%,0)"
+      "-o-transform":"translate(-100%,0)",
+      "width":"240px"
     },
     ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
       "transform":"translate(0,0)",

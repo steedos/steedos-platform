@@ -53,9 +53,9 @@ fields:
         value: percent
       - label: Password
         value: password
-      - label: Lookup
+      - label: Lookup Relationship
         value: lookup
-      - label: Master Detail
+      - label: Master-Detail Relationship
         value: master_detail
       - label: Autonumber
         value: autonumber

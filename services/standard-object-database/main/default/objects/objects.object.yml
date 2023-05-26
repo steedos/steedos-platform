@@ -51,7 +51,6 @@ fields:
                   icon: svg
                 });
               });
-
               return options;
             }
   is_enable:

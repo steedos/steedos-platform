@@ -90,14 +90,6 @@ module.exports = {
                 case 'inbox':
                     filter.push(['handler', '=', userId]);
                     filter.push(['is_finished', '=', false]);
-                    // task中未结束的就是 待办 , 无需其他查询
-                    filter.push([
-                        ['instance_state', 'in', ["pending", "completed"]], 
-                        'or', 
-                        [['instance_state', '=', 'draft'], [
-                            ['distribute_from_instance', '!=', null], 'or', ['forward_from_instance', '!=', null]
-                        ],]
-                    ]);
                     break;
                 case 'outbox':
                     filter.push(['handler', '=', userId]);
@@ -149,7 +141,7 @@ module.exports = {
             }
 
             if(categoriesIds && categoriesIds.length > 0){
-                const forms = await objectql.getObject('forms').find({filters: ['category', 'in', categoriesIds], fields: ['_id']});
+                const forms = await objectql.getObject('forms').directFind({filters: ['category', 'in', categoriesIds], fields: ['_id']});
                 if(forms.length > 0){
                     filter.push(['form', 'in', _.map(forms, '_id')])
                 }else{
@@ -254,7 +246,7 @@ module.exports = {
     },
     getAppCategoriesIds: {
         async handler(appId) {
-          const categories = await objectql.getObject('categories').find({ filters: [['app', '=', appId]] });
+          const categories = await objectql.getObject('categories').directFind({ filters: [['app', '=', appId]] });
           return _.map(categories, '_id');
         }
     },

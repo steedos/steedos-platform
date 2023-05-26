@@ -9,9 +9,10 @@
             "api": {
                 "method": "post",
                 "url": "${context.rootUrl}/graphql",
-                "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) { \n    option.label = option.label + \"(\" + option.value + \")\";\n    return option;\n  });\n}\nif (!api.body.recordId) {\n  const defaultValues = {\n    is_creator: true,\n    mobile: true,\n    visible: true,\n    sort: 9100\n  }\n  data = Object.assign({}, data, defaultValues);\n}\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                 "data": {
-                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}"
+                    "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}",
+                    "recordId": "${recordId}"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -108,6 +109,7 @@
                                                             "labelField": "symbol",
                                                             "valueField": "symbol",
                                                             "multiple": false,
+                                                            "searchable": true,
                                                             "source": "${sldsIconsOptions}",
                                                             "menuTpl": "<span class=\"flex items-center mt-0.5\">\n  <span role=\"img\" aria-label=\"smile\" class=\"anticon anticon-smile\">\n    <span class=\"slds-icon_container slds-icon-standard-${symbol|split:_|join:-}\">\n        <svg class=\"slds-icon slds-icon_x-small\" aria-hidden=\"true\">\n          <use xlink:href=\"/assets/icons/standard-sprite/svg/symbols.svg#${symbol}\"></use>\n        </svg>\n    </span>\n  </span>\n  <span class=\"pl-1.5\">${symbol}</span>\n</span>"
                                                         }
@@ -343,6 +345,13 @@
                                                                                 "name": "group_name",
                                                                                 "label": "名称",
                                                                                 "id": "u:383c7744b499"
+                                                                            },
+                                                                            {
+                                                                                "name": "default_open",
+                                                                                "label": "是否默认展开",
+                                                                                "id": "u:7a243c84ed66",
+                                                                                "type": "checkbox",
+                                                                                "value": true
                                                                             }
                                                                         ],
                                                                         "removable": true,
@@ -354,8 +363,8 @@
                                                                         "actions": [
                                                                             {
                                                                                 "actionType": "custom",
-                                                                                "script": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\nconst clearTabs = function (input) {\n  return {\n    tab_items: []\n  }\n}\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\nconst convertDataForGroups = function(input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = _.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name\n    }\n  }), \"group_name\");\n\n  const groupNames = _.compact(_.map(convertedGroups, \"group_name\"));\n  const tab_items = input.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n};\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: clearTabs()\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: convertDataForGroups(eventData)\n  }\n});\n\n"
-                                                                            }
+                                                                                "script": "const tabGroupKey = \"group\";\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n}\n\nconst clearTabs = function (input) {\n  return {\n    tab_items: []\n  }\n}\n\n// 把”设置分组“弹出窗口中设置的分组转为主表单groups字段值格式\n// 同时根据新的groups排序重新设置tabs属性的字段先后次序\n// 因为直接设置tabs值有bug，即新值老值会串，所以需要先执行上面的clearTabs清除原来的值\nconst convertDataForGroups = function(input) {\n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = _.uniqBy(settingGroups.map(function (item) {\n    return {\n      group_name: item.group_name,\n      default_open: item.default_open\n    }\n  }), \"group_name\");\n\n  const groupNames = _.compact(_.map(convertedGroups, \"group_name\"));\n  const tab_items = input.__super.__super.items;\n  // tabs重新按分组排序\n  tab_items.sort(getTabsSortFun(groupNames));\n  return {\n    tab_groups: convertedGroups,\n    tab_items: tab_items\n  }\n};\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: clearTabs()\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"apps-form\",\n  args: {\n    value: convertDataForGroups(eventData)\n  }\n});\n\n"
+                                                                              }
                                                                         ]
                                                                     }
                                                                 },

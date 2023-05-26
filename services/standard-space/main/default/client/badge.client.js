@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-03-17 12:12:50
+ * @LastEditTime: 2023-05-17 11:32:13
  */
 let keyvalues = {};
 ; (function () {
@@ -43,8 +43,7 @@ let keyvalues = {};
                                 }
                             ]
                         }
-                    },
-                    "id": "u:987c489f7126"
+                    }
                 }]
             }
         };

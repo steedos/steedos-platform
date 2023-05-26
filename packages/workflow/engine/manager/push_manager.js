@@ -842,7 +842,7 @@ pushManager.get_badge = function (send_from, user_id) {
         return null;
     }
     badge = 0;
-    user_spaces = db.space_users.find({
+    user_spaces = db.space_users.direct.find({
         user: user_id,
         user_accepted: true
     }, {
@@ -853,36 +853,26 @@ pushManager.get_badge = function (send_from, user_id) {
     user_spaces.forEach(function (user_space) {
         var appCategories, c, categories, ref4, sk, sk_new, spaceId;
         spaceId = user_space.space;
-        categories = db.categories.find({
+
+        categories = db.categories.direct.find({
             space: spaceId,
             app: {
                 $ne: null
             }
+        }, {
+            fields: { app: 1 }
         }).fetch();
         if (categories.length > 0) {
             appCategories = _.groupBy(categories, 'app');
             _.each(appCategories, function (categorys, appName) {
-                var _set, appKeyValue, appKeyValueNew, categoryBadge, categoryForms, categoryFormsIds, categorysIds, ref4;
+                var _set, appKeyValue, appKeyValueNew, categoryBadge, categorysIds, ref4;
                 categorysIds = _.pluck(categorys, '_id');
                 if (appName) {
-                    categoryFormsIds = [];
-                    categoryForms = db.forms.find({
-                        category: {
-                            $in: categorysIds
-                        }
-                    }, {
-                        fields: {
-                            _id: 1
-                        }
-                    }).fetch();
-                    if (categoryForms.length > 0) {
-                        categoryFormsIds = categoryForms.getProperty('_id');
-                    }
-                    if (categoryFormsIds.length > 0) {
-                        categoryBadge = db.instances.find({
+                    if (categorysIds.length > 0) {
+                        categoryBadge = db.instances.direct.find({
                             space: user_space.space,
-                            form: {
-                                $in: categoryFormsIds
+                            category: {
+                                $in: categorysIds
                             },
                             $or: [
                                 {
@@ -897,7 +887,7 @@ pushManager.get_badge = function (send_from, user_id) {
                                 _id: 1
                             }
                         }).count();
-                        appKeyValue = db.steedos_keyvalues.findOne({
+                        appKeyValue = db.steedos_keyvalues.direct.findOne({
                             user: user_id,
                             space: user_space.space,
                             key: 'badge'
@@ -911,7 +901,7 @@ pushManager.get_badge = function (send_from, user_id) {
                             if (((ref4 = appKeyValue.value) != null ? ref4[appName] : void 0) !== categoryBadge) {
                                 _set = {};
                                 _set['value.' + appName] = categoryBadge;
-                                return db.steedos_keyvalues.update({
+                                return db.steedos_keyvalues.direct.update({
                                     _id: appKeyValue._id
                                 }, {
                                     $set: _set
@@ -924,7 +914,7 @@ pushManager.get_badge = function (send_from, user_id) {
                             appKeyValueNew.key = 'badge';
                             appKeyValueNew.value = {};
                             appKeyValueNew.value[appName] = categoryBadge;
-                            return db.steedos_keyvalues.insert(appKeyValueNew);
+                            return db.steedos_keyvalues.direct.insert(appKeyValueNew);
                         }
                     }
                 }
@@ -932,7 +922,7 @@ pushManager.get_badge = function (send_from, user_id) {
         }
 
         // workflow 记录所有待办数量
-        c = db.instances.find({
+        c = db.instances.direct.find({
             space: user_space.space,
             $or: [
                 {
@@ -948,7 +938,7 @@ pushManager.get_badge = function (send_from, user_id) {
             }
         }).count();
         badge += c;
-        sk = db.steedos_keyvalues.findOne({
+        sk = db.steedos_keyvalues.direct.findOne({
             user: user_id,
             space: user_space.space,
             key: 'badge'
@@ -960,7 +950,7 @@ pushManager.get_badge = function (send_from, user_id) {
         });
         if (sk) {
             if (((ref4 = sk.value) != null ? ref4.workflow : void 0) !== c) {
-                return db.steedos_keyvalues.update({
+                return db.steedos_keyvalues.direct.update({
                     _id: sk._id
                 }, {
                     $set: {
@@ -976,10 +966,10 @@ pushManager.get_badge = function (send_from, user_id) {
             sk_new.value = {
                 'workflow': c
             };
-            return db.steedos_keyvalues.insert(sk_new);
+            return db.steedos_keyvalues.direct.insert(sk_new);
         }
     });
-    sk_all = db.steedos_keyvalues.findOne({
+    sk_all = db.steedos_keyvalues.direct.findOne({
         user: user_id,
         space: null,
         key: 'badge'
@@ -989,7 +979,7 @@ pushManager.get_badge = function (send_from, user_id) {
         }
     });
     if (sk_all) {
-        db.steedos_keyvalues.update({
+        db.steedos_keyvalues.direct.update({
             _id: sk_all._id
         }, {
             $set: {
@@ -1004,7 +994,7 @@ pushManager.get_badge = function (send_from, user_id) {
         sk_all_new.value = {
             'workflow': badge
         };
-        db.steedos_keyvalues.insert(sk_all_new);
+        db.steedos_keyvalues.direct.insert(sk_all_new);
     }
     return badge;
 };
@@ -1130,7 +1120,7 @@ pushManager.send_message_by_raix_push = function (data) {
 };
 
 //steedos_ids 必须为数组 ； body 如果有，则必须为Hash
-pushManager.send_message = function (steedos_ids, body, current_user_info) {
+pushManager.send_message = function (steedos_ids, body) {
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
     }
@@ -1172,7 +1162,7 @@ pushManager.send_to_sms = function (to_user, message, current_user_info, spaceId
 };
 
 //通知服务
-pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids) {
+pushManager.send_instance_notification = function (send_from, instance, description, current_user_info, cc_user_ids, flowDoc) {
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
     }
@@ -1183,7 +1173,7 @@ pushManager.send_instance_notification = function (send_from, instance, descript
         space_id = instance.space;
         instance_id = instance._id;
         flow_version = instance.flow_version;
-        flow = uuflowManager.getFlow(instance.flow);
+        flow = flowDoc || uuflowManager.getFlow(instance.flow);
         to_users = pushManager.get_to_users(send_from, instance, cc_user_ids, current_user_info);
         href = Meteor.absoluteUrl() + `workflow/space/${space_id}/inbox/${instance_id}`;
         body_style_start = "<div style='border:1px solid #bbb;padding:10px;'>";
@@ -1351,9 +1341,13 @@ pushManager.send_message_to_specifyUser = function (send_from, to_user) {
         push_body["badge"] = badge;
         user_info = db.users.findOne({
             _id: to_user
+        }, {
+            fields: {
+                steedos_id: 1
+            }
         });
         if (user_info) {
-            return this.send_message([user_info.steedos_id], push_body, user_info);
+            return this.send_message([user_info.steedos_id], push_body);
         }
     } catch (error) {
         e = error;
@@ -1364,6 +1358,9 @@ pushManager.send_message_to_specifyUser = function (send_from, to_user) {
 pushManager.triggerWebhook = function (flow_id, instance, current_approve, action, from_user_id, to_user_ids) {
     if (process.env.STEEDOS_DEBUG_DISABLE_PUSHMANAGER) {
         return
+    }
+    if (!pushManager.hasWebhooks(flow_id)) { // 没有webhook，不需要发送
+        return;
     }
     var from_space_user, from_user, to_users;
     instance.attachments = cfs.instances.find({
@@ -1436,3 +1433,13 @@ pushManager.triggerWebhook = function (flow_id, instance, current_approve, actio
         });
     });
 };
+
+pushManager.hasWebhooks = function (flow_id) {
+    var webhookDocsCount = db.webhooks.find({
+        flow: {
+            $in: [flow_id, null]
+        },
+        active: true
+    }).count();
+    return webhookDocsCount > 0;
+}

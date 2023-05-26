@@ -1,0 +1,39 @@
+{
+    "name": "@steedos/plugin-dingtalk",
+    "version": "2.5.0-beta.30",
+    "private": false,
+    "description": "",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "author": "Jack Zhuang",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/steedos/steedos-plugin-dingtalk.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "debug": "tsc && nodemon server.js",
+        "start": "node server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "cookies": "^0.8.0",
+        "dotenv-flow": "^3.1.0",
+        "express": "^4.17.1",
+        "jsdom": "^16.2.2",
+        "jshashes": "^1.0.8",
+        "node-fetch": "^2.6.7",
+        "wechat-crypto": "^0.0.2",
+        "wx-ding-aes": "^0.0.10"
+    },
+    "devDependencies": {
+        "babel-runtime": "^6.23.0",
+        "nodemon": "^2.0.19",
+        "steedos-server": "2.5.0-beta.30"
+    },
+    "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
+    "gitHead": "d33d736a3009ecfe57981d03d7062e52eaf27609"
+}

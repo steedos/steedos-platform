@@ -164,6 +164,10 @@
   height: 100%
 }
 
+.h-0 {
+  height: 0px
+}
+
 .w-10 {
   width: 2.5rem
 }
@@ -415,10 +419,6 @@
 @media (min-width: 640px) {
   .sm\:mt-3 {
     margin-top: 0.75rem
-  }
-
-  .sm\:w-\[240px\] {
-    width: 240px
   }
 
   .sm\:rounded-lg {

@@ -48,45 +48,73 @@ uuflowManager.checkNestStepUsersIsValid = function (selected, scope, nextStep) {
 };
 
 uuflowManager.getInstance = function (instance_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getInstance');
+    }
     var ins;
     ins = db.instances.findOne(instance_id);
     if (!ins) {
         throw new Meteor.Error('error!', `申请单ID：${instance_id}有误或此申请单已经被删除`);
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getInstance');
+    }
     return ins;
 };
 
 uuflowManager.getSpace = function (space_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpace');
+    }
     var space;
     space = db.spaces.findOne(space_id);
     if (!space) {
         throw new Meteor.Error('error!', "space_id有误或此space已经被删除");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpace');
+    }
     return space;
 };
 
-uuflowManager.getSpaceUser = function (space_id, user_id) {
+uuflowManager.getSpaceUser = function (space_id, user_id, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpaceUser');
+    }
     var space_user;
     space_user = db.space_users.findOne({
         space: space_id,
         user: user_id
-    });
+    }, options);
     if (!space_user) {
         throw new Meteor.Error('error!', "user_id对应的用户不属于当前space");
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpaceUser');
     }
     return space_user;
 };
 
-uuflowManager.getFlow = function (flow_id, options = {}) {
+uuflowManager.getFlow = function (flow_id, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        var now = new Date().toISOString();
+        console.time('uuflowManager.getFlow' + now);
+    }
     var flow;
     flow = db.flows.findOne(flow_id, options);
     if (!flow) {
         throw new Meteor.Error('error!', "id有误或此流程已经被删除");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getFlow' + now);
+    }
     return flow;
 };
 
 uuflowManager.getSpaceUserOrgInfo = function (space_user) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getSpaceUserOrgInfo');
+    }
     var info, org;
     info = {};
     info.organization = space_user.organization;
@@ -98,6 +126,9 @@ uuflowManager.getSpaceUserOrgInfo = function (space_user) {
     });
     info.organization_name = org.name;
     info.organization_fullname = org.fullname;
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getSpaceUserOrgInfo');
+    }
     return info;
 };
 
@@ -208,13 +239,33 @@ uuflowManager.isSpaceAdmin = function (space_id, user_id) {
     }
 };
 
-uuflowManager.getUser = function (user_id) {
+uuflowManager.getUser = function (user_id, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getUser');
+    }
     var user;
-    user = db.users.findOne(user_id);
+    user = db.users.findOne(user_id, options);
     if (!user) {
         throw new Meteor.Error('error!', "用户ID有误或此用户已经被删除");
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getUser');
+    }
     return user;
+};
+
+uuflowManager.getOrganization = function (orgId, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getOrganization');
+    }
+    var orgDoc = db.organizations.findOne(orgId, options);
+    if (!orgDoc) {
+        throw new Meteor.Error('error!', "组织ID有误或此组织已经被删除");
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getOrganization');
+    }
+    return orgDoc;
 };
 
 uuflowManager.getUserOrganization = function (user_id, space_id) {
@@ -675,6 +726,9 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
 };
 
 uuflowManager.getUpdatedValues = function (instance, approve_id) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getUpdatedValues');
+    }
     var newest_values, trace_approve;
     // 取得最新的approve
     trace_approve = null;
@@ -700,14 +754,23 @@ uuflowManager.getUpdatedValues = function (instance, approve_id) {
     } else {
         newest_values = _.extend(_.clone(instance.values), trace_approve.values);
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getUpdatedValues');
+    }
     return newest_values;
 };
 
-uuflowManager.getForm = function (form_id, options = {}) {
+uuflowManager.getForm = function (form_id, options) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getForm');
+    }
     var form;
     form = db.forms.findOne(form_id, options);
     if (!form) {
         throw new Meteor.Error('error!', '表单ID有误或此表单已经被删除');
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getForm');
     }
     return form;
 };
@@ -728,12 +791,27 @@ uuflowManager.getFormVersion = function (form, form_version) {
     return form_v;
 };
 
-uuflowManager.getCategory = function (category_id, options = {}) {
+uuflowManager.getCategory = function (category_id, options) {
     return db.categories.findOne(category_id, options);
 };
 
 uuflowManager.getInstanceName = function (instance, vals) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getInstanceName');
+    }
     var applicant, default_value, e, flow, form, form_id, form_v, form_version, func, iscript, name_forumla, rev, script, values;
+    default_value = instance.flow_name + ' ' + instance.code;
+    form_id = instance.form;
+    form_version = instance.form_version;
+    form = uuflowManager.getForm(form_id);
+    form_v = uuflowManager.getFormVersion(form, form_version);
+    name_forumla = form_v.name_forumla;
+    if (!name_forumla) {
+        if (process.env.STEEDOS_DEBUG) {
+            console.time('uuflowManager.getInstanceName');
+        }
+        return default_value.trim();
+    }
     values = _.clone(vals || instance.values) || {};
     applicant = WorkflowManager.getFormulaUserObject(instance.space, instance.applicant);
     values["applicant"] = applicant;
@@ -742,13 +820,37 @@ uuflowManager.getInstanceName = function (instance, vals) {
     values["applicant_organization_fullname"] = instance.applicant_organization_fullname;
     values["applicant_organization_name"] = instance.applicant_organization_name;
     values["submit_date"] = moment(instance.submit_date).utcOffset(0, false).format("YYYY-MM-DD");
-    form_id = instance.form;
-    flow = uuflowManager.getFlow(instance.flow);
-    default_value = flow.name + ' ' + instance.code;
-    form_version = instance.form_version;
-    form = uuflowManager.getForm(form_id);
-    form_v = uuflowManager.getFormVersion(form, form_version);
-    name_forumla = form_v.name_forumla;
+    // 显示下拉框字段类型的label
+    if (form_v.fields) {
+        for (const field of form_v.fields) {
+            if(["select", "multiSelect", "radio"].indexOf(field.type) > -1){
+                var fieldOptions = field.options.split("\n").map(function(n){
+                    var itemSplits = n.split(":")
+                    return {
+                        label: itemSplits[0],
+                        value: itemSplits[1] || n
+                    }
+                });
+                const value = values[field.code];
+                switch (field.type) {
+                    case 'select':
+                    case 'radio':
+                        var selectedOption = fieldOptions.find(function(item){ return item.value == value; })
+                        if(selectedOption){
+                            values[field.code] = selectedOption.label
+                        }
+                        break;
+                    case 'multiSelect':
+                        var splitedValues = value.split(",");
+                        var selectedOptions = fieldOptions.filter(function(item){ return splitedValues.indexOf(item.value) > -1; });
+                        if(selectedOptions.length){
+                            values[field.code] = selectedOptions.map(function(item){ return item.label; }).join(",");
+                        }
+                        break;
+                }
+            }
+        }
+    }
     rev = default_value;
     if (name_forumla) {
         if (name_forumla.indexOf("{applicant.") > -1) {
@@ -767,10 +869,16 @@ uuflowManager.getInstanceName = function (instance, vals) {
             console.log(e);
         }
     }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getInstanceName');
+    }
     return rev.trim();
 };
 
 uuflowManager.getApproveValues = function (approve_values, permissions, form_id, form_version) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.time('uuflowManager.getApproveValues');
+    }
     var form_v, instance_form;
     // 如果permissions为null，则approve_values为{}
     if (permissions === null) {
@@ -808,6 +916,9 @@ uuflowManager.getApproveValues = function (approve_values, permissions, form_id,
                 }
             }
         });
+    }
+    if (process.env.STEEDOS_DEBUG) {
+        console.timeEnd('uuflowManager.getApproveValues');
     }
     return approve_values;
 };
@@ -2019,7 +2130,7 @@ uuflowManager.create_instance = function (instance_from_client, user_info) {
     // 判断一个flow和space_id是否匹配
     uuflowManager.isFlowSpaceMatched(flow, space_id);
     form = uuflowManager.getForm(flow.form, { fields: { historys: 0 } });
-    permissions = permissionManager.getFlowPermissions(flow_id, user_id);
+    permissions = permissionManager.getFlowPermissions(flow_id, user_id, flow);
     if (!permissions.includes("add")) {
         throw new Meteor.Error('error!', "当前用户没有此流程的新建权限");
     }
@@ -2131,6 +2242,10 @@ uuflowManager.getDueDate = function (hours, spaceId) {
 };
 
 uuflowManager.submit_instance = function (instance_from_client, user_info) {
+    if (process.env.STEEDOS_DEBUG) {
+        console.log('[submit_instance] start');
+        console.time('submit_instance');
+    }
     var applicant, applicant_id, applicant_org_info, approve, approve_id, attachments, checkApplicant, checkUsers, current_user, description, flow, flow_has_upgrade, flow_id, form, instance, instance_id, instance_name, instance_traces, lang, newTrace, nextSteps, nextTrace, next_step, next_step_users, next_steps, permissions, setObj, space, space_id, space_user, space_user_org_info, start_step, step, submitter_id, trace, trace_id, traces, upObj, updated_values, user, values;
     const now = new Date()
     current_user = user_info._id;
@@ -2234,12 +2349,11 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     setObj.traces = instance_traces;
     setObj.modified = now;
     setObj.modified_by = current_user;
-    db.instances.update({
+    db.instances.direct.update({
         _id: instance_id
     }, {
         $set: setObj
     });
-    update_instance_tasks(instance_id, instance_traces[0]._id, instance_traces[0]["approves"][0]._id)
     if (flow_has_upgrade) {
         return {
             alerts: TAPi18n.__('flow.point_upgraded', {}, lang)
@@ -2439,9 +2553,14 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     if (next_step.step_type !== "end") {
         instance = uuflowManager.getInstance(instance_id);
         //发送短消息给申请人
-        pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info);
+        pushManager.send_instance_notification("first_submit_applicant", instance, "", user_info, null, flow);
         // 发送消息给下一步处理人
-        pushManager.send_instance_notification("first_submit_inbox", instance, "", user_info);
+        pushManager.send_instance_notification("first_submit_inbox", instance, "", user_info, null, flow);
+    }
+
+    if (process.env.STEEDOS_DEBUG) {
+        console.log('[submit_instance] end');
+        console.timeEnd('submit_instance');
     }
     return {};
 };
@@ -2956,6 +3075,8 @@ uuflowManager.triggerRecordInstanceQueue = function (ins_id, record_ids, step_na
     var newObj, owDoc, syncType;
     owDoc = Creator.getCollection('object_workflows').findOne({
         flow_id: flow_id
+    }, {
+        fields: { sync_type: 1 }
     });
     if (owDoc) {
         syncType = owDoc.sync_type;

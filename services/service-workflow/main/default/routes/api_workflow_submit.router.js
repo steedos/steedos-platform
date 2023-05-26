@@ -42,6 +42,10 @@ const { excuteTriggers } = require('../utils/trigger');
  */
 router.post('/api/workflow/submit', core.requireAuthentication, async function (req, res) {
     try {
+        if (process.env.STEEDOS_DEBUG) {
+            console.time('/api/workflow/submit')
+        }
+
         let userSession = req.user;
         const spaceId = userSession.spaceId;
         const userId = userSession.userId;
@@ -66,14 +70,20 @@ router.post('/api/workflow/submit', core.requireAuthentication, async function (
                     pushManager.send_message_to_specifyUser("current_user", userId);
                 }
                 if (_.isEmpty(r.alerts)) {
-                    var instance = db.instances.findOne(instance_from_client._id);
-                    var flow_id = instance.flow;
-                    var current_approve = instance_from_client.traces[0].approves[0];
-                    // 如果已经配置webhook并已激活则触发
-                    pushManager.triggerWebhook(flow_id, instance, current_approve, 'draft_submit', userId, instance.inbox_users);
+                    if (pushManager.hasWebhooks(instance_from_client.flow)) {
+                        var instance = db.instances.findOne(instance_from_client._id);
+                        var flow_id = instance.flow;
+                        var current_approve = instance_from_client.traces[0].approves[0];
+                        // 如果已经配置webhook并已激活则触发
+                        pushManager.triggerWebhook(flow_id, instance, current_approve, 'draft_submit', userId, instance.inbox_users);
+                    }
                 }
                 // 判断申请单是否分发，分发文件结束提醒发起人
                 uuflowManager.distributedInstancesRemind(instance_from_client);
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('/api/workflow/submit')
+                }
                 res.status(200).send({ result: result });
             } catch (error) {
                 console.error(error);

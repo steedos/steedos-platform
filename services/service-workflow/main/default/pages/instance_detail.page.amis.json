@@ -31,13 +31,14 @@
               "hideRoot": true,
               "showIcon": true,
               "initiallyOpen": false,
+              "value":"/app/${appId}/${objectName}/grid/${listName}",
               "size": "md",
               "onEvent": {
                 "change": {
                   "actions": [
                     {
                       "args": {
-                        "link": "${event.data.value.to}",
+                        "link": "${event.data.value}",
                         "blank": false
                       },
                       "actionType": "link"
@@ -59,9 +60,10 @@
                     "className": "-mx-11 ",
                     "tpl": "",
                     "badge": {
+                      "className": "h-0",
                       "offset": [
                         -13,
-                        13
+                        12
                       ],
                       "mode": "text",
                       "text": "${tag | toInt}"

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-10 11:59:22
+ * @LastEditTime: 2023-05-22 10:49:27
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -246,6 +246,16 @@ if (Meteor.isServer) {
       state: 1,
       submit_date: -1,
     }, { background: true, name: 'monitor_admin' });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
+      "state": 1,
+      "form": 1,
+      "is_deleted": 1,
+      "space": 1
+    }, {});
   } catch (error) {
 
   }

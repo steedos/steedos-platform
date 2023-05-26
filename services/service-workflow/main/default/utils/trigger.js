@@ -14,13 +14,23 @@ const PROCESS_TRIGGER = 'processTrigger';
 const LISTENTO_ALL_FLOWS = 'LISTENTO_ALL_FLOWS';
 module.exports = {
     excuteTriggers: async function ({ when, userId, flowId, insId, nextStep, nextUserIds }) {
-        const flow = (await objectql.getObject('flows').find({ filters: ['_id', '=', flowId], fields: ['api_name', 'space'] }))[0];
+        if ('true' !== process.env.STEEDOS_ENABLE_PROCESS_TRIGGER) {
+            return // 未开启流程触发器，直接返回
+        };
+
+        const flow = (await objectql.getObject('flows').directFind({ filters: ['_id', '=', flowId], fields: ['api_name', 'space'] }))[0];
         const flowApiName = flow.api_name;
-        const spaceId = flow.space;
-        const instanceDoc = await objectql.getObject('instances').findOne(insId);
         const broker = objectql.getSteedosSchema().broker;
+
         let triggers = await objectql.registerProcessTrigger.find(broker, { pattern: `${flowApiName}.${when}.*` });
         let wildTriggers = await objectql.registerProcessTrigger.find(broker, { pattern: `${LISTENTO_ALL_FLOWS}.${when}.*` });
+
+        if (triggers.length === 0 && wildTriggers.length === 0) {
+            return; // 没有触发器，直接返回
+        }
+
+        const spaceId = flow.space;
+        const instanceDoc = await objectql.getObject('instances').findOne(insId);
         let allTriggers = triggers.concat(wildTriggers);
         const event = {
             data: {

@@ -2,36 +2,541 @@
     "type": "page",
     "body": [
         {
-            "type": "form",
-            "mode": "normal",
-            "persistData": false,
-            "promptPageLeave": true,
-            "name": "form_edit_${recordId}",
-            "debug": false,
-            "title": "",
-            "api": {
-                "method": "post",
-                "url": "${context.rootUrl}/graphql",
-                "data": {
-                    "objectName": "${objectName}",
-                    "$": "$$",
-                    "recordId": "${recordId}",
-                    "modalName": "${modalName}"
-                },
-                "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n    return { field: item };\n});\n\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
-                "adaptor": "if (payload.errors) {\n    payload.status = 2;\n    payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
-                "responseData": {
-                    "recordId": "${record._id}"
-                },
-                "headers": {
-                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+            "type": "service",
+            "body": [
+                {
+                    "type": "form",
+                    "mode": "normal",
+                    "persistData": false,
+                    "promptPageLeave": true,
+                    "name": "form_edit_${recordId}",
+                    "debug": false,
+                    "title": "",
+                    "api": {
+                        "method": "post",
+                        "url": "${context.rootUrl}/graphql",
+                        "data": {
+                            "objectName": "${objectName}",
+                            "$": "$$",
+                            "recordId": "${recordId}",
+                            "modalName": "${modalName}"
+                        },
+                        "requestAdaptor": "const formData = api.data.$;\nconst objectName = api.data.objectName;\nconst fieldsName = Object.keys(formData);\ndelete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.columns = lodash.map(formData.columns, (item) => {\n    return { field: item };\n});\n\nformData.sort = lodash.map(formData.sort, (item) => {\n    const arr = item.split(':');\n    return { field_name: arr[0], order: arr[1]};\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n    return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n    return { field: item };\n});\n\nif (!formData._filters_type_controller) {\n    formData._filters_type_controller = 'conditions';\n}\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n    formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n    // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n    formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nlet query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n    query = `mutation{record: ${objectName}__update(id: \"${formData.recordId}\", doc: {__saveData}){_id}}`;\n};\ndelete formData._id;\nlet __saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
+                        "adaptor": "if (payload.errors) {\n    payload.status = 2;\n    payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message;\n}\nreturn payload;",
+                        "responseData": {
+                            "recordId": "${record._id}"
+                        },
+                        "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        },
+                        "messages": {}
+                    },
+                    "initFetch": true,
+                    "body": [
+                        {
+                            "type": "fieldSet",
+                            "title": "通用",
+                            "en-US": {
+                                "title": "Common"
+                            },
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "name": "label",
+                                    "label": "显示名称",
+                                    "required": true,
+                                    "type": "input-text",
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "en-US": {
+                                        "label": "Label"
+                                    },
+                                    "id": "u:a45229ed29f8"
+                                },
+                                {
+                                    "name": "name",
+                                    "label": "API 名称",
+                                    "labelRemark": "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符",
+                                    "required": false,
+                                    "type": "input-text",
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "en-US": {
+                                        "label": "API Name",
+                                        "labelRemark": "Can only contain lowercase letters and numbers, must start with a letter,cannot end with an underscore character or contain two consecutive underscore characters"
+                                    },
+                                    "id": "u:ff927884ec36"
+                                },
+                                {
+                                    "name": "object_name",
+                                    "label": "对象",
+                                    "required": true,
+                                    "type": "select",
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "labelField": "label",
+                                    "valueField": "value",
+                                    "autoComplete": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                    },
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "checkAll": false,
+                                    "searchable": true,
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                    },
+                                    "en-US": {
+                                        "label": "Object"
+                                    },
+                                    "id": "u:1427b8edc8f5",
+                                    "multiple": false
+                                },
+                                {
+                                    "name": "filter_scope",
+                                    "label": "过滤范围",
+                                    "required": true,
+                                    "type": "select",
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "labelField": "label",
+                                    "valueField": "value",
+                                    "options": [
+                                        {
+                                            "label": "我的",
+                                            "value": "mine",
+                                            "en-US": {
+                                                "label": "Mine"
+                                            }
+                                        },
+                                        {
+                                            "label": "工作区",
+                                            "value": "space",
+                                            "en-US": {
+                                                "label": "Space"
+                                            }
+                                        }
+                                    ],
+                                    "value": "space",
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "en-US": {
+                                        "label": "Filter Scope"
+                                    },
+                                    "id": "u:5f00b15822d5"
+                                },
+                                {
+                                    "name": "shared",
+                                    "type": "checkbox",
+                                    "tpl": null,
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "option": "共享视图到工作区",
+                                    "en-US": {
+                                        "option": "Shared to All Users"
+                                    },
+                                    "id": "u:3ba5090f7fd0"
+                                },
+                                {
+                                    "name": "show_count",
+                                    "type": "checkbox",
+                                    "tpl": null,
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "option": "显示条目数",
+                                    "en-US": {
+                                        "option": "Show Record Count"
+                                    },
+                                    "id": "u:811f0c5d03ad"
+                                },
+                                {
+                                    "name": "sort_no",
+                                    "label": "排序号",
+                                    "type": "input-number",
+                                    "precision": 0,
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "en-US": {
+                                        "label": "Sort NO."
+                                    },
+                                    "id": "u:25a6ee957503"
+                                },
+                                {
+                                    "label": "显示的列",
+                                    "type": "transfer",
+                                    "name": "columns",
+                                    "options": [],
+                                    "multiple": true,
+                                    "id": "u:92c0b3cccca0",
+                                    "required": true,
+                                    "placeholder": "-",
+                                    "className": "col-span-2 m-0",
+                                    "visibleOn": "!!this.object_name",
+                                    "checkAll": false,
+                                    "searchable": true,
+                                    "sortable": true,
+                                    "en-US": {
+                                        "label": "Columns"
+                                    },
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "requestAdaptor": "",
+                                        "adaptor": "",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "joinValues": false,
+                                    "extractValue": true
+                                }
+                            ],
+                            "id": "u:7f7b2d3ea064"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "过滤",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "label": "默认过滤字段",
+                                    "type": "transfer",
+                                    "name": "filter_fields",
+                                    "options": [],
+                                    "id": "u:ea994ad5816d",
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": null,
+                                        "requestAdaptor": "",
+                                        "adaptor": "",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "visibleOn": "false && !!this.object_name",
+                                    "className": "col-span-2 m-0",
+                                    "searchable": true,
+                                    "sortable": true,
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "en-US": {
+                                        "label": "Default Filter Fields"
+                                    },
+                                    "multiple": true
+                                },
+                                {
+                                    "type": "radios",
+                                    "label": "过滤器配置方式",
+                                    "name": "_filters_type_controller",
+                                    "options": [
+                                        {
+                                            "label": "条件组合",
+                                            "value": "conditions"
+                                        },
+                                        {
+                                            "label": "js脚本",
+                                            "value": "function"
+                                        }
+                                    ],
+                                    "id": "u:318671bc196c",
+                                    "joinValues": true,
+                                    "className": "col-span-2 m-0",
+                                    "language": "javascript",
+                                    "visibleOn": "false",
+                                    "en-US": {
+                                        "label": "Controller"
+                                    }
+                                },
+                                {
+                                    "type": "condition-builder",
+                                    "label": "条件组件",
+                                    "name": "_filters_conditions",
+                                    "description": "",
+                                    "id": "u:a9f2232e30d7",
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-listviews/getFilterFields?objectName=${object_name}",
+                                        "dataType": "json",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        }
+                                    },
+                                    "disabled": false,
+                                    "className": "col-span-2 m-0",
+                                    "visibleOn": "!!this.object_name",
+                                    "labelClassName": "",
+                                    "en-US": {
+                                        "label": "Filters Conditions"
+                                    }
+                                },
+                                {
+                                    "type": "editor",
+                                    "label": "js脚本",
+                                    "name": "_filters_function",
+                                    "id": "u:84714ec9abba",
+                                    "visibleOn": "!!this.object_name && !!this._filters_type_controller && _filters_type_controller== 'function'",
+                                    "className": "col-span-2 m-0",
+                                    "labelClassName": "hidden"
+                                }
+                            ],
+                            "visibleOn": "!!this.object_name",
+                            "collapsed": true,
+                            "en-US": {
+                                "title": "Filter"
+                            },
+                            "id": "u:7d4a03469ab2"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "排序",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "label": "默认排序规则",
+                                    "type": "tabs-transfer",
+                                    "name": "sort",
+                                    "options": [],
+                                    "id": "u:32f3e4e73115",
+                                    "strictMode": true,
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/sortFields/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": null,
+                                        "requestAdaptor": "",
+                                        "adaptor": "",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "visibleOn": "!!this.object_name",
+                                    "sortable": true,
+                                    "className": "col-span-2 m-0",
+                                    "searchable": true,
+                                    "checkAll": false,
+                                    "clearValueOnHidden": false,
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "en-US": {
+                                        "label": "Default Sort Order"
+                                    },
+                                    "multiple": true
+                                }
+                            ],
+                            "visibleOn": "!!this.object_name",
+                            "collapsed": true,
+                            "en-US": {
+                                "title": "Order"
+                            },
+                            "id": "u:82b56e7d9639"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "手机端",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "label": "手机端显示的列",
+                                    "type": "transfer",
+                                    "name": "mobile_columns",
+                                    "options": [],
+                                    "id": "u:e80d9f58dfd0",
+                                    "selectMode": "list",
+                                    "searchable": true,
+                                    "searchApi": "",
+                                    "sortable": true,
+                                    "mode": "normal",
+                                    "searchResultMode": "list",
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": null,
+                                        "requestAdaptor": "",
+                                        "adaptor": "",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "visibleOn": "!!this.object_name",
+                                    "className": "col-span-2 m-0",
+                                    "en-US": {
+                                        "label": "Mobile Columns"
+                                    },
+                                    "multiple": true
+                                }
+                            ],
+                            "collapsed": true,
+                            "visibleOn": "!!this.object_name",
+                            "en-US": {
+                                "title": "Mobile"
+                            },
+                            "id": "u:51174159a42e"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "搜索项",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "label": "默认可搜索字段",
+                                    "type": "transfer",
+                                    "name": "searchable_fields",
+                                    "options": [],
+                                    "selectMode": "list",
+                                    "searchable": true,
+                                    "searchApi": "",
+                                    "sortable": true,
+                                    "mode": "normal",
+                                    "searchResultMode": "list",
+                                    "joinValues": false,
+                                    "extractValue": true,
+                                    "source": {
+                                        "method": "get",
+                                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": null,
+                                        "requestAdaptor": "",
+                                        "adaptor": "",
+                                        "sendOn": "!!this.object_name"
+                                    },
+                                    "visibleOn": "!!this.object_name",
+                                    "className": "col-span-2 m-0",
+                                    "en-US": {
+                                        "label": "searchable fields"
+                                    },
+                                    "multiple": true,
+                                    "id": "u:adb91066539e"
+                                }
+                            ],
+                            "collapsed": true,
+                            "visibleOn": "!!this.object_name",
+                            "en-US": {
+                                "title": "searchable"
+                            },
+                            "id": "u:bcdec77c787b"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "数据接口",
+                            "description": "获取列表数据的 api",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "type": "editor",
+                                    "name": "requestAdaptor",
+                                    "label": "发送适配器",
+                                    "required": false,
+                                    "language": "javascript",
+                                    "description": "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。",
+                                    "className": "col-span-2 m-1",
+                                    "labelClassName": "text-left",
+                                    "id": "u:a0cbe76b01bd"
+                                },
+                                {
+                                    "type": "editor",
+                                    "name": "adaptor",
+                                    "label": "接收适配器",
+                                    "required": false,
+                                    "language": "javascript",
+                                    "description": "函数签名: (payload, response, api) => payload",
+                                    "className": "col-span-2 m-1",
+                                    "labelClassName": "text-left",
+                                    "id": "u:fe199993059a"
+                                }
+                            ],
+                            "collapsed": true,
+                            "visibleOn": "!!this.object_name",
+                            "en-US": {
+                                "title": "API"
+                            },
+                            "id": "u:0521ee7143ab"
+                        },
+                        {
+                            "type": "fieldSet",
+                            "title": "高级",
+                            "collapsable": true,
+                            "body": [
+                                {
+                                    "name": "enable_amis_schema",
+                                    "type": "checkbox",
+                                    "tpl": null,
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "option": "使用 amis自定义列表",
+                                    "en-US": {
+                                        "option": "Enable amis_schema"
+                                    },
+                                    "id": "u:55ca7f7b7eb7"
+                                },
+                                {
+                                    "type": "editor",
+                                    "name": "amis_schema",
+                                    "label": "Amis Schema",
+                                    "required": false,
+                                    "language": "json",
+                                    "className": "col-span-2 m-1",
+                                    "labelClassName": "text-left",
+                                    "clearValueOnHidden": false,
+                                    "hidden": true,
+                                    "id": "u:d219f7b6d06f"
+                                }
+                            ],
+                            "collapsed": true,
+                            "visibleOn": "!!this.object_name",
+                            "en-US": {
+                                "title": "Advanced"
+                            },
+                            "id": "u:9c349b88563b"
+                        }
+                    ],
+                    "panelClassName": "m-0",
+                    "bodyClassName": "p-4",
+                    "actions": false,
+                    "actionsClassName": "p-sm b-t b-light text-center",
+                    "className": "steedos-amis-form",
+                    "language": "javascript",
+                    "id": "listview_form",
+                    "onEvent": {
+                        "submitSucc": {
+                            "weight": 0,
+                            "actions": [
+                                {
+                                    "actionType": "broadcast",
+                                    "args": {
+                                        "eventName": "@data.changed.object_listviews"
+                                    },
+                                    "data": {
+                                        "objectName": "object_listviews"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "hiddenOn": "${editFormInited != true}"
                 }
-            },
-            "initApi": {
+            ],
+            "id": "u:28ff1b544088",
+            "api": {
                 "method": "post",
                 "url": "${context.rootUrl}/graphql?rf=1653731141728",
                 "cache": 100,
-                "adaptor": "const recordId = api.body.recordId;\nvar data;\nif (recordId) {\n    console.log('recordId==>', recordId)\n    data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n    //数据格式转换\n    if (data) {\n        data.columns = lodash.map(data.columns, 'field');\n        data.sort = lodash.map(data.sort, (item) => {\n            return `${item.field_name}:${item.order || 'asc'}`\n        });\n        data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n        data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n        if (data.filters && lodash.isString(data.filters)) {\n            try {\n                data.filters = JSON.parse(data.filters);\n            } catch (e) { }\n        }\n\n        if (data.filters && lodash.isString(data.filters)) {\n            data._filters_type_controller = 'function';\n        } else {\n            data._filters_type_controller = 'conditions'\n        }\n\n        if (data._filters_type_controller === 'conditions') {\n            data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n        } else {\n            data._filters_function = data.filters;\n        }\n    }\n} else {\n    const defaultData = api.body.defaultData;\n    let defaultValues = {};\n    // TODO:字段默认值后期添加\n    if(defaultData && _.isObject(defaultData) && !_.isArray(defaultData)){\n        data = Object.assign({}, defaultValues, defaultData)\n    }\n}\nfor (key in data) {\n    if (data[key] === null) {\n        delete data[key];\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
+                "adaptor": "const recordId = api.body.recordId;\nvar data;\nif (recordId) {\n        data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n    //数据格式转换\n    if (data) {\n        data.columns = lodash.map(data.columns, 'field');\n        data.sort = lodash.map(data.sort, (item) => {\n            return `${item.field_name}:${item.order || 'asc'}`\n        });\n        data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n        data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n        if (data.filters && lodash.isString(data.filters)) {\n            try {\n                data.filters = JSON.parse(data.filters);\n            } catch (e) { }\n        }\n\n        if (data.filters && lodash.isString(data.filters)) {\n            data._filters_type_controller = 'function';\n        } else {\n            data._filters_type_controller = 'conditions'\n        }\n\n        if (data._filters_type_controller === 'conditions') {\n            data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n        } else {\n            data._filters_function = data.filters;\n        }\n    }\n} else {\n    const defaultData = api.body.defaultData;\n    let defaultValues = {};\n    // TODO:字段默认值后期添加\n    if(defaultData && _.isObject(defaultData) && !_.isArray(defaultData)){\n        data = Object.assign({}, defaultValues, defaultData)\n    }\n}\nfor (key in data) {\n    if (data[key] === null) {\n        delete data[key];\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
                 "data": {
                     "recordId": "${recordId}",
                     "defaultData": "${defaultData}",
@@ -39,501 +544,18 @@
                 },
                 "replaceData": false,
                 "responseData": {
+                    "editFormInited": true,
                     "&": "$$"
                 },
                 "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                }
+                },
+                "messages": {}
             },
-            "initFetch": true,
-            "body": [
-                {
-                    "type": "fieldSet",
-                    "title": "通用",
-                    "en-US": {
-                        "title": "Common"
-                    },
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "name": "label",
-                            "label": "显示名称",
-                            "required": true,
-                            "type": "input-text",
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "en-US": {
-                                "label": "Label"
-                            },
-                            "id": "u:a45229ed29f8"
-                        },
-                        {
-                            "name": "name",
-                            "label": "API 名称",
-                            "labelRemark": "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符",
-                            "required": false,
-                            "type": "input-text",
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "en-US": {
-                                "label": "API Name",
-                                "labelRemark": "Can only contain lowercase letters and numbers, must start with a letter,cannot end with an underscore character or contain two consecutive underscore characters"
-                            },
-                            "id": "u:ff927884ec36"
-                        },
-                        {
-                            "name": "object_name",
-                            "label": "对象",
-                            "required": true,
-                            "type": "select",
-                            "joinValues": false,
-                            "extractValue": true,
-                            "labelField": "label",
-                            "valueField": "value",
-                            "autoComplete": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                }
-                            },
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "checkAll": false,
-                            "searchable": true,
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                }
-                            },
-                            "en-US": {
-                                "label": "Object"
-                            },
-                            "id": "u:1427b8edc8f5"
-                        },
-                        {
-                            "name": "filter_scope",
-                            "label": "过滤范围",
-                            "required": true,
-                            "type": "select",
-                            "joinValues": false,
-                            "extractValue": true,
-                            "labelField": "label",
-                            "valueField": "value",
-                            "options": [
-                                {
-                                    "label": "我的",
-                                    "value": "mine",
-                                    "en-US": {
-                                        "label": "Mine"
-                                    }
-                                },
-                                {
-                                    "label": "工作区",
-                                    "value": "space",
-                                    "en-US": {
-                                        "label": "Space"
-                                    }
-                                }
-                            ],
-                            "value": "space",
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "en-US": {
-                                "label": "Filter Scope"
-                            },
-                            "id": "u:5f00b15822d5"
-                        },
-                        {
-                            "name": "shared",
-                            "type": "checkbox",
-                            "tpl": null,
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "option": "共享视图到工作区",
-                            "en-US": {
-                                "option": "Shared to All Users"
-                            },
-                            "id": "u:3ba5090f7fd0"
-                        },
-                        {
-                            "name": "show_count",
-                            "type": "checkbox",
-                            "tpl": null,
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "option": "显示条目数",
-                            "en-US": {
-                                "option": "Show Record Count"
-                            },
-                            "id": "u:811f0c5d03ad"
-                        },
-                        {
-                            "name": "sort_no",
-                            "label": "排序号",
-                            "type": "input-number",
-                            "precision": 0,
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "en-US": {
-                                "label": "Sort NO."
-                            },
-                            "id": "u:25a6ee957503"
-                        },
-                        {
-                            "label": "显示的列",
-                            "type": "transfer",
-                            "name": "columns",
-                            "options": [],
-                            "multiple": true,
-                            "id": "u:92c0b3cccca0",
-                            "required": true,
-                            "placeholder": "-",
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
-                                "data": null,
-                                "requestAdaptor": "",
-                                "adaptor": "",
-                                "sendOn": "!!this.object_name"
-                            },
-                            "className": "col-span-2 m-0",
-                            "visibleOn": "!!this.object_name",
-                            "checkAll": false,
-                            "searchable": true,
-                            "sortable": true,
-                            "joinValues": false,
-                            "extractValue": true,
-                            "en-US": {
-                                "label": "Columns"
-                            }
-                        }
-                    ],
-                    "id": "u:7f7b2d3ea064"
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "过滤",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "label": "默认过滤字段",
-                            "type": "transfer",
-                            "name": "filter_fields",
-                            "options": [],
-                            "id": "u:ea994ad5816d",
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
-                                "data": null,
-                                "requestAdaptor": "",
-                                "adaptor": "",
-                                "sendOn": "!!this.object_name"
-                            },
-                            "visibleOn": "false && !!this.object_name",
-                            "className": "col-span-2 m-0",
-                            "searchable": true,
-                            "sortable": true,
-                            "joinValues": false,
-                            "extractValue": true,
-                            "en-US": {
-                                "label": "Default Filter Fields"
-                            },
-                            "multiple": true
-                        },
-                        {
-                            "type": "radios",
-                            "label": "过滤器配置方式",
-                            "name": "_filters_type_controller",
-                            "options": [
-                                {
-                                    "label": "条件组合",
-                                    "value": "conditions"
-                                },
-                                {
-                                    "label": "js脚本",
-                                    "value": "function"
-                                }
-                            ],
-                            "id": "u:318671bc196c",
-                            "joinValues": true,
-                            "className": "col-span-2 m-0",
-                            "language": "javascript",
-                            "visibleOn": "false",
-                            "en-US": {
-                                "label": "Controller"
-                            }
-                        },
-                        {
-                            "type": "condition-builder",
-                            "label": "条件组件",
-                            "name": "_filters_conditions",
-                            "description": "",
-                            "id": "u:a9f2232e30d7",
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-listviews/getFilterFields?objectName=${object_name}",
-                                "dataType": "json",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                }
-                            },
-                            "disabled": false,
-                            "className": "col-span-2 m-0",
-                            "visibleOn": "!!this.object_name",
-                            "labelClassName": "",
-                            "en-US": {
-                                "label": "Filters Conditions"
-                            }
-                        },
-                        {
-                            "type": "editor",
-                            "label": "js脚本",
-                            "name": "_filters_function",
-                            "id": "u:84714ec9abba",
-                            "visibleOn": "!!this.object_name && !!this._filters_type_controller && _filters_type_controller== 'function'",
-                            "className": "col-span-2 m-0",
-                            "labelClassName": "hidden"
-                        }
-                    ],
-                    "visibleOn": "!!this.object_name",
-                    "collapsed": true,
-                    "en-US": {
-                        "title": "Filter"
-                    },
-                    "id": "u:7d4a03469ab2"
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "排序",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "label": "默认排序规则",
-                            "type": "tabs-transfer",
-                            "name": "sort",
-                            "options": [],
-                            "id": "u:32f3e4e73115",
-                            "strictMode": true,
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/sortFields/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
-                                "data": null,
-                                "requestAdaptor": "",
-                                "adaptor": "",
-                                "sendOn": "!!this.object_name"
-                            },
-                            "visibleOn": "!!this.object_name",
-                            "sortable": true,
-                            "className": "col-span-2 m-0",
-                            "searchable": true,
-                            "checkAll": false,
-                            "clearValueOnHidden": false,
-                            "joinValues": false,
-                            "extractValue": true,
-                            "en-US": {
-                                "label": "Default Sort Order"
-                            },
-                            "multiple": true
-                        }
-                    ],
-                    "visibleOn": "!!this.object_name",
-                    "collapsed": true,
-                    "en-US": {
-                        "title": "Order"
-                    },
-                    "id": "u:82b56e7d9639"
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "手机端",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "label": "手机端显示的列",
-                            "type": "transfer",
-                            "name": "mobile_columns",
-                            "options": [],
-                            "id": "u:e80d9f58dfd0",
-                            "selectMode": "list",
-                            "searchable": true,
-                            "searchApi": "",
-                            "sortable": true,
-                            "mode": "normal",
-                            "searchResultMode": "list",
-                            "joinValues": false,
-                            "extractValue": true,
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
-                                "data": null,
-                                "requestAdaptor": "",
-                                "adaptor": "",
-                                "sendOn": "!!this.object_name"
-                            },
-                            "visibleOn": "!!this.object_name",
-                            "className": "col-span-2 m-0",
-                            "en-US": {
-                                "label": "Mobile Columns"
-                            },
-                            "multiple": true
-                        }
-                    ],
-                    "collapsed": true,
-                    "visibleOn": "!!this.object_name",
-                    "en-US": {
-                        "title": "Mobile"
-                    },
-                    "id": "u:51174159a42e"
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "搜索项",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "label": "默认可搜索字段",
-                            "type": "transfer",
-                            "name": "searchable_fields",
-                            "options": [],
-                            "selectMode": "list",
-                            "searchable": true,
-                            "searchApi": "",
-                            "sortable": true,
-                            "mode": "normal",
-                            "searchResultMode": "list",
-                            "joinValues": false,
-                            "extractValue": true,
-                            "source": {
-                                "method": "get",
-                                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                },
-                                "data": null,
-                                "requestAdaptor": "",
-                                "adaptor": "",
-                                "sendOn": "!!this.object_name"
-                            },
-                            "visibleOn": "!!this.object_name",
-                            "className": "col-span-2 m-0",
-                            "en-US": {
-                                "label": "searchable fields"
-                            },
-                            "multiple": true
-                        }
-                    ],
-                    "collapsed": true,
-                    "visibleOn": "!!this.object_name",
-                    "en-US": {
-                        "title": "searchable"
-                    }
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "数据接口",
-                    "description": "获取列表数据的 api",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "type": "editor",
-                            "name": "requestAdaptor",
-                            "label": "发送适配器",
-                            "required": false,
-                            "language": "javascript",
-                            "description": "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。",
-                            "className": "col-span-2 m-1",
-                            "labelClassName": "text-left"
-                        },
-                        {
-                            "type": "editor",
-                            "name": "adaptor",
-                            "label": "接收适配器",
-                            "required": false,
-                            "language": "javascript",
-                            "description": "函数签名: (payload, response, api) => payload",
-                            "className": "col-span-2 m-1",
-                            "labelClassName": "text-left"
-                        }
-                    ],
-                    "collapsed": true,
-                    "visibleOn": "!!this.object_name",
-                    "en-US": {
-                        "title": "API"
-                    }
-                },
-                {
-                    "type": "fieldSet",
-                    "title": "高级",
-                    "collapsable": true,
-                    "body": [
-                        {
-                            "name": "enable_amis_schema",
-                            "type": "checkbox",
-                            "tpl": null,
-                            "className": "m-0",
-                            "labelClassName": "text-left",
-                            "option": "使用 amis自定义列表",
-                            "en-US": {
-                                "option": "Enable amis_schema"
-                            }
-                        },
-                        {
-                            "type": "editor",
-                            "name": "amis_schema",
-                            "label": "Amis Schema",
-                            "required": false,
-                            "language": "json",
-                            "className": "col-span-2 m-1",
-                            "labelClassName": "text-left",
-                            "clearValueOnHidden": false,
-                            "hidden": true
-                        }
-                    ],
-                    "collapsed": true,
-                    "visibleOn": "!!this.object_name",
-                    "en-US": {
-                        "title": "Advanced"
-                    }
-                }
-            ],
-            "panelClassName": "m-0",
-            "bodyClassName": "p-4",
-            "actions": false,
-            "actionsClassName": "p-sm b-t b-light text-center",
-            "className": "steedos-amis-form",
-            "language": "javascript",
-            "id": "listview_form",
-            "onEvent": {
-                "submitSucc": {
-                    "weight": 0,
-                    "actions": [
-                        {
-                            "actionType": "broadcast",
-                            "args": {
-                                "eventName": "@data.changed.object_listviews"
-                            },
-                            "data": {
-                                "objectName": "object_listviews"
-                            }
-                        }
-                    ]
-                }
-            }
+            "data": {
+                "editFormInited": false
+            },
+            "messages": {}
         }
     ],
     "regions": [

@@ -2,20 +2,21 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-12 13:44:58
+ * @LastEditTime: 2023-05-19 16:16:19
  * @Description: 
  */
 module.exports = { 
     invite_space_users: function(object_name, record_id, fields){
+        debugger
         var inviteToken = Steedos.getInviteToken();
         let address = window.location.origin + "/accounts/a/#/signup?invite_token=" + inviteToken;
         if(_.isFunction(Steedos.isCordova) && Steedos.isCordova()){
             address = Meteor.absoluteUrl("accounts/a/#/signup?invite_token=" + inviteToken)
         }
         
-        var clipboard = new Clipboard('.record-action-custom-invite_space_users');
+        var clipboard = new Clipboard('.button_invite_space_users');
 
-        $(".record-action-custom-invite_space_users").attr("data-clipboard-text", address);
+        $(".button_invite_space_users").attr("data-clipboard-text", address);
 
         clipboard.on('success', function(e) {
             toastr.success(t("space_users_aciton_invite_space_users_success"));

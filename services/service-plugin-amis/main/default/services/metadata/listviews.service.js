@@ -328,6 +328,13 @@ module.exports = {
                                     ...getField(objectName, field.name, field.data_type, lng)
                                 })
                                 break;
+                            case 'summary':
+                                fields.push({
+                                    label: field.label,
+                                    name: field.name,
+                                    ...getField(objectName, field.name, field.data_type, lng)
+                                })
+                                break;
                             default:
                                 fields.push({
                                     label: field.label,
