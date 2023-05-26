@@ -2,11 +2,30 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-21 16:25:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-24 17:13:00
+ * @LastEditTime: 2023-05-18 09:26:18
  * @Description: 
  */
 var packageServiceName = '~database-objects'
-
+function isPatternTrigger(data){
+    const {listenTo} = data;
+    if(listenTo === '*'){
+        return true;
+    }else if(_.isArray(listenTo)){
+        return true;
+    }else if(_.isRegExp(listenTo)){
+        return true;
+    }else if(_.isString(listenTo) && listenTo.startsWith("/")){
+        try {
+            if(_.isRegExp(eval(listenTo))){
+                return true;
+            }
+        } catch (error) {
+            return false
+        }
+        return false;
+    }
+    return false;
+}
 module.exports = {
     name: packageServiceName,
     namespace: "steedos",
@@ -33,6 +52,9 @@ module.exports = {
 	methods: {
         changeTriggerMetadata: {
             async handler(trigger){
+                if(isPatternTrigger(trigger)){
+                    trigger.isPattern = true
+                }
                 await this.broker.call(`object_triggers.add`, { apiName: `${trigger.listenTo}.${trigger.name}`, data: trigger }, {
                     meta: {
                     metadataServiceName: packageServiceName,

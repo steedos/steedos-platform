@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-12 10:43:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-12 10:43:44
+ * @LastEditTime: 2023-05-23 15:10:26
  * @Description: 
  */
 module.exports = {
@@ -61,7 +61,7 @@ module.exports = {
 
 	// Called after broker started.
 	started(broker) {
-		broker.createService(require("@steedos/service-enterprise"));
+		broker.createService(require("@steedos/service-community"));
 	},
 
 };

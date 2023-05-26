@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-12-09 18:23:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-23 15:10:23
+ * @Description: 
+ */
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos",
@@ -37,7 +44,7 @@ module.exports = {
 	
 	// Called after broker started.
 	started(broker) {
-		broker.createService(require("@steedos/service-enterprise"));
+		broker.createService(require("@steedos/service-community"));
 	},
 
 };

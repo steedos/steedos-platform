@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-14 09:58:14
+ * @LastEditTime: 2023-05-18 11:49:57
  * @Description: 
  */
 import * as _ from 'underscore';
@@ -22,6 +22,17 @@ export async function createDataSourceService(broker, dataSource) {
 
     if (LocalDataSourceServices[serviceName]) {
         return;
+    }
+
+    const actions: any = {};
+
+    if(dataSourceName === 'default'){
+        actions.encryptValue = {
+			async handler(ctx) {
+				const { value } = ctx.params;
+				return await dataSource.adapter.encryptValue(value);
+			}
+        }
     }
 
     let service = broker.createService({
@@ -68,7 +79,8 @@ export async function createDataSourceService(broker, dataSource) {
                     }, 1000 * 0.1);
                 }
             },
-        }
+        },
+        actions: actions
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)

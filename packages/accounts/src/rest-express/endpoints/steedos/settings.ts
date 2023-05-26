@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-17 15:28:17
+ * @LastEditTime: 2023-05-23 10:29:35
  * @Description: 
  */
 import * as express from 'express';
@@ -70,7 +70,9 @@ export const getSettings = (accountsServer: AccountsServer) => async (
 
   //allowInit
   const broker = getSteedosSchema().broker;
-  const serverInitInfo = await broker.call(`@steedos/service-cloud-init.serverInitInfo`, {});
+  const serverInitInfo = {
+    
+  };
 
   const _tenant = clone(tenant);
 

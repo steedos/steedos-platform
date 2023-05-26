@@ -56,7 +56,6 @@ module.exports = {
 			// "@steedos/service-accounts",
 			// "@steedos/service-charts",
 			// "@steedos/service-pages",
-			// "@steedos/service-cloud-init",
 			// "@steedos/service-workflow",
 			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
@@ -90,6 +89,16 @@ module.exports = {
 	events: {
 		async 'service-cloud-init.succeeded'(ctx) {
 			await this.setMasterSpaceId()
+		},
+		'steedos-server.started': async function (ctx) {
+			// console.log(chalk.blue('steedos-server.started'));
+			const records = await objectql.getObject('spaces').directFind({ top: 1, fields: ['_id'], sort: { created: -1 } });
+			const steedosConfig = objectql.getSteedosConfig();
+			if (records.length > 0) {
+				steedosConfig.setTenant({ _id: records[0]._id });
+			} else {
+				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
+			}
 		}
 	},
 
@@ -129,6 +138,7 @@ module.exports = {
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
 			// const logger = this.logger;
+			const broker = this.broker;
 			await Future.task(() => {
 				try {
 					this.meteor.loadServerBundles();
@@ -162,6 +172,18 @@ module.exports = {
 					// this.startNodeRedService();
 					this.meteor.callStartupHooks();
 					this.meteor.runMain();
+
+					// 给Push添加微服务事件
+					Push.originalSend = Push.send;
+					Push.send = async function (options) {
+						Push.originalSend(options);
+						try {
+							await broker.emit('push.send', options)
+						} catch (error) {
+
+						}
+					}
+
 				} catch (error) {
 					this.logger.error(error)
 				}

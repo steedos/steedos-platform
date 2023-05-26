@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <title>华炎魔方</title>
+    <script type="text/javascript" src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.10.3/dingtalk.open.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-1.11.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../assets/styles/steedos-tailwind.min.css">
+    <script>
+        dd.ready(function () {
+            //获取当前网页的url
+            var currentUrl = document.location.search.substr(1);
+
+            if (currentUrl && (currentUrl !== "")) {
+                // 解析url中包含的corpId
+                var corp_id = getQueryString("corpid", currentUrl);
+                //使用SDK 获取免登授权码
+                dd.runtime.permission.requestAuthCode({
+                    corpId: corp_id,
+                    onSuccess: function (info) {
+                        var target = getQueryString("target", currentUrl);
+                        var sso_api = window.location.origin + "/api/dingtalk/auth_login";
+                        if (target == '_blank'){
+                            var url = sso_api + "?corpId=" + corp_id + "&code=" + info.code;
+                            window.open(url);
+                        }else{
+                            dingTalkLogin(corp_id, info.code, getQueryString("redirect_url", currentUrl));
+                        }
+                    },
+                    onFail: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
+
+        dd.error(function (error) {
+            console.log("dd error: " + JSON.stringify(error));
+        });
+
+        var dingTalkLogin = function (corpId, code, redirectUrl) {
+            if (corpId && code) {
+                var data = {
+                    "corpId": corpId,
+                    "code": code
+                };
+                var data = JSON.stringify(data);
+                var sso_api = window.location.origin + "/api/dingtalk/sso_steedos";
+                console.log("absoluteUrl: ", sso_api);
+                $.ajax({
+                    url: sso_api,
+                    type: "POST",
+                    async: false,
+                    data: data,
+                    contentType: "application/json",
+                    success: function (responseText, status) {
+                        console.log("responseText ", responseText);
+
+                        if (responseText == "no_space_user") {
+                            $("body").append(`
+                            <div class="rounded-md bg-yellow-50 p-6 m-6">
+                                <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <!-- Heroicon name: exclamation -->
+                                    <svg class="h-6 w-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-lg leading-5 font-bold text-yellow-700">
+                                    登录失败
+                                    </h3>
+                                    <div class="mt-2 text-base leading-5 text-yellow-600">
+                                    <p>
+                                    请联系管理员配置工作区钉钉企业ID和人员钉钉账号
+                                    </p>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>`
+                            )
+                        } else {
+                            window.location = window.location.origin + redirectUrl;
+                        }
+                    },
+                    error: function (xhr, msg, ex) {
+                        console.log("errmsg: ", JSON.stringify(msg));
+                    }
+                });
+            }
+        }
+
+        // 获取url中参数值
+        var getQueryString = function (name, url) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = url.match(reg);
+            if (r != null)
+                return unescape(r[2]);
+
+            return "";
+        }
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
