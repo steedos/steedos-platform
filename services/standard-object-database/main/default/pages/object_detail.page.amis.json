@@ -189,7 +189,7 @@
                     "actions": [
                         {
                             "actionType": "custom",
-                            "script": "var objectName = event.data._master?.record?.name;\nif (objectName) { \n  var activeKey = {};\n  activeKey[objectName] = event.data.value;\n  sessionStorage.setItem(\"object_detail_tabs_activeKeys\", JSON.stringify(activeKey));\n}"
+                            "script": "var objectName = event.data._master?.record?.name;\nvar activeKey = event.data.value;\nif (objectName && activeKey) { \n  var activeKeys = {};\n  activeKeys[objectName] = activeKey;\n  sessionStorage.setItem(\"object_detail_tabs_activeKeys\", JSON.stringify(activeKeys));\n}"
                         }
                     ]
                 },
@@ -198,7 +198,7 @@
                     "actions": [
                         {
                             "actionType": "custom",
-                            "script": "var activeKeys = sessionStorage.getItem(\"object_detail_tabs_activeKeys\");\nvar objectName = event.data.record?.name;\nif (activeKeys && objectName) {\n  activeKeys = JSON.parse(activeKeys);\n  doAction({\n    actionType: 'changeActiveKey',\n    args: {\n      activeKey: activeKeys[objectName]\n    }\n  });\n}"
+                            "script": "var activeKeys = sessionStorage.getItem(\"object_detail_tabs_activeKeys\");\nvar objectName = event.data.record?.name;\nif (activeKeys && objectName) {\n  activeKeys = JSON.parse(activeKeys);\n  var activeKey = activeKeys[objectName];\n  if (activeKey) {\n    doAction({\n      actionType: 'changeActiveKey',\n      args: {\n        activeKey: activeKey\n      }\n    });\n  }\n}"
                         }
                     ]
                 }
