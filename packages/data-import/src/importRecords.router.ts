@@ -93,6 +93,7 @@ router.get('/api/data/download/template/:record_id', requireAuthentication, asyn
         res.writeHead(200, {
             'Content-Type': 'application/octet-stream',
             'Content-Disposition': 'attachment;filename=' + encodeURI(queueImportDoc.description + '.xlsx'),
+            'Access-Control-Expose-Headers': 'Content-Disposition'
         });
         res.end(xls, 'binary');
     } catch (error) {
