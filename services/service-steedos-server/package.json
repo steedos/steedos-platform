@@ -14,7 +14,7 @@
     "@steedos/service-api": "2.5.0-beta.33",
     "@steedos/service-cachers-manager": "2.5.0-beta.33",
     "@steedos/service-charts": "2.5.0-beta.33",
-    "@steedos/service-cloud-init": "2.5.0-beta.30",
+    "@steedos/service-cloud-init": "2.5.0-beta.33",
     "@steedos/service-fields-indexs": "2.5.0-beta.33",
     "@steedos/service-files": "2.5.0-beta.33",
     "@steedos/service-meteor-package-loader": "2.5.0-beta.33",
@@ -39,7 +39,7 @@
     "moleculer": "^0.14.25",
     "moleculer-db": "^0.8.4",
     "moleculer-web": "^0.10.4",
-    "steedos-server": "2.5.0-beta.30"
+    "steedos-server": "2.5.0-beta.33"
   },
   "private": false,
   "publishConfig": {

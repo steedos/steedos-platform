@@ -32,7 +32,7 @@
     "devDependencies": {
         "babel-runtime": "^6.23.0",
         "nodemon": "^2.0.19",
-        "steedos-server": "2.5.0-beta.30"
+        "steedos-server": "2.5.0-beta.33"
     },
     "homepage": "https://github.com/steedos/steedos-plugin-qywx#readme",
     "gitHead": "370c9eaa707a6932f3eb12fb3d711e679bcd2484"

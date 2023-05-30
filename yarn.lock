@@ -4145,21 +4145,21 @@
     simpl-schema "^1.5.5"
     underscore "1.5.2"
 
-"@steedos/ee_audit-records@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/ee_audit-records/-/ee_audit-records-2.5.0-beta.30.tgz#622ba5616891380127e2eb1d4860d7495a2603b5"
+"@steedos/ee_audit-records@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/ee_audit-records/-/ee_audit-records-2.5.0-beta.33.tgz#622ba5616891380127e2eb1d4860d7495a2603b5"
   integrity sha512-MMou/pjBodDBDs1RECz2zyLRBNWcL/eeXXCNxcGv8tQpFC6pQdZnwttps/Y45/B0+CKJFXi2/Z4euENck+/XRg==
 
-"@steedos/ee_branding@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/ee_branding/-/ee_branding-2.5.0-beta.30.tgz#4c5088f329c3aa698e6c3cc4f6a7daaaa8502693"
+"@steedos/ee_branding@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/ee_branding/-/ee_branding-2.5.0-beta.33.tgz#4c5088f329c3aa698e6c3cc4f6a7daaaa8502693"
   integrity sha512-ZiP5lXFrqw3U3UFxb9X+QuxpLEQ0tE74WaVqCKtYA92h1nhPv76g8iCXIQ2xNMyn+FSdQGCRqKQ/HqsRqtbUkw==
   dependencies:
     "@steedos/license" "2.2.8"
 
-"@steedos/ee_mongodb-bi-connector@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/ee_mongodb-bi-connector/-/ee_mongodb-bi-connector-2.5.0-beta.30.tgz#b925d9ae6b7b7fe3e144f32c864a5a0ceee4750d"
+"@steedos/ee_mongodb-bi-connector@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/ee_mongodb-bi-connector/-/ee_mongodb-bi-connector-2.5.0-beta.33.tgz#b925d9ae6b7b7fe3e144f32c864a5a0ceee4750d"
   integrity sha512-VzXhV/sH8GkkCaxL+kCyZvEIkQXL0w52cgwBWQ2D2qrq8kBB/bE+Ck1D9lRUmwCBzGIJ/NRYdegIg9oftcK1kA==
   dependencies:
     dotenv-flow "^3.1.0"
@@ -4421,38 +4421,38 @@
   resolved "https://registry.npmjs.org/@steedos/schemas/-/schemas-2.5.0-beta.25.tgz#d6d7890ca49e4e6b7b2f3ef4624546f807efd8d3"
   integrity sha512-B/aTDQzxTR7XHK1SdER4zbCwCyTYZ/7tUt14uG8zIgsGz/P/R6Eiw2N//v4AJL4tawnqwrEkgqXQDchRzob5hg==
 
-"@steedos/service-cloud-init@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/service-cloud-init/-/service-cloud-init-2.5.0-beta.30.tgz#d37680395d98cac9321e1177df1fd53d47a5191d"
+"@steedos/service-cloud-init@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/service-cloud-init/-/service-cloud-init-2.5.0-beta.33.tgz#d37680395d98cac9321e1177df1fd53d47a5191d"
   integrity sha512-XZRM9KTERJI5uOpMyQaeDWzSC0vprgGJUVe21EXdcf3SDbIqdbuRnL6iYWUmj/nHcx3Wcxq5WZrpbg+6JuKVLg==
   dependencies:
-    "@steedos/objectql" "2.5.0-beta.30"
+    "@steedos/objectql" "2.5.0-beta.33"
     axios "^0.21.4"
     bcryptjs "^2.4.3"
     chalk "^4.1.2"
     randomstring "1.2.2"
 
-"@steedos/service-enterprise@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/service-enterprise/-/service-enterprise-2.5.0-beta.30.tgz#81f4b0bb40eda4599623d9b745255d6a2cafd8b7"
+"@steedos/service-enterprise@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/service-enterprise/-/service-enterprise-2.5.0-beta.33.tgz#81f4b0bb40eda4599623d9b745255d6a2cafd8b7"
   integrity sha512-O1kGoQkYOGqHVrUxc7V5zG/u8oGxfn+xS5EzeXOKFkmut5/NhmSljbnoaPrmuUJXQpK8x1RttlEjK84pYfK1EQ==
   dependencies:
-    "@steedos/ee_audit-records" "2.5.0-beta.30"
-    "@steedos/ee_branding" "2.5.0-beta.30"
-    "@steedos/ee_mongodb-bi-connector" "2.5.0-beta.30"
+    "@steedos/ee_audit-records" "2.5.0-beta.33"
+    "@steedos/ee_branding" "2.5.0-beta.33"
+    "@steedos/ee_mongodb-bi-connector" "2.5.0-beta.33"
     "@steedos/ee_service-plugin-license" "^2.2.5"
-    "@steedos/ee_sso-oidc" "2.5.0-beta.30"
-    "@steedos/ee_stimulsoft-reports" "2.5.0-beta.30"
-    "@steedos/ee_virus-scan" "2.5.0-beta.30"
-    "@steedos/service-community" "2.5.0-beta.30"
+    "@steedos/ee_sso-oidc" "2.5.0-beta.33"
+    "@steedos/ee_stimulsoft-reports" "2.5.0-beta.33"
+    "@steedos/ee_virus-scan" "2.5.0-beta.33"
+    "@steedos/service-community" "2.5.0-beta.33"
     mongodb "^3.7.3"
     mssql "^8.1.2"
     nats "^1.4.12"
     validator "^13.6.0"
 
-"@steedos/service-package-license@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/service-package-license/-/service-package-license-2.5.0-beta.30.tgz#a64d3d4d23109049dfb22cbc84c9c1dc92c88702"
+"@steedos/service-package-license@2.5.0-beta.33":
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/@steedos/service-package-license/-/service-package-license-2.5.0-beta.33.tgz#a64d3d4d23109049dfb22cbc84c9c1dc92c88702"
   integrity sha512-HL9htlNtQsCEtRcOBkS5IaYJPD5W+eAtPUtEcuzMiyLcDZjy+sDdfcMQgIlahwhaDaDhl4itMDEBhT8t0s0z/Q==
   dependencies:
     axios "^0.21.4"
@@ -18182,25 +18182,25 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha512-ZnWpYnYugiOVEY5GkcuJK1io5V8QmNYChG62gSit9pQVGErXtrKuPC55ITaVSukmMta5qpMU7vqLt2Lnni4f/g==
 
-steedos-server@2.5.0-beta.30:
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/steedos-server/-/steedos-server-2.5.0-beta.30.tgz#8f449190e468ca3dffb97f7bb8807ccf3bf9f426"
+steedos-server@2.5.0-beta.33:
+  version "2.5.0-beta.33"
+  resolved "https://registry.npmjs.org/steedos-server/-/steedos-server-2.5.0-beta.33.tgz#8f449190e468ca3dffb97f7bb8807ccf3bf9f426"
   integrity sha512-XZBwbu2bDp/X+q9O7/VkqgiLl6UoDSfj2eKn9iXkoVswCkWG5DRMkew14ubsr3c4css0ye0puwzr6KezjvbXfA==
   dependencies:
     "@babel/runtime" "7.12.18"
-    "@steedos/accounts" "2.5.0-beta.30"
-    "@steedos/auth" "2.5.0-beta.30"
-    "@steedos/core" "2.5.0-beta.30"
-    "@steedos/filters" "2.5.0-beta.30"
-    "@steedos/i18n" "2.5.0-beta.30"
+    "@steedos/accounts" "2.5.0-beta.33"
+    "@steedos/auth" "2.5.0-beta.33"
+    "@steedos/core" "2.5.0-beta.33"
+    "@steedos/filters" "2.5.0-beta.33"
+    "@steedos/i18n" "2.5.0-beta.33"
     "@steedos/license" "2.2.8"
-    "@steedos/meteor-bundle-dependencies" "2.5.0-beta.30"
-    "@steedos/meteor-bundle-runner" "2.5.0-beta.30"
-    "@steedos/objectql" "2.5.0-beta.30"
-    "@steedos/odata-v4-mongodb" "2.5.0-beta.30"
-    "@steedos/odata-v4-parser" "2.5.0-beta.30"
-    "@steedos/process" "2.5.0-beta.30"
-    "@steedos/standard-objects" "2.5.0-beta.30"
+    "@steedos/meteor-bundle-dependencies" "2.5.0-beta.33"
+    "@steedos/meteor-bundle-runner" "2.5.0-beta.33"
+    "@steedos/objectql" "2.5.0-beta.33"
+    "@steedos/odata-v4-mongodb" "2.5.0-beta.33"
+    "@steedos/odata-v4-parser" "2.5.0-beta.33"
+    "@steedos/process" "2.5.0-beta.33"
+    "@steedos/standard-objects" "2.5.0-beta.33"
     "@steedos/webapp" "2.2.25"
     basic-auth "^2.0.1"
     bcryptjs "^2.4.3"

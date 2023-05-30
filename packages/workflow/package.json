@@ -20,7 +20,7 @@
   "devDependencies": {
     "@steedos/core": "2.5.0-beta.33",
     "@steedos/meteor-bundle-runner": "2.5.0-beta.33",
-    "steedos-server": "2.5.0-beta.30"
+    "steedos-server": "2.5.0-beta.33"
   },
   "gitHead": "370c9eaa707a6932f3eb12fb3d711e679bcd2484"
 }
