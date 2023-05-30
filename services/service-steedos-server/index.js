@@ -179,7 +179,6 @@ module.exports = {
 					// }
 					// console.timeEnd(`startSteedos-dataSourceInIt`)
 					Future.fromPromise(this.steedos.init(this.settings)).wait();
-					console.log('====>init')
 					this.WebApp = WebApp;
 					// this.startNodeRedService();
 					this.meteor.callStartupHooks();
