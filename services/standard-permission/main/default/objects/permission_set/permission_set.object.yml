@@ -50,8 +50,6 @@ fields:
     multiple: true
     is_wide: true
     filterable: true
-    depend_on:
-      - type
     inlineHelpText: When the type is a profile, no user needs to be selected
     visible_on: "{{'permission_set' === formData.type}}"
   is_system:
