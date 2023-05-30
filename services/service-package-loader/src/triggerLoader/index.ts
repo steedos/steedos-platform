@@ -1,15 +1,27 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-12 19:08:48
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-24 13:09:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 09:52:23
  * @Description: 加载*.trigger.js文件注册为新版action trigger
  */
 import * as _ from "underscore";
 import * as path from "path";
-import { getMD5, JSONStringify, TriggerActionParams, SteedosTriggerContextConfig, loadObjectTriggers, getObject } from "@steedos/objectql";
+import { JSONStringify, getMD5 } from "@steedos/metadata-core";
+import { loadObjectTriggers } from "@steedos/metadata-registrar";
+
+
 
 const TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterInsert', 'afterUpdate', 'afterDelete', 'afterFindOne', 'afterCount']
+
+function getObject(objectName: string) {
+    try {
+        const objectql = require('@steedos/objectql');
+        return objectql.getObject(objectName);
+    } catch (error) {
+        return null
+    }
+}
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let actions = {};
@@ -82,9 +94,9 @@ function generateActionTrigger(trigger) {
                 isInsert, isUpdate, isDelete, isFind, isBefore, isAfter, isFindOne, isCount,
                 id, doc, previousDoc,
                 // size, 
-                userId, spaceId, objectName, query, data }: TriggerActionParams = ctx.params;
+                userId, spaceId, objectName, query, data }: any = ctx.params;
 
-            const context: SteedosTriggerContextConfig = {
+            const context: any = {
                 id,
                 userId,
                 spaceId,
@@ -125,6 +137,9 @@ function generateActionTrigger(trigger) {
 
             if (when) {
                 const object = getObject(objectName);
+                if(!object){
+                    return ;
+                }
                 await object.runTriggers(when, context);
                 return context;
             }

@@ -4,6 +4,11 @@ const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PREFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
 import { map, filter } from 'lodash';
+export * from './config-register/index';
+export * from './metadata-register/process';
+export * from './metadata-register/processTrigger';
+export * from './config-register/trigger'
+export * from './utils';
 
 let savePackageServicesTimeoutID: any = null;
 

@@ -1,16 +1,25 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-03-30 11:49:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-04-19 15:36:41
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 09:33:01
  * @Description: 
  */
 import * as _ from "underscore";
 import * as path from "path";
-import { registerProcess, getObject } from "@steedos/objectql";
 import { Process } from "./types";
 import { LoadProcessFile } from '@steedos/metadata-core';
+import { registerProcess } from '@steedos/metadata-registrar';
 const loadProcessFile = new LoadProcessFile();
+
+function getObject(objectName: string) {
+    try {
+        const objectql = require('@steedos/objectql');
+        return objectql.getObject(objectName);
+    } catch (error) {
+        return null
+    }
+}
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let filePath = path.join(packagePath, "**");
@@ -50,6 +59,9 @@ export async function sendPackageProcessToDb(packagePath: string) {
     const processObj = getObject('process');
     const processVersionsObj = getObject('process_versions');
     const spaceObj = getObject('spaces');
+    if(!processObj || !processVersionsObj || !spaceObj){
+        return ;
+    }
     const spaceDoc = (await spaceObj.find({}))[0];
     // 如果没有工作区信息则说明为空库，不加载
     if (!spaceDoc) {

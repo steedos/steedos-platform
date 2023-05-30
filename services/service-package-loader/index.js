@@ -1,8 +1,5 @@
 "use strict";
 
-const objectql = require('@steedos/objectql');
-const Future = require('fibers/future');
-const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
@@ -12,7 +9,9 @@ const _ = require('lodash');
 const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
+const { registerMetadataConfigs, loadStandardMetadata } = require('@steedos/metadata-registrar');
 const loadFlowFile = new metaDataCore.LoadFlowFile();
+const loadRouterJsFile = new metaDataCore.LoadRouterJsFile();
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -83,63 +82,7 @@ module.exports = {
         },
 
         importFlow: async function(flow, name) {
-            await Future.task(() => {
-                try {
-                    try {
-                        if(!db){
-                            return
-                        }
-                        if(!steedosImport){
-                            return
-                        }
-                    } catch (error) {
-                        return ;
-                    }
-                    
-                    if(db && db.flows && steedosImport){
-                        const steedosConfig = objectql.getSteedosConfig();
-                        let space;
-                        if(steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
-                            space = db.spaces.findOne(steedosConfig.tenant._id)
-                        }
-                        if(!space){
-                            space = db.spaces.findOne()
-                        }
-                        if(!space){
-                            this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
-                            return ;
-                        }
-                        if(!flow.api_name){
-                            this.logger.warn(`not find api_name in file`);
-                            return ;
-                        }
-                        const dbFlow = db.flows.findOne({api_name: flow.api_name});
-                        if(!dbFlow){
-                            if(flow && flow.current){
-                                if(!_.has(flow.current,'fields')){
-                                    flow.current.fields = [];
-                                }
-                            }
-                            this.logger.info(`insert flow ${flow.api_name} from ${name}`);
-
-                            let company_id = null;
-                            if(flow.company_id){
-                                let count = Creator.getCollection("company").find({ _id: flow.company_id, space: space._id }).count();
-                                if(count > 0){
-                                    company_id = flow.company_id
-                                }
-                            }
-
-                            return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
-                        }
-                        this.logger.debug(`not import flow. find flow `, dbFlow._id)
-                    }
-
-                } catch (error) {
-                    this.logger.error(error)
-                }
-            }).promise();
-            
+            return await this.broker.call('steedos-server.importFlow', {flow, name});
         }, 
         loadDataOnServiceStarted: async function(){
             let packageInfo = this.settings.packageInfo;
@@ -159,39 +102,18 @@ module.exports = {
             if (!datasourceName) {
                 datasourceName = 'default';
             }
-            objectql.getSteedosSchema(this.broker);
-            packagePath = path.join(packagePath, '**');
-            const datasource = objectql.getDataSource(datasourceName);
-            if(datasource){
-                await datasource.init();
+            if(this.objectql){
+                await this.initDataSource(datasourceName);
+                await loadStandardMetadata(name, datasourceName);
             }
-            await objectql.loadStandardMetadata(name, datasourceName);
-            await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+            await registerMetadataConfigs(packagePath, datasourceName, name);
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
             await triggerYmlLoader.load(this.broker, packagePath, name);
-            core.loadClientScripts();
-            let routersData = objectql.loadRouters(packagePath);
-            let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
-            let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
-            if(oldRoutersInfo){
-                _.each(oldRoutersInfo.metadata, (info)=>{
-                    const _info = _.find(routersInfo, (item)=>{
-                        return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
-                    })
-                    if(!_info){
-                        core.removeRouter(info.path, info.methods)
-                    }
-                })
+            await this.broker.call('steedos-server.loadClientScripts', {})
+            if(this.core){
+                await this.loadPackageRouters();
             }
-            const _routers = [];
-            routersData.forEach(element => {
-                // if(element.router.default === require('@steedos/router').staticRouter()){
-                //     objectql.broker.broker.logger.warn(`router error, packagePath: ${packagePath} `);
-                // }
-                _routers.push(element)
-            });
-            core.loadRouters(_routers);
             await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             await this.broker.emit(`translations.object.change`, {});
             return;
@@ -204,7 +126,8 @@ module.exports = {
             const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
             for await (const serviceFilePath of matchedPaths) {
                 try {
-                    const service = objectql.loadService(this.broker, serviceFilePath);
+                    metaDataCore.clearRequireCache(serviceFilePath);
+                    const service = this.broker.loadService(serviceFilePath);
                     this.packageServices.push(service);
                     if (!this.broker.started) {
                         this.broker._restartService(service)
@@ -278,7 +201,7 @@ module.exports = {
             await this.loadPackageMetadataFiles(_path, this.name, datasource);
             if(isPackage !== false){
                 try {
-                    const _packageInfo = objectql.loadJSONFile(path.join(_path, 'package.json'));
+                    const _packageInfo = metaDataCore.loadJSONFile(path.join(_path, 'package.json'));
                     await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
                 } catch (error) {
                     
@@ -297,6 +220,34 @@ module.exports = {
                     this.broker.logger.error(`[${this.name}]: ${error.message}`);
                 }
             }
+        },
+        async loadPackageRouters(packagePath, name){
+            let routersData = loadRouterJsFile.load(packagePath);
+            let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
+            let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
+            if(oldRoutersInfo){
+                _.each(oldRoutersInfo.metadata, (info)=>{
+                    const _info = _.find(routersInfo, (item)=>{
+                        return item.path == info.path && JSON.stringify(item.methods) == JSON.stringify(info.methods) && item.md5 == info.md5
+                    })
+                    if(!_info){
+                        this.core.removeRouter(info.path, info.methods)
+                    }
+                })
+            }
+            const _routers = [];
+            routersData.forEach(element => {
+                _routers.push(element)
+            });
+            this.core.loadRouters(_routers);
+        },
+        async initDataSource(datasourceName){
+            this.objectql.getSteedosSchema(this.broker);
+            packagePath = path.join(packagePath, '**');
+            const datasource = this.objectql.getDataSource(datasourceName);
+            if(datasource){
+                await datasource.init();
+            }
         }
     },
 
@@ -306,6 +257,18 @@ module.exports = {
     created() {
         this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
+        
+        try {
+            this.core = require('@steedos/core');
+        } catch (e) {
+            
+        }
+
+        try {
+            this.objectql = require('@steedos/objectql');
+        } catch (e) {
+            
+        }
     },
 
     merged(schema) {
@@ -344,15 +307,17 @@ module.exports = {
             }
         };
 
-        let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: this.name})
-        if(oldRoutersInfo){
-            _.each(oldRoutersInfo.metadata, (info)=>{
-                core.removeRouter(info.path, info.methods)
-            })
+        if(this.core){
+            let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: this.name})
+            if(oldRoutersInfo){
+                _.each(oldRoutersInfo.metadata, (info)=>{
+                    this.core.removeRouter(info.path, info.methods)
+                })
+            }
         }
 
-        objectql.deletePackageClientScripts(this.name);
-        core.loadClientScripts();
+        await this.broker.call('steedos-server.deletePackageClientScripts', {packageName: this.name})
+        await this.broker.call('steedos-server.loadClientScripts', {})
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{
             name: this.name,

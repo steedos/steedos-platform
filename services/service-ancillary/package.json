@@ -8,6 +8,9 @@
   },
   "author": "",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
