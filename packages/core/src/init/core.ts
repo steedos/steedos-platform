@@ -127,8 +127,8 @@ export const initCreator = async () => {
                 const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
                 if (localObjectConfig)
                     extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
-                // if (objectConfig.name != 'users')
-                Creator.loadObjects(objectConfig, objectConfig.name);
+                if (objectConfig.name != 'users')
+                    Creator.loadObjects(objectConfig, objectConfig.name);
             });
 
             _.each(allDefautObjects, function (obj) {
