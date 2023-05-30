@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.5.0-beta.25",
+  "version": "2.5.0-beta.33",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -85,5 +85,5 @@
     "url-search-params-polyfill": "^7.0.0",
     "xml2js": "^0.4.19"
   },
-  "gitHead": "07943cbedb6caa88cc6a6d365c9fa3603660413d"
+  "gitHead": "370c9eaa707a6932f3eb12fb3d711e679bcd2484"
 }
