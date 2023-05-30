@@ -337,7 +337,7 @@
                   return scoped = ref
                 }
 
-                const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({}, AmisEnv, env))
+                const amisScope = amisRequire('amis/embed').embed(root, schema, {data, name, locale: getAmisLng()}, Object.assign({getModalContainer: ()=>{ return document.querySelector('body');}}, AmisEnv, env))
                 if(window.SteedosUI && refName){
                   SteedosUI.refs[refName] = amisScope;
                   SteedosUI.refs[refName].__$schema = schema;
