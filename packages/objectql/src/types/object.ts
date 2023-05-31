@@ -483,7 +483,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(_triggers, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.isEnabled && (metadata.when === when || includes(metadata.when, when))){
+                    if(metadata.isEnabled && (metadata.when === when || (isArray(metadata.when) && includes(metadata.when, when)))){
                         if(metadata.isPattern){
                             try {
                                 if(metadata.listenTo === '*'){
