@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 14:15:29
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-23 16:03:50
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2023-05-31 14:32:46
  * @Description: 
  */
 "use strict";
@@ -173,7 +173,7 @@ module.exports = {
     afterUpdate: async function () {
         const { doc, id } = this
         const suObj = getObject('space_users');
-        if (doc.last_logon) {
+        if (doc && doc.last_logon) {
             await suObj.updateMany([['user', '=', id]], { last_logon: doc.last_logon });
         }
     },
