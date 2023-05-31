@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-05-18 23:12:37
+ * @LastEditTime: 2023-05-28 10:13:45
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
@@ -83,6 +83,7 @@ let historyPathsStoreKey = "history_paths";
 // 使用debounce防抖动函数，连续多次自动触发enter事件时，只需要捕获最后一次
 FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
     if(!!window.opener){
+        // 记录详细页面点击右上角查看审批单等打开新窗口情况下，新窗口的history path继承了opener页面的history path，所以需要区别出来，否则会报错
         historyPathsStoreKey = "history_paths_opener_level" + getOpenerLevel(window,0);
     }
     const path = context.path;

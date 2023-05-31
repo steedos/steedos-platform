@@ -128,16 +128,8 @@ export const initCreator = async () => {
                 const localObjectConfig = getObjectConfig(objectConfig.name);
                 if (localObjectConfig)
                     extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
-                // if (objectConfig.name != 'users')
-                if(!objectConfig){
-                    console.log(`objectConfig ${objectConfig.name} is null`)
-                }else{
-                    try {
-                        Creator.loadObjects(objectConfig, objectConfig.name);
-                    } catch (error) {
-                        console.error(`${objectConfig.name} error: `, error)
-                    }
-                }
+                if (objectConfig.name != 'users')
+                    Creator.loadObjects(objectConfig, objectConfig.name);
             });
 
             _.each(allDefautObjects, function (obj) {

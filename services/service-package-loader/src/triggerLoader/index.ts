@@ -60,6 +60,10 @@ export async function load(broker: any, packagePath: string, packageServiceName:
          */
         const actionTriggerName = getMD5(JSONStringify(trigger));
         actions[actionTriggerName] = generateActionTrigger(trigger)
+    
+        broker.emit('trigger.loaded', {
+            objectName: trigger['listenTo']
+        })
     }
 
     let serviceConfig = {

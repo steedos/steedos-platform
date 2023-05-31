@@ -50,9 +50,9 @@ fields:
         value: percent
       - label: 密码
         value: password
-      - label: 查找关系
+      - label: 相关表关系
         value: lookup
-      - label: 主-详细信息关系
+      - label: 主/子表关系
         value: master_detail
       - label: 自动编号
         value: autonumber

@@ -103,7 +103,12 @@ FlowversionAPI = {
           return "";
         }
       });
-      stepHandlerName = approverNames.join(",");
+      if(approverNames.length > 3){
+        stepHandlerName = approverNames.slice(0,3).join(",") + "...";
+      }else{
+        stepHandlerName = approverNames.join(",");
+      }
+      
       return stepHandlerName;
     } catch (error) {
       e = error;

@@ -182,10 +182,29 @@
             "className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
             "toolbarClassName": "",
             "linksClassName": "",
-            "contentClassName": "bg-white"
+            "contentClassName": "bg-white",
+            "onEvent": {
+                "change": {
+                    "weight": 0,
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "var objectName = event.data._master?.record?.name;\nvar activeKey = event.data.value;\nif (objectName && activeKey) { \n  var activeKeys = {};\n  activeKeys[objectName] = activeKey;\n  sessionStorage.setItem(\"object_detail_tabs_activeKeys\", JSON.stringify(activeKeys));\n}"
+                        }
+                    ]
+                },
+                "recordLoaded": {
+                    "weight": 0,
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "var activeKeys = sessionStorage.getItem(\"object_detail_tabs_activeKeys\");\nvar objectName = event.data.record?.name;\nif (activeKeys && objectName) {\n  activeKeys = JSON.parse(activeKeys);\n  var activeKey = activeKeys[objectName];\n  if (activeKey) {\n    doAction({\n      actionType: 'changeActiveKey',\n      args: {\n        activeKey: activeKey\n      }\n    });\n  }\n}"
+                        }
+                    ]
+                }
+            }
         }
     ],
-    "objectApiName": "${objectName}",
     "data": {
         "objectName": "objects",
         "recordId": "space_users",
@@ -197,6 +216,7 @@
         }
     },
     "id": "page_objects_record_detail",
+    "objectApiName": "${objectName}",
     "name": "page_objects_record_detail",
     "bodyClassName": "",
     "className": "object-detail-page"

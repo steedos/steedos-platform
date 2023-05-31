@@ -104,7 +104,18 @@ module.exports = {
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
-		}
+		},
+		'trigger.loaded': async function (ctx) {
+			const { objectName } = ctx.params;
+			// 判断能否获取到对象
+			if (Creator.getObject(objectName)){
+				const localObjectConfig = objectql.getObjectConfig(objectName);
+				if (localObjectConfig) {
+					objectql.extend(localObjectConfig, {triggers: localObjectConfig._baseTriggers})
+					Creator.loadObjects(localObjectConfig, localObjectConfig.name);
+				}
+			}
+		},
 	},
 
 	/**
