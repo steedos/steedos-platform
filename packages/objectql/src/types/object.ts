@@ -20,7 +20,7 @@ import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getCacher } from '@steedos/cachers';
-import { uniq, isEmpty, includes } from 'lodash';
+import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
 
@@ -484,7 +484,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(_triggers, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.isEnabled && (metadata.when === when || includes(metadata.when, when))){
+                    if(metadata.isEnabled && (metadata.when === when || (isArray(metadata.when) && includes(metadata.when, when)))){
                         if(metadata.isPattern){
                             try {
                                 if(metadata.listenTo === '*'){
@@ -564,7 +564,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(triggerActions, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.when === when || includes(metadata.when, when)){
+                    if(metadata.when === when || (isArray(metadata.when) && includes(metadata.when, when))){
                         if(metadata.isPattern){
                             try {
                                 if(metadata.listenTo === '*'){
