@@ -1,8 +1,15 @@
-import { registerRestrictionRules } from '../metadata-register/restrictionRules';
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 10:50:09
+ * @Description: 
+ */
 import { getSteedosSchema } from '../types'
 import * as _ from 'lodash'
 import { isExpression, parseSingleExpression } from '../util'
 import { formatFiltersToODataQuery } from "@steedos/filters";
+import { registerRestrictionRules } from '@steedos/metadata-registrar';
 
 export type SteedosRestrictionRuleConfig = {
     _id: string,

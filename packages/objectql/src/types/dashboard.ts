@@ -1,6 +1,13 @@
-import { SteedosDataSourceType, addConfigFiles, addConfig } from '.';
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 10:35:06
+ * @Description: 
+ */
+import { addConfig, addConfigFiles, getConfig, getConfigs } from '@steedos/metadata-registrar';
+import { SteedosDataSourceType} from '.';
 import _ = require('underscore');
-import { getConfigs, getConfig } from './config';
 export type SteedosDashboardTypeConfig = {
     _id: string,
     name: string,

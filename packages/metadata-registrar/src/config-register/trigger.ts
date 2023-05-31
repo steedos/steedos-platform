@@ -1,4 +1,5 @@
-import { getMD5, loadFile, syncMatchFiles } from '@steedos/metadata-core';
+import { getMD5, syncMatchFiles } from '@steedos/metadata-core';
+import { loadFile } from '../utils';
 import { transformListenersToTriggers } from '../utils/transform'
 import _ = require('lodash');
 import { JSONStringify } from '../utils';

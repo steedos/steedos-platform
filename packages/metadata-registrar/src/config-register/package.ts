@@ -7,7 +7,7 @@ import { addPermissionConfig, getLazyLoadPermissions } from './permission';
 import { objectToJson } from '../utils/convert';
 import { registerPermissionFields } from '../metadata-register/permissionFields';
 import { MetadataRegister } from '../metadata-register';
-var util = require('../util');
+import { extend, loadActions, loadButtonScripts, loadButtons, loadFields, loadListViews, loadObjects, loadPermissions } from '../utils';
 var clone = require('clone');
 
 /***
@@ -34,32 +34,32 @@ const getListenTo = function (json) {
 }
 
 const loadPackageObjects = function (filePath: string) {
-    const objectJsons = util.loadObjects(filePath);
+    const objectJsons = loadObjects(filePath);
     return objectJsons;
 }
 
 const loadPackageFields = function (filePath: string) {
-    const fieldJsons = util.loadFields(filePath);
+    const fieldJsons = loadFields(filePath);
     return fieldJsons;
 }
 
 const loadPackageListViews = function (filePath: string) {
-    let listViewJsons = util.loadListViews(filePath);
+    let listViewJsons = loadListViews(filePath);
     return listViewJsons;
 }
 
 const loadPackageButtons = function (filePath: string) {
-    let buttonJsons = util.loadButtons(filePath);
+    let buttonJsons = loadButtons(filePath);
     return buttonJsons;
 }
 
 const loadPackageActions = function (filePath: string) {
-    let actions = util.loadActions(filePath);
+    let actions = loadActions(filePath);
     return _.map(actions, actionToMetadata);
 }
 
 const loadPackageActionScripts = function (filePath: string) {
-    let buttonScripts = util.loadButtonScripts(filePath);
+    let buttonScripts = loadButtonScripts(filePath);
     return _.map(buttonScripts, actionToMetadata);
 }
 
@@ -90,7 +90,7 @@ const actionToMetadata = (config) => {
 }
 
 const loadPackagePermissions = function (filePath: string) {
-    let permissions = util.loadPermissions(filePath);
+    let permissions = loadPermissions(filePath);
     return _.map(permissions, (permission) => {
         delete permission.field_permissions;
         return permission;
@@ -98,7 +98,7 @@ const loadPackagePermissions = function (filePath: string) {
 }
 
 const registerPackageFieldPermissions = async function (filePath: string, broker, serviceName: string) {
-    let permissions = util.loadPermissions(filePath);
+    let permissions = loadPermissions(filePath);
     permissions.forEach(permission => {
         addPermissionConfig(permission.object_name, permission);
     });
@@ -232,7 +232,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
             element.fields = {}
         }
         _.each(getLazyLoadFields(element.name), function (field) {
-            util.extend(element.fields, { [field.name]: field })
+            extend(element.fields, { [field.name]: field })
         });
         _.each(element.fields, (field)=>{
             if(field.omit === true && !_.has(field, 'hidden')){
@@ -243,7 +243,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
             element.actions = {}
         }
         _.each(getLazyLoadButtons(element.name), function (action) {
-            util.extend(element.actions, { [action.name]: action })
+            extend(element.actions, { [action.name]: action })
         })
         let _mf = _.maxBy(_.values(element.fields), function (field) { return field.sort_no; });
         if (_mf && element.name) {
@@ -254,7 +254,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
             element.permission_set = {}
         }
         _.each(getLazyLoadPermissions(element.name), function (permission) {
-            util.extend(element.permission_set, {[permission.name]: permission})
+            extend(element.permission_set, {[permission.name]: permission})
         })
         addObjectConfig(element, datasource, null);
     }

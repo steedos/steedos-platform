@@ -86,13 +86,6 @@ module.exports = {
 			const { flow, name } = ctx.params;
 			return await this.importFlow(flow, name)
 		},
-		loadClientScripts(){
-			return core.loadClientScripts();
-		},
-		async deletePackageClientScripts(ctx) {
-			const { packageName } = ctx.params;
-			return await core.deletePackageClientScripts(packageName);
-		}
 	},
 
 	/**

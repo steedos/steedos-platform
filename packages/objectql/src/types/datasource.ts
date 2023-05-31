@@ -24,15 +24,11 @@ import {
     getAppConfigs,
     getDashboardConfigs,
     getSteedosSchema,
-    getObjectConfig,
-    addAllConfigFiles,
-    MONGO_BASE_OBJECT,
-    SQL_BASE_OBJECT
 } from '.';
 import { SteedosDriverConfig } from '../driver';
 import { createDataSourceService } from '../services/index';
 import path = require('path');
-import { transformListenersToTriggers, extend } from '../util';
+import { getObjectConfig, registerMetadataConfigs } from '@steedos/metadata-registrar';
 const clone = require('clone')
 const cachers = require('@steedos/cachers');
 let Fiber = require('fibers');
@@ -349,7 +345,7 @@ export class SteedosDataSourceType implements Dictionary {
             if(!path.isAbsolute(objectPath)){
                 filePath = path.join(process.cwd(), objectPath)
             }
-            await addAllConfigFiles(filePath, this._name, null)
+            await registerMetadataConfigs(filePath, this._name, null)
         }
     }
 

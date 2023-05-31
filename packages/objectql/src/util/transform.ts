@@ -1,5 +1,5 @@
 import { SteedosListenerConfig, getObject, SteedosObjectTypeConfig } from '../types'
-import { wrapAsync } from './index'
+import { wrapAsync } from '../index'
 import _ = require("underscore");
 import { SteedosTriggerContextConfig } from '../types/trigger';
 import { TriggerActionParams } from '../ts-types';

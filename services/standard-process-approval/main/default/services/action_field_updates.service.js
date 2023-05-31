@@ -2,7 +2,7 @@
  * @Description: 提供action_field_updates(字段更新对象)需要的数据接口
  */
 
-const objectql = require("@steedos/objectql");
+const register = require("@steedos/metadata-registrar");
 const steedosI18n = require("@steedos/i18n");
 const _ = require("lodash");
 const clone = require("clone");
@@ -93,14 +93,14 @@ module.exports = {
                 if(!objectName){
                     return []
                 }
-                const objectConfig = await objectql.getObjectConfig(objectName);
+                const objectConfig = await register.getObjectConfig(objectName);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const options = [{ label: objectConfig.label, value: objectConfig.name }];
                 for (fieldName in objectConfig.fields) {
                     const field = objectConfig.fields[fieldName]
                     if (field && field.type === 'master_detail' && _.isString(field.reference_to)) {
-                        const referenceToObjectConfig = await objectql.getObjectConfig(field.reference_to);
+                        const referenceToObjectConfig = await register.getObjectConfig(field.reference_to);
                         steedosI18n.translationObject(lng, referenceToObjectConfig.name, referenceToObjectConfig);
                         if (referenceToObjectConfig) {
                             options.push({
@@ -126,13 +126,13 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    const targetField = await register.getObjectConfig(objectName).fields[targetObject];
                     mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
 
-                const objectConfig = await objectql.getObjectConfig(mainObjectName);
+                const objectConfig = await register.getObjectConfig(mainObjectName);
                 const options = [];
                 if (objectConfig) {
                     steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
@@ -164,13 +164,13 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    const targetField = await register.getObjectConfig(objectName).fields[targetObject];
                     mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
 
-                const objectConfig = await objectql.getObjectConfig(mainObjectName);
+                const objectConfig = await register.getObjectConfig(mainObjectName);
                 const options = [];
                 if (objectConfig) {
                     steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
@@ -208,13 +208,13 @@ module.exports = {
 
                 let mainObjectName = null;
                 if (targetObject && targetObject != objectName) {
-                    const targetField = await objectql.getObjectConfig(objectName).fields[targetObject];
+                    const targetField = await register.getObjectConfig(objectName).fields[targetObject];
                     mainObjectName = targetField && targetField.reference_to;
                 } else {
                     mainObjectName = objectName;
                 }
 
-                const objectConfig = await objectql.getObjectConfig(mainObjectName);
+                const objectConfig = await register.getObjectConfig(mainObjectName);
                 let literal_value_schema = {
                     "type": "text",
                     "name": "literal_value",

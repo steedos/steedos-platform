@@ -14,7 +14,7 @@ import { loadSourceRoles } from './role';
 import { loadSourceWorkflows } from './workflow';
 import { loadSourceFlowRoles } from './flow_role';
 import { addObjectListenerConfig } from './trigger';
-var util = require('../util')
+import { extend, loadI18n, loadObjectDataFiles, loadRouters, loadFile } from '../utils';
 var clone = require('clone')
 
 export const SYSTEM_DATASOURCE = '__SYSTEM_DATASOURCE';
@@ -53,7 +53,7 @@ const extendOriginalObjectConfig = function(objectName: string, datasource: stri
         return ;
     }
     let parentOriginalObjectConfig = getOriginalObjectConfig(objectName);
-    let originalObjectConfig = util.extend({
+    let originalObjectConfig = extend({
         name: objectName,
         fields: {}
     }, clone(parentOriginalObjectConfig), objectConfig);
@@ -138,7 +138,7 @@ export const addObjectI18nFiles = (filePath: string) => {
     throw new Error(`${filePath} must be an absolute path`);
   }
 
-  let i18nData = util.loadI18n(filePath);
+  let i18nData = loadI18n(filePath);
   i18nData.forEach((element) => {
     _objectsI18n.push(element);
   });
@@ -152,7 +152,7 @@ export const addRouterFiles = (filePath: string) => {
   if (!path.isAbsolute(filePath)) {
     throw new Error(`${filePath} must be an absolute path`);
   }
-  let routersData = util.loadRouters(filePath);
+  let routersData = loadRouters(filePath);
   routersData.forEach((element) => {
     _routers.push(element);
   });
@@ -205,7 +205,7 @@ export const addObjectConfig = async (objectConfig: any, datasource: string, ser
             return addDelayLoadExtendObjectConfig(objectConfig.extend, objectConfig);
             throw new Error(`Object extend failed, object not exist: ${objectConfig.extend}`);
         }
-        config = util.extend(config, clone(parentObjectConfig), clone(objectConfig));
+        config = extend(config, clone(parentObjectConfig), clone(objectConfig));
         config.name = object_name;
         delete config.extend
         datasource = parentObjectConfig.datasource
@@ -221,17 +221,17 @@ export const addObjectConfig = async (objectConfig: any, datasource: string, ser
             if(datasource === 'meteor'){
                 _.each(_baseObjectConfig.listeners, function(license){
                     const triggers = transformListenersToTriggers(config, license)
-                    util.extend(config, {triggers, _baseTriggers: triggers})
+                    extend(config, {triggers, _baseTriggers: triggers})
                 })
             }
-            config = util.extend(config, _baseObjectConfig, clone(objectConfig));
+            config = extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
             // 确保字段顺序正确，避免base中的字段跑到前面
             config.fields = _.clone(objectConfig.fields);
             let _coreObjectConfig = clone(coreObjectConfig)
             delete _coreObjectConfig.hidden;
-            config = util.extend(config, _coreObjectConfig, clone(objectConfig));
+            config = extend(config, _coreObjectConfig, clone(objectConfig));
         }
     }
     config.datasource = datasource;
@@ -334,26 +334,26 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     standardObjectsLoaded = true;
 
     let standardObjectsDir = path.dirname(require.resolve("@steedos/standard-objects"))
-    let baseObject = util.loadFile(path.join(standardObjectsDir, "base.object.yml"))
+    let baseObject: any = loadFile(path.join(standardObjectsDir, "base.object.yml"))
     baseObject.name = MONGO_BASE_OBJECT;
     await addObjectConfig(baseObject, SYSTEM_DATASOURCE, serviceName);
-    let baseObjectJs = util.loadFile(path.join(standardObjectsDir, "base.object.js"))
+    let baseObjectJs: any = loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
     await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
     const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.objectwebhooks.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js','base.defaultValue.trigger.js'];
     _.forEach(baseTriggers, function(triggerFileName){
-        let baseObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        let baseObjectTrigger: any = loadFile(path.join(standardObjectsDir, triggerFileName))
         baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
         addObjectListenerConfig(baseObjectTrigger)
     })
 
-    let coreObject = util.loadFile(path.join(standardObjectsDir, "core.object.yml"))
+    let coreObject:any = loadFile(path.join(standardObjectsDir, "core.object.yml"))
     coreObject.name = SQL_BASE_OBJECT;
     await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
 
     const coreTriggers = ['core.objectwebhooks.trigger.js','core.defaultValue.trigger.js','core.autonumber.trigger.js'];
     _.forEach(coreTriggers, function(triggerFileName){
-        let coreObjectTrigger = util.loadFile(path.join(standardObjectsDir, triggerFileName))
+        let coreObjectTrigger:any = loadFile(path.join(standardObjectsDir, triggerFileName))
         coreObjectTrigger.listenTo = SQL_BASE_OBJECT
         addObjectListenerConfig(coreObjectTrigger)
     })
@@ -431,7 +431,7 @@ export function setObjectData(objectName, records){
 }
 
 export function addObjectDataFiles(filePath: string){
-    let result = util.loadObjectDataFiles(filePath);
+    let result = loadObjectDataFiles(filePath);
     _.each(result, function(item){
         if(item.objectName){
             setObjectData(item.objectName, item.records);

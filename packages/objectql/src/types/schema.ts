@@ -7,8 +7,8 @@ import { getFromContainer } from 'typeorm';
 // import { loadCoreValidators } from '../validators';
 // import { loadStandardBaseObjects } from './object_dynamic_load';
 // import { preloadDBObjectFields, preloadDBObjectButtons } from '../dynamic-load';
-import { MetadataRegister } from '../metadata-register';
 import { MetadataDriver } from '../driver/metadata';
+import { MetadataRegister } from '@steedos/metadata-registrar';
 
 
 const defaultDatasourceName = 'default';
@@ -23,14 +23,14 @@ export class SteedosSchema {
     private _objectsMap: Dictionary<{ datasourceName: string, filePath?: string }> = {};
     private _broker: any = null;
     private _metadataBroker: any = null;
-    metadataRegister: MetadataRegister = null;
+    metadataRegister: any = null;
     metadataDriver = new MetadataDriver();
     public get metadataBroker(): any {
         return this._metadataBroker;
     }
     public set metadataBroker(value: any) {
         this._metadataBroker = value;
-        this.metadataRegister = new MetadataRegister(this._metadataBroker);
+        this.metadataRegister = MetadataRegister;
     }
 
     public get broker(): any {

@@ -1,6 +1,5 @@
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName } from '@steedos/metadata-core';
 import { ObjectId } from "mongodb";
-import { getObject, getOriginalObjectConfig, getOriginalObjectConfigs } from '@steedos/objectql'
 
 const _ = require('underscore')
 

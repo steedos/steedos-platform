@@ -1,4 +1,5 @@
 var objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const clone = require('clone');
 const defaultDatasourceName = 'default';
 const defaultDatasourcesName = ['default','meteor'];
@@ -135,7 +136,7 @@ function loadDBObject(object){
     objectql.extend(object, {fields: fields}, {actions: actions}, {relatedList: relatedList});
     _.each(actions, function(action){
         action._visible = action.visible;
-        objectql.addLazyLoadButtons(action.object, action);
+        register.addLazyLoadButtons(action.object, action);
     })
 }
 
@@ -189,17 +190,17 @@ function loadObject(doc, oldDoc) {
 
         originalObject.isMain = true;
 
-        objectql.addObjectConfig(doc, datasourceName);
-        objectql.loadObjectLazyListViews(doc.name);
-        objectql.loadObjectLazyActions(doc.name);
-        objectql.loadActionScripts(doc.name);
-        objectql.loadObjectLazyMethods(doc.name);
-        objectql.loadObjectLazyListenners(doc.name);
-        objectql.loadObjectLazyButtons(doc.name);
+        register.addObjectConfig(doc, datasourceName);
+        register.loadObjectLazyListViews(doc.name);
+        register.loadObjectLazyActions(doc.name);
+        register.loadActionScripts(doc.name);
+        register.loadObjectLazyMethods(doc.name);
+        register.loadObjectLazyListenners(doc.name);
+        register.loadObjectLazyButtons(doc.name);
         //获取到继承后的对象
         // const _doc = objectql.getObjectConfig(doc.name);
         // console.log(`loadObject===>`, doc.name)
-        objectql.getSteedosSchema().metadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
+        register.MetadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
             if(res){
                 // datasource.setObject(doc.name, _doc);
                 // try {
@@ -215,7 +216,7 @@ function loadObject(doc, oldDoc) {
                 //     loadObjectPermission(doc);
                 // }
                 
-                objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
+                broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
         
@@ -273,33 +274,33 @@ function reloadObject(changeLog){
             case 'field':
                 if(data.event === 'remove'){
                     deleted.fields.push(data.value.name);
-                    objectql.removeObjectFieldConfig(objectName, data.value);
+                    register.removeObjectFieldConfig(objectName, data.value);
                 }else{
                     if(data.event === 'update'){
                         if(data.value._previousName != data.value.name){
                             deleted.fields.push(data.value._previousName);
-                            objectql.removeObjectFieldConfig(objectName, {name: data.value._previousName});
+                            register.removeObjectFieldConfig(objectName, {name: data.value._previousName});
                         }
                     }
-                    objectql.addObjectFieldConfig(objectName, data.value);
+                    register.addObjectFieldConfig(objectName, data.value);
                 }
                 break;
             case 'action':
                 if(data.event === 'remove'){
                     deleted.actions.push(data.value.name);
-                    objectql.removeObjectButtonsConfig(objectName, data.value);
+                    register.removeObjectButtonsConfig(objectName, data.value);
                 }else{
                     if(data.event === 'update'){
                         if(data.value._previousName != data.value.name){
                             deleted.actions.push(data.value._previousName);
-                            objectql.removeObjectButtonsConfig(objectName, {name: data.value._previousName});
+                            register.removeObjectButtonsConfig(objectName, {name: data.value._previousName});
                         }
                     }
                     if(data.value.is_enable){
-                        objectql.addObjectButtonsConfig(objectName, data.value);
+                        register.addObjectButtonsConfig(objectName, data.value);
                     }else{
                         deleted.actions.push(data.value.name);
-                        objectql.removeObjectButtonsConfig(objectName, data.value);
+                        register.removeObjectButtonsConfig(objectName, data.value);
                     }
                 }
                 break;
@@ -316,7 +317,7 @@ function reloadObject(changeLog){
             return 
         }
         //获取到最新的对象
-        const object = objectql.getOriginalObjectConfig(objectName);
+        const object = register.getOriginalObjectConfig(objectName);
 
         let _mf =  _.max(_.values(object.fields), function (field) { return field.sort_no; });
         if(_mf && object.name){
@@ -341,7 +342,7 @@ function reloadObject(changeLog){
                 // } catch (error) {
                 //     console.log('error', error);
                 // }
-                objectql.getSteedosSchema().broker.broadcast("$packages.statisticsActivatedPackages", {});
+                broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
     }

@@ -1,6 +1,7 @@
 const _ = require("underscore");
 const util = require('@steedos/standard-objects').util;
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const InternalData = require('@steedos/standard-objects').internalData;
 
 function setSpaceAndOwner(record, that){
@@ -55,12 +56,12 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let approvalProcesses = [];
         if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
+            approvalProcess = register.getSourceApprovalProcess(filters.name);
             if(approvalProcess){
                 approvalProcesses.push(approvalProcess);
             }
         }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
+            approvalProcesses = register.getSourceApprovalProcesses();
         }
 
         if (filters.object_name){
@@ -77,12 +78,12 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let approvalProcesses = [];
         if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
+            approvalProcess = register.getSourceApprovalProcess(filters.name);
             if(approvalProcess){
                 approvalProcesses.push(approvalProcess);
             }
         }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
+            approvalProcesses = register.getSourceApprovalProcesses();
         }
 
         if (filters.object_name){
@@ -99,12 +100,12 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let approvalProcesses = [];
         if(filters.name){
-            approvalProcess = objectql.getSourceApprovalProcess(filters.name);
+            approvalProcess = register.getSourceApprovalProcess(filters.name);
             if(approvalProcess){
                 approvalProcesses.push(approvalProcess);
             }
         }else{
-            approvalProcesses = objectql.getSourceApprovalProcesses();
+            approvalProcesses = register.getSourceApprovalProcesses();
         }
 
         if (filters.object_name){

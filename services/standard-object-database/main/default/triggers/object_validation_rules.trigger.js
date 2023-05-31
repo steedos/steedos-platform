@@ -6,6 +6,7 @@
 const _ = require("underscore");
 const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
+const register = require('@steedos/metadata-registrar')
 const auth = require('@steedos/auth');
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     },
     afterFind: async function(){
         const { spaceId } = this;
-        let dataList = objectql.getAllObjectValidationRules();
+        let dataList = register.getAllObjectValidationRules();
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
@@ -37,7 +38,7 @@ module.exports = {
     },
     afterAggregate: async function(){
         const { spaceId } = this;
-        let dataList = objectql.getAllObjectValidationRules();
+        let dataList = register.getAllObjectValidationRules();
         if (!_.isEmpty(dataList)) {
             dataList.forEach((doc) => {
                 if (!_.find(this.data.values, (value) => {
@@ -61,7 +62,7 @@ module.exports = {
     },
     afterFindOne: async function(){
         if (_.isEmpty(this.data.values)) {
-            const all = objectql.getAllObjectValidationRules();
+            const all = register.getAllObjectValidationRules();
             const id = this.id;
             this.data.values = _.find(all, function (item) {
                 return item._id === id

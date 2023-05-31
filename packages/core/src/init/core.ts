@@ -10,6 +10,7 @@ import fs = require('fs')
 import { getSteedosSchema, extend } from '@steedos/objectql';
 
 import { createHash } from "crypto";
+import { MONGO_BASE_OBJECT, getClientScriptsFiles, getClientScripts, getObjectConfig, getServerScripts } from '@steedos/metadata-registrar';
 
 // import { ODataRouter, MeteorODataAPIV4Router } from '..';
 
@@ -45,13 +46,13 @@ export const loadClientScripts = ()=>{
     try {
         if(typeof WebAppInternals !== 'undefined'){
             let clientCodes = getClientBaseObject();
-            let clientScripts = objectql.getClientScriptsFiles();
+            let clientScripts = getClientScriptsFiles();
             _.each(clientScripts, function (scriptFile) {
                 let code = fs.readFileSync(scriptFile, 'utf8');
                 clientCodes = clientCodes + '\r\n;' + `try{${code}}catch(error){console.error('client.js [${scriptFile}] error', error)}` + '\r\n;'
             });
     
-            clientCodes = clientCodes + objectql.getClientScripts();
+            clientCodes = clientCodes + getClientScripts();
     
             WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = `$.getScript('${objectql.absoluteUrl("/steedos-init.js")}', function(){${clientCodes}})`
         }
@@ -66,7 +67,7 @@ export const initCreator = async () => {
     await Future.task(() => {
         try {
             extendSimpleSchema();
-            Creator.baseObject = objectql.getObjectConfig(objectql.MONGO_BASE_OBJECT);
+            Creator.baseObject = getObjectConfig(MONGO_BASE_OBJECT);
             Creator.steedosSchema = getSteedosSchema()
             // 不需要加载 Creator 中定义的objects
             // _.each(Creator.Objects, function (obj, object_name) {
@@ -74,10 +75,10 @@ export const initCreator = async () => {
             //     objectql.addObjectConfig(obj, 'default')
             // });
             objectql.addAppConfigFiles(path.join(process.cwd(), "src/**"))
-            // let allObjects = objectql.getObjectConfigs('meteor');
+            // let allObjects = getObjectConfigs('meteor');
             _.each(allObjects, function (obj) {
                 const objectConfig = obj.metadata;
-                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                const localObjectConfig = getObjectConfig(objectConfig.name);
                 if(localObjectConfig){
                     objectConfig.listeners = localObjectConfig.listeners;
                     objectConfig.methods = localObjectConfig.methods;
@@ -105,14 +106,14 @@ export const initCreator = async () => {
                 Creator.Dashboards[dashboard._id] = dashboard
             });
 
-            let allServerScripts = objectql.getServerScripts();
+            let allServerScripts = getServerScripts();
             _.each(allServerScripts, function (scriptFile) {
                 require(scriptFile)
             });
 
             _.each(allObjects, function (obj) {
                 const objectConfig = obj.metadata;
-                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                const localObjectConfig = getObjectConfig(objectConfig.name);
                 if(localObjectConfig){
                     if(Creator.Objects[objectConfig.name]){
                         extend(localObjectConfig, {methods: Creator.Objects[objectConfig.name].methods})
@@ -124,11 +125,19 @@ export const initCreator = async () => {
 
             _.each(allObjects, function (obj) {
                 const objectConfig = obj.metadata;
-                const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+                const localObjectConfig = getObjectConfig(objectConfig.name);
                 if (localObjectConfig)
                     extend(objectConfig, {triggers: localObjectConfig._baseTriggers})
                 // if (objectConfig.name != 'users')
-                Creator.loadObjects(objectConfig, objectConfig.name);
+                if(!objectConfig){
+                    console.log(`objectConfig ${objectConfig.name} is null`)
+                }else{
+                    try {
+                        Creator.loadObjects(objectConfig, objectConfig.name);
+                    } catch (error) {
+                        console.error(`${objectConfig.name} error: `, error)
+                    }
+                }
             });
 
             _.each(allDefautObjects, function (obj) {

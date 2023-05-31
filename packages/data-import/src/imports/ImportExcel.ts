@@ -1,5 +1,5 @@
 import xlsx from 'node-xlsx';
-import { getObjectConfig } from '@steedos/objectql';
+import { getObjectConfig } from '@steedos/metadata-registrar';
 import { importWithRecords } from '../objectImport';
 import { each, includes } from 'lodash';
 import { Base } from './Base';

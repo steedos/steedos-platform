@@ -1,6 +1,7 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema, MONGO_BASE_OBJECT, getObjectConfig } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers, extend } from '../util'
+import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema} from ".";
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers } from '../util'
+import { extend } from '../index'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -18,10 +19,10 @@ import { sortBy, forEach, isNil } from 'lodash';
 import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
-import { getPatternListeners } from '../dynamic-load';
 import { getCacher } from '@steedos/cachers';
 import { uniq, isEmpty, includes } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
+import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
 
 const auth = require("@steedos/auth");
 

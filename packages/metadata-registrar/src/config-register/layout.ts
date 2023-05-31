@@ -1,14 +1,14 @@
 import { MetadataRegister } from "../metadata-register";
+import { loadLayouts } from "../utils";
 
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 14:57:54
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 14:57:59
+ * @LastEditTime: 2023-05-30 11:50:15
  * @Description: 
  */
 const _ = require('underscore');
-var util = require('../util');
 
 const _Layouts: any = {};
 
@@ -40,7 +40,7 @@ export const addObjectLayoutConfig = (objectName: string, json: any) => {
 }
 
 export const loadObjectLayouts = async function (filePath: string, serviceName: string){
-    let layoutJsons = util.loadLayouts(filePath);
+    let layoutJsons = loadLayouts(filePath);
     layoutJsons.forEach(element => {
         addObjectLayoutConfig(element.object_name, element);
     });

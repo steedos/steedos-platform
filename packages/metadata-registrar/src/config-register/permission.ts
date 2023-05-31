@@ -1,8 +1,7 @@
 import { Dictionary } from '@salesforce/ts-types';
 import { registerPermissionFields } from '../metadata-register/permissionFields'
 import _ = require('lodash');
-import { getObjectConfig } from '../utils';
-var util = require('../util');
+import { extend, loadPermissions } from '../utils';
 var clone = require('clone');
 
 const _lazyLoads: Dictionary<any> = {};
@@ -16,6 +15,15 @@ const addLazyLoad = function(objectName: string, json: any){
 
 const getLazyLoads = function(objectName: string){
     return _lazyLoads[objectName]
+}
+
+function getObjectConfig(objectName: string){
+    try {
+        const objectql = require('@steedos/objectql');
+        return objectql.getObjectConfig(objectName);
+    } catch (error) {
+        
+    }
 }
 
 export const getLazyLoadPermissions  = function(objectName: string){
@@ -38,7 +46,7 @@ export const addPermissionConfig = (objectName: string, json: any)=>{
         if(!object.permission_set){
             object.permission_set = {}
         }
-        util.extend(object.permission_set, {[json.name]: json})
+        extend(object.permission_set, {[json.name]: json})
         // getDataSource(object.datasource).setObjectPermission(objectName, json);
     } else {
         addLazyLoad(objectName, json);
@@ -46,7 +54,7 @@ export const addPermissionConfig = (objectName: string, json: any)=>{
 }
 
 export const loadObjectPermissions = async function (filePath: string, serviceName: string){
-    let permissions = util.loadPermissions(filePath);
+    let permissions = loadPermissions(filePath);
     permissions.forEach(permission => {
         addPermissionConfig(permission.object_name, permission);
     });

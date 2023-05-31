@@ -9,9 +9,8 @@ const _ = require('lodash');
 const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
-const { registerMetadataConfigs, loadStandardMetadata } = require('@steedos/metadata-registrar');
+const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
 const loadFlowFile = new metaDataCore.LoadFlowFile();
-const loadRouterJsFile = new metaDataCore.LoadRouterJsFile();
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -99,22 +98,23 @@ module.exports = {
         },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
             this.broker.logger.debug(`Loading package from ${packagePath}`)
+            packagePath = path.join(packagePath, '**');
             if (!datasourceName) {
                 datasourceName = 'default';
             }
             if(this.objectql){
-                await this.initDataSource(datasourceName);
+                await this.initDataSource(packagePath, datasourceName);
                 await loadStandardMetadata(name, datasourceName);
             }
             await registerMetadataConfigs(packagePath, datasourceName, name);
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
             await triggerYmlLoader.load(this.broker, packagePath, name);
-            await this.broker.call('steedos-server.loadClientScripts', {})
             if(this.core){
-                await this.loadPackageRouters();
+                this.core.loadClientScripts();
+                const routersInfo = await this.loadPackageRouters(packagePath, name);
+                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             }
-            await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             await this.broker.emit(`translations.object.change`, {});
             return;
         },
@@ -222,7 +222,7 @@ module.exports = {
             }
         },
         async loadPackageRouters(packagePath, name){
-            let routersData = loadRouterJsFile.load(packagePath);
+            let routersData = loadRouters(packagePath);
             let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
             let routersInfo = _.flattenDeep(_.map(routersData, 'infoList'));
             if(oldRoutersInfo){
@@ -240,8 +240,9 @@ module.exports = {
                 _routers.push(element)
             });
             this.core.loadRouters(_routers);
+            return routersInfo
         },
-        async initDataSource(datasourceName){
+        async initDataSource(packagePath, datasourceName){
             this.objectql.getSteedosSchema(this.broker);
             packagePath = path.join(packagePath, '**');
             const datasource = this.objectql.getDataSource(datasourceName);
@@ -314,10 +315,9 @@ module.exports = {
                     this.core.removeRouter(info.path, info.methods)
                 })
             }
+            await this.core.deletePackageClientScripts(this.name);
+            await this.core.loadClientScripts();
         }
-
-        await this.broker.call('steedos-server.deletePackageClientScripts', {packageName: this.name})
-        await this.broker.call('steedos-server.loadClientScripts', {})
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{
             name: this.name,

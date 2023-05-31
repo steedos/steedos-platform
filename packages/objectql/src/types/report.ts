@@ -1,6 +1,7 @@
 import { JsonMap } from '@salesforce/ts-types';
-import { SteedosQueryFilters, addConfigFiles, addConfig, getConfigs, getConfig } from '.';
+import { SteedosQueryFilters} from '.';
 import { SteedosDataSourceType } from '.';
+import { addConfig, addConfigFiles, getConfig, getConfigs } from '@steedos/metadata-registrar';
 
 export const LOADED_REPORTS_CONFIGS: Array<SteedosReportTypeConfig> = [];
 

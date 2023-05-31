@@ -4450,13 +4450,6 @@
     nats "^1.4.12"
     validator "^13.6.0"
 
-"@steedos/service-package-license@2.5.0-beta.30":
-  version "2.5.0-beta.30"
-  resolved "https://registry.npmjs.org/@steedos/service-package-license/-/service-package-license-2.5.0-beta.30.tgz#a64d3d4d23109049dfb22cbc84c9c1dc92c88702"
-  integrity sha512-HL9htlNtQsCEtRcOBkS5IaYJPD5W+eAtPUtEcuzMiyLcDZjy+sDdfcMQgIlahwhaDaDhl4itMDEBhT8t0s0z/Q==
-  dependencies:
-    axios "^0.21.4"
-
 "@steedos/standard-objects@2.5.0-beta.25":
   version "2.5.0-beta.25"
   resolved "https://registry.npmjs.org/@steedos/standard-objects/-/standard-objects-2.5.0-beta.25.tgz#2465e48c0c29a0b83de73acc2ff0dd71e6765657"

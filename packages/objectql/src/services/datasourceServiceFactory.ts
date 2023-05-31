@@ -2,14 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-18 11:49:57
+ * @LastEditTime: 2023-05-30 10:33:34
  * @Description: 
  */
 import * as _ from 'underscore';
 import { getDataSourceServiceName } from './index';
 import { jsonToObject } from '../util/convert';
 import { getDataSource } from '../types/datasource';
-import { addOriginalObjectConfigs, getOriginalObjectConfig } from '../types/object_dynamic_load';
+import { addOriginalObjectConfigs, getOriginalObjectConfig } from '@steedos/metadata-registrar';
 
 const clone = require('clone');
 

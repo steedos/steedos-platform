@@ -1,7 +1,7 @@
 import { mkdirsSync } from '@steedos/metadata-core';
 import * as _ from 'underscore';
+import { getObjectConfig, getOriginalObjectConfig } from '@steedos/metadata-registrar'
 const fs = require("fs-extra");
-const inquirer = require("inquirer");
 const path = require("path");
 const colors = require('colors/safe');
 const Fiber = require('fibers');
@@ -63,10 +63,10 @@ async function convert(lng, packageDir){
             try {
                 const object = objectql.getObject(filename);
                 if(object){
-                    const objectTemplate = I18n.getObjectI18nTemplate(lng, filename, objectql.getOriginalObjectConfig(filename));
+                    const objectTemplate = I18n.getObjectI18nTemplate(lng, filename, getOriginalObjectConfig(filename));
                     let oldKeys = _.keys(item.data);
                     let keys = _.keys(objectTemplate);
-                    let inheritedObjectConfig = objectql.getObjectConfig(filename);
+                    let inheritedObjectConfig = getObjectConfig(filename);
                     let inheritedKeys = keys;
                     if(inheritedObjectConfig){
                         let inheritedTemplateData = I18n.getObjectI18nTemplate(lng, filename, inheritedObjectConfig);

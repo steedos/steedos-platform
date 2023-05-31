@@ -1,9 +1,10 @@
-import { getSteedosSchema, addConfig, getConfig, removeConfig, getObject } from '@steedos/objectql';
+import { getSteedosSchema, getObject } from '@steedos/objectql';
 import { isExpried } from './utils'
 import { getCacher } from '@steedos/cachers'
 import { isPropValueChanged } from './session';
 import { removeUserSessionFromCache } from './userSession';
 import _ = require('underscore');
+import { addConfig, getConfig, removeConfig } from '@steedos/metadata-registrar';
 const sessionCacheInMinutes = 10;
 const SPACEUSERCACHENAME = 'space_users_cache';
 

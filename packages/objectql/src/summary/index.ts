@@ -1,15 +1,15 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-07-03 11:12:59
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 10:34:10
  * @Description: 
  */
-import { SteedosObjectTypeConfig, getObjectConfigs } from '../types';
+import { SteedosObjectTypeConfig } from '../types';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryDataTypeValue, SupportedSummaryFieldTypes } from './type';
-import { isCodeObject } from '../util';
 import { isFormulaFieldQuotingObjectAndFields } from '../formula';
 import _ = require('lodash')
+import { getObjectConfigs } from '@steedos/metadata-registrar';
 
 export * from './type'
 export * from './field_summary'
@@ -29,12 +29,12 @@ export const initSummaryConfig = async(summaryConfig: SteedosFieldSummaryTypeCon
     });
     if (!summaryObject) {
         // 如果不是零代码对象，直接报错，否则直接返回，待相关零代码对象加载进来时，会再进入该函数
-        if(isCodeObject(summary_object)){
-            throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
-        }
-        else{
+        // if(isCodeObject(summary_object)){
+        //     throw new Error(`The summary_object '${summary_object}' of the field '${field_name}' on the object '${object_name}' is not found in the default datasource.`);
+        // }
+        // else{
             return;
-        }
+        // }
     }
 
     const referenceToField = _.find(summaryObject.fields, (item) => {

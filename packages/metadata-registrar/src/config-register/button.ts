@@ -2,14 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:34:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 10:55:36
+ * @LastEditTime: 2023-05-30 11:44:41
  * @Description: 
  */
 import { getObjectConfig } from './core'
 import _ = require('lodash');
 import { overrideOriginalObject } from './originalObject';
 import { MetadataRegister } from '../metadata-register';
-var util = require('../util');
+import { extend, loadButtons } from '../utils';
 var clone = require('clone');
 
 const _lazyLoadButtons: any = {};
@@ -43,7 +43,7 @@ export const addObjectButtonsConfig = (objectName: string, json: any) => {
         if(!object.actions){
             object.actions = {}
         }
-        util.extend(object.actions, {[json.name]: json});
+        extend(object.actions, {[json.name]: json});
         overrideOriginalObject(objectName, {actions: {[json.name]: json}});
     } else {
         addLazyLoadButtons(objectName, json);
@@ -62,7 +62,7 @@ export const removeObjectButtonsConfig = (objectName: string, json: any)=>{
 }
 
 export const loadObjectButtons = async function (filePath: string, serviceName: string){
-    let buttonJsons = util.loadButtons(filePath);
+    let buttonJsons = loadButtons(filePath);
     buttonJsons.forEach(element => {
         addObjectButtonsConfig(element.object_name, element);
     });

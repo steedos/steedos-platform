@@ -1,10 +1,11 @@
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar')
 const auth = require('@steedos/auth');
 const _ = require('underscore');
 const clone = require('clone');
 async function getAll(){
     const schema = objectql.getSteedosSchema();
-    const configs = await objectql.registerQuery.getAll(schema.broker)
+    const configs = await register.registerQuery.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
 
     _.each(dataList, function(item){
@@ -17,7 +18,7 @@ async function getAll(){
 
 async function get(apiName){
     const schema =objectql.getSteedosSchema();
-    const config = await objectql.registerQuery.get(schema.broker, apiName)
+    const config = await register.registerQuery.get(schema.broker, apiName)
     return config ? config.metadata : null;
 }
 

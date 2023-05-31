@@ -2,14 +2,23 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 15:08:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 15:14:05
+ * @LastEditTime: 2023-05-30 12:17:19
  * @Description: 
  */
-import { loadFile, syncMatchFiles } from '@steedos/metadata-core';
+import { syncMatchFiles } from '@steedos/metadata-core';
+import { loadFile } from '../utils';
 import _ = require('lodash');
-import { getObjectConfig } from '../utils';
 var path = require('path');
 var clone = require('clone');
+
+function getObjectConfig(objectName: string){
+    try {
+        const objectql = require('@steedos/objectql');
+        return objectql.getObjectConfig(objectName);
+    } catch (error) {
+        
+    }
+}
 
 const _lazyLoadMethods: any = {};
 

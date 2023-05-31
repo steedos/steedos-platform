@@ -2,13 +2,13 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:34:27
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 10:55:23
+ * @LastEditTime: 2023-05-30 11:49:51
  * @Description: 
  */
 import { getObjectConfig, getOriginalObjectConfig } from './core'
 import _ = require('lodash');
 import { MetadataRegister } from '../metadata-register';
-var util = require('../util');
+import { extend, loadFields } from '../utils';
 var clone = require('clone');
 
 const _lazyLoadFields: any = {};
@@ -41,8 +41,8 @@ export const addObjectFieldConfig = (objectName: string, json: any) => {
         if(!object.fields){
             object.fields = {}
         }
-        util.extend(object.fields, {[json.name]: json})
-        util.extend(originalObject.fields, {[json.name]: json})
+        extend(object.fields, {[json.name]: json})
+        extend(originalObject.fields, {[json.name]: json})
         
         let _mf =  _.maxBy(_.values(object.fields), function (field) { return field.sort_no; });
         if(_mf && object.name){
@@ -69,7 +69,7 @@ export const removeObjectFieldConfig = (objectName: string, json: any)=>{
 }
 
 export const loadObjectFields = async function (filePath: string, serviceName?: string){
-    let fieldJsons = util.loadFields(filePath);
+    let fieldJsons = loadFields(filePath);
     fieldJsons.forEach(element => {
         addObjectFieldConfig(element.object_name, element);
     });

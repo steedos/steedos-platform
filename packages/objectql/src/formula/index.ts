@@ -1,9 +1,17 @@
-import { SteedosObjectTypeConfig, getObjectConfig, getSteedosSchema } from '../types';
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-12-09 18:23:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 10:32:29
+ * @Description: 
+ */
+import { SteedosObjectTypeConfig, getSteedosSchema } from '../types';
 import { SteedosFormulaOptions } from './type';
 import { computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isUserSessionRequiredForFormulaVars } from './util';
 import { JsonMap } from "@salesforce/ts-types";
 import _ = require('lodash')
+import { getObjectConfig } from '@steedos/metadata-registrar';
 
 export * from './type'
 export * from './util'

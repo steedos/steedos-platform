@@ -1,16 +1,17 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-10-26 14:14:51
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-10-27 17:42:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 15:09:54
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
 async function getAll() {
     const schema = objectql.getSteedosSchema();
-    const configs = await objectql.registerTab.getAll(schema.broker)
+    const configs = await register.registerTab.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
     let permissionTabs = [];
     for (const item of dataList) {

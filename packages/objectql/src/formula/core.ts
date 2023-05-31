@@ -4,7 +4,7 @@ import { SteedosFieldFormulaTypeConfig, SteedosFormulaVarTypeConfig, SteedosForm
 import { getObjectQuotedByFieldFormulaConfigs, getObjectFieldFormulaConfigs } from './field_formula';
 import { runQuotedByObjectFieldSummaries, getObjectQuotedByFieldSummaryConfigs } from '../summary';
 import { checkUserSessionNotRequiredForFieldFormulas, getFormulaVarPathsAggregateLookups, isFieldFormulaConfigQuotingObjectAndFields } from './util';
-import { wrapAsync } from '../util';
+import { wrapAsync } from '../index';
 import { JsonMap } from "@salesforce/ts-types";
 import { SteedosQueryFilters } from '../types';
 import _ = require('lodash')

@@ -1,13 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-08-30 12:06:41
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-29 16:03:50
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 17:29:53
  * @Description: 
  */
 const _ = require("underscore");
 const util = require('@steedos/standard-objects').util;
 const objectql = require("@steedos/objectql");
+const register = require("@steedos/metadata-registrar")
 const InternalData = require('@steedos/standard-objects').internalData;
 
 const getInternalWorkflowRules = function(sourceWorkflowRules, filters){
@@ -40,10 +41,10 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowRules = [];
         if(filters.object_name){
-            workflowRules = objectql.getObjectWorkflowRules(filters.object_name);
+            workflowRules = register.getObjectWorkflowRules(filters.object_name);
             delete filters.object_name;
         }else{
-            workflowRules = objectql.getAllWorkflowRules();
+            workflowRules = register.getAllWorkflowRules();
         }
 
         workflowRules = getInternalWorkflowRules(workflowRules, filters);
@@ -56,10 +57,10 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowRules = [];
         if(filters.object_name){
-            workflowRules = objectql.getObjectWorkflowRules(filters.object_name);
+            workflowRules = register.getObjectWorkflowRules(filters.object_name);
             delete filters.object_name;
         }else{
-            workflowRules = objectql.getAllWorkflowRules();
+            workflowRules = register.getAllWorkflowRules();
         }
         
         workflowRules = getInternalWorkflowRules(workflowRules, filters);
@@ -72,10 +73,10 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let workflowRules = [];
         if(filters.object_name){
-            workflowRules = objectql.getObjectWorkflowRules(filters.object_name);
+            workflowRules = register.getObjectWorkflowRules(filters.object_name);
             delete filters.object_name;
         }else{
-            workflowRules = objectql.getAllWorkflowRules();
+            workflowRules = register.getAllWorkflowRules();
         }
         
         workflowRules = getInternalWorkflowRules(workflowRules, filters);
@@ -87,7 +88,7 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             let id = this.id
-            let workflowRule = objectql.getWorkflowRule(id);
+            let workflowRule = register.getWorkflowRule(id);
             if(workflowRule){
                 this.data.values = workflowRule;
             }

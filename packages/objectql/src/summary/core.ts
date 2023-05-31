@@ -1,10 +1,11 @@
-import { getSteedosSchema, processFilters, getObjectConfig } from '../index';
+import { getSteedosSchema, processFilters } from '../index';
 import { SteedosFieldSummaryTypeConfig, SteedosSummaryTypeValue, SteedosSummaryTypeBlankValue } from './type';
 import { getObjectQuotedByFieldSummaryConfigs, getObjectFieldSummaryConfigs } from './field_summary';
 import { runQuotedByObjectFieldFormulas } from '../formula';
 import { formatFiltersToODataQuery } from '@steedos/filters';
 import _ = require('lodash');
 import { JsonMap } from '@salesforce/ts-types';
+import { getObjectConfig } from '@steedos/metadata-registrar';
 
 /**
  * 在所有字段引用关系（包括跨对象的字段引用关系）中找到引用了当前正在insert/update的对象字段的汇总字段并更新其字段值
