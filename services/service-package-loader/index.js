@@ -65,7 +65,47 @@ module.exports = {
      * Methods
      */
     methods: {
+        checkPackageMetadataFiles: async function (packagePath) {
 
+            if(this.core){
+                return ;
+            }
+
+            let publicPath = path.join(packagePath, 'public');
+            if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
+                this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
+            }
+
+            // 扫描软件包中的元数据, 如果有 .client.js 文件, 则输出警告信息
+            const filePatten = [
+                path.join(packagePath, "**", "*.client.js"),
+                "!" + path.join(packagePath, "node_modules"),
+            ]
+            const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
+            for await (const filePath of matchedPaths) {
+                this.broker.logger.warn(`The client.js file has been deprecated. ${filePath}`); 
+            }
+
+            // 扫描软件包中的元数据, 如果有 .object.js 文件, 则输出警告信息
+            const filePatten2 = [
+                path.join(packagePath, "**", "*.object.js"),
+                "!" + path.join(packagePath, "node_modules"),
+            ]
+            const matchedPaths2 = metaDataCore.syncMatchFiles(filePatten2);
+            for await (const filePath of matchedPaths2) {
+                this.broker.logger.warn(`The object.js file has been deprecated. ${filePath}`); 
+            }
+
+            // 扫描软件包中的元数据, 如果有 .router.js 文件, 则输出警告信息
+            const filePatten3 = [
+                path.join(packagePath, "**", "*.router.js"),
+                "!" + path.join(packagePath, "node_modules"),
+            ]
+            const matchedPaths3 = metaDataCore.syncMatchFiles(filePatten3);
+            for await (const filePath of matchedPaths3) {
+                this.broker.logger.warn(`The router.js file has been deprecated. ${filePath}`); 
+            }
+        },
         sendPackageFlowToDb: async function(packagePath, name) {
             const flows = loadFlowFile.load(path.join(packagePath, '**'));
             for (const apiName in flows) {
@@ -175,6 +215,9 @@ module.exports = {
             return await this.broker.destroyService(this);
         },
         async onStarted(){
+
+            this.checkPackageMetadataFiles(this.settings.packageInfo.path)
+
             if(this.beforeStart){
                 try {
                     await this.beforeStart()
