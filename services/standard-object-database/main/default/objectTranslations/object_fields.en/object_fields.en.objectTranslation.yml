@@ -72,6 +72,10 @@ fields:
       - label: Roll-Up Summary
         value: summary
     description: 
+  language:
+    label: Language
+    help: 
+    description: 
   defaultValue:
     label: Default Value
     help: 
