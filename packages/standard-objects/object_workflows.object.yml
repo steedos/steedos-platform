@@ -36,6 +36,14 @@ fields:
     amis: 
       "autoComplete": 
         "method": "get"
+        "cache": 60000
+        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.flow_id"
+      "source": 
+        "method": "get"
+        "cache": 60000
         "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
@@ -51,6 +59,14 @@ fields:
     amis: 
       "autoComplete": 
         "method": "get"
+        "cache": 60000
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
+      "source": 
+        "method": "get"
+        "cache": 60000
         "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
@@ -73,6 +89,14 @@ fields:
     amis: 
       "autoComplete": 
         "method": "get"
+        "cache": 60000
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
+      "source": 
+        "method": "get"
+        "cache": 60000
         "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&include_hide=true&include_related=true&term=${term}"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
@@ -85,6 +109,14 @@ fields:
     amis: 
       "autoComplete": 
         "method": "get"
+        "cache": 60000
+        "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.flow_id"
+      "source": 
+        "method": "get"
+        "cache": 60000
         "url": "${context.rootUrl}/api/object_workflows/workflow_field/options?flow_id=${flow_id}&term=${term}&instance_fields=true"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
