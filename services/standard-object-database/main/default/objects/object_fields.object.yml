@@ -403,8 +403,6 @@ fields:
     label: Color
     type: text
     required: false
-    amis: 
-      type: input-color
   options.$.description:
     label: Description
     type: text
