@@ -201,6 +201,7 @@ fields:
     type: lookup
     group: Advanced
     label: 依赖的字段
+    inlineHelpText: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段值会随之改变。
     reference_to: object_fields
     reference_to_field: name
     multiple: true
@@ -220,6 +221,7 @@ fields:
     type: lookup
     group: Advanced
     label: 关联的字段
+    inlineHelpText: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了关联字段后，会将“关联的字段”替换_id存储到A1记录中。
     description: '默认为主键'
     reference_to: object_fields
     reference_to_field: name
