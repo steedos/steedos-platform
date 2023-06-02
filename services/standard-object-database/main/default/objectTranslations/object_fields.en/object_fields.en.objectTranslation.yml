@@ -90,12 +90,12 @@ fields:
     description: 
   depend_on:
     label: Dependent Fields
-    help: If the dependent field value changes, the current field value will also change accordingly。
+    help: If the value of the dependent field changes, the option value of the current field will also change accordingly。
     description: 
   reference_to_field:
     label: Reference to field
-    help: The value of the associated object saved to the current object field; For example, after object A is associated with object B, when A1 record is associated with B1 record, B1 record will be stored by default_ Save the ID in the A1 record. If the associated field is modified, the 'associated field' will be replaced_ Store the ID in the A1 record.
-    description: 
+    help: The value of the associated object saved to the current object field; For example, after object A is associated with object B, when A1 record is associated with B1 record, B1 record will be stored by default_ Save the ID in the A1 record. If the foreign key field is modified, the 'foreign key field' will be replaced_ Store the ID in the A1 record.
+    description: The default is the primary key, and the default value is _id.
   filtersFunction:
     label: filters Function
     help: 

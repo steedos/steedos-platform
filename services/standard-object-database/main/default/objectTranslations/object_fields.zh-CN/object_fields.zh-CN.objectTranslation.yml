@@ -83,12 +83,12 @@ fields:
     description: 
   depend_on:
     label: 依赖的字段
-    help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段值会随之改变。
+    help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
     description: 
   reference_to_field:
-    label: 关联的字段
-    help: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了关联字段后，会将“关联的字段”替换_id存储到A1记录中。
-    description: 
+    label: 外键字段
+    help: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
+    description: '默认为主键，默认值是_id'
   filtersFunction:
     label: 过滤器函数
     help: 
