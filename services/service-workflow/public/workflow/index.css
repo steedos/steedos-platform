@@ -45,6 +45,11 @@
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
+
+.instance-print .instance-form .inline-block{
+    display: block !important;
+}
+
 .instance-box-tree .antd-TreeControl{
     padding: 15px 0;
 }
