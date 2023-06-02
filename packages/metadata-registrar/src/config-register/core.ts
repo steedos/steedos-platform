@@ -214,24 +214,28 @@ export const addObjectConfig = async (objectConfig: any, datasource: string, ser
         addOriginalObjectConfigs(object_name, datasource, clone(objectConfig));
         if (datasource === 'default' || datasource === 'meteor') { // isMeteor() && (datasource === 'default')
             let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
-            // 确保字段顺序正确，避免base中的字段跑到前面
-            config.fields = _.clone(objectConfig.fields);
-            let _baseObjectConfig = clone(baseObjectConfig);
-            delete _baseObjectConfig.hidden;
-            if(datasource === 'meteor'){
-                _.each(_baseObjectConfig.listeners, function(license){
-                    const triggers = transformListenersToTriggers(config, license)
-                    extend(config, {triggers, _baseTriggers: triggers})
-                })
+            if(baseObjectConfig){
+                // 确保字段顺序正确，避免base中的字段跑到前面
+                config.fields = _.clone(objectConfig.fields);
+                let _baseObjectConfig = clone(baseObjectConfig);
+                delete _baseObjectConfig.hidden;
+                if(datasource === 'meteor'){
+                    _.each(_baseObjectConfig.listeners, function(license){
+                        const triggers = transformListenersToTriggers(config, license)
+                        extend(config, {triggers, _baseTriggers: triggers})
+                    })
+                }
+                config = extend(config, _baseObjectConfig, clone(objectConfig));
             }
-            config = extend(config, _baseObjectConfig, clone(objectConfig));
         } else {
             let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
-            // 确保字段顺序正确，避免base中的字段跑到前面
-            config.fields = _.clone(objectConfig.fields);
-            let _coreObjectConfig = clone(coreObjectConfig)
-            delete _coreObjectConfig.hidden;
-            config = extend(config, _coreObjectConfig, clone(objectConfig));
+            if(coreObjectConfig){
+                // 确保字段顺序正确，避免base中的字段跑到前面
+                config.fields = _.clone(objectConfig.fields);
+                let _coreObjectConfig = clone(coreObjectConfig)
+                delete _coreObjectConfig.hidden;
+                config = extend(config, _coreObjectConfig, clone(objectConfig));
+            }
         }
     }
     config.datasource = datasource;

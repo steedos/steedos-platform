@@ -6,7 +6,6 @@ const processTriggerLoader = require('./lib').processTriggerLoader;
 const triggerYmlLoader = require('./lib').triggerYmlLoader;
 const path = require('path');
 const _ = require('lodash');
-const express = require('express');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
 const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
@@ -191,19 +190,24 @@ module.exports = {
                     return
                 }
 
-                this.settings.loadedPackagePublicFiles = true;
                 try {
-                    const router = require('@steedos/router').staticRouter();
-                    let routerPath = "";
-                    if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
-                        routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+                    const express = require('express');
+                    this.settings.loadedPackagePublicFiles = true;
+                    try {
+                        const router = require('@steedos/router').staticRouter();
+                        let routerPath = "";
+                        if (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX) {
+                            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
+                        }
+                        const cacheTime = 86400000 * 1; // one day
+                        router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
+                        // WebApp.connectHandlers.use(router);
+                    } catch (error) {
+                        console.error(error)
+                        this.settings.loadedPackagePublicFiles = false;
                     }
-                    const cacheTime = 86400000 * 1; // one day
-                    router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
-                    // WebApp.connectHandlers.use(router);
                 } catch (error) {
-                    console.error(error)
-                    this.settings.loadedPackagePublicFiles = false;
+                        
                 }
             }
         },
@@ -299,6 +303,9 @@ module.exports = {
      * Service created lifecycle event handler
      */
     created() {
+        if(!global.broker){
+            global.broker = this.broker;
+        }
         this.packageServices = [];  //此属性不能放到settings下，否则会导致mo clone settings 时 内存溢出。
         this.logger.debug('service package loader created!!!');
         

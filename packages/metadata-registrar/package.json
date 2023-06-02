@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-registrar",
-  "version": "2.5.0-beta.38",
+  "version": "2.5.0-beta.39",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -22,6 +22,7 @@
     "eval": "^0.1.4",
     "glob": "^7.1.6",
     "ini": "^2.0.0",
+    "ioredis": "^5.3.2",
     "js-beautify": "^1.13.1",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
