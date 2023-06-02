@@ -94,6 +94,91 @@ fields:
       - label: 累计汇总
         value: summary
     sort_no: 150
+  language:
+    type: select
+    label: 语言
+    defaultValue: javascript
+    options: 
+      - label: bat
+        value: bat
+      - label: c
+        value: c
+      - label: coffeescript
+        value: coffeescript
+      - label: cpp
+        value: cpp
+      - label: csharp
+        value: csharp
+      - label: css
+        value: css
+      - label: dockerfile
+        value: dockerfile
+      - label: fsharp
+        value: fsharp
+      - label: go
+        value: go
+      - label: handlebars
+        value: handlebars
+      - label: html
+        value: html
+      - label: ini
+        value: ini
+      - label: java
+        value: java
+      - label: javascript
+        value: javascript
+      - label: json
+        value: json
+      - label: less
+        value: less
+      - label: lua
+        value: lua
+      - label: markdown
+        value: markdown
+      - label: msdax
+        value: msdax
+      - label: objective-c
+        value: objective-c
+      - label: php
+        value: php
+      - label: plaintext
+        value: plaintext
+      - label: postiats
+        value: postiats
+      - label: powershell
+        value: powershell
+      - label: pug
+        value: pug
+      - label: python
+        value: python
+      - label: r
+        value: r
+      - label: razor
+        value: razor
+      - label: ruby
+        value: ruby
+      - label: sb
+        value: sb
+      - label: scss
+        value: scss
+      - label: shell
+        value: shell
+      - label: sol
+        value: sol
+      - label: sql
+        value: sql
+      - label: swift
+        value: swift
+      - label: typescript
+        value: typescript
+      - label: vb
+        value: vb
+      - label: xml
+        value: xml
+      - label: yaml
+        value: yaml
+    sort_no: 155
+    visible_on: "{{['code'].indexOf(formData.type) > -1 ? true: false}}"
   defaultValue:
     type: text
     label: Default Value
@@ -116,6 +201,7 @@ fields:
     type: lookup
     group: Advanced
     label: 依赖的字段
+    inlineHelpText: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
     reference_to: object_fields
     reference_to_field: name
     multiple: true
@@ -134,7 +220,8 @@ fields:
   reference_to_field:
     type: lookup
     group: Advanced
-    label: 关联的字段
+    label: 外键字段
+    inlineHelpText: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
     description: '默认为主键'
     reference_to: object_fields
     reference_to_field: name
@@ -149,7 +236,7 @@ fields:
           return ['_id', '=', 'no']
         }
       }
-    sort_no: 450
+    sort_no: 440
   multiple:
     type: boolean
     label: Multiple
