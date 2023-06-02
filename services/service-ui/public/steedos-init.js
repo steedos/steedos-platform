@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-01 14:55:05
+ * @LastEditTime: 2023-04-27 13:22:22
  * @Description:
  */
 try {
@@ -142,10 +142,16 @@ try {
   };
 
   window.getAppsSync = () => {
+    const isMobile = Steedos.isMobile()
+    let data = { };
+    if(isMobile){
+      data.mobile = isMobile
+    }
     const url = "/service/api/apps/menus";
     const apps = Steedos.authRequest(url, {
       type: "GET",
       async: false,
+      data
     });
     return apps;
   };

@@ -7,22 +7,13 @@ create: false
 reference_to: permission_set
 reference_to_field: name
 visible_on: '{{global.user.is_space_admin}}'
-optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(
-  ) {
-
-    var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
-    var result = [];
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function (filters, values) {
     var is_space_admin = Creator.USER_CONTEXT.user.is_space_admin;
-    profiles.forEach(function (item) {
-        if(!(item.name === 'admin' && !is_space_admin)){
-          result.push({
-            label: item.label,
-            value: item.name
-          });
-        }
-    });
-    return result;
-
+    if(is_space_admin){
+      return ["type","=","profile"]
+    }else{
+      return [["type","=","profile"], 'and', ["name","!=","admin"]]
+    }
   }
 sort_no: 230

@@ -225,11 +225,12 @@ Creator.getObjectRecordName = (record, object_name)->
 			return record.label || record[name_field_key]
 
 Creator.getApp = (app_id)->
-	if !app_id
-		app_id = Session.get("app_id")
-	app = Creator.Apps[app_id]
-	Creator.deps?.app?.depend()
-	return app
+	appMenus = Session.get("_app_menus") || Session.get("app_menus");
+	unless appMenus
+		return {}
+	currentApp = appMenus.find (menuItem) ->
+		return menuItem.id == app_id
+	return currentApp
 
 Creator.getAppDashboard = (app_id)->
 	app = Creator.getApp(app_id)
@@ -296,7 +297,7 @@ Creator.getAppMenuUrl = (menu)->
 		return menu.path
 
 Creator.getAppMenus = (app_id)->
-	appMenus = Session.get("app_menus");
+	appMenus = Session.get("_app_menus") || Session.get("app_menus");
 	unless appMenus
 		return []
 	curentAppMenus = appMenus.find (menuItem) ->
@@ -315,7 +316,7 @@ Creator.loadAppsMenus = ()->
 		success: (data)->
 			Session.set("app_menus", data);
 	 }
-	Steedos.authRequest "/service/api/apps/menus", options
+	Steedos?.authRequest "/service/api/apps/menus", options
 
 Creator.creatorAppsSelector = (apps, assigned_apps) ->
 	adminApp = undefined

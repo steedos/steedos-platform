@@ -17,6 +17,12 @@ Steedos.subs["flow_main_attach_template"] = new SubsManager
 
 Steedos.subs["instance_traces"] = new SubsManager
 
+Steedos.subscribeInstanceFlow = (space, flowId)->
+	Steedos.subs["Instance"].subscribe("instance_flow", space, flowId)
+
+Steedos.subscribeInstanceForm = (space, formId)->
+	Steedos.subs["Instance"].subscribe("instance_form", space, formId)
+
 Steedos.subscribeFlowVersion = (space, flowId, flow_version)->
 	Steedos.subs["Instance"].subscribe("flow_version", space, flowId , flow_version)
 
@@ -24,6 +30,8 @@ Steedos.subscribeFormVersion = (space, formId, form_version)->
 	Steedos.subs["Instance"].subscribe("form_version", space, formId , form_version)
 
 Steedos.subscribeInstance = (instance)->
+	Steedos.subscribeInstanceFlow(instance.space, instance.flow)
+	Steedos.subscribeInstanceForm(instance.space, instance.form)
 	Steedos.subscribeFlowVersion(instance.space, instance.flow, instance.flow_version)
 	Steedos.subscribeFormVersion(instance.space, instance.form, instance.form_version)
 	Steedos.subs["instance_data"].subscribe("instance_data", instance._id, Session.get("box"))
@@ -34,13 +42,15 @@ Steedos.subscribeInstance = (instance)->
 		Steedos.subs["Instance"].subscribe("cfs_instances", instance.distribute_from_instances)
 
 Meteor.startup ()->
-	Tracker.autorun (c) ->
-		if Meteor.userId() and Steedos.spaceId()
-			Steedos.subs["instances_draft"].clear()
-			Steedos.subs["instances_draft"].subscribe "instances_draft", Steedos.spaceId()
+	# Tracker.autorun (c) ->
+	# 	if Meteor.userId() and Steedos.spaceId()
+	# 		Steedos.subs["instances_draft"].clear()
+	# 		Steedos.subs["instances_draft"].subscribe "instances_draft", Steedos.spaceId()
 
 	Tracker.autorun (c)->
 		instanceId = Session.get("instanceId")
+		Steedos.subs["instance_data"].clear()
+		# console.log("Tracker.autorun instanceId====", instanceId)
 		#	Steedos.instanceSpace.clear(); # 清理已订阅数据
 		if instanceId
 			Steedos.subs["Instance"].subscribe("cfs_instances", [instanceId])
@@ -86,10 +96,10 @@ Meteor.startup ()->
 
 		Steedos.subsSpace.clear();
 		if spaceId
-			Steedos.subsSpace.subscribe("categories", spaceId)
-			Steedos.subsSpace.subscribe("forms", spaceId)
-			Steedos.subsSpace.subscribe("flows", spaceId)
-			Steedos.subs["InstanceInbox"].subscribe("my_inbox_flow_instances_count", spaceId);
+			# Steedos.subsSpace.subscribe("categories", spaceId)
+			# Steedos.subsSpace.subscribe("forms", spaceId)
+			# Steedos.subsSpace.subscribe("flows", spaceId)
+			# Steedos.subs["InstanceInbox"].subscribe("my_inbox_flow_instances_count", spaceId);
 
 			Steedos.subsSpace.subscribe("space_user_signs", spaceId);
 
@@ -103,9 +113,9 @@ Meteor.startup ()->
 		if space_id
 			Steedos.subsForwardRelated.subscribe("my_space_user", space_id);
 			Steedos.subsForwardRelated.subscribe("my_organizations", space_id);
-			Steedos.subsForwardRelated.subscribe("categories", space_id);
-			Steedos.subsForwardRelated.subscribe("forms", space_id);
-			Steedos.subsForwardRelated.subscribe("flows", space_id);
+			# Steedos.subsForwardRelated.subscribe("categories", space_id);
+			# Steedos.subsForwardRelated.subscribe("forms", space_id);
+			# Steedos.subsForwardRelated.subscribe("flows", space_id);
 		if distribute_optional_flows
 			Steedos.subsForwardRelated.subscribe("distribute_optional_flows", distribute_optional_flows);
 

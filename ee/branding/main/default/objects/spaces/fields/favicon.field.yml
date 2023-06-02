@@ -1,6 +1,0 @@
-# 后续用于自定义浏览器图标
-name: favicon
-label: Favicon
-type: avatar
-hidden: true
-group: branding

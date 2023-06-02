@@ -145,6 +145,9 @@ module.exports = {
             setObj.name = uuflowManager.getInstanceName(instance, setObj.values);
         }
 
+        // 计算extras
+        setObj.extras = uuflowManager.caculateExtras(setObj.values, form, instance.form_version);
+
         db.instances.update({
             _id: ins_id,
             "traces._id": trace_id

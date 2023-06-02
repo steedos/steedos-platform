@@ -29,6 +29,16 @@ workflowSpaceRoutes = FlowRouter.group
 	prefix: '/workflow/space/:spaceId',
 	name: 'workflowSpace',
 	triggersEnter: [checkUserSigned, (context, redirect)->
+		appId = Session.get("app_id") || 'workflow'
+		if context.params.instanceId && context.route.path != "/workflow/space/:spaceId/print/:instanceId"
+			return redirect('/app/'+appId+'/instances/view/' + context.params.instanceId + '?' + context.context.querystring)
+		else
+			if context.params.box
+				if context.params.box == 'inbox' ||  context.params.box == 'outbox'
+					return redirect('/app/'+appId+'/instance_tasks/grid/' + context.params.box + '?' + context.context.querystring)
+				else if context.route.path != "/workflow/space/:spaceId/print/:instanceId"
+					return redirect('/app/'+appId+'/instances/grid/' + context.params.box + '?' + context.context.querystring)
+		
 		# 申请单界面直接刷新或从首页直接进入申请单时未高亮选中”审批“为当前对象
 		# 这里加Meteor.defer是因为从其他对象记录详细界面直接进入申请单界面（比如在任务详细界面点击顶部搜索栏最近查看中的某个申请单）的时候会有问题
 		# 问题是会多发出一次错误的请求，请求了原来的view详细界面所属的record_id且请求的对象变成了instances，所以会报错404
@@ -84,7 +94,9 @@ workflowSpaceRoutes.route '/print/:instanceId',
 
 workflowSpaceRoutes.route '/:box/',
 	action: (params, queryParams)->
-		Steedos.setSpaceId(params.spaceId)
+		Steedos.setSpaceId(params.spaceId);
+
+		return FlowRouter.go('/app/new_flow/instances/grid/' + params.box)
 
 		last_box = Session.get("box")
 

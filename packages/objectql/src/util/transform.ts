@@ -170,62 +170,47 @@ export function generateActionParams(when: string, context: SteedosTriggerContex
         case 'beforeFind':
             params.isBefore = true;
             params.isFind = true;
-            params.when = when;
-            break;
-        case 'beforeAggregate':
-            params.isBefore = true;
-            params.when = when;
             break;
         case 'beforeInsert':
             params.isBefore = true;
             params.isInsert = true;
-            params.when = when;
             params.size = 1;
             break;
         case 'beforeUpdate':
             params.isBefore = true;
             params.isUpdate = true;
-            params.when = when;
             params.size = 1;
             break;
         case 'beforeDelete':
             params.isBefore = true;
             params.isDelete = true;
-            params.when = when;
             params.size = 1;
             break;
         case 'afterFind':
             params.isAfter = true;
             params.isFind = true;
-            params.when = when;
-            break;
-        case 'afterAggregate':
-            params.isAfter = true;
-            params.when = when;
             break;
         case 'afterCount':
             params.isAfter = true;
-            params.when = when;
+            params.isCount = true;
             break;
         case 'afterFindOne':
             params.isAfter = true;
-            params.when = when;
+            params.isFindOne = true;
             break;
         case 'afterInsert':
             params.isAfter = true;
             params.isInsert = true;
-            params.when = when;
             params.size = 1;
             break;
         case 'afterUpdate':
             params.isAfter = true;
-            params.when = when;
+            params.isUpdate = true;
             params.size = 1;
             break;
         case 'afterDelete':
             params.isAfter = true;
             params.isDelete = true;
-            params.when = when;
             params.size = 1;
             break;
         default:

@@ -238,7 +238,10 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authenticate(ctx, route, req, res) {
+		async authenticate(ctx, route, req, res, alias) {
+			if(alias.authentication === false){
+				return null;
+			}
 			let user = await steedosAuth.auth(req, res);
 			if (user && user.userId) {
 				return user;
@@ -255,7 +258,10 @@ module.exports = {
 		 * @param {IncomingRequest} req
 		 * @returns {Promise}
 		 */
-		async authorize(ctx, route, req, res) {
+		async authorize(ctx, route, req, res, alias) {
+			if(alias.authorization === false){
+				return ;
+			}
 			// Get the authenticated user.
 			const user = ctx.meta.user;
 
@@ -690,8 +696,26 @@ module.exports = {
 					typeDefs.push(str);
 				}
 
-				return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
+				try {
+					return this.makeExecutableSchema({ typeDefs, resolvers, schemaDirectives });
+				} catch (error) {
+					this.logger.error(error);
+					return this.graphqlSchema
+				}
 			} catch (err) {
+				// 用于调试异常GraphQL schema
+				// const fs = require('fs');
+				// // 写入的文件路径
+				// const filePath = `UNABLE_COMPILE_GRAPHQL_SCHEMA.${new Date().getTime()}.txt`;
+				// // 使用fs.writeFile方法写入文件
+				// fs.writeFile(filePath, str, (err) => {
+				// 	if (err) {
+				// 		console.error(err);
+				// 		return;
+				// 	}
+				// 	console.log('文件已写入');
+				// });
+
 				throw new MoleculerServerError(
 					"Unable to compile GraphQL schema",
 					500,

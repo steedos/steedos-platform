@@ -53,9 +53,9 @@ fields:
         value: percent
       - label: Password
         value: password
-      - label: Lookup
+      - label: Lookup Relationship
         value: lookup
-      - label: Master Detail
+      - label: Master-Detail Relationship
         value: master_detail
       - label: Autonumber
         value: autonumber
@@ -72,6 +72,10 @@ fields:
       - label: Roll-Up Summary
         value: summary
     description: 
+  language:
+    label: Language
+    help: 
+    description: 
   defaultValue:
     label: Default Value
     help: 
@@ -84,10 +88,14 @@ fields:
     label: Reference to
     help: 
     description: 
-  # reference_to_field:
-  #   label: Reference to field
-  #   help: 
-  #   description: 
+  depend_on:
+    label: Dependent Fields
+    help: If the value of the dependent field changes, the option value of the current field will also change accordingly。
+    description: 
+  reference_to_field:
+    label: Reference to field
+    help: The value of the associated object saved to the current object field; For example, after object A is associated with object B, when A1 record is associated with B1 record, B1 record will be stored by default_ Save the ID in the A1 record. If the foreign key field is modified, the 'foreign key field' will be replaced_ Store the ID in the A1 record.
+    description: The default is the primary key, and the default value is _id.
   filtersFunction:
     label: filters Function
     help: 

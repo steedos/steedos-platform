@@ -6,6 +6,7 @@ const core = require('@steedos/core');
 const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
+const triggerYmlLoader = require('./lib').triggerYmlLoader;
 const path = require('path');
 const _ = require('lodash');
 const express = require('express');
@@ -19,6 +20,8 @@ const loadFlowFile = new metaDataCore.LoadFlowFile();
 
 module.exports = {
     name: "service-package-loader",
+    
+    triggerLoader,
 
     /**
      * Settings
@@ -166,6 +169,7 @@ module.exports = {
             await objectql.addAllConfigFiles(packagePath, datasourceName, name);
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
+            await triggerYmlLoader.load(this.broker, packagePath, name);
             core.loadClientScripts();
             let routersData = objectql.loadRouters(packagePath);
             let oldRoutersInfo = await this.broker.call(`@steedos/service-packages.getPackageRoutersInfo`, {packageName: name})
@@ -306,7 +310,14 @@ module.exports = {
 
     merged(schema) {
         schema.packageName = schema.name;
-        schema.name = `~packages-${schema.name}`;
+        if(!schema.metadata || !schema.metadata.$package){
+            schema.name = `~packages-${schema.name}`;
+        }
+
+        schema.settings.packageInfo = {
+            ...schema.settings.packageInfo,
+            ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {})
+        }
     },
 
     /**
@@ -348,7 +359,7 @@ module.exports = {
             nodeID: this.broker.nodeID,
             instanceID: this.broker.instanceID
         }] }); //${this.broker.nodeID}.${this.name}
-        
+        this.broker.broadcast('metadata.object_triggers.change', {})
         this.broker.broadcastLocal("@steedos/service-packages.offline", {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
 
         console.log(`service ${this.name} stopped`);

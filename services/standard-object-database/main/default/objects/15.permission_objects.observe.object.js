@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-22 10:32:01
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-05-13 17:09:31
  * @Description: 
  */
 const objectql = require("@steedos/objectql");
@@ -38,6 +38,9 @@ Meteor.startup(function () {
         }
     }).observe({
         added: function (newDocument) {
+            if (newDocument.copy_from) { // 通过复制简档创建的对象权限，不需要重置字段权限
+                return;
+            }
             if (inited) {
                 return _change(newDocument);
             }

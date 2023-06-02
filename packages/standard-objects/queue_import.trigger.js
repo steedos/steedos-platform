@@ -38,7 +38,8 @@ module.exports = {
                 const download = TAPi18n.__('queue_import_download', {returnObjects: true}, locale);
                 Object.assign(this.data.values, { 
                     // template_url: `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)})` 
-                    template_url: `<a href="${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)}" target="_self">${download}</a>`
+                    // template_url: `<a href="${objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)}" target="_self">${download}</a>`
+                    template_url: objectql.absoluteUrl(`/api/data/download/template/${this.data.values._id}`)
                 })
             }
         } catch (error) {
@@ -53,7 +54,8 @@ module.exports = {
             for (const value of this.data.values) {
                 if (value) {
                     // value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
-                    value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
+                    // value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
+                    value.template_url = objectql.absoluteUrl(`/api/data/download/template/${value._id}`)
                 }
             }
         }
@@ -66,7 +68,8 @@ module.exports = {
             for (const value of this.data.values) {
                 if (value) {
                     // value.template_url = `[${download}](${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)})`
-                    value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
+                    // value.template_url = `<a href="${objectql.absoluteUrl(`/api/data/download/template/${value._id}`)}" target="_self">${download}</a>`
+                    value.template_url = objectql.absoluteUrl(`/api/data/download/template/${value._id}`)
                 }
             }
         }

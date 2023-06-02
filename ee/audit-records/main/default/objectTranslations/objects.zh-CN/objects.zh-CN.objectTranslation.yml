@@ -1,6 +1,0 @@
-name: objects
-fields:
-  enable_audit:
-    label: 记录字段历史
-    help:
-    description:

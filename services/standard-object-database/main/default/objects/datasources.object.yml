@@ -82,6 +82,15 @@ fields:
   is_enable:
     type: boolean
     label: Enable
+  record_permissions: 
+    type: object
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 list_views:
   all:
     columns:
@@ -89,6 +98,7 @@ list_views:
       - name
       - is_enable
       - driver
+      - is_system
     label: All
     filter_scope: space
 actions:

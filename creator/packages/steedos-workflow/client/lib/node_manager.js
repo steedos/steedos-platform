@@ -279,9 +279,9 @@ NodeManager.vbsEditFile = function(download_dir, filename, arg) {
 		var states = fs.statSync(filePath);
 
 		// 上传前切换到当前编辑的申请单
-		var instance_url = "/workflow/space/" + Session.get('attach_space_id') + "/" + Session.get('attach_box') + "/" + Session.get('attach_instance_id');
+		// var instance_url = "/workflow/space/" + Session.get('attach_space_id') + "/" + Session.get('attach_box') + "/" + Session.get('attach_instance_id');
 
-		FlowRouter.go(instance_url);
+		// FlowRouter.go(instance_url);
 
 		globalWin.disableClose = false;
 

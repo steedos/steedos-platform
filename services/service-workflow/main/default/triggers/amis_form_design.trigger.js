@@ -358,8 +358,7 @@ function transformFormFields(amisField) {
             formFieldsItem.type = 'input'
             break
         case 'select':
-			//select类型如果有source 说明为旧表单的odata字段
-			if(amisField?.source){
+			if(amisField && amisField.source){
 				formFieldsItem.type = 'odata'
 		  		formFieldsItem.description = amisField.description
 		  		formFieldsItem.detail_url = amisField.detail_url

@@ -224,7 +224,7 @@ actions:
                             "extractValue": false,
                             "valueField": "version_id",
                             "receiver": {
-                                "url": "${context.rootUrl}/s3",
+                                "url": "${context.rootUrl}/s3/",
                                 "headers": {
                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                 },

@@ -2,3 +2,4 @@ name: submit_date
 label: 提交时间
 type: datetime
 sort_no: 320
+sortable: true

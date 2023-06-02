@@ -1,36 +1,57 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2022-06-12 19:08:48
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-04-24 13:09:55
+ * @Description: 加载*.trigger.js文件注册为新版action trigger
+ */
 import * as _ from "underscore";
 import * as path from "path";
-import * as objectql from "@steedos/objectql";
-import { getMD5, JSONStringify, _TRIGGERKEYS } from "@steedos/objectql";
-import { Action, Meta, Trigger, TriggerData } from "./types";
-import { Context } from 'moleculer';
+import { getMD5, JSONStringify, TriggerActionParams, SteedosTriggerContextConfig, loadObjectTriggers, getObject } from "@steedos/objectql";
+
+const TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterInsert', 'afterUpdate', 'afterDelete', 'afterFindOne', 'afterCount']
 
 export async function load(broker: any, packagePath: string, packageServiceName: string) {
     let actions = {};
     let serviceName = `~triggers-${packageServiceName}`;
     let filePath = path.join(packagePath, "**");
-    let objTriggers = objectql.loadObjectTriggers(filePath, packageServiceName);
+    let objTriggers = loadObjectTriggers(filePath, packageServiceName);
     if (_.isEmpty(objTriggers)) {
         return;
     }
-    for (const ot of objTriggers) {
-        if (_.has(ot, 'handler')) { // 新trigger格式
-
-            if (_.isString(ot.when)) {
-                let action = generateAction(ot);
-                if (action) {
-                    actions[action.name] = action;
-                }
-            } else if (_.isArray(ot.when)) {
-                for (const w of ot.when) {
-                    let trigger = _.extend({}, ot, { when: w, name: undefined });
-                    let action = generateAction(trigger);
-                    if (action) {
-                        actions[action.name] = action;
-                    }
-                }
-            }
+    /** objTriggers格式
+    [
+        {
+            beforeInsert: [AsyncFunction: beforeInsert],
+            beforeUpdate: [AsyncFunction: beforeUpdate],
+            beforeDelete: [AsyncFunction: beforeDelete],
+            afterInsert: [AsyncFunction: afterInsert],
+            afterUpdate: [AsyncFunction: afterUpdate],
+            afterDelete: [AsyncFunction: afterDelete],
+            metadataServiceName: '~packages-my-steedos-package',
+            listenTo: 'company'
         }
+    ]
+     */
+    for (const trigger of objTriggers) {
+        // 转换为action trigger
+        /** action trigger 格式
+        spaceUsersBeforeUpdate: {
+            trigger: { 
+                listenTo: 'space_users', 
+                when: ['beforeInsert', 'beforeUpdate']
+            },
+            async handler(ctx) {
+                this.broker.logger.debug('spaceUsersBeforeUpdate', ctx)
+            }   
+        }
+         */
+        const actionTriggerName = getMD5(JSONStringify(trigger));
+        actions[actionTriggerName] = generateActionTrigger(trigger)
+    
+        broker.emit('trigger.loaded', {
+            objectName: trigger['listenTo']
+        })
     }
 
     let serviceConfig = {
@@ -42,67 +63,76 @@ export async function load(broker: any, packagePath: string, packageServiceName:
         await broker._restartService(service)
     }
 
-    await register(broker, actions, serviceName, packageServiceName);
 }
 
-function generateAction(trigger: Trigger): Action {
-    if (!_.contains(_TRIGGERKEYS, trigger.when)) {
-        console.warn(`invalid value ${trigger.when}, please check your trigger.`);
-        return;
+// 生成action trigger
+function generateActionTrigger(trigger) {
+    const when = [];
+    for (const key in trigger) {
+        if (Object.hasOwnProperty.call(trigger, key)) {
+            if (_.contains(TRIGGERKEYS, key)) {
+                when.push(key);
+            }
+        }
     }
-
-    let name = trigger.name || getMD5(JSONStringify(trigger));
-    let action: Action = {
+    const actionTrigger = {
         trigger: {
-            when: trigger.when,
             listenTo: trigger.listenTo,
-            name: name
+            when: when
         },
-        name: `${trigger.listenTo}.${name}`,
-        handler: function () { }
-    };
-    if (_.has(trigger, 'handler')) {
-        action.handler = async function (ctx: Context) {
-           return await trigger.handler.call(ctx.params, ctx);
-        }
-    }
+        async handler(ctx) {
+            // 调用trigger.js的处理函数
+            const {
+                isInsert, isUpdate, isDelete, isFind, isBefore, isAfter, isFindOne, isCount,
+                id, doc, previousDoc,
+                // size, 
+                userId, spaceId, objectName, query, data }: TriggerActionParams = ctx.params;
 
-    return action;
-}
+            const context: SteedosTriggerContextConfig = {
+                id,
+                userId,
+                spaceId,
+                doc,
+                previousDoc,
+                query,
+                data,
+                objectName
+            }
 
+            let when = ''
+            if (isBefore) {
+                if (isFind) {
+                    when = 'beforeFind'
+                } else if (isInsert) {
+                    when = 'beforeInsert'
+                } else if (isUpdate) {
+                    when = 'beforeUpdate'
+                } else if (isDelete) {
+                    when = 'beforeDelete'
+                }
+            }
+            else if (isAfter) {
+                if (isFind) {
+                    when = 'afterFind'
+                } else if (isInsert) {
+                    when = 'afterInsert'
+                } else if (isUpdate) {
+                    when = 'afterUpdate'
+                } else if (isDelete) {
+                    when = 'afterDelete'
+                } else if (isFindOne) {
+                    when = 'afterFindOne'
+                } else if (isCount) {
+                    when = 'afterCount'
+                }
+            }
 
-async function register(broker: any, actions: object, serviceName: string, packageServiceName: string) {
-    for (const key in actions) {
-        if (Object.hasOwnProperty.call(actions, key)) {
-            let action = actions[key];
-            let data = generateAddData(action);
-            let meta = generateAddMeta(broker, serviceName, packageServiceName);
-            await broker.call('triggers.add', { data: data }, { meta: meta });
-        }
-    }
-}
-
-
-function generateAddData(action: Action): TriggerData {
-    let data = {
-        name: action.trigger.name,
-        listenTo: action.trigger.listenTo,
-        when: action.trigger.when,
-        action: action.name
-    };
-    return data;
-}
-
-
-function generateAddMeta(broker: any, serviceName: string, packageServiceName: string): Meta {
-    let meta = {
-        metadataServiceName: packageServiceName,
-        caller: {
-            nodeID: broker.nodeID + '',
-            service: {
-                name: serviceName
+            if (when) {
+                const object = getObject(objectName);
+                await object.runTriggers(when, context);
+                return context;
             }
         }
     };
-    return meta;
+    return actionTrigger;
 }

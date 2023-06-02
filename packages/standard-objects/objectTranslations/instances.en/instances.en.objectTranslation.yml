@@ -137,6 +137,10 @@ fields:
     label: Auto Submit if Time Out
     help: 
     description: 
+  current_step_name:
+    label: Current Step Name
+    help: 
+    description: 
   applicant_company:
     label: Applicant's Division
     help: 

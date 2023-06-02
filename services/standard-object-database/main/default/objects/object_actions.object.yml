@@ -76,6 +76,7 @@ fields:
   type: 
     type: select
     sort_no: 170
+    hidden: true
     options:
       - label: Custom JavaScript
         value: script
@@ -89,16 +90,16 @@ fields:
   #   reference_to: word_templates
   #   visible_on: "{{formData.type === 'word-print' ? true: false}}"
   #   create: false
-  todo:
-    label: Execute Script
-    sort_no: 180
-    type: code
-    language: javascript
-    required: "{{formData.type != 'amis_button' ? true: false}}"
-    # omit: true
-    # hidden: true
-    is_wide: true
-    visible_on: "{{formData.type != 'amis_button' ? true: false}}"
+  # todo:
+  #   label: Execute Script
+  #   sort_no: 180
+  #   type: code
+  #   language: javascript
+  #   required: "{{formData.type != 'amis_button' ? true: false}}"
+  #   # omit: true
+  #   # hidden: true
+  #   is_wide: true
+  #   visible_on: "{{formData.type != 'amis_button' ? true: false}}"
   amis_schema: 
     label: Amis Schema
     sort_no: 180
@@ -108,6 +109,11 @@ fields:
     is_wide: true
     hidden: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+form:
+  initialValues: !!js/function |
+    function(){
+      return {type: 'amis_button'}
+    }
 paging:
   enabled: false
 actions: 

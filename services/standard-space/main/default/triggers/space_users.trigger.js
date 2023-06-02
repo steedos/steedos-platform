@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-19 13:08:34
+ * @LastEditTime: 2023-05-06 16:57:42
  * @Description: 
  */
 "use strict";
@@ -77,53 +77,113 @@ async function insertVaildate(doc) {
     } else {
         const steedosConfig = getSteedosConfig();
         const config = steedosConfig.accounts || {};
-        if (!doc.email && !doc.mobile) {
+        let email = doc.email;
+        let mobile = await decrypValue(doc.mobile);
+
+        if (!email && !mobile) {
             // throw new Error("contact_need_phone_or_email");
         }
-        if (doc.email) {
-            if (!validator.isEmail(doc.email)) {
+        if (email) {
+            if (!validator.isEmail(email)) {
                 throw new Error("email_format_error");
             }
         }
 
-        if (doc.mobile) {
-            if (!checkMobile(doc.mobile, config)) {
+        if (mobile) {
+            if (!checkMobile(mobile, config)) {
                 throw new Error("mobile_format_error");
             }
         }
 
         // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
-        selector = [];
-        if (doc.email) {
-            selector.push(["email", '=', doc.email]);
-        }
+        // selector = [];
+        // if (email) {
+        //     selector.push(["email", '=', email]);
+        // }
 
-        if (doc.mobile) {
-            if (selector.length > 0) {
-                selector.push('or');
+        // if (mobile) {
+        //     if (selector.length > 0) {
+        //         selector.push('or');
+        //     }
+        //     selector.push(["mobile", '=', mobile]);
+        // }
+        // if (doc.username) {
+        //     if (selector.length > 0) {
+        //         selector.push('or');
+        //     }
+        //     selector.push(["username", '=', doc.username]);
+        // }
+        // if (selector.length > 0) {
+        //     userCount = await userObj.count({
+        //         filters: selector
+        //     });
+
+        //     if (userCount > 0) {
+        //         throw new Error("space_users_error_user_exists");
+        //     }
+        //     spaceUserCount = await suObj.count({
+        //         filters: [
+        //             ['space', '=', doc.space],
+        //             selector
+        //         ]
+        //     });
+        // }
+
+        // 当mobile字段为加密后的值时，作为查询条件时，meteorMongo.ts中formatFiltersToMongoQuery的createFilter会报错，所以这里使用db.users.find
+        // 检验手机号和邮箱是不是指向同一个用户(只有手机和邮箱都填写的时候才需要校验)
+        selector = [];
+        if (email) {
+            selector.push({
+                "email": email
+            });
+        }
+        if (mobile) {
+            let selectorMobile = {
+                "mobile": mobile
             }
-            selector.push(["mobile", '=', doc.mobile]);
+            const objFields = await getObject('space_users').getFields();
+            if (objFields.mobile && objFields.mobile.enable_encryption) {
+                selectorMobile.mobile = await encrypValue(mobile);
+            }
+            selector.push(selectorMobile);
         }
         if (doc.username) {
-            if (selector.length > 0) {
-                selector.push('or');
-            }
-            selector.push(["username", '=', doc.username]);
+            selector.push({
+                "username": doc.username
+            });
         }
         if (selector.length > 0) {
-            userCount = await userObj.count({
-                filters: selector
-            });
+            userCount = await new Promise((resolve, reject) => {
+                Fiber(function () {
+                    try {
+                        resolve(db.users.find({
+                            $or: selector
+                        }).count())
+                    } catch (error) {
+                        reject(error)
+                    }
+                }).run()
+            })
 
             if (userCount > 0) {
                 throw new Error("space_users_error_user_exists");
             }
-            spaceUserCount = await suObj.count({
-                filters: [
-                    ['space', '=', doc.space],
-                    selector
-                ]
-            });
+            spaceUserCount = await new Promise((resolve, reject) => {
+                Fiber(function () {
+                    try {
+                        resolve(db.space_users.find({
+                            space: doc.space,
+                            $or: selector
+                        }, {
+                            fields: {
+                                _id: 1
+                            }
+                        }).count())
+                    } catch (error) {
+                        reject(error)
+                    }
+                }).run()
+            })
         }
 
     }
@@ -150,11 +210,12 @@ async function updatevaildate(suDoc, doc) {
             throw new Error("email_format_error");
         }
     }
+    let mobile = await decrypValue(doc.mobile);
 
-    if (doc && doc.mobile) {
+    if (doc && mobile) {
         const steedosConfig = getSteedosConfig();
         const config = steedosConfig.accounts || {};
-        if (!checkMobile(doc.mobile, config)) {
+        if (!checkMobile(mobile, config)) {
             throw new Error("mobile_format_error");
         }
     }
@@ -187,12 +248,23 @@ async function updatevaildate(suDoc, doc) {
             throw new Error("space_users_error_email_already_existed");
         }
     }
-    if (((ref8 = doc) != null ? ref8.mobile : void 0) && doc.mobile !== suDoc.mobile) {
-        const mobileUser = (await userObj.find({
-            filters: [
-                ['mobile', '=', doc.mobile]
-            ]
-        }))[0];
+    if (((ref8 = doc) != null ? ref8.mobile : void 0) && mobile !== suDoc.mobile) {
+        let selectorMobile = {
+            mobile: mobile
+        }
+        const objFields = await getObject('space_users').getFields();
+        if (objFields.mobile && objFields.mobile.enable_encryption) {
+            selectorMobile.mobile = await encrypValue(mobile);
+        }
+        const mobileUser = await new Promise((resolve, reject) => {
+            Fiber(function () {
+                try {
+                    resolve(db.users.findOne(selectorMobile))
+                } catch (error) {
+                    reject(error)
+                }
+            }).run()
+        })
         if (mobileUser && mobileUser._id !== suDoc.user) {
             throw new Error("space_users_error_phone_already_existed");
         }
@@ -217,6 +289,24 @@ async function encryptFields(doc) {
         }
     }
 
+}
+
+// 加密
+async function encrypValue(value) {
+    if (value && !value.buffer && !value.sub_type) {
+        const datasource = getDataSource('default');
+        return await datasource.adapter.encryptValue(value);
+    }
+    return value
+}
+
+// 解密
+async function decrypValue(value) {
+    if (value && value.buffer && value.sub_type) {
+        const datasource = getDataSource('default');
+        return await datasource.adapter.decryptValue(value);
+    }
+    return value
 }
 
 async function vaildateUserUsedByOther(doc) {
@@ -393,7 +483,6 @@ module.exports = {
                 doc.company_id = organization.company_id;
             }
         }
-        await encryptFields(doc);
     },
 
     beforeUpdate: async function () {
@@ -451,7 +540,9 @@ module.exports = {
                 }
             }
         }
-        newMobile = doc.mobile;
+        newMobile = await decrypValue(doc.mobile);
+
+
         if (newMobile !== suDoc.mobile) {
 
             if (newMobile) {

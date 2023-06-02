@@ -129,6 +129,7 @@
             const masterObject = Creator.getObject(FlowRouter.getParam("object_name"))
             const object = Creator.getObject(objectApiName)
             const idFieldName = masterObject.idFieldName;
+            relatedKeyRefToField = object.fields[relatedKey].reference_to_field || idFieldName || '_id';
             return {
                 render_engine: 'amis',
                 name: 'steedosRelatedListPage',
@@ -142,7 +143,7 @@
                             api.data = {
                                 query: \`{
                                     data: ${masterObject.name}(filters:["${idFieldName}", "=", "${FlowRouter.getParam("record_id")}"]){
-                                        ${idFieldName}
+                                        ${idFieldName === relatedKeyRefToField ? idFieldName : idFieldName+','+relatedKeyRefToField},
                                         ${masterObject.NAME_FIELD_KEY},
                                         recordPermissions: _permissions{
                                             allowCreate,
@@ -177,6 +178,15 @@
                             if(payload.data.data){
                                 var data = payload.data.data[0];
                                 payload.data = data;
+                                payload.data._master = {
+                                    objectName: "${masterObject.name}",
+                                    recordId: data["${idFieldName}"],
+                                    record: {
+                                        "${idFieldName}": data["${idFieldName}"], 
+                                        "${masterObject.NAME_FIELD_KEY}": data["${masterObject.NAME_FIELD_KEY}"], 
+                                        "${relatedKeyRefToField}": data["${relatedKeyRefToField}"]
+                                    }
+                                };
                             }
                             payload.data.$breadcrumb = [
                                 {
@@ -801,7 +811,13 @@
     }
 
     Steedos.Page.Header.render = function(appId, tabId){
-        let app = _.find(Session.get('app_menus'), {id: appId}) || {}
+
+        const defApps = Session.get('app_menus'); //触发 autorun
+
+        const apps = Tracker.nonreactive(()=>{
+            return Session.get('_app_menus') || defApps || []
+        })
+        let app = _.find(apps, {id: appId}) || {}
         if(_.isEmpty(app)){
             return ;
         }
@@ -854,7 +870,17 @@
                       "type": "steedos-global-header",
                       "logoSrc": logoSrc
                     },
-                  ]
+                  ],
+                onEvent: {
+                    "@appsLoaded": {
+                        "actions": [
+                            {
+                              "actionType": "custom",
+                              "script": "Session.set('_app_menus', event.data.apps)"
+                            }
+                          ]
+                    }
+                }
               }
         }
     }
@@ -899,11 +925,6 @@
                 "body": [
                     {
                         "type": "steedos-global-Footer",
-                        overflow: {
-                            enable: false,
-                            maxVisibleCount: 4,
-                            overflowPopoverClassName: "footer-popup"
-                        },
                         "id": "u:77851eb4aa89",
                         "appId": "${app.id}"
                     },

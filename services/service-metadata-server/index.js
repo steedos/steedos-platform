@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:03
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-05-14 13:26:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-04-21 17:11:38
  * @Description: 
  */
 
@@ -24,6 +24,7 @@ const restrictionRulesService = require('./lib/restrictionRulesService');
 const permissionFieldsService = require('./lib/permissionFieldsService');
 const processService = require('./lib/processService');
 const processTriggerService = require('./lib/processTriggerService');
+const objectTriggerService = require('./lib/objectTriggerService');
 
 module.exports = {
 	name: "metadata-server",
@@ -49,6 +50,7 @@ module.exports = {
     this.broker.createService(permissionFieldsService);
     this.broker.createService(processService);
     this.broker.createService(processTriggerService);
+    this.broker.createService(objectTriggerService);
   },
 
   async started() {

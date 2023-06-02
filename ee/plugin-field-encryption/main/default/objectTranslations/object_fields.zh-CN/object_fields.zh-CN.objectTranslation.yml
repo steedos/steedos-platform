@@ -1,6 +1,0 @@
-name: object_fields
-fields:
-  enable_encryption:
-    label: 加密
-    help:
-    description:

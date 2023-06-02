@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
+const serviceObjectGraphql = require('@steedos/service-object-graphql');
 module.exports = {
   name: "instance",
   actions: {
@@ -9,6 +10,8 @@ module.exports = {
           `
           #获取可选取的相关申请单列表
           instances__getRelatedInstances(
+            #过滤条件
+            filters: JSON,
             #按流程过滤
             flowId: String,
             #按状态过滤 
@@ -26,13 +29,17 @@ module.exports = {
       async handler(ctx) {
         const userSession = ctx.meta.user;
         const { resolveInfo } = ctx.meta;
-        const { flowId, state, keywords , top , skip , sort} = ctx.params;
+        const { flowId, state, keywords , top , skip , sort, filters: userFilters} = ctx.params;
 
         const filters = await this.getRelatedFilters(flowId, state, keywords, userSession)
 
+        if(!_.isEmpty(userFilters)){
+            filters.push(userFilters);
+        }
+
         let fields = [];
 
-        const fieldNames = objectql.getGraphqlFields(resolveInfo);
+        const fieldNames = serviceObjectGraphql.getGraphqlFields(resolveInfo);
 
         if (!_.isEmpty(fieldNames)) {
             fields = fieldNames;
@@ -52,12 +59,15 @@ module.exports = {
     instances__getRelatedInstances__count: {
         graphql: {
             query:
-            " instances__getRelatedInstances__count(flowId: String, state: String, keywords: String): Int"
+            " instances__getRelatedInstances__count(flowId: String, state: String, keywords: String, filters: JSON): Int"
         },
         async handler(ctx) {
             const userSession = ctx.meta.user;
-            const { flowId, state, keywords } = ctx.params;
+            const { flowId, state, keywords, filters: userFilters } = ctx.params;
             const filters = await this.getRelatedFilters(flowId, state, keywords, userSession);
+            if(!_.isEmpty(userFilters)){
+                filters.push(userFilters);
+            }
             const query = {
                 filters: filters
             }
@@ -73,20 +83,13 @@ module.exports = {
     },
     getBoxFilters: {
         async handler(ctx){
-            const { box, flowId, userId } = ctx.params;
+            const { appId, box, flowId, userId, is_space_admin, spaceId } = ctx.params;
+            const categoriesIds = await this.getAppCategoriesIds(appId);
             const filter = [];
             switch (box) {
                 case 'inbox':
                     filter.push(['handler', '=', userId]);
                     filter.push(['is_finished', '=', false]);
-                    // task中未结束的就是 待办 , 无需其他查询
-                    filter.push([
-                        ['instance_state', 'in', ["pending", "completed"]], 
-                        'or', 
-                        [['instance_state', '=', 'draft'], [
-                            ['distribute_from_instance', '!=', null], 'or', ['forward_from_instance', '!=', null]
-                        ],]
-                    ]);
                     break;
                 case 'outbox':
                     filter.push(['handler', '=', userId]);
@@ -110,8 +113,16 @@ module.exports = {
                 case 'monitor':
                     filter.push(['state', 'in', ["pending", "completed"]]);
                     if(!is_space_admin){
-                        const flowIds = WorkflowManager.getMyAdminOrMonitorFlows();
-                        if(!flowId){
+                        const flowIds = await new Promise(function (resolve, reject) {
+                            Fiber(function () {
+                                try {
+                                    resolve(WorkflowManager.getMyAdminOrMonitorFlows(spaceId, userId));
+                                } catch (error) {
+                                    reject(error);
+                                }
+                            }).run()
+                        })
+                        if(flowId){
                             if(!_.includes(flowIds, flowId)){
                                 filter.push([
                                     ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId]
@@ -128,6 +139,16 @@ module.exports = {
                     filter.push(['instance_state', '=', 'none']);
                     break;
             }
+
+            if(categoriesIds && categoriesIds.length > 0){
+                const forms = await objectql.getObject('forms').directFind({filters: ['category', 'in', categoriesIds], fields: ['_id']});
+                if(forms.length > 0){
+                    filter.push(['form', 'in', _.map(forms, '_id')])
+                }else{
+                    filter.push(['form', 'in',  ['no']])
+                }
+            }
+
             return filter;
         }
     }
@@ -222,6 +243,12 @@ module.exports = {
                 });
             }
         }
-    }
+    },
+    getAppCategoriesIds: {
+        async handler(appId) {
+          const categories = await objectql.getObject('categories').directFind({ filters: [['app', '=', appId]] });
+          return _.map(categories, '_id');
+        }
+    },
   }
 };

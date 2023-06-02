@@ -81,7 +81,7 @@ export function getFileinfoByFilename(filename) {
         metadataName = TypeInfoKeys.Router;
         itemName = _.first(filename.split('.'));
 
-    }else if(filename.endsWith('.trigger.js')){
+    }else if(filename.endsWith('.trigger.yml')){
         metadataName = TypeInfoKeys.Trigger;
         itemName = _.first(filename.split('.'));
 
@@ -334,7 +334,9 @@ export function getMetadataTypeObjects(spaceId: string) {
     //TODO 从云端获取namespace
     const metadataObjects: any = [];
     const typeInfos = getMetadataTypeInfos();
+    console.log(`typeInfos`, typeInfos)
     const allowSyncMetadataKeys = getAllowSyncMetadataKeys();
+    console.log(`allowSyncMetadataKeys`, allowSyncMetadataKeys)
     _.each(typeInfos, function (info, metadataName) {
         if (!_.has(info, 'parent') && _.include(allowSyncMetadataKeys, metadataName)) {
             metadataObjects.push({

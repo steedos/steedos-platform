@@ -32,7 +32,7 @@ const addDelayLoadExtendObjectConfig = function (extend: string, config: Steedos
     delayLoadExtendObjectConfigQueue[extend].push(config);
 }
 
-const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
+export const addOriginalObjectConfigs = function(objectName: string, datasource: string, config: SteedosObjectTypeConfig){
     if(objectName === MONGO_BASE_OBJECT || objectName === SQL_BASE_OBJECT){
         return ;
     }

@@ -2,15 +2,18 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-21 15:00:07
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-02-16 09:50:09
+ * @LastEditTime: 2023-05-25 16:20:22
  * @Description: 
  */
 global.permissionManager = {};
 
-permissionManager.getFlowPermissions = function (flow_id, user_id) {
+permissionManager.getFlowPermissions = function (flow_id, user_id, flowDoc) {
+  if (process.env.STEEDOS_DEBUG) {
+    console.time('permissionManager.getFlowPermissions');
+  }
   var flow, my_permissions, org_ids, organizations, orgs_can_add, orgs_can_admin, orgs_can_monitor, space_id, users_can_add, users_can_admin, users_can_monitor;
   // 根据:flow_id查到对应的flow
-  flow = uuflowManager.getFlow(flow_id, { fields: { space: 1, perms: 1 } });
+  flow = flowDoc || uuflowManager.getFlow(flow_id, { fields: { space: 1, perms: 1 } });
   space_id = flow.space;
   // 根据space_id和:user_id到organizations表中查到用户所属所有的org_id（包括上级组ID）
   org_ids = new Array;
@@ -86,5 +89,8 @@ permissionManager.getFlowPermissions = function (flow_id, user_id) {
     }
   }
   my_permissions = _.uniq(my_permissions);
+  if (process.env.STEEDOS_DEBUG) {
+    console.timeEnd('permissionManager.getFlowPermissions');
+  }
   return my_permissions;
 };

@@ -9,3 +9,5 @@ options:
   - label: 已完成
     value: completed
 sort_no: 390
+hidden: false
+visible_on: "{{true}}"

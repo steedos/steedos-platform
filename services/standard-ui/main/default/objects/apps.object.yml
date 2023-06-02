@@ -63,6 +63,8 @@ fields:
     hidden: true
   tab_groups.$.group_name:
     type: text
+  tab_groups.$.default_open:
+    type: boolean
   tab_items:
     label: Tabs
     type: object
@@ -167,6 +169,7 @@ fields:
     label: Open with iframe
     defaultValue: false
     group: External Application
+    visible_on: "{{false}}"
   is_new_window:
     type: boolean
     label: Open in New Window

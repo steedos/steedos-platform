@@ -1,5 +1,5 @@
 metadataName: Trigger
-defaultDirectory: trigger
+defaultDirectory: triggers
 ext: trigger
 hasStandardMembers: true
 hasContent: false
@@ -9,3 +9,4 @@ isSourceTracked: true
 nameForMsgs: Custom Trigger
 nameForMsgsPlural: Custom Triggers
 deleteSupported: true
+tableName: object_triggers

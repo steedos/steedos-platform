@@ -143,7 +143,7 @@ getResponsiveButtons = (buttons, maxUnfoldedCount)->
 instanceButtonHelpers =
 	useAmisButton: ()->
 		# 分发目前正常, 无需使用amis button . this.code == 'distribute' || 
-		return this.code == 'distribute' || this.code == 'related' || this.code == 'forward'
+		return this.code == 'distribute' || this.code == 'related' || this.code == 'forward' || this.code == 'delete'
 	amisButton: ()->
 		return Creator.getObject("instances").actions["instance_" + this.code];
 	amisButtonClassName: ()->

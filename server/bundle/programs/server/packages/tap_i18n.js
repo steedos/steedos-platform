@@ -13,16 +13,16 @@ var HTTP = Package['cfs:http-methods'].HTTP;
 var Promise = Package.promise.Promise;
 
 /* Package-scope variables */
-var TAPi18n, __coffeescriptShare, language_names, TAPi18next;
+var TAPi18n;
 
 (function(){
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                    //
-// packages/tap_i18n/lib/globals.js                                                                                   //
-//                                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                      //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// packages/tap_i18n/lib/globals.js                                          //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+                                                                             //
 // The globals object will be accessible to the build plugin, the server and
 // the client
 
@@ -50,7 +50,7 @@ TAPi18n.getLanguage = function(){
 	console.log('TAPi18n.getLanguage');
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 

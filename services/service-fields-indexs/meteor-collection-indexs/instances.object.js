@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-10 11:59:22
+ * @LastEditTime: 2023-06-01 13:52:09
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -249,12 +249,75 @@ if (Meteor.isServer) {
   } catch (error) {
 
   }
+  try {
+    db.instances._ensureIndex({
+      "state": 1,
+      "form": 1,
+      "is_deleted": 1,
+      "space": 1
+    }, {});
+  } catch (error) {
+
+  }
 
   // 监控箱-用户
   try {
     db.instances._ensureIndex({
+      submitter: 1,
+      submit_date: -1,
+      form: 1,
+      state: 1,
+      is_deleted: 1,
+      space: 1
+    });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
+      applicant: 1,
+      submit_date: -1,
+      form: 1,
+      state: 1,
+      is_deleted: 1,
+      space: 1
+    });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
+      inbox_users: 1,
+      submit_date: -1,
+      form: 1,
+      state: 1,
+      is_deleted: 1,
+      space: 1
+    });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
+      outbox_users: 1,
+      submit_date: -1,
+      form: 1,
+      state: 1,
+      is_deleted: 1,
+      space: 1
+    });
+  } catch (error) {
+
+  }
+  try {
+    db.instances._ensureIndex({
       flow: 1,
-    }, { background: true });
+      submit_date: -1,
+      form: 1,
+      state: 1,
+      is_deleted: 1,
+      space: 1
+    });
   } catch (error) {
 
   }

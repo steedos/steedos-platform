@@ -446,7 +446,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        collection.update(selector, { $set: data });
+                        collection.update(selector, { $set: data }, { validate: false, filter: false });
                         return collection.findOne(selector);
                     })
                     resolve(result);
@@ -470,7 +470,7 @@ export class SteedosMeteorMongoDriver implements SteedosDriver {
                         randomSeed: DDPCommon.makeRpcSeed()
                     })
                     let result = DDP._CurrentInvocation.withValue(invocation, function () {
-                        return collection.update(mongoFilters, { $set: data }, { multi: true });
+                        return collection.update(mongoFilters, { $set: data }, { multi: true, validate: false, filter: false });
                     })
                     resolve(result);
                 } catch (error) {

@@ -113,25 +113,25 @@ Meteor.publish('my_notifications', function(spaceId){
  * to: [userId]
  */
 Creator.addNotifications = function(message, from, to){
-
+    let notifications_ids = [];
     if(!_.isArray(to) && _.isString(to)){
         to = [to]
     }
 
     try {
-        sendNotifications(message, from, to);
+        notifications_ids = sendNotifications(message, from, to);
     } catch (error) {
         console.error("通知数据插入失败，错误信息：", error);
     }
 
     try {
-        sendPushs(message, from, to)
+        sendPushs(message, from, to, notifications_ids)
     } catch (error) {
         console.error("推送数据插入失败，错误信息：", error);
     }
 }
 
-function sendPushs(message, from, to){
+function sendPushs(message, from, to, notifications_ids){
     const appName = 'workflow'
     let now = new Date();
     let data = {
@@ -155,9 +155,10 @@ function sendPushs(message, from, to){
         data.badge = message.badge
     }
     
-    _.each(to, function(toUserId){
+    _.each(to, function(toUserId, index){
         if(toUserId){
             try {
+                data.payload.notifications_id = notifications_ids[index];
                 Push.send(Object.assign({}, data, {query: {"userId": toUserId,"appName": appName}}))
             } catch (error) {
                 console.error("推送数据插入失败，错误信息：", error);
@@ -173,6 +174,7 @@ function sendNotifications(message, from, to){
     let now = new Date();
     const collection = Creator.getCollection("notifications");
     let bulk = collection.rawCollection().initializeUnorderedBulkOp();
+    let notifications_ids = []
 
     let doc = Object.assign({
         created: now,
@@ -182,12 +184,15 @@ function sendNotifications(message, from, to){
     }, message)
 
     _.each(to, function(userId){
-        bulk.insert(Object.assign({}, doc, {_id: collection._makeNewID(), owner: userId}));
+        let notifications_id = collection._makeNewID();
+        bulk.insert(Object.assign({}, doc, {_id: notifications_id, owner: userId}));
+        notifications_ids.push(notifications_id)
     })
 
     bulk.execute().catch(function (error) {
         console.error("通知数据插入失败，错误信息：", error);
     });
+    return notifications_ids;
 }
 
 Creator.removeNotifications = function(doc, assignees, object_name){

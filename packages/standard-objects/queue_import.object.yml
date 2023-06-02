@@ -152,12 +152,26 @@ fields:
     filterable: true
   template_url:
     label: 导入模板
-    type: html
+    type: url
     hidden: false
     omit: false
     readonly: true
     disabled: true
     is_wide: true
+    # 为了区分crud内容的label与button的label，使用button-group把button包裹住
+    amis: 
+      "type": "button-group" 
+      "buttons":
+        - "type": "button"
+          "label": "下载"
+          "visibleOn": "${template_url}"
+          "level": "link"
+          "actionType": "download"
+          "api": 
+            "url": "${template_url}"
+            "method": "get"
+            "headers": 
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
 list_views:
   all:
     label: All Queues
@@ -189,5 +203,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-relatedList:
-  - queue_import_history

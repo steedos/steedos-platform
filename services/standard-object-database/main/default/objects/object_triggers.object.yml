@@ -1,94 +1,98 @@
 name: object_triggers
 icon: apex
 label: Object Triggers
+version: 2.0
 hidden: true
 fields:
-  name:
+  _name:
     type: text
-    label: Name
+    label: Api Name
     searchable: true
     index: true
     required: true
-  # label:
-  #   label: 显示名称
-  #   type: text
-  object:
+  name: 
+    data_type: text
+    type: text
+    visible_on: "{{false}}"
+  listenTo:
     label: Object
     type: master_detail
     reference_to: objects
     reference_to_field: name
     required: true
-  # on:
-  #   label: 运行于
-  #   type: lookup
-  #   required: true
-  #   optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  #     function () {
-  #             return [{
-  #               label: "客户端",
-  #               value: "client",
-  #               icon: "address"
-  #             }, {
-  #               label: "服务端",
-  #               value: "server",
-  #               icon: "address"
-  #             }];
-  #           }
   when:
     label: Execution Time Option
-    type: lookup
+    type: select
     required: true
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return [{
+    multiple: true
+    is_wide: true
+    options: [{
                 label: "新增记录之前",
-                value: "beforeInsert",
-                icon: "asset_relationship"
+                value: "beforeInsert"
               }, {
                 label: "新增记录之后",
-                value: "afterInsert",
-                icon: "asset_relationship"
+                value: "afterInsert"
               }, {
                 label: "修改记录之前",
-                value: "beforeUpdate",
-                icon: "asset_relationship"
+                value: "beforeUpdate"
               }, {
                 label: "修改记录之后",
-                value: "afterUpdate",
-                icon: "asset_relationship"
+                value: "afterUpdate"
               }, {
                 label: "删除记录之前",
-                value: "beforeDelete",
-                icon: "asset_relationship"
+                value: "beforeDelete"
               }, {
                 label: "删除记录之后",
-                value: "afterDelete",
-                icon: "asset_relationship"
+                value: "afterDelete"
               }, {
                 label: "查下记录之前",
-                value: "beforeFind",
-                icon: "asset_relationship"
-              }];
-            }
-  is_enable:
-    label: Enable
+                value: "beforeFind"
+              }]
+  isEnabled:
+    label: Enabled
     type: boolean
-  todo:
-    label: Execute Script  <a target="_blank" href="https://developer.steedos.com/developer/object_trigger">View Help</a>
-    type: textarea
-    required: true
+    defaultValue: true
+  handler:
+    label: Handler
+    type: code
+    language: javascript
     is_wide: true
+    required: true
+    defaultValue: |-
+      // _ : lodash
+      // moment: moment
+      // validator: validator
+      // ctx
+      // objects
+      // services
+    editorDidMount: |-
+      if(window._registerCompletionItemProviderTrigger){
+        return ;
+      }
+      window._registerCompletionItemProviderTrigger = true;
+      const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts", {async: false});
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        result
+      );
+  record_permissions: 
+    type: object
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 paging:
   enabled: false
 list_views:
   all:
     columns:
       - name
-      # - label
-      - object
-      # - 'on'
+      - listenTo
       - when
-      - is_enable
+      - isEnabled
+      - is_system
     label: All
     filter_scope: space
 permission_set:

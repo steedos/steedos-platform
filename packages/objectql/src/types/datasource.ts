@@ -30,7 +30,7 @@ import {
     SQL_BASE_OBJECT
 } from '.';
 import { SteedosDriverConfig } from '../driver';
-import { getObjectDispatcher, createObjectService, createDataSourceService } from '../services/index';
+import { createDataSourceService } from '../services/index';
 import path = require('path');
 import { transformListenersToTriggers, extend } from '../util';
 const clone = require('clone')
@@ -165,11 +165,6 @@ export class SteedosDataSourceType implements Dictionary {
 
     getObject(objectApiName: string): any{
         return this.getLocalObject(objectApiName);
-        // const localObject = this.getLocalObject(objectApiName);
-        // if(localObject){
-        //     return localObject;
-        // }
-        // return getObjectDispatcher(objectApiName)
     }
 
     getLocalObject(objectApiName: string) {
@@ -199,14 +194,17 @@ export class SteedosDataSourceType implements Dictionary {
         }
 
         this._objects[objectApiName] = object;
-        // await createObjectService(this._schema.metadataBroker, serviceName, objectConfig)
         return object;
     }
 
+    removeLocalObject(objectApiName: string) {
+        delete this._objectsConfig[objectApiName];
+        delete this._objects[objectApiName];
+        this.schema.removeObjectMap(objectApiName);
+    }
+
     removeObject(object_name: string){
-        delete this._objectsConfig[object_name];
-        delete this._objects[object_name];
-        this.schema.removeObjectMap(object_name);
+        this.removeLocalObject(object_name);
         this.schema.metadataRegister.removeObject(object_name)
     }
 
@@ -263,25 +261,25 @@ export class SteedosDataSourceType implements Dictionary {
             objectConfig.listeners = localObjectConfig.listeners;
             objectConfig.methods = localObjectConfig.methods;
         }
-        else {
-            if (this.name === "meteor" || this.name === "default") {
-                let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
-                let _baseObjectConfig = clone(baseObjectConfig);
-                delete _baseObjectConfig.hidden;
-                if(this.name === 'meteor'){
-                    _.each(_baseObjectConfig.listeners, function(license){
-                        const triggers = transformListenersToTriggers(objectConfig, license)
-                        extend(objectConfig, {triggers, _baseTriggers: triggers})
-                    })
-                }
-                objectConfig = extend(objectConfig, _baseObjectConfig, clone(objectConfig));
-            } else {
-                let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
-                let _coreObjectConfig = clone(coreObjectConfig)
-                delete _coreObjectConfig.hidden;
-                objectConfig = extend(objectConfig, _coreObjectConfig, clone(objectConfig));
-            }
-        }
+        // else {
+        //     if (this.name === "meteor" || this.name === "default") {
+        //         let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
+        //         let _baseObjectConfig = clone(baseObjectConfig);
+        //         delete _baseObjectConfig.hidden;
+        //         if(this.name === 'meteor'){
+        //             _.each(_baseObjectConfig.listeners, function(license){
+        //                 const triggers = transformListenersToTriggers(objectConfig, license)
+        //                 extend(objectConfig, {triggers, _baseTriggers: triggers})
+        //             })
+        //         }
+        //         objectConfig = extend(objectConfig, _baseObjectConfig, clone(objectConfig));
+        //     } else {
+        //         let coreObjectConfig = getObjectConfig(SQL_BASE_OBJECT);
+        //         let _coreObjectConfig = clone(coreObjectConfig)
+        //         delete _coreObjectConfig.hidden;
+        //         objectConfig = extend(objectConfig, _coreObjectConfig, clone(objectConfig));
+        //     }
+        // }
         if (this.name === "meteor") {
             try {
                 const _db = Creator.createCollection(objectConfig)
@@ -577,7 +575,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     async close() {
-        if (this._adapter.close) 
+        if (this._adapter?.close) 
             this._adapter.close()
     }
 

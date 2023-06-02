@@ -1,12 +1,12 @@
 <template name="instance_button">
 	<div class="instance-left-buttons flex">
 		{{#unless isMobile}}
-			<button type="button" class="btn btn-default btn-instance-back hidden">
+			<button type="button" class="btn btn-default btn-instance-back mr-1 px-1 py-0 -ml-1">
 				&nbsp;<i class="ion ion-android-arrow-back"></i>&nbsp;
 			</button>
 		{{/unless}}
 		{{#if enabled_submit}}
-			<div class="slds-button slds-button_brand slds-button--neutral slds-truncate btn-instance-submit">
+			<div class="slds-button slds-button_brand slds-button--neutral slds-truncate btn-instance-submit ml-2">
 				<a href="javascript:void(0);" title="{{_ 'Send'}}" class="">
 					<div class="record-edit-text slds-truncate" title="{{_ 'Send'}}">{{_ 'Send'}}</div>
 				</a>
@@ -32,7 +32,7 @@
 						{{> steedos_button className="slds-button_icon-border-filled" iconCategory="utility" iconName="down" variant="icon" title="显示更多"}}
 					</div>
 					<div class="dropdown-menu dropdown-menu-right crm-header-menu" role="menu">
-						<ul class="slds-dropdown__list slds-show">
+						<ul class="slds-dropdown__list slds-show mb-0">
 							{{#each foldedButtons}}
 								{{#if useAmisButton}}
 									{{> amis_action button=amisButton buttonClassName=amisButtonDropdownClassName data=amisButtonData }}

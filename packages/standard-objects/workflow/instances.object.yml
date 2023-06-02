@@ -13,6 +13,11 @@ fields:
     searchable: true
     is_wide: true
     name: name
+    amis:
+      className:
+        'color-priority-danger': "${extras && extras.priority == '特急'}"
+        'color-priority-warning': "${extras && extras.priority == '紧急'}"
+        'color-priority-muted': "${extras && extras.priority == '办文'}" 
   flow:
     label: Workflow
     type: lookup
@@ -48,12 +53,13 @@ fields:
   submitter_name:
     type: text
     label: Submitter's Name
-    hidden: true
+    hidden: false
     name: submitter_name
   submit_date:
     type: datetime
     label: Submit Date
     name: submit_date
+    sortable: true
   applicant:
     type: lookup
     label: Applicant
@@ -74,7 +80,7 @@ fields:
   applicant_organization_name:
     type: text
     label: Applicant Department's Name
-    hidden: true
+    hidden: false
     name: applicant_organization_name
   applicant_organization_fullname:
     type: text
@@ -123,7 +129,7 @@ fields:
   flow_name:
     type: text
     label: Workflow Name
-    hidden: true
+    hidden: false
     name: flow_name
   category_name:
     type: text
@@ -157,7 +163,7 @@ fields:
   is_archived:
     type: boolean
     label: Archived
-    hidden: true
+    hidden: false
     name: is_archived
   is_deleted:
     type: boolean
@@ -194,8 +200,9 @@ fields:
   #   omit: false
   #   hidden: false
   current_step_name:
+    label: Current Step Name
     type: text
-    hidden: true
+    hidden: false
   current_step_auto_submit:
     label: Auto Submit if Time Out
     type: boolean
@@ -212,6 +219,12 @@ fields:
     hidden: true
   cc_users:
     type: "[text]"
+    hidden: true
+  extras:
+    type: Object
+    blackbox: true
+    omit: true
+    label: Extras
     hidden: true
 permission_set:
   user:

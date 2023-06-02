@@ -113,13 +113,13 @@ Template.instance_view.helpers
 
 	showPickApproveUsers: ()->
 		return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
-
+	
 Template.instance_view.onCreated ->
+	console.log('Template.instance_view.onCreated......')
 	Form_formula.initFormScripts()
 	Session.set("instance_submitting", false);
 
 Template.instance_view.onRendered ->
-
 	ins = WorkflowManager.getInstance();
 
 	form_version = db.form_versions.findOne({_id: ins.form_version})
@@ -207,8 +207,9 @@ Template.instance_view.onRendered ->
 			})
 
 Template.instance_view.onDestroyed ->
+	console.log('Template.instance_view.onDestroyed......')
 	Session.set("instance_next_user_recalculate", null)
-	Steedos.subs["instance_data"].clear()
+	# Steedos.subs["instance_data"].clear()
 
 Template.instance_view.events
 	'change .instance-view .form-control,.instance-view .suggestion-control,.instance-view .checkbox input,.instance-view .af-radio-group input,.instance-view .af-checkbox-group input': (event, template) ->
@@ -250,8 +251,9 @@ Template.instance_view.events
 		$("#ins_upload_normal_attach").val('')
 
 	'click .btn-instance-back': (event)->
-		backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
-		FlowRouter.go(backURL)
+		# backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
+		# FlowRouter.go(backURL)
+		Steedos.goBack()
 
 
 	'click #ins_new_main_file': (event, template)->

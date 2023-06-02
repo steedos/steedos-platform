@@ -45,7 +45,10 @@
 .instance-wrapper .instance-form .inline-block{
     display: block !important;
 }
-.instance-tasks-tree .antd-TreeControl{
+.instance-box-tree .antd-TreeControl{
+    padding: 15px 0;
+}
+/* .instance-box-tree .antd-TreeControl{
     padding: 0;
     border-bottom: 0px;
     border-radius: 0px;
@@ -54,39 +57,39 @@
     padding-top: 8px;
     padding-left: 4px;
 }
-.instance-tasks-tree .antd-Tree {
+.instance-box-tree .antd-Tree {
     max-height: 100%;
 }
-.instance-tasks-tree .antd-Tree-itemLabel{
+.instance-box-tree .antd-Tree-itemLabel{
     padding-left: 0;
 }
 
-.instance-tasks-tree .antd-Tree-itemLabel-item{
+.instance-box-tree .antd-Tree-itemLabel-item{
     padding-left: 0;
 }
-.instance-tasks-tree .antd-Tree-itemArrow{
+.instance-box-tree .antd-Tree-itemArrow{
     margin-right: 0;
 }
-.instance-tasks-tree .antd-Tree-itemIcon{
+.instance-box-tree .antd-Tree-itemIcon{
     margin-right: 4px;
-}
-.instance-tasks-tree  .antd-Badge-text{
+} */
+.instance-box-tree  .antd-Badge-text{
     background: #D3D6DD;
 }
-.instance-tasks-tree .antd-Tree-item:nth-child(1) .antd-Badge-text{
+.instance-box-tree .antd-Tree-item:nth-child(1) .antd-Badge-text{
     background: #DF4D46;
 }
-.instance-tasks-tree .antd-Tree-itemLabel-item{
+/* .instance-box-tree .antd-Tree-itemLabel-item{
     height: 1.6rem;
-}
-.instance-tasks-tree .antd-TplField span{
+} */
+.instance-box-tree .antd-TplField span{
     width: 85%;
     display: block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.instance-tasks-tree .antd-Tree-itemText{
+.instance-box-tree .antd-Tree-itemText{
     margin: auto;
 }
 
@@ -107,6 +110,14 @@
     border: none !important;
 }
 
+.instance-box-tree .antd-Tree-item .is-checked{
+    background-color: rgba(21,137,238,.1);
+}
+
+.instance-box-tree .antd-Tree-item .is-checked .antd-Tree-itemLabel-item{
+    background-color: unset;
+}
+
 .steedos-instance-detail-wrapper .instance-wrapper{
     border-radius: 0px !important;
 }
@@ -114,4 +125,21 @@
 
 .steedos-instance-wrapper input[disabled], input:disabled, input.disabled, input.is-disabled {
     -webkit-text-fill-color: inherit !important;
+}
+
+
+.instance-trace-detail-modal .weui-input{
+    color: #777;
+}
+
+tbody .color-priority-danger *{
+    color: red !important;
+}
+
+tbody .color-priority-warning *{
+    color: purple !important;
+}
+
+tbody .color-priority-muted *{
+    color: blue !important;
 }

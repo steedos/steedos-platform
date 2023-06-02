@@ -127,6 +127,13 @@ module.exports = {
 					metadataType: "*",
 					metadataApiName: "*"
 				});
+
+				const configsV2 = await ctx.broker.call(`metadata.getServiceMetadatas`, {
+					serviceName: ctx.params.packageName,
+					metadataType: "*",
+					metadataApiName: "*"
+				});
+
 				const metadata = [];
 				_.each(configs, (config)=>{
 					if(config.metadataType && config.metadataApiName){
@@ -134,6 +141,14 @@ module.exports = {
 						metadata.push({type: config.metadataType, api_name: config.metadataApiName, label: label || name})
 					}
 				})
+
+				_.each(configsV2, (config)=>{
+					if(config.metadataType && config.metadataApiName){
+						const {label,name} = config.metadata || {}
+						metadata.push({type: config.metadataType, api_name: config.metadataApiName, label: label || name})
+					}
+				})
+
 				return metadata;
 			} 
 		}

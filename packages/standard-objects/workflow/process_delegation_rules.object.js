@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-02-28 09:25:02
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-19 16:16:07
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-08 17:21:10
  * @Description: 
  */
 if (!db.process_delegation_rules) {
@@ -46,17 +46,17 @@ if (Meteor.isServer) {
   db.process_delegation_rules.before.insert(function (userId, doc) {
     var ref;
     if (doc.start_time >= doc.end_time) {
-      throw new Meteor.Error(400, "process_delegation_rules_start_must_lt_end");
+      throw new Error("process_delegation_rules_start_must_lt_end");
     }
     if (db.process_delegation_rules.find({
       from: userId
     }).count() > 0) {
-      throw new Meteor.Error(400, "process_delegation_rules_only_one");
+      throw new Error("process_delegation_rules_only_one");
     }
     if (doc.to) {
       var pdr = db.process_delegation_rules.findOne({ from: doc.to, to: userId, enabled: true, $or: [{ start_time: { $lte: doc.start_time }, end_time: { $gte: doc.start_time } }, { start_time: { $gte: doc.start_time }, end_time: { $lte: doc.end_time } }, { start_time: { $lte: doc.end_time }, end_time: { $gte: doc.end_time } }] });
       if (pdr) {
-        throw new Meteor.Error(400, "process_delegation_rules_cannot_deltegation_eachother");
+        throw new Error("process_delegation_rules_cannot_deltegation_eachother");
       }
     }
 

@@ -12,6 +12,7 @@ tab_groups:
   - group_name: 对象设置
   - group_name: 用户界面
   - group_name: 统计分析
+  - group_name: 开发
   - group_name: 流程自动化
   - group_name: 审批王
   - group_name: 高级设置
@@ -53,8 +54,8 @@ tab_items:
     group: 对象设置
     index: 13
   admin_queue_import:
-    group: 对象设置
-    index: 14
+    group: 高级设置
+    index: 38
   admin_pages:
     group: 用户界面
     index: 15
@@ -70,6 +71,15 @@ tab_items:
   admin_stimulsoft_reports:
     group: 统计分析
     index: 19
+  admin_developer:
+    group: 开发
+    index: 19.50
+  admin_developer_triggers:
+    group: 开发
+    index: 19.51
+  admin_developer_graphql:
+    group: 开发
+    index: 19.52
   admin_process_definition:
     group: 流程自动化
     index: 20
@@ -118,29 +128,29 @@ tab_items:
   admin_sessions:
     group: 高级设置
     index: 34
-  admin_dashboard:
-    group: 高级设置
-    index: 35
+  # admin_dashboard:
+  #   group: 高级设置
+  #   index: 35
   admin_audit_records:
     group: 高级设置
     index: 36
   admin_autonumber:
     group: 高级设置
     index: 37
-  admin_web_forms:
-    group: 高级设置
-    index: 38
+  # admin_web_forms:
+  #   group: 高级设置
+  #   index: 38
   admin_holidays:
     group: 高级设置
     index: 39
   admin_business_hours:
     group: 高级设置
     index: 40
-  admin_object_webhooks:
-    group: 高级设置
-    index: 41
+  # admin_object_webhooks:
+  #   group: 高级设置
+  #   index: 41
   admin_api_keys:
-    group: 高级设置
+    group: 开发
     index: 42
 objects: []
 sort: 9100

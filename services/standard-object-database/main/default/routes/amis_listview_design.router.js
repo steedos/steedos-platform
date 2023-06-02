@@ -41,7 +41,7 @@ router.get('/api/amisListviewDesign', core.requireAuthentication, async function
             userId: userSession.userId,
             authToken: userSession.authToken,
             id: req.query.id,
-            object_name: record?.object_name
+            object_name: record && record.object_name ? record.object_name : ""
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

@@ -158,7 +158,7 @@ getHandlersManager.getHandlers = function (instance_id, step_id, login_user_id) 
     space_id = instance.space;
     flow_id = instance.flow;
     flow_rev = instance.flow_version;
-    current_flow = db.flows.findOne(flow_id);
+    current_flow = db.flows.findOne(flow_id, { fields: { _id: 1, form: 1, 'current._id': 1, 'current.steps': 1, 'current.form_version': 1, 'historys._id': 1, 'historys.steps': 1, 'historys.form_version': 1 }});
     current_step = null;
     current_steps = new Array;
     if (current_flow.current._id === flow_rev) {
@@ -227,16 +227,7 @@ getHandlersManager.getHandlers = function (instance_id, step_id, login_user_id) 
         }
     } else if (deal_type === "applicant") {
         // 2.***********申请人***********
-        applicant = instance.applicant;
-        space_user_count = db.space_users.find({
-            space: space_id,
-            user: applicant
-        }).count();
-        if (space_user_count === 0) {
-            throw new Meteor.Error('error!', "提交人已经被删除或不属于当前space");
-        } else {
-            users = new Array(applicant);
-        }
+        users = new Array(instance.applicant);
     } else if (deal_type === "orgFieldRole") {
         // 3.***********部门字段所属组织中的审批岗位***********
         form_id = current_flow.form;

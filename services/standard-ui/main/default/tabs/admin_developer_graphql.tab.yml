@@ -1,0 +1,21 @@
+name: admin_developer_graphql
+desktop: true
+icon: entity
+is_new_window: true
+label: Graphql IDE
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: url
+url: /graphql

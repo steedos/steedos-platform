@@ -1,13 +1,23 @@
 
 autoGoApp = (appId)->
-	menus = Creator.getAppMenus(appId)
-	first_menu = _.first(menus)
-	if first_menu
-		menu = Object.assign({}, first_menu, {target: false}) # 自动进入的应用强制不以新窗口打开
-		url = Creator.getAppMenuUrl menu
-		FlowRouter.go url
+	currentApp = Creator.getApp(appId)
+	if currentApp?.isExternalUrl
+		if /^http(s?):\/\//.test(currentApp.path)
+			if currentApp.blank
+				window.open(currentApp.path)
+			else
+				window.location.href = currentApp.path
+		else
+			FlowRouter.go currentApp.path
 	else
-		FlowRouter.go '/app/' + appId
+		menus = Creator.getAppMenus(appId)
+		first_menu = _.first(menus)
+		if first_menu
+			menu = Object.assign({}, first_menu, {target: false}) # 自动进入的应用强制不以新窗口打开
+			url = Creator.getAppMenuUrl menu
+			FlowRouter.go url
+		else
+			FlowRouter.go '/app/' + appId
 
 Template.creator_app_home.onRendered ()->
 	this.autorun ->

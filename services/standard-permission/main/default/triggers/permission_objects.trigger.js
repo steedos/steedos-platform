@@ -91,6 +91,27 @@ module.exports = {
                     this.data.values.push(doc);
                 }
             })
+            
+            // 为了解决默认简档自定义后生成新的_id，导致无法查询到数据的问题
+            if (_.isString(this.query.filters)) {
+                const filtersStr = this.query.filters;
+                const regex = /(?<=permission_set_id eq ')\w+(?=')/g;
+                const matches = filtersStr.match(regex);
+                if (matches) {
+                    const permissionSetId = matches[0];
+                    // 查找permissionSetId对应的permissionSet
+                    const permissionSetDoc = (await objectql.getObject('permission_set').directFind({
+                        filters: [
+                            ['_id', '=', permissionSetId],
+                        ]
+                    })[0]);
+                    if (permissionSetDoc) {
+                        // 替换this.query.filters中全部的的permission_set_id为permissionSetDoc.name
+                        this.query.filters = this.query.filters.replace(regex, permissionSetDoc.name).replace(`permission_set_id eq '${permissionSetDoc.name}'`, `(permission_set_id eq '${permissionSetDoc.name}') or (permission_set_id eq '${permissionSetId}')`);
+                    }
+                }
+            }
+            
             const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
             if (records.length > 0) {
                 this.data.values = records;

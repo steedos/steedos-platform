@@ -6,6 +6,7 @@ columns:
   - submit_date
   - flow_name
   - step_name
+  - modified
   - start_date
 mobile_columns:
   - instance_name
@@ -15,10 +16,20 @@ mobile_columns:
 filter_scope: space
 filters: !!js/function |
     function(filters, data){
-      console.log('inbox ===filters ===>',data);
-      var result = Steedos.authRequest(`/api/workflow/v2/\${data.\$listviewId}/filter?app=\${data.appId}`, {
+      console.log('inbox ===filters ===> ',data, `/api/workflow/v2/\${data.listName}/filter?app=\${data.appId}`);
+      var result = Steedos.authRequest(`/api/workflow/v2/\${data.listName}/filter?app=\${data.appId}`, {
           type: 'get', async: false
       });
       return result.filter;
     }
 sort: [['start_date','desc']]
+searchable_fields:
+  - field: instance_name
+  - field: submitter_name
+  - field: flow
+  - field: applicant_organization_name
+  - field: submit_date
+  - field: instance_state
+  - field: is_archived
+extra_columns:
+  - extras

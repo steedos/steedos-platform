@@ -19,6 +19,9 @@ Meteor.startup(function () {
         }
     }).observe({
         added: function (newDocument) {
+            if (newDocument.copy_from) { // 通过复制简档创建的字段权限，使用批量注册
+                return;
+            }
             if (inited) {
                 return _change(newDocument);
             }

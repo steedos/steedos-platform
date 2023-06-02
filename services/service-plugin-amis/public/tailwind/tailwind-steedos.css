@@ -54,6 +54,10 @@
   position: absolute
 }
 
+.sticky {
+  position: sticky
+}
+
 .inset-0 {
   top: 0px;
   right: 0px;
@@ -152,6 +156,10 @@
   height: 100%
 }
 
+.h-0 {
+  height: 0px
+}
+
 .w-10 {
   width: 2.5rem
 }
@@ -164,6 +172,10 @@
   width: 100%
 }
 
+.w-96 {
+  width: 24rem
+}
+
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content
@@ -171,6 +183,10 @@
 
 .min-w-\[240px\] {
   min-width: 240px
+}
+
+.min-w-\[200px\] {
+  min-width: 200px
 }
 
 .flex-1 {
@@ -230,6 +246,10 @@
   border-right-width: 1px
 }
 
+.border-solid {
+  border-style: solid
+}
+
 .border-slate-300 {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity))
@@ -245,9 +265,19 @@
   border-color: rgb(226 232 240 / var(--tw-border-opacity))
 }
 
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity))
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
 .p-0 {
@@ -292,11 +322,6 @@
   padding-bottom: 0px
 }
 
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
@@ -320,10 +345,6 @@
 
 .text-lg {
   font-size: 16px
-}
-
-.text-xl {
-  font-size: 18px
 }
 
 .font-bold {
@@ -392,10 +413,6 @@
     margin-top: 0.75rem
   }
 
-  .sm\:w-\[240px\] {
-    width: 240px
-  }
-
   .sm\:rounded-lg {
     border-radius: 0.5rem
   }
@@ -411,6 +428,10 @@
   .sm\:border-gray-300 {
     --tw-border-opacity: 1;
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
+  }
+
+  .sm\:p-3 {
+    padding: 0.75rem
   }
 
   .sm\:px-3 {

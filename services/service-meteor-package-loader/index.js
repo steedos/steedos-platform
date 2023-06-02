@@ -2,7 +2,7 @@
 
 const objectql = require('@steedos/objectql');
 const core = require('@steedos/core');
-const triggerLoader = require('./lib').triggerLoader;
+const triggerLoader = require('@steedos/service-package-loader').triggerLoader;
 const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
@@ -135,7 +135,9 @@ module.exports = {
     },
 
     merged (schema) {
-        schema.name = `~packages-${schema.name}`;
+        if(!schema.metadata || !schema.metadata.$package){
+            schema.name = `~packages-${schema.name}`;
+        }
     },
 
     /**

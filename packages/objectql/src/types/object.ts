@@ -1,6 +1,6 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
-import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema } from ".";
-import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl } from '../util'
+import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema, MONGO_BASE_OBJECT, getObjectConfig } from ".";
+import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers, extend } from '../util'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -20,7 +20,10 @@ import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
 import { getPatternListeners } from '../dynamic-load';
 import { getCacher } from '@steedos/cachers';
-import { uniq, isEmpty } from 'lodash';
+import { uniq, isEmpty, includes, isArray } from 'lodash';
+import { runTriggerFunction } from '../triggers/trigger';
+
+const auth = require("@steedos/auth");
 
 const clone = require('clone')
 
@@ -135,6 +138,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _list_views: Dictionary<SteedosObjectListViewType> = {};
     private _table_name: string;
     private _triggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
+    private _baseTriggersQueue: Dictionary<Dictionary<SteedosTriggerType>> = {}
     private _idFieldName: string;
     private _idFieldNames: string[] = [];
     private _NAME_FIELD_KEY: string;
@@ -282,6 +286,31 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         this.schema.setObjectMap(this.name, { datasourceName: this.datasource.name, _id: config._id })
+
+        if (datasource.name === "meteor" || datasource.name === "default") {
+            let baseObjectConfig = getObjectConfig(MONGO_BASE_OBJECT);
+            let _baseObjectConfig = clone(baseObjectConfig);
+            delete _baseObjectConfig.hidden;
+            if(datasource.name === 'meteor'){
+                let _baseTriggers = {};
+                const listeners = _baseObjectConfig.listeners;
+                for (const key in listeners) {
+                    if (Object.prototype.hasOwnProperty.call(listeners, key)) {
+                        const listener = listeners[key];
+                        const triggers = transformListenersToTriggers(config, listener)
+                        extend(_baseTriggers, triggers)
+                    }
+                }
+                (this as any)._baseTriggers = _baseTriggers;
+            }
+            // 将baseObject的listeners转换为triggers
+            for (const name in _baseObjectConfig.listeners) {
+                if (Object.prototype.hasOwnProperty.call(_baseObjectConfig.listeners, name)) {
+                    const listener = _baseObjectConfig.listeners[name];
+                    this.setBaseListener(name, listener)
+                }
+            }
+        }
     }
     
 
@@ -344,6 +373,41 @@ export class SteedosObjectType extends SteedosObjectProperties {
         delete this._triggersQueue[trigger.when][trigger.name]
     }
 
+
+    setBaseListener(listener_name: string, config: SteedosListenerConfig) {
+        this.listeners[listener_name] = config
+        _TRIGGERKEYS.forEach((key) => {
+            let event = config[key];
+            if (_.isFunction(event)) {
+                this.setBaseTrigger(`${listener_name}_${event.name}`, key, event);
+            }
+        })
+    }
+
+    private setBaseTrigger(name: string, when: string, todo: Function, on = 'server') {
+        let triggerConfig: SteedosTriggerTypeConfig = {
+            name: name,
+            on: on,
+            when: when,
+            todo: todo,
+        }
+        let trigger = new SteedosTriggerType(triggerConfig)
+        this.registerBaseTrigger(trigger)
+    }
+
+    registerBaseTrigger(trigger: SteedosTriggerType) {
+        //如果是meteor mongo 则不做任何处理
+        if (!_.isString(this._datasource.driver) || this._datasource.driver != SteedosDatabaseDriverType.MeteorMongo || trigger.when === 'beforeFind' || trigger.when === 'afterFind' || trigger.when === 'afterFindOne' || trigger.when === 'afterCount' || trigger.when === 'beforeAggregate' || trigger.when === 'afterAggregate') {
+            if (!trigger.todo) {
+                return;
+            }
+            if (!this._baseTriggersQueue[trigger.when]) {
+                this._baseTriggersQueue[trigger.when] = {}
+            }
+            this._baseTriggersQueue[trigger.when][trigger.name] = trigger
+        }
+    }
+
     private async runTirgger(trigger: SteedosTriggerType, context: SteedosTriggerContextConfig) {
         let object_name = this.name
         let event = trigger.todo
@@ -396,6 +460,98 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
     }
 
+    // 执行base触发器
+    async runBaseTriggers(when: string, context: SteedosTriggerContextConfig) {
+        let triggers = this._baseTriggersQueue[when]
+        if (triggers) {
+            let triggerKeys = _.keys(triggers)
+
+            for (let index = 0; index < triggerKeys.length; index++) {
+                let trigger = triggers[triggerKeys[index]];
+                await this.runTirgger(trigger, context)
+            }
+        }
+    }
+
+    getFunctionTriggers(when: string){
+
+        const triggers = [];
+    
+        const cache = getCacher('triggers');
+        const _triggers = cache.get('triggers');
+        if(!_.isEmpty(_triggers)){
+            _.map(_triggers, (item)=>{
+                if(item && item.metadata){
+                    const { metadata } = item
+                    if(metadata.isEnabled && (metadata.when === when || (isArray(metadata.when) && includes(metadata.when, when)))){
+                        if(metadata.isPattern){
+                            try {
+                                if(metadata.listenTo === '*'){
+                                    triggers.push(item);
+                                }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
+                                    triggers.push(item);
+                                }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
+                                    triggers.push(item);
+                                }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                                    try {
+                                        if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
+                                            triggers.push(item);
+                                        }
+                                    } catch (error) {
+                                    }
+                                }
+                            } catch (error) {
+                                console.log(`error`, error);
+                            }
+                        }else{
+                            if( metadata.listenTo === this.name ){
+                                triggers.push(item);
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        return triggers;
+    }
+    
+    async runFunctionTriggers(when: string, context: SteedosTriggerContextConfig) {
+        const broker = this._schema.metadataBroker;
+        let triggers = this.getFunctionTriggers(when);
+        if (_.isEmpty(triggers)) {
+            return;
+        }
+        
+        for (const trigger of triggers) {
+            let params = generateActionParams(when, context);
+            const result = await runTriggerFunction(trigger.metadata.handler, {
+                
+            }, {
+                params: params,
+                broker: broker,
+                getObject: getObject,
+                getUser: auth.getSessionByUserId
+            })
+            
+            if (when == 'beforeInsert' || when == 'beforeUpdate') {
+                if (result && result.doc && _.isObject(result.doc)) {
+                    Object.assign(context.doc, result.doc)
+                }
+            }
+            if (when == 'beforeFind') {
+                if (result && result.query && _.isObject(result.query)) {
+                    Object.assign(context.query, result.query)
+                }
+            }
+            if (when == 'afterFind') {
+                if (result && result.data && _.isObject(result.data)) {
+                    Object.assign(context.data, result.data)
+                }
+            }
+        }
+        
+    }
+
     getTriggerActions(when: string){
 
         const triggers = [];
@@ -407,31 +563,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
             _.map(triggerActions, (item)=>{
                 if(item && item.metadata){
                     const { metadata } = item
-                    if(metadata.isPattern){
-                        try {
-                            if(metadata.listenTo === '*'){
-                                triggers.push(item);
-                            }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
-                                triggers.push(item);
-                            }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
-                                triggers.push(item);
-                            }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
-                                try {
-                                    if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
-                                        triggers.push(item);
+                    if(metadata.when === when || (isArray(metadata.when) && includes(metadata.when, when))){
+                        if(metadata.isPattern){
+                            try {
+                                if(metadata.listenTo === '*'){
+                                    triggers.push(item);
+                                }else if(_.isArray(metadata.listenTo) && _.include(metadata.listenTo, this.name)){
+                                    triggers.push(item);
+                                }else if(_.isRegExp(metadata.listenTo) && metadata.listenTo.test(this.name)){
+                                    triggers.push(item);
+                                }else if(_.isString(metadata.listenTo) && metadata.listenTo.startsWith("/")){
+                                    try {
+                                        if(_.isRegExp(eval(metadata.listenTo)) && eval(metadata.listenTo).test(this.name)){
+                                            triggers.push(item);
+                                        }
+                                    } catch (error) {
                                     }
-                                } catch (error) {
                                 }
+                            } catch (error) {
+                                console.log(`error`, error);
                             }
-                        } catch (error) {
-                            console.log(`error`, error);
-                        }
-                    }else{
-                        if(metadata.when === when && metadata.listenTo === this.name){
-                            triggers.push(item);
+                        }else{
+                            if(metadata.listenTo === this.name){
+                                triggers.push(item);
+                            }
                         }
                     }
-                    
                 }
             })
         }
@@ -465,7 +622,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     Object.assign(context.query, result.query)
                 }
             }
-            if (when == 'afterFind') {
+            if (when == 'afterFind' || when == 'afterFindOne' || when == 'afterCount') {
                 if (result && result.data && _.isObject(result.data)) {
                     Object.assign(context.data, result.data)
                 }
@@ -1572,13 +1729,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             method = 'find';
         }
         let meteorWhen = `before${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        await this.runBaseTriggers(meteorWhen, context);
+        await this.runFunctionTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 
     private async runAfterTriggers(method: string, context: SteedosTriggerContextConfig) {
         let meteorWhen = `after${method.charAt(0).toLocaleUpperCase()}${_.rest([...method]).join('')}`
-        await this.runTriggers(meteorWhen, context);
+        await this.runBaseTriggers(meteorWhen, context);
+        await this.runFunctionTriggers(meteorWhen, context);
+        // await this.runTriggers(meteorWhen, context);
         return await this.runTriggerActions(meteorWhen, context)
     }
 

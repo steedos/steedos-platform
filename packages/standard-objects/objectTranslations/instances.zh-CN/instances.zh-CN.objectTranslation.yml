@@ -23,11 +23,11 @@ fields:
     help: 
     description: 
   submitter:
-    label: 提交者
+    label: 提交人
     help: 
     description: 
   submitter_name:
-    label: 提交者
+    label: 提交人姓名
     help: 
     description: 
   submit_date:
@@ -39,7 +39,7 @@ fields:
     help: 
     description: 
   applicant_name:
-    label: 申请人
+    label: 申请人姓名
     help: 
     description: 
   applicant_organization:
@@ -135,6 +135,10 @@ fields:
     description: 
   current_step_auto_submit:
     label: 当前步骤超时自动流转
+    help: 
+    description: 
+  current_step_name:
+    label: 当前步骤
     help: 
     description: 
   applicant_company:

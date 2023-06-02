@@ -128,60 +128,57 @@ FlowRouter.route '/page/:page_id/',
 		BlazeLayout.render Creator.getLayout(),
 			main: 'page'
 
-FlowRouter.route '/app/:app_id/instances/grid/:listview_id',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		app_id = FlowRouter.getParam("app_id")
-		if (app_id != "-")
-			Session.set("app_id", app_id)
-		Session.set("object_name", "instances")
-		FlowRouter.go '/workflow'
-		return
+# FlowRouter.route '/app/:app_id/instances/grid/:listview_id',
+# 	triggersEnter: [ checkUserSigned ],
+# 	action: (params, queryParams)->
+# 		app_id = FlowRouter.getParam("app_id")
+# 		if (app_id != "-")
+# 			Session.set("app_id", app_id)
+# 		Session.set("object_name", "instances")
+# 		FlowRouter.go '/workflow'
+# 		return
 
-FlowRouter.route '/app/:app_id/instances/view/:record_id',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		instanceId = FlowRouter.getParam("record_id")
-		uobj = {}
-		uobj['X-User-Id'] = Meteor.userId()
-		uobj['X-Auth-Token'] = Accounts._storedLoginToken()
-		data = {
-			object_name: "",
-			record_id: "",
-			space_id: Session.get("spaceId")
-		}
-		url = Steedos.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj)
-		data = JSON.stringify(data)
-		$(document.body).addClass('loading')
-		$.ajax({
-			url: url,
-			type: 'POST',
-			async: true,
-			data: data,
-			dataType: 'json',
-			processData: false,
-			contentType: 'application/json',
-			beforeSend: (request) ->
-				request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
-			,
-			success:  (responseText, status) -> 
-				$(document.body).removeClass('loading')
-				if responseText.errors
-					responseText.errors.forEach (e) -> 
-						toastr.error(e.errorMessage)
-					# Template.creator_view.currentInstance.onEditSuccess()
-					return
-				else if responseText.redirect_url
-					if Meteor.settings.public.webservices?.workflow?.url
-						Steedos.openWindow(responseText.redirect_url);
-					else
-						Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
-			,
-			error:  (xhr, msg, ex) -> 
-				$(document.body).removeClass('loading')
-				toastr.error(msg)
-				# Template.creator_view.currentInstance.onEditSuccess()
-		})
+# FlowRouter.route '/app/:app_id/instances/view/:record_id',
+# 	triggersEnter: [ checkUserSigned ],
+# 	action: (params, queryParams)->
+# 		instanceId = FlowRouter.getParam("record_id")
+# 		uobj = {}
+# 		uobj['X-User-Id'] = Meteor.userId()
+# 		uobj['X-Auth-Token'] = Accounts._storedLoginToken()
+# 		data = {
+# 			object_name: "",
+# 			record_id: "",
+# 			space_id: Session.get("spaceId")
+# 		}
+# 		url = Steedos.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj)
+# 		data = JSON.stringify(data)
+# 		$(document.body).addClass('loading')
+# 		$.ajax({
+# 			url: url,
+# 			type: 'POST',
+# 			async: true,
+# 			data: data,
+# 			dataType: 'json',
+# 			processData: false,
+# 			contentType: 'application/json',
+# 			success:  (responseText, status) -> 
+# 				$(document.body).removeClass('loading')
+# 				if responseText.errors
+# 					responseText.errors.forEach (e) -> 
+# 						toastr.error(e.errorMessage)
+# 					# Template.creator_view.currentInstance.onEditSuccess()
+# 					return
+# 				else if responseText.redirect_url
+# 					if Meteor.settings.public.webservices?.workflow?.url
+# 						Steedos.openWindow(responseText.redirect_url);
+# 					else
+# 						Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
+# 			,
+# 			error:  (xhr, msg, ex) -> 
+# 				$(document.body).removeClass('loading')
+# 				toastr.error(msg)
+# 				# Template.creator_view.currentInstance.onEditSuccess()
+# 		})
 
 FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 	triggersEnter: [ checkUserSigned ],
@@ -206,7 +203,7 @@ objectRoutes.route '/',
 		(context, redirect) -> 
 			object_name = context.params.object_name
 			listview = window.getFirstListView(object_name)
-			console.log("getFirstListView listview",listview)
+			# console.log("getFirstListView listview",listview)
 			list_view_id = listview?.name || listview?._id
 			app_id = context.params.app_id
 			url = "/app/" + app_id + "/" + object_name + "/grid/" + list_view_id

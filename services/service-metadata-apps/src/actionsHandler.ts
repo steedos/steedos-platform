@@ -1,7 +1,7 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
 import { translationApp, translationObjectLabel } from '@steedos/i18n';
-import { getAssignedApps, getObject as _getObject } from "@steedos/objectql";
+import { getAssignedApps, getObject as _getObject, absoluteUrl } from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
@@ -17,7 +17,8 @@ async function getSpaceApp(ctx: any, appApiName: string) {
     const spaceId = userSession.spaceId;
     const userApps = _.filter(allApps, function (metadataConfig) {
         const config = metadataConfig.metadata;
-        if (!config.is_creator || !config.visible) {
+        //只判断是否启用
+        if (!config.visible) {
             return false;
         }
         if (_.has(config, 'space') && config.space) {
@@ -49,7 +50,8 @@ async function get(ctx: any) {
             const spaceId = userSession.spaceId;
             const userApps = _.filter(allApps, function (metadataConfig) {
                 const config = metadataConfig.metadata;
-                if (!config.is_creator || !config.visible) {
+                //只判断是否启用
+                if (!config.visible) {
                     return false;
                 }
                 if (_.has(config, 'space') && config.space) {
@@ -279,7 +281,15 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
     translationApp(userSession.language, app.code, app);
     var appPath = `/app/${app.code}`
     if(app.url){
-        appPath = app.url
+        if(/^http(s?):\/\//.test(app.url)){
+            if(app.secret){
+				appPath = absoluteUrl("/api/external/app/" + (app._id || app.code))
+            }else{
+                appPath = app.url
+            }
+        }else{
+            appPath = app.url
+        }
     }
     const menu: any = {
         id: app.code,
@@ -289,7 +299,10 @@ async function transformAppToMenus(ctx, app, mobile, userSession, context) {
         showSidebar: app.showSidebar,
         description: app.description,
         children: [],
-        blank: app.is_new_window
+        blank: app.is_new_window,
+        on_click: app.on_click,
+        isExternalUrl: !!app.url,
+        tab_groups: app.tab_groups
     }
     if(app.enable_nav_schema && app.nav_schema){
         menu.nav_schema = _.isString(app.nav_schema) ? JSON.parse(app.nav_schema) : app.nav_schema

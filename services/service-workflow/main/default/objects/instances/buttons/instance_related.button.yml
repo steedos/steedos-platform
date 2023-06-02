@@ -7,7 +7,8 @@ amis_schema: |-
               "type": "button",
               "label": "关联文件",
               "id": "u:instance_link",
-              "className": "  ",
+              "className": "p-0 m-0",
+              "level": "link",
               "onEvent": {
                   "click": {
                       "actions": [
@@ -33,10 +34,11 @@ amis_schema: |-
                                                     "embed": true,
                                                     "label": false,
                                                     "multiple": true,
+                                                    "visibleOn": "initApiFinished == true",
                                                     "source": {
                                                       "method": "post",
                                                       "url": "${context.rootUrl}/graphql",
-                                                      "requestAdaptor": "const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize}, skip: ${(pageNo - 1) * pageSize}){\n                 _id,\n    name,\n    flow,\n    form,\n    submit_date,\n    submitter\n    _display:_ui{\n      flow,\n      form,\n      submit_date,\n      submitter\n    }\n            },\n            count: instances__getRelatedInstances__count(keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
+                                                      "requestAdaptor": "var searchableFilter = SteedosUI.getSearchFilter(api.data.$self) || []; const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize || 0}, skip: ${(pageNo - 1) * pageSize}, filters: ${JSON.stringify(searchableFilter)}){\n                 _id,\n    name,\n    flow,\n    form,\n    submit_date,\n    submitter\n    _display:_ui{\n      flow,\n      form,\n      submit_date,\n      submitter\n    }\n            },\n            count: instances__getRelatedInstances__count(filters: ${JSON.stringify(searchableFilter)}, keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
                                                       "headers": {
                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                       },
@@ -60,7 +62,7 @@ amis_schema: |-
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
                                               "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  _id,\n                 name\n                }\n              }\n            }\n          `\n        }\n        return api;",
-                                              "adaptor": "payload.data = {\n  related_instances: payload.data.instance?.related_instances\n};console.log('====payload', payload);\nreturn payload;"
+                                              "adaptor": "payload.data = {initApiFinished: true, \n  related_instances: _.map(payload.data.instance?.related_instances, '_id')\n};console.log('====payload', payload);\nreturn payload;"
                                           }
                                       }
                                   ],

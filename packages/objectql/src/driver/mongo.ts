@@ -72,6 +72,14 @@ export class SteedosMongoDriver implements SteedosDriver {
         }
         return value;
     }
+    async decryptValue(value: any) {
+        if (this._encryption) {
+            const encryption = this._encryption;
+            let decryptValue = await encryption.decrypt(value)
+            return decryptValue;
+        }
+        return value;
+    }
 
     async connect() {
         if (!this._client) {

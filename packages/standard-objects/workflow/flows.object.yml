@@ -62,6 +62,12 @@ fields:
     type: textarea
     is_wide: true
     name: description
+  enable_amisform:
+    label: 启用amis表单
+    type: boolean
+    is_wide: false
+    name: description
+    visible_on: "{{false}}"
   help_text:
     label: Help
     type: textarea
@@ -795,7 +801,7 @@ actions:
     label: Form Designer
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, data) {
-              const record = Creator.getObjectRecord(object_name, record_id);
+              var record = data && data.record;
               if(record.enable_amisform){
                 return false;
               };
@@ -809,8 +815,8 @@ actions:
   enableFlow:
     label: Enable Flow
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions) {
-        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+      function (object_name, record_id, record_permissions, data) {
+        var record = data && data.record;
         if (record && record.state == 'disabled') {
           return true;
         }
@@ -849,8 +855,8 @@ actions:
   disableFlow:
     label: Disable Flow
     visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions) {
-        var record = Creator.getObjectRecord(object_name, record_id, 'state');
+      function (object_name, record_id, record_permissions, data) {
+        var record = data && data.record;
         if (record && record.state == 'enabled') {
           return true;
         }

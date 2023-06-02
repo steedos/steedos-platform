@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-16 17:37:05
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-05-25 19:48:49
  * @Description:
  */
 const express = require("express");
@@ -50,9 +50,9 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           var ins = db.instances.findOne(instance_id);
           var old_space_id = ins.space;
 
-          var flow = db.flows.findOne(flow_id);
+          var flow = uuflowManager.getFlow(flow_id, { fields: { historys: 0 } });
 
-          var space = db.spaces.findOne(space_id);
+          var space = db.spaces.findOne(space_id, { fields: { _id: 1 }});
 
           if (!ins || !flow || !space) {
             throw new Meteor.Error("params error!", "record not exists!");
@@ -70,7 +70,8 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           _.each(forward_users, function (uid) {
             var permissions = permissionManager.getFlowPermissions(
               flow_id,
-              uid
+              uid,
+              flow
             );
             if (!permissions.includes("add")) {
               // throw new Meteor.Error('error!', "该申请人没有提交此申请单的权限。")
@@ -130,7 +131,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           // 计算values
           var old_values = ins.values,
             new_values = {};
-          var form = db.forms.findOne(flow.form);
+          var form = uuflowManager.getForm(flow.form, { fields: { historys: 0 } });
           var fields = form.current.fields || [];
 
           var old_form = db.forms.findOne(ins.form);
@@ -364,6 +365,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
             return step.step_type == "start";
           });
 
+
           // 流程转发功能修改为，开始节点有编辑权限的字段的值进行复制，无编辑权限的字段值不进行复制 #3748
           if (action_type === "forward") {
             new_values = uuflowManager.getApproveValues(
@@ -377,28 +379,24 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           // 新建申请单时，instances记录流程名称、流程分类名称 #1313
           var category_name = "";
           if (form.category) {
-            var category = uuflowManager.getCategory(form.category);
+            var category = uuflowManager.getCategory(form.category, { fields: { _id: 1, name: 1 } });
             if (category) category_name = category.name;
           }
 
           _.each(forward_users, function (user_id) {
-            var user_info = db.users.findOne(user_id);
-
-            var space_user = db.space_users.findOne(
-              {
-                space: space_id,
-                user: user_id,
-              },
-              {
+            var user_info = uuflowManager.getUser(user_id, {
                 fields: {
-                  organization: 1,
-                },
+                  name: 1,
+                  utcOffset: 1,
+                  locale: 1
               }
-            );
-            var space_user_org_info = db.organizations.findOne(
-              {
-                _id: space_user.organization,
-              },
+            });
+            var space_user = uuflowManager.getSpaceUser(space_id, user_id, {
+              fields: {
+                organization: 1,
+              }
+            });
+            var space_user_org_info = uuflowManager.getOrganization(space_user.organization,
               {
                 fields: {
                   name: 1,
@@ -417,10 +415,19 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
             var handler_org_info = space_user_org_info;
             if (agent) {
               handler_id = agent;
-              handler_info = db.users.findOne(agent);
-              handler_space_user = uuflowManager.getSpaceUser(space_id, agent);
-              handler_org_info =
-                uuflowManager.getSpaceUserOrgInfo(handler_space_user);
+              handler_info = uuflowManager.getUser(agent, {
+                  fields: {
+                    name: 1,
+                    utcOffset: 1,
+                    locale: 1
+                }
+              });
+              handler_space_user = uuflowManager.getSpaceUser(space_id, agent, {
+                fields: {
+                  organization: 1,
+                }
+              });
+              handler_org_info = uuflowManager.getSpaceUserOrgInfo(handler_space_user);
             }
             ins_obj._id = db.instances._makeNewID();
             ins_obj.space = space_id;
@@ -526,7 +533,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
               ins_obj.category = category._id;
             }
 
-            new_ins_id = db.instances.insert(ins_obj);
+            var new_ins_id = db.instances.insert(ins_obj);
 
             insert_instance_tasks(ins_obj._id, trace_obj._id, appr_obj._id)
 
@@ -678,7 +685,7 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
           if (!_.isEmpty(forward_approves)) {
             set_obj.modified = new Date();
             set_obj.modified_by = current_user_id;
-            var r = db.instances.update(
+            db.instances.update(
               {
                 _id: instance_id,
                 "traces._id": current_trace_id,
@@ -694,25 +701,6 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
             );
           }
 
-          if (r) {
-            _.each(current_trace.approves, function (a, idx) {
-              if (a._id == from_approve_id) {
-                var update_read = {};
-                update_read["traces.$.approves." + idx + ".read_date"] =
-                  new Date();
-                db.instances.update(
-                  {
-                    _id: instance_id,
-                    "traces._id": current_trace_id,
-                  },
-                  {
-                    $set: update_read,
-                  }
-                );
-                update_instance_tasks(instance_id, current_trace_id, from_approve_id)
-              }
-            });
-          }
           res.status(200).send({ data: new_ins_data });
         } catch (error) {
           console.error(error);
