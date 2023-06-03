@@ -29,6 +29,9 @@ amis_schema: |-
                                                   "name": "related_instances",
                                                   "id": "u:ff88cc3375b5",
                                                   "reference_to": "instances",
+                                                  "pickerSchema": {
+                                                        "rowClassNameExpr": "<%= data.__selected === true ? 'hidden' : '' %>"
+                                                    },
                                                   "amis": {
                                                     "id": "u:f0273e374d19",
                                                     "embed": true,
@@ -38,11 +41,11 @@ amis_schema: |-
                                                     "source": {
                                                       "method": "post",
                                                       "url": "${context.rootUrl}/graphql",
-                                                      "requestAdaptor": "var searchableFilter = SteedosUI.getSearchFilter(api.data.$self) || []; const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize || 0}, skip: ${(pageNo - 1) * pageSize}, filters: ${JSON.stringify(searchableFilter)}){\n                 _id,\n    name,\n    flow,\n    form,\n    submit_date,\n    submitter\n    _display:_ui{\n      flow,\n      form,\n      submit_date,\n      submitter\n    }\n            },\n            count: instances__getRelatedInstances__count(filters: ${JSON.stringify(searchableFilter)}, keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
+                                                      "requestAdaptor": "var searchableFilter = SteedosUI.getSearchFilter(api.data.$self) || []; const { pageNo, pageSize, keywords ='' } = api.data;\nconsole.log(\"===\", JSON.stringify(api.data));\napi.data = {\n    query: `\n        query{\n            rows: instances__getRelatedInstances(keywords: \"${keywords}\", top: ${pageSize || 20}, skip: ${(pageNo - 1) * pageSize}, filters: ${JSON.stringify(searchableFilter)}){\n                 _id,\n    name,\n    flow,\n    form,\n    submit_date,\n    submitter\n    _display:_ui{\n      flow,\n      form,\n      submit_date,\n      submitter\n    }\n            },\n            count: instances__getRelatedInstances__count(filters: ${JSON.stringify(searchableFilter)}, keywords: \"${keywords}\")\n            }\n    `\n};\nreturn api;",
                                                       "headers": {
                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                       },
-                                                      "adaptor": "return payload",
+                                                      "adaptor": "payload.data.rows = payload.data.rows.concat(api.body.$self.selectedRelatedInstances || []); return payload",
                                                       "data": {
                                                         "orderBy": "${orderBy}",
                                                         "orderDir": "${orderDir}",
@@ -62,7 +65,7 @@ amis_schema: |-
                                               "method": "post",
                                               "url": "${context.rootUrl}/graphql",
                                               "requestAdaptor": "const { _id: recordId } = api.data.record;\napi.data = {\n  query:`\n            {\n              instance: instances__findOne(id:\"${recordId}\"){\n                related_instances: related_instances__expand{\n                  _id,\n                 name\n                }\n              }\n            }\n          `\n        }\n        return api;",
-                                              "adaptor": "payload.data = {initApiFinished: true, \n  related_instances: _.map(payload.data.instance?.related_instances, '_id')\n};console.log('====payload', payload);\nreturn payload;"
+                                              "adaptor": "payload.data = {initApiFinished: true, \n  related_instances: _.map(payload.data.instance?.related_instances, '_id'),\n selectedRelatedInstances: _.map(payload.data.instance?.related_instances, (item)=>{item.__selected=true;return item})};console.log('====payload', payload);\nreturn payload;"
                                           }
                                       }
                                   ],
