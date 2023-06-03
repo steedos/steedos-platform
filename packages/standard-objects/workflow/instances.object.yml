@@ -25,6 +25,9 @@ fields:
     readonly: true
     name: flow
     filterable: true
+    amis:
+      type: 'steedos-select-flow'
+      mode: "tree-select"
   flow_version:
     label: Workflow Version
     type: text
