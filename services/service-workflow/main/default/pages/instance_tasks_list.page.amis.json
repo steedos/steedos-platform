@@ -39,7 +39,7 @@
             }
           ],
           "listName": "inbox",
-          "rowClassNameExpr": "<%= data.is_read ? '' : 'unread-instance' %>"
+          "rowClassNameExpr": "<%= data.is_read === false ? 'unread-instance' : '' %>"
         },
         {
           "type": "action",
