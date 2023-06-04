@@ -149,10 +149,10 @@ tbody .color-priority-muted *{
     color: blue !important;
 }
 
-
 .instance-tasks-list .unread-instance .antd-Table-checkCell {
     position: relative
 }
+
 .instance-tasks-list .unread-instance .antd-Table-checkCell:after {
     content: " ";
     position: absolute;
@@ -163,4 +163,20 @@ tbody .color-priority-muted *{
     height: 10px;
     background-color: #1890ff;
     border-radius: 6px;
-  }
+}
+
+.instance-tasks-list .unread-instance .steedos-listview-item {
+    position: relative
+}
+
+.instance-tasks-list .unread-instance .steedos-listview-item:after {
+    content: " ";
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    margin-top: -14px;
+    width: 8px;
+    height: 8px;
+    background-color: #1890ff;
+    border-radius: 4px;
+}
