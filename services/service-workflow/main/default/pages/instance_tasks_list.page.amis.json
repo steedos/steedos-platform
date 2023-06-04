@@ -16,7 +16,7 @@
           "showHeader": true,
           "id": "u:d29cef0d1007",
           "showDisplayAs": true,
-          "className": "h-full w-full bg-white",
+          "className": "h-full w-full bg-white instance-tasks-list",
           "formFactor": "LARGE",
           "headerToolbarItems": [
             {
@@ -38,7 +38,8 @@
               "id": "u:115e270cae4d"
             }
           ],
-          "listName": "inbox"
+          "listName": "inbox",
+          "rowClassNameExpr": "<%= data.is_read ? '' : 'unread-instance' %>"
         },
         {
           "type": "action",
@@ -149,7 +150,8 @@
                   },
                   "messages": {}
                 }
-              ]
+              ],
+              "id": "u:5d1f5d7c38d2"
             }
           ],
           "onEvent": {
@@ -164,7 +166,8 @@
           },
           "className": {
             "absolute isInset": "true"
-          }
+          },
+          "id": "u:c8fc09ce5d6b"
         }
       ],
       "onEvent": {
@@ -191,13 +194,7 @@
   "data": {
     "objectName": "instance_tasks",
     "initialValues": {},
-    "title": "",
-    "context": {
-      "rootUrl": "http://127.0.0.1:5000",
-      "tenantId": "644484b7aff6100247b3e6cf",
-      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
-      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
-    }
+    "title": ""
   },
   "id": "u:7e20ab64163e",
   "asideResizor": false,

@@ -148,3 +148,19 @@ tbody .color-priority-warning *{
 tbody .color-priority-muted *{
     color: blue !important;
 }
+
+
+.instance-tasks-list .unread-instance .antd-Table-checkCell {
+    position: relative
+}
+.instance-tasks-list .unread-instance .antd-Table-checkCell:after {
+    content: " ";
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    margin-top: -5px;
+    width: 10px;
+    height: 10px;
+    background-color: #1890ff;
+    border-radius: 6px;
+  }
