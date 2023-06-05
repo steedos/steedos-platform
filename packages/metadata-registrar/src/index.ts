@@ -31,6 +31,7 @@ export * from './config-register/permissionset'
 export * from './config-register/client_script'
 export * from './config-register/validation_rule'
 export * from './config-register/workflow'
+export * from './config-register/package'
 
 export * from './metadata-register/tab';
 export * from './metadata-register/page';

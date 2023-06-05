@@ -259,7 +259,7 @@ export const loadPackageMetadatas = async function (packagePath: string, datasou
         addObjectConfig(element, datasource, null);
     }
 
-    if(broker){
+    if(global.broker){
 
         // loadObjectTriggers(packagePath, serviceName);
         //此功能不支持微服务模式
