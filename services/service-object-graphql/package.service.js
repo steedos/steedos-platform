@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-16 11:28:59
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-05 13:54:59
  * @Description: 
  */
 
@@ -56,7 +56,7 @@ module.exports = {
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-                top: { type: 'number', optional: true },
+                top: { type: 'number', optional: true, default: 5000, max: 5000 },
                 skip: { type: 'number', optional: true },
                 sort: { type: 'string', optional: true }
             },
