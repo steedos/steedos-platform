@@ -33,3 +33,4 @@ searchable_fields:
   - field: is_archived
 extra_columns:
   - extras
+  - is_read

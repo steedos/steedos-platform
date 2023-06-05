@@ -31,7 +31,7 @@ fields:
     description: 
   formula:
     label: 公式
-    help: 
+    help: 满足以下公式时执行即时操作
     description: 
   updates_field_actions:
     label: 字段更新
@@ -49,6 +49,9 @@ fields:
     label: 描述
     help: 
     description: 
+  filters:
+    label: 过滤条件
+    help: 满足以下过滤条件时执行依赖于时间的操作
   time_triggers:
     label: 时间触发器
   time_triggers.$:

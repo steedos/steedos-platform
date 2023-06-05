@@ -1,0 +1,13 @@
+name: test__c
+label: test
+description: 
+fields:
+  name:
+    label: 名称
+    help: aaa
+    description: 
+listviews:
+  all:
+    label: 所有
+  recent:
+    label: 最近查看
