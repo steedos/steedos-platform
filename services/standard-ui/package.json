@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-ui",
-    "version": "2.5.3-beta.1",
+    "version": "2.5.3-beta.2",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {

@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-process-approval",
-    "version": "2.5.3-beta.1",
+    "version": "2.5.3-beta.2",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -10,7 +10,7 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/process": "2.5.3-beta.1"
+        "@steedos/process": "2.5.3-beta.2"
     },
     "description": "steedos package",
     "repository": {},

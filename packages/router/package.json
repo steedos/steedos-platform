@@ -1,7 +1,7 @@
 {
   "name": "@steedos/router",
   "private": false,
-  "version": "2.5.3-beta.1",
+  "version": "2.5.3-beta.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
