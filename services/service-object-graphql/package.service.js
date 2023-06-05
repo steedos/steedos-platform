@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-05 13:54:59
+ * @LastEditTime: 2023-06-05 15:09:14
  * @Description: 
  */
 
@@ -56,7 +56,7 @@ module.exports = {
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-                top: { type: 'number', optional: true, default: 5000, max: 5000 },
+                top: { type: 'number', optional: true, default: 5000, max: 5000, positive: true },
                 skip: { type: 'number', optional: true },
                 sort: { type: 'string', optional: true }
             },
