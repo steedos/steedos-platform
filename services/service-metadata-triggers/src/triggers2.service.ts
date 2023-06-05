@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-20 10:08:46
+ * @LastEditTime: 2023-06-02 14:04:04
  * @Description: 
  */
 "use strict";
@@ -70,27 +70,28 @@ module.exports = {
                             if (action.trigger) {
                                 const { trigger, rawName, name } = action
                                 const { listenTo, when } = trigger
+
                                 if (listenTo && when && _.isArray(when)) {
                                     for (const w of when) {
                                         if (!TRIGGERKEYS.includes(w)) {
                                             logger.warn(`trigger when '${w}' is not supported.`)
                                             continue
                                         }
-                                        triggers.push({
-                                            "nodeID": broker.nodeID + '',
-                                            "service": {
-                                                "name": serviceName
-                                            },
-                                            "metadata": {
-                                                "name": name,
-                                                "listenTo": listenTo,
-                                                "when": w,
-                                                "action": rawName
-                                            }
-                                        })
                                     }
-
                                 }
+
+                                triggers.push({
+                                    "nodeID": broker.nodeID + '',
+                                    "service": {
+                                        "name": serviceName
+                                    },
+                                    "metadata": {
+                                        "name": name,
+                                        "listenTo": listenTo,
+                                        "when": when,
+                                        "action": rawName
+                                    }
+                                })
 
                             }
                         }

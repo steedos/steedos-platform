@@ -1,6 +1,6 @@
 {
   "name": "@steedos/odata-v4-sql",
-  "version": "2.5.2",
+  "version": "2.5.3-beta.2",
   "description": "OData to SQL query compiler",
   "main": "lib/index.js",
   "typings": "lib/index",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/jaystack/odata-v4-sql#readme",
   "dependencies": {
-    "@steedos/odata-v4-parser": "2.5.2",
+    "@steedos/odata-v4-parser": "2.5.3-beta.2",
     "odata-v4-literal": "^0.1.0"
   },
   "publishConfig": {
@@ -36,5 +36,5 @@
   "devDependencies": {
     "typescript": "4.6.3"
   },
-  "gitHead": "cdf76ccec2a8c9acb954f15e07a1c7ca0e62077e"
+  "gitHead": "321fe88aba6ddc3380a0d71eaa2e9a18186d49f8"
 }

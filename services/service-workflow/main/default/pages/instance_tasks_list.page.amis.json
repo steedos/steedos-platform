@@ -16,7 +16,7 @@
           "showHeader": true,
           "id": "u:d29cef0d1007",
           "showDisplayAs": true,
-          "className": "h-full w-full bg-white",
+          "className": "h-full w-full bg-white instance-tasks-list",
           "formFactor": "LARGE",
           "headerToolbarItems": [
             {
@@ -38,7 +38,8 @@
               "id": "u:115e270cae4d"
             }
           ],
-          "listName": "inbox"
+          "listName": "inbox",
+          "rowClassNameExpr": "<%= data.is_read === false ? 'unread-instance' : '' %>"
         },
         {
           "type": "action",
@@ -77,7 +78,7 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
-                      "value":"${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
+                      "value": "${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
                       "size": "md",
                       "onEvent": {
                         "change": {
@@ -145,13 +146,12 @@
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
-                    "messages": {
-                    }
+                    "messages": {}
                   },
-                  "messages": {
-                  }
+                  "messages": {}
                 }
-              ]
+              ],
+              "id": "u:5d1f5d7c38d2"
             }
           ],
           "onEvent": {
@@ -166,7 +166,8 @@
           },
           "className": {
             "absolute isInset": "true"
-          }
+          },
+          "id": "u:c8fc09ce5d6b"
         }
       ],
       "onEvent": {
@@ -192,15 +193,8 @@
   ],
   "data": {
     "objectName": "instance_tasks",
-    "initialValues": {
-    },
-    "title": "",
-    "context": {
-      "rootUrl": "http://127.0.0.1:5000",
-      "tenantId": "644484b7aff6100247b3e6cf",
-      "userId": "6c017281-b966-49fe-aa2b-f09b835feed7",
-      "authToken": "ec7b993f86f01162b471f17d9063241beb7c57987a45d40f911e40269ca2e21b8f806cba87de7be1a07c41"
-    }
+    "initialValues": {},
+    "title": ""
   },
   "id": "u:7e20ab64163e",
   "asideResizor": false,
@@ -218,19 +212,19 @@
     ".instances-sidebar-wrapper": {
       "transition": "0.5s ease transform",
       "will-change": "transform",
-      "transform":"translate(-100%,0)",
-      "-webkit-transform":"translate(-100%,0)",
-      "-moz-transform":"translate(-100%,0)",
-      "-ms-transform":"translate(-100%,0)",
-      "-o-transform":"translate(-100%,0)",
-      "width":"240px"
+      "transform": "translate(-100%,0)",
+      "-webkit-transform": "translate(-100%,0)",
+      "-moz-transform": "translate(-100%,0)",
+      "-ms-transform": "translate(-100%,0)",
+      "-o-transform": "translate(-100%,0)",
+      "width": "240px"
     },
     ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
-      "transform":"translate(0,0)",
-      "-webkit-transform":"translate(0,0)",
-      "-moz-transform":"translate(0,0)",
-      "-ms-transform":"translate(0,0)",
-      "-o-transform":"translate(0,0)"
+      "transform": "translate(0,0)",
+      "-webkit-transform": "translate(0,0)",
+      "-moz-transform": "translate(0,0)",
+      "-ms-transform": "translate(0,0)",
+      "-o-transform": "translate(0,0)"
     },
     ".pcCss": {
       "top": "90px",

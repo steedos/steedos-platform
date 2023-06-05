@@ -22,7 +22,7 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
 }
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.13/dist/assets.json";
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.14/dist/assets.json";
 }
 
 /**
