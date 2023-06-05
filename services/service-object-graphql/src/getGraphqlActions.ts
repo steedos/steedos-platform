@@ -96,7 +96,7 @@ export function getGraphqlActions(
         params: {
             fields: { type: 'array', items: "string", optional: true },
             filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-            top: { type: 'number', optional: true, default: 5000, max: 5000, positive: true },
+            top: { type: 'number', optional: true, default: 5000, max: 5000 },
             skip: { type: 'number', optional: true },
             sort: { type: 'string', optional: true },
             _parentId: { type: 'string', optional: false },
@@ -142,6 +142,9 @@ export function getGraphqlActions(
             }
             delete params._related_params;
             delete params._parentId;
+            if (_.has(params, "top") && params.top < 1) { // 如果top小于1，不返回数据
+                return []
+            }
             return await object.find(params, userSession);
         },
     };
