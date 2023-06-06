@@ -1,7 +1,7 @@
 {
   "name": "@steedos/accounts",
   "private": false,
-  "version": "2.5.3-beta.4",
+  "version": "2.5.3-beta.6",
   "main": "lib/index.js",
   "files": [
     "/package.json",
@@ -56,9 +56,9 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@steedos/auth": "2.5.3-beta.4",
-    "@steedos/meteor-bundle-runner": "2.5.3-beta.4",
-    "@steedos/objectql": "2.5.3-beta.4",
+    "@steedos/auth": "2.5.3-beta.6",
+    "@steedos/meteor-bundle-runner": "2.5.3-beta.6",
+    "@steedos/objectql": "2.5.3-beta.6",
     "@types/dotenv-flow": "^3.0.0",
     "@types/node": "12.6.8",
     "cross-env": "^7.0.3",
@@ -71,5 +71,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "864f038f9cd5f12c521dce09498ca74d8b156077"
+  "gitHead": "e45db2f282daff3e2965c98dbefaa30c7c3bdd73"
 }
