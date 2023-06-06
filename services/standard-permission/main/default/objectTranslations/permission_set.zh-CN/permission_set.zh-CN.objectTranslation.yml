@@ -19,10 +19,6 @@ fields:
       - label: 权限集
         value: permission_set
     description: 
-  license:
-    label: 许可证
-    help: 
-    description: 
   assigned_apps:
     label: 授权应用
     help: 

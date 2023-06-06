@@ -26,15 +26,6 @@ fields:
     firstOption: false
     options: Profile:profile,Permission set:permission_set
     defaultValue: permission_set
-  license:
-    label: License
-    type: lookup
-    optionsFunction: !!js/function 
-      function(){
-        return Steedos.getLicenseOptions();
-      }
-    showIcon: false
-    # required: "{{ 'profile' === formData.type }}"
   assigned_apps:
     label: Assigned Apps
     type: lookup

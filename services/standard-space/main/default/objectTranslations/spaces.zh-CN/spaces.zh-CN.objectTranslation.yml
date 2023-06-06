@@ -50,10 +50,6 @@ fields:
     label: 
     help: 
     description: 
-  api_key:
-    label: API Key
-    help: 
-    description: 
 groups:
   register_account: 用户自助注册
   developer: 华炎云
