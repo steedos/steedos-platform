@@ -14,7 +14,6 @@
     "@steedos/service-api": "2.5.3-beta.6",
     "@steedos/service-cachers-manager": "2.5.3-beta.6",
     "@steedos/service-charts": "2.5.3-beta.6",
-    "@steedos/service-cloud-init": "2.5.0-beta.30",
     "@steedos/service-fields-indexs": "2.5.3-beta.6",
     "@steedos/service-files": "2.5.3-beta.6",
     "@steedos/service-meteor-package-loader": "2.5.3-beta.6",
