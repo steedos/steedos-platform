@@ -31,7 +31,7 @@ fields:
     description: 
   formula:
     label: 
-    help: 
+    help: Run Immediate Actions if the following criteria are met.
     description: 
   updates_field_actions:
     label: Field Update
@@ -49,6 +49,9 @@ fields:
     label: 
     help: 
     description: 
+  filters:
+    label: Filters
+    help: Run Time-Dependent Actions if the following filters are met.
   time_triggers:
     label: Time Triggers
   time_triggers.$:

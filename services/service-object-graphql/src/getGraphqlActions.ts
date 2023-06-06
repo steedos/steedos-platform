@@ -93,6 +93,23 @@ export function getGraphqlActions(
     // }
 
     actions[`${GRAPHQL_ACTION_PREFIX}${RELATED_PREFIX}`] = {
+        params: {
+            fields: { type: 'array', items: "string", optional: true },
+            filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
+            top: { type: 'number', optional: true, default: 5000, max: 5000 },
+            skip: { type: 'number', optional: true },
+            sort: { type: 'string', optional: true },
+            _parentId: { type: 'string', optional: false },
+            _related_params: {
+                type: 'object',
+                props: {
+                    objectName: { type: "string", optional: false },
+                    parentObjectName: { type: "string", optional: false },
+                    fieldName: { type: "string", optional: false },
+                    referenceToParentFieldName: { type: "string", optional: true },
+                }
+            }
+        },
         handler: async function (ctx) {
             let params = ctx.params;
             let { _parentId, _related_params } = params;
@@ -122,6 +139,11 @@ export function getGraphqlActions(
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
                 params.fields = fieldNames;
+            }
+            delete params._related_params;
+            delete params._parentId;
+            if (_.has(params, "top") && params.top < 1) { // 如果top小于1，不返回数据
+                return []
             }
             return await object.find(params, userSession);
         },
@@ -429,7 +451,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                             }
                             displayObj[name] = label;
                         } else if (fType == "lookup" && (_.isString(field.reference_to) || !_.has(field, 'reference_to'))) {
-                            if(_.isString(field.reference_to)){
+                            if (_.isString(field.reference_to)) {
                                 let refTo = field.reference_to;
 
                                 let refField = field.reference_to_field || '_id';
@@ -499,7 +521,7 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                             value: refRecord._id,
                                             label: refRecord[nameFieldKey]
                                         };
-                                    }else{
+                                    } else {
                                         displayObj[name] = {
                                             objectName: refTo,
                                             value: refValue,
@@ -507,26 +529,26 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                         };
                                     }
                                 }
-                            }else{
+                            } else {
                                 let refValue = doc[name];
                                 if (!refValue) {
                                     continue;
                                 }
-                                if(field.multiple && _.isArray(refValue)){
-                                    _.each(refValue, (item)=>{
+                                if (field.multiple && _.isArray(refValue)) {
+                                    _.each(refValue, (item) => {
                                         displayObj[name] = {
                                             value: item,
                                             label: item
                                         };
                                     })
-                                }else{
+                                } else {
                                     displayObj[name] = {
                                         value: refValue,
                                         label: refValue
                                     };
                                 }
                             }
-                            
+
                         } else if (fType == "master_detail" && _.isString(field.reference_to)) {
                             let refTo = field.reference_to;
                             let refField = field.reference_to_field || '_id';

@@ -4,6 +4,7 @@ const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require('clone');
 var objectCore = require('../objects/objects.core.js');
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const auth = require('@steedos/auth');
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 const validateOptionValue = (value)=>{
@@ -198,7 +199,7 @@ const initSummaryDoc = async (doc) => {
     if (!doc.summary_object) {
         throw new Error("object_fields_error_summary_object_required");
     }
-    let summaryObject = objectql.getObjectConfig(doc.summary_object);
+    let summaryObject = register.getObjectConfig(doc.summary_object);
     let summaryConfig = {
         summary_object: doc.summary_object,
         summary_type: doc.summary_type,

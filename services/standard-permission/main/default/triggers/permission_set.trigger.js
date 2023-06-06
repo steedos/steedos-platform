@@ -1,16 +1,24 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 15:10:02
+ * @Description: 
+ */
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const auth = require("@steedos/auth");
 
 
 const getSourcePermissionSets = async function(type){
     switch (type) {
         case 'permission_set':
-            return await objectql.getSourcePermissionsets();
+            return await register.getSourcePermissionsets();
         case 'profile':
-            return await objectql.getSourceProfiles();
+            return await register.getSourceProfiles();
         default:
-            return (await objectql.getSourceProfiles()).concat((await objectql.getSourcePermissionsets()));
+            return (await register.getSourceProfiles()).concat((await register.getSourcePermissionsets()));
     }
     
 }

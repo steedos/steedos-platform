@@ -1,5 +1,5 @@
-import { SteedosDataSourceType, getConfigsFormFiles, getSteedosSchema, getObject } from '.';
-import { getConfigs } from './config';
+import { SteedosDataSourceType, getSteedosSchema, getObject } from '.';
+import { getConfigs, getConfigsFormFiles } from '@steedos/metadata-registrar';
 import _ = require('underscore');
 import * as _l from 'lodash';
 export type SteedosAppTypeConfig = {
@@ -127,7 +127,7 @@ export async function addAppConfigFiles(filePath: string, serviceName: string){
 
 export const addAppConfig = async (appConfig: SteedosAppTypeConfig, serviceName: string = '') => {
     const schema = getSteedosSchema();
-    await schema.metadataRegister?.addApp(serviceName, appConfig);
+    await schema.metadataRegister.addApp(serviceName, appConfig);
 }
 
 export const getAppConfigs = async (spaceId?) => {

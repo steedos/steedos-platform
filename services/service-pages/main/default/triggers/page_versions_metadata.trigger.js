@@ -1,16 +1,17 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-04-10 14:27:24
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-18 13:43:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 16:20:54
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
+const register = require('@steedos/metadata-registrar');
 async function getAll(){
     const schema = objectql.getSteedosSchema();
-    const configs = await objectql.registerPage.getAll(schema.broker)
+    const configs = await register.registerPage.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
     let versions = [];
     _.each(dataList, function(item){

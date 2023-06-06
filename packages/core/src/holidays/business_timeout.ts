@@ -1,8 +1,9 @@
 import { computeNextBusinessDate, computeIsBusinessDate, getBusinessHoursPerDay } from './business_hours';
-import { getSteedosSchema, getSteedosConfig, getConfigs, getConfig, addConfig, removeConfig } from '@steedos/objectql';
+import { getSteedosSchema, getSteedosConfig } from '@steedos/objectql';
 import { BusinessHoursPerDay, Holiday, BusinessHours, BusinessHoursCheckedType } from './types';
 const moment = require('moment');
 import _ = require('lodash');
+import { addConfig, getConfig, getConfigs, removeConfig } from '@steedos/metadata-registrar';
 
 /**
  * 从数据库中取出指定工作区内的节假日数据，支持缓存

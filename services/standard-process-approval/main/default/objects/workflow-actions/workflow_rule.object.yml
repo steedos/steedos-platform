@@ -36,7 +36,8 @@ fields:
     type: textarea
     is_wide: true
     required: false
-    group: Rule Criteria
+    group: Immediate Actions
+    inlineHelpText: Run Immediate Actions if the following criteria are met.
   updates_field_actions:
     group: Immediate Actions
     type: lookup
@@ -98,6 +99,7 @@ fields:
     # visible_on: "{{global.mode ==='read' ? true : false}}"
     depend_on:
       - object_name
+    inlineHelpText: Run Time-Dependent Actions if the following filters are met.
     group: 依赖于时间的工作流操作
   time_triggers:
     type: grid

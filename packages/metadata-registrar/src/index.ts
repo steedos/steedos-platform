@@ -4,7 +4,38 @@ const PACKAGE_SERVICE_PREFIX = '~packages-';
 const METADATA_SERVICES_PREFIX = '$METADATA-SERVICES';
 import * as _ from 'underscore';
 import { map, filter } from 'lodash';
+export * from './config-register/index';
+export * from './metadata-register/index';
+export * from './metadata-register/process';
+export * from './metadata-register/processTrigger';
+export * from './metadata-register/permissionFields'
+export * from './metadata-register/restrictionRules'
+export * from './config-register/trigger'
+export * from './metadata-register/shareRules';
+export * from './utils';
+export * from './config';
+export * from './config-register/core'
+export * from './config-register/translations'
+export * from './config-register/object_translations'
+export * from './config-register/actions'
+export * from './config-register/app'
+export * from './config-register/approval_process'
+export * from './config-register/button'
+export * from './config-register/listview'
+export * from './config-register/profile'
+export * from './config-register/translations'
+export * from './config-register/trigger'
+export * from './config-register/shareRules'
+export * from './config-register/method'
+export * from './config-register/permissionset'
+export * from './config-register/client_script'
+export * from './config-register/validation_rule'
+export * from './config-register/workflow'
+export * from './config-register/package'
 
+export * from './metadata-register/tab';
+export * from './metadata-register/page';
+export * from './metadata-register/query'
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;

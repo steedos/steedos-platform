@@ -5,7 +5,6 @@ const loader = require('./main/default/manager/loader');
 const packages = require('./main/default/manager/packages');
 const registry = require('./main/default/manager/registry');
 const metadata = require('@steedos/metadata-core')
-const packageLicense = require('@steedos/service-package-license');
 const axios = require('axios');
 const _ = require(`lodash`);
 const path = require(`path`);
@@ -48,7 +47,7 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
-	dependencies: ['~packages-standard-objects', '@steedos/service-package-license'],
+	dependencies: ['~packages-standard-objects'],
 
 	/**
 	 * Actions
@@ -197,8 +196,6 @@ module.exports = {
 					if(syncCloudPackages){
 						result = await this.getCloudSaasPurchasedPackages();
 					}
-					//同步软件包许可证
-					// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					if(result){
 						for (const _package of result.packages) {
 							try {
@@ -235,8 +232,6 @@ module.exports = {
 		upgradePackage: {
 			async handler(ctx) {
 				const { module, version } = ctx.params
-				//同步软件包许可证
-				// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 				return await this.upgradePackage(module, version);
             }
 		},
@@ -255,8 +250,6 @@ module.exports = {
 					}
 					let { module, version, url, auth, registry_url } = ctx.params
 					const enable = true;
-					//同步软件包许可证
-					// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
 					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
 				} catch (error) {
 					let errorInfo = error.message || '';
@@ -558,7 +551,7 @@ module.exports = {
 	 * Service created lifecycle event handler
 	 */
 	async created() {
-		this.broker.createService(packageLicense);
+
 	},
 
 	/**
@@ -571,8 +564,6 @@ module.exports = {
 		} catch (error) {
 			// console.error(`login steedos registry fail: `, error.message);
 		}
-
-		// await this.broker.call(`@steedos/service-package-license.syncPackagesLicense`);
  
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){

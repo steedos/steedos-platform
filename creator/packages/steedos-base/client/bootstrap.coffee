@@ -233,7 +233,6 @@ Tracker.autorun ()->
 			FlowRouter.initialize();
 
 handleBootstrapData = (result, callback)->
-	requestLicense(result.spaceId);
 	if _.isFunction(callback)
 		callback()
 
@@ -243,33 +242,6 @@ handleBootstrapData = (result, callback)->
 			return
 		else
 			FlowRouter.go("/")
-
-requestLicense = (spaceId)->
-	unless spaceId and Meteor.userId()
-		return
-	userId = Meteor.userId()
-	authToken = Accounts._storedLoginToken()
-	headers = {}
-	headers['Authorization'] = 'Bearer ' + spaceId + ',' + authToken
-	headers['X-User-Id'] = userId
-	headers['X-Auth-Token'] = authToken
-	$.ajax
-		type: "get"
-		url: Steedos.absoluteUrl("/api/license/#{spaceId}"),
-		dataType: "json"
-		headers: headers
-		async: false,
-		error: (jqXHR, textStatus, errorThrown) ->
-			error = jqXHR.responseJSON
-			console.error error
-			if error?.reason
-				toastr?.error?(TAPi18n.__(error.reason))
-			else if error?.message
-				toastr?.error?(TAPi18n.__(error.message))
-			else
-				toastr?.error?(error)
-		success: (result) ->
-			Creator.__l.set result
 
 requestBootstrapDataUseAjax = (spaceId, callback)->
 	unless spaceId and Meteor.userId()

@@ -8,6 +8,7 @@ const standardObjectsPath = path.dirname(require.resolve("@steedos/standard-obje
 const _ = require('lodash');
 const express = require('express');
 const validator = require('validator');
+const core = require('@steedos/core');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -80,6 +81,10 @@ module.exports = {
 		// 动态修改浏览器端 Meteor.settings 变量，包括其中的 PUBLIC_SETTINGS
 		setSettings(ctx) {
 			this.setSettings(ctx.params)
+		},
+		async importFlow(ctx) {
+			const { flow, name } = ctx.params;
+			return await this.importFlow(flow, name)
 		},
 	},
 
@@ -262,6 +267,66 @@ module.exports = {
 				}
 			})
 		},
+
+		importFlow: async function(flow, name) {
+            await Future.task(() => {
+                try {
+                    try {
+                        if(!db){
+                            return
+                        }
+                        if(!steedosImport){
+                            return
+                        }
+                    } catch (error) {
+                        return ;
+                    }
+                    
+                    if(db && db.flows && steedosImport){
+                        const steedosConfig = objectql.getSteedosConfig();
+                        let space;
+                        if(steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
+                            space = db.spaces.findOne(steedosConfig.tenant._id)
+                        }
+                        if(!space){
+                            space = db.spaces.findOne()
+                        }
+                        if(!space){
+                            this.logger.debug(`import flow ${flow.name} fail. not find space in db`);
+                            return ;
+                        }
+                        if(!flow.api_name){
+                            this.logger.warn(`not find api_name in file`);
+                            return ;
+                        }
+                        const dbFlow = db.flows.findOne({api_name: flow.api_name});
+                        if(!dbFlow){
+                            if(flow && flow.current){
+                                if(!_.has(flow.current,'fields')){
+                                    flow.current.fields = [];
+                                }
+                            }
+                            this.logger.info(`insert flow ${flow.api_name} from ${name}`);
+
+                            let company_id = null;
+                            if(flow.company_id){
+                                let count = Creator.getCollection("company").find({ _id: flow.company_id, space: space._id }).count();
+                                if(count > 0){
+                                    company_id = flow.company_id
+                                }
+                            }
+
+                            return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
+                        }
+                        this.logger.debug(`not import flow. find flow `, dbFlow._id)
+                    }
+
+                } catch (error) {
+                    this.logger.error(error)
+                }
+            }).promise();
+            
+        },
 	},
 
 	/**

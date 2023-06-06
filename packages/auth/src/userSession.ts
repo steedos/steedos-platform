@@ -1,11 +1,12 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-07 10:19:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 10:58:24
  * @Description: 
  */
-import { getSteedosSchema, addConfig, getConfig, removeConfig } from '@steedos/objectql';
+import { getSteedosSchema } from '@steedos/objectql';
+import { addConfig, getConfig, removeConfig} from '@steedos/metadata-registrar';
 import { isExpried } from './utils'
 const sessionCacheInMinutes = 10;
 const USERCACHENAME = 'users_cache';

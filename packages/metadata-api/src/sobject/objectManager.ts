@@ -1,4 +1,4 @@
-import { getOriginalObjectConfig, getOriginalObjectConfigs } from '@steedos/objectql'
+import { getOriginalObjectConfig, getOriginalObjectConfigs } from '@steedos/metadata-registrar'
 import * as _ from 'underscore'
 
 const noUseFields = ['created_by', 'modified_by', 'company_id', 'company_ids', 'owner'];

@@ -19,3 +19,4 @@ required: true
 filterable: true
 searchable: true
 sort_no: 160
+visible_on: '{{global.user.is_space_admin}}'

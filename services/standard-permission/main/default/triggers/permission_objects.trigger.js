@@ -3,6 +3,7 @@ const objectql = require("@steedos/objectql");
 const InternalData = require('@steedos/standard-objects').internalData;
 const auth = require("@steedos/auth");
 
+
 const permissions = {
     allowEdit: false,
     allowDelete: false,

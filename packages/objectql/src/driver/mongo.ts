@@ -7,7 +7,7 @@ import { SteedosDriverConfig } from "./driver";
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { createFilter, createQuery } from '@steedos/odata-v4-mongodb';
 import _ = require("underscore");
-import { wrapAsync } from '../util';
+import { wrapAsync } from '../index';
 import { getMongoFieldEncryptionConsts } from './field-encrytion';
 import { formatRecord } from './format';
 

@@ -1,6 +1,7 @@
 "use strict";
 
 const objectql = require('@steedos/objectql');
+const { registerMetadataConfigs, loadStandardMetadata } = require('@steedos/metadata-registrar');
 const core = require('@steedos/core');
 const triggerLoader = require('@steedos/service-package-loader').triggerLoader;
 const path = require('path');
@@ -53,8 +54,8 @@ module.exports = {
 				packagePath = path.join(packagePath, '**');
                 const datasource = objectql.getDataSource(datasourceName);
                 await datasource.init();
-				await objectql.loadStandardMetadata(name, datasourceName);
-                await objectql.addAllConfigFiles(packagePath, datasourceName, name);
+				await loadStandardMetadata(name, datasourceName);
+                await registerMetadataConfigs(packagePath, datasourceName, name);
 				await triggerLoader.load(this.broker, packagePath, name);
 
                 let routersData = objectql.loadRouters(packagePath);

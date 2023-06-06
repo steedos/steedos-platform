@@ -1,4 +1,5 @@
 const objectql = require("@steedos/objectql");
+const register = require("@steedos/metadata-registrar")
 const steedosI18n = require("@steedos/i18n");
 const odataMongodb = require("@steedos/odata-v4-mongodb");
 const clone = require("clone");
@@ -191,7 +192,7 @@ async function getObject(id, userId){
 exports.getObject = getObject
 
 function getOriginalObjectFields(objectName){
-    return objectql.getOriginalObjectConfig(objectName)?.fields || {}
+    return register.getOriginalObjectConfig(objectName)?.fields || {}
 }
 
 async function getObjectFields(objectName, userId, all){
@@ -200,7 +201,7 @@ async function getObjectFields(objectName, userId, all){
         let fields = [];
         let originalFieldsName = ['owner', 'created', 'created_by', 'modified', 'modified_by', 'locked', 'company_id', 'company_ids', 'instance_state']//'created', 'modified', 'owner'
         
-        const baseObject = objectql.getObjectConfig('__MONGO_BASE_OBJECT');
+        const baseObject = register.getObjectConfig('__MONGO_BASE_OBJECT');
 
         // 从 originalFieldsName 中排出掉 baseObject中的fields
         if(baseObject && baseObject.fields){
@@ -228,10 +229,6 @@ exports.getDefaultSysFields = async function(object, userId){
 exports.getObjectField = async function(objectName, userId, fieldId){
     let fields = await getObjectFields(objectName, userId);
     return _.find(fields, function(field){ return field._id === fieldId})
-}
-
-function getOriginalObjectActions(objectName){
-    return objectql.getOriginalObjectConfig(objectName).actions || {}
 }
 
 async function getObjectActions(objectName, userId){

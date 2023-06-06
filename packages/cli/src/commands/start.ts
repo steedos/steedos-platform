@@ -427,6 +427,7 @@ class StartCommand extends Command {
 		// Create service broker
 		this.broker = new ServiceBroker(Object.assign({}, this.config));
 		this.broker.runner = this;
+		global.broker = this.broker;
 
 		await this.loadServices();
 

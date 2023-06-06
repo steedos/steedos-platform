@@ -1,9 +1,17 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 15:07:13
+ * @Description: 
+ */
 const objectql = require('@steedos/objectql');
+const register = require('@steedos/metadata-registrar');
 const auth = require('@steedos/auth');
 const _ = require('underscore');
 async function getAll(){
     const schema = objectql.getSteedosSchema();
-    const configs = await objectql.registerTab.getAll(schema.broker)
+    const configs = await register.registerTab.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
 
     _.each(dataList, function(item){
@@ -16,7 +24,7 @@ async function getAll(){
 
 async function get(apiName){
     const schema =objectql.getSteedosSchema();
-    const config = await objectql.registerTab.get(schema.broker, apiName)
+    const config = await register.registerTab.get(schema.broker, apiName)
     return config ? config.metadata : null;
 }
 

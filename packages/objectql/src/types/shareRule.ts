@@ -1,8 +1,8 @@
-import { registerShareRules } from '../metadata-register/shareRules';
 import { getSteedosSchema } from '../types'
 import * as _ from 'lodash'
 import { isExpression, parseSingleExpression } from '../util'
 import { formatFiltersToODataQuery } from "@steedos/filters";
+import { registerShareRules } from '@steedos/metadata-registrar';
 
 export type SteedosShareRuleConfig = {
     _id: string,

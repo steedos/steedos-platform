@@ -7,7 +7,7 @@ import odataV4Mongodb = require('@steedos/odata-v4-mongodb');
 import _ = require('underscore');
 import { Response } from 'express-serve-static-core';
 import * as core from "express-serve-static-core";
-import { getObjectConfig } from "@steedos/objectql";
+import { getObjectConfig } from '@steedos/metadata-registrar'
 interface Request extends core.Request {
     user: any;
 }

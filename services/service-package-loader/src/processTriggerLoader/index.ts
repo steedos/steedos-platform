@@ -1,7 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-16 11:55:06
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-05-30 09:47:15
+ * @Description: 
+ */
 import * as _ from "underscore";
 import * as path from "path";
-import { getMD5, JSONStringify, loadProcessTriggers, registerProcessTrigger } from "@steedos/objectql";
+import { getMD5, JSONStringify } from '@steedos/metadata-core';
 import { Trigger } from "./types";
+import { registerProcessTrigger, loadProcessTriggers } from "@steedos/metadata-registrar";
 
 const ENUM_WHEN = ['beforeDraftInsert', 'afterDraftInsert', 'beforeDraftSubmit', 'afterDraftSubmit', 'beforeStepSubmit', 'afterStepSubmit', 'cacluateNextStepUsers',
     'beforeCancel', 'afterCancel', 'beforeTerminate', 'afterTerminate', 'beforeEnd', 'afterEnd'];
