@@ -239,6 +239,7 @@
                                                             "id": "u:1ac8afc8a9bb"
                                                         }
                                                     ],
+                                                    "headerToolbarClassName": "px-1 py-3",
                                                     "source": "${buttons}",
                                                     "id": "u:a5d43b752494"
                                                 }
@@ -494,6 +495,7 @@
                                                             "id": "u:ec9931ea883c"
                                                         }
                                                     ],
+                                                    "headerToolbarClassName": "px-1 py-3",
                                                     "id": "u:22121edc42b1"
                                                 }
                                             ],
@@ -820,6 +822,7 @@
                                                             "id": "u:b9a5d3b611d7"
                                                         }
                                                     ],
+                                                    "headerToolbarClassName": "px-1 py-3",
                                                     "source": "${related_lists}",
                                                     "footable": false,
                                                     "columnsTogglable": true,
