@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-16 11:28:59
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-06 11:03:12
  * @Description: 
  */
 
@@ -19,6 +19,8 @@ const open = require('open');
 const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
+
+const { QUERY_DOCS_TOP } = require('./lib/consts');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -56,7 +58,7 @@ module.exports = {
             params: {
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-                top: { type: 'number', optional: true },
+                top: { type: 'number', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'number', optional: true },
                 sort: { type: 'string', optional: true }
             },
@@ -86,6 +88,15 @@ module.exports = {
                     }
                 }
                 const userSession = ctx.meta.user;
+
+                if (_.has(ctx.params, "top")) { // 如果top小于1，不返回数据
+                    if (ctx.params.top < 1) {
+                        return []
+                    }
+                    if (ctx.params.top > QUERY_DOCS_TOP) {
+                        ctx.params.top = QUERY_DOCS_TOP   // 最多返回5000条数据
+                    }
+                }
                 return this.find(objectName, ctx.params, userSession)
             }
         },

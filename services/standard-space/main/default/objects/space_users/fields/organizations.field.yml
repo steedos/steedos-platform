@@ -19,3 +19,4 @@ required: true
 filterable: true
 searchable: true
 sort_no: 160
+visible_on: "{{global.mode ==='read' ? true : (global.user.is_space_admin || global.user.roles.includes('organization_admin'))}}"
