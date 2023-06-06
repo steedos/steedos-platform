@@ -19,10 +19,6 @@ fields:
       - label: Permission set
         value: permission_set
     description: 
-  license:
-    label: License
-    help: 
-    description: 
   assigned_apps:
     label: Assigned Apps
     help: 
