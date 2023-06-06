@@ -21,6 +21,7 @@
     "@steedos/formula": "2.5.3-beta.2",
     "@steedos/i18n": "2.5.3-beta.2",
     "@steedos/metadata-core": "2.5.3-beta.2",
+    "@steedos/metadata-registrar": "2.5.3-beta.2",
     "@steedos/odata-v4-mongodb": "2.5.3-beta.2",
     "@steedos/odata-v4-sql": "2.5.3-beta.2",
     "@steedos/odata-v4-typeorm": "2.5.3-beta.2",
