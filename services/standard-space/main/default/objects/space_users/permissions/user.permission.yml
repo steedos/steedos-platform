@@ -9,3 +9,13 @@ uneditable_fields:
   - profile
   - password_expired
   - organizations
+field_permissions:
+  - field: profile
+    readable: true
+    editable: false
+  - field: password_expired
+    readable: true
+    editable: false
+  - field: organizations
+    readable: true
+    editable: false
