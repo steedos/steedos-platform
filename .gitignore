@@ -29,4 +29,4 @@
 !/server/bundle/**/node_modules/formBuilder/dist
 !/server/bundle/**/node_modules
 docker-volumes/**
-examples/project-ee2/**
+examples/multi-node-testing/**
