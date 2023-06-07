@@ -216,7 +216,7 @@ fields:
           return ['_id', '=', 'no']
         }
       }
-    sort_no: 450
+    sort_no: 445
   reference_to_field:
     type: lookup
     group: Advanced
@@ -615,13 +615,13 @@ fields:
   required:
     type: boolean
     label: Required
-    group: Advanced
+    # group: Advanced
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
     sort_no: 390
   is_wide:
     type: boolean
     label: Is Wide
-    group: Advanced
+    # group: Advanced
   # readonly:
   #   type: boolean
   #   label: Readonly
@@ -657,7 +657,7 @@ fields:
   show_as_qr:
     type: boolean
     label: Show_as_qr
-    group: Advanced
+    # group: Advanced
     visible_on: "{{formData.type === 'url' ? true: false}}"
     sort_no: 440
   visible_on:
@@ -670,13 +670,13 @@ fields:
     label: Prompt text
     type: textarea
     is_wide: true
-    group: Advanced
+    # group: Advanced
     sort_no: 460
   description:
     label: Description
     type: textarea
     is_wide: true
-    group: Advanced
+    # group: Advanced
     sort_no: 470
   amis:
     label: Amis 属性
