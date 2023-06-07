@@ -24,6 +24,7 @@
     "@steedos/i18n": "2.5.3-beta.7",
     "@steedos/metadata-registrar": "2.5.3-beta.7",
     "dotenv-flow": "^3.1.0",
+    "tslib": "^2.4.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
     "moleculer": "^0.14.25",

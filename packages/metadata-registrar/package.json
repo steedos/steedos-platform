@@ -19,6 +19,7 @@
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
     "compressing": "^1.5.1",
+    "tslib": "^2.4.0",
     "dotenv-flow": "^3.2.0",
     "eval": "^0.1.4",
     "glob": "^7.1.6",

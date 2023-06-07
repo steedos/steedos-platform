@@ -47,6 +47,7 @@
   "devDependencies": {
     "@salesforce/kit": "1.0.4",
     "@salesforce/ts-types": "1.1.2",
+    "tslib": "^2.4.0",
     "@steedos/meteor-bundle-runner": "2.5.3-beta.7",
     "@types/express": "^4.16.1",
     "@types/node": "^11.10.4",
