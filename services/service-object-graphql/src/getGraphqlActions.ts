@@ -2,7 +2,7 @@ import _ = require("underscore");
 import { translationObject } from '@steedos/i18n';
 import moment = require('moment');
 import { getSteedosSchema, SteedosObjectTypeConfig, getUserLocale, absoluteUrl } from "@steedos/objectql";
-import { EXPAND_SUFFIX, DISPLAY_PREFIX, RELATED_PREFIX, GRAPHQL_ACTION_PREFIX, UI_PREFIX, PERMISSIONS_PREFIX } from "./consts";
+import { EXPAND_SUFFIX, DISPLAY_PREFIX, RELATED_PREFIX, GRAPHQL_ACTION_PREFIX, UI_PREFIX, PERMISSIONS_PREFIX, QUERY_DOCS_TOP } from "./consts";
 import { getQueryFields } from "./getQueryFields";
 import {
     callObjectServiceAction,
@@ -96,7 +96,7 @@ export function getGraphqlActions(
         params: {
             fields: { type: 'array', items: "string", optional: true },
             filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-            top: { type: 'number', optional: true, default: 5000, max: 5000 },
+            top: { type: 'number', optional: true, default: QUERY_DOCS_TOP },
             skip: { type: 'number', optional: true },
             sort: { type: 'string', optional: true },
             _parentId: { type: 'string', optional: false },
@@ -142,8 +142,13 @@ export function getGraphqlActions(
             }
             delete params._related_params;
             delete params._parentId;
-            if (_.has(params, "top") && params.top < 1) { // 如果top小于1，不返回数据
-                return []
+            if (_.has(params, "top")) { // 如果top小于1，不返回数据
+                if (params.top < 1) {
+                    return []
+                }
+                if (params.top > QUERY_DOCS_TOP) {
+                    params.top = QUERY_DOCS_TOP; // 最多返回5000条数据
+                }
             }
             return await object.find(params, userSession);
         },
