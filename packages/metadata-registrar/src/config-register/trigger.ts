@@ -82,7 +82,7 @@ export const addObjectListenerConfig = (json: any) => {
             listener.name = json._id || getMD5(JSONStringify(json));
             object.listeners[listener.name] = listener
             if(object.datasource === 'meteor'){
-                _.extend(object, {triggers: transformListenersToTriggers(object, listener)})
+                _.defaultsDeep(object, {triggers: transformListenersToTriggers(object, listener)})
             }
 
             try {
