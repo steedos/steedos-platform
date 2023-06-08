@@ -1,12 +1,12 @@
 {
   "name": "with-datadog",
-  "version": "2.5.3-beta.8",
+  "version": "2.5.3-beta.9",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.5.3-beta.8"
+    "@steedos/service-community": "2.5.3-beta.9"
   },
   "devDependencies": {
     "dd-trace": "3.7.1"
