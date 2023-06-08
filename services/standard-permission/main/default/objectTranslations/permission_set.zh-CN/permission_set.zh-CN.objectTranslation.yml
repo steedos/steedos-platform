@@ -23,6 +23,33 @@ fields:
     label: 授权应用
     help: 
     description: 
+  default_standard_buttons:
+    label: 默认标准按钮
+    help:
+    description:
+    options:
+      - label: 查找
+        value: standard_query
+      - label: 新建
+        value: standard_new
+      - label: 查看
+        value: standard_open_view
+      - label: 编辑
+        value: standard_edit
+      - label: 删除
+        value: standard_delete
+      - label: 批量删除
+        value: standard_delete_many
+      - label: 发起审批
+        value: standard_approve
+      - label: 查看审批单
+        value: standard_view_instance
+      - label: 关注
+        value: standard_follow
+      - label: 提请批准
+        value: standard_submit_for_approval
+      - label: 导入数据
+        value: standard_import_data
   users:
     label: 成员
     help: 类别为简档时，不需要选择成员

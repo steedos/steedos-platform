@@ -1425,6 +1425,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async getRecordView(userSession, context: any = {}) {
         let { objectConfig, layouts, spaceProcessDefinition, dbListViews, rolesFieldsPermission, relationsInfo} = await this.getContext(userSession, context);
         const lng = userSession.language;
+        const profile = userSession.profile;
+        const profileDoc = (await getObject('permission_set').find({
+            filters: [
+                ['name', '=', profile],
+                ['space', '=', userSession.spaceId],
+            ]
+        }, userSession))[0];
+        const defaultStandardButtons = profileDoc?.default_standard_buttons || [];
         
         objectConfig.name = this.name
         objectConfig.datasource = this.datasource.name;
@@ -1447,7 +1455,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
     
-            const layoutButtonsName = _.pluck(objectLayout.buttons,'button_name');
+            const layoutButtonsName = _.uniq(_.pluck(objectLayout.buttons,'button_name').concat(defaultStandardButtons));
             _.each(objectConfig.actions, function(action){
                 if(!_.include(layoutButtonsName, action.name)){
                     action.visible = false
@@ -1461,6 +1469,14 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     _.each(related_list.sort_field_name, (fName)=>{
                         related_list.sort.push({field_name: fName, order: related_list.sort_order || 'asc'})
                     })
+                }
+            })
+        }
+        else {
+            _.each(objectConfig.actions, function(action){
+                if(!_.include(defaultStandardButtons, action.name)){
+                    action.visible = false
+                    action._visible = function(){return false}.toString()
                 }
             })
         }

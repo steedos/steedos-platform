@@ -23,6 +23,33 @@ fields:
     label: Assigned Apps
     help: 
     description: 
+  default_standard_buttons:
+    label: Default Standard Buttons
+    help:
+    description:
+    options:
+      - label: Query
+        value: standard_query
+      - label: New
+        value: standard_new
+      - label: View
+        value: standard_open_view
+      - label: Edit
+        value: standard_edit
+      - label: Delete
+        value: standard_delete
+      - label: Delete many
+        value: standard_delete_many
+      - label: Approve
+        value: standard_approve
+      - label: View instance
+        value: standard_view_instance
+      - label: Follow
+        value: standard_follow
+      - label: Submit for approval
+        value: standard_submit_for_approval
+      - label: Import data
+        value: standard_import_data
   users:
     label: Users
     help: 'When the type is a profile, no user needs to be selected'
