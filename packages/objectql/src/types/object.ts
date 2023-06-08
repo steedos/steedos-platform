@@ -1472,7 +1472,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
         }
-        else {
+        else if (!_.isEmpty(defaultStandardButtons)){
             _.each(objectConfig.actions, function(action){
                 if(!_.include(defaultStandardButtons, action.name)){
                     action.visible = false
