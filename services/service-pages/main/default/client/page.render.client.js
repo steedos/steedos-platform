@@ -924,9 +924,9 @@
                 "name": "globalFooter",
                 "body": [
                     {
-                        "type": "steedos-global-Footer",
+                        "type": "steedos-global-footer",
                         "id": "u:77851eb4aa89",
-                        "appId": "${app.id}"
+                        "appId": appId
                     },
                 ]
             }
