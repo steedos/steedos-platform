@@ -13,6 +13,8 @@ const {
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 const ServiceObjectGraphql = require('@steedos/service-object-graphql')
+const open = require('open');
+
 
 const mixinOptions = {
 
@@ -90,6 +92,7 @@ const mixinOptions = {
  */
 module.exports = {
 	name: "api",
+    projectStarted: false,
 	mixins: [ApiGateway,
 		// GraphQL Apollo Server
 		ApolloService(mixinOptions),
@@ -729,6 +732,30 @@ module.exports = {
 	created() {
 		this.app = SteedosRouter.staticRouter();
 	},
+	events:{
+		'service-ui.started': function(){
+			this.app.use("/", this.express());
+		},
+		"$packages.changed": function(){
+			if (!this.projectStarted) {
+				this.projectStarted = true
+				// 开发环境, 显示耗时
+				if(process.env.NODE_ENV == 'development' && global.__startDate){
+					console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
+				}
+				console.log(`Project is running at ${process.env.ROOT_URL}`);
+				console.log('');
+				if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
+					try {
+						open(process.env.ROOT_URL);
+					} catch (error) {
+						console.error(error);
+						console.error('auto open browser failed.');
+					}
+				}
+			}
+		}
+	},
 	async started() {
 
 		this.broker.createService(require("@steedos/service-ui"));
@@ -745,9 +772,9 @@ module.exports = {
 		// 	});
 		// }
 
-		this.broker.waitForServices('~packages-@steedos/service-ui').then(() => {
-			this.app.use("/", this.express());
-		})
+		// this.broker.waitForServices('~packages-@steedos/service-ui').then(() => {
+		// 	this.app.use("/", this.express());
+		// })
 
 		global.SteedosApi = {
 			express: this.express

@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-06 11:03:12
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-08 18:06:04
  * @Description: 
  */
 
@@ -14,13 +14,14 @@ const {
     getGraphqlActions,
     getQueryFields
 } = require('./lib');
-const open = require('open');
 
 const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
 const { QUERY_DOCS_TOP } = require('./lib/consts');
+
+const { Register } = require('@steedos/metadata-registrar')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -32,8 +33,6 @@ module.exports = {
 
     globalGraphQLSettings: {}, // service-api 里generateGraphQLSchema使用 
     getGraphqlFields: getQueryFields,
-
-    projectStarted: false,
 
     /**
      * Settings
@@ -229,70 +228,67 @@ module.exports = {
      * Events
      */
     events: {
+        "graphql.schema.changed": {
+            params: {},
+            async handler(ctx) {
+                console.log(`graphql.schema.changed====>`)
+                await this.ChangeGlobalGraphQLSettings()
+            }
+        },
         // 此事件表示软件包发生变化（包括加载、卸载、对象发生变化），接收到此事件后重新生成graphql schema
         "$packages.changed": {
             params: {},
             async handler(ctx) {
-                // console.log("Payload:", ctx.params);
-                // console.log("Sender:", ctx.nodeID);
-                // console.log("Metadata:", ctx.meta);
-                // console.log("The called event name:", ctx.eventName);
-
-                const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
-
-                let type = []
-                let query = []
-                let mutation = []
-                let resolvers = {}
-                let resolversQuery = {}
-                let resolversMutation = {}
-
-                for (const objectName in objGraphqlMap) {
-                    if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
-                        const gMap = objGraphqlMap[objectName];
-                        type.push(gMap.type)
-                        query = query.concat(gMap.query)
-                        mutation = mutation.concat(gMap.mutation)
-                        resolvers = Object.assign(resolvers, gMap.resolvers)
-                        resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
-                        resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
-                    }
+                if(broker.nodeID != 'steedos-primary'){
+                    return ;
                 }
-
-                this.globalGraphQLSettings = {
-                    type: type,
-                    query: query,
-                    mutation: mutation,
-                    resolvers: {
-                        ...resolvers,
-                        Query: resolversQuery,
-                        Mutation: resolversMutation
-                    }
+                if(this.setTimeoutId){
+                    clearTimeout(this.setTimeoutId);
+                    this.setTimeoutId = null;
                 }
-
-                // console.log('graphql:', new Date())
-                // console.log(JSON.stringify(query, null, 2))
-
-                // 发送事件，通知ApolloService重新加载graphql schema
-                ctx.emit('$services.changed');
-
-                if (!this.projectStarted) {
-                    this.projectStarted = true
-                    // 开发环境, 显示耗时
-                    if(process.env.NODE_ENV == 'development' && global.__startDate){
-                        console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
-                    }
-                    console.log(`Project is running at ${process.env.ROOT_URL}`);
-                    console.log('');
-                    if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
-                        try {
-                            open(process.env.ROOT_URL);
-                        } catch (error) {
-                            console.error(error);
-                            console.error('auto open browser failed.');
+                this.setTimeoutId = setTimeout(async ()=>{
+                    // console.log("Payload:", ctx.params);
+                    // console.log("Sender:", ctx.nodeID);
+                    // console.log("Metadata:", ctx.meta);
+                    // console.log("The called event name:", ctx.eventName);
+                    console.log(`[service][graphql]===> generateObjGraphqlMap ${this.name} start`)
+                    const s = new Date();
+                    const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
+                    console.log(`[service][graphql]==1=> generateObjGraphqlMap ${this.name} 耗时：`, new Date() - s, 'ms')
+                    let type = []
+                    let query = []
+                    let mutation = []
+                    let resolvers = {}
+                    let resolversQuery = {}
+                    let resolversMutation = {}
+                    
+                    for (const objectName in objGraphqlMap) {
+                        if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
+                            const gMap = objGraphqlMap[objectName];
+                            type.push(gMap.type)
+                            query = query.concat(gMap.query)
+                            mutation = mutation.concat(gMap.mutation)
+                            resolvers = Object.assign(resolvers, gMap.resolvers)
+                            resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
+                            resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
                         }
                     }
-                }
+                    console.log(`[service][graphql]==2=> generateObjGraphqlMap ${this.name} 耗时：`, new Date() - s, 'ms')
+                    const globalGraphQLSettings = {
+                        type: type,
+                        query: query,
+                        mutation: mutation,
+                        resolvers: {
+                            ...resolvers,
+                            Query: resolversQuery,
+                            Mutation: resolversMutation
+                        }
+                    }
+                    console.log(`graphql.schema.changed=============`)
+                    await Register.add(ctx.broker, {key: 'globalGraphQLSettings', data: globalGraphQLSettings}, {})
+                    ctx.broker.broadcast("graphql.schema.changed")
+
+                }, 1000 * 3)
             }
         }
     },
@@ -301,7 +297,15 @@ module.exports = {
      * Methods
      */
     methods: {
-
+        async ChangeGlobalGraphQLSettings() {
+            console.log(`ChangeGlobalGraphQLSettings====>`)
+            const result = await Register.get(this.broker, 'globalGraphQLSettings');
+            if(result){
+                this.globalGraphQLSettings = result.metadata;
+                // 发送事件，通知ApolloService重新加载graphql schema; api 服务和graphql服务在同一个节点上.
+                this.broker.broadcastLocal('$services.changed');
+            }
+        },
         find: {
             async handler(objectName, query, userSession) {
                 const obj = this.getObject(objectName)
@@ -347,84 +351,90 @@ module.exports = {
 
         async generateObjGraphqlMap(graphqlServiceName) {
             const objGraphqlMap = {}
+            console.time('generateObjGraphqlMap===>objects.getAll')
             const objectConfigs = await this.broker.call("objects.getAll");
+            console.timeEnd('generateObjGraphqlMap===>objects.getAll')
             for (const object of objectConfigs) {
-                // console.log('===>object.metadata.name: ', object.metadata.name)
-                const objectConfig = object.metadata
-                const objectName = objectConfig.name
-                // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
-                if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
-                    continue
-                }
-                /**
-                 * objGraphqlMap[objectName] 结构
-                {
-                    type: "",
-                    resolvers: {
-                        [objectName]: {
-                            [`${name}${EXPAND_SUFFIX}`]: {},
-                            [relatedFieldName]: {},
-                            [DISPLAY_PREFIX]: {},
-                            [UI_PREFIX]: {},
-                            [PERMISSIONS_PREFIX]: {},
-                            [`${RELATED_PREFIX}_files`]: {},
-                            [`${RELATED_PREFIX}_tasks`]: {},
-                            [`${RELATED_PREFIX}_notes`]: {},
-                            [`${RELATED_PREFIX}_events`]: {},
-                            [`${RELATED_PREFIX}_audit_records`]: {},
-                            [`${RELATED_PREFIX}_instances`]: {},
-                            [`${RELATED_PREFIX}_approvals`]: {}
-                        }
-                    },
-                    query: [],
-                    resolversQuery: {
-                        [objectName]: { action: 'find' },
-                        [`${objectName}__count`]: { action: 'count' },
-                        [`${objectName}__findOne`]: { action: 'findOne' }
-                    },
-                    mutation: [],
-                    resolversMutation: {
-                        [`${objectName}__insert`]: { action: 'insert' },
-                        [`${objectName}__update`]: { action: 'update' },
-                        [`${objectName}__delete`]: { action: 'delete' }
+                try {
+                    // console.log('===>object.metadata.name: ', object.metadata.name)
+                    const objectConfig = object.metadata
+                    const objectName = objectConfig.name
+                    // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
+                    if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
+                        continue
                     }
-                }
-                 */
-                const gMap = {}
+                    /**
+                     * objGraphqlMap[objectName] 结构
+                    {
+                        type: "",
+                        resolvers: {
+                            [objectName]: {
+                                [`${name}${EXPAND_SUFFIX}`]: {},
+                                [relatedFieldName]: {},
+                                [DISPLAY_PREFIX]: {},
+                                [UI_PREFIX]: {},
+                                [PERMISSIONS_PREFIX]: {},
+                                [`${RELATED_PREFIX}_files`]: {},
+                                [`${RELATED_PREFIX}_tasks`]: {},
+                                [`${RELATED_PREFIX}_notes`]: {},
+                                [`${RELATED_PREFIX}_events`]: {},
+                                [`${RELATED_PREFIX}_audit_records`]: {},
+                                [`${RELATED_PREFIX}_instances`]: {},
+                                [`${RELATED_PREFIX}_approvals`]: {}
+                            }
+                        },
+                        query: [],
+                        resolversQuery: {
+                            [objectName]: { action: 'find' },
+                            [`${objectName}__count`]: { action: 'count' },
+                            [`${objectName}__findOne`]: { action: 'findOne' }
+                        },
+                        mutation: [],
+                        resolversMutation: {
+                            [`${objectName}__insert`]: { action: 'insert' },
+                            [`${objectName}__update`]: { action: 'update' },
+                            [`${objectName}__delete`]: { action: 'delete' }
+                        }
+                    }
+                    */
+                    const gMap = {}
 
-                const typeAndResolves = await generateSettingsGraphql(objectConfig, graphqlServiceName)
+                    const typeAndResolves = await generateSettingsGraphql(objectConfig, graphqlServiceName)
 
-                gMap.type = typeAndResolves.type
-                gMap.resolvers = typeAndResolves.resolvers
+                    gMap.type = typeAndResolves.type
+                    gMap.resolvers = typeAndResolves.resolvers
 
-                if (objectName == 'users') {
+                    if (objectName == 'users') {
+                        objGraphqlMap[objectName] = gMap
+                        continue
+                    }
+                    gMap.query = []
+                    gMap.resolversQuery = {}
+                    gMap.mutation = []
+                    gMap.resolversMutation = {}
+
+                    gMap.query.push(generateActionGraphqlProp('find', objectConfig))
+                    gMap.resolversQuery[objectName] = { action: 'find' }
+
+                    gMap.query.push(generateActionGraphqlProp('count', objectConfig))
+                    gMap.resolversQuery[`${objectName}__count`] = { action: 'count' }
+
+                    gMap.query.push(generateActionGraphqlProp('findOne', objectConfig))
+                    gMap.resolversQuery[`${objectName}__findOne`] = { action: 'findOne' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('insert', objectConfig))
+                    gMap.resolversMutation[`${objectName}__insert`] = { action: 'insert' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('update', objectConfig))
+                    gMap.resolversMutation[`${objectName}__update`] = { action: 'update' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('delete', objectConfig))
+                    gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
+
                     objGraphqlMap[objectName] = gMap
-                    continue
+                } catch (error) {
+                    console.error(`error`, error)
                 }
-                gMap.query = []
-                gMap.resolversQuery = {}
-                gMap.mutation = []
-                gMap.resolversMutation = {}
-
-                gMap.query.push(generateActionGraphqlProp('find', objectConfig))
-                gMap.resolversQuery[objectName] = { action: 'find' }
-
-                gMap.query.push(generateActionGraphqlProp('count', objectConfig))
-                gMap.resolversQuery[`${objectName}__count`] = { action: 'count' }
-
-                gMap.query.push(generateActionGraphqlProp('findOne', objectConfig))
-                gMap.resolversQuery[`${objectName}__findOne`] = { action: 'findOne' }
-
-                gMap.mutation.push(generateActionGraphqlProp('insert', objectConfig))
-                gMap.resolversMutation[`${objectName}__insert`] = { action: 'insert' }
-
-                gMap.mutation.push(generateActionGraphqlProp('update', objectConfig))
-                gMap.resolversMutation[`${objectName}__update`] = { action: 'update' }
-
-                gMap.mutation.push(generateActionGraphqlProp('delete', objectConfig))
-                gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
-
-                objGraphqlMap[objectName] = gMap
             };
 
             return objGraphqlMap
@@ -469,43 +479,8 @@ module.exports = {
      * Service started lifecycle event handler
      */
     async started() {
-        // const that = this;
-        // setTimeout(async function () {
-        //     const objGraphqlMap = await that.generateObjGraphqlMap(that.name)
-
-        //     let globalTypeDefs = []
-        //     let query = []
-        //     let mutation = []
-        //     let resolvers = {}
-        //     let resolversQuery = {}
-        //     let resolversMutation = {}
-
-        //     for (const objectName in objGraphqlMap) {
-        //         if (Object.hasOwnProperty.call(objGraphqlMap, objectName)) {
-        //             const gMap = objGraphqlMap[objectName];
-        //             globalTypeDefs.push(gMap.type)
-        //             query = query.concat(gMap.query)
-        //             mutation = mutation.concat(gMap.mutation)
-        //             resolvers = Object.assign(resolvers, gMap.resolvers)
-        //             resolversQuery = Object.assign(resolversQuery, gMap.resolversQuery)
-        //             resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
-        //         }
-        //     }
-
-        //     that.globalTypeDefs = globalTypeDefs
-
-        //     that.settings.graphql = {
-        //         query: query,
-        //         mutation: mutation,
-        //         resolvers: {
-        //             ...resolvers,
-        //             Query: resolversQuery,
-        //             Mutation: resolversMutation
-        //         }
-        //     }
-
-        //     console.log('graphql:', new Date())
-        // }, 20000)
+        await this.ChangeGlobalGraphQLSettings()
+        console.log('=============> service-object0-graphql started')
     },
 
     /**
