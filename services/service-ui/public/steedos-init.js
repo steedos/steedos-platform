@@ -2,10 +2,46 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-27 13:22:22
+ * @LastEditTime: 2023-06-06 16:55:36
  * @Description:
  */
 try {
+
+  function _innerWaitForThing(obj, path, func){
+    const timeGap = 100;
+    return new Promise((resolve, reject) => {
+    setTimeout(() => {
+        let thing = null;
+        if(lodash.isFunction(func)){
+            thing = func(obj, path);
+        }else{
+            thing = lodash.get(obj, path);
+        }
+        // console.log(`_innerWaitForThing`, path)
+        if (thing) {
+            return resolve(thing);
+        }
+        reject();
+    }, timeGap);
+    }).catch(() => {
+        return _innerWaitForThing(obj, path, func);
+    });
+  }
+
+  window.waitForThing=(obj, path, func)=>{
+      let thing = null;
+      if(lodash.isFunction(func)){
+          thing = func(obj, path);
+      }else{
+          thing = lodash.get(obj, path);
+      }
+      if (thing) {
+          return Promise.resolve(thing);
+      }
+      return _innerWaitForThing(obj, path, func);
+  };
+
+
   Steedos.authRequest = function (url, options) {
     var userSession = Creator.USER_CONTEXT;
     var spaceId = userSession.spaceId;
