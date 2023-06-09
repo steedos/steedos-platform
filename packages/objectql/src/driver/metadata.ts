@@ -125,7 +125,9 @@ export class MetadataDriver implements SteedosDriver {
         const _collection = clone(collection);
         _.each(_collection, function(item) {
             try {
-                item.space = spaceId;
+                if (!item.space && spaceId) {
+                    item.space = spaceId;
+                }
             } catch (error) {
                 console.error(`metadata driver queryMetadata: ${item} is not json data`);
             }
