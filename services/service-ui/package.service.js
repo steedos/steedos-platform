@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-11 18:09:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-15 18:08:40
+ * @LastEditTime: 2023-06-06 10:19:04
  * @Description: 
  */
 "use strict";
@@ -65,7 +65,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-
+		this.broker.broadcastLocal('service-ui.started', { name: this.name })
 	},
 
 	/**
