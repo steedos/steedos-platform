@@ -102,37 +102,18 @@ docker-compose -f docker-compose-vscode.yml up
 
 此时可以在浏览器中操作 VS Code，运行华炎魔方。
 
-## 访问华炎魔方
-
-打开浏览器，访问 http://127.0.0.1:5000，进入华炎魔方。
-
-进入设置应用，可以：
-- 创建自定义对象
-- 创建应用
-- 创建微页面
-
-## 平台功能
 
 ## 技术框架
 
 华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
+
+![Steedos Packages Overview](./docs/diagrams/Steedos%20Packages.drawio.svg)
 
 - [MongoDB](https://www.mongodb.com/try/download/) 版本 = 4.4， 华炎魔方使用 MongoDB 作为元数据仓库和默认数据源.
 - [Node.js](https://nodejs.org/en/download/) 版本 = 14。华炎魔方平台源码运行于 nodejs 环境。
 - [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
 - [Moleculer](https://moleculer.services/zh/): 基于 Node.js 的响应式微服务框架。
 - [Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components): 百度 Amis 前端低代码框架。
-
-## 了解更多
-
-您还可以根据华炎魔方快速构建应用程序的视频教程进行操作。
-
-- [视频教程](https://www.steedos.cn/videos/)
-- [安装部署](https://www.steedos.cn/docs/deploy/getting-started)
-- [开发文档](https://www.steedos.cn/docs/developer/)
-- [客户案例](https://www.steedos.cn/customer-success-stories/)
-- [解决方案](https://www.steedos.cn/collections/steedos-packages)
-- [试用解决方案(SaaS版）](https://demo.steedos.cn/)
 
 ## 为华炎魔方做贡献
 
