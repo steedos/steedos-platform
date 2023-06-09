@@ -28,7 +28,7 @@ Steedos 低代码PaaS平台是一款功能强大、易于使用、可扩展、�
 - 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
 - 自定义数据模型：用户可以根据自己的业务需求创建自定义的数据模型，以便更好地管理和分析数据。
 - 工作流引擎：内置强大的工作流引擎，可以帮助用户快速实现业务流程自动化。
-- 安全和权限控制：该平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
+- 安全和权限控制：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
 
 ## 可视化设计微页面
 
@@ -42,17 +42,18 @@ Steedos 低代码PaaS平台是一款功能强大、易于使用、可扩展、�
 
 ![对象管理](https://console.steedos.cn/api/files/images/64216644671028003e75f90e)
 
+## 安全和权限控制
+
+平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
+
+![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
+
 ## VS Code 插件
 
 实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
 
 ![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
 
-## 软件包管理
-
-元数据以及自定义的代码组合成为 [Steedos 软件包](https://www.steedos.cn/docs/developer/package)。支持软件包的版本管理、发布、安装、个性化定制、版本升级、多包开发，并与现有 DevOps 方案融合。参考：[Salesforce Package](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_unlocked_pkg_whats_a_package.htm)。
-
-![Steedos Packages Overview](./docs/diagrams/Steedos%20Metadata.drawio.svg)
 
 # 快速向导
 
