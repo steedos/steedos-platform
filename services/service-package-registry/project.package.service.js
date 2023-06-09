@@ -16,6 +16,7 @@ const { MoleculerError } = require("moleculer").Errors;
 const validator = require('validator');
 const npa = require("npm-package-arg");
 const login = require('./main/default/manager/login');
+// const objectql = require('@steedos/objectql');
 
 const HEADER_AUTH = 'Authorization';
 const AUTH_TYPE = 'Bearer';
@@ -558,6 +559,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
+		// objectql.getSteedosSchema(this.broker);
 		try {
 			await this.loginSteedosRegistry();
 			console.info(`login steedos registry success`);
