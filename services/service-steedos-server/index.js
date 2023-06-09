@@ -37,7 +37,7 @@ module.exports = {
 			enabled: true
 		},
 		built_in_plugins: [
-			"@steedos/standard-space",
+			// "@steedos/standard-space",
 			"@steedos/standard-cms",
 			"@steedos/standard-object-database",
 			"@steedos/standard-process-approval",
@@ -57,7 +57,7 @@ module.exports = {
 			// "@steedos/service-accounts",
 			// "@steedos/service-charts",
 			// "@steedos/service-pages",
-			// "@steedos/service-workflow",
+			"@steedos/service-workflow",
 			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
 			// "@steedos/service-files",
@@ -176,6 +176,7 @@ module.exports = {
 					WebApp.connectHandlers.use(connectHandlersExpress)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
+					this.wrapAsync(this.startStandardSpace, {});
 					// console.time(`startSteedos-dataSourceInIt`)
 					// const datasources = steedosSchema.getDataSources();
 					// for (let dataSource in datasources) {
@@ -231,6 +232,22 @@ module.exports = {
 
 		},
 
+		async startStandardSpace(){
+			console.log(`startStandardSpace====`)
+			return await new Promise((resolve, reject) => {
+				this.standardSpaceService = this.broker.createService({
+					mixins: [require('@steedos/standard-space')],
+					started: () => {
+						console.log(`standard-objects started=========>`)
+						resolve(true)
+					}
+				});
+				if (!this.broker.started) {
+					this.broker._restartService(this.standardSpaceService)
+				}
+			})
+		},
+
 		async startStandardObjectsPackageLoader() {
 			let settings = this.settings.packageInfo;
 			if (settings.path) {
@@ -240,6 +257,7 @@ module.exports = {
 						mixins: [packageLoader],
 						settings: { packageInfo: settings },
 						started: () => {
+							console.log(`standard-objects started=========>`)
 							resolve(true)
 						}
 					});
@@ -354,9 +372,9 @@ module.exports = {
 			// console.log('耗时：', new Date().getTime() - time);
 			//  **已经移除了waitForServices, 此事件可以作废了, 可使用 dependencies: ['steedos-server']** ; 此处有异步函数，当前服务started后，实际上还未初始化完成。所以此服务初始化完成后，发出一个事件;
 			
-			// 此处需要延时处理,否则监听此事件的函数中如果调用了此服务中的aciton, 可能会出现action未注册的情况.
+			// 此处需要延时处理,否则监听此事件的函数中如果调用了此服务中的action, 可能会出现action未注册的情况.
 			setTimeout(()=>{
-				this.broker.emit("steedos-server.started");
+				this.broker.broadcastLocal("steedos-server.started");
 			}, 1000)
 		
 			// });
