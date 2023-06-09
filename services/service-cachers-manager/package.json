@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@steedos/cachers": "2.5.3-beta.10"
+    "@steedos/cachers": "2.5.3-beta.10",
+    "@steedos/metadata-registrar": "2.5.3-beta.10"
   },
   "publishConfig": {
     "access": "public"

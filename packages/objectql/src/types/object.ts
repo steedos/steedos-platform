@@ -1426,12 +1426,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         let { objectConfig, layouts, spaceProcessDefinition, dbListViews, rolesFieldsPermission, relationsInfo} = await this.getContext(userSession, context);
         const lng = userSession.language;
         const profile = userSession.profile;
-        const profileDoc = (await getObject('permission_set').find({
-            filters: [
-                ['name', '=', profile],
-                ['space', '=', userSession.spaceId],
-            ]
-        }, userSession))[0];
+        const profileDoc = await broker.call('@steedos/service-cachers-manager.getProfile', { name: profile, spaceId: userSession.spaceId })
         const defaultStandardButtons = profileDoc?.default_standard_buttons || [];
         
         objectConfig.name = this.name
@@ -1474,7 +1469,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
         else if (!_.isEmpty(defaultStandardButtons)){
             _.each(objectConfig.actions, function(action){
-                if(!_.include(defaultStandardButtons, action.name)){
+                if(action.name.startsWith('standard_') && !_.include(defaultStandardButtons, action.name)){
+                    // 在base默认按钮中，但是不在简档配置中的按钮，隐藏，只影响base按钮，不影响自定义按钮
                     action.visible = false
                     action._visible = function(){return false}.toString()
                 }
