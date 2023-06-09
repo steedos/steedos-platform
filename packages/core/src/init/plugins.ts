@@ -6,9 +6,28 @@ const app = SteedosRouter.staticRouter();
 // const objectql = require('@steedos/objectql')
 // const util = require('../util/index')
 // const ConfigName = 'plugin.config.yml'
-import { getSteedosSchema, loadService } from '@steedos/objectql';
+import { getSteedosSchema } from '@steedos/objectql';
 import * as initConfig from './init-config.json'
 const PACKAGE_SERVICE_FILE_NAME = 'package.service.js';
+
+
+const loadPluginPackages = async (broker, packageName, pluginContext) => {
+    return await new Promise((resolve, reject) => {
+        var standardSpaceService = broker.createService({
+            mixins: [require(packageName)],
+            started: function() {
+                if(_.isFunction(this.init)){
+                    this.init(pluginContext);
+                }
+                resolve(true)
+            }
+        });
+        if (!broker.started) {
+            broker._restartService(standardSpaceService)
+        }
+    })
+}
+
 export class Plugins {
     static async init(coreInitConfig: any = {}) {
         let builtInPluginsName = coreInitConfig.built_in_plugins || [];
@@ -26,19 +45,21 @@ export class Plugins {
                 const pluginDir = this.getPluginDir(name);
                 let packageServiceFilePath = path.join(pluginDir, PACKAGE_SERVICE_FILE_NAME);
                 if (fs.existsSync(packageServiceFilePath)) {
-                    try {
-                        let service = loadService(broker, packageServiceFilePath);
-                        if (!broker.started) {
-                            broker._restartService(service)
-                        }
-                        await broker.waitForServices(service.name, null, 20)
-                        if (_.isFunction(service.init)) {
-                            // console.log(`pluginName: ${name}, pluginDir: ${pluginDir}`)
-                            service.init(pluginContext);
-                        }
-                    } catch (error) {
-                        console.error(error);
-                    }
+                    // 多节点运行的时候, 无法通过waitForServices来控制启动顺序. 目前waitForServices无法只监听本地服务
+                    await loadPluginPackages(broker, packageServiceFilePath, pluginContext);
+                    // try {
+                    //     let service = loadService(broker, packageServiceFilePath);
+                    //     if (!broker.started) {
+                    //         broker._restartService(service)
+                    //     }
+                    //     await broker.waitForServices(service.name, null, 20)
+                    //     if (_.isFunction(service.init)) {
+                    //         // console.log(`pluginName: ${name}, pluginDir: ${pluginDir}`)
+                    //         service.init(pluginContext);
+                    //     }
+                    // } catch (error) {
+                    //     console.error(error);
+                    // }
                 } else {
                     console.error(`Please add ${PACKAGE_SERVICE_FILE_NAME} in Plugin ${name}.`);
                 }
