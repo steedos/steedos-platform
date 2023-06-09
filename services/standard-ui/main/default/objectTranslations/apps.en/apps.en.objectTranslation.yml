@@ -1,5 +1,5 @@
 name: apps
-label: App
+label: Apps
 description: 
 fields:
   name:
@@ -7,7 +7,7 @@ fields:
     help: 
     description: 
   code:
-    label: API Name)
+    label: API Name
     help: 
     description: 
   icon_slds:
@@ -47,11 +47,11 @@ fields:
     help: 
     description: 
   is_creator:
-    label: Show this app for Desktop
+    label: Show this app on Desktop
     help: 
     description: 
   mobile:
-    label: Show this app for Mobile
+    label: Show this app on Mobile
     help: 
     description: 
   members:

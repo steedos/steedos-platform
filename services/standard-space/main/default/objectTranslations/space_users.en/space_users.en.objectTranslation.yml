@@ -31,7 +31,7 @@ fields:
     help: 
     description: 
   organizations_parents:
-    label: Department Parent Tree
+    label: Department (including superiors)
     help: 
     description: 
   organization:
@@ -148,7 +148,7 @@ actions:
   unlock:
     label: Unlock
 CustomLabels:
-  space_users_field_profile_def_options_admin: 
-  space_users_field_profile_def_options_user: 
-  space_users_field_profile_def_options_supplier: 
-  space_users_field_profile_def_options_customer: 
+  space_users_field_profile_def_options_admin: Administrator
+  space_users_field_profile_def_options_user: Employee
+  space_users_field_profile_def_options_supplier: Supplier
+  space_users_field_profile_def_options_customer: Customer

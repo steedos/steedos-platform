@@ -266,7 +266,7 @@ list_views:
       - owner
       - modified
       - is_system
-    label: All List View
+    label: All List Views
     filter_scope: space
 actions:
   customize:

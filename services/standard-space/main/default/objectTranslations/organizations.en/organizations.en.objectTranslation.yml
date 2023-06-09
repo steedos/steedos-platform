@@ -11,15 +11,15 @@ fields:
     help: 
     description: 
   parent:
-    label: Parent Department
+    label: Superior Department
     help: 
     description: 
   parents:
-    label: All Parents
+    label: All Superior Departments
     help: 
     description: 
   children:
-    label: Children
+    label: Subordinate Department
     help: 
     description: 
   sort_no:
@@ -57,4 +57,4 @@ actions:
   addSubOrganization:
     label: Add a Branch
 CustomLabels:
-  organizations_group_系统: 
+  organizations_group_系统: System
