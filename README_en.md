@@ -16,45 +16,30 @@
 </p>
 
 <p align="center">
-Salesforce alternative in nodejs and mongodb, use metadata to describe objects, fields, code, logic, and page layouts. Metadata can be imported into Steedos, modified in the product interface, or manipulated via the Steedos Metadata API.</p>
+Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platform. It provides a powerful and flexible platform for building enterprise-grade applications quickly and easily.  With its intuitive drag-and-drop interface, Steedos empowers both developers and non-technical users to create custom applications without the need for extensive coding knowledge.
+</p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
 
-## What is Steedos Metadata?
+## Core Features
+                  
+- Drag-and-drop interface for building applications
+- Built-in data management and workflow automation
+- Integration with popular business tools and services
+- Customizable user interface and branding options
+- Multi-language support
+- Real-time collaboration and team management features
 
-Metadata is core to the steedos infrastructure. Metadata relates to the objects, fields, configurations, code, logic, and page layouts that go into building the information architecture and look and feel of your steedos apps.
+## Key Highlights:
 
-There are several types of Metadata, with each one representing a unique way a business function can be customized. Here are a few broad categories for Metadata types:
+- Low-code development: Steedos allows you to create custom applications without the need for extensive coding knowledge. This reduces development time and costs significantly.
+- Open-source: Steedos is an open-source platform, which means you have complete control over the code and can modify it to fit your specific needs.
+- Scalable: Steedos is built on a scalable architecture, which means it can grow with your business and handle large volumes of data and users.
+- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
 
-- **Data**: the core components of the data structure on which most customization is built. E.g. Custom Objects, Fields, and Custom Apps.
-- **Programmability**: custom code developed on top of the platform. E.g. Buttons, Form Events, Triggers.
-- **Presentation**: customization on how users interact with the platform. E.g. Components, List View and Page Layouts.
-
-## Why Metadata?
-
-Hard-coded applications are a thing of the past; customization is the flair of the season.
-
-You need flexible applications that can be tailor-made as per your business needs without the need for high-level programming skills. That is why Steedos Metadata is so powerful. Metadata is what transforms Steedos from a simple database into an entire platform.
-
-## Steedos Metadata Types
-
-- **Custom Objects**: Create custom objects to store information that’s unique to your organization. Choose whether your custom objects are searchable, support sharing, or include access to the Bulk API and Streaming API.
-
-- **Formula**: A formula is an algorithm that derives its value from other fields, expressions, or values. Formulas can help you automatically calculate the value of a field based on other fields.
-
-- **Validation Rules**: Improve the quality of your data using validation rules. Validation rules verify that the data a user enters in a record meets the standards you specify before the user can save the record. 
-
-- **Workflow Rules**: Workflow lets you automate standard internal procedures and processes to save time across your org. A workflow rule is the main container for a set of workflow instructions. These instructions can always be summed up in an if/then statement.
-
-- **Automated Actions**: An automated action is a reusable component that performs some sort of action behind the scenes—like updating a field or sending an email. Once you create an automated action, add it to a process, milestone, or other automated process.
-
-- **Approval Process**:  Different from process automation in the form of workflow rules. Approvals take automation one step further, letting you specify a sequence of steps that are required to approve a record.
-
-- **Report & Dashboard**: Steedos offers a powerful suite of reporting tools that work together to help you understand and act on your data.
-
-## Installation
+## Getting Started
 
 Steedos is essentially a set of npm packages that can be installed over npm. 
 
@@ -69,72 +54,8 @@ yarn start
 
 or you can try the following sample projects.
 
-- [Project Management App](https://github.com/steedos/project-management-app)
-- [Customer Relationship Management](https://github.com/steedos/steedos-app-crm)
-
-## Steedos Project
-
-Steedos project is native [Node.js](https://nodejs.org/en/download/) (version >= 10.15.1) project, use [MongoDB](https://www.mongodb.com/try/download/) (version >= 4.2) to save metadata and data.
-
-Developers can define metadata in project source code, or via product interface.
-
-Developers can add business logic to most system events, including button clicks, related record updates, and customized pages. Code can be initiated by Web service requests and from triggers on objects.
-
-### Project Structure
-
-```sh
-my-app
-├── steedos-app/main/default
-│   ├── applications
-│   │   └── myApp.app.yml
-│   └── objects
-│       └──todo__c
-│           ├── buttons
-│           │   └── markDown.button.yml
-│           │   └── markDown.button.js
-│           ├── fields
-│           │   └── name.field.yml
-│           │   └── description.field.yml
-│           │   └── isDone.field.yml
-│           │   └── ...
-│           ├── listviews
-│           │   └── all.listview.yml
-│           │   └── recent.listview.yml
-│           │   └── my.listview.yml
-│           ├── permissions
-│           │   └── user.permission.yml
-│           │   └── admin.permission.yml
-│           └── todo.object.yml
-│           └──...
-├── .env
-├── .gitignore
-├── package.json
-├── README.md
-├── server.js
-├── steedos-config.yml
-└── yarn.lock
-```
-
-
-### Metadata Example
-
-Steedos use the following yml file to describe an object field.
-
-```yml
-name: rating
-label: Rating
-type: select
-sortable: true
-options:
-  - label: Hot
-    value: hot
-  - label: Warm
-    value: warm
-  - label: Cold
-    value: cold
-inlineHelpText: How do you classify this customer level, for example, hot, warn or cold.
-sort_no: 270
-```
+- [Project Template](https://github.com/steedos/steedos-project-template)
+- [Examples](https://github.com/steedos/steedos-examples)
 
 ## Steedos DX
 
@@ -152,17 +73,15 @@ Steedos DX is licenced per developer. We provide Steedos DX free license for ope
 
 💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
 
-- [PM (Project Management)](https://github.com/steedos/project-management-app): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
-- [CRM (Customer Relationship Management)](https://github.com/steedos/steedos-app-crm): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
-- [OKR (Objectives and Key Results)](https://github.com/steedos/okr-management-app): Objectives and Key Results (OKR) is a critical thinking framework and goal setting methodology that helps companies to align goals and ensure everyone is working collaboratively on goals that really matter.
-- [B2B Commerce](https://github.com/steedos/b2b-commerce): Design, build, and launch a business-to-business (B2B) commerce solution that enables retailers, wholesalers, or distributors to purchase goods or services from your brand. Powered by Steedos and Next.js Commerce.
-- [Contract Management](https://github.com/steedos/steedos-app-contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
+- [Steedos Projects](https://github.com/steedos-labs/project): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
+- [Salesforce CRM Clone](https://github.com/steedos-labs/salesforce): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
+- [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
-[Find more](https://github.com/steedos/awesome-steedos-apps)
+[Find more](https://github.com/steedos-labs/)
 
 ## Steedos Docs
 
-For more information, please refer to the official website of [www.steedos.org](https://www.steedos.org/)
+For more information, please refer to the official website of [docs.steedos.com](https://docs.steedos.com/)
 
 ## Contribute to Steedos Platform
 
