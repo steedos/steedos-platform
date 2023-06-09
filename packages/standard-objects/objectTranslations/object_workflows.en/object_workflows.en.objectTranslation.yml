@@ -84,7 +84,7 @@ groups:
   script: Script
 listviews:
   default:
-    label: 
+    label: Default
   all:
     label: All Rules
 actions:

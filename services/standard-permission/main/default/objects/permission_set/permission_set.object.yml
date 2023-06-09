@@ -34,6 +34,34 @@ fields:
     reference_to_field: code
     name: assigned_apps
     filterable: true
+  default_standard_buttons:
+    label: Default Standard Buttons
+    type: select
+    multiple: true
+    options:
+      - label: 查找
+        value: standard_query
+      - label: 新建
+        value: standard_new
+      - label: 查看
+        value: standard_open_view
+      - label: 编辑
+        value: standard_edit
+      - label: 删除
+        value: standard_delete
+      - label: 删除
+        value: standard_delete_many
+      - label: 发起审批
+        value: standard_approve
+      - label: 查看审批单
+        value: standard_view_instance
+      - label: 关注
+        value: standard_follow
+      - label: 提请批准
+        value: standard_submit_for_approval
+      - label: 导入数据
+        value: standard_import_data
+    visible_on: "{{'profile' === formData.type ? true: false}}"
   users:
     label: Users
     type: lookup

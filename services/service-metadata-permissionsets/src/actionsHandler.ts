@@ -1,3 +1,10 @@
+/*
+ * @Author: sunhaolin@hotoa.com
+ * @Date: 2021-07-30 09:20:04
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-09 10:18:09
+ * @Description: 
+ */
 import _ = require("lodash");
 import { METADATA_TYPE, PROFILE_METADATA_TYPE } from ".";
 import { getServicePermissionsetConfig, refreshPermissionset } from "./permissionsets";
@@ -56,7 +63,10 @@ export const ActionHandlers = {
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: PROFILE_METADATA_TYPE, metadataApiName: metadataApiName})})
         const profileConfig = await refreshProfile(ctx, metadataApiName);
-        return await registerProfile(ctx, ctx.params.profileApiName, profileConfig, ctx.meta)
+        const result = await registerProfile(ctx, ctx.params.profileApiName, profileConfig, ctx.meta)
+        // 触发加载简档事件
+        await ctx.broker.emit(`$METADATA.${PROFILE_METADATA_TYPE}.add`, { metadataApiName })
+        return result
     },
     async getProfiles(ctx: any): Promise<any> {
         return await ctx.broker.call('metadata.filter', {key: profileCacherKey("*")}, {meta: ctx.meta})

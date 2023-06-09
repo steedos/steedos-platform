@@ -44,7 +44,7 @@ fields:
     label: First Login Time
 list_views:
   all:
-    label: All Session
+    label: All Sessions
     columns:
       - userId
       - ip

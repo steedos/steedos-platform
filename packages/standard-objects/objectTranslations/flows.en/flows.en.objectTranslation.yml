@@ -52,7 +52,7 @@ fields:
     help:
     description:
   current:
-    label: Current
+    label: Current Version
     help:
     description:
   current.modified:
@@ -88,15 +88,15 @@ fields:
     help:
     description:
   current.steps.$.allowDistribute:
-    label: Can Distribute Instance
+    label: Allow Distribution
     help:
     description:
   current.steps.$.can_edit_main_attach:
-    label: Can Edit Main Attach
+    label: Allow Modification of the Body Text
     help:
     description:
   current.steps.$.can_edit_normal_attach:
-    label: Can Edit Normal Attach
+    label: Allow Modification of Attachments
     help:
     description:
   current.steps.$.distribute_optional_flows:

@@ -4,10 +4,13 @@ description:
 fields:
   name:
     label: API Name
-    help: 
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
     description: 
   label:
-    label: 
+    label: Label
     help: 
     description: 
   object_name:
@@ -23,11 +26,11 @@ fields:
     help:
     description:
   assigned_users:
-    label:
+    label: Assigned Users
     help:
     description:
   assigned_user_field:
-    label:
+    label: Assigned User Field
     help:
     description:
 groups:

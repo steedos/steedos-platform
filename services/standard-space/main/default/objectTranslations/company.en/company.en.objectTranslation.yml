@@ -11,7 +11,7 @@ fields:
     help: 
     description: 
   parent:
-    label: Parent
+    label: Superior Department
     help: 
     description: 
   organization:
@@ -23,7 +23,7 @@ fields:
     help: 
     description: 
   admins:
-    label: Admin Users
+    label: Administrator
     help: 
     description: 
   description:

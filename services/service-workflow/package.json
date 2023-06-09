@@ -1,11 +1,11 @@
 {
   "name": "@steedos/service-workflow",
-  "version": "2.5.3-beta.7",
+  "version": "2.5.3-beta.11",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/service-object-graphql": "2.5.3-beta.7",
-    "@steedos/workflow": "2.5.3-beta.7",
+    "@steedos/service-object-graphql": "2.5.3-beta.11",
+    "@steedos/workflow": "2.5.3-beta.11",
     "lodash": "^4.17.21",
     "node-schedule": "^2.0.0"
   },
@@ -13,5 +13,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9d378a70c079087686ef26c717f3785303350b95"
+  "gitHead": "90a5790974f858323e534c321f96643da576d260"
 }
