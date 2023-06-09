@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-08 18:06:04
+ * @LastEditTime: 2023-06-09 15:52:01
  * @Description: 
  */
 
@@ -231,7 +231,6 @@ module.exports = {
         "graphql.schema.changed": {
             params: {},
             async handler(ctx) {
-                console.log(`graphql.schema.changed====>`)
                 await this.ChangeGlobalGraphQLSettings()
             }
         },
@@ -298,7 +297,6 @@ module.exports = {
      */
     methods: {
         async ChangeGlobalGraphQLSettings() {
-            console.log(`ChangeGlobalGraphQLSettings====>`)
             const result = await Register.get(this.broker, 'globalGraphQLSettings');
             if(result){
                 this.globalGraphQLSettings = result.metadata;

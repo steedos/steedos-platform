@@ -192,7 +192,7 @@ module.exports = {
         },
         loadPackagePublicFiles: {
             handler(packagePath) {
-                if(!canLoadMetadata('publicFolder')){
+                if(!canLoadMetadata('PublicFolder')){
                     return ;
                 }
                 if (!this.settings.packageInfo.loadPublicFolder) {

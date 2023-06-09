@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-02 14:04:04
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-09 17:01:48
  * @Description: 
  */
 "use strict";
@@ -98,7 +98,7 @@ module.exports = {
                     }
                 }
                 this.metadata.triggers = triggers
-                broker.emit(`${METADATA_TYPE}.change`, {});
+                broker.broadcast(`${METADATA_TYPE}.change`, {});
             }
         },
     },

@@ -1,7 +1,7 @@
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
 import { SteedosTriggerType, SteedosFieldType, SteedosFieldTypeConfig, SteedosSchema, SteedosListenerConfig, SteedosObjectListViewTypeConfig, SteedosObjectListViewType, SteedosIDType, SteedosObjectPermissionTypeConfig, SteedosActionType, SteedosActionTypeConfig, SteedosUserSession, getSteedosSchema} from ".";
 import { getUserObjectSharesFilters, isTemplateSpace, isCloudAdminSpace, generateActionParams, absoluteUrl, transformListenersToTriggers } from '../util'
-import { extend } from '../index'
+import { broker, extend } from '../index'
 import _ = require("underscore");
 import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger";
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
@@ -1867,7 +1867,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async callAdapter(method: string, ...args: any[]) {
-
+        console.log(`[${this._schema.metadataBroker.nodeID}] callAdapter ${method} ${this.name}`)
         const adapterMethod = this._datasource[method];
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');

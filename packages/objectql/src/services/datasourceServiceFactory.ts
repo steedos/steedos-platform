@@ -2,14 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-11-09 16:16:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 10:33:34
+ * @LastEditTime: 2023-06-09 17:27:33
  * @Description: 
  */
 import * as _ from 'underscore';
 import { getDataSourceServiceName } from './index';
 import { jsonToObject } from '../util/convert';
 import { getDataSource } from '../types/datasource';
-import { addOriginalObjectConfigs, getOriginalObjectConfig } from '@steedos/metadata-registrar';
+import { addOriginalObjectConfigs, getOriginalObjectConfig, addObjectConfig, MONGO_BASE_OBJECT, SQL_BASE_OBJECT, loadObjectLazyListenners } from '@steedos/metadata-registrar';
 
 const clone = require('clone');
 
@@ -23,9 +23,8 @@ export async function createDataSourceService(broker, dataSource) {
     if (LocalDataSourceServices[serviceName]) {
         return;
     }
-
+    LocalDataSourceServices[serviceName] = true;
     const actions: any = {};
-
     if(dataSourceName === 'default'){
         actions.encryptValue = {
 			async handler(ctx) {
@@ -80,12 +79,30 @@ export async function createDataSourceService(broker, dataSource) {
                 }
             },
         },
-        actions: actions
+        actions: actions,
+        started: async function(){
+            const objects = await this.broker.call(`objects.getAll`,    {datasource: dataSourceName});
+            _.each(objects, (meta)=>{
+                const objectConfig = meta.metadata;
+                if(objectConfig.name != MONGO_BASE_OBJECT && objectConfig.name != SQL_BASE_OBJECT){
+                    // console.log(`initObject====》`, dataSourceName, objectConfig.name)
+                    // if(objectConfig.extend === MONGO_BASE_OBJECT || objectConfig.extend === SQL_BASE_OBJECT){
+                    //     delete objectConfig.extend;  
+                    // }
+                    delete objectConfig.extend;
+                    addObjectConfig(objectConfig, dataSourceName);
+                    loadObjectLazyListenners(objectConfig.name);
+                    dataSource.initObject(objectConfig)
+                }
+                
+            })
+
+            dataSource.initTypeORM();
+        }
     })
     if (!broker.started) { //如果broker未启动则手动启动service
         await broker._restartService(service)
     }
     await broker.waitForServices(service.name, null, 10);
-    LocalDataSourceServices[serviceName] = true;
     return service
 } 
