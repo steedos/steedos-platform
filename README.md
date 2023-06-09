@@ -4,24 +4,31 @@
   </a>
 </p>
 <h1 align="center">
-  Steedos Low Code DevOps Platform
+  Steedos低代码PaaS平台
 </h1>
 
 <p align="center">
 <a href="./README_en.md">English</a>
-<a href="https://www.steedos.cn/docs/"> · 文档</a>
-<a href="https://www.steedos.cn/videos/"> · 视频</a>
-<a href="https://demo.steedos.cn"> · 试用</a>
+<a href="https://docs.steedos.com/"> · 文档</a>
 </p>
 
 
 <p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。 
+  Steedos低代码PaaS平台是一款全新的企业级应用开发平台，它可以帮助企业快速构建和部署自定义的企业级应用程序，无需编写繁琐的代码。
 </p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
+
+# 核心功能：
+
+Steedos 低代码PaaS平台是一款功能强大、易于使用、可扩展、安全可靠的企业级应用开发平台，可以帮助企业快速构建和部署自定义的企业级应用程序，提高企业的生产效率和竞争力。
+
+- 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
+- 自定义数据模型：用户可以根据自己的业务需求创建自定义的数据模型，以便更好地管理和分析数据。
+- 工作流引擎：内置强大的工作流引擎，可以帮助用户快速实现业务流程自动化。
+- 安全和权限控制：该平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
 
 ## 可视化设计微页面
 
