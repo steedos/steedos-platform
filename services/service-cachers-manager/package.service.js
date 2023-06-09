@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-26 11:29:13
+ * @LastEditTime: 2023-06-07 11:04:45
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -143,24 +143,28 @@ module.exports = {
 				const objects = {}
 				const objectConfigs = await this.broker.call("objects.getAll");
 				for (const object of objectConfigs) {
-					const objectConfig = object.metadata
-					const objectName = objectConfig.name
-					// 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
-					if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
-						continue
-					}
-
-					const obj = getObject(objectName);
-					if(!objects[objectName]){
-						objects[objectName] = {}
-					}
-
-					//TODO 确认 delete\directDelete 功能
-					_.each(['find', 'count', 'findOne', 'insert', 'update', 'delete', 'directFind', 'directInsert', 'directUpdate', 'directDelete'], (funKey)=>{
-						objects[objectName][funKey] = function(...args){
-							return obj[funKey].apply(obj, args)   // 重写this为obj, 防止this异常
+					try {
+						const objectConfig = object.metadata
+						const objectName = objectConfig.name
+						// 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
+						if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
+							continue
 						}
-					})
+
+						const obj = getObject(objectName);
+						if(!objects[objectName]){
+							objects[objectName] = {}
+						}
+
+						//TODO 确认 delete\directDelete 功能
+						_.each(['find', 'count', 'findOne', 'insert', 'update', 'delete', 'directFind', 'directInsert', 'directUpdate', 'directDelete'], (funKey)=>{
+							objects[objectName][funKey] = function(...args){
+								return obj[funKey].apply(obj, args)   // 重写this为obj, 防止this异常
+							}
+						})
+					} catch (ex) {
+						console.error(`====>`,ex)
+					}
 				};
 				// console.log('===========global.objects===========');
 				// console.log(objects)
