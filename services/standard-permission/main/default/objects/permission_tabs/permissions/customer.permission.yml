@@ -9,6 +9,6 @@ allowRead: true
 allowReadFiles: true
 modifyAllRecords: false
 permission_set_id: customer
-viewAllFiles: false
-viewAllRecords: false
-viewCompanyRecords: false
+viewAllFiles: true
+viewAllRecords: true
+viewCompanyRecords: true
