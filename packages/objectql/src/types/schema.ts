@@ -34,7 +34,7 @@ export class SteedosSchema {
     }
 
     public get broker(): any {
-        return this._broker;
+        return this._broker || (global as any).broker;
     }
     public set broker(value: any) {
         this._broker = value;

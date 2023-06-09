@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:53:45
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 17:42:41
+ * @LastEditTime: 2023-06-08 14:05:51
  * @Description: 
  */
 import { isJsonMap, JsonMap, has, getJsonMap } from '@salesforce/ts-types';
@@ -10,6 +10,7 @@ import { getMD5, syncMatchFiles } from '@steedos/metadata-core';
 import path = require('path');
 const fs = require("fs");
 const _ = require('underscore');
+const lodash = require('lodash');
 var clone = require('clone');
 const yaml = require('js-yaml');
 
@@ -409,3 +410,30 @@ export const loadLayouts = (filePath: string) => {
     });
     return results;
   };
+
+  export enum CanLoadedMetadataType {
+    Object = "Object",
+    App = "App",
+    Trigger = "Trigger",
+    ProcessTrigger = "ProcessTrigger",
+    TriggerYml = "TriggerYml",
+    ClientJS = "ClientJS",
+    ObjectJS = "ObjectJS",
+    Router = "Router",
+    Process = "Process",
+    Flow = "Flow",
+    Translation = "Translation",
+    ObjectTranslation = "ObjectTranslation",
+    PublicFolder = "PublicFolder"
+  }
+
+  export const canLoadMetadata = (metadataType: CanLoadedMetadataType) => {
+    if(!process.env.STEEDOS_PACKAGE_METADATA_TYPES){
+      return true;
+    }
+    const allowedMetadataTypes = process.env.STEEDOS_PACKAGE_METADATA_TYPES.split(',')
+    if(allowedMetadataTypes.length == 0){
+      return true;
+    }
+    return lodash.includes(allowedMetadataTypes, metadataType);
+  }

@@ -8,7 +8,7 @@ const path = require('path');
 const _ = require('lodash');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
-const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
+const { registerMetadataConfigs, loadStandardMetadata, loadRouters, canLoadMetadata } = require('@steedos/metadata-registrar');
 const loadFlowFile = new metaDataCore.LoadFlowFile();
 
 /**
@@ -106,6 +106,9 @@ module.exports = {
             }
         },
         sendPackageFlowToDb: async function(packagePath, name) {
+            if(!canLoadMetadata('Flow')){
+                return ;
+            }
             const flows = loadFlowFile.load(path.join(packagePath, '**'));
             for (const apiName in flows) {
                 const flow = flows[apiName];
@@ -128,11 +131,12 @@ module.exports = {
                 return;
             }
             const { path : _path } = packageInfo;
-
             this.loadPackagePublicFiles(_path);
             if(_path){
                 this.sendPackageFlowToDb(_path)
-                processLoader.sendPackageProcessToDb(_path);
+                if(canLoadMetadata('Process')){
+                    processLoader.sendPackageProcessToDb(_path);
+                }
             }
         },
         loadPackageMetadataFiles: async function (packagePath, name, datasourceName) {
@@ -142,17 +146,27 @@ module.exports = {
                 datasourceName = 'default';
             }
             if(this.objectql){
-                await this.initDataSource(packagePath, datasourceName);
                 await loadStandardMetadata(name, datasourceName);
+                await this.initDataSource(packagePath, datasourceName);
             }
             await registerMetadataConfigs(packagePath, datasourceName, name);
-            await triggerLoader.load(this.broker, packagePath, name);
-            await processTriggerLoader.load(this.broker, packagePath, name);
-            await triggerYmlLoader.load(this.broker, packagePath, name);
+            if(canLoadMetadata('Trigger')){
+                await triggerLoader.load(this.broker, packagePath, name);
+            }
+            if(canLoadMetadata('ProcessTrigger')){
+                await processTriggerLoader.load(this.broker, packagePath, name);
+            }
+            if(canLoadMetadata('TriggerYml')){
+                await triggerYmlLoader.load(this.broker, packagePath, name);
+            }
             if(this.core){
-                this.core.loadClientScripts();
-                const routersInfo = await this.loadPackageRouters(packagePath, name);
-                await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
+                if(canLoadMetadata('ClientJS')){
+                    this.core.loadClientScripts();
+                }
+                if(canLoadMetadata('Router')){
+                    const routersInfo = await this.loadPackageRouters(packagePath, name);
+                    await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
+                }
             }
             await this.broker.emit(`translations.object.change`, {});
             return;
@@ -178,6 +192,9 @@ module.exports = {
         },
         loadPackagePublicFiles: {
             handler(packagePath) {
+                if(!canLoadMetadata('publicFolder')){
+                    return ;
+                }
                 if (!this.settings.packageInfo.loadPublicFolder) {
                     return;
                 }
@@ -254,7 +271,7 @@ module.exports = {
                     
                 }    
             }
-    
+            
             await this.loadPackageMetadataServices(_path);
     
             // await this.loadPackagePublicFiles(_path);
