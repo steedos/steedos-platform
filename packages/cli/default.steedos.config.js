@@ -273,25 +273,32 @@ module.exports = {
 
 	// Called after broker created.
 	created(broker) {
+		console.log(`broker`, broker.nodeID)
 		// Clear all cache entries
-		broker.logger.warn('Clear all cache entries on startup.')
-		broker.cacher.clean();
+		if(broker.nodeID === 'steedos-primary'){
+			broker.logger.warn('Clear all cache entries on startup.')
+			broker.cacher.clean();
+		}
 
 		const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
+		console.log('init objectql....');
 		objectql.broker.init(broker);
+		global.broker = broker;
 
-		//TODO 此处不考虑多个node服务模式.
-		process.on('SIGTERM', close.bind(broker, 'SIGTERM'));
-		process.on('SIGINT', close.bind(broker, 'SIGINT'));
-		async function close(signal) {
-			try {
-				await this.cacher.clean(); //TODO 此clean 有问题，如果在启动过程中就停止服务，则会清理不干净。尝试试用reids client 原生clean（flushdb）。
-				await this.cacher.close();
-			} catch (error) {
-				// console.log(`error`, error)
+		if(broker.nodeID === 'steedos-primary'){
+			//TODO 此处不考虑多个node服务模式.
+			process.on('SIGTERM', close.bind(broker, 'SIGTERM'));
+			process.on('SIGINT', close.bind(broker, 'SIGINT'));
+			async function close(signal) {
+				try {
+					await this.cacher.clean(); //TODO 此clean 有问题，如果在启动过程中就停止服务，则会清理不干净。尝试试用redis client 原生clean（flushdb）。
+					await this.cacher.close();
+				} catch (error) {
+					// console.log(`error`, error)
+				}
+				console.log(`[${signal}]服务已停止: namespace: ${this.namespace}, nodeID: ${this.nodeID}`);
+				process.exit(0);
 			}
-			console.log(`[${signal}]服务已停止: namespace: ${this.namespace}, nodeID: ${this.nodeID}`);
-			process.exit(0);
 		}
 	},
 
