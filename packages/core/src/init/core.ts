@@ -108,7 +108,11 @@ export const initCreator = async () => {
 
             let allServerScripts = getServerScripts();
             _.each(allServerScripts, function (scriptFile) {
-                require(scriptFile)
+                try {
+                    require(scriptFile)
+                } catch (exception) {
+                    console.error(`[${broker.nodeID}]`, exception)
+                }
             });
 
             _.each(allObjects, function (obj) {
