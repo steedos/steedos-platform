@@ -35,11 +35,10 @@ module.exports = {
 	 */
 	settings: {
 		packageInfo: {
-			path: path.join(__dirname, 'main'),
+			path: __dirname,
 			name: packageName,
 			isPackage: false
 		},
-		initBuilderRouter: false,
 		QUERY_RESULTS_CLEANUP_ENABLED: process.env.STEEDOS_QUERY_RESULTS_CLEANUP_ENABLED ? validator.toBoolean(process.env.STEEDOS_QUERY_RESULTS_CLEANUP_ENABLED || 'true', true) : true,
 		QUERY_RESULTS_CLEANUP_COUNT: process.env.STEEDOS_QUERY_RESULTS_CLEANUP_COUNT || 100,
 		QUERY_RESULTS_CLEANUP_MAX_AGE: process.env.STEEDOS_QUERY_RESULTS_CLEANUP_MAX_AGE || 7
@@ -308,15 +307,6 @@ module.exports = {
 				return []
             }
 		},
-	},
-
-	/**
-	 * Events
-	 */
-    events: {
-        'steedos-server.started': async function (ctx) {
-			this.initBuilderRouter();
-		}
 	},
 
 	/**
@@ -888,7 +878,6 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		this.initBuilderRouter();
 		this.cacherMaps = [];
 		this.querySCheduleMaps = [];
 		if (this.settings.QUERY_RESULTS_CLEANUP_ENABLED) {
