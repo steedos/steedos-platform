@@ -1,7 +1,7 @@
 {
   "name": "@steedos/cachers",
   "private": false,
-  "version": "2.5.3-beta.12",
+  "version": "2.5.3-beta.13",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -19,5 +19,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "79e9dfbd0bf19a0979f29d2a055cf6e2ea847997"
+  "gitHead": "293a5a23b2a4ab86f037368b0f450c8b2fba4e44"
 }
