@@ -32,10 +32,12 @@ export * from './config-register/client_script'
 export * from './config-register/validation_rule'
 export * from './config-register/workflow'
 export * from './config-register/package'
+export * from './config-register/chart'
 
 export * from './metadata-register/tab';
 export * from './metadata-register/page';
 export * from './metadata-register/query'
+export * from './metadata-register/chart'
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;

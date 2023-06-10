@@ -96,6 +96,16 @@ module.exports = {
 			await this.setMasterSpaceId()
 		},
 		'steedos-server.started': async function (ctx) {
+			const broker = this.broker;
+			if(broker.nodeID === 'steedos-primary'){
+				broker.createService({
+					name: "steedos-primary",
+					started: ()=>{
+						console.log(`[steedos-primary]服务已启动: namespace: ${broker.namespace}, nodeID: ${broker.nodeID}`)
+					}
+				})
+			}
+
 			// console.log(chalk.blue('steedos-server.started'));
 			const records = await objectql.getObject('spaces').directFind({ top: 1, fields: ['_id'], sort: { created: -1 } });
 			const steedosConfig = objectql.getSteedosConfig();
@@ -150,13 +160,14 @@ module.exports = {
 		},
 
 		async startSteedos() {
-
+			console.log(`[${this.broker.nodeID}] Steedos server run startSteedos...`);
 			this.meteor = require('@steedos/meteor-bundle-runner');
 			this.steedos = require('@steedos/core');
 			// const logger = this.logger;
 			const broker = this.broker;
 			await Future.task(() => {
 				try {
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> loadServerBundles`);
 					this.meteor.loadServerBundles();
 					// 使用 express 服务扩展meteor req 功能, 比如sendFile等
 					const connectHandlersExpress = express();
@@ -175,7 +186,9 @@ module.exports = {
 					connectHandlersExpress.use(SteedosApi.express());
 					WebApp.connectHandlers.use(connectHandlersExpress)
 					const steedosSchema = require('@steedos/objectql').getSteedosSchema(this.broker);
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> startStandardObjectsPackageLoader`);
 					this.wrapAsync(this.startStandardObjectsPackageLoader, {});
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> startStandardSpace`);
 					this.wrapAsync(this.startStandardSpace, {});
 					// console.time(`startSteedos-dataSourceInIt`)
 					// const datasources = steedosSchema.getDataSources();
@@ -184,11 +197,14 @@ module.exports = {
 					// 	Future.fromPromise(steedosSchema.getDataSource(dataSource).init()).wait();
 					// }
 					// console.timeEnd(`startSteedos-dataSourceInIt`)
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> steedos init`);
 					Future.fromPromise(this.steedos.init(this.settings)).wait();
 					this.WebApp = WebApp;
 					// this.startNodeRedService();
 					this.meteor.callStartupHooks();
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> meteor.callStartupHooks`);
 					this.meteor.runMain();
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> meteor.runMain`);
 
 					// 给Push添加微服务事件
 					Push.originalSend = Push.send;
@@ -202,6 +218,7 @@ module.exports = {
 					}
 
 				} catch (error) {
+					console.log(`[${this.broker.nodeID}] Steedos server run startSteedos ---> error`, error);
 					this.logger.error(error)
 				}
 			}).promise();
@@ -389,5 +406,9 @@ module.exports = {
 	},
     merged(schema) {
         schema.name = 'steedos-server';  //steedo-server 服务禁止修改name
+
+		if(broker.nodeID != 'steedos-primary'){
+			schema.dependencies.push('steedos-primary')
+		}
     }
 };

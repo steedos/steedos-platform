@@ -206,7 +206,6 @@ module.exports = {
                 } catch (error) {
                     return
                 }
-
                 try {
                     const express = require('express');
                     this.settings.loadedPackagePublicFiles = true;
@@ -217,6 +216,7 @@ module.exports = {
                             routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX;
                         }
                         const cacheTime = 86400000 * 1; // one day
+                        // console.log(`static router`, routerPath, publicPath)
                         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
                         // WebApp.connectHandlers.use(router);
                     } catch (error) {
