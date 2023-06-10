@@ -273,7 +273,6 @@ module.exports = {
 
 	// Called after broker created.
 	created(broker) {
-		console.log(`broker`, broker.nodeID)
 		// Clear all cache entries
 		if(broker.nodeID === 'steedos-primary'){
 			broker.logger.warn('Clear all cache entries on startup.')
@@ -281,7 +280,6 @@ module.exports = {
 		}
 
 		const objectql = require(require.resolve('@steedos/objectql', {paths: [process.cwd()]}));
-		console.log('init objectql....');
 		objectql.broker.init(broker);
 		global.broker = broker;
 
