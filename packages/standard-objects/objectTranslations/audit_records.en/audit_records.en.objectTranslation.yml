@@ -30,6 +30,6 @@ listviews:
   all:
     label: All Audit Records
   recent:
-    label: Recently Viewed Audit Records
+    label: Recently Viewed
 CustomLabels:
   audit_records_created: Created

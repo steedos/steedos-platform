@@ -30,7 +30,7 @@ listviews:
   all:
     label: All queries
   recent:
-    label: Recent queries
+    label: Recently Viewed
 actions:
   openDesign:
     label: Open Designer

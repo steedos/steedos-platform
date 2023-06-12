@@ -82,9 +82,9 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All Pages
   recent:
-    label: Recent
+    label: Recently Viewed
 actions:
   customPage:
     label: Custom Page

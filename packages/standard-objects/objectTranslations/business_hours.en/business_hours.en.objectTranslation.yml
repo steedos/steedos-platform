@@ -59,7 +59,7 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All Business Hours
 CustomLabels:
   business_hours_field_working_days_options_0: 
   business_hours_field_working_days_options_1: 

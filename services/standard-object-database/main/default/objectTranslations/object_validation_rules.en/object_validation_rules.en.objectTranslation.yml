@@ -34,7 +34,7 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All Object Validation Rules
 CustomLabels:
   object_validation_rules_field_error_display_field: 
   object_validation_rules_field_error_display_field_inlineHelpText: 

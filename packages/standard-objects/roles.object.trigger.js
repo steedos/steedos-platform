@@ -1,12 +1,13 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-23 17:58:55
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-16 15:08:20
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-12 10:16:55
  * @Description: 
  */
 const _ = require("underscore");
 const objectql = require("@steedos/objectql");
+const register = require('@steedos/metadata-registrar');
 
 module.exports = {
     beforeFind: async function () {
@@ -14,7 +15,7 @@ module.exports = {
     },
     afterFind: async function(){
         let spaceId = this.spaceId;
-        let sourceData = objectql.getSourceRoles();
+        let sourceData = register.getSourceRoles();
         let _values = _.filter(sourceData, (item)=>{
             return !_.find(this.data.values, (value)=>{
                 return value.api_name == item.api_name;
@@ -30,7 +31,7 @@ module.exports = {
     afterFindOne: async function(){
         let spaceId = this.spaceId;
         if(_.isEmpty(this.data.values)){
-            const records = objectql.getSteedosSchema().metadataDriver.find(objectql.getSourceRoles(), {filters: ['_id', '=', this.id]}, spaceId);
+            const records = objectql.getSteedosSchema().metadataDriver.find(register.getSourceRoles(), {filters: ['_id', '=', this.id]}, spaceId);
             if(records.length > 0){
                 this.data.values = records[0]
             }

@@ -76,7 +76,7 @@ groups:
   time_triggers: Time-Dependent Action
 listviews:
   all:
-    label: All
+    label: All Workflow Rules
 CustomLabels:
   workflow_rule_field_trigger_type_options_onAllChanges: 
   workflow_rule_field_trigger_type_options_onCreateOnly: 

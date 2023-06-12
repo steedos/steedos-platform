@@ -37,7 +37,7 @@ groups:
   select_assigned_user: Select Assigned User
 listviews:
   all:
-    label: All
+    label: All Workflow Notifications
 CustomLabels:
   workflow_notifications_field__error_process_node_process_definition_required: Please select "Approval Process" for this Approval Step and then create "Workflow Notification"!
   workflow_notifications_field__error_process_definition_object_required: Please select "Object" for this Approval Process and then create "Workflow Notification"!

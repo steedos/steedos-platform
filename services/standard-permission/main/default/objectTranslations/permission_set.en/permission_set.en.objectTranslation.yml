@@ -108,9 +108,9 @@ listviews:
   all:
     label: All
   permission_set:
-    label: Permission Set
+    label: Permission Sets
   profile:
-    label: Profile
+    label: Profiles
 actions:
   customize:
     label: Customize

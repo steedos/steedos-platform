@@ -93,7 +93,7 @@ groups:
   advanced: Advanced
 listviews:
   all:
-    label: All
+    label: All Data Source
 actions:
   testConnection:
     label: Test connection

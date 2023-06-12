@@ -24,9 +24,9 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All API Keys
   recent:
-    label: Recent
+    label: Recently Viewed
 actions:
   copy:
     label: Copy API Key

@@ -15,6 +15,7 @@
     "@steedos/core": "2.5.3-beta.13",
     "@steedos/filters": "2.5.3-beta.13",
     "@steedos/i18n": "2.5.3-beta.13",
-    "@steedos/metadata-core": "2.5.3-beta.13"
+    "@steedos/metadata-core": "2.5.3-beta.13",
+    "@steedos/metadata-registrar": "2.5.3-beta.13"
   }
 }
