@@ -599,6 +599,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async runTriggerActions(when: string, context: SteedosTriggerContextConfig) {
         let triggers = this.getTriggerActions(when);
+        if(this.name === 'objects'){
+            console.log(`objects====>`, this.name);
+        }
         if (_.isEmpty(triggers)) {
             return;
         }
