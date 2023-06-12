@@ -365,7 +365,7 @@ module.exports = {
                     this.core.removeRouter(info.path, info.methods)
                 })
             }
-            await this.core.deletePackageClientScripts(this.name);
+            await this.objectql.deletePackageClientScripts(this.name);
             await this.core.loadClientScripts();
         }
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
