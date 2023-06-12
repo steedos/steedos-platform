@@ -100,6 +100,17 @@
                         }
                     ],
                     "inputClassName": "antd-Form-static m-0"
+                },
+                {
+                    "type": "input-url",
+                    "label": "隐私政策",
+                    "value": "https://www.steedos.cn/company/privacy",
+                    "static": true,
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2",
+                    "validations": {},
+                    "validationErrors": {},
+                    "id": "u:f1b77695557a"
                 }
             ],
             "id": "u:d8ce1cb3156a",
