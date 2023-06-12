@@ -1164,6 +1164,7 @@ CustomLabels:
   pending: 进行中
   completed: 已完成
   monitor: 监控箱
+  myfile: 我的文件
   FlowName: 名称
   My Approval: 审核
   My Applications: 我的申请单

@@ -130,7 +130,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "value": `/app/${appId}/instances/grid/monitor`
       },
       {
-        "label": "我的文件",
+        "label": t('myfile', {}, userSession.language),
         "options":{
           "level":1,
           // "to": `/app/${appId}/instance_tasks/grid/inbox`
