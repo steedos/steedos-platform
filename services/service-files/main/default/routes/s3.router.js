@@ -152,7 +152,7 @@ router.post('/s3/', core.requireAuthentication, async function (req, res) {
 
             } catch (error) {
                 console.error(error);
-                res.send({ errors: [{ errorMessage: err.message }] });
+                res.send({ errors: [{ errorMessage: error.message }] });
             }
 
         });
