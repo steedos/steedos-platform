@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-18 14:33:09
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-08 16:10:01
  * @Description: 
  */
 "use strict";
@@ -19,11 +19,13 @@ module.exports = {
     namespace: "steedos",
     mixins: [],
 
+    // version: 1,
+
     /**
      * Settings
      */
     settings: {
-
+        rest: '/v1/objectql',
     },
 
     /**
@@ -35,7 +37,22 @@ module.exports = {
      * Actions
      */
     actions: {
+        health: {
+            rest: {
+                method: "GET",
+                path: "/health"
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                console.log('health', userSession)
+                return 'ok'
+            }
+        },
         find: {
+            rest: {
+                method: "GET",
+                path: "/find/:objectName"
+            },
             params: {
                 objectName: { type: "string" },
                 query: {
