@@ -40,13 +40,27 @@
     if(_.isString(assetUrls)){
       assetUrls = assetUrls.split(',');
     }
+
+    const getBrowserLocale = function() {
+      var l, locale;
+      l = window.navigator.userLanguage || window.navigator.language || 'en';
+      if (l.indexOf("zh") >= 0) {
+        locale = "zh-cn";
+      } else {
+        locale = "en-us";
+      }
+      return locale;
+    };
+
+    
     Builder.set({
       nodeEnv: "${NODE_ENV}", 
       rootUrl: "${ROOT_URL}", 
       unpkgUrl: "${STEEDOS_UNPKG_URL}",
       steedosVersion: "${STEEDOS_VERSION}",
       assetUrls,
-      steedosAmisVersion: "${STEEDOS_AMIS_VERSION}"
+      steedosAmisVersion: "${STEEDOS_AMIS_VERSION}",
+      locale: "${STEEDOS_LOCALE}" || getBrowserLocale()
     });
 
     window.axios = amisRequire('axios');

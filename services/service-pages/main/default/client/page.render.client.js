@@ -259,7 +259,7 @@
                     record_id: data.recordId,
                     formFactor: Steedos.isMobile() ? "SMALL" : "LARGE",
                     context: {
-                        rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
+                        rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
                         tenantId: Creator.USER_CONTEXT.spaceId,
                         userId: Creator.USER_CONTEXT.userId,
                         authToken: Creator.USER_CONTEXT.user.authToken,
@@ -276,6 +276,7 @@
                     $scopeId : schema.name || schema.id
                 }
             });
+            console.log(`defData`, defData)
 
             schema = lodash.defaultsDeep(defData , schema);
 
