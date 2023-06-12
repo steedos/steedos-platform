@@ -198,7 +198,7 @@ groups:
   script: Script
 listviews:
   all:
-    label: All
+    label: All Objects
   customize:
     label: Customize
   system:

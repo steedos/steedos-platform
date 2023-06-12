@@ -52,7 +52,7 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All Packages
 actions:
   disable:
     label: Disable
