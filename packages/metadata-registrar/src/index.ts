@@ -39,6 +39,7 @@ export * from './config-register/layout';
 export * from './metadata-register/tab';
 export * from './metadata-register/page';
 export * from './metadata-register/query'
+export * from './metadata-register/chart'
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;
