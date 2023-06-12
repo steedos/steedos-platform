@@ -62,6 +62,11 @@ router.post('/api/v4/instances/s3/', core.requireAuthentication, async function 
                     size
                 } = files.file;
 
+                //安全问题，禁止上传svg格式的文件
+                if ("image/svg+xml" == mimetype){
+                    throw new Error("SVG NOT Allowed!");
+                }
+
                 const collection = await getCollection(DB_COLLECTION_NAME);
 
                 const newFile = new File({ name: formatFileName(originalFilename, upload_from), size, mimetype, fsCollectionName: FS_COLLECTION_NAME });
