@@ -46,7 +46,7 @@ Steedos 低代码PaaS平台是一款功能强大、易于使用、可扩展、�
 
 ## 安全和权限控制
 
-平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
+平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。[Steedos](https://docs.steedos.com/admin/permissions/)🚀[Salesforce](https://developer.salesforce.com/docs/atlas.en-us.securityImplGuide.meta/securityImplGuide/security_data_access.htm)
 
 ![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
 
