@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-09 15:52:01
+ * @LastEditTime: 2023-06-13 16:13:19
  * @Description: 
  */
 
@@ -250,10 +250,7 @@ module.exports = {
                     // console.log("Sender:", ctx.nodeID);
                     // console.log("Metadata:", ctx.meta);
                     // console.log("The called event name:", ctx.eventName);
-                    console.log(`[service][graphql]===> generateObjGraphqlMap ${this.name} start`)
-                    const s = new Date();
                     const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
-                    console.log(`[service][graphql]==1=> generateObjGraphqlMap ${this.name} 耗时：`, new Date() - s, 'ms')
                     let type = []
                     let query = []
                     let mutation = []
@@ -272,7 +269,6 @@ module.exports = {
                             resolversMutation = Object.assign(resolversMutation, gMap.resolversMutation)
                         }
                     }
-                    console.log(`[service][graphql]==2=> generateObjGraphqlMap ${this.name} 耗时：`, new Date() - s, 'ms')
                     const globalGraphQLSettings = {
                         type: type,
                         query: query,
@@ -283,11 +279,10 @@ module.exports = {
                             Mutation: resolversMutation
                         }
                     }
-                    console.log(`graphql.schema.changed=============`)
                     await Register.add(ctx.broker, {key: 'globalGraphQLSettings', data: globalGraphQLSettings}, {})
                     ctx.broker.broadcast("graphql.schema.changed")
 
-                }, 1000 * 3)
+                }, 1000 * 2)
             }
         }
     },
@@ -349,9 +344,7 @@ module.exports = {
 
         async generateObjGraphqlMap(graphqlServiceName) {
             const objGraphqlMap = {}
-            console.time('generateObjGraphqlMap===>objects.getAll')
             const objectConfigs = await this.broker.call("objects.getAll");
-            console.timeEnd('generateObjGraphqlMap===>objects.getAll')
             for (const object of objectConfigs) {
                 try {
                     // console.log('===>object.metadata.name: ', object.metadata.name)

@@ -1882,7 +1882,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     private async callAdapter(method: string, ...args: any[]) {
-        console.log(`[${this._schema.metadataBroker.nodeID}] callAdapter ${method} ${this.name}`)
         const adapterMethod = this._datasource[method];
         if (typeof adapterMethod !== 'function') {
             throw new Error('Adapted does not support "' + method + '" method');
