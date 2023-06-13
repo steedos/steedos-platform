@@ -9,7 +9,8 @@
 
 <p align="center">
 <a href="./README_en.md">English</a>
-<a href="https://docs.steedos.com/"> · 文档</a>
+<a href="https://docs.steedos.com/" target="_blank"> · 文档</a>
+<a href="https://github.com/steedos-labs/" target="_blank"> · Steedos Labs</a>
 </p>
 
 
