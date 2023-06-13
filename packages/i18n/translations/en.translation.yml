@@ -1935,12 +1935,12 @@ CustomLabels:
   process_delegation_rules_end_time: End Time
   process_delegation_rules_start_must_lt_end: Strat time must less than end time
   process_delegation_rules_description: "{$userName} delegated"
+  process_delegation_rules_time_repeat: Please confirm that the order period overlaps with other request periods.
   process_delegation_rules_cannot_deltegation_eachother: Only allow one-way delegation
   instance_handler_name: Handler
   instance_handler_organization_fullname: Organization
   instance_approve_timeout_auto_submitted: Timeout auto submitted
   categories_in_use: Category is in use and cannot be deleted
-  process_delegation_rules_only_one: You already set process delegation rule
   instance_approve_modal_modificationsave: saved
   instance_print_traces_simplify: Simplify
   instance_print_a4_vertical: A4Vertical
