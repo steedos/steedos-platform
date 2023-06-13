@@ -227,12 +227,12 @@ Template.dxDateBox.rendered = function () {
 
 };
 
-Template.dxDateBox.destroyed = function () {
-  var $input = this.$('.dx-date-box');
-  if ($input.find("input").length){
-    module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
-      DevExpress.ui.dxDateBox = dxDateBox;
-      $input.dxDateBox("dispose");
-    });
-  }
-};
+// Template.dxDateBox.destroyed = function () {
+//   var $input = this.$('.dx-date-box');
+//   if ($input.find("input").length){
+//     module.dynamicImport('devextreme/ui/date_box').then(function (dxDateBox) {
+//       DevExpress.ui.dxDateBox = dxDateBox;
+//       $input.dxDateBox("dispose");
+//     });
+//   }
+// };
