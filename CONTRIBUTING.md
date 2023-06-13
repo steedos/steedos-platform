@@ -55,21 +55,14 @@ ROOT_URL=http://127.0.0.1:3100
 MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-## 调试平台源码
+### Start a database using Docker
 
-调试平台源码需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
-
-### 使用 docker 启动数据库
-
-华炎魔方运行依赖 mongodb 和 redis，需先在本地安装运行相关服务。
 
 ```bash
 docker-compose -f docker-compose-db.yml up
 ```
 
-### 使用本地 nodejs 调试平台源码
-
-运行华炎魔方需要在本地安装 nodejs 14 和 python 等编译环境，如果本地有环境，可以本地启动华炎魔方。
+### Use local Node.js to debug platform source code
 
 ```bash
 yarn
@@ -77,16 +70,12 @@ yarn build
 yarn start
 ```
 
-## 使用 VSCode Server 远程调试平台源码
+## Use VSCode Server to debug the source code remotely
 
-可以在服务器上部署远程开发环境，实现远程开发。
 
 ```bash
 docker-compose -f docker-compose-vscode.yml up
 ```
+Open the browser and visit http://127.0.0.1:5555/?folder=/home/workspace/steedos-platform to access the VS Code remote development environment.
 
-打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-project-template ，进入VS Code远程开发环境。
-
-此时可以在浏览器中操作 VS Code，运行华炎魔方。
-
-
+You can now operate VS Code and run Steedos in the browser.
