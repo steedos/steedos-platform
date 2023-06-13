@@ -21,8 +21,10 @@ export * from './config-register/actions'
 export * from './config-register/app'
 export * from './config-register/approval_process'
 export * from './config-register/button'
+export * from './config-register/flow_role'
 export * from './config-register/listview'
 export * from './config-register/profile'
+export * from './config-register/role'
 export * from './config-register/translations'
 export * from './config-register/trigger'
 export * from './config-register/shareRules'
@@ -32,10 +34,12 @@ export * from './config-register/client_script'
 export * from './config-register/validation_rule'
 export * from './config-register/workflow'
 export * from './config-register/package'
+export * from './config-register/layout';
 
 export * from './metadata-register/tab';
 export * from './metadata-register/page';
 export * from './metadata-register/query'
+export * from './metadata-register/chart'
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;

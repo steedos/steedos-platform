@@ -8,4 +8,5 @@ required: true
 searchable: true
 index: true
 sortable: true
+filterable: true
 sort_no: 100

@@ -127,7 +127,7 @@ fields:
     help: 
     description: 
   owner:
-    label: 
+    label: Owner
     help: 
     description: 
   app_unique_id:
@@ -147,7 +147,7 @@ fields:
     help: 
     description: 
   is_deleted:
-    label: 
+    label: Deleted
     help: 
     description: 
   reload_time:
@@ -198,7 +198,7 @@ groups:
   script: Script
 listviews:
   all:
-    label: All
+    label: All Objects
   customize:
     label: Customize
   system:
@@ -215,7 +215,7 @@ actions:
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_datasource_meteor: Meteor
-  objects_field_enable_approvals: 
-  objects_field_enable_space_global: 
-  objects_field_enable_web_forms: 
-  object_object__error_name_invalid_format: 
+  objects_field_enable_approvals: Display Request History Steps
+  objects_field_enable_space_global: Accessing Data Across Workspaces
+  objects_field_enable_web_forms: Allow Online Forms
+  object_object__error_name_invalid_format: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters

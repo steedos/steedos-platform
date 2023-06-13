@@ -123,7 +123,7 @@ groups:
   recall_actions: Recall Actions
 listviews:
   all:
-    label: All
+    label: All Approval Processes
 actions:
   enable:
     label: Enable

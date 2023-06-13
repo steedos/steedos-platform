@@ -1,7 +1,7 @@
+'use strict';
 const _ = require("underscore");
-const objectql = require("@steedos/objectql");
 const InternalData = require('../core/internalData');
-const util = require('../util');
+const register = require('@steedos/metadata-registrar');
 
 const getInternalFlowRoles = function(sourceFlowRoles, filters){
     let dbFlowRoles = Creator.getCollection("flow_roles").find(filters, {fields:{_id:1, api_name:1}}).fetch();
@@ -24,14 +24,14 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
         if(filters.api_name){
-            flowRole = objectql.getSourceFlowRole(filters.api_name);
+            const flowRole = register.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }
         }else if(filters._id){
             roles = Creator.getCollection("flow_roles").find({api_name: filters._id}).fetch();
         }else{
-            flowRoles = objectql.getSourceFlowRoles();
+            flowRoles = register.getSourceFlowRoles();
         }
 
         flowRoles = getInternalFlowRoles(flowRoles, filters);
@@ -44,14 +44,14 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
         if(filters.api_name){
-            flowRole = objectql.getSourceFlowRole(filters.api_name);
+            const flowRole = register.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }
         }else if(filters._id){
             roles = Creator.getCollection("flow_roles").find({api_name: filters._id}).fetch();
         }else{
-            flowRoles = objectql.getSourceFlowRoles();
+            flowRoles = register.getSourceFlowRoles();
         }
 
         flowRoles = getInternalFlowRoles(flowRoles, filters);
@@ -64,14 +64,14 @@ module.exports = {
         let filters = InternalData.parserFilters(this.query.filters)
         let flowRoles = [];
         if(filters.api_name){
-            flowRole = objectql.getSourceFlowRole(filters.api_name);
+            const flowRole = register.getSourceFlowRole(filters.api_name);
             if(flowRole){
                 flowRoles.push(flowRole);
             }
         }else if(filters._id){
             roles = Creator.getCollection("flow_roles").find({api_name: filters._id}).fetch();
         }else{
-            flowRoles = objectql.getSourceFlowRoles();
+            flowRoles = register.getSourceFlowRoles();
         }
 
         flowRoles = getInternalFlowRoles(flowRoles, filters);
@@ -91,7 +91,7 @@ module.exports = {
                     return;
                 }
 
-                let flowRole = objectql.getSourceFlowRole(id);
+                let flowRole = register.getSourceFlowRole(id);
                 if(flowRole){
                     this.data.values = flowRole;
                 }

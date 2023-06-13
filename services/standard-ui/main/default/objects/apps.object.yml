@@ -12,6 +12,7 @@ fields:
     inlineHelpText: ''
     required: true
     searchable: true
+    filterable: true
     index: true
   code:
     label: API Name
@@ -97,7 +98,7 @@ fields:
       function () {
         return Steedos.getObjectsOptions()
       }
-    filterable: true
+    # filterable: true
   mobile_objects:
     label: Mobile Menus(Invalid)
     type: lookup
@@ -107,7 +108,7 @@ fields:
       function () {
         return Steedos.getObjectsOptions()
       }
-    filterable: true
+    # filterable: true
   is_creator:
     type: boolean
     label: Show this app for Desktop

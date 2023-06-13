@@ -1,5 +1,5 @@
 name: steedos_packages
-label: Software package
+label: Packages
 description: 
 fields:
   metadata:
@@ -52,7 +52,7 @@ fields:
     description: 
 listviews:
   all:
-    label: All
+    label: All Packages
 actions:
   disable:
     label: Disable

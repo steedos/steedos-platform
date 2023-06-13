@@ -61,19 +61,26 @@
                     "className": "mb-0 border-b py-1 ml-2"
                 },
                 {
-                    "type": "input-url",
+                    "type": "button-toolbar",
                     "label": "技术支持",
-                    "name": "input-url",
-                    "id": "u:d1eb5fb80e12",
-                    "value": "https://www.steedos.com/",
-                    "static": true,
                     "labelClassName": "text-lg font-bold",
                     "className": "mb-0 border-b py-1 ml-2",
-                    "validations": {
-                    },
-                    "validationErrors": {
-                    }
-                },
+                    "buttons": [
+                      {
+                        "type": "button",
+                        "label": "https://www.steedos.cn/",
+                        "level": "link",
+                        "style": {
+                          "padding": 0,
+                          "margin": 0,
+                          "height": "unset"
+                        },
+                        "onClick": "Steedos.openWindow('https://www.steedos.cn/');"
+                      }
+                    ],
+                    "inputClassName": "antd-Form-static m-0",
+                    "id": "u:5a4b3cf67a69"
+                  },
                 {
                     "label": "客服热线",
                     "name": "rexian",
@@ -100,7 +107,29 @@
                         }
                     ],
                     "inputClassName": "antd-Form-static m-0"
-                }
+                  },
+                {
+                    "type": "button-toolbar",
+                    "label": "隐私政策",
+                    "labelClassName": "text-lg font-bold",
+                    "className": "mb-0 border-b py-1 ml-2",
+                    "buttons": [
+                      {
+                        "type": "button",
+                        "label": "https://www.steedos.cn/company/privacy",
+                        "level": "link",
+                        "id": "u:581c46e53a53",
+                        "style": {
+                          "padding": 0,
+                          "margin": 0,
+                          "height": "unset"
+                        },
+                        "onClick": "Steedos.openWindow('https://www.steedos.cn/company/privacy');"
+                      }
+                    ],
+                    "inputClassName": "antd-Form-static m-0",
+                    "id": "u:8e0d333520d6"
+                  }
             ],
             "id": "u:d8ce1cb3156a",
             "mode": "horizontal",

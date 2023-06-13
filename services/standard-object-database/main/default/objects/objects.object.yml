@@ -28,10 +28,12 @@ fields:
     required: true
     is_name: true
     searchable: true
+    filterable: true
   name:
     type: text
     label: API Name
     searchable: true
+    filterable: true
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters

@@ -7,7 +7,7 @@ fields:
     help: 
     description: 
   field_name:
-    label: Field Name
+    label: Auto-numbering field
     help: 
     description: 
   current_no:

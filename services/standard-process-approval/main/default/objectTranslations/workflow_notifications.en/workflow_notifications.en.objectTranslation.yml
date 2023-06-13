@@ -4,10 +4,13 @@ description:
 fields:
   name:
     label: API Name
-    help: 
+    help: >-
+      Can only contain lowercase letters and numbers, must start with a letter,
+      cannot end with an underscore character or contain two consecutive
+      underscore characters
     description: 
   label:
-    label: 
+    label: Label
     help: 
     description: 
   object_name:
@@ -23,18 +26,18 @@ fields:
     help:
     description:
   assigned_users:
-    label:
+    label: Assigned Users
     help:
     description:
   assigned_user_field:
-    label:
+    label: Assigned User Field
     help:
     description:
 groups:
   select_assigned_user: Select Assigned User
 listviews:
   all:
-    label: All
+    label: All Workflow Notifications
 CustomLabels:
   workflow_notifications_field__error_process_node_process_definition_required: Please select "Approval Process" for this Approval Step and then create "Workflow Notification"!
   workflow_notifications_field__error_process_definition_object_required: Please select "Object" for this Approval Process and then create "Workflow Notification"!

@@ -1257,6 +1257,7 @@ CustomLabels:
   pending: In Progress
   completed: Finished
   monitor: Monitor
+  myfile: My File
   FlowName: Workflow Name
   My Approval: My Approval
   My Applications: My Applications

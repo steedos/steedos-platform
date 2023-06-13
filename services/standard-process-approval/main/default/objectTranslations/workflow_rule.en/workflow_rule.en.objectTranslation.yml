@@ -7,15 +7,15 @@ fields:
     help: 
     description: 
   name:
-    label: 
+    label: Api Name
     help: 
     description: 
   label:
-    label: 
+    label: Label
     help: 
     description: 
   active:
-    label: 
+    label: Enable
     help: 
     description: 
   trigger_type:
@@ -30,7 +30,7 @@ fields:
         value: onCreateOrTriggeringUpdate
     description: 
   formula:
-    label: 
+    label: Formula
     help: Run Immediate Actions if the following criteria are met.
     description: 
   updates_field_actions:
@@ -46,7 +46,7 @@ fields:
     help: 
     description: 
   description:
-    label: 
+    label: Description
     help: 
     description: 
   filters:
@@ -76,7 +76,7 @@ groups:
   time_triggers: Time-Dependent Action
 listviews:
   all:
-    label: All
+    label: All Workflow Rules
 CustomLabels:
   workflow_rule_field_trigger_type_options_onAllChanges: 
   workflow_rule_field_trigger_type_options_onCreateOnly: 

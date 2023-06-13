@@ -8,7 +8,7 @@ const evalEnv = (function() {
 
   return function(str, o) {
         return str.replace(regexp, function(ignore, key){
-              return (value = o[key]) == null ? '' : value;
+              return key === 'ROOT_URL' ? '' : (value = o[key]) == null ? '' : value;
         });
   }
 })()

@@ -46,7 +46,7 @@ list_views:
       - start_time
       - end_time
       - enabled
-    label: All Delegation
+    label: All Delegations
 permission_set:
   user:
     allowCreate: true

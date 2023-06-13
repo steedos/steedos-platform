@@ -48,7 +48,7 @@ fields:
     description: This check box only identifies whether or not the workflow rules for the object with which the field update is associated are reevaluated. For field updates across objects, these workflow rules are never reevaluated, and all workflow rules for the object to which they are to be updated are always reevaluated.
 listviews:
   all:
-    label: All
+    label: All Updates
 CustomLabels:
   action_field_updates_field_operation_options_null: A blank value (null)
   action_field_updates_field_operation_options_formula: Use a formula to set the new value
