@@ -27,12 +27,11 @@ Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platf
 
 Steedos Low-code PaaS platform is a powerful and flexible solution for building enterprise applications quickly and easily.     
 
-- Drag-and-drop interface for building applications
-- Built-in data management and workflow automation
-- Integration with popular business tools and services
-- Customizable user interface and branding options
-- Multi-language support
-- Real-time collaboration and team management features
+- Data Management: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
+- Workflow Automation: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
+- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
+- Low-code development: Drag-and-drop interface for building applications.
+- Integration: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
 
 ## Key Highlights
                   
@@ -41,7 +40,6 @@ With its low-code development approach, open-source nature, and scalable archite
 - Low-code development: Steedos allows you to create custom applications without the need for extensive coding knowledge. This reduces development time and costs significantly.
 - Open-source: Steedos is an open-source platform, which means you have complete control over the code and can modify it to fit your specific needs.
 - Scalable: Steedos is built on a scalable architecture, which means it can grow with your business and handle large volumes of data and users.
-- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
 
 ## Getting Started
 
