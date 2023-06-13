@@ -10,14 +10,19 @@ fields:
     index: true
     reference_to: !<tag:yaml.org,2002:js/function> |- 
       function () {
-        var o;
-        o = [];
-        _.each(Creator.Objects, function(object, object_name) {
-          if (object.enable_audit) {
-            return o.push(object.name);
-          }
-        });
-        return o;
+            try{
+              let objects = [];
+              var queryResult = Steedos.authRequest(`/graphql`, {
+                  type: 'POST', async: false, 
+                  data: JSON.stringify({
+                    query: `{ objects(filters: ["enable_audit","=",true]){ name,enable_audit } }`
+                  })
+              });
+              objects = queryResult && queryResult.data && queryResult.data.objects;
+              return _.map(objects, 'name') ;
+            }catch(e){
+              return []
+            }
       }
     filterable: true
   created:
