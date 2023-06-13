@@ -81,7 +81,7 @@ Package.onUse(function (api) {
 
 	api.use('steedos:logger@0.0.2');
 
-	api.use('steedos:devexpress@18.1.4');
+	// api.use('steedos:devexpress@18.1.4');
 	api.use('steedos:odata@0.0.3');
 	api.use('blaze-html-templates@1.1.2');
 	// api.use('steedos:lightning-design-system@0.0.2');
