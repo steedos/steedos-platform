@@ -111,9 +111,15 @@ module.exports = {
 			if (Creator.getObject(objectName)){
 				const localObjectConfig = objectql.getObjectConfig(objectName);
 				if (localObjectConfig) {
-					objectql.extend(localObjectConfig, {triggers: localObjectConfig._baseTriggers})
+					let creatorTriggers = {};
+					if(Creator.Objects[localObjectConfig.name]?.triggers){
+						creatorTriggers = Creator.Objects[localObjectConfig.name].triggers
+					}
+					objectql.extend(localObjectConfig, { triggers:  creatorTriggers || {}}, { triggers: localObjectConfig._baseTriggers })
 					Creator.loadObjects(localObjectConfig, localObjectConfig.name);
 				}
+
+				
 			}
 		},
 	},
