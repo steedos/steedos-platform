@@ -2,44 +2,2314 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "fddfeecf24645127b4903fb9550cc8c87fd1bd88.js",
+      "path": "4966b2b90b2ffff82c066f835c5f8678366bf91c.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/fddfeecf24645127b4903fb9550cc8c87fd1bd88.js?meteor_js_resource=true",
-      "size": 5493105,
-      "hash": "fddfeecf24645127b4903fb9550cc8c87fd1bd88",
-      "sri": "VyncmhOHQiEHjHYUNBQXSBcLxiCT7yQdUJvRhDId/n2XWK+LoGhMY33cDqAFvaFpqvnYbfperjsKw5dYwqqIIQ=="
+      "url": "/4966b2b90b2ffff82c066f835c5f8678366bf91c.js?meteor_js_resource=true",
+      "size": 4324609,
+      "hash": "4966b2b90b2ffff82c066f835c5f8678366bf91c",
+      "sri": "vObUgiHZqVGaulSUCYJCaI5EjxCL/981MfXvDEGGAcguUynoyDoPw7Ie7twQ6zhxd61WqzNjyMiPNLp4TMPuhQ=="
     },
     {
-      "path": "fddfeecf24645127b4903fb9550cc8c87fd1bd88.stats.json",
+      "path": "4966b2b90b2ffff82c066f835c5f8678366bf91c.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/fddfeecf24645127b4903fb9550cc8c87fd1bd88.stats.json?meteor_js_resource=true",
-      "size": 109376,
-      "hash": "4788e61f342fa439b0ad4f6351de0fe5d56e56d3",
-      "sri": "9a/qmqiu9Vo/hH052vUQs8y6HhbbYcYhvELx34T46G+45ifoB/PdPMbCAVpm+9dCFRuIc/kNEC0bVVNg8DorgA=="
+      "url": "/4966b2b90b2ffff82c066f835c5f8678366bf91c.stats.json?meteor_js_resource=true",
+      "size": 103676,
+      "hash": "dc5e1074c105758c6610c51c43f687d49994e450",
+      "sri": "mgjvgpzL8cDwO6WckcxGJKpdyZX0Lu8aSQlilaqUf1F5QXmXQ6VFuL9nY+owOx0M0c50miTzt+6gTNmYDXStBg=="
     },
     {
-      "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
+      "path": "dynamic/node_modules/devextreme/ui/date_box.js",
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/drop_down_box.js?hash=bc6d21c27bb9cfa1f439908440323c720410e2de",
-      "size": 4099,
-      "hash": "bc6d21c27bb9cfa1f439908440323c720410e2de",
-      "sri": "RxJXAwdwLik9jV82uIQAUOpM1x05kCDvNawUZaxnJV/rC4GFN9O/FW9MVk5SJA9m2cqO0dcJ4vZ9xr2hYvjsTQ=="
+      "url": "/dynamic/node_modules/devextreme/ui/date_box.js?hash=e07fb74bfbd8af58ab66da6f10be02823dfd0ee1",
+      "size": 104,
+      "hash": "e07fb74bfbd8af58ab66da6f10be02823dfd0ee1",
+      "sri": "nYvK+bH/L3CboLBJOPkKtKDGsl3s7CHXyFDCw6LyOLvW5cJNz8B9Ht/P+lzXYkhueB7elZ63OxvDgT3JZxIiRg=="
     },
     {
-      "path": "dynamic/node_modules/devextreme/ui/overlay/utils.js",
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.js",
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/overlay/utils.js?hash=2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
-      "size": 438,
-      "hash": "2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
-      "sri": "zzibV6UI+lfCT3W7kep62HkoHEbYYHDxTQKOUlcJAdFw9zN3mDqX0W9d1EJ60nAGgt/GCNoiFGEdEr9IE1JV/Q=="
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.js?hash=9de3ece6b7afaf4a6bbfc425545faa7afb48d107",
+      "size": 137,
+      "hash": "9de3ece6b7afaf4a6bbfc425545faa7afb48d107",
+      "sri": "+Hs1kcRz9gy5gMzo2hgAdjfX2teNckkleX6N59shCmNrStWdEvJE/eNorXJchyVI7RCJsv9yA/qrVTPqsJsFKg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/component_registrator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/component_registrator.js?hash=7ce2b81786d1eb7973ecbb37b79a6152d27831df",
+      "size": 565,
+      "hash": "7ce2b81786d1eb7973ecbb37b79a6152d27831df",
+      "sri": "spddnRTasvgdtIn1NmSXWO66+v7nkglvCaqVNaEtOgbHmMLoduw5JoxA643zsnDl/IYDWUXDYrqNiBZeTJc0tw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/renderer.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/renderer.js?hash=29cee9d6d686c7106c9437c0c2cf0382f9cc6b3b",
+      "size": 83,
+      "hash": "29cee9d6d686c7106c9437c0c2cf0382f9cc6b3b",
+      "sri": "siLfYHcKXMCdf9LB8gtmFBwUuAzucOnFlOb+yqPiEDEQVHFbSegWmz4Sxjx7a2wQ8UZ5xBNk66CrAAcVN0tRaQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/renderer_base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/renderer_base.js?hash=46d0780abf279c14b5ead666993404abdac5d925",
+      "size": 11632,
+      "hash": "46d0780abf279c14b5ead666993404abdac5d925",
+      "sri": "626gVXDOV+khrRPXQttq0f0ysoUBaPu6LJb9SFSELAm/7vI+P4XH1yZpgI5uYErtIZcNPiYsSme69mYTz6Qpzg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/element_data.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/element_data.js?hash=52ab9081474b8c6051288c14d0407076a4652bfe",
+      "size": 1126,
+      "hash": "52ab9081474b8c6051288c14d0407076a4652bfe",
+      "sri": "sApjT6AxG1hi59ko2TPgnRDgZdpEOdN4LGn00W3MTV+BSzQifArsj7HmPP74KRyGTzcQPGtHOm1FXcDADvcKbg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/polyfills/weak_map.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/polyfills/weak_map.js?hash=b263b834b09b9ef332b020d28522e3339297ad01",
+      "size": 454,
+      "hash": "b263b834b09b9ef332b020d28522e3339297ad01",
+      "sri": "QxgB7ArRKFNkt+VlGjZcPnCXv80tOKBxQO6nluA5nMVSUd6jpXeTTPC7O23/JD4Y1cRTL8xRlsKPVKqFzlr78Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/array.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/array.js?hash=c678dc5a03db1deef364c76828cbaec46ed9a510",
+      "size": 1207,
+      "hash": "c678dc5a03db1deef364c76828cbaec46ed9a510",
+      "sri": "zNm0TULhjQ4LGs+QiAcZB+20a4qgB0w3Ieo7P0rRsNFg3TRwcA6muB26UT8IVZJAGmYT3HuUZRky05dmq5HByg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/type.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/type.js?hash=cdbd13e89a076f793050e60cb8dbe69f05b496a7",
+      "size": 1664,
+      "hash": "cdbd13e89a076f793050e60cb8dbe69f05b496a7",
+      "sri": "og/2S5u7UOaATaRXcnhIisKO9mDwDFBaB9l7Duzfe6kWIlGHgSfUOUdzMIauQnxrBWngBIOOqLsHtKyz8+U4Zg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/iterator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/iterator.js?hash=d6b9609d2b8dadd12b544b1095f90a4143f64828",
+      "size": 442,
+      "hash": "d6b9609d2b8dadd12b544b1095f90a4143f64828",
+      "sri": "AQUrdXPGMnn3gdRkjWnSHAaD6NN2Dw/viuC3xK6yol3w6iAR8ny5cjqtL8sMRya6c1tanhYsoXYv4gqTMxG2Bg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/object.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/object.js?hash=a1a671078592b1c57e9ee80e4efe86efd41d224d",
+      "size": 700,
+      "hash": "a1a671078592b1c57e9ee80e4efe86efd41d224d",
+      "sri": "H8mSqbkayUeBBrFapYuNwaCYx5U0YblnGitvnvBUZPTk3xQi72sm1JlKTnGhHAhSZl+hSkoquDY4ZDfXtnqilw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/variable_wrapper.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/variable_wrapper.js?hash=1a3f8d4163a7f5aceb8e37106e570ccb4b2ff7ab",
+      "size": 365,
+      "hash": "1a3f8d4163a7f5aceb8e37106e570ccb4b2ff7ab",
+      "sri": "r4K9/uAqSKSYrsTTA+wfAlepzShOBxFQT0QY0hQOg9t9L4oI0qDSEVL1RRkRBeXGmpOXkqeDg21DPJCPZf6HDA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/console.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/console.js?hash=c78fd8b49b640bb568ec5ca957818620043b7eed",
+      "size": 360,
+      "hash": "c78fd8b49b640bb568ec5ca957818620043b7eed",
+      "sri": "kBFM30jhQumabwShkwkhKeXi1XUrKMBeWLpUClv9EhBM4kOG9U7y7H9wNaMdMmJ5ixnfUGDZ5fdNWPYHQ4+rkQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/dependency_injector.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/dependency_injector.js?hash=e344cd29c9c4de760a173e0a6f5398b908f0691a",
+      "size": 432,
+      "hash": "e344cd29c9c4de760a173e0a6f5398b908f0691a",
+      "sri": "v+Y+y41YbOKLyaZWUv822nGKgG0NI223JtlTjxKKHpKYf6woWaAxSCaeGUiO9c94TiNAJmD/ENieyhF8ZsCC5Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/extend.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/extend.js?hash=22ff5dae84753f912feb1632e6e54273eb81534c",
+      "size": 543,
+      "hash": "22ff5dae84753f912feb1632e6e54273eb81534c",
+      "sri": "Tc8Cj7MgOOWlK45x1CcutY/OZ1/rG1mZ6OpKxHnERqSVWqNJHEoVcCCRBmxRT26LcHJx5baWKKlEmmsEpCOlew=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/class.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/class.js?hash=055b6101fb2ca059caf96dbdd683e0115c9ce264",
+      "size": 1810,
+      "hash": "055b6101fb2ca059caf96dbdd683e0115c9ce264",
+      "sri": "LV0FNaV/5yrl13F8wvrarDtZREzznVc3oZ/RtS1eEBfM/xMtP5GE2hFplut44vURdHOeSn+V1z/KVplTOFecCA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/errors.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/errors.js?hash=53980fbaee05250cb11fafb8a11e310360fdb8ac",
+      "size": 2679,
+      "hash": "53980fbaee05250cb11fafb8a11e310360fdb8ac",
+      "sri": "0LzB2iPzY5VLi2mHAHivKtyMpb7zyI+36sHGVOgBLPE9cE55VuCZlkCP1daiMXdvWIx0mTSqIQ61wy+Wdla3/Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/error.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/error.js?hash=05c610fab1e11939be3722869c870b508c7f2846",
+      "size": 832,
+      "hash": "05c610fab1e11939be3722869c870b508c7f2846",
+      "sri": "6jH/ysVv4Tm3hGXFaOaByYVcXf249ZGydT1tyPUZLyJIQnOKnNakj/+Ac/zx7C4rtLy5JELZSljHGwpyM3nsZA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/string.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/string.js?hash=7169924a2df47c5e0bd96f36a1b66a1046aabad0",
+      "size": 1547,
+      "hash": "7169924a2df47c5e0bd96f36a1b66a1046aabad0",
+      "sri": "NU6BVF7c+z8Zp9BlpPRKODnC1OB6LbfAhTTnQp83yZRQh9APrO7E/Bw29R/yrnyPp++CAbp0pY3uLrRsfPfTXw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/version.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/version.js?hash=797a04287f80b852f7d8b636e9bbedfe8f684c9d",
+      "size": 58,
+      "hash": "797a04287f80b852f7d8b636e9bbedfe8f684c9d",
+      "sri": "4bDuFY4HnJDwfC6rxi2yDA43ZXmiUWAZsTt+y00aYHn3HSPtZSrJrpnu1jHe5uOrjl/re00gmYbC6EYVRNH7aQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/config.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/config.js?hash=a88254d4b7d939fe75262e047ff50849f8f5935b",
+      "size": 801,
+      "hash": "a88254d4b7d939fe75262e047ff50849f8f5935b",
+      "sri": "B17TQHgniioIuKJ67kc1C7sN7scE3lP5rm2GzI7g57Tmgc0rLDegDMl14uhggxmvH3lPnMZS1/2q5jIFBeNLVg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/window.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/window.js?hash=3cecd19cf7adaecf6b16fc653a3d11a10cbd393c",
+      "size": 536,
+      "hash": "3cecd19cf7adaecf6b16fc653a3d11a10cbd393c",
+      "sri": "MFvoYIz9wwusxGYsF4xzCPPMmFRut+Xp6l07cBztJF5xZZvgYE91qqMDjeAFp/fahGylO36gyVJ3x+0gj0GFMw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/dom_adapter.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/dom_adapter.js?hash=2d13b613dede50eca63eb0c76cd4086210eb428c",
+      "size": 2775,
+      "hash": "2d13b613dede50eca63eb0c76cd4086210eb428c",
+      "sri": "rEHEfKWpZ0Win+aJ2mij5le6ckj/j9BqKgqBPUPuHnX+JeP3BKek8oJzjkxltWGVsTxYK2q3s8qY0eOci35Nbg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/common.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/common.js?hash=079927a3578afe8783b82d13f55a2336a061accd",
+      "size": 3703,
+      "hash": "079927a3578afe8783b82d13f55a2336a061accd",
+      "sri": "JQUTxG7xyrvqrU3xCxP/X90RFJt0EM9sn/H4sgyqEPmK5zv6alVn1w/ugL2wPp7ORcy42K1a/3BjhqySinJEJg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/guid.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/guid.js?hash=01fcf679924104daac8d27b0fa76f4eb33bbc6ff",
+      "size": 597,
+      "hash": "01fcf679924104daac8d27b0fa76f4eb33bbc6ff",
+      "sri": "SAyjH3rYhcDlRW4NnVOwdukY+/w8jPc5eC2vvZj6C6Hu9ag0/ksZIca5F/ajxqu+GGM1G08Bfto2DRxQzRKQKg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/deferred.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/deferred.js?hash=2b888b0ab9cf78ebc9be580ba716c987c81dd816",
+      "size": 2328,
+      "hash": "2b888b0ab9cf78ebc9be580ba716c987c81dd816",
+      "sri": "2iYUI2fPqhsp/5+YgoqB8vXGndHSNHl7Pl6an+k4sUkIT8o21CCuF28sEcxpQa+Z0euFHO6IMqgT2oe9n5woKA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/callbacks.js?hash=383d301c76eb38ae8b5a8351d96405e357d89898",
+      "size": 1266,
+      "hash": "383d301c76eb38ae8b5a8351d96405e357d89898",
+      "sri": "9cBT9hJUzcv08wB4t2yX/AT0j5/291SxMurWJr+QTgU3haNq1FGDR3QWPhkc7WiQXwf9SxVGlfOAwkBZkqo/jw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/data.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/data.js?hash=440f88f2291dfdb93206585dc641aaf80e3a2b14",
+      "size": 1969,
+      "hash": "440f88f2291dfdb93206585dc641aaf80e3a2b14",
+      "sri": "+rhyBw/6+fxpL1afNvnDhZ9G1atsIKf0e/tfQ7oA1hOyyMmJyWzsycZObwBanf2X/NYd9Pjz7zkv6xQzy3wwZw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/events_engine.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/events_engine.js?hash=5798fd9cc9ec527d66c09b3811eebb04709cd7a2",
+      "size": 7232,
+      "hash": "5798fd9cc9ec527d66c09b3811eebb04709cd7a2",
+      "sri": "K74lOlCRjH8dn2DTKv8EBLYBlNPO/VI7P6j1uc7Nm0X/rH8kuhWxYlUaiEGc2xyQ5Qw8f34stL+jkmJ9e80W7A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/event_registrator_callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/event_registrator_callbacks.js?hash=e7055b9ef01662d4eb65624375b2a492338d9f2c",
+      "size": 96,
+      "hash": "e7055b9ef01662d4eb65624375b2a492338d9f2c",
+      "sri": "pQPEzTUSxCbB7ginkQHGXW0vL3jAq997ayFBDxCJFH4mAtHkUUkJQbMhqqk+x6Nc17I2jScfWj2SVVcongvgVA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/memorized_callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/memorized_callbacks.js?hash=dcdbf92fac6e66e180fbdf5789def2d45ecc5078",
+      "size": 312,
+      "hash": "dcdbf92fac6e66e180fbdf5789def2d45ecc5078",
+      "sri": "QuzzTN0Qek/0uKWbeGb/+8HkUopZfqL0C9L13aXgKu4ElUTa5HocyvBGgJsDED9B6txaDy/bHvWpT7NlR2W8lQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/hook_touch_props.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/hook_touch_props.js?hash=b0bd5876c1e17a87b14706653c67f93a88bbb006",
+      "size": 332,
+      "hash": "b0bd5876c1e17a87b14706653c67f93a88bbb006",
+      "sri": "W1L4kqZgfPvJpWdeTdd7OvKpDoMoJriCm6lA9c3vcGtgTV4QoaVtS/yPtHnZLntis0KrFXRULvl5tq604P9YkQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/call_once.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/call_once.js?hash=9a4d32f54ce77065d781c0d6e52895df156617ec",
+      "size": 197,
+      "hash": "9a4d32f54ce77065d781c0d6e52895df156617ec",
+      "sri": "GsDSbSFy+qrO6Y9ct4LGNnYeWpaLh+pxMQ9BOS2tpI7quX270a3KY0aivl/rZxXRgnWwFd1l2VjfBrEBunAVCw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/style.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/style.js?hash=1c090250e322c56a8f4eb6ec60d279f518864689",
+      "size": 1079,
+      "hash": "1c090250e322c56a8f4eb6ec60d279f518864689",
+      "sri": "pgKvQiZJ1tICCSeDSQBr0RM78DW3DdhiESiQC57zbEuBanUrUvzhIlz8++HokWKoSIH+oEHj1A7emySFp71c7Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/inflector.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/inflector.js?hash=af4ff52289583dcc030d88276762fbf002a6429f",
+      "size": 979,
+      "hash": "af4ff52289583dcc030d88276762fbf002a6429f",
+      "sri": "XkAZtd7h9zV0unrwH7tl0btO/kORaYQ+ZCOOnl8I30w/Nj4uxxyIsKYq04o+SRe40I3Y6ihtGI8N09t37AbKfw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/size.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/size.js?hash=84d1f07a6937d25d7a6272d9d4b34499946c5114",
+      "size": 1689,
+      "hash": "84d1f07a6937d25d7a6272d9d4b34499946c5114",
+      "sri": "bu3ORL3/ctL7DgpMWzun+ykLcfjDcA8E9IVtFLvtvlLHp+0Bwsiq6qfQnC3FEfOjAXUcHmRq+lx6Q/BVG0Z1aQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/html_parser.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/html_parser.js?hash=18d6cc031b1486f38a62622d6b7cf387b9fd3afd",
+      "size": 875,
+      "hash": "18d6cc031b1486f38a62622d6b7cf387b9fd3afd",
+      "sri": "FgeMijBahsAqTXV4hBTEzjkoRp6zfWkveBYdN0+VqmldvZVNsunm4cNyx6trOtXlZRt8we7VZoqsKZ4XogDj5A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/component_registrator_callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/component_registrator_callbacks.js?hash=e4639b08b0a2b096e9f950d0816398bff7e85bfc",
+      "size": 87,
+      "hash": "e4639b08b0a2b096e9f950d0816398bff7e85bfc",
+      "sri": "09M679aJElRaPWdSH4iT6y32N/gCZmQtg/qF8vP+Dc7oEppSp4Va4X+OovuXqQETTW+60minzZU84p6klM7DoA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/public_component.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/public_component.js?hash=a78bb00533548363b32b2905ff02f6b2388fa0c0",
+      "size": 628,
+      "hash": "a78bb00533548363b32b2905ff02f6b2388fa0c0",
+      "sri": "Y5/7DnbPMckaEiYHCISa/c3Ps05C28MA5idhyKlydlwubSY8w7M8hWm0l57Nf/QrHZsj3XhUxps6qvaoSExJaw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/remove_event.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/remove_event.js?hash=1a570a37c602ef532ac17a4698b0f052d9a0400d",
+      "size": 410,
+      "hash": "1a570a37c602ef532ac17a4698b0f052d9a0400d",
+      "sri": "IHgriCcexskG/JiLTnFoWyn8EZSjegEcXuuwz1N5x57X+pxmhxWcSmm3JTSam8n84Q6Vr8mYcB4jAS4PPwgnRg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/event_registrator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/event_registrator.js?hash=16526287628090faaf720c49a129106cf8166b76",
+      "size": 504,
+      "hash": "16526287628090faaf720c49a129106cf8166b76",
+      "sri": "hgzjrM8whqHNOqdxIBxR/OUmB7TR7Ydr1UL/veZRWrQpCCRE4KCESiokzP4O47uCQua5HIbmUlk3Wk2VO0UkBw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.mask.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.mask.js?hash=78e13458f4da440d5511d1c6a0337cb3c2985406",
+      "size": 9828,
+      "hash": "78e13458f4da440d5511d1c6a0337cb3c2985406",
+      "sri": "xG+nMWaICwGrww8lPG9zsRvJv4burN0phmePbw0DwoB7h1JKjLB9X7qweU/sQuv/qd28krepEMSOt24sjKFkSw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/utils.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/utils.js?hash=c31cc7c99d0477d992215d133f5f4532bc4cc4fc",
+      "size": 3172,
+      "hash": "c31cc7c99d0477d992215d133f5f4532bc4cc4fc",
+      "sri": "FoTCVKdDr/If3DE2/B+3NSrrQZiSd+bLmGClCVU7NoA1BN5zHPXj3GCms/iftO7xuQy84Eo4MYR6AnUsK4dgbg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/selectors.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/selectors.js?hash=657bd7de50915991b6b65c30e106cfb1f6e7f71a",
+      "size": 665,
+      "hash": "657bd7de50915991b6b65c30e106cfb1f6e7f71a",
+      "sri": "wgJJqwjyb1IwBWU8c1Jdxf/1JUcmTDY50WxKY1+ljSbzrojFJObdvVIHTNrwfz1Y8w4rVDpSfwp3uXzdd1xQww=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/dom.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/dom.js?hash=1afeec32b6d24f2b7e4d9ca71c723cb2960babf7",
+      "size": 3065,
+      "hash": "1afeec32b6d24f2b7e4d9ca71c723cb2960babf7",
+      "sri": "vclKGFOgAQTdWRMsHYnGlGnXyq9g0Qprz2lR5/VKwW2WDuu6YQRYzor+G4P+uObepzMUT2/7s63Q02FO5Tx5IQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/math.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/math.js?hash=a37558f7e1ea7f413be407fda373e0d7a15fbf8a",
+      "size": 962,
+      "hash": "a37558f7e1ea7f413be407fda373e0d7a15fbf8a",
+      "sri": "tmfrDFDtGWO5NGRiAytbDrSmQgA0OzRKPvqkqA1r38sY71I5Acfiem2LnM/atqD1LjvvSB4u494w8ZCx0AiFew=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.mask.parts.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.mask.parts.js?hash=b511a4cdc1b9989975fb67794787fdc6161f3476",
+      "size": 1977,
+      "hash": "b511a4cdc1b9989975fb67794787fdc6161f3476",
+      "sri": "eWcAb1EVLOMMkg9/AnxWXCejIZFrIEkaRcwcamFL8pGWBccXt/0vwnBr7mbGo2cdZUX7mU4vc2ttIdQJOPziXg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/ldml/date.parser.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/ldml/date.parser.js?hash=e89abc99731589f352a4032c0cfd79540c0a4809",
+      "size": 3039,
+      "hash": "e89abc99731589f352a4032c0cfd79540c0a4809",
+      "sri": "ZuEJekXGF3QNgxVuiKxwS7SitzCBW0jNmj2+hUMeslo9vdVNn3i2moVDUXoNbLWusPLN8sZt/CaDD7VEcGyQWw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/date.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/date.js?hash=71efa7bb4775af2b27e447559e121b2cda8dd3ad",
+      "size": 2544,
+      "hash": "71efa7bb4775af2b27e447559e121b2cda8dd3ad",
+      "sri": "DJdTRliuWmm5Ycn2u1UxhnlGtjyFMxCF8I1obt6CVsjSRuZYXanc7he5Ckvuvkl9AwXGttW+DI5tAX8T3okLcA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/ldml/date.formatter.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/ldml/date.formatter.js?hash=d6651f0e7459bd4f600e80f9a4a207ab7a757255",
+      "size": 2034,
+      "hash": "d6651f0e7459bd4f600e80f9a4a207ab7a757255",
+      "sri": "OfVw/WUQSoczRhPdL28OezJxu9gkRPKSXgXI0abGPRugF3vGooKTjXz7iziLGLRVE8VmmgRQFeXENTt+JLexAw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/ldml/date.format.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/ldml/date.format.js?hash=cf5d0c81daf636ccbb3113cb3cfb181237159d53",
+      "size": 2572,
+      "hash": "cf5d0c81daf636ccbb3113cb3cfb181237159d53",
+      "sri": "LNSKV+lXyWEVwYtDx0JZSP4pf+DIGU3UTqkkNvn/ggKpBjTyoxxtyzxXWAIQo1Cnu52xNIXXEacsNO75i5hxsA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/default_date_names.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/default_date_names.js?hash=63d5ce8a3c1e25394e9038e32895db8039d0214f",
+      "size": 577,
+      "hash": "63d5ce8a3c1e25394e9038e32895db8039d0214f",
+      "sri": "Pj8OSlG60Lvj3mMR0QehQU7BQ+4jr8B+Hz01S61lrrtldO9Tyk/6RnYxWspH9D2arG1eFvkexy/JQg3+fKy79w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/number.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/number.js?hash=c4c2fe5bf25e4e50f60d77bf929d67a4b994af0e",
+      "size": 4659,
+      "hash": "c4c2fe5bf25e4e50f60d77bf929d67a4b994af0e",
+      "sri": "EqK/IAYH9tbhBjpKKu4ugy82zb6brFX9i+gEQb+av6H23B4d6e8QcaR7lpBIvIYjit+s6dWu32PHt4aBhsxi2Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/ldml/number.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/ldml/number.js?hash=ad80c71881b961d7970a5809c361dd0900b37c35",
+      "size": 2408,
+      "hash": "ad80c71881b961d7970a5809c361dd0900b37c35",
+      "sri": "d9/lVNZaScKROEthyvi+L8eZhuBxzW5z4nL5KQdiZxnutYj2orn+rvTd2LwUvjxfzMKSWrnqRUBzDc/IXXI2mQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/utils.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/utils.js?hash=cc27be91ab514215ff285475432c85d72d059e7c",
+      "size": 360,
+      "hash": "cc27be91ab514215ff285475432c85d72d059e7c",
+      "sri": "/yqQJi8X4Y80jdZyW07FEJF+N34PncR6lH36jfFRdNzAK+L0lM51edBHKnJLyvwGFXNIcuB8A2scvDfhGSBIIQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/core.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/core.js?hash=b010753ed7fc827b87a79a68c5a587de2ecf55c6",
+      "size": 148,
+      "hash": "b010753ed7fc827b87a79a68c5a587de2ecf55c6",
+      "sri": "qEWu7Y0VHC8hjZknTTwpdenJsyLyDAUZ9ltJBvkSTJ71zXeNT/z/sQa3Y6bE1HzLN9n+BzrRTH3mfLdoPJElPA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.base.js?hash=0d9806880f3c0c2f2602171ab75f04d2b431cf12",
+      "size": 12251,
+      "hash": "0d9806880f3c0c2f2602171ab75f04d2b431cf12",
+      "sri": "2ReCHoG50czTaVRkDTzfuLirHBNbfBO6IkdHUXa/2NwV9X1iVPiWvP5DOGEtcu+Eirk6Xj+8MvenjCCXs1ssog=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/version.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/version.js?hash=0dbfe9b056e336958eadb09cf0d31db20a27f481",
+      "size": 331,
+      "hash": "0dbfe9b056e336958eadb09cf0d31db20a27f481",
+      "sri": "JooGOJVCwJKDjLEZI89+4HyD8bi+GKadL/jvrMdua1EVb56DLQjNvNVv6euJGJnV8vHY98tt1EckkA36zAVdig=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/support.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/support.js?hash=47f45406d176c02b38609315dcd47eafd5cf108e",
+      "size": 1488,
+      "hash": "47f45406d176c02b38609315dcd47eafd5cf108e",
+      "sri": "+jzb1kqN6K4nMmesz/0+wRKkyRQUDYTJCiHY4qS8IIyKrn511VpEcAH2bGx+8PzpTqJGtfF3Qjt8dzFj+lBGYA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/devices.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/devices.js?hash=b0ba3a94f1b483b5dfc575e3b766483c5e82ec3c",
+      "size": 5121,
+      "hash": "b0ba3a94f1b483b5dfc575e3b766483c5e82ec3c",
+      "sri": "hzeRwCjVthiQM7I9As4KdtFOOT8mHmEspyOQznOVh0hru+eyMfN3oQbsJPmTpsupr3+D3HcWKaLU4yrmXYKbaQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/resize_callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/resize_callbacks.js?hash=0cbaf4527a4f6376dc2926199e9386eecc537066",
+      "size": 724,
+      "hash": "0cbaf4527a4f6376dc2926199e9386eecc537066",
+      "sri": "Kvw29thBQMFsWfMRvSZu8T96dfeJjK9yylnoPjRP8hGT7s1JyfU0NhA/f56R9KzLudqzckmheU51IsC42GU9AQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/ready_callbacks.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/ready_callbacks.js?hash=b3de62c2d788be42010720d8cb676d6a0f106060",
+      "size": 491,
+      "hash": "b3de62c2d788be42010720d8cb676d6a0f106060",
+      "sri": "aNong3+dmaJTY+XCoLefhNb8gu6/Ws5AFFWZy0qm1fuqldJe+BVf2VzdcXT/mCLZFsOPPQjzOp52KcmdC4hKMA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/events_mixin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/events_mixin.js?hash=47f0d5e6256caa5b9647f97e902f732ba64bca9f",
+      "size": 661,
+      "hash": "47f0d5e6256caa5b9647f97e902f732ba64bca9f",
+      "sri": "IK9B6qqf/X8883U5hQKBDiePLJSTbRuKRwryVLQq8SP0b/hViU7SJ4Qnhd4AZSKlJF2XjbXHvttJEgh1bhvTzg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/events_strategy.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/events_strategy.js?hash=b81f0a8c3cef1951f4a4fe1a3249d89ec2cee460",
+      "size": 594,
+      "hash": "b81f0a8c3cef1951f4a4fe1a3249d89ec2cee460",
+      "sri": "Ejl07gYkQUI+GidUfg7qC4Y8SkjwXb7Y279E/lOFs3xCv0pNUi8bBNKiTBjpnlNohsa5WlFWZGta8G00WFI6cg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/storage.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/storage.js?hash=45fd1fdeb8b510ab1aa45425980b413935b5d18b",
+      "size": 164,
+      "hash": "45fd1fdeb8b510ab1aa45425980b413935b5d18b",
+      "sri": "p24MHeguROnVnlstJSa+BtfvjhRKQnpxgImOPAQx8yMI5pqvwetL9tQl/Nam5+3iE+gTBoFIXENqfoyusYo/0w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/view_port.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/view_port.js?hash=d52ca1fcff6a4503a2d21e9a2df9d4a99f9651d4",
+      "size": 342,
+      "hash": "d52ca1fcff6a4503a2d21e9a2df9d4a99f9651d4",
+      "sri": "vLwifABg+Ce0FAlYgGJk1acLHIIv2U8onB78f99zzbxtv83xywtPFeVR6NFF5mpfujn3ai164RnCQHIOG8XjsA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/date.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/date.js?hash=0be17f69e1af4b251fee6e8dde8b7c21e2f225cb",
+      "size": 8214,
+      "hash": "0be17f69e1af4b251fee6e8dde8b7c21e2f225cb",
+      "sri": "dSG9CXAoAek7R7P18+My4UuC8C7sPkp37Rh74JyT4Nz/mUZJDP1MAEAQ+xS54CsACR5SEomHkQ85lLO/JPl59w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_utils.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_utils.js?hash=548f25024bf000cf39575954a77c85eea8289e0e",
+      "size": 4339,
+      "hash": "548f25024bf000cf39575954a77c85eea8289e0e",
+      "sri": "lyBcxJBQZlC662t/TXdgSjn6ojVZ59ncKjHqnoTzs/QS650LlzrZBoeOrU+bHNXtP68lb9oUxXmVZg5SaVpdHw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/date_serialization.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/date_serialization.js?hash=65d3262a1e81d755a7e2c80b1acd636cb95807d4",
+      "size": 1629,
+      "hash": "65d3262a1e81d755a7e2c80b1acd636cb95807d4",
+      "sri": "EbDjb4pODG8UDvihaTk02/tQthOG2TRMb8D5QaEyTWsRTJ0OMkjBCd8gpF9WenVmd4N/tNv0WqvOAniybc0vxg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/drop_down_editor/ui.drop_down_editor.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/drop_down_editor/ui.drop_down_editor.js?hash=314a178ec9b978c23e1399d75a8ab50664e29a0a",
+      "size": 13652,
+      "hash": "314a178ec9b978c23e1399d75a8ab50664e29a0a",
+      "sri": "2raq/vmt40pO+h5o53MtHTeu6n/F2Tud/gbhE3huT8WHqAmzYrXlPwUSY5G13Kaxpv4r/Fxm3dyqOZFSoXfBqA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/shared/async_template_mixin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/shared/async_template_mixin.js?hash=9560ef6a15137ff93e52a5beeffb7e23ba0fa181",
+      "size": 463,
+      "hash": "9560ef6a15137ff93e52a5beeffb7e23ba0fa181",
+      "sri": "hOng1730UjGMz0WfXk381Yk+ppO7lIqSXPN8nUNzLaxpag6cPW1NXWSv8sX/+vVFDNJ6ePoy1/mQ1Wo9jKmHDA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/ui.errors.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/ui.errors.js?hash=50bec6a2bf85b0f352680a5c8057c7fed7384cec",
+      "size": 4169,
+      "hash": "50bec6a2bf85b0f352680a5c8057c7fed7384cec",
+      "sri": "hqNAN4wCvNZIlf1YN3G7n2XUePvugbqSzJ9gxqGuHffJrFw17Q3eWpUEvNtK6CEOZphF0pM3yWNVLpk7yZtR+Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/animation/position.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/animation/position.js?hash=3687e6b967dd2950c29115205408054b946513d2",
+      "size": 4474,
+      "hash": "3687e6b967dd2950c29115205408054b946513d2",
+      "sri": "hx2kU6skdf8EHktEFczrEit6Yp8aU/pTU2aCGJwmZ+fJ7a6oZWFdU3j2n78yhslxxrWLpZUDFaaKXt0V9d8YcQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/browser.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/browser.js?hash=050f2994efca8257a6c81e33914c89fdad23ec78",
+      "size": 791,
+      "hash": "050f2994efca8257a6c81e33914c89fdad23ec78",
+      "sri": "ulxN8OzWPV4DQF8TYKVue8oISOZQLhlOAgx5IOjQaXS+MaQCWe7woop6QKtFhJxnBD/MnQos18nUj6CxAMHT7g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/animation/translator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/animation/translator.js?hash=2f0d26a07deb3b0fb86c2d459ccb65620b57b8ac",
+      "size": 1389,
+      "hash": "2f0d26a07deb3b0fb86c2d459ccb65620b57b8ac",
+      "sri": "jWtBDnLfqALrug+kk/jWajOuDznvkq9/ZecVr2wEkXvdwKUeW4Os/X+5SWZPaSqq+NHbPKNpfEhFLfxag4SkCg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/position.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/position.js?hash=0165c955709498cd09256c084f5c525c58dbeb83",
+      "size": 142,
+      "hash": "0165c955709498cd09256c084f5c525c58dbeb83",
+      "sri": "X11yGsVw4rYCAZVD/mthYI4/4qCDZ9vm7UZ4ZBP5tlcBRrMuGI84XDS0YWJnL+3RV1/YY4lCuNUusLc9HPN2Hg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/message.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/message.js?hash=b35e8502dc50bdbc8458c32f99f5e17264fd70fe",
+      "size": 2048,
+      "hash": "b35e8502dc50bdbc8458c32f99f5e17264fd70fe",
+      "sri": "J6mHqZq0fGbTMONnOiV1xkCVZdMen6lF2gHgUQcNesJ+P1W8ZVh85852dd1rB3dnJo4gn2buDhYuupnCVCEuSw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/default_messages.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/default_messages.js?hash=92b00fc43cb192aba2018b76133bd418be7bdd9e",
+      "size": 11478,
+      "hash": "92b00fc43cb192aba2018b76133bd418be7bdd9e",
+      "sri": "+ya51g4CvKG+H/BWHGdl1BgxG+FJgA0BwxFi1iz4/WGJnSC0iVrSE320Esq5nfsmciT1ZT8nqWAinJI2m4feiQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/localization/cldr-data/parentLocales.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/localization/cldr-data/parentLocales.js?hash=3d4238411df46f521f6b36f34cdb077834f50d4e",
+      "size": 2895,
+      "hash": "3d4238411df46f521f6b36f34cdb077834f50d4e",
+      "sri": "QkGh3eR70cTA7EmTAmPFoCrXcK/XOYWQYxK3rIBVKEV1gp1Xfjt0QrjIJjeYEWVJIS08sdMYLoZPUMRU/MTI3w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/button.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/button.js?hash=0ff44326d3806e89c612a3a7e48849c0306942ba",
+      "size": 5494,
+      "hash": "0ff44326d3806e89c612a3a7e48849c0306942ba",
+      "sri": "1cy0wBJavbeRnvvCxV0oCFUTeUagHCOYwkS1r9ugEVqeJ5eMmDFBkXNo41WAo7f6Wd9wwfZW8t8asL3o0GPJAA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/icon.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/icon.js?hash=fa5b7ca194e09e81d60ca8e68466a81812d6d941",
+      "size": 485,
+      "hash": "fa5b7ca194e09e81d60ca8e68466a81812d6d941",
+      "sri": "uHqvIIdJ3SsxLzdnz9h5RkoOHlTOFKQwPwRxxasWH/duh9rA9VPJjC74DcHhuRuTT9U5DtxD4M86fh/Uhgrxow=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/validation/validation_mixin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/validation/validation_mixin.js?hash=027fe972028b216fd9c0a8e1d2dbf7970a40e8ae",
+      "size": 272,
+      "hash": "027fe972028b216fd9c0a8e1d2dbf7970a40e8ae",
+      "sri": "/ghwaAhMuKz+YH5pHuoaTC6jVneC32O2uTNdpeJHBYGqd9nChsZWcjhfrvzk92H4yqd46SeZXTLjLnF4ChKjMw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/validation_engine.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/validation_engine.js?hash=8c20170e7adfc4f94bdb9755004a866cd57f9b29",
+      "size": 4915,
+      "hash": "8c20170e7adfc4f94bdb9755004a866cd57f9b29",
+      "sri": "Xr4nyn4bmqQ+Et1kUII4xkpJ3RtGxJJukMlTatAhmQU1Y4GBxNDyySYIgYWFt59gBE2dgD+ZnLJ+MrsD144Xhg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/ui.widget.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/ui.widget.js?hash=441daf5a97b22faba8cd739ea55c183c5083070c",
+      "size": 13944,
+      "hash": "441daf5a97b22faba8cd739ea55c183c5083070c",
+      "sri": "7gfqpfAP1KskFTslViYu8h93/9Lt7/Qyy4maFSyPXUgwamErEWTz9JmCEDVtou7ve/Z+U6y4GS78FqfZ6zBCMA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/action.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/action.js?hash=70c4708333a2d7b867d96a4697c3f211b6fa3adb",
+      "size": 2440,
+      "hash": "70c4708333a2d7b867d96a4697c3f211b6fa3adb",
+      "sri": "Unn+h0MChRYz82CTSjk5a6GlW9URSWvSZ91hMrYFApNugih0JWYIqYCanVrYIrX++xZI87z8BjTEA3pUVT7KSw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/dom_component.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/dom_component.js?hash=ce22b53bc3061a8ce47bc73c2c351800ee92d2bd",
+      "size": 6551,
+      "hash": "ce22b53bc3061a8ce47bc73c2c351800ee92d2bd",
+      "sri": "xOx0EmP/JV2paGTssbRSbxLPStvr7mlM5LqPlhTFE/X0XHZWJifQ+nKx0UcJfnvIH8/kybVAe2Y6RjaTH4S6pw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/component.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/component.js?hash=6f88eba644c2ed5de3a3299702c5b1bfdc26efd4",
+      "size": 9526,
+      "hash": "6f88eba644c2ed5de3a3299702c5b1bfdc26efd4",
+      "sri": "jeRdzcMLG9Gv4hK++ZlpEF7zAeCp7e14Q1gWI9HnPAh952himsz1EWvcMPiLIqBPLa4sx9MkXZHNXkPf3I1wgA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/template.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/template.js?hash=60060f89480aea359e7984845c4e3943211889c1",
+      "size": 853,
+      "hash": "60060f89480aea359e7984845c4e3943211889c1",
+      "sri": "L/cYJ0IduYllwwugoZXCFeiQuwJfm9dXY7bq+IScVZjFbNWUtbYooUdA9sNYy2XQzIObDAdA1dopj2SFxUvzzg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/ui.template_base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/ui.template_base.js?hash=0b9fe25a2d220b4173d6917eeebbbab5eedcd1a6",
+      "size": 633,
+      "hash": "0b9fe25a2d220b4173d6917eeebbbab5eedcd1a6",
+      "sri": "clFYIJHvYR5OGztEK8YJg8ZV5mUHDoodUmq8XeM3u6zt/IUPaSYrCq5Q4qutWrheyk7lfE150w1R4euxtDki+w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/template_engine_registry.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/template_engine_registry.js?hash=06fad5cd09dbc73f9a1d10b00845563094203fad",
+      "size": 411,
+      "hash": "06fad5cd09dbc73f9a1d10b00845563094203fad",
+      "sri": "s8P6qdHAS59gX7Hs+VmThAQpe6hJ21CQMzlWq1syZHUNR5gskkorIjiH6BgZpNumFqe5OZW2Exvf2h0Ovf9zVw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/template_engines.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/template_engines.js?hash=08a8bcb3a40e3ff3823200f86d2c078ee9eb23af",
+      "size": 1181,
+      "hash": "08a8bcb3a40e3ff3823200f86d2c078ee9eb23af",
+      "sri": "M1AE/Nh3UYMG36o/hxTiOB1/DE/N2NMcYnBckcNOXk25c+qD7+rYVBT72nFfqpUoZhOGRhun28Ej5Fc/8YOHzg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/function_template.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/function_template.js?hash=79f0bc3f189bea5d7e8bae7d641cf78b89e26382",
+      "size": 232,
+      "hash": "79f0bc3f189bea5d7e8bae7d641cf78b89e26382",
+      "sri": "31QPs47YVaZdc1rby0wDKVEnTze5ye8ZiiMdtvi+RUT6OYETpqtaw29Qt3q5iA/7NLKyp3iW4Bgwhi+NqV4Emg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/empty_template.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/empty_template.js?hash=8a1d159db6885ed043c1302df0cc7ff6e1d1e1b3",
+      "size": 155,
+      "hash": "8a1d159db6885ed043c1302df0cc7ff6e1d1e1b3",
+      "sri": "e4VGDD4d45qPYwLsd/FNd5P0VrTrZlnCtf8hhpBwM7QRNk9iQ6qwd9DbPXvOoHHHXpls5mXvcNyjyFczfKtryA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/child_default_template.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/child_default_template.js?hash=a09c857164a99a25f207c5a5a7c15fb57b4ccd98",
+      "size": 121,
+      "hash": "a09c857164a99a25f207c5a5a7c15fb57b4ccd98",
+      "sri": "BKq6MHnrOPiLuVwIwpXME1SIWmn4FhzkqzZvcVoN5ZsyTVbAPjcHp1k+ngum5H4t+gWnisu95XdhzkX3n9NmeQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/ui.keyboard_processor.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/ui.keyboard_processor.js?hash=6a7aad88500195321e2e7bf4f0301a389a603669",
+      "size": 2489,
+      "hash": "6a7aad88500195321e2e7bf4f0301a389a603669",
+      "sri": "1ML6FLJwpC7gRIkxJp1ODIMdAzOxIHWPQDO1PfXdR5VQ5W2qSbipiXY1yKwb3/AWmYYNtCC1au++W9VUQ0UexQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/hover.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/hover.js?hash=9209b0bfcdffc98c88ff95200408c691c29783fe",
+      "size": 1359,
+      "hash": "9209b0bfcdffc98c88ff95200408c691c29783fe",
+      "sri": "wX/BkiaNobJ8VHyfYziMlnn1xbV+HMryAUm2dqlWs4Ufb7T53OP/Lby0fkxErSJFeVCdioc7Da4liIVX1ZR6ww=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer.js?hash=146fe0f78caa1577e96ff1c0e33352331254fff9",
+      "size": 826,
+      "hash": "146fe0f78caa1577e96ff1c0e33352331254fff9",
+      "sri": "3INvqC18fbUjV90ozqiqol3qINTWgMGBY3WpnJE1BBty1nZHm9KJZH/pSGKS5BOtYPxokAwi1NMw/E37eEbTuQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/touch.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/touch.js?hash=a612b14bd5bf33d0f08516a54f9a6d23931b3756",
+      "size": 974,
+      "hash": "a612b14bd5bf33d0f08516a54f9a6d23931b3756",
+      "sri": "mjCLVwa1ce0TKnhjcnhPa+6jgP3tnYX86aeSjMu6ESzbk2Yurr2CP/XwKEFor9TYae/YjBNs4bed5HQDWuC2sg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/base.js?hash=f87149e2d772b564b64f088149e125c4cf7b189a",
+      "size": 1572,
+      "hash": "f87149e2d772b564b64f088149e125c4cf7b189a",
+      "sri": "YGPtLgaCJsrcpgQCPJUNxjtG1FwPabL/ZoRs6ejHxADwta6/I3hEhZMt70VbkZWTAc7b34liJT1g8NqCAcAOQQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/mspointer.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/mspointer.js?hash=cddf2bd8407fb0354f22923a67ee3e62b8b5f6c1",
+      "size": 713,
+      "hash": "cddf2bd8407fb0354f22923a67ee3e62b8b5f6c1",
+      "sri": "D9W4pZ5r7NLRlH8DlHJqYVHeS25R0gb/HeSSPBrQWTjdpMgs7bIoSwOJVru63bFxdeJ4QM/D0hmceiKdK7D8pA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/observer.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/observer.js?hash=59337a07e618f9f33b2fde5593dd5fac04ce38e1",
+      "size": 656,
+      "hash": "59337a07e618f9f33b2fde5593dd5fac04ce38e1",
+      "sri": "Kqd/UBqRtmWELIerYRJN7UNsvGv5m6mkQ5QK6lGHg5+JWf6HgrOCF0GL7L2T8ySg4tLP2MVmA0hwGtkpMB9CYw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/mouse.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/mouse.js?hash=0fe4ff2c3aae8106a8d7543c87acfa36fce273c7",
+      "size": 679,
+      "hash": "0fe4ff2c3aae8106a8d7543c87acfa36fce273c7",
+      "sri": "eTXqYdw67oEfR5rmfWzjOrL0wZQK1QWiYYivI50uXqsGAt8gS3uRkR74bn+lTet4tyi1V73EMaHTAigyynFAmw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/pointer/mouse_and_touch.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/pointer/mouse_and_touch.js?hash=1283d4ce18d740b9472cb872b503bbfed86a84c2",
+      "size": 1165,
+      "hash": "1283d4ce18d740b9472cb872b503bbfed86a84c2",
+      "sri": "GSjlPOcDGskmOiZ56i4y9tf3ssc1DK5LxlF1bAko1yLEM6NYNgajxlEIsSTL7YWDEmgYN2/IPvbqjcSDFTQn+Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/emitter.feedback.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/emitter.feedback.js?hash=c3a7877e543f3b730360edda94450580668cfbd8",
+      "size": 2023,
+      "hash": "c3a7877e543f3b730360edda94450580668cfbd8",
+      "sri": "5mTnZDfKJ5LbV66G0bADbt9Q8iiavA7NvJGMzpnBfcbA90VGiXUSQiw0Nh9/2LsVOmq/1iZH05fn2YiIUy1GeQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/emitter.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/emitter.js?hash=e53e4b86582243044a5b0e94e8ddbd78f033b10a",
+      "size": 1514,
+      "hash": "e53e4b86582243044a5b0e94e8ddbd78f033b10a",
+      "sri": "hzk3hAzSRRxDbVs1LYeo9t9uWQvslVUJdI7fYks5ix6X5DYQg7mtLBTkMKwqA8EvMijrah1UEXF3eVhX1FO84A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/emitter_registrator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/emitter_registrator.js?hash=f7b0f14e9486bcb6b86439ca8262ec16812b8d55",
+      "size": 4117,
+      "hash": "f7b0f14e9486bcb6b86439ca8262ec16812b8d55",
+      "sri": "fyFhfHYM6sFuqXpXlQevlU/YpJPrqFgMzb4vKOanciljaJAK1ZXkB6phOXSSn8NFZd3qDOFYx6gAzinghy3uMw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/core/wheel.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/core/wheel.js?hash=f0a7bdaa7bc7d88690405a65b32c8cff7d64afc6",
+      "size": 706,
+      "hash": "f0a7bdaa7bc7d88690405a65b32c8cff7d64afc6",
+      "sri": "PSy+yU2gIaKo1VlzOJcu1e6O687rXiEWZ4pj+y0Q1Pmjn0eULF0OzfZEdS/bxg5GbpyOZJOlHojqie0hC9xhvQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/click.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/click.js?hash=2ab2645645a10ace8a7945ab6d6b909a5f86eb56",
+      "size": 2678,
+      "hash": "2ab2645645a10ace8a7945ab6d6b909a5f86eb56",
+      "sri": "00Yt8W3tCiBJ3LOBlmQuFbEAPRw7MOgN6B+N8Jd7N160FiabY77V9zdpcG06FzAvYI8vzHWLjkyCYR8tnEOBuQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/animation/frame.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/animation/frame.js?hash=7fda28c91f18800b9ab91046d708a701471f2205",
+      "size": 816,
+      "hash": "7fda28c91f18800b9ab91046d708a701471f2205",
+      "sri": "H9mxN+BxEGsQUVbwXvPcJEklMsNFMjX291RXreQV7RsJJbz2Mx8aQQxOFGCNdjdvxf1t6EPBgGCblfwKt3tqWQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/utils.ink_ripple.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/utils.ink_ripple.js?hash=e3cb7b0b6fd719d78fab61551e03e9b4d0bf07dd",
+      "size": 1910,
+      "hash": "e3cb7b0b6fd719d78fab61551e03e9b4d0bf07dd",
+      "sri": "wzsBKWJg1YxJ9tNXnVibop3D9NZhDqrx2TW2RP8eNtEl6d3tM7hYQ8Jw9yOl1w48eK4Jo6h+oONwwkH1r5Ac/g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/themes.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/themes.js?hash=d6fe8961ee355c4fd7ec2442eb2a84ed05c835e4",
+      "size": 3679,
+      "hash": "d6fe8961ee355c4fd7ec2442eb2a84ed05c835e4",
+      "sri": "10Iws7D9/AaZissF0rk0aZ+rsV9e1FAVGisOfGmfMxGB7F5kGp2494F1EMfZZgenrmzeQoXcSYzR6lwxNxKH8w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/themes_callback.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/themes_callback.js?hash=c0341237e570e8a3bc97c018b839adf9865b7981",
+      "size": 89,
+      "hash": "c0341237e570e8a3bc97c018b839adf9865b7981",
+      "sri": "6aZp1xqfPBAaRgWFJFSb+n4C9SGZdY69ykd0r4aBu75Kj7vtxAIuL2Dqn9nJQf3QQo/x/PAXqQwZ0j9dTNj6jw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box.js?hash=432d8506d2b901c363de0d96c5b3b0cff7e43eca",
+      "size": 101,
+      "hash": "432d8506d2b901c363de0d96c5b3b0cff7e43eca",
+      "sri": "9q/tHaou0bT4x7shSUBBkvtbyPZfKeHlikZCh4I1KqD+eDiw7Cn3Nr+qffuIhtxHTl/XTNgfFwSG2lGQD/OxHg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/text_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/text_box.js?hash=55b6fc7e42cf3024d05f20b59279a9eef4261799",
+      "size": 3055,
+      "hash": "55b6fc7e42cf3024d05f20b59279a9eef4261799",
+      "sri": "++NYA/om9p7WjZBVDUQy79dCnAEBE1BCw/xfAeipR7UJJuY5DstCcgcI7NtWohy1EvXT+wfwmpTb0HO8iM2TqQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.js?hash=d9d70c85608be167223f1fbf181c10789fa334eb",
+      "size": 143,
+      "hash": "d9d70c85608be167223f1fbf181c10789fa334eb",
+      "sri": "49XziCj64X+buGXb6y7EqvoMy4I+3M9p7IPigHB55kQ16Mhk5FMKIO5S5Q+OJaUtYIfYztAzUYjMIzKVADqRWQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.mask.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.mask.js?hash=8128e9097d62b4c0dea7b7533ba284af1076fc1b",
+      "size": 11945,
+      "hash": "8128e9097d62b4c0dea7b7533ba284af1076fc1b",
+      "sri": "xk+DubokStF/jlwd0M7IkhhOOyf+H1OFfngylfgssRCkDIWfocoyqN/Is0nGqXDcmHL/UK+GJBXVMFJD7mLlUA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/utils.caret.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/utils.caret.js?hash=5714c88f710b31cd4611c116718e0263159bf338",
+      "size": 626,
+      "hash": "5714c88f710b31cd4611c116718e0263159bf338",
+      "sri": "uLeDi/l0xalEh7ffR1lyn9e14EtYll+RDfypAFTI1AOyp7MXjzJ1F58VbgV+xTtMbJQEIzMqpF/hIYYq/U1B6w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.mask.rule.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.mask.rule.js?hash=fe8689894f9a915897fbbbe2e0bee60480e8cb7e",
+      "size": 3893,
+      "hash": "fe8689894f9a915897fbbbe2e0bee60480e8cb7e",
+      "sri": "ud11+kzLE8wHZXdFSxyRRU8fhDxeonZwyjIaxa/XXkvx/Q4jsETYHzrMoKhElyD2kEo68op4lJwlro/qdE7L5A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/text_box/ui.text_editor.base.js?hash=df980aae960197ee82694b16b1124eab591308d7",
+      "size": 10631,
+      "hash": "df980aae960197ee82694b16b1124eab591308d7",
+      "sri": "Ml2Noq4ohgUrhZivAKh2dyprxAZxKZDefVn/xvLjo4pVpilOnMcj5sEbB5lDZK9aNazNc24tL/iPUgRo8Fj2Gw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/editor/editor.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/editor/editor.js?hash=c15c6dbc040d34c6360390086b9eab9fbc3ed203",
+      "size": 6117,
+      "hash": "c15c6dbc040d34c6360390086b9eab9fbc3ed203",
+      "sri": "k6JPsWLSzCDgghFXRYBCrlgLHBvJMsn/426pO7aIsY7OoIFp+rlzFiTM9FGUPU06jlXP7gojMxx7/0oP79Ha6A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/overlay.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/overlay.js?hash=316fb2ef1be933eca28af34dfa7b07b45a09889a",
+      "size": 102,
+      "hash": "316fb2ef1be933eca28af34dfa7b07b45a09889a",
+      "sri": "n9vlb8KNJLukZEQBYS6FcuDwuKVToXKiWGBV7Qrch+fXT3NDn2lZ16KH6/i1lE5MnaHDq9WAiHYjSy3UqmuCzA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/overlay/ui.overlay.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/overlay/ui.overlay.js?hash=c811a400bfa11eceed34567290f7eda403209fe1",
+      "size": 22739,
+      "hash": "c811a400bfa11eceed34567290f7eda403209fe1",
+      "sri": "0BONuj4fKfTREeeXmmDDpUtHHPrXSYArEOMvr3PTQS99CtyqOR2naF9+RndwSi5aVSLK3shI5DcHC9lcHEYQ0A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/animation/fx.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/animation/fx.js?hash=85b8479a10253706954529853a9c38148bc8b208",
+      "size": 9989,
+      "hash": "85b8479a10253706954529853a9c38148bc8b208",
+      "sri": "qNem1W9g1V0gDCfbW5FqPrBAgCyTWLp/r7cpO4aZDEZt1V+oN28DyxTD/rReW47wqVPSyQUnJmAET5JFvzOoqA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/animation/easing.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/animation/easing.js?hash=4c981dd7c2b560075e952c2c3cb99851a980f36e",
+      "size": 1140,
+      "hash": "4c981dd7c2b560075e952c2c3cb99851a980f36e",
+      "sri": "iPf1UN6IM/Rw2eaJSEkgPxxkARQLrqZ9hsAt/NioxHMFrVSE77qOxJ+Yr2ZxU0kA8F+JjBmj4nwcBwkrTJ130Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/mobile/hide_top_overlay.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/mobile/hide_top_overlay.js?hash=df4de3d7d104ee1cde2a9970f501d812570b266c",
+      "size": 377,
+      "hash": "df4de3d7d104ee1cde2a9970f501d812570b266c",
+      "sri": "BOUckH3kkO3UZyppaTu/jX8Ais81bKHh073hn//OqSHsVNOjH2nEO7mMnRejfBCbvsz0iIgJRxdnV7159i9rWw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/drag.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/drag.js?hash=c36a4e1110d6b9176a1bedee08612b4a4275877d",
+      "size": 3809,
+      "hash": "c36a4e1110d6b9176a1bedee08612b4a4275877d",
+      "sri": "eteUoFUthRzMuvKM8JvT8BlSzCBdFc/j3FE1JljhW3FlkoBVZDk/FknnIOoNd+77Q2nCXHr0SnH9X/YVcARveg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/gesture/emitter.gesture.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/gesture/emitter.gesture.js?hash=65bf97e8bf1d9823937152cea58def06ba18157c",
+      "size": 3332,
+      "hash": "65bf97e8bf1d9823937152cea58def06ba18157c",
+      "sri": "Ko15HbZD+fxkB+pMUnZYsbso6RwuG4jZdiXodat2x64LGKzGy+z98PFHCqcvy17lMPT6EY73x73OgcB2vT6YiA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/resizable.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/resizable.js?hash=e32da1b77478a269e41614a65f32f6c532e55c42",
+      "size": 7477,
+      "hash": "e32da1b77478a269e41614a65f32f6c532e55c42",
+      "sri": "WAIw/Ezhf0nYZyzrurC25FuB+J33uAfYltY0Pxnvt28fFzphjfhPBVp6HV5CAdYoOFeouc4JR/YtfzQMQyeJPQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/overlay/z_index.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/overlay/z_index.js?hash=2cda8d413e5f119a9fbb74bc09466bd676bbec18",
+      "size": 461,
+      "hash": "2cda8d413e5f119a9fbb74bc09466bd676bbec18",
+      "sri": "BNm9craiABfteitcWAV2NGImBn15tpQp5DqrUlV0e1g3SNO1vfEK7WW6bjKvLqvyiP0VNegp5lNthTVpBN7T7g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/swatch_container.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/swatch_container.js?hash=2c95c5113bf0a6c95508048f584243bbec695820",
+      "size": 427,
+      "hash": "2c95c5113bf0a6c95508048f584243bbec695820",
+      "sri": "OLgWdT6hUeh4ZpUnc6PzuzUV+iFZhTsqRmW3Tmf8pgG1+4eooS/qmOhzRCgKTfAH+V1k3HQyiT2CSCRVkBVprw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/popup.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/popup.js?hash=6395d5dd54d5af214e597f9fabcded2c8695172d",
+      "size": 11410,
+      "hash": "6395d5dd54d5af214e597f9fabcded2c8695172d",
+      "sri": "VmwRppEzis/MV2vU0iQRdi7qdgtAfGse97eWTsdsgs9PDZUxIXFgccKZcHfKTeWD4risy0nG3AQ6j+an5PZlLA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/toolbar/ui.toolbar.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/toolbar/ui.toolbar.base.js?hash=60b8a1a07008b9c1b356a6f316527dda250da5e0",
+      "size": 6926,
+      "hash": "60b8a1a07008b9c1b356a6f316527dda250da5e0",
+      "sri": "5NEXnF87POpLchNY8IT634g9RTrsUpl0w/YN8JZyqvKpwp3BHava4amDy26TEGNn1cjrTh8K5ZhEahx5tGZOfg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.async.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.async.js?hash=01e0e485aee5b8df24227c88db6675f680f0a324",
+      "size": 938,
+      "hash": "01e0e485aee5b8df24227c88db6675f680f0a324",
+      "sri": "9Ii9tHjSgKMSd/d4zGU1WSG5l+tOIrgvTprRxwqMek+r2drsKwj3/2kLQ7FtTAgBqy/IJU9bsJrwNuDjSaGV7g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.js?hash=46dda3b5032615a4dceb25a7989516260ca48232",
+      "size": 14355,
+      "hash": "46dda3b5032615a4dceb25a7989516260ca48232",
+      "sri": "dbwh5Ox8p01DMiUtsTaKeZ1ay69DQsGGq6443J/HMWXuE7N8VRoviT4k++p3IuD6ucjtCOjFpOeK6YGSIuRmrg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.base.js?hash=d40558120630b9d00f81522d917efc84a4f113dd",
+      "size": 17794,
+      "hash": "d40558120630b9d00f81522d917efc84a4f113dd",
+      "sri": "YG8KQMTIUAie9ukDMGWSt1vv+TKOIWyuXy3T3QNNAK0PF5fee1ff7OcMRnAa4+eNWI3b378CyfgqRZx710Lqgw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data_helper.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data_helper.js?hash=b7754275080ce85bfc043961e890d0788fe6c8ea",
+      "size": 3269,
+      "hash": "b7754275080ce85bfc043961e890d0788fe6c8ea",
+      "sri": "+Ewl83Jzc3xxs/o21u1/tnLTVxDw996xKshIUni4C38lqek/nHj5nRGvvyD4KOb+Lx7Y5601H45Y49XF35nQ9w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/data_source/data_source.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/data_source/data_source.js?hash=a511d2d3fcc1e72c4e8c20e026621927ee337f39",
+      "size": 9714,
+      "hash": "a511d2d3fcc1e72c4e8c20e026621927ee337f39",
+      "sri": "rhC7Rhr6cpZKIalDZ0/8wP9nf+4fYVuYuPNE8xI/tmvaCAnQE/OnFiwTg5n6C2kqTc/lBysPa1uZF1IhRvkVsA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/ajax.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/ajax.js?hash=384f124b92dbc55553cc0b9fccb9e474aa749ca2",
+      "size": 3960,
+      "hash": "384f124b92dbc55553cc0b9fccb9e474aa749ca2",
+      "sri": "ryuwyVHrXc83uG6ubwT3MOnL/DFgFlyIL6eGOqDh0gyfkf59OyzY/iGGwv7E7bZaOhqonkxlNOM4CmaF19El1A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/http_request.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/http_request.js?hash=93a3771a4f47742acd69ad15eb8c75ed4cc4bff1",
+      "size": 179,
+      "hash": "93a3771a4f47742acd69ad15eb8c75ed4cc4bff1",
+      "sri": "OEzhfG4qEN+VzfjO5j4gJ9yTfOBuFQ9X8oiJqg4/XSM+BlwSh3Dg8qSpsijG8cqjpFWhAvNYv4a5OqnBTePRdw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/polyfills/promise.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/polyfills/promise.js?hash=78e5cf6fdce3f7e64cab284259b953b30e5300e3",
+      "size": 488,
+      "hash": "78e5cf6fdce3f7e64cab284259b953b30e5300e3",
+      "sri": "1Bt5trNDugYdUYNl3FLVRDod22j8gPGVCq0P6yW7H/u826LxJMaqwDm8M0fSk5IVA534wbomek1PqFh9L2iNzQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/utils.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/utils.js?hash=9899147200a59ae395e8700d70154d2360c34308",
+      "size": 3596,
+      "hash": "9899147200a59ae395e8700d70154d2360c34308",
+      "sri": "se+qztxGfGW+sjzW9V+ZknFH+cZPDnp61czJGZwZUTjKczdkhQgY6WA+moRVaBcFFz/8HH0u35ssKafzgf/CzQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/array_utils.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/array_utils.js?hash=66e3fcf1b6aa707068b6da6db96f62eb7921b37e",
+      "size": 2505,
+      "hash": "66e3fcf1b6aa707068b6da6db96f62eb7921b37e",
+      "sri": "SVwuTI4coIO+NconYArrekGejEyLbpkvNykPovGySt6LBWWnuR+7AWpfdLUvdhe3oeoodsCdbrPj7sjBdG7Wag=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/errors.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/errors.js?hash=789c49b1c0a8a3c2ca0dd1c253f34019f34b483d",
+      "size": 1939,
+      "hash": "789c49b1c0a8a3c2ca0dd1c253f34019f34b483d",
+      "sri": "FKAnOLoNvOzQt5beics5d305htCgpvU0WBZ0tdM2QXQQLxCHE8iZLjqeedcVk+wxbtI6QZyPZBQxCwPjoDpCsQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/abstract_store.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/abstract_store.js?hash=6b5772cf184b15a8cb57091522aac69435151b01",
+      "size": 2588,
+      "hash": "6b5772cf184b15a8cb57091522aac69435151b01",
+      "sri": "f8nbVh48cEDVnFMnfxABtMsuQiU4F3l+QJfH1J2+lFS9YK3Rqf66UCW4PHKXteASCrsukjwtGeF7IkJ7yHfQaw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/store_helper.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/store_helper.js?hash=bacd1de193c3b988c53368a90879f453ee520362",
+      "size": 966,
+      "hash": "bacd1de193c3b988c53368a90879f453ee520362",
+      "sri": "fCLsfcCTDFD7FRkGV3kDrJqyLtZnw1Z7b3GOrpgpuw0tgrjj60/54n5dYnWupo1TF40W7d9IosQx+pJhr9U3Fw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/array_query.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/array_query.js?hash=614bd0c25cb995687ad950780a0c2f24f2e2265b",
+      "size": 6756,
+      "hash": "614bd0c25cb995687ad950780a0c2f24f2e2265b",
+      "sri": "qkloP80TBkmb+LUu5h5OZo4BDw+xCNyLcfDmus4h+P+Yh/jGEuONsXPougknTQbI7ixuAL/pmjDXg7BD/vojjA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/array_store.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/array_store.js?hash=60994d9d5d7638d568defdc3e4143d08b7035c70",
+      "size": 1050,
+      "hash": "60994d9d5d7638d568defdc3e4143d08b7035c70",
+      "sri": "+LOzjuoHbGt9ZrjYGOtalt/VEwwbLsB9I9BVpEWEZWpaojXUMGwZoUI/ypqcjkFUBCcc974O7UXCrB2bI4piEA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/query.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/query.js?hash=3edec7ddc89baefd0e70c124d5f0192913bc8aea",
+      "size": 263,
+      "hash": "3edec7ddc89baefd0e70c124d5f0192913bc8aea",
+      "sri": "HlQkBQKqxc18ewTcT5vwqC5VbBjwldES2hBOip6wLC9is0/MDvfc3uLXBf3vxNcT+5hmROagC75ZNPVQGWGDvg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/remote_query.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/remote_query.js?hash=e7ca930ffd2f379e502dc82e87de825980bdc8a0",
+      "size": 1524,
+      "hash": "e7ca930ffd2f379e502dc82e87de825980bdc8a0",
+      "sri": "s7AGOWD8FPe6/3N6G6qXtGsneH32k+oVjRrYBmIvZiBqRUIErpG3fYyuZ1cIjatIYD+xrSzCnKQUJHvuqMZBUw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/query_adapters.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/query_adapters.js?hash=b3e5cc416d1e13e975c535ef9f7b53ab01f7e7c9",
+      "size": 51,
+      "hash": "b3e5cc416d1e13e975c535ef9f7b53ab01f7e7c9",
+      "sri": "V0p0p7ddwqdi+5y51WX/8hIu7VupGDsLAp14LpH7HEXi4aH5IFIeMHwdEyWr/XOrhZBZiNLUlFC5fUK5Jv3MYg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/data/custom_store.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/data/custom_store.js?hash=ae29294d98e190251e905b5e9305c5851e3efa27",
+      "size": 3877,
+      "hash": "ae29294d98e190251e905b5e9305c5851e3efa27",
+      "sri": "sIvG/lgcIU7zeUMjBw8I+aaBUWoiweJ/z3mZ+VONw60/gMh4gQE4xsKj1jIGqAOJ1xwkwdraT4ZD+fu6MSFkyA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/queue.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/queue.js?hash=7b9d21e94b289e59a0c596dd85f04d7687ca575e",
+      "size": 390,
+      "hash": "7b9d21e94b289e59a0c596dd85f04d7687ca575e",
+      "sri": "DI4HEtHFfFachFiRB72qes89On+3ktQqZHbTd+nJnHv4qzDAHSAcVZqwc8GdYnZvNnNUKnWJlz5zEJj20PEh2w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/item.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/item.js?hash=f59e0340edb1180d2423f19d31fb2b0ce4f1b6e2",
+      "size": 1442,
+      "hash": "f59e0340edb1180d2423f19d31fb2b0ce4f1b6e2",
+      "sri": "SaRN9EF937YFcbX6nQJnveC5iMjEUj6Eg4qiZIM7wvKjRPZJHWZMEpEiAV05eIK/R6ayNaQUqFuVkMVt8RAsJg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/hold.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/hold.js?hash=4ed4f64eb8fe4f86f3d6cc9f41d525848e178a91",
+      "size": 840,
+      "hash": "4ed4f64eb8fe4f86f3d6cc9f41d525848e178a91",
+      "sri": "O/9dMxeoNTNUMNaf2c1kZNG4R0DQ6SG/uieAf1YiUj8hbmAPCwJBBbIrUYhBxEGKOJiUpSjW5NcWTqIN0OEMZA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/contextmenu.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/contextmenu.js?hash=fdc5ed566b8524942462f799067337a78158f22b",
+      "size": 843,
+      "hash": "fdc5ed566b8524942462f799067337a78158f22b",
+      "sri": "N7lrLmZlHIdjkoZbnSEWYaK1M+o9pg7+1h98pVSkcT21I88jnRbMN9/RCscV2kQ+stKuHPEW16Pv5p7F8IOdNA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/bindable_template.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/bindable_template.js?hash=77e77de77542f6ea5f0b2e350fbd5e88fe62e1bb",
+      "size": 1040,
+      "hash": "77e77de77542f6ea5f0b2e350fbd5e88fe62e1bb",
+      "sri": "GUtheKWjVzU/CapiFWdHfZiSjwh2inKLbBgHqxnxO570jLgtJJCjoU+Z9X0MvPw9/9ma2p4A8sHlnQ2qE3jCwg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.strategy.plain.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.strategy.plain.js?hash=209dba6b0003b7b49a2cf625080ccaac72aa6771",
+      "size": 1737,
+      "hash": "209dba6b0003b7b49a2cf625080ccaac72aa6771",
+      "sri": "AFpWDcxxK4UoTZJD8K0+8ZtP7nyd3Z9hYy1LMfl5/LSpRDc6hadeuJXT+8j6n/t12nLUyv/lyofWo75HG5sl5Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.strategy.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.edit.strategy.js?hash=afdfe1dd4f3a4f046dfd3f4a8c8ba375bbddcdc5",
+      "size": 1837,
+      "hash": "afdfe1dd4f3a4f046dfd3f4a8c8ba375bbddcdc5",
+      "sri": "mkoVwG+vkF2try0v5D3CxgcmccMnXcXYyOyAsLX4Kg54Kgo0wiF1LU6rTYNg/uea6oPyWehJxHb7IdILYJZcFA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/selection/selection.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/selection/selection.js?hash=5a5f26f848a61910d2a0c033a3404e132f671759",
+      "size": 5060,
+      "hash": "5a5f26f848a61910d2a0c033a3404e132f671759",
+      "sri": "uqCyXCLErIp9D+Fcib7aeuRCFm7IdSyRH+23iGTF+bxwowojrYp5H+kP0zhOx/bi/eTjaPnRRE/vgl4OHsM6Pg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/selection/selection.strategy.deferred.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/selection/selection.strategy.deferred.js?hash=8d654c14a1212ae595430d87cb3516ae1aef5dcc",
+      "size": 3413,
+      "hash": "8d654c14a1212ae595430d87cb3516ae1aef5dcc",
+      "sri": "2nFhwPufSHAs8NKO+rNkxCQy3lhvdxThAbxJJDDfqC67l6sYFzQA4IKVyCCgodG3kwYhwW23P/T1VjnrZZjbIQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/selection/selection.strategy.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/selection/selection.strategy.js?hash=f1bd74e96994b60ba61473c09539d5675bd442bc",
+      "size": 2407,
+      "hash": "f1bd74e96994b60ba61473c09539d5675bd442bc",
+      "sri": "AzOPjaoD7wnGJyGUjfoVELpa24AuEnvVwWlYVhfAcUtvvxjC9fUWOAV13mUlTFIK4F1Uoi+eIF9qoigXVr5JkA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/selection/selection.strategy.standard.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/selection/selection.strategy.standard.js?hash=5b4bd0bec1edd391e27430ae73ea5696f6a56b43",
+      "size": 5327,
+      "hash": "5b4bd0bec1edd391e27430ae73ea5696f6a56b43",
+      "sri": "r/4bQRmgntSpt8fCCz6aYjdFrcmThM+kBq3ajcL5pqYLTxTbZiNTwZQe69qDO+l73BBOCJDrhrNWrEj2B4VVqA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/selection_filter.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/selection_filter.js?hash=01d285a0896d52ee8f4f3ffa9224e4cb647ee8c9",
+      "size": 1048,
+      "hash": "01d285a0896d52ee8f4f3ffa9224e4cb647ee8c9",
+      "sri": "WMK6zHG530WLyLEsRO0EySxJYmpkXch3th+ffcxS66uDCkeTlWein4gADrEXbMiBthBMBWURa8vLsGMyrpnG0Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.calendar.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.calendar.js?hash=4d782f478ce6d98193e0bf7421489771a21ea5ba",
+      "size": 2655,
+      "hash": "4d782f478ce6d98193e0bf7421489771a21ea5ba",
+      "sri": "bM/x+5nKC5JRg6/89gYaRWrCgryRcHG19wr4MSzptK2zqvWzevggwNUDnAqJ69dv5fy5CeU66LDKcx+X3KGzkA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/calendar.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/calendar.js?hash=52cfb75b8b1d43c4d9a3553f26491d1e03f3463a",
+      "size": 104,
+      "hash": "52cfb75b8b1d43c4d9a3553f26491d1e03f3463a",
+      "sri": "OcNAP8GWMIscfzhSfVaUTD633XJ5JG56nC9eJUNpAdpzZySR3FN2YUREoOkH92dbSsP2wGG16H4ca6qRtg25Ag=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/calendar/ui.calendar.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/calendar/ui.calendar.js?hash=8d4c4e1fae3772e65ffa9dce365dd75038887e9b",
+      "size": 19476,
+      "hash": "8d4c4e1fae3772e65ffa9dce365dd75038887e9b",
+      "sri": "aFRMASQkqRrkPrvaf5vqXPqM16BvzoRG7m5g8xaK/N8fA+92FsqqSsoFadptsyZ/4F9CRBgA7SwqVOW9XxWqqA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/gesture/swipeable.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/gesture/swipeable.js?hash=f7fcddaeeedfb94b38e503c01038a939cf440fa9",
+      "size": 1552,
+      "hash": "f7fcddaeeedfb94b38e503c01038a939cf440fa9",
+      "sri": "u5/7KxpX9wEQs+cnmF0AKmhWr5q2pQ92Q0KlH4U20wHCmNeU5repSCQMbifWNNSFAnxIhUHfCGDW5rJeWndqeQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/events/swipe.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/events/swipe.js?hash=167bbf68ce97d4f8a65e8649694c8baded7cf121",
+      "size": 2573,
+      "hash": "167bbf68ce97d4f8a65e8649694c8baded7cf121",
+      "sri": "1c3KCgbG7ryyi9moLyD+ihejk6Wn0ff5YTp11fLgDlx7/jrUYgT7d99OP0UqwZmfOaoCeBuhT8YXzIOm9ix7BA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/calendar/ui.calendar.navigator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/calendar/ui.calendar.navigator.js?hash=fe6ec87129206c004308b52b08a30b7b11cce77e",
+      "size": 2125,
+      "hash": "fe6ec87129206c004308b52b08a30b7b11cce77e",
+      "sri": "+lUdmALBuHOxzyXxbhlWl+PEcLB4PvCXqzuwakeiCQPJ46AcRcOG/FeEiEH+vJSFBrvbFsqvO3iUYyl1HIRAvw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/calendar/ui.calendar.views.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/calendar/ui.calendar.views.js?hash=f5c40ca85c76641eed40c795ee145059c7ee41ff",
+      "size": 5689,
+      "hash": "f5c40ca85c76641eed40c795ee145059c7ee41ff",
+      "sri": "/dWIs6DHWNV7lgfgSrhptKFswvjGJAXEbY0HlwPqrx+ttbCRdMeFW838aNC5zXRVSQHcQqHIk2GZ+t54iryGZA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/calendar/ui.calendar.base_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/calendar/ui.calendar.base_view.js?hash=00b2717f231f092c0d028939787d85be40897499",
+      "size": 4457,
+      "hash": "00b2717f231f092c0d028939787d85be40897499",
+      "sri": "3sdqVFRiKzIFGWqabPZO+PjOTgYu4zaAjJdX5yZ46Y59AuB1ZJy/mKiuilyDKB20vWCRRhsKhCs11ZUcLXeFHQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.js?hash=90dc47cb90997cb966d71cea1e360c2e0bd74d35",
+      "size": 2111,
+      "hash": "90dc47cb90997cb966d71cea1e360c2e0bd74d35",
+      "sri": "LoLTzErArMs9AZzeOCkfATuBkNU+vMcW940892Wrv5GYPqREbB9ADyFmLPtddhF7hCmrg4uEWD63LbEmacweYQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.date_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.date_view.js?hash=e49ec0c2982d67fde30e32210bf20b400ea8e848",
+      "size": 2312,
+      "hash": "e49ec0c2982d67fde30e32210bf20b400ea8e848",
+      "sri": "R9xJEEfdUV1+0mZ90LcUE8yeWywewCioi7/oN7/hSgyC/dnYMHKUremh34eJyfkRpLQ2MQxoZatF5EspLi2kdw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_view.js?hash=a016a114481001f36cc814068b9c9f434e9df5d7",
+      "size": 5968,
+      "hash": "a016a114481001f36cc814068b9c9f434e9df5d7",
+      "sri": "TfF5PguggZACBzX1iD0sZgayGFDgEHNUUrlNheKSsjkT2fV3qgShaWvprOnFMZJs0kAWwHG9qZdnDiZIajYPuQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_view_roller.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_view_roller.js?hash=7f5f892235f0350f3c71015f456f37e0a76e5d76",
+      "size": 5082,
+      "hash": "7f5f892235f0350f3c71015f456f37e0a76e5d76",
+      "sri": "ZWQ8RuLN/JmSp49DU94DTDgmLo4sx/5BzYpvyKzsxY+Zdev2w+o0eujn+2e17mWrkrkusV+woOes6QgYVqTnSQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.js?hash=4e0c0e7db3a386d75612ed22bde00accc3a6d72f",
+      "size": 9531,
+      "hash": "4e0c0e7db3a386d75612ed22bde00accc3a6d72f",
+      "sri": "E4P5uGzpJSZJiDrJfn9+noESzSRAIWdqqwaxJbSsaxqcoN1IedUB4DqmW92NCSTaP6J65hBaul9xpqAYlOIzdw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.events.emitter.gesture.scroll.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.events.emitter.gesture.scroll.js?hash=5dfb104d92509e3c3c9c005f1ba9e7519f548ff2",
+      "size": 4393,
+      "hash": "5dfb104d92509e3c3c9c005f1ba9e7519f548ff2",
+      "sri": "1H53ACzrqAqhwFmAar8DXIzdeW/7BWWZ0/XKreawyQd20N2ldf3tkIWURmcFumC3t5tPF3RwYwNH6rNTHfWWzQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.simulated.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.simulated.js?hash=1fe1fb6f2f6e300981e7b7d29203761004ad8e4f",
+      "size": 19067,
+      "hash": "1fe1fb6f2f6e300981e7b7d29203761004ad8e4f",
+      "sri": "F/r8KjmehAnDQsudF1RuAlz6paQzx+Xq1jx+ySbk76VjOA5Inw/qpfe8vFYwSJhyeUiO78toZRe56O2d8s3l6g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/animator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/animator.js?hash=f7ceeb2b1e9e7444a704f36c63214cbf226f82fd",
+      "size": 788,
+      "hash": "f7ceeb2b1e9e7444a704f36c63214cbf226f82fd",
+      "sri": "lX1z/dfdzgMzXoZr5NYlZl0/X98ktF+gnqpMW/fkNAPQTfOlcjaIkWzhWO/Iw3Z+ranT1Iv4mF/OXsckEJiprw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollbar.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollbar.js?hash=68efefb0a4b06b740e1c57cbc880bbe2aac07cef",
+      "size": 4217,
+      "hash": "68efefb0a4b06b740e1c57cbc880bbe2aac07cef",
+      "sri": "a+8Ps8AwrzEuFDJJKAJoPA/dLyzmL8KXx6R3BVtL2LdItiUTusTvfb9SX+1tmSP+tZ097cFqWqEJHoffwjzgpQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.native.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scrollable.native.js?hash=5fc57f1dbff47e176c39acf9bed2d1f02fa6e905",
+      "size": 5976,
+      "hash": "5fc57f1dbff47e176c39acf9bed2d1f02fa6e905",
+      "sri": "R1WuWraBXXdMrfQLXAVEP37XLsAkl3lOUVjkaPyG4dpdjU2hxjFc2ifrMWydTTCuq4OC9C9mFW+12kAV7j6FcQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.native.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.native.js?hash=e6192c9a8943444c6771239ddef7fc2db31c12b4",
+      "size": 1013,
+      "hash": "e6192c9a8943444c6771239ddef7fc2db31c12b4",
+      "sri": "ux1xYfKIpOeim0CO9LqeXo7ukoLmgYtvqRd/Kv9o1GsEtlKuximmERbOAO1TVpl9ksbBPSxkhEObo2XeguNbSg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.calendar_with_time.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.calendar_with_time.js?hash=3b73d4cdebca0528854c68fdbbdfa6579ceff99f",
+      "size": 3514,
+      "hash": "3b73d4cdebca0528854c68fdbbdfa6579ceff99f",
+      "sri": "0qDiXsGFaeoO32SLpQeS4LEAdYQDgpoS0N0368z5POd9MevOJQy8Ci99g2UB+ZGQXbj03fC4ELggmIHAViE1aw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.time_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.time_view.js?hash=d59fede17a21aca64d3d0a9fe42a473eb7a398d5",
+      "size": 5725,
+      "hash": "d59fede17a21aca64d3d0a9fe42a473eb7a398d5",
+      "sri": "oLl7l82YoLNFKz+M9bo37aH01kVE95sVmq5P3udldRI6NSZluu2DamnVtXCjYLr7U+5LAilDuMnan49TlkAWwA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box.js?hash=829db817749bad613493a7cd2715a1bb7577102d",
+      "size": 105,
+      "hash": "829db817749bad613493a7cd2715a1bb7577102d",
+      "sri": "HoZ05Z27PMFv38Si3zV1Omt1ZSmWmyv/EkiuJWJITmGef9f9EW+Q3gSXfb2ATILtNfOc+au/txLmFKBFUjdcKg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box/number_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box/number_box.js?hash=b2e8eb7d85f3a61cfc2cdf92f80d13a5737d9ca5",
+      "size": 138,
+      "hash": "b2e8eb7d85f3a61cfc2cdf92f80d13a5737d9ca5",
+      "sri": "LsBC8mDOzpMCoybrREOIJ5sxQ9LaaSSbJBl1ejGU2Lw2FvTBeXqeulowFt2d5gQ93bhaJyxvtXPsMKbCipcXWw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box/number_box.mask.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box/number_box.mask.js?hash=361d5b31ca92d6c675800d113dfe9ed3e19c7755",
+      "size": 11810,
+      "hash": "361d5b31ca92d6c675800d113dfe9ed3e19c7755",
+      "sri": "D1t0b9VbCbdqzKZSqbbQKJ1wjkhlXmRYCvFjVluyCtqh1ojzca3/kK+aXU7FrJ4oUQZv1/31oTr+ijtvlPkjKw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box/number_box.caret.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box/number_box.caret.js?hash=134199bd3971fb1c12c21f0c1e8ee81f9eb0ce38",
+      "size": 1687,
+      "hash": "134199bd3971fb1c12c21f0c1e8ee81f9eb0ce38",
+      "sri": "8ojsVCzDblBvaIKTHK7T4MkDtl1KXRiydrqOj3w60yr3wYCV/mTzhqCXrvxO9fyBrudlYE6HvwxALep1euzvHQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box/number_box.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box/number_box.base.js?hash=220930cb33c19520fa5296c3afe6b42f654b9208",
+      "size": 8101,
+      "hash": "220930cb33c19520fa5296c3afe6b42f654b9208",
+      "sri": "L2HQ4eFx6SQDasqTLYsLUV/c03NlhP7C9VIa9MNDmF2jEy9/UPfdqQ9wrSSFkf89EBTfw3QEG09C+OQ871xpjA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/number_box/number_box.spin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/number_box/number_box.spin.js?hash=92121e761fc0270cfdcef3fc04ae3d397c659793",
+      "size": 1849,
+      "hash": "92121e761fc0270cfdcef3fc04ae3d397c659793",
+      "sri": "XJFyeveW3kVxLszd6z8oJwgWNK1irqLBD+KaIu2uyKtemNmogkORhz/RVnfwZ2apWcpdYJIfQHZDbCl62lV1bQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/select_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/select_box.js?hash=4640514f8fa031e8861bc84f5b9d89312502fa26",
+      "size": 14171,
+      "hash": "4640514f8fa031e8861bc84f5b9d89312502fa26",
+      "sri": "p8ezy5mQH0ByvAyazrSFMGQVzLPqZ2jz+kkpXROsPU4GL292ctnxMNNazCiHGvgggL/IW03e2JM4sLYxXI0fZw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/drop_down_editor/ui.drop_down_list.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/drop_down_editor/ui.drop_down_list.js?hash=7013484dde24e36f98724b64372a70650bc33729",
+      "size": 14472,
+      "hash": "7013484dde24e36f98724b64372a70650bc33729",
+      "sri": "0oXGBZVqz7plb7M4oljg6nhLqsCSR4q6TM8Rvr96h1JVROpoeKYwJ/b0Bc39A3B2zPCnJs+XFOAkyowsXOfZXw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list.js?hash=b292f0dd4f0c8f256845550353f1cf9b52f3ebd2",
+      "size": 165,
+      "hash": "b292f0dd4f0c8f256845550353f1cf9b52f3ebd2",
+      "sri": "deTkR4evxLwv+sHZBgh6PkfL6ocH+LuFaBOgdIJwebsMUfPZD9J9l4wLjpu/c7z+fl5tYJHJr/jiza0lyDmYzA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.search.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.search.js?hash=fd08df4c0ea88fc58ac5872b2aef4867e68fd93c",
+      "size": 621,
+      "hash": "fd08df4c0ea88fc58ac5872b2aef4867e68fd93c",
+      "sri": "9vJMsAQ6+GyYgzSiJ3DNyumS58QURFRDpUJr4x4nrRx7pB7uhBVQ8r9PwjBBOo3cIDXCJ60CrHPGLqV4NSyOtw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.js?hash=1c32875164cf7f510c072f9182ff62801df3bfed",
+      "size": 5751,
+      "hash": "1c32875164cf7f510c072f9182ff62801df3bfed",
+      "sri": "gqeBNeTPsdVoInAERhtmsMGPyHt0feFgSZNFBegEtZPr9Q2zbgVSloY5sBDs8CguSDFSP0BONY90kiaeZXcliQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.strategy.grouped.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.strategy.grouped.js?hash=75c938a37eafd32a3262163f8a13efacb468927e",
+      "size": 2978,
+      "hash": "75c938a37eafd32a3262163f8a13efacb468927e",
+      "sri": "RywLH2eJtBcKFmudslzbwBiLXbIG3zDAPTOlM9WTuhyKlUzEnHoKWflnvdMz3+4Ia6NJ/d7dwdXhLUd+aP56Xg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.provider.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.provider.js?hash=97b1896ca1b62a156a319fc804f0c5819928e818",
+      "size": 3741,
+      "hash": "97b1896ca1b62a156a319fc804f0c5819928e818",
+      "sri": "B4tmMpgQPwYPwDhnwC+MCFdfwxcdlUJw5UvS2fibhJ7cPB7ZC04e0sfUH41io/458jHwQsS5PM+gabES6926uA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator_registry.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator_registry.js?hash=79630b839f695041e9b7a9c67b7905652bc739b3",
+      "size": 179,
+      "hash": "79630b839f695041e9b7a9c67b7905652bc739b3",
+      "sri": "GAANHI3j2TCYSNrUxD0iSEmZU9ONK+Tf2nrBg75lSg5oFwVUlAHU4J9agvLGH9pTnZwnVxT/9CVddsXmsOYUEw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.static.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.static.js?hash=33d27e2ffd1e29e38cb54eaded16eba6309db900",
+      "size": 630,
+      "hash": "33d27e2ffd1e29e38cb54eaded16eba6309db900",
+      "sri": "J5FUW+TbjCJNddCgAQKyHPRDx/fIcdagyvaLe0DSCedCSq2aiPBU2eCK4ORKkqKmxGOeD3VLUPwT+14ncSXm0g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.js?hash=96b7414a336b7eebf4e3fd10b4e4b6a890c73dbf",
+      "size": 1758,
+      "hash": "96b7414a336b7eebf4e3fd10b4e4b6a890c73dbf",
+      "sri": "UXhK2WPsb0pzDe8bkay9ytzqtNkVY/cfTuz0mUMXF/RGccATJc+j7dJMQpcLyJ8vjFZ5O9H0TmvE95zsexVKxw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.button.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.button.js?hash=17f75ac386b48dc8e5d441f731e68de3fb80f04d",
+      "size": 2440,
+      "hash": "17f75ac386b48dc8e5d441f731e68de3fb80f04d",
+      "sri": "tq44FrdF6WJkvaiIROWatgzZgr1uZmsy1hXoYcjRB68nIunh6XyYwkw1PGpA4tXQKS9bKnS2InkZ1/e1QecS3g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.js?hash=d27abb872b69e9c269239408a1b40948dcb2ea2d",
+      "size": 3549,
+      "hash": "d27abb872b69e9c269239408a1b40948dcb2ea2d",
+      "sri": "Z/7F36wybNJrJxQUR6xntlvJqUTqzw6mJl5+tbsf3FVrl246AbT17+8JNzZ/hOHLb6sPnd4npIJLT0NLpkeoVQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.slide.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.switchable.slide.js?hash=b009668585ac495f0571ab3aedb2510dc48148eb",
+      "size": 5446,
+      "hash": "b009668585ac495f0571ab3aedb2510dc48148eb",
+      "sri": "3PY0ic3nc2nR2fimh0n3PzNNP7mnTiOTigmQVJaU4yht3oktKuEUBSDU226TdkEHBQ25b8vxDQGfRzCZfil0cg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator_menu_helper.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator_menu_helper.js?hash=6ea8f7d3e791c7c2a6f4dbd42d7d4c95d96d7e1d",
+      "size": 371,
+      "hash": "6ea8f7d3e791c7c2a6f4dbd42d7d4c95d96d7e1d",
+      "sri": "I2eNzHMti7O4Pffvqaqg1jCwXzC/OEaEZ+yWQp+uuT/D4C9ACNf/hCK5jO72qj/TTQEM1Spo/4PuE0j4D0cnmw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/action_sheet.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/action_sheet.js?hash=325a3c6f503cc5d85f0f598747a181d7b2d9047c",
+      "size": 5193,
+      "hash": "325a3c6f503cc5d85f0f598747a181d7b2d9047c",
+      "sri": "bfsZE+xSzfr6L1xz7rLwwKXUMM9+R/um41ajBT1Vq+fSBMJjkiVwO6XNkdvT/kYCxhmbZOGU7lTs8cfNwgmZCg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/popover.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/popover.js?hash=bd91296ca13d846ef192857c5b37a68364ec62d9",
+      "size": 8320,
+      "hash": "bd91296ca13d846ef192857c5b37a68364ec62d9",
+      "sri": "mCKlxujNKW0oCy0nEVdVETZ1lNmlP45YbAr0RtnodoXn5MM4XAQf6lZkk+uh1x+JVjWRIsT8xoTp+xDyZ2/efw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.swipe.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.swipe.js?hash=60d2bde6fe90142d7a44e090bb5e0c562174981c",
+      "size": 868,
+      "hash": "60d2bde6fe90142d7a44e090bb5e0c562174981c",
+      "sri": "vq+kQoG6O0WhuaAAQShAF3yqQ4h5iehnpF6WRcYw/azYC6PmmFoz5tvN8DfwOUHz7qJMzTgVbPLA6QfJfYEtPA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.context.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.context.js?hash=ac7221fa578f1a50a533ad464a119345c2bdb954",
+      "size": 1971,
+      "hash": "ac7221fa578f1a50a533ad464a119345c2bdb954",
+      "sri": "5JFHMPgc/ytsuE0SfOitFN7Rie73GrxtObIGRsyJ+wUb8Dj4RcjzkdiP3qmnLrbbZM9NE1VXsr70EhkPlHMd8w=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.base.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.base.js?hash=9995f57ebdbf2ecad9f4c0318ae30acc4f258a56",
+      "size": 16329,
+      "hash": "9995f57ebdbf2ecad9f4c0318ae30acc4f258a56",
+      "sri": "U20vn/M1Meo4k7FzZJEEzGonH6p/0Efc3vzlF7pL+2fXKtDQ/E4Bkcez0eTKaSHBg0fBOurQSbymtpWHEjguFQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/item.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/item.js?hash=a24e3f55d5da51f626612ad1a7c7743c7250dc39",
+      "size": 1032,
+      "hash": "a24e3f55d5da51f626612ad1a7c7743c7250dc39",
+      "sri": "+E7+ZF0kylDIKInqa1I7JiFrZc1NK/3qpoIUNFmEvEw/IlXQfM//NGmkXFUR4m7wAywURis14n7NZmXO7XiJMw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view.js?hash=e0ad3ea945ba6b12d36ad9f6f4a5c84fdc6867ea",
+      "size": 110,
+      "hash": "e0ad3ea945ba6b12d36ad9f6f4a5c84fdc6867ea",
+      "sri": "nfb8I8gBcjQrgGxKUeAWsR+oD9ZNoyzTTWKnVFOXByoXWnVHJZTnTpRvJo9Vpe8G/MKNSi/qHNQ7rimr5PAxEw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.js?hash=51889c28c14fd769b3c0f36045f601e3de0bee93",
+      "size": 6107,
+      "hash": "51889c28c14fd769b3c0f36045f601e3de0bee93",
+      "sri": "YOLlyZ3ClGlMGvMMLm+PPpt0Ok+CsRRp6ZaW/VL3AOQipfsxwAPXlGybika0wI1eamRCuzVvpABBHZtvAtP7zg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.pull_down.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.pull_down.js?hash=cc5c06505a3d60604d8f244dc03804a9a3b3b2ec",
+      "size": 4863,
+      "hash": "cc5c06505a3d60604d8f244dc03804a9a3b3b2ec",
+      "sri": "cL0d7Uj8PLGGWzS+aVhTodwynQX1O+OcOSpH1Fy/6i0ixGsQXEZ3lgQRGkISl+DEkzMzQs7BTK/u8hvmq/4hig=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/load_indicator.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/load_indicator.js?hash=169c469578b436ff61da02875529d73611c0cf56",
+      "size": 3292,
+      "hash": "169c469578b436ff61da02875529d73611c0cf56",
+      "sri": "WWL1suim2JeiSy96AcmiLmJzq4eYPwdnxRQUgLZ4/7SvtkHk0eQeDehIg8jbALh5Y0ToFXP+3T6JT/dgbp7png=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.swipe_down.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.swipe_down.js?hash=1829b0864d21708e4a44e0f12729192fe3ca582d",
+      "size": 4123,
+      "hash": "1829b0864d21708e4a44e0f12729192fe3ca582d",
+      "sri": "XUGnN/wxSoDGhaGgOChVSZT8GvazWjftXuC9OVX0957YsduBygFyOuhJC8ufJciz2s+MV9SX8x8LXJ6Wp9EdJw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.slide_down.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.native.slide_down.js?hash=e0c957af3cb5a9d8639024f64342ed0a13a2fd26",
+      "size": 1790,
+      "hash": "e0c957af3cb5a9d8639024f64342ed0a13a2fd26",
+      "sri": "HLtyu4Wu465vBdljYXzLPD7/lppgvraEr/VAcrUTWH01FWQDePfDzN9Y6RXJzAJrq9MANJRYZ+D06I+oybKqrA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.simulated.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/scroll_view/ui.scroll_view.simulated.js?hash=6f5c55158bb24f0eb0c2b7f09d8b1eeccaa3f95c",
+      "size": 5895,
+      "hash": "6f5c55158bb24f0eb0c2b7f09d8b1eeccaa3f95c",
+      "sri": "nCqu0onWiwMVy7fUsO9b1sCC8r7aa8Gd3Hr2g/hKAqa3JhwfWrRwBWhpqwb/h4BQ+1+r81yBCXP3Yv1hpvfE2g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/load_panel.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/load_panel.js?hash=a142ba1888c5781de5f2e2ee4df8bae4f92675bf",
+      "size": 3219,
+      "hash": "a142ba1888c5781de5f2e2ee4df8bae4f92675bf",
+      "sri": "+0KNqIDNy9GQtMH8OMbdtQd0dTg3JYXWSc4Fx/xh+Pr3wkIMOsGyJhs5EYw3Cm6McHanIiw1vm3g24QDVBM53g=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.live_update.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/collection/ui.collection_widget.live_update.js?hash=e580beae7f6c2d76b877ce52fd835364b91bf396",
+      "size": 4294,
+      "hash": "e580beae7f6c2d76b877ce52fd835364b91bf396",
+      "sri": "t3of5PvqjfmGYaCkyaMov3CnLnwuy/cDnGJmWEZDHQXiz5hgicX32XVk0GCrusbnHV6e615+iM+tliq79rzBPg=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/core/utils/array_compare.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/core/utils/array_compare.js?hash=6f3915bddd158c707931da3ae2178a4e3ef61598",
+      "size": 779,
+      "hash": "6f3915bddd158c707931da3ae2178a4e3ef61598",
+      "sri": "q9qPYX1e4O2hcMRaWEnXXeumbQe760rGEzyQRRPRVdboJCJxRQI+VxeXP6h+onNO5mJq/iUH5V0lnbjf7O5aew=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/shared/grouped_data_converter_mixin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/shared/grouped_data_converter_mixin.js?hash=5c1a60c93749623d4ce10ba466646deeb1b915a4",
+      "size": 677,
+      "hash": "5c1a60c93749623d4ce10ba466646deeb1b915a4",
+      "sri": "cpDZfcPzGzD430e62Ab5uuVRXzg1NQ8aPyp/hQSiJMg9HoJ0zUz8yGYpZnw95T6CZl00Rjl/MrrXldbJmST1dw=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.selection.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.selection.js?hash=31644115b49b67f9788b4ea5dfbf0e49cc7abd2f",
+      "size": 4307,
+      "hash": "31644115b49b67f9788b4ea5dfbf0e49cc7abd2f",
+      "sri": "7q8tqS6Gn+1CBtn3pn2tsBmhEezQBSoFa20rwPvWyTzYH23IJAV2TbFOW4vUz911v2de/V0R0CBEme8PL70w4Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/check_box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/check_box.js?hash=a9afa8c637a3563a3e46e4ab692d8aee12363e9a",
+      "size": 3486,
+      "hash": "a9afa8c637a3563a3e46e4ab692d8aee12363e9a",
+      "sri": "c5v/ABry+5+xPBjN6gIqjVHDaqt/HRQmC77JK6n2zWpMbxJl+BBV0v6DYxtrPScnY/NUYkMFBLm0KbBe09OZ4A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/radio_group/radio_button.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/radio_group/radio_button.js?hash=19af7cd5547a6058deb28d1b80645258d58e854e",
+      "size": 2793,
+      "hash": "19af7cd5547a6058deb28d1b80645258d58e854e",
+      "sri": "0f73OTKJIwzkqUwaQpIovaGl27TAMm6sGpecteH5QqwjZ7sQHaueMQ1JNq0SLXV8su0qedP9wA/ckFDN8E+Aew=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.reorder.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/list/ui.list.edit.decorator.reorder.js?hash=f1af864ec0444ceb968d5cd2b0646735c840c9ad",
+      "size": 6050,
+      "hash": "f1af864ec0444ceb968d5cd2b0646735c840c9ad",
+      "sri": "2azq35yhcSAzAspV1hAKpFUNmoA6V57yvGQ/Khx2IEV/Rg5NImBRXJ0c/KwOHJLiLbxqW0I1lHipTPjczh389Q=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/widget/ui.search_box_mixin.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/widget/ui.search_box_mixin.js?hash=80d2a9d270bd8ad6e36a5365b46b5c30ae534ff4",
+      "size": 2990,
+      "hash": "80d2a9d270bd8ad6e36a5365b46b5c30ae534ff4",
+      "sri": "LTTIwb4Yiz1RvmE0E0SQTbuIeZ9dA9aBZw7TWTGlzfJICNrQn5Y5urX89LUi8j6Sq5xuK/PLnqkdHdYm6cX87A=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/editor/ui.data_expression.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/editor/ui.data_expression.js?hash=b350779aa3e38245782b3f146b4d7d1ef9faa04b",
+      "size": 3379,
+      "hash": "b350779aa3e38245782b3f146b4d7d1ef9faa04b",
+      "sri": "f3sdAW+eMaO/4qcfiYwxvv2s4dPL/pi1N8UmQ6m6PbnObcsk5txCkLaTe5NBRiIqN9CR3deE2KUu00BWjnVmeA=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/box.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/box.js?hash=d96f17ad51a27c17b1dfb416865e192a1c4b275c",
+      "size": 9591,
+      "hash": "d96f17ad51a27c17b1dfb416865e192a1c4b275c",
+      "sri": "fEFnnpmZgOl6qg9Sj12pen67no3SqWrxK7vfd913V3cmMLhrLYKRv3VFKUCYqvEnr433Gh83nmJ20PCN7M2pfQ=="
+    },
+    {
+      "path": "dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.list.js",
+      "where": "client",
+      "type": "dynamic js",
+      "cacheable": true,
+      "url": "/dynamic/node_modules/devextreme/ui/date_box/ui.date_box.strategy.list.js?hash=422039b6a3a8d8552afa224565293a68965d3f9c",
+      "size": 4664,
+      "hash": "422039b6a3a8d8552afa224565293a68965d3f9c",
+      "sri": "r/2+cxxaRFdR8thb6DVpHa0l6sePB3JPIesaXhhxW1IIv8aJQIcZEHZIR/XbLk0/SsRc4peEsQnyEzjtpd07ZA=="
     },
     {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
@@ -62,14 +2332,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css",
+      "path": "11b5a903682246a83749a7824a51a82b9822753b.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css?meteor_css_resource=true",
-      "size": 1554154,
-      "hash": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff",
-      "sri": "0QiI9WSAlKRqs4nL51qDWVqVx197ONmpFBdmq17i0WLzMEX/V2erou8bBe0pwZoWxlTNawdggD9EprNAZE1/+g=="
+      "url": "/11b5a903682246a83749a7824a51a82b9822753b.css?meteor_css_resource=true",
+      "size": 893843,
+      "hash": "11b5a903682246a83749a7824a51a82b9822753b",
+      "sri": "hKHEGAN5vI23h295my704G7FA6Vjdk5Y+f4Q05NmKwJ+ejHLexKDaDbnX0Sz0D2Uv8tKmnGivNrjDX7m3haPhw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -210,96 +2480,6 @@
       "size": 1456,
       "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
       "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.ttf",
-      "size": 48724,
-      "hash": "302974cc41031c5e99168cbf103a0053e5314f45",
-      "sri": "IBxCKRRwlJO1p0op/FSeJDmlYPPYHFRxwTY9aUAi1E+89Mbu6JyzhJ1S1B2AhmtaTIVTqm8+z8KtkJcyIFiMIg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff",
-      "size": 24324,
-      "hash": "4b6f8435fd1c52f0be92199b76185bd53933f73e",
-      "sri": "l9q4eHWCpOsnXIAmbZIFE2RHFGiLPikprwvSjT4fzDgZvWIna8gdXTi8PxTQqGV3fSNW/31vK4GIGYpxPy1jmQ=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff2",
-      "size": 19024,
-      "hash": "43f5630b91630eccd683f823e89aa2001f3b3332",
-      "sri": "kFyufZ4z/3xnXVrb2HQwF8NUbHCI05dPGG2ZaTRABLsp8Xe+cmuuXioMoEy8YcxTmPNB6kyOC394GVxAopDOIQ=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
-      "size": 50248,
-      "hash": "c337700f6ae6437f0ac7235a5e8e021d59cd0244",
-      "sri": "bZiZlxUf/9dF/nOEY2EayK4Qbw02cRGTP24jFQgcUguCbfetvEClvi4jlPfU7aTlP6Meaoy89UVKRucy5tL/SA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
-      "size": 25524,
-      "hash": "ca2e7a2e63df6831efbb93297f5d40fc5f89c83d",
-      "sri": "/fo3PSrvaepd1gx3RM6lUNaqvQiiKLuny0hHwrzVulMJqvHaF0AIcMleH2LEbRl27h21IIfiLHKfNrf/366BBg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
-      "size": 19224,
-      "hash": "207b59ccd5660b6f8ca788709914be13e8883209",
-      "sri": "UtuWhVDvPvRHNLjUmEioDTKy7IIIwg/3jrNFglomqlqRmiNRJzOi9G8Plw69CEmaTpPgy7jCXiub24RNMd0NKA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
-      "size": 39120,
-      "hash": "1cc3688a0e84dfafac77b721bbf60256f9d5872d",
-      "sri": "AbhN3eh6K0VZUgou5jChlHrdS57PSb3/iL//RYhvjHYsPHlSG52nXx6L8GPW/4gB5TGwcq+1VAU0GLsdMH8RPg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
-      "size": 20352,
-      "hash": "64610198d22bc37a35abfd0830d7afa16f8706e7",
-      "sri": "KLYd9xegSkL/RBrxEsZlslT/Vgevm7bjqXXEVhHb+VsM3+Wj0u3Sz4bDPTN+EAZ72WiIsOoOrlL2Da93WIekKg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
-      "size": 16376,
-      "hash": "465f0d5236a35cdbbd7069247e9d9be8f61df468",
-      "sri": "6K3xF3+O3cpO1rJPDy2czeHwJbPgyrNuNJy1GdcE70S18+PYJlHDIGRvfV/0fdDLImEzAsiCIEoRArEXcbcGcQ=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
