@@ -55,45 +55,38 @@ ROOT_URL=http://127.0.0.1:3100
 MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-### settings.json
+## 调试平台源码
 
-As a Meteor application in the '/creator' folder, You cannot use `steedos-config.yml` as the configuration file, but you can add a file named `settings.json` to do the same.
+调试平台源码需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
 
-The content of the `setting.json` may like this:
+### 使用 docker 启动数据库
 
-```shell
-{
-    "email": {
-        "from": "Steedos <noreply@message.steedos.com>"
-    }
-}
+华炎魔方运行依赖 mongodb 和 redis，需先在本地安装运行相关服务。
+
+```bash
+docker-compose -f docker-compose-db.yml up
 ```
 
-### Run Creator
+### 使用本地 nodejs 调试平台源码
 
-- Enter to the '/creator' folder of this repository by command line.
-- Run `yarn` on command line to install the dependent NPM packages.
-- Then you can start the service just by run `yarn start`.
-- Use your browser to access `http://127.0.0.1:3100`.
+运行华炎魔方需要在本地安装 nodejs 14 和 python 等编译环境，如果本地有环境，可以本地启动华炎魔方。
 
-### Build Creator
-
-You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
-
-```shell
-cd creator/
-export TOOL_NODE_FLAGS="--max-old-space-size=3800"
-yarn run build
+```bash
+yarn
+yarn build
+yarn start
 ```
 
-### Test Creator Code After Build
+## 使用 VSCode Server 远程调试平台源码
 
-After the command line shell execution of [Build Creator](#build-creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
+可以在服务器上部署远程开发环境，实现远程开发。
 
-You can simply [Run Project](#run-project) to test the code that has just been built from the source code in the '/creator' folder.
+```bash
+docker-compose -f docker-compose-vscode.yml up
+```
 
-### Publish
+打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-project-template ，进入VS Code远程开发环境。
 
-After passing the test of Creator Code, you should release a new version for both the packages in the '/packages' folder and the package named 'steedos-server' in the '/server' folder, so that to unify all of the packages version numbers.
+此时可以在浏览器中操作 VS Code，运行华炎魔方。
 
-See [Publish Guide](./PUBLISH.md) for more.
+
