@@ -133,6 +133,11 @@ fields:
     inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
     group: Switch
     defaultValue: false
+  enable_audit:
+    type: boolean
+    label: Enable Audit
+    group: Switch
+    hidden: true
   # enable_trash:
   #   type: boolean
   # enable_space_global:
