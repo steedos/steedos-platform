@@ -157,5 +157,7 @@ actions:
     label: Submit for Approval
   standard_import_data:
     label: Import Data
+  standard_export_excel:
+    label: Export Excel
 groups:
   system_information: System Information
