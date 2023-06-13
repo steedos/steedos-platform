@@ -261,7 +261,6 @@ module.exports = {
 				this.standardSpaceService = this.broker.createService({
 					mixins: [require('@steedos/standard-space')],
 					started: () => {
-						console.log(`standard-objects started=========>`)
 						resolve(true)
 					}
 				});
@@ -280,7 +279,6 @@ module.exports = {
 						mixins: [packageLoader],
 						settings: { packageInfo: settings },
 						started: () => {
-							console.log(`standard-objects started=========>`)
 							resolve(true)
 						}
 					});

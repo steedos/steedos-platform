@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-13 16:13:19
+ * @LastEditTime: 2023-06-13 17:57:34
  * @Description: 
  */
 
@@ -471,7 +471,6 @@ module.exports = {
      */
     async started() {
         await this.ChangeGlobalGraphQLSettings()
-        console.log('=============> service-object0-graphql started')
     },
 
     /**

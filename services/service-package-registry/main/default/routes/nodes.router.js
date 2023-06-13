@@ -176,6 +176,7 @@ router.get('/api/nodes/cloud/saas/packages/purchased', core.requireAuthenticatio
         let broker = schema.broker;
         const result = await broker.call(`~packages-project-server.getCloudSaasPurchasedPackages`, {
         }, {
+            nodeID: packageInstallationNodeID,
             meta: {
                 user: userSession
             }
@@ -192,6 +193,7 @@ router.post('/api/nodes/cloud/saas/packages/purchased', core.requireAuthenticati
     try {
         let broker = schema.broker;
         const result = await broker.call(`~packages-project-server.installPurchasedPackages`, {}, {
+            nodeID: packageInstallationNodeID,
             meta: {
                 user: userSession
             }
@@ -209,6 +211,7 @@ router.post('/api/nodes/cloud/saas/packages/url', core.requireAuthentication, as
         let broker = schema.broker;
         const { module, version, url, auth, registry_url } = req.body;
         const result = await broker.call(`~packages-project-server.installPackageFromUrl`, {module, version, url, auth, registry_url}, {
+            nodeID: packageInstallationNodeID,
             meta: {
                 user: userSession
             }
