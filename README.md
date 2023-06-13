@@ -58,51 +58,17 @@ Steedos 低代码PaaS平台是一款功能强大、易于使用、可扩展、�
 
 # 快速向导
 
-本项目仓库为平台源码，我们会定期发布版本，在项目中直接引用即可。
+## 创建一个空项目
 
-## 开发软件包
-
-使用华炎魔方开发企业应用，建议克隆华炎魔方模版项目。
-
-- [克隆项目模版@github.com](github.com/steedos/steedos-project-template)
-- [克隆项目模版@gitlab.steedos.cn](gitlab.steedos.cn/steedos/steedos-project-template)
-- [create-steedos-app]( ./create-steedos-app)
-- [Gitpod 远程开发环境](./devops.mdx)
-
-## 调试平台源码
-
-调试平台源码需要安装nodejs，mongodb，redis，建议使用 docker 启动远程开发环境。
-
-### 使用 docker 启动数据库
-
-华炎魔方运行依赖 mongodb 和 redis，需先在本地安装运行相关服务。
-
-```bash
-docker-compose -f docker-compose-db.yml up
+```
+npx create-steedos-app my-project
 ```
 
-### 使用本地 nodejs 调试平台源码
+## 项目实例
 
-运行华炎魔方需要在本地安装 nodejs 14 和 python 等编译环境，如果本地有环境，可以本地启动华炎魔方。
-
-```bash
-yarn
-yarn build
-yarn start
-```
-
-## 使用 VSCode Server 远程调试平台源码
-
-可以在服务器上部署远程开发环境，实现远程开发。
-
-```bash
-docker-compose -f docker-compose-vscode.yml up
-```
-
-打开浏览器，访问 http://127.0.0.1:5555/?folder=/home/workspace/steedos-project-template ，进入VS Code远程开发环境。
-
-此时可以在浏览器中操作 VS Code，运行华炎魔方。
-
+- [项目模版](https://github.com/steedos/steedos-project-template)
+- [Examples](https://github.com/steedos/steedos-examples)
+- [Steedos Labs 开源项目](https://github.com/steedos-labs/)
 
 ## 技术框架
 
