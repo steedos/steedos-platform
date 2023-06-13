@@ -21,6 +21,10 @@ SteedosDataManager.getSpaceUsers = function (spaceId, userIds) {
     async: false,
     data: data,
     dataType: 'json',
+    contentType: "application/json",
+		beforeSend: function(request) {
+			request.setRequestHeader('Authorization', 'Bearer ' + spaceId + ',' + Accounts._storedLoginToken())
+		},
     success: function(responseText, status) {
       if (responseText.errors) {
         toastr.error(responseText.errors);
