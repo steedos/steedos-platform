@@ -1164,6 +1164,7 @@ CustomLabels:
   pending: 进行中
   completed: 已完成
   monitor: 监控箱
+  myfile: 我的文件
   FlowName: 名称
   My Approval: 审核
   My Applications: 我的申请单
@@ -1782,12 +1783,12 @@ CustomLabels:
   process_delegation_rules_end_time: 委托结束
   process_delegation_rules_start_must_lt_end: 开始时间应小于结束时间
   process_delegation_rules_description: "{$userName}委托"
+  process_delegation_rules_time_repeat: 委托时间段与其他委托时间段有重叠，请确认。
   process_delegation_rules_cannot_deltegation_eachother: 只允许单向委托， 请更换被委托人或者调整委托时间
   instance_handler_name: 处理人
   instance_handler_organization_fullname: 部门
   instance_approve_timeout_auto_submitted: 超时自动跳过
   categories_in_use: 分类在使用中，不能删除
-  process_delegation_rules_only_one: 您已设置委托规则，修改即可
   instance_approve_modal_modificationsave: 您的修改保存成功
   instance_print_traces_simplify: 精简
   instance_print_a4_vertical: A4纵向

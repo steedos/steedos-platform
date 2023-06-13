@@ -3254,6 +3254,8 @@ uuflowManager.cancelProcessDelegation = function (spaceId, toId) {
                     }, {
                         $set: setObj
                     });
+                    // 更新instance_tasks
+                    update_instance_tasks(ins._id, a.trace, a._id);
                     pushManager.send_message_to_specifyUser('current_user', a.user);
                     return pushManager.send_message_to_specifyUser('current_user', toId);
                 } else if (a.user === toId) {
@@ -3310,6 +3312,8 @@ uuflowManager.cancelProcessDelegation = function (spaceId, toId) {
                         }, {
                             $set: setObj
                         });
+                        // 更新instance_tasks
+                        update_instance_tasks(ins._id, a.trace, a._id);
                         pushManager.send_message_to_specifyUser('current_user', a.user);
                         return pushManager.send_message_to_specifyUser('current_user', toId);
                     } else if (a.user === toId) {

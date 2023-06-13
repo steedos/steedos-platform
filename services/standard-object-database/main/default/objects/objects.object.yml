@@ -28,10 +28,12 @@ fields:
     required: true
     is_name: true
     searchable: true
+    filterable: true
   name:
     type: text
     label: API Name
     searchable: true
+    filterable: true
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
@@ -131,6 +133,11 @@ fields:
     inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
     group: Switch
     defaultValue: false
+  enable_audit:
+    type: boolean
+    label: Enable Audit
+    group: Switch
+    hidden: true
   # enable_trash:
   #   type: boolean
   # enable_space_global:
