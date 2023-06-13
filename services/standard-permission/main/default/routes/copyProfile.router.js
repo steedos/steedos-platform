@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-13 17:00:38
+ * @LastEditTime: 2023-06-13 17:32:29
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -121,9 +121,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             if (newPermissionSet) {
                 const { _id: newPermissionSetId, name: newPermissionSetName } = newPermissionSet;
                 // 对象权限数据来源于两个部分，1、内存 2、数据库
-                const internalPermissionObjects = await getInternalPermissionObjects(originalPermissionSetId);
-                const dbPermissionObjects = await poObj.directFind({ filters: [['space', '=', spaceId], ['permission_set_id', '=', originalPermissionSetId]] });
-                const originalPermissionObjects = getCombinedPermissionObjects(internalPermissionObjects, dbPermissionObjects);
+                const originalPermissionObjects = await poObj.find({ filters: [['space', '=', spaceId], ['permission_set_id', '=', originalPermissionSetId]] }, userSession);
                 const newPermissionObjects = []
                 const newPermissionFields = []
                 // 遍历原有的对象权限
@@ -251,24 +249,6 @@ async function getInternalPermissionObjects(permissionSetId) {
         });
     }
     return objectsPermissions;
-}
-// 合并内存中的对象权限和数据库中的对象权限
-// 如果dbPermissionObjects和internalPermissionObjects中permission_set_id存在相同的值，则以dbPermissionObjects中数据为准
-function getCombinedPermissionObjects(internalPermissionObjects, dbPermissionObjects) {
-    const dbPermissionObjectsIds = _.pluck(dbPermissionObjects, 'permission_set_id');
-    const internalPermissionObjectsIds = _.pluck(internalPermissionObjects, 'permission_set_id');
-    const sameIds = _.intersection(dbPermissionObjectsIds, internalPermissionObjectsIds);
-    if (sameIds.length > 0) {
-        for (const sameId of sameIds) {
-            const dbPermissionObject = _.findWhere(dbPermissionObjects, { permission_set_id: sameId });
-            const internalPermissionObject = _.findWhere(internalPermissionObjects, { permission_set_id: sameId });
-            if (dbPermissionObject && internalPermissionObject) {
-                const index = internalPermissionObjects.indexOf(internalPermissionObject);
-                internalPermissionObjects.splice(index, 1, dbPermissionObject);
-            }
-        }
-    }
-    return [...internalPermissionObjects, ...dbPermissionObjects];
 }
 
 async function getFieldPermission(apiName) {
