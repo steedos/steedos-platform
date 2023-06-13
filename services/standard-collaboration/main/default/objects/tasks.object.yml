@@ -12,6 +12,7 @@ fields:
     required: true
     is_wide: true
     searchable: true
+    filterable: true
     index: true
     name: name
   assignees:
@@ -82,7 +83,7 @@ fields:
             }
       }
     name: related_to
-    filterable: true
+    # filterable: true
   description:
     label: Description
     type: textarea
