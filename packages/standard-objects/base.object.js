@@ -187,7 +187,17 @@ module.exports = {
                 "bodyClassName": "p-0",
                 "id": "u:50444554a302"
             }
-        }
+        },
+        standard_export_excel: {
+            label: "Export Excel",
+            visible: function (object_name, record_id, record_permissions) {
+                return Steedos.StandardObjects.Base.Actions.standard_export_excel.visible.apply(this, arguments)
+            },
+            on: "list",
+            todo: function () {
+                return Steedos.StandardObjects.Base.Actions.standard_export_excel.todo.apply(this, arguments)
+            }
+        },
     },
     triggers: {
         "before.insert.client.default": {

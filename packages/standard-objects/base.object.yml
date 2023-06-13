@@ -293,6 +293,9 @@ actions:
       function(objectName){
         return Steedos.StandardObjects.Base.Actions.standard_import_data.visible.apply(this, arguments)
       }
+  standard_export_excel:
+    label: Export Excel
+    on: list
 permission_set:
   none:
     allowCreate: false
