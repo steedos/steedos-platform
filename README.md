@@ -1,96 +1,99 @@
+
 <p align="center">
-  <a href="https://www.steedos.cn/">
+  <a href="https://www.steedos.org">
     <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
-  Steedos低代码PaaS平台
+  Steedos Platform
 </h1>
 
 <p align="center">
-<a href="./README_en.md">English</a>
-<a href="https://docs.steedos.com/" target="_blank"> · 文档</a>
+<a href="./README_cn.md">中文</a>
+<a href="https://docs.steedos.com"> · Docs</a>
 <a href="https://github.com/steedos-labs/" target="_blank"> · Steedos Labs</a>
 </p>
 
-
-<p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方低代码PaaS平台是一款基于 Salesforce Platform 的开源替代方案，旨在为企业提供高效、灵活、易于使用的低代码开发平台。
+<p align="center">
+Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platform. It provides a powerful and flexible platform for building enterprise-grade applications quickly and easily.  With its intuitive drag-and-drop interface, Steedos empowers both developers and non-technical users to create custom applications without the need for extensive coding knowledge.
 </p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
 
-# 核心功能
+## Core Features
 
-华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
+Steedos Low-code PaaS platform is a powerful and flexible solution for building enterprise applications quickly and easily.     
 
-- 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
-- 数据管理：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
-- 安全和权限控制：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
-- 流程自动化：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
-- 应用集成：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
+- Data Management: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
+- Workflow Automation: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
+- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
+- Low-code development: Drag-and-drop interface for building applications.
+- Integration: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
 
-## 可视化设计微页面
+## Key Highlights
+                  
+With its low-code development approach, open-source nature, and scalable architecture, it is an ideal choice for businesses looking to streamline their application development process.
+                  
+- Low-code development: Steedos allows you to create custom applications without the need for extensive coding knowledge. This reduces development time and costs significantly.
+- Open-source: Steedos is an open-source platform, which means you have complete control over the code and can modify it to fit your specific needs.
+- Scalable: Steedos is built on a scalable architecture, which means it can grow with your business and handle large volumes of data and users.
 
-基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具，实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)。
+## Getting Started
 
-![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
+Steedos is essentially a set of npm packages that can be installed over npm. 
 
-## 可视化创建业务对象
+The easiest way to install Steedos is to use the command line tool that helps you create a template project. You can run this command anywhere in a new empty repository or within an existing repository, it will create a new directory containing the scaffolded files.
 
-实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)。
-
-![对象管理](https://console.steedos.cn/api/files/images/64216644671028003e75f90e)
-
-## 安全和权限控制
-
-平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。[Steedos](https://docs.steedos.com/admin/permissions/)🚀[Salesforce](https://developer.salesforce.com/docs/atlas.en-us.securityImplGuide.meta/securityImplGuide/security_data_access.htm)
-
-![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
-
-## VS Code 插件
-
-实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
-
-![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
-
-
-# 快速向导
-
-## 创建一个空项目
-
-```
-npx create-steedos-app my-project
+```bash
+npx create-steedos-app my-app
+cd my-app
+yarn
+yarn start
 ```
 
-## 项目实例
+or you can try the following sample projects.
 
-- [项目模版](https://github.com/steedos/steedos-project-template)
+- [Project Template](https://github.com/steedos/steedos-project-template)
 - [Examples](https://github.com/steedos/steedos-examples)
-- [Steedos Labs 开源项目](https://github.com/steedos-labs/)
 
-## 技术框架
+## Steedos DX
 
-华炎魔方服务端使用nodejs开发，您定义的元数据，和系统中录入的业务数据均保存在mongodb中。
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
 
-- [MongoDB](https://www.mongodb.com/try/download/) 版本 = 4.4， 华炎魔方使用 MongoDB 作为元数据仓库和默认数据源.
-- [Node.js](https://nodejs.org/en/download/) 版本 = 14。华炎魔方平台源码运行于 nodejs 环境。
-- [Meteor](https://www.meteor.com): 基于 Meteor 开发环境魔方元数据解释引擎(steedos-server)。
-- [Moleculer](https://moleculer.services/zh/): 基于 Node.js 的响应式微服务框架。
-- [Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components): 百度 Amis 前端低代码框架。
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
-## 为华炎魔方做贡献
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
 
-从上报BUG到提出改善建议，每一个贡献都非常欢迎。如果您打算动手修改代码来修正BUG或实现某个新功能，请先创建一个 [ISSUE](https://github.com/steedos/steedos-platform/issues)。
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
+Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
 
-如果您有任何疑问或想与其他华炎魔方用户交谈，请扫码添加以下联系方式与我们联系。
+## Awesome Steedos Apps
 
-| ![开发者微信交流群](https://steedos.github.io/assets/github/platform/cn/QR_wechat_developers.jpg) | ![商务咨询](https://steedos.github.io/assets/github/platform/cn/business_consulting.jpg)        | ![微信公众号](https://steedos.github.io/assets/github/platform/cn/public_number.jpg)|
-| :-----: | :-----: | :-----: |
-| 开发人员微信群  | 商务咨询  | 微信公众号 |
+💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
 
+- [Steedos Projects](https://github.com/steedos-labs/project): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
+- [Salesforce CRM Clone](https://github.com/steedos-labs/salesforce): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
+- [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
+[Find more](https://github.com/steedos-labs/)
 
+## Steedos Docs
+
+For more information, please refer to the official website of [docs.steedos.com](https://docs.steedos.com/)
+
+## Contribute to Steedos Platform
+
+From reporting bugs to proposing improvement suggestions, every contribution is worthy of appreciation and welcome. If you are going to modify the code to fix a bug or implement a new function, please create an issue first, so that we can ensure that your work is not wasted.
+
+See [Contributing Guide](/CONTRIBUTING.md) for how to run and build our platform source code.
+
+## Licence
+
+Steedos Platform is licensed under the MIT. Everyone can build and distribute steedos apps for free. 
+
+## Keep in Contact
+
+If you have any questions or want to talk to other users of Steedos Platform , please jump to GitHub for discussion [Click to Discuss](https://github.com/steedos/steedos-platform/discussions) or [Join me on Slack-it's a faster,simpler way to work](https://join.slack.com/t/steedos/shared_invite/zt-jq7eupr9-cgKrUOyWb1zymniRzhH4jg).
