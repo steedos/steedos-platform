@@ -55,45 +55,27 @@ ROOT_URL=http://127.0.0.1:3100
 MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-### settings.json
+### Start a database using Docker
 
-As a Meteor application in the '/creator' folder, You cannot use `steedos-config.yml` as the configuration file, but you can add a file named `settings.json` to do the same.
 
-The content of the `setting.json` may like this:
-
-```shell
-{
-    "email": {
-        "from": "Steedos <noreply@message.steedos.com>"
-    }
-}
+```bash
+docker-compose -f docker-compose-db.yml up
 ```
 
-### Run Creator
+### Use local Node.js to debug platform source code
 
-- Enter to the '/creator' folder of this repository by command line.
-- Run `yarn` on command line to install the dependent NPM packages.
-- Then you can start the service just by run `yarn start`.
-- Use your browser to access `http://127.0.0.1:3100`.
-
-### Build Creator
-
-You can run the shell bellow on command line to build all of the source code of '/creator' to the '/server' folder as a NPM package named 'steedos-server'.
-
-```shell
-cd creator/
-export TOOL_NODE_FLAGS="--max-old-space-size=3800"
-yarn run build
+```bash
+yarn
+yarn build
+yarn start
 ```
 
-### Test Creator Code After Build
+## Use VSCode Server to debug the source code remotely
 
-After the command line shell execution of [Build Creator](#build-creator) above, the built code will be copied automatically to the [/server](https://github.com/steedos/steedos-platform/tree/develop/server) folder.
 
-You can simply [Run Project](#run-project) to test the code that has just been built from the source code in the '/creator' folder.
+```bash
+docker-compose -f docker-compose-vscode.yml up
+```
+Open the browser and visit http://127.0.0.1:5555/?folder=/home/workspace/steedos-platform to access the VS Code remote development environment.
 
-### Publish
-
-After passing the test of Creator Code, you should release a new version for both the packages in the '/packages' folder and the package named 'steedos-server' in the '/server' folder, so that to unify all of the packages version numbers.
-
-See [Publish Guide](./PUBLISH.md) for more.
+You can now operate VS Code and run Steedos in the browser.
