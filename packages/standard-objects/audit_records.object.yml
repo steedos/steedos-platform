@@ -15,7 +15,7 @@ fields:
               var queryResult = Steedos.authRequest(`/graphql`, {
                   type: 'POST', async: false, 
                   data: JSON.stringify({
-                    query: `{ objects(filters: ["enable_audit","=",true]){ name,enable_audit } }`
+                    query: `{ objects(filters: ["enable_audit","=",true]){ name } }`
                   })
               });
               objects = queryResult && queryResult.data && queryResult.data.objects;
