@@ -23,8 +23,17 @@ const getAppDescriptionKey = function(appId){
     return `app${KEYSEPARATOR}${appId}${KEYSEPARATOR}description`
 }
 
+const getAppGroupKey = function(appId, groupId){
+    let groupKey = groupId.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_')
+    return `${appId}${KEYSEPARATOR}tab_group${KEYSEPARATOR}${groupKey}`
+}
+
 const getMenuLabelKey = function(menuId){
     return `menu${KEYSEPARATOR}${menuId}`
+}
+
+const getTabKey = function(tabId){
+    return `tab${KEYSEPARATOR}${tabId}`
 }
 
 const getAppLabel = function(lng, appId, def){
@@ -78,5 +87,7 @@ export const getAppI18nTemplate = function(lng: string, appId: string, _app: Str
 export const appFallbackKeys = {
     getAppLabelKey,
     getAppDescriptionKey,
-    getMenuLabelKey
+    getAppGroupKey,
+    getMenuLabelKey,
+    getTabKey
 }

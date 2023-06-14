@@ -99,7 +99,8 @@ push:
     keyData: ${STEEDOS_PUSH_APN_DATA}
     certData: ${STEEDOS_PUSH_APN_DATA}
   gcm:
-    apiKey: xxx
+    apiKey: ${STEEDOS_GCM_APIKEY}
+    projectNumber: ${STEEDOS_GCM_PROJECT_NUMBER}
   xinge:
     accessId: ${STEEDOS_PUSH_XINGE_ACCESSID}
     secretKey: ${STEEDOS_PUSH_XINGE_SECRETKEY}
