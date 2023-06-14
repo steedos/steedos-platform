@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-02-28 09:25:02
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-08 17:21:10
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-13 14:45:32
  * @Description: 
  */
 if (!db.process_delegation_rules) {
@@ -16,10 +16,10 @@ db.process_delegation_rules.helpers({
     f = db.flows.findOne({
       _id: this.flow
     }, {
-        fields: {
-          name: 1
-        }
-      });
+      fields: {
+        name: 1
+      }
+    });
     return f && f.name;
   }
 });
@@ -48,13 +48,15 @@ if (Meteor.isServer) {
     if (doc.start_time >= doc.end_time) {
       throw new Error("process_delegation_rules_start_must_lt_end");
     }
-    if (db.process_delegation_rules.find({
-      from: userId
-    }).count() > 0) {
-      throw new Error("process_delegation_rules_only_one");
+    const timeFilter = [{ start_time: { $lte: doc.start_time }, end_time: { $gte: doc.start_time } }, { start_time: { $gte: doc.start_time }, end_time: { $lte: doc.end_time } }, { start_time: { $lte: doc.end_time }, end_time: { $gte: doc.end_time } }, { start_time: { $lte: doc.start_time }, end_time: { $gte: doc.end_time } }]
+    // 委托时间不能重叠
+    var repeatDoc = db.process_delegation_rules.findOne({ from: userId, $or: timeFilter });
+    if (repeatDoc) {
+      throw new Error("process_delegation_rules_time_repeat");
     }
+
     if (doc.to) {
-      var pdr = db.process_delegation_rules.findOne({ from: doc.to, to: userId, enabled: true, $or: [{ start_time: { $lte: doc.start_time }, end_time: { $gte: doc.start_time } }, { start_time: { $gte: doc.start_time }, end_time: { $lte: doc.end_time } }, { start_time: { $lte: doc.end_time }, end_time: { $gte: doc.end_time } }] });
+      var pdr = db.process_delegation_rules.findOne({ from: doc.to, to: userId, enabled: true, $or: timeFilter });
       if (pdr) {
         throw new Error("process_delegation_rules_cannot_deltegation_eachother");
       }
@@ -72,8 +74,14 @@ if (Meteor.isServer) {
     if (mergeDoc.start_time >= mergeDoc.end_time) {
       throw new Meteor.Error(400, "process_delegation_rules_start_must_lt_end");
     }
+    const timeFilter = [{ start_time: { $lte: mergeDoc.start_time }, end_time: { $gte: mergeDoc.start_time } }, { start_time: { $gte: mergeDoc.start_time }, end_time: { $lte: mergeDoc.end_time } }, { start_time: { $lte: mergeDoc.end_time }, end_time: { $gte: mergeDoc.end_time } }, { start_time: { $lte: mergeDoc.start_time }, end_time: { $gte: mergeDoc.end_time } }]
+    // 委托时间不能重叠
+    var repeatDoc = db.process_delegation_rules.findOne({ from: userId, $or: timeFilter, _id: { $ne: doc._id } });
+    if (repeatDoc) {
+      throw new Error("process_delegation_rules_time_repeat");
+    }
 
-    var pdr = db.process_delegation_rules.findOne({ from: mergeDoc.to, to: userId, enabled: true, $or: [{ start_time: { $lte: mergeDoc.start_time }, end_time: { $gte: mergeDoc.start_time } }, { start_time: { $gte: mergeDoc.start_time }, end_time: { $lte: mergeDoc.end_time } }, { start_time: { $lte: mergeDoc.end_time }, end_time: { $gte: mergeDoc.end_time } }] });
+    var pdr = db.process_delegation_rules.findOne({ from: mergeDoc.to, to: userId, enabled: true, $or: timeFilter });
     if (pdr && mergeDoc.enabled) {
       throw new Meteor.Error(400, "process_delegation_rules_cannot_deltegation_eachother");
     }

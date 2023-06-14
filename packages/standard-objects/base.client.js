@@ -328,6 +328,11 @@ Steedos.StandardObjects = {
                     //     }
                     // }, null, {iconPath: '/assets/icons'})
                 }
+            },
+            standard_export_excel:{
+                visible: function(objectName,  record_id, record_permissions, props){
+                    return !props._isRelated && Steedos.isSpaceAdmin();
+                }
             }
         },
         Fields: {

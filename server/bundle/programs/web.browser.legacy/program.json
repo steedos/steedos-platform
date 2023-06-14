@@ -2,44 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "d2b73e3ed8a43eed7d36b9f5620d49304b1f4369.js",
+      "path": "7e4cb3d2bfc05b6c00a0a345c1ffd17d87105ba9.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/d2b73e3ed8a43eed7d36b9f5620d49304b1f4369.js?meteor_js_resource=true",
-      "size": 5617481,
-      "hash": "d2b73e3ed8a43eed7d36b9f5620d49304b1f4369",
-      "sri": "Zq1aBmIXzchCpEk68ajo9GRguO/bcSb1pIg9+f470e0SxZgpgGsZhC+RbnXrW/w/ebVyi+fY2v3+TxTD10y4YQ=="
+      "url": "/7e4cb3d2bfc05b6c00a0a345c1ffd17d87105ba9.js?meteor_js_resource=true",
+      "size": 4400432,
+      "hash": "7e4cb3d2bfc05b6c00a0a345c1ffd17d87105ba9",
+      "sri": "tVxlXbeARp6s82O8MOUKX2w3t/A7TOb3HwBbg/Ec6arGuPePtIUZ1P+4bANDrXy/sF6Y5cHBy4uzogpvz5fz2A=="
     },
     {
-      "path": "d2b73e3ed8a43eed7d36b9f5620d49304b1f4369.stats.json",
+      "path": "7e4cb3d2bfc05b6c00a0a345c1ffd17d87105ba9.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/d2b73e3ed8a43eed7d36b9f5620d49304b1f4369.stats.json?meteor_js_resource=true",
-      "size": 109655,
-      "hash": "038c0b6a207a0a6316bd940b9bd2fd6212128783",
-      "sri": "gNWDGzW4eZy3dtD2aBwfKRR21KQ84fYmS63FhvfGCyJ1SWqqtjBRWPg7MwgyWXhAIRm8pbEpHbYkuZJDNFwA3w=="
-    },
-    {
-      "path": "dynamic/node_modules/devextreme/ui/drop_down_box.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/drop_down_box.js?hash=bc6d21c27bb9cfa1f439908440323c720410e2de",
-      "size": 4099,
-      "hash": "bc6d21c27bb9cfa1f439908440323c720410e2de",
-      "sri": "RxJXAwdwLik9jV82uIQAUOpM1x05kCDvNawUZaxnJV/rC4GFN9O/FW9MVk5SJA9m2cqO0dcJ4vZ9xr2hYvjsTQ=="
-    },
-    {
-      "path": "dynamic/node_modules/devextreme/ui/overlay/utils.js",
-      "where": "client",
-      "type": "dynamic js",
-      "cacheable": true,
-      "url": "/dynamic/node_modules/devextreme/ui/overlay/utils.js?hash=2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
-      "size": 438,
-      "hash": "2264d0838e3d696a58d1f78d19c1e1d1d3099a0d",
-      "sri": "zzibV6UI+lfCT3W7kep62HkoHEbYYHDxTQKOUlcJAdFw9zN3mDqX0W9d1EJ60nAGgt/GCNoiFGEdEr9IE1JV/Q=="
+      "url": "/7e4cb3d2bfc05b6c00a0a345c1ffd17d87105ba9.stats.json?meteor_js_resource=true",
+      "size": 93026,
+      "hash": "497d721b6873b1fea4e96dd4f72419431dffccc4",
+      "sri": "iySTuwwlCLKIbWu1i3lpB4sGn7MeO4M4VcRNjJsHTUj+ZDYLPK9y8CJgc9mxiwFu8vKyo2vZ4aXhfZPgGTR4fA=="
     },
     {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
@@ -62,14 +42,14 @@
       "sri": "QHoD3eBWtoB0O5iCxYBCVvUIiHJ/4DDM/ojXZdmSFEEM+8kcGAQ3eaB2wpOenTLldZ9XhfIGTBaNisipdwarxA=="
     },
     {
-      "path": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css",
+      "path": "11b5a903682246a83749a7824a51a82b9822753b.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css?meteor_css_resource=true",
-      "size": 1554154,
-      "hash": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff",
-      "sri": "0QiI9WSAlKRqs4nL51qDWVqVx197ONmpFBdmq17i0WLzMEX/V2erou8bBe0pwZoWxlTNawdggD9EprNAZE1/+g=="
+      "url": "/11b5a903682246a83749a7824a51a82b9822753b.css?meteor_css_resource=true",
+      "size": 893843,
+      "hash": "11b5a903682246a83749a7824a51a82b9822753b",
+      "sri": "hKHEGAN5vI23h295my704G7FA6Vjdk5Y+f4Q05NmKwJ+ejHLexKDaDbnX0Sz0D2Uv8tKmnGivNrjDX7m3haPhw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -210,96 +190,6 @@
       "size": 1456,
       "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
       "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.ttf",
-      "size": 48724,
-      "hash": "302974cc41031c5e99168cbf103a0053e5314f45",
-      "sri": "IBxCKRRwlJO1p0op/FSeJDmlYPPYHFRxwTY9aUAi1E+89Mbu6JyzhJ1S1B2AhmtaTIVTqm8+z8KtkJcyIFiMIg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff",
-      "size": 24324,
-      "hash": "4b6f8435fd1c52f0be92199b76185bd53933f73e",
-      "sri": "l9q4eHWCpOsnXIAmbZIFE2RHFGiLPikprwvSjT4fzDgZvWIna8gdXTi8PxTQqGV3fSNW/31vK4GIGYpxPy1jmQ=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff2",
-      "size": 19024,
-      "hash": "43f5630b91630eccd683f823e89aa2001f3b3332",
-      "sri": "kFyufZ4z/3xnXVrb2HQwF8NUbHCI05dPGG2ZaTRABLsp8Xe+cmuuXioMoEy8YcxTmPNB6kyOC394GVxAopDOIQ=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
-      "size": 50248,
-      "hash": "c337700f6ae6437f0ac7235a5e8e021d59cd0244",
-      "sri": "bZiZlxUf/9dF/nOEY2EayK4Qbw02cRGTP24jFQgcUguCbfetvEClvi4jlPfU7aTlP6Meaoy89UVKRucy5tL/SA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
-      "size": 25524,
-      "hash": "ca2e7a2e63df6831efbb93297f5d40fc5f89c83d",
-      "sri": "/fo3PSrvaepd1gx3RM6lUNaqvQiiKLuny0hHwrzVulMJqvHaF0AIcMleH2LEbRl27h21IIfiLHKfNrf/366BBg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
-      "size": 19224,
-      "hash": "207b59ccd5660b6f8ca788709914be13e8883209",
-      "sri": "UtuWhVDvPvRHNLjUmEioDTKy7IIIwg/3jrNFglomqlqRmiNRJzOi9G8Plw69CEmaTpPgy7jCXiub24RNMd0NKA=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
-      "size": 39120,
-      "hash": "1cc3688a0e84dfafac77b721bbf60256f9d5872d",
-      "sri": "AbhN3eh6K0VZUgou5jChlHrdS57PSb3/iL//RYhvjHYsPHlSG52nXx6L8GPW/4gB5TGwcq+1VAU0GLsdMH8RPg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
-      "size": 20352,
-      "hash": "64610198d22bc37a35abfd0830d7afa16f8706e7",
-      "sri": "KLYd9xegSkL/RBrxEsZlslT/Vgevm7bjqXXEVhHb+VsM3+Wj0u3Sz4bDPTN+EAZ72WiIsOoOrlL2Da93WIekKg=="
-    },
-    {
-      "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
-      "size": 16376,
-      "hash": "465f0d5236a35cdbbd7069247e9d9be8f61df468",
-      "sri": "6K3xF3+O3cpO1rJPDy2czeHwJbPgyrNuNJy1GdcE70S18+PYJlHDIGRvfV/0fdDLImEzAsiCIEoRArEXcbcGcQ=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",

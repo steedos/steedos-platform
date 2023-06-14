@@ -47,6 +47,9 @@ list_views:
       - end_time
       - enabled
     label: All Delegations
+    sort:
+      - field_name: start_time
+        order: desc
 permission_set:
   user:
     allowCreate: true
