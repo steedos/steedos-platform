@@ -251,6 +251,7 @@ async function updateAppsI18n(lng, packageDir, configs, content){
             }
             const customApplicationTemplate = I18n.getAppMetadataTranslationTemplate(lng, appName, config);
             appTemplates[ranslationsFolder].CustomApplications = Object.assign({}, appTemplates[ranslationsFolder].CustomApplications, customApplicationTemplate.CustomApplications);
+            appTemplates[ranslationsFolder].CustomTabs = Object.assign({}, appTemplates[ranslationsFolder].CustomTabs, customApplicationTemplate.CustomTabs);
         }
     })
 

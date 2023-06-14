@@ -82,6 +82,7 @@ export enum SteedosTranslationPrefixKeys {
     Permission = 'CustomPermission',
     ValidationRule = 'CustomValidationRule',
     Application = 'CustomApplication',
+    Tab = 'CustomTabs',
     Permissionset = 'CustomPermissionset',
     Profile = 'CustomProfile',
     Report = 'CustomReport',

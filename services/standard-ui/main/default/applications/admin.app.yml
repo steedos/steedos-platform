@@ -6,151 +6,151 @@ icon_slds: settings
 is_creator: true
 mobile: true
 tab_groups:
-  - group_name: 个人设置
-  - group_name: 公司设置
-  - group_name: 应用程序
-  - group_name: 对象设置
-  - group_name: 用户界面
-  - group_name: 统计分析
-  - group_name: 开发
-  - group_name: 流程自动化
-  - group_name: 审批王
-  - group_name: 高级设置
+  - group_name: personal_settings
+  - group_name: company_settings
+  - group_name: apps
+  - group_name: object_settings
+  - group_name: user_interface
+  - group_name: statistical_analysis
+  - group_name: development
+  - group_name: process_automation
+  - group_name: approval_workflow
+  - group_name: advanced_settings
 tab_items:
   # admin_space_user_info:
   #   group: 个人设置
   #   index: 1
   admin_process_delegation_rules:
-    group: 个人设置
+    group: personal_settings
     index: 2
   admin_space_info:
-    group: 公司设置
+    group: company_settings
     index: 3
   admin_organizations:
-    group: 公司设置
+    group: company_settings
     index: 4
   admin_company:
-    group: 公司设置
+    group: company_settings
     index: 5
   admin_space_users:
-    group: 公司设置
+    group: company_settings
     index: 6
   admin_permission_set:
-    group: 公司设置
+    group: company_settings
     index: 7
   admin_license:
-    group: 公司设置
+    group: company_settings
     index: 9
   admin_apps:
-    group: 应用程序
+    group: apps
     index: 10
   admin_steedos_packages:
-    group: 应用程序
+    group: apps
     index: 11
   admin_objects:
-    group: 对象设置
+    group: object_settings
     index: 12
   admin_datasources:
-    group: 对象设置
+    group: object_settings
     index: 13
   admin_queue_import:
-    group: 高级设置
+    group: advanced_settings
     index: 38
   admin_pages:
-    group: 用户界面
+    group: user_interface
     index: 15
   admin_tabs:
-    group: 用户界面
+    group: user_interface
     index: 16
   admin_queries:
-    group: 统计分析
+    group: statistical_analysis
     index: 17
   admin_charts:
-    group: 统计分析
+    group: statistical_analysis
     index: 18
   admin_stimulsoft_reports:
-    group: 统计分析
+    group: statistical_analysis
     index: 19
   admin_developer:
-    group: 开发
+    group: development
     index: 19.50
   admin_developer_triggers:
-    group: 开发
+    group: development
     index: 19.51
   admin_developer_graphql:
-    group: 开发
+    group: development
     index: 19.52
   admin_process_definition:
-    group: 流程自动化
+    group: process_automation
     index: 20
   admin_workflow_rule:
-    group: 流程自动化
+    group: process_automation
     index: 21
   admin_object_validation_rules:
-    group: 流程自动化
+    group: process_automation
     index: 22
   admin_action_field_updates:
-    group: 流程自动化
+    group: process_automation
     index: 23
   admin_workflow_notifications:
-    group: 流程自动化
+    group: process_automation
     index: 24
   admin_workflow_outbound_messages:
-    group: 流程自动化
+    group: process_automation
     index: 25
   admin_roles:
-    group: 审批王
+    group: approval_workflow
     index: 25
   admin_flow_roles:
-    group: 审批王
+    group: approval_workflow
     index: 26
   admin_flows:
-    group: 审批王
+    group: approval_workflow
     index: 27
   admin_categories:
-    group: 审批王
+    group: approval_workflow
     index: 28
   admin_instance_number_rules:
-    group: 审批王
+    group: approval_workflow
     index: 29
   admin_space_user_signs:
-    group: 审批王
+    group: approval_workflow
     index: 30
   admin_instances_statistic:
-    group: 审批王
+    group: approval_workflow
     index: 31
   admin_webhooks:
-    group: 审批王
+    group: approval_workflow
     index: 32
   admin_object_workflows:
-    group: 审批王
+    group: approval_workflow
     index: 33
   admin_sessions:
-    group: 高级设置
+    group: advanced_settings
     index: 34
   # admin_dashboard:
   #   group: 高级设置
   #   index: 35
   admin_audit_records:
-    group: 高级设置
+    group: advanced_settings
     index: 36
   admin_autonumber:
-    group: 高级设置
+    group: advanced_settings
     index: 37
   # admin_web_forms:
   #   group: 高级设置
   #   index: 38
   admin_holidays:
-    group: 高级设置
+    group: advanced_settings
     index: 39
   admin_business_hours:
-    group: 高级设置
+    group: advanced_settings
     index: 40
   # admin_object_webhooks:
   #   group: 高级设置
   #   index: 41
   admin_api_keys:
-    group: 开发
+    group: development
     index: 42
 objects: []
 sort: 9100
