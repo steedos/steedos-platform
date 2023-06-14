@@ -101,16 +101,6 @@
     }
 }
 
-.antd-Crud .antd-Crud-body .antd-Table-contentWrap{
-    margin-bottom: 15px;
-}
-@media (max-width: 768px) {
-    .antd-Crud .antd-Crud-body .antd-Table-contentWrap{
-        margin-bottom: 0px;
-    }
-}
-
-
 .antd-Table-footToolbar .antd-Crud-toolbar .antd-Crud-toolbar-item--left:not(:first-child){
     margin-left: 0.625rem;
 }
