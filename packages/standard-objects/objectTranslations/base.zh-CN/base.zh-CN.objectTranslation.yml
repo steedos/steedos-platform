@@ -157,5 +157,7 @@ actions:
     label: 提请批准
   standard_import_data:
     label: 导入数据
+  standard_export_excel:
+    label: 导出
 groups:
   system_information: 系统信息

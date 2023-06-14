@@ -97,7 +97,6 @@
     "cross-env": "^7.0.3",
     "datatables": "^1.10.18",
     "detect-browser": "^5.0.0",
-    "devextreme": "^18.2.6",
     "dotenv": "^8.1.0",
     "dotenv-flow": "^3.1.0",
     "handlebars": "^4.7.7",

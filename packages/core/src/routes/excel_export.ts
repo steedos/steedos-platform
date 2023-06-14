@@ -218,7 +218,7 @@ const key2value = async function (fieldValue, fieldConfig, userSession) {
             let ref_coll: any;
             let id = fieldValue;
             // 判断reference_to是已经指定的对象名，还是通过function计算的对象名
-            if (_.isFunction(reference_to)) {
+            if (_.isFunction(reference_to) || (fieldConfig._reference_to && fieldConfig._reference_to.startsWith('function')) ) {
                 reference_to = fieldValue.o;
                 id = fieldConfig.multiple ? fieldValue.ids : fieldValue.ids[0];
             }

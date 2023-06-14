@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-13 17:00:38
+ * @LastEditTime: 2023-06-14 10:49:23
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -228,7 +228,7 @@ async function getInternalPermissionObjects(permissionSetId) {
         filters: [
             ['_id', '=', permissionSetId],
         ]
-    })[0]);
+    }))[0];
     // 如果库中有记录则使用库中的name作为判断条件，否则使用permissionSetId
     const permissionSetName = permissionSetDoc ? permissionSetDoc.name : permissionSetId;
 

@@ -105,7 +105,7 @@ module.exports = {
                         filters: [
                             ['_id', '=', permissionSetId],
                         ]
-                    })[0]);
+                    }))[0];
                     if (permissionSetDoc) {
                         // 替换this.query.filters中全部的的permission_set_id为permissionSetDoc.name
                         this.query.filters = this.query.filters.replace(regex, permissionSetDoc.name).replace(`permission_set_id eq '${permissionSetDoc.name}'`, `(permission_set_id eq '${permissionSetDoc.name}') or (permission_set_id eq '${permissionSetId}')`);
