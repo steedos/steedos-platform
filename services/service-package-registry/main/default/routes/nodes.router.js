@@ -7,7 +7,6 @@ const objectql = require('@steedos/objectql');
 let schema = objectql.getSteedosSchema();
 
 const packageInstallationNodeID = process.env.STEEDOS_PACKAGE_INSTALLATION_NODEID || null;
-console.log(`load nodes.router.js.....`, packageInstallationNodeID)
 router.get('/api/nodes/install', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
     const isSpaceAdmin = userSession.is_space_admin;
