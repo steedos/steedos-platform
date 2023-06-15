@@ -10,11 +10,14 @@ const KEYSEPARATOR: string = '.';
 
 const CUSTOMAPPLICATIONS_KEY = 'app';
 const MENU_KEY = 'menu';
+const CUSTOMTABS_KEY = 'tab';
 
 const getPrefix = function(key?){
     switch (key) {
         case CUSTOMAPPLICATIONS_KEY:
             return SteedosTranslationPrefixKeys.Application
+        case CUSTOMTABS_KEY:
+            return SteedosTranslationPrefixKeys.Tab
         default:
             return 'CustomLabels';
     }
@@ -45,9 +48,20 @@ const getAppDescriptionKey = function(appId){
     return [prefix, appId, 'description'].join(KEYSEPARATOR);
 }
 
+const getAppGroupKey = function(appId, groupId){
+    const prefix = getPrefix(CUSTOMAPPLICATIONS_KEY);
+    const fixGroupId = groupId.toLocaleLowerCase().replace(/\%/g, '_').replace(/\./g, '_').replace(/\ /g, '_');
+    return [prefix, appId, 'groups', fixGroupId].join(KEYSEPARATOR);
+}
+
 const getMenuLabelKey = function(menuId){
     const prefix = getPrefix(MENU_KEY);
     return [prefix, `menu_${menuId}`].join(KEYSEPARATOR);
+}
+
+const getTabLabelKey = function(tabId){
+    const prefix = getPrefix(CUSTOMTABS_KEY);
+    return [prefix, tabId].join(KEYSEPARATOR);
 }
 
 const translationAppName = function(lng, appId, def){
@@ -70,6 +84,16 @@ const translationAppDescription = function(lng, appId, def){
     return translation(keys, lng) || def || '' 
 }
 
+export const translationTabGroup = function(lng, appId, groupId, def){
+    let key = getAppGroupKey(appId, groupId);
+    let keys = [key];
+    let fallbackKey = appFallbackKeys.getAppGroupKey(appId, groupId);
+    if(fallbackKey){
+        keys.push(fallbackKey);
+    }
+    return translation(keys, lng) || def || '' 
+}
+
 const translationMenuLabel = function(lng, menuId, def){
     let key = getMenuLabelKey(menuId);
     let keys = [key];
@@ -80,10 +104,24 @@ const translationMenuLabel = function(lng, menuId, def){
     return translation(keys, lng) || def || '' 
 }
 
+export const translationTabLabel = function(lng: string, tabId: string, def){
+    let key = getTabLabelKey(tabId);
+    let keys = [key];
+    let fallbackKey = appFallbackKeys.getTabKey(tabId)
+    if(fallbackKey){
+        keys.push(fallbackKey);
+    }
+    return translation(keys, lng) || def || ''; 
+}
+
 export const translationApp = function(lng: string, appId: string, app: StringMap){
     app.label = translationAppName(lng, appId, app.label || app.name);
     // app.name = app.label
     app.description = translationAppDescription(lng, appId, app.description);
+    _.each(app.tab_groups,function(tab_group, index){
+        app.tab_groups[index].id = tab_group.group_name;
+        app.tab_groups[index].group_name = translationTabGroup(lng, appId, tab_group.group_name, tab_group.group_name);
+    })
     translationMenus(lng, app.admin_menus);
 }
 
@@ -154,6 +192,13 @@ export const convertTranslation = function(_translation){
     _.each(translation.CustomApplications, function(app, appId){
         template[getAppNameKey(appId)] = app.name;
         template[getAppDescriptionKey(appId)] = app.description;
+        _.each(app.groups,function(group, groupId){
+            template[getAppGroupKey(appId, groupId)] = group;
+        })
+    })
+
+    _.each(translation.CustomTabs, function(tab, tabId){
+        template[getTabLabelKey(tabId)] = tab;
     })
 
     // _.each(translation.CustomMenus, function(menu, menuId){

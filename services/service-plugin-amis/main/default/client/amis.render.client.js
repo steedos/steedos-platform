@@ -60,6 +60,9 @@
             // window.ReactDOM = window.__ReactDOM;
             const AmisRenderers = [];
             let amisLib = amisRequire('amis');
+            amisLib.registerFilter('t', function (key) {
+              return typeof key === 'string' ? window.t(key) : key;
+            });
             const registerMap = {
               renderer: amisLib.Renderer,
               formitem: amisLib.FormItem,
