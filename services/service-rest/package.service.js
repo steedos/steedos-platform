@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-15 16:22:24
+ * @LastEditTime: 2023-06-15 19:57:25
  * @Description: 
  */
 "use strict";
 // @ts-check
 const serviceObjectMixin = require('@steedos/service-object-mixin');
-const { QUERY_DOCS_TOP } = require('./consts')
+const { QUERY_DOCS_TOP, REQUEST_SUCCESS_STATUS } = require('./consts')
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql');
 
@@ -25,7 +25,7 @@ module.exports = {
      */
     settings: {
         // Base path
-        rest: "/rest",
+        rest: "/",
     },
 
     /**
@@ -47,7 +47,7 @@ module.exports = {
             }
         },
         /**
-         * @api {GET} /api/rest/:objectName 获取列表记录
+         * @api {GET} /api/v1/:objectName 获取列表记录
          * @apiVersion 0.0.0
          * @apiName find
          * @apiGroup @steedos/service-rest
@@ -61,23 +61,25 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *      records: [{
-         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
-         *       "name": "test",
-         *       ...
-         *      }]
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *         "items": [
+         *           {
+         *             "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *             "name": "",
+         *             ...
+         *           }
+         *         ],
+         *         "total": 200 // 注意！！！这里不是当前请求返回的 items 的长度，而是数据库中一共有多少条数据
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         find: {
@@ -125,13 +127,23 @@ module.exports = {
                 }
 
                 const records = await this.find(objectName, query, userSession)
+                const countQuery = {
+                    filters: query.filters
+                }
+                const totalCount = await this.count(objectName, countQuery, userSession)
+
                 return {
-                    records
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "items": records,
+                        "total": totalCount
+                    }
                 }
             }
         },
         /**
-         * @api {POST} /api/rest/:objectName/search 查询列表记录
+         * @api {POST} /api/v1/:objectName/search 查询列表记录
          * @apiVersion 0.0.0
          * @apiName search
          * @apiGroup @steedos/service-rest
@@ -145,23 +157,25 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *      records: [{
-         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
-         *       "name": "test",
-         *       ...
-         *      }]
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *         "items": [
+         *           {
+         *             "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *             "name": "",
+         *             ...
+         *           }
+         *         ],
+         *         "total": 200 // 注意！！！这里不是当前请求返回的 items 的长度，而是数据库中一共有多少条数据
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         search: {
@@ -209,13 +223,22 @@ module.exports = {
                 }
 
                 const records = await this.find(objectName, query, userSession)
+                const countQuery = {
+                    filters: query.filters
+                }
+                const totalCount = await this.count(objectName, countQuery, userSession)
                 return {
-                    records
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "items": records,
+                        "total": totalCount
+                    }
                 }
             }
         },
         /**
-         * @api {GET} /api/rest/:objectName/:id 获取单条记录
+         * @api {GET} /api/v1/:objectName/:id 获取单条记录
          * @apiVersion 0.0.0
          * @apiName findOne
          * @apiGroup @steedos/service-rest
@@ -226,21 +249,21 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
-         *       "name": "test",
-         *       ...
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *          "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *          "name": "",
+         *          ...
+         *        }
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         findOne: {
@@ -260,11 +283,16 @@ module.exports = {
                 if (fields) {
                     query.fields = JSON.parse(fields)
                 }
-                return this.findOne(objectName, id, query, userSession)
+                const doc = await this.findOne(objectName, id, query, userSession)
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": doc
+                }
             }
         },
         /**
-         * @api {POST} /api/rest/:objectName 新增记录
+         * @api {POST} /api/v1/:objectName 新增记录
          * @apiVersion 0.0.0
          * @apiName insert
          * @apiGroup @steedos/service-rest
@@ -274,21 +302,21 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
-         *       "name": "test",
-         *       ...
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *          "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *          "name": "",
+         *          ...
+         *        }
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         insert: {
@@ -313,11 +341,16 @@ module.exports = {
                 if (userSession && (await object.getField('space'))) {
                     data.space = userSession.spaceId;
                 }
-                return this.insert(objectName, data, userSession)
+                const newDoc = await this.insert(objectName, data, userSession)
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": newDoc
+                }
             }
         },
         /**
-         * @api {PUT} /api/rest/:objectName/:id 更新记录
+         * @api {PUT} /api/v1/:objectName/:id 更新记录
          * @apiVersion 0.0.0
          * @apiName update
          * @apiGroup @steedos/service-rest
@@ -328,21 +361,21 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
-         *       "name": "test",
-         *       ...
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *          "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *          "name": "",
+         *          ...
+         *        }
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         update: {
@@ -365,11 +398,16 @@ module.exports = {
                     data = JSON.parse(JSON.stringify(doc));
                 }
                 delete data.space;
-                return this.update(objectName, id, data, userSession)
+                const newDoc = await this.update(objectName, id, data, userSession)
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": newDoc
+                }
             }
         },
         /**
-         * @api {DELETE} /api/rest/:objectName/:id 删除记录
+         * @api {DELETE} /api/v1/:objectName/:id 删除记录
          * @apiVersion 0.0.0
          * @apiName delete
          * @apiGroup @steedos/service-rest
@@ -379,20 +417,19 @@ module.exports = {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
-         *       "deleted": true,
-         *       "id": "5e7d1b9b9c9d4400001d1b9b",
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *          "_id": "5a6b1c3c8d6d1d0b7c6d1d0b",
+         *        }
+         *       }
          *     }
          * @apiErrorExample {json} Error-Response:
-         *     HTTP/1.1 404 Error
+         *     HTTP/1.1 500 Error
          *     {
-         *       "error": "Service 'rest.contracts' is not found.",
-         *       "detail": {
-         *         "code": "404",
-         *         "type": "SERVICE_NOT_FOUND",
-         *         "data": {
-         *          "action": "rest.contracts"
-         *         }
-         *       }
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
          *     }
          */
         delete: {
@@ -420,8 +457,11 @@ module.exports = {
                     await this.update(objectName, id, data, userSession)
                 }
                 return {
-                    "deleted": true,
-                    "id": id
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "_id": id
+                    }
                 }
             }
         },
@@ -446,6 +486,12 @@ module.exports = {
                     return await obj.find(query)
                 }
                 return await obj.find(query, userSession)
+            }
+        },
+        count: {
+            async handler(objectName, query, userSession) {
+                const obj = this.getObject(objectName)
+                return await obj.count(query, userSession)
             }
         },
         findOne: {
