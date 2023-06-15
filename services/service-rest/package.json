@@ -1,0 +1,21 @@
+{
+    "name": "@steedos/service-rest",
+    "version": "2.5.3-beta.19",
+    "main": "package.service.js",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "steedos"
+    ],
+    "scripts": {},
+    "description": "steedos package",
+    "repository": {},
+    "license": "MIT",
+    "dependencies": {
+        "@steedos/objectql": "2.5.3-beta.19",
+        "@steedos/service-object-mixin": "2.5.3-beta.19",
+        "lodash": "^4.17.21"
+    }
+}

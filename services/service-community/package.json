@@ -24,6 +24,7 @@
     "@steedos/service-package-registry": "2.5.3-beta.19",
     "@steedos/service-package-tool": "2.5.3-beta.19",
     "@steedos/service-pages": "2.5.3-beta.19",
+    "@steedos/service-rest": "2.5.3-beta.19",
     "@steedos/service-saas": "2.5.3-beta.19",
     "@steedos/service-sentry": "2.5.3-beta.19",
     "@steedos/service-sidecar": "2.5.3-beta.19",
