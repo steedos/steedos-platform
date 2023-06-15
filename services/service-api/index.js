@@ -209,10 +209,10 @@ module.exports = {
 				}
 			},
 			{
-				path: "/api/v1",
+				path: "/api",
 
 				whitelist: [
-					"**",
+					"rest.*",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares

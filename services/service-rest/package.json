@@ -9,7 +9,9 @@
     "keywords": [
         "steedos"
     ],
-    "scripts": {},
+    "scripts": {
+        "apidoc": "apidoc -i . -o doc/"
+    },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",

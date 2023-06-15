@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-15 13:50:16
+ * @LastEditTime: 2023-06-15 16:22:24
  * @Description: 
  */
 "use strict";
@@ -47,17 +47,17 @@ module.exports = {
             }
         },
         /**
-         * @api {POST} /api/v1/rest/:objectName/listRecords 获取列表
+         * @api {GET} /api/rest/:objectName 获取列表记录
          * @apiVersion 0.0.0
          * @apiName find
          * @apiGroup @steedos/service-rest
          * @apiParam {String} objectName 对象API Name，如：contracts
-         * @apiBody {String[]} [fields] 字段名，如：["name", "description"]
-         * @apiBody {Object[]} [filters] 过滤条件，如：[['name', '=', 'test'],['amount', '>', 100]]
-         * @apiBody {Number} [top] 获取条数，如：10，最多5000
-         * @apiBody {Number} [skip] 跳过条数，如：10
-         * @apiBody {String} [sort] 排序，如：'name desc'
-         * @apiSuccess {Object[]} listRecords  记录列表
+         * @apiQuery {String} [fields] 字段名，如：'["name", "description"]'
+         * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
+         * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
+         * @apiQuery {String} [skip] 跳过条数，如：'10'
+         * @apiQuery {String} [sort] 排序，如：'name desc'
+         * @apiSuccess {Object[]} find  记录列表
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          *     {
@@ -82,8 +82,92 @@ module.exports = {
          */
         find: {
             rest: {
+                method: "GET",
+                path: "/:objectName"
+            },
+            params: {
+                objectName: { type: "string" },
+                fields: { type: 'string', optional: true },
+                filters: { type: 'string', optional: true },
+                top: { type: 'string', optional: true },
+                skip: { type: 'string', optional: true },
+                sort: { type: 'string', optional: true }
+            },
+            async handler(ctx) {
+                const params = ctx.params
+                const { objectName, fields, filters, top, skip, sort } = params
+                const userSession = ctx.meta.user;
+
+                const query = {}
+                if (filters) {
+                    query.filters = JSON.parse(filters)
+                }
+                if (fields) {
+                    query.fields = JSON.parse(fields)
+                }
+                if (top) {
+                    query.top = Number(top)
+                }
+                if (skip) {
+                    query.skip = Number(skip)
+                }
+                if (sort) {
+                    query.sort = sort
+                }
+
+                if (_.has(query, "top")) { // 如果top小于1，不返回数据
+                    if (query.top < 1) {
+                        return []
+                    }
+                    if (query.top > QUERY_DOCS_TOP) {
+                        query.top = QUERY_DOCS_TOP   // 最多返回5000条数据
+                    }
+                }
+
+                const records = await this.find(objectName, query, userSession)
+                return {
+                    records
+                }
+            }
+        },
+        /**
+         * @api {POST} /api/rest/:objectName/search 查询列表记录
+         * @apiVersion 0.0.0
+         * @apiName search
+         * @apiGroup @steedos/service-rest
+         * @apiParam {String} objectName 对象API Name，如：contracts
+         * @apiBody {String[]} [fields] 字段名，如：["name", "description"]
+         * @apiBody {Object[]} [filters] 过滤条件，如：[['name', '=', 'test'],['amount', '>', 100]]
+         * @apiBody {Number} [top] 获取条数，如：10，最多5000
+         * @apiBody {Number} [skip] 跳过条数，如：10
+         * @apiBody {String} [sort] 排序，如：'name desc'
+         * @apiSuccess {Object[]} search  记录列表
+         * @apiSuccessExample {json} Success-Response:
+         *     HTTP/1.1 200 OK
+         *     {
+         *      records: [{
+         *       "_id": "5e7d1b9b9c9d4400001d1b9b",
+         *       "name": "test",
+         *       ...
+         *      }]
+         *     }
+         * @apiErrorExample {json} Error-Response:
+         *     HTTP/1.1 404 Error
+         *     {
+         *       "error": "Service 'rest.contracts' is not found.",
+         *       "detail": {
+         *         "code": "404",
+         *         "type": "SERVICE_NOT_FOUND",
+         *         "data": {
+         *          "action": "rest.contracts"
+         *         }
+         *       }
+         *     }
+         */
+        search: {
+            rest: {
                 method: "POST",
-                path: "/:objectName/listRecords"
+                path: "/:objectName/search"
             },
             params: {
                 objectName: { type: "string" },
@@ -97,15 +181,6 @@ module.exports = {
                 const params = ctx.params
                 const { objectName } = params
                 const userSession = ctx.meta.user;
-
-                if (_.has(params, "top")) { // 如果top小于1，不返回数据
-                    if (params.top < 1) {
-                        return []
-                    }
-                    if (params.top > QUERY_DOCS_TOP) {
-                        params.top = QUERY_DOCS_TOP   // 最多返回5000条数据
-                    }
-                }
 
                 const query = {}
                 if (_.has(params, "filters")) {
@@ -123,6 +198,16 @@ module.exports = {
                 if (_.has(params, "sort")) {
                     query.sort = params.sort
                 }
+
+                if (_.has(query, "top")) { // 如果top小于1，不返回数据
+                    if (query.top < 1) {
+                        return []
+                    }
+                    if (query.top > QUERY_DOCS_TOP) {
+                        query.top = QUERY_DOCS_TOP   // 最多返回5000条数据
+                    }
+                }
+
                 const records = await this.find(objectName, query, userSession)
                 return {
                     records
@@ -130,7 +215,7 @@ module.exports = {
             }
         },
         /**
-         * @api {GET} /api/v1/rest/:objectName/:id 获取单条记录
+         * @api {GET} /api/rest/:objectName/:id 获取单条记录
          * @apiVersion 0.0.0
          * @apiName findOne
          * @apiGroup @steedos/service-rest
@@ -179,7 +264,7 @@ module.exports = {
             }
         },
         /**
-         * @api {POST} /api/v1/rest/:objectName 新增记录
+         * @api {POST} /api/rest/:objectName 新增记录
          * @apiVersion 0.0.0
          * @apiName insert
          * @apiGroup @steedos/service-rest
@@ -232,7 +317,7 @@ module.exports = {
             }
         },
         /**
-         * @api {PUT} /api/v1/rest/:objectName/:id 更新记录
+         * @api {PUT} /api/rest/:objectName/:id 更新记录
          * @apiVersion 0.0.0
          * @apiName update
          * @apiGroup @steedos/service-rest
@@ -284,7 +369,7 @@ module.exports = {
             }
         },
         /**
-         * @api {DELETE} /api/v1/rest/:objectName/:id 删除记录
+         * @api {DELETE} /api/rest/:objectName/:id 删除记录
          * @apiVersion 0.0.0
          * @apiName delete
          * @apiGroup @steedos/service-rest
