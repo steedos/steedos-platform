@@ -1001,6 +1001,18 @@ CustomLabels:
   objects_enable_share: 允许共享记录
   objects_enable_instances: 允许查看申请单
   objects_description: 描述
+  objects_amis_details: 详情
+  objects_amis_field: 对象字段
+  objects_amis_list_view: 列表视图
+  objects_amis_action_button: 操作按钮
+  objects_amis_object_page: 对象页面
+  objects_amis_page_layout: 页面布局
+  objects_amis_object_permission: 对象权限
+  objects_amis_trigger: 触发器
+  objects_amis_process_mapping: 流程映射
+  objects_amis_validation_rule: 验证规则
+  objects_amis_limitation_rule: 限制规则
+  objects_amis_sharing_rule: 共享规则
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称
