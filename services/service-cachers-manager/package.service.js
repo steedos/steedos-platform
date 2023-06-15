@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-09 17:34:57
+ * @LastEditTime: 2023-06-15 10:22:58
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -78,7 +78,7 @@ module.exports = {
 				this.translationsChangeTimeoutId = setTimeout(() => {
 					core.loadTranslations()
 					this.translationsChangeTimeoutId = null;
-				}, 2000)
+				}, 3000)
 			}
 		},
 		"translations.object.change": {
@@ -91,7 +91,7 @@ module.exports = {
 						cachers.getCacher('lru.translations.objects').clear();
 					})
 					this.objectTranslationsChangeTimeoutId = null;
-				}, 2000)
+				}, 3000)
 
 			}
 		},
