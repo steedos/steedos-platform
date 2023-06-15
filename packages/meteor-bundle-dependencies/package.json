@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-dependencies",
-  "version": "2.5.3-beta.19",
+  "version": "2.5.3-beta.23",
   "description": "",
   "main": "index.js",
   "private": false,
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "43f6afa6a823ae9f34be22b981a6fa38fd5590e2"
+  "gitHead": "8fd9cf35d29f8f71e11790bd010bf5b045e7ebc4"
 }
