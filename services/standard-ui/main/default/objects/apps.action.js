@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2021-12-27 10:49:33
- * @LastEditors: 廖大雪 2291335922@qq.com
- * @LastEditTime: 2023-03-05 18:11:32
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-16 12:04:04
  * @Description: 
  */
 module.exports = {
@@ -13,6 +13,7 @@ module.exports = {
         delete newRecord._id;
         delete newRecord.record_permissions;
         newRecord.from_code_id = record_id;
+        newRecord.tabs = doc.tabs;
         Creator.odata.insert(object_name, newRecord, function(result, error){
             if(result){
                 FlowRouter.go(`/app/-/${object_name}/view/${result._id}`)
