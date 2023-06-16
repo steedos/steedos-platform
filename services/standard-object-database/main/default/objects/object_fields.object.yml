@@ -97,7 +97,8 @@ fields:
   language:
     type: select
     label: 语言
-    defaultValue: javascript
+    required: true
+    # defaultValue: javascript
     options: 
       - label: bat
         value: bat
