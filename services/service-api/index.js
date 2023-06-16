@@ -212,7 +212,7 @@ module.exports = {
 				path: "/api/v1",
 
 				whitelist: [
-					"**",
+					"rest.*",
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -284,7 +284,11 @@ module.exports = {
 				onError(req, res, err) {
 					res.setHeader("Content-Type", "application/json; charset=utf-8");
 					res.writeHead(err.code || 500);
-					res.end(JSON.stringify({ error: err.message, detail: err }));
+					res.end(JSON.stringify({
+						"status": -1,
+						"msg": err.message,
+						"data": {}
+					}));
 				}
 			}
 		],

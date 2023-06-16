@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-rest",
-    "version": "2.5.3-beta.23",
+    "version": "2.5.3-beta.25",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -9,14 +9,16 @@
     "keywords": [
         "steedos"
     ],
-    "scripts": {},
+    "scripts": {
+        "apidoc": "apidoc -i . -o doc/"
+    },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
     "dependencies": {
-        "@steedos/objectql": "2.5.3-beta.23",
-        "@steedos/service-object-mixin": "2.5.3-beta.23",
+        "@steedos/objectql": "2.5.3-beta.25",
+        "@steedos/service-object-mixin": "2.5.3-beta.25",
         "lodash": "^4.17.21"
     },
-    "gitHead": "8fd9cf35d29f8f71e11790bd010bf5b045e7ebc4"
+    "gitHead": "02543361b65c5eabe667a581687f13fde3b358a8"
 }
