@@ -248,7 +248,6 @@ module.exports = {
 		},
 
 		async startStandardSpace(){
-			console.log(`startStandardSpace====`)
 			return await new Promise((resolve, reject) => {
 				this.standardSpaceService = this.broker.createService({
 					mixins: [require('@steedos/standard-space')],
@@ -401,7 +400,7 @@ module.exports = {
 
 	},
     merged(schema) {
-        schema.name = 'steedos-server';  //steedo-server 服务禁止修改name
+        schema.name = 'steedos-server';  //steedos-server 服务禁止修改name
 
 		if(broker.nodeID != 'steedos-primary'){
 			schema.dependencies.push('steedos-primary')
