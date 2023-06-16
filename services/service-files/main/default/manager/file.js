@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-09 09:36:43
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-27 15:01:27
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-06-16 15:56:45
  * @Description: 文件类，处理文件保存
  */
 'use strict';
@@ -97,6 +97,7 @@ class File {
 
         const doc = {
             "_id": _id,
+            "link": process.env.ROOT_URL+"/api/files/images/"+_id,
             "original": {
                 "type": mimetype,
                 "size": size,
