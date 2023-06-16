@@ -7,7 +7,6 @@
     "ee/**",
     "server"
   ],
-  "useWorkspaces": true,
   "npmClient": "yarn",
   "version": "2.5.3-beta.23"
 }
