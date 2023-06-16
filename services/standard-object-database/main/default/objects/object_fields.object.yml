@@ -97,7 +97,7 @@ fields:
   language:
     type: select
     label: 语言
-    required: true
+    required: "{{['code'].indexOf(formData.type) > -1 ? true: false}}"
     # defaultValue: javascript
     options: 
       - label: bat
