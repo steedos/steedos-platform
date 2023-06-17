@@ -1087,17 +1087,17 @@ CustomLabels:
   objects_enable_instances: 允许查看申请单
   objects_description: 描述
   objects_amis_details: Details
-  objects_amis_field: Object Field
-  objects_amis_list_view: List View
-  objects_amis_action_button: Action Button
-  objects_amis_object_page: Object Page
-  objects_amis_page_layout: Page Layout
-  objects_amis_object_permission: Permission
-  objects_amis_trigger: Trigger
-  objects_amis_process_mapping: Process Mapping
-  objects_amis_validation_rule: Validation Rule
-  objects_amis_limitation_rule: Limitation Rule
-  objects_amis_sharing_rule: Sharing Rule
+  objects_amis_field: Fields
+  objects_amis_list_view: List Views
+  objects_amis_action_button: Buttons
+  objects_amis_object_page: Mine Pages
+  objects_amis_page_layout: Page Layouts
+  objects_amis_object_permission: Permissions
+  objects_amis_trigger: Triggers
+  objects_amis_process_mapping: Process Mappings
+  objects_amis_validation_rule: Validation Rules
+  objects_amis_limitation_rule: Limitation Rules
+  objects_amis_sharing_rule: Sharing Rules
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称

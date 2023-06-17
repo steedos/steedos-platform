@@ -76,19 +76,19 @@ CustomLabels:
   menu_process_delegation_rules: 
   menu_roles: 
 CustomTabs:
-  admin_process_delegation_rules: Process Delegation
+  admin_process_delegation_rules: Process Delegations
   admin_space_info: Company
   admin_organizations: Departments
-  admin_company: Branches
+  admin_company: Divisions
   admin_space_users: Users
   admin_permission_set: Profiles & Permission Sets
   admin_license: 
-  admin_apps: Applications
+  admin_apps: Apps
   admin_steedos_packages: Packages
   admin_objects: Objects
   admin_datasources: External Data Sources
   admin_queue_import: Data Import
-  admin_pages: Micro Pages
+  admin_pages: Mini Pages
   admin_tabs: Tabs
   admin_queries: Queries
   admin_charts: Charts
@@ -102,17 +102,17 @@ CustomTabs:
   admin_workflow_notifications: Workflow Notifications
   admin_workflow_outbound_messages: Outbound Messages
   admin_roles: Roles
-  admin_flow_roles: Positions
-  admin_flows: Flows
-  admin_categories: Flow Categories
-  admin_instance_number_rules: Process Numbering
-  admin_space_user_signs: Image Signatures
+  admin_flow_roles: Workflow Roles
+  admin_flows: Workflows
+  admin_categories: Workflow Categories
+  admin_instance_number_rules: Instance Number Rules
+  admin_space_user_signs: User Sign
   admin_instances_statistic: Efficiency Statistics
-  admin_webhooks: Process Triggers
-  admin_object_workflows: Object-Process Mapping
-  admin_sessions: Login Sessions
-  admin_audit_records: Audit Logs
-  admin_autonumber: Auto-Numbering
+  admin_webhooks: Webhooks
+  admin_object_workflows: Object Synchronization Rules
+  admin_sessions: Sessions
+  admin_audit_records: Audit Records
+  admin_autonumber: Auto Number
   admin_holidays: Holidays
   admin_business_hours: Business Hours
   admin_api_keys: API Keys

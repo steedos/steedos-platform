@@ -68,7 +68,7 @@ CustomLabels:
   menu_flow_roles: 岗位
   menu_flow_positions: 岗位成员
   menu_categories: 流程分类
-  menu_instance_number_rules: 流程编号
+  menu_instance_number_rules: 申请编号
   menu_space_user_signs: 图片签名
   menu_instances_statistic: 效率统计
   menu_webhooks: 流程触发器
