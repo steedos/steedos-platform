@@ -1,0 +1,16 @@
+name: zoom
+label: font_size
+type: select
+allowedValues:
+  - normal
+  - large
+  - extra-large
+options:
+  - label: 标准
+    value: normal
+  - label: 大字体
+    value: large
+  - label: 超大字体
+    value: extra-large
+defaultValue: normal
+sort_no: 290

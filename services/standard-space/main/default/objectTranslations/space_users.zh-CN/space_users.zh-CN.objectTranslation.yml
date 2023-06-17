@@ -87,6 +87,17 @@ fields:
     label: 排序号
     help: 
     description: 
+  zoom:
+    label: 字体大小
+    help: 
+    options:
+      - label: 标准
+        value: normal
+      - label: 大字体
+        value: large
+      - label: 超大字体
+        value: extra-large
+    description: 
   email_notification:
     label: 接收邮件通知
     help: 

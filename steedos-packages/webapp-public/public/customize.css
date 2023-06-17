@@ -64,3 +64,15 @@ body {
 .antd-Form-item.form-control {
   height: auto;
 }
+
+.zoom-large {
+  -ms-text-size-adjust: auto;
+  -webkit-text-size-adjust: auto;
+  zoom: 117% !important;
+}
+
+.zoom-extra-large {
+  -ms-text-size-adjust: auto;
+  -webkit-text-size-adjust: auto;
+  zoom: 135% !important;
+}
