@@ -39,6 +39,11 @@ fields:
     description: 
   literal_value:
     label: 指定新字段值
+  
+    help: 
+    description: 
+  undirect:
+    label: 触发对象触发器、工作流规则、字段验证规则
     help: 
     description: 
   notify_assignee:

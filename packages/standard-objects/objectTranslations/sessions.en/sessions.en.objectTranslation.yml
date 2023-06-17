@@ -26,6 +26,14 @@ fields:
     label: valid
     help: 
     description: 
+  is_phone:
+    label: Phone
+    help: 
+    description: 
+  is_tablet:
+    label: Tablet Computer
+    help: 
+    description: 
   client_id:
     label: Client ID
     help: 
