@@ -1,11 +1,12 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-11 17:02:38
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-17 11:40:37
  * @Description:
  */
 const objectql = require("@steedos/objectql");
+const { t } = require("@steedos/i18n");
 const { getStep } = require('../uuflowManager');
 const _ = require("lodash");
 module.exports = {
@@ -59,6 +60,55 @@ module.exports = {
         }
       },
     },
+    getStartFlows:{
+      rest: {
+        method: "GET",
+        fullPath: "/api/steedos_keyvalues/startFlows",
+      },
+      async handler(ctx) {
+        const userSession = ctx.meta.user;
+        const { spaceId, userId } = userSession;
+        const keyValue = await objectql.getObject('steedos_keyvalues').find({
+          filters: [['space', '=', spaceId], ['user', '=', userId], ['key', '=', 'start_flows']]
+        });
+        if(keyValue && keyValue.length > 0){
+          return {
+            startFlows: keyValue[0].value
+          }
+        }else{
+          return {
+            startFlows: []
+          }
+        }
+      }
+    },
+    changeStartFlows: {
+      rest: {
+        method: "POST",
+        fullPath: "/api/steedos_keyvalues/startFlows",
+      },
+      async handler(ctx) {
+        const { startFlows } = ctx.params;
+        const userSession = ctx.meta.user;
+        const { spaceId, userId } = userSession;
+        const keyValue = await objectql.getObject('steedos_keyvalues').find({
+          filters: [['space', '=', spaceId], ['user', '=', userId], ['key', '=', 'start_flows']]
+        });
+
+        if(keyValue && keyValue.length > 0){
+          return await objectql.getObject('steedos_keyvalues').update(keyValue[0]._id, {
+            value: startFlows
+          })
+        }else{
+          return await objectql.getObject('steedos_keyvalues').insert({
+            space: spaceId,
+            user: userId,
+            key: 'start_flows',
+            value: startFlows
+          })
+        }
+      }
+    }
   },
   methods: {
     formatKeywords: {
@@ -96,7 +146,7 @@ module.exports = {
 
         const keywordsFilter = this.getKeywordsFilter(keywords)
         let data = [];
-        const { is_space_admin } = userSession;
+        const { is_space_admin, spaceId, userId, language } = userSession;
         // 分发的流程范围处理
         let distributeOptionalFlows = [];
         if (action === "distribute") {
@@ -136,6 +186,7 @@ module.exports = {
           }
         } else {
           var categories = await this.getSpaceCategories(categoriesIds, userSession);
+          var categoriesFlows = [];
           for (const category of categories) {
             const filters = [
               ["category", "=", category._id],
@@ -154,14 +205,31 @@ module.exports = {
             for (const flow of categoryFlows) {
               if (this.canAdd(flow, userSession)) {
                 category.flows.push(flow);
+                categoriesFlows.push(flow)
               } else if (action == 'query') {
                 if (is_space_admin || this.canMonitor(flow, userSession) || this.canAdmin(flow, userSession)) {
                   category.flows.push(flow);
+                  categoriesFlows.push(flow)
                 }
               }
             }
           }
           data = categories;
+
+          const startFlowsResults = await objectql.getObject('steedos_keyvalues').find({
+            filters: [['space', '=', spaceId], ['user', '=', userId], ['key', '=', 'start_flows']]
+          })
+
+          const startFlows = startFlowsResults[0]?.value || [];
+
+          data.unshift({
+            _id: 'startFlows',
+            name: t('star_flows', {}, language),
+            flows: startFlows.length > 0 ?  _.compact(_.map(startFlows, (flowId) => {
+              const flow = _.find(categoriesFlows, { _id: flowId })
+              return flow;
+            })) : null
+          })
         }
         return data;
       }

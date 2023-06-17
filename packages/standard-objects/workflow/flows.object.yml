@@ -2,6 +2,8 @@ name: flows
 icon: environment_hub
 label: Workflow
 hidden: false
+# 弹出选择
+enable_enhanced_lookup: true
 enable_files: true
 version: 2
 fields:
