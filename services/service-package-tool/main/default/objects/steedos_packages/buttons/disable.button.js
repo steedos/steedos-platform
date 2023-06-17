@@ -3,15 +3,15 @@ module.exports = {
         const record = Creator.odata.get(object_name, record_id);
         const nodesSelect = Steedos.PackageRegistry.getNodesSelect();
         swal({
-            title: `停用`,
-            text: `确定要停用${record.name}?${nodesSelect}`,
+            title: t('steedos_packages.disable.title'),
+            text:  t('steedos_packages.disable.text') + ` ${record.name}?${nodesSelect}`,
             html: true,
             showCancelButton: true,
-            confirmButtonText: '停用',
+            confirmButtonText: t('steedos_packages.disable.title'),
             cancelButtonText: TAPi18n.__('Cancel')
         }, function (option) {
             if (option) {
-                toastr.info('停用中，请稍后...', null, {timeOut: false});
+                toastr.info(t('steedos_packages.disable.toast_info'), null, {timeOut: false});
                 Steedos.authRequest(Steedos.absoluteUrl('/api/nodes/disable'), {
                     type: 'post', async: false, data: JSON.stringify({
                         module: record.name,
@@ -23,7 +23,7 @@ module.exports = {
                                 SteedosUI.reloadRecord(object_name, record_id)
                             }
                             toastr.clear();
-                            toastr.success('已停用');
+                            toastr.success(t('steedos_packages.disable.toastr_success'));
                             FlowRouter.reload()
                         }, 1000 * 5)
                     },
