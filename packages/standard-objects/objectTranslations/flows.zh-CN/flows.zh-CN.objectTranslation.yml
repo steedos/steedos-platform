@@ -249,6 +249,10 @@ fields:
     label: 显示的字段
     help:
     description:
+  forbid_initiate_instance:
+    label: 审批王端禁止发起流程
+    help:
+    description:
 groups:
   template: 模板
   synchronization: 归档
