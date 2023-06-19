@@ -82,11 +82,11 @@ module.exports = {
 					apiKey: process.env.APOLLO_ENGINE_KEY
 				},
 				subscriptions: false,
-				playground: {
+				playground: process.env.NODE_ENV !== 'production' ? {
 					settings: {
 						'request.credentials': 'same-origin'
 					}
-				},
+				}: false,
 				introspection: true
 			}
 		})
