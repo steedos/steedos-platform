@@ -28,6 +28,15 @@ InstanceAttachmentTemplate.helpers = {
 		if (!current_step)
 			return false;
 
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
+
 		// 分发的正文或者附件不显示转为pdf按钮
 		// 如果有正文权限则为正文，否则分发为附件
 		// 分发的附件不允许修改 删除 新增版本
@@ -91,6 +100,15 @@ InstanceAttachmentTemplate.helpers = {
 		// 已经结束的单子不能改附件
 		if (ins.state == "completed") {
 			return false
+		}
+
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
 		}
 
 		if (InstanceManager.isCC(ins)) {

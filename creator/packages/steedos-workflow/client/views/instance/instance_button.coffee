@@ -413,7 +413,23 @@ instanceButtonHelpers =
 			return true
 
 	enabled_related: ->
+		ins = WorkflowManager.getInstance();
+		if !ins
+			return false
+		# 已经结束的单子不能改附件
+		if ins.state == "completed"
+			return false
+
 		if Session.get("box") == "draft" || Session.get("box") == 'inbox'
+
+			# cc的单子，只有在当前步骤才能修改附件
+			approve = InstanceManager.getCurrentApprove();
+			if approve && approve.type == "cc"
+				currentTrace = InstanceManager.getCurrentTrace();
+				if currentTrace && currentTrace._id != approve.trace
+					return false;
+			
+
 			current_step = InstanceManager.getCurrentStep()
 			if current_step
 				if (current_step.can_edit_main_attach || current_step.can_edit_normal_attach == true || current_step.can_edit_normal_attach == undefined)

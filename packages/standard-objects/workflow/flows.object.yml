@@ -483,6 +483,10 @@ fields:
     inlineHelpText: Allow the applicant to specify the flow steps and step handlers when submitting the application form. You need to modify the properties on the step through the Workflow Designer.
     type: boolean
     group: Others
+  forbid_initiate_instance:
+    label: 审批王端禁止发起流程
+    type: boolean
+    group: Others
 list_views:
   all:
     label: All Workflows

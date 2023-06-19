@@ -1,6 +1,6 @@
 Tracker.autorun(function(e) {
     let zoom = "normal";
-    let space = db.space_users?.findOne();
+    let space = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() });
     if(space?.zoom){
         zoom = space.zoom;
     }

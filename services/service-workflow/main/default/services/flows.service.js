@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-11 17:02:38
+ * @LastEditTime: 2023-06-19 15:45:20
  * @Description:
  */
 const objectql = require("@steedos/objectql");
@@ -140,6 +140,7 @@ module.exports = {
             const filters = [
               ["category", "=", category._id],
               ["state", "=", "enabled"],
+              ["forbid_initiate_instance", "!=", true]
             ];
             if (keywordsFilter) {
               filters.push(keywordsFilter)
