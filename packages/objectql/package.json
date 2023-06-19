@@ -1,7 +1,7 @@
 {
   "name": "@steedos/objectql",
   "private": false,
-  "version": "2.2.72",
+  "version": "2.2.73",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -16,16 +16,16 @@
   "dependencies": {
     "@salesforce/kit": "^1.0.4",
     "@salesforce/ts-types": "^1.1.1",
-    "@steedos/cachers": "2.2.72",
-    "@steedos/filters": "2.2.72",
-    "@steedos/formula": "2.2.72",
-    "@steedos/i18n": "2.2.72",
-    "@steedos/metadata-core": "2.2.72",
-    "@steedos/odata-v4-mongodb": "2.2.72",
-    "@steedos/odata-v4-sql": "2.2.72",
-    "@steedos/odata-v4-typeorm": "2.2.72",
-    "@steedos/schemas": "2.2.72",
-    "@steedos/standard-objects": "2.2.72",
+    "@steedos/cachers": "2.2.73",
+    "@steedos/filters": "2.2.73",
+    "@steedos/formula": "2.2.73",
+    "@steedos/i18n": "2.2.73",
+    "@steedos/metadata-core": "2.2.73",
+    "@steedos/odata-v4-mongodb": "2.2.73",
+    "@steedos/odata-v4-sql": "2.2.73",
+    "@steedos/odata-v4-typeorm": "2.2.73",
+    "@steedos/schemas": "2.2.73",
+    "@steedos/standard-objects": "2.2.73",
     "app-root-path": "^2.2.1",
     "body-parser": "^1.18.1",
     "bunyan-sfdx-no-dtrace": "^1.8.2",
@@ -50,7 +50,7 @@
     "underscore": "1.5.2"
   },
   "devDependencies": {
-    "@steedos/meteor-bundle-runner": "2.2.72",
+    "@steedos/meteor-bundle-runner": "2.2.73",
     "@types/express": "^4.16.1",
     "@types/node": "^11.10.4",
     "@types/underscore": "^1.8.13",
@@ -60,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9d9d2f8ba1c915d0789f30bc06c549ac69375185"
+  "gitHead": "d5ea4eb9a8d9f53e36dd52bd8023643621077be9"
 }
