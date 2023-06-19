@@ -24,7 +24,7 @@ fields:
     label: Type
     type: select
     firstOption: false
-    options: Profile:profile,Permission set:permission_set
+    options: Permission set:permission_set
     defaultValue: permission_set
   assigned_apps:
     label: Assigned Apps
