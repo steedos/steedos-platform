@@ -84,7 +84,7 @@ email:
 cron:
   instancerecordqueue_interval: 10000
   mailqueue_interval: 10000
-  # push_interval: 1000
+  push_interval: ${STEEDOS_CRON_PUSH_INTERVAL}
   webhookqueue_interval: 1000
   build_index: "0 0 * * * *"
 instances_stat:
@@ -100,7 +100,8 @@ push:
     keyData: ${STEEDOS_PUSH_APN_DATA}
     certData: ${STEEDOS_PUSH_APN_DATA}
   gcm:
-    apiKey: xxx
+    apiKey: ${STEEDOS_GCM_APIKEY}
+    projectNumber: ${STEEDOS_GCM_PROJECT_NUMBER}
   xinge:
     accessId: ${STEEDOS_PUSH_XINGE_ACCESSID}
     secretKey: ${STEEDOS_PUSH_XINGE_SECRETKEY}

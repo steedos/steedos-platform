@@ -84,7 +84,8 @@
     "temp": "^0.7.0",
     "unpipe": "1.0.0",
     "url-search-params-polyfill": "^7.0.0",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.19",
+    "xiaomi-push": "^1.0.0"
   },
   "gitHead": "9d9d2f8ba1c915d0789f30bc06c549ac69375185"
 }
