@@ -42,6 +42,14 @@ fields:
     label: 旧版图标
     help: 
     description: 
+  showSidebar:
+    label: 显示左侧导航
+    help: 
+    description: 
+  enable_nav_schema: 
+    label: 启用自定义导航
+    help: 
+    description: 
   sort:
     label: 排序
     help: 

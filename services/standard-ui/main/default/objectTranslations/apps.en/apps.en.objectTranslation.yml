@@ -42,6 +42,14 @@ fields:
     label: Icon
     help: 
     description: 
+  showSidebar:
+    label: Show Left Navigation
+    help: 
+    description: 
+  enable_nav_schema: 
+    label: Enable Custom Navigation
+    help: 
+    description: 
   sort:
     label: Sort Number
     help: 

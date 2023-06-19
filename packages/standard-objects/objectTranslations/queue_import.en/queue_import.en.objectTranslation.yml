@@ -1,5 +1,5 @@
 name: queue_import
-label: Data Import Queue
+label: Data Import
 description: 
 fields:
   description:

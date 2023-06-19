@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-06 16:57:42
+ * @LastEditTime: 2023-06-16 13:43:36
  * @Description: 
  */
 "use strict";
@@ -21,7 +21,7 @@ async function addSpaceAdmin(spaceId, userId) {
     if (space) {
         let admins = space.admins || [];
         admins.push(userId);
-        await spaceObj.directUpdate(space._id, {
+        await spaceObj.update(space._id, {
             admins: _.uniq(admins)
         })
     }
@@ -33,7 +33,7 @@ async function removeSpaceAdmin(spaceId, userId) {
     if (space) {
         let admins = space.admins || [];
         admins = _.difference(admins, [userId]);
-        await spaceObj.directUpdate(space._id, {
+        await spaceObj.update(space._id, {
             admins: _.uniq(admins)
         })
     }

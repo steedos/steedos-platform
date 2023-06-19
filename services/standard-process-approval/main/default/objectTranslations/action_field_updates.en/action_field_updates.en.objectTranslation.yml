@@ -3,11 +3,11 @@ label: Field Updates
 description: 
 fields:
   name:
-    label: 
+    label: API Name
     help: 
     description: 
   label:
-    label: 
+    label: Name
     help: 
     description: 
   object_name:
@@ -23,19 +23,30 @@ fields:
     help: 
     description: 
   operation:
-    label: 
+    label: New Field Type
     help: 
+    options:
+      - label: null
+        value: 'null'
+      - label: Set New Value Using Formula
+        value: formula
+      - label: Specific Value
+        value: literal
     description: 
   formula:
-    label: 
+    label: Formula
     help: 
     description: 
   literal_value:
     label: Literal value
     help: 
     description: 
+  undirect:
+    label: Trigger on Object, Workflow Rule, Field Validation Rule
+    help: 
+    description: 
   notify_assignee:
-    label: 通知被分配人(仅修改拥有者时由此选项)
+    label: Notify Assignee (Only when owner is changed from this option)
     help: 
     description: 
   description:

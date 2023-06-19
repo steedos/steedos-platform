@@ -1,0 +1,6 @@
+description: 
+fields:
+  user_provider:
+    label: 身份提供者
+    help: 
+    description: 
