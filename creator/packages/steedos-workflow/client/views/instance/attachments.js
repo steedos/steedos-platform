@@ -60,6 +60,15 @@ Template.instance_attachment.helpers({
 			return false
 		}
 
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
+
 		var isDraftOrInbox = false;
 		var isFlowEnable = false;
 		var isHistoryLenthZero = false;
@@ -159,6 +168,15 @@ Template.instance_attachment.helpers({
 			return false
 		}
 
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
+
 		var locked = false;
 		if (locked_by) locked = true;
 		if ((Steedos.isIE() || Steedos.isNode()) && (Session.get('box') == 'inbox' || Session.get('box') == 'draft') && !Steedos.isMobile() && !Steedos.isMac() && Steedos.isOfficeFile(filename) && !locked) {
@@ -212,6 +230,15 @@ Template.instance_attachment.helpers({
 
 		if (current && current.metadata && current.metadata.locked_by)
 			return false
+
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
 
 		if (Session.get("box") == "draft" || Session.get("box") == "inbox") {
 			if (InstanceManager.isCC(ins)) {
@@ -494,6 +521,14 @@ Template.ins_attach_version_modal.helpers({
 		if (current && current.metadata && current.metadata.locked_by)
 			return false
 
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
 		if (Session.get("box") == "draft" || Session.get("box") == "inbox") {
 			if (InstanceManager.isCC(ins)) {
 				var step = InstanceManager.getCCStep();
@@ -537,6 +572,15 @@ Template.ins_attach_version_modal.helpers({
 		// 分发后的 正文、附件，不可以编辑/删除，也不让上传新的正文/附件
 		if (ins.distribute_from_instances && ins.distribute_from_instances.includes(this.metadata.instance))
 			return false
+
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
 
 		var isDraftOrInbox = false;
 		var isFlowEnable = false;
@@ -622,6 +666,15 @@ Template.ins_attach_version_modal.helpers({
 		// 分发后的 正文、附件，不可以编辑/删除，也不让上传新的正文/附件版本
 		if (ins.distribute_from_instances && ins.distribute_from_instances.includes(this.metadata.instance))
 			return false
+		
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
 
 		var locked = false;
 		if (locked_by) locked = true;
@@ -667,6 +720,15 @@ Template.ins_attach_version_modal.helpers({
 		if (ins.distribute_from_instances && ins.distribute_from_instances.includes(this.metadata.instance))
 			return false
 
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
+
 		var locked = false;
 		if (locked_by) locked = true;
 		if ((Steedos.isIE() || Steedos.isNode()) && (Session.get('box') == 'inbox' || Session.get('box') == 'draft') && !Steedos.isMobile() && !Steedos.isMac() && Steedos.isOfficeFile(filename) && !locked) {
@@ -697,6 +759,15 @@ Template.ins_attach_version_modal.helpers({
 		// 分发后的 正文、附件，不可以编辑/删除，也不让上传新的正文/附件版本，也不允许转PDF
 		if (ins.distribute_from_instances && ins.distribute_from_instances.includes(this.metadata.instance))
 			return false
+
+		// cc的单子，只有在当前步骤才能修改附件
+		var approve = InstanceManager.getCurrentApprove();
+		if (approve && approve.type == "cc") {
+			var currentTrace = InstanceManager.getCurrentTrace();
+			if(currentTrace && currentTrace._id != approve.trace){
+				return false;
+			}
+		}
 
 		var locked = false;
 		if (locked_by) locked = true;
