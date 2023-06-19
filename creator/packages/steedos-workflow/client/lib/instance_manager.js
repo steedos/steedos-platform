@@ -664,6 +664,15 @@ InstanceManager.getCurrentStep = function () {
 	return WorkflowManager.getInstanceStep(currentStepId);
 }
 
+InstanceManager.getCurrentTrace = function () {
+	var instance = WorkflowManager.getInstance();
+
+	if (!instance || !instance.traces)
+		return;
+
+	return instance.traces[instance.traces.length - 1];
+}
+
 InstanceManager.getStartStep = function () {
 
 	var instance = WorkflowManager.getInstance();
