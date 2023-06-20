@@ -13,7 +13,8 @@
     "graphql-type-json": "^0.3.2",
     "moleculer": "^0.14.25",
     "moleculer-apollo-server": "^0.3.6",
-    "moleculer-web": "^0.10.4"
+    "moleculer-web": "^0.10.4",
+    "validator": "^13.6.0"
   },
   "private": false,
   "publishConfig": {
