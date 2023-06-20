@@ -228,7 +228,7 @@ async function converterLookup(
   if (field.multiple) {
     jsonObj[field_name] = [];
     if (dataCell) {
-      cellContents = dataCell.split(";");
+      cellContents = dataCell.toString().split(";");
     }
   } else {
     jsonObj[field_name] = null;
