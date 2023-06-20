@@ -1,7 +1,7 @@
 name: cms_categories
 icon: folder
 label: Category
-hidden: true
+hidden: false
 fields:
   name:
     label: Name
