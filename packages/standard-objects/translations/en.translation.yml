@@ -5,6 +5,17 @@ CustomApplications:
   admin:
     name: Setup
     description: Manage company , users , permissions and so on .
+    groups: 
+      personal_settings: Personal Settings
+      company_settings: Company Settings
+      apps: Apps
+      object_settings: Object Settings
+      user_interface: User Interface
+      statistical_analysis: Statistical Analysis
+      development: Development
+      process_automation: Process Automation
+      approval_workflow: Approval Workflow
+      advanced_settings: Advanced Settings
 CustomLabels:
   app_object_manager_name: app_object_manager_name
   menu_account: My Account
@@ -64,3 +75,44 @@ CustomLabels:
   menu_webhooks: 
   menu_process_delegation_rules: 
   menu_roles: 
+CustomTabs:
+  admin_process_delegation_rules: Process Delegations
+  admin_space_info: Company
+  admin_organizations: Departments
+  admin_company: Divisions
+  admin_space_users: Users
+  admin_permission_set: Profiles & Permission Sets
+  admin_license: 
+  admin_apps: Apps
+  admin_steedos_packages: Packages
+  admin_objects: Objects
+  admin_datasources: External Data Sources
+  admin_queue_import: Data Import
+  admin_pages: Mini Pages
+  admin_tabs: Tabs
+  admin_queries: Queries
+  admin_charts: Charts
+  admin_stimulsoft_reports: Reports
+  admin_developer_triggers: Triggers
+  admin_developer_graphql: GraphQL IDE
+  admin_process_definition: Approval Processes
+  admin_workflow_rule: Workflow Rules
+  admin_object_validation_rules: Object Validation Rules
+  admin_action_field_updates: Field Updates
+  admin_workflow_notifications: Workflow Notifications
+  admin_workflow_outbound_messages: Outbound Messages
+  admin_roles: Roles
+  admin_flow_roles: Workflow Roles
+  admin_flows: Workflows
+  admin_categories: Workflow Categories
+  admin_instance_number_rules: Instance Number Rules
+  admin_space_user_signs: User Sign
+  admin_instances_statistic: Efficiency Statistics
+  admin_webhooks: Webhooks
+  admin_object_workflows: Object Synchronization Rules
+  admin_sessions: Sessions
+  admin_audit_records: Audit Records
+  admin_autonumber: Auto Number
+  admin_holidays: Holidays
+  admin_business_hours: Business Hours
+  admin_api_keys: API Keys

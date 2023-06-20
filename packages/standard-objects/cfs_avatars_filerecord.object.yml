@@ -38,7 +38,7 @@ fields:
     label: Parent 
     type: master_detail
     reference_to: cms_files
-    hidden: true
+    visible_on: "{{false}}"
   uploadedAt: 
     label: Upload Time
     type: "datetime"

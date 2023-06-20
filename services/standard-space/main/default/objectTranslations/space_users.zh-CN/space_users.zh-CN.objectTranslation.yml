@@ -87,6 +87,17 @@ fields:
     label: 排序号
     help: 
     description: 
+  zoom:
+    label: 字体大小
+    help: 
+    options:
+      - label: 标准
+        value: normal
+      - label: 大字体
+        value: large
+      - label: 超大字体
+        value: extra-large
+    description: 
   email_notification:
     label: 接收邮件通知
     help: 
@@ -147,6 +158,10 @@ actions:
     label: 锁定
   unlock:
     label: 解除锁定
+  verify_email:
+    label: 验证邮箱
+  verify_mobile:
+    label: 验证手机
 CustomLabels:
   space_users_field_profile_def_options_admin: 管理员
   space_users_field_profile_def_options_user: 员工

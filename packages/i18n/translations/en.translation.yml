@@ -1086,6 +1086,18 @@ CustomLabels:
   objects_enable_share: 允许共享记录
   objects_enable_instances: 允许查看申请单
   objects_description: 描述
+  objects_amis_details: Details
+  objects_amis_field: Fields
+  objects_amis_list_view: List Views
+  objects_amis_action_button: Buttons
+  objects_amis_object_page: Mine Pages
+  objects_amis_page_layout: Page Layouts
+  objects_amis_object_permission: Permissions
+  objects_amis_trigger: Triggers
+  objects_amis_process_mapping: Process Mappings
+  objects_amis_validation_rule: Validation Rules
+  objects_amis_limitation_rule: Limitation Rules
+  objects_amis_sharing_rule: Sharing Rules
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称
@@ -1765,6 +1777,12 @@ CustomLabels:
   workflow_import_flow_error: Import failed
   workflow_import_flow_info: Please select the workflow you want to import
   flows: Workflow
+  flows_tabs_detail: Details
+  flows_tabs_permission: Permissions
+  flows_tabs_step: Steps
+  flows_tabs_field: Fields
+  flows_tabs_binding_object: Binding Object
+  flows_tabs_body_template: Body Template
   instance_readonly_view_url_copy: Copy Link
   instance_readonly_view_url_copy_success: Tableau Web Data Connector copy successful
   instance_related_instances: Related requests
@@ -1961,3 +1979,39 @@ CustomLabels:
   base_error_start_end_date: The start time must be earlier than the end time
   instance_approve_handler_work_phone: Handler Phone
   instance_approve_handler_mobile: Handler Mobile
+  steedos_packages:
+    install:
+      install_package_from_url: Install
+      package_name: Package Name
+      version_installation: Version installation
+      url_installation: URL Installation
+      url: Package URL
+      version_number: Version Number
+      version_number_placeholder: If not filled out, then install the latest official version
+      authentication_information: Authentication information
+      initialization_failure: Initialization failure
+      installation_success: Installation Success
+      installation_failure: Installation Failure
+    upgrade:
+      upgrade_package: Upgrade
+      select_version: Please select a version
+      version_number: Version Number
+      label: Label
+      upgrade_successful: Upgrade Successful
+      installation_failed: Installation Failed
+      cancel: Cancel
+      confirm: Confirm
+      second_confirm: Are you sure you want to upgrade?
+    uninstall:
+      title: Uninstall
+      text: Are you sure you want to uninstall 
+      toast_info: Uninstalling, please wait...
+      toastr_success: Uninstalled successfully
+    reload:
+      toastr_info: Reloading, please wait...
+      toastr_success: Reloaded successfully
+    disable:
+      title: Disable
+      text: Are you sure you want to disable  
+      toast_info: Disabling, please wait...
+      toastr_success: Disabled successfully

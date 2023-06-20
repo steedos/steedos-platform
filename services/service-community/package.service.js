@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-07-20 21:31:37
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-09 17:31:33
+ * @LastEditTime: 2023-06-20 15:28:54
  * @Description: 
  */
 "use strict";
@@ -73,6 +73,9 @@ module.exports = {
 	 */
 	async started(ctx) {
 		this.broker.createService(require("@steedos/service-objectql"));
+
+		// rest api
+		this.broker.createService(require("@steedos/service-rest"));
 
 		//ApiGateway
 		this.broker.createService(require('@steedos/service-api'));

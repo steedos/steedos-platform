@@ -252,6 +252,10 @@ fields:
     label: Field Names
     help:
     description:
+  forbid_initiate_instance:
+    label: Forbid initiate instance
+    help:
+    description:
 groups:
   template: Template
   synchronization: Synchronization

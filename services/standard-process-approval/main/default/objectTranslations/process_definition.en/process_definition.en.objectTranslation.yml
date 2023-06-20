@@ -3,15 +3,15 @@ label: Approval Processes
 description: 
 fields:
   name:
-    label: 
+    label: API Name
     help: 
     description: 
   label:
-    label: 
+    label: Name
     help: 
     description: 
   object_name:
-    label: 
+    label: Object
     help: 
     description: 
   description:
@@ -19,7 +19,7 @@ fields:
     help: 
     description: 
   order:
-    label: 
+    label: Number
     help: 
     description: 
   active:

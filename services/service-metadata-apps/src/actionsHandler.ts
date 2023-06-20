@@ -1,6 +1,6 @@
 import { getServiceAppConfig, METADATA_TYPE, refreshApp } from ".";
 import _ = require("lodash");
-import { translationApp, translationObjectLabel } from '@steedos/i18n';
+import { translationApp, translationObjectLabel, translationTabLabel } from '@steedos/i18n';
 import { getAssignedApps, getObject as _getObject, absoluteUrl } from "@steedos/objectql";
 
 function cacherKey(appApiName: string): string {
@@ -175,10 +175,13 @@ async function getHiddenTabNames(ctx) {
     return hiddenTabNames
 }
 
-async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props = {}) {
+async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props:any = {}) {
     try {
         // const objectsConfigs = context.objects;
         const tab = await getTab(ctx, tabApiName);
+        if(props.group){
+            props.group = _.find(menu.tab_groups, { id: props.group }).group_name;
+        }
         if (tab) {
             const isMobileChecked = checkTabMobile(tab, mobile)
             if (!isMobileChecked) {
@@ -227,6 +230,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                     }
                 }
                 if (tab.type === 'url') {
+                    tab.label = translationTabLabel(userSession.language, tab.name, tab.label || tab.name);
                     let urlMenu: any = {
                         id: `${tab.name}`,
                         type: tab.type,
@@ -243,6 +247,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                     )
                 }
                 if (tab.type === 'page') {
+                    tab.label = translationTabLabel(userSession.language, tab.name, tab.label || tab.name);
                     menu.children.push(
                         {
                             id: `${tab.name}`,

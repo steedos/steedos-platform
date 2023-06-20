@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-26 16:56:54
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-14 10:49:23
+ * @LastEditTime: 2023-06-18 12:55:43
  * @Description: 复制已有简档来创建新简档
  * 使用mongodb的事务处理，保证数据的一致性
  * 复制对象包括：简档、对象权限、字段权限、选项卡权限
@@ -53,7 +53,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             throw new Error("permission_set is not profile type");
         }
 
-        const { name:originalPermissionSetName } = originalPermissionSet;
+        const { name: originalPermissionSetName } = originalPermissionSet;
 
         // API名称不能重复
         const existPermissionSetCount = await psObj.count({
@@ -83,7 +83,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         const permissionSetColl = db.collection('permission_set');
 
         // Start a transaction
-        session.startTransaction({ readConcern: { level: "local" }, writeConcern: { w: "majority" } });
+        session.startTransaction({ readConcern: { level: "majority" }, writeConcern: { w: "majority" }, readPreference: 'primary' });
 
         let newPermissionSet = null;
 
@@ -113,7 +113,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
             };
 
             delete newPermissionSetData.record_permissions;
-            const insertPermissionSetResult = await permissionSetColl.insertOne(newPermissionSetData);
+            const insertPermissionSetResult = await permissionSetColl.insertOne(newPermissionSetData, { session });
             newPermissionSet = insertPermissionSetResult.ops[0];
             // console.log('newPermissionSet', newPermissionSet)
 

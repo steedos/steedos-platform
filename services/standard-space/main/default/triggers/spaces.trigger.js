@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-03 11:19:39
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-01-13 11:55:59
+ * @LastEditors: sunhaolin@hotoa.com
+ * @LastEditTime: 2023-06-16 13:43:44
  * @Description: 
  */
 "use strict";
@@ -41,7 +41,7 @@ module.exports = {
     beforeUpdate: async function () {
         const { doc, userId, id } = this
         const spaceDoc = await objectql.getObject('spaces').findOne(id)
-        if (spaceDoc.owner !== userId) {
+        if (userId && (spaceDoc.owner !== userId)) {
             throw new Error("spaces_error_space_owner_only");
         }
         if (doc.owner) {

@@ -87,6 +87,17 @@ fields:
     label: Sort Number
     help: 
     description: 
+  zoom:
+    label: Font Size
+    help: 
+    options:
+      - label: Normal
+        value: normal
+      - label: Large
+        value: large
+      - label: Extra Large
+        value: extra-large
+    description: 
   email_notification:
     label: Recieve Email Notifications
     help: 
@@ -147,6 +158,10 @@ actions:
     label: Lockout
   unlock:
     label: Unlock
+  verify_email:
+    label: Verify Email
+  verify_mobile:
+    label: Verify Mobile
 CustomLabels:
   space_users_field_profile_def_options_admin: Administrator
   space_users_field_profile_def_options_user: Employee

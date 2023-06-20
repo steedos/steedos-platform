@@ -12,7 +12,7 @@
             "type": "tabs",
             "tabs": [
                 {
-                    "title": "详情",
+                    "title": "${'objects_amis_details' | t}",
                     "body": [
                         {
                             "type": "steedos-object-form",
@@ -27,7 +27,7 @@
                     "id": "u:b2fbc13aabb8"
                 },
                 {
-                    "title": "对象字段",
+                    "title": "${'objects_amis_field' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -42,7 +42,7 @@
                     "id": "u:f1a52545b642"
                 },
                 {
-                    "title": "列表视图",
+                    "title": "${'objects_amis_list_view' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -56,7 +56,7 @@
                     "id": "u:df900c5f2119"
                 },
                 {
-                    "title": "操作按钮",
+                    "title": "${'objects_amis_action_button' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -70,7 +70,7 @@
                     "id": "u:d75b105f6d02"
                 },
                 {
-                    "title": "对象页面",
+                    "title": "${'objects_amis_object_page' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -85,7 +85,7 @@
                     "id": "u:d75b105f6d042"
                 },
                 {
-                    "title": "页面布局",
+                    "title": "${'objects_amis_page_layout' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -99,7 +99,7 @@
                     "id": "u:ee4ab13a92e6"
                 },
                 {
-                    "title": "对象权限",
+                    "title": "${'objects_amis_object_permission' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -112,7 +112,7 @@
                     ]
                 },
                 {
-                    "title": "触发器",
+                    "title": "${'objects_amis_trigger' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -125,7 +125,7 @@
                     ]
                 },
                 {
-                    "title": "流程映射",
+                    "title": "${'objects_amis_process_mapping' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -139,7 +139,7 @@
                     "id": "u:cbc13e1a7033"
                 },
                 {
-                    "title": "验证规则",
+                    "title": "${'objects_amis_validation_rule' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -151,7 +151,7 @@
                     ]
                 },
                 {
-                    "title": "限制规则",
+                    "title": "${'objects_amis_limitation_rule' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
@@ -164,7 +164,7 @@
                     ]
                 },
                 {
-                    "title": "共享规则",
+                    "title": "${'objects_amis_sharing_rule' | t}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",

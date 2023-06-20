@@ -26,6 +26,14 @@ fields:
     label: 有效
     help: 
     description: 
+  is_phone:
+    label: 手机
+    help: 
+    description: 
+  is_tablet:
+    label: 平板电脑
+    help: 
+    description: 
   client_id:
     label: Client ID
     help: 

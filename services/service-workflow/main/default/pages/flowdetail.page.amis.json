@@ -15,7 +15,7 @@
 					"type": "tabs",
 					"tabs": [
 						{
-							"title": "详情",
+							"title": "${'flows_tabs_detail'|t}",
 							"body": [
 								{
 									"type": "steedos-object-form",
@@ -63,7 +63,7 @@
 							"unmountOnExit": true
 						},
 						{
-							"title": "权限",
+							"title": "${'flows_tabs_permission'|t}",
 							"body": [
 								{
 									"type": "steedos-object-form",
@@ -89,7 +89,7 @@
 							"unmountOnExit": true
 						},
 						{
-							"title": "步骤",
+							"title": "${'flows_tabs_step'|t}",
 							"body": [
 								{
 									"type": "steedos-object-form",
@@ -120,7 +120,7 @@
 							"unmountOnExit": true
 						},
 						{
-							"title": "字段",
+							"title": "${'flows_tabs_field'|t}",
 							"body": [
 								{
 									"type": "steedos-object-form",
@@ -169,7 +169,7 @@
 							"id": "u:827750209c5d"
 						},
 						{
-							"title": "绑定对象",
+							"title": "${'flows_tabs_binding_object'|t}",
 							"body": [
 								{
 									"type": "steedos-object-form",
@@ -197,7 +197,7 @@
 							"visibleOn": "${!!object_name}"
 						},
 						{
-							"title": "正文模版",
+							"title": "${'flows_tabs_body_template'|t}",
 							"body": [
 								{
 									"type": "steedos-object-related-lists",

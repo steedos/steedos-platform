@@ -1,0 +1,3 @@
+name: verify_email
+label: Verify Email
+'on': record_more

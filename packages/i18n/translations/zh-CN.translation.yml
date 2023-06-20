@@ -1001,6 +1001,18 @@ CustomLabels:
   objects_enable_share: 允许共享记录
   objects_enable_instances: 允许查看申请单
   objects_description: 描述
+  objects_amis_details: 详情
+  objects_amis_field: 对象字段
+  objects_amis_list_view: 列表视图
+  objects_amis_action_button: 操作按钮
+  objects_amis_object_page: 对象页面
+  objects_amis_page_layout: 页面布局
+  objects_amis_object_permission: 对象权限
+  objects_amis_trigger: 触发器
+  objects_amis_process_mapping: 流程映射
+  objects_amis_validation_rule: 验证规则
+  objects_amis_limitation_rule: 限制规则
+  objects_amis_sharing_rule: 共享规则
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称
@@ -1622,6 +1634,12 @@ CustomLabels:
   workflow_import_flow_error: 导入失败
   workflow_import_flow_info: 请选择需要导入的流程
   flows: 流程
+  flows_tabs_detail: 详情
+  flows_tabs_permission: 权限
+  flows_tabs_step: 步骤
+  flows_tabs_field: 字段
+  flows_tabs_binding_object: 绑定对象
+  flows_tabs_body_template: 正文模版
   instance_readonly_view_url_copy: 复制链接
   instance_readonly_view_url_copy_success: Tableau Web 数据连接器已复制
   instance_related_instances: 相关文件
@@ -1809,3 +1827,39 @@ CustomLabels:
   base_error_start_end_date: 开始时间必须小于结束时间
   instance_approve_handler_work_phone: 处理人电话
   instance_approve_handler_mobile: 处理人手机
+  steedos_packages:
+    install:
+      install_package_from_url: 手动安装软件包
+      package_name: 软件包名称
+      version_installation: 版本号安装
+      url_installation: 软件包地址安装
+      url: 软件包URL
+      version_number: 版本号
+      version_number_placeholder: 如未填写, 则安装最新正式版
+      authentication_information: 认证信息
+      initialization_failure: 初始化失败
+      installation_success: 安装成功
+      installation_failure: 安装失败
+    upgrade:
+      upgrade_package: 升级
+      select_version: 请选择版本
+      version_number: 版本号
+      label: 标签
+      upgrade_successful: 升级成功
+      installation_failed: 安装失败
+      cancel: 取消
+      confirm: 确认
+      second_confirm: 确定要升级吗？
+    uninstall:
+      title: 卸载
+      text: 确定要卸载
+      toast_info: 卸载中，请稍后...
+      toastr_success: 已卸载
+    reload:
+      toastr_info: 重新加载中，请稍后...
+      toastr_success: 已重新加载
+  disable:
+      title: 停用
+      text: 确定要停用 
+      toast_info: 停用中，请稍后..
+      toastr_success: 已停用

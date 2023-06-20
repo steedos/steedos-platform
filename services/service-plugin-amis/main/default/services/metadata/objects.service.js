@@ -19,6 +19,9 @@ const ExcludeObjectNames = [
     'cms_posts',
 ];
 
+const ExcludeFieldNames = [
+    'instances'
+]
 
 module.exports = {
     name: "amis-metadata-objects",
@@ -388,6 +391,8 @@ module.exports = {
 
                 const fieldsArr = [];
                 _.each(objectConfig.fields , (field, field_name)=>{
+                    if (field.hidden) return;
+                    if (ExcludeFieldNames.includes(field_name)) return;
                     if(!_.has(field, "name")){
                         field.name = field_name
                     }

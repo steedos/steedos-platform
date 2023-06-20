@@ -15,6 +15,8 @@ const _ = require('lodash');
 const ServiceObjectGraphql = require('@steedos/service-object-graphql')
 const open = require('open');
 
+const validator = require('validator');
+const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true)
 
 const mixinOptions = {
 
@@ -76,12 +78,12 @@ const mixinOptions = {
 			apiKey: process.env.APOLLO_ENGINE_KEY
 		},
 		subscriptions: false,
-		playground: {
+		playground: enablePlayground ? {
 			settings: {
 				'request.credentials': 'same-origin'
 			}
-		},
-		introspection: true
+		} : false,
+		introspection: enablePlayground
 	}
 }
 
@@ -209,6 +211,89 @@ module.exports = {
 					res.setHeader("Content-Type", "application/json; charset=utf-8");
 					res.writeHead(err.code || 500);
 					res.end(JSON.stringify({ error: err.message, detail: err }));
+				}
+			},
+			{
+				path: "/api/v1",
+
+				whitelist: [
+					"rest.*",
+				],
+
+				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
+				use: [],
+
+				// Enable/disable parameter merging method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Disable-merging
+				mergeParams: true,
+
+				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
+				authentication: true,
+
+				// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
+				authorization: true,
+
+				// The auto-alias feature allows you to declare your route alias directly in your services.
+				// The gateway will dynamically build the full routes from service schema.
+				autoAliases: true,
+
+				aliases: {
+
+				},
+
+				/** 
+				 * Before call hook. You can check the request.
+				 * @param {Context} ctx 
+				 * @param {Object} route 
+				 * @param {IncomingRequest} req 
+				 * @param {ServerResponse} res 
+				 * @param {Object} data
+				 * 
+				onBeforeCall(ctx, route, req, res) {
+					// Set request headers to context meta
+					ctx.meta.userAgent = req.headers["user-agent"];
+				}, */
+
+				/**
+				 * After call hook. You can modify the data.
+				 * @param {Context} ctx 
+				 * @param {Object} route 
+				 * @param {IncomingRequest} req 
+				 * @param {ServerResponse} res 
+				 * @param {Object} data
+				onAfterCall(ctx, route, req, res, data) {
+					// Async function which return with Promise
+					return doSomething(ctx, res, data);
+				}, */
+
+				// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
+				callingOptions: {},
+
+				bodyParsers: {
+					json: {
+						strict: false,
+						limit: "10MB"
+					},
+					urlencoded: {
+						extended: true,
+						limit: "10MB"
+					}
+				},
+
+				// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
+				mappingPolicy: "all", // Available values: "all", "restrict"
+
+				// Enable/disable logging
+				logging: false,
+
+				// Route error handler
+				onError(req, res, err) {
+					res.setHeader("Content-Type", "application/json; charset=utf-8");
+					res.writeHead(err.code || 500);
+					res.end(JSON.stringify({
+						"status": -1,
+						"msg": err.message,
+						"data": {}
+					}));
 				}
 			}
 		],

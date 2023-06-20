@@ -10,6 +10,7 @@
                     "persistData": false,
                     "promptPageLeave": true,
                     "name": "form_edit_${recordId}",
+                    "resetAfterSubmit": true,
                     "debug": false,
                     "title": "",
                     "api": {
