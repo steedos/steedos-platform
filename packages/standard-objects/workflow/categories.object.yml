@@ -9,10 +9,7 @@ fields:
     label: Name
     name: name
     searchable: true
-  sort_no:
-    label: Sort Number
-    type: number
-    name: sort_no
+    required: true
   app:
     label: Apps
     type: lookup
@@ -20,6 +17,11 @@ fields:
     reference_to_field: code
     name: app
     filterable: true
+    required: true
+  sort_no:
+    label: Sort Number
+    type: number
+    name: sort_no
 list_views:
   all:
     label: All Workflow Categories
