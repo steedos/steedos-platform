@@ -12,6 +12,9 @@ const {
 
 const _ = require('lodash');
 
+const validator = require('validator');
+const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true)
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * @typedef {import('http').IncomingMessage} IncomingRequest Incoming HTTP Request
@@ -82,7 +85,7 @@ module.exports = {
 					apiKey: process.env.APOLLO_ENGINE_KEY
 				},
 				subscriptions: false,
-				playground: process.env.NODE_ENV !== 'production' ? {
+				playground: enablePlayground ? {
 					settings: {
 						'request.credentials': 'same-origin'
 					}
