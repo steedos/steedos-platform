@@ -17,5 +17,5 @@ permissions:
     permission_set: organization_admin
   - permission: 'off'
     permission_set: workflow_admin
-type: url
-url: /app/admin/instance_number_rules/grid/all
+type: object
+object: instance_number_rules
