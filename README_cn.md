@@ -32,12 +32,12 @@
   - [x] 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 可视化页面设计引擎，替代 [Salesforce Lightning App Builder](https://help.salesforce.com/s/articleView?id=sf.lightning_app_builder_overview.htm&type=5)
   - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
   - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
-- **数据管理**：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
+- **管理业务数据**：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
   - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
   - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
   - [ ] [Metabase 数据分析引擎](https://github.com/metabase/metabase) ，替代 [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
-- **安全和权限控制**：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
+- **控制数据访问权限**：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
   - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
   - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
   - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
@@ -46,7 +46,7 @@
   - [x] 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
   - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
   - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
-- **流程自动化**：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
+- **自动化业务流程**：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
   - [x] 自动化操作 [文档](https://docs.steedos.cn/zh-CN/automation/automated-actions)
   - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
   - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
