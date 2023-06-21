@@ -36,6 +36,7 @@
   - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
   - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
+  - [ ] [metabase](https://github.com/metabase/metabase) 数据分析引擎
 - 安全和权限控制：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
   - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
   - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
@@ -50,11 +51,10 @@
   - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
   - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
   - [x] 审批王 [文档](https://docs.steedos.cn/zh-CN/automation/approval-king/)
-- 应用集成：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
+- 可视化应用集成：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
   - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 集成
   - [ ] [n8n](https://github.com/n8n-io/n8n) 集成
-  - [ ] [metabase](https://github.com/metabase/metabase) 集成
 
 ## 可视化设计微页面
 
