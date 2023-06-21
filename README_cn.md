@@ -26,12 +26,12 @@
 
 华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
 
-- 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
-  - [x] 微页面设计器 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
-  - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
-  - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
+- 可视化构建应用：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
   - [x] 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
   - [x] 选项卡 [文档](https://docs.steedos.cn/zh-CN/no-code/application/tab)
+  - [x] 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
+  - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
+  - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
 - 数据管理：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
   - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
@@ -46,7 +46,14 @@
   - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
   - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
 - 流程自动化：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
+  - [x] 自动化操作 [文档](https://docs.steedos.cn/zh-CN/automation/automated-actions)
+  - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
+  - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
+  - [x] 审批王 [文档](https://docs.steedos.cn/zh-CN/automation/approval-king/)
 - 应用集成：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
+  - [x] Node-RED 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
+  - [ ] ToolJet 集成
+  - [ ] n8n 集成
 
 ## 可视化设计微页面
 
