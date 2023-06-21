@@ -41,7 +41,6 @@ export * from './config-register/tab';
 export * from './config-register/page';
 export * from './config-register/query'
 export * from './config-register/chart'
-export * from './metadata-register/app'
 
 export * from './metadata-register/tab';
 export * from './metadata-register/page';
