@@ -3,6 +3,9 @@ import _ = require("lodash");
 import { translationApp, translationObjectLabel, translationTabLabel } from '@steedos/i18n';
 import { getAssignedApps, getObject as _getObject, absoluteUrl } from "@steedos/objectql";
 
+const cachers = require('@steedos/cachers');
+
+
 function cacherKey(appApiName: string): string {
     return `$steedos.#${METADATA_TYPE}.${appApiName}`
 }
@@ -82,7 +85,9 @@ async function getAllApps(ctx: any) {
 // }
 
 async function getAllTabs(ctx: any) {
-    return await ctx.broker.call('tabs.getAll');
+    const cache = cachers.getCacher('tabs');
+    return cache.values();
+    // return await ctx.broker.call('tabs.getAll');
 }
 
 async function getContext(ctx: any) {
@@ -97,7 +102,11 @@ async function getContext(ctx: any) {
 }
 
 async function getTab(ctx: any, tabApiName: string) {
-    const metadataConfig = await ctx.broker.call('tabs.get', { tabApiName });
+    // const metadataConfig = await ctx.broker.call('tabs.get', { tabApiName });
+    // return metadataConfig?.metadata;
+
+    const cache = cachers.getCacher('tabs');
+    const metadataConfig = cache.get(tabApiName)
     return metadataConfig?.metadata;
 }
 

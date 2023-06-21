@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-15 10:22:58
+ * @LastEditTime: 2023-06-21 12:07:00
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -22,6 +22,7 @@ module.exports = {
 	namespace: "steedos",
 	translationsChangeTimeoutId: null,
 	objectTranslationsChangeTimeoutId: null,
+	tabsChangeTimeoutId: null,
 	/**
 	 * Settings
 	 */
@@ -63,6 +64,16 @@ module.exports = {
 				// 代码定义的简档
 				cache.set(doc.name, doc);
 			}
+		},
+		loadTabs: async function (broker) {
+			const cache = cachers.getCacher('tabs');
+			broker.call('tabs.getAll').then((res) => {
+				for (const item of res) {
+					if(item?.metadata){
+						cache.set(item.metadata.name, item);
+					}
+				}
+			})
 		}
 	},
 
@@ -221,6 +232,17 @@ module.exports = {
 					this.profilesChangeTimeoutId = null;
 				}, 2000)
 			}
+		},
+		'tabs.change': {
+			async handler(ctx) {
+				if (this.tabsChangeTimeoutId) {
+					clearTimeout(this.tabsChangeTimeoutId)
+				}
+				this.tabsChangeTimeoutId = setTimeout(() => {
+					this.loadTabs(this.broker);
+					this.tabsChangeTimeoutId = null;
+				}, 2000)
+			}
 		}
 	},
 
@@ -251,5 +273,6 @@ module.exports = {
 		core.loadObjectTranslations();
 		this.loadActionTriggers(this.broker);
 		this.loadTriggers(this.broker);
+		this.loadTabs(this.broker);
 	},
 };

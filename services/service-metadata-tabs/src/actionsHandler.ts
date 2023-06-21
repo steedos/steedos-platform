@@ -17,7 +17,9 @@ async function addChildMap(ctx, apiName, data, meta){
 
 async function deleteChildMap(ctx, tabApiName, childTabApiName){
     if(tabApiName && childTabApiName){
-        return await ctx.broker.call('metadata.delete', {key: childCacherKey(tabApiName, childTabApiName)});
+        const result =  await ctx.broker.call('metadata.delete', {key: childCacherKey(tabApiName, childTabApiName)});
+        ctx.broker.broadcast(`tabs.change`);
+        return result;
     }
 }
 
@@ -27,7 +29,9 @@ async function getChildren(ctx, tabApiName){
 
 async function register(ctx, tabApiName, data, meta){
     await addChildMap(ctx, tabApiName, data, meta);
-    return await ctx.broker.call('metadata.add', {key: cacherKey(tabApiName), data: data}, {meta: meta});
+    const result = await ctx.broker.call('metadata.add', {key: cacherKey(tabApiName), data: data}, {meta: meta});
+    ctx.broker.broadcast(`tabs.change`);
+    return result;
 }
 
 export const ActionHandlers = {
@@ -95,6 +99,7 @@ export const ActionHandlers = {
                 const config = await refresh(ctx, metadataApiName);
                 if(!config){
                     await ctx.broker.call('metadata.delete', {key: cacherKey(metadataApiName)})
+                    ctx.broker.broadcast(`tabs.change`);
                 }else{
                     await register(ctx, metadataApiName, config, {});
                 }
