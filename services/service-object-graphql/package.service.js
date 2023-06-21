@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-13 17:57:34
+ * @LastEditTime: 2023-06-21 17:26:15
  * @Description: 
  */
 
@@ -22,6 +22,8 @@ const serviceObjectMixin = require('@steedos/service-object-mixin');
 const { QUERY_DOCS_TOP } = require('./lib/consts');
 
 const { Register } = require('@steedos/metadata-registrar')
+
+const _ = require('lodash');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -345,6 +347,19 @@ module.exports = {
         async generateObjGraphqlMap(graphqlServiceName) {
             const objGraphqlMap = {}
             const objectConfigs = await this.broker.call("objects.getAll");
+            const allRelationsInfo = await this.broker.call("objects.getAllRelationsInfo");
+            const getRelationsInfo = (objectName)=>{
+                const results0 = _.filter(allRelationsInfo.details, { 'objectName': objectName})
+                const results1 = _.filter(allRelationsInfo.masters, { 'objectName': objectName})
+                const results2 = _.filter(allRelationsInfo.lookup_details, { 'objectName': objectName})
+                return {
+                    details: _.compact(_.map(results0, 'key')),
+                    masters: _.compact(_.map(results1, 'key')),
+                    lookup_details: _.compact(_.map(results2, 'key')),
+                }
+            }
+
+
             for (const object of objectConfigs) {
                 try {
                     // console.log('===>object.metadata.name: ', object.metadata.name)
@@ -390,7 +405,7 @@ module.exports = {
                     */
                     const gMap = {}
 
-                    const typeAndResolves = await generateSettingsGraphql(objectConfig, graphqlServiceName)
+                    const typeAndResolves = generateSettingsGraphql(objectConfig, graphqlServiceName, {getRelationsInfo: getRelationsInfo})
 
                     gMap.type = typeAndResolves.type
                     gMap.resolvers = typeAndResolves.resolvers
