@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-28 15:53:33
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-21 17:06:24
  * @Description: 
  */
 
@@ -26,7 +26,7 @@ import {
 } from './utils'
 // import { getGraphqlServiceName } from "./utils";
 
-export async function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, graphqlServiceName: string) {
+export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, graphqlServiceName: string, ctx: any = {}) {
     let objectName = objectConfig.name;
     let fields = objectConfig.fields;
     const primaryFieldType = getPrimaryFieldType(objectConfig);
@@ -111,8 +111,9 @@ export async function generateSettingsGraphql(objectConfig: SteedosObjectTypeCon
     }
 
     // _related
-    let obj = getObject(objectName);
-    const relationsInfo = await obj.getRelationsInfo();
+    // let obj = getObject(objectName);
+    // const relationsInfo = await obj.getRelationsInfo();
+    const relationsInfo = ctx.getRelationsInfo(objectName);
     let detailsInfo = relationsInfo.details || [];
     let lookupsInfo = relationsInfo.lookup_details || [];
     let relatedInfos = detailsInfo.concat(lookupsInfo);

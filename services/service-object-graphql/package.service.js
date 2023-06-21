@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-06 11:03:12
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-21 17:52:05
  * @Description: 
  */
 
@@ -21,6 +21,8 @@ const { formatFiltersToODataQuery } = require("@steedos/filters");
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
 const { QUERY_DOCS_TOP } = require('./lib/consts');
+
+const _ = require('lodash');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -348,83 +350,100 @@ module.exports = {
         async generateObjGraphqlMap(graphqlServiceName) {
             const objGraphqlMap = {}
             const objectConfigs = await this.broker.call("objects.getAll");
+            const allRelationsInfo = await this.broker.call("objects.getAllRelationsInfo");
+            const getRelationsInfo = (objectName)=>{
+                const results0 = _.filter(allRelationsInfo.details, { 'objectName': objectName})
+                const results1 = _.filter(allRelationsInfo.masters, { 'objectName': objectName})
+                const results2 = _.filter(allRelationsInfo.lookup_details, { 'objectName': objectName})
+                return {
+                    details: _.compact(_.map(results0, 'key')),
+                    masters: _.compact(_.map(results1, 'key')),
+                    lookup_details: _.compact(_.map(results2, 'key')),
+                }
+            }
+
+
             for (const object of objectConfigs) {
-                // console.log('===>object.metadata.name: ', object.metadata.name)
-                const objectConfig = object.metadata
-                const objectName = objectConfig.name
-                // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
-                if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
-                    continue
-                }
-                /**
-                 * objGraphqlMap[objectName] 结构
-                {
-                    type: "",
-                    resolvers: {
-                        [objectName]: {
-                            [`${name}${EXPAND_SUFFIX}`]: {},
-                            [relatedFieldName]: {},
-                            [DISPLAY_PREFIX]: {},
-                            [UI_PREFIX]: {},
-                            [PERMISSIONS_PREFIX]: {},
-                            [`${RELATED_PREFIX}_files`]: {},
-                            [`${RELATED_PREFIX}_tasks`]: {},
-                            [`${RELATED_PREFIX}_notes`]: {},
-                            [`${RELATED_PREFIX}_events`]: {},
-                            [`${RELATED_PREFIX}_audit_records`]: {},
-                            [`${RELATED_PREFIX}_instances`]: {},
-                            [`${RELATED_PREFIX}_approvals`]: {}
-                        }
-                    },
-                    query: [],
-                    resolversQuery: {
-                        [objectName]: { action: 'find' },
-                        [`${objectName}__count`]: { action: 'count' },
-                        [`${objectName}__findOne`]: { action: 'findOne' }
-                    },
-                    mutation: [],
-                    resolversMutation: {
-                        [`${objectName}__insert`]: { action: 'insert' },
-                        [`${objectName}__update`]: { action: 'update' },
-                        [`${objectName}__delete`]: { action: 'delete' }
+                try {
+                    // console.log('===>object.metadata.name: ', object.metadata.name)
+                    const objectConfig = object.metadata
+                    const objectName = objectConfig.name
+                    // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
+                    if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
+                        continue
                     }
-                }
-                 */
-                const gMap = {}
+                    /**
+                     * objGraphqlMap[objectName] 结构
+                    {
+                        type: "",
+                        resolvers: {
+                            [objectName]: {
+                                [`${name}${EXPAND_SUFFIX}`]: {},
+                                [relatedFieldName]: {},
+                                [DISPLAY_PREFIX]: {},
+                                [UI_PREFIX]: {},
+                                [PERMISSIONS_PREFIX]: {},
+                                [`${RELATED_PREFIX}_files`]: {},
+                                [`${RELATED_PREFIX}_tasks`]: {},
+                                [`${RELATED_PREFIX}_notes`]: {},
+                                [`${RELATED_PREFIX}_events`]: {},
+                                [`${RELATED_PREFIX}_audit_records`]: {},
+                                [`${RELATED_PREFIX}_instances`]: {},
+                                [`${RELATED_PREFIX}_approvals`]: {}
+                            }
+                        },
+                        query: [],
+                        resolversQuery: {
+                            [objectName]: { action: 'find' },
+                            [`${objectName}__count`]: { action: 'count' },
+                            [`${objectName}__findOne`]: { action: 'findOne' }
+                        },
+                        mutation: [],
+                        resolversMutation: {
+                            [`${objectName}__insert`]: { action: 'insert' },
+                            [`${objectName}__update`]: { action: 'update' },
+                            [`${objectName}__delete`]: { action: 'delete' }
+                        }
+                    }
+                    */
+                    const gMap = {}
 
-                const typeAndResolves = await generateSettingsGraphql(objectConfig, graphqlServiceName)
+                    const typeAndResolves = generateSettingsGraphql(objectConfig, graphqlServiceName, {getRelationsInfo: getRelationsInfo})
 
-                gMap.type = typeAndResolves.type
-                gMap.resolvers = typeAndResolves.resolvers
+                    gMap.type = typeAndResolves.type
+                    gMap.resolvers = typeAndResolves.resolvers
 
-                if (objectName == 'users') {
+                    if (objectName == 'users') {
+                        objGraphqlMap[objectName] = gMap
+                        continue
+                    }
+                    gMap.query = []
+                    gMap.resolversQuery = {}
+                    gMap.mutation = []
+                    gMap.resolversMutation = {}
+
+                    gMap.query.push(generateActionGraphqlProp('find', objectConfig))
+                    gMap.resolversQuery[objectName] = { action: 'find' }
+
+                    gMap.query.push(generateActionGraphqlProp('count', objectConfig))
+                    gMap.resolversQuery[`${objectName}__count`] = { action: 'count' }
+
+                    gMap.query.push(generateActionGraphqlProp('findOne', objectConfig))
+                    gMap.resolversQuery[`${objectName}__findOne`] = { action: 'findOne' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('insert', objectConfig))
+                    gMap.resolversMutation[`${objectName}__insert`] = { action: 'insert' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('update', objectConfig))
+                    gMap.resolversMutation[`${objectName}__update`] = { action: 'update' }
+
+                    gMap.mutation.push(generateActionGraphqlProp('delete', objectConfig))
+                    gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
+
                     objGraphqlMap[objectName] = gMap
-                    continue
+                } catch (error) {
+                    console.error(`error`, error)
                 }
-                gMap.query = []
-                gMap.resolversQuery = {}
-                gMap.mutation = []
-                gMap.resolversMutation = {}
-
-                gMap.query.push(generateActionGraphqlProp('find', objectConfig))
-                gMap.resolversQuery[objectName] = { action: 'find' }
-
-                gMap.query.push(generateActionGraphqlProp('count', objectConfig))
-                gMap.resolversQuery[`${objectName}__count`] = { action: 'count' }
-
-                gMap.query.push(generateActionGraphqlProp('findOne', objectConfig))
-                gMap.resolversQuery[`${objectName}__findOne`] = { action: 'findOne' }
-
-                gMap.mutation.push(generateActionGraphqlProp('insert', objectConfig))
-                gMap.resolversMutation[`${objectName}__insert`] = { action: 'insert' }
-
-                gMap.mutation.push(generateActionGraphqlProp('update', objectConfig))
-                gMap.resolversMutation[`${objectName}__update`] = { action: 'update' }
-
-                gMap.mutation.push(generateActionGraphqlProp('delete', objectConfig))
-                gMap.resolversMutation[`${objectName}__delete`] = { action: 'delete' }
-
-                objGraphqlMap[objectName] = gMap
             };
 
             return objGraphqlMap
