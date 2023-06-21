@@ -56,6 +56,7 @@
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 集成
   - [ ] [n8n](https://github.com/n8n-io/n8n) 集成
 - 高代码开发：可以像传统项目一样，编写代码，实现复杂业务逻辑。
+  - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
   - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
   - [x] 元数据同步为代码 [文档](https://docs.steedos.com/zh-CN/developer/sync-metadata)
   - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
