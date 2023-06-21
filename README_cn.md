@@ -55,7 +55,7 @@
   - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 集成
   - [ ] [n8n](https://github.com/n8n-io/n8n) 集成
-- 高代码开发：可以像传统项目一样，编写代码，实现复杂业务逻辑。
+- 高代码开发：元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
   - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
   - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
   - [x] 元数据同步为代码 [文档](https://docs.steedos.com/zh-CN/developer/sync-metadata)
