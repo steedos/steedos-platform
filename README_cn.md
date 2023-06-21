@@ -59,6 +59,7 @@
   - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
   - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
   - [x] 元数据同步为代码 [文档](https://docs.steedos.com/zh-CN/developer/sync-metadata)
+  - [x] API [文档](https://docs.steedos.com/zh-CN/api/rest-api/)
   - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
   - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
 
