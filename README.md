@@ -51,7 +51,7 @@ Steedos Low-code PaaS platform is a powerful and flexible solution for building 
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
   - [x] Approval King [Docs](https://docs.steedos.com/automation/approval-king/)
-  - [ ] [n8n](https://github.com/n8n-io/n8n) Integration **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
 - **Integration**: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
   - [x] [Node-RED](https://github.com/node-red/node-red) Integration [Docs](https://docs.steedos.com/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Integration
