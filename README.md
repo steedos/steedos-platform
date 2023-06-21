@@ -29,14 +29,14 @@ Steedos Low-code PaaS platform is a powerful and flexible solution for building 
 - **Low-code development**: Drag-and-drop interface for building applications.
   - [x] Apps [Docs](https://docs.steedos.com/no-code/application/app)
   - [x] Tabs [Docs](https://docs.steedos.com/no-code/application/tab)
-  - [x] Micro Pages [Docs](https://docs.steedos.com/no-code/amis/) 
+  - [x] Micro Pages [Docs](https://docs.steedos.com/no-code/amis/) **vs** [Salesforce Lightning App Builder](https://help.salesforce.com/s/articleView?id=sf.lightning_app_builder_overview.htm&type=5)
   - [x] List View [Docs](https://docs.steedos.com/no-code/customize/listview/)
   - [x] Page Layout [Docs](https://docs.steedos.com/no-code/customize/page-layout)
 - **Data Management**: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
   - [x] Objects [Docs](https://docs.steedos.com/no-code/customize/object) 
   - [x] Fields [Docs](https://docs.steedos.com/no-code/customize/fields/) 
   - [x] Validation Rules [Docs](https://docs.steedos.com/no-code/customize/validation-rules) 
-  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization
+  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
 - **Secure**: Steedos provides enterprise-level security features to ensure your data is protected at all times.
   - [x] Object Permissions [Docs](https://docs.steedos.com/admin/permissions/object-permissions)
   - [x] Field Permissions [Docs](https://docs.steedos.com/admin/permissions/field-permissions)
@@ -51,10 +51,10 @@ Steedos Low-code PaaS platform is a powerful and flexible solution for building 
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
   - [x] Approval King [Docs](https://docs.steedos.com/automation/approval-king/)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) Integration **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
 - **Integration**: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
   - [x] [Node-RED](https://github.com/node-red/node-red) Integration [Docs](https://docs.steedos.com/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Integration
-  - [ ] [n8n](https://github.com/n8n-io/n8n) Integration
 - **High Code**: Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
   - [x] create-steedos-app [Docs](https://docs.steedos.com/developer/create-steedos-app)
   - [x] Steedos Packages [Docs](https://docs.steedos.com/developer/package)
