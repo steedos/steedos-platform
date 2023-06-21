@@ -9,6 +9,10 @@
     "keywords": [
         "steedos"
     ],
+    "dependencies": {
+        "@steedos/objectql": "2.5.4",
+        "@steedos/service-meteor-package-loader": "2.5.4"
+    },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",

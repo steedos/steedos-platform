@@ -2,74 +2,148 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-09 13:40:48
+ * @LastEditTime: 2023-06-21 19:18:23
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
+const objectql = require('@steedos/objectql');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 module.exports = {
-	name: packageName,
-	namespace: "steedos",
-	mixins: [packageLoader],
-	/**
-	 * Settings
-	 */
-	settings: {
-		packageInfo: {
-			path: __dirname,
-			name: packageName,
-			isPackage: false
-		}
-	},
+    name: packageName,
+    namespace: "steedos",
+    mixins: [packageLoader],
+    /**
+     * Settings
+     */
+    settings: {
+        packageInfo: {
+            path: __dirname,
+            name: packageName,
+            isPackage: false
+        }
+    },
 
-	/**
-	 * Dependencies
-	 */
-	dependencies: ['~packages-standard-objects'],
+    /**
+     * Dependencies
+     */
+    dependencies: ['~packages-standard-objects'],
 
-	/**
-	 * Actions
-	 */
-	actions: {
+    /**
+     * Actions
+     */
+    actions: {
 
-	},
+    },
 
-	/**
-	 * Events
-	 */
-	events: {
+    /**
+     * Events
+     */
+    events: {
+        /**
+         * [Feature]: Master-detail relationship 级联删除 #4984
+         * 考虑死循环的情况，A 主表是 B，B主表是A
+         */
+        "@*.deleted": {
+            async handler(ctx) {
+                // console.log(require('chalk').red('-------------------@*.deleted-------------------'), ctx.params)
+                const params = ctx.params
+                const { isDelete, isAfter, previousDoc, objectName } = params;
+                if (isAfter && isDelete) {
+                    const spaceId = previousDoc.space;
+                    const obj = objectql.getObject(objectName);
+                    const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象
 
-	},
+                    const config = objectql.getSteedosConfig();
+                    let datasourceConfig = config.datasources['default'];
+                    const driver = new objectql.SteedosMongoDriver(datasourceConfig.connection);
+                    await driver.connect();
+                    const client = driver._client;
+                    const db = client.db();
 
-	/**
-	 * Methods
-	 */
-	methods: {
+                    // Start a session.
+                    const session = client.startSession();
 
-	},
+                    // Start a transaction
+                    session.startTransaction({ readConcern: { level: "majority" }, writeConcern: { w: "majority" }, readPreference: 'primary' });
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	created() {
-	},
+                    // Operations inside the transaction
+                    try {
+                        const infoMap = {}; // 防止死循环
+                        const deleteDetails = async (detailsInfo, previousDoc) => {
+                            for (const info of detailsInfo) {
+                                if (!infoMap[info]) {
+                                    infoMap[info] = 1
+                                } else {
+                                    continue;
+                                }
+                                const infos = info.split(".");
+                                const detailObjectApiName = infos[0];
+                                const detailFieldName = infos[1];
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	async started() {
-		
-	},
+                                const detailObj = objectql.getObject(detailObjectApiName);
+                                const detailField = detailObj.getField(detailFieldName);
+                                const refFieldName = detailField.reference_to_field || '_id'
 
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	async stopped() {
+                                const detailColl = db.collection(detailObjectApiName);
+                                const query = { [detailFieldName]: previousDoc[refFieldName], space: spaceId };
+                                const docs = await detailColl.find(query, { session }).toArray()
+                                await detailColl.deleteMany(query, { session });
 
-	}
+                                const detailDetailsInfo = await detailObj.getDetailsInfo();
+                                if (detailDetailsInfo.length > 0) {
+                                    for (const doc of docs) {
+                                        await deleteDetails(detailDetailsInfo, doc)
+                                    }
+                                }
+                            }
+                        }
+
+                        await deleteDetails(detailsInfo, previousDoc)
+
+                        await session.commitTransaction();
+                    } catch (error) {
+                        // Abort transaction on error
+                        await session.abortTransaction();
+                        console.error(error);
+                    } finally {
+                        await session.endSession();
+                        await client.close();
+                    }
+
+                }
+            }
+        },
+    },
+
+    /**
+     * Methods
+     */
+    methods: {
+
+    },
+
+    /**
+     * Service created lifecycle event handler
+     */
+    created() {
+    },
+
+    /**
+     * Service started lifecycle event handler
+     */
+    async started() {
+
+    },
+
+    /**
+     * Service stopped lifecycle event handler
+     */
+    async stopped() {
+
+    }
 };
