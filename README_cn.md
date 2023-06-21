@@ -27,24 +27,24 @@
 华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
 
 - 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
-  - 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
-  - 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
-  - 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
-  - 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
-  - 选项卡 [文档](https://docs.steedos.cn/zh-CN/no-code/application/tab)
+  - [x] 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
+  - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
+  - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
+  - [x] 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
+  - [x] 选项卡 [文档](https://docs.steedos.cn/zh-CN/no-code/application/tab)
 - 数据管理：华炎魔方提供了强大的数据管理功能，包括数据建模、数据存储、数据分析等，可以帮助企业轻松管理和分析大量的数据。
-  - 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
-  - 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
-  - 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
+  - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
+  - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
+  - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
 - 安全和权限控制：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
-  - 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)x
-  - 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
-  - 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
-  - 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
-  - 共享规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/sharing-rules)
-  - 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
-  - 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
-  - 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
+  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)x
+  - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
+  - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
+  - [x] 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
+  - [x] 共享规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/sharing-rules)
+  - [x] 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
+  - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
+  - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
 - 流程自动化：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
 - 应用集成：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
 
