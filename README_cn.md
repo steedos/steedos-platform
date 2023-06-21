@@ -81,11 +81,11 @@
 
 ![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
 
-## VS Code 插件
+## Steedos DX
 
-实现 [Steedos VSCode 插件](https://www.steedos.cn/docs/developer/sync-metadata)，可视化工具设计的元数据可以和代码双向同步。参考：[Salesforce DX](https://developer.salesforce.com/developer-centers/developer-experience)。
+使用 Steedos DX，您可以将元数据导入到 Steedos 中，在可视化界面中进行修改，并将其同步回项目源代码。Steedos DX 引入了一种新的方式来组织您的元数据和分发您的应用程序。您可以从现代协作技术（如 Git）中受益，跨团队版本控制您的所有内容 - 您的代码、组织配置和元数据。
 
-![Steedos VSCode 插件](https://console.steedos.cn/api/files/images/6421667e671028003e75f90f)
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 
 # 快速向导
