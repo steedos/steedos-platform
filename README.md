@@ -26,18 +26,18 @@ Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platf
 
 Steedos Low-code PaaS platform is a powerful and flexible solution for building enterprise applications quickly and easily.     
 
-- Low-code development: Drag-and-drop interface for building applications.
+- **Low-code development**: Drag-and-drop interface for building applications.
   - [x] Apps [Docs](https://docs.steedos.com/no-code/application/app)
   - [x] Tabs [Docs](https://docs.steedos.com/no-code/application/tab)
   - [x] Micro Pages [Docs](https://docs.steedos.com/no-code/amis/) 
   - [x] List View [Docs](https://docs.steedos.com/no-code/customize/listview/)
   - [x] Page Layout [Docs](https://docs.steedos.com/no-code/customize/page-layout)
-- Data Management: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
+- **Data Management**: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
   - [x] Objects [Docs](https://docs.steedos.com/no-code/customize/object) 
   - [x] Fields [Docs](https://docs.steedos.com/no-code/customize/fields/) 
   - [x] Validation Rules [Docs](https://docs.steedos.com/no-code/customize/validation-rules) 
   - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization
-- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
+- **Secure**: Steedos provides enterprise-level security features to ensure your data is protected at all times.
   - [x] Object Permissions [Docs](https://docs.steedos.com/admin/permissions/object-permissions)
   - [x] Field Permissions [Docs](https://docs.steedos.com/admin/permissions/field-permissions)
   - [x] App Permissions [Docs](https://docs.steedos.com/admin/permissions/app-permissions)
@@ -46,16 +46,16 @@ Steedos Low-code PaaS platform is a powerful and flexible solution for building 
   - [x] Restriction Rules [Docs](https://docs.steedos.com/admin/permissions/restriction-rules)
   - [x] Profiles [Docs](https://docs.steedos.com/admin/permissions/profile)
   - [x] Permission Sets [Docs](https://docs.steedos.com/admin/permissions/permission-set)
-- Workflow Automation: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
+- **Workflow Automation**: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
   - [x] Automated Actions [Docs](https://docs.steedos.com/automation/automated-actions)
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
   - [x] Approval King [Docs](https://docs.steedos.com/automation/approval-king/)
-- Integration: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
+- **Integration**: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
   - [x] [Node-RED](https://github.com/node-red/node-red) Integration [Docs](https://docs.steedos.com/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Integration
   - [ ] [n8n](https://github.com/n8n-io/n8n) Integration
-- High Code: Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
+- **High Code**: Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
   - [x] create-steedos-app [Docs](https://docs.steedos.com/developer/create-steedos-app)
   - [x] Steedos Packages [Docs](https://docs.steedos.com/developer/package)
   - [x] Metadata Sync with Source Code [Docs](https://docs.steedos.com/developer/sync-metadata)
