@@ -55,7 +55,7 @@
 - **可视化应用集成**：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
   - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 微应用
-- 高代码开发：元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
+- **高代码开发**：元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
   - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
   - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
   - [x] 元数据同步为代码 [文档](https://docs.steedos.com/zh-CN/developer/sync-metadata)
