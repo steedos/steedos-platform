@@ -27,7 +27,7 @@
 华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
 
 - 可视化开发：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
-  - [x] 微页面 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
+  - [x] 微页面设计器 [文档](https://docs.steedos.cn/zh-CN/no-code/amis/) 
   - [x] 列表视图 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/listview/)
   - [x] 页面布局 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/page-layout)
   - [x] 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
@@ -37,7 +37,7 @@
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
   - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
 - 安全和权限控制：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
-  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)x
+  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
   - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
   - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
   - [x] 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
