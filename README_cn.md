@@ -58,7 +58,7 @@
 - **高代码开发**：元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
   - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
   - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
-  - [x] VS Code 插件，支持元数据与代码双向同步 [文档](https://docs.steedos.com/zh-CN/developer/sync-metadata)， 替代 [Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
+  - [x] VS Code 插件 ([文档](https://docs.steedos.com/zh-CN/developer/sync-metadata))，支持元数据与代码双向同步， 替代 [Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
   - [x] API [文档](https://docs.steedos.com/zh-CN/api/rest-api/)
   - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
   - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
