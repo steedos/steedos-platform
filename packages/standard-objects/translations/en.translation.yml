@@ -75,6 +75,7 @@ CustomLabels:
   menu_webhooks: 
   menu_process_delegation_rules: 
   menu_roles: 
+  delete_required_lookup_record_error: "Your attempt to delete 1 could not be completed because it is associated with the following {$objectLabel}. ：{$recordName}"
 CustomTabs:
   admin_process_delegation_rules: Process Delegations
   admin_space_info: Company

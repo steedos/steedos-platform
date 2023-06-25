@@ -92,7 +92,12 @@ FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
     const recordId = params.record_id;
     if (recordId) {
         // 触发广播事件，把当前path和params累加存入amis变量historyPaths中
-        pushHistoryPath(path, params);
+        var paths = getHistoryPaths() || [];
+        let lastPath = paths && paths[paths.length - 1];
+        //判断当前路由与记录的路由是否相同，为解决从设计器微页面返回重复记录的问题#4978
+        if(path.split('?')[0] != lastPath?.path?.split('?')[0]){
+            pushHistoryPath(path, params);
+        } 
     }
     else {
         // 触发广播事件重围amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中

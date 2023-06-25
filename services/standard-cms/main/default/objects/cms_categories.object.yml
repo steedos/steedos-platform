@@ -1,7 +1,7 @@
 name: cms_categories
 icon: folder
 label: Category
-hidden: true
+hidden: false
 fields:
   name:
     label: Name
@@ -25,33 +25,13 @@ fields:
     required: true
     sortable: true
     index: true
-    optionsFunction: !!js/function |
-      function (values) {
-        var siteObjectName = "cms_sites";
-        var object = Creator.getObject(siteObjectName);
-        if(!object){
-          console.error(t("cms_categories_error_no_object") + siteObjectName);
-          return [];
-        }
-        var options, result, sites, queryFilters;
-        result = [];
-        options = {
-          $select: 'name'
-        };
+    filtersFunction: !!js/function |
+      function (filters, values) {
         if(!Steedos.isSpaceAdmin()){
           var userId = Steedos.userId();
-          queryFilters = ["admins", "=", userId];
-          var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
-          options.$filter = odataFilter;
+          return ["admins", "=", userId];
         }
-        sites = Creator.odata.query(siteObjectName, options, true);
-        sites.forEach(function (item) {
-          result.push({
-            label: item.name,
-            value: item._id
-          });
-        });
-        return result;
+        return [];
       }
   parent:
     label: Parent Category
@@ -60,32 +40,12 @@ fields:
     sortable: true
     depend_on:
       - site
-    optionsFunction: !!js/function |
-      function (values) {
+    filtersFunction: !!js/function |
+      function (filters, values) {
         if (!values || !values.site) {
-          return [];
+          return ["_id", "=", null];
         }
-        var object = Creator.getObject(values._object_name);
-        if(!object){
-          console.error("未找到当前对象：" + values._object_name);
-          return [];
-        }
-        var options, result, parents, queryFilters;
-        result = [];
-        options = {
-          $select: 'name'
-        };
-        queryFilters = ["site", "=", values.site];
-        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
-        options.$filter = odataFilter;
-        parents = Creator.odata.query(values._object_name, options, true);
-        parents.forEach(function (item) {
-          result.push({
-            label: item.name,
-            value: item._id
-          });
-        });
-        return result;
+        return ["site", "=", values.site];
       }
   parents:
     label: All Parent Categories
@@ -115,17 +75,20 @@ list_views:
     filters: !<tag:yaml.org,2002:js/function> |-
       function () {
         if(!Steedos.isSpaceAdmin()){
-          var siteObjectName = "cms_sites";
-          var options, sites, queryFilters;
-          options = {
-            $select: 'name'
-          };
-          var userId = Steedos.userId();
-          queryFilters = ["admins", "=", userId];
-          var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
-          options.$filter = odataFilter;
-          var sites = Creator.odata.query(siteObjectName, options, true);
-          return [["site", "in", _.pluck(sites, "_id")]];
+          try {
+            var userId = Steedos.userId();
+            var queryFilters = ["admins", "=", userId];
+            var queryResult = Steedos.authRequest("/graphql", {
+              type: 'POST', async: false,
+              data: JSON.stringify({
+                query: "{ cms_sites(filters: " + JSON.stringify(queryFilters) + "){ _id } }"
+              })
+            });
+            var sites = queryResult && queryResult.data && queryResult.data.cms_sites;
+            return [["site", "in", _.map(sites, "_id")]];
+          } catch (e) {
+            return ["_id", "=", null];
+          }
         }
       }
 permission_set:

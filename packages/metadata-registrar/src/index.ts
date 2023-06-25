@@ -35,6 +35,12 @@ export * from './config-register/validation_rule'
 export * from './config-register/workflow'
 export * from './config-register/package'
 export * from './config-register/layout';
+export * from './config-register/tabs';
+export * from './config-register/field';
+export * from './config-register/tab';
+export * from './config-register/page';
+export * from './config-register/query'
+export * from './config-register/chart'
 
 export * from './metadata-register/tab';
 export * from './metadata-register/page';

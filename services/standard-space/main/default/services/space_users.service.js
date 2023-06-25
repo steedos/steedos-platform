@@ -227,10 +227,10 @@ module.exports = {
                 throw new Error('space_users_method_disable_enable_error_only_admin')
             }
             if (spaceUser.user === userSession.userId) {
-                throw new Error('space_users_method_error_can_not_own')
+                throw new Error('space_users_method_disable_enable_error_can_not_own')
             }
             if (!spaceUser.user_accepted) {
-                throw new Error('space_users_method_error_can_not_disable_disabled')
+                throw new Error('space_users_method_disable_error_can_not_disable_disabled')
             }
             let result = await this.doDisable(spaceUser);
             if (result) {
@@ -291,10 +291,10 @@ module.exports = {
                 throw new Error('space_users_method_disable_enable_error_only_admin')
             }
             if (spaceUser.user === userSession.userId) {
-                throw new Error('space_users_method_error_can_not_own')
+                throw new Error('space_users_method_disable_enable_error_can_not_own')
             }
             if (spaceUser.user_accepted) {
-                throw new Error('space_users_method_error_can_not_enable_enabled')
+                throw new Error('space_users_method_enable_error_can_not_enable_enabled')
             }
             let result = await getObject('space_users').updateOne(suId, { user_accepted: true, profile: spaceUser.profile });
             if (result) {

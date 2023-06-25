@@ -16,15 +16,23 @@ if(_.isEmpty(process.env.STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN)) {
 if(_.isEmpty(process.env.STEEDOS_UNPKG_URL)) {
 	process.env.STEEDOS_UNPKG_URL = 'https://unpkg.steedos.cn';
 }
+process.env.STEEDOS_UNPKG_URL =  process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "");
+
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
 	process.env.STEEDOS_AMIS_VERSION = '2.9.0';
 }
 
+if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
+	process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_UNPKG_URL + '/amis@' + process.env.STEEDOS_AMIS_VERSION;
+}
+process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
+
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.25/dist/assets.json";
 }
 
+process.env.ROOT_URL =  process.env.ROOT_URL.replace(/\/+$/, "");
 /**
  * Steedos ServiceBroker configuration file
  *

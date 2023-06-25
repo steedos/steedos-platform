@@ -304,31 +304,37 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
 router.get('/api/sync/qywxId', async function (req, res) {
     const broker = objectql.getSteedosSchema().broker
     let space = await broker.call('qywx.getSpace');
+
     if (!space)
         return;
-    
-    let response = await broker.call('qywx.getToken', {corpId: space.qywx_corp_id, secret: space.qywx_secret})
-    access_token = response.access_token;
+
+    let spaceUsers = await broker.call('qywx.getSpaceUsers', { corpId: space._id })
+    let response = await broker.call('qywx.getToken', { corpId: space.qywx_corp_id,secret: space.qywx_secret })
+    let access_token = response.access_token;
 
     qywxSync.write("================同步企业微信id开始===================")
     qywxSync.write("access_token:" + access_token)
 
-    deptListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=" + access_token);
-    deptListRes = await deptListRes.json()
-    deptListRes = deptListRes.department
-    // console.log(deptListRes)
-    
-    for (let i = 0; i < deptListRes.length; i++) {
-        userListRes = await fetch("https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=" + access_token + "&department_id=" + deptListRes[i].id)
-        userListRes = await userListRes.json()
-        userListRes = userListRes.userlist
-        // console.log("userListRes: ",userListRes);
-        for (let ui = 0; ui < userListRes.length; ui++) {
-            // console.log("space._id: ",space._id);
-            qywxSync.write("用户ID:" + userListRes[ui]['userid'])
-            await broker.call('qywx.useridPush', {accessToken: access_token, userId: userListRes[ui]['userid'], mobile: userListRes[ui]['mobile']})
+    let url = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserid?access_token=" + access_token;
+
+    for (let ui = 0; ui < spaceUsers.length; ui++) {
+        if (!spaceUsers[ui].mobile)
+            continue;
+        
+        let data = {
+            "mobile": spaceUsers[ui].mobile
         }
 
+        let userListRes = await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json());
+
+        qywxSync.write("用户ID:" + userListRes.userid);
+        await broker.call('qywx.useridPush', { accessToken: access_token, userId: userListRes.userid, mobile: spaceUsers[ui].mobile })
     }
     qywxSync.write("================同步数据结束===================")
     qywxSync.write("\n")

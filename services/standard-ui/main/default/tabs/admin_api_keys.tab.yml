@@ -17,5 +17,5 @@ permissions:
     permission_set: organization_admin
   - permission: 'on'
     permission_set: workflow_admin
-type: url
-url: /app/admin/api_keys/grid/all
+type: object
+object: api_keys
