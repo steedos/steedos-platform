@@ -49,11 +49,6 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
   - [x] Automated Actions [Docs](https://docs.steedos.com/automation/automated-actions)
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
-- **Integration**: Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
-  - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
-  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
-  - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
-  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
 
 ## Extend Steedos with Code
 
@@ -65,6 +60,15 @@ Metadata can be synchronized as code, version controlled, and automated. For com
   - [x] API [Docs](https://docs.steedos.com/api/rest-api/)
   - [x] Object Triggers [Docs](https://docs.steedos.com/developer/action-trigger)
   - [x] Custom API [Docs](https://docs.steedos.com/developer/action-api)
+
+## Integrations
+
+Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
+
+  - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
+  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
+  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
 
 ## Getting Started
 
@@ -84,18 +88,6 @@ or you can try the following sample projects.
 - [Project Template](https://github.com/steedos/steedos-project-template)
 - [Examples](https://github.com/steedos/steedos-examples)
 
-## Steedos DX
-
-With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
-
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
-Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
-
 ## Awesome Steedos Apps
 
 💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
@@ -105,6 +97,16 @@ Steedos DX is licenced per developer. We provide Steedos DX free license for ope
 - [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
 [Find more](https://github.com/steedos-labs/)
+
+## Steedos DX
+
+With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 ## Steedos Docs
 
