@@ -54,6 +54,10 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
 
 Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
 
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
   - [x] create-steedos-app [Docs](https://docs.steedos.com/developer/create-steedos-app)
   - [x] Steedos Packages [Docs](https://docs.steedos.com/developer/package)
   - [x] Metadata Sync with Source Code [Docs](https://docs.steedos.com/developer/sync-metadata)
@@ -97,16 +101,6 @@ or you can try the following sample projects.
 - [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
 [Find more](https://github.com/steedos-labs/)
-
-## Steedos DX
-
-With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
-
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 ## Steedos Docs
 
