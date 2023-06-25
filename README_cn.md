@@ -22,9 +22,11 @@
  🤖 🎨 🚀
 </h3>
 
-# 核心功能
+# 点击鼠标，就能编程
 
 华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。无论是传统企业还是新兴企业，都可以使用华炎魔方快速构建自己的应用程序和流程。
+
+![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
 
 - **可视化构建应用**：使用简单易懂的拖放式界面，用户可以快速创建自定义的企业级应用程序。
   - [x] 应用 [文档](https://docs.steedos.cn/zh-CN/no-code/application/app)
@@ -36,7 +38,6 @@
   - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
   - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
-  - [ ] [Metabase 数据分析引擎](https://github.com/metabase/metabase) ，替代 [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
 - **控制数据访问权限**：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
   - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
   - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
@@ -51,29 +52,6 @@
   - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
   - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
   - [x] 审批王 [文档](https://docs.steedos.cn/zh-CN/automation/approval-king/)
-  - [ ] [n8n](https://github.com/n8n-io/n8n) 业务流程编排，替代 [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
-- **可视化应用集成**：华炎魔方提供可视化应用程序集成开发工具，可以帮助企业快速实现内外部系统间的无缝衔接。
-  - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
-  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 微应用
-- **高代码扩展**：元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
-  - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
-  - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
-  - [x] VS Code 插件 ([文档](https://docs.steedos.com/zh-CN/developer/sync-metadata))，支持元数据与代码双向同步， 替代 [Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-  - [x] API [文档](https://docs.steedos.com/zh-CN/api/rest-api/)
-  - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
-  - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
-
-## 可视化设计微页面
-
-基于[百度Amis](https://aisuda.bce.baidu.com/amis/zh-CN/components)，扩展开发面向业务模型的动态组件，并提供可视化设计工具，实现[华炎魔方微页面](https://www.steedos.cn/docs/amis/start)。参考：[Saleforce Lightning](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)。
-
-![微页面](https://console.steedos.cn/api/files/images/642166bd671028003e75f910)
-
-## 可视化创建业务对象
-
-实现[可视化建模](https://www.steedos.cn/docs/admin/object)，并开发配套的权限引擎、规则引擎、流程引擎、报表引擎，以及以上相关的可视化设计工具。参考：[Salesforce Object](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_concepts.htm)。
-
-![对象管理](https://console.steedos.cn/api/files/images/64216644671028003e75f90e)
 
 ## 安全和权限控制
 
@@ -81,12 +59,30 @@
 
 ![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
 
-## Steedos DX
+
+## 使用代码扩展Steedos
+
+元数据可以同步为代码，进行版本管理并实现自动化；对于复杂的业务逻辑，可以编写前后端代码实现。
+  
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
 
 使用 Steedos DX，您可以将元数据导入到 Steedos 中，在可视化界面中进行修改，并将其同步回项目源代码。Steedos DX 引入了一种新的方式来组织您的元数据和分发您的应用程序。您可以从现代协作技术（如 Git）中受益，跨团队版本控制您的所有内容 - 您的代码、组织配置和元数据。
 
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+  - [x] create-steedos-app [文档](https://docs.steedos.com/zh-CN/developer/create-steedos-app)
+  - [x] 软件包 [文档](https://docs.steedos.com/zh-CN/developer/package)
+  - [x] VS Code 插件 ([文档](https://docs.steedos.com/zh-CN/developer/sync-metadata))，支持元数据与代码双向同步， 替代 [Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
+  - [x] API [文档](https://docs.steedos.com/zh-CN/api/rest-api/)
+  - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
+  - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
+  
+## 与第三方低代码工具无缝集成
 
+作为低代码生态的一员，华炎魔方通过插件的方式，实现与多个行业领先的第三方低代码工具无缝集成，扩展华炎魔方的产品能力。
+
+  - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
+  - [ ] [Metabase 数据分析引擎](https://github.com/metabase/metabase) ，替代 [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) 业务流程编排，替代 [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
+  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 微应用
 
 # 快速向导
 
