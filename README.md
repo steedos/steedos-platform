@@ -22,7 +22,7 @@ Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platf
  🤖 🎨 🚀
 </h3>
 
-## Low-code development
+## Click, Not Code
 
 Steedos Low-code PaaS platform is a powerful and flexible solution for building enterprise applications quickly and easily.     
 
