@@ -53,7 +53,7 @@
   - [x] 批准过程 [文档](https://docs.steedos.cn/zh-CN/automation/approval-process)
   - [x] 审批王 [文档](https://docs.steedos.cn/zh-CN/automation/approval-king/)
 
-## 安全和权限控制
+## 管理数据访问权限
 
 平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。[Steedos](https://docs.steedos.com/admin/permissions/)🚀[Salesforce](https://developer.salesforce.com/docs/atlas.en-us.securityImplGuide.meta/securityImplGuide/security_data_access.htm)
 
