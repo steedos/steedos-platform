@@ -30,7 +30,6 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
   - [x] Objects [Docs](https://docs.steedos.com/no-code/customize/object) 
   - [x] Fields [Docs](https://docs.steedos.com/no-code/customize/fields/) 
   - [x] Validation Rules [Docs](https://docs.steedos.com/no-code/customize/validation-rules) 
-  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
 - **Building Apps**: Drag-and-drop interface for building applications.
   - [x] Apps [Docs](https://docs.steedos.com/no-code/application/app)
   - [x] Tabs [Docs](https://docs.steedos.com/no-code/application/tab)
@@ -50,8 +49,9 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
   - [x] Automated Actions [Docs](https://docs.steedos.com/automation/automated-actions)
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
-- **Integration**: Steedos provides visual integration tools that can help enterprises achieve seamless integration between internal and external systems.
+- **Integration**: Steedos connect with other low-code tools that can help enterprises achieve seamless integration between internal and external systems.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
+  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
   - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
   - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
 
