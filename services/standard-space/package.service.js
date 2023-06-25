@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-21 19:18:23
+ * @LastEditTime: 2023-06-25 13:14:31
  * @Description: 
  */
 "use strict";
@@ -46,6 +46,7 @@ module.exports = {
     events: {
         /**
          * [Feature]: Master-detail relationship 级联删除 #4984
+         * [Feature]: Lookup relationship 级联删除 #4985
          * 考虑死循环的情况，A 主表是 B，B主表是A
          */
         "@*.deleted": {
@@ -57,6 +58,7 @@ module.exports = {
                     const spaceId = previousDoc.space;
                     const obj = objectql.getObject(objectName);
                     const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象
+                    const lookupDetailsInfo = await obj.getLookupDetailsInfo(); // 查找当前哪些对象有lookup字段引用当前对象
 
                     const config = objectql.getSteedosConfig();
                     let datasourceConfig = config.datasources['default'];
@@ -104,6 +106,25 @@ module.exports = {
                         }
 
                         await deleteDetails(detailsInfo, previousDoc)
+
+                        for (const info of lookupDetailsInfo) {
+                            const infos = info.split(".");
+                            const detailObjectApiName = infos[0];
+                            const detailFieldName = infos[1];
+                            const detailObj = objectql.getObject(detailObjectApiName);
+                            const detailField = detailObj.getField(detailFieldName);
+                            if ('clear' === detailField.deleted_lookup_record_behavior || !detailField.deleted_lookup_record_behavior) { // 清除相关记录lookup字段的值，默认清除
+                                const refFieldName = detailField.reference_to_field || '_id'
+                                const detailColl = db.collection(detailObjectApiName);
+                                await detailColl.updateMany({
+                                    [detailFieldName]: previousDoc[refFieldName]
+                                }, {
+                                    $unset: {
+                                        [detailFieldName]: 1
+                                    }
+                                }, { session });
+                            }
+                        }
 
                         await session.commitTransaction();
                     } catch (error) {
