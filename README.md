@@ -49,7 +49,7 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
   - [x] Automated Actions [Docs](https://docs.steedos.com/automation/automated-actions)
   - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
   - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
-- **Integration**: Steedos connect with other low-code tools that can help enterprises achieve seamless integration between internal and external systems.
+- **Integration**: Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
   - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
   - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
