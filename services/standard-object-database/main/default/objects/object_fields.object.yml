@@ -639,7 +639,7 @@ fields:
     label: Required
     # group: Advanced
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
-    sort_no: 390
+    sort_no: 272
     amis:
       onEvent:
         change:
@@ -661,7 +661,7 @@ fields:
         value: clear
       - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
         value: retain
-    sort_no: 395
+    sort_no: 276
     is_wide: true
     defaultValue: clear
     amis:
@@ -683,7 +683,7 @@ fields:
   #   type: boolean
   #   label: Omit
   #   group: Advanced
-    sort_no: 400
+    sort_no: 274
   index:
     type: boolean
     label: Is Index Field
