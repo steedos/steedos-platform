@@ -1,3 +1,5 @@
+const { t } = require('@steedos/i18n');
+
 var isConfigured = false;
 var sendWorker = function(task, interval) {
 
@@ -107,15 +109,15 @@ SMSQueue.Configure = function(options) {
 	if (options.sendInterval !== null) {
 
 		// This will require index since we sort sms by createdAt
-		// SMSQueue.collection._ensureIndex({
-		// 	createdAt: 1
-		// });
-		// SMSQueue.collection._ensureIndex({
-		// 	sent: 1
-		// });
-		// SMSQueue.collection._ensureIndex({
-		// 	sending: 1
-		// });
+		SMSQueue.collection._ensureIndex({
+			createdAt: 1
+		});
+		SMSQueue.collection._ensureIndex({
+			sent: 1
+		});
+		SMSQueue.collection._ensureIndex({
+			sending: 1
+		});
 
 
 		var sendSMS = function(sms) {
