@@ -3,6 +3,8 @@ const _ = require('underscore');
 const objectql = require('@steedos/objectql');
 const objectTree = require('../objects/objects.tree.js');
 
+const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 module.exports = {
     beforeFind: async function () {
         delete this.query.fields;
@@ -97,6 +99,7 @@ module.exports = {
         //     }],
         //     space: this.spaceId
         // })
+        await sleep(1000 * 2)
     },
     beforeUpdate: async function () {
         const { doc, id, object_name } = this;
@@ -140,5 +143,7 @@ module.exports = {
             await datasource.renameCollection(newObjName, oldObjName)
         }
         */
+
+        await sleep(1000 * 2)
     }
 }

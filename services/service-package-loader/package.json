@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-package-loader",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-core": "2.5.4",
-    "@steedos/metadata-registrar": "2.5.4",
-    "@steedos/router": "2.5.4",
+    "@steedos/metadata-core": "2.5.5",
+    "@steedos/metadata-registrar": "2.5.5",
+    "@steedos/router": "2.5.5",
     "clone": "^2.1.2",
     "moleculer": "^0.14.25",
     "underscore": "^1.12.0"
@@ -24,5 +24,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0b1b93c80e8448e54b77064d976b9e20bfe39727"
+  "gitHead": "f1e15b667da1e140e3003bf836d56cd6e36c79e3"
 }

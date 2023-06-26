@@ -17,5 +17,5 @@ permissions:
     permission_set: organization_admin
   - permission: 'off'
     permission_set: workflow_admin
-type: url
-url: /app/admin/space_users/grid/all
+type: object
+object: space_users

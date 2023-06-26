@@ -17,5 +17,5 @@ permissions:
     permission_set: organization_admin
   - permission: 'off'
     permission_set: workflow_admin
-type: url
-url: /app/admin/workflow_notifications/grid/all
+type: object
+object: workflow_notifications

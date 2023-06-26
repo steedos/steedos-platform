@@ -13,6 +13,8 @@ const {
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 const ServiceObjectGraphql = require('@steedos/service-object-graphql')
+const validator = require('validator');
+const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true)
 
 const mixinOptions = {
 
@@ -74,12 +76,12 @@ const mixinOptions = {
 			apiKey: process.env.APOLLO_ENGINE_KEY
 		},
 		subscriptions: false,
-		playground: {
+		playground: enablePlayground ? {
 			settings: {
 				'request.credentials': 'same-origin'
 			}
-		},
-		introspection: true
+		} : false,
+		introspection: enablePlayground
 	}
 }
 

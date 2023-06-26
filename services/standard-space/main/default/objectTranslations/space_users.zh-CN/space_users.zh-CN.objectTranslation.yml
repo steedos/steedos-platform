@@ -158,6 +158,10 @@ actions:
     label: 锁定
   unlock:
     label: 解除锁定
+  verify_email:
+    label: 验证邮箱
+  verify_mobile:
+    label: 验证手机
 CustomLabels:
   space_users_field_profile_def_options_admin: 管理员
   space_users_field_profile_def_options_user: 员工

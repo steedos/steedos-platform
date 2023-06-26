@@ -69,44 +69,15 @@ fields:
         var category = Session.get("category");
         return category ? category._id : null;
       }
-    # filtersFunction: !!js/function |
-    #   function () {
-    #     return "site eq '" + Session.get("siteId") + "'";
-    #   }
+    filtersFunction: !!js/function |
+      function (filters, values) {
+        if (!values || !values.site) {
+          return ["_id", "=", null];
+        }
+        return ["site", "=", values.site];
+      }
     depend_on:
       - site
-    optionsFunction: !!js/function |
-      function (values) {
-        if (!values || !values.site) {
-          return [];
-        }
-        var objectName = "cms_categories";
-        var object = Creator.getObject(objectName);
-        if(!object){
-          console.error(t("cms_posts_error_no_object") + objectName);
-          return [];
-        }
-        var options, result, companys, queryFilters;
-        result = [];
-        options = {
-          $select: 'name'
-        };
-        var site = values.site;
-        if(_.isObject(site)){
-          site = site._id;
-        }
-        queryFilters = ["site", "=", site];
-        var odataFilter = SteedosFilters.formatFiltersToODataQuery(queryFilters);
-        options.$filter = odataFilter;
-        companys = Creator.odata.query(objectName, options, true);
-        companys.forEach(function (item) {
-          result.push({
-            label: item.name,
-            value: item._id
-          });
-        });
-        return result;
-      }
   # visibility:
   #   label: 可见性
   #   type: lookup

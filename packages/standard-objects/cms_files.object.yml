@@ -158,6 +158,7 @@ actions:
     'on': record
   new_version:
     label: Upgrade
+    type: amis_button
     visible: !<tag:yaml.org,2002:js/function> |- 
       function (object_name, record_id, record_permissions, record) {
         if(record_permissions){
@@ -181,8 +182,83 @@ actions:
       }
     is_file: true
     'on': record_only
-    todo: !<tag:yaml.org,2002:js/function> |- 
-      function (object_name, record_id) {}
+    amis_schema: |-
+        {
+            "type": "service",
+            "body": [
+                {
+                    "type": "form",
+                    "title": "表单",
+                    "body": [
+                        {
+                            "type": "input-file",
+                            "label": "",
+                            "name": "file",
+                            "id": "u:a58d02614e04",
+                            "btnLabel": "上传新版本",
+                            "btnClassName": "m-0",
+                            "className": "p-0",
+                            "multiple": false,
+                            "maxLength": 10,
+                            "submitType": "asUpload",
+                            "uploadType": "fileReceptor",
+                            "proxy": false,
+                            "drag": false,
+                            "autoUpload": true,
+                            "useChunk": false,
+                            "joinValues": false,
+                            "extractValue": false,
+                            "valueField": "version_id",
+                            "receiver": {
+                                "url": "${context.rootUrl}/s3/",
+                                "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                },
+                                "method": "post",
+                                "messages": {},
+                                "dataType": "form-data",
+                                "requestAdaptor": "api.data.append('record_id', api.body._master.recordId);api.data.append('parent', api.body._master.recordId);api.data.append('object_name', api.body._master.objectName); api.data.append('space', api.body.global.spaceId);api.data.append('owner', api.body.global.userId);api.data.append('owner_name', api.body.global.user.name);return api;"
+                            },
+                            "onEvent": {
+                                "success": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "componentId": "u:5f901c0b917b",
+                                            "args": {},
+                                            "actionType": "clear"
+                                        },
+                                        {
+                                            "componentId": "",
+                                            "args": {
+                                                "msgType": "success",
+                                                "position": "top-right",
+                                                "closeButton": true,
+                                                "showIcon": true,
+                                                "msg": "上传成功"
+                                            },
+                                            "actionType": "toast"
+                                        },
+                                        {
+                                          "actionType": "reload",
+                                          "componentId": "service_detail_page"
+                                        },
+                                        {
+                                          "actionType": "broadcast",
+                                          "args": {
+                                            "eventName": "@data.changed.cfs_files_filerecord"
+                                          }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "id": "u:5f901c0b917b",
+                    "wrapWithPanel": false
+                }
+            ]
+        }
   upload:
     label: Upload
     on: list

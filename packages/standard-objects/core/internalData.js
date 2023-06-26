@@ -192,7 +192,8 @@ async function getObject(id, userId){
 exports.getObject = getObject
 
 function getOriginalObjectFields(objectName){
-    return register.getOriginalObjectConfig(objectName)?.fields || {}
+    if (!register.getOriginalObjectConfig(objectName)) return {}
+    return register.getOriginalObjectConfig(objectName).fields || {}
 }
 
 async function getObjectFields(objectName, userId, all){
