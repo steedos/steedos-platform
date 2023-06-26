@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.5.4",
+  "version": "2.6.1-beta.1",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -86,5 +86,5 @@
     "xiaomi-push": "^1.0.0",
     "xml2js": "^0.4.19"
   },
-  "gitHead": "0b1b93c80e8448e54b77064d976b9e20bfe39727"
+  "gitHead": "4cfca8ba76cca0b2ee1c7ad5997b97ba89f05aac"
 }
