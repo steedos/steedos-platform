@@ -1,3 +1,8 @@
+/*
+ * @LastEditTime: 2023-06-21 13:10:41
+ * @LastEditors: liaodaxue
+ * @customMade: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 module.exports = {
   download: function (object_name, record_id) {
     var file, fileId, ref;
@@ -15,10 +20,8 @@ module.exports = {
   },
 
   downloadVisible: function (object_name, record_id, record_permissions) {
-    var fileRecord;
     if (object_name === Session.get('object_name')) {
-      fileRecord = Creator.getObjectRecord();
-      if (!fileRecord) {
+      if (!record_id) {
         return false;
       }
     }

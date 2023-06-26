@@ -47,7 +47,8 @@ module.exports = {
                 const fields = await objectql.getObject('object_fields').find({ filters: [['object', '=', record.object_name]] });
                 const now = new Date();
                 for (const field of fields) {
-                    const count = await objectql.getObject('permission_fields').count({ filters: [['permission_set_id', '=', permissionSet.name], ['permission_object', '=', record.name], ['object_name', '=', record.object_name], ['field', '=', field.name], ['is_system', '!=', true]] });
+                    const result = await objectql.getObject('permission_fields').directFind({ filters: [['permission_set_id', '=', permissionSet.name], ['permission_object', '=', record.name], ['object_name', '=', record.object_name], ['field', '=', field.name], ['is_system', '!=', true]] });
+                    const count = result.length;
                     if (count == 0) {
                         const apiName = `${permissionSet.name}.${record.object_name}.${field.name}`
                         const fieldPermission = await getFieldPermission(apiName)

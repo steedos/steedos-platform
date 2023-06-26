@@ -1,3 +1,5 @@
+const { t } = require('@steedos/i18n');
+
 var isConfigured = false;
 var sendWorker = function(task, interval) {
 

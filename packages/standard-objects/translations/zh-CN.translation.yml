@@ -74,6 +74,7 @@ CustomLabels:
   menu_webhooks: 流程触发器
   menu_process_delegation_rules: 流程委托
   menu_roles: 角色
+  delete_required_lookup_record_error: "无法完成您对当前记录的删除尝试，因为它与以下{$objectLabel}关联。：{$recordName}"
 CustomTabs:
   admin_process_delegation_rules: 流程委托
   admin_space_info: 公司

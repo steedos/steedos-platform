@@ -13,7 +13,7 @@ amis_schema: |-
                           {
                               "args": {
                                   "api": {
-                                      "url": "${context.rootUrl}/api/files/files/${versions[0] || record.versions[0]}?download=true",
+                                      "url": "${context.rootUrl}/api/files/files/${versions[0] || record.versions[0].value}?download=true",
                                       "method": "get",
                                       "headers": {
                                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"

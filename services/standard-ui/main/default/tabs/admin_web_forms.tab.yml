@@ -17,5 +17,5 @@ permissions:
     permission_set: organization_admin
   - permission: 'off'
     permission_set: workflow_admin
-type: url
-url: /app/admin/web_forms/grid/all
+type: object
+object: web_forms
