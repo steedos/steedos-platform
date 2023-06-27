@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-26 16:50:37
+ * @LastEditTime: 2023-06-27 10:06:21
  * @Description: 
  */
 
@@ -284,7 +284,7 @@ module.exports = {
                     await Register.add(ctx.broker, {key: 'globalGraphQLSettings', data: globalGraphQLSettings}, {})
                     ctx.broker.broadcast("graphql.schema.changed")
 
-                }, 1000 * 2)
+                }, 100)
             }
         }
     },
