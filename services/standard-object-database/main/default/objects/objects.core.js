@@ -141,13 +141,39 @@ function loadDBObject(object){
 }
 
 
+let _objectConfigs = [];
+let _setTimeoutId = null;
+function _sendObjectMeta(objectConfig){
+
+    if(_setTimeoutId){
+        clearTimeout(_setTimeoutId);
+    }
+
+    _objectConfigs.push(objectConfig);
+
+    _setTimeoutId = setTimeout(function(){
+        var length = _objectConfigs.length
+        register.MetadataRegister.addObjectConfigs(DB_OBJECT_SERVICE_NAME, _objectConfigs).then(function(res){         
+            if(res){
+                console.log('send object meta success', length);
+                broker.broadcast("$packages.statisticsActivatedPackages", {});
+            }
+        })
+        _objectConfigs = [];
+        _setTimeoutId = null;
+    }, 300)
+
+    
+}
+
+
 function loadObject(doc, oldDoc) {
     try {
         if (!canLoadObject(doc.name, doc.datasource)) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name);
             return;
         }
-    
+        
         var datasourceDoc = getDataSource(doc);
         if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource) && (!datasourceDoc || !datasourceDoc.is_enable)) {
             console.warn('warn: Not loaded. Invalid custom object -> ', doc.name, doc.datasource);
@@ -200,25 +226,7 @@ function loadObject(doc, oldDoc) {
         //获取到继承后的对象
         // const _doc = objectql.getObjectConfig(doc.name);
         // console.log(`loadObject===>`, doc.name)
-        register.MetadataRegister.addObjectConfig(DB_OBJECT_SERVICE_NAME, originalObject).then(function(res){            
-            if(res){
-                // datasource.setObject(doc.name, _doc);
-                // try {
-                //     if (!datasourceName || datasourceName == defaultDatasourceName) {
-                //         Creator.Objects[doc.name] = _doc;
-                //         Creator.loadObjects(_doc, _doc.name);
-                //     }
-                // } catch (error) {
-                //     console.log('error', error);
-                // }
-                // if (!oldDoc || (oldDoc && oldDoc.is_enable === false && doc.is_enable)) {
-                //     loadObjectTriggers(doc);
-                //     loadObjectPermission(doc);
-                // }
-                
-                broker.broadcast("$packages.statisticsActivatedPackages", {});
-            }
-        })
+        _sendObjectMeta(originalObject);
         
         
     } catch (error) {
@@ -355,6 +363,7 @@ function triggerReloadObject(objectName, type, value, event){
       })
     if(objectRecord){
         //TODO 待支持动态加载related_list后， 删除此行代码
+        // console.log(`triggerReloadObject===>`, objectName)
         Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
     }else{
         Creator.getCollection("_object_reload_logs").insert({

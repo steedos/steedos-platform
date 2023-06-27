@@ -1,8 +1,15 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-06-27 09:32:45
+ * @Description: 
+ */
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
 var lodash = require('lodash');
 Meteor.startup(function () {
-    var _change, _remove;
+    var _change, _remove, inited = false;
     _change = function (document) {
         // 防止visible默认值丢失
         if(!document.visible && !lodash.isBoolean(document.visible)){
@@ -30,14 +37,21 @@ Meteor.startup(function () {
             }
         }).observe({
             added: function (newDocument) {
-                return _change(Object.assign(newDocument, {_previousName: newDocument.name}));
+                if(inited){
+                    return _change(Object.assign(newDocument, {_previousName: newDocument.name}));
+                }
             },
             changed: function (newDocument, oldDocument) {
-                return _change(Object.assign(newDocument, {_previousName: oldDocument.name}));
+                if(inited){
+                    return _change(Object.assign(newDocument, {_previousName: oldDocument.name}));
+                }
             },
             removed: function (oldDocument) {
-                return _remove(oldDocument);
+                if(inited){
+                    return _remove(oldDocument);
+                }
             }
         });
+        inited=true;
     }
 });
