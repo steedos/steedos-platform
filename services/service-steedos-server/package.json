@@ -38,7 +38,7 @@
     "moleculer": "^0.14.25",
     "moleculer-db": "^0.8.4",
     "moleculer-web": "^0.10.4",
-    "steedos-server": "2.5.5"
+    "steedos-server": "2.6.1-beta.1"
   },
   "private": false,
   "publishConfig": {
