@@ -155,7 +155,7 @@ function _sendObjectMeta(objectConfig){
         var length = _objectConfigs.length
         register.MetadataRegister.addObjectConfigs(DB_OBJECT_SERVICE_NAME, _objectConfigs).then(function(res){         
             if(res){
-                console.log('send object meta success', length);
+                // console.log('send object meta success', length);
                 broker.broadcast("$packages.statisticsActivatedPackages", {});
             }
         })
