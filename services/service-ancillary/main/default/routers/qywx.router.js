@@ -21,11 +21,12 @@ router.use("/qywx", async function (req, res, next) {
 // 网页授权登录
 router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     const broker = objectql.getSteedosSchema().broker
-    let authToken, cookies, hashedToken, user, userId, userInfo, state, redirect_url, _ref5, space, spaceId, token;
+    let authToken, cookies, hashedToken, user, userId, userInfo, state, redirect_url, _ref5, space, spaceId, token, qywxUser;
     cookies = new Cookies(req, res);
 
     userId = cookies.get("X-User-Id");
     authToken = cookies.get("X-Auth-Token");
+
     state = req.query.state;
     space = await broker.call('qywx.getSpace', {corpId: null})
     // 获取access_token
@@ -84,8 +85,11 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         return res.end('');
     }
 
-    // console.log("userInfo: ",userInfo);
     user = await broker.call('qywx.getSpaceUser', {spaceId: space._id, userInfo: userInfo})
+
+    if (userInfo.user_ticket){
+        qywxUser = await broker.call('qywx.getUserDetail', {accessToken: token, userTicket: userInfo.user_ticket})
+    }
 
     // 默认工作区
     if (space)
@@ -136,27 +140,44 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         // res.write('<h1>提示 Tips</h1>');
         // res.write('<h2>请联系管理员配置企业微信工作区ID和用户ID...</h2>');
         return res.end('');
-    }
-    // console.log("user: ",user);
-    if (userId && authToken) {
-        if (user.user != userId) {
-            // console.log("userId: ",userId);
-            clearAuthCookies(req, res);
-            hashedToken = Accounts._hashLoginToken(authToken);
-            await destroyToken(userId, hashedToken);
-        } else {
-            res.redirect(302, redirect_url || '/');
-            return res.end('');
+    }else{
+        if (qywxUser){
+            // 同步更新手机号
+            let qywxMobile = qywxUser.mobile;
+            let userMobile = user.mobile || "";
+            if((qywxMobile != userMobile) && (qywxMobile != "")){
+                await broker.call('qywx.updateUserMobile', {userId: user._id, mobile: qywxUser.mobile});
+            }
+
+            // 同步更新邮箱
+            let qywxEmail = qywxUser.email;
+            let userEmail = user.email || "";
+            if((qywxEmail != userEmail) && (qywxEmail != "")){
+                await broker.call('qywx.updateUserEmail', {userId: user._id, email: qywxUser.email});
+            }
+
         }
+
+        if (userId && authToken) {
+            if (user.user != userId) {
+                // console.log("userId: ",userId);
+                clearAuthCookies(req, res);
+                hashedToken = Accounts._hashLoginToken(authToken);
+                await destroyToken(userId, hashedToken);
+            } else {
+                res.redirect(302, redirect_url || '/');
+                return res.end('');
+            }
+        }
+        let stampedAuthToken = auth.generateStampedLoginToken();
+        authtToken = stampedAuthToken.token;
+        hashedToken = auth.hashStampedToken(stampedAuthToken);
+        await auth.insertHashedLoginToken(user.user, hashedToken);
+        auth.setAuthCookies(req, res, user.user, authtToken, spaceId);
+        res.setHeader('X-Space-Token', spaceId + ',' + authtToken);
+        res.redirect(302, redirect_url || '/');
+        return res.end('');
     }
-    let stampedAuthToken = auth.generateStampedLoginToken();
-    authtToken = stampedAuthToken.token;
-    hashedToken = auth.hashStampedToken(stampedAuthToken);
-    await auth.insertHashedLoginToken(user.user, hashedToken);
-    auth.setAuthCookies(req, res, user.user, authtToken, spaceId);
-    res.setHeader('X-Space-Token', spaceId + ',' + authtToken);
-    res.redirect(302, redirect_url || '/');
-    return res.end('');
 });
 
 // 从企业微信端单点登录:从浏览器后台管理页面"前往服务商后台"进入的网址
@@ -250,7 +271,6 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     var query = req.query
     var params = req.body
 
-    // console.log(query)
     // console.log(params)
 
     var dtSpace = await broker.call('qywx.getSpace');
