@@ -798,14 +798,17 @@ MongoConnection.prototype.findOne = function (collection_name, selector,
 // Mongo's, but make it synchronous.
 MongoConnection.prototype._ensureIndex = function (collectionName, index,
                                                    options) {
-  var self = this;
-
-  // We expect this function to be called at startup, not from within a method,
-  // so we don't interact with the write fence.
-  var collection = self.rawCollection(collectionName);
-  var future = new Future;
-  var indexName = collection.ensureIndex(index, options, future.resolver());
-  future.wait();
+  try {
+    var self = this;
+    // We expect this function to be called at startup, not from within a method,
+    // so we don't interact with the write fence.
+    var collection = self.rawCollection(collectionName);
+    var future = new Future;
+    var indexName = collection.ensureIndex(index, options, future.resolver());
+    future.wait();
+  } catch (Exception) {
+    
+  }
 };
 MongoConnection.prototype._dropIndex = function (collectionName, index) {
   var self = this;

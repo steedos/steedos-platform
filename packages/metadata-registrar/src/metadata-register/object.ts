@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-27 11:38:13
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 09:25:47
+ * @LastEditTime: 2023-06-26 18:10:47
  * @Description: 
  */
 import * as _ from 'underscore';
@@ -41,6 +41,28 @@ export async function addObjectConfig(broker, serviceName, objectConfig) {
             nodeID: broker.nodeID
         }
     }});
+    return res;
+}
+
+export async function addObjectConfigs(broker, serviceName, objectConfigs) {
+    if(_.isEmpty(objectConfigs)){
+        return ;
+    }
+    let metadatas = clone(objectConfigs);
+    _.map(metadatas, (metadata) => {
+        delete metadata.triggers;
+        delete metadata.listeners;
+        delete metadata.methods;
+        objectToJson(metadata);
+    })
+    const res = await broker.call("objects.addConfigs", { data: metadatas }, {
+        meta: {
+            metadataServiceName: serviceName,
+            caller: {
+                nodeID: broker.nodeID
+            }
+        }
+    });
     return res;
 }
 

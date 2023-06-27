@@ -148,8 +148,8 @@ Template.afSelectTree.helpers({
 });
 
 
-Template.afSelectTree.onDestroyed(function () {
-	// 还原dxOverlay原来默认的zIndex值
-	DevExpress.ui.dxOverlay.baseZIndex(1500);
-});
+// Template.afSelectTree.onDestroyed(function () {
+// 	// 还原dxOverlay原来默认的zIndex值
+// 	DevExpress.ui.dxOverlay.baseZIndex(1500);
+// });
 
