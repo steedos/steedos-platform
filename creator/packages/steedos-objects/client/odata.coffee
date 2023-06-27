@@ -92,47 +92,47 @@ Creator.odata.query = (object_name, options, is_ajax, callback)->
 	else
 		if object_name
 			url = Steedos.absoluteUrl "/api/v4/#{_object_name}"
-			options.store = new DevExpress.data.ODataStore({
-				type: "odata"
-				version: 4
-				url: url
-				withCredentials: false
-				beforeSend: (request) ->
-					request.headers['X-User-Id'] = Meteor.userId()
-					request.headers['X-Space-Id'] = Steedos.spaceId()
-					request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-				errorHandler: (error) ->
-					if error.httpStatus == 404 || error.httpStatus == 400
-						error.message = t "creator_odata_api_not_found"
-					else if error.httpStatus == 401
-						error.message = t "creator_odata_unexpected_character"
-					else if error.httpStatus == 403
-						error.message = t "creator_odata_user_privileges"
-					else if error.httpStatus == 500
-						if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
-							error.message = t "creator_odata_unexpected_character"
-					toastr.error(error.message)
-				fieldTypes: {
-					'_id': 'String'
-				}
-			})
-			datasource = new DevExpress.data.DataSource(options)
-			datasource.load()
-				.done((result, args) ->
-					if isAsync
-						callback(result, args)
-				)
-				.fail((error) ->
-					console.error error
-					if error.reason
-						toastr?.error?(TAPi18n.__(error.reason))
-					else if error.message
-						toastr?.error?(TAPi18n.__(error.message))
-					else
-						toastr?.error?(error)
-					if isAsync
-						callback(false, error)
-				)
+			# options.store = new DevExpress.data.ODataStore({
+			# 	type: "odata"
+			# 	version: 4
+			# 	url: url
+			# 	withCredentials: false
+			# 	beforeSend: (request) ->
+			# 		request.headers['X-User-Id'] = Meteor.userId()
+			# 		request.headers['X-Space-Id'] = Steedos.spaceId()
+			# 		request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+			# 	errorHandler: (error) ->
+			# 		if error.httpStatus == 404 || error.httpStatus == 400
+			# 			error.message = t "creator_odata_api_not_found"
+			# 		else if error.httpStatus == 401
+			# 			error.message = t "creator_odata_unexpected_character"
+			# 		else if error.httpStatus == 403
+			# 			error.message = t "creator_odata_user_privileges"
+			# 		else if error.httpStatus == 500
+			# 			if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
+			# 				error.message = t "creator_odata_unexpected_character"
+			# 		toastr.error(error.message)
+			# 	fieldTypes: {
+			# 		'_id': 'String'
+			# 	}
+			# })
+			# datasource = new DevExpress.data.DataSource(options)
+			# datasource.load()
+			# 	.done((result, args) ->
+			# 		if isAsync
+			# 			callback(result, args)
+			# 	)
+			# 	.fail((error) ->
+			# 		console.error error
+			# 		if error.reason
+			# 			toastr?.error?(TAPi18n.__(error.reason))
+			# 		else if error.message
+			# 			toastr?.error?(TAPi18n.__(error.message))
+			# 		else
+			# 			toastr?.error?(error)
+			# 		if isAsync
+			# 			callback(false, error)
+			# 	)
 
 
 Creator.odata.queryCount = (object_name, options, callback)->
@@ -145,44 +145,44 @@ Creator.odata.queryCount = (object_name, options, callback)->
 		return
 	if object_name
 		url = Steedos.absoluteUrl "/api/v4/#{_object_name}"
-		store = new DevExpress.data.ODataStore({
-			type: "odata"
-			version: 4
-			url: url
-			withCredentials: false
-			beforeSend: (request) ->
-				request.headers['X-User-Id'] = Meteor.userId()
-				request.headers['X-Space-Id'] = Steedos.spaceId()
-				request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
-			errorHandler: (error) ->
-				if error.httpStatus == 404 || error.httpStatus == 400
-					error.message = t "creator_odata_api_not_found"
-				else if error.httpStatus == 401
-					error.message = t "creator_odata_unexpected_character"
-				else if error.httpStatus == 403
-					error.message = t "creator_odata_user_privileges"
-				else if error.httpStatus == 500
-					if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
-						error.message = t "creator_odata_unexpected_character"
-				toastr.error(error.message)
-			fieldTypes: {
-				'_id': 'String'
-			}
-		})
-		store.totalCount(options)
-			.done((count) ->
-				callback(count)
-			)
-			.fail((error) ->
-				console.error error
-				if error.reason
-					toastr?.error?(TAPi18n.__(error.reason))
-				else if error.message
-					toastr?.error?(TAPi18n.__(error.message))
-				else
-					toastr?.error?(error)
-				callback(false, error)
-			)
+		# store = new DevExpress.data.ODataStore({
+		# 	type: "odata"
+		# 	version: 4
+		# 	url: url
+		# 	withCredentials: false
+		# 	beforeSend: (request) ->
+		# 		request.headers['X-User-Id'] = Meteor.userId()
+		# 		request.headers['X-Space-Id'] = Steedos.spaceId()
+		# 		request.headers['X-Auth-Token'] = Accounts._storedLoginToken()
+		# 	errorHandler: (error) ->
+		# 		if error.httpStatus == 404 || error.httpStatus == 400
+		# 			error.message = t "creator_odata_api_not_found"
+		# 		else if error.httpStatus == 401
+		# 			error.message = t "creator_odata_unexpected_character"
+		# 		else if error.httpStatus == 403
+		# 			error.message = t "creator_odata_user_privileges"
+		# 		else if error.httpStatus == 500
+		# 			if error.message == "Unexpected character at 106" or error.message == 'Unexpected character at 374'
+		# 				error.message = t "creator_odata_unexpected_character"
+		# 		toastr.error(error.message)
+		# 	fieldTypes: {
+		# 		'_id': 'String'
+		# 	}
+		# })
+		# store.totalCount(options)
+		# 	.done((count) ->
+		# 		callback(count)
+		# 	)
+		# 	.fail((error) ->
+		# 		console.error error
+		# 		if error.reason
+		# 			toastr?.error?(TAPi18n.__(error.reason))
+		# 		else if error.message
+		# 			toastr?.error?(TAPi18n.__(error.message))
+		# 		else
+		# 			toastr?.error?(error)
+		# 		callback(false, error)
+		# 	)
 
 Creator.odata.delete = (object_name,record_id,callback,onError)->
 	_object_name = Creator.formatObjectName(object_name)
