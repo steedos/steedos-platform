@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "2.6.1-beta.1",
+    "version": "2.6.1-beta.2",
     "description": "",
     "main": "index.js",
     "author": "",
@@ -10,5 +10,5 @@
         "access": "public"
     },
     "homepage": "https://www.steedos.com",
-    "gitHead": "4cfca8ba76cca0b2ee1c7ad5997b97ba89f05aac"
+    "gitHead": "9051772a001ba99aeaf026680ef171d508e92b8f"
 }
