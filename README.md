@@ -67,7 +67,7 @@ Steedos DX introduces a new way to organize your metadata and distribute your ap
 
 ## Open Source Ecosystem
 
-Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
+Steedos can seamlessly integrating with third-party open source projects through plugins, to build an integrated enterprise PaaS platform for customers.
 
   - [x] [KeyCloak](https://github.com/keycloak/keycloak) Open Source Identity and Access Management For Modern Applications and Services.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
