@@ -65,7 +65,7 @@ Steedos DX introduces a new way to organize your metadata and distribute your ap
   - [x] Object Triggers [Docs](https://docs.steedos.com/developer/action-trigger)
   - [x] Custom API [Docs](https://docs.steedos.com/developer/action-api)
 
-## Integrating with open source ecosystem
+## Open Source Ecosystem
 
 Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
 
