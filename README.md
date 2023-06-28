@@ -71,9 +71,9 @@ Steedos can working collaboratively with third-party low-code platforms, help en
 
   - [x] [KeyCloak](https://github.com/keycloak/keycloak) Open Source Identity and Access Management For Modern Applications and Services.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
-  - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [x] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [x] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
   - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
-  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
 
 ## Getting Started
 
