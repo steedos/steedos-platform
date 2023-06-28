@@ -65,9 +65,9 @@ Steedos DX introduces a new way to organize your metadata and distribute your ap
   - [x] Object Triggers [Docs](https://docs.steedos.com/developer/action-trigger)
   - [x] Custom API [Docs](https://docs.steedos.com/developer/action-api)
 
-## Open Source Ecosystem
+## Enterprise Plugins
 
-Steedos can seamlessly integrating with third-party open source projects through plugins, to build an integrated enterprise PaaS platform for enterprise.
+Steedos enterprise can seamlessly integrating with third-party open source projects through plugins, to build an integrated PaaS platform for enterprise.
 
   - [x] [KeyCloak](https://github.com/keycloak/keycloak) Open Source Identity and Access Management For Modern Applications and Services.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
