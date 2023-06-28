@@ -75,15 +75,16 @@
   - [x] 触发器 [文档](https://docs.steedos.com/zh-CN/developer/action-trigger)
   - [x] 自定义API [文档](https://docs.steedos.com/zh-CN/developer/action-api)
   
-## 与第三方低代码工具无缝集成
+## 企业级插件
 
-作为低代码生态的一员，华炎魔方通过插件的方式，实现与多个行业领先的第三方低代码工具无缝集成，扩展华炎魔方的产品能力。
+华炎魔方支持以插件的方式与第三方开源项目无缝融合，包括统一身份认证、数据分析、微应用、流程自动化，为客户构建一体化的企业PaaS平台。
 
-  - [x] [Node-RED](https://github.com/node-red/node-red) 集成 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
-  - [ ] [Metabase 数据分析引擎](https://github.com/metabase/metabase) ，替代 [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
-  - [ ] [n8n](https://github.com/n8n-io/n8n) 业务流程编排，替代 [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
-  - [ ] [ToolJet](https://github.com/ToolJet/ToolJet/) 微应用
-
+  - [x] [KeyCloak](https://github.com/keycloak/keycloak) 企业级统一身份认证平台, **vs** [Salesfore Identity](https://help.salesforce.com/s/articleView?id=sf.identity_overview.htm&type=5)
+  - [x] [Node-RED](https://github.com/node-red/node-red) 可视化编程、物联网开发。 [文档](https://docs.steedos.cn/zh-CN/plugins/node-red)
+  - [x] [ToolJet](https://github.com/ToolJet/ToolJet/) 连接任意数据源，使用amis构建微应用。
+  - [x] [Metabase](https://github.com/metabase/metabase) 数据分析引擎, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) 业务流程编排, **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
+  
 # 快速向导
 
 ## 创建一个空项目
