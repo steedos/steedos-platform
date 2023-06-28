@@ -38,15 +38,6 @@
   - [x] 对象 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/object) 
   - [x] 字段 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/fields/) 
   - [x] 验证规则 [文档](https://docs.steedos.cn/zh-CN/no-code/customize/validation-rules) 
-- **控制数据访问权限**：平台提供了完善的安全和权限控制机制，可以确保企业数据的安全性和隐私性。
-  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
-  - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
-  - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
-  - [x] 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
-  - [x] 共享规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/sharing-rules)
-  - [x] 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
-  - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
-  - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
 - **自动化业务流程**：内置可视化的流程开发引擎，可以帮助用户快速实现业务流程自动化。
   - [x] 自动化操作 [文档](https://docs.steedos.cn/zh-CN/automation/automated-actions)
   - [x] 工作流规则 [文档](https://docs.steedos.cn/zh-CN/automation/workflow-rules)
@@ -59,6 +50,14 @@
 
 ![Steedos Permissions Overview](./docs/diagrams/Steedos%20Permissions.drawio.svg)
 
+  - [x] 对象权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/object-permissions)
+  - [x] 字段权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/field-permissions)
+  - [x] 应用权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/app-permissions)
+  - [x] 分部级权限 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/division)
+  - [x] 共享规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/sharing-rules)
+  - [x] 限制规则 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/restriction-rules)
+  - [x] 简档 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/profile)
+  - [x] 权限集 [文档](https://docs.steedos.cn/zh-CN/admin/permissions/permission-set)
 
 ## 使用代码扩展Steedos
 
