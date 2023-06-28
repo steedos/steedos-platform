@@ -65,10 +65,11 @@ Steedos DX introduces a new way to organize your metadata and distribute your ap
   - [x] Object Triggers [Docs](https://docs.steedos.com/developer/action-trigger)
   - [x] Custom API [Docs](https://docs.steedos.com/developer/action-api)
 
-## Integrations
+## Integrating with open source ecosystem
 
 Steedos can working collaboratively with third-party low-code platforms, help enterprises achieve seamless integration between internal and external systems.
 
+  - [x] [KeyCloak](https://github.com/keycloak/keycloak) Open Source Identity and Access Management For Modern Applications and Services.
   - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
   - [ ] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
   - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
