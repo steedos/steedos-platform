@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-fields-indexs",
-  "version": "2.6.1-beta.3",
+  "version": "2.6.1-beta.5",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
@@ -10,5 +10,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "aadc252f0493eacc639632ba9c3baae7a22df442"
+  "gitHead": "28d9ffe3cc73f4a89abea60c659f3b89eaaf378b"
 }
