@@ -12,7 +12,6 @@
   "scripts": {
     "pnpm:install": "rm -rf node_modules && pnpm install",
     "start": "cd examples && cd project-template && steedos start",
-    "start:ee": "cd examples && cd project-ee && steedos start",
     "bootstrap": "lerna clean --yes && lerna bootstrap",
     "build": "yarn bootstrap && lerna run build",
     "i18n": "lerna run i18n",
