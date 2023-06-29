@@ -65,7 +65,7 @@
     "dotenv": "^8.2.0",
     "dotenv-flow": "^3.1.0",
     "nodemon": "^2.0.19",
-    "steedos-server": "2.5.5",
+    "steedos-server": "2.6.1-beta.3",
     "typescript": "4.6.3"
   },
   "publishConfig": {

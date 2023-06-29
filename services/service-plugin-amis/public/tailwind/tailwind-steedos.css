@@ -54,6 +54,10 @@
   position: absolute
 }
 
+.relative {
+  position: relative
+}
+
 .sticky {
   position: sticky
 }
@@ -63,6 +67,10 @@
   right: 0px;
   bottom: 0px;
   left: 0px
+}
+
+.isolate {
+  isolation: isolate
 }
 
 .z-20 {
@@ -238,10 +246,6 @@
   border-radius: 0.25rem
 }
 
-.border {
-  border-width: 1px
-}
-
 .border-b {
   border-bottom-width: 1px
 }
@@ -385,11 +389,6 @@
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
-}
-
-.invert {
-  --tw-invert: invert(100%);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
 }
 
 .filter {
