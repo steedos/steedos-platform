@@ -12,6 +12,7 @@ import {
     numberToString,
     getFileStorageName
 } from "./utils"
+import { time } from "console";
 
 export function getGraphqlActions(
     // objectConfig: SteedosObjectTypeConfig
@@ -173,7 +174,7 @@ export function getGraphqlActions(
     actions[`${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`] = {
         handler: async function (ctx) {
             let params = ctx.params;
-            let { __objectName } = params;
+            let { __objectName, __objectConfig } = params;
             let userSession = ctx.meta.user;
             let selectFieldNames = [];
             const { resolveInfo } = ctx.meta;
@@ -181,7 +182,7 @@ export function getGraphqlActions(
             if (!_.isEmpty(fieldNames)) {
                 selectFieldNames = fieldNames;
             }
-            let result = await translateToUI(__objectName, params, userSession, selectFieldNames);
+            let result = await translateToUI(__objectConfig, params, userSession, selectFieldNames);
 
             return result;
         },
@@ -419,11 +420,11 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
     return displayDoc;
 }
 
-async function translateToUI(objectName, doc, userSession: any, selectorFieldNames) {
+export async function translateToUI(objConfig, doc, userSession: any, selectorFieldNames) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
-    let object = steedosSchema.getObject(objectName);
-    let objConfig = await object.toConfig();
+    // let object = steedosSchema.getObject(objectName);
+    // let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
     translationObject(lng, objConfig.name, objConfig, true);

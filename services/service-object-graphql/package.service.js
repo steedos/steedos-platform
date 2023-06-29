@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-27 10:06:21
+ * @LastEditTime: 2023-06-28 19:08:39
  * @Description: 
  */
 
@@ -19,7 +19,8 @@ const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
-const { QUERY_DOCS_TOP } = require('./lib/consts');
+const { QUERY_DOCS_TOP, UI_PREFIX } = require('./lib/consts');
+const { translateToUI } = require('./lib/getGraphqlActions');
 
 const { Register } = require('@steedos/metadata-registrar')
 
@@ -252,7 +253,7 @@ module.exports = {
                     // console.log("Sender:", ctx.nodeID);
                     // console.log("Metadata:", ctx.meta);
                     // console.log("The called event name:", ctx.eventName);
-                    const objGraphqlMap = await this.generateObjGraphqlMap(this.name)
+                    const objGraphqlMap = await this.generateObjGraphqlMap(this.name);
                     let type = []
                     let query = []
                     let mutation = []
@@ -293,6 +294,56 @@ module.exports = {
      * Methods
      */
     methods: {
+        getObjectsUIResolvers(objectConfigs){
+            const resolvers = {};
+            for (const object of objectConfigs) {
+                try {
+                    const objectConfig = object.metadata
+                    const objectName = objectConfig.name
+                    // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
+                    if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
+                        continue
+                    }
+                    // resolvers[objectName][UI_PREFIX] = {
+                    //     action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
+                    //     rootParams: {
+                    //         _id: "_id",
+                    //         ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
+                    //     },
+                    //     params: {
+                    //         '__objectName': objectName
+                    //     },
+                    // };
+
+                    delete objectConfig.list_views
+                    delete objectConfig.permission_set
+                    delete objectConfig.actions
+                    delete objectConfig.triggers
+
+                    const _fields = {};
+                    _.each(objectConfig.fields, (field)=>{
+                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale']);
+                    })
+                    objectConfig.fields=_fields;
+
+                    resolvers[objectName] = async (root, args, context, info) => {
+                        // console.log(`${objectName}${UI_PREFIX}`, root, args, context, info);
+                        const { ctx } = context;
+                        let userSession = ctx.meta.user;
+                        let selectFieldNames = [];
+                        const fieldNames = getQueryFields(info);
+                        if (!_.isEmpty(fieldNames)) {
+                            selectFieldNames = fieldNames;
+                        }
+                        let result = await translateToUI(objectConfig, root, userSession, selectFieldNames);
+                        return result
+                    }
+                } catch (error) {
+                    console.log(`error`, error)
+                }
+            }
+            return resolvers;
+        },
         async ChangeGlobalGraphQLSettings() {
             const result = await Register.get(this.broker, 'globalGraphQLSettings');
             if(result){
@@ -442,6 +493,8 @@ module.exports = {
                     console.error(`error`, error)
                 }
             };
+
+            this.ObjectsUIResolvers = this.getObjectsUIResolvers(objectConfigs);
 
             return objGraphqlMap
         },
