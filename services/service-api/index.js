@@ -566,6 +566,13 @@ module.exports = {
 								},
 								resolvers
 							);
+
+
+							for (const objectName in this.ObjectsUIResolvers) {
+								if(resolvers[objectName]){
+									resolvers[objectName]['_ui'] = this.ObjectsUIResolvers[objectName];
+								}
+							}
 						}
 					}
 				}

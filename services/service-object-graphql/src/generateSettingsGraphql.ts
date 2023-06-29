@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-21 17:06:24
+ * @LastEditTime: 2023-06-28 17:18:47
  * @Description: 
  */
 
@@ -167,16 +167,16 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, g
     // _ui
     let _ui_type_name = `${UI_PREFIX}_${objectName}`;
     type += `${UI_PREFIX}: ${_ui_type_name} `;
-    resolvers[objectName][UI_PREFIX] = {
-        action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
-        rootParams: {
-            _id: "_id",
-            ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
-        },
-        params: {
-            '__objectName': objectName
-        },
-    };
+    // resolvers[objectName][UI_PREFIX] = {
+    //     action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
+    //     rootParams: {
+    //         _id: "_id",
+    //         ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
+    //     },
+    //     params: {
+    //         '__objectName': objectName
+    //     },
+    // };
     // define _ui_type
     let _ui_type = _getUIType(_ui_type_name, fields);
     type = gql`

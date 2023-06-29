@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-27 10:09:51
+ * @LastEditTime: 2023-07-03 13:48:07
  * @Description: 
  */
 
@@ -20,7 +20,8 @@ const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
-const { QUERY_DOCS_TOP } = require('./lib/consts');
+const { QUERY_DOCS_TOP, UI_PREFIX } = require('./lib/consts');
+const { translateToUI } = require('./lib/getGraphqlActions');
 
 const _ = require('lodash');
 
@@ -303,7 +304,64 @@ module.exports = {
      * Methods
      */
     methods: {
+        getObjectsUIResolvers(objectConfigs){
+            const resolvers = {};
+            for (const object of objectConfigs) {
+                try {
+                    const objectConfig = object.metadata
+                    const objectName = objectConfig.name
+                    // 排除 __MONGO_BASE_OBJECT __SQL_BASE_OBJECT
+                    if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
+                        continue
+                    }
+                    // resolvers[objectName][UI_PREFIX] = {
+                    //     action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
+                    //     rootParams: {
+                    //         _id: "_id",
+                    //         ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
+                    //     },
+                    //     params: {
+                    //         '__objectName': objectName
+                    //     },
+                    // };
 
+                    delete objectConfig.list_views
+                    delete objectConfig.permission_set
+                    delete objectConfig.actions
+                    delete objectConfig.triggers
+
+                    const _fields = {};
+                    _.each(objectConfig.fields, (field)=>{
+                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale']);
+                    })
+                    objectConfig.fields=_fields;
+
+                    resolvers[objectName] = async (root, args, context, info) => {
+                        // console.log(`${objectName}${UI_PREFIX}`, root, args, context, info);
+                        const { ctx } = context;
+                        let userSession = ctx.meta.user;
+                        let selectFieldNames = [];
+                        const fieldNames = getQueryFields(info);
+                        if (!_.isEmpty(fieldNames)) {
+                            selectFieldNames = fieldNames;
+                        }
+                        let result = await translateToUI(objectConfig, root, userSession, selectFieldNames);
+                        return result
+                    }
+                } catch (error) {
+                    console.log(`error`, error)
+                }
+            }
+            return resolvers;
+        },
+        async ChangeGlobalGraphQLSettings() {
+            const result = await Register.get(this.broker, 'globalGraphQLSettings');
+            if(result){
+                this.globalGraphQLSettings = result.metadata;
+                // 发送事件，通知ApolloService重新加载graphql schema; api 服务和graphql服务在同一个节点上.
+                this.broker.broadcastLocal('$services.changed');
+            }
+        },
         find: {
             async handler(objectName, query, userSession) {
                 const obj = this.getObject(objectName)
@@ -445,6 +503,8 @@ module.exports = {
                     console.error(`error`, error)
                 }
             };
+
+            this.ObjectsUIResolvers = this.getObjectsUIResolvers(objectConfigs);
 
             return objGraphqlMap
         },
