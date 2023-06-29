@@ -1,12 +1,12 @@
 {
   "name": "with-tracing-jaeger",
-  "version": "2.6.1-beta.2",
+  "version": "2.6.1-beta.3",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.6.1-beta.2"
+    "@steedos/service-community": "2.6.1-beta.3"
   },
   "devDependencies": {
     "jaeger-client": "^3.19.0"
