@@ -7,47 +7,47 @@
 let keyvalues = {};
 ; (function () {
     try {
-        var rootId = "steedosKeyvaluesSubscribeRoot";
-        var modalRoot = document.getElementById(rootId);
-        if (!modalRoot) {
-            modalRoot = document.createElement('div');
-            modalRoot.setAttribute('id', rootId);
-            $("body")[0].appendChild(modalRoot);
-        }
-        const page = {
-            name: "pageSteedosKeyvaluesSubscribe",
-            render_engine: "amis",
-            schema: {
-                name: "serviceSteedosKeyvaluesSubscribe",
-                id: "serviceSteedosKeyvaluesSubscribe",
-                type: "service",
-                className: "service-steedos-keyvalues-subscribe hidden",
-                body: [{
-                    "type": "button",
-                    "label": "触发@data.changed",
-                    "name": "buttonTriggerDataChange",
-                    "className": "button-trigger-data-change-steedos_keyvalues",
-                    "onEvent": {
-                        "click": {
-                            "actions": [
-                                {
-                                    "actionType": "broadcast",
-                                    "args": {
-                                        "eventName": "@data.changed.steedos_keyvalues"
-                                    },
-                                    "data": {
-                                        "type": "${event.data.type}",
-                                        "keyvalue": "${event.data.keyvalue}",
-                                        "keyvalues": "${ss:keyvalues}"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }]
-            }
-        };
         Meteor.startup(function () {
+            var rootId = "steedosKeyvaluesSubscribeRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $("body")[0].appendChild(modalRoot);
+            }
+            const page = {
+                name: "pageSteedosKeyvaluesSubscribe",
+                render_engine: "amis",
+                schema: {
+                    name: "serviceSteedosKeyvaluesSubscribe",
+                    id: "serviceSteedosKeyvaluesSubscribe",
+                    type: "service",
+                    className: "service-steedos-keyvalues-subscribe hidden",
+                    body: [{
+                        "type": "button",
+                        "label": "触发@data.changed",
+                        "name": "buttonTriggerDataChange",
+                        "className": "button-trigger-data-change-steedos_keyvalues",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@data.changed.steedos_keyvalues"
+                                        },
+                                        "data": {
+                                            "type": "${event.data.type}",
+                                            "keyvalue": "${event.data.keyvalue}",
+                                            "keyvalues": "${ss:keyvalues}"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }]
+                }
+            };
             const root = $("#" + rootId)[0];
             Tracker.autorun(function (c) {
                 if (Creator.steedosInit.get() && Creator.validated.get() && Steedos.subsBootstrap.ready("steedos_keyvalues")) {
