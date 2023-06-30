@@ -3,8 +3,12 @@ import _ = require("underscore");
 const ENUM_WHEN = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete']
 
 //TODO
-function getObject(){
-
+function getObject(objectName: string){
+    try {
+        return require('@steedos/objectql').getObject(objectName)
+    } catch (error) {
+        throw new Error('getObject is not defined')
+    }
 }
 
 function getBaseContext(object: any) {
