@@ -7,7 +7,7 @@
  */
 module.exports = {
     verify_mobile: function (object_name, record_id) {
-        Steedos.openWindow('/accounts/a/#/verify/mobile')
+        Steedos.openWindow(Steedos.absoluteUrl('/accounts/a/#/verify/mobile'))
     },
 
     verify_mobileVisible: function (object_name, record_id, record_permissions, data) {
