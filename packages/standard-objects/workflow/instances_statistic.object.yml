@@ -2,6 +2,7 @@ name: instances_statistic
 icon: metrics
 label: Statistic of Processing Instances
 hidden: true
+enable_dataloader: false
 fields:
   user:
     type: master_detail
