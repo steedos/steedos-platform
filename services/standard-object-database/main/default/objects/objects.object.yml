@@ -3,6 +3,7 @@ icon: orders
 label: Object
 version: 2
 hidden: true
+enable_dataloader: false
 fields:
   datasource:
     type: master_detail
@@ -133,6 +134,13 @@ fields:
     inlineHelpText: When enabled, the lookup field associated with this object displays its options as a pop-up window.
     group: Switch
     defaultValue: false
+  enable_dataloader:
+    type: boolean
+    label: Enable Dataloader
+    inlineHelpText: Enable the dataloader for the object GraphQL API. The default value is "true".
+    group: Switch
+    defaultValue: true
+    hidden: true
   # enable_audit:
   #   type: boolean
   #   label: Enable Audit

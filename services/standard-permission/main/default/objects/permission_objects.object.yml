@@ -3,6 +3,7 @@ label: Permission
 icon: omni_supervisor
 hidden: true
 version: 2
+enable_dataloader: false
 fields:
   name:
     label: Name
