@@ -30,3 +30,4 @@
 !/server/bundle/**/node_modules
 docker-volumes/**
 examples/multi-node-testing/**
+examples/project-ee/**
