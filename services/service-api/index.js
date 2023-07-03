@@ -14,10 +14,10 @@ const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 const ServiceObjectGraphql = require('@steedos/service-object-graphql')
 const open = require('open');
-
+const DataLoader = require("dataloader");
+const { LRUMap } = require('lru_map');
 const validator = require('validator');
-const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true)
-
+const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true);
 const mixinOptions = {
 
 	// Global GraphQL typeDefs
@@ -317,6 +317,76 @@ module.exports = {
 
 	methods: {
 		/**
+		 * Get the unique key assigned to the DataLoader map
+		 * @param {string} actionName - Fully qualified action name to bind to dataloader
+		 * @param {Object.<string, any>} staticParams - Static parameters to use in dataloader
+		 * @param {Object.<string, any>} args - Arguments passed to GraphQL child resolver
+		 * @returns {string} Key to the dataloader instance
+		 */
+		getObjectDataLoaderMapKey(objectName) {
+			if (objectName) {
+				return `object:${objectName}`;
+			}
+			// 如果没有objectName，则抛出错误信息
+			throw new Error("objectName is required");
+		},
+
+
+		async objectDataLoaderHandler(actionName, staticParams, rootParams, graphqlCtx) {
+			const rootKeys = Object.keys(rootParams);
+			const {root, args, context, resolveInfo} = graphqlCtx;
+			const dataLoaderMapKey = this.getObjectDataLoaderMapKey(
+				staticParams.__objectName || staticParams.objectName
+			);
+			const objectDataLoaders = this.objectDataLoaders;
+			// if a dataLoader batching parameter is specified, then all root params can be data loaded;
+			// otherwise use only the primary rootParam
+			const primaryDataLoaderRootKey = rootKeys[0]; // for dataloader, use the first root key only
+			const dataLoaderBatchParam = this.dataLoaderBatchParams.get(actionName);
+			const dataLoaderUseAllRootKeys = dataLoaderBatchParam != null;
+
+			// check to see if the DataLoader has already been added to the GraphQL context; if not then add it for subsequent use
+			let dataLoader;
+			// console.log(`objectDataLoaders.has(dataLoaderMapKey)`, objectDataLoaders.has(dataLoaderMapKey))
+			if (objectDataLoaders.has(dataLoaderMapKey)) {
+				dataLoader = objectDataLoaders.get(dataLoaderMapKey);
+			} else {
+				const batchedParamKey =
+					dataLoaderBatchParam || rootParams[primaryDataLoaderRootKey];
+				dataLoader = this.buildDataLoader(
+					context.ctx,
+					actionName,
+					batchedParamKey,
+					staticParams,
+					args,
+					{ hashCacheKey: dataLoaderUseAllRootKeys } // must hash the cache key if not loading scalar
+				);
+				objectDataLoaders.set(dataLoaderMapKey, dataLoader);
+			}
+
+			let dataLoaderKey;
+			if (dataLoaderUseAllRootKeys) {
+				if (root && rootKeys) {
+					dataLoaderKey = {};
+
+					rootKeys.forEach(key => {
+						_.set(dataLoaderKey, rootParams[key], _.get(root, key));
+					});
+				}
+			} else {
+				dataLoaderKey = root && _.get(root, primaryDataLoaderRootKey);
+			}
+
+			if (dataLoaderKey == null) {
+				return null;
+			}
+
+			return Array.isArray(dataLoaderKey)
+				? await dataLoader.loadMany(dataLoaderKey)
+				: await dataLoader.load(dataLoaderKey);
+		},
+
+		/**
 		 * Authenticate the request. It check the `Authorization` token value in the request header.
 		 * Check the token value & resolve the user by the token.
 		 * The resolved user will be available in `ctx.meta.user`
@@ -372,16 +442,18 @@ module.exports = {
 		createActionResolver(actionName, def = {}) {
 			const {
 				dataLoader: useDataLoader = false,
+				objectDataLoader: useObjectDataLoader = false,
 				nullIfError = false,
 				params: staticParams = {},
 				rootParams = {},
 				fileUploadArg = null,
 			} = def;
 			const rootKeys = Object.keys(rootParams);
-
 			return async (root, args, context, resolveInfo) => {
 				try {
-					if (useDataLoader) {
+					if(useObjectDataLoader){
+						return await this.objectDataLoaderHandler(actionName, staticParams, rootParams, {root, args, context, resolveInfo});
+					}else if (useDataLoader) {
 						const dataLoaderMapKey = this.getDataLoaderMapKey(
 							actionName,
 							staticParams,
@@ -820,11 +892,65 @@ module.exports = {
 			}
 		},
 
+		/**
+			 * Build a DataLoader instance
+			 *
+			 * @param {Object} ctx - Moleculer context
+			 * @param {string} actionName - Fully qualified action name to bind to dataloader
+			 * @param {string} batchedParamKey - Parameter key to use for loaded values
+			 * @param {Object} staticParams - Static parameters to use in dataloader
+			 * @param {Object} args - Arguments passed to GraphQL child resolver
+			 * @param {Object} [options={}] - Optional arguments
+			 * @param {Boolean} [options.hashCacheKey=false] - Use a hash for the cacheKeyFn
+			 * @returns {DataLoader} Dataloader instance
+			 */
+		buildDataLoader(
+			ctx,
+			actionName,
+			batchedParamKey,
+			staticParams,
+			args,
+			{ hashCacheKey = false } = {}
+		) {
+			const batchLoadFn = keys => {
+				const rootParams = { [batchedParamKey]: keys };
+				return ctx.call(actionName, _.defaultsDeep({}, args, rootParams, staticParams));
+			};
+
+			const dataLoaderOptions = this.dataLoaderOptions.get(actionName) || {};
+			const cacheKeyFn = hashCacheKey && (key => hash(key));
+			const options = {
+				...(cacheKeyFn && { cacheKeyFn }),
+				cacheMap: new LRUMap(1000),
+				...dataLoaderOptions,
+			};
+			return new DataLoader(batchLoadFn, options);
+		}
+
 	},
 	created() {
+		this.objectDataLoaders = new Map();
 		this.app = SteedosRouter.staticRouter();
 	},
 	events:{
+		'@objectRecordEvent.*.*': function(ctx){
+			const { objectApiName, isUpdate, isDelete, id, doc } = ctx.params;
+			if(objectApiName && (isUpdate || isDelete)){
+				const key = this.getObjectDataLoaderMapKey(
+					objectApiName
+				);
+				let dataLoaderKeys = [id];
+				if(objectApiName === 'space_users'){
+					dataLoaderKeys.push(doc.user)
+				}
+				const loader = this.objectDataLoaders.get(key);
+				if(loader){
+					for(const dataLoaderKey of dataLoaderKeys){
+						loader.clear(dataLoaderKey);
+					}
+				}
+			}
+		},
 		'service-ui.started': function(){
 			this.app.use("/", this.express());
 		},
@@ -870,6 +996,15 @@ module.exports = {
 
 		global.SteedosApi = {
 			express: this.express
+		}
+	},
+
+	actions: {
+		getObjectDisplayData: {
+			handler(ctx) {
+				const { objectApiName, recordId, fields } = ctx.params;
+				return this.getObjectDisplayData(objectApiName, recordId, fields);
+			}
 		}
 	}
 };

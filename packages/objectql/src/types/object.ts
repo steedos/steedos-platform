@@ -77,6 +77,7 @@ abstract class SteedosObjectProperties {
     enable_notes?: boolean
     enable_events?: boolean
     enable_api?: boolean  //TODO 未开放功能
+    abstract enable_dataloader?: boolean
     abstract enable_share?: boolean
     abstract enable_instances?: boolean
     enable_chatter?: boolean
@@ -122,7 +123,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 export const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging"]
+const properties = ['enable_dataloader', 'label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging"]
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -145,6 +146,15 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private _NAME_FIELD_KEY: string;
     private _masters: string[] = [];
     private _details: string[] = [];
+
+    private _enable_dataloader:boolean;
+    public get enable_dataloader(): boolean{
+        return this._enable_dataloader;
+    }
+
+    public set enable_dataloader(value: boolean) {
+        this._enable_dataloader = value;
+    }
 
     private _enable_audit: boolean;
     public get enable_audit(): boolean {

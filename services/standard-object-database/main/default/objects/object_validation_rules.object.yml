@@ -3,6 +3,7 @@ icon: textbox
 hidden: true
 label: Object Validation Rules
 version: 2
+enable_dataloader: false
 fields:
   name:
     type: text

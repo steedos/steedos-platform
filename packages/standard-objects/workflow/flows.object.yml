@@ -5,6 +5,7 @@ hidden: false
 # 弹出选择
 enable_enhanced_lookup: true
 enable_files: true
+enable_dataloader: false
 version: 2
 fields:
   name:

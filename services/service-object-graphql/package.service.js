@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-28 19:08:39
+ * @LastEditTime: 2023-06-30 17:55:00
  * @Description: 
  */
 
@@ -19,7 +19,7 @@ const { formatFiltersToODataQuery } = require("@steedos/filters");
 
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 
-const { QUERY_DOCS_TOP, UI_PREFIX } = require('./lib/consts');
+const { QUERY_DOCS_TOP, UI_PREFIX, EXPAND_SUFFIX, GRAPHQL_ACTION_PREFIX} = require('./lib/consts');
 const { translateToUI } = require('./lib/getGraphqlActions');
 
 const { Register } = require('@steedos/metadata-registrar')
@@ -203,8 +203,7 @@ module.exports = {
                     return this.update(objectName, id, data, userSession)
                 }
             }
-        },
-
+        }
         // /**
         //  * @api {get} /service/api/graphql/generateGraphqlSchemaInfo 生成graphql schema
         //  * @apiName generateGraphqlSchemaInfo
@@ -304,16 +303,6 @@ module.exports = {
                     if (['__MONGO_BASE_OBJECT', '__SQL_BASE_OBJECT'].includes(objectName)) {
                         continue
                     }
-                    // resolvers[objectName][UI_PREFIX] = {
-                    //     action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
-                    //     rootParams: {
-                    //         _id: "_id",
-                    //         ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
-                    //     },
-                    //     params: {
-                    //         '__objectName': objectName
-                    //     },
-                    // };
 
                     delete objectConfig.list_views
                     delete objectConfig.permission_set
@@ -335,7 +324,7 @@ module.exports = {
                         if (!_.isEmpty(fieldNames)) {
                             selectFieldNames = fieldNames;
                         }
-                        let result = await translateToUI(objectConfig, root, userSession, selectFieldNames);
+                        let result = await translateToUI(objectConfig, root, userSession, selectFieldNames, {root, args, context, info, objectDataLoaderHandler: this.objectDataLoaderHandler});
                         return result
                     }
                 } catch (error) {

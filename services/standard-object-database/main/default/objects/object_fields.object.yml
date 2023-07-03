@@ -3,6 +3,7 @@ icon: textbox
 enable_api: true
 enable_inline_edit: false
 enable_enhanced_lookup: true
+enable_dataloader: false
 hidden: true
 label: Object Fields
 version: 2.0

@@ -4,6 +4,7 @@ icon: groups
 hidden: false
 enable_inline_edit: false
 version: 2
+enable_dataloader: false
 paging:
   enabled: false
 fields:

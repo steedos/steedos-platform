@@ -3,6 +3,7 @@ label: Object Layouts
 icon: dashboard_ea
 hidden: false
 version: 2
+enable_dataloader: false
 fields:
   name:
     type: text

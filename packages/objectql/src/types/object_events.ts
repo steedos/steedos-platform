@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-26 11:19:29
+ * @LastEditTime: 2023-07-03 09:26:54
  * @Description: 
  */
 import { SteedosTriggerContextConfig } from "./trigger";
@@ -46,6 +46,7 @@ export async function brokeEmitEvents(objectName: string, method: string, contex
         let payload = Object.assign({}, {objectApiName: objectName}, params)
         if (schema.broker) {
             await schema.broker.emit(`${getObjectServiceName(objectName)}.${when}`, payload);
+            await schema.broker.broadcast(`@objectRecordEvent.${objectName}.${when}`, payload);
         }
     }
 

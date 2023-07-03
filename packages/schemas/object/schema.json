@@ -60,6 +60,10 @@
             "type": "boolean",
             "description": "允许搜索"
         },
+        "enable_dataloader":{
+            "type": "boolean",
+            "description": "graphql api中启用dataloader缓存"
+        },
         "is_enable": {
             "type": "boolean",
             "description": "是否启用，如果为false，则对象不可见"

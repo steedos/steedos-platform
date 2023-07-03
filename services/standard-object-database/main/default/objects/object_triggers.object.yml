@@ -3,6 +3,7 @@ icon: apex
 label: Object Triggers
 version: 2.0
 hidden: true
+enable_dataloader: false
 fields:
   _name:
     type: text
