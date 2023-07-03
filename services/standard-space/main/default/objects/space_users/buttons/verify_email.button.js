@@ -7,7 +7,7 @@
  */
 module.exports = {
     verify_email: function (object_name, record_id) {
-        Steedos.openWindow('/accounts/a/#/verify/email')
+        Steedos.openWindow(Steedos.absoluteUrl('/accounts/a/#/verify/email'))
     },
 
     verify_emailVisible: function (object_name, record_id, record_permissions, data) {
