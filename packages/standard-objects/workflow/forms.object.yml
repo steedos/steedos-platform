@@ -2,6 +2,7 @@ name: forms
 icon: timesheet
 label: Form
 hidden: true
+enable_dataloader: false
 fields:
   name:
     type: text

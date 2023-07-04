@@ -96,14 +96,6 @@
   margin-right: -2.75rem
 }
 
-.mt-0\.5 {
-  margin-top: 0.125rem
-}
-
-.mt-0 {
-  margin-top: 0px
-}
-
 .-mt-3 {
   margin-top: -0.75rem
 }
@@ -327,12 +319,8 @@
   padding-bottom: 0.25rem
 }
 
-.pl-1\.5 {
-  padding-left: 0.375rem
-}
-
-.pl-1 {
-  padding-left: 0.25rem
+.pb-3 {
+  padding-bottom: 0.75rem
 }
 
 .text-left {

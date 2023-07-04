@@ -3,6 +3,7 @@ icon: carousel
 label: User Sign
 hidden: true
 version: 2
+enable_dataloader: false
 fields:
   user:
     type: lookup

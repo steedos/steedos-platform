@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 11:01:45
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 14:58:54
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-06-28 16:48:40
  * @Description: 
  */
 import { addObjectFieldConfig } from './field'
@@ -12,6 +12,7 @@ import { addTabConfig } from './tabs';
 import { registerRestrictionRules } from '../metadata-register/restrictionRules';
 import { registerShareRules } from '../metadata-register/shareRules';
 import { registerPermissionFields } from '../metadata-register/permissionFields';
+import { registerPermissionTabs } from '../metadata-register/permissionTabs';
 import { MetadataRegister } from '../metadata-register';
 
 declare var Creator: any;
@@ -104,5 +105,16 @@ export const preloadDBPermissionFields = async function (datasource: any) {
     let records: any = await datasource.find(tableName, {});
     if (records && records.length > 0) {
         await registerPermissionFields.mregister(broker, `~database-${tableName}`, records);
+    }
+}
+
+export const preloadDBPermissionTabs = async function (datasource: any) {
+    const tableName = "permission_tabs";
+    if (datasource.name === 'meteor') {
+        Creator.Collections[tableName] = Creator.createCollection({ name: tableName });
+    }
+    let records: any = await datasource.find(tableName, {});
+    if (records && records.length > 0) {
+        await registerPermissionTabs.mregister(broker, `~database-${tableName}`, records);
     }
 }

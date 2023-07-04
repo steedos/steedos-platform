@@ -4,6 +4,7 @@ icon: omni_supervisor
 version: 2
 enable_inline_edit: false
 hidden: true
+enable_dataloader: false
 fields:
   name:
     label: Api 名称

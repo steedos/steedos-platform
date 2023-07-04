@@ -1,6 +1,7 @@
 name: object_actions
 label: Object Action
 icon: actions_and_buttons
+enable_dataloader: false
 hidden: true
 version: 2
 fields:

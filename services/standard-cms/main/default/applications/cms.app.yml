@@ -3,10 +3,10 @@ name: 信息发布
 description: 站点、栏目、文章
 icon_slds: approval
 is_creator: false
-objects: 
-  - cms_sites
-  - cms_categories
-  - cms_posts
+# objects: 
+#   - cms_sites
+#   - cms_categories
+#   - cms_posts
 # admin_menus:
 #   - _id: menu_cms
 #     name: 知识

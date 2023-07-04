@@ -2,6 +2,7 @@ name: permission_shares
 label: Permission Share
 icon: assigned_resource
 hidden: true
+enable_dataloader: false
 fields:
   name:
     label: Name

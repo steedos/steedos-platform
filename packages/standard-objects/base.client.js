@@ -52,6 +52,9 @@ Steedos.StandardObjects = {
             },
             standard_delete_many:{
                 visible: function (object_name, record_id, record_permissions) {
+                    if(Steedos.isMobile()){
+                        return false;
+                    }
                     if(Session.get('record_id')){
                         return false;
                     }

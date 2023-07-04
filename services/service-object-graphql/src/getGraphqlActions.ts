@@ -12,6 +12,7 @@ import {
     numberToString,
     getFileStorageName
 } from "./utils"
+// import { LRUMap } from 'lru_map';
 
 export function getGraphqlActions(
     // objectConfig: SteedosObjectTypeConfig
@@ -19,43 +20,58 @@ export function getGraphqlActions(
     let actions = {};
     // let objName = objectConfig.name;
 
-    actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`] = {
-        handler: async function (ctx) {
-            let { ids, objectName, referenceToField } = ctx.params;
-            if (_.isEmpty(ids)) {
-                return null;
-            }
-            let filters = [[referenceToField || "_id", "in", ids]];
-            const selector: any = { filters: filters };
-            let steedosSchema = getSteedosSchema();
-            let obj = steedosSchema.getObject(objectName);
+    // actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`] = {
+    //     handler: async function (ctx) {
+    //         let { ids, objectName, referenceToField } = ctx.params;
+    //         if (_.isEmpty(ids)) {
+    //             return null;
+    //         }
+    //         let filters = [[referenceToField || "_id", "in", ids]];
+    //         const selector: any = { filters: filters };
+    //         let steedosSchema = getSteedosSchema();
+    //         let obj = steedosSchema.getObject(objectName);
 
-            const { resolveInfo } = ctx.meta;
-            const fieldNames = getQueryFields(resolveInfo);
-            if (!_.isEmpty(fieldNames)) {
-                selector.fields = fieldNames;
-            }
+    //         const { resolveInfo } = ctx.meta;
+    //         const fieldNames = getQueryFields(resolveInfo);
+    //         if (!_.isEmpty(fieldNames)) {
+    //             selector.fields = fieldNames;
+    //         }
 
-            return obj.find(selector);
-        },
-    };
+    //         return obj.find(selector);
+    //     },
+    // };
     actions[`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`] = {
+        // params:{
+        //     graphql: { dataLoaderOptions: { cacheMap: new LRUMap(1000) } },
+        // },
         handler: async function (ctx) {
+            // console.log(`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX} params`, ctx.params)
             let { id, objectName, referenceToField } = ctx.params;
             if (!id) {
                 return;
             }
             let steedosSchema = getSteedosSchema();
             let obj = steedosSchema.getObject(objectName);
-
-            const selector: any = { filters: [[referenceToField || "_id", "=", id]] };
+            if(_.isString(id)){
+                id = [id]
+            }
+            const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
             const { resolveInfo } = ctx.meta;
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
                 selector.fields = fieldNames;
             }
 
-            return (await obj.find(selector))[0];
+            // return (await obj.find(selector))[0];
+            delete selector.fields;
+            const result = await obj.find(selector);
+            if(_.isString(ctx.params.id)){
+                return result[0];
+            }
+            if(objectName === 'space_users'){
+                console.log(`result length`, result.length)
+            }
+            return result;
         },
     };
 
@@ -170,22 +186,22 @@ export function getGraphqlActions(
         },
     };
 
-    actions[`${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`] = {
-        handler: async function (ctx) {
-            let params = ctx.params;
-            let { __objectName } = params;
-            let userSession = ctx.meta.user;
-            let selectFieldNames = [];
-            const { resolveInfo } = ctx.meta;
-            const fieldNames = getQueryFields(resolveInfo);
-            if (!_.isEmpty(fieldNames)) {
-                selectFieldNames = fieldNames;
-            }
-            let result = await translateToUI(__objectName, params, userSession, selectFieldNames);
+    // actions[`${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`] = {
+    //     handler: async function (ctx) {
+    //         let params = ctx.params;
+    //         let { __objectName, __objectConfig } = params;
+    //         let userSession = ctx.meta.user;
+    //         let selectFieldNames = [];
+    //         const { resolveInfo } = ctx.meta;
+    //         const fieldNames = getQueryFields(resolveInfo);
+    //         if (!_.isEmpty(fieldNames)) {
+    //             selectFieldNames = fieldNames;
+    //         }
+    //         let result = await translateToUI(__objectConfig, params, userSession, selectFieldNames);
 
-            return result;
-        },
-    };
+    //         return result;
+    //     },
+    // };
 
     actions[`${GRAPHQL_ACTION_PREFIX}${PERMISSIONS_PREFIX}`] = {
         handler: async function (ctx) {
@@ -195,7 +211,7 @@ export function getGraphqlActions(
             return await callObjectServiceAction(`objectql.getRecordPermissionsById`, userSession, {
                 objectName: __objectName,
                 recordId: params._id
-            });;
+            });
         },
     };
 
@@ -419,11 +435,23 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
     return displayDoc;
 }
 
-async function translateToUI(objectName, doc, userSession: any, selectorFieldNames) {
+
+const getObjectDisplayData = async (graphqlServiceName, objectName, refFieldName , referenceToFieldName, objectDataLoaderHandler, graphqlCtx) => {
+    const actionName = `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`
+    // console.log(`getObjectDisplayData===>actionName`, actionName, referenceToFieldName)
+    return await objectDataLoaderHandler(actionName, {
+        objectName: objectName,
+        referenceToField: referenceToFieldName
+    }, {
+        [refFieldName]: 'id'
+    }, graphqlCtx);
+}
+
+export async function translateToUI(objConfig, doc, userSession: any, selectorFieldNames, graphqlCtx) {
     const lng = getUserLocale(userSession);
     let steedosSchema = getSteedosSchema();
-    let object = steedosSchema.getObject(objectName);
-    let objConfig = await object.toConfig();
+    // let object = steedosSchema.getObject(objectName);
+    // let objConfig = await object.toConfig();
     let fields = objConfig.fields;
     // let _object = clone(objConfig);
     translationObject(lng, objConfig.name, objConfig, true);
@@ -470,68 +498,88 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                                 if (!refValue) {
                                     continue;
                                 }
-
-                                let refFilters = null;
-
-                                if (field.multiple) {
-                                    refFilters = [refField, "in", refValue]
-                                } else {
-                                    refFilters = [refField, "=", refValue]
-                                }
-
-                                // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
-                                if (refTo === 'object_fields' && refField == 'name') {
-                                    const refToObjectsField = _.find(fields, (_field) => {
-                                        return _field.reference_to === 'objects'
-                                    })
-                                    if (refToObjectsField) {
-                                        refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
-                                    }
-                                }
-
-                                // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
-                                if (refTo === 'object_actions' && refField == 'name') {
-                                    const refToObjectsField = _.find(fields, (_field) => {
-                                        return _field.reference_to === 'objects'
-                                    })
-                                    if (refToObjectsField) {
-                                        refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
-                                    }
-                                }
-
                                 let refObj = steedosSchema.getObject(refTo);
                                 let nameFieldKey = await refObj.getNameFieldKey();
-                                if (field.multiple) {
-                                    let refRecords = await refObj.find({
-                                        filters: refFilters,
-                                        fields: [nameFieldKey],
-                                    });
-                                    displayObj[name] = _.map(refRecords, (item) => {
-                                        return {
+                                let objectDataLoader = refObj.enable_dataloader != false;
+                                if(objectDataLoader){
+                                    const results = await getObjectDisplayData('api', field.reference_to, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
+                                    if(field.multiple){
+                                        displayObj[name] = _.map(results, (item) => {
+                                                    return {
+                                                        objectName: refTo,
+                                                        value: item ? item._id : refValue,
+                                                        label: item ? item[nameFieldKey] : refValue
+                                                    }
+                                                })
+                                    }else{
+                                        displayObj[name] = {
                                             objectName: refTo,
-                                            value: item ? item._id : refValue,
-                                            label: item ? item[nameFieldKey] : refValue
+                                            value: results._id || refValue,
+                                            label: results[nameFieldKey] || refValue
+                                        };
+                                    }
+                                }else{
+    
+                                    let refFilters = null;
+    
+                                    if (field.multiple) {
+                                        refFilters = [refField, "in", refValue]
+                                    } else {
+                                        refFilters = [refField, "=", refValue]
+                                    }
+    
+                                    // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                                    if (refTo === 'object_fields' && refField == 'name') {
+                                        const refToObjectsField = _.find(fields, (_field) => {
+                                            return _field.reference_to === 'objects'
+                                        })
+                                        if (refToObjectsField) {
+                                            refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
                                         }
-                                    })
-                                } else {
-                                    let refRecord = (
-                                        await refObj.find({
+                                    }
+    
+                                    // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
+                                    if (refTo === 'object_actions' && refField == 'name') {
+                                        const refToObjectsField = _.find(fields, (_field) => {
+                                            return _field.reference_to === 'objects'
+                                        })
+                                        if (refToObjectsField) {
+                                            refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                        }
+                                    }
+    
+                                    if (field.multiple) {
+                                        let refRecords = await refObj.find({
                                             filters: refFilters,
                                             fields: [nameFieldKey],
+                                        });
+                                        displayObj[name] = _.map(refRecords, (item) => {
+                                            return {
+                                                objectName: refTo,
+                                                value: item ? item._id : refValue,
+                                                label: item ? item[nameFieldKey] : refValue
+                                            }
                                         })
-                                    )[0];
-                                    if (refRecord) {
-                                        displayObj[name] = {
-                                            objectName: refTo,
-                                            value: refRecord._id,
-                                            label: refRecord[nameFieldKey]
-                                        };
                                     } else {
-                                        displayObj[name] = {
-                                            objectName: refTo,
-                                            value: refValue,
-                                            label: refValue
-                                        };
+                                        let refRecord = (
+                                            await refObj.find({
+                                                filters: refFilters,
+                                                fields: [nameFieldKey],
+                                            })
+                                        )[0];
+                                        if (refRecord) {
+                                            displayObj[name] = {
+                                                objectName: refTo,
+                                                value: refRecord._id,
+                                                label: refRecord[nameFieldKey]
+                                            };
+                                        } else {
+                                            displayObj[name] = {
+                                                objectName: refTo,
+                                                value: refValue,
+                                                label: refValue
+                                            };
+                                        }
                                     }
                                 }
                             } else {
@@ -568,31 +616,53 @@ async function translateToUI(objectName, doc, userSession: any, selectorFieldNam
                             }
                             let refObj = steedosSchema.getObject(refTo);
                             let nameFieldKey = await refObj.getNameFieldKey();
-                            if (field.multiple) {
-                                let refRecords = await refObj.find({
-                                    filters: [refField, "in", refValue],
-                                    fields: [nameFieldKey],
-                                });
-                                displayObj[name] = _.map(refRecords, (item) => {
-                                    return {
-                                        objectName: refTo,
-                                        value: item._id,
-                                        label: item[nameFieldKey]
-                                    }
-                                })
-                            } else {
-                                let refRecord = (
-                                    await refObj.find({
-                                        filters: [refField, "=", refValue],
-                                        fields: [nameFieldKey],
-                                    })
-                                )[0];
-                                if (refRecord) {
+
+                            let objectDataLoader = refObj.enable_dataloader != false;
+                            
+                            if(objectDataLoader){
+                                const results = await getObjectDisplayData('api', field.reference_to, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
+                                if(field.multiple){
+                                    displayObj[name] = _.map(results, (item) => {
+                                                return {
+                                                    objectName: refTo,
+                                                    value: item ? item._id : refValue,
+                                                    label: item ? item[nameFieldKey] : refValue
+                                                }
+                                            })
+                                }else{
                                     displayObj[name] = {
                                         objectName: refTo,
-                                        value: refRecord._id,
-                                        label: refRecord[nameFieldKey]
+                                        value: results._id || refValue,
+                                        label: results[nameFieldKey] || refValue
                                     };
+                                }
+                            }else{
+                                if (field.multiple) {
+                                    let refRecords = await refObj.find({
+                                        filters: [refField, "in", refValue],
+                                        fields: [nameFieldKey],
+                                    });
+                                    displayObj[name] = _.map(refRecords, (item) => {
+                                        return {
+                                            objectName: refTo,
+                                            value: item._id,
+                                            label: item[nameFieldKey]
+                                        }
+                                    })
+                                } else {
+                                    let refRecord = (
+                                        await refObj.find({
+                                            filters: [refField, "=", refValue],
+                                            fields: [nameFieldKey],
+                                        })
+                                    )[0];
+                                    if (refRecord) {
+                                        displayObj[name] = {
+                                            objectName: refTo,
+                                            value: refRecord._id,
+                                            label: refRecord[nameFieldKey]
+                                        };
+                                    }
                                 }
                             }
                         } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {

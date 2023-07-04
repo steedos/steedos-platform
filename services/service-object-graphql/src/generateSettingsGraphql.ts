@@ -2,10 +2,9 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-21 17:06:24
+ * @LastEditTime: 2023-07-03 11:39:40
  * @Description: 
  */
-
 const { moleculerGql: gql } = require("moleculer-apollo-server");
 import { SteedosObjectTypeConfig, getObject } from "@steedos/objectql";
 import {
@@ -65,8 +64,11 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, g
                 // TODO: cfs_images_filerecord对象不存在，需要额外处理
                 refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
             }
+            let objectDataLoader = true;
+            let obj;
             try {
-                let obj = getObject(refTo);
+                obj = getObject(refTo);
+                objectDataLoader = obj.enable_dataloader != false;
                 if (refTo != objectName && (!obj)) {
                     type += `${name}: ${field.multiple ? "[JSON]" : "JSON"} `; // 未找到关联对象时仍返回字段值
                     return type;
@@ -79,30 +81,21 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, g
             if (field.multiple) {
                 type += `${name}: [JSON] `;
                 type += `${name}${EXPAND_SUFFIX}: [${refTo}] `;
-                resolvers[typeName][`${name}${EXPAND_SUFFIX}`] = {
-                    action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}_multiple`,
-                    rootParams: {
-                        [name]: "ids",
-                    },
-                    params: {
-                        objectName: refTo,
-                        referenceToField
-                    },
-                };
             } else {
                 type += `${name}: JSON `;
                 type += `${name}${EXPAND_SUFFIX}: ${refTo} `;
-                resolvers[typeName][`${name}${EXPAND_SUFFIX}`] = {
-                    action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`,
-                    rootParams: {
-                        [name]: "id",
-                    },
-                    params: {
-                        objectName: refTo,
-                        referenceToField
-                    },
-                };
             }
+            resolvers[typeName][`${name}${EXPAND_SUFFIX}`] = {
+                action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX}`,
+                rootParams: {
+                    [name]: "id",
+                },
+                objectDataLoader: objectDataLoader,
+                params: {
+                    objectName: refTo,
+                    referenceToField
+                },
+            };
         }
         else {
             type += `${name}: JSON `;
@@ -167,16 +160,16 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, g
     // _ui
     let _ui_type_name = `${UI_PREFIX}_${objectName}`;
     type += `${UI_PREFIX}: ${_ui_type_name} `;
-    resolvers[objectName][UI_PREFIX] = {
-        action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
-        rootParams: {
-            _id: "_id",
-            ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
-        },
-        params: {
-            '__objectName': objectName
-        },
-    };
+    // resolvers[objectName][UI_PREFIX] = {
+    //     action: `${graphqlServiceName}.${GRAPHQL_ACTION_PREFIX}${UI_PREFIX}`,
+    //     rootParams: {
+    //         _id: "_id",
+    //         ...fieldNamesMap // 对象的字段名，用于将值传递到ui，而不需要再查一次
+    //     },
+    //     params: {
+    //         '__objectName': objectName
+    //     },
+    // };
     // define _ui_type
     let _ui_type = _getUIType(_ui_type_name, fields);
     type = gql`

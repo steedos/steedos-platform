@@ -7,42 +7,42 @@
 var buttonTriggerHistoryPathsChange;
 ; (function () {
     try {
-        var rootId = "steedosHistoryPathsRoot";
-        var modalRoot = document.getElementById(rootId);
-        if (!modalRoot) {
-            modalRoot = document.createElement('div');
-            modalRoot.setAttribute('id', rootId);
-            $("body")[0].appendChild(modalRoot);
-        }
-        const page = {
-            name: "pageSteedosHistoryPaths",
-            render_engine: "amis",
-            schema: {
-                name: "serviceSteedosHistoryPaths",
-                id: "serviceSteedosHistoryPaths",
-                type: "service",
-                className: "service-steedos-history-paths",
-                body: [{
-                    "type": "button",
-                    "label": "触发@history_paths.changed",
-                    "name": "buttonTriggerHistoryPathsChange",
-                    "className": "button-trigger-history-paths-change hidden",
-                    "onEvent": {
-                        "click": {
-                            "actions": [
-                                {
-                                    "actionType": "broadcast",
-                                    "args": {
-                                        "eventName": "@history_paths.changed"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }]
-            }
-        };
         Meteor.startup(function () {
+            var rootId = "steedosHistoryPathsRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $("body")[0].appendChild(modalRoot);
+            }
+            const page = {
+                name: "pageSteedosHistoryPaths",
+                render_engine: "amis",
+                schema: {
+                    name: "serviceSteedosHistoryPaths",
+                    id: "serviceSteedosHistoryPaths",
+                    type: "service",
+                    className: "service-steedos-history-paths",
+                    body: [{
+                        "type": "button",
+                        "label": "触发@history_paths.changed",
+                        "name": "buttonTriggerHistoryPathsChange",
+                        "className": "button-trigger-history-paths-change hidden",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@history_paths.changed"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }]
+                }
+            };
             const root = $("#" + rootId)[0];
             Tracker.autorun(function (c) {
                 if (Creator.steedosInit.get() && Creator.validated.get()) {

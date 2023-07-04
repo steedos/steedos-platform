@@ -2,6 +2,7 @@ name: process_delegation_rules
 icon: metrics
 label: Delegation
 hidden: true
+enable_dataloader: false
 version: 2.0
 fields:
   from:

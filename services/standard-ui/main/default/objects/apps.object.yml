@@ -61,7 +61,8 @@ fields:
     type: grid
     blackbox: true
     is_wide: true
-    hidden: true
+    # hidden: true
+    visible_on: "{{false}}"
   tab_groups.$.group_name:
     type: text
   tab_groups.$.default_open:
@@ -89,25 +90,7 @@ fields:
   # tab_items.$.group:
   #   label: Group
   #   type: text
-  objects:
-    label: Desktop Menu(Invalid)
-    type: lookup
-    multiple: true
-    group: Tabs
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
-    # filterable: true
-  mobile_objects:
-    label: Mobile Menus(Invalid)
-    type: lookup
-    multiple: true
-    group: Tabs
-    optionsFunction: !!js/function |
-      function () {
-        return Steedos.getObjectsOptions()
-      }
+  
     # filterable: true
   is_creator:
     type: boolean
@@ -130,10 +113,7 @@ fields:
     label: 显示左侧导航
     type: boolean
     defaultValue: false
-  enable_nav_schema: 
-    label: 启用自定义导航
-    type: boolean
-    required: false
+
   nav_schema:
     label: 自定义导航
     type: code
@@ -193,6 +173,30 @@ fields:
     max: 16
     min: 16
     group: External Application
+  objects:
+    label: Desktop Menu(Invalid)
+    type: lookup
+    multiple: true
+    group: 其它
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+    # filterable: true
+  mobile_objects:
+    label: Mobile Menus(Invalid)
+    type: lookup
+    multiple: true
+    group: 其它
+    optionsFunction: !!js/function |
+      function () {
+        return Steedos.getObjectsOptions()
+      }
+  enable_nav_schema: 
+    label: 启用自定义导航
+    type: boolean
+    required: false
+    group: 其它
 
   oauth2_enabled:
     group: OAuth2 

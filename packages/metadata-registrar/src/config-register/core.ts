@@ -1,6 +1,6 @@
 import _ = require('lodash')
 import path = require('path')
-import { preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields } from './preload_data'
+import { preloadDBObjectFields, preloadDBObjectButtons, preloadDBApps, preloadDBObjectLayouts, preloadDBTabs, preloadDBShareRules, preloadDBRestrictionRules, preloadDBPermissionFields, preloadDBPermissionTabs } from './preload_data'
 import { loadPackageMetadatas } from './package'
 import { transformListenersToTriggers } from '../utils/transform';
 import { syncMatchFiles } from '@steedos/metadata-core';
@@ -326,6 +326,7 @@ export const loadDbMetadatas = async (datasourceApiName: string) => {
             await preloadDBShareRules(datasource);
             await preloadDBRestrictionRules(datasource);
             await preloadDBPermissionFields(datasource);
+            await preloadDBPermissionTabs(datasource);
         }
     }
 }

@@ -3,6 +3,7 @@ icon: environment_hub
 label: Workflow
 hidden: false
 enable_files: true
+enable_dataloader: false
 version: 2
 fields:
   name:

@@ -3,5 +3,6 @@ label: 选项卡权限
 icon: apps
 version: 2
 hidden: false
+enable_dataloader: false
 paging:
   enabled: false

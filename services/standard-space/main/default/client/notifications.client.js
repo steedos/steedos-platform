@@ -111,47 +111,47 @@ var handleMyNotifications = function(id, notification){
 
     ; (function () {
         try {
-            var rootId = "NotificationsSubscribeRoot";
-            var modalRoot = document.getElementById(rootId);
-            if (!modalRoot) {
-                modalRoot = document.createElement('div');
-                modalRoot.setAttribute('id', rootId);
-                $("body")[0].appendChild(modalRoot);
-            }
-            const page = {
-                name: "pageNotificationsSubscribe",
-                render_engine: "amis",
-                schema: {
-                    name: "serviceNotificationsSubscribe",
-                    id: "serviceNotificationsSubscribe",
-                    type: "service",
-                    className: "service-notifications-subscribe hidden",
-                    body: [{
-                        "type": "button",
-                        "label": "触发@data.changed",
-                        "name": "buttonTriggerDataChange",
-                        "className": "button-trigger-data-change-notifications",
-                        "onEvent": {
-                            "click": {
-                                "actions": [
-                                    {
-                                        "actionType": "broadcast",
-                                        "args": {
-                                            "eventName": "@data.changed.notifications"
-                                        },
-                                        "data": {
-                                            "type": "${event.data.type}",
-                                            "objectName": "notifications",
-                                            "recordId": "sss"
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                    }]
-                }
-            };
             Meteor.startup(function () {
+                var rootId = "NotificationsSubscribeRoot";
+                var modalRoot = document.getElementById(rootId);
+                if (!modalRoot) {
+                    modalRoot = document.createElement('div');
+                    modalRoot.setAttribute('id', rootId);
+                    $("body")[0].appendChild(modalRoot);
+                }
+                const page = {
+                    name: "pageNotificationsSubscribe",
+                    render_engine: "amis",
+                    schema: {
+                        name: "serviceNotificationsSubscribe",
+                        id: "serviceNotificationsSubscribe",
+                        type: "service",
+                        className: "service-notifications-subscribe hidden",
+                        body: [{
+                            "type": "button",
+                            "label": "触发@data.changed",
+                            "name": "buttonTriggerDataChange",
+                            "className": "button-trigger-data-change-notifications",
+                            "onEvent": {
+                                "click": {
+                                    "actions": [
+                                        {
+                                            "actionType": "broadcast",
+                                            "args": {
+                                                "eventName": "@data.changed.notifications"
+                                            },
+                                            "data": {
+                                                "type": "${event.data.type}",
+                                                "objectName": "notifications",
+                                                "recordId": "sss"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                        }]
+                    }
+                };
                 const root = $("#" + rootId)[0];
                 Tracker.autorun(function (c) {
                     if (Creator.steedosInit.get() && Creator.validated.get() && Creator.subs["CreatorNotifications"].ready("my_notifications")) {

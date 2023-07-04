@@ -20,6 +20,8 @@ type ImportOptions = {
   queueImportId: string | null;
 };
 
+const FILE_EXT_TYPES = ['.xlsx', '.xls'];
+
 function converterString(field_name, dataCell, jsonObj) {
   if (dataCell) {
     jsonObj[field_name] = dataCell.toString();
@@ -618,10 +620,14 @@ function loadWorkbook(file) {
       return chunks.push(chunk);
     });
     stream.on("end", function() {
-      let workbook = xlsx.parse(Buffer.concat(chunks), {
-        cellDates: true,
-      });
-      resolve(workbook);
+      try {
+        let workbook = xlsx.parse(Buffer.concat(chunks), {
+          cellDates: true,
+        });
+        resolve(workbook);
+      } catch (error) {
+        reject(error)
+      }
     });
   });
 
@@ -682,6 +688,7 @@ export async function importWithCmsFile(
     throw new Error(`Just need one file.`);
   }
   file = files[0];
+  isImportFileType(file);
 
   await importWithExcelFile(file, options);
 
@@ -692,6 +699,17 @@ export async function importWithCmsFile(
     queueImportId: queueImport._id,
     importObjectHistoryId: importObjectHistoryId,
   };
+}
+
+/**
+ * 判断是否符合导入的文件类型
+ * @param file 
+ */
+function isImportFileType(file) {
+  let fileExt = path.extname(file.original.name);
+  if (!_.contains(FILE_EXT_TYPES, fileExt)) {
+    throw new Error(`Unsupported file type: ${fileExt}`);
+  }
 }
 
 const formatErrors = function(errorList) {

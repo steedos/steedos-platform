@@ -2,6 +2,7 @@ name: object_related_list
 label: Object Related List
 icon: related_list
 hidden: true
+enable_dataloader: false
 fields:
   object_name:
     label: To Object
