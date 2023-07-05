@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-18 14:33:09
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-05 10:37:06
  * @Description: 
  */
 "use strict";
@@ -35,6 +35,19 @@ module.exports = {
      * Actions
      */
     actions: {
+        aggregate: {
+            params: {
+                objectName: { type: "string" },
+                query: { type: "object" },
+                externalPipeline: { type: "array", items: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, query, externalPipeline } = ctx.params;
+                const obj = getObject(objectName)
+                return await obj.aggregate(query, externalPipeline, userSession)
+            }
+        },
         find: {
             params: {
                 objectName: { type: "string" },
