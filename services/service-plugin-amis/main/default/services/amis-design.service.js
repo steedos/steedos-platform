@@ -92,7 +92,8 @@ module.exports = {
                     projection: {
                         name: 1, 
                         label: 1, 
-                        list_views: 1
+                        list_views: 1,
+                        NAME_FIELD_KEY: 1
                     }
                 };
 
