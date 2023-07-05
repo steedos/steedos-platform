@@ -1,7 +1,7 @@
 {
   "name": "@steedos/filters",
   "private": false,
-  "version": "2.5.6-beta.4",
+  "version": "2.5.6-beta.5",
   "description": "filters lib for steedos",
   "main": "lib/index.js",
   "files": [
@@ -36,5 +36,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "865682da22058bd2a954753eeeab891612e6b529"
+  "gitHead": "afcfb049f7ea22fbd2518e27795729c07bd76301"
 }
