@@ -177,7 +177,7 @@ fields:
     label: Desktop Menu(Invalid)
     type: lookup
     multiple: true
-    group: 其它
+    group: other
     optionsFunction: !!js/function |
       function () {
         return Steedos.getObjectsOptions()
@@ -187,7 +187,7 @@ fields:
     label: Mobile Menus(Invalid)
     type: lookup
     multiple: true
-    group: 其它
+    group: other
     optionsFunction: !!js/function |
       function () {
         return Steedos.getObjectsOptions()
@@ -196,7 +196,7 @@ fields:
     label: 启用自定义导航
     type: boolean
     required: false
-    group: 其它
+    group: other
 
   oauth2_enabled:
     group: OAuth2 
