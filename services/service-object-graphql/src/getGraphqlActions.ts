@@ -56,6 +56,9 @@ export function getGraphqlActions(
                 id = [id]
             }
             const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
+            if(referenceToField != '_id'){
+                selector.filters.push(["space", "=", ctx.meta.user.spaceId])
+            }
             const { resolveInfo } = ctx.meta;
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
@@ -65,12 +68,18 @@ export function getGraphqlActions(
             // return (await obj.find(selector))[0];
             delete selector.fields;
             const result = await obj.find(selector);
+            
+            if(id.length > result.length){
+                const count = id.length - result.length;
+                for (let index = 0; index < count; index++) {
+                    result.push({})
+                }
+            }
+
             if(_.isString(ctx.params.id)){
                 return result[0];
             }
-            if(objectName === 'space_users'){
-                console.log(`result length`, result.length)
-            }
+
             return result;
         },
     };
