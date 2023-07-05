@@ -4,3 +4,24 @@ CustomLabels:
   apply: 应用
   asc: 正序
   desc: 降序
+  apps:
+    apps_form:
+      tab: 选项卡
+      tab_generate: 生成选项卡
+      tab_generate_title: 选择需要生成选项卡的对象
+      tab_set: 设置选项卡
+      tab_grouping: 分组
+      tab_grouping_set: 设置分组
+      tab_grouping_name: 名称
+      tab_grouping_open: 是否默认展开
+      tab_number: 序号
+    amis_edit:
+      edit: 编辑
+      edit_apps: 编辑 应用程序
+    amis_new:
+      new: 新建
+      new_apps: 新建 应用程序
+  tabs:
+    generate_object_tabs:
+      objects_tab: 对象选项卡
+      objects_tab_title: 选择需要生成选项卡的对象

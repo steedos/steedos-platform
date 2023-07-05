@@ -4,3 +4,24 @@ CustomLabels:
   apply: Apply
   asc: Asc
   desc: Desc
+  apps:
+    apps_form:
+      tab: Tab
+      tab_generate: Generate Tab
+      tab_generate_title: Select objects that need to generate tabs
+      tab_set: Set Tab
+      tab_grouping: Grouping
+      tab_grouping_set: Set Grouping
+      tab_grouping_name: Name
+      tab_grouping_open: Expand by Default
+      tab_number: Sequence
+    amis_edit:
+      edit: Edit
+      edit_apps: Edit Apps
+    amis_new:
+      new: New
+      new_apps: New Apps
+  tabs:
+    generate_object_tabs:
+      objects_tab: Objects Tabs
+      objects_tab_title: Select objects that need to generate tabs
