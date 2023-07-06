@@ -327,6 +327,10 @@ fields:
       permission to create, edit, or delete child records. This setting is more
       restrictive than true, and is the default value.
     description: 
+  amis:
+    label: Amis Attribute
+    help: 
+    description: 
 groups:
   external_data_source: External data source
   advanced: Advanced
