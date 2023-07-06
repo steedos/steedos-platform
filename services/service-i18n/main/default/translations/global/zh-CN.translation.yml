@@ -25,3 +25,20 @@ CustomLabels:
     generate_object_tabs:
       objects_tab: 对象选项卡
       objects_tab_title: 选择需要生成选项卡的对象
+  action_field_updates:
+    action_field_updates_form:
+      field_group_generalization: 通用
+      api_name: API 名称
+      display_name: 显示名称
+      object_name: 对象
+      update_object: 要更新的对象
+      update_name: 要更新的字段
+      new_field_value_type: 新字段值类型
+      formula: 公式
+      description: 描述
+      reevaluate_on_change: 字段更改后重新评估工作流规则
+      undirect: 触发对象触发器、工作流规则、字段验证规则 
+  cms_files:
+    upload:
+      upload: 上传
+      message_success: 上传成功

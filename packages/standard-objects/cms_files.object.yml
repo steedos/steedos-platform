@@ -325,7 +325,7 @@ actions:
                                                 "position": "top-right",
                                                 "closeButton": true,
                                                 "showIcon": true,
-                                                "msg": "上传成功"
+                                                "msg": "${'cms_files.upload.message_success' | t}"
                                             },
                                             "actionType": "toast"
                                         },

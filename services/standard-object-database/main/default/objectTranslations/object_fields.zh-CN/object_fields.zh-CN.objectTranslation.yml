@@ -30,6 +30,8 @@ fields:
         value: html
       - label: 代码
         value: code
+      - label: Markdown
+        value: markdown
       - label: 选择框
         value: select
       - label: 复选框
@@ -297,6 +299,10 @@ fields:
     label: 当用户对主表记录有读取权限时对子表记录可以增删改
     help: >-
       设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于·主表/子表·字段类型。勾选表示允许具有'读取'访问权限的用户创建、编辑或删除子记录。反之表示允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。
+    description: 
+  amis:
+    label: Amis 属性
+    help: 
     description: 
 groups:
   external_data_source: 外部数据源

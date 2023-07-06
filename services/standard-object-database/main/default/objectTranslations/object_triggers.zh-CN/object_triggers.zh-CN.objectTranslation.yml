@@ -14,6 +14,21 @@ fields:
     label: 运行时
     help: 
     description: 
+    options:
+      - label: "新增记录之前"
+        value: "beforeInsert"
+      - label: "新增记录之后"
+        value: "afterInsert"
+      - label: "修改记录之前"
+        value: "beforeUpdate"
+      - label: "修改记录之后"
+        value: "afterUpdate"
+      - label: "删除记录之前"
+        value: "beforeDelete" 
+      - label: "删除记录之后"
+        value: "afterDelete"
+      - label: "查下记录之前"
+        value: "beforeFind"
   isEnabled:
     label: 已启用
     help: 

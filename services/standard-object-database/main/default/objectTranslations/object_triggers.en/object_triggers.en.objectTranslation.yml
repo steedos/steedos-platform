@@ -14,6 +14,21 @@ fields:
     label: Execution Time Option
     help: 
     description: 
+    options:
+      - label: "Before adding a new record"
+        value: "beforeInsert"
+      - label: "After adding a new record"
+        value: "afterInsert"
+      - label: "Before modifying a record"
+        value: "beforeUpdate"
+      - label: "After modifying a record"
+        value: "afterUpdate"
+      - label: "Before deleting a record"
+        value: "beforeDelete" 
+      - label: "After deleting a record"
+        value: "afterDelete"
+      - label: "Before checking the records"
+        value: "beforeFind"
   is_enable:
     label: Enable
     help: 
