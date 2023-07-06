@@ -38,3 +38,7 @@ CustomLabels:
       description: 描述
       reevaluate_on_change: 字段更改后重新评估工作流规则
       undirect: 触发对象触发器、工作流规则、字段验证规则 
+  cms_files:
+    upload:
+      upload: 上传
+      message_success: 上传成功

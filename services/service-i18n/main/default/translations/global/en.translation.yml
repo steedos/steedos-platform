@@ -38,3 +38,7 @@ CustomLabels:
       description: Description
       reevaluate_on_change: Reevaluate workflow rules after field changes
       undirect: Trigger object triggers, workflow rules, field validation rules 
+  cms_files:
+    upload:
+      upload: Upload
+      message_success: Upload successful!
