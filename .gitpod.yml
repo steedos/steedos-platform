@@ -53,7 +53,7 @@ tasks:
       yarn build
       gp await-port 27017
       gp await-port 6379
-      yarn start:ee
+      yarn start
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
