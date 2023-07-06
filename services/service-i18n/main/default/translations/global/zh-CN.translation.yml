@@ -26,7 +26,7 @@ CustomLabels:
       objects_tab: 对象选项卡
       objects_tab_title: 选择需要生成选项卡的对象
   action_field_updates:
-    action_field_updates:
+    action_field_updates_form:
       field_group_generalization: 通用
       api_name: API 名称
       display_name: 显示名称

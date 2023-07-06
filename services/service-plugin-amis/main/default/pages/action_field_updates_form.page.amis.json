@@ -27,12 +27,12 @@
               {
                 "type": "fieldSet",
                 "id": "u:3ce1d050bcac",
-                "title": "${'action_field_updates.action_field_updates.field_group_generalization' | t}",
+                "title": "${'action_field_updates.action_field_updates_form.field_group_generalization' | t}",
                 "collapsable": true,
                 "body": [
                   {
                     "name": "name",
-                    "label": "${'action_field_updates.action_field_updates.api_name' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.api_name' | t}",
                     "required": true,
                     "type": "input-text",
                     "className": "m-1",
@@ -43,7 +43,7 @@
                   },
                   {
                     "name": "label",
-                    "label": "${'action_field_updates.action_field_updates.display_name' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.display_name' | t}",
                     "required": true,
                     "type": "input-text",
                     "className": "m-1",
@@ -54,7 +54,7 @@
                   },
                   {
                     "name": "object_name",
-                    "label": "${'action_field_updates.action_field_updates.object_name' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.object_name' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -88,7 +88,7 @@
                   },
                   {
                     "name": "target_object",
-                    "label": "${'action_field_updates.action_field_updates.update_object' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.update_object' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -106,7 +106,7 @@
                   },
                   {
                     "name": "field_name",
-                    "label": "${'action_field_updates.action_field_updates.update_name' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.update_name' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -124,7 +124,7 @@
                   },
                   {
                     "name": "operation",
-                    "label": "${'action_field_updates.action_field_updates.new_field_value_type' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.new_field_value_type' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -142,7 +142,7 @@
                   },
                   {
                     "name": "formula",
-                    "label": "${'action_field_updates.action_field_updates.formula' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.formula' | t}",
                     "required": false,
                     "type": "textarea",
                     "tpl": "<b><%=data.formula%></b>",
@@ -168,7 +168,7 @@
                   },
                   {
                     "name": "description",
-                    "label": "${'action_field_updates.action_field_updates.description' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.description' | t}",
                     "required": false,
                     "type": "textarea",
                     "tpl": "<b><%=data.description%></b>",
@@ -180,7 +180,7 @@
                   },
                   {
                     "name": "reevaluate_on_change",
-                    "label": "${'action_field_updates.action_field_updates.reevaluate_on_change' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.reevaluate_on_change' | t}",
                     "required": false,
                     "type": "checkbox",
                     "tpl": null,
@@ -192,7 +192,7 @@
                   },
                   {
                     "name": "undirect",
-                    "label": "${'action_field_updates.action_field_updates.undirect' | t}",
+                    "label": "${'action_field_updates.action_field_updates_form.undirect' | t}",
                     "required": false,
                     "type": "checkbox",
                     "tpl": null,
