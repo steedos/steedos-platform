@@ -20,7 +20,7 @@ async function checkRepeatCompany(orgId, spaceId) {
     }))[0];
     if (repeatCompany) {
         /* 要判断选中的关联组织是否已经被其他分部关联了，如果有就提示不能修改，而且不用处理其is_company、company_id值逻辑 */
-        throw new Error("该关联组织，已经被其他分部占用了，不能重复关联该组织");
+        throw new Error("company_error_already_associated");
     }
 }
 
@@ -63,7 +63,7 @@ module.exports = {
                 fields: ['_id']
             });
             if (org) {
-                throw new Error("请先清空关联组织值再删除该分部");
+                throw new Error("company_error_clear_before_deleting");
             }
         }
     },

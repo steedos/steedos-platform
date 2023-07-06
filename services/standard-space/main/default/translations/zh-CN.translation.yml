@@ -1,0 +1,3 @@
+CustomLabels:
+  company_error_already_associated: 该关联组织，已经被其他分部占用了，不能重复关联该组织
+  company_error_clear_before_deleting: 请先清空关联组织值再删除该分部

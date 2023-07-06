@@ -1,0 +1,3 @@
+CustomLabels:
+  company_error_already_associated: This affiliated organization is already occupied by other branches and cannot be associated with this organization again
+  company_error_clear_before_deleting: Please clear the associated organization value before deleting the branch
