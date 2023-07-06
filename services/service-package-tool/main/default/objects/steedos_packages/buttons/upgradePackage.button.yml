@@ -8,7 +8,7 @@ amis_schema: |-
   "body": [
     {
       "type": "button",
-      "label": "升级",
+      "label": "${'steedos_packages.upgrade.upgrade_package' | t}",
       "id": "u:upgrade_package",
       "onEvent": {
         "click": {
@@ -17,7 +17,7 @@ amis_schema: |-
               "actionType": "dialog",
               "dialog": {
                 "type": "dialog",
-                "title": "请选择版本",
+                "title": "${'steedos_packages.upgrade.select_version' | t}",
                 "body": [
                   {
                     "type": "form",
@@ -56,13 +56,13 @@ amis_schema: |-
                           "filter": null,
                           "columns": [
                             {
-                              "label": "版本号",
+                              "label": "${'steedos_packages.upgrade.version_number' | t}",
                               "name": "version",
                               "id": "u:b0e787352cf4",
                               "placeholder": "-"
                             },
                             {
-                              "label": "标签",
+                              "label": "${'steedos_packages.upgrade.label' | t}",
                               "name": "tag",
                               "id": "u:f17df7e102a2",
                               "placeholder": "-"
@@ -105,7 +105,7 @@ amis_schema: |-
                 "actions": [
                   {
                     "type": "button",
-                    "label": "取消",
+                    "label": "${'steedos_packages.upgrade.cancel' | t}",
                     "onEvent": {
                       "click": {
                         "actions": [
@@ -122,10 +122,10 @@ amis_schema: |-
                   },
                   {
                     "type": "submit",
-                    "label": "确认",
+                    "label": "${'steedos_packages.upgrade.confirm' | t}",
                     "id": "u:0318127b7745",
                     "close": true,
-                    "confirmText": "确定要升级?",
+                    "confirmText": "${'steedos_packages.upgrade.second_confirm' | t}",
                     "level": "primary"
                   }
                 ]
