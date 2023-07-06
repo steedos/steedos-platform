@@ -5,3 +5,8 @@ CustomApplications:
 CustomLabels:
   menu_user_interface: 用户界面
   menu_pages: 微页面
+  page_assignments_error_not_allowed_to_application_pages: 禁止给应用程序页面分配权限
+  page_assignments_error_organization_default_settings_already_exists: 已存在「组织默认设置」授权
+  page_assignments_error_application_default_already_exists: 已存在「应用程序默认设置」授权
+  page_assignments_error_application_and_profile_already_exists: 已存在「应用程序和简档」授权
+
