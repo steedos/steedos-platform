@@ -45,7 +45,7 @@ export function getGraphqlActions(
         //     graphql: { dataLoaderOptions: { cacheMap: new LRUMap(1000) } },
         // },
         handler: async function (ctx) {
-            // console.log(`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX} params`, ctx.params)
+            console.log(`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX} params`, ctx.params)
             let { id, objectName, referenceToField } = ctx.params;
             if (!id) {
                 return;
@@ -56,7 +56,7 @@ export function getGraphqlActions(
                 id = [id]
             }
             const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
-            if(referenceToField && referenceToField != '_id'){
+            if(referenceToField && referenceToField != '_id' && objectName != 'users' && objectName != 'spaces' && ctx.meta.user.spaceId){
                 selector.filters.push(["space", "=", ctx.meta.user.spaceId])
             }
             const { resolveInfo } = ctx.meta;
@@ -75,7 +75,7 @@ export function getGraphqlActions(
                     result.push({})
                 }
             }
-
+            // console.log(`result=====>`, JSON.stringify(selector), result)
             if(_.isString(ctx.params.id)){
                 return result[0];
             }
@@ -511,7 +511,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 let nameFieldKey = await refObj.getNameFieldKey();
                                 let objectDataLoader = refObj.enable_dataloader != false;
                                 if(objectDataLoader){
-                                    const results = await getObjectDisplayData('api', field.reference_to, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
+                                    const results = await getObjectDisplayData('api', refTo, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
                                     if(field.multiple){
                                         displayObj[name] = _.map(results, (item) => {
                                                     return {
