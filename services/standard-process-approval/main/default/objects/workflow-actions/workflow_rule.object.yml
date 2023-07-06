@@ -100,13 +100,13 @@ fields:
     depend_on:
       - object_name
     inlineHelpText: Run Time-Dependent Actions if the following filters are met.
-    group: 依赖于时间的工作流操作
+    group: time_dependent_action
   time_triggers:
     type: grid
     label: 时间触发器
     is_wide: true
     required: false
-    group: 依赖于时间的工作流操作
+    group: time_dependent_action
   time_triggers.$:
     label: Field
     blackbox: true
