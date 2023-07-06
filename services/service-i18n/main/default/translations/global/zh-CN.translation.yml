@@ -42,3 +42,38 @@ CustomLabels:
     upload:
       upload: 上传
       message_success: 上传成功
+  flows:
+    newimport:
+      import_process: 导入流程
+      file_select: 文件选择
+      file_upload: 文件上传
+      division: 分部
+    newexport:
+      export_process: 导出流程
+      alert: 请选择要导出的流程
+    standard_new:
+      new: 新建
+      new_flow: 新建流程
+      category: 分类
+      flow_name: 流程名
+      division: 分部
+      division_name: 分部名称
+      division_code: 分部代码
+      related_departments: 关联部门
+      modification_time: 修改时间
+      binding_objects: 绑定对象
+      enable_amis_forms: 启用amis表单
+    addFormFields:
+      add_fields: 添加字段
+      binding_objects: 绑定对象
+      application_form_fields: 申请单字段
+      field: 字段
+      required: 必填
+      set_fields: 设置字段
+      application_form_subform: 申请单子表
+      sequence: 序号
+      subform_name: 子表名称
+      show_heading: 显示标题
+      default_to_object_name: 默认为对象名称
+      displayed_fields: 显示的字段
+      set_subform: 设置子表
