@@ -30,6 +30,8 @@ fields:
         value: html
       - label: 代码
         value: code
+      - label: Markdown
+        value: markdown
       - label: 选择框
         value: select
       - label: 复选框
