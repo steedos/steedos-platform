@@ -25,3 +25,16 @@ CustomLabels:
     generate_object_tabs:
       objects_tab: Objects Tabs
       objects_tab_title: Select objects that need to generate tabs
+  action_field_updates:
+    action_field_updates:
+      field_group_generalization: Generalization
+      api_name: API Name
+      display_name: Display Name
+      object_name: Object
+      update_object: Objects to update
+      update_name: Fields to update
+      new_field_value_type: New Field Value Type
+      formula: Formula
+      description: Description
+      reevaluate_on_change: Reevaluate workflow rules after field changes
+      undirect: Trigger object triggers, workflow rules, field validation rules 

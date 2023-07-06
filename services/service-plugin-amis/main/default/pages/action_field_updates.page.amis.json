@@ -27,12 +27,12 @@
               {
                 "type": "fieldSet",
                 "id": "u:3ce1d050bcac",
-                "title": "通用",
+                "title": "${'action_field_updates.action_field_updates.field_group_generalization' | t}",
                 "collapsable": true,
                 "body": [
                   {
                     "name": "name",
-                    "label": "API 名称",
+                    "label": "${'action_field_updates.action_field_updates.api_name' | t}",
                     "required": true,
                     "type": "input-text",
                     "className": "m-1",
@@ -43,7 +43,7 @@
                   },
                   {
                     "name": "label",
-                    "label": "显示名称",
+                    "label": "${'action_field_updates.action_field_updates.display_name' | t}",
                     "required": true,
                     "type": "input-text",
                     "className": "m-1",
@@ -54,7 +54,7 @@
                   },
                   {
                     "name": "object_name",
-                    "label": "对象",
+                    "label": "${'action_field_updates.action_field_updates.object_name' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -88,7 +88,7 @@
                   },
                   {
                     "name": "target_object",
-                    "label": "要更新的对象",
+                    "label": "${'action_field_updates.action_field_updates.update_object' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -106,7 +106,7 @@
                   },
                   {
                     "name": "field_name",
-                    "label": "要更新的字段",
+                    "label": "${'action_field_updates.action_field_updates.update_name' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -124,7 +124,7 @@
                   },
                   {
                     "name": "operation",
-                    "label": "新字段值类型",
+                    "label": "${'action_field_updates.action_field_updates.new_field_value_type' | t}",
                     "required": false,
                     "type": "select",
                     "joinValues": false,
@@ -142,7 +142,7 @@
                   },
                   {
                     "name": "formula",
-                    "label": "公式",
+                    "label": "${'action_field_updates.action_field_updates.formula' | t}",
                     "required": false,
                     "type": "textarea",
                     "tpl": "<b><%=data.formula%></b>",
@@ -168,7 +168,7 @@
                   },
                   {
                     "name": "description",
-                    "label": "描述",
+                    "label": "${'action_field_updates.action_field_updates.description' | t}",
                     "required": false,
                     "type": "textarea",
                     "tpl": "<b><%=data.description%></b>",
@@ -180,7 +180,7 @@
                   },
                   {
                     "name": "reevaluate_on_change",
-                    "label": "字段更改后重新评估工作流规则",
+                    "label": "${'action_field_updates.action_field_updates.reevaluate_on_change' | t}",
                     "required": false,
                     "type": "checkbox",
                     "tpl": null,
@@ -192,7 +192,7 @@
                   },
                   {
                     "name": "undirect",
-                    "label": "触发对象触发器、工作流规则、字段验证规则",
+                    "label": "${'action_field_updates.action_field_updates.undirect' | t}",
                     "required": false,
                     "type": "checkbox",
                     "tpl": null,
