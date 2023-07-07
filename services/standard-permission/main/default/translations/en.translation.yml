@@ -1,0 +1,16 @@
+CustomLabels:
+  permission_set:
+    set_permission_tabs:
+      set_permission: Set Tab Permissions
+      tab: Tab
+      permission: Permission
+      default_on: Default On
+      default_off: Default Off
+      cancel: Cancel
+      save: Save
+    copy:
+      copy: Copy
+      copy_record: Copy the Current Profile Record
+      display_name: Display Name
+      copy_of_record: "Copy of %s"
+      api_name: API Name

@@ -1,0 +1,16 @@
+CustomLabels:
+  permission_set:
+    set_permission_tabs:
+      set_permission: 设置选项卡权限
+      tab: 选项卡
+      permission: 权限
+      default_on: 默认打开
+      default_off: 默认关闭
+      cancel: 取消
+      save: 保存
+    copy:
+      copy: 复制
+      copy_record: 复制 当前简档记录
+      display_name: 显示名称
+      copy_of_record: "%s 的副本"
+      api_name: API名称
