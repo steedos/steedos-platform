@@ -212,6 +212,8 @@ actions:
     label: Preview
   copy_odata:
     label: Copy OData URL
+  createDefaultRecordView:
+    label: Create Default Page Layout
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_datasource_meteor: Meteor

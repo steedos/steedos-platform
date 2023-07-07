@@ -209,6 +209,8 @@ actions:
     label: 预览
   copy_odata:
     label: 复制OData网址
+  createDefaultRecordView:
+    label: 创建默认页面布局
 CustomLabels:
   objects_field_datasource_defaultValue: 默认数据源
   objects_field_datasource_meteor: Meteor
