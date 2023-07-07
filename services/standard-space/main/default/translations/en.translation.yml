@@ -5,3 +5,7 @@ CustomLabels:
   company_success_updata_message: Successfully updated {$updatedOrgs} organizational information and {$updatedSus} user information
   company_confirm_text: This operation will update the organizational branches of the corresponding nodes (and all subordinate nodes) in the organizational structure to this branch, and the branches of personnel in the organization will also be updated to this branch. Do you want to continue?
   company_confirm_title: Update '%s' organization information
+  space_users_lockout_button_confirm_text: Locked users will not be able to log in to the system. Are you sure?
+  space_users_lockout_button_confirm_title: Lock User
+  space_users_unlock_button_confirm_text: Unlock to restore user access. Are you sure?
+  space_users_unlock_button_confirm_title: Unlock User
