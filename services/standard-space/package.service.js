@@ -62,7 +62,7 @@ module.exports = {
                     const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象
                     const lookupDetailsInfo = await obj.getLookupDetailsInfo(); // 查找当前哪些对象有lookup字段引用当前对象
 
-                    // pan
+                    // 空的不执行
                     if (_.isEmpty(detailsInfo) && _.isEmpty(lookupDetailsInfo)) {
                         return;
                     }
