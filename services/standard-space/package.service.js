@@ -10,6 +10,8 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const objectql = require('@steedos/objectql');
+const { MongoClient } = require('mongodb');
+const _ = require('lodash')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -60,11 +62,16 @@ module.exports = {
                     const detailsInfo = await obj.getDetailsInfo(); // 查找当前哪些对象有masterDetail字段引用当前对象
                     const lookupDetailsInfo = await obj.getLookupDetailsInfo(); // 查找当前哪些对象有lookup字段引用当前对象
 
-                    const config = objectql.getSteedosConfig();
-                    let datasourceConfig = config.datasources['default'];
-                    const driver = new objectql.SteedosMongoDriver(datasourceConfig.connection);
-                    await driver.connect();
-                    const client = driver._client;
+                    // pan
+                    if (_.isEmpty(detailsInfo) && _.isEmpty(lookupDetailsInfo)) {
+                        return;
+                    }
+
+                    const client = new MongoClient(process.env.MONGO_URL, {
+                        useNewUrlParser: true,
+                        useUnifiedTopology: true,
+                    });
+                    await client.connect();
                     const db = client.db();
 
                     // Start a session.
