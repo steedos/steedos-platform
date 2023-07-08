@@ -284,7 +284,7 @@ async function converterLookup(
       } else {
         jsonObj[field_name] = lookups[0][reference_to_field];
       }
-    } else if (dbRecordCount.length == 0) {
+    } else if (dbRecordCount == 0) {
       if (!dataCell) {
         // 单元格没有填写
 
