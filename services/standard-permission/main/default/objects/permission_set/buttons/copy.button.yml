@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "复制",
+              "label": "${'permission_set.copy.copy' | t}",
               "id": "u:copy",
               "onEvent": {
                   "click": {
@@ -14,16 +14,16 @@ amis_schema: |-
                           {
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "复制 当前简档记录",
+                                  "title": "${'permission_set.copy.copy_record' | t}",
                                   "body": [
                                       {
                                           "type": "form",
                                           "title": "表单",
                                           "body": [
                                               {
-                                                  "label": "显示名称",
+                                                  "label": "${'permission_set.copy.display_name' | t}",
                                                   "type": "input-text",
-                                                  "value": "${record.label} 的副本",
+                                                  "value": "${'permission_set.copy.copy_of_record' | t:${record.label}}",
                                                   "name": "label_input",
                                                   "id": "u:24e89a11d437",
                                                   "required": true
@@ -32,7 +32,7 @@ amis_schema: |-
                                                   "type": "input-text",
                                                   "name": "name_input",
                                                   "value": "${record.name}_copy",
-                                                  "label": "api名称",
+                                                  "label": "${'permission_set.copy.api_name' | t}",
                                                   "id": "u:27bd7cfe3e12",
                                                   "required": true
                                               }

@@ -61,6 +61,8 @@ listviews:
   all:
     label: All
 actions:
+  createDefaultRecordView:
+    label: Create Default Page Layout
   customize:
     label: Customize
 CustomLabels:
