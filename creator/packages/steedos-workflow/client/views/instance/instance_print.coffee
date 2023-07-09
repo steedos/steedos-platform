@@ -23,6 +23,9 @@ Template.instancePrint.helpers
 	unequals: (a, b) ->
 		return !(a == b)
 
+	enableAmisform: ()->
+		return InstanceManager.isAmisForm()
+
 	readOnlyView: ()->
 		steedos_instance = WorkflowManager.getInstance();
 		if steedos_instance

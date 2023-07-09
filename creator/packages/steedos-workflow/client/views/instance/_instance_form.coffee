@@ -578,8 +578,7 @@ InstanceformTemplate.onRendered = ()->
 
 	#$("#ins_applicant").select2().val(instance.applicant).trigger('change');
 	#$("#ins_applicant").val(instance.applicant);
-	$("input[name='ins_applicant']")[0]?.dataset.values = instance.applicant;
-	$("input[name='ins_applicant']").val(instance.applicant_name)
+	InstanceManager.setInstanceFormApplicant(instance.applicant, instance.applicant_name)
 
 
 	ApproveManager.error = {nextSteps: '', nextStepUsers: ''};

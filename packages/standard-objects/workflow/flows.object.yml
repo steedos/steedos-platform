@@ -403,6 +403,7 @@ fields:
     is_wide: true
     group: Template
     name: instance_template
+    visible_on: "{{formData.enable_amisform ? false : true}}"
   print_template:
     label: Print Template
     type: code
@@ -410,6 +411,7 @@ fields:
     is_wide: true
     group: Template
     name: print_template
+    visible_on: "{{formData.enable_amisform ? false : true}}"
   field_map:
     label: Mapping
     type: code
@@ -424,6 +426,7 @@ fields:
     is_wide: true
     group: Script
     name: events
+    visible_on: "{{formData.enable_amisform ? false : true}}"
   distribute_optional_users:
     type: object
     label: Users to be Distributed
