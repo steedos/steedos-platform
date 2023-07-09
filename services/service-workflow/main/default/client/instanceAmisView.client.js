@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-09 09:55:51
+ * @LastEditTime: 2023-07-09 11:57:42
  * @Description: 
  */
 ; (function () {
@@ -116,7 +116,7 @@
 
         const getAmisSchema = function(ins, formReadonly){
             const form = db.forms.findOne({_id: ins.form},{fields:{amis_schema: 1}})
-            const amisSchema = JSON.parse(form.amis_schema);
+            const amisSchema = _.isString(form.amis_schema) ? JSON.parse(form.amis_schema) : ( form.amis_schema || {});
     
             delete amisSchema.data;
     
@@ -130,7 +130,7 @@
             //     delete amisSchema.data.record;
             //     delete amisSchema.data.permissions;
             // }
-            const fromSchema = getInstanceFormSchema(amisSchema);
+            const fromSchema = getInstanceFormSchema(amisSchema) || {};
             if(formReadonly){
                 fromSchema.static = true;
             }else{
@@ -169,7 +169,7 @@
                 }
             }
 
-            // console.log(`amisSchema`, amisSchema)
+            console.log(`amisSchema`, amisSchema)
             return amisSchema;
         }
 
