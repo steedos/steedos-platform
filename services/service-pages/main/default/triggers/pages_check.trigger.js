@@ -7,10 +7,10 @@ module.exports = {
         if(_.has(doc, 'type') || _.has(doc, 'render_engine')){
             const record = await objectql.getObject('pages').findOne(id);
             if(_.has(doc, 'type') && doc.type != record.type){
-                throw new Error('禁止修改页面类型');
+                throw new Error('page_check_error_prohibit_modifying_page_types');
             }
             if(_.has(doc, 'render_engine') && doc.render_engine != record.render_engine){
-                throw new Error('禁止修改页面渲染器');
+                throw new Error('page_check_error_prohibit_modifying_page_renderer');
             }
         }
         
@@ -23,7 +23,7 @@ module.exports = {
                 type = record.type;
             }
             if(type === 'app'){
-                throw new Error('禁止停用应用程序页面');
+                throw new Error('page_check_error_prohibit_disabling_application_pages');
             }
         }
     }

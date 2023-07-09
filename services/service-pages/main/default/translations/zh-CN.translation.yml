@@ -9,4 +9,8 @@ CustomLabels:
   page_assignments_error_organization_default_settings_already_exists: 已存在「组织默认设置」授权
   page_assignments_error_application_default_already_exists: 已存在「应用程序默认设置」授权
   page_assignments_error_application_and_profile_already_exists: 已存在「应用程序和简档」授权
-
+  page_check_error_prohibit_modifying_page_types: 禁止修改页面类型
+  page_check_error_prohibit_modifying_page_renderer: 禁止修改页面渲染器
+  page_check_error_prohibit_disabling_application_pages: 禁止停用应用程序页面
+  page_pai_name_error_not_repeat: Api Name 不能重复
+  page_versions_error_prohibit_modifying_non_latest_version: 禁止修改非最新版
