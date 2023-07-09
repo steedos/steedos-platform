@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-26 09:43:16
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-07-09 11:02:47
  * @Description: 
  */
 'use strict';
@@ -170,6 +170,9 @@ var DesignerAPI = {
  */
 router.get('/api/workflow/designer', core.requireAuthentication, async function (req, res) {
     try {
+		res.writeHead(200, {
+			"Content-Type": "text/html;charset=utf-8"
+		});
         return DesignerAPI.sendHtmlResponse(req, res)
     } catch (e) {
         res.status(200).send({
