@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-09 11:57:42
+ * @LastEditTime: 2023-07-10 17:22:10
  * @Description: 
  */
 ; (function () {
@@ -130,19 +130,20 @@
             //     delete amisSchema.data.record;
             //     delete amisSchema.data.permissions;
             // }
-            const fromSchema = getInstanceFormSchema(amisSchema) || {};
+            const formSchema = getInstanceFormSchema(amisSchema) || {};
+            formSchema.id='instanceForm';
             if(formReadonly){
-                fromSchema.static = true;
+                formSchema.static = true;
             }else{
                 if(Session.get("box") === 'draft' || Session.get("box") === 'pending'){
                     const formChange = {
                         "actionType": "custom",
                         "script": "Session.set('instance_form_values', {instanceId: event.data.instanceId, values: JSON.parse(JSON.stringify(event.data))});Session.set('instance_next_user_recalculate', new Date().getTime())"
                     }; //
-                    if(fromSchema.onEvent?.change && fromSchema.onEvent.change.actions){
-                        fromSchema.onEvent.change.actions.push(formChange)
+                    if(formSchema.onEvent?.change && formSchema.onEvent.change.actions){
+                        formSchema.onEvent.change.actions.push(formChange)
                     }else{
-                        fromSchema.onEvent = Object.assign({}, fromSchema.onEvent, {
+                        formSchema.onEvent = Object.assign({}, formSchema.onEvent, {
                             change: {
                                 actions: [formChange]
                             }
@@ -152,7 +153,7 @@
             }
 
             const permissions = WorkflowManager.getInstanceFieldPermission();
-            const fields = getFormInputFields(fromSchema, []);
+            const fields = getFormInputFields(formSchema, []);
 
             for (const field of fields) {
                 if(formReadonly || permissions[field.name] != 'editable'){
