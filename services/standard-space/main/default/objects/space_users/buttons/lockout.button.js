@@ -7,9 +7,9 @@
  */
 module.exports = {
     lockout: function (object_name, record_id) {
-        var text = "锁定的用户将无法登入系统。 是否确定？";
+        var text = t('space_users_lockout_button_confirm_text');
         swal({
-            title: "锁定用户",
+            title: t('space_users_lockout_button_confirm_title'),
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,

@@ -5,7 +5,7 @@ Workflow.getInstance = function() {
 		return;
 
 	if (instance.state == "draft") {
-		var selected_applicant = $("input[name='ins_applicant']")[0].dataset.values;
+		var selected_applicant = InstanceManager.getInstanceFormApplicant();
 		if (instance.applicant != selected_applicant) {
 			var space_id = instance.space;
 			var applicant = SteedosDataManager.spaceUserRemote.findOne({

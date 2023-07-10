@@ -107,6 +107,8 @@ listviews:
   all:
     label: 所有
 actions:
+  createDefaultRecordView:
+    label: 创建默认页面布局
   customize:
     label: 自定义
 CustomLabels:

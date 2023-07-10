@@ -7,9 +7,9 @@
  */
 module.exports = {
     unlock: function (object_name, record_id) {
-        var text = "解除锁定以便恢复用户的访问权限。 是否确定？";
+        var text = t('space_users_unlock_button_confirm_text');
         swal({
-            title: "解除锁定用户",
+            title: t('space_users_unlock_button_confirm_title'),
             text: "<div>" + text + "</div>",
             html: true,
             showCancelButton: true,

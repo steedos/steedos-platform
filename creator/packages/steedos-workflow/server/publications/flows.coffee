@@ -19,7 +19,8 @@ Meteor.publish 'flows', (spaceId)->
 			company_id: 1,
 			sort_no: 1,
 			distribute_optional_users: 1,
-			distribute_to_self: 1
+			distribute_to_self: 1,
+			enable_amisform: 1
 		}
 	})
 
@@ -43,7 +44,8 @@ Meteor.publish 'instance_flow', (spaceId, flowId)->
 			company_id: 1,
 			sort_no: 1,
 			distribute_optional_users: 1,
-			distribute_to_self: 1
+			distribute_to_self: 1,
+			enable_amisform: 1
 		}
 	})
 
@@ -103,7 +105,8 @@ Meteor.publish 'distribute_optional_flows', (flow_ids)->
 			distribute_optional_users: 1,
 			distribute_to_self: 1,
 			distribute_end_notification: 1,
-			company_id: 1
+			company_id: 1,
+			enable_amisform: 1
 		}
 	})
 
@@ -128,7 +131,8 @@ Meteor.publish 'flow', (spaceId, flowId)->
 			upload_after_being_distributed: 1,
 			distribute_end_notification: 1,
 			company_id: 1,
-			allow_select_step: 1
+			allow_select_step: 1,
+			enable_amisform: 1
 		}
 	})
 Meteor.publish 'flow_files', (spaceId, flowId)->

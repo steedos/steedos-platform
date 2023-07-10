@@ -19,13 +19,17 @@
                         {{> Template.dynamic template="instance_attachments" }}
                         {{> related_instances}}
                         {{> related_records}}
-                        {{#if isIReadable}}
-                            {{{readOnlyView}}}
+                        {{#if enableAmisform}}
+                            {{> instance_amis_view readonly=isIReadable}}
                         {{else}}
-                            {{#if isTableView}}
-                                {{> instanceform_table}}
+                            {{#if isIReadable}}
+                                {{{readOnlyView}}}
                             {{else}}
-                                {{> instanceform}}
+                                {{#if isTableView}}
+                                    {{> instanceform_table}}
+                                {{else}}
+                                    {{> instanceform}}
+                                {{/if}}
                             {{/if}}
                         {{/if}}
 

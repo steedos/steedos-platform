@@ -5,7 +5,7 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "导入流程",
+              "label": "${'flows.newimport.import_process' | t}",
               "id": "u:newimport",
               "onEvent": {
                   "click": {
@@ -15,7 +15,7 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "导入流程",
+                                  "title": "${'flows.newimport.import_process' | t}",
                                   "body": [
                                       {
                                           "type": "form",
@@ -24,7 +24,7 @@ amis_schema: |-
                                           "body": [
                                               {
                                                   "type": "input-file",
-                                                  "label": "文件选择",
+                                                  "label": "${'flows.newimport.file_select' | t}",
                                                   "name": "file",
                                                   "receiver": {
                                                       "url": "${context.rootUrl}/api/workflow/import/form",
@@ -49,7 +49,7 @@ amis_schema: |-
                                                   "type": "steedos-field",
                                                   "config": {
                                                       "type": "lookup",
-                                                      "label": "分部",
+                                                      "label": "${'flows.newimport.division' | t}",
                                                       "id": "u:30ec6c98cb3d",
                                                       "reference_to": "company",
                                                       "name": "company_id"

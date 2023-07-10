@@ -405,7 +405,11 @@ function transformFormFields(amisField) {
 				}else if(tempConfig.reference_to === "space_users"){
 					//  && tempConfig.reference_to_field === 'user'
 					steedosField.type = 'user'
-				}
+				}else{
+                    steedosField.type = 'lookup';
+                    steedosField.reference_to = tempConfig.reference_to;
+                    steedosField.reference_to_field = tempConfig.reference_to_field;
+                }
 				return steedosField
 
 			}else if(amisField.field){
