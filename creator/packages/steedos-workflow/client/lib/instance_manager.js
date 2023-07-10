@@ -619,7 +619,7 @@ InstanceManager.getInstanceFormValue = function(){
 	// var instanceValue = InstanceManager.getCurrentValues();
 	// var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
 	if(InstanceManager.isAmisForm() && SteedosUI.refs.instanceAmisView){
-		autoFormValue = SteedosUI.refs.instanceAmisView.getComponentById('u:cb45bcc519f8').props.data;
+		autoFormValue = SteedosUI.refs.instanceAmisView.getComponentById('instanceForm').props.data;
 	}else{
 		var instanceformValues = AutoForm.getFormValues("instanceform");
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
