@@ -2,6 +2,10 @@ name: queue_import
 label: Data Import
 description: 
 fields:
+  name:
+    label: API Name
+    help: 
+    description: 
   description:
     label: Description
     help: 
@@ -96,6 +100,10 @@ fields:
     label: Excel File
   template_url:
     label: Template
+  is_system:
+    label: System
+    help: 
+    description: 
 listviews:
   all:
     label: All Queues
@@ -104,6 +112,8 @@ actions:
     label: Perform Import
   downloadTemplate:
     label: Download Template
+  customize:
+    label: Customize
 CustomLabels:
   queue_import_download: Download
   queue_import_form_field_mapping_prompt: "Indicates that the data uniqueness field {$label} does not exist in the field mapping. Please configure it."

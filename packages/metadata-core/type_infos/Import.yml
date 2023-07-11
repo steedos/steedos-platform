@@ -1,0 +1,11 @@
+metadataName: Import
+isAddressable: true
+isSourceTracked: true
+ext: import
+tableName: queue_import
+hasContent: false
+defaultDirectory: imports
+nameForMsgs: Import
+nameForMsgsPlural: Imports
+contentIsBinary: false
+deleteSupported: true
