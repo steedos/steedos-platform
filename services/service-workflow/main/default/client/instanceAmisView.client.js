@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-10 17:22:10
+ * @LastEditTime: 2023-07-11 10:13:44
  * @Description: 
  */
 ; (function () {
@@ -85,7 +85,7 @@
 
         function getFormInputFields(formSchema, inputFields) {
 
-            _.each(formSchema.body, (bodyItem) => {
+            _.each(formSchema.body  || formSchema.columns || [], (bodyItem) => {
 
                 let flag = true;
                 // 对符合条件的formSchema做解析处理
@@ -106,6 +106,10 @@
                 }else{
                     //else schema中有嵌套表单项的元素 对其进行递归
                     if(_.isArray(bodyItem.body)){
+                        getFormInputFields(bodyItem, inputFields);
+                    }
+
+                    if(_.isArray(bodyItem.columns)){
                         getFormInputFields(bodyItem, inputFields);
                     }
                 }
