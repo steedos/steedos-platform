@@ -4,6 +4,7 @@ const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
 const triggerYmlLoader = require('./lib').triggerYmlLoader;
+const importLoader = require('./lib').importLoader;
 const path = require('path');
 const _ = require('lodash');
 const fs = require("fs");
@@ -149,6 +150,7 @@ module.exports = {
             await triggerLoader.load(this.broker, packagePath, name);
             await processTriggerLoader.load(this.broker, packagePath, name);
             await triggerYmlLoader.load(this.broker, packagePath, name);
+            await importLoader.load(this.broker, packagePath, name);
             if(this.core){
                 this.core.loadClientScripts();
                 const routersInfo = await this.loadPackageRouters(packagePath, name);

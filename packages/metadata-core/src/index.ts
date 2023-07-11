@@ -218,6 +218,10 @@ export function getFileinfoByFilename(filename) {
     } else if (filename.endsWith('.restrictionRule.yml')) {
         metadataName = TypeInfoKeys.RestrictionRule;
         itemName = _.first(filename.split('.'));
+    }else if(filename.endsWith('.import.yml')){
+        metadataName = TypeInfoKeys.Import;
+        itemName = _.first(filename.split('.'));
+
     }else{
         unsupportedFile = filename;
         //throw new Error('unsupported filename:'+ filename);
