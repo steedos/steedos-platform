@@ -203,9 +203,37 @@ fields:
     sort_no: 155
     visible_on: "{{['code'].indexOf(formData.type) > -1 ? true: false}}"
   defaultValue:
-    type: text
+    type: object
+    blackbox: true
     label: Default Value
     sort_no: 160
+    amis:
+      type: service
+      className: 
+        antd-Form-item: true 
+        antd-Form-item--normal: true 
+        m-1: true 
+        "md:border-b": global.mode === "read"
+        defaultValue_field: true 
+        flex: true
+      schemaApi:
+        url: "${context.rootUrl}/service/api/object_fields/defaultValue/schema?object=${object}&name=${name}&options=${options}&type=${type}&reference_to=${reference_to}&multiple=${multiple}&filtersFunction=${filtersFunction}&reference_to_field=${reference_to_field}&mode=${global.mode}&_id=${_id}"
+        method: get
+        headers:
+          Authorization: "Bearer ${context.tenantId},${context.authToken}"
+        # sendOn: "!!this.type"
+      onEvent:
+        fetchSchemaInited:
+          weight: 0
+          actions:
+            - actionType: "setValue"
+              componentId: "service_detail_page"
+              args: 
+                value: 
+                  defaultValue: "${event.data.body[0].value}"
+              expression: "global.mode ==='read' && event.data.body[0].value"
+
+          
   group:
     type: text
     label: Group

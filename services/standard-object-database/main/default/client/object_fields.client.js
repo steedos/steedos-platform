@@ -68,3 +68,23 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
   }
   return operations;
 };
+
+(function () {
+  try {
+      var styleCss = $(`<style>
+          .defaultValue_field .antd-Form-item:first-child{
+              flex-grow: 1;
+          }
+          .defaultValue_field .defaultValue_field_formula{
+              margin: 4px;
+          }
+          .defaultValue_field .defaultValue_field_formula .antd-Form-label{
+              visibility: hidden;
+          }
+
+      </style>`);
+      $("head").append(styleCss);
+  } catch (error) {
+      console.log(error);
+  }
+})();

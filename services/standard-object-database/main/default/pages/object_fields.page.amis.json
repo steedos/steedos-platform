@@ -1,0 +1,33 @@
+{
+    "type": "page",
+    "body": [
+      {
+        "type": "steedos-object-form",
+        "label": "对象表单",
+        "objectApiName": "object_fields",
+        "recordId": "${recordId}",
+        "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+        "id": "u:b3d626885b90",
+        "mode": "edit",
+        "layout": "normal",
+        "enableTabs": true,
+        "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue; if(defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{')>-1 ){ payload.data.defaultValue_formula = defaultValue_field_value; delete payload.data.defaultValue; } return payload;",
+        "apiRequestAdaptor": "if(formData.defaultValue_formula && !formData.defaultValue){ formData.defaultValue = formData.defaultValue_formula }  __saveData = JSON.stringify(JSON.stringify(formData)); api.data = {query: query.replace('{__saveData}', __saveData)};"
+      }
+    ],
+    "regions": [
+      "body"
+    ],
+    "data": {
+      "objectName": "object_fields",
+      "context": {
+        "rootUrl": "http://127.0.0.1:5000",
+        "tenantId": "64acf5fe74eb1203fcacf31a",
+        "userId": "620da7b6-6918-473e-90a7-f9b98425b09a",
+        "authToken": "8fc4b5f94e2a1b6248f98ee845f7d01abd0b2dff8cde86bf156cc9c4ce81b43fce518f6838508b2ea0a3c8"
+      }
+    },
+    "name": "page_object_fields_form",
+    "bodyClassName": "",
+    "id": "u:6e9674f278b0"
+}
