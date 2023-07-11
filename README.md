@@ -99,7 +99,7 @@ or you can try the following sample projects.
 
 - [Steedos Projects](https://github.com/steedos-labs/project): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
 - [Salesforce CRM Clone](https://github.com/steedos-labs/salesforce): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
-- [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
+- [Contract Management](https://github.com/steedos-labs/contract): With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
 [Find more](https://github.com/steedos-labs/)
 
