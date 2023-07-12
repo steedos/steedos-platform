@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-09 14:42:12
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-07-12 13:17:34
  * @Description: 
  */
 Steedos.ObjectFieldManager = {};
@@ -76,10 +76,26 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
               flex-grow: 1;
           }
           .defaultValue_field .defaultValue_field_formula{
-              margin: 4px;
+              // margin: 4px;
           }
           .defaultValue_field .defaultValue_field_formula .antd-Form-label{
               visibility: hidden;
+          }
+
+          .defaultValue_field .defaultValue_field_formula_visible{
+              flex-grow: 1;
+          }
+          .defaultValue_field .defaultValue_field_formula_visible .antd-Form-label .antd-TplField{
+              visibility: visible;
+          }
+          .defaultValue_field .defaultValue_field_hidden{
+              display: none;
+          }
+          .defaultValue_field .defaultValue_field_formula_hidden{
+              flex-grow: 0;
+          }
+          .defaultValue_field .defaultValue_field_formula_hidden .antd-FormulaPicker-input{
+              display: none;
           }
 
       </style>`);

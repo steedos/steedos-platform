@@ -79,10 +79,11 @@ module.exports = {
                     targetField = objectConfig.fields[fieldName];
                 }
                 const value = (targetField && targetField.defaultValue) || '';
+                const translatedLabel = lng === 'zh-CN' ? "默认值" : 'DefaultValue';
                 let defaultValue_schema = {
                     "type": "text",
                     "name": "defaultValue",
-                    "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                    "label": translatedLabel,
                     "labelClassName": "text-left"
                 }
                 
@@ -112,7 +113,7 @@ module.exports = {
                 if(mode === 'read'){
                     const baseFieldConfig = {
                         "name": "defaultValue",
-                        "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                        "label": translatedLabel,
                         "labelClassName": "text-left",
                         "clearValueOnHidden": true,
                         "fieldName": "defaultValue"
@@ -121,10 +122,10 @@ module.exports = {
                         // 只读时值是公式就显示公式
                         steedos_field = {
                             "type": "control",
-                            "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                            "label": translatedLabel,
                             "body": {
                                 "name": "defaultValue",
-                                "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                                "label": translatedLabel,
                                 "labelClassName": "text-left",
                                 "type": "tpl",
                                 "tpl": value.indexOf('$') > -1 ? "\\"+value : value
@@ -194,10 +195,10 @@ module.exports = {
                             const tpl = _.map(res, NAME_FIELD_KEY).join('、')
                             steedos_field = {
                                 "type": "control",
-                                "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                                "label": translatedLabel,
                                 "body": {
                                     "name": "defaultValue",
-                                    "label": lng === 'zh-CN' ? "默认值" : 'DefaultValue',
+                                    "label": translatedLabel,
                                     "labelClassName": "text-left",
                                     "type": "tpl",
                                     "tpl": tpl
@@ -212,15 +213,22 @@ module.exports = {
                 ]
                 if(mode === 'edit'){
                     body[0].field.amis = {
-                        disabledOn: "!!this.defaultValue_formula"
+                        // disabledOn: "!!this.defaultValue_formula",
+                        "className": {
+                            "defaultValue_field_hidden": "!this.defaultValue && (!this.defaultValue || '').toString() && !!this.defaultValue_formula"
+                        }
                     }
                     body.push({
                         "name": "defaultValue_formula",
-                        "label": "默认值公式",
+                        "label": translatedLabel,
                         "evalMode": false,
                         "type": "input-formula",
-                        "disabledOn": "!!this.defaultValue && !!this.defaultValue.toString()",
-                        "className": "defaultValue_field_formula"
+                        // "disabledOn": "!!this.defaultValue && !!this.defaultValue.toString()",
+                        "className": {
+                            "defaultValue_field_formula": true,
+                            "defaultValue_field_formula_visible": "!!this.defaultValue_formula",
+                            "defaultValue_field_formula_hidden": "!!this.defaultValue && !!this.defaultValue.toString()"
+                        }
                     })
                 }
                 // console.log('body==>', body);
