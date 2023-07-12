@@ -12,6 +12,7 @@ import {
     numberToString,
     getFileStorageName
 } from "./utils"
+import { sortBy, each, find } from 'lodash'
 // import { LRUMap } from 'lru_map';
 
 export function getGraphqlActions(
@@ -45,7 +46,7 @@ export function getGraphqlActions(
         //     graphql: { dataLoaderOptions: { cacheMap: new LRUMap(1000) } },
         // },
         handler: async function (ctx) {
-            console.log(`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX} params`, ctx.params)
+            // console.log(`${GRAPHQL_ACTION_PREFIX}${EXPAND_SUFFIX} params`, ctx.params)
             let { id, objectName, referenceToField } = ctx.params;
             if (!id) {
                 return;
@@ -68,19 +69,27 @@ export function getGraphqlActions(
             // return (await obj.find(selector))[0];
             delete selector.fields;
             const result = await obj.find(selector);
-            
+
             if(id.length > result.length){
-                const count = id.length - result.length;
-                for (let index = 0; index < count; index++) {
-                    result.push({})
-                }
+                // const count = id.length - result.length;
+                // for (let index = 0; index < count; index++) {
+                //     result.push({})
+                // }
+                each(id, (_id)=>{
+                    if(!find(result, (doc)=>{return doc[referenceToField || "_id"] === _id})){
+                        result.push({[referenceToField || "_id"]: _id})
+                    }
+                })
             }
             // console.log(`result=====>`, JSON.stringify(selector), result)
             if(_.isString(ctx.params.id)){
                 return result[0];
             }
 
-            return result;
+            // 使用 id 对象查询的结果result进行排序. 否则会导致dataloader缓存key与结果不匹配
+            return sortBy(result, (doc)=>{
+                return id.indexOf(doc[referenceToField || "_id"]);
+            });
         },
     };
 

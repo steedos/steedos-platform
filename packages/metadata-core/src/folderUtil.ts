@@ -153,6 +153,7 @@ export function getRetrievePackageInfo(option) {
                     requestJson[TypeInfoKeys.Tab] = ['*']
                     requestJson[TypeInfoKeys.ShareRule] = ['*']
                     requestJson[TypeInfoKeys.RestrictionRule] = ['*']
+                    requestJson[TypeInfoKeys.Import] = ['*']
                 }
     
             }

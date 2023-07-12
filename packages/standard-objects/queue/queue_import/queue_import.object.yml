@@ -6,6 +6,13 @@ enable_enhanced_lookup: true
 hidden: true
 version: 2
 fields:
+  name:
+    index: true
+    label: API Name
+    required: true
+    searchable: true
+    sort_no: 10
+    type: text
   description:
     label: Description
     type: text
@@ -172,14 +179,22 @@ fields:
             "method": "get"
             "headers": 
               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
 list_views:
   all:
     label: All Queues
     columns:
+      - name
       - description
       - object_name
       - template_url
       - encoding
+      - is_system
     filter_scope: space
 permission_set:
   user:

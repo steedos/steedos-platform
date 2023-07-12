@@ -1,4 +1,18 @@
-import { loadFile, SteedosMetadataTypeInfoKeys as TypeInfoKeys, getChilds, hasParent, LoadChartFile, LoadPageFile, LoadQueryFile, LoadTabFile, LoadShareRules, LoadRestrictionRules, LoadProcessFile, LoadTriggerFile} from '@steedos/metadata-core';
+import { 
+    loadFile, 
+    SteedosMetadataTypeInfoKeys as TypeInfoKeys, 
+    getChilds, 
+    hasParent, 
+    LoadChartFile, 
+    LoadPageFile, 
+    LoadQueryFile, 
+    LoadTabFile, 
+    LoadShareRules, 
+    LoadRestrictionRules, 
+    LoadProcessFile, 
+    LoadTriggerFile, 
+    LoadImportFile
+} from '@steedos/metadata-core';
 import { checkNameEquals } from '../../util/check_name_equals'
 
 const path = require('path');
@@ -14,6 +28,7 @@ const loadShareRules = new LoadShareRules();
 const loadRestrictionRules = new LoadRestrictionRules();
 const loadProcessFile = new LoadProcessFile();
 const loadTriggersFile = new LoadTriggerFile();
+const loadImportFile = new LoadImportFile();
 
 //扫描Permissionsets并输出为json
 async function loadPermissionsets(filePath){
@@ -676,6 +691,7 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     let restrictionRules = {};
     let processes = {};
     let triggers = {};
+    let imports = {};
     let mark:boolean = false;
 
     for(const metadataname in packageYml){
@@ -779,6 +795,9 @@ export async function loadFileToJson(packagePath:string, packageYml?){
         }else if (metadataname === TypeInfoKeys.Trigger) {
             triggers = loadTriggersFile.load(packagePath);
             mark = true;
+        }else if (metadataname === TypeInfoKeys.Import) {
+            imports = loadImportFile.load(packagePath);
+            mark = true;
         }
 
     }
@@ -816,6 +835,7 @@ export async function loadFileToJson(packagePath:string, packageYml?){
     steedosPackage[TypeInfoKeys.RestrictionRule] = restrictionRules;
     steedosPackage[TypeInfoKeys.Process] = processes;
     steedosPackage[TypeInfoKeys.Trigger] = triggers;
+    steedosPackage[TypeInfoKeys.Import] = imports;
 
     //用于测试查看本地生成的steedosPackage结构和属性是否完整
     // let targetFolderName = './data';
