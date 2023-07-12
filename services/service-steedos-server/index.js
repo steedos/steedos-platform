@@ -321,6 +321,13 @@ module.exports = {
                                     company_id = flow.company_id
                                 }
                             }
+                            // 默认分部
+                            if (!company_id) {
+                                const rootOrg = db.organizations.findOne({ space: space._id, is_company: true, parent: null });
+                                if (rootOrg && rootOrg.company_id) {
+                                    company_id = rootOrg.company_id;
+                                }
+                            }
 
                             return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
                         }
