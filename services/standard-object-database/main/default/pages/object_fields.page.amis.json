@@ -19,13 +19,7 @@
       "body"
     ],
     "data": {
-      "objectName": "object_fields",
-      "context": {
-        "rootUrl": "http://127.0.0.1:5000",
-        "tenantId": "64acf5fe74eb1203fcacf31a",
-        "userId": "620da7b6-6918-473e-90a7-f9b98425b09a",
-        "authToken": "8fc4b5f94e2a1b6248f98ee845f7d01abd0b2dff8cde86bf156cc9c4ce81b43fce518f6838508b2ea0a3c8"
-      }
+      "objectName": "object_fields"
     },
     "name": "page_object_fields_form",
     "bodyClassName": "",
