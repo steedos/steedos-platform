@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-06-20 11:24:21
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-25 11:25:54
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-07-13 17:15:41
  * @Description: [Feature]: Lookup relationship 级联删除 #4985
  */
 "use strict";
@@ -14,6 +14,9 @@ const steedosI18n = require("@steedos/i18n");
  */
 const beforeDeleteBase = async function () {
     const { id, object_name, userId } = this;
+    if(object_name === 'objects'){
+        return ;
+    }
     const obj = getObject(object_name);
     const doc = await obj.findOne(id);
     const lookupDetailsInfo = await obj.getLookupDetailsInfo(); // 查找当前哪些对象有lookup字段引用当前对象
