@@ -76,10 +76,35 @@ module.exports = {
         }
     },
     afterInsert: async function(){
-        const doc = this.doc;
-        if(doc.enable_tree){
-            await objectTree.insertParentAndChildrenFieldForTreeObject(doc)
+        const object = this.doc;
+        const { spaceId , userId } = this;
+        if(object.enable_tree){
+            await objectTree.insertParentAndChildrenFieldForTreeObject(object)
         }
+
+        const tabLabel = object.label || object.name;
+        const tabName = "object_" + object.name.replace(/__c$/, "");
+        const now = new Date();
+        const tabDoc = {
+            label: tabLabel, 
+            name: tabName, 
+            icon: object.icon,
+            type: "object", 
+            mobile: true,
+            desktop: true,
+            object: object.name,
+            space: spaceId,
+            owner: userId,
+            created_by: userId,
+            created: now,
+            modified_by: userId,
+            modified: now,
+            company_id: object.companyId,
+            company_ids: object.companyIds
+        };
+        await objectql.getObject('tabs').insert(tabDoc);
+        
+
         // let spaceProfiles = await objectql.getObject('permission_set').find({space: this.spaceId, type: 'profile'});
         // await objectql.getObject('object_layouts').insert({
         //     label: 'default',
@@ -145,5 +170,13 @@ module.exports = {
         */
 
         await sleep(1000 * 2)
+    },
+    afterDelete: async function(){
+        const { previousDoc: object, spaceId } = this;
+        const objectTabs = await objectql.getObject('tabs').find({filters: [['type', '=', 'object'], ['object', '=', object.name], ['space', '=', spaceId]]})
+        for(const record of objectTabs){
+            // console.log(`delete tabs`, record._id, record.name)
+            await objectql.getObject('tabs').delete(record._id);
+        }
     }
 }
