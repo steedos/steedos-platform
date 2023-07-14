@@ -201,7 +201,7 @@ UUflow_api.post_engine = function (approve) {
 			}
 			Session.set("instance_change", false);
 			//为了保留url上的过滤条件
-			Steedos.goback()
+			Steedos.goBack()
 			// FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 			toastr.success(TAPi18n.__('Submitted successfully'));
 			Session.set("instance_submitting", false);
