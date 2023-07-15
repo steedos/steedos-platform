@@ -10,8 +10,6 @@ Template.instance_attachments.onRendered(function() {
 	self = this;
 
 	var ins = WorkflowManager.getInstance();
-	if (!ins)
-		self.workflowMainAttachTitle.set(true);
 
 	var current_step = InstanceManager.getCurrentStep();
 
