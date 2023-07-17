@@ -52,13 +52,28 @@ module.exports = {
         let views = []
         if(filters._id && !filters._id.$ne){
             let id = filters._id
-            id = id.replace(/\\/g, '');
             if(_.isString(id)){
+                id = id.replace(/\\/g, ''); // string类型才有replce方法
                 let objectName = id.substr(0, id.indexOf("."));
                 if(objectName){
                     let view = await InternalData.getObjectListView(objectName, this.userId, id);
                     if(view){
                         views = [view];
+                    }
+                }
+            }
+            else if (id.$in) {
+                for (const _id of id.$in) {
+                    if(_.isString(_id) && _id.indexOf('.') > 0){
+                        let objectName = _id.split('.')[0];
+                        let view = await InternalData.getObjectListView(objectName, this.userId, _id);
+                        if(view){
+                            if (_.isArray(this.query.fields)) {
+                                const fields = ["_id"].concat(this.query.fields);
+                                view = _.pick(view, fields);
+                            }
+                            views.push(view);
+                        }
                     }
                 }
             }

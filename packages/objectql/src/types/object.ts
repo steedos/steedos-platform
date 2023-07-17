@@ -1511,6 +1511,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             if(!value.name){
                 value.name = key;
             }
+            if (!value._id) {
+                value._id = `${value.object_name}.${value.name}`;
+            }
         })
         const listViews = {}
         _.map(_.sortBy(_.values(objectConfig.list_views) , 'sort_no'), (listView)=>{

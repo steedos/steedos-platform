@@ -122,6 +122,17 @@ export class MetadataDriver implements SteedosDriver {
     }
     
     queryMetadata(collection, queryOptions, spaceId){
+        let mongoFilters = this.getMongoFilters(queryOptions.filters);
+        if (!spaceId) {
+            // 如果没有传spaceId，从filters中获取
+            const str = JSON.stringify(mongoFilters);
+            const regex = /"space":"([^"]+)"/;
+            const match = regex.exec(str);
+            const space = match ? match[1] : null;
+            if (space) {
+                spaceId = space;
+            }
+        }
         const _collection = clone(collection);
         _.each(_collection, function(item) {
             try {
@@ -132,7 +143,6 @@ export class MetadataDriver implements SteedosDriver {
                 console.error(`metadata driver queryMetadata: ${item} is not json data`);
             }
         });
-        let mongoFilters = this.getMongoFilters(queryOptions.filters);
         let mongoOptions = this.getMongoOptions(queryOptions);
         // console.log(`mongoFilters`, JSON.stringify(mongoFilters));
         // console.log(`mongoOptions`, mongoOptions);

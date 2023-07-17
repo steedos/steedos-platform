@@ -226,7 +226,7 @@ Creator.getObjectSchema = (obj) ->
 								# 对当前对象有viewAllRecords权限则不限制所属分部列表查看权限，否则只显示当前所属分部
 								# 注意不是reference_to对象的viewAllRecords权限，而是当前对象的
 								if Meteor.isClient
-									permissions = obj.permissions?.get()
+									permissions = obj.permissions
 									isUnLimited = permissions?.viewAllRecords
 									if _.include(["organizations", "users", "space_users"], obj.name)
 										# 如果字段所属对象是用户或组织，则是否限制显示所属分部部门与modifyAllRecords权限关联
@@ -256,7 +256,7 @@ Creator.getObjectSchema = (obj) ->
 								# 对当前对象有viewAllRecords权限则不限制所属分部列表查看权限，否则只显示当前所属分部
 								# 注意不是reference_to对象的viewAllRecords权限，而是当前对象的
 								if Meteor.isClient
-									permissions = obj.permissions?.get()
+									permissions = obj.permissions
 									isUnLimited = permissions?.viewAllRecords
 									if _.include(["organizations", "users", "space_users"], obj.name)
 										# 如果字段所属对象是用户或组织，则是否限制显示所属分部部门与modifyAllRecords权限关联

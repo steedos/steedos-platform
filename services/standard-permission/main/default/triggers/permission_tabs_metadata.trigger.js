@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-10-26 14:14:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 15:09:54
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-13 09:56:08
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -11,30 +11,26 @@ const auth = require('@steedos/auth');
 const _ = require('underscore');
 async function getAll() {
     const schema = objectql.getSteedosSchema();
-    const configs = await register.registerTab.getAll(schema.broker)
+    const configs = await register.registerPermissionTabs.getAll(schema.broker)
     const dataList = _.pluck(configs, 'metadata');
     let permissionTabs = [];
     for (const item of dataList) {
         if (!item._id) {
-            item._id = `${item.name}`
+            item._id = `${item.permission_set}_${item.tab}`
         }
-        if (item.permissions) {
-            for (const permissionTab of item.permissions) {
-                permissionTabs.push({
-                    _id: `${permissionTab.permission_set}_${item.name}`,
-                    permission: permissionTab.permission,
-                    permission_set: permissionTab.permission_set,
-                    tab: item.name,
+        permissionTabs.push({
+            _id: item._id,
+            permission: item.permission,
+            permission_set: item.permission_set,
+            tab: item.tab,
 
-                    is_system: true,
-                    record_permissions: { // 此属性控制记录在前台页面的权限
-                        allowEdit: false,
-                        allowDelete: false,
-                        allowRead: true,
-                    }
-                });
+            is_system: true,
+            record_permissions: { // 此属性控制记录在前台页面的权限
+                allowEdit: false,
+                allowDelete: false,
+                allowRead: true,
             }
-        }
+        });
     }
     return permissionTabs;
 }

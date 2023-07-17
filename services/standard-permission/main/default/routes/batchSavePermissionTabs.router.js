@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-10-29 16:49:49
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-10-29 17:29:38
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-13 12:03:01
  * @Description: 权限集详情页中的设置选项卡权限按钮保存接口，批量保存选项卡权限
  */
 'use strict';
@@ -39,29 +39,37 @@ router.post('/api/permission/permission_set/batchSavePermissionTabs', core.requi
             throw new Error("permission_tabs_list is required");
         }
         const permissionTabsObj = objectql.getObject('permission_tabs')
-        for (const { permission, tab } of permission_tabs_list) {
-            const pTabDoc = (await permissionTabsObj.find({
-                filters: [
-                    ['permission_set', '=', permission_set_name],
-                    ['tab', '=', tab.name]
-                ]
-            }))[0]
+        const ptList = await permissionTabsObj.find({
+            filters: [
+                ['permission_set', '=', permission_set_name],
+            ]
+        }, userSession)
 
-            if (pTabDoc && !pTabDoc.system) {
-                // 如果存在
-                // 1、非系统 执行更新
-                await permissionTabsObj.update(pTabDoc._id, {
-                    'permission': permission
-                }, userSession)
-            } else if (!pTabDoc || pTabDoc.system) {
-                // 2、系统的执行新增，相当于自定义
-                // 如果不存在，执行新增
-                await permissionTabsObj.insert({
-                    'space': spaceId,
-                    'permission_set': permission_set_name,
-                    'tab': tab.name,
-                    'permission': permission
-                }, userSession)
+        const ptMap = {}
+        for (const pt of ptList) {
+            ptMap[pt.tab] = pt
+        }
+
+        for (const { permission, tab } of permission_tabs_list) {
+            const pTabDoc = ptMap[tab.name]
+
+            if (pTabDoc && pTabDoc.permission !== permission) {
+                if (!pTabDoc.is_system) {
+                    // 如果存在
+                    // 1、非系统 执行更新
+                    await permissionTabsObj.update(pTabDoc._id, {
+                        'permission': permission
+                    }, userSession)
+                } else if (pTabDoc.is_system) {
+                    // 2、系统的执行新增，相当于自定义
+                    // 如果不存在，执行新增
+                    await permissionTabsObj.insert({
+                        'space': spaceId,
+                        'permission_set': permission_set_name,
+                        'tab': tab.name,
+                        'permission': permission
+                    }, userSession)
+                }
             }
 
         }

@@ -100,6 +100,7 @@ fields:
     group: Files permissions
   disabled_list_views:
     type: lookup
+    reference_to: object_listviews
     label: Disabled ListViews
     multiple: true
     depend_on:

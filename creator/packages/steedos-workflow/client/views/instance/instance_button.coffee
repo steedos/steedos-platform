@@ -721,7 +721,9 @@ Template.instance_button.events
 					toastr.error TAPi18n.__(err.reason)
 				if result == true
 					Session.set("instance_change", false)
-					FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+					#为了保留url上的过滤条件
+					Steedos.goBack()
+					# FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
 					toastr.success(TAPi18n.__('instance_return_success'));
 				return
 

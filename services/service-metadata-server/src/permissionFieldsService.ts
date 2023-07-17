@@ -42,6 +42,9 @@ module.exports = {
         resetFieldPermissions: {
             async handler(permissionObjectId: string, userSession: any) {
                 const record = await objectql.getObject('permission_objects').findOne(permissionObjectId)
+                if(!record){
+                    return ;
+                }
                 const permissionSet = await objectql.getObject('permission_set').findOne(record.permission_set_id)
                 //获取对象所有字段
                 const fields = await objectql.getObject('object_fields').find({ filters: [['object', '=', record.object_name]] });
