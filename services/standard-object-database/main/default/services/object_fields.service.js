@@ -223,6 +223,7 @@ module.exports = {
                         "label": translatedLabel,
                         "evalMode": false,
                         "type": "input-formula",
+                        "placeholder": "公式",
                         // "disabledOn": "!!this.defaultValue && !!this.defaultValue.toString()",
                         "className": {
                             "defaultValue_field_formula": true,
