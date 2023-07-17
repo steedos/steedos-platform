@@ -104,6 +104,12 @@ module.exports = {
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
+
+			try {
+				await ctx.broker.call('~packages-project-server.initialPackages', {}, {});
+			} catch (error) {
+				console.error(`initialPackages error`, error)
+			}
 		},
 		'trigger.loaded': async function (ctx) {
 			const { objectName } = ctx.params;
