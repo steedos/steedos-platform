@@ -15,6 +15,10 @@ CustomLabels:
       tab_grouping_name: Name
       tab_grouping_open: Expand by Default
       tab_number: Sequence
+      tab_desktop: Desktop
+      tab_desktop_remark: Display in desktop menu
+      tab_mobile: Mobile
+      tab_mobile_remark: Displayed in the phone menu
     amis_edit:
       edit: Edit
       edit_apps: Edit Apps

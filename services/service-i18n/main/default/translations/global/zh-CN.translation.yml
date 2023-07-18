@@ -15,6 +15,10 @@ CustomLabels:
       tab_grouping_name: 名称
       tab_grouping_open: 是否默认展开
       tab_number: 序号
+      tab_desktop: 桌面
+      tab_desktop_remark: 显示在桌面菜单中
+      tab_mobile: 手机
+      tab_mobile_remark: 显示在手机菜单中
     amis_edit:
       edit: 编辑
       edit_apps: 编辑 应用程序
