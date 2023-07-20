@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-03 13:51:44
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-15 13:55:29
  * @Description: 
  */
 
@@ -35,8 +35,6 @@ module.exports = {
 
     globalGraphQLSettings: {}, // service-api 里generateGraphQLSchema使用 
     getGraphqlFields: getQueryFields,
-
-    projectStarted: false,
 
     /**
      * Settings
@@ -278,23 +276,6 @@ module.exports = {
                 // 发送事件，通知ApolloService重新加载graphql schema
                 ctx.emit('$services.changed');
 
-                if (!this.projectStarted) {
-                    this.projectStarted = true
-                    // 开发环境, 显示耗时
-                    if(process.env.NODE_ENV == 'development' && global.__startDate){
-                        console.log('耗时: ' + (new Date().getTime() - global.__startDate.getTime()) + ' ms');
-                    }
-                    console.log(`Project is running at ${process.env.ROOT_URL}`);
-                    console.log('');
-                    if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
-                        try {
-                            open(process.env.ROOT_URL);
-                        } catch (error) {
-                            console.error(error);
-                            console.error('auto open browser failed.');
-                        }
-                    }
-                }
             }
         }
     },

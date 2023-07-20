@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-01 13:52:09
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-17 14:01:14
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -228,8 +228,8 @@ if (Meteor.isServer) {
 
   }
   db.instances._ensureIndex({
+    "record_ids.ids": 1,
     "record_ids.o": 1,
-    "record_ids.ids": 1
   }, {
     background: true
   });
