@@ -37,10 +37,7 @@ amis_schema: |-
                         "source": {
                           "method": "get",
                           "url": "${context.rootUrl}/api/nodes/versions?module=${record.name}",
-                          "data": {
-                            "&": "$$",
-                            "record": "${record}"
-                          },
+                          "requestAdaptor": "api.data={}; return api;",
                           "headers": {
                             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                           }
