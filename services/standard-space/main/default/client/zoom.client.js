@@ -4,6 +4,19 @@ Tracker.autorun(function(e) {
     if(space?.zoom){
         zoom = space.zoom;
     }
-    $("body").removeClass("zoom-normal").removeClass("zoom-large").removeClass("zoom-extra-large");
-    $("body").addClass("zoom-" + zoom);
+    if(Steedos.isMobile()){
+        $("body").removeClass("zoom-normal").removeClass("zoom-large").removeClass("zoom-extra-large");
+        $("body").addClass("zoom-" + zoom);
+    }else if(Steedos.isNode()){
+        let zoomRate = 1;
+        if(zoom == "large"){
+            zoomRate = 1.5;
+        }else if(zoom == 'extra-large'){
+            zoomRate = 2.0;
+        }
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            var tabId = tabs[0].id;
+            chrome.tabs.setZoom(tabId, zoomRate)
+        });
+    }
 })
