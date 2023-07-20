@@ -1,0 +1,7 @@
+name: workflow_chart
+is_active: true
+label: 流程图
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

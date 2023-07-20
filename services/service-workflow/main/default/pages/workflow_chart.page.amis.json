@@ -1,0 +1,66 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "service",
+            "body": [
+                {
+                    "type": "steedos-react-flow",
+                    "name": "flow_chart",
+                    "wrapperClassName": "w-full h-full",
+                    "config": "${config}",
+                    "id": "u:4dc36cb794c7"
+                }
+            ],
+            "id": "u:f5e1dc3d2677",
+            "data": {
+                "config": {
+                    "nodes": [
+                        {
+                            "id": "start",
+                            "data": {
+                                "label": "开始1"
+                            },
+                            "position": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "type": "input"
+                        },
+                        {
+                            "id": "end",
+                            "data": {
+                                "label": "结束"
+                            },
+                            "position": {
+                                "x": 100,
+                                "y": 100
+                            }
+                        }
+                    ],
+                    "edges": [
+                        {
+                            "id": "start-end",
+                            "source": "start",
+                            "target": "end",
+                            "label": "",
+                            "type": "step"
+                        }
+                    ]
+                }
+            },
+            "className": "w-full h-full"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {}
+    },
+    "id": "u:db296d9b195d"
+}
