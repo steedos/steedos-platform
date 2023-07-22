@@ -1,0 +1,27 @@
+CustomLabels:
+  object_layouts: 
+    object_layouts_form:
+      check_all_label: 全选
+      sequence: 序号
+      button_name_label: 名称
+      visibile_on: 显示条件
+      button_set: 设置按钮
+      fields: 字段
+      readonly: 只读
+      required: 必填
+      grouping: 分组
+      field_set: 设置字段
+      grouping_set: 设置分组
+      group_name: 名称
+      related_list_name: 子表名称
+      related_list_label: 显示标题
+      related_list_label_remark: 默认为对象名称
+      field_names: 显示的字段
+      sort_field_name: 排序字段
+      sort_order: 排序方式
+      filters_rule: 过滤规则
+      filters_rule_description: 函数签名：(filters, data) => 自定义过滤条件， 数据在 data 中，修改后返回 自定义过滤条件
+      page_size: 每页显示数量
+      set_related_list: 设置子表
+      positive_order: 正序
+      reverse_order: 倒序

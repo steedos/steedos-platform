@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-06 11:52:46
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-22 11:09:28
  * @Description: 
  */
 const _ = require('underscore');
@@ -30,6 +30,11 @@ const getLng = async function(userId){
 }
 
 module.exports = {
+    
+    beforeFind: async function () {
+        delete this.query.fields;
+    },
+
     afterFind: async function () {
         const { spaceId } = this;
         let query = InternalData.parserFilters(this.query.filters);

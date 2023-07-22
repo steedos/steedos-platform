@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-19 09:26:37
+ * @LastEditTime: 2023-07-21 17:15:23
  * @Description: 
  */
 const { NodeVM } = require('vm2');
@@ -46,7 +46,9 @@ export const runTriggerFunction = (code, thisArg, ...args)=>{
         },
         env: process.env
     });
-    let triggerInSandbox =  vm.run(`module.exports = async function(ctx){${code}};`);
+    let triggerInSandbox =  vm.run(`module.exports = async function(ctx){
+        ${code}
+    };`);
 
     return triggerInSandbox.apply(thisArg, args)
 }

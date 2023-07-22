@@ -104,7 +104,11 @@ module.exports = {
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
-
+			// 工作区未初始化时，才初始化软件包
+			const allowInit = await this.allowInit(records);
+			if (!allowInit) {
+				return
+			}
 			try {
 				await ctx.broker.call('~packages-project-server.initialPackages', {}, {});
 			} catch (error) {
@@ -346,6 +350,19 @@ module.exports = {
             }).promise();
             
         },
+
+		allowInit: async function (spaces) {
+			if (spaces && spaces.length > 0) {
+				return false;
+			}
+			// 查询库中工作区记录，如果有工作区记录则不初始化
+			const spaceObj = objectql.getObject('spaces');
+			let spacesCount = await spaceObj.count({});
+			if (spacesCount > 0) {
+				return false;
+			}
+			return true;
+		}
 	},
 
 	/**

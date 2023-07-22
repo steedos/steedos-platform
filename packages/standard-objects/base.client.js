@@ -254,18 +254,17 @@ Steedos.StandardObjects = {
                         return window._hasImportTemplates[objectName];
                     }
                     if(allowCreate){
-                        var hasImportTemplates = Steedos.authRequest("/api/v4/queue_import",
-                            {
-                                type: 'get', async: false,
-                                data: {
-                                    $filter: `(object_name eq '${objectName}')`,
-                                    $count: true,
-                                    $select: '_id'
-                                },
-                                error: function(){}
-                            }
-                        );
-                        if(hasImportTemplates && hasImportTemplates.value && hasImportTemplates.value.length > 0){
+                        var hasImportTemplates = Steedos.authRequest("/graphql", {
+                            type: 'POST',
+                            async: false,
+                            data: JSON.stringify({
+                                query: `{records: queue_import(filters: [["object_name", "=", "${objectName}"]]){_id}}`
+                            }),
+                            contentType: 'application/json',
+                            error: function () { }
+                        });
+
+                        if(hasImportTemplates && hasImportTemplates.data && hasImportTemplates.data.records && hasImportTemplates.data.records.length > 0){
                             window._hasImportTemplates[objectName] = true;
                             return true;
                         }
