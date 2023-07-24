@@ -1,6 +1,7 @@
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 const serviceObjectGraphql = require('@steedos/service-object-graphql');
+const Fiber = require('fibers');
 module.exports = {
   name: "instance",
   actions: {
@@ -150,6 +151,21 @@ module.exports = {
             }
 
             return filter;
+        }
+    },
+    getHanders:{
+        async handler(ctx) {
+            return await new Promise((resolve, reject) => {
+                Fiber(function () {
+                    try {
+                        const {insId, stepId, loginUserId} = ctx.params;
+                        var userIds = getHandlersManager.getHandlers(insId, stepId, loginUserId);
+                        resolve(userIds);
+                    } catch (error) {
+                        reject(error)
+                    }
+                }).run()
+            });
         }
     }
   },
