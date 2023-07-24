@@ -228,7 +228,7 @@ module.exports = {
                         "className": {
                             "defaultValue_field_formula": true,
                             "defaultValue_field_formula_visible": "!!this.defaultValue_formula",
-                            "defaultValue_field_formula_hidden": "!!this.defaultValue && !!this.defaultValue.toString()"
+                            "defaultValue_field_formula_hidden": "(!!this.defaultValue && !!this.defaultValue.toString()) || (!this.defaultValue && !this.defaultValue_formula)"
                         }
                     })
                 }

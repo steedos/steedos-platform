@@ -11,8 +11,23 @@
         "mode": "edit",
         "layout": "normal",
         "enableTabs": true,
+        "onEvent": {
+          "change": {
+            "actions": [
+              {
+                "actionType": "setValue",
+                "args": {
+                  "value": {
+                    "defaultValue": ""
+                  }
+                },
+                "expression": "${!!event.data.defaultValue_formula}"
+              }
+            ]
+          }
+        },
         "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue; if(defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{')>-1 ){ payload.data.defaultValue_formula = defaultValue_field_value; delete payload.data.defaultValue; } return payload;",
-        "apiRequestAdaptor": "if(formData.defaultValue_formula && !formData.defaultValue){ formData.defaultValue = formData.defaultValue_formula }  __saveData = JSON.stringify(JSON.stringify(formData)); api.data = {query: query.replace('{__saveData}', __saveData)};"
+        "apiRequestAdaptor": "if(formData.defaultValue_formula){ formData.defaultValue = formData.defaultValue_formula }  __saveData = JSON.stringify(JSON.stringify(formData)); api.data = {query: query.replace('{__saveData}', __saveData)};"
       }
     ],
     "regions": [
