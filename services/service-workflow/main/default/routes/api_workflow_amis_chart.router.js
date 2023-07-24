@@ -7,17 +7,17 @@ const objectql = require('@steedos/objectql');
 const FlowversionAPI = {
     getIconName: function(type){
         if(type == "start"){
-            return "play";
+            return "startStep";
         }else if(type == "end"){
-            return "stop";
+            return "endStep";
         }else if(type == "condition"){
-            return "question";
+            return "conditionStep";
         }else if(type == "sign"){
-            return "approval";
+            return "signStep";
         }else if(type == "counterSign"){
-            return "groups";
+            return "counterSignStep";
         }else if(type == "submit"){
-            return "record_update";
+            return "submitStep";
         }
     },
     getStepHandlerName: async function (step, insId) {
@@ -58,8 +58,9 @@ const FlowversionAPI = {
                 return React.createElement(
                     'div',
                     { className: 'graph-node' },
+                    React.createElement('div',{ className: 'step-icon ${iconName}' }),
                     React.createElement('span',{ className: 'step-name' },'${stepName}'),
-                    React.createElement('div',{ className: 'step-handler-name' },'${stepHandlerName}')
+                    React.createElement('span',{ className: 'step-handler-name' },'${stepHandlerName}')
                 )
             `
         } else {
@@ -112,7 +113,7 @@ const FlowversionAPI = {
                         },
                         style: {
                             stroke: "#333333",
-                            strokeWidth: 2
+                            strokeWidth: 1
                         },
                         label: line.condition,
                         labelStyle:{
@@ -151,15 +152,7 @@ const FlowversionAPI = {
                 deletable: false
             }
             if (currentStepId == steps[i]._id) {
-                node.style = {
-                    background: "#cde498",
-                    border: "solid #13540c 2px"
-                }
-            } else {
-                node.style = {
-                    background: "#ECECFF",
-                    border: "solid #9370DB 2px"
-                }
+                node.className = "stepHighLight"
             }
             nodes.push(node);
         }
