@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
  * @LastEditors: liaodaxue
- * @LastEditTime: 2023-07-12 13:17:34
+ * @LastEditTime: 2023-07-24 13:57:51
  * @Description: 
  */
 Steedos.ObjectFieldManager = {};
@@ -72,7 +72,7 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
 (function () {
   try {
       var styleCss = $(`<style>
-          .defaultValue_field .antd-Form-item:first-child{
+          .defaultValue_field div:first-child{
               flex-grow: 1;
           }
           .defaultValue_field .defaultValue_field_formula{
