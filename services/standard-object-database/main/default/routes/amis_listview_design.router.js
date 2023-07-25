@@ -24,10 +24,15 @@ router.get('/api/amisListviewDesign', core.requireAuthentication, async function
         //     userId: userSession.userId,
         //     authToken: userSession.authToken
         // }
-
+        let locale = "zh-CN";
+        if (req.query.locale == "en-us") {
+            locale = "en-US";
+        } else if (req.query.locale == "zh-cn") {
+            locale = "zh-CN";
+        }
         const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/object_listviews/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}`;
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
         const record = await objectql.getObject('object_listviews').findOne(req.query.id);
         // let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
         // res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));
