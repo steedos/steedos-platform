@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
+const amisFormula = require('amis-formula');
 
 /**
   把原来的默认值公式表达式转换成新的表达式语法，原来的表达式语法如下所示：
@@ -118,9 +119,26 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                 defaultValue = getCompatibleDefaultValueExpression(defaultValue);
                 // console.log("==setDefaultValues=defaultValue===333=", defaultValue);
                 if(defaultValue){
-                    defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userSession);
-                    if(field.multiple && !_.isArray(defaultValue)){
-                        defaultValue = defaultValue.split(',');
+                    if(defaultValue.indexOf('${')<0){
+                        defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userSession);
+                        if(field.multiple && !_.isArray(defaultValue)){
+                            defaultValue = defaultValue.split(',');
+                        }
+                    }else{
+                        try {
+                            const start = defaultValue.indexOf("{") + 1;
+                            const end = defaultValue.indexOf("}");
+                            const value = defaultValue.substring(start, end);
+                            const amisFormulaValue= amisFormula.evaluate(value,{},{evalMode: true});
+                            if(value === amisFormulaValue){
+                                throw new Error("Error:" +amisFormulaValue+"函数没有定义"); // 抛出错误
+                            }else{
+                                defaultValue = amisFormulaValue;
+                            }
+                        } catch (e) {
+                            defaultValue = null;
+                            console.log(e);
+                        }
                     }
                     doc[field.name] = defaultValue;
                     // console.log("==setDefaultValues=doc[field.name]====", field.name, doc[field.name]);
