@@ -1,6 +1,7 @@
 name: installPackageFromUrl
 label: 手动安装软件包
 'on': list
+#TODO: ${'steedos_packages.install.initialization_failure' | t} ,${'steedos_packages.install.installation_success' | t}，${'steedos_packages.install.installation_failure' | t}，等待amis合并分支，可用该代码,用于form组件的message属性
 amis_schema: |-
   {
       "type": "service",
@@ -87,9 +88,9 @@ amis_schema: |-
                                               }
                                           },
                                           "messages": {
-                                              "fetchFailed": "${'steedos_packages.install.initialization_failure' | t}",
-                                              "saveSuccess": "${'steedos_packages.install.installation_success' | t}",
-                                              "saveFailed": "${'steedos_packages.install.installation_failure' | t}"
+                                              "fetchFailed": "初始化失败",
+                                              "saveSuccess": "安装成功", 
+                                              "saveFailed": "安装失败" 
                                           },
                                           "onEvent": {
                                             "submitSucc": {
