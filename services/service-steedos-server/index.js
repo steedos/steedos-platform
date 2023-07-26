@@ -114,6 +114,16 @@ module.exports = {
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });
 			}
+			// 工作区未初始化时，才初始化软件包
+			const allowInit = await this.allowInit(records);
+			if (!allowInit) {
+				return
+			}
+			try {
+				await ctx.broker.call('~packages-project-server.initialPackages', {}, {});
+			} catch (error) {
+				console.error(`initialPackages error`, error)
+			}
 		},
 		'trigger.loaded': async function (ctx) {
 			const { objectName } = ctx.params;
@@ -345,6 +355,13 @@ module.exports = {
                                     company_id = flow.company_id
                                 }
                             }
+                            // 默认分部
+                            if (!company_id) {
+                                const rootOrg = db.organizations.findOne({ space: space._id, is_company: true, parent: null });
+                                if (rootOrg && rootOrg.company_id) {
+                                    company_id = rootOrg.company_id;
+                                }
+                            }
 
                             return steedosImport.workflow(space.owner, space._id, flow, flow.state == 'enabled' ? true : false, company_id);
                         }
@@ -357,6 +374,19 @@ module.exports = {
             }).promise();
             
         },
+
+		allowInit: async function (spaces) {
+			if (spaces && spaces.length > 0) {
+				return false;
+			}
+			// 查询库中工作区记录，如果有工作区记录则不初始化
+			const spaceObj = objectql.getObject('spaces');
+			let spacesCount = await spaceObj.count({});
+			if (spacesCount > 0) {
+				return false;
+			}
+			return true;
+		}
 	},
 
 	/**

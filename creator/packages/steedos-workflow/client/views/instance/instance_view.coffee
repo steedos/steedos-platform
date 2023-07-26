@@ -20,7 +20,8 @@ Template.instance_view.helpers
 			return true
 		# return true
 		return false;
-
+	enableAmisform: ()->
+		return InstanceManager.isAmisForm()
 	readOnlyView: ()->
 		steedos_instance = WorkflowManager.getInstance();
 		if steedos_instance

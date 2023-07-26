@@ -73,7 +73,7 @@ fields:
 groups:
   rule_criteria: 规则条件
   immediate_actions: 即时操作
-  time_triggers: 依赖于时间的工作流操作
+  time_dependent_action: 依赖于时间的工作流操作
 listviews:
   all:
     label: 所有

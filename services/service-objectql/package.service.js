@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-18 14:33:09
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-20 14:02:33
  * @Description: 
  */
 "use strict";
@@ -35,6 +35,19 @@ module.exports = {
      * Actions
      */
     actions: {
+        aggregate: {
+            params: {
+                objectName: { type: "string" },
+                query: { type: "object" },
+                externalPipeline: { type: "array", items: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, query, externalPipeline } = ctx.params;
+                const obj = getObject(objectName)
+                return await obj.aggregate(query, externalPipeline, userSession)
+            }
+        },
         find: {
             params: {
                 objectName: { type: "string" },
@@ -319,7 +332,7 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
             },
-            async handler() {
+            async handler(ctx) {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return obj.isEnableAudit();
@@ -329,7 +342,7 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
             },
-            async handler() {
+            async handler(ctx) {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return await obj._makeNewID();
@@ -339,7 +352,7 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
             },
-            async handler() {
+            async handler(ctx) {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return obj.getRecordAbsoluteUrl();
@@ -349,7 +362,7 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
             },
-            async handler() {
+            async handler(ctx) {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return obj.getGridAbsoluteUrl();

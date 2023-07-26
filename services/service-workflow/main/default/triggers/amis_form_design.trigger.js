@@ -85,8 +85,7 @@ function getInputFiled(bodyItem) {
 let inputFields = [];
 function getFormInputFields(formSchema) {
 
-    _.each(formSchema.body, (bodyItem) => {
-
+    _.each(formSchema.body || formSchema.columns || [], (bodyItem) => {
         let flag = true;
         // 对符合条件的formSchema做解析处理
         const field = getInputFiled(bodyItem);
@@ -106,6 +105,10 @@ function getFormInputFields(formSchema) {
         }else{
             //else schema中有嵌套表单项的元素 对其进行递归
             if(_.isArray(bodyItem.body)){
+                getFormInputFields(bodyItem);
+            }
+
+            if(_.isArray(bodyItem.columns)){
                 getFormInputFields(bodyItem);
             }
         }
@@ -405,7 +408,11 @@ function transformFormFields(amisField) {
 				}else if(tempConfig.reference_to === "space_users"){
 					//  && tempConfig.reference_to_field === 'user'
 					steedosField.type = 'user'
-				}
+				}else{
+                    steedosField.type = 'lookup';
+                    steedosField.reference_to = tempConfig.reference_to;
+                    steedosField.reference_to_field = tempConfig.reference_to_field;
+                }
 				return steedosField
 
 			}else if(amisField.field){

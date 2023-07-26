@@ -4,3 +4,80 @@ CustomLabels:
   apply: 应用
   asc: 正序
   desc: 降序
+  apps:
+    apps_form:
+      tab: 选项卡
+      tab_generate: 生成选项卡
+      tab_generate_title: 选择需要生成选项卡的对象
+      tab_set: 设置选项卡
+      tab_grouping: 分组
+      tab_grouping_set: 设置分组
+      tab_grouping_name: 名称
+      tab_grouping_open: 是否默认展开
+      tab_number: 序号
+      tab_desktop: 桌面
+      tab_desktop_remark: 显示在桌面菜单中
+      tab_mobile: 手机
+      tab_mobile_remark: 显示在手机菜单中
+    amis_edit:
+      edit: 编辑
+      edit_apps: 编辑 应用程序
+    amis_new:
+      new: 新建
+      new_apps: 新建 应用程序
+  tabs:
+    generate_object_tabs:
+      objects_tab: 对象选项卡
+      objects_tab_title: 选择需要生成选项卡的对象
+  action_field_updates:
+    action_field_updates_form:
+      field_group_generalization: 通用
+      api_name: API 名称
+      display_name: 显示名称
+      object_name: 对象
+      update_object: 要更新的对象
+      update_name: 要更新的字段
+      new_field_value_type: 新字段值类型
+      formula: 公式
+      description: 描述
+      reevaluate_on_change: 字段更改后重新评估工作流规则
+      undirect: 触发对象触发器、工作流规则、字段验证规则 
+  cms_files:
+    upload:
+      upload: 上传
+      message_success: 上传成功
+  flows:
+    newimport:
+      import_process: 导入流程
+      file_select: 文件选择
+      file_upload: 文件上传
+      division: 分部
+    newexport:
+      export_process: 导出流程
+      alert: 请选择要导出的流程
+    standard_new:
+      new: 新建
+      new_flow: 新建流程
+      category: 分类
+      flow_name: 流程名
+      division: 分部
+      division_name: 分部名称
+      division_code: 分部代码
+      related_departments: 关联部门
+      modification_time: 修改时间
+      binding_objects: 绑定对象
+      enable_amis_forms: 启用amis表单
+    addFormFields:
+      add_fields: 添加字段
+      binding_objects: 绑定对象
+      application_form_fields: 申请单字段
+      field: 字段
+      required: 必填
+      set_fields: 设置字段
+      application_form_subform: 申请单子表
+      sequence: 序号
+      subform_name: 子表名称
+      show_heading: 显示标题
+      default_to_object_name: 默认为对象名称
+      displayed_fields: 显示的字段
+      set_subform: 设置子表

@@ -5,7 +5,7 @@ amis_schema: |-
         "body": [
             {
                 "type": "button",
-                "label": "设置选项卡权限",
+                "label": "${'permission_set.set_permission_tabs.set_permission' | t}",
                 "id": "u:set_permission_tabs",
                 "onEvent": {
                     "click": {
@@ -14,7 +14,7 @@ amis_schema: |-
                                 "actionType": "dialog",
                                 "dialog": {
                                     "type": "dialog",
-                                    "title": "设置选项卡权限",
+                                    "title": "${'permission_set.set_permission_tabs.set_permission' | t}",
                                     "body": [
                                         {
                                             "type": "form",
@@ -27,14 +27,14 @@ amis_schema: |-
                                                     "label": "",
                                                     "columns": [
                                                         {
-                                                            "label": "选项卡",
+                                                            "label": "${'permission_set.set_permission_tabs.tab' | t}",
                                                             "name": "tab.label",
                                                             "type": "text",
                                                             "id": "u:ebd95b18057a",
                                                             "placeholder": "-"
                                                         },
                                                         {
-                                                            "label": "权限",
+                                                            "label": "${'permission_set.set_permission_tabs.permission' | t}",
                                                             "name": "permission",
                                                             "type": "select",
                                                             "id": "u:ad5dcb76754f",
@@ -64,7 +64,7 @@ amis_schema: |-
                                                     "&": "$$",
                                                     "record": "${record}"
                                                 },
-                                                "adaptor": "const data = payload.data\nconst { permission_tabs, tabs } = data\nconst tableOptions = []\nconst tabNames = [] // 用于存储已经遍历过的选项卡，防止重复\nfor (const pTab of permission_tabs) {\n  tableOptions.push({\n    tab: {\n      _id: pTab.tab__expand._id,\n      name: pTab.tab__expand.name,\n      label: pTab.tab__expand.label\n    },\n    permission: pTab.permission\n  })\n  tabNames.push(pTab.tab__expand.name)\n}\n\nfor (const tab of tabs) {\n  if (tabNames.includes(tab.name)) {\n    continue\n  }\n  tableOptions.push({\n    tab: {\n      _id: tab._id,\n      name: tab.name,\n      label: tab.label\n    },\n    permission: 'on'\n  })\n}\n\ndata.permission_tabs_list = tableOptions\n\nreturn payload\n",
+                                                "adaptor": "const data = payload.data\nconst { permission_tabs, tabs } = data\nconst tableOptions = []\nconst tabNames = [] // 用于存储已经遍历过的选项卡，防止重复\nfor (const pTab of permission_tabs) {\n   tableOptions.push({\n    tab: {\n      _id: pTab.tab__expand?._id,\n      name: pTab.tab__expand?.name,\n      label: pTab.tab__expand?.label\n    },\n    permission: pTab.permission\n  })\n  tabNames.push(pTab.tab__expand?.name)\n}\n\nfor (const tab of tabs) {\n  if (tabNames.includes(tab.name)) {\n    continue\n  }\n  tableOptions.push({\n    tab: {\n      _id: tab._id,\n      name: tab.name,\n      label: tab.label\n    },\n    permission: 'on'\n  })\n}\n\ndata.permission_tabs_list = tableOptions\n\nreturn payload\n",
                                                 "headers": {
                                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                 },
@@ -104,7 +104,7 @@ amis_schema: |-
                                     "actions": [
                                         {
                                             "type": "button",
-                                            "label": "取消",
+                                            "label": "${'permission_set.set_permission_tabs.cancel' | t}",
                                             "onEvent": {
                                                 "click": {
                                                     "actions": [
@@ -121,7 +121,7 @@ amis_schema: |-
                                         },
                                         {
                                             "type": "submit",
-                                            "label": "保存",
+                                            "label": "${'permission_set.set_permission_tabs.save' | t}",
                                             "onEvent": {},
                                             "id": "u:246398c1f14c",
                                             "level": "primary",

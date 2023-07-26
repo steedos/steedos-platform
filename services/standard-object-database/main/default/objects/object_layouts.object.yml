@@ -10,19 +10,23 @@ fields:
     required: true
     label: Api Name
     is_wide: true
+    group: general_information
   label:
     type: text
     required: true
     label: Label
     is_wide: true
     is_name: true
+    group: general_information
   object_name:
     label: Object
     type: master_detail
     required: true
     reference_to: objects
     reference_to_field: name
+    is_wide: true
     write_requires_master_read: true
+    group: general_information
   type:
     type: select
     options:
@@ -42,6 +46,10 @@ fields:
     create: false
     reference_to: permission_set
     reference_to_field: name
+    is_wide: true
+    defaultValue:
+      - admin
+      - user
     optionsFunction: !<tag:yaml.org,2002:js/function> |-
       function () {
         var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
@@ -54,12 +62,14 @@ fields:
         });
         return result;
       }
+    group: general_information
   buttons:
     type: grid
     blackbox: true
     is_wide: true
     depend_on:
       - object_name
+    group: buttons
   buttons.$.button_name:
     type: lookup
     reference_to: object_actions
@@ -83,6 +93,7 @@ fields:
     required: true
     depend_on:
       - object_name
+    group: fields
   fields.$:
     label: Field
     blackbox: true
@@ -116,6 +127,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
+    group: related_lists
   related_lists.$.related_field_fullname:
     type: lookup
     optionsFunction: !!js/function |

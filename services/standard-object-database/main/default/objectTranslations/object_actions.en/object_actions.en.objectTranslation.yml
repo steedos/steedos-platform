@@ -29,6 +29,25 @@ fields:
     label: 'On'
     help: 
     description: 
+    options:
+      - label: Display in the top right corner of the list
+        value: list
+        icon: contact_list
+      - label: Displayed in the top right corner of the record viewing page and in the drop-down menu for each item in the list view
+        value: record
+        icon: contact_list
+      - label: Displayed in the "More" dropdown menu in the upper right corner of the record viewing page, as well as in the dropdown menu for each item in the list view
+        value: record_more
+        icon: lead_list
+      - label: Display in the drop-down menu for each item in the list view
+        value: list_item
+        icon: action_list_component
+      - label: Displayed in the upper right corner of the record viewing page
+        value: record_only
+        icon: contract
+      - label: Displayed in the "More" drop-down menu in the upper right corner of the record viewing page
+        value: record_only_more
+        icon: lead_list
   type: 
     label: Type
     options:

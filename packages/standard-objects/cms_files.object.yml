@@ -325,7 +325,7 @@ actions:
                                                 "position": "top-right",
                                                 "closeButton": true,
                                                 "showIcon": true,
-                                                "msg": "上传成功"
+                                                "msg": "${'cms_files.upload.message_success' | t}"
                                             },
                                             "actionType": "toast"
                                         },
@@ -333,7 +333,7 @@ actions:
                                           "componentId": "",
                                           "args": {},
                                           "actionType": "custom",
-                                          "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); SteedosUI.getRef(context.props.data.scopeId).getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
+                                          "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); SteedosUI.getRef(context.props.data.scopeId).parent?.getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
                                         }
                                     ]
                                 }

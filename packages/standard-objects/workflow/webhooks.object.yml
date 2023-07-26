@@ -2,6 +2,7 @@ name: webhooks
 icon: output
 label: Webhook
 hidden: true
+enable_dataloader: false
 version: 2
 fields:
   name:

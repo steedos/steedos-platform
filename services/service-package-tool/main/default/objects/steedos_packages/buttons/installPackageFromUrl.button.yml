@@ -1,13 +1,14 @@
 name: installPackageFromUrl
 label: 手动安装软件包
 'on': list
+#TODO: ${'steedos_packages.install.initialization_failure' | t} ,${'steedos_packages.install.installation_success' | t}，${'steedos_packages.install.installation_failure' | t}，等待amis合并分支，可用该代码,用于form组件的message属性
 amis_schema: |-
   {
       "type": "service",
       "body": [
           {
               "type": "button",
-              "label": "手动安装软件包",
+              "label": "${'steedos_packages.install.install_package_from_url' | t}",
               "id": "u:install_package_from_url",
               "onEvent": {
                   "click": {
@@ -16,7 +17,7 @@ amis_schema: |-
                               "actionType": "dialog",
                               "dialog": {
                                   "type": "dialog",
-                                  "title": "手动安装软件包",
+                                  "title": "${'steedos_packages.install.install_package_from_url' | t}",
                                   "body": [
                                       {
                                           "type": "form",
@@ -24,7 +25,7 @@ amis_schema: |-
                                           "title": "",
                                           "body": [
                                               {
-                                                  "label": "软件包名称",
+                                                  "label": "${'steedos_packages.install.package_name' | t}",
                                                   "type": "input-text",
                                                   "name": "module",
                                                   "id": "u:524cb8f8d888",
@@ -48,7 +49,7 @@ amis_schema: |-
                                                   "value": "version"
                                               },
                                               {
-                                                  "label": "软件包URL",
+                                                  "label": "${'steedos_packages.install.url' | t}",
                                                   "type": "input-text",
                                                   "name": "url",
                                                   "id": "u:524cb8f8d888",
@@ -56,16 +57,16 @@ amis_schema: |-
                                                   "hiddenOn": "this.type == 'version'"
                                               },
                                               {
-                                                  "label": "版本号",
+                                                  "label": "${'steedos_packages.install.version_number' | t}",
                                                   "type": "input-text",
                                                   "name": "version",
                                                   "id": "u:524cb8f8d888",
-                                                  "placeholder": "如果未填写, 则安装最新正式版",
+                                                  "placeholder": "如未填写, 则安装最新正式版",
                                                   "hiddenOn": "this.type != 'version'"
                                               },
                                               {
                                                   "type": "input-text",
-                                                  "label": "认证信息",
+                                                  "label": "${'steedos_packages.install.authentication_information' | t}",
                                                   "name": "password",
                                                   "id": "u:25e4f0cdf57b",
                                                   "showCounter": false,
@@ -88,8 +89,8 @@ amis_schema: |-
                                           },
                                           "messages": {
                                               "fetchFailed": "初始化失败",
-                                              "saveSuccess": "安装成功",
-                                              "saveFailed": "安装失败"
+                                              "saveSuccess": "安装成功", 
+                                              "saveFailed": "安装失败" 
                                           },
                                           "onEvent": {
                                             "submitSucc": {

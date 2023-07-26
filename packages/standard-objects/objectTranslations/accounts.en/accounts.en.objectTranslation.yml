@@ -1,413 +1,411 @@
 name: accounts
-label: 业务伙伴
+label: Business Partner
 description: 
 fields:
   name:
-    label: 业务伙伴名称
+    label: Business Partner Name
     help: 
     description: 
   owner:
-    label: 我方客户经理
+    label: Our Account Manager
     help: 
     description: 
   is_supplier:
-    label: 供应商
+    label: Supplier
     help: 
     description: 
   is_customer:
-    label: 客户
+    label: Customer
     help: 
     description: 
   type:
-    label: 类型
+    label: Type
     help: 
     options:
-      - label: 分析师
+      - label: Analyst
         value: Analyst
-      - label: 竞争者
+      - label: Competitor
         value: Competitor
-      - label: 顾客
+      - label: Customer
         value: Customer
-      - label: 集成商
+      - label: Integrator
         value: Integrator
-      - label: 投资者
+      - label: Investor
         value: Investor
-      - label: 合作伙伴
+      - label: Partner
         value: Partner
-      - label: 公关媒体
+      - label: Press
         value: Press
-      - label: 潜在
+      - label: Prospect
         value: Prospect
-      - label: 代理商
+      - label: Reseller
         value: Reseller
-      - label: 其他
+      - label: Other
         value: Other
     description: 
   parent_id:
-    label: 母公司
-    help: 作为大公司或组织的子公司的母公司。父级业务伙伴名称必须是华炎魔方中的现有业务伙伴名称。您可输入业务伙伴名称，或使用查找图标选择（或创建）业务伙伴名称。
+    label: Parent Company
+    help: As the parent company of a subsidiary of a large company or organization. The parent business partner name must be an existing business partner name in Huayan Rubik's Cube. You can enter a business partner name or use the search icon to select (or create) a business partner name.
     description: 
   credit_code:
-    label: 纳税人识别号（身份证/其他）
+    label: Taxpayer Identification Number (ID card/Other)
     help: 
     description: 
   website:
-    label: 网站
+    label: Website
     help: 
     description: 
   phone:
-    label: 电话
+    label: Phone
     help: 
     description: 
   fax:
-    label: 传真
+    label: Fax
     help: 
     description: 
   description:
-    label: 描述
+    label: Description
     help: 
     description: 
   industry:
-    label: 行业
+    label: Industry
     help: 
     options:
-      - label: 农业
+      - label: Agriculture
         value: Agriculture
-      - label: 服饰
+      - label: Apparel
         value: Apparel
-      - label: 银行
+      - label: Banking
         value: Banking
-      - label: 生物科技
+      - label: Biotechnology
         value: Biotechnology
-      - label: 化工
+      - label: Chemicals
         value: Chemicals
-      - label: 通信
+      - label: Communications
         value: Communications
-      - label: 建筑
+      - label: Construction
         value: Construction
-      - label: 咨询
+      - label: Consulting
         value: Consulting
-      - label: 教育
+      - label: Education
         value: Education
-      - label: 电子
+      - label: Electronics
         value: Electronics
-      - label: 能源
+      - label: Energy
         value: Energy
-      - label: 工程
+      - label: Engineering
         value: Engineering
-      - label: 娱乐
+      - label: Entertainment
         value: Entertainment
-      - label: 环保
+      - label: Environmental
         value: Environmental
-      - label: 金融
+      - label: Finance
         value: Finance
-      - label: 食品饮料
+      - label: Food and Beverage
         value: Food_&_Beverage
-      - label: 政府组织
+      - label: Government
         value: Government
-      - label: 医疗保健
+      - label: Healthcare
         value: Healthcare
-      - label: 服务
+      - label: Hospitality
         value: Hospitality
-      - label: 保险
+      - label: Insurance
         value: Insurance
-      - label: 机械
+      - label: Machinery
         value: Machinery
-      - label: 制造
+      - label: Manufacturing
         value: Manufacturing
-      - label: 媒体
+      - label: Media
         value: Media
-      - label: 非牟利组织
+      - label: Non Profit Organizations
         value: Not_For_Profit
-      - label: 其他
+      - label: Other
         value: Other
-      - label: 休闲
+      - label: Recreation
         value: Recreation
-      - label: 零售
+      - label: Retail
         value: Retail
-      - label: 航运
+      - label: Shipping
         value: Shipping
-      - label: 科技
+      - label: Technology
         value: Technology
-      - label: 电讯
+      - label: Telecommunications
         value: Telecommunications
-      - label: 交通运输
+      - label: Transportation
         value: Transportation
-      - label: 公用事业
+      - label: Utilities
         value: Utilities
     description: 
   number_of_employees:
-    label: 员工人数
+    label: Number of Employees
     help: 
     description: 
   state:
-    label: 区域
-    help: 业务伙伴被分配至的区域。
+    label: region
+    help: The area to which the business partner is assigned.
     options:
-      - label: 北京
+      - label: Beijing
         value: BJ
-      - label: 上海
+      - label: Shanghai
         value: SH
-      - label: 重庆
+      - label: Chongqing
         value: CQ
-      - label: 天津
+      - label: Tianjin
         value: TJ
-      - label: 河北
+      - label: Hebei
         value: HB
-      - label: 山西
+      - label: Shanxi
         value: SX
-      - label: 辽宁
+      - label: Liaoning
         value: LN
-      - label: 吉林
+      - label: Jilin
         value: GL
-      - label: 黑龙江
+      - label: Heilongjiang
         value: HLJ
-      - label: 江苏
+      - label: Jiangsu
         value: JS
-      - label: 浙江
+      - label: Zhejiang
         value: ZJ
-      - label: 安徽
+      - label: Anhui
         value: AH
-      - label: 福建
+      - label: Fujian
         value: FJ
-      - label: 江西
+      - label: Jiangxi
         value: JX
-      - label: 山东
+      - label: Shandong
         value: SD
-      - label: 河南
+      - label: Henan
         value: HN
-      - label: 湖北
+      - label: Hubei
         value: HUB
-      - label: 湖南
+      - label: Hunan
         value: HUN
-      - label: 广东
+      - label: Guangdong
         value: GD
-      - label: 海南
+      - label: Hainan
         value: HAN
-      - label: 四川
+      - label: Sichuan
         value: SC
-      - label: 贵州
+      - label: Guizhou
         value: GZ
-      - label: 云南
+      - label: Yunnan
         value: YN
-      - label: 陕西
+      - label: Shaanxi
         value: SHX
-      - label: 甘肃
+      - label: Gansu
         value: GS
-      - label: 青海
+      - label: Qinghai
         value: QH
-      - label: 内蒙古
+      - label: Inner Mongolia
         value: NMG
-      - label: 广西
+      - label: Guangxi
         value: GX
-      - label: 西藏
+      - label: Tibet
         value: XZ
-      - label: 宁夏
+      - label: Ningxia
         value: NX
-      - label: 新疆
+      - label: Xinjiang
         value: XJ
-      - label: 香港
+      - label: Hong Kong
         value: HK
-      - label: 澳门
+      - label: Macau
         value: AM
-      - label: 台湾
+      - label: Taiwan
         value: TW
     description: 
   billing_address:
-    label: 开单地址
+    label: Billing Address
     help: 
     description: 
   shipping_address:
-    label: 发货地址
+    label: Shipping Address
     help: 
     description: 
   account_number:
-    label: 业务伙伴编号
+    label: Business Partner Number
     help: 
     description: 
   rating:
-    label: 分级
-    help: 您如何划分此业务伙伴等级的分类，例如，普通、重要。
+    label: Grade
+    help: How do you classify this business partner level, such as Normal and Important.
     options:
-      - label: 非常重要
+      - label: Very Important
         value: Hot
-      - label: 重要
+      - label: Important
         value: Warm
-      - label: 普通
+      - label: Ordinary
         value: Cold
     description: 
   invoice_address:
-    label: 开票地址
+    label: Invoice Address
     help: 
     description: 
   invoice_phone:
-    label: 开票电话
+    label: Invoice Phone
     help: 
     description: 
   invoice_bank:
-    label: 开户行
+    label: Bank of Account
     help: 
     description: 
   invoice_combinenum:
-    label: 账号
+    label: Account Number
     help: 
     description: 
   account_source:
-    label: 业务伙伴来源
+    label: Business Partner Source
     help: 
     description: 
   site:
-    label: 业务伙伴地点
-    help: 可用业务伙伴地点字段来指定同一公司的不同位置。例如，假设百度在北京和上海均设有办公室。创建两个名为百度的业务伙伴，但是业务伙伴地点的值分别为北京和上海。
+    label: Business Partner Location
+    help: The Business Partner Location field can be used to specify different locations within the same company. For example, suppose Baidu has offices in both Beijing and Shanghai. Create two business partners named Baidu, but the values for the location of the business partners are Beijing and Shanghai, respectively.
     description: 
   annual_revenue:
-    label: 年收入
+    label: Annual Revenue
     help: 
     description: 
   ownership:
-    label: 所有权
-    help: 公司的所有权，例如，公有或私有。
+    label: Ownership
+    help: Ownership of a company, for example, public or private.
     options:
-      - label: 国营
+      - label: National
         value: National
-      - label: 私营
+      - label: Private
         value: Private
-      - label: 子公司
+      - label: Subcompany
         value: Subcompany
-      - label: 其他
+      - label: Others
         value: Others
     description: 
   account_division:
-    label: 业务伙伴分部
+    label: Business Partner Division
     help: 
     description: 
   partner_account:
-    label: 合作伙伴
+    label: Partners
     help: 
     description: 
   assistant:
-    label: 助理
+    label: Assistant
     help: 
     description: 
   asst_phone:
-    label: 助理电话
+    label: Assistant Phone
     help: 
     description: 
   birthdate:
-    label: 生日
+    label: Birthday
     help: 
     description: 
   department:
-    label: 部门
+    label: Department
     help: 
     description: 
   email:
-    label: 电子邮件
+    label: E-mail
     help: 
     description: 
   do_not_call:
-    label: 请勿致电
-    help: 是否想要通过电话联系联系人。
+    label: Do Not Call
+    help: Do you want to contact the contact person by phone.
     description: 
   has_opted_out_of_email:
-    label: 退出邮件列表
-    help: 是否将联系人包含在群发邮件列表中。
+    label: Exit Mailing List
+    help: Include contacts in the group mailing list.
     description: 
   fax_opt_out:
-    label: 退出传真列表
-    help: 是否将联系人包含在传真中。
+    label: Exit Fax List
+    help: Include contacts in the fax.
     description: 
   home_phone:
-    label: 家庭电话
+    label: Home Phone
     help: 
     description: 
   lead_source:
-    label: 潜在业务伙伴来源
-    help: 潜在业务伙伴来源，例如，广告、合作伙伴或 Web。
+    label: Lead Source
+    help: The source of the potential business partner, such as Advertisement, Customer Event, Employee Referral, Baidu AdWords, Other, Partner, Purchased List, Trade Show, Webinar, Website.
     options:
-      - label: 广告
+      - label: Advertisement
         value: Advertisement
-      - label: 业务伙伴活动
+      - label: Customer Event
         value: Customer_Event
-      - label: 员工推荐
+      - label: Employee Referral
         value: Employee_Referral
-      - label: 百度搜索
+      - label: Baidu AdWords
         value: Baidu_AdWords
-      - label: 其他
+      - label: Other
         value: Other
-      - label: 合作伙伴
+      - label: Partner
         value: Partner
-      - label: 采购清单
+      - label: Purchased List
         value: Purchased_List
-      - label: 贸易展览
+      - label: Trade Show
         value: Trade_Show
-      - label: 线上研讨
+      - label: Webinar
         value: Webinar
-      - label: 网站
+      - label: Website
         value: Website
-    description: 
+    description:
   mailing_city:
-    label: 邮寄地址-城市
-    help: 
-    description: 
+    label: Mailing Address - City
+    help:
+    description:
   mailing_street:
-    label: 邮寄地址-街道
-    help: 
-    description: 
+    label: Mailing Address - Street
+    help:
+    description:
   mailing_zip:
-    label: 邮寄地址-邮政编码
-    help: 
-    description: 
+    label: Mailing Address - ZIP Code
+    help:
+    description:
   other_city:
-    label: 其他地址-城市
-    help: 
-    description: 
+    label: Other Address - City
+    help:
+    description:
   other_street:
-    label: 其他地址-街道
-    help: 
-    description: 
+    label: Other Address - Street
+    help:
+    description:
   other_zip:
-    label: 其他地址-邮政编码
-    help: 
-    description: 
+    label: Other Address - ZIP Code
+    help:
+    description:
   mobile:
-    label: 手机
-    help: 
-    description: 
+    label: Mobile
+    help:
+    description:
   salutation:
-    label: 性别
-    help: 
+    label: Salutation
+    help:
     options:
-      - label: 男
+      - label: Male
         value: Male
-      - label: 女
+      - label: Female
         value: Female
-    description: 
+    description:
   other_phone:
-    label: 其他电话
-    help: 
-    description: 
+    label: Other Phone
+    help:
+    description:
 groups:
-  地址信息: 地址信息
-  开票信息: 开票信息
-  其他地址信息: 其他地址信息
+  地址信息: Address Information
+  开票信息: Billing Information
+  其他地址信息: Other Address Information
 listviews:
   recent:
-    label: 最近查看
+    label: Recently Viewed
   all:
-    label: 所有业务伙伴
-  # allCustomers:
-  #   label: 所有顾客
+    label: All Business Partners
   hotRating:
-    label: 非常重要的业务伙伴
+    label: Highly Important Business Partners
   mine:
-    label: 我的业务伙伴
+    label: My Business Partners
 actions:
   enableSupplier:
-    label: 作为供应商启用
+    label: Enable as Supplier
   disableSupplier:
-    label: 禁用供应商账户
+    label: Disable Supplier Account
   enableCustomer:
-    label: 作为业务伙伴启用
+    label: Enable as Business Partner
   disableCustomer:
-    label: 禁用业务伙伴账户
+    label: Disable Business Partner Account

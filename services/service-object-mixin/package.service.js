@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-04-21 09:33:36
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-05 10:37:29
  * @Description: 
  */
 "use strict";
@@ -51,6 +51,17 @@ module.exports = {
         getObject: {
             handler: function (objectName) {
                 return {
+                    aggregate: async (query, externalPipeline, userSession) => {
+                        return await this.broker.call("objectql.aggregate", {
+                            objectName,
+                            query,
+                            externalPipeline
+                        }, {
+                            meta: {
+                                user: userSession
+                            }
+                        })
+                    },
                     find: async (query, userSession) => {
                         return await this.broker.call("objectql.find", {
                             objectName,

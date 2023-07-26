@@ -9,7 +9,7 @@ module.exports = {
     updateOrgs: function (object_name, record_id) {
         const record = this.record ? this.record.record : this.record;
         if (!record.organization) {
-            toastr.warning("该分部的关联组织未设置，未更新任何数据");
+            toastr.warning(t("company_warning_no_associated_organization_set"));
             return;
         }
 
@@ -48,7 +48,7 @@ module.exports = {
                     success: function (data) {
                         console.log(data);
                         window.$("body").removeClass("loading");
-                        var logInfo = "已成功更新" + data.updatedOrgs + "条组织信息及" + data.updatedSus + "条用户信息";
+                        var logInfo = t("company_success_updata_message",{updatedOrgs:data.updatedOrgs,updatedSus:data.updatedSus});
                         console.log(logInfo);
                         toastr.success(logInfo);
                         /* 更新组织后刷新分部列表，直接显示新的关联组织、排序号等列表信息 */
@@ -72,9 +72,9 @@ module.exports = {
             }
         }
 
-        var text = "此操作将把组织结构中对应节点（及所有下属节点）的组织所属分部更新为本分部，组织中的人员所属分部也都更新为本分部。是否继续";
+        var text = t("company_confirm_text");
         swal({
-            title: "更新“" + record.name + "”组织信息",
+            title: t("company_confirm_title",record.name),
             text: "<div>" + text + "？</div>",
             html: true,
             showCancelButton: true,

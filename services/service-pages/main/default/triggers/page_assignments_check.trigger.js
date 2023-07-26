@@ -7,7 +7,7 @@ module.exports = {
         if(doc.page){
             const record = await objectql.getObject('pages').findOne(doc.page);
             if(record.type === 'app'){
-                throw new Error('禁止给应用程序页面分配权限');
+                throw new Error('page_assignments_error_not_allowed_to_application_pages');
             }
         }
 
@@ -23,21 +23,21 @@ module.exports = {
         if(doc.type === 'orgDefault'){
             const count = await objectql.getObject('page_assignments').count({filters: [['page', '=', doc.page], ['type', '=', doc.type]]})
             if(count > 0){
-                throw new Error("已存在「组织默认设置」授权")
+                throw new Error("page_assignments_error_organization_default_already_exists")
             }
         }
 
         if(doc.type === 'appDefault'){
             const count = await objectql.getObject('page_assignments').count({filters: [['page', '=', doc.page], ['type', '=', doc.type], ['app', '=', doc.app]]})
             if(count > 0){
-                throw new Error("已存在「应用程序默认设置」授权")
+                throw new Error("page_assignments_error_application_default_already_exists")
             }
         }
 
         if(doc.type === 'appRecordProfile'){
             const count = await objectql.getObject('page_assignments').count({filters: [['page', '=', doc.page], ['type', '=', doc.type], ['app', '=', doc.app], ['profile', '=', doc.profile]]})
             if(count > 0){
-                throw new Error("已存在「应用程序和简档」授权")
+                throw new Error("page_assignments_error_application_and_profile_already_exists")
             }
         }
 
@@ -47,7 +47,7 @@ module.exports = {
         if(doc.page){
             const record = await objectql.getObject('pages').findOne(doc.page);
             if(record.type === 'app'){
-                throw new Error('禁止给应用程序页面分配权限');
+                throw new Error('page_assignments_error_not_allowed_to_application_pages');
             }
         }
 
@@ -63,21 +63,21 @@ module.exports = {
         if(doc.type === 'orgDefault'){
             const count = await objectql.getObject('page_assignments').count({filters: [['_id', '!=', id], ['page', '=', doc.page], ['type', '=', doc.type]]})
             if(count > 0){
-                throw new Error("已存在「组织默认设置」授权")
+                throw new Error("page_assignments_error_organization_default_already_exists")
             }
         }
 
         if(doc.type === 'appDefault'){
             const count = await objectql.getObject('page_assignments').count({filters: [['_id', '!=', id], ['page', '=', doc.page], ['type', '=', doc.type], ['app', '=', doc.app]]})
             if(count > 0){
-                throw new Error("已存在「应用程序默认设置」授权")
+                throw new Error("page_assignments_error_application_default_already_exists")
             }
         }
 
         if(doc.type === 'appRecordProfile'){
             const count = await objectql.getObject('page_assignments').count({filters: [['_id', '!=', id], ['page', '=', doc.page], ['type', '=', doc.type], ['app', '=', doc.app], ['profile', '=', doc.profile]]})
             if(count > 0){
-                throw new Error("已存在「应用程序和简档」授权")
+                throw new Error("page_assignments_error_application_and_profile_already_exists")
             }
         }
     }

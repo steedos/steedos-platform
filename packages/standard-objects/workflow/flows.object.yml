@@ -405,6 +405,7 @@ fields:
     is_wide: true
     group: Template
     name: instance_template
+    visible_on: "${enable_amisform ? false : true}"
   print_template:
     label: Print Template
     type: code
@@ -412,6 +413,7 @@ fields:
     is_wide: true
     group: Template
     name: print_template
+    visible_on: "${enable_amisform ? false : true}"
   field_map:
     label: Mapping
     type: code
@@ -426,6 +428,7 @@ fields:
     is_wide: true
     group: Script
     name: events
+    visible_on: "${enable_amisform ? false : true}"
   distribute_optional_users:
     type: object
     label: Users to be Distributed
@@ -526,7 +529,7 @@ actions:
           "body": [
               {
                   "type": "button",
-                  "label": "新建",
+                  "label": "${'flows.standard_new.new' | t}",
                   "id": "u:new_flow",
                   "onEvent": {
                       "click": {
@@ -539,7 +542,7 @@ actions:
                                         "&": "$$",
                                         "spaceId": "${context.tenantId}"
                                       },
-                                      "title": "新建流程",
+                                      "title": "${'flows.standard_new.new_flow' | t}",
                                       "body": [
                                           {
                                               "type": "form",
@@ -554,7 +557,7 @@ actions:
                                                   {
                                                   "type": "select",
                                                   "name": "category",
-                                                  "label": "分类",
+                                                  "label": "${'flows.standard_new.category' | t}",
                                                   "required": false,
                                                   "joinValues": false,
                                                   "extractValue": true,
@@ -584,7 +587,7 @@ actions:
                                                 },
                                                   {
                                                       "type": "input-text",
-                                                      "label": "流程名",
+                                                      "label": "${'flows.standard_new.flow_name' | t}",
                                                       "name": "name",
                                                       "id": "u:4af5bdaa813a",
                                                       "required": true,
@@ -593,7 +596,7 @@ actions:
                                                   {
                                                     "type": "picker",
                                                     "name": "company_id",
-                                                    "label": "分部",
+                                                    "label": "${'flows.standard_new.division' | t}",
                                                     "required": false,
                                                     "labelField": "name",
                                                     "valueField": "_id",
@@ -636,7 +639,7 @@ actions:
                                                         },
                                                         {
                                                           "name": "name",
-                                                          "label": "分部名称",
+                                                          "label": "${'flows.standard_new.division_name' | t}",
                                                           "type": "tpl",
                                                           "tpl": "<a href=\"/app/undefined/undefined/view/${undefined}\">${name}</a>",
                                                           "className": "whitespace-nowrap",
@@ -644,14 +647,14 @@ actions:
                                                         },
                                                         {
                                                           "name": "code",
-                                                          "label": "分部代码",
+                                                          "label": "${'flows.standard_new.division_code' | t}",
                                                           "type": "text",
                                                           "className": "whitespace-nowrap",
                                                           "html": null
                                                         },
                                                         {
                                                           "name": "organization",
-                                                          "label": "关联部门",
+                                                          "label": "${'flows.standard_new.related_departments' | t}",
                                                           "type": "tpl",
                                                           "tpl": "<a href=\"/app/undefined/${_display.organization.objectName}/view/${_display.organization.value}\">${_display.organization.label}</a>",
                                                           "className": "whitespace-nowrap",
@@ -659,7 +662,7 @@ actions:
                                                         },
                                                         {
                                                           "name": "modified",
-                                                          "label": "修改时间",
+                                                          "label": "${'flows.standard_new.modification_time' | t}",
                                                           "sortable": true,
                                                           "type": "tpl",
                                                           "tpl": "<div>${_display.modified}</div>",
@@ -682,7 +685,7 @@ actions:
                                                     "id": "u:18291ffb397f"
                                                   },
                                                   {
-                                                      "label": "绑定对象",
+                                                      "label": "${'flows.standard_new.binding_objects' | t}",
                                                       "type": "select",
                                                       "name": "object_name2",
                                                       "id": "u:4e769995f638",
@@ -717,7 +720,7 @@ actions:
                                                           "requestAdaptor": "\n        var filters = [];\n        var top = 10;\n        if(api.data.$term){\n            filters = [[\"label\", \"contains\", api.data.$term]];\n        }\n        // else if(api.data.$value){\n        //     filters = [[\"_id\", \"=\", api.data.$value]];\n        // }\n\n        var fieldFilters = [\"enable_workflow\",\"=\",true];\n        if(fieldFilters && fieldFilters.length){\n            filters.push(fieldFilters);\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n        var sort = \"\";\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', top).replace('{__sort}', sort.trim());\n\n        var defaultValue = api.data.$value;\n        var optionsFiltersOp = \"=\";\n        var optionsFilters = [[\"name\", optionsFiltersOp, []]];\n        if (defaultValue && !api.data.$term) { \n            // 字段值单独请求，没值的时候在请求中返回空\n            optionsFilters = [[\"name\", optionsFiltersOp, defaultValue]];\n        }\n        api.data.query = api.data.query.replace(/{__options_filters}/g, JSON.stringify(optionsFilters));\n        return api;\n    "
                                                       },
                                                       "multiple": false
-                                                  },{"type": "checkbox","option": "","name": "enable_amisform","id": "u:f581950a606a","label": "启用amis表单"}
+                                                  },{"type": "checkbox","option": "","name": "enable_amisform","id": "u:f581950a606a","label": "${'flows.standard_new.enable_amis_forms' | t}"}
                                               ],
                                               "api": {
                                                   "method": "post",
@@ -1099,7 +1102,7 @@ actions:
         "body": [
           {
             "type": "button",
-            "label": "添加字段",
+            "label": "${'flows.addFormFields.add_fields' | t}",
             "id": "u:add_form_fields2",
             "onEvent": {
               "click": {
@@ -1108,7 +1111,7 @@ actions:
                     "actionType": "dialog",
                     "dialog": {
                       "type": "dialog",
-                      "title": "添加字段",
+                      "title": "${'flows.addFormFields.add_fields' | t}",
                       "size": "lg",
                       "data": {
                         "&": "$$",
@@ -1122,7 +1125,7 @@ actions:
                           "title": "表单",
                           "body": [
                             {
-                              "label": "绑定对象",
+                              "label": "${'flows.addFormFields.binding_objects' | t}",
                               "type": "select",
                               "name": "object_name",
                               "id": "u:4e769995f638",
@@ -1150,7 +1153,7 @@ actions:
                               "type": "tabs",
                               "tabs": [
                                 {
-                                  "title": "申请单字段",
+                                  "title": "${'flows.addFormFields.application_form_fields' | t}",
                                   "body": [
                                     {
                                       "type": "wrapper",
@@ -1171,14 +1174,14 @@ actions:
                                               "columns": [
                                                 {
                                                   "name": "field_name_label",
-                                                  "label": "字段",
+                                                  "label": "${'flows.addFormFields.field' | t}",
                                                   "type": "tpl",
                                                   "tpl": "${fields_options|filter:value:equals:name|pick:label}",
                                                   "id": "u:b95c69a1cd84"
                                                 },
                                                 {
                                                   "name": "required",
-                                                  "label": "必填",
+                                                  "label": "${'flows.addFormFields.required' | t}",
                                                   "quickEdit": {
                                                     "mode": "inline",
                                                     "type": "checkbox",
@@ -1210,7 +1213,7 @@ actions:
                                                   "type": "button",
                                                   "actionType": "dialog",
                                                   "dialog": {
-                                                    "title": "设置字段",
+                                                    "title": "${'flows.addFormFields.set_fields' | t}",
                                                     "body": [
                                                       {
                                                         "type": "transfer",
@@ -1238,7 +1241,7 @@ actions:
                                                     "closeOnOutside": false,
                                                     "showCloseButton": true
                                                   },
-                                                  "label": "设置字段",
+                                                  "label": "${'flows.addFormFields.set_fields' | t}",
                                                   "id": "u:853b890ab524"
                                                 }
                                               ],
@@ -1278,7 +1281,7 @@ actions:
                                   ]
                                 },
                                 {
-                                  "title": "申请单子表",
+                                  "title": "${'flows.addFormFields.application_form_subform' | t}",
                                   "body": [
                                     {
                                       "type": "wrapper",
@@ -1310,7 +1313,7 @@ actions:
                                               "columns": [
                                                 {
                                                   "name": "index",
-                                                  "label": "序号",
+                                                  "label": "${'flows.addFormFields.sequence' | t}",
                                                   "className": "w-10",
                                                   "type": "static",
                                                   "value": "${index + 1}",
@@ -1318,14 +1321,14 @@ actions:
                                                 },
                                                 {
                                                   "name": "related_field_fullname_label",
-                                                  "label": "子表名称",
+                                                  "label": "${'flows.addFormFields.subform_name' | t}",
                                                   "type": "tpl",
                                                   "tpl": "${related_lists_options|filter:value:equals:detail_field_fullname|pick:label}",
                                                   "id": "u:5204fc0fbe1c"
                                                 },
                                                 {
                                                   "name": "label",
-                                                  "label": "显示标题",
+                                                  "label": "${'flows.addFormFields.show_heading' | t}",
                                                   "quickEdit": {
                                                     "type": "input-text",
                                                     "onEvent": {
@@ -1338,7 +1341,7 @@ actions:
                                                         ]
                                                       }
                                                     },
-                                                    "labelRemark": "默认为对象名称",
+                                                    "labelRemark": "${'flows.addFormFields.default_to_object_name' | t}",
                                                     "className": "m-0",
                                                     "labelClassName": "text-left",
                                                     "id": "u:5b30f2a71830",
@@ -1349,7 +1352,7 @@ actions:
                                                 },
                                                 {
                                                   "name": "field_names",
-                                                  "label": "显示的字段",
+                                                  "label": "${'flows.addFormFields.displayed_fields' | t}",
                                                   "quickEdit": {
                                                     "type": "transfer-picker",
                                                     "source": {
@@ -1390,7 +1393,7 @@ actions:
                                                   "type": "button",
                                                   "actionType": "dialog",
                                                   "dialog": {
-                                                    "title": "设置子表",
+                                                    "title": "${'flows.addFormFields.set_subform' | t}",
                                                     "body": [
                                                       {
                                                         "type": "transfer",
@@ -1418,7 +1421,7 @@ actions:
                                                     "closeOnOutside": false,
                                                     "showCloseButton": true
                                                   },
-                                                  "label": "设置子表",
+                                                  "label": "${'flows.addFormFields.set_subform' | t}",
                                                   "id": "u:b9a5d3b611d7"
                                                 }
                                               ],

@@ -5,3 +5,13 @@ CustomApplications:
 CustomLabels:
   menu_user_interface: User Interface
   menu_pages: Mini Page
+  page_assignments_error_not_allowed_to_application_pages: Prohibit assigning permissions to application pages
+  page_assignments_error_organization_default_already_exists: Authorization for 'Organization Default Settings' already exists
+  page_assignments_error_application_default_already_exists: Authorization for 'Application Default Settings' already exists
+  page_assignments_error_application_and_profile_already_exists: Application and Profile authorization already exists
+  page_check_error_prohibit_modifying_page_types: Prohibit modifying page types
+  page_check_error_prohibit_modifying_page_renderer: Prohibit modifying the page renderer
+  page_check_error_prohibit_disabling_application_pages: Prohibit disabling application pages
+  page_pai_name_error_not_repeat: Api Name cannot be duplicate
+  page_versions_error_prohibit_modifying_non_latest_version: Prohibit modifying non latest version
+

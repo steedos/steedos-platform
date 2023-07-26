@@ -28,6 +28,7 @@ import { ShareRuleCollection } from '../collection/shareRule'
 import { RestrictionRuleCollection } from '../collection/restrictionRule'
 import { ProcessCollection } from '../collection/process';
 import { TriggerCollection } from '../collection/trigger';
+import { ImportCollection } from '../collection/import'
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -37,6 +38,7 @@ const shareRuleCollection = new ShareRuleCollection();
 const restrictionRuleCollection = new RestrictionRuleCollection();
 const processCollection = new ProcessCollection();
 const triggerCollection = new TriggerCollection();
+const importCollection = new ImportCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -149,6 +151,9 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         break;
       case TypeInfoKeys.Trigger:
         await triggerCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.Import:
+        await importCollection.retrieve(dbManager, reqYml[metadataName], container);
         break;
       default:
         break;

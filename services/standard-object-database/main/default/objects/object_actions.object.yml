@@ -46,34 +46,53 @@ fields:
     required: true
     showIcon: false
     sort_no: 160
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function () {
-              return [{
-                label: "显示在列表右上角",
-                value: "list",
-                icon: "contact_list"
-              }, {
-                label: "显示在记录查看页右上角，以及列表视图中每项的下拉菜单中",
-                value: "record",
-                icon: "contact_list"
-              }, {
-                label: "显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中",
-                value: "record_more",
-                icon: "lead_list"
-              }, {
-                label: "显示在列表视图中每项的下拉菜单中",
-                value: "list_item",
-                icon: "action_list_component"
-              }, {
-                label: "显示在记录查看页右上角",
-                value: "record_only",
-                icon: "contract"
-              }, {
-                label: "显示在记录查看页右上角的“更多”下拉菜单中",
-                value: "record_only_more",
-                icon: "lead_list"
-              }];
-            }
+    options:
+      - label: 显示在列表右上角
+        value: list
+        icon: contact_list
+      - label: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中
+        value: record
+        icon: contact_list
+      - label: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中
+        value: record_more
+        icon: lead_list
+      - label: 显示在列表视图中每项的下拉菜单中
+        value: list_item
+        icon: action_list_component
+      - label: 显示在记录查看页右上角
+        value: record_only
+        icon: contract
+      - label: 显示在记录查看页右上角的“更多”下拉菜单中
+        value: record_only_more
+        icon: lead_list
+    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
+      # function () {
+      #         return [{
+      #           label: "显示在列表右上角",
+      #           value: "list",
+      #           icon: "contact_list"
+      #         }, {
+      #           label: "显示在记录查看页右上角，以及列表视图中每项的下拉菜单中",
+      #           value: "record",
+      #           icon: "contact_list"
+      #         }, {
+      #           label: "显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中",
+      #           value: "record_more",
+      #           icon: "lead_list"
+      #         }, {
+      #           label: "显示在列表视图中每项的下拉菜单中",
+      #           value: "list_item",
+      #           icon: "action_list_component"
+      #         }, {
+      #           label: "显示在记录查看页右上角",
+      #           value: "record_only",
+      #           icon: "contract"
+      #         }, {
+      #           label: "显示在记录查看页右上角的“更多”下拉菜单中",
+      #           value: "record_only_more",
+      #           icon: "lead_list"
+      #         }];
+      #       }
   type: 
     type: select
     sort_no: 170

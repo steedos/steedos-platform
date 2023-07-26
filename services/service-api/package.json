@@ -15,11 +15,16 @@
     "moleculer": "^0.14.25",
     "moleculer-apollo-server": "^0.3.6",
     "moleculer-web": "^0.10.4",
+    "react-dev-utils": "12.0.1",
     "validator": "^13.6.0"
   },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d77961251196c5352622d977e554660796ed6208"
+  "gitHead": "d77961251196c5352622d977e554660796ed6208",
+  "devDependencies": {
+    "@types/graphql-iso-date": "^3.4.0",
+    "@types/react-dev-utils": "^9.0.11"
+  }
 }

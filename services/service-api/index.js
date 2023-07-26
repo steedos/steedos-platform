@@ -13,11 +13,11 @@ const {
 const SteedosRouter = require('@steedos/router');
 const _ = require('lodash');
 const ServiceObjectGraphql = require('@steedos/service-object-graphql')
-const open = require('open');
 const DataLoader = require("dataloader");
 const { LRUMap } = require('lru_map');
 const validator = require('validator');
 const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true);
+const openBrowser = require('react-dev-utils/openBrowser');
 const mixinOptions = {
 
 	// Global GraphQL typeDefs
@@ -100,6 +100,8 @@ module.exports = {
 		ApolloService(mixinOptions),
 		ServiceObjectGraphql
 	],
+
+    projectStarted: false,
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
 	settings: {
@@ -964,12 +966,15 @@ module.exports = {
 				console.log(`Project is running at ${process.env.ROOT_URL}`);
 				console.log('');
 				if (process.env.STEEDOS_AUTO_OPEN_BROWSER != 'false') { // 默认打开，如果不想打开，设置STEEDOS_AUTO_OPEN_BROWSER=false
-					try {
-						open(process.env.ROOT_URL);
-					} catch (error) {
-						console.error(error);
-						console.error('auto open browser failed.');
-					}
+					setTimeout(function () {
+						try {
+							openBrowser(process.env.ROOT_URL);
+						} catch (error) {
+							console.error(error);
+							console.error('auto open browser failed.');
+						}
+					}, 100)
+					
 				}
 			}
 		}

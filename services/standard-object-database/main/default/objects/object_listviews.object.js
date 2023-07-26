@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-05-30 18:38:47
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-07-13 13:28:02
  * @Description: 
  */
 const _ = require("underscore");
@@ -91,7 +91,7 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
     on: "server",
     when: "before.remove",
     todo: function (userId, doc) {
-      console.log("before.remove");
+      // console.log("before.remove");
       if (doc.owner !== userId) {
         throw new Meteor.Error(403, "can only remove own list view");
       }

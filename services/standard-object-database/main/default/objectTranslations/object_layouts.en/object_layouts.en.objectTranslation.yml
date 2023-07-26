@@ -60,7 +60,14 @@ fields:
 listviews:
   all:
     label: All
+groups:
+  general_information: General Information
+  buttons: Buttons
+  fields: Fields
+  related_lists: Related Lists
 actions:
+  createDefaultRecordView:
+    label: Create Default Page Layout
   customize:
     label: Customize
 CustomLabels:

@@ -190,6 +190,7 @@ groups:
   external_application: 外接应用
   oauth2: OAuth2
   saml: SAML
+  other: 其它
 listviews:
   all:
     label: 所有

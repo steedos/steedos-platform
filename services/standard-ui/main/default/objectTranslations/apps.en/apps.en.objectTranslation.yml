@@ -183,6 +183,7 @@ groups:
   external_application: External Application
   oauth2: OAuth2
   saml: SAML
+  other: Other
 listviews:
   all:
     label: All Apps

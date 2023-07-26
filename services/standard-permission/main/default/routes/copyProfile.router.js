@@ -16,6 +16,7 @@ const core = require('@steedos/core');
 const objectql = require('@steedos/objectql');
 const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
+const { MongoClient } = require('mongodb');
 
 /**
  * body {
@@ -67,11 +68,11 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
         }
 
         // 事务 https://www.mongodb.com/docs/v4.4/core/transactions-in-applications/#core-api
-        const config = objectql.getSteedosConfig();
-        let datasourceConfig = config.datasources['default'];
-        const driver = new objectql.SteedosMongoDriver(datasourceConfig.connection);
-        await driver.connect();
-        const client = driver._client;
+        const client = new MongoClient(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        await client.connect();
         const db = client.db();
 
         // Start a session.
@@ -108,7 +109,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                 is_system: false,
                 name,
                 label,
-                _id: driver._makeNewID(),
+                _id: await psObj._makeNewID(),
                 copy_from: originalPermissionSetId,
             };
 
@@ -129,7 +130,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                 // 遍历原有的对象权限
                 for (const poDoc of originalPermissionObjects) {
                     const fromId = poDoc._id;
-                    const newId = driver._makeNewID();
+                    const newId = await psObj._makeNewID();
                     // 由于 15.permission_objects.observe.object.js 中的 _change 函数中，调用了 permission_fields.resetFieldPermissions 方法，会阻塞redis查询，需要调整15.permission_objects.observe.object.js, 避免调用 resetFieldPermissions 方法
                     const newPermissionObject = {
                         ...poDoc,
@@ -154,7 +155,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                             field: field.name,
                             editable: fieldPermission ? fieldPermission.editable : getFieldDefaultEditable(field),
                             readable: fieldPermission ? fieldPermission.readable : getFieldDefaultReadable(field),
-                            _id: driver._makeNewID(),
+                            _id: await psObj._makeNewID(),
                             copy_from: fieldPermission ? fieldPermission._id : `${originalPermissionSetName}.${newPermissionObject.object_name}.${field.name}`
                         })
                     }
@@ -165,7 +166,7 @@ router.post('/api/permission/permission_set/copy', core.requireAuthentication, a
                 // 遍历原有的选项卡权限
                 for (const ptDoc of originalPermissionTabs) {
                     const fromId = ptDoc._id;
-                    const newId = driver._makeNewID();
+                    const newId = await psObj._makeNewID();
                     delete ptDoc.record_permissions;
                     newPermissionTabs.push({
                         ...ptDoc,

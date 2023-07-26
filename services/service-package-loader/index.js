@@ -4,6 +4,7 @@ const triggerLoader = require('./lib').triggerLoader;
 const processLoader = require('./lib').processLoader;
 const processTriggerLoader = require('./lib').processTriggerLoader;
 const triggerYmlLoader = require('./lib').triggerYmlLoader;
+const importLoader = require('./lib').importLoader;
 const path = require('path');
 const _ = require('lodash');
 const fs = require("fs");
@@ -159,6 +160,7 @@ module.exports = {
             if(canLoadMetadata('TriggerYml')){
                 await triggerYmlLoader.load(this.broker, packagePath, name);
             }
+            await importLoader.load(this.broker, packagePath, name);
             if(this.core){
                 if(canLoadMetadata('ClientJS')){
                     this.core.loadClientScripts();

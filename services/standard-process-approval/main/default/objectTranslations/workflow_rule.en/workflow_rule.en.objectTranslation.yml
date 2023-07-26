@@ -73,7 +73,7 @@ fields:
 groups:
   rule_criteria: Rule Criteria
   immediate_actions: Immediate Actions
-  time_triggers: Time-Dependent Action
+  time_dependent_action: Time-Dependent Action
 listviews:
   all:
     label: All Workflow Rules

@@ -29,7 +29,7 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.26/dist/assets.json";
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = "https://unpkg.steedos.cn/@steedos-widgets/amis-object@1.2.32/dist/assets.json";
 }
 
 process.env.ROOT_URL =  process.env.ROOT_URL.replace(/\/+$/, "");

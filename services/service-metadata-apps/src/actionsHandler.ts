@@ -162,14 +162,8 @@ async function getHiddenTabNames(ctx) {
     if (!userSession) {
         throw new Error('no permission.')
     }
-    const { roles, spaceId } = userSession
     const hiddenTabNames = []
-    const permissionTabs = await _getObject('permission_tabs').find({
-        filters: [
-            ['space', '=', spaceId],
-            ['permission_set', 'in', roles]
-        ]
-    }, userSession)
+    const permissionTabs = await getPermissionTabs(ctx, userSession)
     const showTabNames = [] // 同一个选项卡在不同权限集中的权限叠加，如有一个是默认打开的则选项卡默认打开
     for (const permissionTab of permissionTabs) {
         if (permissionTab.permission === 'on') {
@@ -183,6 +177,24 @@ async function getHiddenTabNames(ctx) {
     }
     return hiddenTabNames
 }
+
+async function getPermissionTabs(ctx, userSession): Promise<any[]>{
+    const { roles, spaceId } = userSession
+    const pattern = `[${roles.join('/')}]*`
+    const filterResult = await ctx.broker.call('permission_tabs.filter', {
+        pattern: pattern,
+    }, {
+        user: { spaceId: spaceId }
+    });
+    const permissionTabs = []
+    for (const ptConfig of filterResult) {
+        if (!_.has(ptConfig.metadata, 'space') || ptConfig.metadata.space === spaceId) {
+            permissionTabs.push(ptConfig.metadata)
+        }
+    }
+    return permissionTabs
+}
+
 
 async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession, context, props:any = {}) {
     try {

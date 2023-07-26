@@ -2,6 +2,7 @@ name: flow_positions
 icon: person_account
 label: Workflow Position
 hidden: true
+enable_dataloader: false
 version: 2
 fields:
   role:

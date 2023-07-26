@@ -1,0 +1,266 @@
+{
+    "type": "page",
+    "body": [
+      {
+        "type": "service",
+        "className": "p-0",
+        "name": "page_edit_${recordId}",
+        "api": {
+          "method": "post",
+          "url": "${context.rootUrl}/graphql",
+          "adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n            return payload;\n        ",
+          "data": {
+            "query": "{data:action_field_updates(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,name,label,object_name,target_object,field_name,operation,formula,literal_value,description,reevaluate_on_change,undirect,created,created_by,modified,modified_by,_display:_ui{object_name,target_object,field_name,operation,reevaluate_on_change,undirect,created,created_by,modified,modified_by}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
+          },
+          "headers": {
+            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+          },
+          "sendOn": "!!this.recordId",
+          "cache": 100
+        },
+        "initFetch": null,
+        "body": [
+          {
+            "type": "form",
+            "title": "",
+            "body": [
+              {
+                "type": "fieldSet",
+                "id": "u:3ce1d050bcac",
+                "title": "${'action_field_updates.action_field_updates_form.field_group_generalization' | t}",
+                "collapsable": true,
+                "body": [
+                  {
+                    "name": "name",
+                    "label": "${'action_field_updates.action_field_updates_form.api_name' | t}",
+                    "required": true,
+                    "type": "input-text",
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "name",
+                    "id": "u:8ebca359c714"
+                  },
+                  {
+                    "name": "label",
+                    "label": "${'action_field_updates.action_field_updates_form.display_name' | t}",
+                    "required": true,
+                    "type": "input-text",
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "label",
+                    "id": "u:124c34a09c5c"
+                  },
+                  {
+                    "name": "object_name",
+                    "label": "${'action_field_updates.action_field_updates_form.object_name' | t}",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "searchable": true,
+                    "source": {
+                      "method": "post",
+                      "url": "${context.rootUrl}/graphql",
+                      "data": {
+                        "orderBy": "${orderBy}",
+                        "orderDir": "${orderDir}",
+                        "pageNo": "${page}",
+                        "pageSize": "${perPage}",
+                        "query": "{options:objects(filters: {__filters}, top: {__top}, sort: \"{__sort}\"){_id label:label value:name},count:objects__count(filters:{__filters}),defaultValueOptions:objects(filters:{__options_filters}){_id label:label value:name}}",
+                        "$term": "$term",
+                        "$value": "$object_name",
+                        "$": "$$",
+                        "rfield": "${object_name}"
+                      },
+                      "headers": {
+                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                      },
+                      "adaptor": "\n            const data = payload.data;\n            var defaultValueOptions = data.defaultValueOptions;\n            // 字段值下拉选项合并到options中\n            data.options = _.unionWith(defaultValueOptions, data.options, function(a,b){\n                return a[\"value\"]=== b[\"value\"];\n            });\n            delete data.defaultValueOptions;\n            payload.data.options = data.options;\n            return payload;\n        ",
+                      "requestAdaptor": "\n        var filters = [];\n        var top = 10;\n        if(api.data.$term){\n            filters = [[\"label\", \"contains\", api.data.$term]];\n        }\n        // else if(api.data.$value){\n        //     filters = [[\"_id\", \"=\", api.data.$value]];\n        // }\n\n        var fieldFilters = undefined;\n        if(fieldFilters && fieldFilters.length){\n            filters.push(fieldFilters);\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n        var sort = \"\";\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', top).replace('{__sort}', sort.trim());\n\n        var defaultValue = api.data.$value;\n        var optionsFiltersOp = \"=\";\n        var optionsFilters = [[\"name\", optionsFiltersOp, []]];\n        if (defaultValue && !api.data.$term) { \n            // 字段值单独请求，没值的时候在请求中返回空\n            optionsFilters = [[\"name\", optionsFiltersOp, defaultValue]];\n        }\n        api.data.query = api.data.query.replace(/{__options_filters}/g, JSON.stringify(optionsFilters));\n        return api;\n    "
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "object_name",
+                    "id": "u:0f2e40f882e2"
+                  },
+                  {
+                    "name": "target_object",
+                    "label": "${'action_field_updates.action_field_updates_form.update_object' | t}",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "searchable": true,
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/target_object/options?objectName=${object_name}"
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "target_object",
+                    "id": "u:dd1c95753238"
+                  },
+                  {
+                    "name": "field_name",
+                    "label": "${'action_field_updates.action_field_updates_form.update_name' | t}",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "searchable": true,
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/field_name/options?objectName=${object_name}&targetObject=${target_object}"
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "field_name",
+                    "id": "u:204fadb7cef0"
+                  },
+                  {
+                    "name": "operation",
+                    "label": "${'action_field_updates.action_field_updates_form.new_field_value_type' | t}",
+                    "required": false,
+                    "type": "select",
+                    "joinValues": false,
+                    "extractValue": true,
+                    "source": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/operation/options?objectName=${object_name}&targetObject=${target_object}&fieldName=${field_name}"
+                    },
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "operation",
+                    "id": "u:627e520855b5",
+                    "multiple": false
+                  },
+                  {
+                    "name": "formula",
+                    "label": "${'action_field_updates.action_field_updates_form.formula' | t}",
+                    "required": false,
+                    "type": "textarea",
+                    "tpl": "<b><%=data.formula%></b>",
+                    "className": "col-span-2 m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "formula",
+                    "id": "u:20766a86a9f4",
+                    "hiddenOn": "this.operation != 'formula'"
+                  },
+                  {
+                    "type": "service",
+                    "id": "u:d201a629c160",
+                    "body": [],
+                    "messages": {},
+                    "schemaApi": {
+                      "method": "get",
+                      "url": "${context.rootUrl}/service/api/action_field_updates/literal_value/options?objectName=${object_name}&targetObject=${target_object}&fieldName=${field_name}&operation=${operation}",
+                      "data": {
+                        "&": "$$"
+                      }
+                    }
+                  },
+                  {
+                    "name": "description",
+                    "label": "${'action_field_updates.action_field_updates_form.description' | t}",
+                    "required": false,
+                    "type": "textarea",
+                    "tpl": "<b><%=data.description%></b>",
+                    "className": "col-span-2 m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "description",
+                    "id": "u:16a7ebd835a6"
+                  },
+                  {
+                    "name": "reevaluate_on_change",
+                    "label": "${'action_field_updates.action_field_updates_form.reevaluate_on_change' | t}",
+                    "required": false,
+                    "type": "checkbox",
+                    "tpl": null,
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "reevaluate_on_change",
+                    "id": "u:b9baf683b6b0"
+                  },
+                  {
+                    "name": "undirect",
+                    "label": "${'action_field_updates.action_field_updates_form.undirect' | t}",
+                    "required": false,
+                    "type": "checkbox",
+                    "tpl": null,
+                    "className": "m-1",
+                    "labelClassName": "text-left",
+                    "clearValueOnHidden": true,
+                    "fieldName": "undirect",
+                    "id": "u:b86f699bbe4f"
+                  }
+                ]
+              }
+            ],
+            "id": "u:f57077c2a95f",
+            "mode": "horizontal",
+            "persistData": false,
+            "promptPageLeave": true,
+            "name": "form_edit_${recordId}",
+            "debug": false,
+            "submitText": "",
+            "api": {
+              "method": "post",
+              "url": "${context.rootUrl}/graphql",
+              "data": {
+                "objectName": "${objectName}",
+                "$": "$$",
+                "recordId": "${recordId}",
+                "modalName": "${modalName}"
+              },
+              "requestAdaptor": "\n        \n        const formData = api.data.$;\n        for (key in formData){\n            // image、select等字段清空值后保存的空字符串转换为null。\n            if(formData[key] === ''){\n                formData[key] = null;\n            }\n        }\n        const objectName = api.data.objectName;\n        const fieldsName = Object.keys(formData);\n        delete formData.created;\n        delete formData.created_by;\n        delete formData.modified;\n        delete formData.modified_by;\n        delete formData._display;\n        delete formData.created;\r\ndelete formData.created_by;\r\ndelete formData.modified;\r\ndelete formData.modified_by;\n        \n        \n        let query = `mutation{record: ${objectName}__insert(doc: {__saveData}){_id}}`;\n        if(formData.recordId && formData.recordId !='new'){\n            query = `mutation{record: ${objectName}__update(id: \"${formData._id}\", doc: {__saveData}){_id}}`;\n        };\n        delete formData._id;\n        let __saveData = JSON.stringify(JSON.stringify(formData));\n    \n        api.data = {query: query.replace('{__saveData}', __saveData)};\n        return api;\n    ",
+              "responseData": {
+                "recordId": "${record._id}"
+              },
+              "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }\n            return payload;\n        ",
+              "headers": {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+              }
+            },
+            "initFetch": true,
+            "panelClassName": "m-0 sm:rounded-lg shadow-none",
+            "bodyClassName": "p-0",
+            "className": "steedos-amis-form",
+            "onEvent": {
+              "submitSucc": {
+                "weight": 0,
+                "actions": [
+                  {
+                    "componentId": "listview_action_field_updates",
+                    "actionType": "reload",
+                    "expression": "!!listViewId"
+                  },
+                  {
+                    "actionType": "custom",
+                    "script": "\n      const { recordId, listViewId } = context.props.data;\n      const data = event.data;\n      const appId = data.appId;\n      const objectName = data.objectName;\n      // 在记录详细界面时isRecordDetail为true\n      // TODO: isRecordDetail这个判断需要优化\n      const isRecordDetail = data._isRelated;\n      if(recordId){\n        // 编辑记录时，刷新主表单\n        doAction({\n          componentId: `detail_${recordId}`,\n          actionType: \"reload\",\n          expression: `!${listViewId}`\n        });\n      }\n      else if(!isRecordDetail){\n        // 在列表视图界面新建记录时跳转到详细页面\n        const jumpTo = event.context.env && event.context.env.jumpTo;\n        if(jumpTo){\n          const newRecordId = data.result.data?.recordId;\n          jumpTo(\"/app/\" + appId + \"/\" + objectName + \"/view/\" + newRecordId);\n        }\n      }\n    "
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "initApi": null
+      }
+    ],
+    "data": {
+      "objectName": "action_field_updates",
+      "context": {}
+    },
+    "regions": [
+      "body"
+    ],
+    "bodyClassName": ""
+  }

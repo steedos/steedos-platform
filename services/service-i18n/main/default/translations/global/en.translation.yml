@@ -4,3 +4,80 @@ CustomLabels:
   apply: Apply
   asc: Asc
   desc: Desc
+  apps:
+    apps_form:
+      tab: Tab
+      tab_generate: Generate Tab
+      tab_generate_title: Select objects that need to generate tabs
+      tab_set: Set Tab
+      tab_grouping: Grouping
+      tab_grouping_set: Set Grouping
+      tab_grouping_name: Name
+      tab_grouping_open: Expand by Default
+      tab_number: Sequence
+      tab_desktop: Desktop
+      tab_desktop_remark: Display in desktop menu
+      tab_mobile: Mobile
+      tab_mobile_remark: Displayed in the phone menu
+    amis_edit:
+      edit: Edit
+      edit_apps: Edit Apps
+    amis_new:
+      new: New
+      new_apps: New Apps
+  tabs:
+    generate_object_tabs:
+      objects_tab: Objects Tabs
+      objects_tab_title: Select objects that need to generate tabs
+  action_field_updates:
+    action_field_updates_form:
+      field_group_generalization: Generalization
+      api_name: API Name
+      display_name: Display Name
+      object_name: Object
+      update_object: Objects to update
+      update_name: Fields to update
+      new_field_value_type: New Field Value Type
+      formula: Formula
+      description: Description
+      reevaluate_on_change: Reevaluate workflow rules after field changes
+      undirect: Trigger object triggers, workflow rules, field validation rules 
+  cms_files:
+    upload:
+      upload: Upload
+      message_success: Upload successful!
+  flows:
+    newimport:
+      import_process: Import Process
+      file_select: File Select
+      file_upload: File Upload
+      division: Division
+    newexport:
+      export_process: Export process
+      alert: Please select the process to export
+    standard_new:
+      new: New
+      new_flow: New Flow
+      category: Category
+      flow_name: Flow Name
+      division: Division
+      division_name: Division Name
+      division_code: Division Code
+      related_departments: Related Departments
+      modification_time: Modification Time
+      binding_objects: Binding Objects
+      enable_amis_forms: Enable Amis Forms
+    addFormFields:
+      add_fields: Add Fields
+      binding_objects: Binding Objects
+      application_form_fields: Application Form Fields
+      field: Field
+      required: Required
+      set_fields: Set Fields
+      application_form_subform: Application Form Subform
+      sequence: Sequence
+      subform_name: Subform Name
+      show_heading: Show Heading
+      default_to_object_name: Default to object name
+      displayed_fields: Displayed Fields
+      set_subform: Set Subform

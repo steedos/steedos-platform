@@ -3,6 +3,7 @@ icon: hierarchy
 label: Workflow Category
 hidden: true
 version: 2
+enable_dataloader: false
 fields:
   name:
     type: text

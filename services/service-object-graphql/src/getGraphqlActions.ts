@@ -12,6 +12,7 @@ import {
     numberToString,
     getFileStorageName
 } from "./utils"
+import { sortBy, each, find } from 'lodash'
 // import { LRUMap } from 'lru_map';
 
 export function getGraphqlActions(
@@ -56,6 +57,9 @@ export function getGraphqlActions(
                 id = [id]
             }
             const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
+            if(referenceToField && referenceToField != '_id' && objectName != 'users' && objectName != 'spaces' && ctx.meta.user.spaceId){
+                selector.filters.push(["space", "=", ctx.meta.user.spaceId])
+            }
             const { resolveInfo } = ctx.meta;
             const fieldNames = getQueryFields(resolveInfo);
             if (!_.isEmpty(fieldNames)) {
@@ -65,13 +69,27 @@ export function getGraphqlActions(
             // return (await obj.find(selector))[0];
             delete selector.fields;
             const result = await obj.find(selector);
+
+            if(id.length > result.length){
+                // const count = id.length - result.length;
+                // for (let index = 0; index < count; index++) {
+                //     result.push({})
+                // }
+                each(id, (_id)=>{
+                    if(!find(result, (doc)=>{return doc[referenceToField || "_id"] === _id})){
+                        result.push({[referenceToField || "_id"]: _id})
+                    }
+                })
+            }
+            // console.log(`result=====>`, JSON.stringify(selector), result)
             if(_.isString(ctx.params.id)){
                 return result[0];
             }
-            if(objectName === 'space_users'){
-                console.log(`result length`, result.length)
-            }
-            return result;
+
+            // 使用 id 对象查询的结果result进行排序. 否则会导致dataloader缓存key与结果不匹配
+            return sortBy(result, (doc)=>{
+                return id.indexOf(doc[referenceToField || "_id"]);
+            });
         },
     };
 
@@ -502,7 +520,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 let nameFieldKey = await refObj.getNameFieldKey();
                                 let objectDataLoader = refObj.enable_dataloader != false;
                                 if(objectDataLoader){
-                                    const results = await getObjectDisplayData('api', field.reference_to, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
+                                    const results = await getObjectDisplayData('api', refTo, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
                                     if(field.multiple){
                                         displayObj[name] = _.map(results, (item) => {
                                                     return {

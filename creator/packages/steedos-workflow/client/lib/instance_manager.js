@@ -573,6 +573,10 @@ InstanceManager.checkFormFieldValue = function (field, fieldName, fieldValue) {
 }
 
 InstanceManager.getFormFieldValue = function (fieldCode) {
+	if(InstanceManager.isAmisForm()){
+		const formValues = InstanceManager.getInstanceFormValue() || {};
+		return formValues[fieldCode]
+	}
 	return AutoForm.getFieldValue(fieldCode, "instanceform");
 }
 
@@ -610,16 +614,25 @@ function adjustFieldValue(field, value) {
 	return value;
 }
 
+InstanceManager.getInstanceFormValue = function(){
+	var autoFormValue = {};
+	// var instanceValue = InstanceManager.getCurrentValues();
+	// var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
+	if(InstanceManager.isAmisForm() && SteedosUI.refs.instanceAmisView){
+		autoFormValue = SteedosUI.refs.instanceAmisView.getComponentById('instanceForm').props.data;
+	}else{
+		var instanceformValues = AutoForm.getFormValues("instanceform");
+		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
+	}
+	return autoFormValue;
+}
+
 
 InstanceManager.getInstanceValuesByAutoForm = function () {
 
 	var fields = WorkflowManager.getInstanceFields();
-
-	// var instanceValue = InstanceManager.getCurrentValues();
-	// var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
-	var instanceformValues = AutoForm.getFormValues("instanceform");
-	var autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
-
+	var autoFormValue = InstanceManager.getInstanceFormValue();
+	
 	var values = {};
 
 	fields.forEach(function (field) {
@@ -806,6 +819,29 @@ InstanceManager.getMyApprove = function () {
 	return {};
 }
 
+InstanceManager.isAmisForm = function () {
+	var ins = WorkflowManager.getInstance();
+	if(ins){
+		var flow = db.flows.findOne({_id: ins.flow},{fields:{enable_amisform: 1}})
+		return flow.enable_amisform
+	}
+}
+
+InstanceManager.getInstanceFormApplicant = function(){
+	if(InstanceManager.isAmisForm()){
+		//TODO: 切换申请人
+		var ins = WorkflowManager.getInstance();
+		return ins.applicant;
+	}
+	return $("input[name='ins_applicant']")[0].dataset.values;
+}
+
+InstanceManager.setInstanceFormApplicant = function(applicantId, applicantName){
+	$("input[name='ins_applicant']")[0].dataset.values = applicantId;
+	$("input[name='ins_applicant']").val(applicantName)
+}
+
+
 // 申请单暂存
 InstanceManager.saveIns = function (noWarn) {
 	$('body').addClass("loading");
@@ -836,7 +872,7 @@ InstanceManager.saveIns = function (noWarn) {
 	}
 
 	//如果instanceform不存在，则不执行暂存操作
-	if (!AutoForm.getFormValues("instanceform"))
+	if (!InstanceManager.getInstanceFormValue())
 		return
 
 
@@ -844,7 +880,7 @@ InstanceManager.saveIns = function (noWarn) {
 		var state = instance.state;
 		if (state == "draft") {
 			instance.traces[0].approves[0] = InstanceManager.getMyApprove();
-			var selected_applicant = $("input[name='ins_applicant']")[0].dataset.values;
+			var selected_applicant = InstanceManager.getInstanceFormApplicant();
 			if (instance.applicant != selected_applicant) {
 				var space_id = instance.space;
 
@@ -978,7 +1014,7 @@ InstanceManager.submitIns = function () {
 			var state = instance.state;
 			if (state == "draft") {
 
-				var selected_applicant = $("input[name='ins_applicant']")[0].dataset.values;
+				var selected_applicant = InstanceManager.getInstanceFormApplicant();
 				if (instance.applicant != selected_applicant) {
 					var space_id = instance.space;
 					var applicant = SteedosDataManager.spaceUserRemote.findOne({

@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:53:45
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-08 14:05:51
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-07-26 14:01:46
  * @Description: 
  */
 import { isJsonMap, JsonMap, has, getJsonMap } from '@salesforce/ts-types';
@@ -31,25 +31,21 @@ export const loadFile = (filePath: string)=>{
 };
 
 export function wrapAsync(fn, context){
-    try {
-        const Future  = require('fibers/future');
-        let proxyFn = async function(_cb){
-            let value = null;
-            let error = null;
-            try {
-                value = await fn.call(context)
-            } catch (err) {
-                error = err
-            }
-            _cb(error, value)
+    const Future  = require('fibers/future');
+    let proxyFn = async function(_cb){
+        let value = null;
+        let error = null;
+        try {
+            value = await fn.call(context)
+        } catch (err) {
+            error = err
         }
-        let fut = new Future();
-        let callback = fut.resolver();
-        let result = proxyFn.apply(this, [callback]);
-        return fut ? fut.wait() : result;
-    } catch (Exception) {
-        
+        _cb(error, value)
     }
+    let fut = new Future();
+    let callback = fut.resolver();
+    let result = proxyFn.apply(this, [callback]);
+    return fut ? fut.wait() : result;
 }
 
 export function JSONStringify(data) {

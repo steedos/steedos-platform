@@ -1,0 +1,27 @@
+CustomLabels:
+  object_layouts: 
+    object_layouts_form:
+      check_all_label: Check All
+      sequence: Sequence
+      button_name_label: Name
+      visibile_on: Display Conditions
+      button_set: Set Buttons
+      fields: Fields
+      readonly: Readonly
+      required: Required
+      grouping: Grouping
+      field_set: Set Fields
+      grouping_set: Set Grouping
+      group_name: Name
+      related_list_name: Related List Name
+      related_list_label: Displayed Title
+      related_list_label_remark: Default to object name
+      field_names: Displayed Fields
+      sort_field_name: Sort Fields
+      sort_order: Sort Order
+      filters_rule: Filter Rules
+      filters_rule_description: 'Function signature: (filters, data)=>user-defined filter conditions. The data is in data, and the user-defined filter conditions are returned after modification'
+      page_size: Display quantity per page
+      set_related_list: Set Related List
+      positive_order: Positive Order
+      reverse_order: Reverse order

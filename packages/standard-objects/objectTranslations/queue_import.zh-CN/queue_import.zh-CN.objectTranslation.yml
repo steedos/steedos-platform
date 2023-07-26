@@ -2,6 +2,10 @@ name: queue_import
 label: 数据导入
 description: 
 fields:
+  name:
+    label: API 名称
+    help: 
+    description: 
   description:
     label: 导入描述
     help: 
@@ -106,6 +110,10 @@ fields:
     label: 关联失败时保存key
   template_url:
     label: 导入模板
+  is_system:
+    label: 系统
+    help: 
+    description: 
 listviews:
   all:
     label: 全部
@@ -114,6 +122,8 @@ actions:
     label: 执行导入
   downloadTemplate:
     label: 下载模板
+  customize:
+    label: 自定义
 CustomLabels:
   queue_import_download: 下载
   queue_import_form_field_mapping_prompt: "表示数据唯一性字段 {$label} 在字段映射中不存在，请配置。"

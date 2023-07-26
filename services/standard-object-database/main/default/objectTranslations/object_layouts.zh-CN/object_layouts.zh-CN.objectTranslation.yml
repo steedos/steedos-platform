@@ -106,7 +106,14 @@ fields:
 listviews:
   all:
     label: 所有
+groups:
+  general_information: 基本信息
+  buttons: 按钮
+  fields: 字段
+  related_lists: 子表
 actions:
+  createDefaultRecordView:
+    label: 创建默认页面布局
   customize:
     label: 自定义
 CustomLabels:

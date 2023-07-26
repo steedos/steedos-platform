@@ -191,6 +191,9 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/instance/instance_view.html', 'client');
 	api.addFiles('client/views/instance/instance_view.coffee', 'client');
 
+	api.addFiles('client/views/instance/instance_amis_view.html', 'client');
+	api.addFiles('client/views/instance/instance_amis_view.coffee', 'client');
+
 	api.addFiles('client/views/instance/reassign_modal.html', 'client');
 	api.addFiles('client/views/instance/reassign_modal.js', 'client');
 	api.addFiles('client/views/instance/relocate_modal.html', 'client');

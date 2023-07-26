@@ -1,0 +1,12 @@
+name: object_layouts_form
+is_active: true
+label: 页面布局表单
+object_name: object_layouts
+pageAssignments:
+  - desktop: true
+    mobile: true
+    page: object_layouts
+    type: orgDefault
+render_engine: amis
+type: form
+widgets: []

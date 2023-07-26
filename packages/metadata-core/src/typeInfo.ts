@@ -39,7 +39,8 @@ export enum SteedosMetadataTypeInfoKeys {
     Process = "Process",
     Tab = "Tab",
     RestrictionRule = "RestrictionRule",
-    ShareRule = "ShareRule"
+    ShareRule = "ShareRule",
+    Import = "Import"
 }
 
 const loadType = function (filePath){

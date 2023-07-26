@@ -1,0 +1,220 @@
+name: queue_import
+label: Data Import Queue
+icon: product_consumed
+enable_files: false
+enable_enhanced_lookup: true
+hidden: true
+version: 2
+fields:
+  name:
+    index: true
+    label: API Name
+    required: true
+    searchable: true
+    sort_no: 10
+    type: text
+  description:
+    label: Description
+    type: text
+    is_wide: true
+    required: true
+    is_name: true
+    name: description
+    searchable: true
+  object_name:
+    label: Object
+    type: lookup
+    required: true
+    is_wide: true
+    reference_to: objects
+    reference_to_field: name
+    name: object_name
+    filterable: true
+  encoding:
+    label: Character Code
+    type: select
+    defaultValue: '"GB2312"'
+    options:
+      - label: GB2312 , Simplified Chinese
+        value: GB2312
+      - label: Unicode (UTF8)
+        value: UTF8
+      - label: Unicode (UTF16)
+        value: UTF16
+      - label: Big5 , Traditional Chinese
+        value: Big5
+      - label: Big5 , Traditional Chinese  (HKSCS)
+        value: HKSCS
+      - label: Windows Japanese
+        value: Windows 日语
+      - label: Japanese (Shift_JIS-2004)
+        value: Shift_JIS-2004
+      - label: KS C 5601 Korean
+        value: KS C 5601
+      - label: ISO-8859-1（ISO-LATIN-1）
+        value: ISO
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    name: encoding
+    filterable: true
+  value_separator:
+    label: Separator
+    type: select
+    options:
+      - label: ','
+        value: ','
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    defaultValue: '","'
+    name: value_separator
+    filterable: true
+  
+  operation:
+    type: select
+    label: operation
+    options:
+      - label: insert
+        value: insert
+      - label: update
+        value: update
+      - label: upsert
+        value: upsert
+    required: true
+  fire_workflows:
+    name: fire_workflows
+    label: Fire Workflows
+    type: boolean
+    hidden: true
+
+  field_mappings:
+    label: Field Mappings
+    type: grid
+    is_wide: true
+    defaultIcon: service_contract
+    required: true
+    name: field_mappings
+    filterable: true
+  field_mappings.$:
+    label: Column
+    blackbox: true
+    type: object
+  field_mappings.$.header:
+    label: Header
+    type: text
+  field_mappings.$.api_name:
+    label: ApiName
+    type: lookup
+    multiple: false
+    is_wide: false
+    required: false
+    depend_on:
+      - object_name
+    # optionsFunction: !<tag:yaml.org,2002:js/function> |-
+    #   function (values) {
+    #     if(values && values.object_name){
+    #       var _object = Creator.getObject(values.object_name);
+    #       if(_object){
+    #         var icon = _object.icon;
+    #         return [{label: "Primary Key ( _id )", value: "_id", icon: icon}].concat(Creator.getObjectLookupFieldOptions(values != null ? values.object_name : void 0, true));
+    #       }
+    #     }else{
+    #       return []
+    #     }
+    #   }
+    reference_to: object_fields
+    reference_to_field: name
+    amis: 
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
+        "adaptor": "payload.data.options = [{ label: \"Primary Key ( _id )\", value: \"_id\" }].concat(payload.data.options);\nreturn payload;"
+  field_mappings.$.matched_by:
+    label: Matched By
+    type: text
+  field_mappings.$.save_key_while_fail:
+    label: Save key while fail to map a record
+    type: boolean
+    defaultValue: false
+
+  external_id_name:
+    label: External_id (Based on this when executing again)
+    type: lookup
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    defaultIcon: service_contract
+    reference_to: object_fields
+    reference_to_field: name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
+    visible_on: "{{formData.operation != 'insert' ? true : false}}"
+    required: true
+    name: external_id_name
+    filterable: true
+  template_url:
+    label: 导入模板
+    type: url
+    hidden: false
+    omit: false
+    readonly: true
+    disabled: true
+    is_wide: true
+    # 为了区分crud内容的label与button的label，使用button-group把button包裹住
+    amis: 
+      "type": "button-group" 
+      "buttons":
+        - "type": "button"
+          "label": "下载"
+          "visibleOn": "${template_url}"
+          "level": "link"
+          "actionType": "download"
+          "api": 
+            "url": "${template_url}"
+            "method": "get"
+            "headers": 
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+list_views:
+  all:
+    label: All Queues
+    columns:
+      - name
+      - description
+      - object_name
+      - template_url
+      - encoding
+      - is_system
+    filter_scope: space
+permission_set:
+  user:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: true
+  customer:
+    allowCreate: false
+    allowDelete: false
+    allowEdit: false
+    allowRead: true
+    modifyAllRecords: false
+    viewAllRecords: false
+  admin:
+    allowCreate: true
+    allowDelete: true
+    allowEdit: true
+    allowRead: true
+    modifyAllRecords: true
+    viewAllRecords: true

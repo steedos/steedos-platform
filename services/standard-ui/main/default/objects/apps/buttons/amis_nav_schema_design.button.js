@@ -7,7 +7,7 @@
  */
 module.exports = {
     amis_nav_schema_design: function (object_name, record_id) {
-      document.location = Steedos.absoluteUrl(`/api/amisAppNavSchemaDesign?id=${record_id}&object=${this.record.object_name}&assetUrls=${Builder.settings.assetUrls}`);
+      document.location = Steedos.absoluteUrl(`/api/amisAppNavSchemaDesign?id=${record_id}&object=${this.record.object_name}&assetUrls=${Builder.settings.assetUrls}&locale=${Builder.settings.locale}`);
     },
     amis_nav_schema_designVisible: function (object_name, record_id, record_permissions) {
         var perms= {};

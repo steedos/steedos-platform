@@ -49,7 +49,11 @@
                                         {{> Template.dynamic template="instance_attachments" }}
                                         {{> related_instances}}
                                     </div>
-                                    {{{readOnlyView}}}
+                                    {{#if enableAmisform}}
+                                        {{> instance_amis_view readonly=true}}
+                                    {{else}}
+                                        {{{readOnlyView}}}
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>

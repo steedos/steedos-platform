@@ -1,5 +1,5 @@
 {
-    "type": "page",
+    "type": "service",
     "body": [
         {
             "type": "service",
@@ -158,13 +158,7 @@
     "pullRefresh": {
         "disabled": true
     },
-    "className": "space-users-list sm:p-3",
-    "css": {
-        ".space-users-list .antd-Tree": {
-            "max-height": "80vh !important",
-            "overflow": "visible !important"
-        }
-    },
+    "className": "space-users-list",
     "style": {
         "padding": "${displayAs == 'grid'?'':'0px'}"
     }

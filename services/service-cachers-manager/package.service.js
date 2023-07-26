@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-21 12:07:00
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-07-26 11:53:47
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -265,7 +265,20 @@ module.exports = {
 				}
 				return profile;
 			}
-		}
+		},
+		getPermissionTabs: {
+			params: {
+				spaceId: { type: "string", optional: true },
+				roles: { type: "array", items: "string" },
+			},
+			async handler(ctx) {
+				const { roles, spaceId } = ctx.params;
+
+				const cache = cachers.getCacher('permission_tabs');
+
+				return [];
+			}
+		},
 	},
 
 	async started() {

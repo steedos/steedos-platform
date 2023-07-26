@@ -1,0 +1,12 @@
+name: action_field_updates_form
+is_active: true
+label: 字段更新表单
+object_name: action_field_updates
+pageAssignments:
+  - desktop: true
+    mobile: true
+    page: action_field_updates
+    type: orgDefault
+render_engine: amis
+type: form
+widgets: []
