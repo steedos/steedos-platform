@@ -3,6 +3,7 @@ label: Tabs
 icon: apps
 hidden: true
 version: 2.0
+enable_dataloader: false
 fields:
   label:
     inlineHelpText: This is the label of the tab, for web tabs only.

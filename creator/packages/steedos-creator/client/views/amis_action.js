@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-03-27 15:23:04
+ * @LastEditTime: 2023-07-26 14:04:56
  * @Description: 
  */
 const normalizeLink = (to, location = window.location) => {
@@ -148,7 +148,7 @@ Template.amis_action.onRendered(()=>{
     const defData = lodash.defaultsDeep({}, {data: data} , {
         data: {
             context: {
-                rootUrl: rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl,
+                rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
                 tenantId: Creator.USER_CONTEXT.spaceId,
                 userId: Creator.USER_CONTEXT.userId,
                 authToken: Creator.USER_CONTEXT.user.authToken
