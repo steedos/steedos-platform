@@ -25,9 +25,15 @@ router.get('/api/amisAppNavSchemaDesign', core.requireAuthentication, async func
         //     authToken: userSession.authToken
         // }
 
+        let locale = "zh-CN";
+        if (req.query.locale == "en-us") {
+            locale = "en-US";
+        } else if (req.query.locale == "zh-cn") {
+            locale = "zh-CN";
+        }
         const retUrl = __meteor_runtime_config__.ROOT_URL + `/app/admin/apps/view/${req.query.id}`
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
-        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}`;
+        const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}locale=${locale}&retUrl=${retUrl}`;
 
         const filename = __dirname+'/amis_app_nav_schema_design.ejs'
         const data = {

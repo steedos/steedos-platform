@@ -92,7 +92,7 @@ module.exports = {
     return true;
   },
   showDesign: function (object_name, record_id) {
-    document.location = Steedos.absoluteUrl(`/api/amisListviewDesign?id=${record_id}&object=${this.record.object_name}&assetUrls=${Builder.settings.assetUrls}`);
+    document.location = Steedos.absoluteUrl(`/api/amisListviewDesign?id=${record_id}&object=${this.record.object_name}&assetUrls=${Builder.settings.assetUrls}&locale=${Builder.settings.locale}`);
   },
   showDesignVisible: function (object_name, record_id, record_permissions) {
       var perms= {};
