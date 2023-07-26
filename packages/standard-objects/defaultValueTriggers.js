@@ -126,10 +126,7 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                         }
                     }else{
                         try {
-                            const start = defaultValue.indexOf("{") + 1;
-                            const end = defaultValue.indexOf("}");
-                            const value = defaultValue.substring(start, end);
-                            const amisFormulaValue= amisFormula.evaluate(value,{},{evalMode: true});
+                            const amisFormulaValue= amisFormula.evaluate(defaultValue,doc,{evalMode: field.evalMode});
                             if(value === amisFormulaValue){
                                 throw new Error("Error:" +amisFormulaValue+"函数没有定义"); // 抛出错误
                             }else{
