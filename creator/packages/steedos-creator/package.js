@@ -178,6 +178,9 @@ Package.onUse(function (api) {
 	api.addFiles('client/views/app_iframe.coffee', 'client');
 	api.addFiles('client/views/app_iframe.less', 'client');
 
+	api.addFiles('client/views/page_iframe.html', 'client');
+	api.addFiles('client/views/page_iframe.js', 'client');
+
 	api.addFiles('client/views/initiate_approval.html', 'client');
 	api.addFiles('client/views/initiate_approval.coffee', 'client');
 
