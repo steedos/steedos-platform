@@ -11,6 +11,7 @@ fields:
     reference_to_field: name
   queue_import:
     type: master_detail
+    write_requires_master_read: true
     label: queue import
     required: true
     depend_on:
