@@ -14,8 +14,11 @@ autoGoApp = (appId)->
 		first_menu = _.first(menus)
 		if first_menu
 			menu = Object.assign({}, first_menu, {target: false}) # 自动进入的应用强制不以新窗口打开
-			url = Creator.getAppMenuUrl menu
-			FlowRouter.go url
+			if menu.type == 'url' && menu.target != '_blank'
+				FlowRouter.go menu.path
+			else
+				url = Creator.getAppMenuUrl menu
+				FlowRouter.go url
 		else
 			FlowRouter.go '/app/' + appId
 

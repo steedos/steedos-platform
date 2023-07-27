@@ -1,11 +1,21 @@
 Template.page_iframe.helpers({
 	url: ()=>{
-		return FlowRouter.current().queryParams.url;
+		if(Template.instance().data.regions){
+			regions = Template.instance().data.regions();
+			return regions.queryParams.url;
+		}
 	},
 	className: ()=>{
-		return FlowRouter.current().queryParams.className || "";
+		if(Template.instance().data.regions){
+			regions = Template.instance().data.regions();
+			return regions.queryParams.className || "";
+		}
 	},
 	style: ()=>{
-		return FlowRouter.current().queryParams.style || "width: 100%; height: 100%;";
+		if(Template.instance().data.regions){
+			regions = Template.instance().data.regions();
+			return regions.queryParams.style || "width: 100%; height: 100%;";
+		}
+		return "width: 100%; height: 100%;";
 	}
 })

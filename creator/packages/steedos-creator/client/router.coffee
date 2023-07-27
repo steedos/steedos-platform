@@ -188,6 +188,10 @@ FlowRouter.route '/app/:app_id/tab_iframe/:tab_id',
 		Session.set("object_name", null)
 		BlazeLayout.render Creator.getLayout(),
 			main: "page_iframe"
+			regions: {
+				params: params,
+				queryParams: queryParams
+			}
 	triggersExit: [(context, redirect) ->
 		Session.set("tab_name", null)
 	]
