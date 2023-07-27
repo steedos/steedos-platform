@@ -186,9 +186,7 @@ router.get('/api/workflow/amis_chart', core.requireAuthentication, async functio
                 '$project': {
                     'flow_version': 1,
                     'flow': 1,
-                    'lastTrace': {
-                        '$last': '$traces'
-                    }
+                    'lastTrace': { $arrayElemAt: ["$traces", -1] }
                 }
             }
         ])
