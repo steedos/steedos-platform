@@ -15,7 +15,42 @@
                             "tabs": [
                                 {
                                     "title": "流程信息",
-                                    "tab": "Content 1",
+                                    "tab": [
+                                        {
+                                            "type": "form",
+                                            "wrapWithPanel": false,
+                                            "body": [
+                                                {
+                                                    "label": "流程名称",
+                                                    "type": "input-text",
+                                                    "name": "name",
+                                                    "id": "u:ded33d6cc55e"
+                                                },
+                                                {
+                                                    "label": "流程描述",
+                                                    "type": "input-text",
+                                                    "name": "description",
+                                                    "id": "u:72318c2f6664"
+                                                },
+                                                {
+                                                    "label": "创建时间",
+                                                    "type": "input-text",
+                                                    "name": "_display.created",
+                                                    "static": true,
+                                                    "id": "u:a0ad60dadeb1"
+                                                },
+                                                {
+                                                    "label": "创建人",
+                                                    "type": "input-text",
+                                                    "name": "_display.created_by.label",
+                                                    "static": true,
+                                                    "id": "u:80a8e4172436"
+                                                }
+                                            ],
+                                            "id": "u:505aed37e326",
+                                            "debug": true
+                                        }
+                                    ],
                                     "id": "u:bbe62967461e"
                                 },
                                 {
@@ -209,8 +244,8 @@
                 "url": "/graphql",
                 "method": "post",
                 "messages": {},
-                "requestAdaptor": "const flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            _id, category, form, current,\n                form__expand{\n                    name,\n                    current\n            },\n            _display:_ui{ category }\n        }\n    }\n`;\nreturn api;\n\n",
-                "adaptor": "const data = payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      data: {\n        label: step.name,\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id,\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"config\": convertedConfigData\n  }\n}",
+                "requestAdaptor": "const flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            _id, name, category, form, current, description\n            created, created_by, modified, modified_by,\n            form__expand{\n                name,\n                current\n            },\n            _display:_ui{ created,created_by,modified,modified_by }\n        }\n    }\n`;\nreturn api;\n\n",
+                "adaptor": "const data = payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      data: {\n        label: step.name,\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id,\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    ...data,\n    \"config\": convertedConfigData\n  }\n}",
                 "dataType": "json"
             },
             "data__": {
