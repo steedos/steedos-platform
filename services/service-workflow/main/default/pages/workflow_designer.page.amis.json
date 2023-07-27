@@ -1,16 +1,6 @@
 {
     "type": "page",
     "title": "Welcome to Steedos",
-    "regions": [
-        "body"
-    ],
-    "data": {
-        "initialValues": {},
-        "appId": "builder",
-        "title": "",
-        "context": {}
-    },
-    "id": "u:95b021ef4426",
     "body": [
         {
             "type": "service",
@@ -209,18 +199,28 @@
                     },
                     "name": "flow_chart",
                     "wrapperClassName": "w-full h-full",
-                    "config": "${config}"
+                    "config": "${config}",
+                    "visibleOn": "${config.nodes.length}"
                 }
             ],
-            "data": {
+            "className": "w-full h-full",
+            "messages": {},
+            "api": {
+                "url": "/graphql",
+                "method": "post",
+                "messages": {},
+                "requestAdaptor": "debugger;\nconst flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            _id, category, form, current,\n                form__expand{\n                    name,\n                    current\n            },\n            _display:_ui{ category }\n        }\n    }\n`;\nreturn api;\n\n",
+                "adaptor": "const data = payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      data: {\n        label: step.name,\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id,\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"config\": convertedConfigData\n  }\n}",
+                "dataType": "json"
+            },
+            "data__": {
                 "config": {
                     "edges": [
                         {
                             "id": "start-end",
                             "source": "start",
                             "target": "end",
-                            "label": "",
-                            "type": "step"
+                            "label": ""
                         }
                     ],
                     "nodes": [
@@ -233,8 +233,8 @@
                                 "timeout_hours": 168
                             },
                             "position": {
-                                "x": 0,
-                                "y": 0
+                                "x": 20,
+                                "y": 20
                             },
                             "type": "input"
                         },
@@ -246,16 +246,30 @@
                                 "step_type": "end"
                             },
                             "position": {
-                                "x": 100,
-                                "y": 100
+                                "x": 200,
+                                "y": 200
                             }
                         }
                     ]
                 }
-            },
-            "className": "w-full h-full"
+            }
         }
     ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800",
+            "tenantId": "64a4d6dd7fe9acaf8c330a37",
+            "userId": "683e09cd-8482-4034-bd29-5a30643e6c0f",
+            "authToken": "f906a466d4e120dc4bc558923c1cee67019ecbdcf9dab565fe73f1e02e6071630ede4a658786c62c755ed3"
+        }
+    },
+    "id": "u:95b021ef4426",
     "definitions": {
         "buttonAddStep": {
             "type": "button",
