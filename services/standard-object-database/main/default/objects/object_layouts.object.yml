@@ -84,7 +84,7 @@ fields:
     type: grid
     blackbox: true
     is_wide: true
-    hidden: true
+    hidden: false
   field_groups.$.group_name:
     type: text
   fields:
