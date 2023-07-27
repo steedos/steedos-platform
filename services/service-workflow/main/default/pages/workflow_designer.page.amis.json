@@ -1,0 +1,276 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {}
+    },
+    "id": "u:95b021ef4426",
+    "body": [
+        {
+            "type": "service",
+            "id": "service_react_flow",
+            "body": [
+                {
+                    "type": "panel",
+                    "body": [
+                        {
+                            "type": "tabs",
+                            "id": "tabs_react_flow",
+                            "tabs": [
+                                {
+                                    "title": "流程信息",
+                                    "tab": "Content 1",
+                                    "id": "u:bbe62967461e"
+                                },
+                                {
+                                    "title": "画图",
+                                    "tab": [
+                                        {
+                                            "$ref": "buttonAddStep",
+                                            "label": "审批",
+                                            "stepProps": {
+                                                "name": "审批",
+                                                "step_type": "sign"
+                                            },
+                                            "id": "u:e02e02910f9e"
+                                        },
+                                        {
+                                            "$ref": "buttonAddStep",
+                                            "label": "会签",
+                                            "stepProps": {
+                                                "name": "会签",
+                                                "step_type": "counterSign"
+                                            },
+                                            "id": "u:3d55a6911d13"
+                                        },
+                                        {
+                                            "$ref": "buttonAddStep",
+                                            "label": "填写",
+                                            "stepProps": {
+                                                "name": "填写",
+                                                "step_type": "submit"
+                                            },
+                                            "id": "u:1dc1bcb7f401"
+                                        },
+                                        {
+                                            "$ref": "buttonAddStep",
+                                            "label": "条件",
+                                            "stepProps": {
+                                                "name": "条件",
+                                                "step_type": "condition"
+                                            },
+                                            "id": "u:9a7cf380d1fa"
+                                        }
+                                    ],
+                                    "id": "u:64e15bf9f638"
+                                },
+                                {
+                                    "title": "属性",
+                                    "tab": [
+                                        {
+                                            "type": "each",
+                                            "id": "u:de445fd7654a",
+                                            "items": {
+                                                "type": "form",
+                                                "debug": true,
+                                                "body": [
+                                                    {
+                                                        "type": "input-text",
+                                                        "name": "data.name",
+                                                        "label": "步骤名称",
+                                                        "id": "u:561792782229"
+                                                    },
+                                                    {
+                                                        "type": "input-text",
+                                                        "name": "data.description",
+                                                        "label": "描述",
+                                                        "id": "u:ace132578700"
+                                                    }
+                                                ],
+                                                "wrapWithPanel": false,
+                                                "id": "u:0e484d5ffbf5",
+                                                "onEvent": {
+                                                    "change": {
+                                                        "weight": 0,
+                                                        "actions": [
+                                                            {
+                                                                "actionType": "custom",
+                                                                "script": "event.data.reactFlowInstance.setNodes(function (nds) {\n  return nds.map((node) => {\n    if (node.id === event.data.id) {\n      node.data = {\n        ...node.data,\n        ...event.data.data,\n      };\n      node.data.label = node.data.name;\n    }\n    return node;\n  })\n});"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "source": "${reactFlowSelection.nodes}",
+                                            "visibleOn": "${reactFlowSelection.nodes.length}"
+                                        },
+                                        {
+                                            "type": "each",
+                                            "items": {
+                                                "type": "form",
+                                                "debug": true,
+                                                "body": [
+                                                    {
+                                                        "type": "input-text",
+                                                        "name": "data.name",
+                                                        "label": "连线名称",
+                                                        "id": "u:3de37a96b91a"
+                                                    },
+                                                    {
+                                                        "type": "checkbox",
+                                                        "name": "data.timeout_line",
+                                                        "label": "超时设置",
+                                                        "id": "u:f0fc5232275c",
+                                                        "option": "超时自动流转到此路径"
+                                                    }
+                                                ],
+                                                "wrapWithPanel": false,
+                                                "id": "u:6767d57a2ec1",
+                                                "onEvent": {
+                                                    "change": {
+                                                        "weight": 0,
+                                                        "actions": [
+                                                            {
+                                                                "actionType": "custom",
+                                                                "script": "debugger;\nevent.data.reactFlowInstance.setEdges(function (eds) {\n  return eds.map((edge) => {\n    if (edge.id === event.data.id) {\n      edge.data = {\n        ...edge.data,\n        ...event.data.data,\n      };\n      edge.label = edge.data.name;\n    }\n    return edge;\n  })\n});"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "id": "u:d835e9606d64",
+                                            "source": "${reactFlowSelection.edges}",
+                                            "visibleOn": "${reactFlowSelection.edges.length}"
+                                        }
+                                    ],
+                                    "id": "u:406e84d38bbe"
+                                }
+                            ]
+                        }
+                    ],
+                    "id": "u:a585ef75560b",
+                    "className": "absolute top-0 right-0 bottom-0 w-96 z-10",
+                    "title": ""
+                },
+                {
+                    "type": "steedos-react-flow",
+                    "id": "u:4dc36cb794c7",
+                    "onEvent": {
+                        "getInstance": {
+                            "weight": 0,
+                            "actions": [
+                                {
+                                    "actionType": "setValue",
+                                    "args": {
+                                        "value": {
+                                            "reactFlowInstance": "${event.data.reactFlowInstance}"
+                                        }
+                                    },
+                                    "componentId": "service_react_flow"
+                                }
+                            ]
+                        },
+                        "selectionChange": {
+                            "weight": 0,
+                            "actions": [
+                                {
+                                    "actionType": "setValue",
+                                    "args": {
+                                        "value": {
+                                            "reactFlowSelection": "${event.data}"
+                                        }
+                                    },
+                                    "componentId": "service_react_flow"
+                                },
+                                {
+                                    "actionType": "changeActiveKey",
+                                    "args": {
+                                        "activeKey": 3
+                                    },
+                                    "componentId": "tabs_react_flow",
+                                    "expression": "${event.data.nodes.length || event.data.edges.length}"
+                                },
+                                {
+                                    "actionType": "changeActiveKey",
+                                    "args": {
+                                        "activeKey": 1
+                                    },
+                                    "componentId": "tabs_react_flow",
+                                    "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "flow_chart",
+                    "wrapperClassName": "w-full h-full",
+                    "config": "${config}"
+                }
+            ],
+            "data": {
+                "config": {
+                    "edges": [
+                        {
+                            "id": "start-end",
+                            "source": "start",
+                            "target": "end",
+                            "label": "",
+                            "type": "step"
+                        }
+                    ],
+                    "nodes": [
+                        {
+                            "id": "start",
+                            "data": {
+                                "label": "开始",
+                                "name": "开始",
+                                "step_type": "start",
+                                "timeout_hours": 168
+                            },
+                            "position": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "type": "input"
+                        },
+                        {
+                            "id": "end",
+                            "data": {
+                                "label": "结束",
+                                "name": "结束",
+                                "step_type": "end"
+                            },
+                            "position": {
+                                "x": 100,
+                                "y": 100
+                            }
+                        }
+                    ]
+                }
+            },
+            "className": "w-full h-full"
+        }
+    ],
+    "definitions": {
+        "buttonAddStep": {
+            "type": "button",
+            "label": "审批",
+            "level": "primary",
+            "onEvent": {
+                "click": {
+                    "actions": [
+                        {
+                            "actionType": "custom",
+                            "script": "debugger; var id = crypto.randomUUID();\nvar stepProps = context.props.stepProps;\nvar newNode = {\n  id,\n  position: {\n    x: Math.random() * 500,\n    y: Math.random() * 500,\n  },\n  data: {\n    ...stepProps,\n    label: stepProps.name\n  },\n  width: 100,\n  height: 41\n};\nvar reactFlowInstance = event.data.reactFlowInstance;\nreactFlowInstance?.addNodes([newNode]);"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

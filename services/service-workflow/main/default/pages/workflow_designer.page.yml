@@ -1,0 +1,7 @@
+name: workflow_designer
+is_active: true
+label: 流程设计器
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []
