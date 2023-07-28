@@ -444,6 +444,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             let triggerKeys = _.keys(triggers)
 
             for (let index = 0; index < triggerKeys.length; index++) {
+                // 排除base触发器，因为base触发器已经在runBaseTriggers中执行过了
+                if (this._baseTriggersQueue[when] && this._baseTriggersQueue[when][triggerKeys[index]]) {
+                    continue;
+                }
                 let trigger = triggers[triggerKeys[index]];
                 await this.runTirgger(trigger, context)
             }
