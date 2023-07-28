@@ -74,6 +74,7 @@
                         "grid",
                         "url",
                         "email",
+                        "geolocation",
                         "avatar",
                         "location",
                         "image",

@@ -86,6 +86,8 @@ fields:
         value: url
       - label: Email
         value: email
+      - label: Geolocation
+        value: geolocation
       - label: Image
         value: image
       - label: File
