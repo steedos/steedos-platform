@@ -5,6 +5,9 @@ datasources:
     objectFiles:
       - "./steedos-app/**"
 public:
+  amis:
+    map_ak: ${STEEDOS_AMIS_MAP_KEY}
+    map_vendor: ${STEEDOS_AMIS_MAP_VENDER}
   cfs:
     store: ${STEEDOS_CFS_STORE}
   templateSpaceId: 'template'
