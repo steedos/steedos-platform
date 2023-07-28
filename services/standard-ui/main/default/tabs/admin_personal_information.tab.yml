@@ -1,0 +1,21 @@
+name: admin_personal_information
+desktop: true
+icon: user_role
+is_new_window: false
+label: 个人资料
+mobile: true
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'on'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin
+type: url
+url: /app/admin/space_users/view/${context.user.spaceUserId}
