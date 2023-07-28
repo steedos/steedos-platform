@@ -171,16 +171,18 @@ async function getHiddenTabNames(ctx) {
 
 async function getPermissionTabs(ctx, userSession): Promise<any[]>{
     const { roles, spaceId } = userSession
-    const pattern = `[${roles.join('/')}]*`
-    const filterResult = await ctx.broker.call('permission_tabs.filter', {
-        pattern: pattern,
-    }, {
-        user: { spaceId: spaceId }
-    });
     const permissionTabs = []
-    for (const ptConfig of filterResult) {
-        if (!_.has(ptConfig.metadata, 'space') || ptConfig.metadata.space === spaceId) {
-            permissionTabs.push(ptConfig.metadata)
+    for (const role of roles) {
+        const pattern = `${role}_*`
+        const filterResult = await ctx.broker.call('permission_tabs.filter', {
+            pattern: pattern,
+        }, {
+            user: { spaceId: spaceId }
+        });
+        for (const ptConfig of filterResult) {
+            if (ptConfig.metadata.permission_set === role && (!_.has(ptConfig.metadata, 'space') || ptConfig.metadata.space === spaceId)) {
+                permissionTabs.push(ptConfig.metadata)
+            }
         }
     }
     return permissionTabs

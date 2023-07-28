@@ -161,6 +161,6 @@ label: 设置选项卡权限
 'on': record_only
 type: amis_button
 visible: !!js/function |
-    function (object_name, record_id, record_permissions, record) {
-        return true;
+    function (object_name, record_id, record_permissions, data) {
+        return data.record.type === 'profile';
     }
