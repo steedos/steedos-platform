@@ -63,7 +63,7 @@ fields:
       - label: 邮件地址
         value: email
       - label: 地理位置
-        value: geolocation
+        value: location
       - label: 图片
         value: image
       - label: 附件
