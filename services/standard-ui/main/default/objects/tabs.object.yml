@@ -80,6 +80,10 @@ fields:
   is_new_window:
     type: boolean
     visible_on: "{{'url' === formData.type ? true: false}}"
+  is_use_iframe:
+    type: boolean
+    label: Open with iframe
+    defaultValue: false
   page:
     type: lookup
     label: 页面
