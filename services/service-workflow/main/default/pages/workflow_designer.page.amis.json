@@ -10,235 +10,262 @@
                     "type": "panel",
                     "body": [
                         {
-                            "type": "tabs",
-                            "id": "tabs_react_flow",
-                            "tabs": [
+                            "type": "panel",
+                            "body": [
                                 {
-                                    "title": "流程信息",
-                                    "tab": [
+                                    "type": "tabs",
+                                    "id": "tabs_react_flow",
+                                    "tabs": [
                                         {
-                                            "type": "form",
-                                            "wrapWithPanel": false,
-                                            "body": [
+                                            "title": "流程信息",
+                                            "tab": [
                                                 {
-                                                    "label": "流程名称",
-                                                    "type": "input-text",
-                                                    "name": "name",
-                                                    "id": "u:ded33d6cc55e"
-                                                },
-                                                {
-                                                    "label": "流程描述",
-                                                    "type": "input-text",
-                                                    "name": "description",
-                                                    "id": "u:72318c2f6664"
-                                                },
-                                                {
-                                                    "label": "创建时间",
-                                                    "type": "input-text",
-                                                    "name": "_display.created",
-                                                    "static": true,
-                                                    "id": "u:a0ad60dadeb1"
-                                                },
-                                                {
-                                                    "label": "创建人",
-                                                    "type": "input-text",
-                                                    "name": "_display.created_by.label",
-                                                    "static": true,
-                                                    "id": "u:80a8e4172436"
+                                                    "type": "form",
+                                                    "wrapWithPanel": false,
+                                                    "body": [
+                                                        {
+                                                            "label": "流程名称",
+                                                            "type": "input-text",
+                                                            "name": "name",
+                                                            "id": "u:ded33d6cc55e"
+                                                        },
+                                                        {
+                                                            "label": "流程描述",
+                                                            "type": "input-text",
+                                                            "name": "description",
+                                                            "id": "u:72318c2f6664"
+                                                        },
+                                                        {
+                                                            "label": "创建时间",
+                                                            "type": "input-text",
+                                                            "name": "_display.created",
+                                                            "static": true,
+                                                            "id": "u:a0ad60dadeb1"
+                                                        },
+                                                        {
+                                                            "label": "创建人",
+                                                            "type": "input-text",
+                                                            "name": "_display.created_by.label",
+                                                            "static": true,
+                                                            "id": "u:80a8e4172436"
+                                                        }
+                                                    ],
+                                                    "id": "u:505aed37e326",
+                                                    "debug": true
                                                 }
                                             ],
-                                            "id": "u:505aed37e326",
-                                            "debug": true
-                                        }
-                                    ],
-                                    "id": "u:bbe62967461e"
-                                },
-                                {
-                                    "title": "画图",
-                                    "tab": [
-                                        {
-                                            "$ref": "buttonAddStep",
-                                            "label": "审批",
-                                            "stepProps": {
-                                                "name": "审批",
-                                                "step_type": "sign"
-                                            },
-                                            "id": "u:e02e02910f9e"
+                                            "id": "u:bbe62967461e"
                                         },
                                         {
-                                            "$ref": "buttonAddStep",
-                                            "label": "会签",
-                                            "stepProps": {
-                                                "name": "会签",
-                                                "step_type": "counterSign"
-                                            },
-                                            "id": "u:3d55a6911d13"
-                                        },
-                                        {
-                                            "$ref": "buttonAddStep",
-                                            "label": "填写",
-                                            "stepProps": {
-                                                "name": "填写",
-                                                "step_type": "submit"
-                                            },
-                                            "id": "u:1dc1bcb7f401"
-                                        },
-                                        {
-                                            "$ref": "buttonAddStep",
-                                            "label": "条件",
-                                            "stepProps": {
-                                                "name": "条件",
-                                                "step_type": "condition"
-                                            },
-                                            "id": "u:9a7cf380d1fa"
-                                        }
-                                    ],
-                                    "id": "u:64e15bf9f638"
-                                },
-                                {
-                                    "title": "属性",
-                                    "tab": [
-                                        {
-                                            "type": "each",
-                                            "id": "u:de445fd7654a",
-                                            "items": {
-                                                "type": "form",
-                                                "debug": true,
-                                                "body": [
-                                                    {
-                                                        "type": "input-text",
-                                                        "name": "data.name",
-                                                        "label": "步骤名称",
-                                                        "id": "u:561792782229"
+                                            "title": "画图",
+                                            "tab": [
+                                                {
+                                                    "$ref": "buttonAddStep",
+                                                    "label": "审批",
+                                                    "stepProps": {
+                                                        "name": "审批",
+                                                        "step_type": "sign"
                                                     },
-                                                    {
-                                                        "type": "input-text",
-                                                        "name": "data.description",
-                                                        "label": "描述",
-                                                        "id": "u:ace132578700"
-                                                    }
-                                                ],
-                                                "wrapWithPanel": false,
-                                                "id": "u:0e484d5ffbf5",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "weight": 0,
-                                                        "actions": [
-                                                            {
-                                                                "actionType": "custom",
-                                                                "script": "event.data.reactFlowInstance.setNodes(function (nds) {\n  return nds.map((node) => {\n    if (node.id === event.data.id) {\n      node.data = {\n        ...node.data,\n        ...event.data.data,\n      };\n      node.data.label = Steedos.getWorkflowStepLabel(node.data);\n    }\n    return node;\n  })\n});"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "id": "u:e02e02910f9e"
+                                                },
+                                                {
+                                                    "$ref": "buttonAddStep",
+                                                    "label": "会签",
+                                                    "stepProps": {
+                                                        "name": "会签",
+                                                        "step_type": "counterSign"
+                                                    },
+                                                    "id": "u:3d55a6911d13"
+                                                },
+                                                {
+                                                    "$ref": "buttonAddStep",
+                                                    "label": "填写",
+                                                    "stepProps": {
+                                                        "name": "填写",
+                                                        "step_type": "submit"
+                                                    },
+                                                    "id": "u:1dc1bcb7f401"
+                                                },
+                                                {
+                                                    "$ref": "buttonAddStep",
+                                                    "label": "条件",
+                                                    "stepProps": {
+                                                        "name": "条件",
+                                                        "step_type": "condition"
+                                                    },
+                                                    "id": "u:9a7cf380d1fa"
                                                 }
-                                            },
-                                            "source": "${reactFlowSelection.nodes}",
-                                            "visibleOn": "${reactFlowSelection.nodes.length}"
+                                            ],
+                                            "id": "u:64e15bf9f638"
                                         },
                                         {
-                                            "type": "each",
-                                            "items": {
-                                                "type": "form",
-                                                "debug": true,
-                                                "body": [
-                                                    {
-                                                        "type": "input-text",
-                                                        "name": "data.name",
-                                                        "label": "连线名称",
-                                                        "id": "u:3de37a96b91a"
-                                                    },
-                                                    {
-                                                        "type": "checkbox",
-                                                        "name": "data.timeout_line",
-                                                        "label": "超时设置",
-                                                        "id": "u:f0fc5232275c",
-                                                        "option": "超时自动流转到此路径"
-                                                    }
-                                                ],
-                                                "wrapWithPanel": false,
-                                                "id": "u:6767d57a2ec1",
-                                                "onEvent": {
-                                                    "change": {
-                                                        "weight": 0,
-                                                        "actions": [
+                                            "title": "属性",
+                                            "tab": [
+                                                {
+                                                    "type": "each",
+                                                    "id": "u:de445fd7654a",
+                                                    "items": {
+                                                        "type": "form",
+                                                        "debug": true,
+                                                        "body": [
                                                             {
-                                                                "actionType": "custom",
-                                                                "script": "debugger;\nevent.data.reactFlowInstance.setEdges(function (eds) {\n  return eds.map((edge) => {\n    if (edge.id === event.data.id) {\n      edge.data = {\n        ...edge.data,\n        ...event.data.data,\n      };\n      edge.label = edge.data.name;\n    }\n    return edge;\n  })\n});"
+                                                                "type": "input-text",
+                                                                "name": "data.name",
+                                                                "label": "步骤名称",
+                                                                "id": "u:561792782229"
+                                                            },
+                                                            {
+                                                                "type": "input-text",
+                                                                "name": "data.description",
+                                                                "label": "描述",
+                                                                "id": "u:ace132578700"
                                                             }
-                                                        ]
-                                                    }
+                                                        ],
+                                                        "wrapWithPanel": false,
+                                                        "id": "u:0e484d5ffbf5",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "weight": 0,
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "custom",
+                                                                        "script": "event.data.reactFlowInstance.setNodes(function (nds) {\n  return nds.map((node) => {\n    if (node.id === event.data.id) {\n      node.data = {\n        ...node.data,\n        ...event.data.data,\n      };\n      node.data.label = Steedos.getWorkflowStepLabel(node.data);\n    }\n    return node;\n  })\n});"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "source": "${reactFlowSelection.nodes}",
+                                                    "visibleOn": "${reactFlowSelection.nodes.length}"
+                                                },
+                                                {
+                                                    "type": "each",
+                                                    "items": {
+                                                        "type": "form",
+                                                        "debug": true,
+                                                        "body": [
+                                                            {
+                                                                "type": "input-text",
+                                                                "name": "data.name",
+                                                                "label": "连线名称",
+                                                                "id": "u:3de37a96b91a"
+                                                            },
+                                                            {
+                                                                "type": "checkbox",
+                                                                "name": "data.timeout_line",
+                                                                "label": "超时设置",
+                                                                "id": "u:f0fc5232275c",
+                                                                "option": "超时自动流转到此路径"
+                                                            }
+                                                        ],
+                                                        "wrapWithPanel": false,
+                                                        "id": "u:6767d57a2ec1",
+                                                        "onEvent": {
+                                                            "change": {
+                                                                "weight": 0,
+                                                                "actions": [
+                                                                    {
+                                                                        "actionType": "custom",
+                                                                        "script": "debugger;\nevent.data.reactFlowInstance.setEdges(function (eds) {\n  return eds.map((edge) => {\n    if (edge.id === event.data.id) {\n      edge.data = {\n        ...edge.data,\n        ...event.data.data,\n      };\n      edge.label = edge.data.name;\n    }\n    return edge;\n  })\n});"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "id": "u:d835e9606d64",
+                                                    "source": "${reactFlowSelection.edges}",
+                                                    "visibleOn": "${reactFlowSelection.edges.length}"
                                                 }
-                                            },
-                                            "id": "u:d835e9606d64",
-                                            "source": "${reactFlowSelection.edges}",
-                                            "visibleOn": "${reactFlowSelection.edges.length}"
+                                            ],
+                                            "id": "u:406e84d38bbe"
                                         }
-                                    ],
-                                    "id": "u:406e84d38bbe"
+                                    ]
                                 }
-                            ]
+                            ],
+                            "id": "u:a585ef75560b",
+                            "className": "absolute top-0 right-0 bottom-0 w-96 z-10 m-0 rounded-none overflow-auto bg-gray-50",
+                            "title": ""
+                        },
+                        {
+                            "type": "steedos-react-flow",
+                            "id": "u:4dc36cb794c7",
+                            "onEvent": {
+                                "getInstance": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "actionType": "setValue",
+                                            "args": {
+                                                "value": {
+                                                    "reactFlowInstance": "${event.data.reactFlowInstance}"
+                                                }
+                                            },
+                                            "componentId": "service_react_flow"
+                                        }
+                                    ]
+                                },
+                                "selectionChange": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "actionType": "setValue",
+                                            "args": {
+                                                "value": {
+                                                    "reactFlowSelection": "${event.data}"
+                                                }
+                                            },
+                                            "componentId": "service_react_flow"
+                                        },
+                                        {
+                                            "actionType": "changeActiveKey",
+                                            "args": {
+                                                "activeKey": 3
+                                            },
+                                            "componentId": "tabs_react_flow",
+                                            "expression": "${event.data.nodes.length || event.data.edges.length}"
+                                        },
+                                        {
+                                            "actionType": "changeActiveKey",
+                                            "args": {
+                                                "activeKey": 1
+                                            },
+                                            "componentId": "tabs_react_flow",
+                                            "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "name": "flow_chart",
+                            "wrapperClassName": "absolute top-0 right-96 bottom-0 left-0",
+                            "config": "${config}",
+                            "visibleOn": "${config.nodes.length}",
+                            "backgroundConfig": {
+                                "variant": "lines"
+                            }
                         }
                     ],
-                    "id": "u:a585ef75560b",
-                    "className": "absolute top-0 right-0 bottom-0 w-96 z-10",
-                    "title": ""
-                },
-                {
-                    "type": "steedos-react-flow",
-                    "id": "u:4dc36cb794c7",
-                    "onEvent": {
-                        "getInstance": {
-                            "weight": 0,
-                            "actions": [
-                                {
-                                    "actionType": "setValue",
-                                    "args": {
-                                        "value": {
-                                            "reactFlowInstance": "${event.data.reactFlowInstance}"
-                                        }
-                                    },
-                                    "componentId": "service_react_flow"
-                                }
-                            ]
+                    "id": "u:eeee71a41b86",
+                    "affixFooter": false,
+                    "className": "Panel--default h-full warpper-panel",
+                    "bodyClassName": "warpper-panel-body relative",
+                    "header": [
+                        {
+                            "type": "tpl",
+                            "tpl": "流程标题",
+                            "id": "u:b2ad0b257ab1",
+                            "className": "flex flex-1 justify-center"
                         },
-                        "selectionChange": {
-                            "weight": 0,
-                            "actions": [
-                                {
-                                    "actionType": "setValue",
-                                    "args": {
-                                        "value": {
-                                            "reactFlowSelection": "${event.data}"
-                                        }
-                                    },
-                                    "componentId": "service_react_flow"
-                                },
-                                {
-                                    "actionType": "changeActiveKey",
-                                    "args": {
-                                        "activeKey": 3
-                                    },
-                                    "componentId": "tabs_react_flow",
-                                    "expression": "${event.data.nodes.length || event.data.edges.length}"
-                                },
-                                {
-                                    "actionType": "changeActiveKey",
-                                    "args": {
-                                        "activeKey": 1
-                                    },
-                                    "componentId": "tabs_react_flow",
-                                    "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
-                                }
-                            ]
+                        {
+                            "type": "button",
+                            "label": "保存",
+                            "id": "u:6609db3e32cf",
+                            "className": "mr-3"
                         }
-                    },
-                    "name": "flow_chart",
-                    "wrapperClassName": "w-full h-full",
-                    "config": "${config}",
-                    "visibleOn": "${config.nodes.length}"
+                    ],
+                    "headerClassName": "flex justify-between items-center h-12 border"
                 }
             ],
-            "className": "w-full h-full",
+            "className": "w-full h-full bg-white",
             "messages": {},
             "api": {
                 "url": "/graphql",
@@ -370,6 +397,9 @@
             "border-radius": "8px",
             "background": "none",
             "border": "none"
+        },
+        ".warpper-panel .warpper-panel-body": {
+            "height": "calc(100% - 48px)"
         }
     }
 }
