@@ -1094,9 +1094,9 @@ CustomLabels:
   objects_amis_page_layout: Page Layouts
   objects_amis_object_permission: Permissions
   objects_amis_trigger: Triggers
-  objects_amis_process_mapping: Process Mappings
+  objects_amis_process_mapping: Object Synchronization Rules
   objects_amis_validation_rule: Validation Rules
-  objects_amis_limitation_rule: Limitation Rules
+  objects_amis_limitation_rule: Restriction Rules
   objects_amis_sharing_rule: Sharing Rules
   object_fields: 字段
   object_fields_name: 字段名
