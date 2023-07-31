@@ -215,12 +215,12 @@ tbody .color-priority-muted *{
     background-position: 0px -192px;
 }
 .steedos-react-flow .react-flow__handle-right {
-    background: none !important;
-    border: none !important;
+    background: none;
+    border: none;
 }
 .steedos-react-flow .react-flow__handle-left {
-    background: none !important;
-    border: none !important;
+    background: none;
+    border: none;
 }
 .steedos-react-flow .graph-node {
     display: flex;
@@ -236,6 +236,23 @@ tbody .color-priority-muted *{
 
 .workflow-designer-page .warpper-panel .warpper-panel-body {
     height: calc(100% - 48px);
+}
+
+.workflow-designer-page .steedos-react-flow .react-flow__node.selectable:hover {
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.18);
+}
+
+.workflow-designer-page .steedos-react-flow .react-flow__node.selectable:hover .react-flow__handle {
+    width: 12px;
+    height: 20px;
+    border-radius: 3px;
+    background-color: #40a9ffc9;
+}
+.workflow-designer-page .steedos-react-flow .react-flow__node.selectable .react-flow__handle-left{
+    left: -6px;
+}
+.workflow-designer-page .steedos-react-flow .react-flow__node.selectable .react-flow__handle-right{
+    right: -6px;
 }
 
 .workflow-chart-page .steedos-react-flow .react-flow__nodes .step-handler-name {
