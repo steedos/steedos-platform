@@ -31,7 +31,7 @@ CustomLabels:
       objects_tab_title: Select objects that need to generate tabs
   action_field_updates:
     action_field_updates_form:
-      field_group_generalization: Generalization
+      field_group_generalization: General
       api_name: API Name
       display_name: Display Name
       object_name: Object
