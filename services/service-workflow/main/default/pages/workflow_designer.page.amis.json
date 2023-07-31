@@ -51,10 +51,11 @@
                                                         }
                                                     ],
                                                     "id": "u:505aed37e326",
-                                                    "debug": true
+                                                    "debug": false
                                                 }
                                             ],
-                                            "id": "u:bbe62967461e"
+                                            "id": "u:bbe62967461e",
+                                            "className": "px-0"
                                         },
                                         {
                                             "title": "画图",
@@ -96,7 +97,8 @@
                                                     "id": "u:9a7cf380d1fa"
                                                 }
                                             ],
-                                            "id": "u:64e15bf9f638"
+                                            "id": "u:64e15bf9f638",
+                                            "className": "px-0"
                                         },
                                         {
                                             "title": "属性",
@@ -177,14 +179,17 @@
                                                     "visibleOn": "${reactFlowSelection.edges.length}"
                                                 }
                                             ],
-                                            "id": "u:406e84d38bbe"
+                                            "id": "u:406e84d38bbe",
+                                            "className": "px-0"
                                         }
-                                    ]
+                                    ],
+                                    "contentClassName": "bg-gray-50"
                                 }
                             ],
                             "id": "u:a585ef75560b",
-                            "className": "absolute top-0 right-0 bottom-0 w-96 z-10 m-0 rounded-none overflow-auto bg-gray-50",
-                            "title": ""
+                            "className": "absolute top-0 right-0 bottom-0 w-80 z-10 m-0 rounded-none overflow-auto bg-gray-50 border-none border-left",
+                            "title": "",
+                            "affixFooter": false
                         },
                         {
                             "type": "steedos-react-flow",
@@ -236,7 +241,7 @@
                                 }
                             },
                             "name": "flow_chart",
-                            "wrapperClassName": "absolute top-0 right-96 bottom-0 left-0",
+                            "wrapperClassName": "absolute top-0 right-80 bottom-0 left-0",
                             "config": "${config}",
                             "visibleOn": "${config.nodes.length}",
                             "backgroundConfig": {
@@ -246,14 +251,14 @@
                     ],
                     "id": "u:eeee71a41b86",
                     "affixFooter": false,
-                    "className": "Panel--default h-full warpper-panel",
+                    "className": "Panel--default h-full warpper-panel bg-white",
                     "bodyClassName": "warpper-panel-body relative",
                     "header": [
                         {
                             "type": "tpl",
-                            "tpl": "流程标题",
                             "id": "u:b2ad0b257ab1",
-                            "className": "flex flex-1 justify-center"
+                            "className": "flex flex-1 justify-center",
+                            "tpl": "${name}"
                         },
                         {
                             "type": "button",
@@ -262,10 +267,12 @@
                             "className": "mr-3"
                         }
                     ],
-                    "headerClassName": "flex justify-between items-center h-12 border"
+                    "headerClassName": "flex justify-between items-center h-12 border-bottom bg-gray-50 rounded-t-md",
+                    "title": "",
+                    "actions": []
                 }
             ],
-            "className": "w-full h-full bg-white",
+            "className": "w-full h-full",
             "messages": {},
             "api": {
                 "url": "/graphql",
