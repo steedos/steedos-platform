@@ -165,9 +165,9 @@ const FlowversionAPI = {
         if (flow.current._id === instance.flow_version) {
             flow_version = flow.current;
         } else {
-            flow_version = _.where(flow.historys, {
+            flow_version = _.find(flow.historys, {
                 _id: instance.flow_version
-            })[0];
+            });
         }
         return flow_version;
     }
