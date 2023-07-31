@@ -1,6 +1,51 @@
 {
     "type": "page",
     "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "service",
+            "body": [
+                {
+                    "type": "steedos-react-flow",
+                    "name": "flow_chart",
+                    "wrapperClassName": "w-full h-full",
+                    "config": "${config}",
+                    "id": "u:4dc36cb794c7",
+                    "backgroundConfig": false,
+                    "visibleOn": "${config}"
+                }
+            ],
+            "id": "u:f5e1dc3d2677",
+            "data": {},
+            "api": {
+                "url": "${context.rootUrl}/api/workflow/amis_chart?instance_id=${instance_id}",
+                "method": "get",
+                "data": {},
+                "messages": {},
+                "requestAdaptor": "",
+                "adaptor": "if (payload.errors) {\n    payload.status = 2;\n    let error = payload.errors[0];\n    let errorMessage = error.message || error.errorMessage;\n    payload.msg = window.t ? window.t(errorMessage) : errorMessage;\n}\nvar defaultNodes = payload.data && payload.data.config.defaultNodes;\nif (defaultNodes) {\n    defaultNodes.forEach(function (node, index) {\n        if (node.data?._labelFunction) {\n            let func = new Function(node.data._labelFunction);\n            defaultNodes[index].data.label = func();\n            delete defaultNodes[index].data._labelFunction;\n        } else {\n            defaultNodes[index].data.label = \"\";\n        }\n    })\n    payload.data.config.defaultNodes = defaultNodes;\n}\nreturn payload;",
+                "headers": {
+                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                }
+            },
+            "className": "w-full h-full",
+            "messages": {}
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {
+            "rootUrl": "http://127.0.0.1:5800",
+            "tenantId": "64a4d6dd7fe9acaf8c330a37",
+            "userId": "683e09cd-8482-4034-bd29-5a30643e6c0f",
+            "authToken": "70c5ca01144799fd8a777223bff1b3bc1860c541b4d8eda9e6b215875e43a15949f266f1cb7de7a2e699f2"
+        }
+    },
     "css": {
         ".steedos-react-flow .react-flow__node-default, .react-flow__node-input, .react-flow__node-output, .react-flow__node-group": {
             "font-size": "16px",
@@ -57,45 +102,6 @@
             "background": "#4072f74a"
         }
     },
-    "body": [
-        {
-            "type": "service",
-            "body": [
-                {
-                    "type": "steedos-react-flow",
-                    "name": "flow_chart",
-                    "wrapperClassName": "w-full h-full",
-                    "config": "${config}",
-                    "id": "u:4dc36cb794c7",
-                    "backgroundConfig": false,
-                    "visibleOn": "${config}"
-                }
-            ],
-            "id": "u:f5e1dc3d2677",
-            "data": {},
-            "api": {
-                "url": "${context.rootUrl}/api/workflow/amis_chart?instance_id=${instance_id}",
-                "method": "get",
-                "data": {},
-                "messages": {},
-                "requestAdaptor": "",
-                "adaptor": "var defaultNodes = payload.data.config.defaultNodes;\n defaultNodes.forEach(function (node,index) {\n    if (node.data?._labelFunction) {\n        let func = new Function(node.data._labelFunction);\n        defaultNodes[index].data.label = func();\n        delete defaultNodes[index].data._labelFunction;\n    } else {\n        defaultNodes[index].data.label = \"\";\n    }\n})\npayload.data.config.defaultNodes = defaultNodes;\nreturn payload;",
-                "headers": {
-                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                }
-            },
-            "className": "w-full h-full"
-        }
-    ],
-    "regions": [
-        "body"
-    ],
     "className": "bg-white",
-    "data": {
-        "initialValues": {},
-        "appId": "builder",
-        "title": "",
-        "context": {}
-    },
     "id": "u:db296d9b195d"
 }
