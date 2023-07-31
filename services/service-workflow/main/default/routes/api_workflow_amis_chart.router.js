@@ -5,18 +5,18 @@ const _ = require('lodash');
 const objectql = require('@steedos/objectql');
 
 const FlowversionAPI = {
-    getIconName: function(type){
-        if(type == "start"){
+    getIconName: function (type) {
+        if (type == "start") {
             return "startStep";
-        }else if(type == "end"){
+        } else if (type == "end") {
             return "endStep";
-        }else if(type == "condition"){
+        } else if (type == "condition") {
             return "conditionStep";
-        }else if(type == "sign"){
+        } else if (type == "sign") {
             return "signStep";
-        }else if(type == "counterSign"){
+        } else if (type == "counterSign") {
             return "counterSignStep";
-        }else if(type == "submit"){
+        } else if (type == "submit") {
             return "submitStep";
         }
     },
@@ -77,7 +77,7 @@ const FlowversionAPI = {
             return cachedStepNameFunction;
         }
 
-        
+
         stepHandlerName = await this.getStepHandlerName(step, instance_id);
         const iconName = this.getIconName(step.step_type)
         stepNameFunction = this.getStepLabelFunction(step.name, stepHandlerName, iconName)
@@ -116,7 +116,7 @@ const FlowversionAPI = {
                             strokeWidth: 1
                         },
                         label: line.condition,
-                        labelStyle:{
+                        labelStyle: {
                             fontSize: "15px"
                         },
                         deletable: false
