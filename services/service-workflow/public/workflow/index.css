@@ -180,3 +180,69 @@ tbody .color-priority-muted *{
     background-color: #1890ff;
     border-radius: 4px;
 }
+
+
+
+/****** 审批王流程设计器、流程图查看界面 start ******/
+.steedos-react-flow .react-flow__node-default, .react-flow__node-input, .react-flow__node-output, .react-flow__node-group {
+    font-size: 16px;
+    font-family: trebuchet ms,verdana,arial,sans-serif;
+    color: #333;
+}
+.steedos-react-flow .step-icon {
+    background: url(/applications/designer/5410/flowdesigner/5410/zh-cn/stylesheet-no-repeat.png);
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+.steedos-react-flow .step-icon.startStep {
+    background-position: 0px -352px;
+}
+.steedos-react-flow .step-icon.counterSignStep {
+    background-position: 0px 0px;
+}
+.steedos-react-flow .step-icon.submitStep {
+    background-position: 0px -64px;
+}
+.steedos-react-flow .step-icon.endStep {
+    background-position: 0px -320px;
+}
+.steedos-react-flow .step-icon.signStep {
+    background-position: 0px -32px;
+}
+.steedos-react-flow .step-icon.conditionStep {
+    background-position: 0px -192px;
+}
+.steedos-react-flow .react-flow__handle-right {
+    background: none !important;
+    border: none !important;
+}
+.steedos-react-flow .react-flow__handle-left {
+    background: none !important;
+    border: none !important;
+}
+.steedos-react-flow .graph-node {
+    display: flex;
+    flex-direction: column;
+}
+.steedos-react-flow .react-flow__node-default,.steedos-react-flow .react-flow__node-input,.steedos-react-flow .react-flow__node-output,.steedos-react-flow .react-flow__node-group {
+    width: unset;
+    border-radius: 8px;
+    background: none;
+    border: none;
+}
+
+
+.workflow-designer-page .warpper-panel .warpper-panel-body {
+    height: calc(100% - 48px);
+}
+
+.workflow-chart-page .steedos-react-flow .react-flow__nodes .step-handler-name {
+    color: #777;
+}
+.workflow-chart-page .steedos-react-flow .react-flow__node-default.stepHighLight {
+    background: #4072f74a;
+}
+
+/****** end ******/
