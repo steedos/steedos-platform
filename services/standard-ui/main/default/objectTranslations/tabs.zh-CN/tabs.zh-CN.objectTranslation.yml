@@ -58,6 +58,8 @@ fields:
     label: 在新窗口打开
     help: 
     description:
+  is_use_iframe:
+    label: 使用iframe打开
 listviews:
   all:
     label: 所有

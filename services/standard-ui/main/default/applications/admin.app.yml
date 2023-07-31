@@ -20,6 +20,9 @@ tab_items:
   # admin_space_user_info:
   #   group: 个人设置
   #   index: 1
+  admin_personal_information:
+    group: personal_settings
+    index: 1
   admin_process_delegation_rules:
     group: personal_settings
     index: 2

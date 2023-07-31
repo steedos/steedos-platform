@@ -6,6 +6,7 @@ columns:
   - submit_date
   - flow_name
   - step_name
+  - instance.current_step_name
   - modified
 mobile_columns:
   - instance_name

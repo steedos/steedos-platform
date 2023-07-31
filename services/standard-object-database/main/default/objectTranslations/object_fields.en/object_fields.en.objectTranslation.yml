@@ -65,6 +65,8 @@ fields:
         value: url
       - label: Email
         value: email
+      - label: Location
+        value: location
       - label: Image
         value: image
       - label: File

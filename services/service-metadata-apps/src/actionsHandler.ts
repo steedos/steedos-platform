@@ -255,7 +255,8 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                     };
                     if (tab.is_new_window) {
                         urlMenu.target = '_blank'
-                    }else{
+                    }else if(tab.is_use_iframe){
+                        urlMenu.is_use_iframe = true;
                         urlMenu.path = `${appPath}/tab_iframe/${tab.name}/?url=${tab.url}`
                     }
                     menu.children.push(
