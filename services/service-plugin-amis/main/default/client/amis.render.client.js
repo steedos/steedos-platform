@@ -235,8 +235,13 @@
 
                   // 主要是支持 nav 中的跳转
                   if (action && to && action.target) {
-                      window.open(to, action.target);
-                      return;
+                      if(Meteor.isCordova && to.indexOf('http') != 0){
+                        window.open(Steedos.absoluteUrl(to), action.target);
+                        return;
+                      }else{
+                        window.open(to, action.target);
+                        return;
+                      }
                   }
 
                   if (/^https?:\/\//.test(to)) {
