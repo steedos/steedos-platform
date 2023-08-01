@@ -21,6 +21,16 @@ const getInternalListviews = async function(sourceListviews, filters, is_system)
 
 module.exports = {
     beforeInsert: async function () {
+        const { userId, spaceId } = this;
+        if(userId && spaceId){
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            if(userSession){
+                const { allowCreateListViews } = await objectql.getObject("object_listviews").getUserObjectPermission(userSession, false);
+                if(!allowCreateListViews){
+                    throw new Error('没有权限创建视图')
+                }
+            }
+        }
         if (!this.doc.name) {
             this.doc.name = 'listview_' + this.doc._id.toLowerCase();
         }

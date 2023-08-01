@@ -98,6 +98,10 @@ fields:
     type: boolean
     label: Modify All Files
     group: Files permissions
+  allowCreateListViews:
+    type: boolean
+    label: Allow Create ListViews
+    defaultValue: true
   disabled_list_views:
     type: lookup
     reference_to: object_listviews

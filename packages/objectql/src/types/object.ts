@@ -905,6 +905,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             modifyAllRecords: false,
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
+            allowCreateListViews: false,
             allowReadFiles: null,
             viewAllFiles: null,
             allowCreateFiles: null,
@@ -943,6 +944,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     let _v = rolePermission[k];
                     if (k === 'field_permissions') {
                         _v = roleFieldsPermission
+                    }
+                    if( k === 'allowCreateListViews'){
+                        _v = _v == false ? false : true
                     }
                     if (_.isBoolean(v)) {
                         if (v === false && _v === true) {

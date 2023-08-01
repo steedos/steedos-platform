@@ -15,6 +15,7 @@ abstract class SteedosObjectPermissionTypeProperties {
     allowEditFiles?: boolean
     allowCreateFiles?: boolean
     allowDeleteFiles?: boolean
+    allowCreateListViews?: boolean
     viewAllFiles?: boolean
     modifyAllFiles?: boolean
     disabled_list_views?: []
@@ -73,6 +74,8 @@ export class SteedosObjectPermissionType extends SteedosObjectPermissionTypeProp
         if (this.viewCompanyRecords) {
             this.allowRead = true;
         }
+        
+        this.allowCreateListViews = this.allowCreateListViews == false ? false : true;
 
         if (!_.isEmpty(this.viewAssignCompanysRecords)) {
             this.allowRead = true;
