@@ -88,6 +88,10 @@ fields:
     label: Group
     help: 
     description: 
+  coordinatesType:
+    label: Coordinates Type
+    help: 
+    description: 
   reference_to:
     label: Reference to
     help: 

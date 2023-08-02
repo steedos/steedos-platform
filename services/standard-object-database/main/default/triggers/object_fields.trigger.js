@@ -373,5 +373,36 @@ module.exports = {
         if( ["parent","children"].indexOf(field.name) > -1 && enable_tree ){
             throw new Meteor.Error(500, "启用树状结构显示记录的对象不能删除parent、children字段。");
         }
+    },
+
+    afterInsert: async function () {
+        const { doc } = this;
+        const { type, name, object: objectName } = doc;
+        // 如果是地理位置字段，则需立即创建索引，否则mongodb查询地理位置字段时会报错 'unable to find index for $geoNear query' on server'
+        if (type === 'location') {
+            const defaultAdapter = objectql.getDataSource('default').adapter
+            await defaultAdapter.connect();
+            const collection = defaultAdapter.collection(objectName);
+
+            try {
+                const indexInfo = {
+                    key: {
+                        [`${name}.wgs84`]: "2dsphere"
+                    },
+                    name: `c2_${name}_wgs84`,
+                    unique: false,
+                    sparse: false,
+                    background: true
+                }
+                const key = indexInfo.key;
+                try {
+                    await collection.createIndex(key, indexInfo)
+                } catch (error) {
+                    // DO NOTHING
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
     }
 }

@@ -102,6 +102,8 @@ fields:
     label: System
     help: 
     description: 
+  allowCreateListViews:
+    label: Allow Create ListViews
 groups:
   files_permissions: Files permissions
 listviews:

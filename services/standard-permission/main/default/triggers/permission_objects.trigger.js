@@ -27,7 +27,13 @@ const getInternalPermissionObjects = async function(){
           if(!objectJSON._id && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
-                objectsPermissions.push(Object.assign({}, v, {_id: `${code}_${objectName}`, name: `${code}_${objectName}`, permission_set_id: code, object_name: objectName}, baseRecord))
+                objectsPermissions.push(Object.assign({}, v, {
+                    _id: `${code}_${objectName}`, 
+                    name: `${code}_${objectName}`, 
+                    permission_set_id: code, 
+                    object_name: objectName,
+                    allowCreateListViews: v.allowCreateListViews == false ? false : true
+                }, baseRecord))
             })
           }
         });
@@ -76,11 +82,6 @@ module.exports = {
     beforeFind: async function () {
         delete this.query.fields;
     },
-
-    beforeAggregate: async function () {
-        delete this.query.fields;
-    },
-
     afterFind: async function(){
         const { spaceId } = this;
         let dataList = await getInternalPermissionObjects();
@@ -121,25 +122,10 @@ module.exports = {
             }
         }
 
-    },
-    afterAggregate: async function(){
-        const { spaceId } = this;
-        let dataList = await getInternalPermissionObjects();
-        if (!_.isEmpty(dataList)) {
-            dataList.forEach((doc) => {
-                if (!_.find(this.data.values, (value) => {
-                    return value.name === doc.name
-                })) {
-                    this.data.values.push(doc);
-                }
-            })
-            const records = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-            if (records.length > 0) {
-                this.data.values = records;
-            } else {
-                this.data.values.length = 0;
-            }
-        }
+        _.each(this.data.values, (value)=>{
+            value.allowCreateListViews = value.allowCreateListViews == false ? false : true
+        })
+
     },
     afterCount: async function(){
         delete this.query.fields;
@@ -153,6 +139,9 @@ module.exports = {
             this.data.values = _.find(all, function(item){
                 return item._id === id
             });
+        }else{
+            const { allowCreateListViews } = this.data.values;
+            this.data.values.allowCreateListViews =  allowCreateListViews == false ? false : true
         }
     },
     beforeInsert: async function(){

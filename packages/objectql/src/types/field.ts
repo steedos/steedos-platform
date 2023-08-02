@@ -148,8 +148,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
     }
 
     getIndexInfo = ()=>{
-        const indexName = this.getIndexName();
-        const defaultIndexFieldTypes = ['lookup', 'master_detail', 'autonumber']
+        let indexName = this.getIndexName();
+        const defaultIndexFieldTypes = ['lookup', 'master_detail', 'autonumber', 'location']
         if(this.index || this.unique || defaultIndexFieldTypes.includes(this.type)){
             let index = {}; 
             let indexValue: any =  null;
@@ -163,6 +163,11 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 indexValue = 1;
             }
             var idxFieldName = this.name.replace(/\.\$\./g, ".");
+            if ('location' === this.type) {
+                indexValue = '2dsphere';
+                idxFieldName = `${idxFieldName}.wgs84`
+                indexName = `${indexName}_wgs84`
+            }
             index[idxFieldName] = indexValue;
             let unique = !!this.unique && (indexValue === 1 || indexValue === -1);
             return {

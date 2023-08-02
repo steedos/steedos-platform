@@ -81,6 +81,10 @@ fields:
     label: 字段分组
     help: 
     description: 
+  coordinatesType:
+    label: 坐标类型
+    help: 
+    description: 
   reference_to:
     label: 引用对象
     help: 

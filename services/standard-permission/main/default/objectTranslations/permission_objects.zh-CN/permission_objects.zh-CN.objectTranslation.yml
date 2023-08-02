@@ -94,6 +94,8 @@ fields:
     label: 系统
     help: 
     description: 
+  allowCreateListViews:
+    label: 允许创建试图
 groups:
   files_permissions: 附件权限
 listviews:
