@@ -70,6 +70,9 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
         case 'datetime':
             dateType = FormulonDataType.Datetime;
             break;
+        case 'time':
+            dateType = FormulonDataType.Time;
+            break;
         case 'boolean':
             dateType = FormulonDataType.Checkbox;
             break;
