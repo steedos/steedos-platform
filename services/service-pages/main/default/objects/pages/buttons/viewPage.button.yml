@@ -1,0 +1,6 @@
+name: viewPage
+is_enable: true
+label: 查看
+'on': record_only
+visible: true
+sort: 9999

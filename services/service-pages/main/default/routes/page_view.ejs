@@ -1,0 +1,197 @@
+<!--
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-08-01 17:47:18
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-08-02 16:54:35
+ * @Description: 
+-->
+<html>
+<head>
+    <style>
+        body { background-color: #fff; }
+        html { 
+            background-color: #fff;
+            background: #fff !important;
+        }
+      </style>
+      <meta charset="utf-8">
+      <title><%=Title%></title>
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="theme-color" content="#000">
+      <meta name="application-name">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <meta name="apple-mobile-web-app-title">
+    
+      <link rel="stylesheet" href="/tailwind/tailwind-base.css" />
+    
+      <script>
+        window.Creator = {};
+        window.Steedos = {
+            isMobile: ()=>{
+                return window.innerWidth <= 768;
+            }
+        };
+        window.__meteor_runtime_config__ = <%- JSON.stringify(__meteor_runtime_config__) %>
+        window.Meteor = {
+            isCordova: false
+        }
+      </script>
+
+
+      <script src="/lib/jquery/jquery-1.11.2.min.js"></script>
+
+      <!-- lodash，低代码编辑器的依赖 -->
+      <script src="<%=STEEDOS_UNPKG_URL%>/lodash@4.17.21/lodash.min.js"></script>
+      <script src="<%=STEEDOS_UNPKG_URL%>/marked@4.0.17/marked.min.js"></script>
+    
+      <script src="<%=STEEDOS_UNPKG_URL%>/crypto-js@4.1.1/crypto-js.js"></script>
+    
+      <!-- Steedos Builder -->
+      <script src="<%=STEEDOS_UNPKG_URL%>/@steedos-builder/sdk@0.2.36/dist/index.umd.js"></script>
+    
+      <script src="<%=STEEDOS_AMIS_URL%>/sdk/sdk.js"></script>
+    
+      
+      
+      <link rel="stylesheet" type="text/css" href="<%=STEEDOS_UNPKG_URL%>/@salesforce-ux/design-system@2.19.0/assets/styles/salesforce-lightning-design-system.min.css">
+      <link rel="stylesheet" href="<%=STEEDOS_AMIS_URL%>/lib/themes/antd.css" />
+      <link rel="stylesheet" href="<%=STEEDOS_AMIS_URL%>/lib/helper.css" />
+      <link rel="stylesheet" href="<%=STEEDOS_AMIS_URL%>/sdk/iconfont.css" />
+      <link rel="stylesheet" href="<%=STEEDOS_UNPKG_URL%>/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+    
+      <link rel="stylesheet" href="<%=ROOT_URL%>/tailwind/tailwind-steedos.css" />
+      <link rel="stylesheet" href="<%=ROOT_URL%>/amis/amis.css" />
+</head>
+
+<body>
+
+  <div class="page-template-root"></div>
+
+  <script>
+    window.lodash = _;
+    window.MonacoEnvironment = {};
+    window.t = (k)=>{
+        console.log(`not support window.t`);
+        return k;
+    }
+
+    window.FlowRouter = {
+        current: ()=>{
+            return {
+                path: location.pathname,
+                queryParams: {}
+            }
+        }
+    }
+
+  </script>
+
+  <script src="/pages/js/builder.client.js"></script>
+  <script src="/pages/js/page.render.client.js"></script>
+  <script src="/pages/js/builder.client.js"></script>
+
+  <script src="/amis-pages/js/amis.render.client.js"></script>
+  <script src="/amis-pages/js/amis.util.client.js"></script>
+  <script src="/amis-pages/js/creator.function.client.js"></script>
+  <script src="/amis-pages/js/onWindowMessage.client.js"></script>
+  
+
+  <script >
+    window.Creator.USER_CONTEXT = <%- JSON.stringify(USER_CONTEXT) %>
+    window.Builder = BuilderSDK.Builder;
+    window.builder = BuilderSDK.builder;
+    window.builder.init('steedos');
+
+    let searchParams = new URLSearchParams(location.search);
+    if (searchParams.get('assetUrls')) {
+      sessionStorage.setItem('assetUrls', searchParams.get('assetUrls'))
+    }
+
+    let assetUrls = "<%=STEEDOS_PUBLIC_PAGE_ASSETURLS%>"
+    if(_.isString(assetUrls)){
+      assetUrls = assetUrls.split(',');
+    }
+
+    const getBrowserLocale = function() {
+      var l, locale;
+      l = window.navigator.userLanguage || window.navigator.language || 'en';
+      if (l.indexOf("zh") >= 0) {
+        locale = "zh-cn";
+      } else {
+        locale = "en-us";
+      }
+      return locale;
+    };
+
+    
+    Builder.set({
+      nodeEnv: "<%=NODE_ENV%>", 
+      rootUrl: "<%=ROOT_URL%>", 
+      unpkgUrl: "<%=STEEDOS_UNPKG_URL%>",
+      steedosVersion: "<%=STEEDOS_VERSION%>",
+      assetUrls: assetUrls,
+      steedosAmisVersion: "<%=STEEDOS_AMIS_VERSION%>",
+      locale: "<%=STEEDOS_LOCALE%>" || getBrowserLocale()
+    });
+
+    window.axios = amisRequire('axios');
+    window.moment = amisRequire('moment');
+    window.React = amisRequire('react');
+    window.ReactDOM = amisRequire('react-dom');  	
+
+    window.addEventListener('message', function (event) {
+    const { data } = event;
+    if (data.type === 'Builder.loaded') {
+            Builder.registerRemoteAssets(Builder.settings.assetUrls);
+        }
+    })
+
+    if ("<%=STEEDOS_PUBLIC_SCRIPT_VCONSOLE%>") {
+      let scriptTag = document.createElement("script");
+      scriptTag.setAttribute("src", "<%=STEEDOS_PUBLIC_SCRIPT_VCONSOLE%>");
+      document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      scriptTag.onload = function(script){
+        window.vConsole = new window.VConsole();
+      }
+    }
+
+    if ("<%=STEEDOS_PUBLIC_SCRIPT_PLUGINS%>") {
+      "<%=STEEDOS_PUBLIC_SCRIPT_PLUGINS%>".split(',').forEach(function (src) {
+        let scriptTag = document.createElement("script");
+        scriptTag.setAttribute("src", src);
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      })
+    }
+
+    if ("<%=STEEDOS_PUBLIC_STYLE_PLUGINS%>") {
+      "<%=STEEDOS_PUBLIC_STYLE_PLUGINS%>".split(',').forEach(function (src) {
+        let styleTag = document.createElement("link");
+        styleTag.setAttribute("rel", "stylesheet");
+        styleTag.setAttribute("type", "text/css");
+        styleTag.setAttribute("href", src);
+        document.getElementsByTagName("head")[0].appendChild(styleTag);
+      })
+    }
+
+
+    const appId = 'admin';
+
+    const page = {
+        render_engine: 'amis',
+        name: "<%=pageApiName%>",
+        schema:  <%- JSON.stringify(pageSchema) %>
+    }
+
+    const container = $(".page-template-root")[0];
+
+    Steedos.Page.render(container, page, Object.assign({}, {
+                    appId: appId
+    }));
+
+  </script>
+</body>
+</html>

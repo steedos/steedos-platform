@@ -1,0 +1,5 @@
+name: allow_anonymous
+label: Allow anonymous access
+type: toggle
+sort_no: 470
+visible_on: "{{'app' == formData.type ? true: false}}"
