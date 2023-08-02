@@ -1,6 +1,7 @@
 const InternalData = require('@steedos/standard-objects').internalData;
 const util = require('@steedos/standard-objects').util;
 const objectql = require('@steedos/objectql');
+const auth = require("@steedos/auth");
 
 const getInternalListviews = async function(sourceListviews, filters, is_system){
     let collection = await objectql.getObject("object_listviews");
