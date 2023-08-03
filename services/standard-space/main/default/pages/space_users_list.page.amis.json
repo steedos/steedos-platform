@@ -105,6 +105,7 @@
                                             "align": "right",
                                             "icon": "fa fa-bars",
                                             "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
+                                            "hiddenOn": "${window:innerWidth < 768}",
                                             "onEvent": {
                                                 "click": {
                                                     "actions": [
