@@ -48,6 +48,10 @@ export * from './metadata-register/query'
 export * from './metadata-register/chart'
 export * from './metadata-register/permissionTabs';
 export * from './metadata-register/import';
+
+export * from './metadata-register/question'
+export * from './metadata-register/dashboard'
+
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;

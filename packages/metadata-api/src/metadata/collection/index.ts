@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-07-28 13:57:22
+ * @Description: 
+ */
 import { getCollectionNameByMetadata, SteedosMetadataTypeInfoKeys} from '@steedos/metadata-core';
 import { workflowsFromDb} from './workflow';
 import _ from 'underscore';
@@ -30,6 +37,7 @@ export async function getMetadataSources(dbManager, metadataName){
                 filters.type = {$ne: 'profile'};
             }
             records = await dbManager.find(collectionName, filters);
+            console.log(`records====>`, records)
             return records;
     }
 }

@@ -30,6 +30,9 @@ import { ProcessCollection } from '../collection/process';
 import { TriggerCollection } from '../collection/trigger';
 import { ImportCollection } from '../collection/import'
 
+import { QuestionCollection } from '../collection/question';
+import { DashboardCollection } from '../collection/dashboard';
+
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
 const pageCollection = new PageCollection();
@@ -39,6 +42,8 @@ const restrictionRuleCollection = new RestrictionRuleCollection();
 const processCollection = new ProcessCollection();
 const triggerCollection = new TriggerCollection();
 const importCollection = new ImportCollection();
+const questionCollection = new QuestionCollection();
+const dashboardCollection = new DashboardCollection();
 
 import { hasParent, getParentMetadataName, hasChild, getMetadataTypeInfo, getFunctionFields,
    SteedosMetadataTypeInfoKeys as TypeInfoKeys } from '@steedos/metadata-core';
@@ -154,6 +159,12 @@ export async function dbToJson(reqYml, steedosPackage, dbManager){
         break;
       case TypeInfoKeys.Import:
         await importCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.Question:
+        await questionCollection.retrieve(dbManager, reqYml[metadataName], container);
+        break;
+      case TypeInfoKeys.Dashboard:
+        await dashboardCollection.retrieve(dbManager, reqYml[metadataName], container);
         break;
       default:
         break;
