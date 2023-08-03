@@ -15,7 +15,7 @@ import { runValidationRules } from './validation_rules';
 import { brokeEmitEvents } from "./object_events";
 import { translationObject } from "@steedos/i18n";
 import { getObjectLayouts } from "./object_layouts";
-import { sortBy, forEach, isNil } from 'lodash';
+import { sortBy, forEach, isNil, cloneDeep } from 'lodash';
 import { ShareRules } from './shareRule';
 import { RestrictionRule } from './restrictionRule';
 import { FieldPermission } from './field_permission';
@@ -1565,6 +1565,46 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         objectConfig.details = uniq(objectConfig.details)
+
+        // 根据对象权限控制是否显示相关子表
+        if(objectConfig && objectConfig.details && objectConfig.details.length){
+            let result = cloneDeep(objectConfig.details);
+            for(let i=0; i<result.length; i++){
+                const objAndKey = result[i].split(".");
+                const relatedObject = objAndKey[0];
+                const relatedObjectPermissions = await broker.call('objectql.getUserObjectPermission', {
+                    objectName: relatedObject
+                }, {
+                    meta: {
+                        user: userSession
+                    }
+                })
+                if(relatedObjectPermissions && relatedObjectPermissions.allowRead === false){
+                    result.splice(i, 1);
+                    --i;
+                }
+            }
+            objectConfig.details = result;
+        }
+        if(objectConfig && objectConfig.related_list && objectConfig.related_list.length){
+            let result = cloneDeep(objectConfig.related_list);
+            for(let i=0; i<result.length; i++){
+                const objAndKey = result[i].split(".");
+                const relatedObject = objAndKey[0];
+                const relatedObjectPermissions = await broker.call('objectql.getUserObjectPermission', {
+                    objectName: relatedObject
+                }, {
+                    meta: {
+                        user: userSession
+                    }
+                })
+                if(relatedObjectPermissions && relatedObjectPermissions.allowRead === false){
+                    result.splice(i, 1);
+                    --i;
+                }
+            }
+            objectConfig.related_list = result;
+        }
 
         return objectConfig;
     }
