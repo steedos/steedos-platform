@@ -118,7 +118,7 @@ fields:
     group: Switch
     hidden: true
   enable_inline_edit:
-    hidden: true
+    # hidden: true
     type: boolean
     defaultValue: true
     label: Enable Single Field Edit
