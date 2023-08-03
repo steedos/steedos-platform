@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-05 10:37:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-08-03 11:02:58
  * @Description: 
  */
 "use strict";
@@ -233,8 +233,8 @@ module.exports = {
                             }
                         })
                     },
-                    getUserObjectPermissions: async (userSession) => {
-                        return await this.broker.call("objectql.getUserObjectPermissions", {
+                    getUserObjectPermission: async (userSession) => {
+                        return await this.broker.call("objectql.getUserObjectPermission", {
                             objectName,
                         }, {
                             meta: {
