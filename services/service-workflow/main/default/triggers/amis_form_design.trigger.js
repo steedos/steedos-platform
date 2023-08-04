@@ -93,7 +93,7 @@ function getFormInputFields(formSchema) {
             //进入if说明是表单项
             _.each(inputFields, (item) => {
 				// 考虑使用steedos-field组件时 name配置到config的情况
-				field.name = field.name || field.config.name;
+				field.name = field.name || field.config?.name;
                 // 如果要添加的field重复 无需再添加
 				if (field.name === item.name) {
                     flag = false;
