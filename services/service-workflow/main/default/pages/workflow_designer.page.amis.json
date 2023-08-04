@@ -51,7 +51,24 @@
                                                         }
                                                     ],
                                                     "id": "u:505aed37e326",
-                                                    "debug": false
+                                                    "debug": false,
+                                                    "onEvent": {
+                                                        "change": {
+                                                            "weight": 0,
+                                                            "actions": [
+                                                                {
+                                                                    "componentId": "service_react_flow",
+                                                                    "actionType": "setValue",
+                                                                    "args": {
+                                                                        "value": {
+                                                                            "name": "${name}",
+                                                                            "description": "${description}"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
                                                 }
                                             ],
                                             "id": "u:bbe62967461e",
@@ -264,7 +281,35 @@
                             "type": "button",
                             "label": "保存",
                             "id": "u:6609db3e32cf",
-                            "className": "mr-3"
+                            "className": "mr-3",
+                            "onEvent": {
+                                "click": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "debugger;\n\n// 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\nfunction getStepsForSave(nodes, edges) {\n  // 参考老流程设计器代码，补充必要的属性规则\n  // https://github.com/steedos/steedos-web \n  return [];\n}\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar name = event.data.name;\nvar description = event.data.description;\n\nevent.data.flowForSave = {\n  name,\n  description,\n  steps\n}\n"
+                                        },
+                                        {
+                                            "actionType": "ajax",
+                                            "outputVar": "responseResult",
+                                            "args": {
+                                                "options": {},
+                                                "api": {
+                                                    "url": "/testSaveFlow",
+                                                    "method": "post",
+                                                    "requestAdaptor": "",
+                                                    "adaptor": "",
+                                                    "messages": {},
+                                                    "data": {
+                                                        "Flows": "${flowForSave}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ],
                     "headerClassName": "flex justify-between items-center h-12 border-bottom bg-gray-50 rounded-t-md",
