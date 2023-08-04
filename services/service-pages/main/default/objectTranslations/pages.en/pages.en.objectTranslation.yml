@@ -80,6 +80,8 @@ fields:
     label: Version Number
     help: 
     description: 
+  allow_anonymous:
+    label: Allow anonymous access
 listviews:
   all:
     label: All Pages
@@ -98,3 +100,5 @@ actions:
     label: Reset Schema
   showDesign:
     label: Show Design
+  viewPage:
+    label: View

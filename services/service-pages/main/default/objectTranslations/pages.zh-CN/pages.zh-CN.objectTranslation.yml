@@ -80,6 +80,8 @@ fields:
     label: 版本号
     help: 
     description: 
+  allow_anonymous:
+    label: 允许匿名访问
 listviews:
   all:
     label: 所有
@@ -98,3 +100,5 @@ actions:
     label: 重置
   showDesign:
     label: 设计器
+  viewPage:
+    label: 查看
