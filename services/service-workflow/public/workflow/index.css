@@ -180,3 +180,7 @@ tbody .color-priority-muted *{
     background-color: #1890ff;
     border-radius: 4px;
 }
+
+#instanceAmisView fieldset{
+    width: 100%;
+}
