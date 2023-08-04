@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-05-28 10:13:45
+ * @LastEditTime: 2023-08-04 12:48:06
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
@@ -90,17 +90,18 @@ FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
     const params = context.params || {};
     // const pathDef = context.route.pathDef;
     const recordId = params.record_id;
+    var paths = getHistoryPaths() || [];
+    let lastPath = paths && paths[paths.length - 1];
     if (recordId) {
-        // 触发广播事件，把当前path和params累加存入amis变量historyPaths中
-        var paths = getHistoryPaths() || [];
-        let lastPath = paths && paths[paths.length - 1];
         //判断当前路由与记录的路由是否相同，为解决从设计器微页面返回重复记录的问题#4978
         if(path.split('?')[0] != lastPath?.path?.split('?')[0]){
+            // 触发广播事件前，把当前path和params累加存入amis变量historyPaths中
             pushHistoryPath(path, params);
         } 
     }
     else {
-        // 触发广播事件重围amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
+        clearHistoryFilters(context, lastPath);
+        // 触发广播事件前重置amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
         resetHistoryPath(path, params);
     }
     triggerBroadcastHistoryPathsChanged(buttonTriggerHistoryPathsChange);
@@ -110,6 +111,22 @@ function goBack(){
     let prevPath = popHistoryPath();
     if(prevPath && prevPath.path){
         FlowRouter.go(prevPath.path);
+    }
+}
+
+// 切换应用、对象、列表视图时清除本地存储中的过滤条件
+function clearHistoryFilters(context, lastPath) {
+    const path = context.path;
+    const params = context.params || {};
+    if (!lastPath || lastPath.params.app_id != params.app_id || lastPath.params.object_name != params.object_name || lastPath.params.list_view_id != params.list_view_id) {
+        let listViewPropsStoreKey;
+        if (lastPath) {
+            listViewPropsStoreKey = lastPath.path + "/crud/" + (lastPath.params.list_view_id || "");
+        }
+        else {
+            listViewPropsStoreKey = path + "/crud/" + (params.list_view_id || "");
+        }
+        sessionStorage.removeItem(listViewPropsStoreKey);
     }
 }
 
