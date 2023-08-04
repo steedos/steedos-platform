@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-11 10:13:44
+ * @LastEditTime: 2023-08-04 11:17:07
  * @Description: 
  */
 ; (function () {
@@ -103,15 +103,15 @@
                     if (flag) {
                         inputFields.push(field);
                     }
-                }else{
-                    //else schema中有嵌套表单项的元素 对其进行递归
-                    if(_.isArray(bodyItem.body)){
-                        getFormInputFields(bodyItem, inputFields);
-                    }
+                }
+                
+                //else schema中有嵌套表单项的元素 对其进行递归
+                if(_.isArray(bodyItem.body)){
+                    getFormInputFields(bodyItem, inputFields);
+                }
 
-                    if(_.isArray(bodyItem.columns)){
-                        getFormInputFields(bodyItem, inputFields);
-                    }
+                if(_.isArray(bodyItem.columns)){
+                    getFormInputFields(bodyItem, inputFields);
                 }
 
             })

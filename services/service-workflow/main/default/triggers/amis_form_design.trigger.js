@@ -233,7 +233,7 @@ function transformFormFields(amisField) {
         case 'fieldset':
             formFieldsItem.type = 'section'
             formFieldsItem.name = amisField.title
-            formFieldsItem.code = 'fieldset'
+            formFieldsItem.code = amisField.name || amisField.title
 			formFieldsItem.is_wide = true
 			fieldset_item = amisField.body ? amisField.body : amisField.field
             // 把他们赋值到新属性fields中
