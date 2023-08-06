@@ -121,6 +121,13 @@
                                             "title": "属性",
                                             "tab": [
                                                 {
+                                                    "type": "tpl",
+                                                    "tpl": "请从画布中选择步骤或连线",
+                                                    "id": "u:75ebba17ee37",
+                                                    "visibleOn": "${reactFlowSelection.nodes.length === 0 && reactFlowSelection.edges.length === 0}",
+                                                    "className": "absolute top-1/2 left-0 right-0 text-center"
+                                                },
+                                                {
                                                     "type": "each",
                                                     "id": "u:de445fd7654a",
                                                     "items": {
@@ -198,6 +205,23 @@
                                             ],
                                             "id": "u:406e84d38bbe",
                                             "className": "px-0"
+                                        },
+                                        {
+                                            "title": "权限",
+                                            "tab": [
+                                                {
+                                                    "type": "input-tree",
+                                                    "label": "请勾选本步骤允许编辑的字段",
+                                                    "name": "tree",
+                                                    "multiple": true,
+                                                    "autoCheckChildren": true,
+                                                    "source": "${permissionsOptions}",
+                                                    "id": "u:a8e4ac91a3d3",
+                                                    "showIcon": false
+                                                }
+                                            ],
+                                            "visibleOn": "${reactFlowSelection.nodes.length && reactFlowSelectedNode.data.step_type != 'condition' && reactFlowSelectedNode.data.step_type != 'end'}",
+                                            "id": "u:d7050d1d672f"
                                         }
                                     ],
                                     "contentClassName": "bg-gray-50"
@@ -233,7 +257,9 @@
                                             "actionType": "setValue",
                                             "args": {
                                                 "value": {
-                                                    "reactFlowSelection": "${event.data}"
+                                                    "reactFlowSelection": "${event.data}",
+                                                    "reactFlowSelectedNode": "${event.data.nodes[0]}",
+                                                    "reactFlowSelectedEdge": "${event.data.edges[0]}"
                                                 }
                                             },
                                             "componentId": "service_react_flow"
@@ -288,7 +314,7 @@
                                     "actions": [
                                         {
                                             "actionType": "custom",
-                                            "script": "debugger;\n\n// 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\nfunction getStepsForSave(nodes, edges) {\n  // 参考老流程设计器代码，补充必要的属性规则\n  // https://github.com/steedos/steedos-web \n  return nodes;\n}\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
+                                            "script": "debugger;\n\n/**\n * 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\n * 1.需要把edges分别存入每个nodes中作为step返回；\n * 2.权限input-tree选中值要转换存入每个步骤的permissions属性中；\n * 3.参考老流程设计器前端代码 https://github.com/steedos/steedos-web，补充必要的连线和步骤属性等规则\n * 4.参考老流程设计器保存接口代码 https://github.com/steedos/steedos-platform/blob/3ff728a72933f8007642736a8082350989545542/packages/workflow/src/designerRouter.js#L378，补充必要的连线和步骤属性等规则\n */\nfunction getStepsForSave(nodes, edges) {\n  let steps = nodes;\n  return steps;\n}\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
                                         },
                                         {
                                             "actionType": "ajax",
@@ -324,48 +350,8 @@
                 "method": "post",
                 "messages": {},
                 "requestAdaptor": "const flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            api_name, app, category, code_formula, current, current_no, description, \n            form, help_text, is_deleted, is_valid, name, name_formula\n            space, state, created, created_by, modified, modified_by,\n            object_name, owner,\n            form__expand{\n                name,\n                current\n            },\n            _display:_ui{ created,created_by,modified,modified_by }\n        }\n    }\n`;\nreturn api;\n\n",
-                "adaptor": "const data = payload.data.data && payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\n\n\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      sourcePosition: \"right\",\n      targetPosition: \"left\",\n      data: {\n        label: Steedos.getWorkflowStepLabel(step),\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id || Steedos.getWorkflowUUID(),\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          markerEnd: {\n            type: \"arrowclosed\",\n            width: 20,\n            height: 20,\n            // color: '#999',\n          },\n          style: {\n            // stroke: \"#999\",\n            strokeWidth: 1\n          },\n          labelStyle: {\n            fontSize: \"15px\"\n          },\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"flow\": {\n      ...data,\n      flowtype: \"new\"//写死，流程对象没有这个字段，但是老的流程设计器startup返回了此字段且此字段要保存\n    },\n    \"config\": convertedConfigData\n  }\n}",
+                "adaptor": "const data = payload.data.data && payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\n\n\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      sourcePosition: \"right\",\n      targetPosition: \"left\",\n      data: {\n        label: Steedos.getWorkflowStepLabel(step),\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id || Steedos.getWorkflowUUID(),\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          markerEnd: {\n            type: \"arrowclosed\",\n            width: 20,\n            height: 20,\n            // color: '#999',\n          },\n          style: {\n            // stroke: \"#999\",\n            strokeWidth: 1\n          },\n          labelStyle: {\n            fontSize: \"15px\"\n          },\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\n\nvar formData = data.form__expand;\nvar formFields = formData.current.fields;\nvar fieldsOptios = [];\nif (formFields && formFields.length) { \n  formFields.forEach(function (item) { \n    fieldsOptios.push({\n      label: item.name,\n      value: item.code\n    });\n  });\n}\nvar permissionsOptions = [{\n  label: formData.name,\n  value: \"__form\",\n  children: fieldsOptios\n}];\n\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\n\n// TODO:permissionsOptions对应的input-tree需要初始值，从每个步骤的permissions属性值中转换可得到初始值。\n\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"flow\": {\n      ...data,\n      flowtype: \"new\"//写死，流程对象没有这个字段，但是老的流程设计器startup返回了此字段且此字段要保存\n    },\n    \"permissionsOptions\": permissionsOptions,\n    \"config\": convertedConfigData\n  }\n}",
                 "dataType": "json"
-            },
-            "data__": {
-                "config": {
-                    "edges": [
-                        {
-                            "id": "start-end",
-                            "source": "start",
-                            "target": "end",
-                            "label": ""
-                        }
-                    ],
-                    "nodes": [
-                        {
-                            "id": "start",
-                            "data": {
-                                "label": "开始",
-                                "name": "开始",
-                                "step_type": "start",
-                                "timeout_hours": 168
-                            },
-                            "position": {
-                                "x": 20,
-                                "y": 20
-                            },
-                            "type": "input"
-                        },
-                        {
-                            "id": "end",
-                            "data": {
-                                "label": "结束",
-                                "name": "结束",
-                                "step_type": "end"
-                            },
-                            "position": {
-                                "x": 200,
-                                "y": 200
-                            }
-                        }
-                    ]
-                }
             }
         }
     ],
