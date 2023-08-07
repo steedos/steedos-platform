@@ -69,12 +69,20 @@
   left: 0px
 }
 
-.top-0 {
-  top: 0px
+.top-1\/2 {
+  top: 50%
+}
+
+.left-0 {
+  left: 0px
 }
 
 .right-0 {
   right: 0px
+}
+
+.top-0 {
+  top: 0px
 }
 
 .bottom-0 {
@@ -83,10 +91,6 @@
 
 .right-80 {
   right: 20rem
-}
-
-.left-0 {
-  left: 0px
 }
 
 .isolate {
