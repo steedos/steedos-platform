@@ -1,5 +1,0 @@
-name: parameters.$.value
-label: 参数值
-type: text
-inlineHelpText: 支持公式
-sort_no: 20

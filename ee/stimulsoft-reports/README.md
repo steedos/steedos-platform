@@ -1,1 +1,0 @@
-# @steedos/ee_stimulsoft-reports

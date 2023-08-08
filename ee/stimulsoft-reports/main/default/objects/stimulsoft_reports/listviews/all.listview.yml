@@ -1,7 +1,0 @@
-name: all
-columns:
-  - label
-  - name
-  - description
-label: 所有
-shared: true
