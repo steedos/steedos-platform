@@ -1,12 +1,12 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-04-11 11:50:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-02 14:04:04
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-08-08 12:30:59
  * @Description: 
  */
 "use strict";
-import { METADATA_TYPE } from './actionsHandler';
+import { METADATA_TYPE, isPatternTrigger } from './actionsHandler';
 import _ = require('lodash');
 import { TRIGGERKEYS } from "./constants";
 
@@ -89,7 +89,8 @@ module.exports = {
                                         "name": name,
                                         "listenTo": listenTo,
                                         "when": when,
-                                        "action": rawName
+                                        "action": rawName,
+                                        "isPattern": isPatternTrigger(trigger)
                                     }
                                 })
 

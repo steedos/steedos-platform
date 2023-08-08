@@ -44,7 +44,7 @@ function getPatternTriggerKey( when: string, name: string): string{
     return key
 }
 
-function isPatternTrigger(data){
+export function isPatternTrigger(data){
     const {listenTo} = data;
     if(listenTo === '*'){
         return true;
