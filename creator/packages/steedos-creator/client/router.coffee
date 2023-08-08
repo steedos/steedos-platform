@@ -274,7 +274,11 @@ objectRoutes.route '/view/:record_id',
 				main: main
 				regions: regions
 		, 10
-
+	triggersExit: [
+		(context, redirect) ->
+			if (context.params?.object_name == 'instances' && context.queryParams?.side_listview_id == 'draft') || (context.params?.object_name == 'instance_tasks' && context.queryParams?.side_listview_id == 'inbox')
+				InstanceManager.saveIns();
+	]
 objectRoutes.route '/grid/:list_view_id',
 	action: (params, queryParams)->
 		Session.set("record_id", null)
