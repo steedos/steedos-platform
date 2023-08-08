@@ -1,5 +1,0 @@
-name: view
-is_enable: true
-label: 预览
-'on': record_only
-visible: true

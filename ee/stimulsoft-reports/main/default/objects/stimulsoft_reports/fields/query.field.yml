@@ -1,9 +1,0 @@
-name: query
-type: master_detail
-label: 查询
-reference_to: queries
-reference_to_field: name
-showIcon: false
-required: true
-sort_no: 200
-multiple: true
