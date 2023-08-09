@@ -27,7 +27,8 @@
                                                             "label": "流程名称",
                                                             "type": "input-text",
                                                             "name": "flow.name",
-                                                            "id": "u:ded33d6cc55e"
+                                                            "id": "u:ded33d6cc55e",
+                                                            "required": true
                                                         },
                                                         {
                                                             "label": "流程描述",
@@ -138,7 +139,8 @@
                                                                 "type": "input-text",
                                                                 "name": "data.name",
                                                                 "label": "步骤名称",
-                                                                "id": "u:561792782229"
+                                                                "id": "u:561792782229",
+                                                                "required": true
                                                             },
                                                             {
                                                                 "type": "input-text",
@@ -281,6 +283,24 @@
                                             "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
                                         }
                                     ]
+                                },
+                                "edgesChange": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "Steedos.validateWokflow(context, doAction, event);"
+                                        }
+                                    ]
+                                },
+                                "nodesChange": {
+                                    "weight": 0,
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "Steedos.validateWokflow(context, doAction, event);"
+                                        }
+                                    ]
                                 }
                             },
                             "name": "flow_chart",
@@ -314,7 +334,7 @@
                                     "actions": [
                                         {
                                             "actionType": "custom",
-                                            "script": "debugger;\n\n/**\n * 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\n * 1.需要把edges分别存入每个nodes中作为step返回；\n * 2.权限input-tree选中值要转换存入每个步骤的permissions属性中；\n * 3.参考老流程设计器前端代码 https://github.com/steedos/steedos-web，补充必要的连线和步骤属性等规则\n * 4.参考老流程设计器保存接口代码 https://github.com/steedos/steedos-platform/blob/3ff728a72933f8007642736a8082350989545542/packages/workflow/src/designerRouter.js#L378，补充必要的连线和步骤属性等规则\n */\nfunction getStepsForSave(nodes, edges) {\n  let steps = nodes;\n  return steps;\n}\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
+                                            "script": "debugger;\n\n/**\n * 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\n * 1.需要把edges分别存入每个nodes中作为step返回；\n * 2.权限input-tree选中值要转换存入每个步骤的permissions属性中；\n * 3.参考老流程设计器前端代码 https://github.com/steedos/steedos-web，补充必要的连线和步骤属性等规则\n * 4.参考老流程设计器保存接口代码 https://github.com/steedos/steedos-platform/blob/3ff728a72933f8007642736a8082350989545542/packages/workflow/src/designerRouter.js#L378，补充必要的连线和步骤属性等规则\n */\nfunction getStepsForSave(nodes, edges) {\n  let steps = nodes;\n  return steps;\n}\n\nSteedos.validateWokflow(context, doAction, event);\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
                                         },
                                         {
                                             "actionType": "ajax",
