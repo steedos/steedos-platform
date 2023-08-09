@@ -83,6 +83,8 @@ Setup.validate = (onSuccess)->
 		spaceId = getCookie("X-Space-Id");
 	headers = {}
 	requestData = { 'utcOffset': moment().utcOffset() / 60 }
+	if !loginToken
+		loginToken = localStorage.getItem("steedos:token");
 	if loginToken && spaceId
 		headers['Authorization'] = 'Bearer ' + spaceId + ',' + loginToken
 	else if loginToken
