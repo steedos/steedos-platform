@@ -281,6 +281,10 @@
                                             },
                                             "componentId": "tabs_react_flow",
                                             "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
+                                        },
+                                        {
+                                            "actionType": "custom",
+                                            "script": "Steedos.validateWokflowCurrentStep(context, doAction, event);"
                                         }
                                     ]
                                 },

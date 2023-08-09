@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-07-30 16:49:42
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-09 17:35:31
+ * @LastEditTime: 2023-08-09 18:37:28
  */
 ; (function () {
     function getIconName(type) {
@@ -85,8 +85,43 @@
         });
     }
 
+    function valiCurStep(context, doAction, event) {
+        var reactFlowSelectedNode = event.data.nodes[0];
+        if(!reactFlowSelectedNode){
+            // 说明选中的不是节点，而是连线或其他
+            return true;
+        }
+        // 优先从event.data下取setNodes函数而不是从event.data.reactFlowInstance中取可以避免死循环
+        var setNodes = event.data.setNodes || event.data.reactFlowInstance.setNodes;
+        var reMsg = valiStepAndGetErrMsg(reactFlowSelectedNode.data);
+        var isValiFailed = !!reMsg.length;
+        if(!isValiFailed){
+            return true;
+        }
+        setNodes(function (nds) {
+            return nds.map((node) => {
+                node.data = {
+                    ...node.data
+                };
+                if (node.id === reactFlowSelectedNode.id) {
+                    node.data.label = Steedos.getWorkflowStepLabel(node.data, true);
+                }
+                return node;
+            })
+        });
+        
+        doAction({
+            "actionType": "toast",
+            "args": {
+              "msgType": "warning",
+              "msg": reMsg
+            }
+        });
+    }
+
     Steedos.getWorkflowStepIconName = getIconName;
     Steedos.getWorkflowStepLabel = getStepLabel;
     Steedos.getWorkflowUUID = getUUID;
     Steedos.validateWokflow = valiFlow;
+    Steedos.validateWokflowCurrentStep = valiCurStep;
 })();
