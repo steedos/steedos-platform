@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-07-30 16:49:42
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-09 18:37:28
+ * @LastEditTime: 2023-08-10 15:03:16
  */
 ; (function () {
     function getIconName(type) {
@@ -73,7 +73,7 @@
             isFlowValid = false;
         }
         // TODO:等所有的校验功能都完成后这句话放能放开，否则会把错误的is_valid保存到数据库中
-        flowInfo.is_valid = isFlowValid;
+        // flowInfo.is_valid = isFlowValid;
         doAction({
             "componentId": "service_react_flow",
             "actionType": "setValue",
