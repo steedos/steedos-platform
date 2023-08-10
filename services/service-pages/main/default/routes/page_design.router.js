@@ -35,9 +35,6 @@ router.get('/api/pageDesign', core.requireAuthentication, async function (req, r
         const steedosBuilderUrl = process.env.STEEDOS_BUILDER_URL || 'https://builder.steedos.cn';
         const builderHost = `${steedosBuilderUrl}/amis?${assetUrl}retUrl=${retUrl}&locale=${locale}&pageType=${page.type}`;
 
-        // let data = fs.readFileSync(__dirname+'/design.html', 'utf8');
-        // res.send(data.replace('SteedosBuilderHost',steedosBuilderHost).replace('DataContext', JSON.stringify(dataContext)));
-
         const filename = __dirname+'/page_design.ejs'
         const data = {
             builderHost,
