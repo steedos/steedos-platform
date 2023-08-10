@@ -355,6 +355,7 @@ WorkflowManager_format.getTableItemSchema = function (field) {
             label = (sfield.name != null && sfield.name.length > 0) ? sfield.name : sfield.code;
 
             sfields_schema = new s_schema(label, sfield);
+            sfields_schema.autoform.__formId = field.__formId
             fieldSchema[field.code + "." + sfield.code] = sfields_schema;
         });
     }
