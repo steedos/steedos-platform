@@ -155,6 +155,7 @@ async function addServiceMetadata(broker, params, meta) {
         metadataApiName,
         metadataServiceName,
         metadata: params.data,
+        timestamp: new Date().getTime()
     });
 }
 
