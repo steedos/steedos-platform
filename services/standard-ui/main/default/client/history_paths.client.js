@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-04 12:48:06
+ * @LastEditTime: 2023-08-11 16:19:45
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
@@ -121,10 +121,10 @@ function clearHistoryFilters(context, lastPath) {
     if (!lastPath || lastPath.params.app_id != params.app_id || lastPath.params.object_name != params.object_name || lastPath.params.list_view_id != params.list_view_id) {
         let listViewPropsStoreKey;
         if (lastPath) {
-            listViewPropsStoreKey = lastPath.path + "/crud/" + (lastPath.params.list_view_id || "");
+            listViewPropsStoreKey = lastPath.path + "/crud";
         }
         else {
-            listViewPropsStoreKey = path + "/crud/" + (params.list_view_id || "");
+            listViewPropsStoreKey = path + "/crud";
         }
         sessionStorage.removeItem(listViewPropsStoreKey);
     }
