@@ -65,7 +65,16 @@ async function getObjectConfigs(ctx, objectApiName) {
         }, {meta: ctx.meta}
     );
     // console.log(`getObjectConfigs ==== `, getObjectConfigs.length);
-    return _.compact(_.map(objectConfigs, "metadata"));
+    const configs = [];
+    _.each(objectConfigs, (item)=>{
+        if(item.metadata){
+            item.metadata.__timestamp = item.timestamp;
+            configs.push(item.metadata) //_.map(objectConfigs, "metadata")
+        }else{
+            configs.push(item.metadata)
+        }
+    })
+    return _.compact(configs);
 }
 
 function getObjectDatasource(objectConfigs: Array<any>) {
@@ -236,7 +245,7 @@ export async function refreshObject(ctx, objectApiName) {
     );
 
     objectConfig.list_views = listviewDefaultsDeep({ list_views: {} }, ..._.sortBy(objectConfigs, function (o) {
-        return o.isMain ? 1 : -1;
+        return o.isMain ? 1 : (-o.__timestamp || -1);
     }))
 
     if(objectDatasource == "default" || objectDatasource == "meteor"){

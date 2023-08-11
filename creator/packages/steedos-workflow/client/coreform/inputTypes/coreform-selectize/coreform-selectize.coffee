@@ -44,11 +44,12 @@ isFunctionStr = (funStr)->
 	else
 		return false
 
-getFilterStr = (filters, functionArgsName)->
+getFilterStr = (filters, functionArgsName, formId, tableName)->
 	# instanceform = AutoForm.getFormValues("instanceform")
 	formValues = AutoForm.getFormValues("instanceform", undefined, undefined, false)
+	tableFormValues = AutoForm.getFormValues(formId, undefined, undefined, false)
 	functionArgs = _.map functionArgsName, (argName)->
-		return formValues[argName]
+		return formValues[argName] || tableFormValues[tableName]?[argName]
 	filterFun = null;
 	eval('filterFun=' + filters)
 	return filterFun.apply({}, functionArgs)
@@ -117,16 +118,24 @@ Template.afSteedosSelectize.onRendered ()->
 
 	filterStr = '';
 
+	formId = "instanceform";
+
+	tableName = ''
+
+	if this.data.atts.__formId
+		formId = this.data.atts.__formId
+		tableName = _.first(code.split('.'))
+
 	if isFunctionStr(filters)
 		functionArgsName = getArgumentsList(filters);
-		filterStr = getFilterStr(filters, functionArgsName);
-		$("#instanceform").on 'change',(e, elementName)->
+		filterStr = getFilterStr(filters, functionArgsName, formId, tableName);
+		$("#"+formId).on 'change',(e, elementName)->
 			if e.target.nodeName == 'FORM'
 				changeFieldName = elementName
 			else
 				changeFieldName = e.target.name;
-			if changeFieldName && functionArgsName.includes(changeFieldName)
-				filterStr = getFilterStr(filters, functionArgsName)
+			if changeFieldName && functionArgsName.includes(_.last(changeFieldName.split('.')))
+				filterStr = getFilterStr(filters, functionArgsName, formId, tableName)
 				if self.filterStr != filterStr
 					self.selectize[0].selectize.clearOptions();
 					self.selectize[0].selectize.load(selectizeLoad)

@@ -298,7 +298,7 @@ fields:
     help: 
     description: 
   searchable:
-    label: Searchable
+    label: Enable full-text search
     help: 
     description: 
   filterable:

@@ -278,7 +278,7 @@ fields:
     help: 
     description: 
   searchable:
-    label: 可搜索
+    label: 启用全文搜索
     help: 
     description: 
   filterable:

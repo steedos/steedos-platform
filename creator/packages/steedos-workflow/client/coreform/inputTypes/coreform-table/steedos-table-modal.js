@@ -4,6 +4,7 @@ Template.steedosTableModal.helpers({
     },
 
     getSchema : function (data) {
+        data.field.__formId = "steedos_table_modal_" + data.field.code + "_" + data.index;
         return new SimpleSchema(WorkflowManager_format.getTableItemSchema(data.field));
     },
 

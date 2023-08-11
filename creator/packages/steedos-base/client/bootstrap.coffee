@@ -85,6 +85,8 @@ Setup.validate = (onSuccess)->
 	requestData = { 'utcOffset': moment().utcOffset() / 60 }
 	if !loginToken
 		loginToken = localStorage.getItem("steedos:token");
+		if loginToken == 'undefined'
+			loginToken = null
 	if loginToken && spaceId
 		headers['Authorization'] = 'Bearer ' + spaceId + ',' + loginToken
 	else if loginToken
