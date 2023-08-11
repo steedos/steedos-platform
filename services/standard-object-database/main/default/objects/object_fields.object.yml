@@ -702,11 +702,12 @@ fields:
     type: boolean
     label: Sortable
     group: Advanced
-  # searchable:
-  #   type: boolean
-  #   label: Searchable
-  #   group: Advanced
     sort_no: 420
+  searchable:
+    type: boolean
+    label: Searchable
+    group: Advanced
+    sort_no: 428
   filterable:
     type: boolean
     label: Filterable
