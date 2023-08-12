@@ -205,14 +205,27 @@ module.exports = {
                 }
                 return result;
             }
-        } 
+        },
+        addAssetUrl: {
+            handler: async function (ctx) {
+                const { url } = ctx.params;
+                return broker.broadcast("page.addAssetUrl", {
+                    url
+                });
+            }
+        }
     },
 
     /**
      * Events
      */
     events: {
-
+        'page.addAssetUrl': function (ctx) {
+            const { url } = ctx.params;
+            const urls = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',');
+            urls.push(url);
+            process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = _.compact(_.uniq(urls)).join(',');
+        }
     },
 
     /**
