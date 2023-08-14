@@ -107,6 +107,9 @@ tab_items:
   admin_flow_roles:
     group: approval_workflow
     index: 26
+  admin_flow_positions:
+    group: approval_workflow
+    index: 26.5
   admin_flows:
     group: approval_workflow
     index: 27
