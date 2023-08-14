@@ -278,11 +278,11 @@ fields:
     help: 
     description: 
   searchable:
-    label: 启用全文搜索
+    label: 启用列表页快速搜索
     help: 
     description: 
   filterable:
-    label: 过滤器默认字段
+    label: 列表页过滤器默认字段
     help: 
     description: 
   show_as_qr:
@@ -308,7 +308,7 @@ fields:
     description: 
   amis:
     label: Amis 属性
-    help: 
+    help: 配置为一个Amis Schema Json可以更改该字段的Amis属性。
     description: 
 groups:
   external_data_source: 外部数据源
