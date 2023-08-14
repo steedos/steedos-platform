@@ -49,6 +49,7 @@
     "md5": "^2.3.0",
     "moleculer": "^0.14.25",
     "moleculer-repl": "^0.7.1",
+    "moleculer-cron": "^0.0.2",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "nats": "^2.13.1",
