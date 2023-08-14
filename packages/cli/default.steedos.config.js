@@ -32,6 +32,10 @@ if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
 	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_UNPKG_URL + "/@steedos-widgets/amis-object@1.2.39/dist/assets.json";
 }
 
+if(_.isEmpty(process.env.SERIALIZER)){
+	process.env.SERIALIZER = 'JSON'
+}
+
 process.env.ROOT_URL =  process.env.ROOT_URL.replace(/\/+$/, "");
 /**
  * Steedos ServiceBroker configuration file
@@ -134,7 +138,7 @@ module.exports = {
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
 	// More info: https://moleculer.services/docs/0.14/networking.html#Serialization
-	serializer: "JSON",
+	serializer: process.env.SERIALIZER || "JSON",
 
 	// Number of milliseconds to wait before reject a request with a RequestTimeout error. Disabled: 0
 	requestTimeout: 0,
