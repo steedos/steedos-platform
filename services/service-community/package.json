@@ -46,6 +46,7 @@
     "js-base64": "^3.6.1",
     "keyv": "^4.0.3",
     "lodash": "^4.17.21",
+    "notepack.io": "^3.0.1",
     "md5": "^2.3.0",
     "moleculer": "^0.14.25",
     "moleculer-repl": "^0.7.1",
