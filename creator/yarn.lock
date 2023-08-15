@@ -1279,15 +1279,15 @@
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.3.tgz#1185726610acc37317ddab11c3c7f9066966bd20"
   integrity sha512-O3uyB/JbkAEMZaP3YqyHH7TMnex7tWyCbCI4EfJdOCoN6HIhqdJBWTM6aCCiWQ/5f5wxjgU735QAIpJbjDvmzg==
 
-"@steedos-builder/react@^0.2.35":
-  version "0.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/react/-/react-0.2.36.tgz#54dfbee9518c205cffab8a835d7dabbbb135d351"
-  integrity sha512-JaOmrO+BfJKfYcAMF+oTvW0DOPEaauztrQh5L+VnvAkYNqvzdDdm1p5kvvZO/39pY65mdI/cwg6rdpwtroxMGg==
+"@steedos-builder/react@^0.2.38":
+  version "0.2.38"
+  resolved "https://registry.npmjs.org/@steedos-builder/react/-/react-0.2.38.tgz#31f5f340f1385681adc8f78b34d1a134fd597b04"
+  integrity sha512-Y+bWE72V0nuup1t4AgCWEY5yjxB1A8EN+UYLIxfGvNJ1fGQud8d89YStwnjH61+CDA72lZ+IeoSwzK5U4Kh8OA==
   dependencies:
     "@builder.io/react" "^1.1.50"
     "@builder.io/sdk" "1.1.26"
     "@emotion/core" "^10.0.17"
-    "@steedos-builder/sdk" "0.2.36"
+    "@steedos-builder/sdk" "0.2.38"
     hash-sum "^2.0.0"
     preact "^10.1.0"
     react ">=14"
@@ -1299,19 +1299,13 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
-"@steedos-builder/requirejs@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/requirejs/-/requirejs-0.0.3.tgz#23f87bc29ce382f094a962e11d50f909124dfe79"
-  integrity sha512-DgCDLmcXuiSLS02ZYgv7FltaQiGaM1SbJXe7YtwNQegHhWCZUHpCFzri4UVc8OKaqf6YB085Go/bCimP3LRPaA==
-
-"@steedos-builder/sdk@0.2.36":
-  version "0.2.36"
-  resolved "https://registry.yarnpkg.com/@steedos-builder/sdk/-/sdk-0.2.36.tgz#ae4cf2ace6f893ff68ded449679f0fefd2bd3d57"
-  integrity sha512-Lbc3U/m9PxHFHB9eIDJp+o9g3Okt6x0Tm1zS2i7CHjfd5SmdFZX6QVdScE4CUW5w+uYRTawHCvkRpLnj7r8htQ==
+"@steedos-builder/sdk@0.2.38":
+  version "0.2.38"
+  resolved "https://registry.npmjs.org/@steedos-builder/sdk/-/sdk-0.2.38.tgz#db1a0d1875c3b7759cee0ab62ffe608358c054bb"
+  integrity sha512-Jlxatcpsjkt6gGLA64YGhOJuqte59x/K3Raz/rgog+Bc5x5wXy+i/BfSnwaSJCaQqYVEjHBWE9D2vMCHm1lZXg==
   dependencies:
     "@builder.io/sdk" "1.1.26"
     "@monaco-editor/loader" "^1.3.0"
-    "@steedos-builder/requirejs" "^0.0.3"
     "@types/requirejs" "^2.1.34"
     "@types/systemjs" "^6.1.1"
     hash-sum "^2.0.0"
