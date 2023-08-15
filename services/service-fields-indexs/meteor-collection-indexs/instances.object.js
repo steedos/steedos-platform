@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-17 14:01:14
+ * @LastEditTime: 2023-08-15 23:24:59
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -252,7 +252,7 @@ if (Meteor.isServer) {
   try {
     db.instances._ensureIndex({
       "state": 1,
-      "form": 1,
+      "category": 1,
       "is_deleted": 1,
       "space": 1
     }, {});
@@ -265,7 +265,7 @@ if (Meteor.isServer) {
     db.instances._ensureIndex({
       submitter: 1,
       submit_date: -1,
-      form: 1,
+      category: 1,
       state: 1,
       is_deleted: 1,
       space: 1
@@ -277,7 +277,7 @@ if (Meteor.isServer) {
     db.instances._ensureIndex({
       applicant: 1,
       submit_date: -1,
-      form: 1,
+      category: 1,
       state: 1,
       is_deleted: 1,
       space: 1
@@ -289,7 +289,7 @@ if (Meteor.isServer) {
     db.instances._ensureIndex({
       inbox_users: 1,
       submit_date: -1,
-      form: 1,
+      category: 1,
       state: 1,
       is_deleted: 1,
       space: 1
@@ -301,7 +301,7 @@ if (Meteor.isServer) {
     db.instances._ensureIndex({
       outbox_users: 1,
       submit_date: -1,
-      form: 1,
+      category: 1,
       state: 1,
       is_deleted: 1,
       space: 1
@@ -313,7 +313,7 @@ if (Meteor.isServer) {
     db.instances._ensureIndex({
       flow: 1,
       submit_date: -1,
-      form: 1,
+      category: 1,
       state: 1,
       is_deleted: 1,
       space: 1

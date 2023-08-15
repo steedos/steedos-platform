@@ -136,17 +136,12 @@ module.exports = {
                     }
                     break;
                 default:
-                    filter.push(['instance_state', '=', 'none']);
+                    filter.push(['state', '=', 'none']);
                     break;
             }
 
             if(categoriesIds && categoriesIds.length > 0){
-                const forms = await objectql.getObject('forms').directFind({filters: ['category', 'in', categoriesIds], fields: ['_id']});
-                if(forms.length > 0){
-                    filter.push(['form', 'in', _.map(forms, '_id')])
-                }else{
-                    filter.push(['form', 'in',  ['no']])
-                }
+                filter.push(['category', 'in', categoriesIds])
             }
 
             return filter;
