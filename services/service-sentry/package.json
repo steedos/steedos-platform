@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-sentry",
-  "version": "2.2.77",
+  "version": "2.2.78",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
@@ -12,5 +12,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "27dfc313512cfb080c146fefaa6bf6230f126375"
+  "gitHead": "5b2b159f0d0999dfbad0e9a855764ed4316ed9f5"
 }
