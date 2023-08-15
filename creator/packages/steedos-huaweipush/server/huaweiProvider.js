@@ -5,7 +5,8 @@ const timeout = 5000;
 
 HuaweiPush = {
 	authInfo: {},
-	default_package_name: undefined
+	default_package_name: undefined,
+	debug: Meteor.settings.push && Meteor.settings.push.huawei && Meteor.settings.push.huawei.debug
 };
 
 HuaweiPush.config = function(config) {
