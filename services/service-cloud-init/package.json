@@ -1,10 +1,10 @@
 {
   "name": "@steedos/service-cloud-init",
-  "version": "2.2.75",
+  "version": "2.2.76",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/objectql": "2.2.75",
+    "@steedos/objectql": "2.2.76",
     "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
@@ -14,5 +14,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "790f79e47209ee16c8dc01dafdf068b31a048330"
+  "gitHead": "2f10be27225456da064a61737107cb4328367d7c"
 }
