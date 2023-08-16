@@ -276,8 +276,8 @@ objectRoutes.route '/view/:record_id',
 		, 10
 	triggersExit: [
 		(context, redirect) ->
-			if (context.params?.object_name == 'instances' && context.queryParams?.side_listview_id == 'draft') || (context.params?.object_name == 'instance_tasks' && context.queryParams?.side_listview_id == 'inbox')
-				InstanceManager.saveIns();
+			if Session.get("instance_change") && ((context.params?.object_name == 'instances' && context.queryParams?.side_listview_id == 'draft') || (context.params?.object_name == 'instance_tasks' && context.queryParams?.side_listview_id == 'inbox'))
+				InstanceManager.saveIns(false);
 	]
 objectRoutes.route '/grid/:list_view_id',
 	action: (params, queryParams)->
