@@ -857,7 +857,7 @@ InstanceManager.saveIns = function (noWarn) {
 			var myApprove = InstanceManager.getMyApprove();
 			Meteor.call('cc_save', instance._id, description, myApprove, ccHasEditPermission, function (error, result) {
 				$('body').removeClass("loading");
-				if (error) {
+				if (!noWarn && error) {
 					toastr.error(error);
 				};
 				if (result == true) {
