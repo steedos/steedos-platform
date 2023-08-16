@@ -53,6 +53,7 @@ module.exports = {
         objectql.checkFormula(this.doc.entry_criteria, this.doc.object_name)
     },
     afterFind: async function(){
+        let spaceId = this.spaceId;
         let filters = InternalData.parserFilters(this.query.filters)
         let approvalProcesses = [];
         if(filters.name){
@@ -72,6 +73,7 @@ module.exports = {
 
         if(approvalProcesses){
             this.data.values = this.data.values.concat(approvalProcesses)
+            this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
         }
     },
     afterAggregate: async function(){

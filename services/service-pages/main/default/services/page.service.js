@@ -1,7 +1,9 @@
 const objectql = require('@steedos/objectql');
 const metadataAPI = require('@steedos/metadata-api');
 const _ = require('lodash');
-
+// 使用变量,存储所有资产
+const ASSETS = {};
+const ENV_ASSETS = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',')
 module.exports = {
     name: "page",
     mixins: [],
@@ -208,9 +210,18 @@ module.exports = {
         },
         addAssetUrl: {
             handler: async function (ctx) {
-                const { url } = ctx.params;
+                const { name, url } = ctx.params;
+                console.log(`addAssetUrl`, name, url)
                 return broker.broadcast("page.addAssetUrl", {
-                    url
+                    name, url
+                });
+            }
+        },
+        removeAssetUrl: {
+            handler: async function (ctx) {
+                const { name } = ctx.params;
+                return broker.broadcast("page.removeAssetUrl", {
+                    name
                 });
             }
         }
@@ -221,11 +232,15 @@ module.exports = {
      */
     events: {
         'page.addAssetUrl': function (ctx) {
-            const { url } = ctx.params;
-            const urls = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',');
-            urls.push(url);
-            process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = _.compact(_.uniq(urls)).join(',');
-        }
+            const { name, url } = ctx.params;
+            ASSETS[name] = url;
+            process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = _.compact(_.uniq(_.concat(ENV_ASSETS, _.values(ASSETS)))).join(',');
+        },
+        'page.removeAssetUrl': function (ctx) {
+            const { name } = ctx.params;
+            delete ASSETS[name]
+            process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = _.compact(_.uniq(_.concat(ENV_ASSETS, _.values(ASSETS)))).join(',');
+        },
     },
 
     /**

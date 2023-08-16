@@ -7,7 +7,7 @@ Template.distribute_edit_flow_modal.helpers
 		suDocs.forEach (s) -> 
 			if s
 				validateSuDocs.push s
-		userIds = _.pluck(validateSuDocs, "user")
+		userIds = _.pluck(validateSuDocs, "id")
 		data = {
 			value: validateSuDocs
 			dataset: {
