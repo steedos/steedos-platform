@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-11 10:54:51
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-13 16:31:10
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-08-17 15:06:54
  * @Description: 发送通知服务
  */
 "use strict";
@@ -79,6 +79,39 @@ module.exports = {
                         ctx.params.message,
                         ctx.params.from,
                         ctx.params.to
+                    );
+                }).run();
+            }
+        },
+        /**
+         * @api {post} remove 删除通知
+         * @apiName remove
+         * @apiGroup notifications.service.js
+         * @apiParam {Object} doc 消息主体
+         * @apiParam {String} doc[_id] 消息ID
+         * @apiParam {String[]} assignees 接受者ID
+         * @apiParam {String} objectName 关联对象名称
+         */
+        remove: {
+            params: {
+                doc: {
+                    type: "object",
+                    props: {
+                        _id: { type: "string" },
+                    }
+                },
+                assignees: {
+                    type: "array", items: "string"
+                },
+                objectName: { type: "string" },
+            },
+            async handler(ctx) {
+                this.broker.logger.info('[service][notifications]===>', 'remove', ctx.params)
+                return Fiber(function () {
+                    Creator.removeNotifications(
+                        ctx.params.doc,
+                        ctx.params.assignees,
+                        ctx.params.objectName
                     );
                 }).run();
             }
