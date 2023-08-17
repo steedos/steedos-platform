@@ -194,7 +194,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
         // const objectsConfigs = context.objects;
         const tab = await getTab(ctx, tabApiName);
         if(props.group){
-            props.group = _.find(menu.tab_groups, { id: props.group }).group_name;
+            props.group = _.find(menu.tab_groups, { id: props.group })?.group_name || props.group;
         }
         if (tab) {
             const isMobileChecked = checkTabMobile(tab, mobile)
