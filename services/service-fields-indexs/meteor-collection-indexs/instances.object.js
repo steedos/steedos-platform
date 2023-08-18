@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-15 23:24:59
+ * @LastEditTime: 2023-08-18 17:26:47
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -263,61 +263,14 @@ if (Meteor.isServer) {
   // 监控箱-用户
   try {
     db.instances._ensureIndex({
-      submitter: 1,
+      space: 1,
       submit_date: -1,
-      category: 1,
-      state: 1,
-      is_deleted: 1,
-      space: 1
-    });
-  } catch (error) {
-
-  }
-  try {
-    db.instances._ensureIndex({
-      applicant: 1,
-      submit_date: -1,
-      category: 1,
-      state: 1,
-      is_deleted: 1,
-      space: 1
-    });
-  } catch (error) {
-
-  }
-  try {
-    db.instances._ensureIndex({
-      inbox_users: 1,
-      submit_date: -1,
-      category: 1,
-      state: 1,
-      is_deleted: 1,
-      space: 1
-    });
-  } catch (error) {
-
-  }
-  try {
-    db.instances._ensureIndex({
-      outbox_users: 1,
-      submit_date: -1,
-      category: 1,
-      state: 1,
-      is_deleted: 1,
-      space: 1
-    });
-  } catch (error) {
-
-  }
-  try {
-    db.instances._ensureIndex({
       flow: 1,
-      submit_date: -1,
       category: 1,
       state: 1,
       is_deleted: 1,
-      space: 1
-    });
+      name: 1,
+    }, { background: true, name: 'monitor_user' });
   } catch (error) {
 
   }
