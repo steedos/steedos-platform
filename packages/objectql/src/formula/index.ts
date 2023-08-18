@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 10:32:29
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-08-18 10:28:49
  * @Description: 
  */
 import { SteedosObjectTypeConfig, getSteedosSchema } from '../types';
@@ -11,7 +11,7 @@ import { computeFormulaParams, pickFormulaVarFields, runFormula } from './core';
 import { isUserSessionRequiredForFormulaVars } from './util';
 import { JsonMap } from "@salesforce/ts-types";
 import _ = require('lodash')
-import { getObjectConfig } from '@steedos/metadata-registrar';
+import { getObjectConfig, getOriginalObjectConfig } from '@steedos/metadata-registrar';
 
 export * from './type'
 export * from './util'
@@ -40,7 +40,7 @@ async function _computeFormula(formula: string, objectName:string, record: JsonM
 async function _computeFormula(formula: string, objectName:string, recordId: string, userSession: any, options?: SteedosFormulaOptions)
 async function _computeFormula(formula: string, objectName:string, data: any, userSession: any, options?: SteedosFormulaOptions) {
     // 允许参数objectName为空，此时formula应该最多只引用了$user变量，未引用任何对象字段相关变量。
-    const objectConfig = objectName ? getObjectConfig(objectName) : null;
+    const objectConfig = objectName ? getOriginalObjectConfig(objectName) : null;
     const varsAndQuotes = await computeFormulaVarsAndQuotes(formula, objectConfig);
     const vars = varsAndQuotes.vars;
     if (_.isEmpty(userSession)) {
