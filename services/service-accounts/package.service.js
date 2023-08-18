@@ -30,7 +30,7 @@ module.exports = {
 	actions: {
 		getUserSession: {
 			async handler(ctx) {
-				const { authorization } = ctx.params;
+				const { authorization, userId, spaceId } = ctx.params;
 				let authToken = '';
 				let params = {};
 				if (authorization) {
@@ -45,8 +45,10 @@ module.exports = {
 						params.spaceId = authToken.split(',')[0];
 						params.token = authToken.split(',')[1];
 					}
+					return await auth.getSession(params.token, params.spaceId);
+				}else if(userId && spaceId){
+					return await auth.getSessionByUserId(userId, spaceId)
 				}
-				return await auth.getSession(params.token, params.spaceId);
             }
 		}
 	},

@@ -1,17 +1,12 @@
 const _ = require("underscore");
+const objectql = require("@steedos/objectql");
 
-const addNotifications = function (userId, doc, members) {
+const addNotifications = async function (userId, doc, members) {
     members = _.difference(members, [userId]);
     if (!members.length) {
         return;
     }
-    const fromUser = Creator.getCollection("users").findOne({
-        _id: userId
-    }, {
-        fields: {
-            name: 1
-        }
-    });
+    const fromUser = await objectql.getObject('users').findOne(userId, {fields: ['name']})
     const notificationTitle = fromUser.name;
     let notificationDoc = {
         name: doc.name,
@@ -24,14 +19,22 @@ const addNotifications = function (userId, doc, members) {
         from: userId,
         space: doc.space
     };
-    Creator.addNotifications(notificationDoc, userId, members);
+    await objectql.getSteedosSchema().broker.call('notifications.add', {
+        message: notificationDoc,
+        from: userId,
+        to: members
+    })
 }
 
-const removeNotifications = function(doc, members){
-    Creator.removeNotifications(doc, members, "cms_posts");
+const removeNotifications = async function(doc, members){
+    await objectql.getSteedosSchema().broker.call('notifications.remove', {
+        doc,
+        assignees: members,
+        objectName: "cms_posts"
+    })
 }
 
-const getPostMembers = function (doc, isModifierSet) {
+const getPostMembers = async function (doc, isModifierSet) {
     var members, organizations, users;
     organizations = doc.members && doc.members.organizations;
     users = doc.members && doc.members.users;
@@ -41,19 +44,10 @@ const getPostMembers = function (doc, isModifierSet) {
             members = users;
         }
         if (organizations != null ? organizations.length : void 0) {
-            db.organizations.find({
-                _id: {
-                    $in: organizations
-                }
-            }, {
-                    fields: {
-                        _id: 1
-                    }
-                }).forEach(function (organizationItem) {
-                    var organizationUsers;
-                    organizationUsers = organizationItem.calculateUsers(true);
-                    members = members.concat(organizationUsers);
-                });
+            for (const orgId of organizations) {
+                const organizationUsers = await objectql.getSteedosSchema().broker.call('organizations.calculateUsers', {orgId: orgId, isIncludeParents: true})
+                members = members.concat(organizationUsers);
+            }
         }
     }
     return _.uniq(members);
@@ -68,7 +62,7 @@ module.exports = {
             var site = db.cms_sites.findOne({_id: doc.site}, {fields:{enable_post_permissions:1}})
             if(site && site.enable_post_permissions){
                 // 站点启用文章级权限时发送通知
-                const members = getPostMembers(doc);
+                const members = await getPostMembers(doc);
                 if (members && members.length) {
                     addNotifications(userId, doc, members);
                 }
@@ -85,8 +79,8 @@ module.exports = {
             var site = db.cms_sites.findOne({_id: doc.site}, {fields:{enable_post_permissions:1}})
             if(site && site.enable_post_permissions){
                 // 站点启用文章级权限时发送通知
-                let oldMembers = getPostMembers(previousDoc);
-                let newMembers = getPostMembers(doc, true);
+                let oldMembers = await getPostMembers(previousDoc);
+                let newMembers = await getPostMembers(doc, true);
                 let addMembers = _.difference(newMembers, oldMembers);
                 let subMembers = _.difference(oldMembers, newMembers);
                 if (addMembers.length) {
@@ -105,7 +99,7 @@ module.exports = {
             var site = db.cms_sites.findOne({_id: doc.site}, {fields:{enable_post_permissions:1}})
             if(site && site.enable_post_permissions){
                 // 站点启用文章级权限时移除通知
-                const members = getPostMembers(doc);
+                const members = await getPostMembers(doc);
                 if (members && members.length) {
                     removeNotifications(doc, members);
                 }

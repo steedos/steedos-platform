@@ -124,14 +124,12 @@ module.exports = {
                         })
                         if(flowId){
                             if(!_.includes(flowIds, flowId)){
-                                filter.push([
-                                    ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId]
-                                ])
+                                // filter.push([
+                                //     ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId]
+                                // ])
                             }
                         }else{
-                            filter.push([
-                                ['submitter', '=', userId], 'or', ['applicant', '=', userId], 'or', ['inbox_users', '=', userId], 'or', ['outbox_users', '=', userId], 'or', ['flow', 'in', flowIds]
-                            ])
+                            filter.push(['flow', 'in', flowIds])
                         }
                     }
                     break;

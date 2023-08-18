@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-12 10:32:01
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-08-18 10:19:20
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -16,6 +16,8 @@ const _ = require('underscore');
 const lodash = require('lodash');
 const { link } = require('fs');
 const { t } = require('@steedos/i18n')
+var Fiber = require('fibers');
+
 /**
 @api {get} /api/workflow/nav 获取用户
 @apiVersion 0.0.0
@@ -98,7 +100,20 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
 
     let userSession = req.user;
     const { appId } = req.params;
-    let {schema, count} = await getCategoriesInbox(userSession,req)
+    let {schema, count} = await getCategoriesInbox(userSession,req);
+    let hasFlowsPer = userSession.is_space_admin;
+    if (!hasFlowsPer) {
+      const flowIds = await new Promise(function (resolve, reject) {
+        Fiber(function () {
+          try {
+            resolve(WorkflowManager.getMyAdminOrMonitorFlows(userSession.spaceId, userSession.userId));
+          } catch (error) {
+            reject(error);
+          }
+        }).run();
+      });
+      hasFlowsPer = flowIds && flowIds.length > 0;
+    }
     var options = [
       {
         "label": t('inbox', {}, userSession.language),
@@ -127,7 +142,8 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
           "level":1,
           "to": `/app/${appId}/instances/grid/monitor`,
         },
-        "value": `/app/${appId}/instances/grid/monitor`
+        "value": `/app/${appId}/instances/grid/monitor`,
+        "visible": hasFlowsPer
       },
       {
         "label": t('myfile', {}, userSession.language),

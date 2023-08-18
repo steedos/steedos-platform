@@ -119,7 +119,7 @@ export const translationApp = function(lng: string, appId: string, app: StringMa
     // app.name = app.label
     app.description = translationAppDescription(lng, appId, app.description);
     _.each(app.tab_groups,function(tab_group, index){
-        app.tab_groups[index].id = tab_group.group_name;
+        app.tab_groups[index].id = tab_group.id || tab_group.group_name;
         app.tab_groups[index].group_name = translationTabGroup(lng, appId, tab_group.group_name, tab_group.group_name);
     })
     translationMenus(lng, app.admin_menus);
