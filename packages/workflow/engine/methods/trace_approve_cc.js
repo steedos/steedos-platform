@@ -2,7 +2,7 @@ const {
     update_instance_tasks,
     insert_instance_tasks,
     remove_instance_tasks,
-    remove_many_instance_tasks
+    direct_remove_many_instance_tasks
 } = require('../manager').instance_tasks_manager
 module.exports = {
     cc_do: function (approve, cc_user_ids, description, ctx = {}) {
@@ -379,7 +379,7 @@ module.exports = {
 			}
 		});
 
-        remove_many_instance_tasks(removeApproveIds)
+        direct_remove_many_instance_tasks(removeApproveIds)
 
 		remove_user_ids.forEach(function(u_id){
 			pushManager.send_message_to_specifyUser("current_user", u_id);
