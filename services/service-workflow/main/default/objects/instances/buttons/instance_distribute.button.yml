@@ -20,6 +20,7 @@ amis_schema: |-
                 "actionType": "dialog",
                 "dialog": {
                   "type": "dialog",
+                  "size": "lg",
                   "title": {
                     "type": "tpl",
                     "id": "u:0bce3c33b6e5",
@@ -65,7 +66,26 @@ amis_schema: |-
                           "id": "u:c3ad733db360",
                           "multiple": true,
                           "required": true,
-                          "idsDependOn": "distribute_optional_users"
+                          "idsDependOn": "distribute_optional_users",
+                          "amis": {
+                               "source": {
+                                  "method": "post",
+                                  "url": "${context.rootUrl}/service/api/standard-ui/getUsersName",
+                                  "requestAdaptor": "api.data={userIds: api.data.$self?.distribute_optional_users || [] }; return api;",
+                                  "headers": {
+                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                  },
+                                  "data": {
+                                    "orderBy": "${orderBy}",
+                                    "orderDir": "${orderDir}",
+                                    "pageNo": "${page}",
+                                    "pageSize": "${perPage}",
+                                    "$self": "$$",
+                                    "keywords": "${keywords}",
+                                    "ids": "${ids}"
+                                  }
+                                }
+                          }
                         },
                         {
                           "type": "textarea",

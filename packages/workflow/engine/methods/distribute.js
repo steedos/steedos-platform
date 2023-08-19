@@ -20,7 +20,7 @@ module.exports = {
         flows = new Array;
         if (searchText) {
             pinyin = /^[a-zA-Z\']*$/.test(searchText);
-            if ((pinyin && searchText.length > 8) || (!pinyin && searchText.length > 1)) {
+            if ((pinyin && searchText.length > 4) || (!pinyin && searchText.length > 1)) {
                 query = {
                     space: spaceId,
                     state: 'enabled',
