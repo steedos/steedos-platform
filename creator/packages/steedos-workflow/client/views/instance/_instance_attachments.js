@@ -315,7 +315,7 @@ if (Meteor.isServer) {
 				}
 			}, {
 				'metadata.is_private': true,
-				"metadata.owner": steedosData.userId
+				"metadata.owner": steedosData.sessionUserId || steedosData.userId || '-1' // 防止数据异常时,显示了私有附件
 			}]
 		}).fetch();
 
