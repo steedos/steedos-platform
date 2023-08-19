@@ -75,7 +75,7 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
-                      "value":"${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
+                      "value": "${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
                       "size": "md",
                       "onEvent": {
                         "change": {
@@ -143,11 +143,9 @@
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
-                    "messages": {
-                    }
+                    "messages": {}
                   },
-                  "messages": {
-                  }
+                  "messages": {}
                 }
               ]
             }
@@ -192,8 +190,7 @@
   ],
   "data": {
     "objectName": "instance_tasks",
-    "initialValues": {
-    },
+    "initialValues": {},
     "title": "",
     "context": {
       "rootUrl": "http://127.0.0.1:5000",
@@ -218,19 +215,19 @@
     ".instances-sidebar-wrapper": {
       "transition": "0.5s ease transform",
       "will-change": "transform",
-      "transform":"translate(-100%,0)",
-      "-webkit-transform":"translate(-100%,0)",
-      "-moz-transform":"translate(-100%,0)",
-      "-ms-transform":"translate(-100%,0)",
-      "-o-transform":"translate(-100%,0)",
-      "width":"240px"
+      "transform": "translate(-100%,0)",
+      "-webkit-transform": "translate(-100%,0)",
+      "-moz-transform": "translate(-100%,0)",
+      "-ms-transform": "translate(-100%,0)",
+      "-o-transform": "translate(-100%,0)",
+      "width": "240px"
     },
     ".instances-customPage.instances-sidebar-open .instances-sidebar-wrapper": {
-      "transform":"translate(0,0)",
-      "-webkit-transform":"translate(0,0)",
-      "-moz-transform":"translate(0,0)",
-      "-ms-transform":"translate(0,0)",
-      "-o-transform":"translate(0,0)"
+      "transform": "translate(0,0)",
+      "-webkit-transform": "translate(0,0)",
+      "-moz-transform": "translate(0,0)",
+      "-ms-transform": "translate(0,0)",
+      "-o-transform": "translate(0,0)"
     },
     ".pcCss": {
       "top": "90px",
