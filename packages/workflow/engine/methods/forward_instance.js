@@ -1,5 +1,5 @@
 const {
-    remove_many_instance_tasks,
+    direct_remove_many_instance_tasks,
     remove_instance_tasks
 } = require('../manager').instance_tasks_manager
 module.exports = {
@@ -119,26 +119,21 @@ module.exports = {
                             }
                             var inbox_users = forward_instance.inbox_users || []
 
-                            forward_instance.deleted = new Date()
-                            forward_instance.deleted_by = userId
-                            var deleted_forward_instance_id = db.deleted_instances.insert(forward_instance)
-                            if (deleted_forward_instance_id) {
-                                db.instances.remove({
-                                    _id: forward_instance_id
-                                })
+                            db.instances.remove({
+                                _id: forward_instance_id
+                            })
 
-                                // 删除申请单后重新计算inbox_users的badge
-                                _.each(inbox_users, function (u_id) {
-                                    pushManager.send_message_to_specifyUser("current_user", u_id)
-                                })
-                            }
+                            // 删除申请单后重新计算inbox_users的badge
+                            _.each(inbox_users, function (u_id) {
+                                pushManager.send_message_to_specifyUser("current_user", u_id)
+                            })
 
                             set_obj['traces.$.approves.' + idx + '.judge'] = 'terminated'
                             set_obj['traces.$.approves.' + idx + '.is_finished'] = true
                             set_obj['traces.$.approves.' + idx + '.finish_date'] = new Date()
                             set_obj['traces.$.approves.' + idx + '.is_read'] = true
                             set_obj['traces.$.approves.' + idx + '.read_date'] = new Date()
-                            
+
                             finishedApproveIds.push(forward_instance.traces[0].approves[0]._id)
                         }
 
@@ -159,7 +154,7 @@ module.exports = {
                     $set: set_obj
                 })
 
-                remove_many_instance_tasks(finishedApproveIds)
+                direct_remove_many_instance_tasks(finishedApproveIds)
             }
         })
 
