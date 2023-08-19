@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-16 09:13:00
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-08-19 14:02:20
  * @Description: 
  */
 'use strict';
@@ -40,6 +40,15 @@ function _update(_id, taskDoc) {
 function _remove(_id) {
     const result = Meteor.wrapAsync(function (_id, cb) {
         getObject('instance_tasks').delete(_id).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(_id);
+    return result
+}
+
+function _directRemove(_id) {
+    const result = Meteor.wrapAsync(function (_id, cb) {
+        getObject('instance_tasks').directDelete(_id).then(function (resolve, reject) {
             cb(reject, resolve);
         });
     })(_id);
@@ -168,6 +177,20 @@ function remove_instance_tasks_by_instance_id(insId) {
 }
 
 /**
+ * 删除instance_tasks记录，不触发钩子
+ * @param {String[]} approveIds
+ * @returns 1
+ */
+function direct_remove_many_instance_tasks(approveIds) {
+    const results = []
+    for (const aId of approveIds) {
+        const r = _directRemove(aId)
+        results.push(r)
+    }
+    return results
+}
+
+/**
  * 使用insId、traceId、approveId整理成instnce_tasks结构
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
@@ -260,5 +283,6 @@ module.exports = {
     update_many_instance_tasks,
     remove_instance_tasks,
     remove_many_instance_tasks,
-    remove_instance_tasks_by_instance_id
+    remove_instance_tasks_by_instance_id,
+    direct_remove_many_instance_tasks
 }
