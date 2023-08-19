@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-07-29 09:40:31
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-09 13:41:00
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-08-19 19:56:00
  * @Description: 
  */
 "use strict";
@@ -36,7 +36,29 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-
+		getUsersName: {
+			rest: {
+				method: "POST",
+                fullPath: "/service/api/standard-ui/getUsersName"
+			},
+			async handler(ctx) {
+				const { userIds } = ctx.params;
+				if(!userIds || userIds.length == 0){
+					return []
+				}
+				//此查询不带权限, 使用userIds 获取用户姓名
+				return await ctx.broker.call(
+					'objectql.find',
+					{
+						objectName: 'space_users',
+						query: {
+							fields: ['_id', 'user', 'name'],
+							filters: [["user", "in", userIds]]
+						},
+					}
+				);
+			}
+		}
 	},
 
 	/**
