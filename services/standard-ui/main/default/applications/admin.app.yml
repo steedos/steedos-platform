@@ -159,6 +159,6 @@ tab_items:
     group: development
     index: 42
 objects: []
-sort: 9100
+sort: 999999
 #url: /app/admin
-visible: false
+visible: true

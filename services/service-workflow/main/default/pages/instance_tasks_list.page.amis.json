@@ -230,6 +230,9 @@
       "top": "90px",
       "left": "0px"
     },
+    ".sidebar .pcCss": {
+      "left": "220px"
+    },
     ".mobileCss": {
       "top": "50px",
       "left": "0px",
