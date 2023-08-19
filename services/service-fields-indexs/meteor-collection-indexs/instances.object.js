@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-18 17:26:47
+ * @LastEditTime: 2023-08-19 13:06:07
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -82,103 +82,6 @@ if (Meteor.isServer) {
   }, {
     background: true
   });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "final_decision": 1,
-    "submitter": 1,
-    "applicant": 1
-  }, Steedos.formatIndex(["is_deleted", "state", "space", "final_decision", "submitter", "applicant"]));
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "space": 1,
-    "modified": 1,
-    "outbox_users": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "modified": 1,
-    "final_decision": 1,
-    "submitter": 1,
-    "applicant": 1
-  }, Steedos.formatIndex(["is_deleted", "state", "space", "modified", "final_decision", "submitter", "applicant"]));
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "space": 1,
-    "outbox_users": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "space": 1,
-    "modified": 1,
-    "submit_date": 1,
-    "outbox_users": 1
-  }, Steedos.formatIndex(["is_deleted", "space", "modified", "submit_date", "outbox_users"]));
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "space": 1,
-    "submit_date": 1,
-    "outbox_users": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "flow": 1,
-    "modified": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "flow": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "flow": 1,
-    "submit_date": 1,
-    "modified": 1
-  }, Steedos.formatIndex(["is_deleted", "state", "space", "flow", "submit_date", "modified"]));
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "flow": 1,
-    "submit_date": 1
-  }, {
-    background: true
-  });
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "submitter": 1,
-    "applicant": 1,
-    "inbox_users": 1
-  }, Steedos.formatIndex(["is_deleted", "state", "space", "submitter", "applicant", "inbox_users"]));
-  db.instances._ensureIndex({
-    "is_deleted": 1,
-    "state": 1,
-    "space": 1,
-    "is_archive": 1,
-    "submitter": 1,
-    "applicant": 1
-  }, Steedos.formatIndex(["is_deleted", "state", "space", "is_archive", "submitter", "applicant"]));
 
   db.instances._ensureIndex({
     "cc_users": 1
