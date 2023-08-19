@@ -471,17 +471,17 @@ async function getAppsMenus(ctx) {
         }
     }
     // if (!mobile) {
-        const setupApp = {
-            code: 'admin',
-            name: '设置',
-            icon_slds: 'settings',
-            description: '管理员设置公司、人员、权限等。',
-            children: [],
-            mobile: true,
-            is_creator: true,
-        }
-        const menu = await transformAppToMenus(ctx, setupApp, mobile, userSession, context);
-        menus.push(menu);
+        // const setupApp = {
+        //     code: 'admin',
+        //     name: '设置',
+        //     icon_slds: 'settings',
+        //     description: '管理员设置公司、人员、权限等。',
+        //     children: [],
+        //     mobile: true,
+        //     is_creator: true,
+        // }
+        // const menu = await transformAppToMenus(ctx, setupApp, mobile, userSession, context);
+        // menus.push(menu);
     // }
     return menus;
 }
