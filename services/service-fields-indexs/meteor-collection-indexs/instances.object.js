@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-02-28 09:25:03
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-19 13:06:07
+ * @LastEditTime: 2023-08-20 10:33:17
  * @Description: 
  */
 if (Meteor.isServer) {
@@ -36,15 +36,7 @@ if (Meteor.isServer) {
   } catch (error) {
 
   }
-  try {
-    db.instances._ensureIndex({
-      "inbox_users": 1
-    }, {
-      background: true
-    });
-  } catch (error) {
 
-  }
   db.instances._ensureIndex({
     "space": 1,
     "is_deleted": 1
@@ -83,11 +75,6 @@ if (Meteor.isServer) {
     background: true
   });
 
-  db.instances._ensureIndex({
-    "cc_users": 1
-  }, {
-    background: true
-  });
   db.instances._ensureIndex({
     "space": 1,
     "state": 1,
@@ -211,3 +198,29 @@ if (Meteor.isServer) {
 
   }
 }
+
+// 推送
+try {
+  db.instances._ensureIndex({
+    inbox_users: 1,
+    category: 1,
+  },
+    {
+      background: true, name: 'push_manager_inbox_users_category'
+    });
+} catch (error) {
+
+}
+
+try {
+  db.instances._ensureIndex({
+    cc_users: 1,
+    category: 1,
+  },
+    {
+      background: true, name: 'push_manager_cc_users_category'
+    });
+} catch (error) {
+
+}
+
