@@ -870,7 +870,6 @@ pushManager.get_badge = function (send_from, user_id) {
                 if (appName) {
                     if (categorysIds.length > 0) {
                         categoryBadge = db.instances.direct.find({
-                            space: user_space.space,
                             category: {
                                 $in: categorysIds
                             },
@@ -923,7 +922,6 @@ pushManager.get_badge = function (send_from, user_id) {
 
         // workflow 记录所有待办数量
         c = db.instances.direct.find({
-            space: user_space.space,
             $or: [
                 {
                     inbox_users: user_id
