@@ -1,6 +1,6 @@
 {
   "name": "project-template",
-  "version": "2.5.12-beta.18",
+  "version": "2.5.12-beta.19",
   "private": true,
   "scripts": {
     "start": "steedos start",
@@ -9,6 +9,6 @@
     "inspect": "cross-env NODE_OPTIONS='--inspect' steedos start --hot"
   },
   "dependencies": {
-    "@steedos/service-community": "2.5.12-beta.18"
+    "@steedos/service-community": "2.5.12-beta.19"
   }
 }
