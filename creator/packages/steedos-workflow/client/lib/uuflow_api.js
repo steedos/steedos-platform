@@ -1,5 +1,9 @@
 UUflow_api = {};
 
+function beforeSendFunc(request) {
+	request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
+};
+
 // 新建instance（申请单）
 UUflow_api.post_draft = function (flowId) {
 	var uobj = {};
@@ -25,6 +29,7 @@ UUflow_api.post_draft = function (flowId) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 
 		success: function (responseText, status) {
 			$(document.body).removeClass("loading");
@@ -72,6 +77,7 @@ UUflow_api.delete_draft = function (instanceId) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 
 		success: function (responseText, status) {
 			if (responseText.errors) {
@@ -403,6 +409,7 @@ UUflow_api.post_archive = function (insId) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 
 		success: function (responseText, status) {
 			$(document.body).removeClass("loading");
@@ -596,6 +603,7 @@ UUflow_api.post_retrieve = function (instance) {
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 
 		success: function (responseText, status) {
 			$(document.body).removeClass("loading");
@@ -637,6 +645,7 @@ UUflow_api.getNameForUser = function (userId) {
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);
@@ -702,6 +711,7 @@ UUflow_api.post_forward = function (instance_id, space_id, flow_id, hasSaveInsta
 		dataType: "json",
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 
 		success: function (responseText, status) {
 			Session.set("instance_submitting", false);
@@ -796,6 +806,7 @@ UUflow_api.getContactInfoForUser = function (userId, spaceId) {
 		dataType: 'json',
 		processData: false,
 		contentType: "application/json",
+		beforeSend: beforeSendFunc,
 		success: function (responseText, status) {
 			if (responseText.errors) {
 				toastr.error(responseText.errors);

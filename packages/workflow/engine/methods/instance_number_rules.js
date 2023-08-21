@@ -38,7 +38,18 @@ module.exports = {
         if (context.YYYY !== numberRules.year) {
             _NUMBER = numberRules.first_number || 1;
         }
+        let pLenConst = process.env.STEEDOS_WORKFLOW_INSTANCE_NUMBER_RULES_PADDING_LEN
+        let paddingLen = 5
+        if (pLenConst) {
+            const _paddingLen = parseInt(pLenConst);
+            if (_paddingLen >= 0) { // 处理 _paddingLen 值为NaN的情况
+                paddingLen = _paddingLen
+            }
+        }
         padding = function (num, length) {
+            if (length == 0) {
+                return num;
+            }
             var diff, len;
             len = (num + '').length;
             diff = length - len;
@@ -47,7 +58,7 @@ module.exports = {
             }
             return num;
         };
-        context.NUMBER = padding(_.clone(_NUMBER), 5);
+        context.NUMBER = padding(_.clone(_NUMBER), paddingLen);
         rules = numberRules.rules.replace("{YYYY}", "' + YYYY + '").replace("{MM}", "' + MM + '").replace("{NUMBER}", "' + NUMBER + '");
         script = `var newNo = '${rules}'; exports.newNo = newNo`;
         try {
