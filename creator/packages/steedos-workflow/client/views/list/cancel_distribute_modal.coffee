@@ -7,17 +7,20 @@ Template.cancel_distribute_modal.helpers
 		traces = []
 		userId = Meteor.userId()
 		hasPermission = WorkflowManager.hasFlowAdminPermission(ins.flow, ins.space, userId)
-		_.each ins.traces, (t) ->
-			newt = { _id: t._id, name: t.name, distribute_approves: [] }
-			if t.approves
-				_.each t.approves, (a) ->
-					if a.type is 'distribute' and (a.from_user is userId or hasPermission) and a.judge isnt 'terminated' and a.forward_instance
-						f = db.instances.findOne(a.forward_instance)
-						if f and f.state is 'draft'
-							newt.distribute_approves.push(a)
+		ins_traces = db.instance_traces.find().fetch()
+		_.each ins_traces, (ins_t) ->
+			if ins_t._id == ins._id
+				_.each ins_t.traces, (t) ->
+					newt = { _id: t._id, name: t.name, distribute_approves: [] }
+					if t.approves
+						_.each t.approves, (a) ->
+							if a.type is 'distribute' and (a.from_user is userId or hasPermission) and a.judge isnt 'terminated' and a.forward_instance
+								f = db.instances.findOne(a.forward_instance)
+								if f and f.state is 'draft'
+									newt.distribute_approves.push(a)
 
-			if not _.isEmpty(newt.distribute_approves)
-				traces.push(newt)
+					if not _.isEmpty(newt.distribute_approves)
+						traces.push(newt)
 
 		return traces
 
@@ -53,3 +56,13 @@ Template.cancel_distribute_modal.events
 					toastr.success(TAPi18n.__("instance_approve_forward_remove_success"))
 					Modal.hide(template)
 					Modal.allowMultiple = false
+
+Template.cancel_distribute_modal.onCreated ->
+
+	$("body").addClass("loading")
+
+	Steedos.subs["instance_traces"].subscribe("instance_traces", Session.get("instanceId"))
+
+	Tracker.autorun () ->
+		if Steedos.subs["instance_traces"].ready()
+			$("body").removeClass("loading")
