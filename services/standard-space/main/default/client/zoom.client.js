@@ -10,7 +10,7 @@ Tracker.autorun(function(e) {
     }else if(Steedos.isNode()){
         let zoomRate = 1;
         if(zoom == "large"){
-            zoomRate = 1.5;
+            zoomRate = 1.25;
         }else if(zoom == 'extra-large'){
             zoomRate = 2.0;
         }
