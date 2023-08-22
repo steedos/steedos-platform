@@ -212,13 +212,13 @@ function debounce(fn, delay) {
     }
 }
 
-function getOpenerLevel(opener,level){
-    if(level > 3){
+function getOpenerLevel(opener, level) {
+    if (level > 3) {
         return level + 1;
     }
     if (!!opener['opener']) {
         return getOpenerLevel(opener['opener'], level + 1);
-    }else{
-       return level; 
+    } else {
+        return level;
     }
 }
