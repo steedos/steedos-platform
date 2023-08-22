@@ -101,6 +101,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     let userSession = req.user;
     const { appId } = req.params;
     let {schema, count} = await getCategoriesInbox(userSession,req);
+    let draftCount = await objectql.getObject('instances').count({ filters: [['state', '=', 'draft']] }, userSession)
     let hasFlowsPer = userSession.is_space_admin;
     if (!hasFlowsPer) {
       const flowIds = await new Promise(function (resolve, reject) {
@@ -160,7 +161,8 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
               "to": `/app/${appId}/instances/grid/draft`
             },
             "value": `/app/${appId}/instances/grid/draft`,
-            "icon": "fa fa-pencil"
+            "icon": "fa fa-pencil",
+            "tag": draftCount
           },
           {
             "label": t('pending', {}, userSession.language),
