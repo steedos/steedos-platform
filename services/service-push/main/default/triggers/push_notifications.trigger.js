@@ -52,7 +52,7 @@ module.exports = {
             name: doc.name,
             body: doc.body,
             related_to: {
-                o: "service_push",
+                o: "push_notifications",
                 ids: [doc._id]
             },
             related_name: doc.name,

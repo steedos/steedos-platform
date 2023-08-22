@@ -7,6 +7,6 @@ module.exports = {
     download_url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.original.name);
     file_name = file.original.name;
 
-    SteedosUI.previewFile({download_url, file_name, isPreviewButton:true})
+    window.previewFile({download_url, file_name, isPreviewButton:true})
   }
 }

@@ -18,7 +18,7 @@ if (Meteor.settings.public.sentry && Meteor.settings.public.sentry.dsn) {
             initialScope: scope => {
                 scope.setTags({ spaceId: Steedos.getSpaceId() });
                 scope.setTags({ userId: Steedos.getUserId() });
-                scope.setUser({ 'id': Meteor.settings.public.masterSpaceId })
+                scope.setUser({ 'id': Steedos.getUserId() })
                 return scope;
             },
         });
