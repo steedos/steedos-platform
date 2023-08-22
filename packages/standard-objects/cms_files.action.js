@@ -1,6 +1,6 @@
 /*
- * @LastEditTime: 2023-06-21 13:10:41
- * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-08-22 10:36:05
+ * @LastEditors: baozhoutao@steedos.com
  * @customMade: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 module.exports = {
@@ -41,6 +41,6 @@ module.exports = {
     download_url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.name);
     file_name = file.name;
     
-    SteedosUI.previewFile({download_url, file_name, isPreviewButton:true});
+    window.previewFile({download_url, file_name, isPreviewButton:true});
   }
 }
