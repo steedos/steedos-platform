@@ -141,6 +141,10 @@ Setup.validate = (onSuccess)->
 			# 第一次在登录界面输入用户名密码登录后loggingIn为true，这时还没有登录成功
 			Setup.bootstrap(Session.get("spaceId"))
 		Creator.validated.set(true);
+		if window.Sentry
+			window.Sentry.setTags({ spaceId: Steedos.getSpaceId() });
+			window.Sentry.setTags({ userId: Steedos.getUserId() });
+			window.Sentry.setUser({ 'id': Steedos.getUserId() })
 		if onSuccess
 			onSuccess()
 	.fail ( e ) ->

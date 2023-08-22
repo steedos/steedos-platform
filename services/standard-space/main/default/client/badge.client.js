@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-05-17 11:32:13
+ * @LastEditTime: 2023-08-22 17:44:06
  */
 let keyvalues = {};
 ; (function () {
@@ -64,13 +64,17 @@ let keyvalues = {};
                             return false;
                         }
                     }
-                    const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
                     Promise.all([
-                        waitForThing(window, waittingVars, findVars)
+                        waitForThing(window, 'SteedosUI'),
                     ]).then(() => {
-                        var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
-                        var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
-                        button && observeBadgeCount(button);
+                        const waittingVars = ["SteedosUI.refs.serviceSteedosKeyvaluesSubscribe.getComponentByName"];
+                        Promise.all([
+                            waitForThing(window, waittingVars, findVars)
+                        ]).then(() => {
+                            var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
+                            var button = scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
+                            button && observeBadgeCount(button);
+                        });
                     });
                 }
             });

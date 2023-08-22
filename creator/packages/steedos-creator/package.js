@@ -136,6 +136,8 @@ Package.onUse(function (api) {
 	api.addFiles('client/layout/loading.html', 'client');
 	api.addFiles('client/layout/loading.less', 'client');
 
+	api.addFiles('client/layout/empty_layout.html', 'client')
+
 	api.addFiles('client/mobile/admin.html', 'client');
 	api.addFiles('client/mobile/admin.coffee', 'client');
 	api.addFiles('client/mobile/admin.less', 'client');

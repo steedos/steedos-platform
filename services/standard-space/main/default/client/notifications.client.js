@@ -168,13 +168,17 @@ var handleMyNotifications = function(id, notification){
                                 return false;
                             }
                         }
-                        const waittingVars = ["SteedosUI.refs.serviceNotificationsSubscribe.getComponentByName"];
                         Promise.all([
-                            waitForThing(window, waittingVars, findVars)
+                            waitForThing(window, 'SteedosUI'),
                         ]).then(() => {
-                            var scope = SteedosUI.refs["serviceNotificationsSubscribe"];
-                            var button = scope.getComponentByName("serviceNotificationsSubscribe.buttonTriggerDataChange");
-                            button && observeBadgeCount(button);
+                            const waittingVars = ["window.SteedosUI.refs.serviceNotificationsSubscribe.getComponentByName"];
+                            Promise.all([
+                                waitForThing(window, waittingVars, findVars)
+                            ]).then(() => {
+                                var scope = SteedosUI.refs["serviceNotificationsSubscribe"];
+                                var button = scope.getComponentByName("serviceNotificationsSubscribe.buttonTriggerDataChange");
+                                button && observeBadgeCount(button);
+                            });
                         });
                     }
                 });

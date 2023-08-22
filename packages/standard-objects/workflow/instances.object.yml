@@ -230,6 +230,10 @@ fields:
     omit: true
     label: Extras
     hidden: true
+  cc_count:
+    type: number
+    label: CC Count
+    scale: 0
 permission_set:
   user:
     allowCreate: false
