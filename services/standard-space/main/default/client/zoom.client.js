@@ -1,7 +1,14 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-08-22 10:36:38
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-08-22 22:19:01
+ * @Description: 
+ */
 Tracker.autorun(function(e) {
     let zoom = "normal";
     let space = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() });
-    if(space?.zoom){
+    if(space && space.zoom){
         zoom = space.zoom;
     }
     if(Steedos.isMobile()){

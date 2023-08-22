@@ -69,14 +69,18 @@
               options: amisLib.OptionsControl,
             };
 
-            const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis?.render});
+            const amisComps = lodash.filter(Builder.registry['meta-components'], function(item){ return item.componentName && item.amis && item.amis.render});
             
             lodash.each(amisComps,(comp)=>{
                 const Component = Builder.components.find(item => item.name === comp.componentName);
-                if (Component && !AmisRenderers.includes(comp.amis?.render.type)){
+                var type = null;
+                if(comp.amis){
+                  type = comp.amis.render.type
+                }
+                if (Component && !AmisRenderers.includes(type)){
                     try {
                         let AmisWrapper = Component.class
-                        AmisRenderers.push(comp.amis?.render.type);
+                        AmisRenderers.push(type);
                         if(comp.componentType === 'amisSchema'){
                             let amisReact = amisRequire('react');
                             AmisWrapper = function(props){
@@ -108,7 +112,7 @@
                               })
 
                               if (props.env.enableAMISDebug && schema) {
-                                console.groupCollapsed(`[steedos render ${comp.amis?.render.type}]`);
+                                console.groupCollapsed(`[steedos render ${type}]`);
                                 console.trace('Component: ', props, 'Generated Amis Schema: ', schema);
                                 console.groupEnd();
                               }
