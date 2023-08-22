@@ -101,7 +101,7 @@ amis_schema: |-
                       "weight": 0
                   }
               },
-              "hiddenOn": "!(\n\trecord.step?.step_type === \"submit\" || record.step?.step_type == \"sign\" \n  || record.step?.step_type === \"counterSign\" \n)",
+              "hiddenOn": "!(record.step && (record.step.step_type === 'submit' || record.step.step_type == 'sign'   || record.step.step_type === 'counterSign') )",
               "hidden": "typeof this.hiddenOn === \"string\" ? 2 : 1"
           }
       ],

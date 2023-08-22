@@ -790,19 +790,19 @@
     const getSpaceLogo = function(){
         let logoSrc = '';
         const space = db.spaces.findOne(Steedos.getSpaceId())
-        if(space?.avatar){
+        if(space && space.avatar){
             logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar) 
-        }else if(space?.avatar_square){
+        }else if(space && space.avatar_square){
             logoSrc = Steedos.absoluteUrl('api/files/avatars/'+space.avatar_square) 
         }else{
             var settings = Session.get("tenant_settings");
             var avatar_url = "";
             if(settings){
-                avatar_url = settings?.logo_square_url;
+                avatar_url = settings.logo_square_url;
             }
             if(!avatar_url || !settings){
                 avatar_url = "/images/logo_platform.png"
-                if(Meteor.user()?.locale != 'zh-cn'){
+                if(Meteor.user() && Meteor.user().locale != 'zh-cn'){
                     avatar_url = "/images/logo_platform.en-us.png"
                 }
             }

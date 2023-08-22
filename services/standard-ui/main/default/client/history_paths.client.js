@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-22 17:42:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-08-22 22:39:40
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
@@ -98,7 +98,11 @@ FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
     let lastPath = paths && paths[paths.length - 1];
     if (recordId) {
         //判断当前路由与记录的路由是否相同，为解决从设计器微页面返回重复记录的问题#4978
-        if(path.split('?')[0] != lastPath?.path?.split('?')[0]){
+        var top0 = null;
+        if(lastPath && lastPath.path && lastPath.path.split){
+            top0 = lastPath.path.split('?')[0]
+        }
+        if(path.split('?')[0] != top0){
             // 触发广播事件前，把当前path和params累加存入amis变量historyPaths中
             pushHistoryPath(path, params);
         } 

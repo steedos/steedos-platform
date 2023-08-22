@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-05-20 17:42:20
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-10-28 11:01:51
+ * @LastEditTime: 2023-08-22 22:36:38
  * @Description: 提供辅助函数
  */
 (function(){
@@ -97,7 +97,7 @@
                     [
                       React17.createElement(SteedosUI.components.Button, {
                             onClick: function(){
-                                SteedosUI.getRef(pageName)?.close();
+                              SteedosUI.getRef(pageName) && SteedosUI.getRef(pageName).close();
                             }
                         } , t('cancel')), 
                         React17.createElement(SteedosUI.components.Button, {
@@ -132,7 +132,7 @@
                                     if (error) {
                                         return console.log("error", error);
                                     } else if (result) {
-                                        SteedosUI.getRef(pageName)?.close();
+                                      SteedosUI.getRef(pageName) && SteedosUI.getRef(pageName).close();
                                         return Session.set("filter_items", filter_items);
                                     }
                                 });
@@ -141,7 +141,7 @@
                                 const formValues = window.amisScopes[pageName].getComponentByName("filtersForm").getValues();
                                 const filters = window.amisConvert.conditionsToFilters(formValues.filters);
                                 Session.set("filter_items", filters);
-                                SteedosUI.getRef(pageName)?.close();
+                                SteedosUI.getRef(pageName) && SteedosUI.getRef(pageName).close();
                             },
                             type: 'primary'
                         } , canSave ? t('save'): t('apply'))
