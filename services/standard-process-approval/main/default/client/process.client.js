@@ -38,7 +38,8 @@ Steedos.ProcessManager.allowSubmit = function(object_name, record_id){
     if(!object_name || !record_id){
         return false;
     }
-    const object = this.object || window.Creator || window.Creator.getObject(object_name)
+    var _window$Creator;
+    const object = this.object || ((_window$Creator = window.Creator) === null || _window$Creator === void 0 ? void 0 : _window$Creator.getObject(object_name));
     if(!object.enable_process){
         return false;
     }
