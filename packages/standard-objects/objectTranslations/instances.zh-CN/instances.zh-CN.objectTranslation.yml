@@ -145,6 +145,10 @@ fields:
     label: 申请人所属分部
     help: 
     description: 
+  cc_count:
+    label: 传阅数
+    help: 
+    description: 
 listviews:
   all:
     label: 所有

@@ -110,6 +110,9 @@ module.exports = {
                 cc_users: {
                     $each: cc_user_ids
                 }
+            },
+            $inc: {
+                cc_count: cc_user_ids.length
             }
         });
         // 新增记录
@@ -244,6 +247,8 @@ module.exports = {
                 }
             });
 
+            uuflowManager.updateCCcount(ins_id)
+
             instance = db.instances.findOne(ins_id);
 
             current_user_info = db.users.findOne(current_user_id);
@@ -325,6 +330,9 @@ module.exports = {
                 }
             });
         }
+
+        uuflowManager.updateCCcount(instanceId)
+
         remove_instance_tasks(approveId)
 
 
@@ -333,59 +341,61 @@ module.exports = {
     },
 
     batch_cancel_cc: function (instance_id, approve_ids) {
-		check(instance_id, String)
-		check(approve_ids, Array)
+        check(instance_id, String)
+        check(approve_ids, Array)
 
-		var setObj = {};
+        var setObj = {};
 
-		var instance = db.instances.findOne(instance_id, {
-			fields: {
-				traces: 1,
-				cc_users: 1
-			}
-		});
-		var traces = instance.traces;
-		var remove_user_ids = [];
+        var instance = db.instances.findOne(instance_id, {
+            fields: {
+                traces: 1,
+                cc_users: 1
+            }
+        });
+        var traces = instance.traces;
+        var remove_user_ids = [];
         var removeApproveIds = []
 
-		traces.forEach(function(t, tIdx) {
-			if (t.approves) {
-				t.approves.forEach(function(a, idx) {
-					if (approve_ids.includes(a._id)) {
+        traces.forEach(function (t, tIdx) {
+            if (t.approves) {
+                t.approves.forEach(function (a, idx) {
+                    if (approve_ids.includes(a._id)) {
                         removeApproveIds.push(a._id)
-						remove_user_ids.push(a.user);
-						setObj['traces.' + tIdx + '.approves.' + idx + '.judge'] = 'terminated';
-						setObj['traces.' + tIdx + '.approves.' + idx + '.is_finished'] = true;
-						setObj['traces.' + tIdx + '.approves.' + idx + '.finish_date'] = new Date();
-						setObj['traces.' + tIdx + '.approves.' + idx + '.is_read'] = true;
-						setObj['traces.' + tIdx + '.approves.' + idx + '.read_date'] = new Date();
-					}
-				});
-			}
-		})
+                        remove_user_ids.push(a.user);
+                        setObj['traces.' + tIdx + '.approves.' + idx + '.judge'] = 'terminated';
+                        setObj['traces.' + tIdx + '.approves.' + idx + '.is_finished'] = true;
+                        setObj['traces.' + tIdx + '.approves.' + idx + '.finish_date'] = new Date();
+                        setObj['traces.' + tIdx + '.approves.' + idx + '.is_read'] = true;
+                        setObj['traces.' + tIdx + '.approves.' + idx + '.read_date'] = new Date();
+                    }
+                });
+            }
+        })
 
-		if (_.isEmpty(remove_user_ids))
-			return;
+        if (_.isEmpty(remove_user_ids))
+            return;
 
-		setObj.modified = new Date();
-		setObj.modified_by = this.userId;
+        setObj.modified = new Date();
+        setObj.modified_by = this.userId;
 
-		db.instances.update({
-			_id: instance_id
-		}, {
-			$set: setObj,
-			$pull: {
-				cc_users: { $in: remove_user_ids }
-			}
-		});
+        db.instances.update({
+            _id: instance_id
+        }, {
+            $set: setObj,
+            $pull: {
+                cc_users: { $in: remove_user_ids }
+            }
+        });
+
+        uuflowManager.updateCCcount(instance_id)
 
         direct_remove_many_instance_tasks(removeApproveIds)
 
-		remove_user_ids.forEach(function(u_id){
-			pushManager.send_message_to_specifyUser("current_user", u_id);
-		})
-		return true;
-	},
+        remove_user_ids.forEach(function (u_id) {
+            pushManager.send_message_to_specifyUser("current_user", u_id);
+        })
+        return true;
+    },
 
     cc_save: function (ins_id, description, myApprove, ccHasEditPermission) {
         var setObj = {};

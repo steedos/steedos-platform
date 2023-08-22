@@ -3325,10 +3325,27 @@ uuflowManager.cancelProcessDelegation = function (spaceId, toId) {
                             }
                         });
                     }
+                    uuflowManager.updateCCcount(ins._id)
                 }
             });
         });
     });
+};
+
+uuflowManager.updateCCcount = function (insId) {
+    // 更新cc_count
+    const insDoc = db.instances.findOne(insId, {
+        fields: {
+            cc_users: 1
+        }
+    });
+    db.instances.update({
+        _id: insId,
+    }, {
+        $set: {
+            cc_count: insDoc.cc_users.length
+        }
+    })
 };
 
 uuflowManager.timeoutAutoSubmit = function (ins_id) {

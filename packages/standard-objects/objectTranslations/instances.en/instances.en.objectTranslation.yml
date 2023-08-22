@@ -145,6 +145,10 @@ fields:
     label: Applicant's Division
     help: 
     description: 
+  cc_count:
+    label: CC Count
+    help: 
+    description: 
 listviews:
   all:
     label: All
