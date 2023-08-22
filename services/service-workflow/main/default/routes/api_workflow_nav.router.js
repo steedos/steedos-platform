@@ -75,10 +75,10 @@ const getCategoriesInbox = async (userSession, req) => {
       })
     })
     output.push({
-      label: k,
+      label: k == 'null' ? "未分类" : k,
       children: flows,
       // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
-      category_name: k,
+      category_name: k == 'null' ? "未分类" : k,
       tag: v.length,
       options: {
         level: 2,
