@@ -322,3 +322,10 @@ objectRoutes.route '/grid/:list_view_id',
 		BlazeLayout.render Creator.getLayout(),
 			main: main,
 			regions: regions
+
+
+FlowRouter.notFound =
+	action: (params, queryParams)->
+		console.error('404 not found', window.location)
+		BlazeLayout.render 'empty_layout',
+			main: 'notFound'

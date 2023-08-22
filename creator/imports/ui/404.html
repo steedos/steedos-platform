@@ -2,26 +2,26 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-19 11:33:15
+ * @LastEditTime: 2023-08-22 17:45:07
  * @Description: 
 -->
 <template name="notFound">
-	<article class="slds-card">
+	<article class="slds-card h-full">
 		<div class="slds-card__header slds-grid">
 			<header class="slds-media slds-media_center slds-has-flexi-truncate">
-				<div class="slds-media__figure">
+				<!-- <div class="slds-media__figure">
 					<span class="slds-icon_container slds-icon-standard-task" title="task">
 						{{> steedos_icon class="slds-icon slds-icon_small" source="standard-sprite" name=object.icon}}
 						<span class="slds-assistive-text">{{object.icon}}</span>
 					</span>
-				</div>
-				<div class="slds-media__body">
+				</div> -->
+				<!-- <div class="slds-media__body">
 					<h2 class="slds-card__header-title">
 						<a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
 							<span>{{_ object.label}}</span>
 						</a>
 					</h2>
-				</div>
+				</div> -->
 			</header>
 		</div>
 		<div class="slds-card__body slds-card__body_inner">
@@ -99,6 +99,7 @@
 				  </svg>
 				<h3 class="slds-illustration__header slds-text-heading_medium">{{notFoundHeading}}</h3>
 				<p class="slds-text-body_regular">{{notFoundMessageBody}}</p>
+				<a class="slds-text-body_regular" href="/">返回首页</a>
 			  </div>
 		</div>
 	</article>

@@ -15,6 +15,26 @@
 
   <link rel="stylesheet" href="${ROOT_URL}/tailwind/tailwind-base.css" />
 
+  <script>
+    if ('${STEEDOS_SENTRY_ENABLED}' != 'false') {
+      const nodeEnv = '${NODE_ENV}' || 'development';
+      const DEFAULT_DSN_JS = {
+        'development': 'https://7c2b864b83bf4361a030a7df9d2ace0c@sentry.steedos.cn/7',
+        'production': 'https://8f3f63d02e8140718a6123b10d49ae2f@sentry.steedos.cn/6'
+      } 
+      var dsn = "${STEEDOS_SENTRY_DSN}" || DEFAULT_DSN_JS[nodeEnv];
+      let scriptTag = document.createElement("script");
+      scriptTag.setAttribute("src", "${ROOT_URL}/sentry/sentry.min.js");
+      document.getElementsByTagName("head")[0].appendChild(scriptTag);
+      scriptTag.onload = function(script){
+        Sentry.init({
+            dsn: dsn
+        });
+      }
+    }
+  </script>
+
+
   <!-- lodash，低代码编辑器的依赖 -->
   <script src="${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js"></script>
   <script src="${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js"></script>
