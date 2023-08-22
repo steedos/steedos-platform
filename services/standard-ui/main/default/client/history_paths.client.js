@@ -2,12 +2,15 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-22 10:41:40
+ * @LastEditTime: 2023-08-22 14:03:26
  */
 var buttonTriggerHistoryPathsChange;
 ; (function () {
     try {
         Meteor.startup(function () {
+            Object.assign(Steedos, {
+                goBack
+            });
             var rootId = "steedosHistoryPathsRoot";
             var modalRoot = document.getElementById(rootId);
             if (!modalRoot) {
@@ -65,9 +68,6 @@ var buttonTriggerHistoryPathsChange;
                     ]).then(() => {
                         var scope = SteedosUI.refs["serviceSteedosHistoryPaths"];
                         buttonTriggerHistoryPathsChange = scope.getComponentByName("serviceSteedosHistoryPaths.buttonTriggerHistoryPathsChange");
-                        Object.assign(Steedos, {
-                            goBack
-                        });
                     });
                 }
             });
