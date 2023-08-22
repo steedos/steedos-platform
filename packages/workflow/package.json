@@ -1,6 +1,6 @@
 {
   "name": "@steedos/workflow",
-  "version": "2.5.12-beta.21",
+  "version": "2.5.12-beta.22",
   "main": "index.js",
   "repository": "https://github.com/steedos/steedos-platform/packages/workflow.git",
   "author": "sunhaolin <sunhaolin@hotoa.com>",
@@ -10,17 +10,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@steedos/auth": "2.5.12-beta.21",
-    "@steedos/objectql": "2.5.12-beta.21",
+    "@steedos/auth": "2.5.12-beta.22",
+    "@steedos/objectql": "2.5.12-beta.22",
     "@steedos/steedos-plugin-workflow": "^2.1.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "@steedos/core": "2.5.12-beta.21",
-    "@steedos/meteor-bundle-runner": "2.5.12-beta.21",
-    "steedos-server": "2.5.12-beta.21"
+    "@steedos/core": "2.5.12-beta.22",
+    "@steedos/meteor-bundle-runner": "2.5.12-beta.22",
+    "steedos-server": "2.5.12-beta.22"
   },
-  "gitHead": "dbc4cd4eb8b6adbbc2da63c938cf735673263ab5"
+  "gitHead": "8061d9ea9c14717d8328a411a2ee6a3e943ebbdd"
 }
