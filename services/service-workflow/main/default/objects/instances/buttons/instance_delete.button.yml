@@ -50,8 +50,6 @@ amis_schema: |-
       "regions": [
           "body"
       ],
-      "data": {
-      },
       "bodyClassName": "p-0",
       "id": "u:4b39d426c2a4"
   }

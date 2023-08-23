@@ -20,6 +20,9 @@ amis_schema: |-
                                   "body": [
                                       {
                                           "type": "form",
+                                          "data": {
+                                            "initApiFinished": false
+                                          },
                                           "body": [
                                             {
                                                 "type": "steedos-field",

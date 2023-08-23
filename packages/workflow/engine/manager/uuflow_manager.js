@@ -2547,7 +2547,11 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     }
     if (nextTrace) {
         // 生成新记录
-        insert_instance_tasks(instance_id, nextTrace._id, nextTrace["approves"][0]._id)
+        const approveIds = []
+        for (const a of nextTrace.approves) {
+            approveIds.push(a._id)
+        }
+        insert_many_instance_tasks(instance_id, nextTrace._id, approveIds)
     }
 
     if (next_step.step_type !== "end") {
