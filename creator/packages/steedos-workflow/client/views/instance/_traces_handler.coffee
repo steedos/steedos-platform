@@ -1,5 +1,7 @@
 TracesHandler.helpers =
-	showSignImage: (handler, is_finished, judge) ->
+	showSignImage: (handler, is_finished, judge, traceShowSignImage) ->
+		if traceShowSignImage == false
+			return false
 		if !is_finished
 			return false
 		if ['returned', 'terminated', 'retrieved'].includes(judge)

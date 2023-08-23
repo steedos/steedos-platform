@@ -1,5 +1,7 @@
 marked = require("marked")
 TracesTemplate.helpers =
+	traceShowSignImage: ()->
+		return Meteor.settings.public.workflow.traceShowSignImage != false && Meteor.settings.public.workflow.traceShowSignImage != 'false'
 	equals: (a, b) ->
 		a == b
 	empty: (a) ->
