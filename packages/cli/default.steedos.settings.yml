@@ -25,6 +25,8 @@ public:
     posthog:
       id: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_ID}
       api_host: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_API_HOST}
+  workflow:
+    traceShowSignImage: ${STEEDOS_WORKFLOW_TRACE_SHOW_SIGN_IMAGE}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:
