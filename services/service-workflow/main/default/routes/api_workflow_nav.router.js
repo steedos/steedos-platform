@@ -35,6 +35,20 @@ var Fiber = require('fibers');
     }
  */
 
+/**
+ * 查询草稿箱数据数量
+ */
+const getDraftCount = async (userSession, req) => {
+  const { appId } = req.params;
+  const { userId, is_space_admin, spaceId } = userSession;
+  const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
+    box: "draft", flowId: null, userId, is_space_admin, appId, spaceId
+  })
+  const draftCount = await objectql.getObject('instances').count({ filters:filters }, userSession)
+  return draftCount;
+}
+
+
 
 /**
  * 1 查询instance_tasks数据
@@ -101,7 +115,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     let userSession = req.user;
     const { appId } = req.params;
     let {schema, count} = await getCategoriesInbox(userSession,req);
-    let draftCount = await objectql.getObject('instances').count({ filters: [['state', '=', 'draft']] }, userSession)
+    let draftCount = await getDraftCount(userSession,req);
     let hasFlowsPer = userSession.is_space_admin;
     if (!hasFlowsPer) {
       const flowIds = await new Promise(function (resolve, reject) {
