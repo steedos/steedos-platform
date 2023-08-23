@@ -354,93 +354,95 @@
         //   console.log('autorun=====>computation:', computation)
             // Session.get("record_id");
           var container, e, lastData, ref, ref1, ref2, regions, schema, updateProps, updatePropsData;
-          regions = self.data.regions();
-        //   console.log('regions====>', regions, this.lastRegions);
-          updateProps = true;
-          if (regions.objectName !== ((ref = this.lastRegions) != null ? ref.objectName : void 0)) {
-            updateProps = false;
-          }
-          this.lastRegions = regions;
-          if (updateProps && self.pageName) {
-            try {
-              if (SteedosUI.refs[self.pageName]) {
-                let queryParams = FlowRouter.current().queryParams
-
-                if(_.isArray(queryParams.side_object)){
-                    if(queryParams.side_object.length >= 1){
-                        queryParams.side_object = queryParams.side_object[0]
-                    }else{
-                        queryParams.side_object = ''
-                    }
-                }
-
-                if(_.isArray(queryParams.side_listview_id)){
-                    if(queryParams.side_listview_id.length >= 1){
-                        queryParams.side_listview_id = queryParams.side_listview_id[0]
-                    }else{
-                        queryParams.side_listview_id = ''
-                    }
-                };
-
-                updatePropsData = {
-                  objectName: objectName,
-                  pageType: regions.pageType,
-                  listViewId: regions.listViewId,
-                  ...queryParams
-                };
-                if(queryParams.side_listview_id){
-                    updatePropsData.listName=queryParams.side_listview_id
-                }else if(regions.listViewId){
-                    updatePropsData.listName=regions.listViewId
-                }
-                
-                updatePropsData.display = Steedos.Page.getDisplay(objectName)
-
-                updatePropsData.recordId = Tracker.nonreactive(function() {
-                    return Session.get("record_id");
-                  });
-                lastData = ((ref1 = SteedosUI.refs[self.pageName]) != null ? (ref2 = ref1.__$schema) != null ? ref2.data : void 0 : void 0) || {};
-                // console.log("page_object Steedos.Page.Record.updateProps", {
-                //     data: window._.defaultsDeep(updatePropsData, lastData)
-                //   });
-                return SteedosUI.refs[self.pageName].updateProps({
-                  data: window._.defaultsDeep(updatePropsData, lastData)
-                });
+          if(self.data.regions){
+            regions = self.data.regions();
+            //   console.log('regions====>', regions, this.lastRegions);
+              updateProps = true;
+              if (regions.objectName !== ((ref = this.lastRegions) != null ? ref.objectName : void 0)) {
+                updateProps = false;
               }
-            } catch (error) {
-              e = error;
-              console.error(self.pageName + ": " + e);
-            }
-          }
-          if (!updateProps && self.pageName && SteedosUI.refs[self.pageName]) {
-            try {
-              SteedosUI.refs[self.pageName].unmount();
-            } catch (error) {
-              e = error;
-              console.error(self.pageName + ": " + e);
-            }
-          }
-          if (self.data.regions) {
-            regions = Tracker.nonreactive(self.data.regions);
-            this.lastRegions = regions;
-            if (regions && regions.page && regions.page.schema) {
-              schema = regions.page.schema;
-              if (_.isString(schema)) {
-                schema = JSON.parse(schema);
+              this.lastRegions = regions;
+              if (updateProps && self.pageName) {
+                try {
+                  if (SteedosUI.refs[self.pageName]) {
+                    let queryParams = FlowRouter.current().queryParams
+    
+                    if(_.isArray(queryParams.side_object)){
+                        if(queryParams.side_object.length >= 1){
+                            queryParams.side_object = queryParams.side_object[0]
+                        }else{
+                            queryParams.side_object = ''
+                        }
+                    }
+    
+                    if(_.isArray(queryParams.side_listview_id)){
+                        if(queryParams.side_listview_id.length >= 1){
+                            queryParams.side_listview_id = queryParams.side_listview_id[0]
+                        }else{
+                            queryParams.side_listview_id = ''
+                        }
+                    };
+    
+                    updatePropsData = {
+                      objectName: objectName,
+                      pageType: regions.pageType,
+                      listViewId: regions.listViewId,
+                      ...queryParams
+                    };
+                    if(queryParams.side_listview_id){
+                        updatePropsData.listName=queryParams.side_listview_id
+                    }else if(regions.listViewId){
+                        updatePropsData.listName=regions.listViewId
+                    }
+                    
+                    updatePropsData.display = Steedos.Page.getDisplay(objectName)
+    
+                    updatePropsData.recordId = Tracker.nonreactive(function() {
+                        return Session.get("record_id");
+                      });
+                    lastData = ((ref1 = SteedosUI.refs[self.pageName]) != null ? (ref2 = ref1.__$schema) != null ? ref2.data : void 0 : void 0) || {};
+                    // console.log("page_object Steedos.Page.Record.updateProps", {
+                    //     data: window._.defaultsDeep(updatePropsData, lastData)
+                    //   });
+                    return SteedosUI.refs[self.pageName].updateProps({
+                      data: window._.defaultsDeep(updatePropsData, lastData)
+                    });
+                  }
+                } catch (error) {
+                  e = error;
+                  console.error(self.pageName + ": " + e);
+                }
               }
-              self.pageName = schema.name;
-            }
-          }
-          objectName = Tracker.nonreactive(function() {
-            return Session.get("object_name");
-          });
-          recordId = Tracker.nonreactive(function() {
-            return Session.get("record_id");
-          });
-          container = Steedos.Page.Object.render(self, objectName, recordId);
-        //   console.log("page_object Steedos.Page.Object.render");
-          if (container) {
-            return self.containerList.push(container);
+              if (!updateProps && self.pageName && SteedosUI.refs[self.pageName]) {
+                try {
+                  SteedosUI.refs[self.pageName].unmount();
+                } catch (error) {
+                  e = error;
+                  console.error(self.pageName + ": " + e);
+                }
+              }
+              if (self.data.regions) {
+                regions = Tracker.nonreactive(self.data.regions);
+                this.lastRegions = regions;
+                if (regions && regions.page && regions.page.schema) {
+                  schema = regions.page.schema;
+                  if (_.isString(schema)) {
+                    schema = JSON.parse(schema);
+                  }
+                  self.pageName = schema.name;
+                }
+              }
+              objectName = Tracker.nonreactive(function() {
+                return Session.get("object_name");
+              });
+              recordId = Tracker.nonreactive(function() {
+                return Session.get("record_id");
+              });
+              container = Steedos.Page.Object.render(self, objectName, recordId);
+            //   console.log("page_object Steedos.Page.Object.render");
+              if (container) {
+                return self.containerList.push(container);
+              }
           }
         });
     };
