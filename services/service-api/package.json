@@ -1,13 +1,13 @@
 {
   "name": "@steedos/service-api",
-  "version": "2.5.12-beta.25",
+  "version": "2.5.12-beta.26",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@steedos/auth": "2.5.12-beta.25",
-    "@steedos/router": "2.5.12-beta.25",
-    "@steedos/service-object-graphql": "2.5.12-beta.25",
-    "@steedos/service-ui": "2.5.12-beta.25",
+    "@steedos/auth": "2.5.12-beta.26",
+    "@steedos/router": "2.5.12-beta.26",
+    "@steedos/service-object-graphql": "2.5.12-beta.26",
+    "@steedos/service-ui": "2.5.12-beta.26",
     "graphql": "^15.8.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.2",
@@ -22,7 +22,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c5e8864f6e9bfb7e2887dc7ef0cd2becca2f92a6",
+  "gitHead": "15395f8943490522c7dca30483a1fdb69d54e501",
   "devDependencies": {
     "@types/graphql-iso-date": "^3.4.0",
     "@types/react-dev-utils": "^9.0.11"
