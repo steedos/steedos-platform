@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-06 11:54:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-26 14:04:56
+ * @LastEditTime: 2023-08-23 09:57:34
  * @Description: 
  */
 const normalizeLink = (to, location = window.location) => {
@@ -127,6 +127,17 @@ Template.amis_action.onRendered(()=>{
   var data = tplData.data
   var env = tplData.env
   var rootName = ".steedos-button-"+ (button.object  || tplData.button.object_name)+"-"+button.name;
+  const getAmisLng = ()=>{
+    var locale = Creator.USER_CONTEXT ? Creator.USER_CONTEXT.user.language : null;
+    if(locale){
+        locale = locale.replace('_', '-');
+        locale = locale === 'en' ? 'en-US' : locale;
+        locale = locale === 'zh' ? 'zh-CN' : locale;
+        locale = locale === 'cn' ? 'zh-CN' : locale;
+        return locale
+    }
+    return 'zh-CN'
+}
   Promise.all([
     waitForThing(window, 'amis'),
   ]).then(()=>{
@@ -147,16 +158,29 @@ Template.amis_action.onRendered(()=>{
     const rootUrl = __meteor_runtime_config__.ROOT_URL;
     const defData = lodash.defaultsDeep({}, {data: data} , {
         data: {
-            context: {
-                rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
-                tenantId: Creator.USER_CONTEXT.spaceId,
-                userId: Creator.USER_CONTEXT.userId,
-                authToken: Creator.USER_CONTEXT.user.authToken
-            }
-        }
+          app_id: data.appId,
+          object_name: data.objectName,
+          record_id: data.recordId,
+          formFactor: Steedos.isMobile() ? "SMALL" : "LARGE",
+          context: {
+              rootUrl: Meteor.isCordova ? (rootUrl.endsWith("/") ? rootUrl.substr(0, rootUrl.length-1) : rootUrl) : '',
+              tenantId: Creator.USER_CONTEXT.spaceId,
+              userId: Creator.USER_CONTEXT.userId,
+              authToken: Creator.USER_CONTEXT.user.authToken,
+              user: Creator.USER_CONTEXT.user
+          },
+          global: {
+              userId: Creator.USER_CONTEXT.userId,
+              spaceId: Creator.USER_CONTEXT.spaceId,
+              user: Creator.USER_CONTEXT.user, 
+              now: new Date()
+          },
+          scopeId: schema.name || schema.id,
+          $scopeId : schema.name || schema.id
+      }
       });
     schema = lodash.defaultsDeep(defData , schema);
     // console.log(`amisAction`, schema)
-    return amis.embed(rootName, schema, {}, Object.assign(getEvn(), env));
+    return amis.embed(rootName, schema, {locale: getAmisLng()}, Object.assign(getEvn(), env));
   })
 })
