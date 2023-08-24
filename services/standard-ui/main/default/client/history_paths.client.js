@@ -1,126 +1,12 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-22 22:39:40
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-08-24 09:52:55
  */
 var buttonTriggerHistoryPathsChange;
-; (function () {
-    try {
-        Meteor.startup(function () {
-            Object.assign(Steedos, {
-                goBack
-            });
-            var rootId = "steedosHistoryPathsRoot";
-            var modalRoot = document.getElementById(rootId);
-            if (!modalRoot) {
-                modalRoot = document.createElement('div');
-                modalRoot.setAttribute('id', rootId);
-                $("body")[0].appendChild(modalRoot);
-            }
-            const page = {
-                name: "pageSteedosHistoryPaths",
-                render_engine: "amis",
-                schema: {
-                    name: "serviceSteedosHistoryPaths",
-                    id: "serviceSteedosHistoryPaths",
-                    type: "service",
-                    className: "service-steedos-history-paths",
-                    body: [{
-                        "type": "button",
-                        "label": "触发@history_paths.changed",
-                        "name": "buttonTriggerHistoryPathsChange",
-                        "className": "button-trigger-history-paths-change hidden",
-                        "onEvent": {
-                            "click": {
-                                "actions": [
-                                    {
-                                        "actionType": "broadcast",
-                                        "args": {
-                                            "eventName": "@history_paths.changed"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }]
-                }
-            };
-            const root = $("#" + rootId)[0];
-            Tracker.autorun(function (c) {
-                if (Creator.steedosInit.get() && Creator.validated.get()) {
-                    Steedos.Page.render(root, page, {});
-                    const findVars = (obj, vars) => {
-                        try {
-                            return vars.length === vars.filter(function (item) {
-                                return item.split(".").reduce(function (sum, n) {
-                                    return sum[n];
-                                }, obj) !== undefined;
-                            }).length;
-                        }
-                        catch (ex) {
-                            return false;
-                        }
-                    }
-                    Promise.all([
-                        waitForThing(window, 'SteedosUI'),
-                    ]).then(() => {
-                        const waittingVars = ["SteedosUI.refs.serviceSteedosHistoryPaths.getComponentByName"];
-                        Promise.all([
-                            waitForThing(window, waittingVars, findVars)
-                        ]).then(() => {
-                            var scope = SteedosUI.refs["serviceSteedosHistoryPaths"];
-                            buttonTriggerHistoryPathsChange = scope.getComponentByName("serviceSteedosHistoryPaths.buttonTriggerHistoryPathsChange");
-                        });
-                    });
-                }
-            });
-        });
-
-    } catch (error) {
-        console.error(error)
-    };
-})();
 
 let historyPathsStoreKey = "history_paths";
-
-// 使用debounce防抖动函数，连续多次自动触发enter事件时，只需要捕获最后一次
-FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
-    if(!!window.opener){
-        // 记录详细页面点击右上角查看审批单等打开新窗口情况下，新窗口的history path继承了opener页面的history path，所以需要区别出来，否则会报错
-        historyPathsStoreKey = "history_paths_opener_level" + getOpenerLevel(window,0);
-    }
-    const path = context.path;
-    const params = context.params || {};
-    // const pathDef = context.route.pathDef;
-    const recordId = params.record_id;
-    var paths = getHistoryPaths() || [];
-    let lastPath = paths && paths[paths.length - 1];
-    if (recordId) {
-        //判断当前路由与记录的路由是否相同，为解决从设计器微页面返回重复记录的问题#4978
-        var top0 = null;
-        if(lastPath && lastPath.path && lastPath.path.split){
-            top0 = lastPath.path.split('?')[0]
-        }
-        if(path.split('?')[0] != top0){
-            // 触发广播事件前，把当前path和params累加存入amis变量historyPaths中
-            pushHistoryPath(path, params);
-        } 
-    }
-    else {
-        clearHistoryFilters(context, lastPath);
-        // 触发广播事件前重置amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
-        resetHistoryPath(path, params);
-    }
-    triggerBroadcastHistoryPathsChanged(buttonTriggerHistoryPathsChange);
-}, 200));
-
-function goBack(){
-    let prevPath = popHistoryPath();
-    if(prevPath && prevPath.path){
-        FlowRouter.go(prevPath.path);
-    }
-}
 
 // 切换应用、对象、列表视图时清除本地存储中的过滤条件
 function clearHistoryFilters(context, lastPath) {
@@ -230,3 +116,120 @@ function getOpenerLevel(opener, level) {
         return level;
     }
 }
+
+
+function goBack(){
+    let prevPath = popHistoryPath();
+    if(prevPath && prevPath.path){
+        FlowRouter.go(prevPath.path);
+    }
+}
+
+; (function () {
+    try {
+        Meteor.startup(function () {
+            Object.assign(Steedos, {
+                goBack
+            });
+            var rootId = "steedosHistoryPathsRoot";
+            var modalRoot = document.getElementById(rootId);
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.setAttribute('id', rootId);
+                $("body")[0].appendChild(modalRoot);
+            }
+            const page = {
+                name: "pageSteedosHistoryPaths",
+                render_engine: "amis",
+                schema: {
+                    name: "serviceSteedosHistoryPaths",
+                    id: "serviceSteedosHistoryPaths",
+                    type: "service",
+                    className: "service-steedos-history-paths",
+                    body: [{
+                        "type": "button",
+                        "label": "触发@history_paths.changed",
+                        "name": "buttonTriggerHistoryPathsChange",
+                        "className": "button-trigger-history-paths-change hidden",
+                        "onEvent": {
+                            "click": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@history_paths.changed"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }]
+                }
+            };
+            const root = $("#" + rootId)[0];
+            Tracker.autorun(function (c) {
+                if (Creator.steedosInit.get() && Creator.validated.get()) {
+                    Steedos.Page.render(root, page, {});
+                    const findVars = (obj, vars) => {
+                        try {
+                            return vars.length === vars.filter(function (item) {
+                                return item.split(".").reduce(function (sum, n) {
+                                    return sum[n];
+                                }, obj) !== undefined;
+                            }).length;
+                        }
+                        catch (ex) {
+                            return false;
+                        }
+                    }
+                    Promise.all([
+                        waitForThing(window, 'SteedosUI'),
+                    ]).then(() => {
+                        const waittingVars = ["SteedosUI.refs.serviceSteedosHistoryPaths.getComponentByName"];
+                        Promise.all([
+                            waitForThing(window, waittingVars, findVars)
+                        ]).then(() => {
+                            var scope = SteedosUI.refs["serviceSteedosHistoryPaths"];
+                            buttonTriggerHistoryPathsChange = scope.getComponentByName("serviceSteedosHistoryPaths.buttonTriggerHistoryPathsChange");
+                        });
+                    });
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error(error)
+    };
+})();
+
+
+// 使用debounce防抖动函数，连续多次自动触发enter事件时，只需要捕获最后一次
+FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
+    if(!!window.opener){
+        // 记录详细页面点击右上角查看审批单等打开新窗口情况下，新窗口的history path继承了opener页面的history path，所以需要区别出来，否则会报错
+        historyPathsStoreKey = "history_paths_opener_level" + getOpenerLevel(window,0);
+    }
+    const path = context.path;
+    const params = context.params || {};
+    // const pathDef = context.route.pathDef;
+    const recordId = params.record_id;
+    var paths = getHistoryPaths() || [];
+    let lastPath = paths && paths[paths.length - 1];
+    if (recordId) {
+        //判断当前路由与记录的路由是否相同，为解决从设计器微页面返回重复记录的问题#4978
+        var top0 = null;
+        if(lastPath && lastPath.path && lastPath.path.split){
+            top0 = lastPath.path.split('?')[0]
+        }
+        if(path.split('?')[0] != top0){
+            // 触发广播事件前，把当前path和params累加存入amis变量historyPaths中
+            pushHistoryPath(path, params);
+        } 
+    }
+    else {
+        clearHistoryFilters(context, lastPath);
+        // 触发广播事件前重置amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
+        resetHistoryPath(path, params);
+    }
+    triggerBroadcastHistoryPathsChanged(buttonTriggerHistoryPathsChange);
+}, 200));
