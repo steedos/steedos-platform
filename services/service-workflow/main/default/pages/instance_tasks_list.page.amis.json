@@ -17,6 +17,7 @@
           "id": "u:d29cef0d1007",
           "showDisplayAs": true,
           "className": "h-full w-full bg-white instance-tasks-list",
+          "hiddenColumnOperation": true,
           "formFactor": "LARGE",
           "headerToolbarItems": [
             {

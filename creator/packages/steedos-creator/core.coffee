@@ -549,7 +549,7 @@ Creator.formatLogicFiltersToDev = (filters, filter_logic, options)->
 				sub_selector.pop()
 		else
 			sub_selector = [field, option, value]
-		console.log "sub_selector", sub_selector
+		# console.log "sub_selector", sub_selector
 		return JSON.stringify(sub_selector)
 	)
 	format_logic = "[#{format_logic}]"
