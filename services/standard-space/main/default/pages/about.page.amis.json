@@ -12,7 +12,10 @@
             "body": [
                 {
                     "type": "input-text",
-                    "label": "版本",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['版本','Version','バージョン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "name": "banben",
                     "id": "u:c7ec8dbb7f07",
                     "value": "${window:Builder.settings.steedosVersion}",
@@ -21,7 +24,10 @@
                     "className": "mb-0 border-b py-1 ml-2"
                 },
                 {
-                    "label": "资产包",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['资产包','Asset package','資産パッケージ'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "type": "input-text",
                     "name": "zichan",
                     "id": "u:65ad5545aeda",
@@ -32,7 +38,10 @@
                 },
                 {
                     "type": "input-text",
-                    "label": "Amis版本",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['Amis版本','Amis Version','Amis バージョン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "name": "Amis",
                     "id": "u:8a4d0a674931",
                     "value": "${window:Builder.settings.steedosAmisVersion}",
@@ -41,7 +50,10 @@
                     "className": "mb-0 border-b py-1 ml-2"
                 },
                 {
-                    "label": "CDN服务器",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['CDN服务器','CDN Server','CDN サーバー'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "name": "CDN",
                     "type": "input-text",
                     "id": "u:5491c057ce27",
@@ -62,7 +74,10 @@
                 },
                 {
                     "type": "button-toolbar",
-                    "label": "技术支持",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['技术支持','Technical Support','テクニカルサポート'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "labelClassName": "text-lg font-bold",
                     "className": "mb-0 border-b py-1 ml-2",
                     "buttons": [
@@ -82,7 +97,10 @@
                     "id": "u:5a4b3cf67a69"
                   },
                 {
-                    "label": "客服热线",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['客服热线','Customer Service Hotline','カスタマーサービスホットライン'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "name": "rexian",
                     "type": "input-text",
                     "id": "u:27b9745bd047",
@@ -93,7 +111,10 @@
                 },
                 {
                     "type": "button-toolbar",
-                    "label": "客服邮箱",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['客服邮箱','Customer Service Email','カスタマーサービスのメールアドレス'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "name": "youxiang",
                     "id": "u:a847a1dbb74e",
                     "labelClassName": "text-lg font-bold",
@@ -110,7 +131,10 @@
                   },
                 {
                     "type": "button-toolbar",
-                    "label": "隐私政策",
+                    "label": {
+                        "type": "tpl",
+                        "tpl": "<%= ['隐私政策','Privacy Policy','プライバシーポリシー'][['zh-cn','en-us','ja'].indexOf(data.context.user.locale  || 'zh-cn')] %>"
+                    },
                     "labelClassName": "text-lg font-bold",
                     "className": "mb-0 border-b py-1 ml-2",
                     "buttons": [
