@@ -254,7 +254,7 @@ Template.instance_view.events
 	'click .btn-instance-back': (event)->
 		# backURL = "/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box")
 		# FlowRouter.go(backURL)
-		Steedos.goBack()
+		window.goBack()
 
 
 	'click #ins_new_main_file': (event, template)->

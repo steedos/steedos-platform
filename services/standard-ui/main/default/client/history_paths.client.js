@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-24 09:52:55
+ * @LastEditTime: 2023-08-24 16:25:28
  */
 var buttonTriggerHistoryPathsChange;
 
@@ -124,6 +124,8 @@ function goBack(){
         FlowRouter.go(prevPath.path);
     }
 }
+
+window.goBack = goBack;
 
 ; (function () {
     try {
