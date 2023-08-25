@@ -10,6 +10,8 @@ const _ = require('lodash')
 export const exportExcelExpress = require('@steedos/router').staticRouter();;
 import { SteedosDatabaseDriverType } from '@steedos/objectql'
 
+const MAX_EXPORT = 5000;
+
 const exportRecordData = async function (req, res) {
     try {
         const userSession = req.user;
@@ -23,7 +25,7 @@ const exportRecordData = async function (req, res) {
         }
         
         if(queryParams.filters){
-            queryParams.$filter = formatFiltersToODataQuery(JSON.parse(queryParams.filters));
+            queryParams.$filter = formatFiltersToODataQuery(JSON.parse(queryParams.filters), userSession);
         }
 
         
@@ -47,6 +49,9 @@ const exportRecordData = async function (req, res) {
             };
         }
         let permissions = await collection.getUserObjectPermission(userSession);
+        if(permissions.allowExport != true){
+            return res.status(403).send({ status: 403, error: 403, msg: `access failed` })
+        }
         if (permissions.viewAllRecords || (permissions.viewCompanyRecords) || (permissions.allowRead && userId)) {
 
             let entities: any[] = [];
@@ -70,6 +75,9 @@ const exportRecordData = async function (req, res) {
                     query['sort'] = queryParams.$orderby;
                 }
                 entities = await collection.find(query, userSession);
+            }
+            if(entities.length > MAX_EXPORT){
+                return res.status(403).send({ status: 403, error: 403, msg: `超出允许的导出记录数(${MAX_EXPORT}条), 请调整搜索条件后重试.` })
             }
             if (entities) {
 

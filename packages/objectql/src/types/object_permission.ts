@@ -18,6 +18,7 @@ abstract class SteedosObjectPermissionTypeProperties {
     allowCreateListViews?: boolean
     viewAllFiles?: boolean
     modifyAllFiles?: boolean
+    allowExport?: boolean
     disabled_list_views?: []
     disabled_actions?: []
     unreadable_fields?: string[]

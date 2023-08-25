@@ -135,6 +135,10 @@ fields:
             }
     name: disabled_list_views
     filterable: true
+  allowExport:
+    type: boolean
+    label: Allow Export Excel
+    defaultValue: true
   disabled_actions:
     type: lookup
     label: Disabled Actions

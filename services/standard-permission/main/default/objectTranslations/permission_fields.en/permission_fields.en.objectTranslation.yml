@@ -35,3 +35,5 @@ fields:
     label: System
     help: 
     description: 
+  allowExport:
+    label: Allow Export Excel
