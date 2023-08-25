@@ -1,5 +1,5 @@
+const Future = require('fibers/future');
 const objectql = require('@steedos/objectql');
-
 module.exports = {
     listenTo: 'push_notifications',
 
@@ -59,10 +59,10 @@ module.exports = {
             from: null,
             space: doc.space,
         }
-
-        // 发送pc端推送和移动端推送
-        await Creator.addNotifications(message, null, doc.owner);
-
+        await Future.task(() => {
+            // 发送pc端推送和移动端推送
+            Creator.addNotifications(message, null, doc.owner);
+        }).promise();
         
         if (doc.app_id){
 
