@@ -153,32 +153,32 @@ tbody .color-priority-muted *{
     position: relative
 }
 
-.instance-tasks-list .unread-instance .antd-Table-checkCell:after {
+/* PC端未读列表蓝色圆点 */
+.instance-tasks-list .unread-instance .antd-Table-checkCell:before {
     content: " ";
     position: absolute;
     right: -6px;
-    top: 50%;
-    margin-top: -5px;
     width: 10px;
     height: 10px;
     background-color: #1890ff;
     border-radius: 6px;
+    top: 10px;
 }
 
 .instance-tasks-list .unread-instance .steedos-listview-item {
     position: relative
 }
 
-.instance-tasks-list .unread-instance .steedos-listview-item:after {
+/* 手机端未读列表蓝色圆点 */
+.instance-tasks-list .unread-instance .steedos-listview-item:before {
     content: " ";
     position: absolute;
     left: -5px;
-    top: 50%;
-    margin-top: -14px;
     width: 8px;
     height: 8px;
     background-color: #1890ff;
     border-radius: 4px;
+    top: 10px;
 }
 
 #instanceAmisView fieldset{

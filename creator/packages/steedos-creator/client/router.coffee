@@ -326,6 +326,9 @@ objectRoutes.route '/grid/:list_view_id',
 
 FlowRouter.notFound =
 	action: (params, queryParams)->
-		console.error('404 not found', window.location)
+		try
+			throw new Error('404 not found:' + window.location.href)
+		catch e
+			console.log(e, window.location.href)
 		BlazeLayout.render 'empty_layout',
 			main: 'notFound'

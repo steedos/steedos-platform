@@ -5,6 +5,7 @@ multiple: false
 filterable: true
 sort_no: 10
 is_name: true
+is_wide: true
 amis:
   className:
     'color-priority-danger': "${extras && extras.priority == '特急'}"

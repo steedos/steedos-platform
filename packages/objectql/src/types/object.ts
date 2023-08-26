@@ -906,6 +906,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             viewCompanyRecords: false,
             modifyCompanyRecords: false,
             allowCreateListViews: false,
+            allowExport: false,
             allowReadFiles: null,
             viewAllFiles: null,
             allowCreateFiles: null,

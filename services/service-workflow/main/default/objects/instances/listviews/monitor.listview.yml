@@ -8,6 +8,12 @@ columns:
   - current_step_name
   - modified
   - is_archived
+mobile_columns:
+  - name
+  - flow_name
+  - current_step_name
+  - applicant
+  - submit_date
 filter_scope: space
 filters: !!js/function |
     function(filters, data){

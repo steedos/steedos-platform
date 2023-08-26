@@ -96,6 +96,8 @@ fields:
     description: 
   allowCreateListViews:
     label: 允许创建视图
+  allowExport:
+    label: 允许导出Excel
 groups:
   files_permissions: 附件权限
 listviews:
