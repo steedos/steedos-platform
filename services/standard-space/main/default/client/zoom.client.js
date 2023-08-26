@@ -15,7 +15,7 @@ Tracker.autorun(function(e) {
         $("body").removeClass("zoom-normal").removeClass("zoom-large").removeClass("zoom-extra-large");
         $("body").addClass("zoom-" + zoom);
     }else if(Steedos.isNode()){
-        let zoomRate = 1;
+        let zoomRate = 1.1;
         if(zoom == "large"){
             zoomRate = 1.25;
         }else if(zoom == 'extra-large'){
