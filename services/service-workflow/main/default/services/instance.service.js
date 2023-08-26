@@ -99,8 +99,10 @@ module.exports = {
                 case 'draft':
                     filter.push(['submitter', '=', userId]);
                     filter.push(['state', '=', 'draft']);
-                    //TODO 需要排除 分发、转发的申请单
-                    // filter.push(['inbox_users', '=', []]);
+                    // 需要排除 分发、转发的申请单
+                    // filter.push(['inbox_users', '=', []]); // 按照数据库的语法这样查是可以的，但是在objectql中不行，会将[]转换成'__badQueryForEmptyArray'，变成((inbox_users eq '__badQueryForEmptyArray'))
+                    filter.push(['distribute_from_instance', '=', null]);
+                    filter.push(['forward_from_instance', '=', null]);
                     break;
                 case 'pending':
                     filter.push(['state', '=', 'pending']);
