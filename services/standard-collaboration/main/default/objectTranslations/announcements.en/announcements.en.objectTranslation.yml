@@ -11,7 +11,11 @@ fields:
     help: 
     description: 
   members:
-    label: Members
+    label: User Members
+    help: 
+    description: 
+  organizations:
+    label: Organization Members
     help: 
     description: 
   created:
@@ -26,6 +30,8 @@ fields:
     label: Modified by
     help: 
     description: 
+groups:
+    members: Members
 listviews:
   all:
     label: All Announcements
