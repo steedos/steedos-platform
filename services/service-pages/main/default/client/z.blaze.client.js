@@ -2,12 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-27 10:41:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-27 15:25:20
+ * @LastEditTime: 2023-08-27 17:25:13
  * @Description: 
  */
 ;(function(){
     const getCurd = (template)=>{
-        window._selectUserModalonConfirm = ()=>{
+        window._selectUserModalOnConfirm = ()=>{
             Steedos.Page.Blaze.selectUserModalBody.onConfirm(null, template);
         }
         if(template.data.multiple == true){
@@ -35,13 +35,7 @@
                             {
                                 "actionType": "custom",
                                 "script": `
-                                    window._selectUserModalonConfirm();
-                                    // const target = $("#" + "${template.data.target.id}")[0];
-                                    // const values = Session.get("_selectUsers");
-                                    // target.dataset.values = values.getProperty("user").toString();
-                                    // $(target).val(values.getProperty("name").toString()).trigger('change');
-                                    // Modal.hide(template);
-                                    // Modal.allowMultiple = false;
+                                    window._selectUserModalOnConfirm();
                                 `
                             }
                         ]
