@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-19 14:02:20
+ * @LastEditTime: 2023-08-27 10:12:52
  * @Description: 
  */
 'use strict';
@@ -62,6 +62,15 @@ function _find(query) {
         });
     })(query);
     return taskDocs
+}
+
+function _count(query) {
+    const count = Meteor.wrapAsync(function (query, cb) {
+        getObject('instance_tasks').count(query).then(function (resolve, reject) {
+            cb(reject, resolve);
+        });
+    })(query);
+    return count
 }
 
 /**
@@ -191,6 +200,16 @@ function direct_remove_many_instance_tasks(approveIds) {
 }
 
 /**
+ * 计数instance_tasks
+ * @param {object} query
+ * @returns 1
+ */
+function count_instance_tasks(query) {
+    const result = _count(query)
+    return result
+}
+
+/**
  * 使用insId、traceId、approveId整理成instnce_tasks结构
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
@@ -284,5 +303,6 @@ module.exports = {
     remove_instance_tasks,
     remove_many_instance_tasks,
     remove_instance_tasks_by_instance_id,
-    direct_remove_many_instance_tasks
+    direct_remove_many_instance_tasks,
+    count_instance_tasks
 }

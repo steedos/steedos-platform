@@ -1,3 +1,4 @@
+const { count_instance_tasks } = require('./instance_tasks_manager');
 var ref, ref1, ref2, ref3;
 // 定义全局变量
 global.pushManager = {
@@ -869,23 +870,16 @@ pushManager.get_badge = function (send_from, user_id) {
                 categorysIds = _.pluck(categorys, '_id');
                 if (appName) {
                     if (categorysIds.length > 0) {
-                        categoryBadge = db.instances.direct.find({
-                            category: {
-                                $in: categorysIds
-                            },
-                            $or: [
-                                {
-                                    inbox_users: user_id
-                                },
-                                {
-                                    cc_users: user_id
-                                }
+
+                        categoryBadge = count_instance_tasks({
+                            filters: [
+                                ['handler', '=', user_id],
+                                ['is_finished', '=', false],
+                                ['space', '=', spaceId],
+                                ['category', 'in', categorysIds],
                             ]
-                        }, {
-                            fields: {
-                                _id: 1
-                            }
-                        }).count();
+                        })
+
                         appKeyValue = db.steedos_keyvalues.direct.findOne({
                             user: user_id,
                             space: user_space.space,
@@ -921,20 +915,13 @@ pushManager.get_badge = function (send_from, user_id) {
         }
 
         // workflow 记录所有待办数量
-        c = db.instances.direct.find({
-            $or: [
-                {
-                    inbox_users: user_id
-                },
-                {
-                    cc_users: user_id
-                }
+        c = count_instance_tasks({
+            filters: [
+                ['handler', '=', user_id],
+                ['is_finished', '=', false],
+                ['space', '=', spaceId],
             ]
-        }, {
-            fields: {
-                _id: 1
-            }
-        }).count();
+        })
         badge += c;
         sk = db.steedos_keyvalues.direct.findOne({
             user: user_id,
