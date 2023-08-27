@@ -225,7 +225,7 @@ Template.afSelectUser.events({
 		options.target = event.target
 
         Modal.allowMultiple = true;
-        Modal.show("cf_contact_modal", options);
+        Modal.show("select_users_modal", options);
         
     }
 });
