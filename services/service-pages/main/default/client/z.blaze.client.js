@@ -17,7 +17,15 @@
                         "actions": [
                             {
                                 "actionType": "custom",
-                                "script": "Session.set('_selectUsers', event.data.selectedItems)"
+                                "script": `
+                                  let selectedItems = event.data.selectedItems;
+                                  selectedItems.forEach(function (item,index) {
+                                      if(item.data){
+                                          selectedItems[index] = item.data
+                                      }
+                                  })
+                                  Session.set('_selectUsers', selectedItems)
+                                `
                             }
                         ]
                     }
@@ -30,7 +38,17 @@
                         "actions": [
                             {
                                 "actionType": "custom",
-                                "script": "Session.set('_selectUsers', event.data.selectedItems)"
+                                "script": `
+                                    let selectedItems = event.data.selectedItems;
+                                    const _selectUsers = Session.get('_selectUsers')
+                                    if(_selectUsers && _selectUsers.length > 0){
+                                        selectedItems = selectedItems.filter(function (item) {
+                                            return item.user != _selectUsers[0].user;
+                                        })
+                                    }
+                                    Session.set('_selectUsers', selectedItems)
+                                
+                                `
                             },
                             {
                                 "actionType": "custom",
@@ -60,53 +78,98 @@
               },
               "body": [
                 {
-                  "type": "steedos-object-table",
-                  "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white",
-                  "id": "u:f259c69e3c93",
-                  "objectApiName": "space_users",
-                  "label": "对象表格",
-                  "fields": [
-                    "name"
-                  ],
-                  "sortField": "sort_no",
-                  "sortOrder": "desc",
-                  "headerToolbarItems": [
-                    {
-                      "type": "button",
-                      "label": "组织",
-                      "icon": "fa fa-sitemap",
-                      "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
-                      "align": "left",
-                      "onEvent": {
-                        "click": {
-                          "actions": [
-                            {
-                              "actionType": "custom",
-                              "script": "console.log(event.target);document.querySelector('.select-users-list').classList.toggle('select-users-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.toggle('inset-0')}"
-                            }
-                          ]
+                  "type": "steedos-field",
+                  "config": {
+                    "type": "lookup",
+                    "id": "u:ff88cc3375b5",
+                    "reference_to": "space_users",
+                    "amis": {
+                      "embed": true,
+                      "label": false,
+                      "multiple": template.data.multiple,
+                      "valueField": "user",
+                      "source": {
+                        "method": "get",
+                        "url": "${context.rootUrl}/api/v1/space_users?filters=${additionalFilters}",
+                        "requestAdaptor": "let query = api.query;if(!query.filters){query.filters = []}else{query.filters.push(\"and\");}if(api.query.__keywords){query.filters.push([\"name\",\"contains\",api.query.__keywords]);}query.filters = JSON.stringify(query.filters);url_tmp = api.url.split('?')[0];api.url = url_tmp + \"?fields=\" + query.fields + \"&skip=\" + query.skip + \"&top=\" + query.top + \"&sort=\" + query.sort + \"&filters=\" + query.filters;return api;",
+                        "adaptor":"",
+                        "headers": {
+                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        },
+                        "data": {
+                          "sort": "sort_no desc",
+                          "skip": "${(page - 1) * perPage}",
+                          "top": "${perPage || 20}",
+                          "fields": "[\"_id\",\"name\",\"user\"]",
+                          "__keywords": "${__keywords}"
+                        },
+                        "messages": {
                         }
                       },
-                      "id": "u:115e270cae4d",
-                      "visibleOn": "${window:innerWidth < 768 && showOrg}"
-                    }
-                  ],
-                  "extraColumns": [
-                    "user"
-                  ],
-                  "crud": Object.assign({},getCurd(template),{
-                    "autoFillHeight": false
-                  })
+                      "id": "u:0c2caa804b74",
+                      "value": "${defaultValues | join}"
+                    },
+                    "pickerSchema": {
+                      ...getCurd(template),
+                      "checkOnItemClick": true,
+                      "headerToolbar": [
+                        {
+                          "type": "button",
+                          "label": "组织",
+                          "icon": "fa fa-sitemap",
+                          "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
+                          "align": "left",
+                          "onEvent": {
+                            "click": {
+                              "actions": [
+                                {
+                                  "actionType": "custom",
+                                  "script": "console.log(event.target);document.querySelector('.select-users-list').classList.toggle('select-users-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.toggle('inset-0')}"
+                                }
+                              ]
+                            }
+                          },
+                          "id": "u:115e270cae4d",
+                          "visibleOn": "${window:innerWidth < 768 && showOrg}"
+                        },
+                        {
+                          clearAndSubmit: true,
+                          clearable: true,
+                          name: "__keywords",
+                          placeholder: "快速搜索",
+                          type: "search-box",
+                          value: ""
+                        }
+                      ],
+                      "columns": [
+                        {
+                          "name": "name",
+                          "label": "姓名",
+                          "id": "u:a16aeb69065b"
+                        }
+                      ],
+                      "autoFillHeight": false,
+                      "id": "u:ea2da4bc2a42",
+                      "className": "bg-white"
+                    },
+                    "name": "select_users"
+                  },
+                  "id": "u:84fd7e414b1a"
                 },
                 {
                   "type": "action",
+                  "className": {
+                    "absolute isInset": "true",
+                    "inset-0": "${window:innerWidth < 768}"
+                  },
+                  "id": "u:10896530250e",
                   "body": [
                     {
                       "type": "action",
                       "className": {
                         "mobileCss": "${window:innerWidth < 768}",
                         "pcCss": "${window:innerWidth > 768}",
-                        "select-users-sidebar-wrapper px-0 fixed z-20 ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0": "true"
+                        "select-users-sidebar-wrapper px-0 fixed z-20 ease-in-out duration-300 flex flex-col overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0": "true"
                       },
                       "body": [
                         {
@@ -136,11 +199,11 @@
                                   "componentId": "u:f6a209c8cf61",
                                   "args": {
                                     "value": {
-                                      "additionalFilters": [
+                                      "additionalFilters": [[
                                         "organizations_parents",
                                         "in",
                                         "${event.data.value.value | asArray}"
-                                      ]
+                                      ]]
                                     }
                                   }
                                 },
@@ -153,7 +216,7 @@
                           },
                           "label": "",
                           "name": "organizations",
-                          "multiple":false,
+                          "multiple": false,
                           "joinValues": false,
                           "clearValueOnHidden": false,
                           "fieldName": "organizations",
@@ -189,21 +252,16 @@
                       ]
                     }
                   },
-                  "className": {
-                    "absolute isInset": "true",
-                    "inset-0": "${window:innerWidth < 768}"
-                  },
-                  "id": "u:10896530250e",
                   "visibleOn": "${showOrg}"
                 }
               ],
-              "className": "h-full",
+              "className": "h-full border-l",
               "onEvent": {
                 "init": {
                   "actions": [
                     {
                       "actionType": "custom",
-                      "script": "if (event.data.userOptions) {\r\n  doAction({\r\n    actionType: 'setValue',\r\n    args: {\r\n      value: {\r\n        \"additionalFilters\": [\r\n          [\r\n            \"_id\",\r\n            \"in\",\r\n            event.data.userOptions.split(\",\")\r\n          ]\r\n        ]\r\n      }\r\n    }\r\n  });\r\n} else {\r\n  doAction({\r\n    actionType: 'setValue',\r\n    args: {\r\n      value: {\r\n        \"additionalFilters\": [\r\n        [\r\n          \"organizations_parents\",\r\n          \"in\",\r\n          []\r\n        ]\r\n        ]\r\n      }\r\n    }\r\n  });\r\n}"
+                      "script": "if (event.data.userOptions) {\r\n  doAction({\r\n    actionType: 'setValue',\r\n    args: {\r\n      value: {\r\n        \"additionalFilters\": [[\r\n          [\r\n            \"_id\",\r\n            \"in\",\r\n            event.data.userOptions.split(\",\")\r\n          ]]\r\n        ]\r\n      }\r\n    }\r\n  });\r\n}"
                     }
                   ]
                 }
@@ -222,10 +280,10 @@
             "context": {
             },
             "objectName": "space_users",
-            "showOrg": "${userOptions?false:showOrg}",
+            "showOrg": "${userOptions?false:(showOrg == false?false:true)}",
             "isLookup": true,
             "userOptions": "${userOptions}",
-            "selectedUsers":"${selectedUsers}"
+            "defaultValues": "${defaultValues}"
           },
           "id": "u:b7167e2fcaf0",
           "name": "page_space_users_list",
@@ -237,16 +295,22 @@
             "select-users-pc select-users-minwidth": "${window:innerWidth > 768}",
             "select-users-mobile": "${window:innerWidth < 768}",
             "p-0 select-users-sidebar select-users-list": "true",
-            "select-users-sidebar-open": "${showOrg}"
+            "select-users-sidebar-open": "${window:innerWidth > 768 && showOrg}"
           },
           "css": {
+            ".select-users-list .antd-Crud-selection":{
+              "display":"none"
+            },
+            ".select-users-modal-body":{
+              "height":"100%"
+            },
+            ".select-users-list .steedos-picker-edit":{
+              "margin": "0px",
+              "padding": "0px"
+            },
             ".select-users-list": {
               "margin-left": "-15px",
               "margin-right": "-15px"
-            },
-            ".select-users-pc .antd-Table-content": {
-              "height": "1088px",
-              "overflow": "auto"
             },
             ".select-users-list.select-users-sidebar.select-users-sidebar-open.select-users-pc": {
               "margin-left": "360px",
@@ -305,12 +369,14 @@
                 render : (template)=>{
                     console.log(`template`, template)
                     const bodyId = template.bodyId;
+                    console.log("template.data===>",template.data)
                     Steedos.Page.render($("#" + bodyId)[0], {
                                     name: bodyId,
                                     render_engine: "amis",
                                     schema: {
                                         type: "service",
                                         body: getSelectUserModalBodySchema(template),
+                                        className: "h-full",
                                         id: bodyId,
                                         data: template.data
                                     }
