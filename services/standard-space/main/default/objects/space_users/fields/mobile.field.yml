@@ -5,5 +5,5 @@ searchable: true
 group: '-'
 index: true
 sort_no: 140
-# amis: 
-#   tpl: "${IF(pageType == 'record' && formFactor != 'LARGE', \"<a href='tel: \" + mobile + \"' >\" + mobile + \"</a>\", mobile)}"
+amis: 
+  tpl: "${IF(pageType == 'record' && formFactor != 'LARGE', \"<a href='tel: \" + mobile + \"' >\" + mobile + \"</a>\", mobile)}"
