@@ -111,7 +111,6 @@
                     },
                     "pickerSchema": {
                       ...getCurd(template),
-                      "checkOnItemClick": true,
                       "headerToolbar": [
                         {
                           "type": "button",
