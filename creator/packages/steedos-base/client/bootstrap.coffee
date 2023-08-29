@@ -33,8 +33,14 @@ Steedos.logout = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
-			redirect = getRedirectUrl();
-	window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout?redirect_uri="+ redirect);
+			if Meteor.isCordova
+				redirect = Meteor.absoluteUrl();
+			# else
+			# 	redirect = getRedirectUrl();
+	if redirect
+		window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout?redirect_uri="+ redirect);
+	else
+		window.location.href = Steedos.absoluteUrl("/accounts/a/#/logout");
 
 Steedos.goResetPassword = (redirect)->
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
