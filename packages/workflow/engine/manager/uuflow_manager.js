@@ -2528,6 +2528,12 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
     upObj.keywords = uuflowManager.caculateKeywords(upObj.values, form, instance.form_version);
     // 计算extras
     upObj.extras = uuflowManager.caculateExtras(upObj.values, form, instance.form_version);
+
+    // 如果不是转发、分发，新建instance_tasks
+    if (!instance.forward_from_instance && !instance.distribute_from_instance) {
+        insert_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id);
+    }
+
     db.instances.update({
         _id: instance_id
     }, {
@@ -2541,10 +2547,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
         }
     });
 
-    // 转发或分发，更新当前记录
-    if (instance.forward_from_instance || instance.distribute_from_instance) {
-        update_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id)
-    }
+    update_instance_tasks(instance_id, traces[0]._id, traces[0]["approves"][0]._id)
     if (nextTrace) {
         // 生成新记录
         const approveIds = []

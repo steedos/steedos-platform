@@ -35,3 +35,5 @@ searchable_fields:
 extra_columns:
   - extras
   - is_read
+  - type
+adaptor: "_.each(payload.data.rows, function (item, index) {if (item.type == 'cc') {item.instance_name += '（传阅）';}})"

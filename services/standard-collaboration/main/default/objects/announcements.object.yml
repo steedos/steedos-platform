@@ -23,9 +23,17 @@ fields:
     is_wide: true
   members:
     type: lookup
-    label: Members
+    label: User Members
     reference_to: users
-    required: true
+    group: Members
+    multiple: true
+    filterable: true
+    is_wide: true
+  organizations:
+    type: lookup
+    label: Organization Members
+    reference_to: organizations
+    group: Members
     multiple: true
     filterable: true
     is_wide: true

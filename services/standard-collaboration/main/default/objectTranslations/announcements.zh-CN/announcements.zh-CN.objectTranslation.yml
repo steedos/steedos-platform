@@ -11,7 +11,11 @@ fields:
     help: 
     description: 
   members:
-    label: 发布对象
+    label: 人员
+    help: 
+    description: 
+  organizations:
+    label: 部门
     help: 
     description: 
   created:
@@ -26,6 +30,8 @@ fields:
     label: 修改人
     help: 
     description: 
+groups:
+    members: 发布对象
 listviews:
   all:
     label: 所有公告

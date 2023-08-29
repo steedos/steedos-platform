@@ -1,21 +1,16 @@
 const _ = require("underscore");
 const auth = require('@steedos/auth');
 var steedosFilters = require("@steedos/filters");
+const objectql = require("@steedos/objectql");
 
-const addNotifications = function (userId, doc, members) {
+const addNotifications = async function (userId, doc, members) {
     if(doc.created_by){
         userId = doc.created_by;
     }
     if (!members.length) {
         return;
     }
-    const fromUser = Creator.getCollection("users").findOne({
-        _id: userId
-    }, {
-            fields: {
-                name: 1
-            }
-        });
+    const fromUser = await objectql.getObject('users').findOne(userId, {fields: ['name']});
     const notificationTitle = fromUser.name;
     let notificationDoc = {
         name: doc.name,
@@ -28,12 +23,39 @@ const addNotifications = function (userId, doc, members) {
         from: userId,
         space: doc.space
     };
-    Creator.addNotifications(notificationDoc, userId, members);
+    await objectql.getSteedosSchema().broker.call('notifications.add', {
+        message: notificationDoc,
+        from: userId,
+        to: members
+    })
 }
 
-const removeNotifications = function(doc, members){
-    Creator.removeNotifications(doc, members, "announcements");
+const removeNotifications = async function(doc, members){
+    await objectql.getSteedosSchema().broker.call('notifications.remove', {
+        doc,
+        assignees: members,
+        objectName: "announcements"
+    })
 }
+
+const getAnnouncementsMembers = async function (doc, isModifierSet) {
+    var members, organizations, users;
+    organizations = doc.organizations;
+    users = doc.members;
+    members = [];
+    if (organizations?.length || users?.length) {
+        if (users?.length) {
+            members = users;
+        }
+        if (organizations?.length) {
+            for (const orgId of organizations) {
+                const organizationUsers = await objectql.getSteedosSchema().broker.call('organizations.calculateUsers', {orgId: orgId, isIncludeParents: true})
+                members = members.concat(organizationUsers);
+            }
+        }
+    }
+    return _.uniq(members);
+};
 
 module.exports = {
     listenTo: 'announcements',
@@ -43,7 +65,8 @@ module.exports = {
         if(userId && spaceId){
             const userSession = await auth.getSessionByUserId(userId, spaceId);
             if(userSession.profile != 'admin'){
-                const permissionFilters = [['members','=', userId], 'or', ['owner','=', userId]];
+                const orgs = userSession.organizations_parents;
+                const permissionFilters = [['members','=', userId], 'or', ['organizations','in', orgs], 'or', ['owner','=', userId]];
                 const odataFilter = steedosFilters.formatFiltersToODataQuery(permissionFilters);
                 if(!_.isArray(query.filters)){
                     if(!query.filters){
@@ -75,7 +98,7 @@ module.exports = {
     afterInsert: async function () {
         const doc = this.doc;
         const userId = this.userId;
-        const members = doc.members;
+        const members = await getAnnouncementsMembers(doc);
         if (members && members.length) {
             addNotifications(userId, doc, members);
         }
@@ -87,12 +110,11 @@ module.exports = {
         const userId = this.userId;
 
         if(doc.members){
-            // 编辑单个非members字段时，doc.members为空
-            let oldMembers = previousDoc.members || [];
-            let newMembers = doc.members || [];
+            doc = Object.assign({}, previousDoc, doc);//编辑单个字段时，space,name,body等字段都可以为空，需要从previousDoc中集成过来
+            let oldMembers = await getAnnouncementsMembers(previousDoc);
+            let newMembers = await getAnnouncementsMembers(doc, true);
             let addMembers = _.difference(newMembers, oldMembers);
             let subMembers = _.difference(oldMembers, newMembers);
-            doc = Object.assign({}, previousDoc, doc);//编辑单个字段时，space,name,body等字段都可以为空，需要从previousDoc中集成过来
             if (addMembers.length) {
                 addNotifications(userId, doc, addMembers);
             }
@@ -104,8 +126,8 @@ module.exports = {
     afterDelete: async function () {
         // 因为afterDelete中没有this.doc，所以用this.previousDoc
         const doc = this.previousDoc;
-        let members = doc.members;
-        if(members && members.length){
+        const members = await getAnnouncementsMembers(doc);
+        if (members && members.length) {
             removeNotifications(doc, members);
         }
     }
