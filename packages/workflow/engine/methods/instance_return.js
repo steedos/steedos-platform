@@ -1,5 +1,5 @@
 const {
-    update_instance_tasks,
+    update_many_instance_tasks,
     insert_instance_tasks
 } = require('../manager').instance_tasks_manager
 module.exports = {
@@ -52,6 +52,7 @@ module.exports = {
         setObj = new Object;
         now = new Date;
         rest_counter_users = new Array;
+        const finishedApproveIds = []
         _.each(traces, function (t) {
             if (t._id === last_trace._id) {
                 if (!t.approves) {
@@ -66,6 +67,7 @@ module.exports = {
                         setObj['traces.$.approves.' + idx + '.is_finished'] = true;
                         setObj['traces.$.approves.' + idx + '.cost_time'] = now - a.start_date;
                         setObj['traces.$.approves.' + idx + '.values'] = approve_values;
+                        finishedApproveIds.push(a._id)
                         if (a.handler === current_user) {
                             setObj['traces.$.approves.' + idx + '.judge'] = "returned";
                             return setObj['traces.$.approves.' + idx + '.description'] = reason;
@@ -152,7 +154,7 @@ module.exports = {
             $set: setObj
         });
         // 更新当前记录
-        update_instance_tasks(instance_id, last_trace._id, approve._id)
+        update_many_instance_tasks(instance_id, last_trace._id, finishedApproveIds)
 
         b = db.instances.update({
             _id: instance_id
