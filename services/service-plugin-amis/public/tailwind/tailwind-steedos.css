@@ -96,6 +96,10 @@
   margin-right: -2.75rem
 }
 
+.mt-0 {
+  margin-top: 0px
+}
+
 .-mt-3 {
   margin-top: -0.75rem
 }
@@ -230,16 +234,16 @@
   border-radius: 0.25rem
 }
 
+.border-r {
+  border-right-width: 1px
+}
+
 .border-l {
   border-left-width: 1px
 }
 
 .border-b {
   border-bottom-width: 1px
-}
-
-.border-r {
-  border-right-width: 1px
 }
 
 .border-solid {
@@ -316,6 +320,14 @@
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem
+}
+
+.pt-0 {
+  padding-top: 0px
+}
+
+.pt-2 {
+  padding-top: 0.5rem
 }
 
 .pb-3 {
