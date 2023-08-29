@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-27 10:41:47
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-27 17:25:13
+ * @LastEditTime: 2023-08-29 15:08:30
  * @Description: 
  */
 ;(function(){
@@ -455,6 +455,10 @@
                     const target = template.data.target
 
                     const values = Session.get("_selectUsers");
+
+                    if(!values){
+                        return []
+                    }
 
                     target.dataset.values = values.getProperty("user").toString();
 
