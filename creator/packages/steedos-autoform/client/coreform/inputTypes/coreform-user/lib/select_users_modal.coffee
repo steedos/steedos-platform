@@ -40,6 +40,7 @@ Template.select_users_modal.events
 		Steedos.Page.Blaze.selectUserModalBody.onRemove(event, template)
 		
 	'hide.bs.modal #cf_contact_modal': (event, template) ->
+		Session.set('_selectUsers', null)
 		Modal.allowMultiple = false;
 		return true;
 Template.select_users_modal.onRendered ->
