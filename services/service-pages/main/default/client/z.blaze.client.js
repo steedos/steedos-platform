@@ -55,6 +55,67 @@
     }
 
     const getSelectUserModalBodySchema = (template)=>{
+        const crudRequestAdaptor = `
+          let query = api.query;
+          if (!query.filters) {
+              query.filters = []
+          } else if (api.query.__keywords) {
+              query.filters.push("and");
+          }
+          if (api.query.__keywords) {
+              query.filters.push(["name", "contains", api.query.__keywords]);
+          }
+          query.filters = JSON.stringify(query.filters);
+          url_tmp = api.url.split('?')[0];
+          api.url = url_tmp + "?fields=" + query.fields + "&skip=" + query.skip + "&top=" + query.top + "&sort=" + query.sort + "&filters=" + query.filters;
+          return api;
+        `;
+        const treeAdaptor = `
+          if (payload.data.cache == true) {
+                  return payload;
+          }
+          const records = payload.data.options;
+          const treeRecords = [];
+          const getChildren = (records, childrenIds) => {
+                  if (!childrenIds) {
+                          return;
+                  }
+                  const children = _.filter(records, (record) => {
+                          return _.includes(childrenIds, record.value)
+                  });
+                  _.each(children, (item) => {
+                          if (item.children) {
+                                  item.children = getChildren(records, item.children)
+                          }
+                  })
+                  return children;
+          }
+
+          const getRoot = (records) => {
+                  for (var i = 0; i < records.length; i++){
+                          records[i].noParent = 0;
+                          if (!!records[i].parent) {
+                                  biaozhi = 1
+                                  for (var j = 0; j < records.length; j++){
+                                          if (records[i].parent == records[j].value)
+                                                  biaozhi = 0;
+                                  }
+                                  if (biaozhi == 1) records[i].noParent = 1;
+                          } else records[i].noParent = 1;
+                  }
+          }
+          getRoot(records);
+
+          _.each(records, (record) => {
+                  if (record.noParent ==1) {
+                          treeRecords.push(Object.assign({}, record, { children: getChildren(records, record.children) }));
+                  }
+          });
+
+          payload.data.options = treeRecords;
+          payload.data.cache = true;
+          return payload;
+        `;
         return {
           "type": "page",
           "body": [
@@ -82,7 +143,7 @@
                       "source": {
                         "method": "get",
                         "url": "${context.rootUrl}/api/v1/space_users?filters=${additionalFilters}",
-                        "requestAdaptor": "let query = api.query;if(!query.filters){query.filters = []}else if(api.query.__keywords){query.filters.push(\"and\");}if(api.query.__keywords){query.filters.push([\"name\",\"contains\",api.query.__keywords]);}query.filters = JSON.stringify(query.filters);url_tmp = api.url.split('?')[0];api.url = url_tmp + \"?fields=\" + query.fields + \"&skip=\" + query.skip + \"&top=\" + query.top + \"&sort=\" + query.sort + \"&filters=\" + query.filters;return api;",
+                        "requestAdaptor": crudRequestAdaptor,
                         "adaptor":"",
                         "headers": {
                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -90,12 +151,13 @@
                         "data": {
                           "sort": "sort_no desc",
                           "skip": "${(page - 1) * perPage}",
-                          "top": "${perPage || 20}",
+                          "top": "${perPage}",
                           "fields": "[\"_id\",\"name\",\"user\"]",
                           "__keywords": "${__keywords}"
                         },
                         "messages": {
-                        }
+                        },
+                        "cache": 30000
                       },
                       "id": "u:0c2caa804b74",
                       "value": "${defaultValues | join}"
@@ -132,11 +194,11 @@
                         }
                       ],
                       "footerToolbar": [
-                        {
-                          "type": "pagination",
-                          "maxButtons": 5
-                        }
+                        "pagination"
                       ],
+                      "defaultParams":{
+                        "perPage": "20"
+                      },
                       "columns": [
                         {
                           "name": "name",
@@ -178,14 +240,13 @@
                             "headers": {
                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                             },
-                            "adaptor": "        if (payload.data.cache == true) {\n                return payload;\n        }\n        const records = payload.data.options;\n        const treeRecords = [];\n        const getChildren = (records, childrenIds) => {\n                if (!childrenIds) {\n                        return;\n                }\n                const children = _.filter(records, (record) => {\n                        return _.includes(childrenIds, record.value)\n                });\n                _.each(children, (item) => {\n                        if (item.children) {\n                                item.children = getChildren(records, item.children)\n                        }\n                })\n                return children;\n        }\n\n        const getRoot = (records) => {\n                for (var i = 0; i < records.length; i++){\n                        records[i].noParent = 0;\n                        if (!!records[i].parent) {\n                                biaozhi = 1\n                                for (var j = 0; j < records.length; j++){\n                                        if (records[i].parent == records[j].value)\n                                                biaozhi = 0;\n                                }\n                                if (biaozhi == 1) records[i].noParent = 1;\n                        } else records[i].noParent = 1;\n                }\n        }\n        getRoot(records);\n\n        _.each(records, (record) => {\n                if (record.noParent ==1) {\n                        treeRecords.push(Object.assign({}, record, { children: getChildren(records, record.children) }));\n                }\n        });\n\n        payload.data.options = treeRecords;\n        payload.data.cache = true;\n        return payload;\n    ",
-                            "requestAdaptor": "\n    ",
+                            "adaptor": treeAdaptor,
                             "data": {
                               "query": "{options:organizations(filters:[\"hidden\", \"!=\", true],sort:\"sort_no desc\"){value:_id label:name,parent,children}}"
                             },
                             "messages": {
                             },
-                            "cache": 300000
+                            "cache": 30000
                           },
                           "onEvent": {
                             "change": {
@@ -220,14 +281,19 @@
                           "initiallyOpen": false,
                           "extractValue": true,
                           "onlyChildren": true,
-                          "treeContainerClassName": "h-full no-border",
+                          "treeContainerClassName": {
+                            "h-full no-border": "true",
+                            "pt-0": "${window:innerWidth < 768}",
+                            "pt-2": "${window:innerWidth > 768}"
+                          },
                           "showIcon": false,
                           "enableNodePath": false,
                           "autoCheckChildren": true,
                           "searchable": true,
                           "searchConfig": {
                             "sticky": true,
-                            "placeholder": "请搜索组织"
+                            "placeholder": "请搜索组织",
+                            "className": "mt-0"
                           },
                           "unfoldedLevel": 2,
                           "inputClassName": "",
@@ -258,7 +324,7 @@
                   "actions": [
                     {
                       "actionType": "custom",
-                      "script": "if (event.data.userOptions) {\r\n  doAction({\r\n    actionType: 'setValue',\r\n    args: {\r\n      value: {\r\n        \"additionalFilters\": [[\r\n          [\r\n            \"_id\",\r\n            \"in\",\r\n            event.data.userOptions.split(\",\")\r\n          ]]\r\n        ]\r\n      }\r\n    }\r\n  });\r\n}"
+                      "script": "if (event.data.userOptions) {\r\n  doAction({\r\n    actionType: 'setValue',\r\n    args: {\r\n      value: {\r\n        \"additionalFilters\": [\r\n          [\r\n            \"user\",\r\n            \"in\",\r\n            event.data.userOptions.split(\",\")\r\n          ]\r\n        ]\r\n      }\r\n    }\r\n  });\r\n}"
                     }
                   ]
                 }
@@ -295,6 +361,9 @@
             "select-users-sidebar-open": "${window:innerWidth > 768 && showOrg}"
           },
           "css": {
+            ".select-users-list .antd-Form-item::after":{
+              "border-bottom":"none"
+            },
             ".select-users-list .antd-Crud-selection":{
               "display":"none"
             },
@@ -343,6 +412,10 @@
             },
             ".select-users-minwidth": {
               "min-width": "388px"
+            },
+            ".select-users-list.select-users-pc .antd-TreeControl > .antd-Tree":{
+              "max-height": "unset",
+              "overflow": "unset"
             },
             "body.zoom-extra-large .select-users-list.select-users-mobile .antd-Tree": {
               "max-height": "calc(100vh - 347px) !important",
