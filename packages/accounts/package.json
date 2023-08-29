@@ -46,7 +46,7 @@
     "lodash": "^4.17.21",
     "mem": "^5.1.1",
     "mongodb": "^3.7.3",
-    "mongoose": "^5.12.13",
+    "mongoose": "^6.12.0",
     "nodemailer": "^6.3.0",
     "pug": "^3.0.2",
     "request-ip": "^2.2.0",
