@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as path from 'path';
-import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
 import { AccountsServer, generateRandomToken } from './server';
 import { AccountsPassword } from './password';
@@ -21,19 +20,26 @@ export { getMergedTenant } from './core';
 declare var WebApp;
 
 const config = getSteedosConfig();
+let accountsServer;
 
-function getAccountsServer() {
+export function getAccountsServer() {
+  return accountsServer;
+}
+
+export async function createAccountsServer() {
   let accountsConfig = config.tenant || {};
   let emailConfig = config.email || {};
   let tokenSecret = accountsConfig.tokenSecret || generateRandomToken();
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
+  let client;
 
   if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
     const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
     const kmsProvider = getKMSProviders();
-    mongoose.connect(mongoUrl, {
+    client = new mongodb.MongoClient(mongoUrl, {
+      useNewUrlParser: true, useUnifiedTopology: true,
       monitorCommands: true,
       autoEncryption: {
         keyVaultNamespace: keyVaultNamespace,
@@ -42,9 +48,12 @@ function getAccountsServer() {
       }
     } as any);
   } else {
-    mongoose.connect(mongoUrl, {  });
+    client = new mongodb.MongoClient(mongoUrl, {  useNewUrlParser: true, useUnifiedTopology: true } as any);
   }
-  const connection = mongoose.connection;
+
+
+  await client.connect();
+  const connection = client.db();
 
   const rootUrl = process.env.ROOT_URL
     ? process.env.ROOT_URL
@@ -136,9 +145,10 @@ function getAccountsServer() {
   return accountsServer;
 }
 
-export const accountsServer = getAccountsServer()
 
 export async function getAccountsRouter(context) {
+
+  accountsServer = await createAccountsServer();
 
   const router = accountsExpress(accountsServer, {
     path: '/accounts',

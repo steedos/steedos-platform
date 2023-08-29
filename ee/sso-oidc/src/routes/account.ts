@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-07-01 11:13:58
  * @Description: 
  */
-import { accountsServer, setAuthCookies } from '@steedos/accounts';
+import { getAccountsServer, setAuthCookies } from '@steedos/accounts';
 
 import * as requestIp from 'request-ip';
 import { UserProvider } from '../collections/user_provider';
@@ -36,6 +36,7 @@ export class Account {
         let phone_login_expiration_in_days = null;
         let space = null;
         // 获取用户简档
+        const accountsServer = await getAccountsServer();
         const userProfile = await accountsServer.getUserProfile(
             user.id
         );
