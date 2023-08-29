@@ -1,0 +1,351 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "service",
+            "id": "u:f6a209c8cf61",
+            "data": {
+                "isVisible": true
+            },
+            "messages": {},
+            "body": [
+                {
+                    "type": "wrapper",
+                    "id": "u:9526a450d59b",
+                    "style": {
+                        "border-width": "${displayAs == 'split'?'0px':''}",
+                        "box-shadow": "${displayAs == 'split'?'none':''}",
+                        "--tw-shadow-colored": "${displayAs == 'split'?'none':''}",
+                        "--tw-shadow": "${displayAs == 'split'?'none':''}"
+                    },
+                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:shadow sm:rounded",
+                    "size": "none",
+                    "body": [
+                        {
+                            "type": "wrapper",
+                            "size": "none",
+                            "className": "flex-shrink-0 min-w-[200px] overflow-y-auto border-r border-gray-200 lg:order-first lg:flex lg:flex-col hidden",
+                            "body": [
+                                {
+                                    "type": "nav",
+                                    "stacked": true,
+                                    "id": "u:fef15e62ad3a",
+                                    "itemActions": [
+                                        {
+                                            "type": "dropdown-button",
+                                            "level": "link",
+                                            "icon": "fa fa-ellipsis-h",
+                                            "hideCaret": true,
+                                            "buttons": [
+                                                {
+                                                    "type": "button",
+                                                    "label": "编辑 ${event.data.item.object_name}",
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "type": "dialog",
+                                                        "title": "编辑 ${event.data.item.object_name}",
+                                                        "body": [
+                                                            {
+                                                                "type": "steedos-object-form",
+                                                                "label": "对象表单",
+                                                                "objectApiName": "${event.data.item.object_name}",
+                                                                "defaultData": {
+                                                                    "site": "${site || event.data.item._id}"
+                                                                },
+                                                                "recordId": "${event.data.item._id}",
+                                                                "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+                                                                "id": "u:1a0be526e371",
+                                                                "mode": "edit"
+                                                            }
+                                                        ],
+                                                        "showCloseButton": true,
+                                                        "showErrorMsg": true,
+                                                        "showLoading": true,
+                                                        "className": "app-popover",
+                                                        "closeOnEsc": false,
+                                                        "size": "md"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "button",
+                                                    "label": "删除"
+                                                },
+                                                {
+                                                    "type": "button",
+                                                    "label": "新建栏目",
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "type": "dialog",
+                                                        "title": "新建栏目",
+                                                        "body": [
+                                                            {
+                                                                "type": "steedos-object-form",
+                                                                "label": "对象表单",
+                                                                "objectApiName": "cms_categories",
+                                                                "defaultData": {
+                                                                    "site": "${site || event.data.item._id}"
+                                                                },
+                                                                "recordId": "",
+                                                                "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+                                                                "id": "u:1a0be526e371",
+                                                                "mode": "edit"
+                                                            }
+                                                        ],
+                                                        "showCloseButton": true,
+                                                        "showErrorMsg": true,
+                                                        "showLoading": true,
+                                                        "className": "app-popover",
+                                                        "id": "u:16fb32580cf2",
+                                                        "closeOnEsc": false,
+                                                        "size": "md"
+                                                    }
+                                                }
+                                            ],
+                                            "id": "u:39af3408b67d"
+                                        }
+                                    ],
+                                    "className": "w-md",
+                                    "draggable": false,
+                                    "source": {
+                                        "url": "${context.rootUrl}/graphql",
+                                        "method": "post",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": {
+                                            "query": "{rows:cms_sites(filters: [], top: 20, skip: 0, sort: \"\"){_id,name,visibility,order,_display:_ui{visibility,order},_categories:_related_cms_categories_site{_id,name,parent,order}},count:cms_sites__count(filters:[])}"
+                                        },
+                                        "requestAdaptor": "",
+                                        "adaptor": "const rows = payload.data.rows;\nconsole.log('roows==>', rows);\n\nconst treeRecords = [];\n\nconst getParentIds = (records) => {\n  const ids = _.map(records, (item) => {\n    return item._id;\n  });\n  const parents = _.filter(records, (record) => {\n    return !record.parent || !_.includes(ids, record.parent);\n  })\n  const parentsIds = _.map(parents, (item) => {\n    return item._id;\n  })\n  return parentsIds;\n}\nconst getChildren = (records, record_id, rootFilter) => {\n  const children = _.filter(records, (record) => {\n    return record_id === record.parent\n  });\n  // _.each(children, (item) => {\n  //   if (item.children) {\n  //     item.children = getChildren(records, item.children)\n  //   }\n  // })\n  const childrens = _.map(children, (item,index) => {\n    return {\n      _id: item._id, label: item.name, to: \"\", value: index + '', icon: \"fa fa-user\", object_name: 'cms_categories', children: getChildren(records, item._id, rootFilter),\n      additionalFilters: [rootFilter, [\"category\", \"=\", item._id]]\n    }\n  })\n  console.log('children==>', children)\n  return childrens;\n}\n\n// const parentIds = getParentIds(records);\n// _.each(records, (record) => {\n//   if (!record.parent || _.includes(parentIds, record._id)) {\n//     treeRecords.push(Object.assign({}, record, { children: getChildren(records, record.children) }));\n//   }\n// });\n\nconst links = _.map(rows, (item, index) => {\n  const records = item._categories;\n  const treeRecords = [];\n  const parentIds = getParentIds(records);\n  console.log('parentIds==>', parentIds);\n  _.each(records, (record, index) => {\n    // || _.includes(parentIds, record._id)\n    if (!record.parent) {\n      treeRecords.push(Object.assign(\n        {},\n        {\n          _id: record._id, label: record.name, to: \"\", value: index + '', icon: \"fa fa-user\",\n          object_name: 'cms_sites',\n          additionalFilters: [[\"site\", \"=\", item._id], [\"category\", \"=\", record._id]]\n        },\n        { children: getChildren(records, record._id, [\"site\", \"=\", item._id]) }\n      ));\n    }\n  });\n  console.log('treeRecords==>', treeRecords); \n  return {\n    _id: item._id,\n    label: item.name,\n    to: \"\",\n    value: index + '',\n    icon: \"fa fa-user\",\n    children: treeRecords,\n    additionalFilters: [\"site\", \"=\", item._id]\n  }\n})\n\npayload = {\n  data: {\n    links\n  },\n  msg: '',\n  status: 0\n}\nreturn payload;",
+                                        "messages": {}
+                                    },
+                                    "style": {},
+                                    "onEvent": {
+                                        "click": {
+                                            "weight": 0,
+                                            "actions": [
+                                                {
+                                                    "actionType": "toast",
+                                                    "args": {
+                                                        "msgType": "info",
+                                                        "msg": "data: ${event.data | json}"
+                                                    }
+                                                },
+                                                {
+                                                    "actionType": "setValue",
+                                                    "componentId": "u:f6a209c8cf61",
+                                                    "args": {
+                                                        "value": {
+                                                            "additionalFilters": "${event.data.item.additionalFilters}",
+                                                            "site": "${event.data.item._id}"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "change": {
+                                            "weight": 0,
+                                            "actions": [
+                                                {
+                                                    "actionType": "toast",
+                                                    "args": {
+                                                        "msgType": "info",
+                                                        "msg": "菜单选中: ${event.data | json}"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "toggled": {
+                                            "weight": 0,
+                                            "actions": [
+                                                {
+                                                    "actionType": "toast",
+                                                    "args": {
+                                                        "msgType": "info",
+                                                        "msg": "菜单展开: ${event.data | json}"
+                                                    }
+                                                },
+                                                {
+                                                    "actionType": "setValue",
+                                                    "componentId": "u:f6a209c8cf61",
+                                                    "args": {
+                                                        "value": {
+                                                            "additionalFilters": "${event.data.item.additionalFilters}",
+                                                            "site": "${event.data.item._id}"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "button",
+                                    "label": "新建站点",
+                                    "onEvent": {
+                                        "click": {
+                                            "actions": [
+                                                {
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "type": "dialog",
+                                                        "title": "新建站点",
+                                                        "body": [
+                                                            {
+                                                                "type": "steedos-object-form",
+                                                                "id": "u:1a0be526e371",
+                                                                "label": "对象表单",
+                                                                "objectApiName": "cms_sites",
+                                                                "recordId": "",
+                                                                "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+                                                                "mode": "edit"
+                                                            }
+                                                        ],
+                                                        "showCloseButton": true,
+                                                        "showErrorMsg": true,
+                                                        "showLoading": true,
+                                                        "className": "app-popover",
+                                                        "id": "u:16fb32580cf2",
+                                                        "closeOnEsc": false,
+                                                        "size": "md"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "id": "u:297fc7ae800b",
+                                    "editorState": "default"
+                                },
+                                {
+                                    "type": "tpl",
+                                    "tpl": "+新建站点",
+                                    "inline": true,
+                                    "wrapperComponent": "",
+                                    "id": "u:8b332b604ee8",
+                                    "onEvent": {
+                                        "click": {
+                                            "weight": 0,
+                                            "actions": [
+                                                {
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "type": "dialog",
+                                                        "title": "新建站点",
+                                                        "body": [
+                                                            {
+                                                                "type": "steedos-object-form",
+                                                                "label": "对象表单",
+                                                                "objectApiName": "cms_sites",
+                                                                "recordId": "",
+                                                                "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+                                                                "id": "u:1a0be526e371",
+                                                                "mode": "edit"
+                                                            }
+                                                        ],
+                                                        "showCloseButton": true,
+                                                        "showErrorMsg": true,
+                                                        "showLoading": true,
+                                                        "className": "app-popover",
+                                                        "id": "u:16fb32580cf2",
+                                                        "closeOnEsc": false,
+                                                        "size": "md"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "id": "u:fd659f5c3657",
+                            "visibleOn": "${isVisible}"
+                        },
+                        {
+                            "type": "wrapper",
+                            "size": "none",
+                            "className": "flex-1 overflow-y-auto focus:outline-none lg:order-last w-96",
+                            "body": [
+                                {
+                                    "type": "steedos-object-table",
+                                    "objectApiName": "cms_posts",
+                                    "id": "u:f259c69e3c93",
+                                    "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white",
+                                    "label": "对象表格",
+                                    "fields": [
+                                        "name"
+                                    ],
+                                    "sortField": "",
+                                    "sortOrder": "desc",
+                                    "headerToolbarItems": [
+                                        {
+                                            "type": "button",
+                                            "label": "新建知识",
+                                            "onEvent": {
+                                                "click": {
+                                                    "actions": [
+                                                        {
+                                                            "actionType": "dialog",
+                                                            "dialog": {
+                                                                "type": "dialog",
+                                                                "title": "新建知识",
+                                                                "body": [
+                                                                    {
+                                                                        "type": "steedos-object-form",
+                                                                        "id": "u:1a0be526e371",
+                                                                        "label": "对象表单",
+                                                                        "objectApiName": "cms_posts",
+                                                                        "recordId": "",
+                                                                        "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+                                                                        "mode": "edit"
+                                                                    }
+                                                                ],
+                                                                "showCloseButton": true,
+                                                                "showErrorMsg": true,
+                                                                "showLoading": true,
+                                                                "className": "app-popover",
+                                                                "id": "u:16fb32580cf2",
+                                                                "closeOnEsc": false,
+                                                                "size": "md"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "id": "u:ca495ec221e7"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "context": {}
+    },
+    "id": "u:b7167e2fcaf0",
+    "name": "page_cms_posts_list",
+    "bodyClassName": "p-0",
+    "style": {
+        "padding": "${displayAs == 'grid'?'':'0px'}"
+    },
+    "asideResizor": false,
+    "pullRefresh": {
+        "disabled": true
+    },
+    "className": "cms_posts-list sm:p-3",
+    "css": {
+        ".cms_posts-list .antd-Tree": {
+            "max-height": "87vh !important",
+            "overflow": "visible !important"
+        },
+        ".cms_posts-list .antd-TreeControl": {
+            "max-height": "100%"
+        }
+    }
+}

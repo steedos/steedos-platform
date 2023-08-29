@@ -382,8 +382,22 @@ module.exports = {
             _id: instance_id
         }, {
             $set: setObj,
+        });
+        for (const ruId of remove_user_ids) {
+            db.instances.update({
+                _id: instance_id,
+                cc_users: ruId
+            }, {
+                $unset: {
+                    'cc_users.$': true
+                }
+            });
+        }
+        db.instances.update({
+            _id: instance_id,
+        }, {
             $pull: {
-                cc_users: { $in: remove_user_ids }
+                cc_users: null
             }
         });
 

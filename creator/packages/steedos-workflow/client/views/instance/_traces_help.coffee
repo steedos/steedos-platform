@@ -20,9 +20,9 @@ TracesTemplate.helpers =
 
 	dateFormat: (date) ->
 			if Steedos.isMobile() && date?.getFullYear() == (new Date).getFullYear()
-				return $.format.date new Date(date), "MM-dd HH:mm"
+				return moment(date).format('MM-DD HH:mm');
 			else
-				return $.format.date new Date(date), "yyyy-MM-dd HH:mm"
+				return moment(date).format('YYYY-MM-DD HH:mm');
 
 	getStepName: (stepId) ->
 		step = WorkflowManager.getInstanceStep(stepId)
