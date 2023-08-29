@@ -446,6 +446,13 @@ fields:
     omit: true
     hidden: true
     name: distribute_to_self
+  distribute_end_notification:
+    label: Distribute to myself
+    type: boolean
+    group: Distribution
+    omit: true
+    hidden: true
+    name: distribute_to_self
   upload_after_being_distributed:
     label: Allow upload after being distributed
     type: boolean
@@ -1002,7 +1009,7 @@ actions:
             type: 'POST',
             async: false,
             data: JSON.stringify({
-                query: `{record:${object_name}__findOne(id: "${record_id}"){_id, name, distribute_optional_users, current}}`
+                query: `{record:${object_name}__findOne(id: "${record_id}"){_id, name, distribute_optional_users, current, distribute_to_self, distribute_end_notification, upload_after_being_distributed}}`
             }),
             contentType: 'application/json',
             error: function () { }
