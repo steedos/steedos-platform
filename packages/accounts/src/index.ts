@@ -9,7 +9,7 @@ import MongoDBInterface from './database-mongo';
 // import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { getSteedosConfig, getSteedosSchema, getMongoFieldEncryptionConsts } from '@steedos/objectql'
+import { getSteedosConfig, getDataSource } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS } from './core';
@@ -33,26 +33,10 @@ export async function createAccountsServer() {
   let accessTokenExpiresIn = accountsConfig.accessTokenExpiresIn || "90d";
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
-  let client;
+  const driver = getDataSource('default').adapter as any;
+  await driver.connect();
+  const client = driver.getClient();
 
-  if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
-    const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
-    const kmsProvider = getKMSProviders();
-    client = new mongodb.MongoClient(mongoUrl, {
-      useNewUrlParser: true, useUnifiedTopology: true,
-      monitorCommands: true,
-      autoEncryption: {
-        keyVaultNamespace: keyVaultNamespace,
-        kmsProviders: kmsProvider,
-        bypassAutoEncryption: true,
-      }
-    } as any);
-  } else {
-    client = new mongodb.MongoClient(mongoUrl, {  useNewUrlParser: true, useUnifiedTopology: true } as any);
-  }
-
-
-  await client.connect();
   const connection = client.db();
 
   const rootUrl = process.env.ROOT_URL
