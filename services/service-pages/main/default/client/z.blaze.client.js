@@ -364,9 +364,6 @@
             ".select-users-list .antd-Form-item::after":{
               "border-bottom":"none"
             },
-            ".select-users-list .antd-Crud-selection":{
-              "display":"none"
-            },
             ".select-users-modal-body":{
               "height":"100%"
             },
