@@ -152,16 +152,16 @@
   height: 0px
 }
 
+.w-full {
+  width: 100%
+}
+
 .w-10 {
   width: 2.5rem
 }
 
 .w-6\/12 {
   width: 50%
-}
-
-.w-full {
-  width: 100%
 }
 
 .w-96 {
@@ -230,6 +230,10 @@
   border-radius: 0.25rem
 }
 
+.border-l {
+  border-left-width: 1px
+}
+
 .border-b {
   border-bottom-width: 1px
 }
@@ -242,11 +246,6 @@
   border-style: solid
 }
 
-.border-slate-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity))
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity))
@@ -255,6 +254,11 @@
 .border-slate-200 {
   --tw-border-opacity: 1;
   border-color: rgb(226 232 240 / var(--tw-border-opacity))
+}
+
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity))
 }
 
 .border-gray-200 {
@@ -276,12 +280,22 @@
   padding: 0px
 }
 
+.p-2 {
+  padding: 0.5rem
+}
+
 .p-4 {
   padding: 1rem
 }
 
-.p-2 {
-  padding: 0.5rem
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px
 }
 
 .px-1 {
@@ -297,16 +311,6 @@
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem
-}
-
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px
-}
-
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px
 }
 
 .py-1 {
@@ -346,14 +350,14 @@
   line-height: 1
 }
 
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity))
-}
-
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity))
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity))
 }
 
 .underline {

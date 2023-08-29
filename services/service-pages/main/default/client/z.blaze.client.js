@@ -13,17 +13,12 @@
         if(template.data.multiple == true){
             return {
                 "onEvent": {
-                    "selectedChange": {
+                    "change": {
                         "actions": [
                             {
                                 "actionType": "custom",
                                 "script": `
                                   let selectedItems = event.data.selectedItems;
-                                  selectedItems.forEach(function (item,index) {
-                                      if(item.data){
-                                          selectedItems[index] = item.data
-                                      }
-                                  })
                                   Session.set('_selectUsers', selectedItems)
                                 `
                             }
@@ -34,18 +29,13 @@
         }else{
             return {
                 "onEvent": {
-                    "selectedChange": {
+                    "change": {
                         "actions": [
                             {
                                 "actionType": "custom",
                                 "script": `
-                                    let selectedItems = event.data.selectedItems;
-                                    const _selectUsers = Session.get('_selectUsers')
-                                    if(_selectUsers && _selectUsers.length > 0){
-                                        selectedItems = selectedItems.filter(function (item) {
-                                            return item.user != _selectUsers[0].user;
-                                        })
-                                    }
+                                    let selectedItems = [];
+                                    selectedItems.push(event.data.selectedItems);
                                     Session.set('_selectUsers', selectedItems)
                                 
                                 `
@@ -84,6 +74,7 @@
                     "id": "u:ff88cc3375b5",
                     "reference_to": "space_users",
                     "amis": {
+                      ...getCurd(template),
                       "embed": true,
                       "label": false,
                       "multiple": template.data.multiple,
@@ -91,7 +82,7 @@
                       "source": {
                         "method": "get",
                         "url": "${context.rootUrl}/api/v1/space_users?filters=${additionalFilters}",
-                        "requestAdaptor": "let query = api.query;if(!query.filters){query.filters = []}else{query.filters.push(\"and\");}if(api.query.__keywords){query.filters.push([\"name\",\"contains\",api.query.__keywords]);}query.filters = JSON.stringify(query.filters);url_tmp = api.url.split('?')[0];api.url = url_tmp + \"?fields=\" + query.fields + \"&skip=\" + query.skip + \"&top=\" + query.top + \"&sort=\" + query.sort + \"&filters=\" + query.filters;return api;",
+                        "requestAdaptor": "let query = api.query;if(!query.filters){query.filters = []}else if(api.query.__keywords){query.filters.push(\"and\");}if(api.query.__keywords){query.filters.push([\"name\",\"contains\",api.query.__keywords]);}query.filters = JSON.stringify(query.filters);url_tmp = api.url.split('?')[0];api.url = url_tmp + \"?fields=\" + query.fields + \"&skip=\" + query.skip + \"&top=\" + query.top + \"&sort=\" + query.sort + \"&filters=\" + query.filters;return api;",
                         "adaptor":"",
                         "headers": {
                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -110,7 +101,6 @@
                       "value": "${defaultValues | join}"
                     },
                     "pickerSchema": {
-                      ...getCurd(template),
                       "headerToolbar": [
                         {
                           "type": "button",
@@ -135,9 +125,16 @@
                           clearAndSubmit: true,
                           clearable: true,
                           name: "__keywords",
-                          placeholder: "快速搜索",
+                          placeholder: "请搜索姓名",
                           type: "search-box",
-                          value: ""
+                          value: "",
+                          align: "right"
+                        }
+                      ],
+                      "footerToolbar": [
+                        {
+                          "type": "pagination",
+                          "maxButtons": 5
                         }
                       ],
                       "columns": [
@@ -147,6 +144,7 @@
                           "id": "u:a16aeb69065b"
                         }
                       ],
+                      "checkOnItemClick": true,
                       "autoFillHeight": false,
                       "id": "u:ea2da4bc2a42",
                       "className": "bg-white"
@@ -158,8 +156,7 @@
                 {
                   "type": "action",
                   "className": {
-                    "absolute isInset": "true",
-                    "inset-0": "${window:innerWidth < 768}"
+                    "absolute isInset": "true"
                   },
                   "id": "u:10896530250e",
                   "body": [
@@ -168,7 +165,7 @@
                       "className": {
                         "mobileCss": "${window:innerWidth < 768}",
                         "pcCss": "${window:innerWidth > 768}",
-                        "select-users-sidebar-wrapper px-0 fixed z-20 ease-in-out duration-300 flex flex-col overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0": "true"
+                        "select-users-sidebar-wrapper px-0 fixed z-20 ease-in-out duration-300 flex flex-col overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0 border-r": "true"
                       },
                       "body": [
                         {
@@ -229,7 +226,8 @@
                           "autoCheckChildren": true,
                           "searchable": true,
                           "searchConfig": {
-                            "sticky": true
+                            "sticky": true,
+                            "placeholder": "请搜索组织"
                           },
                           "unfoldedLevel": 2,
                           "inputClassName": "",
@@ -340,7 +338,6 @@
             ".mobileCss": {
               "top": "51px",
               "left": "0px",
-              "padding-bottom": "65px",
               "height": "calc(100% - 105px)",
               "width": "240px"
             },
