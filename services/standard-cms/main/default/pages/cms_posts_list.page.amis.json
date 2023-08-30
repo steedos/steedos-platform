@@ -10,25 +10,63 @@
             "messages": {},
             "body": [
                 {
-                    "type": "wrapper",
-                    "id": "u:9526a450d59b",
-                    "style": {
-                        "border-width": "${displayAs == 'split'?'0px':''}",
-                        "box-shadow": "${displayAs == 'split'?'none':''}",
-                        "--tw-shadow-colored": "${displayAs == 'split'?'none':''}",
-                        "--tw-shadow": "${displayAs == 'split'?'none':''}"
-                    },
-                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:shadow sm:rounded",
-                    "size": "none",
+                    "type": "steedos-object-listview",
+                    "label": "列表视图",
+                    "objectApiName": "${objectName}",
+                    "listName": "all",
+                    "showHeader": true,
+                    "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                    "headerToolbarItems": [
+                        {
+                            "type": "button",
+                            "label": "组织",
+                            "icon": "fa fa-sitemap",
+                            "className": "bg-white p-2 rounded border-gray-300 text-gray-500",
+                            "align": "left",
+                            "onEvent": {
+                                "click": {
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "console.log(event.target);document.querySelector('.cms_posts-list').classList.toggle('cms_posts-sidebar-open');if(window.innerWidth < 768){document.querySelector('.isInset').classList.toggle('inset-0')}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "id": "u:115e270cae4d",
+                            "visibleOn": "${window:innerWidth < 768}"
+                        }
+                    ],
+                    "id": "u:2ee11aa2a699"
+                },
+                {
+                    "type": "action",
                     "body": [
                         {
-                            "type": "wrapper",
-                            "size": "none",
-                            "className": "flex-shrink-0 min-w-[200px] overflow-y-auto border-r border-gray-200 lg:order-first lg:flex lg:flex-col hidden",
+                            "type": "action",
+                            "className": {
+                                "mobileCss": "${window:innerWidth < 768}",
+                                "pcCss": "${window:innerWidth > 768}",
+                                "cms_posts-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-200 block -translate-x-0 py-0": "true"
+                            },
                             "body": [
                                 {
                                     "type": "nav",
                                     "id": "u:fef15e62ad3a",
+                                    "className": "w-md",
+                                    "source": {
+                                        "method": "post",
+                                        "url": "${context.rootUrl}/graphql",
+                                        "headers": {
+                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "adaptor": "const rows = payload.data.rows;\n// console.log('roows==>', rows);\n\nconst getChildren = (records, record_id, site) => {\n  const children = _.filter(records, (record) => {\n    return record_id === record.parent\n  });\n  const childrens = _.map(children, (item, index) => {\n    return {\n      _id: item._id, label: item.name, to: \"\", value: index + '', icon: \"fa fa-user\", object_name: 'cms_categories', site: site, parent: item._id,\n      children: getChildren(records, item._id, site),\n      additionalFilters: [[\"site\", \"=\", site], [\"category\", \"=\", item._id]]\n    }\n  })\n  // console.log('children==>', children)\n  return childrens;\n}\n\nconst links = _.map(rows, (item, index) => {\n  const records = item._categories;\n  const treeRecords = [];\n  _.each(records, (record, index) => {\n    if (!record.parent) {\n      treeRecords.push(Object.assign(\n        {},\n        {\n          _id: record._id, label: record.name, to: \"\", value: index + '', icon: \"fa fa-user\",\n          object_name: 'cms_categories',\n          site: item._id,\n          parent: record._id,\n          additionalFilters: [[\"site\", \"=\", item._id], [\"category\", \"=\", record._id]]\n        },\n        { children: getChildren(records, record._id, item._id) }\n      ));\n    }\n  });\n  // console.log('treeRecords==>', treeRecords);\n  return {\n    _id: item._id,\n    label: item.name,\n    site: item._id,\n    parent: '',\n    object_name: 'cms_sites',\n    to: \"\",\n    value: index + '',\n    icon: \"fa fa-user\",\n    children: treeRecords,\n    additionalFilters: [\"site\", \"=\", item._id]\n  }\n})\n\npayload = {\n  data: {\n    links\n  },\n  msg: '',\n  status: 0\n}\nreturn payload;",
+                                        "requestAdaptor": "",
+                                        "data": {
+                                            "query": "{rows:cms_sites(filters: [], top: 20, skip: 0, sort: \"\"){_id,name,visibility,order,_display:_ui{visibility,order},_categories:_related_cms_categories_site{_id,name,parent,order}},count:cms_sites__count(filters:[])}"
+                                        },
+                                        "messages": {}
+                                    },
                                     "onEvent": {
                                         "click": {
                                             "actions": [
@@ -69,11 +107,12 @@
                                             "buttons": [
                                                 {
                                                     "type": "button",
-                                                    "label": "编辑",
+                                                    "label": "编辑站点",
+                                                    "visibleOn": "${object_name === 'cms_sites'}",
                                                     "actionType": "dialog",
                                                     "dialog": {
                                                         "type": "dialog",
-                                                        "title": "编辑",
+                                                        "title": "编辑站点",
                                                         "body": [
                                                             {
                                                                 "type": "steedos-object-form",
@@ -107,8 +146,83 @@
                                                 },
                                                 {
                                                     "type": "button",
+                                                    "label": "编辑栏目",
+                                                    "visibleOn": "${object_name === 'cms_categories'}",
+                                                    "actionType": "dialog",
+                                                    "dialog": {
+                                                        "type": "dialog",
+                                                        "title": "编辑栏目",
+                                                        "body": [
+                                                            {
+                                                                "type": "steedos-object-form",
+                                                                "label": "对象表单",
+                                                                "objectApiName": "${object_name}",
+                                                                "recordId": "${_id}",
+                                                                "className": "bg-white",
+                                                                "id": "u:1a0be526e371",
+                                                                "mode": "edit",
+                                                                "form": {
+                                                                    "onEvent": {
+                                                                        "submitSucc": {
+                                                                            "actions": [
+                                                                                {
+                                                                                    "actionType": "reload",
+                                                                                    "componentId": "u:fef15e62ad3a"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "showCloseButton": true,
+                                                        "showErrorMsg": true,
+                                                        "showLoading": true,
+                                                        "className": "app-popover",
+                                                        "closeOnEsc": false,
+                                                        "size": "md"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "button",
+                                                    "label": "删除站点",
+                                                    "visibleOn": "${object_name === 'cms_sites'}",
+                                                    "confirmText": "确定要删除 ${label} 站点吗？",
+                                                    "onEvent": {
+                                                        "click": {
+                                                            "actions": [
+                                                                {
+                                                                    "args": {
+                                                                        "api": {
+                                                                            "method": "post",
+                                                                            "url": "${context.rootUrl}/graphql",
+                                                                            "data": {
+                                                                                "&": "$$",
+                                                                                "recordId": "${_id}",
+                                                                                "objectName": "${object_name}"
+                                                                            },
+                                                                            "requestAdaptor": "const {recordId, objectName} = api.body; api.data = {query: `mutation{delete:${objectName}__delete(id: \"${recordId}\")}`}; return api;",
+                                                                            "headers": {
+                                                                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                            },
+                                                                            "adaptor": "if(payload.errors){payload.status = 2;payload.msg = window.t ? window.t(payload.errors[0].message) : payload.errors[0].message; } return payload;"
+                                                                        }
+                                                                    },
+                                                                    "actionType": "ajax"
+                                                                },
+                                                                {
+                                                                    "actionType": "reload",
+                                                                    "componentId": "u:fef15e62ad3a"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "button",
                                                     "label": "删除",
-                                                    "confirmText": "确定要删除吗？",
+                                                    "visibleOn": "${object_name === 'cms_categories'}",
+                                                    "confirmText": "确定要删除 ${label} 栏目吗？",
                                                     "onEvent": {
                                                         "click": {
                                                             "actions": [
@@ -186,27 +300,22 @@
                                             "id": "u:39af3408b67d"
                                         }
                                     ],
-                                    "className": "w-md",
                                     "draggable": false,
-                                    "source": {
-                                        "url": "${context.rootUrl}/graphql",
-                                        "method": "post",
-                                        "headers": {
-                                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                        },
-                                        "data": {
-                                            "query": "{rows:cms_sites(filters: [], top: 20, skip: 0, sort: \"\"){_id,name,visibility,order,_display:_ui{visibility,order},_categories:_related_cms_categories_site{_id,name,parent,order}},count:cms_sites__count(filters:[])}"
-                                        },
-                                        "requestAdaptor": "",
-                                        "adaptor": "const rows = payload.data.rows;\n// console.log('roows==>', rows);\n\nconst getChildren = (records, record_id, site) => {\n  const children = _.filter(records, (record) => {\n    return record_id === record.parent\n  });\n  const childrens = _.map(children, (item, index) => {\n    return {\n      _id: item._id, label: item.name, to: \"\", value: index + '', icon: \"fa fa-user\", object_name: 'cms_categories', site: site, parent: item._id,\n      children: getChildren(records, item._id, site),\n      additionalFilters: [[\"site\", \"=\", site], [\"category\", \"=\", item._id]]\n    }\n  })\n  // console.log('children==>', children)\n  return childrens;\n}\n\nconst links = _.map(rows, (item, index) => {\n  const records = item._categories;\n  const treeRecords = [];\n  _.each(records, (record, index) => {\n    if (!record.parent) {\n      treeRecords.push(Object.assign(\n        {},\n        {\n          _id: record._id, label: record.name, to: \"\", value: index + '', icon: \"fa fa-user\",\n          object_name: 'cms_categories',\n          site: item._id,\n          parent: record._id,\n          additionalFilters: [[\"site\", \"=\", item._id], [\"category\", \"=\", record._id]]\n        },\n        { children: getChildren(records, record._id, item._id) }\n      ));\n    }\n  });\n  // console.log('treeRecords==>', treeRecords);\n  return {\n    _id: item._id,\n    label: item.name,\n    site: item._id,\n    parent: '',\n    object_name: 'cms_sites',\n    to: \"\",\n    value: index + '',\n    icon: \"fa fa-user\",\n    children: treeRecords,\n    additionalFilters: [\"site\", \"=\", item._id]\n  }\n})\n\npayload = {\n  data: {\n    links\n  },\n  msg: '',\n  status: 0\n}\nreturn payload;",
-                                        "messages": {}
-                                    },
                                     "style": {}
                                 },
                                 {
-                                    "type": "button",
+                                    "type": "tpl",
+                                    "tpl": "+ 新建站点",
+                                    "inline": false,
+                                    "wrapperComponent": "",
+                                    "style": {
+                                        "marginLeft": "16px",
+                                        "marginTop": "10px"
+                                    },
+                                    "id": "u:8b332b604ee8",
                                     "onEvent": {
                                         "click": {
+                                            "weight": 0,
                                             "actions": [
                                                 {
                                                     "actionType": "dialog",
@@ -247,74 +356,121 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    "id": "u:297fc7ae800b",
-                                    "label": "新建站点",
-                                    "editorState": "default",
-                                    "size": "sm",
-                                    "block": false,
-                                    "themeCss": {
-                                        "className": {
-                                            "padding-and-margin:default": {
-                                                "marginTop": "0px",
-                                                "marginRight": "16px",
-                                                "marginBottom": "0px",
-                                                "marginLeft": "16px"
-                                            }
-                                        }
-                                    },
-                                    "className": "className-297fc7ae800b"
+                                    }
                                 }
                             ],
-                            "id": "u:fd659f5c3657",
-                            "visibleOn": "${isVisible}"
-                        },
-                        {
-                            "type": "wrapper",
-                            "size": "none",
-                            "className": "flex-1 focus:outline-none lg:order-last w-96",
-                            "body": [
+                            "id": "u:04f0e5aafaf0"
+                        }
+                    ],
+                    "onEvent": {
+                        "click": {
+                            "actions": [
                                 {
-                                    "type": "steedos-object-listview",
-                                    "label": "列表视图",
-                                    "objectApiName": "${objectName}",
-                                    "listName": "all",
-                                    "showHeader": true,
-                                    "className": "sm:shadow sm:rounded sm:border-gray-300 mb-4",
-                                    "id": "u:666d9dcff276"
+                                    "actionType": "custom",
+                                    "script": " if(window.innerWidth < 768){ document.querySelector('.cms_posts-list').classList.remove('cms_posts-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
                                 }
-                            ],
-                            "id": "u:ca495ec221e7"
+                            ]
+                        }
+                    },
+                    "className": {
+                        "absolute isInset": "true",
+                        "inset-0": "${window:innerWidth < 768}"
+                    },
+                    "id": "u:10896530250e"
+                }
+            ],
+            "className": "h-full",
+            "onEvent": {
+                "init": {
+                    "actions": [
+                        {
+                            "actionType": "setValue",
+                            "args": {
+                                "value": {
+                                    "additionalFilters": [
+                                        "organizations_parents",
+                                        "in",
+                                        []
+                                    ]
+                                }
+                            }
                         }
                     ]
                 }
-            ]
+            }
         }
     ],
     "regions": [
         "body"
     ],
     "data": {
-        "context": {}
+        "context": {},
+        "isLookup": true
     },
     "id": "u:b7167e2fcaf0",
     "name": "page_cms_posts_list",
-    "bodyClassName": "p-0",
-    "style": {
-        "padding": "${displayAs == 'grid'?'':'0px'}"
+    "bodyClassName": {
+        "p-0 cms_posts-sidebar cms_posts-list cms_posts-sidebar-open": "true",
+        "cms_posts-pc cms_posts-minwidth": "${window:innerWidth > 768}",
+        "cms_posts-mobile": "${window:innerWidth < 768}"
     },
     "asideResizor": false,
     "pullRefresh": {
         "disabled": true
     },
-    "className": "cms_posts-list sm:p-3",
     "css": {
-        ".cms_posts-list .antd-Tree": {
-            "max-height": "87vh !important",
-            "overflow": "visible !important"
+        ".page-list-grid": {
+            "padding": "0px"
         },
-        ".cms_posts-list .antd-TreeControl": {
-            "max-height": "100%"
+        ".pcCss": {
+            "top": "90px",
+            "left": "0px"
+        },
+        ".mobileCss": {
+            "top": "50px",
+            "left": "0px",
+            "padding-bottom": "65px"
+        },
+        ".cms_posts-list.cms_posts-sidebar.cms_posts-sidebar-open.cms_posts-pc": {
+            "margin-left": "250px"
+        },
+        ".cms_posts-sidebar-wrapper": {
+            "transition": "0.5s ease transform",
+            "will-change": "transform",
+            "transform": "translate(-100%,0)",
+            "-webkit-transform": "translate(-100%,0)",
+            "-moz-transform": "translate(-100%,0)",
+            "-ms-transform": "translate(-100%,0)",
+            "-o-transform": "translate(-100%,0)",
+            "width": "250px"
+        },
+        ".cms_posts-list.cms_posts-sidebar-open .cms_posts-sidebar-wrapper": {
+            "transform": "translate(0,0)",
+            "-webkit-transform": "translate(0,0)",
+            "-moz-transform": "translate(0,0)",
+            "-ms-transform": "translate(0,0)",
+            "-o-transform": "translate(0,0)"
+        },
+        ".cms_posts-minwidth": {
+            "min-width": "388px"
+        },
+        "body.zoom-extra-large .cms_posts-list.cms_posts-mobile .antd-Tree": {
+            "max-height": "calc(100vh - 347px) !important",
+            "overflow": "auto !important"
+        },
+        "body.zoom-large .cms_posts-list.cms_posts-mobile .antd-Tree": {
+            "max-height": "calc(100vh - 271px) !important",
+            "overflow": "auto !important"
+        },
+        "body.zoom-normal .cms_posts-list.cms_posts-mobile .antd-Tree": {
+            "max-height": "calc(100vh - 174px) !important",
+            "overflow": "auto !important"
         }
+    },
+    "style": {
+        "paddingTop": "0px",
+        "paddingRight": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px"
     }
 }
