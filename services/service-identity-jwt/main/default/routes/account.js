@@ -27,7 +27,8 @@ class Account {
             let phone_logout_other_clients = false;
             let phone_login_expiration_in_days = null;
             let space = null;
-            const userProfile = yield accounts_1.accountsServer.getUserProfile(user.id);
+            const accountsServer = yield (0, accounts_1.getAccountsServer)();
+            const userProfile = yield accountsServer.getUserProfile(user.id);
             if (userProfile) {
                 logout_other_clients = userProfile.logout_other_clients || false;
                 login_expiration_in_days = userProfile.login_expiration_in_days;
@@ -37,7 +38,7 @@ class Account {
                     userProfile.phone_login_expiration_in_days;
                 space = userProfile.space;
             }
-            const loginResult = yield accounts_1.accountsServer.loginWithUser(user, Object.assign({}, {
+            const loginResult = yield accountsServer.loginWithUser(user, Object.assign({}, {
                 ip,
                 userAgent
             }, {

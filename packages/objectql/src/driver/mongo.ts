@@ -98,6 +98,10 @@ export class SteedosMongoDriver implements SteedosDriver {
             return true;
         }
     }
+    
+    getClient(){
+        return this._client;
+    }
 
     async close() {
         if (this._client) {
