@@ -174,6 +174,10 @@ Setup.setGlobalAjaxHeader = () ->
 	$.ajaxSetup
 		beforeSend: (request) ->
 			request.setRequestHeader('X-User-Id', Meteor.userId())
+			spaceId = Session.get("spaceId")
+			token = Accounts._storedLoginToken()
+			if spaceId && token
+				request.setRequestHeader('Authorization', 'Bearer ' +  spaceId + ',' + token)
 
 Meteor.startup ->
 	Setup.setGlobalAjaxHeader()

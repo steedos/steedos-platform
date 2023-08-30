@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b68a703b66ca212718fcdc50ae88891e77d521fd.js",
+      "path": "fb6dfca326b77467fa4407b58072e7e45d93a376.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/b68a703b66ca212718fcdc50ae88891e77d521fd.js?meteor_js_resource=true",
-      "size": 5775419,
-      "hash": "b68a703b66ca212718fcdc50ae88891e77d521fd",
-      "sri": "riIzejfd0GFCJPlYh4OhU4P91Hku6T2XVGiOXoAHj8I1VyIlyibADACDzB/rKoAduAUXUI3yA6xew0Rdad5abQ=="
+      "url": "/__cordova/fb6dfca326b77467fa4407b58072e7e45d93a376.js?meteor_js_resource=true",
+      "size": 5775496,
+      "hash": "fb6dfca326b77467fa4407b58072e7e45d93a376",
+      "sri": "jBAq7xYl2h6wHfjEo7EFbWikalhSu2T9ubrsS1tjLzg+6HGjC4H5nfa5a/6vXs8NEgpMkleslrKYu18IWIFcUg=="
     },
     {
-      "path": "b68a703b66ca212718fcdc50ae88891e77d521fd.stats.json",
+      "path": "fb6dfca326b77467fa4407b58072e7e45d93a376.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/b68a703b66ca212718fcdc50ae88891e77d521fd.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/fb6dfca326b77467fa4407b58072e7e45d93a376.stats.json?meteor_js_resource=true",
       "size": 109760,
-      "hash": "c97800fcbefba8f7bbae8cff58b5f21cd6750ad7",
-      "sri": "jaLM3uEXgIye25+GZT5yT8sCzeDgAveEPI/mXL6W92o2dPNJ36oPy95TRjEQSyYT+SGeHC5o+GpWEjN9GZqGbA=="
+      "hash": "e7109fe95852a7a97bb5874e01d5f49f0bb14e6f",
+      "sri": "MdMVWEN2Rh5MHHoTOlQZhH38qfCXdNXfmhlkheNzUl4boBuSkh93cSbWJsn1vadYlWW5V2cWBlsJE70FmI6KEw=="
     },
     {
       "path": "c5ca0120ce7cd8ee08cc6ca59b8c01016126adff.css",
@@ -38,8 +38,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/aldeed_tabular/images/sort_asc.png",
       "size": 1118,
-      "hash": "f7d6c6b431b0d8e55f2edc2cac3b93319a48445e",
-      "sri": null
+      "hash": "316902f252ed6c1df0f2e249b595947ea614561f",
+      "sri": "Nuoh8B6BuGHNfEMcEHBZAoIr9Hqg328mnKZu8sn85o8HP3yCGm3WWL1+6HnrnfdsohuJ7lisX5qag8ImWgdKmw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc.png",
@@ -48,8 +48,8 @@
       "cacheable": false,
       "url": "/packages/aldeed_tabular/images/sort_asc.png",
       "size": 1118,
-      "hash": "f7d6c6b431b0d8e55f2edc2cac3b93319a48445e",
-      "sri": null
+      "hash": "316902f252ed6c1df0f2e249b595947ea614561f",
+      "sri": "Nuoh8B6BuGHNfEMcEHBZAoIr9Hqg328mnKZu8sn85o8HP3yCGm3WWL1+6HnrnfdsohuJ7lisX5qag8ImWgdKmw=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc_disabled.png",
@@ -58,8 +58,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/aldeed_tabular/images/sort_asc_disabled.png",
       "size": 2916,
-      "hash": "cafa49620d7bd15a9fd0644dedec4ba862b3a2d4",
-      "sri": null
+      "hash": "d3b36e7e840073d72c41234d8ea9458f6fbfdd89",
+      "sri": "Np57d/2rfIV4VBtl977miwbZdQVVtfe7JCeZAAQNAJBVm96NeBs2yHIos6KTPsRyPfn72bR2wQ+Ie93VbCyB5w=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_asc_disabled.png",
@@ -68,8 +68,8 @@
       "cacheable": false,
       "url": "/packages/aldeed_tabular/images/sort_asc_disabled.png",
       "size": 2916,
-      "hash": "cafa49620d7bd15a9fd0644dedec4ba862b3a2d4",
-      "sri": null
+      "hash": "d3b36e7e840073d72c41234d8ea9458f6fbfdd89",
+      "sri": "Np57d/2rfIV4VBtl977miwbZdQVVtfe7JCeZAAQNAJBVm96NeBs2yHIos6KTPsRyPfn72bR2wQ+Ie93VbCyB5w=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_both.png",
@@ -78,8 +78,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/aldeed_tabular/images/sort_both.png",
       "size": 1136,
-      "hash": "7d5a19949989bb107e478c6e55ea65f8c325abcd",
-      "sri": null
+      "hash": "ab54233bd2b1c940c4dc31fb0c61153df0688cd3",
+      "sri": "kwpWVgKlaCLJoySRqvgvt4GPbeqSqx+eBIKkOT4LOxt5w0uhM3z2hK/QtVVRzk/p7XN3ljW0PlvgO/uCB+G+KQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_both.png",
@@ -88,8 +88,8 @@
       "cacheable": false,
       "url": "/packages/aldeed_tabular/images/sort_both.png",
       "size": 1136,
-      "hash": "7d5a19949989bb107e478c6e55ea65f8c325abcd",
-      "sri": null
+      "hash": "ab54233bd2b1c940c4dc31fb0c61153df0688cd3",
+      "sri": "kwpWVgKlaCLJoySRqvgvt4GPbeqSqx+eBIKkOT4LOxt5w0uhM3z2hK/QtVVRzk/p7XN3ljW0PlvgO/uCB+G+KQ=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_desc.png",
@@ -98,8 +98,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/aldeed_tabular/images/sort_desc.png",
       "size": 1127,
-      "hash": "d69a3fd48716a8c4d8df38859cd0c1d7dab5e296",
-      "sri": null
+      "hash": "e0d717f0b79a6fa7648a2f7803db6883482d94d3",
+      "sri": "WcMO6Jpo1AHAjz5kpNECZzheBFC1I2aUzGoYr+UTdKg/gtLWrw48Z2hxpzvt2V38F8G/4z7CgVxRxES189aUMg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_desc.png",
@@ -108,8 +108,8 @@
       "cacheable": false,
       "url": "/packages/aldeed_tabular/images/sort_desc.png",
       "size": 1127,
-      "hash": "d69a3fd48716a8c4d8df38859cd0c1d7dab5e296",
-      "sri": null
+      "hash": "e0d717f0b79a6fa7648a2f7803db6883482d94d3",
+      "sri": "WcMO6Jpo1AHAjz5kpNECZzheBFC1I2aUzGoYr+UTdKg/gtLWrw48Z2hxpzvt2V38F8G/4z7CgVxRxES189aUMg=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_desc_disabled.png",
@@ -118,8 +118,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/aldeed_tabular/images/sort_desc_disabled.png",
       "size": 1045,
-      "hash": "cd40181787ffeaef98d82fba7b0f6b7a5293e2aa",
-      "sri": null
+      "hash": "d78cd75eda77f65256044e0c16554a48901fe46f",
+      "sri": "wWNhEtCCD5xwQdWjTJJtJh2jA5jTW7zZ6N8rKBufbZ0n5f/i+dDSZFVafcMEuBGi+1jFnjINgbsQcozynkBlTA=="
     },
     {
       "path": "packages/aldeed_tabular/images/sort_desc_disabled.png",
@@ -128,8 +128,8 @@
       "cacheable": false,
       "url": "/packages/aldeed_tabular/images/sort_desc_disabled.png",
       "size": 1045,
-      "hash": "cd40181787ffeaef98d82fba7b0f6b7a5293e2aa",
-      "sri": null
+      "hash": "d78cd75eda77f65256044e0c16554a48901fe46f",
+      "sri": "wWNhEtCCD5xwQdWjTJJtJh2jA5jTW7zZ6N8rKBufbZ0n5f/i+dDSZFVafcMEuBGi+1jFnjINgbsQcozynkBlTA=="
     },
     {
       "path": "packages/steedos_autoform-bs-minicolors/public/jquery.minicolors.png",
@@ -278,8 +278,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_autoform-lookup/img/loading.gif",
       "size": 1456,
-      "hash": "3e95eac46ab7d984594478c90ccb439ec03b5525",
-      "sri": null
+      "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
+      "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
     },
     {
       "path": "packages/steedos_autoform-lookup/img/loading.gif",
@@ -288,8 +288,8 @@
       "cacheable": false,
       "url": "/packages/steedos_autoform-lookup/img/loading.gif",
       "size": 1456,
-      "hash": "3e95eac46ab7d984594478c90ccb439ec03b5525",
-      "sri": null
+      "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
+      "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
     },
     {
       "path": "packages/vazco_universe-selectize/img/loading.gif",
@@ -318,8 +318,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxicons.ttf",
       "size": 48724,
-      "hash": "fa1bcf8fa441ca7ebd8d4c7ef9f9833a0372b8f7",
-      "sri": null
+      "hash": "302974cc41031c5e99168cbf103a0053e5314f45",
+      "sri": "IBxCKRRwlJO1p0op/FSeJDmlYPPYHFRxwTY9aUAi1E+89Mbu6JyzhJ1S1B2AhmtaTIVTqm8+z8KtkJcyIFiMIg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.ttf",
@@ -328,8 +328,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxicons.ttf",
       "size": 48724,
-      "hash": "fa1bcf8fa441ca7ebd8d4c7ef9f9833a0372b8f7",
-      "sri": null
+      "hash": "302974cc41031c5e99168cbf103a0053e5314f45",
+      "sri": "IBxCKRRwlJO1p0op/FSeJDmlYPPYHFRxwTY9aUAi1E+89Mbu6JyzhJ1S1B2AhmtaTIVTqm8+z8KtkJcyIFiMIg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff",
@@ -338,8 +338,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxicons.woff",
       "size": 24324,
-      "hash": "6d5bc4ee222c5193fa6eda7eef677fdd84a35b72",
-      "sri": null
+      "hash": "4b6f8435fd1c52f0be92199b76185bd53933f73e",
+      "sri": "l9q4eHWCpOsnXIAmbZIFE2RHFGiLPikprwvSjT4fzDgZvWIna8gdXTi8PxTQqGV3fSNW/31vK4GIGYpxPy1jmQ=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff",
@@ -348,8 +348,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff",
       "size": 24324,
-      "hash": "6d5bc4ee222c5193fa6eda7eef677fdd84a35b72",
-      "sri": null
+      "hash": "4b6f8435fd1c52f0be92199b76185bd53933f73e",
+      "sri": "l9q4eHWCpOsnXIAmbZIFE2RHFGiLPikprwvSjT4fzDgZvWIna8gdXTi8PxTQqGV3fSNW/31vK4GIGYpxPy1jmQ=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff2",
@@ -358,8 +358,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxicons.woff2",
       "size": 19024,
-      "hash": "52ebfd3715b7e6c234aca522cae1784ededd31cc",
-      "sri": null
+      "hash": "43f5630b91630eccd683f823e89aa2001f3b3332",
+      "sri": "kFyufZ4z/3xnXVrb2HQwF8NUbHCI05dPGG2ZaTRABLsp8Xe+cmuuXioMoEy8YcxTmPNB6kyOC394GVxAopDOIQ=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxicons.woff2",
@@ -368,8 +368,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxicons.woff2",
       "size": 19024,
-      "hash": "52ebfd3715b7e6c234aca522cae1784ededd31cc",
-      "sri": null
+      "hash": "43f5630b91630eccd683f823e89aa2001f3b3332",
+      "sri": "kFyufZ4z/3xnXVrb2HQwF8NUbHCI05dPGG2ZaTRABLsp8Xe+cmuuXioMoEy8YcxTmPNB6kyOC394GVxAopDOIQ=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
@@ -378,8 +378,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
       "size": 50248,
-      "hash": "6cc73b3fe497e01c484c6751ae3d577fd47771a9",
-      "sri": null
+      "hash": "c337700f6ae6437f0ac7235a5e8e021d59cd0244",
+      "sri": "bZiZlxUf/9dF/nOEY2EayK4Qbw02cRGTP24jFQgcUguCbfetvEClvi4jlPfU7aTlP6Meaoy89UVKRucy5tL/SA=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
@@ -388,8 +388,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.ttf",
       "size": 50248,
-      "hash": "6cc73b3fe497e01c484c6751ae3d577fd47771a9",
-      "sri": null
+      "hash": "c337700f6ae6437f0ac7235a5e8e021d59cd0244",
+      "sri": "bZiZlxUf/9dF/nOEY2EayK4Qbw02cRGTP24jFQgcUguCbfetvEClvi4jlPfU7aTlP6Meaoy89UVKRucy5tL/SA=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
@@ -398,8 +398,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
       "size": 25524,
-      "hash": "b6b07cf1fb4b3591fef69f8877cf7b7a01dfd63f",
-      "sri": null
+      "hash": "ca2e7a2e63df6831efbb93297f5d40fc5f89c83d",
+      "sri": "/fo3PSrvaepd1gx3RM6lUNaqvQiiKLuny0hHwrzVulMJqvHaF0AIcMleH2LEbRl27h21IIfiLHKfNrf/366BBg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
@@ -408,8 +408,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff",
       "size": 25524,
-      "hash": "b6b07cf1fb4b3591fef69f8877cf7b7a01dfd63f",
-      "sri": null
+      "hash": "ca2e7a2e63df6831efbb93297f5d40fc5f89c83d",
+      "sri": "/fo3PSrvaepd1gx3RM6lUNaqvQiiKLuny0hHwrzVulMJqvHaF0AIcMleH2LEbRl27h21IIfiLHKfNrf/366BBg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
@@ -418,8 +418,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
       "size": 19224,
-      "hash": "a9b883bac392139e4399d3528b054e315cc10e34",
-      "sri": null
+      "hash": "207b59ccd5660b6f8ca788709914be13e8883209",
+      "sri": "UtuWhVDvPvRHNLjUmEioDTKy7IIIwg/3jrNFglomqlqRmiNRJzOi9G8Plw69CEmaTpPgy7jCXiub24RNMd0NKA=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
@@ -428,8 +428,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsios.woff2",
       "size": 19224,
-      "hash": "a9b883bac392139e4399d3528b054e315cc10e34",
-      "sri": null
+      "hash": "207b59ccd5660b6f8ca788709914be13e8883209",
+      "sri": "UtuWhVDvPvRHNLjUmEioDTKy7IIIwg/3jrNFglomqlqRmiNRJzOi9G8Plw69CEmaTpPgy7jCXiub24RNMd0NKA=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
@@ -438,8 +438,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
       "size": 39120,
-      "hash": "697cd2d626099a6effb474d33697417b139514ce",
-      "sri": null
+      "hash": "1cc3688a0e84dfafac77b721bbf60256f9d5872d",
+      "sri": "AbhN3eh6K0VZUgou5jChlHrdS57PSb3/iL//RYhvjHYsPHlSG52nXx6L8GPW/4gB5TGwcq+1VAU0GLsdMH8RPg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
@@ -448,8 +448,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.ttf",
       "size": 39120,
-      "hash": "697cd2d626099a6effb474d33697417b139514ce",
-      "sri": null
+      "hash": "1cc3688a0e84dfafac77b721bbf60256f9d5872d",
+      "sri": "AbhN3eh6K0VZUgou5jChlHrdS57PSb3/iL//RYhvjHYsPHlSG52nXx6L8GPW/4gB5TGwcq+1VAU0GLsdMH8RPg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
@@ -458,8 +458,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
       "size": 20352,
-      "hash": "496f1fa160d33cf96c1a5b2c05fcae261e59607b",
-      "sri": null
+      "hash": "64610198d22bc37a35abfd0830d7afa16f8706e7",
+      "sri": "KLYd9xegSkL/RBrxEsZlslT/Vgevm7bjqXXEVhHb+VsM3+Wj0u3Sz4bDPTN+EAZ72WiIsOoOrlL2Da93WIekKg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
@@ -468,8 +468,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff",
       "size": 20352,
-      "hash": "496f1fa160d33cf96c1a5b2c05fcae261e59607b",
-      "sri": null
+      "hash": "64610198d22bc37a35abfd0830d7afa16f8706e7",
+      "sri": "KLYd9xegSkL/RBrxEsZlslT/Vgevm7bjqXXEVhHb+VsM3+Wj0u3Sz4bDPTN+EAZ72WiIsOoOrlL2Da93WIekKg=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
@@ -478,8 +478,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
       "size": 16376,
-      "hash": "382656a43b3b234c5e1763807f04719eb789d6c9",
-      "sri": null
+      "hash": "465f0d5236a35cdbbd7069247e9d9be8f61df468",
+      "sri": "6K3xF3+O3cpO1rJPDy2czeHwJbPgyrNuNJy1GdcE70S18+PYJlHDIGRvfV/0fdDLImEzAsiCIEoRArEXcbcGcQ=="
     },
     {
       "path": "packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
@@ -488,8 +488,8 @@
       "cacheable": false,
       "url": "/packages/steedos_devexpress/client/css/icons/dxiconsmaterial.woff2",
       "size": 16376,
-      "hash": "382656a43b3b234c5e1763807f04719eb789d6c9",
-      "sri": null
+      "hash": "465f0d5236a35cdbbd7069247e9d9be8f61df468",
+      "sri": "6K3xF3+O3cpO1rJPDy2czeHwJbPgyrNuNJy1GdcE70S18+PYJlHDIGRvfV/0fdDLImEzAsiCIEoRArEXcbcGcQ=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -498,8 +498,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
       "size": 20127,
-      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3",
-      "sri": null
+      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
+      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -508,8 +508,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
       "size": 20127,
-      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3",
-      "sri": null
+      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
+      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
@@ -518,8 +518,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
       "size": 108738,
-      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95",
-      "sri": null
+      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
+      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
@@ -528,8 +528,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
       "size": 108738,
-      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95",
-      "sri": null
+      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
+      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -538,8 +538,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
       "size": 45404,
-      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434",
-      "sri": null
+      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
+      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -548,8 +548,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
       "size": 45404,
-      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434",
-      "sri": null
+      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
+      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
@@ -558,8 +558,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
       "size": 23424,
-      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4",
-      "sri": null
+      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
+      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
@@ -568,8 +568,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
       "size": 23424,
-      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4",
-      "sri": null
+      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
+      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
@@ -578,8 +578,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
-      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6",
-      "sri": null
+      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
+      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
@@ -588,8 +588,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
-      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6",
-      "sri": null
+      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
+      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
     },
     {
       "path": "packages/steedos_ionicons/fonts/ionicons.eot",
@@ -738,8 +738,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
-      "sri": null
+      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
+      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
       "path": "packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
@@ -748,8 +748,8 @@
       "cacheable": false,
       "url": "/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
-      "sri": null
+      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
+      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
       "path": "assets/icons/License-for-icons.txt",
