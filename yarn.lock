@@ -3620,16 +3620,6 @@
   dependencies:
     lodash "^4.17.21"
 
-"@steedos/license@2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@steedos/license/-/license-2.2.8.tgz#6933c932dc809c3b0c85cf35d2045d035d6a2969"
-  integrity sha512-GNx5P0eLJiHTqd9xxyWcSXgmpdNluWOdt6mqtIGg9JJx0/6oGEWub4UKtniliwB6l2hWPyJDGtuzFMdUAwAH/Q==
-  dependencies:
-    abort-controller "^3.0.0"
-    crypto "^1.0.1"
-    node-fetch "^2.6.0"
-    systeminformation "5.9.17"
-
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/@steedos/mongodb-memory-server-core/-/mongodb-memory-server-core-7.0.0-beta.14.tgz#a9b8ea6ac08160bff416c2afc35c656d7fdb9f23"
@@ -13132,7 +13122,7 @@ node-emoji@^1.10.0:
   dependencies:
     lodash "^4.17.21"
 
-node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -17542,11 +17532,6 @@ sync-fetch@0.3.0:
   dependencies:
     buffer "^5.7.0"
     node-fetch "^2.6.1"
-
-systeminformation@5.9.17:
-  version "5.9.17"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.9.17.tgz#9b0c405346fcd9ad37a95df4990eefa3d164d7a3"
-  integrity sha512-hbJtPsG63PCst4PLXFq8hycbkeR5oGDquRowfLK0gNX7nJ1qx3tCbsWu83OL4GP1dkcLMKsVooLUn5x2K1Epgg==
 
 table@^6.8.0:
   version "6.8.1"
