@@ -5,7 +5,8 @@ const timeout = 5000;
 
 HuaweiPush = {
 	authInfo: {},
-	default_package_name: undefined
+	default_package_name: undefined,
+	debug: Meteor.settings.push && Meteor.settings.push.huawei && Meteor.settings.push.huawei.debug
 };
 
 HuaweiPush.config = function(config) {
@@ -92,7 +93,8 @@ HuaweiPush.getPostData = function(notification, package_name, tokens, timeToLive
 					param: {
 						appPkgName: package_name
 					}
-				}
+				},
+				category: 'WORK' // 工作事项提醒
 			},
 			ext: {
 				customize: this.extras(notification.extras)
