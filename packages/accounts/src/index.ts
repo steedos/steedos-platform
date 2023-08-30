@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as path from 'path';
-import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
 import { AccountsServer, generateRandomToken } from './server';
 import { AccountsPassword } from './password';
@@ -10,7 +9,7 @@ import MongoDBInterface from './database-mongo';
 // import accountsSamlIdp from './saml-idp';
 import { userLoader } from './rest-express/user-loader';
 import { mongoUrl } from './db';
-import { getSteedosConfig, getSteedosSchema, getMongoFieldEncryptionConsts } from '@steedos/objectql'
+import { getSteedosConfig, getDataSource } from '@steedos/objectql'
 import { URL } from 'url';
 import * as bodyParser from 'body-parser';
 import { sendMail, sendSMS } from './core';
@@ -22,7 +21,13 @@ declare var WebApp;
 
 const config = getSteedosConfig();
 
-function getAccountsServer() {
+let accountsServer;
+
+export function getAccountsServer() {
+  return accountsServer;
+}
+
+export async function createAccountsServer() {
   let accountsConfig = config.tenant || {};
   let emailConfig = config.email || {};
   let tokenSecret = accountsConfig.tokenSecret || generateRandomToken();
@@ -30,23 +35,11 @@ function getAccountsServer() {
   let refreshTokenExpiresIn = accountsConfig.refreshTokenExpiresIn || "7d";
   let mailSignname = emailConfig.signname || "华炎魔方";
 
-  if (process.env.STEEDOS_CSFLE_MASTER_KEY) {
-    const { keyVaultNamespace, getKMSProviders } = getMongoFieldEncryptionConsts();
-    const kmsProvider = getKMSProviders();
-    mongoose.connect(mongoUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      monitorCommands: true,
-      autoEncryption: {
-        keyVaultNamespace: keyVaultNamespace,
-        kmsProviders: kmsProvider,
-        bypassAutoEncryption: true,
-      }
-    } as any);
-  } else {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-  }
-  const connection = mongoose.connection;
+  const driver = getDataSource('default').adapter as any;
+  await driver.connect();
+  const client = driver.getClient();
+
+  const connection = client.db();
 
   const rootUrl = process.env.ROOT_URL
     ? process.env.ROOT_URL
@@ -138,10 +131,8 @@ function getAccountsServer() {
   return accountsServer;
 }
 
-export const accountsServer = getAccountsServer()
-
 export async function getAccountsRouter(context) {
-
+  accountsServer = await createAccountsServer();
   const router = accountsExpress(accountsServer, {
     path: '/accounts',
   });
