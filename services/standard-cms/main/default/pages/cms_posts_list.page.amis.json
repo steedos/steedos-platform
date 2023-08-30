@@ -39,20 +39,17 @@
                                             "buttons": [
                                                 {
                                                     "type": "button",
-                                                    "label": "编辑 ${event.data.item.object_name}",
+                                                    "label": "编辑",
                                                     "actionType": "dialog",
                                                     "dialog": {
                                                         "type": "dialog",
-                                                        "title": "编辑 ${event.data.item.object_name}",
+                                                        "title": "编辑",
                                                         "body": [
                                                             {
                                                                 "type": "steedos-object-form",
                                                                 "label": "对象表单",
-                                                                "objectApiName": "${event.data.item.object_name}",
-                                                                "defaultData": {
-                                                                    "site": "${site || event.data.item._id}"
-                                                                },
-                                                                "recordId": "${event.data.item._id}",
+                                                                "objectApiName": "${object_name}",
+                                                                "recordId": "${_id}",
                                                                 "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
                                                                 "id": "u:1a0be526e371",
                                                                 "mode": "edit"
@@ -83,7 +80,8 @@
                                                                 "label": "对象表单",
                                                                 "objectApiName": "cms_categories",
                                                                 "defaultData": {
-                                                                    "site": "${site || event.data.item._id}"
+                                                                    "site": "${site}",
+                                                                    "parent": "${parent}"
                                                                 },
                                                                 "recordId": "",
                                                                 "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
@@ -116,7 +114,7 @@
                                             "query": "{rows:cms_sites(filters: [], top: 20, skip: 0, sort: \"\"){_id,name,visibility,order,_display:_ui{visibility,order},_categories:_related_cms_categories_site{_id,name,parent,order}},count:cms_sites__count(filters:[])}"
                                         },
                                         "requestAdaptor": "",
-                                        "adaptor": "const rows = payload.data.rows;\nconsole.log('roows==>', rows);\n\nconst treeRecords = [];\n\nconst getParentIds = (records) => {\n  const ids = _.map(records, (item) => {\n    return item._id;\n  });\n  const parents = _.filter(records, (record) => {\n    return !record.parent || !_.includes(ids, record.parent);\n  })\n  const parentsIds = _.map(parents, (item) => {\n    return item._id;\n  })\n  return parentsIds;\n}\nconst getChildren = (records, record_id, rootFilter) => {\n  const children = _.filter(records, (record) => {\n    return record_id === record.parent\n  });\n  // _.each(children, (item) => {\n  //   if (item.children) {\n  //     item.children = getChildren(records, item.children)\n  //   }\n  // })\n  const childrens = _.map(children, (item,index) => {\n    return {\n      _id: item._id, label: item.name, to: \"\", value: index + '', icon: \"fa fa-user\", object_name: 'cms_categories', children: getChildren(records, item._id, rootFilter),\n      additionalFilters: [rootFilter, [\"category\", \"=\", item._id]]\n    }\n  })\n  console.log('children==>', children)\n  return childrens;\n}\n\n// const parentIds = getParentIds(records);\n// _.each(records, (record) => {\n//   if (!record.parent || _.includes(parentIds, record._id)) {\n//     treeRecords.push(Object.assign({}, record, { children: getChildren(records, record.children) }));\n//   }\n// });\n\nconst links = _.map(rows, (item, index) => {\n  const records = item._categories;\n  const treeRecords = [];\n  const parentIds = getParentIds(records);\n  console.log('parentIds==>', parentIds);\n  _.each(records, (record, index) => {\n    // || _.includes(parentIds, record._id)\n    if (!record.parent) {\n      treeRecords.push(Object.assign(\n        {},\n        {\n          _id: record._id, label: record.name, to: \"\", value: index + '', icon: \"fa fa-user\",\n          object_name: 'cms_sites',\n          additionalFilters: [[\"site\", \"=\", item._id], [\"category\", \"=\", record._id]]\n        },\n        { children: getChildren(records, record._id, [\"site\", \"=\", item._id]) }\n      ));\n    }\n  });\n  console.log('treeRecords==>', treeRecords); \n  return {\n    _id: item._id,\n    label: item.name,\n    to: \"\",\n    value: index + '',\n    icon: \"fa fa-user\",\n    children: treeRecords,\n    additionalFilters: [\"site\", \"=\", item._id]\n  }\n})\n\npayload = {\n  data: {\n    links\n  },\n  msg: '',\n  status: 0\n}\nreturn payload;",
+                                        "adaptor": "const rows = payload.data.rows;\nconsole.log('roows==>', rows);\n\nconst treeRecords = [];\n\nconst getParentIds = (records) => {\n  const ids = _.map(records, (item) => {\n    return item._id;\n  });\n  const parents = _.filter(records, (record) => {\n    return !record.parent || !_.includes(ids, record.parent);\n  })\n  const parentsIds = _.map(parents, (item) => {\n    return item._id;\n  })\n  return parentsIds;\n}\nconst getChildren = (records, record_id, site) => {\n  const children = _.filter(records, (record) => {\n    return record_id === record.parent\n  });\n  const childrens = _.map(children, (item, index) => {\n    return {\n      _id: item._id, label: item.name, to: \"\", value: index + '', icon: \"fa fa-user\", object_name: 'cms_categories', site: site, parent: item._id,\n      children: getChildren(records, item._id, site),\n      additionalFilters: [[\"site\", \"=\", site], [\"category\", \"=\", item._id]]\n    }\n  })\n  console.log('children==>', children)\n  return childrens;\n}\n\nconst links = _.map(rows, (item, index) => {\n  const records = item._categories;\n  const treeRecords = [];\n  const parentIds = getParentIds(records);\n  console.log('parentIds==>', parentIds);\n  _.each(records, (record, index) => {\n    // || _.includes(parentIds, record._id)\n    if (!record.parent) {\n      treeRecords.push(Object.assign(\n        {},\n        {\n          _id: record._id, label: record.name, to: \"\", value: index + '', icon: \"fa fa-user\",\n          object_name: 'cms_categories',\n          site: item._id,\n          parent: record._id,\n          additionalFilters: [[\"site\", \"=\", item._id], [\"category\", \"=\", record._id]]\n        },\n        { children: getChildren(records, record._id, item._id) }\n      ));\n    }\n  });\n  console.log('treeRecords==>', treeRecords);\n  return {\n    _id: item._id,\n    label: item.name,\n    site: item._id,\n    parent: '',\n    object_name: 'cms_sites',\n    to: \"\",\n    value: index + '',\n    icon: \"fa fa-user\",\n    children: treeRecords,\n    additionalFilters: [\"site\", \"=\", item._id]\n  }\n})\n\npayload = {\n  data: {\n    links\n  },\n  msg: '',\n  status: 0\n}\nreturn payload;",
                                         "messages": {}
                                     },
                                     "style": {},
@@ -126,9 +124,10 @@
                                             "actions": [
                                                 {
                                                     "actionType": "toast",
+                                                    "expression": "false",
                                                     "args": {
                                                         "msgType": "info",
-                                                        "msg": "data: ${event.data | json}"
+                                                        "msg": "点击: ${event.data | json}"
                                                     }
                                                 },
                                                 {
@@ -136,8 +135,7 @@
                                                     "componentId": "u:f6a209c8cf61",
                                                     "args": {
                                                         "value": {
-                                                            "additionalFilters": "${event.data.item.additionalFilters}",
-                                                            "site": "${event.data.item._id}"
+                                                            "additionalFilters": "${event.data.item.additionalFilters}"
                                                         }
                                                     }
                                                 }
@@ -148,6 +146,7 @@
                                             "actions": [
                                                 {
                                                     "actionType": "toast",
+                                                    "expression": "false",
                                                     "args": {
                                                         "msgType": "info",
                                                         "msg": "菜单选中: ${event.data | json}"
@@ -163,15 +162,15 @@
                                                     "args": {
                                                         "msgType": "info",
                                                         "msg": "菜单展开: ${event.data | json}"
-                                                    }
+                                                    },
+                                                    "expression": "false"
                                                 },
                                                 {
                                                     "actionType": "setValue",
                                                     "componentId": "u:f6a209c8cf61",
                                                     "args": {
                                                         "value": {
-                                                            "additionalFilters": "${event.data.item.additionalFilters}",
-                                                            "site": "${event.data.item._id}"
+                                                            "additionalFilters": "${event.data.item.additionalFilters}"
                                                         }
                                                     }
                                                 }
