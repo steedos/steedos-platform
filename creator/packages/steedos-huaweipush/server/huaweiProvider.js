@@ -93,7 +93,8 @@ HuaweiPush.getPostData = function(notification, package_name, tokens, timeToLive
 					param: {
 						appPkgName: package_name
 					}
-				}
+				},
+				category: 'WORK' // 工作事项提醒
 			},
 			ext: {
 				customize: this.extras(notification.extras)
