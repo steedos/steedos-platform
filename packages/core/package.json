@@ -17,7 +17,6 @@
     "@steedos/auth": "2.5.12",
     "@steedos/filters": "2.5.12",
     "@steedos/i18n": "2.5.12",
-    "@steedos/license": "2.2.8",
     "@steedos/metadata-core": "2.5.12",
     "@steedos/migrate": "2.5.12",
     "@steedos/objectql": "2.5.12",
