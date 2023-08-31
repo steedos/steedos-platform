@@ -11,7 +11,7 @@ CustomApplications:
       apps: Apps
       object_settings: Object Settings
       user_interface: User Interface
-      statistical_analysis: Statistical Analysis
+      statistical_analysis: Data Analysis
       development: Development
       process_automation: Process Automation
       approval_workflow: Approval Workflow
