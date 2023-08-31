@@ -167,7 +167,8 @@ fields:
     is_wide: true
     # 为了区分crud内容的label与button的label，使用button-group把button包裹住
     amis: 
-      "type": "button-group" 
+      "type": "button-group"
+      "static": false
       "buttons":
         - "type": "button"
           "label": "下载"
