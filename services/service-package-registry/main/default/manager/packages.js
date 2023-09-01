@@ -32,6 +32,7 @@ const getAllPackages = async ()=>{
         package.status = '';
         package.new_version = package.version
         package.local = package.local
+        package.static = package.static
         delete package.version
         if(installPackages[package.name]){
             package.status = installPackages[package.name].enable ? 'enable' : 'disable'
@@ -52,7 +53,8 @@ const getAllPackages = async ()=>{
                 local: package.local,
                 label: package.label || packageName,
                 description: package.description,
-                metadata: package.metadata
+                metadata: package.metadata,
+                static: package.static
             })
         }
     })

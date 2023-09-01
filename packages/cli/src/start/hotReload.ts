@@ -22,7 +22,7 @@ const reloadPackage = (broker, packagePath) => {
                 if (serviceJson) {
                     delete require.cache[require.resolve(servicePath)];
                 }
-                broker.call(`~packages-project-server.reloadPackage`, { module: packageJson.name })
+                broker.call(`@steedos/service-project.reloadPackage`, { module: packageJson.name })
             }
         })
     }, 3000)

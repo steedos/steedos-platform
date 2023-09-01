@@ -1858,8 +1858,8 @@ CustomLabels:
     reload:
       toastr_info: 重新加载中，请稍后...
       toastr_success: 已重新加载
-  disable:
-      title: 停用
-      text: 确定要停用 
-      toast_info: 停用中，请稍后..
-      toastr_success: 已停用
+    disable:
+        title: 停用
+        text: 确定要停用 
+        toast_info: 停用中，请稍后..
+        toastr_success: 已停用

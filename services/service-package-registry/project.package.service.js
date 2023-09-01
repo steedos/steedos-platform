@@ -25,7 +25,7 @@ const AUTH_TYPE = 'Bearer';
  * 软件包服务启动后也需要抛出事件。
  */
 module.exports = {
-	name: '~packages-project-server',
+	name: '@steedos/service-project',
 	namespace: "steedos",
 	/**
 	 * Settings
@@ -149,7 +149,10 @@ module.exports = {
 		enablePackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
-                const packageConfig = await loader.enablePackage(module);
+                let packageConfig = await loader.enablePackage(module);
+				if(packageConfig.static){
+					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig.name))
+				}
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
@@ -275,7 +278,13 @@ module.exports = {
 			async handler(ctx) {
 				return await this.initialPackages();
 			}
+		},
+		addPackages: {
+			async handler(ctx) {
+				return await this.addPackages(ctx);
+			}
 		}
+
 	},
 
 	/**
@@ -544,6 +553,68 @@ module.exports = {
 					}
 				}
 			}
+		},
+		addPackages: {
+			async handler(ctx){
+				const { packages } = ctx.params;
+				for(const _package of packages){
+					let name = null;
+					let options = null;
+					if(_.isString(_package)){
+						name = _package;
+						options = {}
+					}else{
+						const { name: _name, ..._options} = _package;
+						name = _name;
+						options = _options;
+					}
+					if(!_.has(options, 'static')){
+						options.static = true
+					}
+					loader.appendToPackagesConfig(name, options)
+					await this.installPackagesSyncToMetaData(name);
+				}
+			}
+		},
+		getStaticPackageInfo: {
+			handler(packageName){
+				const _path = path.dirname(require.resolve(`${packageName}/package.json`));
+				const packageJson = require(`${_path}/package.json`);
+				return {
+					path: _path,
+					version: packageJson.version,
+					description: packageJson.description
+				}
+			}
+		},
+		installPackagesSyncToMetaData:{
+			async handler(packageName){
+				//注册本地已安装的steedos packages
+				const installPackages = loader.loadPackagesConfig();
+				for (const name in installPackages) {
+					if (Object.hasOwnProperty.call(installPackages, name) && (packageName && packageName === name)) {
+						let _packageInfo = installPackages[name];
+						if(_packageInfo.static){
+							_packageInfo = Object.assign({}, _packageInfo, this.getStaticPackageInfo(name))
+						}
+						const metadata = await loader.getPackageMetadata(_packageInfo.path);
+						await this.broker.call(`@steedos/service-packages.install`, {
+							serviceInfo: {
+								name: name, 
+								nodeID: this.broker.nodeID, 
+								instanceID: this.broker.instanceID, 
+								path: _packageInfo.path,
+								local: _packageInfo.local, 
+								enable: _packageInfo.enable, 
+								version: _packageInfo.version, 
+								description: _packageInfo.description,
+								metadata: metadata,
+								static: _packageInfo.static
+							}
+						})
+					}
+				}
+			}
 		}
 	},
 
@@ -606,27 +677,7 @@ module.exports = {
 		})
 		await loader.loadPackages();
 
-		//注册本地已安装的steedos packages
-		const installPackages = loader.loadPackagesConfig();
-		for (const name in installPackages) {
-			if (Object.hasOwnProperty.call(installPackages, name)) {
-				const _packageInfo = installPackages[name];
-				const metadata = await loader.getPackageMetadata(_packageInfo.path);
-				await this.broker.call(`@steedos/service-packages.install`, {
-					serviceInfo: {
-						name: name, 
-						nodeID: this.broker.nodeID, 
-						instanceID: this.broker.instanceID, 
-						path: _packageInfo.path,
-						local: _packageInfo.local, 
-						enable: _packageInfo.enable, 
-						version: _packageInfo.version, 
-						description: _packageInfo.description,
-						metadata: metadata
-					}
-				})
-			}
-		}
+		await this.installPackagesSyncToMetaData()
 		
 	},
 

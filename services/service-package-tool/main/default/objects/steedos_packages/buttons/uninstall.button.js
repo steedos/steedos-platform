@@ -36,7 +36,7 @@ module.exports = {
     },
     uninstallVisible: function (object_name,record_id) {
         const record = Creator.odata.get(object_name,record_id);
-        if(record.local){
+        if(record.local || record.static){
             return false;
         }
         if(record.status){

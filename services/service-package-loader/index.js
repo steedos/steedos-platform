@@ -36,7 +36,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server', '~packages-project-server', '@steedos/service-packages'],
+    dependencies: ['metadata-server', '@steedos/service-project', '@steedos/service-packages'],
 
     /**
      * Actions
@@ -215,7 +215,7 @@ module.exports = {
         },
         async errorHandler(error) {
             this.broker.logger.error(`[${this.name}] 启动失败: ${error.message}`);
-            await await this.broker.call(`~packages-project-server.disablePackage`, {
+            await await this.broker.call(`@steedos/service-project.disablePackage`, {
                 module: this.schema.packageName
             })
             return await this.broker.destroyService(this);

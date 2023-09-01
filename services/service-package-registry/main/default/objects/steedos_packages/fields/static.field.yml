@@ -1,0 +1,4 @@
+name: static
+type: boolean
+label: 静态(不支持卸载、升级)
+visible_on: "{{false}}"

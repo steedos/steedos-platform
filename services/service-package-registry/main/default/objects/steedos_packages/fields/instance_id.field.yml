@@ -12,3 +12,4 @@ searchable: true
 sort_no: 110
 sortable: true
 type: text
+visible_on: "{{false}}"
