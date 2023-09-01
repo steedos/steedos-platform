@@ -14,7 +14,6 @@ const loadPackagesConfig = ()=>{
 }
 
 const appendToPackagesConfig = (packageName, options)=>{
-    console.log(`appendToPackagesConfig`, packageName, options)
     let packages = loadPackagesConfig();
     let changeNamePackage = null;
     if(options.local && !packages[packageName]){
