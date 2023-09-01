@@ -158,6 +158,10 @@ export function getGraphqlActions(
             let object = steedosSchema.getObject(objectName);
             let parentObj = steedosSchema.getObject(parentObjectName);
             let parent = await parentObj.findOne(_parentId);
+            // 防止万一parent为空
+            if (!parent) {
+                return []
+            }
             let filters = [];
             let _idValue = parent._id;
             if (referenceToParentFieldName) {
