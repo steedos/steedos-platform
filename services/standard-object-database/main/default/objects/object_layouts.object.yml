@@ -130,6 +130,8 @@ fields:
     group: related_lists
   related_lists.$.related_field_fullname:
     type: lookup
+    amis:
+      tpl: ${related_field_fullname.label}
     optionsFunction: !!js/function |
       function(values) {
         if (!(values != null ? values.object_name : void 0)) {
