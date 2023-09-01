@@ -69,7 +69,8 @@
                                     "autoCheckChildren": false,
                                     "searchable": true,
                                     "searchConfig": {
-                                        "sticky": true
+                                        "sticky": true,
+                                        "placeholder": "请搜索部门"
                                     },
                                     "unfoldedLevel": 2,
                                     "inputClassName": "",
