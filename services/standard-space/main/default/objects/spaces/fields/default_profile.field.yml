@@ -9,4 +9,4 @@ filtersFunction: !!js/function |
     return [["type", "=", "profile"], ["name", "!=", "admin"]]
   }
 group: Register account
-sort_no: 140
+sort_no: 11
