@@ -1,0 +1,130 @@
+(function(){
+    const loadJs = (url, callback)=>{
+        let scriptTag = document.createElement("script");
+        scriptTag.type = "text/javascript";
+        scriptTag.src = url;
+        scriptTag.async = false;
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+        scriptTag.onload = function(script){
+            if(callback){
+                callback(script)
+            }
+        }
+    }
+
+    const loadCss = (url)=>{
+        let styleTag = document.createElement("link");
+        styleTag.setAttribute("rel", "stylesheet");
+        styleTag.setAttribute("type", "text/css");
+        styleTag.setAttribute("href", src);
+        document.getElementsByTagName("head")[0].appendChild(styleTag);
+    }
+
+    window.loadJs = loadJs;
+    window.loadCss = loadCss;
+
+
+    const STEEDOS_SENTRY_ENABLED = "<%=STEEDOS_SENTRY_ENABLED%>";
+    const NODE_ENV = "<%=NODE_ENV%>";
+    const STEEDOS_SENTRY_DSN = "<%=STEEDOS_SENTRY_DSN%>";
+    const ROOT_URL = "<%=ROOT_URL%>";
+    const STEEDOS_UNPKG_URL = "<%=STEEDOS_UNPKG_URL%>";
+    const STEEDOS_AMIS_URL = "<%=STEEDOS_AMIS_URL%>";
+    const STEEDOS_PUBLIC_SCRIPT_VCONSOLE = "<%=STEEDOS_PUBLIC_SCRIPT_VCONSOLE%>";
+    const STEEDOS_PUBLIC_SCRIPT_PLUGINS = "<%=STEEDOS_PUBLIC_SCRIPT_PLUGINS%>";
+    const STEEDOS_PUBLIC_STYLE_PLUGINS = "<%=STEEDOS_PUBLIC_STYLE_PLUGINS%>";
+    const STEEDOS_VERSION = "<%=STEEDOS_VERSION%>";
+    const STEEDOS_LOCALE = "<%=STEEDOS_LOCALE%>";
+    const STEEDOS_PUBLIC_PAGE_ASSETURLS = "<%=STEEDOS_PUBLIC_PAGE_ASSETURLS%>";
+    const STEEDOS_AMIS_VERSION= "<%=STEEDOS_AMIS_VERSION%>";
+
+    if (`${STEEDOS_SENTRY_ENABLED}` != 'false') {
+        loadJs(`${ROOT_URL}/sentry/sentry.min.js`, (script)=>{
+            const nodeEnv = NODE_ENV || 'development';
+            const DEFAULT_DSN_JS = {
+                'development': 'https://7c2b864b83bf4361a030a7df9d2ace0c@sentry.steedos.cn/7',
+                'production': 'https://8f3f63d02e8140718a6123b10d49ae2f@sentry.steedos.cn/6'
+            } 
+            var dsn = STEEDOS_SENTRY_DSN || DEFAULT_DSN_JS[nodeEnv];
+            Sentry.init({
+                dsn: STEEDOS_SENTRY_DSN
+            });
+        });
+    };
+
+    loadJs(`${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js`);
+    loadJs(`${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js`);
+    loadJs(`${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js`);
+
+    loadJs(`${STEEDOS_UNPKG_URL}/@steedos-builder/sdk@0.2.38/dist/index.umd.js`, ()=>{
+        window.Builder = BuilderSDK.Builder;
+        window.builder = BuilderSDK.builder;
+        window.builder.init('steedos');
+
+        let searchParams = new URLSearchParams(location.search);
+        if (searchParams.get('assetUrls')) {
+            sessionStorage.setItem('assetUrls', searchParams.get('assetUrls'))
+        }
+
+        let assetUrls = sessionStorage.getItem('assetUrls')? sessionStorage.getItem('assetUrls') : STEEDOS_PUBLIC_PAGE_ASSETURLS
+        if(typeof "assetUrls" == 'string'){
+            assetUrls = assetUrls.split(',');
+        }
+
+        const getBrowserLocale = function() {
+            var l, locale;
+            l = window.navigator.userLanguage || window.navigator.language || 'en';
+            if (l.indexOf("zh") >= 0) {
+                locale = "zh-cn";
+            } else {
+                locale = "en-us";
+            }
+            return locale;
+        };
+        
+        Builder.set({
+            nodeEnv: NODE_ENV, 
+            rootUrl: ROOT_URL, 
+            unpkgUrl: STEEDOS_UNPKG_URL,
+            steedosVersion: STEEDOS_VERSION,
+            assetUrls,
+            steedosAmisVersion: STEEDOS_AMIS_VERSION,
+            locale: STEEDOS_LOCALE || getBrowserLocale()
+        });
+    });
+
+    loadJs(`${STEEDOS_AMIS_URL}/sdk/sdk.js`, ()=>{
+        window.axios = amisRequire('axios');
+        window.moment = amisRequire('moment');
+        window.React = amisRequire('react');
+        window.ReactDOM = amisRequire('react-dom');  	
+        window.React17 = window.React;
+        window.ReactDOM17 = window.ReactDOM;
+    });
+
+    window.addEventListener('message', function (event) {
+        const { data } = event;
+        if (data.type === 'Builder.loaded') {
+            Builder.registerRemoteAssets(Builder.settings.assetUrls);
+        }
+    });
+
+    if (STEEDOS_PUBLIC_SCRIPT_VCONSOLE) {
+        loadJs(STEEDOS_PUBLIC_SCRIPT_VCONSOLE, ()=>{
+            window.vConsole = new window.VConsole();
+        });
+    }
+
+    if (STEEDOS_PUBLIC_SCRIPT_PLUGINS) {
+        STEEDOS_PUBLIC_SCRIPT_PLUGINS.split(',').forEach(function (src) {
+            loadJs(src)
+        })
+    }
+
+    if (STEEDOS_PUBLIC_STYLE_PLUGINS) {
+        STEEDOS_PUBLIC_STYLE_PLUGINS.split(',').forEach(function (src) {
+            loadCss(src)
+        })
+    }
+
+})();

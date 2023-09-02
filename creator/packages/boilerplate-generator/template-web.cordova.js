@@ -5,6 +5,9 @@ const evalEnv = (function() {
 
   return function(str, o) {
         return str.replace(regexp, function(ignore, key){
+              if(key === 'PLATFORM'){
+                return 'cordova';
+              }
               return (value = o[key]) == null ? '' : value;
         });
   }
@@ -71,7 +74,7 @@ export const headTemplate = ({
     '  <script type="text/javascript" src="/cordova.js"></script>',
 
     ...(js || []).map(file =>
-      template('  <script type="text/javascript" src="<%- src %>"></script>')({
+      template('  <script type="text/javascript">loadJs("<%- src %>")</script>')({
         src: file.url,
       })
     ),
@@ -81,7 +84,7 @@ export const headTemplate = ({
         ? template('  <script><%= contents %></script>')({
           contents,
         })
-        : template('  <script type="text/javascript" src="<%- src %>"></script>')({
+        : template('  <script type="text/javascript">loadJs("<%- src %>")</script>')({
           src: Meteor.absoluteUrl(pathname)
         })
     )),
