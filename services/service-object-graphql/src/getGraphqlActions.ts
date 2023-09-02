@@ -505,7 +505,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 label = map[value];
                             }
                             displayObj[name] = label;
-                        } else if (fType == "lookup" && (_.isString(field.reference_to) || !_.has(field, 'reference_to'))) {
+                        } else if (fType == "lookup" && (_.isString(field.reference_to) || (!_.has(field, 'reference_to') && !_.has(field, '_reference_to')))) {
                             if (_.isString(field.reference_to)) {
                                 let refTo = field.reference_to;
 
@@ -687,7 +687,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                     }
                                 }
                             }
-                        } else if ((fType == "master_detail" || fType == "lookup") && field.reference_to && !_.isString(field.reference_to)) {
+                        } else if ((fType == "master_detail" || fType == "lookup") && ((field.reference_to && !_.isString(field.reference_to)) || _.isString(field._reference_to))) {
                             let refValue = doc[name];
                             if (!refValue) {
                                 continue;
