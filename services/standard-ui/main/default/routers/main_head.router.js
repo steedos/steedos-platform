@@ -11,6 +11,10 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 
+/**
+ * 虽然script 标签的 async = false; 可以解决js之间的依赖顺序问题, 但是它无法做到比 HTML 中其他非动态加载的 script 脚本更早执行
+ * 所以调整了meteor 内核加载 bundledJs、staticJs的方式 (creator/packages/boilerplate-generator)
+ */
 router.get('/main_head.js', async function (req, res) {
     try {
         const { platform } = req.query;
