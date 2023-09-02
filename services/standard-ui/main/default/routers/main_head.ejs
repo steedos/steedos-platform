@@ -52,7 +52,9 @@
         });
     };
 
-    loadJs(`${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js`);
+    loadJs(`${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js`, ()=>{
+        window._ = window.lodash;
+    });
     loadJs(`${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js`);
     loadJs(`${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js`);
 
