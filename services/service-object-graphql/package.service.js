@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-15 13:55:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-02 15:04:27
  * @Description: 
  */
 
@@ -302,7 +302,7 @@ module.exports = {
 
                     const _fields = {};
                     _.each(objectConfig.fields, (field)=>{
-                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale']);
+                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale', '_reference_to']);
                     })
                     objectConfig.fields=_fields;
 

@@ -8,6 +8,9 @@ const evalEnv = (function() {
 
   return function(str, o) {
         return str.replace(regexp, function(ignore, key){
+              if(key === 'PLATFORM'){
+                return 'browser';
+              }
               return key === 'ROOT_URL' ? '' : (value = o[key]) == null ? '' : value;
         });
   }
@@ -71,7 +74,7 @@ export const closeTemplate = ({
   '',
 
   ...(js || []).map(file =>
-    template('  <script type="text/javascript" src="<%- src %>"<%= sri %>></script>')({
+    template('  <script type="text/javascript">loadJs("<%- src %>")</script>')({
       src: bundledJsCssUrlRewriteHook(file.url),
       sri: sri(file.sri, sriMode),
     })
@@ -82,7 +85,7 @@ export const closeTemplate = ({
       ? template('  <script><%= contents %></script>')({
         contents,
       })
-      : template('  <script type="text/javascript" src="<%- src %>"></script>')({
+      : template('  <script type="text/javascript">loadJs("<%- src %>")</script>')({
         src: rootUrlPathPrefix + pathname,
       })
   )),

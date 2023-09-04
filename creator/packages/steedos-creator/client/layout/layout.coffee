@@ -81,11 +81,13 @@ Template.creatorLayout.onRendered ->
 			amisScope = SteedosUI.refs.globalHeader;
 			if amisScope
 				Meteor.setTimeout ()->
-					amisScope.updateProps( {
-						location: FlowRouter.current()
-					}, ()->
-						console.log("amisScope.updateProps callback.......")
-					);
+					try
+						amisScope.updateProps( {
+							location: FlowRouter.current()
+						}, ()->
+							console.log("amisScope.updateProps callback.......")
+						);
+					catch e
 				, 100
 	this.autorun ->
 		tab_id = Session.get("pageApiName") || Session.get("object_name");
@@ -93,11 +95,13 @@ Template.creatorLayout.onRendered ->
 			amisScope = SteedosUI.refs.globalFooter;
 			if amisScope
 				Meteor.setTimeout ()->
-					amisScope.updateProps( {
-						location: FlowRouter.current()
-					}, ()->
-						console.log("amisScope.updateProps callback.......")
-					);
+					try
+						amisScope.updateProps( {
+							location: FlowRouter.current()
+						}, ()->
+							console.log("amisScope.updateProps callback.......")
+						);
+					catch e
 				, 100
 
 

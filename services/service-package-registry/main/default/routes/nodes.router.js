@@ -15,7 +15,7 @@ router.get('/api/nodes/install', core.requireAuthentication, async function (req
     try {
         const { module, version, label, description, nodeID} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.installPackage`, {
+        const result = await broker.call(`@steedos/service-project.installPackage`, {
             module, version, label, description
         },{
             nodeID: nodeID
@@ -40,7 +40,7 @@ router.post('/api/nodes/uninstall', core.requireAuthentication, async function (
         await registry.uninstallModule(body.module)
         const { module, nodeID} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.uninstallPackage`, {
+        const result = await broker.call(`@steedos/service-project.uninstallPackage`, {
             module
         },{
             nodeID: nodeID
@@ -62,7 +62,7 @@ router.post('/api/nodes/reload', core.requireAuthentication, async function (req
     try {
         const { module, nodeID} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.reloadPackage`, {
+        const result = await broker.call(`@steedos/service-project.reloadPackage`, {
             module
         },{
             nodeID: nodeID
@@ -84,7 +84,7 @@ router.post('/api/nodes/disable', core.requireAuthentication, async function (re
     try {
         const { module, nodeID} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.disablePackage`, {
+        const result = await broker.call(`@steedos/service-project.disablePackage`, {
             module
         },{
             nodeID: nodeID
@@ -106,7 +106,7 @@ router.post('/api/nodes/enable', core.requireAuthentication, async function (req
     try {
         const { module, nodeID} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.enablePackage`, {
+        const result = await broker.call(`@steedos/service-project.enablePackage`, {
             module
         },{
             nodeID: nodeID
@@ -132,7 +132,7 @@ router.get('/api/nodes/versions', core.requireAuthentication, async function (re
     try {
        
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.getPackageVersions`, {
+        const result = await broker.call(`@steedos/service-project.getPackageVersions`, {
             module
         })
         res.status(200).send(result); //TODO 完善返回信息
@@ -152,7 +152,7 @@ router.post('/api/nodes/upgrade', core.requireAuthentication, async function (re
     try {
         const { module, version} = body || {};
         let broker = schema.broker;
-        const result = await broker.call(`~packages-project-server.upgradePackage`, {
+        const result = await broker.call(`@steedos/service-project.upgradePackage`, {
             module, version
         })
         res.status(200).send(result);

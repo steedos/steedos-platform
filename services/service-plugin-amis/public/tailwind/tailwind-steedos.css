@@ -413,10 +413,6 @@
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
   }
 
-  .sm\:p-3 {
-    padding: 0.75rem
-  }
-
   .sm\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem

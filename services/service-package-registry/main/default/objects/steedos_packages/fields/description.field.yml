@@ -10,6 +10,6 @@ readonly: false
 required: false
 rows: 2
 searchable: false
-sort_no: 130
+sort_no: 999
 sortable: false
 type: textarea

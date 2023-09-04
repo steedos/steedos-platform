@@ -3,4 +3,4 @@ label: Enable User Registration
 type: boolean
 group: Register account
 defaultValue: false
-sort_no: 130
+sort_no: 10

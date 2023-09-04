@@ -24,27 +24,42 @@ const appendToPackagesConfig = (packageName, options)=>{
             }
         })
     }
-    if(changeNamePackage){
-        //如果是修改package name, 在steedos-package.yml位置保持不变
-        const newPackages = {};
-        _.each(packages, (info, key)=>{
-            if(key === changeNamePackage.module){
-                delete changeNamePackage.module
-                newPackages[packageName] = Object.assign(changeNamePackage, options)
-            }else{
-                newPackages[key] = info
-            }
-        })
-        packages = newPackages
-    }else{
+    if(options.static){
         if(!packages[packageName]){
+            if(options.enable){
+                const packagePath = path.dirname(require.resolve(`${packageName}/package.json`))
+                loadPackage(packageName, packagePath);
+            }
             packages[packageName] = Object.assign({
-                enable: true
+                enable: false
             }, options)
         }else{
             packages[packageName] = Object.assign(packages[packageName], options)
         }
+    }else{
+        if(changeNamePackage){
+                //如果是修改package name, 在steedos-package.yml位置保持不变
+                const newPackages = {};
+                _.each(packages, (info, key)=>{
+                    if(key === changeNamePackage.module){
+                        delete changeNamePackage.module
+                        newPackages[packageName] = Object.assign(changeNamePackage, options)
+                    }else{
+                        newPackages[key] = info
+                    }
+                })
+                packages = newPackages
+            }else{
+                if(!packages[packageName]){
+                    packages[packageName] = Object.assign({
+                        enable: true
+                    }, options)
+                }else{
+                    packages[packageName] = Object.assign(packages[packageName], options)
+                }
+            }
     }
+    
     let data = yaml.dump(packages);
     fs.writeFileSync(packagesFilePath, data);
 }
@@ -250,9 +265,13 @@ const enablePackage = async (packageName)=>{
             packagePath = path.resolve(process.cwd(), package.path)
         }
     }else{
-        packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
-            paths: [path.join(userDir, 'node_modules')]
-        }))
+        if(package && package.static){
+            packagePath = path.dirname(require.resolve(`${packageName}/package.json`))
+        }else{
+            packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
+                paths: [path.join(userDir, 'node_modules')]
+            }))
+        }
     }
     await loadPackage(packageName, packagePath)
     
@@ -271,6 +290,7 @@ const enablePackage = async (packageName)=>{
     }
     appendToPackagesConfig(packageName, package);
     let packageInfo = Object.assign({}, package, {name: packageName});
+    console.log(`enable packageInfo`, packageInfo)
     return packageInfo;
 }
 const installPackage = async (broker, options)=>{

@@ -56,9 +56,6 @@ tab_items:
   admin_datasources:
     group: object_settings
     index: 13
-  admin_queue_import:
-    group: advanced_settings
-    index: 38
   admin_pages:
     group: user_interface
     index: 15
@@ -143,6 +140,9 @@ tab_items:
   admin_autonumber:
     group: advanced_settings
     index: 37
+  admin_queue_import:
+    group: advanced_settings
+    index: 38
   # admin_web_forms:
   #   group: 高级设置
   #   index: 38

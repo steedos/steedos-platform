@@ -110,7 +110,7 @@ module.exports = {
 				return
 			}
 			try {
-				await ctx.broker.call('~packages-project-server.initialPackages', {}, {});
+				await ctx.broker.call('@steedos/service-project.initialPackages', {}, {});
 			} catch (error) {
 				console.error(`initialPackages error`, error)
 			}
