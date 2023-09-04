@@ -161,9 +161,9 @@ Template.remind_modal.onDestroyed ->
 
 Template.remind_modal.events
 	'click #instance_remind_ok': (event, template) ->
-		if !Steedos.hasProduct('platform-enterprise')
-				Steedos.spaceUpgradedModal()
-				return
+		# if !Steedos.hasProduct('platform-enterprise')
+		# 		Steedos.spaceUpgradedModal()
+		# 		return
 		values = $("#instance_remind_select_users")[0]?.dataset.values
 		remind_users = if values then values.split(",") else []
 		remind_count = ''
