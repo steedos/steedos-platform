@@ -3,7 +3,7 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 5000
+  - port: 6000
     onOpen: ignore
     visibility: public
   - port: 3000
@@ -44,8 +44,8 @@ tasks:
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
-      echo "ROOT_URL=$(gp url 5000)" >> examples/project-template/.env.local 
-      echo "METADATA_SERVER=$(gp url 5000)" >> examples/project-template/.env.local
+      echo "ROOT_URL=$(gp url 6000)" >> examples/project-template/.env.local 
+      echo "METADATA_SERVER=$(gp url 6000)" >> examples/project-template/.env.local
       npm i steedos-cli --global 
       npm i --global pnpm
       yarn install
