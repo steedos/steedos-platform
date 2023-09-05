@@ -162,7 +162,8 @@ tbody .color-priority-muted *{
     height: 10px;
     background-color: #1890ff;
     border-radius: 6px;
-    top: 10px;
+    top: 50%;
+    margin-top: -6px;
 }
 
 .instance-tasks-list .unread-instance .steedos-listview-item {
