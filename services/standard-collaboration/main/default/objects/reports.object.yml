@@ -2,6 +2,7 @@ name: reports
 label: Report
 icon: report
 enable_space_global: true
+hidden: true
 version: 2
 fields:
   name:

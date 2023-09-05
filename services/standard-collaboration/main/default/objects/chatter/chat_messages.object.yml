@@ -1,7 +1,7 @@
 name: chat_messages
 label: Chat Message
 icon: rtc_presence
-hidden: false
+hidden: true
 fields:
   related_to:
     label: Related Object Record

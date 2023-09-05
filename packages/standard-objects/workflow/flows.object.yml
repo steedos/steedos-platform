@@ -1,7 +1,7 @@
 name: flows
 icon: environment_hub
 label: Workflow
-hidden: false
+hidden: true
 enable_files: true
 enable_dataloader: false
 version: 2

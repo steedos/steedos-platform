@@ -4,7 +4,7 @@ table_name: 'cfs.files.filerecord'
 icon: drafts
 enable_search: true
 enable_api: true
-# hidden: true
+hidden: true
 fields:
   original:
     label: Original
