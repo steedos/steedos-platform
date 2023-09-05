@@ -211,7 +211,7 @@ module.exports = {
         addAssetUrl: {
             handler: async function (ctx) {
                 const { name, url } = ctx.params;
-                console.log(`addAssetUrl`, name, url)
+                // console.log(`addAssetUrl`, name, url)
                 return broker.broadcast("page.addAssetUrl", {
                     name, url
                 });

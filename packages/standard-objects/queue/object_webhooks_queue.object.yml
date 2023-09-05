@@ -1,6 +1,7 @@
 name: object_webhooks_queue
-label: Object Webhooks Queue
+label: Webhooks Queue
 icon: sms
+hidden: true
 fields:
   webhook: 
     type: object

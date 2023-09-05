@@ -1,10 +1,10 @@
 name: cfs_images_filerecord
-label: Attachment Version
+label: Images Version
 table_name: 'cfs.images.filerecord'
 icon: drafts
 enable_search: true
 enable_api: true
-# hidden: true
+hidden: true
 fields:
   original:
     label: Original

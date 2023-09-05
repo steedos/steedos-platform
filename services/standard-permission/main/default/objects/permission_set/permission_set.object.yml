@@ -1,7 +1,7 @@
 name: permission_set
 label: Profile & Permission Set
 icon: groups
-hidden: false
+hidden: true
 enable_inline_edit: false
 version: 2
 enable_dataloader: false

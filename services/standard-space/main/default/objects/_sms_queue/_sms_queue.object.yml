@@ -1,3 +1,4 @@
 name: _sms_queue
 label: 短信队列
 icon: sms
+hidden: true

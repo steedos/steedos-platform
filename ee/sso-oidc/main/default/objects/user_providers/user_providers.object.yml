@@ -1,3 +1,4 @@
 name: user_providers
 label: 身份提供者
 icon: recent
+hidden: true

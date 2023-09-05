@@ -68,6 +68,7 @@ amis_schema: |-
                           "required": true,
                           "idsDependOn": "distribute_optional_users",
                           "amis": {
+                               "id": "u:c3ad733db3602",
                                "source": {
                                   "method": "post",
                                   "url": "${context.rootUrl}/service/api/standard-ui/getUsersName",
@@ -97,6 +98,13 @@ amis_schema: |-
                         },
                         {
                           "type": "checkbox",
+                          "name": "instance_distribute_to_self",
+                          "id": "u:da17af0371f82",
+                          "option": "同时分发给自己",
+                          "hiddenOn": "${distribute_to_self != true}"
+                        },
+                        {
+                          "type": "checkbox",
                           "name": "saveInstanceToAttachment",
                           "id": "u:da17af0371f8",
                           "option": "将原表单存储为附件"
@@ -119,7 +127,7 @@ amis_schema: |-
                           "record": "${record}",
                           "context": "${context}"
                         },
-                        "requestAdaptor": "console.log('====', api);\nconst { record, flow_id, description, context, users, saveInstanceToAttachment, instance_related } = api.data;\nvar from_approve_id = null;\nif (record.approve && record.approve._id) {\n  from_approve_id = record.approve._id\n} else if (window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id) {\n  from_approve_id = window.InstanceManager.getCurrentApprove()._id\n} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": saveInstanceToAttachment || false,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": users,\n  \"action_type\": \"distribute\",\n  \"related\": instance_related || false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
+                        "requestAdaptor": "console.log('====', api);\nconst { record, flow_id, description, context, users, saveInstanceToAttachment, instance_related, instance_distribute_to_self } = api.data; if(instance_distribute_to_self){users.push(api.data.context.userId);} \nvar from_approve_id = null;\nif (record.approve && record.approve._id) {\n  from_approve_id = record.approve._id\n} else if (window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id) {\n  from_approve_id = window.InstanceManager.getCurrentApprove()._id\n} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": saveInstanceToAttachment || false,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": _.uniq(users),\n  \"action_type\": \"distribute\",\n  \"related\": instance_related || false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
                         "adaptor": "console.log('payload', payload);\nreturn payload;",
                         "headers": {
                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -156,7 +164,7 @@ amis_schema: |-
                                   "data": {
                                     "eData": "${event.data}"
                                   },
-                                  "requestAdaptor": "console.log('====', api);\nconst { flow_id } = api.data.eData\napi.data = {\n  query: \n  `{\n    flow: flows__findOne(id:\"${flow_id}\"){\n      distribute_optional_users\n    }\n  }`\n}\nreturn api;\n"
+                                  "requestAdaptor": "console.log('====', api);\nconst { flow_id } = api.data.eData\napi.data = {\n  query: \n  `{\n    flow: flows__findOne(id:\"${flow_id}\"){\n      distribute_optional_users,distribute_to_self\n    }\n  }`\n}\nreturn api;\n"
                                 }
                               },
                               "outputVar": "responseResult",
@@ -164,17 +172,22 @@ amis_schema: |-
                               "expression": "${!!event.data.flow_id}"
                             },
                             {
-                              "script": "console.log(event)",
-                              "actionType": "customer"
-                            },
-                            {
                               "componentId": "u:742f9c0dc8a1",
                               "args": {
                                 "value": {
-                                  "distribute_optional_users": "${event.data.flow.distribute_optional_users|pick:id}"
+                                  "distribute_optional_users": "${event.data.flow.distribute_optional_users|pick:id}",
+                                  "distribute_to_self": "${event.data.flow.distribute_to_self}"
                                 }
                               },
                               "actionType": "setValue"
+                            },
+                            {
+                              "componentId": "u:c3ad733db3602",
+                              "args": {
+                                "value": "${event.data.flow.distribute_optional_users|pick:id}"
+                              },
+                              "actionType": "setValue",
+                              "expression": "${event.data.flow.distribute_optional_users.length == 1 && event.data.users.length == 0}"
                             }
                           ]
                         }

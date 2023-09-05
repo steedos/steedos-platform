@@ -259,6 +259,7 @@ install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
 install("steedos:api-authenticate-user");
+install("steedos:records-qhd");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
@@ -464,7 +465,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "lib/index.js"
 };
 
@@ -491,7 +492,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "lib/index.js"
 };
 
@@ -518,7 +519,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "lib/index.js"
 };
 
@@ -545,7 +546,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "index.js"
 };
 
@@ -572,7 +573,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "index.js"
 };
 
@@ -599,7 +600,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "index.js"
 };
 
@@ -626,7 +627,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "package.service.js"
 };
 
@@ -653,7 +654,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-objectql",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "package.service.js"
 };
 
@@ -680,7 +681,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-ui",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "package.service.js"
 };
 
@@ -707,7 +708,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-pages",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "package.service.js"
 };
 
@@ -734,7 +735,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/router",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "lib/index.js"
 };
 
@@ -761,7 +762,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "lib/index.js"
 };
 
@@ -788,7 +789,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/workflow",
-  "version": "2.5.12",
+  "version": "2.5.13-beta.3",
   "main": "index.js"
 };
 

@@ -14,7 +14,7 @@ enable_search: false
 enable_share: false
 enable_tasks: false
 enable_workflow: false
-hidden: false
+hidden: true
 icon: contract
 is_enable: true
 version: 2

@@ -290,7 +290,7 @@ const enablePackage = async (packageName)=>{
     }
     appendToPackagesConfig(packageName, package);
     let packageInfo = Object.assign({}, package, {name: packageName});
-    console.log(`enable packageInfo`, packageInfo)
+    // console.log(`enable packageInfo`, packageInfo)
     return packageInfo;
 }
 const installPackage = async (broker, options)=>{

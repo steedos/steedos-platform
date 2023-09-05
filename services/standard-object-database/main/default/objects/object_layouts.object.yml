@@ -1,7 +1,7 @@
 name: object_layouts
 label: Object Layouts
 icon: dashboard_ea
-hidden: false
+hidden: true
 version: 2
 enable_dataloader: false
 fields:
