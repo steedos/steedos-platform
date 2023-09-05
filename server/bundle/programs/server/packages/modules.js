@@ -259,6 +259,7 @@ install("comerc:autoform-selectize");
 install("react-template-helper");
 install("steedos:webkit-notification");
 install("steedos:api-authenticate-user");
+install("steedos:records-qhd");
 install("hot-code-push");
 install("launch-screen");
 install("autoupdate", "meteor/autoupdate/autoupdate_server.js");

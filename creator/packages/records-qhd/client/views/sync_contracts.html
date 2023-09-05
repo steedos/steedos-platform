@@ -1,0 +1,92 @@
+<template name="recordsQHDSyncContracts">
+	<div class="qhd-sync-contracts">
+		<div class="box" style="border-top: 0px">
+			<div class="progress progress-sm contracts-active">
+				<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+					<span class="sr-only">同步控件</span>
+				</div>
+			</div>
+			<div class="box-header with-border">
+				<div class="box-title">
+					合同归档
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="form-group">
+					<label class="control-label">{{_ '同步合同台账'}}</label>
+					<div class="row">
+						<div class="{{#if isMobile}}col-xs-12{{else}}col-xs-5{{/if}}">
+							<div class="input-group date">
+								<div class="input-group-addon">{{_ 'instance_search_start'}}</div>
+								<div class="input-group-addon submit-date-icon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								{{#if isMobile}}
+									<input type="date" class="form-control pull-left"
+										   id="instance_submit_date_start">
+								{{else}}
+									<input type="text" class="form-control pull-left"
+										   id="instance_submit_date_start">
+								{{/if}}
+							</div>
+						</div>
+						<div class="{{#if isMobile}}col-xs-12 submit_date_end{{else}}col-xs-5{{/if}}">
+							<div class="input-group date">
+								<div class="input-group-addon">{{_ 'instance_search_end'}}</div>
+								<div class="input-group-addon submit-date-icon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								{{#if isMobile}}
+									<input type="date" class="form-control pull-left" id="instance_submit_date_end">
+								{{else}}
+									<input type="text" class="form-control pull-right"
+										   id="instance_submit_date_end">
+								{{/if}}
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<button type="button" class="btn btn-success instance-to-contracts">同步</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="table-responsive contracts-active-detail">
+
+					<div class="alert alert-success alert-dismissible">
+						<h4><i class="icon fa fa-check"></i> 同步已完成</h4>
+						共{{syncData.count}}条数据， 同步成功{{syncData.successCount}}
+					</div>
+
+					<table class="table no-margin">
+						<thead>
+						<tr>
+							<th>文件标题</th>
+							<th>提交人</th>
+							<th>提交时间</th>
+							<th>状态</th>
+						</tr>
+						</thead>
+						<tbody>
+							{{#each syncData.instances}}
+								<tr>
+									<td><a href="/workflow/space/{{spaceId}}/view/readonly/{{_id}}" target="_blank">{{name}}</a></td>
+									<td>{{applicant_name}}</td>
+									<td>{{format submit_date}}</td>
+									<td>
+										{{#if is_contract_archived}}
+											<span class="label label-success">成功</span>
+										{{else}}
+											<span class="label label-error">失败</span>
+										{{/if}}
+									</td>
+								</tr>
+							{{/each}}
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+

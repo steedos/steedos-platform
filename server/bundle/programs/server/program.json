@@ -720,6 +720,11 @@
       "path": "packages/steedos_api-authenticate-user.js"
     },
     {
+      "node_modules": "npm/node_modules/meteor/steedos_records-qhd/node_modules",
+      "sourceMap": "packages/steedos_records-qhd.js.map",
+      "path": "packages/steedos_records-qhd.js"
+    },
+    {
       "path": "packages/hot-code-push.js"
     },
     {
