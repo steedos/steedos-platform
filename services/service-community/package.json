@@ -63,7 +63,6 @@
     "randomcolor": "^0.6.2",
     "randomstring": "^1.2.1",
     "redlock": "^4.2.0",
-    "sqlite3": "^5.1.6",
     "steedos-cli": "2.5.13-beta.5",
     "tslib": "^2.4.0",
     "validator": "^13.6.0"
