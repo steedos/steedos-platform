@@ -759,6 +759,15 @@ InstanceManager.getCurrentApprove = function () {
 		var currentApproves = currentTraces[0].approves.filterProperty("is_finished", false).filterProperty("handler", Meteor.userId());
 
 		var currentApprove = currentApproves.length > 0 ? currentApproves[0] : null;
+
+		if(Session.get('instanceTaskId')){
+			var _currentApprove = _.find(currentApproves, (item)=>{
+				return item._id === Session.get('instanceTaskId')
+			});
+			if(_currentApprove){
+				currentApprove = _currentApprove
+			}
+		}
 	}
 
 	//传阅的approve返回最新一条
