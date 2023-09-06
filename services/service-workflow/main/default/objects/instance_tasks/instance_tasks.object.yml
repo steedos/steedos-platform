@@ -1,4 +1,4 @@
-name: api_keys
+name: instance_tasks
 label: 审批任务
 icon: account
 enable_api: true
