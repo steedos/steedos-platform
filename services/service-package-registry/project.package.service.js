@@ -151,7 +151,7 @@ module.exports = {
 				const { module } = ctx.params
                 let packageConfig = await loader.enablePackage(module);
 				if(packageConfig.static){
-					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig.name))
+					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
 				}
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
@@ -577,8 +577,8 @@ module.exports = {
 			}
 		},
 		getStaticPackageInfo: {
-			handler(packageName){
-				const _path = path.dirname(require.resolve(`${packageName}/package.json`));
+			handler(packageInfo, packageName){
+				const _path = packageInfo.path || path.dirname(require.resolve(`${packageName}/package.json`));
 				const packageJson = require(`${_path}/package.json`);
 				return {
 					path: _path,
@@ -595,7 +595,7 @@ module.exports = {
 					if (Object.hasOwnProperty.call(installPackages, name) && (packageName && packageName === name)) {
 						let _packageInfo = installPackages[name];
 						if(_packageInfo.static){
-							_packageInfo = Object.assign({}, _packageInfo, this.getStaticPackageInfo(name))
+							_packageInfo = Object.assign({}, _packageInfo, this.getStaticPackageInfo(_packageInfo, name))
 						}
 						const metadata = await loader.getPackageMetadata(_packageInfo.path);
 						await this.broker.call(`@steedos/service-packages.install`, {

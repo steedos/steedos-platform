@@ -619,7 +619,11 @@ InstanceManager.getInstanceFormValue = function(){
 	// var instanceValue = InstanceManager.getCurrentValues();
 	// var autoFormValue = AutoForm.getFormValues("instanceform").insertDoc;
 	if(InstanceManager.isAmisForm() && SteedosUI.refs.instanceAmisView){
-		autoFormValue = SteedosUI.refs.instanceAmisView.getComponentById('instanceForm').props.data;
+		if(SteedosUI.refs.instanceAmisView.getComponentById('instanceForm')){
+			autoFormValue = SteedosUI.refs.instanceAmisView.getComponentById('instanceForm').props.data;
+		}else{
+			autoFormValue = SteedosUI.refs.instanceAmisView.parent.getComponentById('instanceForm').props.data;
+		}
 	}else{
 		var instanceformValues = AutoForm.getFormValues("instanceform");
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
@@ -759,6 +763,15 @@ InstanceManager.getCurrentApprove = function () {
 		var currentApproves = currentTraces[0].approves.filterProperty("is_finished", false).filterProperty("handler", Meteor.userId());
 
 		var currentApprove = currentApproves.length > 0 ? currentApproves[0] : null;
+
+		if(Session.get('instanceTaskId')){
+			var _currentApprove = _.find(currentApproves, (item)=>{
+				return item._id === Session.get('instanceTaskId')
+			});
+			if(_currentApprove){
+				currentApprove = _currentApprove
+			}
+		}
 	}
 
 	//传阅的approve返回最新一条

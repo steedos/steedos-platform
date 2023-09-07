@@ -19,7 +19,7 @@ async function getServicesAppConfigs(ctx, appApiName) {
         metadataType,
         metadataApiName: appApiName
     }, {meta: ctx.meta})
-    return _.map(configs, 'metadata');
+    return _.map(_.orderBy(configs, 'timestamp'), 'metadata');
 }
 
 export async function refreshApp(ctx, appApiName) {

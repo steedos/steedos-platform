@@ -498,6 +498,8 @@ CustomLabels:
   cms_sites_error_site_owner_only: 所有者才能进行修改
   cms_sites_error_has_categories: 该站点下有栏目，不能删除
   cms_sites_error_has_posts: 该站点下有文章，不能删除
+  cms_sites_error_no_permission_to_modify: 工作区管理员和站点成员可以修改站点
+  cms_sites_error_no_permission_to_delete: 工作区管理员和站点成员可以删除站点
   cms_sites_visibility: 可见性
   cms_sites_visibility_private: 私有（此站点不公开，只有站点成员可见。）
   cms_sites_visibility_team: 工作区（此工作区的所有用户都可见，但只有站点成员可以编辑。）
@@ -509,6 +511,8 @@ CustomLabels:
   cms_categories_edit: 编辑栏目
   cms_categories_remove: 删除栏目
   cms_categories_error_deny_set_self: 不能修改上级栏目为当前栏目自身
+  cms_categories_error_no_permission_to_modify: 工作区管理员和站点成员可以修改栏目
+  cms_categories_error_no_permission_to_delete: 工作区管理员和站点成员可以删除栏目
   cms_post_error_remove_unreads_fail: 删除文章未读记录失败
   cms_posts_visibility: 可见性
   cms_posts_visibility_private: 私有（文章作者及发布对象可见，且只有作者或站点成员可以编辑。）

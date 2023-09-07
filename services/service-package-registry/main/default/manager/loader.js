@@ -26,13 +26,14 @@ const appendToPackagesConfig = (packageName, options)=>{
     }
     if(options.static){
         if(!packages[packageName]){
+            packages[packageName] = Object.assign({
+                enable: false,
+                local: true
+            }, options)
             if(options.enable){
-                const packagePath = path.dirname(require.resolve(`${packageName}/package.json`))
+                const packagePath = options.path || path.dirname(require.resolve(`${packageName}/package.json`))
                 loadPackage(packageName, packagePath);
             }
-            packages[packageName] = Object.assign({
-                enable: false
-            }, options)
         }else{
             packages[packageName] = Object.assign(packages[packageName], options)
         }
@@ -145,7 +146,8 @@ const isPackage = (name)=>{
     }
 }
 
-const loadDependency = async (dependencyName, dependencyVersion)=>{
+const loadDependency = async (mainPackageInfo, dependencyName, dependencyVersion)=>{
+    // console.log(`loadDependency`, mainPackageInfo, dependencyName, dependencyVersion)
     let schema = objectql.getSteedosSchema();
     let broker = schema.broker;
     let packageInfo = null;
@@ -169,9 +171,11 @@ const loadDependency = async (dependencyName, dependencyVersion)=>{
             await enablePackage(dependencyName)
         }else{
             try {
-                await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+                if(mainPackageInfo.static != true){
+                    await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
+                }
             } catch (error) {
-                
+                console.log(error)
             }
         }
         // 如果steedos package yml 中没有该依赖，则直接安装
@@ -196,16 +200,16 @@ const loadPackage = async (packageName, packagePath)=>{
         const packageInfo = require(path.join(packagePath, 'package.json'));
         await destroyExistThePackageService(packageInfo);
         await steedos.loadPackage(packagePath);
-
+        const packageConfig = getPackageConfig(packageName);
         if(packageInfo.dependencies){
             for (const dependencyName in packageInfo.dependencies) {
                 const dependencyVersion = packageInfo.dependencies[dependencyName];
-                await loadDependency(dependencyName, dependencyVersion);
+                await loadDependency(packageConfig, dependencyName, dependencyVersion);
             }
         }   
         return Object.assign({packagePath: packagePath}, packageInfo);
     } catch (error) {
-        console.error(error)
+        console.error(packageName, packagePath, error)
     }
 }
 

@@ -119,7 +119,7 @@
                 {
                   "type": "custom",
                   "html": "<div className='workflow-main flex w-full h-full no-columns instance-show instance-detail-service-wrapper'></div>",
-                  "onMount": "console.log('custom props.data====>', props.data);\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.instanceId);\nSession.set(\"box\", props.data.boxName);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])",
+                  "onMount": "console.log('custom props.data====>', props.data);\nSession.set(\"instance_change\", false);\n\nSession.set(\"instance_loading\", true);\nSession.set(\"judge\", null);\nSession.set(\"next_step_id\", null);\nSession.set(\"next_step_multiple\", null);\nSession.set(\"next_user_multiple\", null);\nSession.set(\"instanceId\", props.data.instanceId);\nSession.set(\"instanceTaskId\", props.data.recordId);\nSession.set(\"box\", props.data.boxName);\n\n\n window.instanceDetailBlazeRenderView = Blaze.render(Blaze._getTemplate('instance_view_wrapper'), document.getElementsByClassName('instance-detail-service-wrapper')[0])",
                   "id": "u:a6e0685d1da3",
                   "onUnmount": "if(window.instanceDetailBlazeRenderView){Blaze.remove(window.instanceDetailBlazeRenderView)}"
                 }

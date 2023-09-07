@@ -2,19 +2,30 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-24 16:25:28
+ * @LastEditTime: 2023-09-07 13:23:57
  */
 var buttonTriggerHistoryPathsChange;
 
 let historyPathsStoreKey = "history_paths";
 
 // 切换应用、对象、列表视图时清除本地存储中的过滤条件
-function clearHistoryFilters(context, lastPath) {
+function clearHistoryFilters(context, lastPath, paths) {
     const path = context.path;
     const params = context.params || {};
     if (!lastPath || lastPath.params.app_id != params.app_id || lastPath.params.object_name != params.object_name || lastPath.params.list_view_id != params.list_view_id) {
         let listViewPropsStoreKey;
         if (lastPath) {
+            if(lastPath.params.record_id){
+                // 是从记录详细界面直接切换到其他对象列表或其他应用时，进一步往上找，找到对象列表的path作为lastPath来清除对应的本地存储
+                for(let i = paths.length - 1;i >= 0;i--){
+                    let tempPath = paths[i];
+                    if(!tempPath.params.record_id && tempPath.params.list_view_id){
+                        // record_id不存在，list_view_id存在表示对象列表页面
+                        lastPath = tempPath;
+                        break;
+                    }
+                }
+            }
             listViewPropsStoreKey = lastPath.path + "/crud";
         }
         else {
@@ -229,7 +240,7 @@ FlowRouter.triggers.enter(debounce(function (context, redirect, stop) {
         } 
     }
     else {
-        clearHistoryFilters(context, lastPath);
+        clearHistoryFilters(context, lastPath, paths);
         // 触发广播事件前重置amis变量historyPaths值为空数组，并把当前path和params存入amis变量historyPaths中
         resetHistoryPath(path, params);
     }
