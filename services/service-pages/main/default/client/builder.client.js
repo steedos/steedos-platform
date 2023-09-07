@@ -55,7 +55,7 @@
             locale: Creator.USER_CONTEXT.user.locale
         })
     
-        window.postMessage({ type: "Builder.loaded" })
+        window.postMessage({ type: "Builder.loaded" }, "*")
     })
 })();
 
