@@ -550,6 +550,8 @@ CustomLabels:
   cms_categories_edit: Edit Category
   cms_categories_remove: Delete Category
   cms_categories_error_deny_set_self: Can't set the Parent property to current categorie.
+  cms_categories_error_no_permission_to_modify: Only workspace administrators and site members can modify the categorie
+  cms_categories_error_no_permission_to_delete: Only workspace administrators and site members can delete the categorie
   cms_post_error_remove_unreads_fail: Remove post unread record failed
   cms_posts_visibility: Visibility
   cms_posts_visibility_private: >-
