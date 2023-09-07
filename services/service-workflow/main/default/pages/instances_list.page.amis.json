@@ -55,7 +55,7 @@
                   "id": "u:aa4f4dc5f439",
                   "className": "w-full h-full",
                   "onEvent": {
-                    "@data.changed.instance_tasks": {
+                    "@data.changed.instances": {
                       "actions": [
                         {
                           "actionType": "reload"
@@ -174,10 +174,10 @@
             {
               "actionType": "broadcast",
               "args": {
-                "eventName": "@data.changed.instance_tasks"
+                "eventName": "@data.changed.instances"
               },
               "data": {
-                "objectName": "instance_tasks",
+                "objectName": "instances",
                 "recordId": "reload"
               }
             }
