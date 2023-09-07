@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-22 22:37:16
+ * @LastEditTime: 2023-09-07 17:18:56
  * @Description: 
  */
 ; (function () {
@@ -142,7 +142,7 @@
                 if(Session.get("box") === 'draft' || Session.get("box") === 'pending'){
                     const formChange = {
                         "actionType": "custom",
-                        "script": "Session.set('instance_form_values', {instanceId: event.data.instanceId, values: JSON.parse(JSON.stringify(event.data))});Session.set('instance_next_user_recalculate', new Date().getTime())"
+                        "script": "Session.set('instance_change', true);Session.set('instance_form_values', {instanceId: event.data.instanceId, values: JSON.parse(JSON.stringify(event.data))});Session.set('instance_next_user_recalculate', new Date().getTime())"
                     }; //
                     if(formSchema.onEvent && formSchema.onEvent.change && formSchema.onEvent.change.actions){
                         formSchema.onEvent.change.actions.push(formChange)
