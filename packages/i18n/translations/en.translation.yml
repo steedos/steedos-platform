@@ -536,6 +536,8 @@ CustomLabels:
   cms_sites_error_site_owner_only: Site owner only
   cms_sites_error_has_categories: Can't remove because it has categories
   cms_sites_error_has_posts: Can't remove because it has posts
+  cms_sites_error_no_permission_to_modify: Only workspace administrators and site members can modify the site
+  cms_sites_error_no_permission_to_delete: Only workspace administrators and site members can delete the site
   cms_sites_visibility: Visibility
   cms_sites_visibility_private: Private(Only the site's collaborators and owner can see.)
   cms_sites_visibility_team: Team(All users in the space can see.)
