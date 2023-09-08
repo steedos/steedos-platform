@@ -175,7 +175,7 @@ const loadDependency = async (mainPackageInfo, dependencyName, dependencyVersion
                     await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
                 }
             } catch (error) {
-                console.log(error)
+                // console.log(error)
             }
         }
         // 如果steedos package yml 中没有该依赖，则直接安装
