@@ -88,7 +88,7 @@ const loadPackages = async ()=>{
                         console.error(error)
                     }
                 }
-            }else if(package.local === true){
+            }else if(package.local === true && package.static != true){
                 let packagePath = package.path;
                 if(!path.isAbsolute(packagePath)){
                     packagePath = path.resolve(process.cwd(), packagePath)
@@ -262,7 +262,7 @@ const getPackageConfig = (packageName)=>{
 const enablePackage = async (packageName)=>{
     let packagePath = null;
     let package = getPackageConfig(packageName);
-    if(package && package.local){
+    if(package && package.local && package.static !=true){
         if(path.isAbsolute(package.path)){
             packagePath = package.path
         }else{
