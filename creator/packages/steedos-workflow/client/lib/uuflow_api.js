@@ -155,6 +155,12 @@ UUflow_api.post_submit = function (instance) {
 			toastr.success(TAPi18n.__('Submitted successfully'));
 
 			Session.set("instance_submitting", false);
+
+			var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
+			var button = scope && scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
+			if(button){
+				button.props.dispatchEvent('click', {});
+			}
 		},
 		error: function (xhr, msg, ex) {
 			$(document.body).removeClass("loading");
@@ -267,6 +273,12 @@ UUflow_api.post_terminate = function (instance) {
 			toastr.success(TAPi18n.__('Canceled successfully'));
 
 			Session.set("instance_submitting", false);
+
+			var scope = SteedosUI.refs["serviceSteedosKeyvaluesSubscribe"];
+			var button = scope && scope.getComponentByName("serviceSteedosKeyvaluesSubscribe.buttonTriggerDataChange");
+			if(button){
+				button.props.dispatchEvent('click', {});
+			}
 		},
 		error: function (xhr, msg, ex) {
 			$(document.body).removeClass("loading");

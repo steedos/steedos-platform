@@ -38,6 +38,17 @@ amis_schema: |-
                                   "objectName": "instances",
                                   "__deletedRecord": true
                                 }
+                            },
+                            {
+                                "actionType": "broadcast",
+                                "args": {
+                                    "eventName": "@data.changed.steedos_keyvalues"
+                                },
+                                "data": {
+                                    "type": "",
+                                    "keyvalue": "",
+                                    "keyvalues": "${ss:keyvalues}"
+                                }
                             }
                       ],
                       "weight": 0
