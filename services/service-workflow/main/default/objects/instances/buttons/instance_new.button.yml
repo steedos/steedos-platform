@@ -60,6 +60,17 @@ amis_schema: |-
                                                         "args": {
                                                         },
                                                         "actionType": "closeDrawer"
+                                                        },
+                                                        {
+                                                            "actionType": "broadcast",
+                                                            "args": {
+                                                                "eventName": "@data.changed.steedos_keyvalues"
+                                                            },
+                                                            "data": {
+                                                                "type": "",
+                                                                "keyvalue": "",
+                                                                "keyvalues": "${ss:keyvalues}"
+                                                            }
                                                         }
                                                     ]
                                                 }
