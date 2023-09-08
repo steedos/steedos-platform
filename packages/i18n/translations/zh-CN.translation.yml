@@ -511,9 +511,13 @@ CustomLabels:
   cms_categories_edit: 编辑栏目
   cms_categories_remove: 删除栏目
   cms_categories_error_deny_set_self: 不能修改上级栏目为当前栏目自身
+  cms_categories_error_no_permission_to_create: 工作区管理员和站点成员可以新建栏目
   cms_categories_error_no_permission_to_modify: 工作区管理员和站点成员可以修改栏目
   cms_categories_error_no_permission_to_delete: 工作区管理员和站点成员可以删除栏目
   cms_post_error_remove_unreads_fail: 删除文章未读记录失败
+  cms_posts_error_no_permission_to_create: 工作区管理员和站点成员可以新建知识
+  cms_posts_error_no_permission_to_modify: 工作区管理员和站点成员可以修改知识
+  cms_posts_error_no_permission_to_delete: 工作区管理员和站点成员可以删除知识
   cms_posts_visibility: 可见性
   cms_posts_visibility_private: 私有（文章作者及发布对象可见，且只有作者或站点成员可以编辑。）
   cms_posts_visibility_space: 工作区（此工作区的所有用户都可见，但只有作者或站点成员可以编辑。）
