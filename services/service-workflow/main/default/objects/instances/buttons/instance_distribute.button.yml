@@ -50,8 +50,69 @@ amis_schema: |-
                           "options": [],
                           "searchable": true,
                           "amis": {
-                            "autoFill": {
-                              "users": []
+                            "onEvent":{
+                                "change": {
+                                "weight": 0,
+                                "actions": [
+                                  {
+                                    "args": {
+                                      "options": {},
+                                      "api": {
+                                        "url": "${context.rootUrl}/graphql",
+                                        "method": "post",
+                                        "messages": {},
+                                        "dataType": "json",
+                                        "headers": {
+                                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                        },
+                                        "data": {
+                                          "eData": "${event.data}"
+                                        },
+                                        "requestAdaptor": "console.log('====', api);\nconst { flow_id } = api.data.eData\napi.data = {\n  query: \n  `{\n    flow: flows__findOne(id:\"${flow_id}\"){\n      distribute_optional_users,distribute_to_self\n    }\n  }`\n}\nreturn api;\n"
+                                      }
+                                    },
+                                    "outputVar": "responseResult",
+                                    "actionType": "ajax",
+                                    "expression": "${!!event.data.flow_id}"
+                                  },
+                                  {
+                                    "componentId": "u:742f9c0dc8a1",
+                                    "args": {
+                                      "value": {
+                                        "distribute_optional_users": "${event.data.flow.distribute_optional_users|pick:id}",
+                                        "distribute_to_self": "${event.data.flow.distribute_to_self}"
+                                      }
+                                    },
+                                    "actionType": "setValue"
+                                  },
+                                  {
+                                    "componentId": "u:c3ad733db365",
+                                    "actionType": "visibility",
+                                    "args": {
+                                      "value": "${!event.data.flow.distribute_optional_users || event.data.flow.distribute_optional_users.length == 0}"
+                                    }
+                                  },
+                                  {
+                                    "componentId": "u:c3ad733db3602",
+                                    "actionType": "visibility",
+                                    "args": {
+                                      "value": "${event.data.flow.distribute_optional_users.length > 0}"
+                                    }
+                                  },
+                                  {
+                                    "actionType": "custom",
+                                    "script": "//先控制字段显隐后,再给赋值,存在值上不去的情况. \n setTimeout(function(){doAction({\"componentId\":\"u:c3ad733db3602\",\"args\":{\"value\":\"${event.data.flow.distribute_optional_users|pick:id}\"},\"actionType\":\"setValue\",\"expression\":\"${event.data.flow.distribute_optional_users.length == 1}\"})}, 300)"
+                                  },
+                                  {
+                                    "componentId": "u:c3ad733db3602",
+                                    "args": {
+                                      "value": []
+                                    },
+                                    "actionType": "setValue",
+                                    "expression": "${!event.data.flow.distribute_optional_users || event.data.flow.distribute_optional_users.length != 1}"
+                                  }
+                                ]
+                              }
                             }
                           },
                           "onlyLeaf": true,
@@ -63,12 +124,22 @@ amis_schema: |-
                           "type": "steedos-select-user",
                           "label": "分发对象",
                           "name": "users",
+                          "id": "u:c3ad733db365",
+                          "multiple": true,
+                          "requiredOn":"${distribute_to_self != true || instance_distribute_to_self != true}",
+                          "visible": false
+                        },
+                        {
+                          "type": "steedos-select-user",
+                          "label": "分发对象",
+                          "name": "users",
                           "id": "u:c3ad733db360",
                           "multiple": true,
-                          "required": true,
+                          "requiredOn":"${distribute_to_self != true || instance_distribute_to_self != true}",
                           "idsDependOn": "distribute_optional_users",
                           "amis": {
                                "id": "u:c3ad733db3602",
+                                "visible": false,
                                "source": {
                                   "method": "post",
                                   "url": "${context.rootUrl}/service/api/standard-ui/getUsersName",
@@ -127,7 +198,7 @@ amis_schema: |-
                           "record": "${record}",
                           "context": "${context}"
                         },
-                        "requestAdaptor": "console.log('====', api);\nconst { record, flow_id, description, context, users, saveInstanceToAttachment, instance_related, instance_distribute_to_self } = api.data; if(instance_distribute_to_self){users.push(api.data.context.userId);} \nvar from_approve_id = null;\nif (record.approve && record.approve._id) {\n  from_approve_id = record.approve._id\n} else if (window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id) {\n  from_approve_id = window.InstanceManager.getCurrentApprove()._id\n} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": saveInstanceToAttachment || false,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": _.uniq(users),\n  \"action_type\": \"distribute\",\n  \"related\": instance_related || false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
+                        "requestAdaptor": "console.log('====', api);\nconst { record, flow_id, description, context, users, saveInstanceToAttachment, instance_related, instance_distribute_to_self } = api.data; if(instance_distribute_to_self){users.push(api.data.context.userId);} \nvar from_approve_id = null;\nif (record.approve && record.approve._id) {\n  from_approve_id = record.approve._id\n} else if (window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id) {\n  from_approve_id = window.InstanceManager.getCurrentApprove()._id\n}; \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": saveInstanceToAttachment || false,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": _.uniq(users),\n  \"action_type\": \"distribute\",\n  \"related\": instance_related || false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
                         "adaptor": "console.log('payload', payload);\nreturn payload;",
                         "headers": {
                           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -144,50 +215,6 @@ amis_schema: |-
                               "componentId": "",
                               "args": {},
                               "actionType": "closeDialog"
-                            }
-                          ]
-                        },
-                        "change": {
-                          "weight": 0,
-                          "actions": [
-                            {
-                              "args": {
-                                "options": {},
-                                "api": {
-                                  "url": "${context.rootUrl}/graphql",
-                                  "method": "post",
-                                  "messages": {},
-                                  "dataType": "json",
-                                  "headers": {
-                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                  },
-                                  "data": {
-                                    "eData": "${event.data}"
-                                  },
-                                  "requestAdaptor": "console.log('====', api);\nconst { flow_id } = api.data.eData\napi.data = {\n  query: \n  `{\n    flow: flows__findOne(id:\"${flow_id}\"){\n      distribute_optional_users,distribute_to_self\n    }\n  }`\n}\nreturn api;\n"
-                                }
-                              },
-                              "outputVar": "responseResult",
-                              "actionType": "ajax",
-                              "expression": "${!!event.data.flow_id}"
-                            },
-                            {
-                              "componentId": "u:742f9c0dc8a1",
-                              "args": {
-                                "value": {
-                                  "distribute_optional_users": "${event.data.flow.distribute_optional_users|pick:id}",
-                                  "distribute_to_self": "${event.data.flow.distribute_to_self}"
-                                }
-                              },
-                              "actionType": "setValue"
-                            },
-                            {
-                              "componentId": "u:c3ad733db3602",
-                              "args": {
-                                "value": "${event.data.flow.distribute_optional_users|pick:id}"
-                              },
-                              "actionType": "setValue",
-                              "expression": "${event.data.flow.distribute_optional_users.length == 1 && event.data.users.length == 0}"
                             }
                           ]
                         }
