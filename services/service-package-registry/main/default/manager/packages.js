@@ -33,6 +33,7 @@ const getAllPackages = async ()=>{
         package.new_version = package.version
         package.local = package.local
         package.static = package.static
+        package.homepage = package.homepage
         delete package.version
         if(installPackages[package.name]){
             package.status = installPackages[package.name].enable ? 'enable' : 'disable'
@@ -54,7 +55,8 @@ const getAllPackages = async ()=>{
                 label: package.label || packageName,
                 description: package.description,
                 metadata: package.metadata,
-                static: package.static
+                static: package.static,
+                homepage: package.homepage
             })
         }
     })
@@ -67,6 +69,7 @@ const getAllPackages = async ()=>{
             _package.node_id = packageInfo.nodeID
             _package.instance_id = packageInfo.instanceID
             _package.version = packageInfo.version
+            _package.homepage = packageInfo.homepage
         }else{
             packages.push({
                 _id : packageName.replace("/", '_'),
@@ -78,7 +81,8 @@ const getAllPackages = async ()=>{
                 version : packageInfo.version,
                 label: packageInfo.label || packageName,
                 description: packageInfo.description,
-                local: false
+                local: false,
+                homepage: packageInfo.homepage
             })
         }
     })

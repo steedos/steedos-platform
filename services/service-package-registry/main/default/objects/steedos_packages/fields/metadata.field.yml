@@ -2,3 +2,4 @@ name: metadata
 label: 软件包组件
 type: grid
 is_wide: true
+sort_no: 500
