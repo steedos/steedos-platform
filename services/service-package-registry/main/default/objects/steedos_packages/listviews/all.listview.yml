@@ -2,10 +2,10 @@ name: all
 columns:
   - field: label
     wrap: false
-  - field: version
-    wrap: false
   - field: description
     width: '150'
+    wrap: false
+  - field: version
     wrap: false
   - field: status
 filter_scope: space

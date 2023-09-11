@@ -583,7 +583,18 @@ module.exports = {
 				return {
 					path: _path,
 					version: packageJson.version,
-					description: packageJson.description
+					description: packageJson.description,
+					homepage: packageJson.homepage
+				}
+			}
+		},
+		getPackageInfo: {
+			handler(packageInfo, packageName){
+				const packageJson = require(`${_path}/package.json`);
+				return {
+					version: packageJson.version,
+					description: packageJson.description,
+					homepage: packageJson.homepage
 				}
 			}
 		},
@@ -596,6 +607,8 @@ module.exports = {
 						let _packageInfo = installPackages[name];
 						if(_packageInfo.static){
 							_packageInfo = Object.assign({}, _packageInfo, this.getStaticPackageInfo(_packageInfo, name))
+						}else{
+							_packageInfo = Object.assign({}, _packageInfo, this.getPackageInfo(_packageInfo, name))
 						}
 						const metadata = await loader.getPackageMetadata(_packageInfo.path);
 						await this.broker.call(`@steedos/service-packages.install`, {
@@ -609,7 +622,8 @@ module.exports = {
 								version: _packageInfo.version, 
 								description: _packageInfo.description,
 								metadata: metadata,
-								static: _packageInfo.static
+								static: _packageInfo.static,
+								homepage: _packageInfo.homepage
 							}
 						})
 					}
