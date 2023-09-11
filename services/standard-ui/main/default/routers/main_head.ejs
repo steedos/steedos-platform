@@ -38,6 +38,8 @@
     const STEEDOS_PUBLIC_PAGE_ASSETURLS = "<%=STEEDOS_PUBLIC_PAGE_ASSETURLS%>";
     const STEEDOS_AMIS_VERSION= "<%=STEEDOS_AMIS_VERSION%>";
 
+    const platform = <%- JSON.stringify(platform) %>;
+
     if (`${STEEDOS_SENTRY_ENABLED}` != 'false') {
         loadJs(`${ROOT_URL}/sentry/sentry.min.js`, (script)=>{
             const nodeEnv = NODE_ENV || 'development';
@@ -53,7 +55,21 @@
     };
 
     loadJs(`${STEEDOS_UNPKG_URL}/lodash@4.17.21/lodash.min.js`, ()=>{
-        window._ = window.lodash;
+        // window._ = window.lodash;
+        try {
+            if(platform.hostname){
+                if (!_.includes(platform.hostname.split(','), window.location.hostname)) {
+                    setTimeout(function(){
+                        document.getElementsByClassName("steedos-banners")[0].style.display = 'flex';
+                        document.getElementsByClassName("steedos-banners")[0].style.justifyContent = 'center';
+                        console.error(`环境变量ROOT_URL中的hostname(${window.location.hostname})与许可证中设置的不一致，请确认。`)
+                    }, 1000)
+                }
+            }
+        } catch (error) {
+            console.error(error)
+        }
+
     });
     loadJs(`${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js`);
     loadJs(`${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js`);

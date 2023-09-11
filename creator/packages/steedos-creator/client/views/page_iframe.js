@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-08-30 15:26:07
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-09 15:11:09
+ * @Description: 
+ */
 
 var onNavClick=function (event) {
     const { data } = event;
@@ -38,3 +45,6 @@ Template.page_iframe.onDestroyed(function(){
 	window.removeEventListener('message', onNavClick)
 })
 
+Template.page_iframe.onRendered(function(){
+	window.Steedos.setDocumentTitle({pageName: null, tabName: null})
+})
