@@ -331,6 +331,10 @@
 
         const page = Steedos.Page.getPage('app', app_id, null, null, pageName);
         if (page) {
+            Steedos.setDocumentTitle({
+                pageName: page.label,
+                tabName: null
+            })
             if (page.render_engine && page.render_engine != 'redash') {
                 return Steedos.Page.render(container, page, Object.assign({}, options, {
                     appId: app_id

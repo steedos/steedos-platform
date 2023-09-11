@@ -10,7 +10,7 @@
           "type": "service",
           "className": "w-full h-full",
           "onEvent": {
-            "@data.changed.instance_tasks": {
+            "@data.changed.steedos_keyvalues": {
               "actions": [
                 {
                   "actionType": "reload"

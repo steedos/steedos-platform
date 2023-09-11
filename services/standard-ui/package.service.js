@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-07-29 09:40:31
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-19 19:56:00
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-09-11 15:45:29
  * @Description: 
  */
 "use strict";
@@ -52,8 +52,9 @@ module.exports = {
 					{
 						objectName: 'space_users',
 						query: {
-							fields: ['_id', 'user', 'name'],
-							filters: [["user", "in", userIds]]
+							fields: ['_id', 'user', 'name', 'sort_no'],
+							filters: [["user", "in", userIds]],
+							sort: 'sort_no desc'
 						},
 					}
 				);

@@ -6,6 +6,14 @@ DOCUMENT_TITLE_PROPS = {
 	tabName: '',
 	pageName: ''
 }
+
+Meteor.startup(()->
+	if Meteor.settings.public?.platform?.is_oem && Meteor.settings.public?.platform?.licensed_to
+		DOCUMENT_TITLE_SUFFIX = Meteor.settings.public.platform.licensed_to;
+		DOCUMENT_TITLE_PROPS.suffix = DOCUMENT_TITLE_SUFFIX;
+		document.title = DOCUMENT_TITLE_SUFFIX
+)
+
 Steedos.Helpers =
 
 	isPad: ()->

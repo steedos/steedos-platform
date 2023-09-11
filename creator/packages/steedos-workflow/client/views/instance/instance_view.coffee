@@ -123,6 +123,11 @@ Template.instance_view.onCreated ->
 Template.instance_view.onRendered ->
 	ins = WorkflowManager.getInstance();
 
+	try
+		window.Steedos && window.Steedos.setDocumentTitle && window.Steedos.setDocumentTitle({pageName: ins.name})
+	catch e
+		console.error(e)
+
 	form_version = db.form_versions.findOne({_id: ins.form_version})
 
 	flow_version = db.flow_versions.findOne({_id: ins.flow_version})

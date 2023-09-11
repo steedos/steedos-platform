@@ -11,7 +11,6 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 
-
 const getConfig = (key, platform)=>{
     if(platform === 'cordova'){
         let value = process.env[key];
@@ -47,7 +46,8 @@ router.get('/main_head.js', async function (req, res) {
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,
             STEEDOS_LOCALE: "",
             STEEDOS_PUBLIC_PAGE_ASSETURLS: process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
-            STEEDOS_AMIS_VERSION: process.env.STEEDOS_AMIS_VERSION
+            STEEDOS_AMIS_VERSION: process.env.STEEDOS_AMIS_VERSION,
+            platform: __meteor_runtime_config__.PUBLIC_SETTINGS?.platform || {}
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){
