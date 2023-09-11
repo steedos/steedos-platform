@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-09-07 13:23:57
+ * @LastEditTime: 2023-09-11 17:44:01
  */
 var buttonTriggerHistoryPathsChange;
 
@@ -19,7 +19,9 @@ function clearHistoryFilters(context, lastPath, paths) {
                 // 是从记录详细界面直接切换到其他对象列表或其他应用时，进一步往上找，找到对象列表的path作为lastPath来清除对应的本地存储
                 for(let i = paths.length - 1;i >= 0;i--){
                     let tempPath = paths[i];
-                    if(!tempPath.params.record_id && tempPath.params.list_view_id){
+                    // if(!tempPath.params.record_id && tempPath.params.list_view_id){
+                    // 不可以判断list_view_id表示对象列表，因为有可以从应用程序微页面进入记录详细页面，需要清除应用程序微页面中的对象表格或对象列表组件中本地存储中保存的过滤条件
+                    if(!tempPath.params.record_id){
                         // record_id不存在，list_view_id存在表示对象列表页面
                         lastPath = tempPath;
                         break;
