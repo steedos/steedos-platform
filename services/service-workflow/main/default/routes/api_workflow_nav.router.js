@@ -49,19 +49,18 @@ const getDraftCount = async (userSession, req) => {
 }
 
 
-
 /**
- * 1 查询instance_tasks数据
+ * 1 查询审批数据
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategoriesInbox = async (userSession, req) => {
+const getCategories = async (userSession, req, object, box) => {
   const { appId } = req.params;
   const { userId, is_space_admin, spaceId } = userSession;
   const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-    box: "inbox", flowId: null, userId, is_space_admin, appId, spaceId
+    box: box, flowId: null, userId, is_space_admin, appId, spaceId
   })
-  const data = await objectql.getObject('instance_tasks').find({
+  const data = await objectql.getObject(object).find({
     filters: filters,
     fields: ['_id', 'flow', 'category','flow_name','category_name']
   }, userSession)
@@ -76,31 +75,29 @@ const getCategoriesInbox = async (userSession, req) => {
       categoryBadge += v2.length
       flows.push({
         label: k2,
-        // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow_name', '=', '${k2}']`,
         flow_name: k2,
         tag:v2.length,
         options:{
           level:3,
           value: v2[0].flow,
           name: 'flow',
-          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']`,
+          to: `/app/${appId}/${object}/grid/${box}?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`,
         },
-        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']`
+        value: `/app/${appId}/${object}/grid/${box}?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`
       })
     })
     output.push({
       label: k == 'null' ? "未分类" : k,
       children: flows,
-      // to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category_name', '=', '${k}']`,
       category_name: k == 'null' ? "未分类" : k,
       tag: v.length,
       options: {
         level: 2,
         value: v[0].category,
         name: 'category',
-        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']`,
+        to: `/app/${appId}/${object}/grid/${box}?additionalFilters=['category', '=', '${v[0].category}']&flowId=`,
       },
-      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']`
+      value: `/app/${appId}/${object}/grid/${box}?additionalFilters=['category', '=', '${v[0].category}']&flowId=`
     })
   })
   return {
@@ -109,12 +106,14 @@ const getCategoriesInbox = async (userSession, req) => {
   }
 }
 
+
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
 
     let userSession = req.user;
     const { appId } = req.params;
-    let {schema, count} = await getCategoriesInbox(userSession,req);
+    let inboxResult = await getCategories(userSession,req,"instance_tasks","inbox");
+    let monitorResult = await getCategories(userSession,req,"instances","monitor");
     let draftCount = await getDraftCount(userSession,req);
     let hasFlowsPer = userSession.is_space_admin;
     if (!hasFlowsPer) {
@@ -133,13 +132,13 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
       {
         "label": t('inbox', {}, userSession.language),
         "icon": "fa fa-download",
-        "tag":count,
+        "tag":inboxResult.count,
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/inbox`
+          "to": `/app/${appId}/instance_tasks/grid/inbox?flowId=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/inbox`,
-        "children":schema
+        "value": `/app/${appId}/instance_tasks/grid/inbox?flowId=`,
+        "children": inboxResult.schema
       },
       {
         "label": t('outbox', {}, userSession.language),
@@ -155,9 +154,10 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "icon": "fa fa-eye",
         "options":{
           "level":1,
-          "to": `/app/${appId}/instances/grid/monitor`,
+          "to": `/app/${appId}/instances/grid/monitor?flowId=`,
         },
-        "value": `/app/${appId}/instances/grid/monitor`,
+        "value": `/app/${appId}/instances/grid/monitor?flowId=`,
+        "children": monitorResult.schema,
         "visible": hasFlowsPer
       },
       {
