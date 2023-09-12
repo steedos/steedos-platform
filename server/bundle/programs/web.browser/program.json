@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "45b4387e708bde696c98410c8ffad6b2cba5a91c.js",
+      "path": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/45b4387e708bde696c98410c8ffad6b2cba5a91c.js?meteor_js_resource=true",
-      "size": 4300080,
-      "hash": "45b4387e708bde696c98410c8ffad6b2cba5a91c",
-      "sri": "cqs/NzgtruI6z4c7uspkJYQJyZt1MfLEft3MRI59QmREJOyJhgswpkb5cbCKM16A32oWDRQp0cHQ0tDHI3uCyA=="
+      "url": "/d7bf8f2ce189640c36b958dd95ec40bcec283bd9.js?meteor_js_resource=true",
+      "size": 4299916,
+      "hash": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9",
+      "sri": "xWAu3wYCs4whvR2Y9e2wjXozl0oFzWoGkE0D3IRrYh+fe53GNfIWVstEWMDzizwdBf/DWPZgtczTczADiGlj2A=="
     },
     {
-      "path": "45b4387e708bde696c98410c8ffad6b2cba5a91c.stats.json",
+      "path": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/45b4387e708bde696c98410c8ffad6b2cba5a91c.stats.json?meteor_js_resource=true",
+      "url": "/d7bf8f2ce189640c36b958dd95ec40bcec283bd9.stats.json?meteor_js_resource=true",
       "size": 93049,
-      "hash": "c35cac72ecdd2a5a735f2d1d8e9417dd1cc0446c",
-      "sri": "3uLGeZEL5zUNni+QXzLda+rSwTxpdpVuuVKqb4iRhASkrwYWv8zg92bq28vdfKHOjNhOvHVeo5n2b5fJ1AJ2pQ=="
+      "hash": "f45194afa0dc871bccc451241e743e3292629d8e",
+      "sri": "CrZj8UhL9r3TNNSgzF0D41g28df+e/0e7VF8nDca6M5GyizNnPZyi9fkeSNNR9dLqbLn1ABnhXAz0Y7ZA/Clog=="
     },
     {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
@@ -322,6 +322,26 @@
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
+      "path": "app/js/jquery.fileupload.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/jquery.fileupload.js",
+      "size": 63666,
+      "hash": "c890081eb69b17c2bee3b227d50ece6e83b3baf8",
+      "sri": null
+    },
+    {
+      "path": "app/js/jquery.ui.widget.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/js/jquery.ui.widget.js",
+      "size": 16089,
+      "hash": "bd1507404d89843243174be93268f1c648088677",
+      "sri": null
+    },
+    {
       "path": "assets/icons/License-for-icons.txt",
       "where": "client",
       "type": "asset",
@@ -445,7 +465,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "13fd793d6ff15734c117eec34745fdf01ce4c50e"
+      "hash": "fa7bfcba3dd964c169f3961a33accaefe402e7d7"
     }
   ]
 }
