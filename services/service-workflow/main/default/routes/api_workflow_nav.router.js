@@ -113,6 +113,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
     let userSession = req.user;
     const { appId } = req.params;
     let inboxResult = await getCategories(userSession,req,"instance_tasks","inbox");
+    let monitorResult = await getCategories(userSession,req,"instances","monitor");
     let draftCount = await getDraftCount(userSession,req);
     let hasFlowsPer = userSession.is_space_admin;
     if (!hasFlowsPer) {
@@ -156,6 +157,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
           "to": `/app/${appId}/instances/grid/monitor?flowId=`,
         },
         "value": `/app/${appId}/instances/grid/monitor?flowId=`,
+        "children": monitorResult.schema,
         "visible": hasFlowsPer
       },
       {
