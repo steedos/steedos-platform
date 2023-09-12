@@ -23,6 +23,7 @@ const getFormPageInitSchema = function (objectApiName) {
         "recordId": "${recordId}",
         "className": "",
         "id": "u:b3d626885b90",
+        "enableTabs": true,
         "mode": "edit",
         "layout": "normal"
     };
