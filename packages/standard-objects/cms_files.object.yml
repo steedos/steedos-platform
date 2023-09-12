@@ -3,7 +3,7 @@ label: Attachments
 icon: drafts
 enable_search: true
 enable_api: true
-hidden: true
+hidden: false
 version: 2
 fields:
   name:
