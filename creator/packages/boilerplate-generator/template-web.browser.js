@@ -74,7 +74,7 @@ export const closeTemplate = ({
   '',
 
   ...(js || []).map(file =>
-    template('  <script type="text/javascript">loadJs("<%- src %>")</script>')({
+    template('  <script type="text/javascript">delete window.jQuery;delete window.$;loadJs("<%- src %>")</script>')({
       src: bundledJsCssUrlRewriteHook(file.url),
       sri: sri(file.sri, sriMode),
     })

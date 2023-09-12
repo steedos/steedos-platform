@@ -583,7 +583,6 @@ Template.instance_button.helpers
 
 Template.instance_button.onRendered ->
 	self = this
-	$('[data-toggle="tooltip"]').tooltip();
 	copyUrlClipboard = new Clipboard('.btn-instance-readonly-view-url-copy');
 
 	Template.instance_button.copyUrlClipboard = copyUrlClipboard
