@@ -50,17 +50,17 @@ const getDraftCount = async (userSession, req) => {
 
 
 /**
- * 1 查询审批数据
+ * 1 查询inbox数据
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategories = async (userSession, req, object, box) => {
+const getCategoriesInbox = async (userSession, req) => {
   const { appId } = req.params;
   const { userId, is_space_admin, spaceId } = userSession;
   const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
-    box: box, flowId: null, userId, is_space_admin, appId, spaceId
+    box: "inbox", flowId: null, userId, is_space_admin, appId, spaceId
   })
-  const data = await objectql.getObject(object).find({
+  const data = await objectql.getObject("instance_tasks").find({
     filters: filters,
     fields: ['_id', 'flow', 'category','flow_name','category_name']
   }, userSession)
@@ -81,9 +81,9 @@ const getCategories = async (userSession, req, object, box) => {
           level:3,
           value: v2[0].flow,
           name: 'flow',
-          to: `/app/${appId}/${object}/grid/${box}?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`,
+          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`,
         },
-        value: `/app/${appId}/${object}/grid/${box}?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`
+        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`
       })
     })
     output.push({
@@ -95,9 +95,9 @@ const getCategories = async (userSession, req, object, box) => {
         level: 2,
         value: v[0].category,
         name: 'category',
-        to: `/app/${appId}/${object}/grid/${box}?additionalFilters=['category', '=', '${v[0].category}']&flowId=`,
+        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']&flowId=`,
       },
-      value: `/app/${appId}/${object}/grid/${box}?additionalFilters=['category', '=', '${v[0].category}']&flowId=`
+      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']&flowId=`
     })
   })
   return {
@@ -106,28 +106,101 @@ const getCategories = async (userSession, req, object, box) => {
   }
 }
 
+/**
+ * 1 查询监控箱flows数据
+ * 2 结算出分类
+ * 3 按要求返回数据结构
+ */
+const getCategoriesMonitor = async (userSession, req) => {
+  let hasFlowsPer = userSession.is_space_admin;
+  const { appId } = req.params;
+  const output = [];
+  let data = {};
+  if (!hasFlowsPer) {
+    const flowIds = await new Promise(function (resolve, reject) {
+      Fiber(function () {
+        try {
+          resolve(WorkflowManager.getMyAdminOrMonitorFlows(userSession.spaceId, userSession.userId));
+        } catch (error) {
+          reject(error);
+        }
+      }).run();
+    });
+    hasFlowsPer = flowIds && flowIds.length > 0;
+    if (hasFlowsPer) {
+      let query = `
+      query {
+        flows(filters:["_id","in",${JSON.stringify(flowIds)}]){
+          _id,
+          name,
+          category__expand{_id,name}
+        }
+      }
+    `
+      data = await objectql.broker.call('api.graphql', {
+        query }
+      )
+    }
+  } else {
+    data = await objectql.broker.call('api.graphql', {
+      query: `
+        query {
+          flows{
+            _id,
+            name,
+            category__expand{_id,name}
+          }
+        }
+      `}
+    )
+  }
+  if (data.data?.flows && data.data.flows.length > 0) {
+    const categoryGroups = lodash.groupBy(data.data.flows, 'category__expand.name');
+    lodash.each(categoryGroups, (v, k) => {
+      const flowGroups = lodash.groupBy(v, 'name');
+      const flows = [];
+      lodash.each(flowGroups, (v2, k2) => {
+        flows.push({
+          label: k2,
+          flow_name: k2,
+          options: {
+            level: 3,
+            value: v2[0]._id,
+            name: 'flow',
+            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}`,
+          },
+          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}`
+        })
+      })
+      output.push({
+        label: k == 'null' ? "未分类" : k,
+        children: flows,
+        category_name: k == 'null' ? "未分类" : k,
+        options: {
+          level: 2,
+          value: v[0].category__expand._id,
+          name: 'category',
+          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', '${v[0].category__expand._id}']&flowId=`,
+        },
+        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', '${v[0].category__expand._id}']&flowId=`
+      })
+    })
+  }
+  return {
+    schema: output,
+    hasFlowsPer: hasFlowsPer
+  };
+}
 
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
 
     let userSession = req.user;
     const { appId } = req.params;
-    let inboxResult = await getCategories(userSession,req,"instance_tasks","inbox");
-    let monitorResult = await getCategories(userSession,req,"instances","monitor");
+    let inboxResult = await getCategoriesInbox(userSession,req);
+    let monitorResult = await getCategoriesMonitor(userSession,req)
     let draftCount = await getDraftCount(userSession,req);
-    let hasFlowsPer = userSession.is_space_admin;
-    if (!hasFlowsPer) {
-      const flowIds = await new Promise(function (resolve, reject) {
-        Fiber(function () {
-          try {
-            resolve(WorkflowManager.getMyAdminOrMonitorFlows(userSession.spaceId, userSession.userId));
-          } catch (error) {
-            reject(error);
-          }
-        }).run();
-      });
-      hasFlowsPer = flowIds && flowIds.length > 0;
-    }
+    
     var options = [
       {
         "label": t('inbox', {}, userSession.language),
@@ -158,7 +231,8 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         },
         "value": `/app/${appId}/instances/grid/monitor?flowId=`,
         "children": monitorResult.schema,
-        "visible": hasFlowsPer
+        "unfolded": false,
+        "visible": monitorResult.hasFlowsPer
       },
       {
         "label": t('myfile', {}, userSession.language),
