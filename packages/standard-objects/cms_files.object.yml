@@ -105,27 +105,7 @@ actions:
   standard_edit:
     label: Edit
     sort: 0
-    visible: !<tag:yaml.org,2002:js/function> |-
-      function (object_name, record_id, record_permissions, record) {
-        if(record_permissions){
-          return record_permissions["allowEdit"];
-        }
-        else{
-          var object_fields_keys, ref, select;
-          if(!record){
-            object_fields_keys = _.keys(((ref = Creator.getObject(object_name, Session.get("spaceId"))) != null ? ref.fields : void 0) || {}) || [];
-            select = _.intersection(object_fields_keys, ['owner', 'company_id', 'locked']) || [];
-            if (select.length > 0) {
-                record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-            } else {
-                record = {};
-            }
-            record = Creator.getObjectRecord(object_name, record_id, select.join(','));
-          }
-          record_permissions = Creator.getRecordPermissions(object_name, record, Meteor.userId());
-          return record_permissions && record_permissions["allowEdit"];
-        }
-      }
+    visible: false
     'on': record
     todo: standard_edit
   standard_delete:
