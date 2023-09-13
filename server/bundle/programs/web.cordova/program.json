@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "f3d805d4b989d1b3a1885119de5f00dd93a7a952.js",
+      "path": "1321f342e109ae1a50d07438c05abd1b3bf08ca5.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/f3d805d4b989d1b3a1885119de5f00dd93a7a952.js?meteor_js_resource=true",
+      "url": "/__cordova/1321f342e109ae1a50d07438c05abd1b3bf08ca5.js?meteor_js_resource=true",
       "size": 4576748,
-      "hash": "f3d805d4b989d1b3a1885119de5f00dd93a7a952",
-      "sri": "k4m9/laWx+DDjrHChhe5IAJdslN/bhfrE/4ugSH96/z1hb0PD0KS7AIqhHzqlIrxHq3LFjgbXKKDsn/heRjbkA=="
+      "hash": "1321f342e109ae1a50d07438c05abd1b3bf08ca5",
+      "sri": "h748oIdXncLkBCpp77kNhwf0JDBrC5hxHw6gkRMv1TlH8iie2sHnlLFa8ufYlAxRE6bP0YWftbnDsdCIC2Zfqg=="
     },
     {
-      "path": "f3d805d4b989d1b3a1885119de5f00dd93a7a952.stats.json",
+      "path": "1321f342e109ae1a50d07438c05abd1b3bf08ca5.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/f3d805d4b989d1b3a1885119de5f00dd93a7a952.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/1321f342e109ae1a50d07438c05abd1b3bf08ca5.stats.json?meteor_js_resource=true",
       "size": 93433,
-      "hash": "1eeb3a6aaef2de12aa279c7ba87589c72a48a8f4",
-      "sri": "Q0EKSRXzKBHN+MK03b6gf8BSnuH+Imjpr+wMZr2ROjWngBX2ai+huI5pet2dFQOPkSYvvDeJFaPVKeuXg6n1JA=="
+      "hash": "ad3fe2b3bfbc853d11318dc2e72e8b9ad6877f78",
+      "sri": "0FQS4UEcKfq/tK8a8PShYK540luTkENKE5ukujZkaYLc4W1LLWDuyBbXViZsTIYDEWLWErWwNyEJgCQkWIgAJA=="
     },
     {
       "path": "858751463f10c59fcbb329588716ee3958973ef8.css",
@@ -570,46 +570,6 @@
       "size": 2439,
       "hash": "41c29095fb591655d64f6862170bca966f1a0938",
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
-    },
-    {
-      "path": "app/js/jquery.fileupload.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/__cordova/js/jquery.fileupload.js",
-      "size": 63666,
-      "hash": "c890081eb69b17c2bee3b227d50ece6e83b3baf8",
-      "sri": null
-    },
-    {
-      "path": "app/js/jquery.fileupload.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/jquery.fileupload.js",
-      "size": 63666,
-      "hash": "c890081eb69b17c2bee3b227d50ece6e83b3baf8",
-      "sri": null
-    },
-    {
-      "path": "app/js/jquery.ui.widget.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/__cordova/js/jquery.ui.widget.js",
-      "size": 16089,
-      "hash": "bd1507404d89843243174be93268f1c648088677",
-      "sri": null
-    },
-    {
-      "path": "app/js/jquery.ui.widget.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/jquery.ui.widget.js",
-      "size": 16089,
-      "hash": "bd1507404d89843243174be93268f1c648088677",
-      "sri": null
     },
     {
       "path": "assets/icons/License-for-icons.txt",
