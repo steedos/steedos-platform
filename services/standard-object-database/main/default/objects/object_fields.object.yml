@@ -248,6 +248,12 @@ fields:
         }
       }
     sort_no: 445
+  create:
+    type: boolean
+    label: 是否显示新建按钮
+    defaultValue: true
+    visible_on: "{{['lookup'].indexOf(formData.type) > -1 ? true: false}}"
+    sort_no: 185
   reference_to_field:
     type: lookup
     group: Advanced

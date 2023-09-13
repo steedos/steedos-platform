@@ -170,53 +170,7 @@ Steedos.StandardObjects = {
                         console.error('instanceId not exists');
                         return;
                     }
-                    uobj = {};
-                    uobj['X-User-Id'] = Meteor.userId();
-                    uobj['X-Auth-Token'] = Accounts._storedLoginToken();
-                    data = {
-                        object_name: this.object_name,
-                        record_id: this.record_id,
-                        space_id: Session.get("spaceId")
-                    };
-                    url = Steedos.absoluteUrl() + ("api/workflow/view/" + instanceId + "?") + $.param(uobj);
-                    data = JSON.stringify(data);
-                    $(document.body).addClass('loading');
-                    return $.ajax({
-                        url: url,
-                        type: 'POST',
-                        async: true,
-                        data: data,
-                        dataType: 'json',
-                        processData: false,
-                        contentType: 'application/json',
-                        beforeSend: function(request) {
-                            request.setRequestHeader('Authorization', 'Bearer ' + Session.get("spaceId") + ',' + Accounts._storedLoginToken())
-                        },
-                        success: function (responseText, status) {
-                            $(document.body).removeClass('loading');
-                            if (responseText.errors) {
-                                responseText.errors.forEach(function (e) {
-                                    toastr.error(e.errorMessage);
-                                });
-                                // Template.creator_view.currentInstance.onEditSuccess();
-                                FlowRouter.reload();
-                                return;
-                            } else if (responseText.redirect_url) {
-                                if (Meteor.settings.public.webservices && Meteor.settings.public.webservices.workflow && Meteor.settings.public.webservices.workflow.url) {
-                                    Steedos.openWindow(responseText.redirect_url);
-                                } else {
-                                    Steedos.openWindow(Steedos.absoluteUrl(responseText.redirect_url));
-                                }
-
-                            }
-                        },
-                        error: function (xhr, msg, ex) {
-                            $(document.body).removeClass('loading');
-                            toastr.error(msg);
-                            // Template.creator_view.currentInstance.onEditSuccess();
-                            FlowRouter.reload();
-                        }
-                    });
+                    Steedos.openWindow(Steedos.absoluteUrl() +`api/workflow/instance/${instanceId}`)
                 }
             },
             standard_follow:{
