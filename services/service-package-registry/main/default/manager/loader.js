@@ -70,7 +70,18 @@ const loadPackages = async ()=>{
     for (const packageName in packages) {
         const package = packages[packageName]
         if(package.enable){
-            if(package.local !== true){
+            if(package.static === true){
+                try {
+                    const packagePath = package.path || path.dirname(require.resolve(`${packageName}/package.json`))
+                    if(packagePath){
+                        const packageInfo = await loadPackage(packageName, packagePath);
+                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                    }
+                } catch (error) {
+                    console.error(error)
+                }
+
+            }else if(package.local !== true){
                 try {
                     const packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
                         paths: [path.join(userDir, 'node_modules')]

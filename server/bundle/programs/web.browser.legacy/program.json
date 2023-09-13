@@ -2,21 +2,21 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9.js",
+      "path": "aa72de1ef01f8937fbe66d164e73cf848760639a.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/d7bf8f2ce189640c36b958dd95ec40bcec283bd9.js?meteor_js_resource=true",
+      "url": "/aa72de1ef01f8937fbe66d164e73cf848760639a.js?meteor_js_resource=true",
       "size": 4299916,
-      "hash": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9",
-      "sri": "xWAu3wYCs4whvR2Y9e2wjXozl0oFzWoGkE0D3IRrYh+fe53GNfIWVstEWMDzizwdBf/DWPZgtczTczADiGlj2A=="
+      "hash": "aa72de1ef01f8937fbe66d164e73cf848760639a",
+      "sri": "CDjFJJ5g2NKsdP/aF+/qg6H4PMttCJQ8jzD3cqchC64GMebTM9mP42a2ieHmSfl7daLL6Aov8acf0i0zNw36Eg=="
     },
     {
-      "path": "d7bf8f2ce189640c36b958dd95ec40bcec283bd9.stats.json",
+      "path": "aa72de1ef01f8937fbe66d164e73cf848760639a.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/d7bf8f2ce189640c36b958dd95ec40bcec283bd9.stats.json?meteor_js_resource=true",
+      "url": "/aa72de1ef01f8937fbe66d164e73cf848760639a.stats.json?meteor_js_resource=true",
       "size": 93049,
       "hash": "f45194afa0dc871bccc451241e743e3292629d8e",
       "sri": "CrZj8UhL9r3TNNSgzF0D41g28df+e/0e7VF8nDca6M5GyizNnPZyi9fkeSNNR9dLqbLn1ABnhXAz0Y7ZA/Clog=="
@@ -320,26 +320,6 @@
       "size": 2439,
       "hash": "41c29095fb591655d64f6862170bca966f1a0938",
       "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
-    },
-    {
-      "path": "app/js/jquery.fileupload.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/jquery.fileupload.js",
-      "size": 63666,
-      "hash": "c890081eb69b17c2bee3b227d50ece6e83b3baf8",
-      "sri": null
-    },
-    {
-      "path": "app/js/jquery.ui.widget.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/js/jquery.ui.widget.js",
-      "size": 16089,
-      "hash": "bd1507404d89843243174be93268f1c648088677",
-      "sri": null
     },
     {
       "path": "assets/icons/License-for-icons.txt",
