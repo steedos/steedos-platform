@@ -36,4 +36,5 @@ extra_columns:
   - extras
   - is_read
   - type
+  - instance.values
 adaptor: "_.each(payload.data.rows, function (item, index) {if (item.type == 'cc') {item.instance_name += '（传阅）';}})"
