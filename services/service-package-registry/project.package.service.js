@@ -441,7 +441,13 @@ module.exports = {
 					path: util.getPackageRelativePath(process.cwd(), packagePath)
 				}
 				loader.appendToPackagesConfig(packageName, packageConfig);
-				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				let metadata = {}
+				try {
+					// 软件包元数据扫描失败,并不影响软件包的启动. 在控制台输出异常信息即可.
+					metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				} catch (error) {
+					console.error(error)
+				}
 				await broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
 						name: packageName,

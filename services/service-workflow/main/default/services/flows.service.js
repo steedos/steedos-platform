@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-19 15:45:20
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-14 09:46:14
  * @Description:
  */
 const objectql = require("@steedos/objectql");
@@ -44,7 +44,9 @@ module.exports = {
             # distribute instance id
             distributeInstanceId: String
             # distribute step id
-            distributeStepId: String
+            distributeStepId: String,
+            # 显示所有流程
+            allData: Boolean
             ): [categoriesTree]
           `,
       },
@@ -52,8 +54,8 @@ module.exports = {
         try {
           const userSession = ctx.meta.user;
           const { resolveInfo } = ctx.meta;
-          const { action, appId, keywords, distributeInstanceId, distributeStepId } = ctx.params;
-          return await this.getFlowListData(action, { appId, keywords, distributeInstanceId, distributeStepId }, userSession)
+          const { action, appId, keywords, distributeInstanceId, distributeStepId, allData } = ctx.params;
+          return await this.getFlowListData(action, { appId, keywords, distributeInstanceId, distributeStepId, allData }, userSession)
         } catch (error) {
           throw error;
         }
@@ -83,16 +85,21 @@ module.exports = {
       }
     },
     getAppCategoriesIds: {
-      async handler(appId) {
-        const categories = await objectql.getObject('categories').find({ filters: [['app', '=', appId]] });
+      async handler(appId, allData) {
+        const query = {};
+        if(appId && allData !=true){
+          query.filters = [['app', '=', appId]] 
+        }
+        console.log(`getAppCategoriesIds`, appId, allData, query)
+        const categories = await objectql.getObject('categories').find(query);
         return _.map(categories, '_id');
       }
     },
     getFlowListData: {
       async handler(action, options, userSession) {
-        const { appId, keywords, distributeInstanceId, distributeStepId } = options;
+        const { appId, keywords, distributeInstanceId, distributeStepId, allData } = options;
 
-        const categoriesIds = await this.getAppCategoriesIds(appId);
+        const categoriesIds = await this.getAppCategoriesIds(appId, allData);
 
         const keywordsFilter = this.getKeywordsFilter(keywords)
         let data = [];
@@ -153,11 +160,15 @@ module.exports = {
             });
             category.flows = [];
             for (const flow of categoryFlows) {
-              if (this.canAdd(flow, userSession)) {
+              if(allData){
                 category.flows.push(flow);
-              } else if (action == 'query') {
-                if (is_space_admin || this.canMonitor(flow, userSession) || this.canAdmin(flow, userSession)) {
+              }else{
+                if (this.canAdd(flow, userSession)) {
                   category.flows.push(flow);
+                } else if (action == 'query') {
+                  if (is_space_admin || this.canMonitor(flow, userSession) || this.canAdmin(flow, userSession)) {
+                    category.flows.push(flow);
+                  }
                 }
               }
             }
