@@ -175,6 +175,15 @@ Object.assign(Mongo.Collection.prototype, {
       // Apply an update.
       // XXX better specify this interface (not in terms of a wire message)?
       update(msg) {
+        if(Meteor.isClient){
+          try {
+            if(!msg){
+              throw new Error("mongo update message is undefined. collection name is " + self._name)
+            }
+          } catch (error) {
+            console.error(error, msg)
+          }
+        }
         var mongoId = MongoID.idParse(msg.id);
         var doc = self._collection.findOne(mongoId);
 
