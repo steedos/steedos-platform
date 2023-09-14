@@ -836,7 +836,7 @@ InstanceManager.isAmisForm = function () {
 	var ins = WorkflowManager.getInstance();
 	if(ins){
 		var flow = db.flows.findOne({_id: ins.flow},{fields:{enable_amisform: 1}})
-		return flow.enable_amisform
+		return flow && flow.enable_amisform
 	}
 }
 
