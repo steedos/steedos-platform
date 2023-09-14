@@ -325,8 +325,19 @@ Template.instance_suggestion.helpers
 	showSelsectInAllUsers: ()->
 		if Meteor.settings.public.workflow?.disable_pick_approve_users
 			return false
+		
+		ins = WorkflowManager.getInstance()
+		unless ins
+			return false;
+		unless ins.flow
+			return false;
+		
+		flow = WorkflowManager.getFlow(ins.flow)
+		unless flow
+			return false;
 
-		if WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
+
+		if flow.allow_select_step && InstanceManager.getCurrentStep().step_type != 'start'
 			nextStep = WorkflowManager.getInstanceStep(Session.get("next_step_id"));
 			return nextStep?.allow_pick_approve_users
 		return false
