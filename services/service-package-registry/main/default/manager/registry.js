@@ -320,7 +320,7 @@ async function uninstallModule(module){
 // }
 
 const isPackageUrl = (url)=>{
-    return pkgurlRe.test(url)
+    return pkgurlRe.test(url) || localtgzRe.test(url)
 }
 
 module.exports = {
