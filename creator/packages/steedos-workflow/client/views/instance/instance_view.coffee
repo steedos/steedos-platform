@@ -127,6 +127,9 @@ Template.instance_view.onCreated ->
 Template.instance_view.onRendered ->
 	ins = WorkflowManager.getInstance();
 
+	unless ins
+		return;
+
 	try
 		window.Steedos && window.Steedos.setDocumentTitle && window.Steedos.setDocumentTitle({pageName: ins.name})
 	catch e
