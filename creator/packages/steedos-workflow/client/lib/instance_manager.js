@@ -64,7 +64,7 @@ InstanceManager.getNextStepOptions = function () {
 		autoFormDoc = Session.get("instance_form_values").values
 	}
 
-	var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+	var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version && form_version.fields);
 
 	var getSessionStepId = function () {
 		return Session.get("next_step_id");
