@@ -1330,7 +1330,6 @@ actions:
                                               ],
                                               "source": "${instance_table_fields}",
                                               "footable": false,
-                                              "columnsTogglable": true,
                                               "messages": {},
                                               "tableClassName": "min-w-max",
                                               "id": "u:95aea10231d3"
