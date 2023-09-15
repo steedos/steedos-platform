@@ -1373,7 +1373,7 @@ actions:
                             "responseData": {
                               "recordId": "${record._id}"
                             },
-                            "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }\n            return payload;\n        ",
+                            "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
                             "headers": {
                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                             }
