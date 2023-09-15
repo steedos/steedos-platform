@@ -13,6 +13,7 @@ CustomLabels:
       field_set: Set Fields
       grouping_set: Set Grouping
       group_name: Name
+      group_visible_on: VisibleOn
       related_list_name: Related List Name
       related_list_label: Displayed Title
       related_list_label_remark: Default to object name
