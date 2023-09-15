@@ -1264,7 +1264,8 @@ actions:
                                                       "cache": 60000,
                                                       "headers": {
                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                      }
+                                                      },
+                                                      "sendOn": "${!!detail_field_fullname && !detail_field_fullname.value}"
                                                     },
                                                     "searchable": true,
                                                     "onEvent": {
@@ -1272,7 +1273,7 @@ actions:
                                                         "actions": [
                                                           {
                                                             "actionType": "custom",
-                                                            "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
+                                                            "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  \n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
                                                           }
                                                         ]
                                                       }
@@ -1368,7 +1369,7 @@ actions:
                               "$": "$$",
                               "recordId": "${recordId}"
                             },
-                            "requestAdaptor": "api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.fields, object_name: api.body.$.object_name}",
+                            "requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.fields, object_name: api.body.$.object_name}",
                             "responseData": {
                               "recordId": "${record._id}"
                             },
