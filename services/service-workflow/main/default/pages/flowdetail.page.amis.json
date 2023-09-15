@@ -70,7 +70,7 @@
 									"label": "对象表单",
 									"objectApiName": "flows",
 									"recordId": "${recordId}",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"id": "u:3b769ba2695e",
 									"mode": "read",
 									"fields": [
@@ -96,7 +96,7 @@
 									"label": "对象表单",
 									"objectApiName": "flows",
 									"recordId": "${recordId}",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"id": "u:3b769ba2695e",
 									"mode": "read",
 									"fields": [
@@ -128,7 +128,7 @@
 									"objectApiName": "forms",
 									"recordId": "${form}",
 									"id": "u:5df987ad9bc8",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"mode": "read",
 									"fields": [
 										"current",
@@ -177,7 +177,7 @@
 									"objectApiName": "flows",
 									"recordId": "${recordId}",
 									"id": "u:31a417c79ce2",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"mode": "read",
 									"fields": [
 										"object_name",
@@ -242,5 +242,10 @@
 	},
 	"id": "page_flows_record_detail",
 	"name": "page_flows_record_detail",
-	"bodyClassName": ""
+	"bodyClassName": "",
+	"css": {
+		".m--8": {
+			"margin": "-12px"
+		}
+	}
 }
