@@ -599,95 +599,13 @@ actions:
                                                       "labelClassName": "text-left"
                                                   },
                                                   {
-                                                    "type": "picker",
-                                                    "name": "company_id",
-                                                    "label": "${'flows.standard_new.division' | t}",
-                                                    "required": false,
-                                                    "labelField": "name",
-                                                    "valueField": "_id",
-                                                    "modalMode": "dialog",
-                                                    "source": {
-                                                      "method": "post",
-                                                      "url": "${context.rootUrl}/graphql",
-                                                      "data": {
-                                                        "orderBy": "${orderBy}",
-                                                        "orderDir": "${orderDir}",
-                                                        "pageNo": "${page}",
-                                                        "pageSize": "${perPage}",
-                                                        "query": "{rows:company(filters: {__filters}, top: {__top}, skip: {__skip}, sort: \"{__sort}\"){_id,name,code,organization,modified,_display:_ui{organization,modified}},count:company__count(filters:{__filters})}",
-                                                        "$term": "$term",
-                                                        "$self": "$$"
-                                                      },
-                                                      "headers": {
-                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                      },
-                                                      "requestAdaptor": "\n        const selfData = JSON.parse(JSON.stringify(api.data.$self));\n        var filters = [];\n        var pageSize = api.data.pageSize || 10;\n        var pageNo = api.data.pageNo || 1;\n        var skip = (pageNo - 1) * pageSize;\n        var orderBy = api.data.orderBy || '';\n        var orderDir = api.data.orderDir || '';\n        var sort = orderBy + ' ' + orderDir;\n        var allowSearchFields = [];\n        if(api.data.$term){\n            filters = [[\"name\", \"contains\", \"'+ api.data.$term +'\"]];\n        }else if(selfData.op === 'loadOptions' && selfData.value){\n            if(selfData.value?.indexOf(',') > 0){\n                filters = [[\"_id\", \"=\", selfData.value.split(',')]];\n            }else{\n                filters = [[\"_id\", \"=\", selfData.value]];\n            }\n        }\n        if(allowSearchFields){\n            allowSearchFields.forEach(function(key){\n                const keyValue = selfData[key];\n                if(keyValue){\n                    filters.push([key, \"contains\", keyValue]);\n                }\n            })\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$self.__super.__super);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());\n        return api;\n    ",
-                                                      "adaptor": "\n    const enable_tree = undefined;\n    if(enable_tree){\n        const records = payload.data.rows;\n        const treeRecords = [];\n        const getChildren = (records, childrenIds)=>{\n            if(!childrenIds){\n                return;\n            }\n            const children = _.filter(records, (record)=>{\n                return _.includes(childrenIds, record._id)\n            });\n            _.each(children, (item)=>{\n                if(item.children){\n                    item.children = getChildren(records, item.children)\n                }\n            })\n            return children;\n        }\n\n        _.each(records, (record)=>{\n            if(!record.parent){\n                treeRecords.push(Object.assign({}, record, {children: getChildren(records, record.children)}));\n            }\n        });\n        payload.data.rows = treeRecords;\n    }\n    return payload;\n    "
-                                                    },
-                                                    "size": "lg",
-                                                    "pickerSchema": {
-                                                      "mode": "table",
-                                                      "name": "thelist",
-                                                      "draggable": false,
-                                                      "headerToolbar": [
-                                                        "reload"
-                                                      ],
-                                                      "defaultParams": {
-                                                        "perPage": 20
-                                                      },
-                                                      "columns": [
-                                                        {
-                                                          "name": "_index",
-                                                          "type": "text",
-                                                          "width": 32,
-                                                          "placeholder": ""
-                                                        },
-                                                        {
-                                                          "name": "name",
-                                                          "label": "${'flows.standard_new.division_name' | t}",
-                                                          "type": "tpl",
-                                                          "tpl": "<a href=\"/app/undefined/undefined/view/${undefined}\">${name}</a>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "code",
-                                                          "label": "${'flows.standard_new.division_code' | t}",
-                                                          "type": "text",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "organization",
-                                                          "label": "${'flows.standard_new.related_departments' | t}",
-                                                          "type": "tpl",
-                                                          "tpl": "<a href=\"/app/undefined/${_display.organization.objectName}/view/${_display.organization.value}\">${_display.organization.label}</a>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "modified",
-                                                          "label": "${'flows.standard_new.modification_time' | t}",
-                                                          "sortable": true,
-                                                          "type": "tpl",
-                                                          "tpl": "<div>${_display.modified}</div>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        null
-                                                      ],
-                                                      "syncLocation": false,
-                                                      "keepItemSelectionOnPageChange": true,
-                                                      "checkOnItemClick": false,
-                                                      "labelTpl": "${name}",
-                                                      "autoFillHeight": false
-                                                    },
-                                                    "joinValues": false,
-                                                    "extractValue": true,
-                                                    "labelClassName": "text-left",
-                                                    "clearValueOnHidden": true,
-                                                    "fieldName": "company_id",
-                                                    "id": "u:18291ffb397f"
+                                                    "type": "steedos-field",
+                                                    "config": {
+                                                      "name": "company_id",
+                                                      "type": "lookup",
+                                                      "reference_to": "company",
+                                                      "label": "${'flows.standard_new.division' | t}"
+                                                    }
                                                   },
                                                   {
                                                       "label": "${'flows.standard_new.binding_objects' | t}",
