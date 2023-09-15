@@ -1108,16 +1108,6 @@ actions:
                                                   "quickEdit": {
                                                     "mode": "inline",
                                                     "type": "checkbox",
-                                                    "onEvent": {
-                                                      "change": {
-                                                        "actions": [
-                                                          {
-                                                            "actionType": "custom",
-                                                            "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForField = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const name = rowValue.name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.name == name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  const fieldGroups = input.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  newFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: newFields\n  }\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForField(eventData, \"required\")\n  }\n});\n"
-                                                          }
-                                                        ]
-                                                      }
-                                                    },
                                                     "tpl": null,
                                                     "labelClassName": "text-left",
                                                     "id": "u:bbd1c15b6504",
@@ -1175,7 +1165,7 @@ actions:
                                           "affixFooter": false,
                                           "api": {
                                             "method": "get",
-                                            "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options",
+                                            "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options?showHiddenField=true",
                                             "adaptor": "let data = payload.data;\ndata.fields_options = data.options;\n\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                             "sendOn": "!!this.object_name",
                                             "data": null,
@@ -1185,16 +1175,6 @@ actions:
                                           },
                                           "className": "col-span-2 m-0",
                                           "placeholder": "-",
-                                          "onEvent": {
-                                            "fetchInited": {
-                                              "actions": [
-                                                {
-                                                  "actionType": "custom",
-                                                  "script": "// 把字段中配置的group属性加到主表field_groups属性中\nconst mixingGroupsFromFields = function (input, formData) {\n  const groupsOptions = input.field_groups_options;\n  const groups = formData.field_groups || [];\n  const groupsForMixing = groupsOptions.map(function (item) {\n    return {\n      group_name: item\n    }\n  });\n  const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n  return {\n    field_groups: mixedGroups\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: mixingGroupsFromFields(eventData, context.props.data)\n  }\n});\n\n"
-                                                }
-                                              ]
-                                            }
-                                          },
                                           "messages": {}
                                         }
                                       ],
