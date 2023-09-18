@@ -1,5 +1,5 @@
 name: cfs_avatars_filerecord
-label: Avatars
+label: 头像版本
 table_name: 'cfs.avatars.filerecord'
 icon: drafts
 enable_search: true

@@ -87,6 +87,8 @@ fields:
     hidden: false
   field_groups.$.group_name:
     type: text
+  field_groups.$.visible_on:
+    type: text
   fields:
     type: grid
     is_wide: true

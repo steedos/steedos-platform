@@ -70,7 +70,7 @@
 									"label": "对象表单",
 									"objectApiName": "flows",
 									"recordId": "${recordId}",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"id": "u:3b769ba2695e",
 									"mode": "read",
 									"fields": [
@@ -96,7 +96,7 @@
 									"label": "对象表单",
 									"objectApiName": "flows",
 									"recordId": "${recordId}",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"id": "u:3b769ba2695e",
 									"mode": "read",
 									"fields": [
@@ -128,7 +128,7 @@
 									"objectApiName": "forms",
 									"recordId": "${form}",
 									"id": "u:5df987ad9bc8",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+									"className": "bg-white m--8",
 									"mode": "read",
 									"fields": [
 										"current",
@@ -172,24 +172,45 @@
 							"title": "${'flows_tabs_binding_object'|t}",
 							"body": [
 								{
-									"type": "steedos-object-form",
-									"label": "对象表单",
-									"objectApiName": "flows",
-									"recordId": "${recordId}",
-									"id": "u:31a417c79ce2",
-									"className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
-									"mode": "read",
-									"fields": [
-										"object_name",
-										"instance_fields",
-										"instance_fields.$.name",
-										"instance_fields.$.required",
-										"instance_table_fields",
-										"instance_table_fields.$.detail_field_fullname",
-										"instance_table_fields.$.label",
-										"instance_table_fields.$.field_names"
-									],
-									"fieldsExtend": ""
+									"type": "service",
+									"id": "u:dbadaff47153",
+									"api": {
+									  "method": "get",
+									  "url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
+									  "sendOn": "!!this.object_name",
+									  "adaptor": "let data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+									  "headers": {
+										"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+									  }
+									},
+									"body": [
+										{
+											"type": "steedos-object-form",
+											"label": "对象表单",
+											"objectApiName": "flows",
+											"recordId": "${recordId}",
+											"id": "u:31a417c79ce2",
+											"className": "bg-white m--8",
+											"mode": "read",
+											"fields": [
+												"object_name",
+												"instance_fields",
+												"instance_fields.$.name",
+												"instance_fields.$.required",
+												"instance_table_fields",
+												"instance_table_fields.$.detail_field_fullname",
+												"instance_table_fields.$.label",
+												"instance_table_fields.$.field_names"
+											],
+											"fieldsExtend": {
+												"instance_table_fields.$.detail_field_fullname": {
+													"amis": {
+														"tpl": "${related_lists_options|filter:value:equals:detail_field_fullname.value|pick:label}"
+													}
+												}
+											}
+										}
+									]
 								}
 							],
 							"id": "u:fa2adcce8268",
@@ -242,5 +263,10 @@
 	},
 	"id": "page_flows_record_detail",
 	"name": "page_flows_record_detail",
-	"bodyClassName": ""
+	"bodyClassName": "",
+	"css": {
+		".m--8": {
+			"margin": "-12px"
+		}
+	}
 }

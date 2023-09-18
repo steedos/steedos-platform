@@ -599,95 +599,13 @@ actions:
                                                       "labelClassName": "text-left"
                                                   },
                                                   {
-                                                    "type": "picker",
-                                                    "name": "company_id",
-                                                    "label": "${'flows.standard_new.division' | t}",
-                                                    "required": false,
-                                                    "labelField": "name",
-                                                    "valueField": "_id",
-                                                    "modalMode": "dialog",
-                                                    "source": {
-                                                      "method": "post",
-                                                      "url": "${context.rootUrl}/graphql",
-                                                      "data": {
-                                                        "orderBy": "${orderBy}",
-                                                        "orderDir": "${orderDir}",
-                                                        "pageNo": "${page}",
-                                                        "pageSize": "${perPage}",
-                                                        "query": "{rows:company(filters: {__filters}, top: {__top}, skip: {__skip}, sort: \"{__sort}\"){_id,name,code,organization,modified,_display:_ui{organization,modified}},count:company__count(filters:{__filters})}",
-                                                        "$term": "$term",
-                                                        "$self": "$$"
-                                                      },
-                                                      "headers": {
-                                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                      },
-                                                      "requestAdaptor": "\n        const selfData = JSON.parse(JSON.stringify(api.data.$self));\n        var filters = [];\n        var pageSize = api.data.pageSize || 10;\n        var pageNo = api.data.pageNo || 1;\n        var skip = (pageNo - 1) * pageSize;\n        var orderBy = api.data.orderBy || '';\n        var orderDir = api.data.orderDir || '';\n        var sort = orderBy + ' ' + orderDir;\n        var allowSearchFields = [];\n        if(api.data.$term){\n            filters = [[\"name\", \"contains\", \"'+ api.data.$term +'\"]];\n        }else if(selfData.op === 'loadOptions' && selfData.value){\n            if(selfData.value?.indexOf(',') > 0){\n                filters = [[\"_id\", \"=\", selfData.value.split(',')]];\n            }else{\n                filters = [[\"_id\", \"=\", selfData.value]];\n            }\n        }\n        if(allowSearchFields){\n            allowSearchFields.forEach(function(key){\n                const keyValue = selfData[key];\n                if(keyValue){\n                    filters.push([key, \"contains\", keyValue]);\n                }\n            })\n        }\n\n        const filtersFunction = undefined;\n\n        if(filtersFunction){\n            const _filters = filtersFunction(filters, api.data.$self.__super.__super);\n            if(_filters && _filters.length > 0){\n                filters.push(_filters);\n            }\n        }\n\n        api.data.query = api.data.query.replace(/{__filters}/g, JSON.stringify(filters)).replace('{__top}', pageSize).replace('{__skip}', skip).replace('{__sort}', sort.trim());\n        return api;\n    ",
-                                                      "adaptor": "\n    const enable_tree = undefined;\n    if(enable_tree){\n        const records = payload.data.rows;\n        const treeRecords = [];\n        const getChildren = (records, childrenIds)=>{\n            if(!childrenIds){\n                return;\n            }\n            const children = _.filter(records, (record)=>{\n                return _.includes(childrenIds, record._id)\n            });\n            _.each(children, (item)=>{\n                if(item.children){\n                    item.children = getChildren(records, item.children)\n                }\n            })\n            return children;\n        }\n\n        _.each(records, (record)=>{\n            if(!record.parent){\n                treeRecords.push(Object.assign({}, record, {children: getChildren(records, record.children)}));\n            }\n        });\n        payload.data.rows = treeRecords;\n    }\n    return payload;\n    "
-                                                    },
-                                                    "size": "lg",
-                                                    "pickerSchema": {
-                                                      "mode": "table",
-                                                      "name": "thelist",
-                                                      "draggable": false,
-                                                      "headerToolbar": [
-                                                        "reload"
-                                                      ],
-                                                      "defaultParams": {
-                                                        "perPage": 20
-                                                      },
-                                                      "columns": [
-                                                        {
-                                                          "name": "_index",
-                                                          "type": "text",
-                                                          "width": 32,
-                                                          "placeholder": ""
-                                                        },
-                                                        {
-                                                          "name": "name",
-                                                          "label": "${'flows.standard_new.division_name' | t}",
-                                                          "type": "tpl",
-                                                          "tpl": "<a href=\"/app/undefined/undefined/view/${undefined}\">${name}</a>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "code",
-                                                          "label": "${'flows.standard_new.division_code' | t}",
-                                                          "type": "text",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "organization",
-                                                          "label": "${'flows.standard_new.related_departments' | t}",
-                                                          "type": "tpl",
-                                                          "tpl": "<a href=\"/app/undefined/${_display.organization.objectName}/view/${_display.organization.value}\">${_display.organization.label}</a>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        {
-                                                          "name": "modified",
-                                                          "label": "${'flows.standard_new.modification_time' | t}",
-                                                          "sortable": true,
-                                                          "type": "tpl",
-                                                          "tpl": "<div>${_display.modified}</div>",
-                                                          "className": "whitespace-nowrap",
-                                                          "html": null
-                                                        },
-                                                        null
-                                                      ],
-                                                      "syncLocation": false,
-                                                      "keepItemSelectionOnPageChange": true,
-                                                      "checkOnItemClick": false,
-                                                      "labelTpl": "${name}",
-                                                      "autoFillHeight": false
-                                                    },
-                                                    "joinValues": false,
-                                                    "extractValue": true,
-                                                    "labelClassName": "text-left",
-                                                    "clearValueOnHidden": true,
-                                                    "fieldName": "company_id",
-                                                    "id": "u:18291ffb397f"
+                                                    "type": "steedos-field",
+                                                    "config": {
+                                                      "name": "company_id",
+                                                      "type": "lookup",
+                                                      "reference_to": "company",
+                                                      "label": "${'flows.standard_new.division' | t}"
+                                                    }
                                                   },
                                                   {
                                                       "label": "${'flows.standard_new.binding_objects' | t}",
@@ -1190,16 +1108,6 @@ actions:
                                                   "quickEdit": {
                                                     "mode": "inline",
                                                     "type": "checkbox",
-                                                    "onEvent": {
-                                                      "change": {
-                                                        "actions": [
-                                                          {
-                                                            "actionType": "custom",
-                                                            "script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForField = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input.__super;\n  const formValue = input.__super.__super.__super;\n  const name = rowValue.name;\n  rowValue[prop_name] = currentPropValue;\n  let newFields = formValue.fields.map(function (item) {\n    if (item.name == name) {\n      return Object.assign({}, item, rowValue);\n    }\n    else {\n      return item;\n    }\n  });\n  const fieldGroups = input.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  newFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: newFields\n  }\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForField(eventData, \"required\")\n  }\n});\n"
-                                                          }
-                                                        ]
-                                                      }
-                                                    },
                                                     "tpl": null,
                                                     "labelClassName": "text-left",
                                                     "id": "u:bbd1c15b6504",
@@ -1257,7 +1165,7 @@ actions:
                                           "affixFooter": false,
                                           "api": {
                                             "method": "get",
-                                            "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options",
+                                            "url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options?showHiddenField=true",
                                             "adaptor": "let data = payload.data;\ndata.fields_options = data.options;\n\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                             "sendOn": "!!this.object_name",
                                             "data": null,
@@ -1267,16 +1175,6 @@ actions:
                                           },
                                           "className": "col-span-2 m-0",
                                           "placeholder": "-",
-                                          "onEvent": {
-                                            "fetchInited": {
-                                              "actions": [
-                                                {
-                                                  "actionType": "custom",
-                                                  "script": "// 把字段中配置的group属性加到主表field_groups属性中\nconst mixingGroupsFromFields = function (input, formData) {\n  const groupsOptions = input.field_groups_options;\n  const groups = formData.field_groups || [];\n  const groupsForMixing = groupsOptions.map(function (item) {\n    return {\n      group_name: item\n    }\n  });\n  const mixedGroups = lodash.unionBy(groups, groupsForMixing, \"group_name\");\n  return {\n    field_groups: mixedGroups\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: mixingGroupsFromFields(eventData, context.props.data)\n  }\n});\n\n"
-                                                }
-                                              ]
-                                            }
-                                          },
                                           "messages": {}
                                         }
                                       ],
@@ -1366,7 +1264,8 @@ actions:
                                                       "cache": 60000,
                                                       "headers": {
                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                                      }
+                                                      },
+                                                      "sendOn": "${!!detail_field_fullname && !detail_field_fullname.value}"
                                                     },
                                                     "searchable": true,
                                                     "onEvent": {
@@ -1374,7 +1273,7 @@ actions:
                                                         "actions": [
                                                           {
                                                             "actionType": "custom",
-                                                            "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  debugger;\n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
+                                                            "script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  \n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
                                                           }
                                                         ]
                                                       }
@@ -1432,7 +1331,6 @@ actions:
                                               ],
                                               "source": "${instance_table_fields}",
                                               "footable": false,
-                                              "columnsTogglable": true,
                                               "messages": {},
                                               "tableClassName": "min-w-max",
                                               "id": "u:95aea10231d3"
@@ -1471,11 +1369,11 @@ actions:
                               "$": "$$",
                               "recordId": "${recordId}"
                             },
-                            "requestAdaptor": "api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.fields, object_name: api.body.$.object_name}",
+                            "requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.fields, object_name: api.body.$.object_name}",
                             "responseData": {
                               "recordId": "${record._id}"
                             },
-                            "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }\n            return payload;\n        ",
+                            "adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
                             "headers": {
                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                             }
