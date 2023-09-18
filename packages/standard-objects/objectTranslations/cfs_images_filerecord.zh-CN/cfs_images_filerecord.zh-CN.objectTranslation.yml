@@ -1,0 +1,47 @@
+name: cfs_images_filerecord
+label: 图片版本
+description: 
+fields:
+  original:
+    label: 文件
+    help: 
+    description: 
+  original.name:
+    label: 文件名
+    help: 
+    description: 
+  original.size:
+    label: 文件大小
+    help: 
+    description: 
+  metadata:
+    label: 属性
+    help: 
+    description: 
+  metadata.owner:
+    label: 上传者
+    help: 
+    description: 
+  metadata.owner_name:
+    label: 上传者
+    help: 
+    description: 
+  metadata.parent:
+    label: 所属文件
+    help: 
+    description: 
+  uploadedAt:
+    label: 上传时间
+    help: 
+    description: 
+  created_by:
+    label: 创建人
+    help: 
+    description: 
+  modified_by:
+    label: 修改人
+    help: 
+    description: 
+listviews:
+  all:
+    label: 所有

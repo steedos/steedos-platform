@@ -78,6 +78,11 @@ permission_set:
     viewAllRecords: true
 
 actions:
+  standard_edit:
+    label: Edit
+    sort: 0
+    visible: false
+    'on': record
   online_preview:
     label: Preview
     sort: 110

@@ -907,7 +907,7 @@ router.post('/am/forms/addFieldFromObject', async function (req, res) {
         }
 
 
-        res.status(200).send({ success: true, message: 'router is ok' });
+        res.status(200).send({ success: true });
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message)
@@ -1024,7 +1024,7 @@ router.post('/am/forms/addTableFromObject', async function (req, res) {
             });
         }
 
-        res.status(200).send({ success: true, message: 'router is ok' });
+        res.status(200).send({ success: true });
     } catch (error) {
         console.log(error);
         res.status(500).send({ error: error.message })
@@ -1150,7 +1150,7 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
         }
 
 
-        res.status(200).send({ success: true, message: 'router is ok' });
+        res.status(200).send({ success: true });
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message)

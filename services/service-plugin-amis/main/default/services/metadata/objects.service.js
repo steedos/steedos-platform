@@ -378,6 +378,10 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
+                let {showHiddenField = false} = ctx.params;
+                if(showHiddenField=='true'){
+                    showHiddenField = true;
+                }
                 const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
@@ -391,7 +395,7 @@ module.exports = {
 
                 const fieldsArr = [];
                 _.each(objectConfig.fields , (field, field_name)=>{
-                    if (field.hidden) return;
+                    if (showHiddenField != true && field.hidden) return;
                     if (ExcludeFieldNames.includes(field_name)) return;
                     if(!_.has(field, "name")){
                         field.name = field_name
