@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-11 10:45:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-18 17:58:46
  * @Description: 
  */
 "use strict";
@@ -47,6 +47,50 @@ module.exports = {
                 return await this.validateUsername(ctx.params.username, ctx.params.userId)
             }
         },
+        clearLoginTokens: {
+            rest: {
+                method: "GET",
+                fullPath: "/api/users/:userId/clear_login_tokens",
+            },
+            params: {
+                userId: { type: "string" }
+            },
+            async handler(ctx) {
+                const { user, userAgent, clientIp } = ctx.meta;
+                const { userId } = ctx.params;
+                if(!user.is_space_admin){
+                    return '非管理员无权操作'
+                }
+                if(!userId){
+                    return "缺少参数"
+                }
+                const dbUser = await getObject('users').findOne(userId)
+                if(dbUser){
+                    // 1 清空 登录tokens
+                    await getObject('users').update(userId, {"services.resume.loginTokens": []})
+                    // 2 设置 sessions 无效
+                    await getObject('sessions').updateMany({userId: userId}, {"valid": false}) 
+                    // 3 记录操作日志
+                    await getObject('operation_logs').insert({
+                        name: '清理登录tokens',
+                        type: 'clear_login_tokens',
+                        remote_user: user.userId,
+                        remote_addr: clientIp,
+                        http_user_agent: userAgent,
+                        object: 'users',
+                        status: 'success',
+                        create: new Date(),
+                        space: user.spaceId,
+                        message: `[系统管理员]清理用户[${dbUser.name}]的登录tokens`,
+                        data: JSON.stringify(ctx.params),
+                        related_to: {
+                          o: "users",
+                          ids: [dbUser._id]
+                        }
+                    })
+                }
+            }
+        }
     },
 
     /**

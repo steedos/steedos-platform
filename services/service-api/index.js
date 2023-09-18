@@ -18,6 +18,7 @@ const { LRUMap } = require('lru_map');
 const validator = require('validator');
 const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true);
 const openBrowser = require('react-dev-utils/openBrowser');
+const requestIp = require('request-ip');
 const mixinOptions = {
 
 	// Global GraphQL typeDefs
@@ -170,10 +171,13 @@ module.exports = {
 				 * @param {ServerResponse} res 
 				 * @param {Object} data
 				 * 
+				 * 
+				*/
 				onBeforeCall(ctx, route, req, res) {
 					// Set request headers to context meta
 					ctx.meta.userAgent = req.headers["user-agent"];
-				}, */
+					ctx.meta.clientIp = requestIp.getClientIp(req);
+				}, 
 
 				/**
 				 * After call hook. You can modify the data.

@@ -1,0 +1,55 @@
+name: clear_login_tokens
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "清理登录Tokens",
+              "id": "u:clear_login_tokens",
+              "editorState": "default",
+              "confirmText": "清理登录Tokens后, 用户所有链接都需要重新登录. 确定要清理吗?",
+              "hiddenOn": "context.user.is_space_admin != true",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "actionType": "ajax",
+                              "outputVar": "responseResult",
+                              "args": {
+                                  "options": {},
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/users/${record.user}/clear_login_tokens",
+                                      "method": "get",
+                                      "requestAdaptor": "",
+                                      "adaptor": "",
+                                      "messages": {
+                                          "success": "清理成功"
+                                      }
+                                  }
+                              }
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:0ef6ed9aee76"
+  }
+is_enable: true
+label: 清理登录Tokens
+'on': record_only
+type: amis_button
+visible: true
