@@ -86,15 +86,25 @@
   
 # 快速向导
 
+## 运行平台源码
+
+```
+docker-compose build
+docker-compose up
+```
+
+## 运行项目模版
+
+- 项目模版: https://github.com/steedos/steedos-project-template
+
 ## 创建一个空项目
 
 ```
 npx create-steedos-app my-project
 ```
 
-## 项目实例
+## 示例
 
-- [项目模版](https://github.com/steedos/steedos-project-template)
 - [Examples](https://github.com/steedos/steedos-examples)
 - [Steedos Labs 开源项目](https://github.com/steedos-labs/)
 

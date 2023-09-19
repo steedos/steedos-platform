@@ -5,10 +5,10 @@ amis_schema: |-
       "body": [
           {
               "type": "button",
-              "label": "清理登录Tokens",
+              "label": "注销所有登录",
               "id": "u:clear_login_tokens",
               "editorState": "default",
-              "confirmText": "清理登录Tokens后, 用户所有链接都需要重新登录. 确定要清理吗?",
+              "confirmText": "注销所有登录后, 用户所有已登录的流程器、客户端都需要重新登录. 确定要清理吗?",
               "hiddenOn": "context.user.is_space_admin != true",
               "onEvent": {
                   "click": {
@@ -25,7 +25,7 @@ amis_schema: |-
                                       "requestAdaptor": "",
                                       "adaptor": "",
                                       "messages": {
-                                          "success": "清理成功"
+                                          "success": "注销成功"
                                       }
                                   }
                               }
@@ -49,7 +49,7 @@ amis_schema: |-
       "id": "u:0ef6ed9aee76"
   }
 is_enable: true
-label: 清理登录Tokens
+label: 注销所有登录
 'on': record_only
 type: amis_button
 visible: true

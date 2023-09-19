@@ -24,18 +24,9 @@ ports:
     visibility: public
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
 tasks:
-  - name: Mongo
-    init: |
-      mkdir -p /workspace/mongodb/data/db
+  - name: Docker
     command: |
-      mongod --replSet rs0 --dbpath /workspace/mongodb/data/db
-  - command: |
-      gp await-port 27017
-      mongo steedos --eval "rs.initiate()"
-      exit
-  - name: Redis
-    command: |
-      redis-server --save "" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0
+      yarn docker:db
   - name: Steedos
     init: |
       yarn
@@ -44,13 +35,9 @@ tasks:
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
-      echo "ROOT_URL=$(gp url 6000)" >> examples/project-template/.env.local 
-      echo "METADATA_SERVER=$(gp url 6000)" >> examples/project-template/.env.local
       echo "ROOT_URL=$(gp url 6000)" >> .env.local 
       echo "METADATA_SERVER=$(gp url 6000)" >> .env.local
-      npm i steedos-cli --global
       yarn install
-      yarn lerna run gitpod:init
       yarn build
       gp await-port 27017
       gp await-port 6379

@@ -102,7 +102,7 @@ fields:
     blackbox: true
     omit: true
     label: Field Values
-    hidden: true
+    hidden: false
     name: values
   inbox_users:
     type: lookup

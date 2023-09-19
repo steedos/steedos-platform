@@ -34,3 +34,4 @@ searchable_fields:
   - field: is_archived
 extra_columns:
   - extras
+  - values
