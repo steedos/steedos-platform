@@ -1021,6 +1021,7 @@ CustomLabels:
   objects_amis_validation_rule: 验证规则
   objects_amis_limitation_rule: 限制规则
   objects_amis_sharing_rule: 共享规则
+  objects_amis_object_workflows: 流程映射
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称
