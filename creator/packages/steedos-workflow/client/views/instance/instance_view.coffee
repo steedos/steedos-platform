@@ -102,7 +102,7 @@ Template.instance_view.helpers
 		return InstanceManager.isInbox()
 
 	tracesListData: (instance)->
-		return instance.traces
+		return instance && instance.traces
 
 	notDistributeAndDraft: (state)->
 		ins = WorkflowManager.getInstance()
@@ -113,7 +113,11 @@ Template.instance_view.helpers
 		return true
 
 	showPickApproveUsers: ()->
-		return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
+		# return WorkflowManager.getFlow(WorkflowManager.getInstance().flow).allow_select_step;
+		ins = WorkflowManager.getInstance()
+		if ins
+			flow = WorkflowManager.getFlow(ins.flow)
+			return flow && flow.allow_select_step
 	
 Template.instance_view.onCreated ->
 	console.log('Template.instance_view.onCreated......')
@@ -122,6 +126,9 @@ Template.instance_view.onCreated ->
 
 Template.instance_view.onRendered ->
 	ins = WorkflowManager.getInstance();
+
+	unless ins
+		return;
 
 	try
 		window.Steedos && window.Steedos.setDocumentTitle && window.Steedos.setDocumentTitle({pageName: ins.name})

@@ -11,6 +11,10 @@ Template.instance_attachments.onRendered(function() {
 
 	var ins = WorkflowManager.getInstance();
 
+	if(!ins){
+		return;
+	}
+
 	var current_step = InstanceManager.getCurrentStep();
 
 	var main_attach_count = cfs.instances.find({

@@ -152,6 +152,8 @@ instanceButtonHelpers =
 		return "slds-dropdown__item crm-header-menu-item list-action-custom list-action-custom-instance-" + this.code 
 	amisButtonData: ()->
 		record = WorkflowManager.getInstance();
+		unless record
+			return {}
 		record.box = Session.get("box")
 		return {
 			app_id: Session.get("app_id")

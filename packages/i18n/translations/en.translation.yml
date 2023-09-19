@@ -1106,6 +1106,7 @@ CustomLabels:
   objects_amis_validation_rule: Validation Rules
   objects_amis_limitation_rule: Restriction Rules
   objects_amis_sharing_rule: Sharing Rules
+  objects_amis_object_workflows: Object Synchronization Rule
   object_fields: 字段
   object_fields_name: 字段名
   object_fields_label: 显示名称

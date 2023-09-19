@@ -175,6 +175,20 @@
                             "perPage": 20
                         }
                     ]
+                },
+                {
+                    "title": "${'objects_amis_object_workflows' | t}",
+					"hiddenOn": "${_master.record.enable_workflow != true}",
+                    "body": [
+                        {
+                            "type": "steedos-object-related-listview",
+                            "objectApiName": "objects",
+                            "recordId": "${recordId}",
+                            "relatedObjectApiName": "object_workflows",
+                            "relatedKey": "object_name",
+                            "perPage": 20
+                        }
+                    ]
                 }
             ],
             "id": "u:6a3b45d7adcf",

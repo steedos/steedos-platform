@@ -32,7 +32,7 @@ If you need to deploy the development environment locally, you can refer to the 
 
 ## Run Project
 
-- Run `yarn start` on the command line to start the template project in the folder `/examples/project-template`
+- Run `yarn start` on the command line to start
 
 - Use your browser to access `http://localhost:5000`.
 
@@ -55,13 +55,6 @@ ROOT_URL=http://127.0.0.1:3100
 MONGO_URL=mongodb://127.0.0.1/steedos
 ```
 
-### Start a database using Docker
-
-
-```bash
-docker-compose -f docker-compose-db.yml up
-```
-
 ### Use local Node.js to debug platform source code
 
 ```bash
@@ -69,13 +62,3 @@ yarn
 yarn build
 yarn start
 ```
-
-## Use VSCode Server to debug the source code remotely
-
-
-```bash
-docker-compose -f docker-compose-vscode.yml up
-```
-Open the browser and visit http://127.0.0.1:5555/?folder=/home/workspace/steedos-platform to access the VS Code remote development environment.
-
-You can now operate VS Code and run Steedos in the browser.

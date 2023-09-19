@@ -2,26 +2,29 @@ version: "3.9"
 
 services:
 
-  vscode:
-    image: steedos/vscode-server
+  steedos:
+    build: 
+      context: ./
+      dockerfile: ./docker/Dockerfile
     ports:
-      - "5555:3000"
       - "5000:5000"
-      - "3001:3001" 
+    env_file:
+      - .env.local
     environment:
+      - PORT=5000
       - MONGO_URL=mongodb://mongodb:27017/steedos
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
-      - TRANSPORTER=redis://redis:6379/1
+      - TRANSPORTER=nats://nats:4222
       - CACHER=redis://redis:6379
-    depends_on:
-      mongodb-init:
-        condition: service_started
     volumes:
-      - '.:/home/workspace/steedos-platform:cached'
-      
+      - "steedos-data:/app/storage"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+  
   redis:
-    image: redis:6.2
-    command: ["redis-server", "--save", "--appendonly no",  "--loglevel warning"]  # disable persistence
+    image: redis:6.0
+    command: "redis-server --save \"\" --appendonly no --loglevel warning"
     ports:
       - "6379:6379"
   
@@ -29,7 +32,7 @@ services:
     image: mongo:4.4
     ports:
       - 27017:27017
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "steedos" ]
+    command: "--bind_ip_all --replSet steedos --logpath /var/log/mongodb/mongod.log"
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo --quiet | grep 1
       interval: 10s
@@ -47,8 +50,17 @@ services:
     command: >
       mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})"
 
-
+  # Micro Service Transporter
+  nats:
+    image: nats:2.9
+    ports:
+      - "4222:4222"
+      # - "8222:8222" # monitor port
 
 volumes:
   steedos-mongo-data:
+    driver: local
+  steedos-installed-packages:
+    driver: local
+  steedos-data:
     driver: local
