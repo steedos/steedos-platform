@@ -72,7 +72,7 @@ module.exports = {
                     await getObject('sessions').updateMany({userId: userId}, {"valid": false}) 
                     // 3 记录操作日志
                     await getObject('operation_logs').insert({
-                        name: '清理登录tokens',
+                        name: '注销所有登录',
                         type: 'clear_login_tokens',
                         remote_user: user.userId,
                         remote_addr: clientIp,
