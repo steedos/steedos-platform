@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-08 15:20:48
+ * @LastEditTime: 2023-09-19 10:30:59
  * @Description: 
  */
 import * as express from 'express';
@@ -45,10 +45,12 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   if(!tenant._id){
     tenant._id = process.env.STEEDOS_CLOUD_SPACE_ID
   }
+
+  const platform = (global as any).Meteor.settings.public?.platform || {}
   
 
   if (tenant._id) {
-    let spaceDoc = await db.findOne("spaces", tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo"]})
+    let spaceDoc = await db.findOne("spaces", tenant._id, {fields: ["name", "avatar", "avatar_dark", "background", "enable_register", "account_logo", "favicon"]})
     let steedosService = getSteedosService();
     if (steedosService && spaceDoc) {
         _.assignIn(tenant, spaceDoc);
@@ -61,6 +63,9 @@ export const getSettings = (accountsServer: AccountsServer) => async (
       } 
       if (spaceDoc.background) {
         tenant.background_url = steedosService + "api/files/avatars/" + spaceDoc.background
+      }
+      if (platform?.is_oem && spaceDoc.favicon){
+        tenant.favicon_url = steedosService + "api/files/avatars/" + spaceDoc.favicon
       }
     }
   }
@@ -92,6 +97,6 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     already_sms_service: already_sms_service,
     serverInitInfo: serverInitInfo,
     redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST,
-    platform: (global as any).Meteor.settings.public?.platform || {}
+    platform: platform
   })
 }
