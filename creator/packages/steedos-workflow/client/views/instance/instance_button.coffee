@@ -152,6 +152,8 @@ instanceButtonHelpers =
 		return "slds-dropdown__item crm-header-menu-item list-action-custom list-action-custom-instance-" + this.code 
 	amisButtonData: ()->
 		record = WorkflowManager.getInstance();
+		unless record
+			return {}
 		record.box = Session.get("box")
 		return {
 			app_id: Session.get("app_id")
@@ -583,7 +585,6 @@ Template.instance_button.helpers
 
 Template.instance_button.onRendered ->
 	self = this
-	$('[data-toggle="tooltip"]').tooltip();
 	copyUrlClipboard = new Clipboard('.btn-instance-readonly-view-url-copy');
 
 	Template.instance_button.copyUrlClipboard = copyUrlClipboard

@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:53:45
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-06-30 10:52:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-14 13:26:47
  * @Description: 
  */
 import { isJsonMap, JsonMap, has, getJsonMap } from '@salesforce/ts-types';
@@ -145,9 +145,16 @@ export const loadObjects = (filePath: string) => {
     const matchedPaths: [string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath: string) => {
       let json: any = loadFile(matchedPath);
+      const firstName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.field'));
       if (!json.name) {
-        json.name = path.basename(matchedPath).split(".")[0];
+        json.name = firstName;
       }
+
+      if(process.env.NODE_ENV === 'development' && json.name != firstName){
+        console.warn(`Warn: The attribute "name" in the file does not match its filename.
+        Name:"${json.name}" Path: ${matchedPath}`)
+      }
+
       if (!json.object_name) {
         json.object_name = path.parse(
           path.dirname(path.dirname(matchedPath))

@@ -18,6 +18,7 @@ const { LRUMap } = require('lru_map');
 const validator = require('validator');
 const enablePlayground = validator.toBoolean(process.env.STEEDOS_GRAPHQL_ENABLE_CONSOLE || 'true', true);
 const openBrowser = require('react-dev-utils/openBrowser');
+const requestIp = require('request-ip');
 const mixinOptions = {
 
 	// Global GraphQL typeDefs
@@ -86,7 +87,7 @@ const mixinOptions = {
 		introspection: enablePlayground
 	}
 }
-
+const ObjectDataLoaderMapKeys = {};
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * @typedef {import('http').IncomingMessage} IncomingRequest Incoming HTTP Request
@@ -170,10 +171,13 @@ module.exports = {
 				 * @param {ServerResponse} res 
 				 * @param {Object} data
 				 * 
+				 * 
+				*/
 				onBeforeCall(ctx, route, req, res) {
 					// Set request headers to context meta
 					ctx.meta.userAgent = req.headers["user-agent"];
-				}, */
+					ctx.meta.clientIp = requestIp.getClientIp(req);
+				}, 
 
 				/**
 				 * After call hook. You can modify the data.
@@ -324,9 +328,14 @@ module.exports = {
 		 * @param {Object.<string, any>} args - Arguments passed to GraphQL child resolver
 		 * @returns {string} Key to the dataloader instance
 		 */
-		getObjectDataLoaderMapKey(objectName) {
+		getObjectDataLoaderMapKey(objectName, referenceToField = '_id') {
 			if (objectName) {
-				return `object:${objectName}`;
+				const key = `object:${objectName}.${referenceToField}`;
+				if(!ObjectDataLoaderMapKeys[objectName]){
+					ObjectDataLoaderMapKeys[objectName] = [] ;
+				}
+				ObjectDataLoaderMapKeys[objectName].push(key);
+				return key;
 			}
 			// 如果没有objectName，则抛出错误信息
 			throw new Error("objectName is required");
@@ -338,6 +347,7 @@ module.exports = {
 			const {root, args, context, resolveInfo} = graphqlCtx;
 			const dataLoaderMapKey = this.getObjectDataLoaderMapKey(
 				staticParams.__objectName || staticParams.objectName
+				, staticParams.referenceToField || '_id'
 			);
 			const objectDataLoaders = this.objectDataLoaders;
 			// if a dataLoader batching parameter is specified, then all root params can be data loaded;
@@ -937,19 +947,19 @@ module.exports = {
 		'@objectRecordEvent.*.*': function(ctx){
 			const { objectApiName, isUpdate, isDelete, id, doc } = ctx.params;
 			if(objectApiName && (isUpdate || isDelete)){
-				const key = this.getObjectDataLoaderMapKey(
-					objectApiName
-				);
+				const keys = ObjectDataLoaderMapKeys[objectApiName] || [];
 				let dataLoaderKeys = [id];
 				if(objectApiName === 'space_users'){
 					dataLoaderKeys.push(doc.user)
 				}
-				const loader = this.objectDataLoaders.get(key);
-				if(loader){
-					for(const dataLoaderKey of dataLoaderKeys){
-						loader.clear(dataLoaderKey);
+				_.each(keys, (key)=>{
+					const loader = this.objectDataLoaders.get(key);
+					if(loader){
+						for(const dataLoaderKey of dataLoaderKeys){
+							loader.clear(dataLoaderKey);
+						}
 					}
-				}
+				})
 			}
 		},
 		'service-ui.started': function(){

@@ -60,10 +60,13 @@
             if(platform.hostname){
                 if (!_.includes(platform.hostname.split(','), window.location.hostname)) {
                     setTimeout(function(){
-                        document.getElementsByClassName("steedos-banners")[0].style.display = 'flex';
-                        document.getElementsByClassName("steedos-banners")[0].style.justifyContent = 'center';
+                        const banners = document.getElementsByClassName("steedos-banners")[0];
+                        if(banners){
+                            banners.style.display = 'flex';
+                            banners.style.justifyContent = 'center';
+                        }
                         console.error(`环境变量ROOT_URL中的hostname(${window.location.hostname})与许可证中设置的不一致，请确认。`)
-                    }, 1000)
+                    }, 3000)
                 }
             }
         } catch (error) {
@@ -143,6 +146,10 @@
         STEEDOS_PUBLIC_STYLE_PLUGINS.split(',').forEach(function (src) {
             loadCss(src)
         })
+    }
+
+    if(ROOT_URL){
+        loadJs(`${ROOT_URL}/cordova.i18n.js`)
     }
 
 })();

@@ -64,7 +64,7 @@ InstanceManager.getNextStepOptions = function () {
 		autoFormDoc = Session.get("instance_form_values").values
 	}
 
-	var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version.fields);
+	var nextSteps = ApproveManager.getNextSteps(instance, currentStep, judge, autoFormDoc, form_version && form_version.fields);
 
 	var getSessionStepId = function () {
 		return Session.get("next_step_id");
@@ -720,7 +720,7 @@ InstanceManager.getCurrentValues = function () {
 		} else if (box == "inbox") {
 			var c = InstanceManager.getCurrentStep();
 			approve = InstanceManager.getCurrentApprove();
-			if (c.step_type == 'counterSign' || InstanceManager.ccHasEditPermission()) {
+			if ((c && c.step_type == 'counterSign') || InstanceManager.ccHasEditPermission()) {
 				approve.values = InstanceManager.clone(instance.values);
 				return approve.values
 			} else {
@@ -836,7 +836,7 @@ InstanceManager.isAmisForm = function () {
 	var ins = WorkflowManager.getInstance();
 	if(ins){
 		var flow = db.flows.findOne({_id: ins.flow},{fields:{enable_amisform: 1}})
-		return flow.enable_amisform
+		return flow && flow.enable_amisform
 	}
 }
 
@@ -1880,7 +1880,7 @@ InstanceManager.ccHasEditPermission = function () {
 	var trace = _.find(ins.traces, function (t) {
 		return t._id == currentApprove.trace;
 	})
-	return ccStep.cc_has_edit_permission && !trace.is_finished;
+	return ccStep && ccStep.cc_has_edit_permission && !trace.is_finished;
 }
 
 InstanceManager.getOpinionFieldsCode = function () {

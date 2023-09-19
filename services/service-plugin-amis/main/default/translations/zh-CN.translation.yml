@@ -13,6 +13,7 @@ CustomLabels:
       field_set: 设置字段
       grouping_set: 设置分组
       group_name: 名称
+      visible_on: 显示条件
       related_list_name: 子表名称
       related_list_label: 显示标题
       related_list_label_remark: 默认为对象名称

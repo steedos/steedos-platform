@@ -51,7 +51,7 @@ TemplateManager.handleTableTemplate = (instance, _export) ->
 
 	table_fields = InstanceformTemplate.helpers.table_fields(instance)
 
-	table_fields.forEach (table_field)->
+	table_fields && table_fields.forEach (table_field)->
 
 		required = ""
 		if !CoreForm?.pageTitleFieldName || CoreForm?.pageTitleFieldName != table_field.code

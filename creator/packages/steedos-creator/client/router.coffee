@@ -92,15 +92,15 @@ FlowRouter.route '/app/:app_id',
 		BlazeLayout.render Creator.getLayout(),
 			main: main
 
-FlowRouter.route '/app/admin/page/:template_name',
-	triggersEnter: [ checkUserSigned ],
-	action: (params, queryParams)->
-		template_name = params?.template_name
-		if Meteor.userId()
-			Session.set("app_id", "admin")
-			Session.set("admin_template_name", template_name)
-			BlazeLayout.render Creator.getLayout(),
-				main: template_name
+# FlowRouter.route '/app/admin/page/:template_name',
+# 	triggersEnter: [ checkUserSigned ],
+# 	action: (params, queryParams)->
+# 		template_name = params?.template_name
+# 		if Meteor.userId()
+# 			Session.set("app_id", "admin")
+# 			Session.set("admin_template_name", template_name)
+# 			BlazeLayout.render Creator.getLayout(),
+# 				main: template_name
 
 FlowRouter.route '/app/:app_id/page/:page_id',
 	triggersEnter: [ checkUserSigned ],

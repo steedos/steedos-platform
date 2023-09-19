@@ -46,8 +46,9 @@ tasks:
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
       echo "ROOT_URL=$(gp url 6000)" >> examples/project-template/.env.local 
       echo "METADATA_SERVER=$(gp url 6000)" >> examples/project-template/.env.local
-      npm i steedos-cli --global 
-      npm i --global pnpm
+      echo "ROOT_URL=$(gp url 6000)" >> .env.local 
+      echo "METADATA_SERVER=$(gp url 6000)" >> .env.local
+      npm i steedos-cli --global
       yarn install
       yarn lerna run gitpod:init
       yarn build

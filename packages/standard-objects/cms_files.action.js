@@ -1,6 +1,6 @@
 /*
- * @LastEditTime: 2023-08-22 10:36:05
- * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-13 15:30:44
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
  * @customMade: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
     if (file != null ? file.versions : void 0) {
       fileId = file != null ? (ref1 = file.versions) != null ? ref1[0] : void 0 : void 0;
     } else {
-      fileId = file != null ? (ref2 = file.__super) != null ? (ref3 = ref2.record) != null ? (ref4 = ref3.versions) != null ? ref4[0].value : void 0 : void 0 : void 0 : void 0;
+      fileId = file != null ? (ref2 = file.__super) != null ? (ref3 = ref2._master.record) != null ? (ref4 = ref3.versions) != null ? ref4[0].value : void 0 : void 0 : void 0 : void 0;
     }
     
     download_url = window.location.origin + Steedos.absoluteUrl("/api/files/files/" + fileId + "/" + file.name);

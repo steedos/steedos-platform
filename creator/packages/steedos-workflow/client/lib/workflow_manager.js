@@ -113,7 +113,7 @@ WorkflowManager.getInstanceFormVersion = function() {
 		}
 
 		field_permission = WorkflowManager.getInstanceFieldPermission();
-		rev.fields.forEach(
+		rev.fields && rev.fields.forEach(
 			function(field) {
 				field['permission'] = field_permission[field.code] == 'editable' ? 'editable' : 'readonly';
 				if (field.type == 'table') {

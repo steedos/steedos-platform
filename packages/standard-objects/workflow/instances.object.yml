@@ -30,6 +30,7 @@ fields:
     amis:
       type: 'steedos-select-flow'
       mode: "tree-select"
+      allData: "\\${isLookup === true}"
   flow_version:
     label: Workflow Version
     type: text

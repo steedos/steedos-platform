@@ -18,3 +18,9 @@ export const getMySpaces = (accountsServer: AccountsServer) => async (
 
   res.json(spaces);
 };
+
+// 获取第一个spaces
+export const getFirstSpace = async (accountsServer: AccountsServer)=>{
+  const space = await accountsServer.db.getFirstSpace();
+  return space;
+}

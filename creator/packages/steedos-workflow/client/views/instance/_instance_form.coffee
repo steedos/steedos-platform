@@ -619,6 +619,12 @@ InstanceformTemplate.onRendered = ()->
 		currentStep = InstanceManager.getCurrentStep();
 		form_version = WorkflowManager.getInstanceFormVersion();
 
+		unless form_version
+			return
+
+		unless form_version.fields
+			return
+
 		formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", form_version.fields);
 		insertDoc = AutoForm.getFormValues("instanceform", undefined, undefined, false)
 		Form_formula.run("", "", formula_fields, insertDoc, form_version.fields);

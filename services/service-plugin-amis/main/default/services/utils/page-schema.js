@@ -21,18 +21,15 @@ const getFormPageInitSchema = function (objectApiName) {
         "label": "对象表单",
         "objectApiName": objectApiName,
         "recordId": "${recordId}",
-        "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4",
+        "className": "",
         "id": "u:b3d626885b90",
+        "enableTabs": true,
         "mode": "edit",
         "layout": "normal"
     };
     return {
-        type: 'page',
+        type: 'service',
         name: getScopeId(objectApiName, "form"),
-        bodyClassName: '',
-        regions: [
-            "body"
-        ],
         body: [
             amisSchema
         ]
