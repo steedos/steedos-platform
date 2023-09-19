@@ -1,0 +1,20 @@
+label: 相关项
+type: lookup
+index: true
+reference_to: !<tag:yaml.org,2002:js/function> |-
+  function () {
+        try{
+          let objects = [];
+          var queryResult = Steedos.authRequest(`/graphql`, {
+              type: 'POST', async: false, 
+              data: JSON.stringify({
+                query: `{ objects{ name,space,enable_tasks } }`
+              })
+          });
+          objects = queryResult && queryResult.data && queryResult.data.objects;
+          return _.map(objects, 'name') ;
+        }catch(e){
+          return []
+        }
+  }
+name: related_to

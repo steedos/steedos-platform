@@ -69,6 +69,8 @@ export interface DatabaseInterface extends DatabaseInterfaceSessions {
 
   getMySpaces(userId: string): Promise<any | null>;
 
+  getFirstSpace(): Promise<any | null>;
+
   getInviteInfo(id: string): Promise<any | null>;
   
   setEmail(userId: string, newEmail: string): Promise<void>;

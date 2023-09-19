@@ -383,21 +383,16 @@ module.exports = {
         }, {
             $set: setObj,
         });
-        db.instances.update({
-            _id: instance_id,
-        }, {
-            $unset: {
-                'cc_users.$[uId]': true
-            }
-        }, {
-            arrayFilters: [
-                {
-                    uId: {
-                        $in: remove_user_ids
-                    }
+        for (const ruId of remove_user_ids) {
+            db.instances.update({
+                _id: instance_id,
+                cc_users: ruId
+            }, {
+                $unset: {
+                    'cc_users.$': true
                 }
-            ]
-        });
+            });
+        }
         db.instances.update({
             _id: instance_id,
         }, {
