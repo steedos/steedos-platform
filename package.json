@@ -20,18 +20,17 @@
   },
   "resolutions": {
     "@salesforce/ts-types": "1.1.2",
-    "**/fibers": "5.0.3"
+    "**/fibers": "5.0.3",
+    "**/type-fest": "0.21.3"
   },
   "devDependencies": {
+    "cnpm": "9.0.1",
+    "tslib": "^2.4.0",
     "@babel/core": "^7.8.4",
     "@types/express-serve-static-core": "~4.17.29",
     "@types/node": "18.0.3",
     "lerna": "^4.0.0",
     "nodemon": "^2.0.19",
     "typescript": "4.6.3"
-  },
-  "dependencies": {
-    "cnpm": "9.0.1",
-    "tslib": "^2.4.0"
   }
 }
