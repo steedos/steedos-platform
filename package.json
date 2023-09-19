@@ -10,8 +10,9 @@
     "steedos-packages/*"
   ],
   "scripts": {
-    "pnpm:install": "rm -rf node_modules && pnpm install",
-    "start": "cd examples && cd project-template && steedos start",
+    "docker": "docker-compose up",
+    "docker:db": "docker-compose up mongodb mongodb-init redis nats",
+    "start": "steedos start --config steedos.config.js",
     "bootstrap": "lerna clean --yes && lerna bootstrap",
     "build": "yarn bootstrap && lerna run build",
     "i18n": "lerna run i18n",

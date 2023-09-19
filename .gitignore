@@ -30,3 +30,8 @@
 !/server/bundle/**/node_modules
 docker-volumes/**
 examples/multi-node-testing/**
+
+storage
+
+.env.local
+.steedos
