@@ -511,7 +511,7 @@ export class AccountsServer {
    * @param {string} accessToken - User access token.
    * @returns {Promise<void>} - Return a promise.
    */
-  public async logout(token: string): Promise<void> {
+  public async logout(token: string): Promise<Session> {
     try {
       const session: Session = await this.db.findSessionByToken(token);
 
@@ -524,6 +524,7 @@ export class AccountsServer {
       } else {
         throw new Error("Session is no longer valid");
       }
+      return session;
     } catch (error) {
       this.hooks.emit(ServerHooks.LogoutError, error);
 

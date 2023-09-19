@@ -56,3 +56,22 @@ Meteor.methods
 				TemplateCode: 'SMS_67200967',
 				msg: TAPi18n.__('sms.change_password.template', {}, lang)
 
+		try
+			return Creator.getCollection("operation_logs").insert({
+				name: "修改密码",
+				type: "change_password",
+				remote_user: userId,
+				status: 'success',
+				space: space_id,
+				message: "[系统管理员]修改了用户[" + changedUserInfo?.name + "]的密码",
+				data: JSON.stringify({
+					changeUser: user_id
+				}),
+				related_to: {
+					o: "users",
+					ids: [user_id]
+				}
+			});
+		catch e
+			console.error e
+

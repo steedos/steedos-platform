@@ -944,6 +944,14 @@ export class Mongo implements DatabaseInterface {
     return spaces;
   }
 
+
+  public async getFirstSpace(): Promise<any | null> {
+    const space = await this.db
+      .collection("spaces")
+      .findOne()
+    return space;
+  }
+
   public async updateMeteorSession(
     userId: string,
     token: string,

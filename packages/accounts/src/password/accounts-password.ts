@@ -691,6 +691,29 @@ export default class AccountsPassword implements AuthenticationService {
     return await this.passwordAuthenticator({email: email}, password);
   }
 
+  public async foundUser(user: string | LoginUserIdentity,){
+    const { username, email, id, mobile } = typeof user == 'string'
+    ? this.toMobileAndEmail({ user })
+    : this.toMobileAndEmail({ ...user });
+
+    let foundUser: any | null = null;
+
+    if (id) {
+      // this._validateLoginWithField('id', user);
+      foundUser = await this.db.findUserById(id);
+    } else if (username) {
+      // this._validateLoginWithField('username', user);
+      foundUser = await this.db.findUserByUsername(username);
+    } else if (mobile) {
+      // this._validateLoginWithField('username', user);
+      foundUser = await this.db.findUserByMobile(mobile);
+    } else if (email) {
+      // this._validateLoginWithField('email', user);
+      foundUser = await this.db.findUserByEmail(email);
+    }
+    return foundUser;
+  }
+
   public async passwordAuthenticator(
     user: string | LoginUserIdentity,
     password: PasswordType,

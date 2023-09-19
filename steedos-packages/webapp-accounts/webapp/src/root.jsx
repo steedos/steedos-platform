@@ -77,6 +77,13 @@ class Root extends React.PureComponent {
   componentDidMount() {
     
     this.props.actions.loadMeAndConfig().then((response) => {
+      const tenant = this.props.tenant;
+
+      if(tenant && tenant.favicon_url){
+        const faviconLink = document.querySelector('link[rel="shortcut icon"]');
+        faviconLink.href = tenant.favicon_url;
+      }
+
       // let password_expired = false;
       // if(this.props.currentUser){
       //   GlobalActions.finishSignin(this.props.currentUser, this.props.tenant, this.props.location);
