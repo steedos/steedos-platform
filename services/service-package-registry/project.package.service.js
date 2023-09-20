@@ -36,11 +36,6 @@ module.exports = {
 			name: this.name,
 			isPackage: false
 		},
-		STEEDOS_CLOUD_URL: process.env.STEEDOS_CLOUD_URL ? process.env.STEEDOS_CLOUD_URL : 'https://console.steedos.cn',
-		STEEDOS_CLOUD_SPACE_ID: process.env.STEEDOS_CLOUD_SPACE_ID,
-		STEEDOS_CLOUD_API_KEY: process.env.STEEDOS_CLOUD_API_KEY,
-		STEEDOS_REGISTRY_URL: process.env.STEEDOS_REGISTRY_URL ? process.env.STEEDOS_REGISTRY_URL : 'https://registry.steedos.cn/',
-		STEEDOS_CLOUD_SYNC_PACKAGES: validator.toBoolean(process.env.STEEDOS_CLOUD_SYNC_PACKAGES || 'false', true),
 		STEEDOS_INITIAL_PACKAGES: process.env.STEEDOS_INITIAL_PACKAGES
 	},
 
@@ -153,6 +148,7 @@ module.exports = {
 				if(packageConfig.static){
 					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
 				}
+				await checkDependencies(util.getPackageRelativePath(process.cwd(), packageConfig.path))
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
@@ -163,68 +159,6 @@ module.exports = {
 				})
 				return {}
             }
-		},
-		getCloudSaasPurchasedPackages:{
-			async handler(ctx) {
-				try {
-					
-					const user = ctx.meta.user;
-					if(!user.is_space_admin){
-						throw new Error('not permission!');
-					}
-					return await this.getCloudSaasPurchasedPackages();
-				} catch (error) {
-					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
-				}
-            }
-		},
-		installPurchasedPackages: {
-			async handler(ctx){
-				const installErrors = {};
-				const installPackages = [];
-				try {
-					const user = ctx.meta.user;
-					if(!user.is_space_admin){
-						throw new Error('not permission!');
-					}
-					try {
-						await this.loginSteedosRegistry();
-						console.info(`login steedos registry success`);
-					} catch (error) {
-						// console.error(`login steedos registry fail: `, error.message);
-					}
-					const settings = this.settings;
-					const syncCloudPackages = settings.STEEDOS_CLOUD_SYNC_PACKAGES;
-					let result = null;
-					if(syncCloudPackages){
-						result = await this.getCloudSaasPurchasedPackages();
-					}
-					if(result){
-						for (const _package of result.packages) {
-							try {
-								const { name, version, label, description } = _package
-								let enable = true; //安装已购买的软件包时先默认启用
-								//TODO 处理 registry_url
-								// 安装最新版
-								const packageInfo = await this.installPackage(name, null, label, description, enable, ctx.broker);
-								installPackages.push(packageInfo)
-							} catch (error) {
-								if(error.stderr){
-									installErrors[_package.name] = error.stderr
-								}else{
-									installErrors[_package.name] = error.message
-								}
-							}
-						}
-					}
-					return {
-						installPackages: installPackages,
-						installErrors: installErrors
-					}
-				} catch (error) {
-					throw new MoleculerError(error.message, 500, "ERR_SOMETHING");
-				}
-			}
 		},
 		getPackageVersions: {
 			async handler(ctx) {
@@ -245,15 +179,9 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					try {
-						await this.loginSteedosRegistry();
-						console.info(`login steedos registry success`);
-					} catch (error) {
-						// console.error(`login steedos registry fail: `, error.message);
-					}
-					let { module, version, url, auth, registry_url } = ctx.params
+					let { module, version, url, auth, registry_url, fromClient = false } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker, {fromClient})
 				} catch (error) {
 					let errorInfo = error.message || '';
 					if (error.stderr) {
@@ -303,47 +231,6 @@ module.exports = {
 				return await loader.installPackage(broker, {module, version, label, description, enable})
             }
 		},
-		getCloudSaasPurchasedPackages:{
-			async handler() {
-				const settings = this.settings;
-				const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY
-				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID
-				const url = settings.STEEDOS_CLOUD_URL
-
-				if(!apiKey || !spaceId || !url){
-					throw new Error(`请配置STEEDOS_CLOUD参数`);
-				}
-				const headers = Object.assign({}, {'Content-Type': 'application/json'}, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}`});
-				const response = await fetch(`${url}/api/shop/product_subscriptions/steedos-packages`, {
-					method: 'GET', headers: headers
-				});
-
-				const result = await response.json();
-
-				if(result.status === 'error'){
-					throw new Error(`${url}: ${result.message}`)
-				}
-
-				const packages = [];
-
-				_.each(result.data, (item)=>{
-					if(item.product){
-						let isExist = _.find(packages, (_package)=>{
-							return _package.name === item.product.sku
-						})
-						if(!isExist){
-							packages.push({
-								name: item.product.sku, 
-								version: null,  //始终安装latest最新版
-								label: item.product.name, 
-								description: item.product.description || ''
-							})
-						}
-					}
-				})
-				return { packages : packages}
-            }
-		},
 		getPackageVersions: {
 			async handler(module) {
                 return packages.getPackageVersions(module);
@@ -379,7 +266,7 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, version, url, auth, enable, registry_url, broker) {
+			async handler(module, version, url, auth, enable, registry_url, broker, {fromClient}) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				} else {
@@ -400,32 +287,13 @@ module.exports = {
 					}
 				}
 
-				const settings = this.settings;
-				if (url && url.startsWith(settings.STEEDOS_CLOUD_URL + '/api/pkg/download')) {
-					const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY
-					const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID
-					const cloudUrl = settings.STEEDOS_CLOUD_URL
-
-					if (!apiKey || !spaceId || !cloudUrl) {
-						throw new Error(`请配置STEEDOS_CLOUD参数`);
-					}
-					const headers = Object.assign({}, { 'Content-Type': 'application/json' }, { [HEADER_AUTH]: `${AUTH_TYPE} apikey,${apiKey}` });
-					const response = await fetch(url, {
-						method: 'POST', headers: headers, body: JSON.stringify({ _authToken: auth })
-					});
-
-					const result = await response.json();
-
-					if (result.error) {
-						throw new Error(`安装失败，软件包URL或认证信息错误`)
-					}
-					url = `${url}/${result.token}`
-					console.log(`url`, url);
-				}
 				const packagePath = await registry.installModule(module, version, url, registry_url);
 				const packageInfo = loader.getPackageInfo(null, packagePath);
 				const packageName = packageInfo.name;
 				if(enable){
+					if(fromClient){
+						await packages.checkDependencies(packagePath)
+					}
 					await loader.loadPackage(packageName, packagePath);
 				}else{
 					enable = false;
@@ -475,40 +343,6 @@ module.exports = {
 					throw new Error(result.data.error);
 				}
 				return result.data;
-			}
-		},
-		loginSteedosRegistry: {
-			async handler() {
-				const settings = this.settings;
-				// 配置主控地址
-				const consoleUrl = settings.STEEDOS_CLOUD_URL;
-				if (!consoleUrl) {
-					throw new Error('请配置主控地址');
-				}
-
-				// 初始化工作区数据
-				// 获取环境变量中工作区信息
-				const spaceId = settings.STEEDOS_CLOUD_SPACE_ID || process.env.STEEDOS_CLOUD_SPACE_ID;
-				const apiKey = settings.STEEDOS_CLOUD_API_KEY || process.env.STEEDOS_CLOUD_API_KEY;
-
-				if (!spaceId || !apiKey) {
-					throw new Error('请配置环境变量STEEDOS_CLOUD_SPACE_ID和STEEDOS_CLOUD_API_KEY。');
-				}
-
-				const registryUrl = settings.STEEDOS_REGISTRY_URL
-
-				// 调用接口获取初始化信息
-				const { info, scopes } = await this.getSafeScopes(spaceId, apiKey, consoleUrl);
-				const { adminPhone } = info;
-				if (!adminPhone) {
-					throw new Error('缺少工作区信息 工作区名称、管理员姓名、管理员手机号，请检查');
-				}
-				// let scope = '';
-				// if (scopes && scopes.length > 0) {
-				// 	scope = scopes[0];
-				// }
-				await login.loginToRegistry(adminPhone, apiKey, `${adminPhone}@steedos.com`, registryUrl, undefined);
-				login.setYarnrcScopes(scopes, registryUrl);
 			}
 		},
 		initialPackages: {
@@ -649,12 +483,6 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-		try {
-			await this.loginSteedosRegistry();
-			console.info(`login steedos registry success`);
-		} catch (error) {
-			// console.error(`login steedos registry fail: `, error.message);
-		}
  
 		const PACKAGE_INSTALL_NODE = process.env.PACKAGE_INSTALL_NODE
 		if(PACKAGE_INSTALL_NODE){
@@ -671,19 +499,6 @@ module.exports = {
 		} catch (error) {
 			console.log(`started error`, error)
 		}
-
-		// 新版单包项目加载
-		// try {
-		// 	if(fs.existsSync(path.join(process.cwd(), 'package.service.js'))){
-		// 		const packagePath = process.cwd(); 
-		// 		if(fs.existsSync(packagePath)){
-		// 			const packageInfo = require(path.join(packagePath, 'package.json'));
-		// 			loader.appendToPackagesConfig(`${packageInfo.name}`, {version: packageInfo.version, description: packageInfo.description, local: true, path: util.getPackageRelativePath(process.cwd(), packagePath)});
-		// 		}
-		// 	}
-		// } catch (error) {
-		// 	console.log(`started error`, error)
-		// }
 
 		await metadata.uncompressPackages(process.cwd());
 		const mPackages = metadata.getAllPackages(process.cwd());

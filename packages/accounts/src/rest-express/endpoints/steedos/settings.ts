@@ -43,7 +43,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
   }
 
   if(!tenant._id){
-    tenant._id = process.env.STEEDOS_CLOUD_SPACE_ID
+    tenant._id = process.env.STEEDOS_TENANT_ID
   }
 
   const platform = (global as any).Meteor.settings.public?.platform || {}

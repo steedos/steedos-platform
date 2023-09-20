@@ -37,7 +37,7 @@ module.exports = {
 		packageInfo: {
 			path: path.join(__dirname, 'main'),
 			name: packageName,
-			isPackage: false
+			isPackage: true,
 		},
 		initBuilderRouter: false,
 		QUERY_RESULTS_CLEANUP_ENABLED: process.env.STEEDOS_QUERY_RESULTS_CLEANUP_ENABLED ? validator.toBoolean(process.env.STEEDOS_QUERY_RESULTS_CLEANUP_ENABLED || 'true', true) : true,

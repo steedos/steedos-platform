@@ -196,7 +196,7 @@ router.post('/api/nodes/cloud/saas/packages/url', core.requireAuthentication, as
     try {
         let broker = schema.broker;
         const { module, version, url, auth, registry_url } = req.body;
-        const result = await broker.call(`@steedos/service-project.installPackageFromUrl`, {module, version, url, auth, registry_url}, {
+        const result = await broker.call(`@steedos/service-project.installPackageFromUrl`, {module, version, url, auth, registry_url, fromClient: true}, {
             meta: {
                 user: userSession
             }

@@ -1,7 +1,7 @@
 name: audit_records
 label: Audit Record
 icon: record
-hidden: true
+hidden: false
 version: 2
 fields:
   related_to:

@@ -101,20 +101,12 @@ fields:
       - label: 已完成
         value: completed
     description: 
-  is_recorded:
-    label: 已归档
-    help: 
-    description: 
   is_archived:
-    label: 已归档(旧)
+    label: 已归档
     help: 
     description: 
   is_deleted:
     label: 已删除
-    help: 
-    description: 
-  is_recorded_creator:
-    label: 已归档
     help: 
     description: 
   related_instances:

@@ -98,6 +98,9 @@ tab_items:
   admin_workflow_outbound_messages:
     group: process_automation
     index: 25
+  admin_flows:
+    group: approval_workflow
+    index: 20
   admin_roles:
     group: approval_workflow
     index: 25
@@ -107,9 +110,6 @@ tab_items:
   admin_flow_positions:
     group: approval_workflow
     index: 26.5
-  admin_flows:
-    group: approval_workflow
-    index: 27
   admin_categories:
     group: approval_workflow
     index: 28

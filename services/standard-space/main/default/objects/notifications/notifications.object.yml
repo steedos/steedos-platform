@@ -1,4 +1,4 @@
 name: notifications
 label: Notification
 icon: quick_text
-hidden: true
+hidden: false

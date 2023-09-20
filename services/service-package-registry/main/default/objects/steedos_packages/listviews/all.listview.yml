@@ -3,7 +3,6 @@ columns:
   - field: label
     wrap: false
   - field: description
-    width: '150'
     wrap: false
   - field: version
     wrap: false

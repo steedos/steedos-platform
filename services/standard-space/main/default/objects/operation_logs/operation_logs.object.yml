@@ -1,4 +1,5 @@
 name: operation_logs
-label: 操作日志
+label: 安全日志
 version: 2
 icon: budget
+hidden: true
