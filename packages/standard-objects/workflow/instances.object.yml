@@ -3,7 +3,7 @@ icon: task
 label: Request
 enable_search: true
 enable_dataloader: false
-hidden: true
+hidden: false
 fields:
   name:
     label: Name
