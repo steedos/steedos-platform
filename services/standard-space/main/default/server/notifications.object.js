@@ -125,13 +125,13 @@ Creator.addNotifications = function(message, from, to){
     }
 
     try {
-        sendPushs(message, from, to, notifications_ids)
+        Creator.sendPushs(message, from, to, notifications_ids)
     } catch (error) {
         console.error("推送数据插入失败，错误信息：", error);
     }
 }
 
-function sendPushs(message, from, to, notifications_ids){
+Creator.sendPushs = function(message, from, to, notifications_ids){
     const appName = 'workflow'
     let now = new Date();
     let data = {

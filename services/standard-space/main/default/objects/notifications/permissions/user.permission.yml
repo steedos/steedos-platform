@@ -4,4 +4,4 @@ allowDelete: true
 allowEdit: true
 allowRead: true
 modifyAllRecords: false
-viewAllRecords: true
+viewAllRecords: false

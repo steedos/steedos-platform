@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-25 13:14:31
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-09-20 16:10:55
  * @Description: 
  */
 "use strict";
@@ -12,6 +12,9 @@ const packageLoader = require('@steedos/service-meteor-package-loader');
 const objectql = require('@steedos/objectql');
 const { MongoClient } = require('mongodb');
 const _ = require('lodash')
+
+const triggers = require('./src/triggers')
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -39,7 +42,7 @@ module.exports = {
      * Actions
      */
     actions: {
-
+        ...triggers,
     },
 
     /**
