@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-files",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.8",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -14,5 +14,5 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1"
   },
-  "gitHead": "fb9a047669f43d23c3408029cf051b0f6744e8e0"
+  "gitHead": "9e2b4ac59a9a1700158c0d132b4cbc9ae4931bec"
 }
