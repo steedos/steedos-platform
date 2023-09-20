@@ -230,6 +230,19 @@
 							],
 							"id": "u:ae482c3f33a5",
 							"unmountOnExit": true
+						},
+						{
+							"title": "${'objects_amis_object_workflows' | t}",
+							"body": [
+								{
+									"type": "steedos-object-related-listview",
+									"objectApiName": "objects",
+									"recordId": "${recordId}",
+									"relatedObjectApiName": "object_workflows",
+									"relatedKey": "flow_id",
+									"perPage": 20
+								}
+							]
 						}
 					],
 					"className": "object-detail-tabs mt-3 bg-white border-b sm:shadow sm:rounded sm:border border-slate-300",
