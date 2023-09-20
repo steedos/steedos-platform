@@ -26,6 +26,8 @@ ports:
 tasks:
   - name: Docker
     command: |
+      echo "ROOT_URL=$(gp url 6000)" >> .env.local 
+      echo "METADATA_SERVER=$(gp url 6000)" >> .env.local
       yarn docker:db
   - name: Steedos
     init: |
@@ -35,8 +37,6 @@ tasks:
       rm creator/.env.local
       cp creator/.env creator/.env.local
       sed -i "/^ROOT_URL=*/cROOT_URL=$(gp url 3100)" creator/.env.local
-      echo "ROOT_URL=$(gp url 6000)" >> .env.local 
-      echo "METADATA_SERVER=$(gp url 6000)" >> .env.local
       yarn install
       yarn build
       gp await-port 27017
