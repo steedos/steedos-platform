@@ -102,12 +102,7 @@ if (Meteor.isServer) {
     "traces.approves.type": 1,
     "traces.approves.handler": 1
   }, Steedos.formatIndex(["traces.approves.type", "traces.approves.handler"]));
-  // 全文检索同步字段
-  db.instances._ensureIndex({
-    "is_recorded": 1
-  }, {
-    background: true
-  });
+  
   try {
     db.instances._ensureIndex({
       "category": 1

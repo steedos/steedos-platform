@@ -126,10 +126,6 @@ if (Meteor.isServer) {
   } catch (error) {
     console.log(error.message);
   }
-  db.instances.before.update(function (userId, doc, fieldNames, modifier, options) {
-    modifier.$unset = modifier.$unset || {};
-    return modifier.$unset.is_recorded = 1;
-  });
   db.instances.after.update(function (userId, doc, fieldNames, modifier, options) {
     if (doc.current_step_name !== this.previous.current_step_name) {
       return uuflowManager.triggerRecordInstanceQueue(doc._id, doc.record_ids, doc.current_step_name, doc.flow, doc.state);

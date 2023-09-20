@@ -101,20 +101,12 @@ fields:
       - label: Completed
         value: completed
     description: 
-  is_recorded:
-    label: Recorded
-    help: 
-    description: 
   is_archived:
     label: Archived
     help: 
     description: 
   is_deleted:
     label: Deleted
-    help: 
-    description: 
-  is_recorded_creator:
-    label: Synced
     help: 
     description: 
   related_instances:

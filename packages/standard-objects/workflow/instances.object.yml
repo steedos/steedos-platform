@@ -162,10 +162,10 @@ fields:
     readonly: true
     name: state
     filterable: true
-  is_recorded:
-    type: boolean
-    label: Recorded
-    name: is_recorded
+  # is_recorded:
+  #   type: boolean
+  #   label: Recorded
+  #   name: is_recorded
   is_archived:
     type: boolean
     label: Archived
@@ -175,10 +175,10 @@ fields:
     type: boolean
     label: Deleted
     hidden: true
-  is_recorded_creator:
-    type: boolean
-    label: Synced
-    name: is_recorded_creator
+  # is_recorded_creator:
+  #   type: boolean
+  #   label: Synced
+  #   name: is_recorded_creator
   related_instances:
     type: lookup
     multiple: true
