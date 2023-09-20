@@ -87,17 +87,17 @@ const getCategoriesInbox = async (userSession, req) => {
       })
     })
     output.push({
-      label: k == 'null' ? "未分类" : k,
+      label: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
       children: flows,
-      category_name: k == 'null' ? "未分类" : k,
+      category_name: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
       tag: v.length,
       options: {
         level: 2,
         value: v[0].category,
         name: 'category',
-        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']&flowId=`,
+        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=`,
       },
-      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', '${v[0].category}']&flowId=`
+      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=`
     })
   })
   return {
@@ -173,16 +173,16 @@ const getCategoriesMonitor = async (userSession, req) => {
         })
       })
       output.push({
-        label: k == 'null' ? "未分类" : k,
+        label: k == 'null' || k == 'undefined' || !k? "未分类" : k,
         children: flows,
-        category_name: k == 'null' ? "未分类" : k,
+        category_name: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
         options: {
           level: 2,
-          value: v[0].category__expand._id,
+          value: v[0].category__expand && v[0].category__expand._id,
           name: 'category',
-          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', '${v[0].category__expand._id}']&flowId=`,
+          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=`,
         },
-        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', '${v[0].category__expand._id}']&flowId=`
+        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=`
       })
     })
   }
