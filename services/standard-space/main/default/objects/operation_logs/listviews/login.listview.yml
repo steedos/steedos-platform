@@ -2,17 +2,20 @@ name: login
 label: 登录日志
 columns:
   - name
+  - status
   - remote_user
   - related_to
   - remote_addr
   - http_user_agent
   - is_mobile
   - is_tablet
-  - status
   - message
   - created
 filter_scope: space
 filters: ["type","=", "login"]
+sort:
+  - field_name: created
+    order: desc
 searchable_fields: 
   - field: name
   - field: remote_user
