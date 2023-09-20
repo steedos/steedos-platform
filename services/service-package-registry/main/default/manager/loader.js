@@ -35,6 +35,8 @@ const appendToPackagesConfig = (packageName, options)=>{
                 loadPackage(packageName, packagePath);
             }
         }else{
+            // 对于已经存在的软件包, 不支持使用传入的enable控制软件包状态.
+            delete options.enable
             packages[packageName] = Object.assign(packages[packageName], options)
         }
     }else{
