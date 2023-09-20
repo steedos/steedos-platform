@@ -74,6 +74,7 @@ Meteor.startup ->
 			if notification.payload
 				if notification.payload.requireInteraction
 					options.requireInteraction = notification.payload.requireInteraction
+					delete options.timeout
 
 				if notification.payload.notifications_id
 					options.tag = "/api/v4/notifications/" + notification.payload.notifications_id + "/read"
