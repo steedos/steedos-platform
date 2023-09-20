@@ -52,7 +52,7 @@ cfs:
     accessKeyId: ${STEEDOS_CFS_CLOUD_ACCESSKEYID}
     secretAccessKey: ${STEEDOS_CFS_CLOUD_SECRETACCESSKEY}
 tenant:
-  _id: ${STEEDOS_CLOUD_SPACE_ID}
+  _id: ${STEEDOS_TENANT_ID}
   name: 华炎魔方
   logo_url: ${STEEDOS_TENANT_LOGO_URL}
   logo_square_url: ${STEEDOS_TENANT_LOGO_SQUARE_URL}

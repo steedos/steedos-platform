@@ -35,7 +35,7 @@ module.exports = {
     afterFind: async function(){
         let { spaceId } = this;
         if(!spaceId){
-            spaceId = process.env.STEEDOS_CLOUD_SPACE_ID;
+            spaceId = process.env.STEEDOS_TENANT_ID;
         }
         if(!spaceId){
             const spaces = await objectql.getObject('spaces').find({});
