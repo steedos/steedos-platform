@@ -60,7 +60,7 @@ module.exports = {
 			// "@steedos/service-plugin-amis",
 			// "@steedos/standard-process"
 			// "@steedos/service-files",
-			"@steedos/steedos-plugin-schema-builder",
+			// "@steedos/steedos-plugin-schema-builder",
 		],
 		plugins: [
 		]

@@ -74,6 +74,7 @@ Meteor.startup ->
 			if notification.payload
 				if notification.payload.requireInteraction
 					options.requireInteraction = notification.payload.requireInteraction
+					delete options.timeout
 
 				if notification.payload.notifications_id
 					options.tag = "/api/v4/notifications/" + notification.payload.notifications_id + "/read"
@@ -84,6 +85,10 @@ Meteor.startup ->
 			
 			if options.title
 				Steedos.Push.create(options.title, options);
+
+			# add sound
+			msg = new Audio("/sound/notification.mp3")
+			msg.play();
 
 			Steedos.playNodeBadge(notification.badge)
 			return;
