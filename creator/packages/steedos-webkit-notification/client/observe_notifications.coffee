@@ -86,6 +86,10 @@ Meteor.startup ->
 			if options.title
 				Steedos.Push.create(options.title, options);
 
+			# add sound
+			msg = new Audio("/sound/notification.mp3")
+			msg.play();
+
 			Steedos.playNodeBadge(notification.badge)
 			return;
 		)
