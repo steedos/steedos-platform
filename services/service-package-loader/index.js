@@ -250,10 +250,15 @@ module.exports = {
             await this.loadPackageMetadataFiles(_path, this.name, datasource);
             if(isPackage !== false){
                 try {
-                    const _packageInfo = metaDataCore.loadJSONFile(path.join(_path, 'package.json'));
+                    let _packageInfo = {};
+                    if(fs.existsSync(path.join(_path, 'package.json'))){
+                        _packageInfo = metaDataCore.loadJSONFile(path.join(_path, 'package.json'));
+                    }else if(fs.existsSync(path.join(_path, '..','package.json'))){
+                        _packageInfo = metaDataCore.loadJSONFile(path.join(_path, '..', 'package.json'));
+                    }
                     await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
                 } catch (error) {
-                    
+                    console.log(`error`, error)
                 }    
             }
     
