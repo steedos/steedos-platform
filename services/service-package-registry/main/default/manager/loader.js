@@ -159,7 +159,7 @@ const isPackage = (name)=>{
     }
 }
 
-const loadDependency = async (mainPackageInfo, dependencyName, dependencyVersion)=>{
+const loadDependency = async (mainPackageInfo = {}, dependencyName, dependencyVersion)=>{
     // console.log(`loadDependency`, mainPackageInfo, dependencyName, dependencyVersion)
     if(mainPackageInfo.static == true){
         return ;

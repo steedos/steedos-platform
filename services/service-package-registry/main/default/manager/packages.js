@@ -184,9 +184,22 @@ const scanPackageMetadatas = async (packagePath) => {
     return packageMetadatas;
 }
 
+const checkDependencies = async (packagePath)=>{
+    const packageServiceConfig = require(path.join(packagePath, 'package.service.js'));
+    const dependencies = packageServiceConfig?.dependencies || [];
+    for(const item of dependencies){
+        const hasService = await objectql.getSteedosSchema().broker.registry.hasService(item);
+        if(!hasService){
+            throw new Error(`依赖项${item}未启动, 请先启动依赖项`)
+        }
+    }
+    return true;
+}
+
 module.exports = {
     maintainSystemFiles,
     getAllPackages,
     getPackageVersions,
-    scanPackageMetadatas
+    scanPackageMetadatas,
+    checkDependencies
 }

@@ -148,6 +148,7 @@ module.exports = {
 				if(packageConfig.static){
 					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
 				}
+				await checkDependencies(util.getPackageRelativePath(process.cwd(), packageConfig.path))
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
@@ -178,9 +179,9 @@ module.exports = {
 					if(!user.is_space_admin){
 						throw new Error('not permission!');
 					}
-					let { module, version, url, auth, registry_url } = ctx.params
+					let { module, version, url, auth, registry_url, fromClient = false } = ctx.params
 					const enable = true;
-					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker)
+					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker, {fromClient})
 				} catch (error) {
 					let errorInfo = error.message || '';
 					if (error.stderr) {
@@ -265,7 +266,7 @@ module.exports = {
             }
 		},
 		installPackageFromUrl: {
-			async handler(module, version, url, auth, enable, registry_url, broker) {
+			async handler(module, version, url, auth, enable, registry_url, broker, {fromClient}) {
 				if(!module || !_.isString(module) || !module.trim()){
 					throw new Error(`无效的软件包名称`);
 				} else {
@@ -290,6 +291,9 @@ module.exports = {
 				const packageInfo = loader.getPackageInfo(null, packagePath);
 				const packageName = packageInfo.name;
 				if(enable){
+					if(fromClient){
+						await packages.checkDependencies(packagePath)
+					}
 					await loader.loadPackage(packageName, packagePath);
 				}else{
 					enable = false;
