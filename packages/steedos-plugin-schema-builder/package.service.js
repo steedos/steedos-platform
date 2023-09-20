@@ -1,7 +1,7 @@
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-meteor-package-loader');
+const packageLoader = require('@steedos/service-package-loader');
 const path = require('path');
 const init = require('.').init;
 /**
@@ -17,7 +17,9 @@ module.exports = {
      */
     settings: {
         packageInfo: {
-            path: path.join(__dirname, 'src')
+			name: packageName,
+            path: __dirname,
+			isPackage: true
         }
     },
 
@@ -44,9 +46,9 @@ module.exports = {
      * Methods
      */
     methods: {
-        init: function (context) {
-            init(context);
-        }
+        // init: function (context) {
+        //     init(context);
+        // }
     },
 
     /**
