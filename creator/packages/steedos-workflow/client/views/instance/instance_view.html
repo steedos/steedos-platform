@@ -1,50 +1,52 @@
 <template name="instance_view">
-    <div class="bg-gray-50 py-3 px-3 border-0 border-b border-solid border-gray-200 flex-none relative">
-        <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
-        {{> instance_button}}
-    </div>
-    <div class="instance-view flex-1 relative {{get_priority_class}}">
-        {{> instance_suggestion}}
-        <div class="instance {{instanceStyle instance.form}}">
-            <div class="instance-form {{instance_box_style }} {{box}}">
-                {{#if formDescription}}
-                    <div class="box-header  with-border instance-header">
-                        <div>
-                            {{{formDescription}}}
+    {{#if isNeedToShowInstance}}
+        <div class="bg-gray-50 py-3 px-3 border-0 border-b border-solid border-gray-200 flex-none relative">
+            <div style='display:none'><input id="instanceId" value="{{instance._id}}"/></div>
+            {{> instance_button}}
+        </div>
+        <div class="instance-view flex-1 relative {{get_priority_class}}">
+            {{> instance_suggestion}}
+            <div class="instance {{instanceStyle instance.form}}">
+                <div class="instance-form {{instance_box_style }} {{box}}">
+                    {{#if formDescription}}
+                        <div class="box-header  with-border instance-header">
+                            <div>
+                                {{{formDescription}}}
+                            </div>
                         </div>
-                    </div>
-                {{/if}}
-                <div class="box-body">
-                    <div class="col-md-12">
-                        {{> Template.dynamic template="instance_attachments" }}
-                        {{> related_instances}}
-                        {{> related_records}}
-                        {{#if enableAmisform}}
-                            {{> instance_amis_view readonly=isIReadable}}
-                        {{else}}
-                            {{#if isIReadable}}
-                                {{{readOnlyView}}}
+                    {{/if}}
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            {{> Template.dynamic template="instance_attachments" }}
+                            {{> related_instances}}
+                            {{> related_records}}
+                            {{#if enableAmisform}}
+                                {{> instance_amis_view readonly=isIReadable}}
                             {{else}}
-                                {{#if isTableView}}
-                                    {{> instanceform_table}}
+                                {{#if isIReadable}}
+                                    {{{readOnlyView}}}
                                 {{else}}
-                                    {{> instanceform}}
+                                    {{#if isTableView}}
+                                        {{> instanceform_table}}
+                                    {{else}}
+                                        {{> instanceform}}
+                                    {{/if}}
                                 {{/if}}
                             {{/if}}
-                        {{/if}}
 
-                        {{#if notDistributeAndDraft instance.state}}
-                            {{#if (showTracesView instance.form instance.form_version)}}
-                                {{> Template.dynamic template=(tracesTemplateName instance.form) data=(tracesListData instance)}}
+                            {{#if notDistributeAndDraft instance.state}}
+                                {{#if (showTracesView instance.form instance.form_version)}}
+                                    {{> Template.dynamic template=(tracesTemplateName instance.form) data=(tracesListData instance)}}
+                                {{/if}}
+                            {{else}}
+                                {{#if showPickApproveUsers}}
+                                    {{> Template.dynamic template="instance_pick_approve_users"}}
+                                {{/if}}
                             {{/if}}
-                        {{else}}
-                            {{#if showPickApproveUsers}}
-                                {{> Template.dynamic template="instance_pick_approve_users"}}
-                            {{/if}}
-                        {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {{/if}}
 </template>
