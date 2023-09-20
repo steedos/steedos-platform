@@ -1,5 +1,5 @@
 name: instance_tasks
-label: 审批任务
+label: 审批
 icon: account
 enable_api: true
 hidden: false
