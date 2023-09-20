@@ -1,4 +1,4 @@
 {
-    "built_in_plugins": ["@steedos/accounts", "@steedos/steedos-plugin-schema-builder"],
+    "built_in_plugins": ["@steedos/accounts"],
     "plugins": []
 }

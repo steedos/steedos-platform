@@ -84,8 +84,6 @@ module.exports = {
 
 		this.broker.createService(require("@steedos/service-accounts"));
 		
-		this.broker.createService(require("@steedos/service-charts"));
-		
 		this.broker.createService(require("@steedos/service-pages"));
 
 		this.broker.createService(require("@steedos/service-workflow"));
@@ -143,6 +141,23 @@ module.exports = {
 
 		// 启动时间触发器服务
 		this.broker.createService(require("@steedos/workflow_time_trigger"));
+
+
+		await this.broker.waitForServices(["@steedos/service-project"]);
+		
+		// console.log(require('chalk').blue('pm-'.repeat(10)));
+		await this.broker.call('@steedos/service-project.addPackages', {
+			packages: [
+				{
+					name: '@steedos/service-charts',
+					enable: true
+				},
+				{
+					name: '@steedos/steedos-plugin-schema-builder',
+					enable: false
+				},
+			]
+		});
 	},
 
 	/**
