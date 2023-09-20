@@ -99,6 +99,7 @@ module.exports = {
 			const records = await objectql.getObject('spaces').directFind({ top: 1, fields: ['_id'], sort: { created: -1 } });
 			const steedosConfig = objectql.getSteedosConfig();
 			if (records.length > 0) {
+				process.env.STEEDOS_TENANT_ID = records[0]._id;
 				steedosConfig.setTenant({ _id: records[0]._id });
 			} else {
 				steedosConfig.setTenant({ enable_create_tenant: true, enable_register: true });

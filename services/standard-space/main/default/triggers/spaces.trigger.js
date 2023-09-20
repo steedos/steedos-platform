@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-03 11:19:39
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-16 13:43:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-09-20 14:04:26
  * @Description: 
  */
 "use strict";
@@ -68,6 +68,7 @@ module.exports = {
         const spaces = await spaceObj.count({});
         if (spaces === 1) {
             const config = objectql.getSteedosConfig();
+            process.env.STEEDOS_TENANT_ID = spaceDoc._id;
             config.setTenant({ _id: spaceDoc._id, enable_create_tenant: validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true), enable_register: spaceDoc.enable_register });
         }
 
