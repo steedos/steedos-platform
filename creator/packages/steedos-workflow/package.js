@@ -458,7 +458,7 @@ Package.onUse(function(api) {
 	api.addFiles('routes/api_formula_organizations.coffee', 'server');
 
 	api.export("WorkflowManager", ['client']);
-	// api.export("InstanceManager");
+	api.export("InstanceManager", ['client']);
 	api.export("WorkflowManager_format");
 	// EXPORT
 	api.export('Workflow');
