@@ -44,7 +44,7 @@ const getAnnouncementsMembers = async function (doc, isModifierSet) {
     users = doc.members;
     members = [];
     if (organizations && organizations.length || users && users.length) {
-        if (users?.length) {
+        if (users &&users.length) {
             members = users;
         }
         if (organizations && organizations.length) {
