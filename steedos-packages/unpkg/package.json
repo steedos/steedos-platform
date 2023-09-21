@@ -1,5 +1,5 @@
 {
-  "name": "@steedos/service-files",
+  "name": "@steedos/unpkg",
   "version": "2.5.14-beta.14",
   "main": "package.service.js",
   "scripts": {},
@@ -7,12 +7,6 @@
   "private": false,
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "aws-sdk": "2.0.23",
-    "formidable": "2.0.1",
-    "mkdirp": "^1.0.4",
-    "moment": "^2.29.1"
   },
   "gitHead": "6213a672dd939b5fc56a8df8fcdd8a10304335c3"
 }
