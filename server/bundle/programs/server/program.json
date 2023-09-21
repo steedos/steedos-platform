@@ -656,10 +656,6 @@
       "path": "packages/steedos_instance-record-queue.js"
     },
     {
-      "sourceMap": "packages/steedos_app-chat.js.map",
-      "path": "packages/steedos_app-chat.js"
-    },
-    {
       "path": "packages/steedos_formbuilder.js"
     },
     {
