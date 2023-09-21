@@ -20,6 +20,7 @@ try
 				"@steedos/standard-permission",
 				"@steedos/webapp-public",
 				"@steedos/service-cachers-manager",
+				"@steedos/unpkg",
 				"@steedos/workflow",
 				"@steedos/accounts",
 				"@steedos/plugin-company",

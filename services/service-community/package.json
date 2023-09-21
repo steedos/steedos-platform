@@ -30,6 +30,7 @@
     "@steedos/service-sidecar": "2.5.14-beta.13",
     "@steedos/service-steedos-server": "2.5.14-beta.13",
     "@steedos/steedos-plugin-schema-builder": "2.5.14-beta.13",
+    "@steedos/unpkg": "2.5.14-beta.13",
     "@steedos/workflow_time_trigger": "2.5.14-beta.13",
     "aliyun-sdk": "1.12.3",
     "async-retry": "^1.3.1",

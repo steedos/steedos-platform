@@ -28,6 +28,7 @@
     "@steedos/standard-process-approval": "2.5.14-beta.13",
     "@steedos/standard-space": "2.5.14-beta.13",
     "@steedos/standard-ui": "2.5.14-beta.13",
+    "@steedos/unpkg": "2.5.14-beta.13",
     "@steedos/webapp-accounts": "2.5.14-beta.13",
     "@steedos/webapp-public": "2.5.14-beta.13",
     "@steedos/workflow": "2.5.14-beta.13",

@@ -120,7 +120,14 @@ module.exports = {
 
 		// 启动 steedos-server 服务
         this.broker.createService(require("@steedos/service-steedos-server"));
-		
+		// 启动 本地 CDN
+        if (this.settings.unpkg.enable) {
+			this.broker.createService(require("@steedos/ee_unpkg-local"));
+		}
+		else{
+			this.broker.createService(require("@steedos/unpkg"));
+		}
+
         // 启动 登录页面
         this.broker.createService(require("@steedos/webapp-accounts"));
 
