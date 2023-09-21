@@ -36,6 +36,7 @@ try
 				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
 				"@steedos/service-files",
+				"@steedos/service-sentry",
 				"@steedos/service-identity-jwt"
 			],
 			plugins: config.plugins
