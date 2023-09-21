@@ -154,7 +154,7 @@ const getCategoriesMonitor = async (userSession, req) => {
       `}
     )
   }
-  if (data.data?.flows && data.data.flows.length > 0) {
+  if (data.data && data.data.flows && data.data.flows.length > 0) {
     const categoryGroups = lodash.groupBy(data.data.flows, 'category__expand.name');
     lodash.each(categoryGroups, (v, k) => {
       const flowGroups = lodash.groupBy(v, 'name');

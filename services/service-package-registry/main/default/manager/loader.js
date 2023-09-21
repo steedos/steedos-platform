@@ -187,7 +187,7 @@ const loadDependency = async (mainPackageInfo = {}, dependencyName, dependencyVe
             await enablePackage(dependencyName)
         }else{
             try {
-                if(mainPackageInfo?.static != true){
+                if(mainPackageInfo && mainPackageInfo.static != true){
                     await installPackage(broker, {module: dependencyName, version: dependencyVersion, enable: true})
                 }
             } catch (error) {
