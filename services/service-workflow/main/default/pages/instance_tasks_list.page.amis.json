@@ -64,7 +64,7 @@
               "className": {
                 "mobileCss": "${window:innerWidth < 768}",
                 "pcCss": "${window:innerWidth > 768}",
-                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-slate-300 block -translate-x-0 py-0": "true"
+                "instances-sidebar-wrapper px-0 fixed z-20 h-full h-fill ease-in-out duration-300 flex flex-col border-r overflow-y-auto bg-white border-gray-300 block -translate-x-0 py-0": "true"
               },
               "body": [
                 {

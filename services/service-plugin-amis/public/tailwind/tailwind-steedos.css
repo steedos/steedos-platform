@@ -407,8 +407,16 @@
     border-radius: 0.25rem
   }
 
+  .sm\:rounded-none {
+    border-radius: 0px
+  }
+
   .sm\:border {
     border-width: 1px
+  }
+
+  .sm\:border-0 {
+    border-width: 0px
   }
 
   .sm\:border-gray-300 {

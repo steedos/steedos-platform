@@ -245,7 +245,7 @@
 							]
 						}
 					],
-					"className": "object-detail-tabs mt-3 bg-white border-b sm:rounded sm:border border-slate-300",
+					"className": "object-detail-tabs mt-3 bg-white border-b sm:rounded sm:border border-gray-300",
 					"linksClassName": "",
 					"id": "u:87e566922df2",
 					"tabsMode": "vertical",

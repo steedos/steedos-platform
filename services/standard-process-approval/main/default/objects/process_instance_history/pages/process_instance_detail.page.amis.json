@@ -108,7 +108,7 @@
                             "className": "px-0"
                         }
                     ],
-                    "className": "antd-Tabs antd-Tabs--line bg-white border-slate-300 p-4 sm:border sm:mt-3 sm:rounded sm:shadow",
+                    "className": "antd-Tabs antd-Tabs--line bg-white border-gray-300 p-4 sm:border sm:mt-3 sm:rounded sm:shadow",
                     "toolbarClassName": "",
                     "contentClassName": ""
                 }
