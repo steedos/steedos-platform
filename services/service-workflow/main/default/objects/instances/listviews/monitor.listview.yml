@@ -27,7 +27,6 @@ sort: [['submit_date','desc']]
 searchable_fields:
   - field: name
   - field: submitter_name
-  - field: flow
   - field: applicant_organization_name
   - field: submit_date
   - field: state
@@ -35,3 +34,4 @@ searchable_fields:
 extra_columns:
   - extras
   - values
+adaptor: "_.each(payload.data.rows, function (item, index) {\r\n  if (item.values) {\r\n    const form_fields = api.body.self.__super.__super.__super.form_fields;\r\n    _.each(item.values, function (field, field_code) {\r\n      const form_field = _.find(form_fields, { code: field_code });\r\n      if (form_field && form_field.type == \"group\") {\r\n        if (form_field.is_multiselect) {\r\n          item.values[field_code] = field && field.length > 0?_.map(field, 'fullname').toString():\"\";\r\n        } else {\r\n          item.values[field_code] = field?field.fullname:\"\";\r\n        }\r\n      } else if (form_field && form_field.type == \"user\") {\r\n        if (form_field.is_multiselect) {\r\n          item.values[field_code] = field && field.length > 0 ? _.map(field, 'name').toString() : \"\";\r\n        } else {\r\n          item.values[field_code] = field ? field.name : \"\";\r\n        }\r\n      }\r\n    })\r\n  }\r\n})"
