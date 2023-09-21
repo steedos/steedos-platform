@@ -78,7 +78,7 @@ Template.relocate_modal.events({
                 relocate_users.dataset.multiple = false;
             }
 
-            var next_step_users = ApproveManager.getNextStepUsers(WorkflowManager.getInstance(), s._id);
+            var next_step_users = ApproveManager.getNextStepUsers(WorkflowManager.getInstance(), s._id, 'relocate');
             if (!_.isEmpty(next_step_users)) {
                 relocate_users.dataset.userOptions = _.pluck(next_step_users, "id");
                 relocate_users.dataset.showOrg = false;
