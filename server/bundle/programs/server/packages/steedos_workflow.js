@@ -55,7 +55,7 @@ var MongoInternals = Package.mongo.MongoInternals;
 var Mongo = Package.mongo.Mongo;
 
 /* Package-scope variables */
-var __coffeescriptShare, Workflow, InstanceReadOnlyTemplate, TemplateManager, SteedosTable, year, month, date, hours, seconds, locale, utcOffset, str, addItemTr, Form_formula, workflowTemplate, InstanceManager, WorkflowManager_format, CoreForm, InstanceNumberRules;
+var __coffeescriptShare, Workflow, InstanceReadOnlyTemplate, TemplateManager, SteedosTable, year, month, date, hours, seconds, locale, utcOffset, str, addItemTr, Form_formula, workflowTemplate, WorkflowManager_format, CoreForm, InstanceNumberRules;
 
 var require = meteorInstall({"node_modules":{"meteor":{"steedos:workflow":{"checkNpm.js":function module(require,exports,module){
 
@@ -11844,7 +11844,6 @@ require("/node_modules/meteor/steedos:workflow/server/schedule/timeout_auto_subm
 
 /* Exports */
 Package._define("steedos:workflow", {
-  InstanceManager: InstanceManager,
   WorkflowManager_format: WorkflowManager_format,
   Workflow: Workflow,
   SteedosTable: SteedosTable,

@@ -50,7 +50,6 @@ uuflowManagerForInitApproval = Package['steedos:creator'].uuflowManagerForInitAp
 InstanceRecordQueue = Package['steedos:instance-record-queue'].InstanceRecordQueue;
 Template = Package['steedos:app-workflow'].Template;
 ObjectWebhooksQueue = Package['steedos:object-webhooks-queue'].ObjectWebhooksQueue;
-InstanceManager = Package['steedos:workflow'].InstanceManager;
 WorkflowManager_format = Package['steedos:workflow'].WorkflowManager_format;
 Workflow = Package['steedos:workflow'].Workflow;
 SteedosTable = Package['steedos:workflow'].SteedosTable;
