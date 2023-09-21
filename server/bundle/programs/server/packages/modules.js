@@ -175,7 +175,6 @@ install("steedos:autoform-tags");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
 install("gwendall:simple-schema-i18n");
-install("francocatena:status");
 install("steedos:toastr");
 install("kadira:flow-router");
 install("kadira:blaze-layout");
@@ -245,7 +244,6 @@ install("steedos:sso");
 install("steedos:autoform");
 install("steedos:creator");
 install("steedos:instance-record-queue");
-install("steedos:app-chat");
 install("steedos:formbuilder");
 install("steedos:app-workflow");
 install("steedos:object-webhooks-queue");
@@ -465,7 +463,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/objectql",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "lib/index.js"
 };
 
@@ -492,7 +490,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/i18n",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "lib/index.js"
 };
 
@@ -519,7 +517,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/core",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "lib/index.js"
 };
 
@@ -546,7 +544,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "index.js"
 };
 
@@ -573,7 +571,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-api",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "index.js"
 };
 
@@ -600,7 +598,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-metadata-server",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "index.js"
 };
 
@@ -627,7 +625,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-package-registry",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "package.service.js"
 };
 
@@ -654,7 +652,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-objectql",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "package.service.js"
 };
 
@@ -681,7 +679,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-ui",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "package.service.js"
 };
 
@@ -708,7 +706,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/service-pages",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "package.service.js"
 };
 
@@ -735,7 +733,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/router",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "lib/index.js"
 };
 
@@ -762,7 +760,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/auth",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "lib/index.js"
 };
 
@@ -789,7 +787,7 @@ module.useNode();
                                                                                                       //
 module.exports = {
   "name": "@steedos/workflow",
-  "version": "2.5.14-beta.6",
+  "version": "2.5.14-beta.11",
   "main": "index.js"
 };
 
@@ -1653,61 +1651,7 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"xinge":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/xinge/package.json                                                                    //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "xinge",
-  "version": "1.1.3",
-  "main": "index.js"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"index.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/xinge/index.js                                                                        //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"xiaomi-push":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/xiaomi-push/package.json                                                              //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "xiaomi-push",
-  "version": "1.0.0",
-  "main": "index.js"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"index.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/xiaomi-push/index.js                                                                  //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}},"xml2js":{"package.json":function module(require,exports,module){
+}}},"xml2js":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //
@@ -1761,34 +1705,7 @@ module.exports = {
 module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"socket.io":{"package.json":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/socket.io/package.json                                                                //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.exports = {
-  "name": "socket.io",
-  "version": "4.5.1",
-  "main": "./dist/index.js"
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"dist":{"index.js":function module(require,exports,module){
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                    //
-// node_modules/socket.io/dist/index.js                                                               //
-//                                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                      //
-module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-}}},"marked":{"package.json":function module(require,exports,module){
+}},"marked":{"package.json":function module(require,exports,module){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                    //

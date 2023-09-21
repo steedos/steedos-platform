@@ -20,7 +20,6 @@ try
 				"@steedos/standard-permission",
 				"@steedos/webapp-public",
 				"@steedos/service-cachers-manager",
-				"@steedos/unpkg",
 				"@steedos/workflow",
 				"@steedos/accounts",
 				"@steedos/plugin-company",
@@ -37,6 +36,7 @@ try
 				"@steedos/service-workflow",
 				"@steedos/service-plugin-amis",
 				"@steedos/service-files",
+				"@steedos/service-sentry",
 				"@steedos/service-identity-jwt"
 			],
 			plugins: config.plugins

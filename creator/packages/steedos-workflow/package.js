@@ -146,9 +146,6 @@ Package.onUse(function(api) {
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/coreform-selectize.coffee', 'client');
 	api.addFiles('client/coreform/inputTypes/coreform-selectize/selectize_manager.coffee', 'client');
 
-	api.addFiles('client/layout/master.html', 'client');
-	api.addFiles('client/layout/master.coffee', 'client');
-	api.addFiles('client/layout/master.less', 'client');
 	api.addFiles('client/layout/sidebar.html', 'client');
 	api.addFiles('client/layout/sidebar.coffee', 'client');
 	api.addFiles('client/layout/sidebar.less', 'client');
@@ -458,7 +455,7 @@ Package.onUse(function(api) {
 	api.addFiles('routes/api_formula_organizations.coffee', 'server');
 
 	api.export("WorkflowManager", ['client']);
-	api.export("InstanceManager");
+	api.export("InstanceManager", ['client']);
 	api.export("WorkflowManager_format");
 	// EXPORT
 	api.export('Workflow');

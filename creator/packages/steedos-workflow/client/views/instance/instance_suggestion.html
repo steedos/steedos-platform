@@ -17,7 +17,7 @@
 		{{!-- 比如把弹出的instance-suggestion窗口关掉后，会把表单的部分内容(instance-suggestion窗口显示的时候挡住的部分)擦除掉造成表单部分内容不见了 --}}
 		{{!-- 所以这里专门去掉animated fadeInUp样式类，待以后chrome更高版本fix掉相关问题后再放开 --}}
 		{{!-- <div class="instance-suggestion well animated fadeInUp"> --}}
-		<div class="instance-suggestion shadow-outline bg-white {{#if isMobile}}animated fadeInUp{{/if}}">
+		<div class="instance-suggestion border-t border-gray-300 {{#if isMobile}}animated fadeInUp{{/if}}">
 			{{#if includes currentStep.step_type 'sign,counterSign,submit'}}
 				<div class="instance-suggestion-close"><button type="button" class="btn btn-transparent btn-remove"><span aria-hidden="true">×</span></button></div>
 			{{/if}}

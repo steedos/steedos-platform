@@ -29,6 +29,7 @@ const DEFAULT_DSN_JS = {
 module.exports = {
   name: serviceName,
   namespace: "steedos",
+	mixins: [packageLoader],
 
   /**
    * Dependencies

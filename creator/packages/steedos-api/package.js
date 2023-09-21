@@ -58,8 +58,8 @@ Package.onUse(function(api) {
 	api.addFiles('steedos/organizations.coffee', 'server');
 
 	// api.addFiles('routes/s3.coffee', 'server');
-	api.addFiles('routes/push.coffee', 'server');
-	api.addFiles('routes/aliyun_push.coffee', 'server');
+	// api.addFiles('routes/push.coffee', 'server');
+	// api.addFiles('routes/aliyun_push.coffee', 'server');
 	// api.addFiles('routes/import.coffee', 'server');
 	// api.addFiles('routes/proxy.coffee', 'server');
 

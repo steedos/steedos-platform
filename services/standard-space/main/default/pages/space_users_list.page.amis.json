@@ -8,7 +8,7 @@
                 {
                     "type": "wrapper",
                     "size": "none",
-                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:shadow sm:rounded",
+                    "className": "flex flex-1 overflow-hidden h-full border-gray-300 border-solid bg-white sm:border sm:rounded",
                     "body": [
                         {
                             "type": "wrapper",
@@ -125,7 +125,11 @@
                                             "id": "u:6f237cc36419"
                                         }
                                     ],
-                                    "className": "bg-gray-100"
+                                    "className": "bg-gray-100",
+                                    "styles": {
+                                        "border": 0,
+                                        "border-radius": 0
+                                    }
                                 }
                             ],
                             "id": "u:ca495ec221e7"

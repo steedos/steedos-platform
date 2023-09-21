@@ -626,6 +626,9 @@ InstanceManager.getInstanceFormValue = function(){
 		}
 	}else{
 		var instanceformValues = AutoForm.getFormValues("instanceform");
+		if(!instanceformValues){
+			return ;
+		}
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
 	}
 	return autoFormValue;

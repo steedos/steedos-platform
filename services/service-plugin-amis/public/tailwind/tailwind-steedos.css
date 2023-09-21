@@ -238,6 +238,10 @@
   border-radius: 0.25rem
 }
 
+.border {
+  border-width: 1px
+}
+
 .border-b {
   border-bottom-width: 1px
 }
@@ -248,11 +252,6 @@
 
 .border-solid {
   border-style: solid
-}
-
-.border-slate-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity))
 }
 
 .border-gray-300 {

@@ -4,7 +4,7 @@
     {
       "type": "wrapper",
       "visibleOn": "${AND(display != 'split', ${window:innerWidth > 768})}",
-      "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col",
+      "className": "bg-white m-0 p-0 flex-shrink-0 min-w-[240px] lg:order-first lg:flex lg:flex-col border-r border-gray-300",
       "body": [
         {
           "type": "service",

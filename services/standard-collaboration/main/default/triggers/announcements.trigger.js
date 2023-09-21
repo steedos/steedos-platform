@@ -43,11 +43,11 @@ const getAnnouncementsMembers = async function (doc, isModifierSet) {
     organizations = doc.organizations;
     users = doc.members;
     members = [];
-    if (organizations?.length || users?.length) {
-        if (users?.length) {
+    if (organizations && organizations.length || users && users.length) {
+        if (users &&users.length) {
             members = users;
         }
-        if (organizations?.length) {
+        if (organizations && organizations.length) {
             for (const orgId of organizations) {
                 const organizationUsers = await objectql.getSteedosSchema().broker.call('organizations.calculateUsers', {orgId: orgId, isIncludeParents: true})
                 members = members.concat(organizationUsers);

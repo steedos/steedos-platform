@@ -426,7 +426,7 @@ ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 	return nextStepUsers;
 };
 
-ApproveManager.getNextStepUsers = function(instance, nextStepId) {
+ApproveManager.getNextStepUsers = function(instance, nextStepId, action) {
     ApproveManager.error.nextStepUsers = '';
     ApproveManager.error.type = '';
     ApproveManager.error.code = '';
@@ -565,7 +565,17 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId) {
                         var userFieldId = nextStep.approver_user_field;
                         var userField = InstanceManager.getFormField(userFieldId);
                         if (userField) {
-                            var userFieldValue = InstanceManager.getFormFieldValue(userField.code);
+                            var userFieldValue = null;
+                            if(action == 'relocate'){
+                                if(userField.is_multiselect){
+                                    userFieldValue = lodash.map(instance.values[userField.code], 'id')
+                                }else{
+                                    userFieldValue = lodash.pick(instance.values[userField.code], "id")
+                                }
+                                
+                            }else{
+                                userFieldValue = InstanceManager.getFormFieldValue(userField.code);
+                            }
                             if (userFieldValue) {
 
                                 console.log("if ....")

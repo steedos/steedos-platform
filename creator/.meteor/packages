@@ -70,7 +70,7 @@ vazco:universe-autoform-select
 
 gwendall:simple-schema-i18n
 
-francocatena:status
+# francocatena:status
 
 steedos:toastr@2.1.3
 
@@ -147,7 +147,7 @@ steedos:mailqueue
 # steedos:vip-post
 steedos:objects
 steedos:objects-core
-steedos:objects-billing
+# steedos:objects-billing
 
 steedos:webhookqueue
 
@@ -155,7 +155,7 @@ steedos:creator
 
 steedos:instance-record-queue
 # steedos:love
-steedos:app-chat
+# steedos:app-chat
 
 # steedos:app-tableau
 # steedos:app-portal

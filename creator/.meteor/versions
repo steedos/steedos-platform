@@ -49,7 +49,6 @@ fetch@0.1.1
 flemay:less-autoprefixer@1.2.0
 fortawesome:fontawesome@4.5.0
 fourseven:scss@4.12.0
-francocatena:status@1.5.3
 geojson-utils@1.0.10
 gwendall:simple-schema-i18n@0.3.0
 hot-code-push@1.0.4
@@ -134,7 +133,6 @@ standard-minifier-js@2.6.0
 steedos:adminlte@2.3.12_3
 steedos:api@0.0.1
 steedos:api-authenticate-user@1.0.0
-steedos:app-chat@0.0.1
 steedos:app-workflow@0.0.15
 steedos:autoform@0.0.19
 steedos:autoform-bs-datetimepicker@1.0.8

@@ -421,9 +421,6 @@
       "path": "packages/gwendall_simple-schema-i18n.js"
     },
     {
-      "path": "packages/francocatena_status.js"
-    },
-    {
       "path": "packages/steedos_toastr.js"
     },
     {
@@ -657,10 +654,6 @@
     {
       "sourceMap": "packages/steedos_instance-record-queue.js.map",
       "path": "packages/steedos_instance-record-queue.js"
-    },
-    {
-      "sourceMap": "packages/steedos_app-chat.js.map",
-      "path": "packages/steedos_app-chat.js"
     },
     {
       "path": "packages/steedos_formbuilder.js"
