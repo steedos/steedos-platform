@@ -175,7 +175,6 @@ install("steedos:autoform-tags");
 install("steedos:autoform-dx-date-box");
 install("vazco:universe-autoform-select");
 install("gwendall:simple-schema-i18n");
-install("francocatena:status");
 install("steedos:toastr");
 install("kadira:flow-router");
 install("kadira:blaze-layout");
