@@ -50,6 +50,6 @@ amis_schema: |-
   }
 is_enable: true
 label: 注销所有登录
-'on': record_only
+'on': record_more
 type: amis_button
 visible: true
