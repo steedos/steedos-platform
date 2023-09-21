@@ -50,7 +50,7 @@ const getListPageInitSchema = function (objectApiName) {
             "objectApiName": objectApiName,
             "columnsTogglable": false,
             "showHeader": true,
-            className: "sm:border bg-white sm:shadow sm:rounded border-slate-300 border-solid"
+            className: "sm:border bg-white sm:rounded border-slate-300 border-solid"
         }]
     }
 }
@@ -89,7 +89,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
     const content = {
         "type": "tabs",
-        "className": "sm:mt-3 bg-white sm:shadow sm:rounded sm:border border-slate-300 p-4",
+        "className": "sm:mt-3 bg-white sm:rounded sm:border border-slate-300 p-4",
         "tabs": [
             detailed
         ]

@@ -8,7 +8,7 @@
                 {
                     "type": "wrapper",
                     "size": "none",
-                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:shadow sm:rounded",
+                    "className": "flex flex-1 overflow-hidden h-full border-slate-300 border-solid bg-white sm:border sm:rounded",
                     "body": [
                         {
                             "type": "wrapper",
