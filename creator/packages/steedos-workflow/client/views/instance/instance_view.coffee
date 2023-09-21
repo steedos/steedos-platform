@@ -3,7 +3,9 @@ Template.instance_view.helpers
 		if Steedos.subs["Instance"].ready() && Steedos.subs["instance_data"].ready()
 			Session.set("instance_loading", false);
 			# $("body").removeClass("loading")
-			instance = WorkflowManager.getInstance()
+			instance = Tracker.nonreactive ()->
+				return WorkflowManager.getInstance();
+			;
 
 			if !instance || !instance.traces
 				return false;
@@ -58,7 +60,6 @@ Template.instance_view.helpers
 
 		if Steedos.isMobile()
 			return "instance-default"
-		console.log("instanceStyle=====>", formId, form?.instance_style)
 		if form?.instance_style == 'table'
 			return "instance-table"
 		return "instance-default";
@@ -151,91 +152,93 @@ Template.instance_view.onRendered ->
 		if ins
 			form_version = db.form_versions.findOne({_id: ins.form_version})
 			flow_version = db.flow_versions.findOne({_id: ins.flow_version})
-		Tracker.nonreactive ()->
-			if ins && Session.get("instanceId") == ins._id && form_version && flow_version
-				try
-					window.Steedos && window.Steedos.setDocumentTitle && window.Steedos.setDocumentTitle({pageName: ins.name})
-				catch e
-					console.error(e)
+			Tracker.nonreactive ()->
+				if ins && Session.get("instanceId") == ins._id && form_version && flow_version
+					try
+						window.Steedos && window.Steedos.setDocumentTitle && window.Steedos.setDocumentTitle({pageName: ins.name})
+					catch e
+						console.error(e)
 
-				if Session.get("box") == 'draft' && (form_version.latest != true || flow_version.latest != true)
-					InstanceManager.saveIns();
-				Form_formula.runFormScripts("instanceform", "onload");
+					if Session.get("box") == 'draft' && (form_version.latest != true || flow_version.latest != true)
+						return setTimeout ()->
+							InstanceManager.saveIns();
+						, 300
+					Form_formula.runFormScripts("instanceform", "onload");
 
-				if Session.get("box") == "inbox"
-					InstanceManager.setApproveHaveRead(Session.get("instanceId"))
+					if Session.get("box") == "inbox"
+						InstanceManager.setApproveHaveRead(Session.get("instanceId"))
 
-				$(".workflow-main").addClass("instance-show")
+					$(".workflow-main").addClass("instance-show")
 
-				# 判断html字段中是否只有table标签，如果是，则加上样式类steedos-html-table-only，其会实现表格撑滿的样式
-				htmlFieldContainer = $(".instance-wrapper .instance .steedos-html")
-				htmlFieldContainer.each (key, item)->
-					htmlItem = $(item);
-					if htmlItem.find("> table").length == htmlItem.children().length
-						htmlItem.addClass("steedos-html-table-only")
+					# 判断html字段中是否只有table标签，如果是，则加上样式类steedos-html-table-only，其会实现表格撑滿的样式
+					htmlFieldContainer = $(".instance-wrapper .instance .steedos-html")
+					htmlFieldContainer.each (key, item)->
+						htmlItem = $(item);
+						if htmlItem.find("> table").length == htmlItem.children().length
+							htmlItem.addClass("steedos-html-table-only")
 
-				# isNeedActiveSuggestion = Session.get("box") == "inbox" and WorkflowManager.getInstance()?.state == "pending"
-				isNeedActiveSuggestion = true
-				if !Steedos.isMobile() && !Steedos.isPad()
-					# 增加.css("right","-1px")代码是为了fix掉perfectScrollbar会造成右侧多出空白的问题
-					$('.instance').perfectScrollbar().css("right","-1px")
-					if isNeedActiveSuggestion
-						$('.instance').on 'ps-y-reach-end', ->
-							# if this.scrollTop == 0
-							# 	# 内容高度不足于出现滚动条时也会触发该事件，需要排除掉。
-							# 	return
-							unless $('.instance-wrapper .instance-view').hasClass 'suggestion-active'
-								$('.instance-wrapper .instance-view').toggleClass 'suggestion-active'
-								InstanceManager.fixInstancePosition(true)
+					# isNeedActiveSuggestion = Session.get("box") == "inbox" and WorkflowManager.getInstance()?.state == "pending"
+					isNeedActiveSuggestion = true
+					if !Steedos.isMobile() && !Steedos.isPad()
+						# 增加.css("right","-1px")代码是为了fix掉perfectScrollbar会造成右侧多出空白的问题
+						$('.instance').perfectScrollbar().css("right","-1px")
+						if isNeedActiveSuggestion
+							$('.instance').on 'ps-y-reach-end', ->
+								# if this.scrollTop == 0
+								# 	# 内容高度不足于出现滚动条时也会触发该事件，需要排除掉。
+								# 	return
+								unless $('.instance-wrapper .instance-view').hasClass 'suggestion-active'
+									$('.instance-wrapper .instance-view').toggleClass 'suggestion-active'
+									InstanceManager.fixInstancePosition(true)
 
-					# summernoteContainer = $(".instance .note-editor .note-editable")
-					# if summernoteContainer.length
-					# 	# 如果申请单中存在summernote控件，则应该阻止其鼠标滚轮事件冒泡，否则控件内无法通过鼠标滚轮来滚动内容
-					# 	summernoteContainer.on 'mousewheel DOMMouseScroll', (e) ->
-					# 		if this.scrollHeight > $(this).outerHeight()
-					# 			# 只有出现滚动条时才阻止其鼠标滚轮事件冒泡，这样字段内容少时，可以正常滚动最外面的滚动条
-					# 			e.stopPropagation()
+						# summernoteContainer = $(".instance .note-editor .note-editable")
+						# if summernoteContainer.length
+						# 	# 如果申请单中存在summernote控件，则应该阻止其鼠标滚轮事件冒泡，否则控件内无法通过鼠标滚轮来滚动内容
+						# 	summernoteContainer.on 'mousewheel DOMMouseScroll', (e) ->
+						# 		if this.scrollHeight > $(this).outerHeight()
+						# 			# 只有出现滚动条时才阻止其鼠标滚轮事件冒泡，这样字段内容少时，可以正常滚动最外面的滚动条
+						# 			e.stopPropagation()
 
-				else if isNeedActiveSuggestion
-					preScrollTop = 0
-					loap = 0
-					$(".instance").scroll (event)->
-						clearTimeout loap
-						self = this
-						# 这里增加setTimeout除了优化性能外，更重要的是解决触发次数过多造成的动画效果不流畅问题
-						loap = setTimeout ->
-							scrollTop = self.scrollTop
-							scrollH = self.scrollHeight
-							viewH = $(self).innerHeight()
-							diffValue = (scrollH-viewH) - scrollTop
-							if diffValue < 20
-								if scrollTop >= preScrollTop
-									unless $('.instance-wrapper .instance-view').hasClass 'suggestion-active'
-										$('.instance-wrapper .instance-view').toggleClass 'suggestion-active'
-										InstanceManager.fixInstancePosition(true)
-								preScrollTop = scrollTop
-						,100
+					else if isNeedActiveSuggestion
+						preScrollTop = 0
+						loap = 0
+						$(".instance").scroll (event)->
+							clearTimeout loap
+							self = this
+							# 这里增加setTimeout除了优化性能外，更重要的是解决触发次数过多造成的动画效果不流畅问题
+							loap = setTimeout ->
+								scrollTop = self.scrollTop
+								scrollH = self.scrollHeight
+								viewH = $(self).innerHeight()
+								diffValue = (scrollH-viewH) - scrollTop
+								if diffValue < 20
+									if scrollTop >= preScrollTop
+										unless $('.instance-wrapper .instance-view').hasClass 'suggestion-active'
+											$('.instance-wrapper .instance-view').toggleClass 'suggestion-active'
+											InstanceManager.fixInstancePosition(true)
+									preScrollTop = scrollTop
+							,100
 
-				if Steedos.isMobile()
-					Steedos.bindSwipeBackEvent(".instance-wrapper", (event,options)->
-						$(".btn-instance-back").trigger("click")
-					)
+					if Steedos.isMobile()
+						Steedos.bindSwipeBackEvent(".instance-wrapper", (event,options)->
+							$(".btn-instance-back").trigger("click")
+						)
 
-				if Session.get("box") == "inbox" || Session.get("box") == "draft"
-					console.log("onRendered 160...")
-					Session.set("instance_next_user_recalculate", Random.id())
+					if Session.get("box") == "inbox" || Session.get("box") == "draft"
+						console.log("onRendered 160...")
+						Session.set("instance_next_user_recalculate", Random.id())
 
-				$("body").removeClass("loading")
+					$("body").removeClass("loading")
 
-				# 草稿状态申请单对应的流程已被禁用则提示用户
-				if ins.state is 'draft'
-					flow = db.flows.findOne({_id: ins.flow},{fields:{state: 1, name: 1}})
-					if flow and flow.state is 'disabled'
-						swal({
-							title: t('workflow_flow_state_disabled', {name: flow.name}),
-							confirmButtonText: t("OK"),
-							type: 'warning'
-						})
+					# 草稿状态申请单对应的流程已被禁用则提示用户
+					if ins.state is 'draft'
+						flow = db.flows.findOne({_id: ins.flow},{fields:{state: 1, name: 1}})
+						if flow and flow.state is 'disabled'
+							swal({
+								title: t('workflow_flow_state_disabled', {name: flow.name}),
+								confirmButtonText: t("OK"),
+								type: 'warning'
+							})
 
 Template.instance_view.onDestroyed ->
 	console.log('Template.instance_view.onDestroyed......')
