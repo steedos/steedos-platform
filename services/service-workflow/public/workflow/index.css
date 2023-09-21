@@ -123,9 +123,6 @@
     background-color: unset;
 }
 
-.steedos-instance-detail-wrapper .instance-wrapper{
-    border-radius: 0px !important;
-}
 
 
 .steedos-instance-wrapper input[disabled], input:disabled, input.disabled, input.is-disabled {
