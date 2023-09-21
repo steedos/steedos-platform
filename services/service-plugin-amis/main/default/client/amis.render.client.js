@@ -102,14 +102,15 @@
                               }, [JSON.stringify($schema)]) //, JSON.stringify(props.data)
 
                               if (!schema)
-                              return render('body', {
-                                "type": "wrapper",
-                                "className": "h-full flex items-center justify-center",
-                                "body": {
-                                  "type": "spinner",
-                                  "show": true
-                                }
-                              })
+                                return;
+                                // return render('body', {
+                                //   "type": "wrapper",
+                                //   "className": "h-full flex items-center justify-center",
+                                //   "body": {
+                                //     "type": "spinner",
+                                //     "show": true
+                                //   }
+                                // })
 
                               if (props.env.enableAMISDebug && schema) {
                                 console.groupCollapsed(`[steedos render ${type}]`);
