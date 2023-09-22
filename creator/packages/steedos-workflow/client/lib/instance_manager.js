@@ -860,7 +860,9 @@ InstanceManager.setInstanceFormApplicant = function(applicantId, applicantName){
 
 // 申请单暂存
 InstanceManager.saveIns = function (noWarn) {
-	$('body').addClass("loading");
+	if (!noWarn) {
+		$('body').addClass("loading");
+	}
 	var instance = WorkflowManager.getInstance();
 	if (instance) {
 		if (instance.state != 'draft') {
