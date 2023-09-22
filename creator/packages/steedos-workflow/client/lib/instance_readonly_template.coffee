@@ -732,6 +732,8 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 		width = ""
 
 	cssHref = Meteor.absoluteUrl("steedos-css")
+	
+	jqHref = Meteor.absoluteUrl("website/libs/jquery.min.js")
 
 	allCssLink = """<link rel="stylesheet" type="text/css" class="__meteor-css__" href="#{cssHref}">"""
 
@@ -813,7 +815,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 				#{allCssLink}
-				<script src="https://www.steedos.com/website/libs/jquery.min.js" type="text/javascript"></script>
+				<script src="#{jqHref}" type="text/javascript"></script>
 				<script src="/js/nw_core.js" type="text/javascript"></script>
 				#{options.plugins || ""}
 
