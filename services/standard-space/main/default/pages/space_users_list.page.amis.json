@@ -126,7 +126,7 @@
                                         }
                                     ],
                                     "className": "bg-gray-100",
-                                    "styles": {
+                                    "style": {
                                         "border": 0,
                                         "border-radius": 0
                                     }

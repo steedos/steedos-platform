@@ -148,7 +148,7 @@ module.exports = {
 				if(packageConfig.static){
 					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
 				}
-				await checkDependencies(util.getPackageRelativePath(process.cwd(), packageConfig.path))
+				await packages.checkDependencies(path.resolve(packageConfig.path))
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {

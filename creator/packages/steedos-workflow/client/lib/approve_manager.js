@@ -570,7 +570,7 @@ ApproveManager.getNextStepUsers = function(instance, nextStepId, action) {
                                 if(userField.is_multiselect){
                                     userFieldValue = lodash.map(instance.values[userField.code], 'id')
                                 }else{
-                                    userFieldValue = lodash.pick(instance.values[userField.code], "id")
+                                    userFieldValue = lodash.get(instance.values[userField.code], "id")
                                 }
                                 
                             }else{
