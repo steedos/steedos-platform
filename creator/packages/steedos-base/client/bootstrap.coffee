@@ -13,6 +13,7 @@ Creator.__l = new ReactiveVar({})
 Creator.bootstrapLoaded = new ReactiveVar(false)
 Creator.validated = new ReactiveVar(false);
 Creator.steedosInit = new ReactiveVar(false);
+Creator.dataInit = new ReactiveVar(false);
 
 Blaze._allowJavascriptUrls() 
 FlowRouter.wait();
@@ -245,7 +246,7 @@ Meteor.startup ->
 	return
 
 Tracker.autorun ()->
-	if Creator.steedosInit.get() && Creator.validated.get()
+	if Creator.steedosInit.get() && Creator.validated.get() && Creator.dataInit.get()
 		Creator.bootstrapLoaded.set(true)
 		if (!FlowRouter._initialized)
 			FlowRouter.initialize();

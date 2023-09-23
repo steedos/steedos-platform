@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@steedos/client",
-  "version": "2.5.14-beta.15",
+  "version": "2.5.14-beta.16",
   "description": "client lib for steedos",
   "main": "lib/index.js",
   "scripts": {
@@ -17,8 +17,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@steedos/filters": "2.5.14-beta.15",
+    "@steedos/filters": "2.5.14-beta.16",
     "node-fetch": "^2.6.7"
   },
-  "gitHead": "278f1c8deda678539fd81c5d6a41c4a292ac0ecc"
+  "gitHead": "ad5d4d13b681ef0b273c43c0928d4ac142f8d243"
 }

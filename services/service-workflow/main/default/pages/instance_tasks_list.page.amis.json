@@ -4,7 +4,7 @@
   "body": [
     {
       "type": "service",
-      "id": "u:4dd57bf1a99a",
+      "id": "instance_tasks_list_service",
       "className": "h-full w-full p-0 m-0",
       "pageGridClassName": "h-full m-0",
       "body": [
@@ -41,8 +41,8 @@
           ],
           "listName": "inbox",
           "rowClassNameExpr": "<%=(data.is_read === false && (!data.clientIds || data.clientIds.length == 0 || !data.clientIds.includes(data._id))) ? 'unread-instance' : '' %>",
-          "rebuildOn": "\\${flowId}",
-          "crudDataFilter": "if (data && data.flowId && (data.listName == 'inbox' || 'monitor') && window.innerWidth > 768) {\r\n  var api = {\r\n    url: \"${context.rootUrl}/graphql\",\r\n    method: \"post\",\r\n    dataType: \"json\",\r\n    data: {\r\n      \"query\": '{flow: flows__findOne(id:\"' + data.flowId + '\"){form__expand{current}}}'\r\n    },\r\n    headers: {\r\n      Authorization:\r\n        \"Bearer ${context.tenantId},${context.authToken}\",\r\n    },\r\n  };\r\n  return env.fetcher(api).then((result) => {\r\n    if (result.data && result.data.flow && result.data.flow.form__expand.current.fields && result.data.flow.form__expand.current.fields.length > 0) {\r\n      let fields = result.data.flow.form__expand.current.fields;\r\n      fields.forEach(function (field) {\r\n        if (field.is_list_display) {\r\n          crud.columns.push({\r\n            \"name\": \"instance__expand.values.\" + field.code,\r\n            \"label\": field.name || field.code,\r\n            \"width\": \"unset\",\r\n            \"type\": \"text\",\r\n            \"className\": \" whitespace-nowrap\",\r\n            \"static\": true,\r\n            \"options\": null\r\n          });\r\n        }\r\n      })\r\n    }\r\n    return crud;\r\n  });\r\n} else {\r\n  return crud;\r\n}\r\n",
+          "rebuildOn": "\\${flowId || categoryId}",
+          "crudDataFilter": "if (data && data.flowId && (data.listName == 'inbox' || 'monitor') && window.innerWidth > 768) {\r\n  var api = {\r\n    url: \"${context.rootUrl}/graphql\",\r\n    method: \"post\",\r\n    dataType: \"json\",\r\n    data: {\r\n      \"query\": '{flow: flows__findOne(id:\"' + data.flowId + '\"){form__expand{current}}}'\r\n    },\r\n    headers: {\r\n      Authorization:\r\n        \"Bearer ${context.tenantId},${context.authToken}\",\r\n    },\r\n  };\r\n  return env.fetcher(api).then((result) => {\r\n    if (result.data && result.data.flow && result.data.flow.form__expand.current.fields && result.data.flow.form__expand.current.fields.length > 0) {\r\n      let fields = result.data.flow.form__expand.current.fields;\r\n      fields.forEach(function (field) {\r\n        if (field.is_list_display) {\r\n          crud.columns.push({\r\n            \"name\": \"instance__expand.values.\" + field.code,\r\n            \"label\": field.name || field.code,\r\n            \"width\": \"unset\",\r\n            \"type\": \"text\",\r\n            \"className\": \" whitespace-nowrap\",\r\n            \"static\": true,\r\n            \"options\": null\r\n          });\r\n        }\r\n      })\r\n      let schemaApiService = SteedosUI.getRef('steedosPageObjectControl').parent.getComponentById(\"instance_tasks_list_service\");\r\n      schemaApiService && schemaApiService.setData({ form_fields: fields, isFlowDataDone: true });\r\n      crud.api.sendOn = \"this.isFlowDataDone\";\r\n    }\r\n    return crud;\r\n  });\r\n} else {\r\n  let schemaApiService = SteedosUI.getRef('steedosPageObjectControl').parent.getComponentById(\"instance_tasks_list_service\");\r\n  schemaApiService && schemaApiService.setData({ isFlowDataDone: true });\r\n  crud.api.sendOn = \"this.isFlowDataDone\";\r\n  return crud;\r\n}\r\n",
           "crud": {
             "onEvent": {
               "rowClick": {
@@ -53,7 +53,8 @@
                   }
                 ]
               }
-            }
+            },
+            "id": "u:af8bd61b2b28"
           }
         },
         {
@@ -81,7 +82,7 @@
                     }
                   },
                   "body": [
-                  {
+                    {
                       "type": "input-tree",
                       "name": "tree",
                       "treeContainerClassName": "h-full",
@@ -99,12 +100,20 @@
                         "change": {
                           "actions": [
                             {
+                              "actionType": "setValue",
+                              "componentId": "instance_tasks_list_service",
+                              "args": {
+                                "value": {
+                                  "isFlowDataDone": false
+                                }
+                              }
+                            },
+                            {
                               "actionType": "custom",
                               "script": "if(window.innerWidth < 768){document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
                             },
                             {
                               "actionType": "setValue",
-                              "componentId": "u:4dd57bf1a99a",
                               "args": {
                                 "value": {
                                   "additionalFilters": [
@@ -114,6 +123,7 @@
                                   ]
                                 }
                               },
+                              "componentId": "instance_tasks_list_service",
                               "expression": "${event.data.options.level>=10}"
                             },
                             {
@@ -133,7 +143,8 @@
                           {
                             "type": "tpl",
                             "className": "flex-1 w-6/12",
-                            "tpl": "${label}"
+                            "tpl": "${label}",
+                            "id": "u:adf0cfafa63c"
                           },
                           {
                             "type": "tpl",
@@ -147,9 +158,11 @@
                               ],
                               "mode": "text",
                               "text": "${tag | toInt}"
-                            }
+                            },
+                            "id": "u:ac230c095386"
                           }
-                        ]
+                        ],
+                        "id": "u:74a18fd2df0b"
                       },
                       "unfoldedLevel": 2,
                       "source": "${options}"
@@ -161,9 +174,11 @@
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
-                    "messages": {}
+                    "messages": {
+                    }
                   },
-                  "messages": {}
+                  "messages": {
+                  }
                 }
               ],
               "id": "u:5d1f5d7c38d2"
@@ -200,6 +215,9 @@
             }
           ]
         }
+      },
+      "data": {
+        "isFlowDataDone": false
       }
     }
   ],

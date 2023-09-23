@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-charts",
   "private": false,
-  "version": "2.5.14-beta.15",
+  "version": "2.5.14-beta.16",
   "description": "自定义查询",
   "main": "package.service.js",
   "repository": {
@@ -17,9 +17,9 @@
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/app-admin"
   },
   "devDependencies": {
-    "@steedos/service-metadata-server": "2.5.14-beta.15",
-    "@steedos/service-package-loader": "2.5.14-beta.15",
-    "@steedos/service-steedos-server": "2.5.14-beta.15",
+    "@steedos/service-metadata-server": "2.5.14-beta.16",
+    "@steedos/service-package-loader": "2.5.14-beta.16",
+    "@steedos/service-steedos-server": "2.5.14-beta.16",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",
@@ -34,7 +34,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "278f1c8deda678539fd81c5d6a41c4a292ac0ecc",
+  "gitHead": "ad5d4d13b681ef0b273c43c0928d4ac142f8d243",
   "dependencies": {
     "duration": "^0.2.2",
     "json2csv": "5.0.6",

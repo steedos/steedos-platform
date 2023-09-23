@@ -71,6 +71,7 @@ Steedos.StandardObjects = {
             },
             standard_approve:{
                 visible: function (object_name, record_id, record_permissions, props) {
+                    console.log('standard_approve=====?>');
                     if (!Session.get("record_id")) {
                         /*只在详细界面显示这个action*/
                         return false;
@@ -85,7 +86,7 @@ Steedos.StandardObjects = {
                     //     return false;
                     // }
                     object_workflow = _.find(Creator.object_workflows, function (ow) {
-                        return ow.object_name === object_name;
+                        return ow.object_name === object_name && (!ow.sync_direction || ow.sync_direction == 'both' || ow.sync_direction == 'obj_to_ins');
                     });
                     if (!object_workflow) {
                         return false;

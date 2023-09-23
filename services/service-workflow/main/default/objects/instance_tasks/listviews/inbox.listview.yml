@@ -27,7 +27,6 @@ sort: [['start_date','desc']]
 searchable_fields:
   - field: instance_name
   - field: submitter_name
-  - field: flow
   - field: applicant_organization_name
   - field: submit_date
   - field: instance_state
@@ -37,4 +36,4 @@ extra_columns:
   - is_read
   - type
   - instance.values
-adaptor: "_.each(payload.data.rows, function (item, index) {if (item.type == 'cc') {item.instance_name += '（传阅）';}})"
+adaptor: "_.each(payload.data.rows, function (item, index) {\r\n  if (item.type == 'cc') {\r\n    item.instance_name += '（传阅）';\r\n  }\r\n  if (item.instance__expand.values) {\r\n    const form_fields = api.body.self.form_fields;\r\n    _.each(item.instance__expand.values, function (field, field_code) {\r\n      const form_field = _.find(form_fields, { code: field_code });\r\n      if (form_field && form_field.type == \"group\") {\r\n        if (form_field.is_multiselect) {\r\n          item.instance__expand.values[field_code] = field && field.length > 0?_.map(field, 'fullname').toString():\"\";\r\n        } else {\r\n          item.instance__expand.values[field_code] = field?field.fullname:\"\";\r\n        }\r\n      } else if (form_field && form_field.type == \"user\") {\r\n        if (form_field.is_multiselect) {\r\n          item.instance__expand.values[field_code] = field && field.length > 0 ? _.map(field, 'name').toString() : \"\";\r\n        } else {\r\n          item.instance__expand.values[field_code] = field ? field.name : \"\";\r\n        }\r\n      }\r\n    })\r\n  }\r\n})"
