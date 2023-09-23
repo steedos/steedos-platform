@@ -208,18 +208,18 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "tag":inboxResult.count,
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/inbox?flowId=&categoryId=&additionalFilters=`
+          "to": `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=&flowId=&categoryId=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/inbox?flowId=&categoryId=&additionalFilters=`,
+        "value": `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=&flowId=&categoryId=`,
         "children": inboxResult.schema
       },
       {
         "label": t('outbox', {}, userSession.language),
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=`
+          "to": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=&flowId=&categoryId=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=`,
+        "value": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=&flowId=&categoryId=`,
         "icon": "fa fa-check"
       },
       {
@@ -227,9 +227,9 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "icon": "fa fa-eye",
         "options":{
           "level":1,
-          "to": `/app/${appId}/instances/grid/monitor?flowId=&categoryId=&additionalFilters=`,
+          "to": `/app/${appId}/instances/grid/monitor?additionalFilters=&flowId=&categoryId=`,
         },
-        "value": `/app/${appId}/instances/grid/monitor?flowId=&categoryId=&additionalFilters=`,
+        "value": `/app/${appId}/instances/grid/monitor?additionalFilters=&flowId=&categoryId=`,
         "children": monitorResult.schema,
         "unfolded": false,
         "visible": monitorResult.hasFlowsPer
@@ -246,9 +246,9 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "label": t('draft', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/draft?additionalFilters=`
+              "to": `/app/${appId}/instances/grid/draft?additionalFilters=&flowId=&categoryId=`
             },
-            "value": `/app/${appId}/instances/grid/draft?additionalFilters=`,
+            "value": `/app/${appId}/instances/grid/draft?additionalFilters=&flowId=&categoryId=`,
             "icon": "fa fa-pencil",
             "tag": draftCount
           },
@@ -256,18 +256,18 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "label": t('pending', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/pending?additionalFilters=`,
+              "to": `/app/${appId}/instances/grid/pending?additionalFilters=&flowId=&categoryId=`,
             },
-            "value": `/app/${appId}/instances/grid/pending?additionalFilters=`,
+            "value": `/app/${appId}/instances/grid/pending?additionalFilters=&flowId=&categoryId=`,
             "icon": "fa fa-circle"
           },
           {
             "label": t('completed', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/completed?additionalFilters=`,
+              "to": `/app/${appId}/instances/grid/completed?additionalFilters=&flowId=&categoryId=`,
             },
-            "value": `/app/${appId}/instances/grid/completed?additionalFilters=`,
+            "value": `/app/${appId}/instances/grid/completed?additionalFilters=&flowId=&categoryId=`,
             "icon": "fa fa-check-square"
           }
         ]
