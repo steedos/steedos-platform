@@ -81,9 +81,9 @@ const getCategoriesInbox = async (userSession, req) => {
           level:3,
           value: v2[0].flow,
           name: 'flow',
-          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`,
+          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`,
         },
-        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}`
+        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`
       })
     })
     output.push({
@@ -95,9 +95,9 @@ const getCategoriesInbox = async (userSession, req) => {
         level: 2,
         value: v[0].category,
         name: 'category',
-        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=`,
+        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`,
       },
-      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=`
+      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`
     })
   })
   return {
@@ -167,9 +167,9 @@ const getCategoriesMonitor = async (userSession, req) => {
             level: 3,
             value: v2[0]._id,
             name: 'flow',
-            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}`,
+            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand._id}`,
           },
-          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}`
+          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand._id}`
         })
       })
       output.push({
@@ -180,9 +180,9 @@ const getCategoriesMonitor = async (userSession, req) => {
           level: 2,
           value: v[0].category__expand && v[0].category__expand._id,
           name: 'category',
-          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=`,
+          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand._id}`,
         },
-        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=`
+        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand._id}`
       })
     })
   }
@@ -208,18 +208,18 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "tag":inboxResult.count,
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/inbox?flowId=`
+          "to": `/app/${appId}/instance_tasks/grid/inbox?flowId=&categoryId=&additionalFilters=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/inbox?flowId=`,
+        "value": `/app/${appId}/instance_tasks/grid/inbox?flowId=&categoryId=&additionalFilters=`,
         "children": inboxResult.schema
       },
       {
         "label": t('outbox', {}, userSession.language),
         "options":{
           "level":1,
-          "to": `/app/${appId}/instance_tasks/grid/outbox`
+          "to": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=`
         },
-        "value": `/app/${appId}/instance_tasks/grid/outbox`,
+        "value": `/app/${appId}/instance_tasks/grid/outbox?additionalFilters=`,
         "icon": "fa fa-check"
       },
       {
@@ -227,9 +227,9 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         "icon": "fa fa-eye",
         "options":{
           "level":1,
-          "to": `/app/${appId}/instances/grid/monitor?flowId=`,
+          "to": `/app/${appId}/instances/grid/monitor?flowId=&categoryId=&additionalFilters=`,
         },
-        "value": `/app/${appId}/instances/grid/monitor?flowId=`,
+        "value": `/app/${appId}/instances/grid/monitor?flowId=&categoryId=&additionalFilters=`,
         "children": monitorResult.schema,
         "unfolded": false,
         "visible": monitorResult.hasFlowsPer
@@ -246,9 +246,9 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "label": t('draft', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/draft`
+              "to": `/app/${appId}/instances/grid/draft?additionalFilters=`
             },
-            "value": `/app/${appId}/instances/grid/draft`,
+            "value": `/app/${appId}/instances/grid/draft?additionalFilters=`,
             "icon": "fa fa-pencil",
             "tag": draftCount
           },
@@ -256,18 +256,18 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
             "label": t('pending', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/pending`,
+              "to": `/app/${appId}/instances/grid/pending?additionalFilters=`,
             },
-            "value": `/app/${appId}/instances/grid/pending`,
+            "value": `/app/${appId}/instances/grid/pending?additionalFilters=`,
             "icon": "fa fa-circle"
           },
           {
             "label": t('completed', {}, userSession.language),
             "options":{
               "level":1,
-              "to": `/app/${appId}/instances/grid/completed`,
+              "to": `/app/${appId}/instances/grid/completed?additionalFilters=`,
             },
-            "value": `/app/${appId}/instances/grid/completed`,
+            "value": `/app/${appId}/instances/grid/completed?additionalFilters=`,
             "icon": "fa fa-check-square"
           }
         ]
