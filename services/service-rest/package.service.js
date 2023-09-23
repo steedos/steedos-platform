@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-15 19:57:25
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-09-23 11:50:21
  * @Description: 
  */
 "use strict";
@@ -91,7 +91,7 @@ module.exports = {
                 objectName: { type: "string" },
                 fields: { type: 'string', optional: true },
                 filters: { type: 'string', optional: true },
-                top: { type: 'string', optional: true },
+                top: { type: 'string', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'string', optional: true },
                 sort: { type: 'string', optional: true }
             },
@@ -187,7 +187,7 @@ module.exports = {
                 objectName: { type: "string" },
                 fields: { type: 'array', items: "string", optional: true },
                 filters: [{ type: 'array', optional: true }, { type: 'string', optional: true }],
-                top: { type: 'number', optional: true },
+                top: { type: 'number', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'number', optional: true },
                 sort: { type: 'string', optional: true }
             },
