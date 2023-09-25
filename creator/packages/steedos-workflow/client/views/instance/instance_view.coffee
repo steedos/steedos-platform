@@ -1,5 +1,7 @@
 Template.instance_view.helpers
 	isNeedToShowInstance: ->
+		if Template.instance().loadedInstanceData[Session.get("instanceId")]
+			return true;
 		if Steedos.subs["Instance"].ready() && Steedos.subs["instance_data"].ready()
 			Session.set("instance_loading", false);
 			# $("body").removeClass("loading")
@@ -19,6 +21,7 @@ Template.instance_view.helpers
 					return false;
 
 			if instance
+				Template.instance().loadedInstanceData[Session.get("instanceId")] = true;
 				return true
 		return false
 	instance: ->
@@ -141,6 +144,7 @@ Template.instance_view.helpers
 			return flow && flow.allow_select_step
 	
 Template.instance_view.onCreated ->
+	this.loadedInstanceData={};
 	console.log('Template.instance_view.onCreated......')
 	Form_formula.initFormScripts()
 	Session.set("instance_submitting", false);
