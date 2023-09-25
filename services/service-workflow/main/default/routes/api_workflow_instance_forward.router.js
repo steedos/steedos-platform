@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-25 19:48:49
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-09-25 13:13:48
  * @Description:
  */
 const express = require("express");
@@ -383,6 +383,8 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
             if (category) category_name = category.name;
           }
 
+          const extras = uuflowManager.caculateExtras(new_values, form, form.current._id);
+
           _.each(forward_users, function (user_id) {
             var user_info = uuflowManager.getUser(user_id, {
                 fields: {
@@ -532,6 +534,8 @@ router.post("/api/workflow/v2/instance/forward", core.requireAuthentication, asy
               ins_obj.category_name = category.name;
               ins_obj.category = category._id;
             }
+
+            ins_obj.extras = extras;
 
             var new_ins_id = db.instances.insert(ins_obj);
 

@@ -73,7 +73,36 @@ module.exports = {
                                 "weight": 0,
                                 "actions": [
                                     {
+                                        "actionType": "custom",
+                                        "script": "const flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'obj_to_ins') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
+                                    },
+                                    {
+                                        "actionType": "ajax",
+                                        "outputVar": "responseResult",
+                                        "args": {
+                                            "options": {},
+                                            "api": {
+                                                "url": "${context.rootUrl}/api/object/workflow/drafts",
+                                                "method": "post",
+                                                "requestAdaptor":"api.data = {\n    \'Instances\': [{\n        \'flow\': api.body.flows[0].flow_id,\n        \'applicant\': api.body.context.userId,\n        \'space\': api.body.context.tenantId,\n        \'record_ids\': [{ o: api.body.objectName, ids: [api.body.recordId] }]\n    }]\n}\n\nreturn api;",
+                                                "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.inserts[0];\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nFlowRouter.reload();\nreturn payload;",
+                                                "messages": {},
+                                                "headers": {
+                                                    "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                },
+                                                "data": {
+                                                    "&": "$$",
+                                                    "context": "${context}",
+                                                    "objectName": "${objectName}",
+                                                    "recordId": "${recordId}"
+                                                }
+                                            }
+                                        },
+                                        "expression": "${event.data.flowCount == 1}"
+                                    },
+                                    {
                                         "actionType": "dialog",
+                                        "expression": "${event.data.flowCount > 1}",
                                         "dialog": {
                                             "type": "dialog",
                                             "title": "选择流程发起审批",
@@ -121,7 +150,7 @@ module.exports = {
                                                                                     "url": "${context.rootUrl}/api/object/workflow/drafts",
                                                                                     "method": "post",
                                                                                     "requestAdaptor":"api.data = {\n    \'Instances\': [{\n        \'flow\': api.body.flowId,\n        \'applicant\': api.body.context.userId,\n        \'space\': api.body.context.tenantId,\n        \'record_ids\': [{ o: api.body.objectName, ids: [api.body.recordId] }]\n    }]\n}\n\nreturn api;",
-                                                                                    "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.inserts[0];\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + FlowRouter.current().queryParams.display + \'&side_object=instances&side_listview_id=draft\'))\nFlowRouter.reload();\nreturn payload;",
+                                                                                    "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.inserts[0];\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nFlowRouter.reload();\nreturn payload;",
                                                                                     "messages": {},
                                                                                     "headers": {
                                                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -212,7 +241,7 @@ module.exports = {
                                                 "url": "${context.rootUrl}/api/workflow/v2/draft",
                                                 "method": "post",
                                                 "requestAdaptor":"api.data = {\n    \'instance\': {\n        \'flow\': api.body.flows[0].flow_id,\n        \'applicant\': api.body.context.userId,\n        \'space\': api.body.context.tenantId\n       \n}}\n\nreturn api;",
-                                                "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.instance;\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + FlowRouter.current().queryParams.display + \'&side_object=instances&side_listview_id=draft\'))\nreturn payload;",
+                                                "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.instance;\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nreturn payload;",
                                                 "messages": {},
                                                 "headers": {
                                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -277,7 +306,7 @@ module.exports = {
                                                                                     "url": "${context.rootUrl}/api/workflow/v2/draft",
                                                                                     "method": "post",
                                                                                     "requestAdaptor":"api.data = {\n    \'instance\': {\n        \'flow\': api.body.flowId,\n        \'applicant\': api.body.context.userId,\n        \'space\': api.body.context.tenantId\n       \n}}\n\nreturn api;",
-                                                                                    "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.instance;\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + FlowRouter.current().queryParams.display + \'&side_object=instances&side_listview_id=draft\'))\nreturn payload;",
+                                                                                    "adaptor":"\nif (payload.error) { \n  return {\n    status: 2,\n    msg: payload.error\n  }\n}\nconst instance = payload.instance;\nSteedos.openWindow(Steedos.absoluteUrl(\'/app/\' + FlowRouter.current().params.app_id + \'/instances/view/\' + instance._id + \'?display=\' + (Steedos.Page.getDisplay('instances') || '') + \'&side_object=instances&side_listview_id=draft\'))\nreturn payload;",
                                                                                     "messages": {},
                                                                                     "headers": {
                                                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"

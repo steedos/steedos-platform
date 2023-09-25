@@ -182,3 +182,8 @@ tbody .color-priority-muted *{
 #instanceAmisView fieldset{
     width: 100%;
 }
+
+
+#serverList{
+    display: none !important;
+}

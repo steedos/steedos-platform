@@ -13,6 +13,16 @@ const path = require('path');
 
 const getConfig = (key, platform)=>{
     if(platform === 'cordova'){
+        if(key === 'STEEDOS_PUBLIC_PAGE_ASSETURLS'){
+            const values = _.map(_.split(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS), (item)=>{
+                if(_.startsWith(item, '/')){
+                    return Meteor.absoluteUrl(item) ;
+                }else{
+                    return item;
+                }
+            })
+            return _.join(values, ',')
+        }
         let value = process.env[key];
         //如果不是以http开头的，就是相对路径, 则加上ROOT_URL
         if(_.startsWith(value, '/')){
@@ -45,7 +55,7 @@ router.get('/main_head.js', async function (req, res) {
             STEEDOS_PUBLIC_STYLE_PLUGINS: getConfig('STEEDOS_PUBLIC_STYLE_PLUGINS', platform),
             STEEDOS_VERSION: process.env.STEEDOS_VERSION,
             STEEDOS_LOCALE: "",
-            STEEDOS_PUBLIC_PAGE_ASSETURLS: process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS,
+            STEEDOS_PUBLIC_PAGE_ASSETURLS: getConfig("STEEDOS_PUBLIC_PAGE_ASSETURLS", platform),
             STEEDOS_AMIS_VERSION: process.env.STEEDOS_AMIS_VERSION,
             platform: __meteor_runtime_config__.PUBLIC_SETTINGS && __meteor_runtime_config__.PUBLIC_SETTINGS.platform || {}
         }
