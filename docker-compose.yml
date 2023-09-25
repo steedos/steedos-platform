@@ -5,7 +5,7 @@ services:
   steedos:
     build: 
       context: ./
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: ./docker/src.Dockerfile.dev
     image: steedos/steedos-community:dev
     ports:
       - "6000:6000"
