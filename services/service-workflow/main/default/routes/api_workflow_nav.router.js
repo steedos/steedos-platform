@@ -54,7 +54,7 @@ const getDraftCount = async (userSession, req) => {
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategoriesInbox = async (userSession, req) => {
+const getCategoriesInbox = async (userSession, req, currentUrl) => {
   const { appId } = req.params;
   const { userId, is_space_admin, spaceId } = userSession;
   const filters = await objectql.getSteedosSchema().broker.call("instance.getBoxFilters", {
@@ -71,7 +71,15 @@ const getCategoriesInbox = async (userSession, req) => {
     let categoryBadge = 0;
     const flowGroups = lodash.groupBy(v, 'flow_name');
     const flows = [];
+    const categoryValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`;
+    let categoryIsUnfolded = false;
     lodash.each(flowGroups, (v2, k2)=>{
+      const flowValue = `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`;
+      let flowIsUnfolded = false;
+      if(currentUrl == flowValue){
+        flowIsUnfolded = true;
+        categoryIsUnfolded = true;
+      }
       categoryBadge += v2.length
       flows.push({
         label: k2,
@@ -81,11 +89,15 @@ const getCategoriesInbox = async (userSession, req) => {
           level:3,
           value: v2[0].flow,
           name: 'flow',
-          to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`,
+          to: flowValue,
         },
-        value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['flow', '=', '${v2[0].flow}']&flowId=${v2[0].flow}&categoryId=${v[0].category}`
+        value: flowValue,
+        unfolded: flowIsUnfolded
       })
     })
+    if(currentUrl == categoryValue){
+      categoryIsUnfolded = true;
+    }
     output.push({
       label: k == 'null' || k == 'undefined' || !k ? "未分类" : k,
       children: flows,
@@ -95,9 +107,10 @@ const getCategoriesInbox = async (userSession, req) => {
         level: 2,
         value: v[0].category,
         name: 'category',
-        to: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`,
+        to: categoryValue,
       },
-      value: `/app/${appId}/instance_tasks/grid/inbox?additionalFilters=['category', '=', ${v[0].category?"'" + v[0].category + "'":v[0].category}]&flowId=&categoryId=${v[0].category}`
+      value: categoryValue,
+      unfolded: categoryIsUnfolded
     })
   })
   return {
@@ -111,11 +124,12 @@ const getCategoriesInbox = async (userSession, req) => {
  * 2 结算出分类
  * 3 按要求返回数据结构
  */
-const getCategoriesMonitor = async (userSession, req) => {
+const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let hasFlowsPer = userSession.is_space_admin;
   const { appId } = req.params;
   const output = [];
   let data = {};
+  let monitorIsUnfolded = false;
   if (!hasFlowsPer) {
     const flowIds = await new Promise(function (resolve, reject) {
       Fiber(function () {
@@ -159,7 +173,16 @@ const getCategoriesMonitor = async (userSession, req) => {
     lodash.each(categoryGroups, (v, k) => {
       const flowGroups = lodash.groupBy(v, 'name');
       const flows = [];
+      const categoryValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+      let categoryIsUnfolded = false;
       lodash.each(flowGroups, (v2, k2) => {
+        const flowValue = `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`;
+        let flowIsUnfolded = false;
+        if(currentUrl == flowValue){
+          flowIsUnfolded = true;
+          categoryIsUnfolded = true;
+          monitorIsUnfolded = true;
+        }
         flows.push({
           label: k2,
           flow_name: k2,
@@ -167,11 +190,16 @@ const getCategoriesMonitor = async (userSession, req) => {
             level: 3,
             value: v2[0]._id,
             name: 'flow',
-            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`,
+            to: flowValue,
           },
-          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`
+          value: flowValue,
+          unfolded: flowIsUnfolded
         })
       })
+      if(currentUrl == categoryValue){
+        categoryIsUnfolded = true;
+        monitorIsUnfolded = true;
+      }
       output.push({
         label: k == 'null' || k == 'undefined' || !k? "未分类" : k,
         children: flows,
@@ -180,25 +208,28 @@ const getCategoriesMonitor = async (userSession, req) => {
           level: 2,
           value: v[0].category__expand && v[0].category__expand._id,
           name: 'category',
-          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`,
+          to: categoryValue,
         },
-        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`
+        value: categoryValue,
+        unfolded: categoryIsUnfolded
       })
     })
   }
   return {
     schema: output,
-    hasFlowsPer: hasFlowsPer
+    hasFlowsPer: hasFlowsPer,
+    monitorIsUnfolded: monitorIsUnfolded
   };
 }
 
 router.get('/api/:appId/workflow/nav', core.requireAuthentication, async function (req, res) {
   try {
-
+    let currentUrl = decodeURIComponent(req.headers.referer);
+    currentUrl = currentUrl.substring(currentUrl.indexOf("/app"));
     let userSession = req.user;
     const { appId } = req.params;
-    let inboxResult = await getCategoriesInbox(userSession,req);
-    let monitorResult = await getCategoriesMonitor(userSession,req)
+    let inboxResult = await getCategoriesInbox(userSession, req, currentUrl);
+    let monitorResult = await getCategoriesMonitor(userSession, req, currentUrl)
     let draftCount = await getDraftCount(userSession,req);
     
     var options = [
@@ -231,7 +262,7 @@ router.get('/api/:appId/workflow/nav', core.requireAuthentication, async functio
         },
         "value": `/app/${appId}/instances/grid/monitor?additionalFilters=&flowId=&categoryId=`,
         "children": monitorResult.schema,
-        "unfolded": false,
+        "unfolded": monitorResult.monitorIsUnfolded,
         "visible": monitorResult.hasFlowsPer
       },
       {
