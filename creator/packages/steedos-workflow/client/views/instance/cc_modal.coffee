@@ -95,6 +95,7 @@ Template.instance_cc_modal.events
 		cc_users.value = ''
 		cc_users.dataset.values = ''
 		s = InstanceManager.getCurrentStep()
+		Session.set("instance_submitting", false);
 		$('#instance_curstepName', $('#instance_cc_modal')).html s.name
 		return
 	'click #cc_help': (event, template) ->

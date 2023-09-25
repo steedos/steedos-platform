@@ -78,7 +78,7 @@
                       "hideRoot": true,
                       "showIcon": true,
                       "initiallyOpen": false,
-                      "value": "${additionalFilters?CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters):CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId)}",
+                      "value": "${CONCATENATE('/app/', appId, '/', objectName, '/grid/', listViewId, '?additionalFilters=', additionalFilters,'&flowId=',flowId,'&categoryId=',categoryId)}",
                       "size": "md",
                       "onEvent": {
                         "change": {

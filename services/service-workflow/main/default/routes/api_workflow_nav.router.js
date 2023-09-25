@@ -167,9 +167,9 @@ const getCategoriesMonitor = async (userSession, req) => {
             level: 3,
             value: v2[0]._id,
             name: 'flow',
-            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand._id}`,
+            to: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`,
           },
-          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand._id}`
+          value: `/app/${appId}/instances/grid/monitor?additionalFilters=['flow', '=', '${v2[0]._id}']&flowId=${v2[0]._id}&categoryId=${v[0].category__expand && v[0].category__expand._id}`
         })
       })
       output.push({
@@ -180,9 +180,9 @@ const getCategoriesMonitor = async (userSession, req) => {
           level: 2,
           value: v[0].category__expand && v[0].category__expand._id,
           name: 'category',
-          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand._id}`,
+          to: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`,
         },
-        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand._id}`
+        value: `/app/${appId}/instances/grid/monitor?additionalFilters=['category', '=', ${v[0].category__expand?"'" + v[0].category__expand._id + "'":null}]&flowId=&categoryId=${v[0].category__expand && v[0].category__expand._id}`
       })
     })
   }
