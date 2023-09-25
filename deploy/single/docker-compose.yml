@@ -6,11 +6,12 @@ services:
     build: 
       context: ./
       dockerfile: ./Dockerfile
-    image: steedos/steedos-community:latest
+    image: steedos/steedos-single:latest
     ports:
       - "3000:3000"
     environment:
       - ROOT_URL=http://127.0.0.1:3000
+    command: "npm start"
     volumes:
       - "steedos-data:/app/storage"
       - "steedos-mongo-data:/data"
