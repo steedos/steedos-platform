@@ -313,7 +313,8 @@ let objectTriggers = {
                 type: "text",
                 required: true,
                 index: true,
-                searchable: true
+                searchable: true,
+                filterable: true
             });
             // Creator.getCollection("object_fields").insert({
             //     object: doc.name,
