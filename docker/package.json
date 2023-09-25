@@ -1,6 +1,5 @@
 {
-    "name": "steedos-platform",
-    "version": "~2.5",
+    "name": "steedos-community",
     "private": true,
     "scripts": {
       "start": "steedos start"
