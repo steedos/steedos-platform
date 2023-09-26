@@ -75,9 +75,9 @@ fi
   gzip on;
   gzip_types *;
 
-  root /opt/steedos/public;
-  index index.html;
-  error_page 404 /;
+  # root /opt/steedos/public;
+  # index index.html;
+  # error_page 404 /;
 
   # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
   add_header Content-Security-Policy "frame-ancestors ${STEEDOS_ALLOWED_FRAME_ANCESTORS-'self' *}";
@@ -110,8 +110,36 @@ fi
   proxy_set_header Forwarded \$final_forwarded;
 
   # If the path has an extension at the end, then respond with 404 status if the file not found.
-  location ~ ^/(?!supervisor/).*\.[a-z]+$ {
-    try_files \$uri =404;
+  # location ~ ^/(?!supervisor/).*\.[a-z]+$ {
+  #   try_files \$uri =404;
+  # }
+
+  location / {
+    proxy_pass http://localhost:3000/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header X-real-ip \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+  }
+
+  location /tailwind/ {
+    proxy_http_version       1.1;
+    proxy_buffering          off;
+    proxy_max_temp_file_size 0;
+    proxy_redirect           off;
+    proxy_set_header  X-Forwarded-For   \$proxy_add_x_forwarded_for;
+    proxy_set_header  X-Forwarded-Proto \$origin_scheme;
+    proxy_set_header  X-Forwarded-Host  \$origin_host;
+    proxy_set_header  Connection        "";
+    proxy_pass http://localhost:3000/tailwind/;
+  }
+
+  location /sockjs/ {
+    proxy_pass http://localhost:3000/sockjs/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection "upgrade";
   }
 
 }
