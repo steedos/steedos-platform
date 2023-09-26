@@ -130,6 +130,16 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   const output = [];
   let data = {};
   let monitorIsUnfolded = false;
+  let currentAppCategories = await objectql.broker.call('api.graphql', {
+    query: `
+      query {
+        categories(filters:["app","=","${appId}"]){
+          _id
+        }
+      }
+    `}
+  )
+  currentAppCategories = lodash.map(currentAppCategories.data.categories, '_id');
   if (!hasFlowsPer) {
     const flowIds = await new Promise(function (resolve, reject) {
       Fiber(function () {
@@ -143,14 +153,14 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     hasFlowsPer = flowIds && flowIds.length > 0;
     if (hasFlowsPer) {
       let query = `
-      query {
-        flows(filters:["_id","in",${JSON.stringify(flowIds)}]){
-          _id,
-          name,
-          category__expand{_id,name}
+        query {
+          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}]]){
+            _id,
+            name,
+            category__expand{_id,name}
+          }
         }
-      }
-    `
+      `
       data = await objectql.broker.call('api.graphql', {
         query }
       )
@@ -159,7 +169,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     data = await objectql.broker.call('api.graphql', {
       query: `
         query {
-          flows{
+          flows(filters:["category","in",${JSON.stringify(currentAppCategories)}]){
             _id,
             name,
             category__expand{_id,name}
