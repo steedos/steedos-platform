@@ -30,18 +30,19 @@ RUN apt-get update \
     && apt-get remove -y git python-pip \
     && apt-get clean -y
 
-COPY ./fs/ /
+COPY ./fs/app /app
 
 ENV NODE_ENV=production
 
 
-WORKDIR /opt/steedos/platform
+WORKDIR /app/platform
 
 RUN npm i --production  && npm cache clean --force
 
-WORKDIR /opt/steedos/unpkg
+WORKDIR /app/unpkg
 
 RUN npm i --production  && npm cache clean --force
+
 
 # Remove cached files
 RUN rm -rf \
@@ -53,6 +54,9 @@ RUN rm -rf \
   /usr/share/man \
   /var/lib/apt/lists/* \
   /tmp/*
+
+COPY ./fs/etc /etc
+COPY ./fs/opt /opt
 
 # ENV defaults
 ENV ROOT_URL=http://127.0.0.1:3000 \

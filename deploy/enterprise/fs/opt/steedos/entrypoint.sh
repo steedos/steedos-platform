@@ -194,6 +194,8 @@ fi
 
 configure_supervisord
 
+mkdir -p /steedos-stacks/unpkg
+
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
 mkdir -p /steedos-stacks/data/{backup,restore}
 
