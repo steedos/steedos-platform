@@ -9,9 +9,9 @@ services:
     image: steedos/steedos-single:latest
     ports:
       - "3000:3000"
+      - "9001:9001"
     environment:
       - ROOT_URL=http://127.0.0.1:3000
-    command: "npm start"
     volumes:
       - "./stacks:/steedos-stacks"
   
