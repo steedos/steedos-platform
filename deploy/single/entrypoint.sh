@@ -14,14 +14,14 @@ init_env_file() {
   ENV_PATH="$CONF_PATH/docker.env"
   APP_PATH="/app"
 
+  mkdir -p "$CONF_PATH"
   # Build an env file with current env variables. We single-quote the values, as well as escaping any single-quote characters.
-  printenv | grep -E '^STEEDOS_|^MONGO_|ROOT_URL|CACHER|TRANSPORTER|PORT|NODE_ENV' | sed "s/'/'\\\''/g; s/=/='/; s/$/'/" > "$APP_PATH/.env"
+  printenv | grep -E '^STEEDOS_|^MONGO_|ROOT_URL|CACHER|TRANSPORTER|PORT|NODE_ENV' | sed "s/'/'\\\''/g; s/=/='/; s/$/'/" > "$CONF_PATH/pre-define.env"
 
   echo "Initialize .env file"
   if ! [[ -e "$ENV_PATH" ]]; then
     # Generate new docker.env file when initializing container for first time or in Heroku which does not have persistent volume
     echo "Generating default configuration file"
-    mkdir -p "$CONF_PATH"
     local default_steedos_mongodb_user="steedos"
     local generated_steedos_mongodb_password=$(
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
@@ -39,14 +39,14 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ''
     )
-    bash "$TEMPLATES_PATH/env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
+    bash "$APP_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
   fi
 
 
   echo "Load environment configuration"
   set -o allexport
   . "$ENV_PATH"
-  . "$APP_PATH/.env"
+  . "$CONF_PATH/pre-define.env"
   set +o allexport
 }
 

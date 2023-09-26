@@ -36,10 +36,6 @@ RUN rm -rf \
 ENV ROOT_URL=http://127.0.0.1:3000 \
     PORT=3000 \
     NODE_ENV=production \
-    CACHER=redis://localhost:6379 \
-    TRANSPORTER=redis://localhost:6379/1 \
-    MONGO_URL=mongodb://127.0.0.1:27017/steedos \
-    MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local
 
 # ------------------------------------------------------------------------
 ENV TMP /tmp/steedos
@@ -49,15 +45,20 @@ VOLUME [ "/steedos-stacks" ]
 
 WORKDIR /app
 
+COPY ./etc/ /etc/
+
 COPY ./supervisord /app/supervisord
-COPY ./env.sh /app/env.sh
+COPY ./docker.env.sh /app/docker.env.sh
 COPY ./entrypoint.sh /app/entrypoint.sh
 COPY ./healthcheck.sh /app/healthcheck.sh
+COPY ./run-with-env.sh /app/run-with-env.sh
+RUN chmod +x /app/docker.env.sh
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/healthcheck.sh
+RUN chmod +x /app/run-with-env.sh
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
 
 HEALTHCHECK --interval=15s --timeout=15s --start-period=45s CMD "/app/healthcheck.sh"
 
-CMD ["npm", "start"]
+CMD ["/usr/bin/supervisord", "-n"]
