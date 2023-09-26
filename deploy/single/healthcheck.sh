@@ -15,7 +15,7 @@ if [[ $(curl -Lfk -s -w "%{http_code}\n" http://localhost:3000/ -o /dev/null) -n
   healthy=false
 fi
 
-if [[ $(redis-cli -a $REDIS_PASSWORD --no-auth-warning  ping) != 'PONG' ]]; then
+if [[ $(redis-cli --no-auth-warning  ping) != 'PONG' ]]; then
     echo 'ERROR: Redis is down';
     healthy=false
 fi

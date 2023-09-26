@@ -107,15 +107,15 @@ init_replica_set() {
     echo "Waiting 10s for MongoDB to start"
     sleep 10
     # echo "Creating MongoDB user"
-    mongo "127.0.0.1/steedos" --eval "db.createUser({
-        user: '$STEEDOS_MONGODB_USER',
-        pwd: '$STEEDOS_MONGODB_PASSWORD',
-        roles: [{
-            role: 'root',
-            db: 'admin'
-        }, 'readWrite']
-      }
-    )"
+    # mongo "127.0.0.1/steedos" --eval "db.createUser({
+    #     user: '$STEEDOS_MONGODB_USER',
+    #     pwd: '$STEEDOS_MONGODB_PASSWORD',
+    #     roles: [{
+    #         role: 'root',
+    #         db: 'admin'
+    #     }, 'readWrite']
+    #   }
+    # )"
     echo "Enabling Replica Set"
     mongod --dbpath "$MONGO_DB_PATH" --shutdown || true
     mongod --fork --port 27017 --dbpath "$MONGO_DB_PATH" --logpath "$MONGO_LOG_PATH" --replSet steedos --keyFile "$MONGODB_TMP_KEY_PATH" --bind_ip localhost
