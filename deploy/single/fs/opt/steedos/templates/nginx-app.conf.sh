@@ -80,7 +80,7 @@ fi
   # error_page 404 /;
 
   # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
-  add_header Content-Security-Policy "frame-ancestors ${STEEDOS_ALLOWED_FRAME_ANCESTORS-'self' *}";
+  # add_header Content-Security-Policy "frame-ancestors ${STEEDOS_ALLOWED_FRAME_ANCESTORS-'self' *}";
 
   $additional_downstream_headers
 
@@ -121,18 +121,6 @@ fi
     proxy_set_header Connection "upgrade";
     proxy_set_header X-real-ip \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-  }
-
-  location /tailwind/ {
-    proxy_http_version       1.1;
-    proxy_buffering          off;
-    proxy_max_temp_file_size 0;
-    proxy_redirect           off;
-    proxy_set_header  X-Forwarded-For   \$proxy_add_x_forwarded_for;
-    proxy_set_header  X-Forwarded-Proto \$origin_scheme;
-    proxy_set_header  X-Forwarded-Host  \$origin_host;
-    proxy_set_header  Connection        "";
-    proxy_pass http://localhost:3000/tailwind/;
   }
 
   location /sockjs/ {
