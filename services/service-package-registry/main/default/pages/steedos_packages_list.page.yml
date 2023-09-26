@@ -1,0 +1,12 @@
+name: steedos_packages_list
+is_active: true
+label: 软件包列表
+object_name: steedos_packages
+pageAssignments:
+  - type: orgDefault
+    page: steedos_packages_list
+    desktop: true
+    mobile: true
+render_engine: amis
+type: list
+widgets: []
