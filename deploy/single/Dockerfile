@@ -1,5 +1,11 @@
-FROM steedos/steedos-community
+FROM node:14-slim
 
+RUN apt-get update || : && apt-get install -y \
+    python \
+    curl \
+    build-essential
+
+WORKDIR /app
 
 # Install MongoDB 4.4
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
@@ -25,6 +31,14 @@ RUN apt-get update \
     &&  pip install supervisor-stdout \
     && apt-get remove -y git python-pip \
     && apt-get clean -y
+
+
+COPY package.json .
+COPY steedos.config.js .
+
+ENV NODE_ENV=production
+
+RUN npm i --production  && npm cache clean --force
 
 # Remove cached files
 RUN rm -rf \
