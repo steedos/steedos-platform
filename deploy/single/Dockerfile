@@ -14,14 +14,14 @@ RUN echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] http://re
 
 RUN apt-get update \
     && apt-get install -y mongodb-org=4.4.24 mongodb-org-server=4.4.24 mongodb-org-shell=4.4.24 mongodb-org-mongos=4.4.24 mongodb-org-tools=4.4.24 \
-    && apt-get install -y nginx redis-server \
-    && apt-get install -y cron supervisor git python-pip \
-    && pip install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
     && apt-get autoremove --yes
 
 # Install nginx && redis
 RUN apt-get update \
     && apt-get install -y nginx redis-server \
+    && apt-get install -y cron supervisor git python-pip \
+    # && pip install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
+    &&  pip install supervisor-stdout \
     && apt-get clean -y
 
 # Remove cached files
