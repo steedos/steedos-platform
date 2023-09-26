@@ -22,7 +22,7 @@ init_env_file() {
   if ! [[ -e "$ENV_PATH" ]]; then
     # Generate new docker.env file when initializing container for first time or in Heroku which does not have persistent volume
     echo "Generating default configuration file"
-    local default_steedos_mongodb_user="steedos"
+    local default_steedos_mongodb_user="root"
     local generated_steedos_mongodb_password=$(
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ""
@@ -107,15 +107,15 @@ init_replica_set() {
     echo "Waiting 10s for MongoDB to start"
     sleep 10
     # echo "Creating MongoDB user"
-    # mongo "127.0.0.1/steedos" --eval "db.createUser({
-    #     user: '$STEEDOS_MONGODB_USER',
-    #     pwd: '$STEEDOS_MONGODB_PASSWORD',
-    #     roles: [{
-    #         role: 'root',
-    #         db: 'admin'
-    #     }, 'readWrite']
-    #   }
-    # )"
+    mongo "127.0.0.1/admin" --eval "db.createUser({
+        user: '$STEEDOS_MONGODB_USER',
+        pwd: '$STEEDOS_MONGODB_PASSWORD',
+        roles: [{
+            role: 'root',
+            db: 'admin'
+        }, 'readWrite']
+      }
+    )"
     echo "Enabling Replica Set"
     mongod --dbpath "$MONGO_DB_PATH" --shutdown || true
     mongod --fork --port 27017 --dbpath "$MONGO_DB_PATH" --logpath "$MONGO_LOG_PATH" --replSet steedos --keyFile "$MONGODB_TMP_KEY_PATH" --bind_ip localhost

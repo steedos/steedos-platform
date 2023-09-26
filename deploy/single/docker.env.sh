@@ -9,10 +9,10 @@ SUPERVISOR_PASSWORD="$5"
 
 cat <<EOF
 
-# MONGO_URL=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/steedos
-# MONGO_OPLOG_URL=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/local
-MONGO_URL=mongodb://localhost:27017/steedos
-MONGO_OPLOG_URL=mongodb://localhost:27017/local
+MONGO_URL=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/steedos?authSource=admin
+MONGO_OPLOG_URL=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/local?authSource=admin
+# MONGO_URL=mongodb://localhost:27017/steedos
+# MONGO_OPLOG_URL=mongodb://localhost:27017/local
 
 STEEDOS_MONGODB_USER=$MONGO_USER
 STEEDOS_MONGODB_PASSWORD=$MONGO_PASSWORD
