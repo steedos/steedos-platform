@@ -32,10 +32,14 @@ RUN apt-get update \
 
 COPY ./fs/ /
 
+ENV NODE_ENV=production
+
 
 WORKDIR /opt/steedos/platform
 
-ENV NODE_ENV=production
+RUN npm i --production  && npm cache clean --force
+
+WORKDIR /opt/steedos/unpkg
 
 RUN npm i --production  && npm cache clean --force
 
