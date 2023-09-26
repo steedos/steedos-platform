@@ -15,30 +15,65 @@
 </p>
 
 <p align="center">
-Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platform. It provides a powerful and flexible platform for building enterprise-grade applications quickly and easily.  With its intuitive drag-and-drop interface, Steedos empowers both developers and non-technical users to create custom applications without the need for extensive coding knowledge.
+Steedos Low-code PaaS platform is an open-source alternative to Salesforce Platform. It provides a powerful and flexible platform for building enterprise-grade applications quickly and easily.  
 </p>
 
 <h3 align="center">
  🤖 🎨 🚀
 </h3>
 
-## Core Features
+## Click, Not Code
 
-Steedos Low-code PaaS platform is a powerful and flexible solution for building enterprise applications quickly and easily.     
+With its intuitive drag-and-drop interface, Steedos empowers both developers and non-technical users to create custom applications without the need for extensive coding knowledge.   
 
-- Data Management: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
-- Workflow Automation: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
-- Secure: Steedos provides enterprise-level security features to ensure your data is protected at all times.
-- Low-code development: Drag-and-drop interface for building applications.
-- Integration: Steedos provides a visual integration tool that can help enterprises achieve seamless integration between internal and external systems.
+- **Design your Data**: Steedos provides powerful data management functions, including data modeling, data storage, and data analysis.
+  - [x] Objects [Docs](https://docs.steedos.com/no-code/customize/object) 
+  - [x] Fields [Docs](https://docs.steedos.com/no-code/customize/fields/) 
+  - [x] Validation Rules [Docs](https://docs.steedos.com/no-code/customize/validation-rules) 
+- **Building Apps**: Drag-and-drop interface for building applications.
+  - [x] Apps [Docs](https://docs.steedos.com/no-code/application/app)
+  - [x] Tabs [Docs](https://docs.steedos.com/no-code/application/tab)
+  - [x] Micro Pages [Docs](https://docs.steedos.com/no-code/amis/) **vs** [Salesforce Lightning App Builder](https://help.salesforce.com/s/articleView?id=sf.lightning_app_builder_overview.htm&type=5)
+  - [x] List View [Docs](https://docs.steedos.com/no-code/customize/listview/)
+  - [x] Page Layout [Docs](https://docs.steedos.com/no-code/customize/page-layout)
+- **Secure Your Data**: Steedos provides enterprise-level security features to ensure your data is protected at all times.
+  - [x] Object Permissions [Docs](https://docs.steedos.com/admin/permissions/object-permissions)
+  - [x] Field Permissions [Docs](https://docs.steedos.com/admin/permissions/field-permissions)
+  - [x] App Permissions [Docs](https://docs.steedos.com/admin/permissions/app-permissions)
+  - [x] Division [Docs](https://docs.steedos.com/admin/permissions/division)
+  - [x] Sharing Rules [Docs](https://docs.steedos.com/admin/permissions/sharing-rules)
+  - [x] Restriction Rules [Docs](https://docs.steedos.com/admin/permissions/restriction-rules)
+  - [x] Profiles [Docs](https://docs.steedos.com/admin/permissions/profile)
+  - [x] Permission Sets [Docs](https://docs.steedos.com/admin/permissions/permission-set)
+- **Automate Your Business Processes**: Steedos provides flexible workflow management capabilities that help businesses customize their workflows and improve work efficiency.
+  - [x] Automated Actions [Docs](https://docs.steedos.com/automation/automated-actions)
+  - [x] Workflow Rules [Docs](https://docs.steedos.com/automation/workflow-rules)
+  - [x] Process Approval [Docs](https://docs.steedos.com/automation/approval-process)
 
-## Key Highlights
-                  
-With its low-code development approach, open-source nature, and scalable architecture, it is an ideal choice for businesses looking to streamline their application development process.
-                  
-- Low-code development: Steedos allows you to create custom applications without the need for extensive coding knowledge. This reduces development time and costs significantly.
-- Open-source: Steedos is an open-source platform, which means you have complete control over the code and can modify it to fit your specific needs.
-- Scalable: Steedos is built on a scalable architecture, which means it can grow with your business and handle large volumes of data and users.
+## Extend Steedos with Code
+
+Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
+
+![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+
+Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
+
+  - [x] create-steedos-app [Docs](https://docs.steedos.com/developer/create-steedos-app)
+  - [x] Steedos Packages [Docs](https://docs.steedos.com/developer/package)
+  - [x] Metadata Sync with Source Code [Docs](https://docs.steedos.com/developer/sync-metadata)
+  - [x] API [Docs](https://docs.steedos.com/api/rest-api/)
+  - [x] Object Triggers [Docs](https://docs.steedos.com/developer/action-trigger)
+  - [x] Custom API [Docs](https://docs.steedos.com/developer/action-api)
+
+## Enterprise Plugins
+
+Steedos enterprise can seamlessly integrating with third-party open source projects through plugins, to build an integrated PaaS platform for enterprise.
+
+  - [x] [KeyCloak](https://github.com/keycloak/keycloak) Open Source Identity and Access Management For Modern Applications and Services, **vs** [Salesfore Identity](https://help.salesforce.com/s/articleView?id=sf.identity_overview.htm&type=5)
+  - [x] [Metabase](https://github.com/metabase/metabase) Business Intelligence, Dashboards, and Data Visualization, **vs** [Salesforce Reports and Dashboards](https://help.salesforce.com/s/articleView?id=sf.analytics_overview.htm&type=5)
+  - [ ] [n8n](https://github.com/n8n-io/n8n) Build complex automations 10x faster. **vs** [Salesforce Flow Builder](https://help.salesforce.com/s/articleView?id=sf.flow.htm&language=en_US&type=5)
+  - [x] [ToolJet](https://github.com/ToolJet/ToolJet/) Rapid internal tool development platform
+  - [x] [Node-RED](https://github.com/node-red/node-red) ([Docs](https://docs.steedos.com/plugins/node-red)): Low-code programming for event-driven applications.
 
 ## Getting Started
 
@@ -58,25 +93,13 @@ or you can try the following sample projects.
 - [Project Template](https://github.com/steedos/steedos-project-template)
 - [Examples](https://github.com/steedos/steedos-examples)
 
-## Steedos DX
-
-With Steedos DX, metadata can be imported into Steedos, modified in the product interface, and synchronize back to project source code. 
-
-Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
-
-To make this possible, we're enabling you to export your metadata, define data import files, and easily specify the edition, features, and configuration options of your development, staging, and production environments.
-
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
-
-Steedos DX is licenced per developer. We provide Steedos DX free license for open source projects and educational institutions.
-
 ## Awesome Steedos Apps
 
 💻 🎉 An awesome & curated list of best applications powered by Steedos Platform.
 
 - [Steedos Projects](https://github.com/steedos-labs/project): Track and manage your projects, milestones, tasks, blocked tasks, overdue tasks, time, expense budgets, and has detailed reporting capabilities.
 - [Salesforce CRM Clone](https://github.com/steedos-labs/salesforce): Salesforce alternative, provides everything you need to manage your business. Generate the best leads, manage opportunities through the sales pipleline, and cultivate relationships with exisiting accounts. Plus, forecast revenues, set up sales territories, and organize your reps into selling teams.
-- [Contract Management](https://github.com/steedos-labs/contract): Paper contracts are old school. With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
+- [Contract Management](https://github.com/steedos-labs/contract): With contract management software for Steedos, you can centralize contract storage, strengthen compliance, automate and accelerate the entire contract lifecycle, and much more.
 
 [Find more](https://github.com/steedos-labs/)
 
