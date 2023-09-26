@@ -5,8 +5,6 @@ RUN apt-get update || : && apt-get install -y \
     curl \
     build-essential
 
-WORKDIR /app
-
 # Install MongoDB 4.4
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
 RUN apt-get update \
@@ -32,9 +30,10 @@ RUN apt-get update \
     && apt-get remove -y git python-pip \
     && apt-get clean -y
 
+COPY ./fs/ /
 
-COPY package.json .
-COPY steedos.config.js .
+
+WORKDIR /opt/steedos/platform
 
 ENV NODE_ENV=production
 
@@ -62,9 +61,7 @@ ENV TMP /tmp/steedos
 # Define volumes - Service Layer
 VOLUME [ "/steedos-stacks" ]
 
-WORKDIR /app
-
-COPY ./fs/ /
+WORKDIR /opt/steedos/platform
 
 ENTRYPOINT [ "/opt/steedos/entrypoint.sh" ]
 
