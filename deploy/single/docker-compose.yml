@@ -13,14 +13,5 @@ services:
       - ROOT_URL=http://127.0.0.1:3000
     command: "npm start"
     volumes:
-      - "steedos-data:/app/storage"
-      - "steedos-mongo-data:/data"
-      - "steedos-installed-packages:/app/.steedos"
+      - "./stacks:/steedos-stacks"
   
-volumes:
-  steedos-mongo-data:
-    driver: local
-  steedos-installed-packages:
-    driver: local
-  steedos-data:
-    driver: local

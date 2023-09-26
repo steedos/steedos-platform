@@ -14,7 +14,7 @@ RUN echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] http://re
 
 RUN apt-get update \
     && apt-get install -y mongodb-org=4.4.24 mongodb-org-server=4.4.24 mongodb-org-shell=4.4.24 mongodb-org-mongos=4.4.24 mongodb-org-tools=4.4.24 \
-    && apt-get install -y nginx redis-server
+    && apt-get install -y nginx redis-server supervisor
 
 # Install nginx && redis
 RUN apt-get update \
@@ -41,8 +41,16 @@ ENV ROOT_URL=http://127.0.0.1:3000 \
     MONGO_URL=mongodb://127.0.0.1:27017/steedos \
     MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local
 
+# ------------------------------------------------------------------------
+ENV TMP /tmp/steedos
+
+# Define volumes - Service Layer
+VOLUME [ "/steedos-stacks" ]
+
 WORKDIR /app
 
+COPY ./supervisord /app/supervisord
+COPY ./env.sh /app/env.sh
 COPY ./entrypoint.sh /app/entrypoint.sh
 COPY ./healthcheck.sh /app/healthcheck.sh
 RUN chmod +x /app/entrypoint.sh
