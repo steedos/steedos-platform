@@ -8,10 +8,11 @@ services:
       dockerfile: ./Dockerfile
     image: steedos/steedos-enterprise:latest
     ports:
-      - "80:80"
-      - "3000:3000"
-      - "3100:3100"
-      - "9001:9001"
+      - "80:80"     # Nginx
+      - "443:443"   # Nginx SSL
+      - "3000:3000" # Steedos Platform
+      - "3100:3100" # Unpkg
+      - "9001:9001" # Supervisor
     environment:
       - ROOT_URL=http://127.0.0.1:3000
     volumes:
