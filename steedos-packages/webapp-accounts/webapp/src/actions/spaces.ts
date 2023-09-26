@@ -112,7 +112,8 @@ export function goSpaceHome(location, settings): ActionFunc {
       window.location.href = u.toString();
     }
     else{
-      window.location.href = rootUrl ? rootUrl : "/";
+      // window.location.href = rootUrl ? rootUrl : "/";
+      window.location.href = "/";
     }
 
     return { data: true };

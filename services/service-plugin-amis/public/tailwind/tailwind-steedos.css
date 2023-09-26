@@ -100,12 +100,16 @@
   margin-right: -2.75rem
 }
 
-.-mt-3 {
-  margin-top: -0.75rem
-}
-
 .mb-4 {
   margin-bottom: 1rem
+}
+
+.mt-2 {
+  margin-top: 0.5rem
+}
+
+.-mt-3 {
+  margin-top: -0.75rem
 }
 
 .mt-3 {
@@ -122,6 +126,10 @@
 
 .block {
   display: block
+}
+
+.inline-block {
+  display: inline-block
 }
 
 .inline {
@@ -193,6 +201,10 @@
   flex-shrink: 0
 }
 
+.flex-grow {
+  flex-grow: 1
+}
+
 .-translate-x-0 {
   --tw-translate-x: -0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
@@ -232,6 +244,10 @@
 
 .whitespace-nowrap {
   white-space: nowrap
+}
+
+.rounded-full {
+  border-radius: 9999px
 }
 
 .rounded {
@@ -286,6 +302,21 @@
   padding: 0.5rem
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem
+}
+
+.py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem
@@ -304,11 +335,6 @@
 .px-0 {
   padding-left: 0px;
   padding-right: 0px
-}
-
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px
 }
 
 .py-1 {
@@ -398,12 +424,12 @@
     margin-top: 0.75rem
   }
 
-  .sm\:rounded-lg {
-    border-radius: 0.5rem
-  }
-
   .sm\:rounded {
     border-radius: 0.25rem
+  }
+
+  .sm\:rounded-lg {
+    border-radius: 0.5rem
   }
 
   .sm\:border {

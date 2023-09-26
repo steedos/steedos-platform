@@ -9,5 +9,4 @@ module.exports = {
 	started(broker) {
 		broker.createService(require("@steedos/service-community"));
 	},
-
 };

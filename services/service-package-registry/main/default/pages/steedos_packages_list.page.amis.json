@@ -1,0 +1,114 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "steedos-object-listview",
+      "label": "列表视图",
+      "objectApiName": "${objectName}",
+      "listName": "all",
+      "showHeader": true,
+      "className": "sm:border sm:rounded sm:border-gray-300 mb-4",
+      "id": "u:70d5861033de",
+      "crud": {
+        "columnsCount": 4,
+        "id": "u:553974f9435b",
+        "mode": "cards",
+        "footerToolbar": [],
+        "switchPerPage": false,
+        "bulkActions": [],
+        "card": {
+          "header": {
+            "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
+            "avatarTextBackground": [
+              "#FFB900",
+              "#D83B01",
+              "#B50E0E",
+              "#E81123",
+              "#B4009E",
+              "#5C2D91",
+              "#0078D7",
+              "#00B4FF",
+              "#008272"
+            ],
+            "className": "bg-white",
+            "title": "${label}@${version}",
+            "subTitle": "$description",
+            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span> ${static && '<span>静态(不支持卸载、升级)</span>'}"
+          },
+          "actions": [
+            {
+              "label": "启用",
+              "disabledOn": "${status === 'enable'}",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "custom",
+                      "script": "let todo = event.data.uiSchema.actions.enable.todo;\nlet objectName = event.data.objectName;\nlet _id = event.data._id;\n\nif (todo) {\n  (new Function(\"(\" + todo + \")(\" + \"'\" + objectName + \"'\" + \",'\" + _id + \"')\"))();\n}\n"
+                    }
+                  ]
+                }
+              },
+              "id": "u:553d77aa3872"
+            },
+            {
+              "label": "停用",
+              "disabledOn": "${status !== 'enable'}",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "custom",
+                      "script": "let todo = event.data.uiSchema.actions.disable.todo;\nlet objectName = event.data.objectName;\nlet _id = event.data._id;\n\nif (todo) {\n  (new Function(\"(\" + todo + \")(\" + \"'\" + objectName + \"'\" + \",'\" + _id + \"')\"))();\n}\n"
+                    }
+                  ]
+                }
+              },
+              "id": "u:7e1db04924da"
+            }
+          ],
+          "type": "card",
+          "id": "u:2bb7748ac402"
+        }
+      }
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    "objectName": "steedos_packages",
+    "context": {
+      "rootUrl": "http://127.0.0.1:5800",
+      "tenantId": "64a4d6dd7fe9acaf8c330a37",
+      "userId": "683e09cd-8482-4034-bd29-5a30643e6c0f",
+      "authToken": "2906ff4353c25cfe291352f899ba3446aa5577f3de7ad60e1aa500c60dee7ca6fb446412f1c9693775b4cc"
+    }
+  },
+  "id": "u:2775cd701d6a",
+  "name": "page_test__c_list",
+  "bodyClassName": "p-0",
+  "css": {
+    ".antd-Wrapper.steedos-object-table > .antd-Service": {
+      "flex-grow": "1"
+    },
+    ".antd-Service.steedos-object-table .antd-Crud .antd-Cards": {
+      "height": "100%"
+    },
+    ".antd-Service.steedos-object-table .antd-Crud .antd-Cards .antd-Cards-toolbar": {
+      "padding-top": "0.5rem",
+      "padding-bottom": "0.5rem",
+      "padding-left": "1rem",
+      "padding-right": "1rem",
+      "--tw-bg-opacity": "1",
+      "background-color": "rgb(243 244 246 / var(--tw-bg-opacity))",
+      "--tw-border-opacity": "1",
+      "border-color": "rgb(209 213 219 / var(--tw-border-opacity))",
+      "border-style": "solid",
+      "border-bottom-width": "1px"
+    },
+    ".antd-Service.steedos-object-table .antd-Crud .antd-Cards .antd-Cards-body": {
+      "margin": "0.25rem"
+    }
+  }
+}
