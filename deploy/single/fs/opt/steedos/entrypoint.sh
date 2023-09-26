@@ -156,6 +156,7 @@ configure_supervisord() {
     rm -f "$SUPERVISORD_CONF_TARGET"/*
   fi
 
+  cp -f "$supervisord_conf_source"/nginx.conf "$SUPERVISORD_CONF_TARGET"
   cp -f "$supervisord_conf_source"/steedos.conf "$SUPERVISORD_CONF_TARGET"
 
   # Disable services based on configuration
@@ -196,7 +197,7 @@ configure_supervisord
 mkdir -p /steedos-stacks/data/{backup,restore}
 
 # Create sub-directory to store services log in the container mounting folder
-mkdir -p /steedos-stacks/logs/{supervisor,steedos,cron,mongodb,redis}
+mkdir -p /steedos-stacks/logs/{supervisor,steedos,cron,mongodb,redis,nginx}
 
 # Handle CMD command
 exec "$@"
