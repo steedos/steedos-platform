@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+
+  steedos:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    image: steedos/steedos-enterprise:latest
+    ports:
+      - "80:80"
+      - "3000:3000"
+      - "9001:9001"
+    environment:
+      - ROOT_URL=http://127.0.0.1:3000
+    volumes:
+      - "./stacks:/steedos-stacks"
+  

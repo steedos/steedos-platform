@@ -1,5 +1,5 @@
 {
-    "name": "steedos-community",
+    "name": "steedos-enterprise",
     "private": true,
     "scripts": {
       "start": "steedos start"
