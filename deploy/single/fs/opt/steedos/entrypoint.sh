@@ -12,7 +12,7 @@ mkdir -pv "$SUPERVISORD_CONF_TARGET"
 init_env_file() {
   CONF_PATH="/steedos-stacks/configuration"
   ENV_PATH="$CONF_PATH/docker.env"
-  APP_PATH="/app"
+  TEMPLATES_PATH="/opt/steedos/templates"
 
   mkdir -p "$CONF_PATH"
   # Build an env file with current env variables. We single-quote the values, as well as escaping any single-quote characters.
@@ -39,7 +39,7 @@ init_env_file() {
       tr -dc A-Za-z0-9 </dev/urandom | head -c 13
       echo ''
     )
-    bash "$APP_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
+    bash "$TEMPLATES_PATH/docker.env.sh" "$default_steedos_mongodb_user" "$generated_steedos_mongodb_password" "$generated_steedos_encryption_password" "$generated_steedos_encription_salt" "$generated_steedos_supervisor_password" > "$ENV_PATH"
   fi
 
 
@@ -151,7 +151,7 @@ use-mongodb-key() {
 
 
 configure_supervisord() {
-  local supervisord_conf_source="/app/supervisord"
+  local supervisord_conf_source="/opt/steedos/templates/supervisord"
   if [[ -n "$(ls -A "$SUPERVISORD_CONF_TARGET")" ]]; then
     rm -f "$SUPERVISORD_CONF_TARGET"/*
   fi
