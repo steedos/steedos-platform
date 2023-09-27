@@ -17,6 +17,10 @@
         "switchPerPage": false,
         "bulkActions": [],
         "card": {
+          "itemAction": {
+            "actionType": "link",
+            "link": "/app/admin/steedos_packages/view/${_id}"
+          },
           "header": {
             "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
             "avatarTextBackground": [
