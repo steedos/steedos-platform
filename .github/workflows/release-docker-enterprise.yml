@@ -5,6 +5,9 @@ on:
     workflows: [Disabled-Release NPM]
     types:
       - completed
+  push:
+    branches:
+      - 'releases/**'
 
 jobs:
   docker:
@@ -17,25 +20,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get branch names
-        id: branch-name
-        uses: tj-actions/branch-names@v5.2
-        with: 
-          strip_tag_prefix: v
-
-      - name: Get the current tag
-        if: steps.branch-name.outputs.is_tag == 'true'  # Replaces: startsWith(github.ref, 'refs/tags/')
+      - name: Set Current Version
         run: |
-          echo "${{ steps.branch-name.outputs.tag }}"
-    
-      - uses: nowsprinting/check-version-format-action@v3
-        id: version
-        with:
-          prefix: 'v'
-          
-      - name: Check is stable
-        if: ${{ steps.version.outputs.is_stable != 'true' }}
-        run: exit 0
+          CURRENT_VERSION=$(node -p 'require("./lerna.json").version')
+          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
         
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -52,9 +40,9 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=schedule
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
+            type=semver,pattern={{version}},value=v${CURRENT_VERSION}
+            type=semver,pattern={{major}}.{{minor}},value=v${CURRENT_VERSION}
+            type=semver,pattern={{major}},value=v${CURRENT_VERSION}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
