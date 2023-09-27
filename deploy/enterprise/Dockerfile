@@ -6,18 +6,18 @@ RUN apt-get update || : && apt-get install -y \
     build-essential
 
 # Install MongoDB 4.4
-# https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
+# https://www.mongodb.com/docs/v5.0/tutorial/install-mongodb-on-debian/
 RUN apt-get update \
     && apt-get install -y gnupg curl
 
-RUN curl -fsSL https://pgp.mongodb.com/server-4.4.asc | \
-    gpg -o /usr/share/keyrings/mongodb-server-4.4.gpg \
+RUN curl -fsSL https://pgp.mongodb.com/server-5.0.asc | \
+    gpg -o /usr/share/keyrings/mongodb-server-5.0.gpg \
    --dearmor  --no-tty
 
-RUN echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+RUN echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-5.0.gpg ] http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 
 RUN apt-get update \
-    && apt-get install -y mongodb-org=4.4.24 mongodb-org-server=4.4.24 mongodb-org-shell=4.4.24 mongodb-org-mongos=4.4.24 mongodb-org-tools=4.4.24 
+    && apt-get install -y mongodb-org=5.0.20 mongodb-org-database=5.0.20 mongodb-org-server=5.0.20 mongodb-org-shell=5.0.20 mongodb-org-mongos=5.0.20 mongodb-org-tools=5.0.20
 
 # Install nginx && redis
 RUN apt-get update \
