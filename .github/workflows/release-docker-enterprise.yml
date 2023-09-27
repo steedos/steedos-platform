@@ -22,9 +22,9 @@ jobs:
 
       - name: Set Current Version
         run: |
-          CURRENT_VERSION=$(node -p 'require("./lerna.json").version')
-          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
-          echo "CURRENT_VERSION=${CURRENT_VERSION}"
+          STEEDOS_VERSION=$(node -p 'require("./lerna.json").version')
+          echo "CURRENT_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=${STEEDOS_VERSION}"
         
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -38,15 +38,23 @@ jobs:
           images: |
             steedos/steedos-enterprise
           tags: |
-            type=semver,pattern={{version}},value=${{ env.CURRENT_VERSION }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.CURRENT_VERSION }}
-            type=semver,pattern={{major}},value=${{ env.CURRENT_VERSION }}
+            type=semver,pattern={{version}},value=${{ env.STEEDOS_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.STEEDOS_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.STEEDOS_VERSION }}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Replace Version ~2.5 to Tag
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          include: ./deploy/enterprise/fs/app/platform/package.json
+          find: "~2.5"
+          replace: ${env.{STEEDOS_VERSION}}
+          regex: false
 
       - name: Build and push docker
         uses: docker/build-push-action@v3
