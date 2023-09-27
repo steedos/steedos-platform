@@ -2,7 +2,7 @@ name: Release Docker EE
 
 on:
   workflow_run:
-    workflows: [Release NPM]
+    workflows: [Disabled-Release NPM]
     types:
       - completed
 
