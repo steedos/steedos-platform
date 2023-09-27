@@ -23,8 +23,8 @@ jobs:
       - name: Set Current Version
         run: |
           STEEDOS_VERSION=$(node -p 'require("./lerna.json").version')
-          echo "CURRENT_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
-          echo "CURRENT_VERSION=${STEEDOS_VERSION}"
+          echo "STEEDOS_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
+          echo "STEEDOS_VERSION=${STEEDOS_VERSION}"
         
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -53,7 +53,7 @@ jobs:
         with:
           include: ./deploy/enterprise/fs/app/platform/package.json
           find: "~2.5"
-          replace: ${env.{STEEDOS_VERSION}}
+          replace: ${{env.STEEDOS_VERSION}}
           regex: false
 
       - name: Build and push docker
