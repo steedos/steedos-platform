@@ -178,7 +178,7 @@ configure_supervisord() {
 
 init_env_file
 
-
+check_mongodb_uri
 if [[ -z "${DYNO}" ]]; then
   # Don't run MongoDB if running in a Heroku dyno.
   init_mongodb
