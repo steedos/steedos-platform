@@ -104,6 +104,10 @@ fields:
 listviews:
   all:
     label: All Packages
+  custom:
+    label: Custom Packages
+  system:
+    label: System Packages
 actions:
   disable:
     label: Disable
