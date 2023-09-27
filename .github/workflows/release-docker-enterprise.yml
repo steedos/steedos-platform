@@ -7,7 +7,7 @@ on:
       - completed
   push:
     branches:
-      - 'releases/**'
+      - 'release/**'
 
 jobs:
   docker:
@@ -24,6 +24,7 @@ jobs:
         run: |
           CURRENT_VERSION=$(node -p 'require("./lerna.json").version')
           echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=${CURRENT_VERSION}"
         
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -37,12 +38,9 @@ jobs:
           images: |
             steedos/steedos-enterprise
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=schedule
-            type=semver,pattern={{version}},value=v${CURRENT_VERSION}
-            type=semver,pattern={{major}}.{{minor}},value=v${CURRENT_VERSION}
-            type=semver,pattern={{major}},value=v${CURRENT_VERSION}
+            type=semver,pattern={{version}},value=${{ env.CURRENT_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.CURRENT_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.CURRENT_VERSION }}
 
       - uses: docker/login-action@v1
         name: Login Docker Hub
@@ -54,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./deploy/enterprise
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
