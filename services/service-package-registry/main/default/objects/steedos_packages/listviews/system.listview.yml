@@ -1,4 +1,4 @@
-name: all
+name: system
 columns:
   - field: label
     wrap: false
@@ -9,8 +9,9 @@ columns:
   - field: status
   - field: static
 filter_scope: space
-label: 所有软件包
+label: 系统软件包
 scrolling_mode: standard
 shared: true
 show_count: false
 type: grid
+filters: [["static","=", true]]
