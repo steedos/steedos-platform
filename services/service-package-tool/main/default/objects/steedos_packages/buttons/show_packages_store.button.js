@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-12-09 18:23:36
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-12-19 15:23:33
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2023-09-27 14:02:12
  * @Description: 
  */
 module.exports = {
@@ -16,6 +16,6 @@ module.exports = {
         return window.open(`${packageService}?client=${window.btoa(Meteor.absoluteUrl('', window.location.origin))}&install_nodes=${window.btoa(Steedos.PackageRegistry.getNodes().join(','))}`);
     },
     show_packages_storeVisible: function () {
-        return true
+        return false
     }
 }
