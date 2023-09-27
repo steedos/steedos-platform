@@ -17,6 +17,14 @@
         "switchPerPage": false,
         "bulkActions": [],
         "card": {
+          "toolbar": [
+            {
+              "type": "steedos-badge-ribbon",
+              "text": "静态(不支持卸载、升级)",
+              "body": [],
+              "visibleOn": "${static}"
+            }
+          ],
           "header": {
             "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
             "avatarTextBackground": [
@@ -33,7 +41,7 @@
             "className": "bg-white",
             "title": "${label}@${version}",
             "subTitle": "$description",
-            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span> ${static && '<span>静态(不支持卸载、升级)</span>'}"
+            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span>"
           },
           "actions": [
             {
@@ -88,6 +96,9 @@
   "id": "u:2775cd701d6a",
   "name": "page_test__c_list",
   "bodyClassName": "p-0",
+  "cssVars": {
+    "--text--muted-color": "#bebfc4"
+  },
   "css": {
     ".antd-Wrapper.steedos-object-table > .antd-Service": {
       "flex-grow": "1"
@@ -109,6 +120,15 @@
     },
     ".antd-Service.steedos-object-table .antd-Crud .antd-Cards .antd-Cards-body": {
       "margin": "0.25rem"
+    },
+    ".antd-Card-toolbar .ant-ribbon-wrapper": {
+      "position": "absolute",
+      "top": "-14px",
+      "right": "0"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-title": {
+      "white-space": "break-spaces",
+      "word-break": "break-all"
     }
   }
 }
