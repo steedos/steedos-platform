@@ -17,14 +17,6 @@
         "switchPerPage": false,
         "bulkActions": [],
         "card": {
-          "toolbar": [
-            {
-              "type": "steedos-badge-ribbon",
-              "text": "静态(不支持卸载、升级)",
-              "body": [],
-              "visibleOn": "${static}"
-            }
-          ],
           "header": {
             "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
             "avatarTextBackground": [
@@ -45,7 +37,7 @@
           },
           "actions": [
             {
-              "label": "启用",
+              "label": "${uiSchema.actions.enable.label}",
               "disabledOn": "${status === 'enable'}",
               "onEvent": {
                 "click": {
@@ -60,7 +52,7 @@
               "id": "u:553d77aa3872"
             },
             {
-              "label": "停用",
+              "label": "${uiSchema.actions.disable.label}",
               "disabledOn": "${status !== 'enable'}",
               "onEvent": {
                 "click": {
