@@ -5,6 +5,9 @@ on:
     workflows: [Release NPM]
     types:
       - completed
+  push:
+    branches:
+      - 'releases/**'
 
 jobs:
   docker:
