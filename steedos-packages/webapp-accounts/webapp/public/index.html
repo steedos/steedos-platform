@@ -6,17 +6,6 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, shrink-to-fit=no"/>
     <meta name="theme-color" content="#000000" />
-    <script >
-      var vConsoleURL = "%REACT_APP_STEEDOS_PUBLIC_SCRIPT_VCONSOLE%";
-      if (vConsoleURL && !/^%/.test(vConsoleURL)) {
-        let scriptTag = document.createElement("script");
-        scriptTag.setAttribute("src", vConsoleURL);
-        document.getElementsByTagName("head")[0].appendChild(scriptTag);
-        scriptTag.onload = function(script){
-          window.vConsole = new window.VConsole();
-        }
-      }
-    </script>
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
