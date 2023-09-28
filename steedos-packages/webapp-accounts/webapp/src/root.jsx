@@ -56,6 +56,20 @@ const LoggedInRoute = ({component: Component, ...rest}) => {
     )}
 ;
 
+
+const loadJs = (url, callback)=>{
+  let scriptTag = document.createElement("script");
+  scriptTag.type = "text/javascript";
+  scriptTag.src = url;
+  scriptTag.async = false;
+  document.getElementsByTagName("head")[0].appendChild(scriptTag);
+  scriptTag.onload = function(script){
+      if(callback){
+          callback(script)
+      }
+  }
+}
+
 class Root extends React.PureComponent {
 
   constructor(props) {
@@ -72,6 +86,44 @@ class Root extends React.PureComponent {
 
   onConfigLoaded = () => {
     this.setState({configLoaded: true});
+    const { public: _public } = this.props.settings;
+    try {
+      if( _public?.vconsole?.url ){
+          loadJs(_public.vconsole.url, ()=>{
+            window.vConsole = new window.VConsole();
+          });
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    try {
+      if( _public?.sentry?.enabled == 'true' || _public?.sentry?.enabled == true ){
+        loadJs(`/sentry/sentry.min.js`, (script)=>{
+          const nodeEnv = _public.NODE_ENV || 'development';
+          const DEFAULT_DSN_JS = {
+              'development': 'https://7c2b864b83bf4361a030a7df9d2ace0c@sentry.steedos.cn/7',
+              'production': 'https://8f3f63d02e8140718a6123b10d49ae2f@sentry.steedos.cn/6'
+          } 
+          var dsn = _public.sentry.dsn || DEFAULT_DSN_JS[nodeEnv];
+          window.Sentry.init({
+              dsn: dsn
+          });
+      });
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    try {
+      if( _public?.analytics?.enabled == 'true' || _public?.analytics?.enabled == true ){
+        try {
+          loadJs('/analytics/index.js');
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   componentDidMount() {
@@ -152,6 +204,7 @@ class Root extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     tenant: getTenant(state),
+    settings: getSettings(state),
     currentUser: getCurrentUser(state),
   };
 }

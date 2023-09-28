@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-19 10:30:59
+ * @LastEditTime: 2023-09-27 17:48:31
  * @Description: 
  */
 import * as express from 'express';
@@ -97,6 +97,7 @@ export const getSettings = (accountsServer: AccountsServer) => async (
     already_sms_service: already_sms_service,
     serverInitInfo: serverInitInfo,
     redirect_url_whitelist: process.env.REDIRECT_URL_WHITELIST,
-    platform: platform
+    platform: platform,
+    public: (global as any).Meteor.settings.public || {}
   })
 }
