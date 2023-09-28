@@ -17,6 +17,8 @@ import { useCountDown } from "../components/countdown";
 import LocalStorageStore from '../stores/local_storage_store';
 import { isString, each, compact, values } from 'lodash'
 
+import {Tabs,Tab,Paper} from '@material-ui/core';
+
 const totalSeconds = 60;
 const ReApplyCodeBtn = ({ onClick, id, loginId, disabled }) => {
   const [restTime, resetCountdown] = useCountDown(loginId || "cnt1", {
@@ -100,9 +102,11 @@ class Login extends React.Component {
       // brandImageError: false,
       inApp: inApp,
       geetestValidate: '',
-      disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false
+      disabledSendVerificationstate: this.props.settings.tenant.enable_open_geetest || false,
+      tabIndex: 0
     };
 
+    
 
     // if (this.props.tenant.enable_mobile_code_login || this.props.tenant.enable_email_code_login) {
     //   this.state.loginWithCode = true;
@@ -203,6 +207,13 @@ class Login extends React.Component {
   handleCodeChange = (e) => {
     this.setState({
       verifyCode: e.target.value,
+    });
+  }
+
+  handleTabChange = (event, newValue) => {
+    this.setState({
+      tabIndex: newValue,
+      loginWith: newValue === 0 ? 'password' : 'code'
     });
   }
 
@@ -419,7 +430,26 @@ class Login extends React.Component {
             />}
 
           </h2>
-
+          { !this.state.MFA && this.state.loginWithCode && this.state.loginWithPassword && <Paper variant='outlined' style={{border:"none"}}>
+          <Tabs
+            indicatorColor="primary"
+            value={this.state.tabIndex}
+            textColor="primary"
+            onChange={this.handleTabChange}
+            centered={true}
+            variant='fullWidth'
+          >
+            <Tab label={<FormattedMessage
+                id='accounts.passwordLogin'
+                defaultMessage='密码登录'
+              />}>
+            </Tab>
+            <Tab label={<FormattedMessage
+                id='accounts.codeLogin'
+                defaultMessage='验证码登录'
+              />}>
+            </Tab>
+          </Tabs></Paper>}
           <form onSubmit={this.onSubmit} className="mt-4" autoCapitalize="none">
             <div className="rounded-md shadow-sm my-2">
               <div style={this.state.MFA && this.state.mobile_verified ? { "display": "none" } : {}}>
@@ -482,20 +512,6 @@ class Login extends React.Component {
             </div>
 
             {this.state.serverError && <FormError error={this.state.serverError} />}
-
-
-            {!this.state.MFA && this.state.loginWithPassword && this.state.loginWith === 'code' && (
-              <div className="text-sm leading-5 my-4">
-                <button type="button" onClick={this.switchLoginWithPassword}
-                  className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none hover:underline transition ease-in-out duration-150">
-                  <FormattedMessage
-                    id='accounts.switch_password'
-                    defaultMessage='Login with password'
-                  />
-                </button>
-              </div>
-            )}
-
 
             <div className="mt-6 flex justify-end">
               <button type="submit" className=" group relative w-full justify-center rounded-md py-2 px-4 border border-transparent text-sm leading-5 font-medium text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
