@@ -30,9 +30,9 @@ RUN apt-get update \
 # Install nginx && redis
 RUN apt-get update \
     && apt-get install -y nginx  nginx-extras redis-server \
-    && apt-get install -y cron supervisor git python3-pip \
-    # && pip install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
-    &&  pip install supervisor-stdout \
+    && apt-get install -y cron supervisor git python3-pip\
+    && pip3 install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
+    # && pip3 install supervisor-stdout \
     && apt-get remove -y git python3-pip \
     && apt-get clean -y
 
