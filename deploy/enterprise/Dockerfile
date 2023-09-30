@@ -3,18 +3,20 @@ FROM ubuntu:focal
 # The env variables are needed for Appsmith server to correctly handle non-roman scripts like Arabic.
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
 RUN apt-get update || : && apt-get install -y \
     python \
     curl \
     build-essential 
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
 
 # Install MongoDB 5.0
 # https://www.mongodb.com/docs/v5.0/tutorial/install-mongodb-on-debian/
 RUN apt-get update \
-    && apt-get install -y gnupg curl
+    && apt-get install -y gnupg curl nodejs yarn
 
 RUN curl -fsSL https://pgp.mongodb.com/server-5.0.asc | \
     gpg -o /usr/share/keyrings/mongodb-server-5.0.gpg \
@@ -28,10 +30,10 @@ RUN apt-get update \
 # Install nginx && redis
 RUN apt-get update \
     && apt-get install -y nginx  nginx-extras redis-server \
-    && apt-get install -y cron supervisor git python-pip \
+    && apt-get install -y cron supervisor git python3-pip \
     # && pip install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
     &&  pip install supervisor-stdout \
-    && apt-get remove -y git python-pip \
+    && apt-get remove -y git python3-pip \
     && apt-get clean -y
 
 COPY ./fs/app /app
