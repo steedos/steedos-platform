@@ -1,31 +1,39 @@
-FROM node:14-slim
+FROM ubuntu:focal
+
+# The env variables are needed for Appsmith server to correctly handle non-roman scripts like Arabic.
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
 RUN apt-get update || : && apt-get install -y \
     python \
     curl \
-    build-essential
+    build-essential 
 
-# Install MongoDB 4.4
-# https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
+
+# Install MongoDB 5.0
+# https://www.mongodb.com/docs/v5.0/tutorial/install-mongodb-on-debian/
 RUN apt-get update \
-    && apt-get install -y gnupg curl
+    && apt-get install -y gnupg curl nodejs yarn
 
-RUN curl -fsSL https://pgp.mongodb.com/server-4.4.asc | \
-    gpg -o /usr/share/keyrings/mongodb-server-4.4.gpg \
+RUN curl -fsSL https://pgp.mongodb.com/server-5.0.asc | \
+    gpg -o /usr/share/keyrings/mongodb-server-5.0.gpg \
    --dearmor  --no-tty
 
-RUN echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+RUN echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-5.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 
 RUN apt-get update \
-    && apt-get install -y mongodb-org=4.4.24 mongodb-org-server=4.4.24 mongodb-org-shell=4.4.24 mongodb-org-mongos=4.4.24 mongodb-org-tools=4.4.24 
+    && apt-get install -y mongodb-org=5.0.20 mongodb-org-database=5.0.20 mongodb-org-server=5.0.20 mongodb-org-shell=5.0.20 mongodb-org-mongos=5.0.20 mongodb-org-tools=5.0.20
 
 # Install nginx && redis
 RUN apt-get update \
     && apt-get install -y nginx  nginx-extras redis-server \
-    && apt-get install -y cron supervisor git python-pip \
+    && apt-get install -y cron supervisor git python3-pip \
     # && pip install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
     &&  pip install supervisor-stdout \
-    && apt-get remove -y git python-pip \
+    && apt-get remove -y git python3-pip \
     && apt-get clean -y
 
 COPY ./fs/app /app
