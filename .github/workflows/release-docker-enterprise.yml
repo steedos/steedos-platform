@@ -51,7 +51,7 @@ jobs:
       - name: Replace Version ~2.5 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
         with:
-          include: ./deploy/enterprise/fs/app/platform/package.json
+          include: deploy/enterprise/fs/app/platform/package.json
           find: "~2.5"
           replace: ${{env.STEEDOS_VERSION}}
           regex: false
@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./deploy/enterprise
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

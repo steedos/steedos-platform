@@ -5,6 +5,7 @@ datasources:
     objectFiles:
       - "./steedos-app/**"
 public:
+  NODE_ENV: ${NODE_ENV}
   amis:
     map_ak: ${STEEDOS_AMIS_MAP_KEY}
     map_vendor: ${STEEDOS_AMIS_MAP_VENDER}
@@ -27,6 +28,11 @@ public:
       api_host: ${STEEDOS_PUBLIC_ANALYTICS_POSTHOG_API_HOST}
   workflow:
     traceShowSignImage: ${STEEDOS_WORKFLOW_TRACE_SHOW_SIGN_IMAGE}
+  sentry:
+    enabled: ${STEEDOS_SENTRY_ENABLED}
+    dsn: ${STEEDOS_SENTRY_DSN}
+  vconsole:
+    url: ${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:

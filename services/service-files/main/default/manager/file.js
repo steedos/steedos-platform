@@ -97,7 +97,7 @@ class File {
 
         const doc = {
             "_id": _id,
-            "link": process.env.ROOT_URL+"/api/files/images/"+_id,
+            "link": process.env.ROOT_URL+`/api/files/${fsCollectionName}/`+_id,
             "original": {
                 "type": mimetype,
                 "size": size,

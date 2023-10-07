@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-09-09 16:48:46
+ * @LastEditTime: 2023-10-07 18:04:23
  * @Description: 
  */
 "use strict";
@@ -12,6 +12,17 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const Fiber = require('fibers')
+
+const path = require('path')
+const os = require('os')
+const fs = require('fs')
+const hexoid = require('hexoid')
+const toHexoId = hexoid(25)
+const FileType = require('file-type');
+const {
+	getCollection,
+	File,
+} = require('./main/default/manager');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -86,6 +97,76 @@ module.exports = {
 							reject(error);
 						}
 					}).run();
+				})
+			}
+		},
+
+		/**
+		 * 上传文件，调用示例：
+		 * const stream = fs.createReadStream(filepath);
+			const fileDoc = await this.broker.call('~packages-@steedos/service-files.uploadCollectionFile', stream, {
+				meta: {
+					filename, // 文件名
+					owner // 所有者ID
+				}
+			})
+		 */
+		uploadCollectionFile: {
+			async handler(ctx) {
+				return await new Promise(function (resolve, reject) {
+					try {
+						const stream = ctx.params
+						const { filename, owner } = ctx.meta
+						// console.log('>'.repeat(20), 'uploadCollectionFile:', filename)
+						if (!filename || !owner) {
+							throw new Error('need filename and owner')
+						}
+
+						// 存成临时文件
+						const tempFilename = toHexoId();
+						const tempFilepath = path.join(path.resolve(os.tmpdir()), tempFilename)
+						// console.log(require('chalk').red(tempFilepath))
+						const tempWS = fs.createWriteStream(tempFilepath);
+						stream.pipe(tempWS);
+
+						tempWS.on('finish', async () => {
+							// console.log('All writes are now complete.');
+							const fileStats = fs.statSync(tempFilepath)
+
+							const FS_COLLECTION_NAME = "files";
+							const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
+							const collection = await getCollection(DB_COLLECTION_NAME);
+
+							const mimeInfo = await FileType.fromFile(tempFilepath)
+							const mimetype = mimeInfo.mime
+							const newFile = new File({
+								name: filename,
+								size: fileStats.size,
+								mimetype,
+								fsCollectionName: FS_COLLECTION_NAME
+							});
+
+							newFile.metadata = {
+								owner
+							};
+							// 保存文件
+							newFile.save(tempFilepath, async function (err, result) {
+								if (err) {
+									reject(err)
+									return;
+								}
+
+								await collection.insertOne(newFile.insertDoc());
+
+								const fileDoc = await collection.findOne({ _id: newFile.id });
+								resolve(fileDoc);
+							})
+						});
+
+
+					} catch (error) {
+						reject(error);
+					}
 				})
 			}
 		}

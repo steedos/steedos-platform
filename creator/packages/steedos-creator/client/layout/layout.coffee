@@ -66,7 +66,7 @@ Template.creatorLayout.helpers
 
 
 Template.creatorLayout.onRendered ->
-	tabId = Session.get("pageApiName") || Session.get("object_name")
+	tabId = Session.get("pageApiName") || Session.get("object_name") || Session.get("tab_name");
 	this.autorun ->
 		Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
@@ -76,7 +76,7 @@ Template.creatorLayout.onRendered ->
 	# 	Steedos.Page.Header.render(Session.get('app_id'), tabId)
 
 	this.autorun ->
-		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		tab_id = Session.get("pageApiName") || Session.get("object_name") || Session.get("tab_name");
 		if window.SteedosUI
 			amisScope = SteedosUI.refs.globalHeader;
 			if amisScope
@@ -90,7 +90,7 @@ Template.creatorLayout.onRendered ->
 					catch e
 				, 100
 	this.autorun ->
-		tab_id = Session.get("pageApiName") || Session.get("object_name");
+		tab_id = Session.get("pageApiName") || Session.get("object_name") || Session.get("tab_name");
 		if window.SteedosUI
 			amisScope = SteedosUI.refs.globalFooter;
 			if amisScope

@@ -49,7 +49,7 @@
             } 
             var dsn = STEEDOS_SENTRY_DSN || DEFAULT_DSN_JS[nodeEnv];
             Sentry.init({
-                dsn: STEEDOS_SENTRY_DSN
+                dsn: dsn
             });
         });
     };
