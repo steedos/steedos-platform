@@ -777,8 +777,13 @@ export default class AccountsPassword implements AuthenticationService {
     if (!isPasswordValid) {
       if(!saas){
         const userProfile = await this.getUserProfile(foundUser.id);
-
-        await this.db.updateUser(foundUser.id, {$inc: {login_failed_number: 1}});
+        const login_failed_lockout_time = foundUser.login_failed_lockout_time;
+        // 重置密码错误次数
+        if(userProfile.lockout_interval !=0 && moment(login_failed_lockout_time).isBefore(new Date())){
+          await this.db.updateUser(foundUser.id, {$set: {login_failed_number: 1}});
+        }else{
+          await this.db.updateUser(foundUser.id, {$inc: {login_failed_number: 1}});
+        }
 
         const user: any = await this.db.findUserById(foundUser.id);
         if(user.login_failed_number >= userProfile.max_login_attempts){
