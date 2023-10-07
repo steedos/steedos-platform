@@ -189,3 +189,7 @@ To learn more, please refer to [Supervisor's documentation](http://supervisord.o
 ## Troubleshooting
 
 If you encounter any errors during this process, please reach out to [**support@steedos.com**](mailto:support@steedos.com) or join our [Discord Server](https://discord.gg/84BFNFQP) and reach out on the #support channel.
+
+## Special Thanks
+
+- [Appsmith](https://github.com/appsmithorg/appsmith)
