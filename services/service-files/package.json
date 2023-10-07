@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.0.23",
+    "file-type": "16.5.4",
     "formidable": "2.0.1",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1"
