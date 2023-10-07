@@ -26,6 +26,12 @@ jobs:
           echo "STEEDOS_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
           echo "STEEDOS_VERSION=${STEEDOS_VERSION}"
         
+      - name: Generate info.json
+        run: |
+          if [[ -f deploy/enterprise/scripts/generate_info_json.sh ]]; then
+            deploy/enterprise/scripts/generate_info_json.sh
+          fi
+
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
         with:
@@ -51,16 +57,26 @@ jobs:
       - name: Replace Version ~2.5 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
         with:
-          include: deploy/enterprise/fs/app/platform/package.json
+          include: deploy/enterprise/app/platform/package.json
           find: "~2.5"
           replace: ${{env.STEEDOS_VERSION}}
           regex: false
 
-      - name: Build and push docker
+      - name: Build and push docker linux/amd64
         uses: docker/build-push-action@v3
         with:
           context: ./deploy/enterprise
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+
+      - name: Build and push docker linux/arm64
+        uses: docker/build-push-action@v3
+        with:
+          context: ./deploy/enterprise
+          platforms: linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

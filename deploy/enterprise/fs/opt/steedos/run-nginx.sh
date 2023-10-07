@@ -57,7 +57,7 @@ use_https=0
 if [[ -n ${STEEDOS_CUSTOM_DOMAIN-} ]] && [[ -z ${DYNO-} ]]; then
   use_https=1
   if ! [[ -e "/etc/letsencrypt/live/$STEEDOS_CUSTOM_DOMAIN" ]]; then
-    source "/opt/appsmith/init_ssl_cert.sh"
+    source "/opt/steedos/init_ssl_cert.sh"
     if ! init_ssl_cert "$STEEDOS_CUSTOM_DOMAIN"; then
       echo "Status code from init_ssl_cert is $?"
       use_https=0

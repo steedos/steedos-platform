@@ -105,7 +105,7 @@ async function checkRestoreVersionCompatability(restoreContentsPath) {
   const currentVersion = await getCurrentSteedosVersion();
   const manifest_data = await fsPromises.readFile(restoreContentsPath + '/manifest.json', { encoding: 'utf8' });
   const manifest_json = JSON.parse(manifest_data);
-  const restoreVersion = manifest_json["appsmithVersion"];
+  const restoreVersion = manifest_json["steedosVersion"];
   console.log('Current Steedos Version: ' + currentVersion);
   console.log('Restore Steedos Version: ' + restoreVersion);
 

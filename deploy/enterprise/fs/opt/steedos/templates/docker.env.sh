@@ -14,6 +14,7 @@ MONGO_OPLOG_URL=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/local?auth
 # MONGO_URL=mongodb://localhost:27017/steedos
 # MONGO_OPLOG_URL=mongodb://localhost:27017/local
 
+STEEDOS_MONGODB_URI=mongodb://$MONGO_USER:$MONGO_PASSWORD@localhost:27017/steedos?authSource=admin
 STEEDOS_MONGODB_USER=$MONGO_USER
 STEEDOS_MONGODB_PASSWORD=$MONGO_PASSWORD
 

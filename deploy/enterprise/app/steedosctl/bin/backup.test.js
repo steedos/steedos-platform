@@ -36,7 +36,7 @@ it('Generates t', async () => {
   fsPromises.mkdtemp =  jest.fn().mockImplementation((a) => a);
   backup.generateBackupRootPath().then((response)=>{console.log(response)})
   const res = await backup.generateBackupRootPath()
-  expect(res).toBe('temp/dir/appsmithctl-backup-')
+  expect(res).toBe('temp/dir/steedosctl-backup-')
 });
 
 test('Test backup contents path generation', () => {

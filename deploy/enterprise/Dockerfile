@@ -68,19 +68,21 @@ RUN apt-get update \
     && apt-get remove -y git python3-pip \
     && apt-get clean -y
 
-COPY ./fs/app /app
+COPY ./app /app
 
 ENV NODE_ENV=production
-
-
-WORKDIR /app/platform
-
-RUN npm i --production  && npm cache clean --force
 
 WORKDIR /app/unpkg
 
 RUN npm i --production  && npm cache clean --force
 
+WORKDIR /app/steedosctl
+
+RUN npm install --only=prod && npm install --only=prod -g
+
+WORKDIR /app/platform
+
+RUN npm i --production  && npm cache clean --force
 
 # Remove cached files
 RUN rm -rf \
@@ -97,7 +99,7 @@ COPY ./fs/etc /etc
 COPY ./fs/opt /opt
 
 
-RUN cd ./utils && npm install --only=prod && npm install --only=prod -g . && cd - \
+RUN cd - \
   && chmod 0644 /etc/cron.d/* \
   && chmod +x entrypoint.sh renew-certificate.sh healthcheck.sh templates/nginx-app.conf.sh /watchtower-hooks/*.sh \
   # Disable setuid/setgid bits for the files inside container.

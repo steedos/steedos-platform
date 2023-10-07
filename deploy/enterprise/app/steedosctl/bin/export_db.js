@@ -12,13 +12,13 @@ function export_database() {
 
 function stop_application() {
   console.log('stop_application  ....');
-  shell.exec('/usr/bin/supervisorctl stop backend rts');
+  shell.exec('/usr/bin/supervisorctl stop steedos');
   console.log('stop_application done');
 }
 
 function start_application() {
   console.log('start_application  ....');
-  shell.exec('/usr/bin/supervisorctl start backend rts');
+  shell.exec('/usr/bin/supervisorctl start steedos');
   console.log('start_application done');
 }
 

@@ -17,7 +17,7 @@ base_url="$(git remote get-url origin | sed 's,^git@github\.com:,https://github.
 #   echo "next_version = $next_version" >&2
 #   version="$next_version-SNAPSHOT"
 # fi
-version = require("./lerna.json").version
+version=$(node -p 'require("./lerna.json").version')
 
 if [[ -n ${GITHUB_RUN_ID-} ]]; then
   github_run_url="$base_url/actions/runs/$GITHUB_RUN_ID/attempts/${GITHUB_RUN_ATTEMPT-1}"
@@ -31,4 +31,4 @@ jq -n \
   --arg version "$version" \
   --arg imageBuiltAt "$(date -u -Iseconds)" \
   --argjson isCI "${CI:-false}" \
-  '$ARGS.named' | tee "$(git rev-parse --show-toplevel)/deploy/docker/fs/opt/appsmith/info.json"
+  '$ARGS.named' | tee "$(git rev-parse --show-toplevel)/deploy/enterprise/fs/opt/steedos/info.json"
