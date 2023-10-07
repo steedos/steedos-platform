@@ -26,6 +26,12 @@ jobs:
           echo "STEEDOS_VERSION=${STEEDOS_VERSION}" >> $GITHUB_ENV
           echo "STEEDOS_VERSION=${STEEDOS_VERSION}"
         
+      - name: Generate info.json
+        run: |
+          if [[ -f deploy/enterprise/scripts/generate_info_json.sh ]]; then
+            deploy/enterprise/scripts/generate_info_json.sh
+          fi
+
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
         with:
