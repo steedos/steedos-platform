@@ -31,4 +31,4 @@ jq -n \
   --arg version "$version" \
   --arg imageBuiltAt "$(date -u -Iseconds)" \
   --argjson isCI "${CI:-false}" \
-  '$ARGS.named' | tee "$(git rev-parse --show-toplevel)/deploy/docker/fs/opt/appsmith/info.json"
+  '$ARGS.named' | tee "$(git rev-parse --show-toplevel)/deploy/docker/fs/opt/steedos/info.json"

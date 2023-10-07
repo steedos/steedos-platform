@@ -81,7 +81,7 @@ async function createGitStorageArchive(destFolder) {
 
 async function createManifestFile(path) {
   const version = await utils.getCurrentSteedosVersion()
-  const manifest_data = { "appsmithVersion": version }
+  const manifest_data = { "steedosVersion": version }
   await fsPromises.writeFile(path + '/manifest.json', JSON.stringify(manifest_data));
 }
 
@@ -134,7 +134,7 @@ function getGitRoot(gitRoot) {
 }
 
 async function generateBackupRootPath() {
-  const backupRootPath = await fsPromises.mkdtemp(path.join(os.tmpdir(), 'appsmithctl-backup-'));
+  const backupRootPath = await fsPromises.mkdtemp(path.join(os.tmpdir(), 'steedosctl-backup-'));
   return backupRootPath
 }
 

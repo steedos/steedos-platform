@@ -5,7 +5,7 @@ const RESTORE_PATH = "/steedos-stacks/data/restore"
 
 const DUMP_FILE_NAME = "steedos-data.archive"
 
-const APPSMITHCTL_LOG_PATH = "/steedos-stacks/logs/appsmithctl"
+const STEEDOSCTL_LOG_PATH = "/steedos-stacks/logs/steedosctl"
 
 const LAST_ERROR_MAIL_TS = "/steedos-stacks/data/backup/last-error-mail-ts"
 
@@ -20,7 +20,7 @@ module.exports = {
     RESTORE_PATH,
     DUMP_FILE_NAME,
     LAST_ERROR_MAIL_TS,
-    APPSMITHCTL_LOG_PATH,
+    STEEDOSCTL_LOG_PATH,
     MIN_REQUIRED_DISK_SPACE_IN_BYTES,
     DURATION_BETWEEN_BACKUP_ERROR_MAILS_IN_MILLI_SEC,
     STEEDOS_DEFAULT_BACKUP_ARCHIVE_LIMIT
