@@ -166,12 +166,6 @@ The container runs multiple processes, including the Steedos Platform server, Ng
 
 Supervisord comes with a web interface for managing the various processes, available at <http://localhost/supervisor/>, as well as a command line interface towards the same goal.
 
-Here's a screenshot of the web interface listing all the processes managed:
-
-<p>
-  <img src="https://raw.githubusercontent.com/steedos/steedos-platform/master/deploy/docker/images/steedos_supervisord_ui.png" width="80%">
-</p>
-
 The command line interface can also be used to perform operations like restarting the Steedos Platform server, or restarting Nginx etc. For example, the following command (run in the installation folder) can be used to get a status of all running processes:
 
 ```sh
@@ -192,4 +186,4 @@ If you encounter any errors during this process, please reach out to [**support@
 
 ## Special Thanks
 
-- [Appsmith](https://github.com/appsmithorg/appsmith)
+- [Steedos](https://github.com/appsmithorg/appsmith)

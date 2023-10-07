@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-# The env variables are needed for Appsmith server to correctly handle non-roman scripts like Arabic.
+# The env variables are needed for Steedos server to correctly handle non-roman scripts like Arabic.
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
@@ -96,9 +96,21 @@ RUN rm -rf \
 COPY ./fs/etc /etc
 COPY ./fs/opt /opt
 
+
+RUN cd ./utils && npm install --only=prod && npm install --only=prod -g . && cd - \
+  && chmod 0644 /etc/cron.d/* \
+  && chmod +x entrypoint.sh renew-certificate.sh healthcheck.sh templates/nginx-app.conf.sh /watchtower-hooks/*.sh \
+  # Disable setuid/setgid bits for the files inside container.
+  && find / \( -path /proc -prune \) -o \( \( -perm -2000 -o -perm -4000 \) -print -exec chmod -s '{}' + \) || true 
+
+
+ENV PATH /opt/steedos/utils/node_modules/.bin:/opt/java/bin:$PATH
+
+LABEL com.centurylinklabs.watchtower.lifecycle.pre-check=/watchtower-hooks/pre-check.sh
+LABEL com.centurylinklabs.watchtower.lifecycle.pre-update=/watchtower-hooks/pre-update.sh
+
 # ENV defaults
 ENV ROOT_URL=http://127.0.0.1:3000 \
-    PORT=3000 \
     NODE_ENV=production 
 
 # ------------------------------------------------------------------------
