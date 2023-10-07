@@ -845,7 +845,8 @@
         try {
             const data = {
                 app,
-                isMobile: window.innerWidth <= 768
+                isMobile: window.innerWidth <= 768,
+                tabId
             };
             const page = Steedos.Page.Header.getPage(appId, tabId);
             var rootId = "steedosGlobalHeaderRoot";
@@ -903,7 +904,8 @@
         try {
             const data = {
                 app,
-                isMobile: window.innerWidth <= 768
+                isMobile: window.innerWidth <= 768,
+                tabId
             };
             const page = Steedos.Page.Footer.getPage(appId, tabId);
             var rootId = "steedosGlobalFooterRoot";
