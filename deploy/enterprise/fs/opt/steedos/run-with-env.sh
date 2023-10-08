@@ -8,8 +8,6 @@ set -o allexport
 . "$PRE_DEFINED_ENV_PATH"
 set +o allexport
 
-export PORT=3000
-
 if [[ -z "${STEEDOS_UNPKG_URL}" ]] && [[ ! -z "${STEEDOS_LICENSE}" ]]; then
   export STEEDOS_UNPKG_URL=/unpkg
 fi

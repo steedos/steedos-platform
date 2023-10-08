@@ -1,3 +1,5 @@
+process.env.PORT = 3000; // reset port for meteor 
+
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: "steedos",

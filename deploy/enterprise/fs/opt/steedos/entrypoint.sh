@@ -262,7 +262,7 @@ init_loading_pages(){
   # TODO: Also listen on 443, if HTTP certs are available.
   cat <<EOF > "$TMP/nginx-app.conf"
     server {
-      listen 80 default_server;
+      listen ${PORT:-80} default_server;
       location / {
         try_files \$uri \$uri/ /index.html =404;
       }

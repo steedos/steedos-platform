@@ -66,7 +66,7 @@ server {
 "
 else
   echo "
-  listen 80 default_server;
+  listen ${PORT:-80} default_server;
   server_name $custom_domain;
 "
 fi
