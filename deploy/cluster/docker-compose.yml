@@ -2,21 +2,6 @@ version: "3.9"
 
 services:
 
-  steedos:
-    image: steedos/steedos-enterprise:2.5.15-beta.10
-    scale: 2
-    ports:
-      - 80
-    environment:
-      - MONGO_URL=mongodb://mongodb:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
-    volumes:
-      - "./stacks:/steedos-stacks"
-    tty: true
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
   nginx:
     image: nginx:latest
     tty: true
@@ -26,6 +11,33 @@ services:
       - steedos
     ports:
       - 8080:80
+
+  steedos:
+    image: steedos/steedos-enterprise:2.5.15-beta.10
+    scale: 2
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
+      - STEEDOS_LICENSE=xxx
+    volumes:
+      - "./stacks:/steedos-stacks"
+    tty: true
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  steedos-cron:
+    image: steedos/steedos-enterprise:2.5.15-beta.10
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
+      - STEEDOS_CRON=true
+    volumes:
+      - "./stacks:/steedos-stacks"
+    tty: true
+    depends_on:
+      mongodb:
+        condition: service_healthy
 
   mongodb:
     image: mongo:4.4
