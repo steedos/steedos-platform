@@ -2,7 +2,7 @@ const { MongoClient, MongoServerError} = require("mongodb");
 const { preprocessMongoDBURI } = require("./utils");
 
 async function exec() {
-  const client = new MongoClient(preprocessMongoDBURI(process.env.STEEDOS_MONGODB_URI), {
+  const client = new MongoClient(preprocessMongoDBURI(process.env.MONGO_URL), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -26,7 +26,7 @@ async function checkReplicaSet(client) {
     try {
       const changeStream = client
         .db()
-        .collection("user")
+        .collection("users")
         .watch()
         .on("change", (change) => console.log(change))
         .on("error", (err) => {

@@ -34,10 +34,10 @@ function run() {
       }
     });
 
-    shell.echo('stop backend & rts application before export database');
+    shell.echo('stop steedos application before export database');
     stop_application();
     export_database();
-    shell.echo('start backend & rts application after export database');
+    shell.echo('start steedos application after export database');
     shell.echo();
     shell.echo('\033[0;33m++++++++++++++++++++ NOTE ++++++++++++++++++++');
     shell.echo();

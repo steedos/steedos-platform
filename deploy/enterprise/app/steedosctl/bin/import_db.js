@@ -12,11 +12,11 @@ function import_database() {
 }
 
 function stop_application() {
-  shell.exec('/usr/bin/supervisorctl stop backend rts')
+  shell.exec('/usr/bin/supervisorctl stop steedos')
 }
 
 function start_application() {
-  shell.exec('/usr/bin/supervisorctl start backend rts')
+  shell.exec('/usr/bin/supervisorctl start steedos')
 }
 
 // Main application workflow
@@ -32,7 +32,7 @@ const main = (forceOption) => {
       }
     })
 
-    shell.echo('stop backend & rts application before import database')
+    shell.echo('stop steedos application before import database')
     stop_application()
     const shellCmdResult = shell.exec(`mongo ${process.env.STEEDOS_MONGODB_URI} --quiet --eval "db.getCollectionNames().length"`)
     const collectionsLen = parseInt(shellCmdResult.stdout.toString().trimEnd())
@@ -62,7 +62,7 @@ const main = (forceOption) => {
     shell.echo(err)
     errorCode = 1
   } finally {
-    shell.echo('start backend & rts application after import database')
+    shell.echo('start steedos application after import database')
     start_application()
     process.exit(errorCode)
   }

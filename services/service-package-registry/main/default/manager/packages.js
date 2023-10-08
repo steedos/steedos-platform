@@ -47,16 +47,17 @@ const getAllPackages = async ()=>{
             _package.version = package.version
         }else{
             packages.push({
+                label: package.label || packageName,
+                homepage: package.homepage,
+                description: package.description,
+                ...(package.packageYmlData || {}),
                 _id : packageName.replace("/", '_'),
                 name: packageName,
                 status : package.enable ? 'starting' : 'disable',
                 version : package.version,
                 local: package.local,
-                label: package.label || packageName,
-                description: package.description,
                 metadata: package.metadata,
-                static: package.static,
-                homepage: package.homepage
+                static: package.static
             })
         }
     })
@@ -72,6 +73,10 @@ const getAllPackages = async ()=>{
             _package.homepage = packageInfo.homepage
         }else{
             packages.push({
+                label: packageInfo.label || packageName,
+                description: packageInfo.description,
+                homepage: packageInfo.homepage,
+                ...(packageInfo.packageYmlData || {}),
                 _id : packageName.replace("/", '_'),
                 name: packageName,
                 service_name: packageInfo.name,
@@ -79,10 +84,7 @@ const getAllPackages = async ()=>{
                 instance_id: packageInfo.instanceID,
                 status : 'enable',
                 version : packageInfo.version,
-                label: packageInfo.label || packageName,
-                description: packageInfo.description,
-                local: false,
-                homepage: packageInfo.homepage
+                local: false
             })
         }
     })
