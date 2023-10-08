@@ -186,4 +186,4 @@ If you encounter any errors during this process, please reach out to [**support@
 
 ## Special Thanks
 
-- [Steedos](https://github.com/appsmithorg/appsmith)
+- [Appsmith](https://github.com/appsmithorg/appsmith)
