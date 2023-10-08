@@ -226,6 +226,7 @@
                 //     }
                 //     return div;
                 // },
+                // 如果这里不配置env.notify，那么会走amis 默认的env.notify，它会造成随机把toast组件dom插入到不同的scope容器内（应该是插入到最后一个加载的scope），这在苹果手机上可能会造成弹出的通知z-index不生效的情况，出现通知被档住的问题
                 notify: (type, msg)=>{
                   if(msg.props?.schema.tpl){
                     SteedosUI.message[type](msg.props?.schema.tpl)
