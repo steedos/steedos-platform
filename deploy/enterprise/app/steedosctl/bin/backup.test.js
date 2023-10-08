@@ -12,7 +12,7 @@ test('Timestamp string in ISO format', () => {
   expect(backup.getTimeStampInISO()).toMatch(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\-(\d{2})\-(\d{2})\.(\d{3})Z/)
 });
 
-test('Available Space in /appsmith-stacks volume in Bytes', () => {
+test('Available Space in /steedos-stacks volume in Bytes', () => {
   shell.exec = jest.fn((format) => '20');
   const res = expect(backup.getAvailableBackupSpaceInBytes())
   res.toBe(20)
@@ -24,11 +24,11 @@ it('Checkx the constant is 2 GB', () => {
 });
 it('Should throw Error when the available size is below MIN_REQUIRED_DISK_SPACE_IN_BYTES', () => {
   let size = Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES - 1;
-  expect(() => {backup.checkAvailableBackupSpace(size)}).toThrow('Not enough space avaliable at /appsmith-stacks. Please ensure availability of atleast 2GB to backup successfully.');
+  expect(() => {backup.checkAvailableBackupSpace(size)}).toThrow('Not enough space avaliable at /steedos-stacks. Please ensure availability of atleast 2GB to backup successfully.');
 });
 
 it('Should not hould throw Error when the available size is >= MIN_REQUIRED_DISK_SPACE_IN_BYTES', () => {
-  expect(() => {backup.checkAvailableBackupSpace(Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES)}).not.toThrow('Not enough space avaliable at /appsmith-stacks. Please ensure availability of atleast 5GB to backup successfully.');
+  expect(() => {backup.checkAvailableBackupSpace(Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES)}).not.toThrow('Not enough space avaliable at /steedos-stacks. Please ensure availability of atleast 5GB to backup successfully.');
 });
 
 it('Generates t', async () => {
@@ -42,13 +42,13 @@ it('Generates t', async () => {
 test('Test backup contents path generation', () => {
   var root = '/rootDir'
   var timestamp = '0000-00-0T00-00-00.00Z'
-  expect(backup.getBackupContentsPath(root, timestamp)).toBe('/rootDir/appsmith-backup-0000-00-0T00-00-00.00Z')
+  expect(backup.getBackupContentsPath(root, timestamp)).toBe('/rootDir/steedos-backup-0000-00-0T00-00-00.00Z')
 });
 
 test('Test mongodump CMD generaton', async () => {
   var dest = '/dest'
-  var appsmithMongoURI = 'mongodb://username:password@host/appsmith'
-  var cmd = 'mongodump --uri=mongodb://username:password@host/appsmith --archive=/dest/mongodb-data.gz --gzip'
+  var appsmithMongoURI = 'mongodb://username:password@host/steedos'
+  var cmd = 'mongodump --uri=mongodb://username:password@host/steedos --archive=/dest/mongodb-data.gz --gzip'
   utils.execCommand =  jest.fn().mockImplementation(async (a) => a.join(' '));
   const res = await backup.executeMongoDumpCMD(dest, appsmithMongoURI)
   expect(res).toBe(cmd)
@@ -56,11 +56,11 @@ test('Test mongodump CMD generaton', async () => {
 })
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is \'\' ', () => {
-  expect(backup.getGitRoot('')).toBe('/appsmith-stacks/git-storage')
+  expect(backup.getGitRoot('')).toBe('/steedos-stacks/git-storage')
 });
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is null ', () => {
-  expect(backup.getGitRoot()).toBe('/appsmith-stacks/git-storage')
+  expect(backup.getGitRoot()).toBe('/steedos-stacks/git-storage')
 });
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is defined ', () => {
@@ -68,9 +68,9 @@ test('Test get gitRoot path when STEEDOS_GIT_ROOT is defined ', () => {
 });
 
 test('Test ln command generation', async () => {
-  var gitRoot = '/appsmith-stacks/git-storage'
+  var gitRoot = '/steedos-stacks/git-storage'
   var dest = '/destdir'
-  var cmd = 'ln -s /appsmith-stacks/git-storage /destdir/git-storage'
+  var cmd = 'ln -s /steedos-stacks/git-storage /destdir/git-storage'
   utils.execCommand =  jest.fn().mockImplementation(async (a) => a.join(' '));
   const res = await backup.executeCopyCMD(gitRoot, dest)
   expect(res).toBe(cmd)
