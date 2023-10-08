@@ -77,9 +77,10 @@ fi
   gzip on;
   gzip_types *;
 
-  # root /opt/steedos/public;
   # index index.html;
   # error_page 404 /;
+  error_page 502 /nginx/loading;
+  error_page 503 /nginx/loading;
 
   # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
   # add_header Content-Security-Policy "frame-ancestors ${STEEDOS_ALLOWED_FRAME_ANCESTORS-'self' *}";
@@ -143,6 +144,11 @@ fi
     proxy_set_header  X-Forwarded-Host  \$origin_host;
     proxy_set_header  Connection        "";
     proxy_pass http://localhost:3100/;
+  }
+
+  location /nginx/ {
+    root ${NGINX_WWW_PATH};
+    try_files \$uri \$uri/ /index.html =404;
   }
 }
 EOF
