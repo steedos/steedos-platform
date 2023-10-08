@@ -226,6 +226,15 @@
                 //     }
                 //     return div;
                 // },
+                notify: (type, msg)=>{
+                  if(msg.props?.schema.tpl){
+                    SteedosUI.message[type](msg.props?.schema.tpl)
+                  }else if(typeof msg == 'string'){
+                    SteedosUI.message[type](msg)
+                  }else{
+                    console.warn('notify', type, msg)
+                  }
+                },
                 jumpTo: (to, action) => {
                   if (to === 'goBack') {
                       return window.history.back();
@@ -316,6 +325,8 @@
             };
 
             window.renderAmis = function (root, schema, data, env) {
+              console.log("===window.renderAmis===root, env===", root, env);
+              console.log("===window.renderAmis===data===", data);
               const refName = schema.name || schema.id;
               if(SteedosUI.refs[refName]){
                 if(SteedosUI.refs[refName].unmount){
