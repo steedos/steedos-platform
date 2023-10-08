@@ -62,21 +62,12 @@ jobs:
           replace: ${{env.STEEDOS_VERSION}}
           regex: false
 
-      - name: Build and push docker linux/amd64
+      - name: Build and push docker
         uses: docker/build-push-action@v3
         with:
           context: ./deploy/enterprise
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-
-      - name: Build and push docker linux/arm64
-        uses: docker/build-push-action@v3
-        with:
-          context: ./deploy/enterprise
-          platforms: linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
