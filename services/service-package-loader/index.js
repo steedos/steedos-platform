@@ -12,6 +12,14 @@ const metaDataCore = require('@steedos/metadata-core');
 const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
 const loadFlowFile = new metaDataCore.LoadFlowFile();
 
+const getPackageYmlData = (packagePath)=>{
+    let packageYmlData = {};
+    if(fs.existsSync(path.join(packagePath, 'steedos.package.yml'))){
+        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'steedos.package.yml'));
+    }
+    return packageYmlData;
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -256,7 +264,8 @@ module.exports = {
                     }else if(fs.existsSync(path.join(_path, '..','package.json'))){
                         _packageInfo = metaDataCore.loadJSONFile(path.join(_path, '..', 'package.json'));
                     }
-                    await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
+                    const packageYmlData = getPackageYmlData(_path);
+                    await this.broker.call(`@steedos/service-packages.online`, {serviceInfo: {packageYmlData: packageYmlData, name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID, path: _path, version: _packageInfo.version, description: _packageInfo.description}})
                 } catch (error) {
                     console.log(`error`, error)
                 }    
@@ -337,7 +346,15 @@ module.exports = {
 
         schema.settings.packageInfo = {
             ...schema.settings.packageInfo,
-            ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {})
+            ...(schema.metadata && schema.metadata.$package ? schema.metadata.$package : {}),
+        }
+
+        const _path = schema.settings.packageInfo.path;
+        let packageYmlData = getPackageYmlData(_path);
+
+        schema.settings.packageInfo = {
+            ...schema.settings.packageInfo,
+            ...packageYmlData
         }
     },
 

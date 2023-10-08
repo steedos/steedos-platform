@@ -104,8 +104,10 @@ module.exports = {
 							}
 							await loader.loadPackage(module, packagePath);
 							const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+							const packageYmlData = loader.getPackageYmlData(packagePath);
 							await ctx.broker.call(`@steedos/service-packages.install`, {
 								serviceInfo: Object.assign({}, Object.assign({}, packageConfig, { name: module }), {
+									packageYmlData: packageYmlData,
 									nodeID: ctx.broker.nodeID,
 									instanceID: ctx.broker.instanceID,
 									metadata: metadata
@@ -130,8 +132,10 @@ module.exports = {
                 const packageConfig = await loader.disablePackage(module);
 				if(packageConfig.path){
 					const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+					const packageYmlData = loader.getPackageYmlData(packageConfig.path);
 					await ctx.broker.call(`@steedos/service-packages.install`, {
 						serviceInfo: Object.assign({}, packageConfig, {
+							packageYmlData,
 							nodeID: ctx.broker.nodeID, 
 							instanceID: ctx.broker.instanceID,
 							metadata: metadata 
@@ -150,8 +154,10 @@ module.exports = {
 				}
 				await packages.checkDependencies(path.resolve(packageConfig.path))
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
+				const packageYmlData = loader.getPackageYmlData(packageConfig.path);
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
+						packageYmlData,
 						nodeID: ctx.broker.nodeID, 
 						instanceID: ctx.broker.instanceID,
 						metadata: metadata
@@ -253,8 +259,10 @@ module.exports = {
 				}
 				const newConfig = loader.appendToPackagesConfig(module, packageConfig);
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+				const packageYmlData = loader.getPackageYmlData(packagePath);
 				await this.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, newConfig, {
+						packageYmlData,
 						name: module,
 						enable: enable, 
 						nodeID: this.broker.nodeID, 
@@ -316,8 +324,10 @@ module.exports = {
 				} catch (error) {
 					console.error(error)
 				}
+				const packageYmlData = loader.getPackageYmlData(packagePath);
 				await broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
+						packageYmlData,
 						name: packageName,
 						enable: enable, 
 						nodeID: broker.nodeID, 
@@ -451,8 +461,10 @@ module.exports = {
 							_packageInfo = Object.assign({}, _packageInfo, this.getPackageInfo(_packageInfo, name))
 						}
 						const metadata = await loader.getPackageMetadata(_packageInfo.path);
+						const packageYmlData = loader.getPackageYmlData(_packageInfo.path);
 						await this.broker.call(`@steedos/service-packages.install`, {
 							serviceInfo: {
+								packageYmlData,
 								name: name, 
 								nodeID: this.broker.nodeID, 
 								instanceID: this.broker.instanceID, 

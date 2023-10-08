@@ -9,6 +9,15 @@ const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./util');
+
+const getPackageYmlData = (packagePath)=>{
+    let packageYmlData = {};
+    if(fs.existsSync(path.join(packagePath, 'steedos.package.yml'))){
+        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'steedos.package.yml'));
+    }
+    return packageYmlData;
+}
+
 const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
 }
@@ -331,8 +340,10 @@ const installPackage = async (broker, options)=>{
     }
     appendToPackagesConfig(module, packageConfig);
     const metadata = await getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+    const packageYmlData = getPackageYmlData(packagePath);
     await broker.call(`@steedos/service-packages.install`, {
         serviceInfo: Object.assign({}, packageConfig, {
+            packageYmlData: packageYmlData,
             name: module,
             enable: enable, 
             nodeID: broker.nodeID, 
@@ -385,5 +396,6 @@ module.exports = {
     removePackage,
     getPackageInfo,
     getPackageMetadata,
-    installPackage
+    installPackage,
+    getPackageYmlData
 }
