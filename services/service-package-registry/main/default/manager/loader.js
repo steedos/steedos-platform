@@ -9,6 +9,7 @@ const userDir = path.join(process.cwd(), '.steedos');
 const packagesFilePath = path.join(userDir, 'steedos-packages.yml'); 
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./util');
+const metaDataCore = require('@steedos/metadata-core');
 
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
