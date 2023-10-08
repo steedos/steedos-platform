@@ -67,11 +67,18 @@ Autoupdate._retrySubscription = function () {
 		var checkNewVersionDocument = function (doc) {
 			var self = this;
 			if (doc.version !== autoupdateVersionCordova) {
-				window.fireGlobalEvent('onNewVersion', doc.version)
+				Meteor.setTimeout(function(){
+					if(!window.languages){
+						window.languages = {};
+					}
+					if(!window.languages.en){
+						window.languages = window._languages;
+					}
+					window.fireGlobalEvent('onNewVersion', doc.version);
+				}, 600)
 				// onNewVersion();
 			}
 		};
-
 		var handle = ClientVersions.find({
 			_id: 'web.cordova'
 		}).observe({
