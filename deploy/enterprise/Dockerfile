@@ -61,11 +61,14 @@ RUN set -x \
 
 # Install nginx && redis
 RUN apt-get update \
-    && apt-get install -y nginx  nginx-extras redis-server \
-    && apt-get install -y cron supervisor git python3-pip\
+    && apt-get install -y nginx nginx-extras redis-server \
+    && apt-get install -y cron supervisor git python3-pip python3-venv git ca-certificates\
     && pip3 install --no-cache-dir git+https://github.com/coderanger/supervisor-stdout@973ba19967cdaf46d9c1634d1675fc65b9574f6e \
     # && pip3 install supervisor-stdout \
-    && apt-get remove -y git python3-pip \
+    && python3 -m venv --prompt certbot /opt/certbot/venv \
+    && /opt/certbot/venv/bin/pip install --upgrade certbot setuptools pip \
+    && ln -s /opt/certbot/venv/bin/certbot /usr/local/bin \
+    && apt-get remove -y git python3-pip python3-venv \
     && apt-get clean -y
 
 COPY ./app /app

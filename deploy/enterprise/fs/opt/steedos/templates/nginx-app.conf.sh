@@ -51,6 +51,11 @@ if [[ $use_https == 1 ]]; then
   echo "
   listen 80;
   server_name $custom_domain;
+  
+  location /.well-known/acme-challenge/ {
+    root /steedos-stacks/data/certificate/certbot;
+  }
+
   return 301 https://\$host\$request_uri;
 }
 
