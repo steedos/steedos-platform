@@ -101,12 +101,19 @@ RUN rm -rf \
 COPY ./fs/etc /etc
 COPY ./fs/opt /opt
 
+# Set workdir to /opt/steedos
+WORKDIR /opt/steedos
+
+# ------------------------------------------------------------------------
+ENV TMP /tmp/steedos
+ENV NGINX_WWW_PATH="$TMP/www"
 
 RUN cd - \
   && chmod 0644 /etc/cron.d/* \
   && chmod +x entrypoint.sh renew-certificate.sh healthcheck.sh templates/nginx-app.conf.sh /watchtower-hooks/*.sh \
   # Disable setuid/setgid bits for the files inside container.
-  && find / \( -path /proc -prune \) -o \( \( -perm -2000 -o -perm -4000 \) -print -exec chmod -s '{}' + \) || true 
+  && find / \( -path /proc -prune \) -o \( \( -perm -2000 -o -perm -4000 \) -print -exec chmod -s '{}' + \) || true  \
+  && node prepare-image.mjs
 
 
 ENV PATH /opt/steedos/utils/node_modules/.bin:/opt/java/bin:$PATH
@@ -117,9 +124,6 @@ LABEL com.centurylinklabs.watchtower.lifecycle.pre-update=/watchtower-hooks/pre-
 # ENV defaults
 ENV ROOT_URL=http://127.0.0.1:3000 \
     NODE_ENV=production 
-
-# ------------------------------------------------------------------------
-ENV TMP /tmp/steedos
 
 # Define volumes - Service Layer
 VOLUME [ "/steedos-stacks" ]

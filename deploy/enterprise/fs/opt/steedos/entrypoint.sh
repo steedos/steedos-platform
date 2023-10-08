@@ -7,7 +7,7 @@ stacks_path=/steedos-stacks
 export SUPERVISORD_CONF_TARGET="$TMP/supervisor-conf.d/"  # export for use in supervisord.conf
 export MONGODB_TMP_KEY_PATH="$TMP/mongodb-key"  # export for use in supervisor process mongodb.conf
 
-mkdir -pv "$SUPERVISORD_CONF_TARGET"
+mkdir -pv "$SUPERVISORD_CONF_TARGET" "$NGINX_WWW_PATH"
 
 init_env_file() {
   CONF_PATH="/steedos-stacks/configuration"
@@ -150,6 +150,84 @@ use-mongodb-key() {
 }
 
 
+# Keep Let's Encrypt directory persistent
+mount_letsencrypt_directory() {
+  echo "Mounting Let's encrypt directory"
+  rm -rf /etc/letsencrypt
+  mkdir -p /steedos-stacks/{letsencrypt,ssl}
+  ln -s /steedos-stacks/letsencrypt /etc/letsencrypt
+}
+
+is_empty_directory() {
+  [[ -d $1 && -z "$(ls -A "$1")" ]]
+}
+
+check_setup_custom_ca_certificates() {
+  # old, deprecated, should be removed.
+  local stacks_ca_certs_path
+  stacks_ca_certs_path="$stacks_path/ca-certs"
+
+  local container_ca_certs_path
+  container_ca_certs_path="/usr/local/share/ca-certificates"
+
+  if [[ -d $stacks_ca_certs_path ]]; then
+    if [[ ! -L $container_ca_certs_path ]]; then
+      if is_empty_directory "$container_ca_certs_path"; then
+        rmdir -v "$container_ca_certs_path"
+      else
+        echo "The 'ca-certificates' directory inside the container is not empty. Please clear it and restart to use certs from 'stacks/ca-certs' directory." >&2
+        return
+      fi
+    fi
+
+    ln --verbose --force --symbolic --no-target-directory "$stacks_ca_certs_path" "$container_ca_certs_path"
+
+  elif [[ ! -e $container_ca_certs_path ]]; then
+    rm -vf "$container_ca_certs_path"  # If it exists as a broken symlink, this will be needed.
+    mkdir -v "$container_ca_certs_path"
+
+  fi
+
+  update-ca-certificates --fresh
+}
+
+setup-custom-ca-certificates() (
+  local stacks_ca_certs_path="$stacks_path/ca-certs"
+  local store="$TMP/cacerts"
+  local opts_file="$TMP/java-cacerts-opts"
+
+  rm -f "$store" "$opts_file"
+
+  if [[ -n "$(ls "$stacks_ca_certs_path"/*.pem 2>/dev/null)" ]]; then
+    echo "Looks like you have some '.pem' files in your 'ca-certs' folder. Please rename them to '.crt' to be picked up automatically.".
+  fi
+
+  if ! [[ -d "$stacks_ca_certs_path" && "$(find "$stacks_ca_certs_path" -maxdepth 1 -type f -name '*.crt' | wc -l)" -gt 0 ]]; then
+    echo "No custom CA certificates found."
+    return
+  fi
+
+  # Import the system CA certificates into the store.
+  keytool -importkeystore \
+    -srckeystore /opt/java/lib/security/cacerts \
+    -destkeystore "$store" \
+    -srcstorepass changeit \
+    -deststorepass changeit
+
+  # Add the custom CA certificates to the store.
+  find "$stacks_ca_certs_path" -maxdepth 1 -type f -name '*.crt' \
+    -exec keytool -import -noprompt -keystore "$store" -file '{}' -storepass changeit ';'
+
+  {
+    echo "-Djavax.net.ssl.trustStore=$store"
+    echo "-Djavax.net.ssl.trustStorePassword=changeit"
+  } > "$opts_file"
+
+  # Get certbot to use the combined trusted CA certs file.
+  export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+)
+
+
 configure_supervisord() {
   local supervisord_conf_source="/opt/steedos/templates/supervisord"
   if [[ -n "$(ls -A "$SUPERVISORD_CONF_TARGET")" ]]; then
@@ -176,6 +254,33 @@ configure_supervisord() {
 
 }
 
+init_loading_pages(){
+  local starting_page="/opt/steedos/templates/steedos_starting.html"
+  local initializing_page="/opt/steedos/templates/steedos_initializing.html"
+  local editor_load_page="$NGINX_WWW_PATH/loading.html"
+  cp "$initializing_page" "$NGINX_WWW_PATH/index.html"
+  # TODO: Also listen on 443, if HTTP certs are available.
+  cat <<EOF > "$TMP/nginx-app.conf"
+    server {
+      listen 80 default_server;
+      location / {
+        try_files \$uri \$uri/ /index.html =404;
+      }
+    }
+EOF
+  # Start nginx page to display the Steedos is Initializing page
+  nginx
+  # Update editor nginx page for starting page
+  cp "$starting_page" "$editor_load_page"
+}
+
+check_setup_custom_ca_certificates
+setup-custom-ca-certificates
+
+mount_letsencrypt_directory
+
+# Main Section
+init_loading_pages
 init_env_file
 
 check_mongodb_uri
@@ -201,6 +306,9 @@ mkdir -p /steedos-stacks/data/{backup,restore}
 
 # Create sub-directory to store services log in the container mounting folder
 mkdir -p /steedos-stacks/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg}
+
+# Stop nginx gracefully
+nginx -s quit
 
 # Handle CMD command
 exec "$@"

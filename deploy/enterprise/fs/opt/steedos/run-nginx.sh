@@ -65,7 +65,7 @@ if [[ -n ${STEEDOS_CUSTOM_DOMAIN-} ]] && [[ -z ${DYNO-} ]]; then
   fi
 fi
 
-bash /opt/steedos/templates/nginx-app.conf.sh "$use_https" "${STEEDOS_CUSTOM_DOMAIN-}" > /etc/nginx/sites-available/default
+/opt/steedos/templates/nginx-app.conf.sh "$use_https" "${STEEDOS_CUSTOM_DOMAIN-}"
 
 apply-env-vars() {
   original="$1"

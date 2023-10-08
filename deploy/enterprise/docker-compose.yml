@@ -12,6 +12,7 @@ services:
       - "80:80"    
       - "443:443"  
       - "3000:3000"  
+      - "9001:9001"  
     environment:
       - ROOT_URL=http://127.0.0.1:3000
       - STEEDOS_LICENSE=trial
