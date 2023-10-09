@@ -71,6 +71,10 @@ RUN apt-get update \
     && apt-get remove -y git python3-pip python3-venv \
     && apt-get clean -y
 
+# yarn 
+
+RUN npm install --global yarn
+
 # platform
 COPY ./app/platform /app
 
