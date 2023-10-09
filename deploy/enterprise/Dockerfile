@@ -14,7 +14,7 @@ RUN apt-get update || : && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
 
 RUN apt-get update \
-    && apt-get install -y gnupg curl nodejs yarn
+    && apt-get install -y gnupg curl nodejs
 
 # Install MongoDB 4.4.25
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
