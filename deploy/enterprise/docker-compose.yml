@@ -15,6 +15,7 @@ services:
     environment:
       - ROOT_URL=http://127.0.0.1:3000
       - STEEDOS_LICENSE=trial
+      - STEEDOS_LOG_LEVEL=info
     tty: true
     volumes:
       - "./stacks:/steedos-stacks"
