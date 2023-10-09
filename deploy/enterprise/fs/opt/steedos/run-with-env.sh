@@ -13,7 +13,7 @@ if [[ -z "${STEEDOS_UNPKG_URL}" ]] && [[ ! -z "${STEEDOS_LICENSE}" ]]; then
 fi
 
 if [[ -z "${STEEDOS_STORAGE_DIR}" ]]; then
-  export STEEDOS_STORAGE_DIR=/steedos-stacks/storage
+  export STEEDOS_STORAGE_DIR=/steedos-stacks/
 fi
 mkdir -pv "$STEEDOS_STORAGE_DIR"
 
