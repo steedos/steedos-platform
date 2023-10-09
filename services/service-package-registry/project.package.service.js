@@ -196,6 +196,7 @@ module.exports = {
 					const enable = true;
 					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker, {fromClient})
 				} catch (error) {
+					this.broker.logger.error(`installPackageFromUrl: `, error);
 					let errorInfo = error.message || '';
 					if (error.stderr) {
 						const errors = error.stderr.split('\n');
