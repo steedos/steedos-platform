@@ -326,8 +326,8 @@
             };
 
             window.renderAmis = function (root, schema, data, env) {
-              console.log("===window.renderAmis===root, env===", root, env);
-              console.log("===window.renderAmis===data===", data);
+              // console.log("===window.renderAmis===root, env===", root, env);
+              // console.log("===window.renderAmis===data===", data);
               const refName = schema.name || schema.id;
               if(SteedosUI.refs[refName]){
                 if(SteedosUI.refs[refName].unmount){
