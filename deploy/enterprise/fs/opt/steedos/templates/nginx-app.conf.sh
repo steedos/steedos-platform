@@ -150,5 +150,11 @@ fi
     root ${NGINX_WWW_PATH};
     try_files \$uri \$uri/ /index.html =404;
   }
+
+  location = /info.json {
+    add_header Content-Type application/json;
+    alias /opt/steedos/info.json;
+  }
+
 }
 EOF
