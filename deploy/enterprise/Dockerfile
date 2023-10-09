@@ -71,21 +71,29 @@ RUN apt-get update \
     && apt-get remove -y git python3-pip python3-venv \
     && apt-get clean -y
 
-COPY ./app /app
+# platform
+COPY ./app/platform /app
 
 ENV NODE_ENV=production
 
-WORKDIR /app/unpkg
+WORKDIR /app
 
 RUN npm i --production  && npm cache clean --force
 
-WORKDIR /app/steedosctl
+# steedosctl
+COPY ./app/steedosctl /opt/steedos/steedosctl
+
+WORKDIR /opt/steedos/steedosctl
 
 RUN npm install --only=prod && npm install --only=prod -g
 
-WORKDIR /app/platform
+# unpkg
+COPY ./app/unpkg /opt/steedos/unpkg
+WORKDIR /opt/steedos/unpkg
 
 RUN npm i --production  && npm cache clean --force
+
+COPY ./fs /
 
 # Remove cached files
 RUN rm -rf \
@@ -98,8 +106,6 @@ RUN rm -rf \
   /var/lib/apt/lists/* \
   /tmp/*
 
-COPY ./fs/etc /etc
-COPY ./fs/opt /opt
 
 # Set workdir to /opt/steedos
 WORKDIR /opt/steedos
@@ -127,8 +133,6 @@ ENV ROOT_URL=http://127.0.0.1:3000 \
 
 # Define volumes - Service Layer
 VOLUME [ "/steedos-stacks" ]
-
-WORKDIR /opt/steedos/platform
 
 ENTRYPOINT [ "/opt/steedos/entrypoint.sh" ]
 
