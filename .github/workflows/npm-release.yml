@@ -209,11 +209,7 @@ jobs:
           target_branch: master
           github_token: ${{ github.token }}
 
-      - name: Sleep 120s, wait for npm cache
-        uses: juliangruber/sleep-action@v1
-        with:
-          time: 120s
-
+     
       # - name: Create Docker Release
       #   # if: steps.version.outputs.is_stable == 'true'
       #   id: create_release
@@ -228,9 +224,3 @@ jobs:
       #     release_name: Release v${{ steps.branch-name.outputs.tag }}
       #     draft: false
       #     prerelease: false
-
-      - name: Sync NpmMirror
-        env:
-          CI: false
-        run: |
-          yarn sync

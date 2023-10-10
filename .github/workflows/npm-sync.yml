@@ -1,0 +1,22 @@
+on:
+  workflow_run:
+    workflows: [Release NPM]
+    types:
+      - completed
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Sleep 120s, wait for npm cache
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: 120s
+
+      - name: Sync cnpm
+        env:
+          CI: true
+        run: |
+          yarn sync
+
