@@ -78,7 +78,7 @@ jobs:
       - name: Build and push docker
         uses: docker/build-push-action@v3
         with:
-          context: ./deploy/enterprise
+          context: ./deploy/community
           platforms: linux/amd64 #,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
