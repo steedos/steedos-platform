@@ -9,10 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-      - name: Sleep 120s, wait for npm cache
-        uses: juliangruber/sleep-action@v1
-        with:
-          time: 120s
+      # checkout branch 2.5
+      - name: Checkout branch 2.5
+        uses: actions/checkout@v2
+        with: 
+          ref: '2.5'
+
+      - run: yarn --frozen-lockfile
+
+      - name: Bootstrap platform
+        run: |
+          yarn bootstrap
 
       - name: Sync cnpm
         env:
