@@ -2,7 +2,7 @@ name: Docker Enterprise
 
 on:
   workflow_run:
-    workflows: [Disabled-Release NPM]
+    workflows: [Release NPM]
     types:
       - completed
   push:
