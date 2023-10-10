@@ -29,7 +29,7 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_UNPKG_URL + "/@steedos-widgets/amis-object@1.3.4-beta.10/dist/assets.json";
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_UNPKG_URL + "/@steedos-widgets/amis-object@1.3.4-beta.11/dist/assets.json";
 }
 
 if(_.isEmpty(process.env.SERIALIZER)){
@@ -111,7 +111,7 @@ module.exports = {
 
 	// Default log level for built-in console logger. It can be overwritten in logger options above.
 	// Available values: trace, debug, info, warn, error, fatal
-	logLevel: "warn",
+	logLevel: process.env.STEEDOS_LOG_LEVEL || "warn",
 
 	// Define transporter.
 	// More info: https://moleculer.services/docs/0.14/networking.html

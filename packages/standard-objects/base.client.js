@@ -71,7 +71,6 @@ Steedos.StandardObjects = {
             },
             standard_approve:{
                 visible: function (object_name, record_id, record_permissions, props) {
-                    console.log('standard_approve=====?>');
                     if (!Session.get("record_id")) {
                         /*只在详细界面显示这个action*/
                         return false;

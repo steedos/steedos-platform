@@ -12,7 +12,7 @@ test('Timestamp string in ISO format', () => {
   expect(backup.getTimeStampInISO()).toMatch(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\-(\d{2})\-(\d{2})\.(\d{3})Z/)
 });
 
-test('Available Space in /steedos-stacks volume in Bytes', () => {
+test('Available Space in /steedos-storage volume in Bytes', () => {
   shell.exec = jest.fn((format) => '20');
   const res = expect(backup.getAvailableBackupSpaceInBytes())
   res.toBe(20)
@@ -24,11 +24,11 @@ it('Checkx the constant is 2 GB', () => {
 });
 it('Should throw Error when the available size is below MIN_REQUIRED_DISK_SPACE_IN_BYTES', () => {
   let size = Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES - 1;
-  expect(() => {backup.checkAvailableBackupSpace(size)}).toThrow('Not enough space avaliable at /steedos-stacks. Please ensure availability of atleast 2GB to backup successfully.');
+  expect(() => {backup.checkAvailableBackupSpace(size)}).toThrow('Not enough space avaliable at /steedos-storage. Please ensure availability of atleast 2GB to backup successfully.');
 });
 
 it('Should not hould throw Error when the available size is >= MIN_REQUIRED_DISK_SPACE_IN_BYTES', () => {
-  expect(() => {backup.checkAvailableBackupSpace(Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES)}).not.toThrow('Not enough space avaliable at /steedos-stacks. Please ensure availability of atleast 5GB to backup successfully.');
+  expect(() => {backup.checkAvailableBackupSpace(Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES)}).not.toThrow('Not enough space avaliable at /steedos-storage. Please ensure availability of atleast 5GB to backup successfully.');
 });
 
 it('Generates t', async () => {
@@ -56,11 +56,11 @@ test('Test mongodump CMD generaton', async () => {
 })
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is \'\' ', () => {
-  expect(backup.getGitRoot('')).toBe('/steedos-stacks/git-storage')
+  expect(backup.getGitRoot('')).toBe('/steedos-storage/git-storage')
 });
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is null ', () => {
-  expect(backup.getGitRoot()).toBe('/steedos-stacks/git-storage')
+  expect(backup.getGitRoot()).toBe('/steedos-storage/git-storage')
 });
 
 test('Test get gitRoot path when STEEDOS_GIT_ROOT is defined ', () => {
@@ -68,9 +68,9 @@ test('Test get gitRoot path when STEEDOS_GIT_ROOT is defined ', () => {
 });
 
 test('Test ln command generation', async () => {
-  var gitRoot = '/steedos-stacks/git-storage'
+  var gitRoot = '/steedos-storage/git-storage'
   var dest = '/destdir'
-  var cmd = 'ln -s /steedos-stacks/git-storage /destdir/git-storage'
+  var cmd = 'ln -s /steedos-storage/git-storage /destdir/git-storage'
   utils.execCommand =  jest.fn().mockImplementation(async (a) => a.join(' '));
   const res = await backup.executeCopyCMD(gitRoot, dest)
   expect(res).toBe(cmd)

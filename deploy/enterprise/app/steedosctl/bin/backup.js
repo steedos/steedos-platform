@@ -21,7 +21,7 @@ async function run() {
       }
     });
 
-    console.log('Available free space at /steedos-stacks');
+    console.log('Available free space at /steedos-storage');
     const availSpaceInBytes = getAvailableBackupSpaceInBytes();
     console.log('\n');
 
@@ -87,7 +87,7 @@ async function createManifestFile(path) {
 
 async function exportDockerEnvFile(destFolder) {
   console.log('Exporting docker environment file');
-  const content = await fsPromises.readFile('/steedos-stacks/configuration/docker.env', { encoding: 'utf8' });
+  const content = await fsPromises.readFile('/steedos-storage/configuration/docker.env', { encoding: 'utf8' });
   const cleaned_content = removeSensitiveEnvData(content)
   await fsPromises.writeFile(destFolder + '/docker.env', cleaned_content);
   console.log('Exporting docker environment file done.');
@@ -128,7 +128,7 @@ async function executeCopyCMD(srcFolder, destFolder) {
 
 function getGitRoot(gitRoot) {
   if (gitRoot == null || gitRoot === '') {
-    gitRoot = '/steedos-stacks/git-storage';
+    gitRoot = '/steedos-storage/git-storage';
   }
   return gitRoot
 }
@@ -172,12 +172,12 @@ function getTimeStampInISO() {
 }
 
 function getAvailableBackupSpaceInBytes() {
-  return parseInt(shell.exec('df --output=avail -B 1 /steedos-stacks | tail -n 1'), 10)
+  return parseInt(shell.exec('df --output=avail -B 1 /steedos-storage | tail -n 1'), 10)
 }
 
 function checkAvailableBackupSpace(availSpaceInBytes) {
   if (availSpaceInBytes < Constants.MIN_REQUIRED_DISK_SPACE_IN_BYTES) {
-    throw new Error('Not enough space avaliable at /steedos-stacks. Please ensure availability of atleast 2GB to backup successfully.');
+    throw new Error('Not enough space avaliable at /steedos-storage. Please ensure availability of atleast 2GB to backup successfully.');
   }
 }
 

@@ -92,11 +92,15 @@ module.exports = {
 			async handler(ctx) {
 				const { module } = ctx.params
                 const packages = loader.loadPackagesConfig();
-				const packageConfig = _.find(packages, (_p, pname) => {
+				let packageConfig = _.find(packages, (_p, pname) => {
+					_p.name = pname;
 					return pname === module;
 				})
 				if (packageConfig) {
 					if (packageConfig.enable) {
+						if(packageConfig.static){
+							packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
+						}
 						if (packageConfig.local) {
 							let packagePath = packageConfig.path;
 							if(!path.isAbsolute(packagePath)){
@@ -129,7 +133,10 @@ module.exports = {
 		disablePackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
-                const packageConfig = await loader.disablePackage(module);
+                let packageConfig = await loader.disablePackage(module);
+				if(packageConfig.static){
+					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
+				}
 				if(packageConfig.path){
 					const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
 					const packageYmlData = loader.getPackageYmlData(packageConfig.path);
@@ -189,6 +196,7 @@ module.exports = {
 					const enable = true;
 					return await this.installPackageFromUrl(module, version, url, auth, enable, registry_url, ctx.broker, {fromClient})
 				} catch (error) {
+					this.broker.logger.error(`installPackageFromUrl: `, error);
 					let errorInfo = error.message || '';
 					if (error.stderr) {
 						const errors = error.stderr.split('\n');
@@ -421,7 +429,7 @@ module.exports = {
 					if(!_.has(options, 'static')){
 						options.static = true
 					}
-					loader.appendToPackagesConfig(name, options)
+					loader.appendToPackagesConfig(name, options, 'addPackage')
 					await this.installPackagesSyncToMetaData(name);
 				}
 			}

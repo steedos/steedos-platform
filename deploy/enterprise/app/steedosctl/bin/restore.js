@@ -52,7 +52,7 @@ async function restoreDatabase(restoreContentsPath) {
 
 async function restoreDockerEnvFile(restoreContentsPath, backupName) {
   console.log('Restoring docker environment file');
-  const dockerEnvFile = '/steedos-stacks/configuration/docker.env';
+  const dockerEnvFile = '/steedos-storage/configuration/docker.env';
   var encryptionPwd = process.env.STEEDOS_ENCRYPTION_PASSWORD;
   var encryptionSalt = process.env.STEEDOS_ENCRYPTION_SALT;
   await utils.execCommand(['mv', dockerEnvFile, dockerEnvFile + '.' + backupName]);
@@ -94,9 +94,9 @@ async function restoreDockerEnvFile(restoreContentsPath, backupName) {
 async function restoreGitStorageArchive(restoreContentsPath, backupName) {
   console.log('Restoring git-storage archive');
   // TODO: Consider STEEDOS_GIT_ROOT env for later iterations
-  const gitRoot = '/steedos-stacks/git-storage';
+  const gitRoot = '/steedos-storage/git-storage';
   await utils.execCommand(['mv', gitRoot, gitRoot + '-' + backupName]);
-  await utils.execCommand(['mv', restoreContentsPath + '/git-storage', '/steedos-stacks']);
+  await utils.execCommand(['mv', restoreContentsPath + '/git-storage', '/steedos-storage']);
   console.log('Restoring git-storage archive completed');
 
 }

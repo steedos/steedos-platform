@@ -2,9 +2,9 @@
 
 set -e
 
-ENV_PATH="/steedos-stacks/configuration/docker.env"
-PRE_DEFINED_ENV_PATH="/steedos-stacks/configuration/pre-define.env"
-if [[ -f /steedos-stacks/configuration/docker.env ]]; then
+ENV_PATH="/steedos-storage/configuration/docker.env"
+PRE_DEFINED_ENV_PATH="/steedos-storage/configuration/pre-define.env"
+if [[ -f /steedos-storage/configuration/docker.env ]]; then
   echo 'Load environment configuration'
   set -o allexport
   . "$ENV_PATH"
@@ -13,7 +13,7 @@ if [[ -f /steedos-stacks/configuration/docker.env ]]; then
 fi
 
 if [[ -n $STEEDOS_CUSTOM_DOMAIN ]]; then
-  data_path="/steedos-stacks/data/certificate"
+  data_path="/steedos-storage/data/certificate"
   domain="$STEEDOS_CUSTOM_DOMAIN"
   rsa_key_size=4096
 

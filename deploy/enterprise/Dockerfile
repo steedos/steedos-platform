@@ -14,7 +14,7 @@ RUN apt-get update || : && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
 
 RUN apt-get update \
-    && apt-get install -y gnupg curl nodejs yarn
+    && apt-get install -y gnupg curl nodejs
 
 # Install MongoDB 4.4.25
 # https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/
@@ -71,21 +71,33 @@ RUN apt-get update \
     && apt-get remove -y git python3-pip python3-venv \
     && apt-get clean -y
 
-COPY ./app /app
+# yarn 
+
+RUN npm install --global yarn
+
+# platform
+COPY ./app/platform /app
 
 ENV NODE_ENV=production
 
-WORKDIR /app/unpkg
+WORKDIR /app
 
 RUN npm i --production  && npm cache clean --force
 
-WORKDIR /app/steedosctl
+# steedosctl
+COPY ./app/steedosctl /opt/steedos/steedosctl
+
+WORKDIR /opt/steedos/steedosctl
 
 RUN npm install --only=prod && npm install --only=prod -g
 
-WORKDIR /app/platform
+# unpkg
+COPY ./app/unpkg /opt/steedos/unpkg
+WORKDIR /opt/steedos/unpkg
 
 RUN npm i --production  && npm cache clean --force
+
+COPY ./fs /
 
 # Remove cached files
 RUN rm -rf \
@@ -98,15 +110,20 @@ RUN rm -rf \
   /var/lib/apt/lists/* \
   /tmp/*
 
-COPY ./fs/etc /etc
-COPY ./fs/opt /opt
 
+# Set workdir to /opt/steedos
+WORKDIR /opt/steedos
+
+# ------------------------------------------------------------------------
+ENV TMP /tmp/steedos
+ENV NGINX_WWW_PATH="$TMP/www"
 
 RUN cd - \
   && chmod 0644 /etc/cron.d/* \
   && chmod +x entrypoint.sh renew-certificate.sh healthcheck.sh templates/nginx-app.conf.sh /watchtower-hooks/*.sh \
   # Disable setuid/setgid bits for the files inside container.
-  && find / \( -path /proc -prune \) -o \( \( -perm -2000 -o -perm -4000 \) -print -exec chmod -s '{}' + \) || true 
+  && find / \( -path /proc -prune \) -o \( \( -perm -2000 -o -perm -4000 \) -print -exec chmod -s '{}' + \) || true  \
+  && node prepare-image.mjs
 
 
 ENV PATH /opt/steedos/utils/node_modules/.bin:/opt/java/bin:$PATH
@@ -118,13 +135,8 @@ LABEL com.centurylinklabs.watchtower.lifecycle.pre-update=/watchtower-hooks/pre-
 ENV ROOT_URL=http://127.0.0.1:3000 \
     NODE_ENV=production 
 
-# ------------------------------------------------------------------------
-ENV TMP /tmp/steedos
-
 # Define volumes - Service Layer
-VOLUME [ "/steedos-stacks" ]
-
-WORKDIR /opt/steedos/platform
+VOLUME [ "/steedos-storage" ]
 
 ENTRYPOINT [ "/opt/steedos/entrypoint.sh" ]
 

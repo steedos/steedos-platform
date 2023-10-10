@@ -276,7 +276,7 @@
                     $scopeId : schema.name || schema.id
                 }
             });
-            console.log(`defData`, defData)
+            // console.log(`defData`, defData)
 
             schema = lodash.defaultsDeep(defData , schema);
 

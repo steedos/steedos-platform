@@ -4,7 +4,7 @@ init_ssl_cert() {
   STEEDOS_CUSTOM_DOMAIN="$1"
 
   local rsa_key_size=4096
-  local data_path="/steedos-stacks/data/certificate"
+  local data_path="/steedos-storage/data/certificate"
 
   mkdir -p "$data_path/www"
 
@@ -15,7 +15,7 @@ init_ssl_cert() {
   nginx
 
   local live_path="/etc/letsencrypt/live/$STEEDOS_CUSTOM_DOMAIN"
-  local ssl_path="/steedos-stacks/ssl"
+  local ssl_path="/steedos-storage/ssl"
   if [[ -e "$ssl_path/fullchain.pem" ]] && [[ -e "$ssl_path/privkey.pem" ]]; then
     echo "Existing custom certificate"
     echo "Stop Nginx"

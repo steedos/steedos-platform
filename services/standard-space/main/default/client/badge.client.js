@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-03-05 17:07:58
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-22 17:44:06
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-09 17:21:35
  */
 let keyvalues = {};
 ; (function () {
@@ -101,11 +101,11 @@ function observeBadgeCount(button) {
             "_id": "Y8dTQRuyaqkRebFPz"
         }
         */
-        console.log("observed steedos_keyvalues change:", type, doc);
+        // console.log("observed steedos_keyvalues change:", type, doc);
         if(doc.space){
             keyvalues[doc.key] = doc;
             sessionStorage.setItem("keyvalues", JSON.stringify(keyvalues));
-            console.log("handleAction broadcast for observeBadgeCount");
+            // console.log("handleAction broadcast for observeBadgeCount");
             // space为null的订阅不触发事件，后续有需要再单独处理
             button.props.dispatchEvent('click', {
                 type: type,

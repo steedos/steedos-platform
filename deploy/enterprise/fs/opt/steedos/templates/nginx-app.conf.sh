@@ -11,9 +11,9 @@ if [[ $use_https == 1 ]]; then
   ssl_key_path="/etc/letsencrypt/live/$custom_domain/privkey.pem"
 
   # In case of existing custom certificate, container will use them to configure SSL
-  if [[ -e "/steedos-stacks/ssl/fullchain.pem" ]] && [[ -e "/steedos-stacks/ssl/privkey.pem" ]]; then
-    ssl_cert_path="/steedos-stacks/ssl/fullchain.pem"
-    ssl_key_path="/steedos-stacks/ssl/privkey.pem"
+  if [[ -e "/steedos-storage/ssl/fullchain.pem" ]] && [[ -e "/steedos-storage/ssl/privkey.pem" ]]; then
+    ssl_cert_path="/steedos-storage/ssl/fullchain.pem"
+    ssl_key_path="/steedos-storage/ssl/privkey.pem"
   fi
 fi
 
@@ -22,7 +22,7 @@ additional_downstream_headers='
 add_header X-Content-Type-Options "nosniff";
 '
 
-cat <<EOF
+cat <<EOF > "$TMP/nginx-app.conf"
 map \$http_x_forwarded_proto \$origin_scheme {
   default \$http_x_forwarded_proto;
   '' \$scheme;
@@ -41,9 +41,6 @@ map \$http_forwarded \$final_forwarded {
 # redirect log to stdout for supervisor to capture
 access_log /dev/stdout;
 
-server_tokens off;
-more_set_headers 'Server: ';
-
 server {
 
 $(
@@ -53,7 +50,7 @@ if [[ $use_https == 1 ]]; then
   server_name $custom_domain;
   
   location /.well-known/acme-challenge/ {
-    root /steedos-stacks/data/certificate/certbot;
+    root /steedos-storage/data/certificate/certbot;
   }
 
   return 301 https://\$host\$request_uri;
@@ -64,12 +61,12 @@ server {
   server_name _;
   ssl_certificate $ssl_cert_path;
   ssl_certificate_key $ssl_key_path;
-  include /steedos-stacks/data/certificate/conf/options-ssl-nginx.conf;
-  ssl_dhparam /steedos-stacks/data/certificate/conf/ssl-dhparams.pem;
+  include /steedos-storage/data/certificate/conf/options-ssl-nginx.conf;
+  ssl_dhparam /steedos-storage/data/certificate/conf/ssl-dhparams.pem;
 "
 else
   echo "
-  listen 80 default_server;
+  listen ${PORT:-80} default_server;
   server_name $custom_domain;
 "
 fi
@@ -80,9 +77,10 @@ fi
   gzip on;
   gzip_types *;
 
-  # root /opt/steedos/public;
   # index index.html;
   # error_page 404 /;
+  error_page 502 /nginx/loading;
+  error_page 503 /nginx/loading;
 
   # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
   # add_header Content-Security-Policy "frame-ancestors ${STEEDOS_ALLOWED_FRAME_ANCESTORS-'self' *}";
@@ -90,7 +88,7 @@ fi
   $additional_downstream_headers
 
   location /.well-known/acme-challenge/ {
-    root /steedos-stacks/data/certificate/certbot;
+    root /steedos-storage/data/certificate/certbot;
   }
 
   location = /supervisor {
@@ -147,5 +145,16 @@ fi
     proxy_set_header  Connection        "";
     proxy_pass http://localhost:3100/;
   }
+
+  location /nginx/ {
+    root ${NGINX_WWW_PATH};
+    try_files \$uri \$uri/ /index.html =404;
+  }
+
+  location = /info.json {
+    add_header Content-Type application/json;
+    alias /opt/steedos/info.json;
+  }
+
 }
 EOF

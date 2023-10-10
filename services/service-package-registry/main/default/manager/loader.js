@@ -23,7 +23,7 @@ const loadPackagesConfig = ()=>{
     return yaml.load(fs.readFileSync(packagesFilePath, 'utf8')) || {};
 }
 
-const appendToPackagesConfig = (packageName, options)=>{
+const appendToPackagesConfig = (packageName, options, actionName)=>{
     let packages = loadPackagesConfig();
     let changeNamePackage = null;
     if(options.local && !packages[packageName]){
@@ -46,7 +46,9 @@ const appendToPackagesConfig = (packageName, options)=>{
             }
         }else{
             // 对于已经存在的软件包, 不支持使用传入的enable控制软件包状态.
-            delete options.enable
+            if(actionName === 'addPackage'){
+                delete options.enable
+            }
             packages[packageName] = Object.assign(packages[packageName], options)
         }
     }else{

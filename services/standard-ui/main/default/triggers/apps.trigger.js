@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-22 11:09:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-09 15:46:06
  * @Description: 
  */
 const _ = require('underscore');
@@ -81,8 +81,10 @@ module.exports = {
         if(id && _.isEmpty(this.data.values)){
             let lng = await getLng(this.userId);
             let app = await objectql.getAppConfig(id);
-            i18n.translationApp(lng, app._id, app)
-            Object.assign(this.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
+            if(app){
+                i18n.translationApp(lng, app._id, app)
+                Object.assign(this.data.values, Object.assign({code: app._id}, clone(app), baseRecord))
+            }
         }
     }
 }

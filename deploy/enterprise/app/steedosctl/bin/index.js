@@ -9,7 +9,7 @@ const check_replica_set = require("./check_replica_set.js");
 const version = require("./version.js");
 const mongo_shell_utils = require("./mongo_shell_utils.js");
 
-const APPLICATION_CONFIG_PATH = "/steedos-stacks/configuration/docker.env";
+const APPLICATION_CONFIG_PATH = "/steedos-storage/configuration/docker.env";
 
 // Loading latest application configuration
 require("dotenv").config({ path: APPLICATION_CONFIG_PATH });

@@ -64,13 +64,13 @@ const main = async (userServer, ipServer) => {
         // }
 
         // shell.exec(
-        //   `scp -i ${folderSsh}/id_rsa -r /steedos-stacks/configuration ${userServer}@${ipServer}:${installAbsoluteDir}/stacks`,
+        //   `scp -i ${folderSsh}/id_rsa -r /steedos-storage/configuration ${userServer}@${ipServer}:${installAbsoluteDir}/stacks`,
         // );
         // shell.exec(
-        //   `scp -i ${folderSsh}/id_rsa -r /steedos-stacks/data/backup ${userServer}@${ipServer}:${installAbsoluteDir}/stacks/data`,
+        //   `scp -i ${folderSsh}/id_rsa -r /steedos-storage/data/backup ${userServer}@${ipServer}:${installAbsoluteDir}/stacks/data`,
         // );
         // shell.exec(
-        //   `scp -i ${folderSsh}/id_rsa -r /steedos-stacks/letsencrypt ${userServer}@${ipServer}:${installAbsoluteDir}/stacks`,
+        //   `scp -i ${folderSsh}/id_rsa -r /steedos-storage/letsencrypt ${userServer}@${ipServer}:${installAbsoluteDir}/stacks`,
         // );
         // shell.exec(`ssh -i ${folderSsh}/id_rsa ${userServer}@${ipServer} 'bash -s ${installAbsoluteDir}' < /opt/steedos/start_app.sh`);
         // shell.rm('-rf', folderSsh);

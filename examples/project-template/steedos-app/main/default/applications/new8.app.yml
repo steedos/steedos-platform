@@ -1,0 +1,12 @@
+name: new8
+code: new8
+icon_slds: account
+is_creator: true
+mobile: true
+sort: 1
+tab_items:
+  calendar_objects_list:
+    index: 1
+tabs:
+  - calendar_objects_list
+visible: true

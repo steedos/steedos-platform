@@ -6,6 +6,10 @@ checkUserSigned = (context, redirect) ->
 		app_id = context.params.app_id
 		if (app_id != "-") && app_id && Session.get("app_id") != app_id
 			Session.set("app_id", app_id)
+		else if app_id == '-' && !Session.get("app_id")
+			firstApp = Steedos.getFirstApp()
+			Session.set("app_id", firstApp.id)
+			
 	return
 	# listTreeCompany = localStorage.getItem("listTreeCompany")
 	# if listTreeCompany

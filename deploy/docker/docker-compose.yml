@@ -14,16 +14,19 @@ services:
       - PORT=5000
       - MONGO_URL=mongodb://mongodb:27017/steedos
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
-      - TRANSPORTER=nats://nats:4222
-      - CACHER=redis://redis:6379
+      - TRANSPORTER=redis://redis:6379
+      - CACHER=redis://redis:6379/1
+      - STEEDOS_STORAGE_DIR=/steedos-storage
     volumes:
-      - "steedos-data:/app/storage"
+      - "steedos-storage:/steedos-storage"
     depends_on:
+      redis:
+        condition: service_started
       mongodb:
         condition: service_healthy
   
   redis:
-    image: redis:6.0
+    image: redis:6.2.10
     command: "redis-server --save \"\" --appendonly no --loglevel warning"
     ports:
       - "6379:6379"
@@ -50,17 +53,10 @@ services:
     command: >
       mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})"
 
-  # Micro Service Transporter
-  nats:
-    image: nats:2.9
-    ports:
-      - "4222:4222"
-      # - "8222:8222" # monitor port
-
 volumes:
   steedos-mongo-data:
     driver: local
   steedos-installed-packages:
     driver: local
-  steedos-data:
+  steedos-storage:
     driver: local
