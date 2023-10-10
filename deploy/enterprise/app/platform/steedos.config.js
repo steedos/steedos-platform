@@ -1,4 +1,6 @@
-process.env.PORT = 3000; // reset port for meteor 
+// env PORT is reserved for nginx, reset port for meteor
+// 企业版 PORT 环境变量用于 nginx，此处重置 metor 端口为 3000
+process.env.PORT = 3000;
 
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.

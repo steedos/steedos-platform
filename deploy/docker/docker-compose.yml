@@ -18,7 +18,7 @@ services:
       - CACHER=redis://redis:6379
       - STEEDOS_STORAGE_DIR=/steedos-storage
     volumes:
-      - "steedos-data:/steedos-storage"
+      - "steedos-storage:/steedos-storage"
     depends_on:
       mongodb:
         condition: service_healthy
@@ -63,5 +63,5 @@ volumes:
     driver: local
   steedos-installed-packages:
     driver: local
-  steedos-data:
+  steedos-storage:
     driver: local
