@@ -2,7 +2,7 @@ name: Docker Community
 
 on:
   workflow_run:
-    workflows: [Disabled-Release NPM]
+    workflows: [Release NPM]
     types:
       - completed
   push:
@@ -12,6 +12,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         node-version: [14.x]
