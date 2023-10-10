@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-15 15:50:29
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-06-20 19:36:20
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-10 17:12:11
  * @Description: 根据query的请求体解析出查询的字段
  */
 import { GraphQLResolveInfo } from 'graphql';
@@ -14,7 +14,7 @@ import {
 
 import _ = require('lodash');
 
-import { DISPLAY_PREFIX, EXPAND_SUFFIX, RELATED_PREFIX } from './consts'
+import { DISPLAY_PREFIX, EXPAND_SUFFIX, RELATED_PREFIX, UI_PREFIX, PERMISSIONS_PREFIX } from './consts'
 
 export function getQueryFields(resolveInfo: GraphQLResolveInfo) {
     const fieldsName = []
@@ -40,6 +40,14 @@ export function getQueryFields(resolveInfo: GraphQLResolveInfo) {
             }
             // 如果field.name以_related开头，则跳过
             if (name.startsWith(RELATED_PREFIX)) {
+                continue
+            }
+
+            if (name.startsWith(UI_PREFIX)) {
+                continue
+            }
+
+            if (name.startsWith(PERMISSIONS_PREFIX)) {
                 continue
             }
             fieldsName.push(name)
