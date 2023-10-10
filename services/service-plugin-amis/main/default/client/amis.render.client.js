@@ -293,7 +293,6 @@
                         }
                       }
                     }
-                    console.log('env.requestAdaptor===', config);
                     return config;
                 }
             };
