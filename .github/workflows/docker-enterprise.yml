@@ -1,4 +1,4 @@
-name: Release Docker EE
+name: Docker Enterprise
 
 on:
   workflow_run:

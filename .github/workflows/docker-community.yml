@@ -1,4 +1,4 @@
-name: Release Docker EE
+name: Docker Community
 
 on:
   workflow_run:
