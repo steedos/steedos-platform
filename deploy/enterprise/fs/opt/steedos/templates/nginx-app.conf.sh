@@ -11,9 +11,9 @@ if [[ $use_https == 1 ]]; then
   ssl_key_path="/etc/letsencrypt/live/$custom_domain/privkey.pem"
 
   # In case of existing custom certificate, container will use them to configure SSL
-  if [[ -e "/steedos-stacks/ssl/fullchain.pem" ]] && [[ -e "/steedos-stacks/ssl/privkey.pem" ]]; then
-    ssl_cert_path="/steedos-stacks/ssl/fullchain.pem"
-    ssl_key_path="/steedos-stacks/ssl/privkey.pem"
+  if [[ -e "/steedos-storage/ssl/fullchain.pem" ]] && [[ -e "/steedos-storage/ssl/privkey.pem" ]]; then
+    ssl_cert_path="/steedos-storage/ssl/fullchain.pem"
+    ssl_key_path="/steedos-storage/ssl/privkey.pem"
   fi
 fi
 
@@ -50,7 +50,7 @@ if [[ $use_https == 1 ]]; then
   server_name $custom_domain;
   
   location /.well-known/acme-challenge/ {
-    root /steedos-stacks/data/certificate/certbot;
+    root /steedos-storage/data/certificate/certbot;
   }
 
   return 301 https://\$host\$request_uri;
@@ -61,8 +61,8 @@ server {
   server_name _;
   ssl_certificate $ssl_cert_path;
   ssl_certificate_key $ssl_key_path;
-  include /steedos-stacks/data/certificate/conf/options-ssl-nginx.conf;
-  ssl_dhparam /steedos-stacks/data/certificate/conf/ssl-dhparams.pem;
+  include /steedos-storage/data/certificate/conf/options-ssl-nginx.conf;
+  ssl_dhparam /steedos-storage/data/certificate/conf/ssl-dhparams.pem;
 "
 else
   echo "
@@ -88,7 +88,7 @@ fi
   $additional_downstream_headers
 
   location /.well-known/acme-challenge/ {
-    root /steedos-stacks/data/certificate/certbot;
+    root /steedos-storage/data/certificate/certbot;
   }
 
   location = /supervisor {

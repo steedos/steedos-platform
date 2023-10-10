@@ -38,7 +38,7 @@ services:
       - "443:443"
       - "9001:9001"
     volumes:
-      - ./stacks:/steedos-stacks
+      - ./storage:/steedos-storage
     restart: unless-stopped
   #   # Uncomment the lines below to enable auto-update
   #   labels:
@@ -88,7 +88,7 @@ To make Steedos Platform available on a custom domain, please update your domain
 
 In our container, we support to generate a free SSL certificate If you have your owned certificate, please follow these steps to use it inside the container.
 - Firstly, please rename your certificate file as `fullchain.pem` and key file as `privkey.pem` 
-- Then, copy these files into the sub-directory `<mounting-directory>/ssl/` (*Note: Please change `<mounting-directory>` by the mounting volume directory in the `docker-compose.yml`. Default is `./stacks`*)
+- Then, copy these files into the sub-directory `<mounting-directory>/ssl/` (*Note: Please change `<mounting-directory>` by the mounting volume directory in the `docker-compose.yml`. Default is `./storage`*)
 - Restart the container using `docker restart Steedos Platform`
 
 The container will check the certificate files in the folder `<mounting-directory>/ssl` and use them if they are existed.
@@ -108,18 +108,18 @@ Before running this, ensure you are in the directory where `docker-compose.yml` 
 docker-compose exec steedos-enterprise steedosctl export_db
 ```
 
-The output file will be stored in the container directory `/steedos-stacks/data/backup/steedos-data.archive`. Thanks to the volume configuration in the `docker-compose.yml` file, it should be available on your host machine at `./stacks/data/backup/steedos-data.archive`.
+The output file will be stored in the container directory `/steedos-storage/data/backup/steedos-data.archive`. Thanks to the volume configuration in the `docker-compose.yml` file, it should be available on your host machine at `./storage/data/backup/steedos-data.archive`.
 
 If your volume configuration is different or unavailable, you can use the following command to copy the archive file to your host disk:
 
 ```sh
-docker-compose cp steedos-enterprise:/steedos-stacks/data/backup/steedos-data.archive .
+docker-compose cp steedos-enterprise:/steedos-storage/data/backup/steedos-data.archive .
 ```
 
 Note that you may want to save the `docker.env` file in addition to this archive file, if you intend to be able to reproduce this environment elsewhere, or in case of a disaster. This file can be copied out of the container with the following command:
 
 ```sh
-docker-compose cp steedos-enterprise:/steedos-stacks/configuration/docker.env .
+docker-compose cp steedos-enterprise:/steedos-storage/configuration/docker.env .
 ```
 
 **Be sure to keep this file safe**, since it contains information that can be used to decrypt datasource information from the database archive.
@@ -131,7 +131,7 @@ The following command can restore backup archive, that was produced by the expor
 First, copy the archive file into the container using the following command:
 
 ```sh
-docker-compose cp ./steedos-data.archive steedos-enterprise:/steedos-stacks/data/restore/
+docker-compose cp ./steedos-data.archive steedos-enterprise:/steedos-storage/data/restore/
 ```
 
 Second, run the following command to import data from this file:
@@ -143,7 +143,7 @@ docker-compose exec steedos-enterprise steedosctl import_db
 Note that when you restore, you may also want to copy a `docker.env` from the original instance into this one. You can use the following command to do this (assuming you are in the installation folder and `docker.env` exists in the same folder):
 
 ```sh
-docker-compose cp ./docker.env steedos-enterprise:/steedos-stacks/configuration/
+docker-compose cp ./docker.env steedos-enterprise:/steedos-storage/configuration/
 ```
 
 This will need a restart of the Steedos Platform server, which can be done using the following command:

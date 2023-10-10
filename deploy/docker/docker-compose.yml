@@ -16,8 +16,9 @@ services:
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - TRANSPORTER=nats://nats:4222
       - CACHER=redis://redis:6379
+      - STEEDOS_STORAGE_DIR=/steedos-storage
     volumes:
-      - "steedos-data:/app/storage"
+      - "steedos-data:/steedos-storage"
     depends_on:
       mongodb:
         condition: service_healthy

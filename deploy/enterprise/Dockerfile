@@ -136,7 +136,7 @@ ENV ROOT_URL=http://127.0.0.1:3000 \
     NODE_ENV=production 
 
 # Define volumes - Service Layer
-VOLUME [ "/steedos-stacks" ]
+VOLUME [ "/steedos-storage" ]
 
 ENTRYPOINT [ "/opt/steedos/entrypoint.sh" ]
 

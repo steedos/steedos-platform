@@ -18,5 +18,5 @@ services:
       - STEEDOS_LOG_LEVEL=info
     tty: true
     volumes:
-      - "./stacks:/steedos-stacks"
+      - "./storage:/steedos-storage"
   

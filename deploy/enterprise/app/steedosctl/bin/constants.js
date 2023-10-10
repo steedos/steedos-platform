@@ -1,13 +1,13 @@
 
-const BACKUP_PATH = "/steedos-stacks/data/backup"
+const BACKUP_PATH = "/steedos-storage/data/backup"
 
-const RESTORE_PATH = "/steedos-stacks/data/restore"
+const RESTORE_PATH = "/steedos-storage/data/restore"
 
 const DUMP_FILE_NAME = "steedos-data.archive"
 
-const STEEDOSCTL_LOG_PATH = "/steedos-stacks/logs/steedosctl"
+const STEEDOSCTL_LOG_PATH = "/steedos-storage/logs/steedosctl"
 
-const LAST_ERROR_MAIL_TS = "/steedos-stacks/data/backup/last-error-mail-ts"
+const LAST_ERROR_MAIL_TS = "/steedos-storage/data/backup/last-error-mail-ts"
 
 const MIN_REQUIRED_DISK_SPACE_IN_BYTES = 2147483648 // 2GB
 

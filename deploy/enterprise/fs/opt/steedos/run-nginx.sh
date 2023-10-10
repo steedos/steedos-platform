@@ -5,7 +5,7 @@ set -o nounset
 set -o pipefail
 set -o xtrace
 
-ssl_conf_path="/steedos-stacks/data/certificate/conf"
+ssl_conf_path="/steedos-storage/data/certificate/conf"
 
 mkdir -pv "$ssl_conf_path"
 

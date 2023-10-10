@@ -2,7 +2,7 @@
 
 set -e
 
-stacks_path=/steedos-stacks
+stacks_path=/steedos-storage
 
 export SUPERVISORD_CONF_TARGET="$TMP/supervisor-conf.d/"  # export for use in supervisord.conf
 export MONGODB_TMP_KEY_PATH="$TMP/mongodb-key"  # export for use in supervisor process mongodb.conf
@@ -10,7 +10,7 @@ export MONGODB_TMP_KEY_PATH="$TMP/mongodb-key"  # export for use in supervisor p
 mkdir -pv "$SUPERVISORD_CONF_TARGET" "$NGINX_WWW_PATH"
 
 init_env_file() {
-  CONF_PATH="/steedos-stacks/configuration"
+  CONF_PATH="/steedos-storage/configuration"
   ENV_PATH="$CONF_PATH/docker.env"
   TEMPLATES_PATH="/opt/steedos/templates"
 
@@ -154,8 +154,8 @@ use-mongodb-key() {
 mount_letsencrypt_directory() {
   echo "Mounting Let's encrypt directory"
   rm -rf /etc/letsencrypt
-  mkdir -p /steedos-stacks/{letsencrypt,ssl}
-  ln -s /steedos-stacks/letsencrypt /etc/letsencrypt
+  mkdir -p /steedos-storage/{letsencrypt,ssl}
+  ln -s /steedos-storage/letsencrypt /etc/letsencrypt
 }
 
 is_empty_directory() {
@@ -247,7 +247,7 @@ configure_supervisord() {
       cp "$supervisord_conf_source/redis.conf" "$SUPERVISORD_CONF_TARGET"
       mkdir -p "$stacks_path/data/redis"
     fi
-    if ! [[ -e "/steedos-stacks/ssl/fullchain.pem" ]] || ! [[ -e "/steedos-stacks/ssl/privkey.pem" ]]; then
+    if ! [[ -e "/steedos-storage/ssl/fullchain.pem" ]] || ! [[ -e "/steedos-storage/ssl/privkey.pem" ]]; then
       cp "$supervisord_conf_source/cron.conf" "$SUPERVISORD_CONF_TARGET"
     fi
   fi
@@ -299,13 +299,13 @@ fi
 
 configure_supervisord
 
-mkdir -p /steedos-stacks/unpkg
+mkdir -p /steedos-storage/unpkg
 
 # Ensure the restore path exists in the container, so an archive can be copied to it, if need be.
-mkdir -p /steedos-stacks/data/{backup,restore}
+mkdir -p /steedos-storage/data/{backup,restore}
 
 # Create sub-directory to store services log in the container mounting folder
-mkdir -p /steedos-stacks/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg}
+mkdir -p /steedos-storage/logs/{supervisor,steedos,cron,mongodb,redis,nginx,unpkg}
 
 # Stop nginx gracefully
 nginx -s quit
