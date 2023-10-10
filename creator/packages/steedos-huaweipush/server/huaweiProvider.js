@@ -1,6 +1,6 @@
 const request = require('requestretry');
-const tokenUrl = "https://login.vmall.com/oauth2/token";
-const apiUrl = "https://api.push.hicloud.com/pushsend.do";
+const tokenUrl = "https://oauth-login.cloud.huawei.com/oauth2/v3/token";
+const apiUrl = "https://push-api.cloud.huawei.com/v1/[clientid]/messages:send";
 const timeout = 5000;
 
 HuaweiPush = {
@@ -50,11 +50,11 @@ HuaweiPush.doSendMany = function(notification, package_name, tokens, timeToLive)
 				console.log("sendMany ", notification, timeToLive);
 			const postData = this.getPostData(notification, package_name, tokens, timeToLive);
 			request.post({
-				url: apiUrl,
-				qs: {
-					nsp_ctx: `{"ver":1,"appId":"${this.authInfo[package_name].client_id}"}`
+				url: apiUrl.replace('[clientid]', this.authInfo[package_name].client_id),
+				body: JSON.stringify(postData),
+				'headers': {
+					'Authorization': 'Bearer '+ this.authInfo[package_name].access_token
 				},
-				form: postData,
 				timeout: timeout,
 				maxAttempts: 2,
 				retryDelay: 5000,
@@ -76,39 +76,22 @@ HuaweiPush.doSendMany = function(notification, package_name, tokens, timeToLive)
 
 HuaweiPush.getPostData = function(notification, package_name, tokens, timeToLive) {
 	const postData = {
-		access_token: this.authInfo[package_name].access_token,
-		nsp_svc: "openpush.message.api.send",
-		nsp_ts: Math.floor(Date.now() / 1000)
-	};
-	postData.payload = {
-		hps: {
-			msg: {
-				type: 3,
-				body: {
-					content: notification.android.message,
-					title: notification.android.title
-				},
-				action: {
-					type: 3,
-					param: {
-						appPkgName: package_name
+		"validate_only": false,
+		"message": {
+			"android": {
+				"notification": {
+					"title": notification.android.title,
+					"body": notification.android.message,
+					"click_action": {
+						"type": 3
 					}
 				},
-				category: 'WORK' // 工作事项提醒
+				"category": "WORK"
 			},
-			ext: {
-				customize: this.extras(notification.extras)
-			}
+			"token": tokens,
+			"data": JSON.stringify(notification.extras)
 		}
-	};
-	postData.payload = JSON.stringify(postData.payload);
-	postData.device_token_list = JSON.stringify(tokens);
-
-	if (timeToLive > 0) {
-		postData.expire_time = this.formatHuaweiDate(new Date(Date.now() + timeToLive));
-		if (HuaweiPush.debug)
-			console.log("postData.expire_time ", postData.expire_time);
-	}
+	  }
 	return postData;
 }
 
