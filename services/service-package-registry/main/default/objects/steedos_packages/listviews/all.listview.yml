@@ -8,6 +8,7 @@ columns:
     wrap: false
   - field: status
   - field: static
+  - field: icon
 filter_scope: space
 label: 所有软件包
 scrolling_mode: standard
