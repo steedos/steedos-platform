@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "2.5.15",
+    "version": "2.5.16-beta.1",
     "description": "显示对象关系图",
     "main": "index.js",
     "author": "",
@@ -10,5 +10,5 @@
         "access": "public"
     },
     "homepage": "https://www.steedos.com",
-    "gitHead": "dd588460d9a446d76c1d065c342594e9bec1f14d"
+    "gitHead": "a49fccb59a464a337093f027f5d5279d738f5570"
 }
