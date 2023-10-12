@@ -187,3 +187,7 @@ tbody .color-priority-muted *{
 #serverList{
     display: none !important;
 }
+
+.instance-suggestion{
+    background: #ffffff !important;
+}

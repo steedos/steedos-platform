@@ -731,6 +731,7 @@ fields:
     is_wide: true
     group: Advanced
     sort_no: 450
+    inlineHelpText: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes#%E5%AD%97%E6%AE%B5%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F' target='_blank'>查看帮助</a>
   inlineHelpText:
     label: Prompt text
     type: textarea
@@ -750,6 +751,7 @@ fields:
     is_wide: true
     group: Advanced
     sort_no: 455
+    inlineHelpText: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7' target='_blank'>查看帮助</a>
 paging:
   enabled: false
 list_views:

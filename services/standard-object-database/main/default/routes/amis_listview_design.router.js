@@ -11,12 +11,21 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 const objectql = require('@steedos/objectql');
-
+const getPublicAssetUrls = function(assetUrls){
+    const values = _.map(_.split(assetUrls), (item)=>{
+        if(_.startsWith(item, '/')){
+            return Meteor.absoluteUrl(item) ;
+        }else{
+            return item;
+        }
+    })
+    return _.join(values, ',')
+}
 router.get('/api/amisListviewDesign', core.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
         const userSession = req.user;
-        let assetUrls = req.query.assetUrls;
+        let assetUrls = getPublicAssetUrls(req.query.assetUrls);
         const assetUrl = `assetUrl=${assetUrls.split(',').join("&assetUrl=")}&`;
         // const dataContext = {
         //     rootUrl: __meteor_runtime_config__.ROOT_URL,

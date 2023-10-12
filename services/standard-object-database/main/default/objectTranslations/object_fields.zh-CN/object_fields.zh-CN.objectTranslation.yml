@@ -295,7 +295,7 @@ fields:
     description: 
   visible_on:
     label: 字段显示公式
-    help: 
+    help: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes#%E5%AD%97%E6%AE%B5%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F' target='_blank'>查看帮助</a>
     description: 
   inlineHelpText:
     label: 提示文本
@@ -312,7 +312,7 @@ fields:
     description: 
   amis:
     label: Amis 属性
-    help: 配置为一个Amis Schema Json可以更改该字段的Amis属性。
+    help: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7' target='_blank'>查看帮助</a>
     description: 
 groups:
   external_data_source: 外部数据源

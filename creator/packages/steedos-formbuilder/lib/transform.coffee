@@ -6,7 +6,10 @@ getFormFieldOptions = (field)->
 	else
 		default_value = []
 	_.each options, (option)->
-		if _.contains(default_value, option)
+		itemValue = option
+		if option.indexOf(':') > -1
+			itemValue = option.split(':')[1]
+		if _.contains(default_value, itemValue)
 			values.push {label: option, value: option, selected: true}
 		else
 			values.push {label: option, value: option}
@@ -130,6 +133,8 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 			if ['radio-group', 'select'].includes(field.type)
 				field.default_value = (_.find field.values, (v)->
 					return v.selected)?.label
+				if field.default_value && field.default_value.indexOf(':') > -1
+					field.default_value = field.default_value.split(':')[1];
 			if ['checkbox-group'].includes(field.type)
 				field.default_value = (_.pluck (_.filter field.values, (v)->
 					return v.selected
