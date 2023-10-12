@@ -268,6 +268,34 @@
                 },
                 theme: 'antd',
                 isCurrentUrl: isCurrentUrl,
+                requestAdaptor: (config)=>{
+                    // url是相对路径
+                    if(config.url && (!/^http[s]?:\/\//i.test(config.url))){
+                      if(Meteor.isCordova){
+                        config.url = Meteor.absoluteUrl(config.url)
+                      }
+
+                      if(!config.headers){
+                        config.headers = {}
+                      }
+
+                      if(!config.headers.Authorization && Builder.settings.context && Builder.settings.context.tenantId && Builder.settings.context.authToken){
+                        config.headers.Authorization = `Bearer ${Builder.settings.context.tenantId},${Builder.settings.context.authToken}`;
+                      }
+                    }else if(config.url && Meteor.isCordova && Builder.settings.context && Builder.settings.context.rootUrl && config.url.startsWith(Builder.settings.context.rootUrl)){
+                      // 是绝对路径,且是cordova环境, 且以root url开头, 则自动处理认证
+                      if(Meteor.isCordova){
+                        if(!config.headers){
+                          config.headers = {}
+                        }
+              
+                        if(!config.headers.Authorization && Builder.settings.context && Builder.settings.context.tenantId && Builder.settings.context.authToken){
+                          config.headers.Authorization = `Bearer ${Builder.settings.context.tenantId},${Builder.settings.context.authToken}`;
+                        }
+                      }
+                    }
+                    return config;
+                }
             };
             // 已弃用
             const AmisRender = function (props) {

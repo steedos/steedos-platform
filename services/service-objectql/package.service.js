@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-20 14:02:33
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-10 17:23:06
  * @Description: 
  */
 "use strict";
@@ -371,7 +371,7 @@ module.exports = {
         getRecordPermissionsById: {
             params: {
                 objectName: { type: "string" },
-                recordId: { type: "string" },
+                recordId: { type: "any" },
             },
             async handler(ctx) {
                 const userSession = ctx.meta.user;
