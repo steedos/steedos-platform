@@ -13,50 +13,122 @@ services:
       - 8080:80
 
   steedos:
-    image: steedos/steedos-enterprise:2.5.15-beta.12
-    scale: 2
+    image: steedos/steedos-enterprise:2.5
+    deploy:
+      mode: replicated
+      replicas: 2
     environment:
-      - MONGO_URL=mongodb://mongodb:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - STEEDOS_LICENSE=trial
+      - MONGO_URL=mongodb://root:${MONGODB_ROOT_PASSWORD}@mongodb-primary,mongodb-secondary/${MONGODB_DATABASE}?authSource=admin
+      - MONGO_OPLOG_URL=mongodb://root:${MONGODB_ROOT_PASSWORD}@mongodb-primary:27017/local?authSource=admin
+      - STEEDOS_CFS_STORE=S3
+      - STEEDOS_CFS_AWS_S3_ENDPOINT=http://minio:9000
+      - STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE=true
+      - STEEDOS_CFS_AWS_S3_BUCKET=${MINIO_DEFAULT_BUCKETS:-steedos}
+      - STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID=${MINIO_ROOT_USER} 
+      - STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD} 
     volumes:
-      - "./stacks:/steedos-stacks"
+      - "steedos-storage:/steedos-storage"
     tty: true
     depends_on:
-      mongodb:
+      mongodb-primary:
         condition: service_healthy
 
   steedos-cron:
-    image: steedos/steedos-enterprise:2.5.15-beta.10
+    image: steedos/steedos-enterprise:2.5
     environment:
-      - MONGO_URL=mongodb://mongodb:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
+      - STEEDOS_LICENSE=trial
+      - MONGO_URL=mongodb://root:${MONGODB_ROOT_PASSWORD}@mongodb-primary,mongodb-secondary/${MONGODB_DATABASE}?authSource=admin
+      - MONGO_OPLOG_URL=mongodb://root:${MONGODB_ROOT_PASSWORD}@mongodb-primary:27017/local?authSource=admin
+      - STEEDOS_CFS_STORE=S3
+      - STEEDOS_CFS_AWS_S3_ENDPOINT=http://minio:9000
+      - STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE=true
+      - STEEDOS_CFS_AWS_S3_BUCKET=${MINIO_DEFAULT_BUCKETS:-steedos}
+      - STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID=${MINIO_ROOT_USER} 
+      - STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD} 
       - STEEDOS_CRON=true
     volumes:
-      - "./stacks:/steedos-stacks"
+      - "steedos-storage:/steedos-storage"
     tty: true
     depends_on:
-      mongodb:
+      mongodb-primary:
         condition: service_healthy
 
-  mongodb:
-    image: mongo:4.4
+
+  # Database Service Cluster
+  mongodb-primary:
+    image: 'bitnami/mongodb:4.4'
     ports:
       - 27017:27017
-    command: "--bind_ip_all --replSet steedos --logpath /var/log/mongodb/mongod.log"
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGODB_REPLICA_SET_NAME=${MONGODB_REPLICA_SET_NAME}
+      - MONGODB_REPLICA_SET_KEY=${MONGODB_REPLICA_SET_KEY}
+    volumes:
+      - 'steedos-mongo-primary-data:/bitnami'
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo --quiet | grep 1
+      test: echo 'rs.status().ok' | mongo admin -u root -p ${MONGODB_PASSWORD:-steedos} --quiet | grep 1
       interval: 10s
       timeout: 10s
       retries: 5
-    volumes:
-      - './mongo-data:/data/db'
 
-  mongodb-init:
-    image: mongo:4.4
-    restart: "no"
+  mongodb-secondary:
+    image: 'bitnami/mongodb:4.4'
     depends_on:
-      mongodb:
-        condition: service_healthy
-    command: >
-      mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})"
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGODB_REPLICA_SET_NAME=${MONGODB_REPLICA_SET_NAME}
+      - MONGODB_REPLICA_SET_KEY=${MONGODB_REPLICA_SET_KEY}
+    healthcheck:
+      test: echo 'rs.status().ok' | mongo admin -u root -p ${MONGODB_PASSWORD:-steedos} --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  mongodb-arbiter:
+    image: 'bitnami/mongodb:4.4'
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MONGODB_REPLICA_SET_NAME=${MONGODB_REPLICA_SET_NAME}
+      - MONGODB_REPLICA_SET_KEY=${MONGODB_REPLICA_SET_KEY}
+    healthcheck:
+      test: echo 'rs.status().ok' | mongo admin -u root -p ${MONGODB_PASSWORD:-steedos} --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  # S3 Storage Service
+  minio:
+    image: bitnami/minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-steedos}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-steedos123}
+      MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS:-steedos}
+    volumes:
+      - steedos-minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001" 
+
+
+volumes:
+  steedos-storage:
+    driver: local
+  steedos-minio-data:
+    driver: local
+  steedos-mongo-primary-data:
+    driver: local
