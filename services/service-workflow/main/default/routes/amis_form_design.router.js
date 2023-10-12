@@ -13,6 +13,17 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 
+const getPublicAssetUrls = function(assetUrls){
+    const values = _.map(_.split(assetUrls), (item)=>{
+        if(_.startsWith(item, '/')){
+            return Meteor.absoluteUrl(item) ;
+        }else{
+            return item;
+        }
+    })
+    return _.join(values, ',')
+}
+
 router.get('/api/amisFormDesign', core.requireAuthentication, async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
@@ -21,7 +32,7 @@ router.get('/api/amisFormDesign', core.requireAuthentication, async function (re
         let assetUrl = "";
         let assetUrls = null;
         if(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS && _.isString(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)){
-            assetUrls = process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS.split(',');
+            assetUrls = getPublicAssetUrls(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS).split(',');
             assetUrl = `assetUrl=${assetUrls.join("&assetUrl=")}&`;
         }else{
             var fullPath = path.resolve(path.dirname(require.resolve('@steedos-ui/builder-widgets' + '/package.json')));
