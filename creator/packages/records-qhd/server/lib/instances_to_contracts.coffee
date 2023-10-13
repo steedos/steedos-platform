@@ -2,7 +2,7 @@ request = Npm.require('request')
 
 path = Npm.require('path');
 
-pathname = path.join(__meteor_bootstrap__.serverDir, '../../../cfs/files/instances');
+pathname = path.join(Creator.steedosStorageDir, '/files/instances');
 
 absolutePath = path.resolve(pathname);
 
@@ -37,12 +37,12 @@ InstancesToContracts = (spaces, contracts_server, contract_flows, submit_date_st
 	return
 
 InstancesToContracts.success = (instance)->
-	logger.info("success, name is #{instance.name}, id is #{instance._id}")
+	console.info("success, name is #{instance.name}, id is #{instance._id}")
 	db.instances.direct.update({_id: instance._id}, {$set: {is_contract_archived: true}})
 
 InstancesToContracts.failed = (instance, error)->
-	logger.error("failed, name is #{instance.name}, id is #{instance._id}. error: ")
-	logger.error error
+	console.error("failed, name is #{instance.name}, id is #{instance._id}. error: ")
+	console.error error
 
 InstancesToContracts::getContractInstances = ()->
 	query = {
@@ -117,9 +117,9 @@ _minxiInstanceData = (formData, instance) ->
 					options: {filename: f.name()}
 				}
 			else
-				logger.error "附件不存在：#{filepath}"
+				console.error "附件不存在：#{filepath}"
 		catch e
-			logger.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
+			console.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
 
 
 	#	正文附件
@@ -186,7 +186,7 @@ _minxiInstanceData = (formData, instance) ->
 			options: {filename: attachInfoName}
 		}
 	catch e
-		logger.error "原文读取失败#{instance._id}. error: " + e
+		console.error "原文读取失败#{instance._id}. error: " + e
 
 	console.log("_minxiInstanceData end", instance._id)
 

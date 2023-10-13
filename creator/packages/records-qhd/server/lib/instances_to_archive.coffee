@@ -3,13 +3,13 @@ path = Npm.require('path');
 
 logger = new Logger 'Records_QHD -> InstancesToArchive'
 
-pathname = path.join(__meteor_bootstrap__.serverDir, '../../../cfs/files/instances');
+pathname = path.join(Creator.steedosStorageDir, '/files/instances');
 
 absolutePath = path.resolve(pathname);
 
 #logger = console
 #
-#logger.debug = console.log
+#console.debug = console.log
 
 # spaces: Array 工作区ID
 # archive_server: String 档案系统服务
@@ -149,10 +149,10 @@ _minxiInstanceData = (formData, instance) ->
 
 				_minxiAttachmentInfo formData, instance, f
 			else
-				logger.error "附件不存在：#{filepath}"
+				console.error "附件不存在：#{filepath}"
 
 		catch e
-			logger.error "正文附件下载失败：#{f._id},#{f.name()}. error: " + e
+			console.error "正文附件下载失败：#{f._id},#{f.name()}. error: " + e
 		#		正文附件历史版本
 		if f.metadata.instance == instance._id
 			mainFileHistory = cfs.instances.find({
@@ -175,9 +175,9 @@ _minxiInstanceData = (formData, instance) ->
 						}
 						_minxiAttachmentInfo formData, instance, f
 					else
-						logger.error "附件不存在：#{filepath}"
+						console.error "附件不存在：#{filepath}"
 				catch e
-					logger.error "正文附件下载失败：#{f._id},#{f.name()}. error: " + e
+					console.error "正文附件下载失败：#{f._id},#{f.name()}. error: " + e
 
 
 	nonMainFileHandle = (f)->
@@ -190,9 +190,9 @@ _minxiInstanceData = (formData, instance) ->
 				}
 				_minxiAttachmentInfo formData, instance, f
 			else
-				logger.error "附件不存在：#{filepath}"
+				console.error "附件不存在：#{filepath}"
 		catch e
-			logger.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
+			console.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
 		#	非正文附件历史版本
 		if f.metadata.instance == instance._id
 			nonMainFileHistory = cfs.instances.find({
@@ -215,9 +215,9 @@ _minxiInstanceData = (formData, instance) ->
 						}
 						_minxiAttachmentInfo formData, instance, f
 					else
-						logger.error "附件不存在：#{filepath}"
+						console.error "附件不存在：#{filepath}"
 				catch e
-					logger.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
+					console.error "附件下载失败：#{f._id},#{f.name()}. error: " + e
 
 	#	正文附件
 	mainFile = cfs.instances.find({
@@ -294,7 +294,7 @@ _minxiInstanceData = (formData, instance) ->
 
 		console.log("原文读取完成")
 	catch e
-		logger.error "原文读取失败#{instance._id}. error: " + e
+		console.error "原文读取失败#{instance._id}. error: " + e
 
 	formData.attachInfo = JSON.stringify(formData.attachInfo)
 
@@ -312,7 +312,7 @@ InstancesToArchive._sendContractInstance = (url, instance, callback) ->
 
 	if _checkParameter(formData)
 
-		logger.debug("_sendContractInstance: #{instance._id}")
+		console.debug("_sendContractInstance: #{instance._id}")
 
 		#	发送数据
 		httpResponse = steedosRequest.postFormDataAsync url, formData, callback
@@ -384,7 +384,7 @@ InstancesToArchive.sendNonContractInstance = (url, instance, callback) ->
 
 #		console.log "formData", formData
 
-		logger.debug("_sendContractInstance: #{instance._id}")
+		console.debug("_sendContractInstance: #{instance._id}")
 
 		#	发送数据
 		httpResponse = steedosRequest.postFormDataAsync url, formData, callback
