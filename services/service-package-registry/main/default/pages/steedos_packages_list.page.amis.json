@@ -22,22 +22,17 @@
             "link": "/app/admin/steedos_packages/view/${_id}"
           },
           "header": {
+            "avatar": "${icon}",
             "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
+            "avatarClassName": "pull-left thumb-md b-3x m-r slds-icon slds-icon_container slds-icon-standard-user",
             "avatarTextBackground": [
-              "#FFB900",
-              "#D83B01",
-              "#B50E0E",
-              "#E81123",
-              "#B4009E",
-              "#5C2D91",
-              "#0078D7",
-              "#00B4FF",
-              "#008272"
+              "#34becd"
             ],
             "className": "bg-white",
-            "title": "${label}@${version}",
-            "subTitle": "$description",
-            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span>"
+            "title": "${label}",
+            "subTitle": "${description}",
+            "subTitlePlaceholder": "--",
+            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span>"
           },
           "actions": [
             {
@@ -122,9 +117,20 @@
       "top": "-14px",
       "right": "0"
     },
-    ".antd-Crud .antd-Cards .antd-Card .antd-Card-title": {
-      "white-space": "break-spaces",
-      "word-break": "break-all"
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-heading .antd-Card-avtar, .antd-Crud .antd-Cards .antd-Card .antd-Card-heading .antd-Card-avtarText": {
+      "min-width": "50px",
+      "min-height": "50px",
+      "border-radius": "6px",
+      "width": "50px",
+      "height": "50px"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-meta": {
+      "overflow": "hidden"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-meta .antd-Card-subTitle": {
+      "-webkit-line-clamp": "1",
+      "max-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)",
+      "min-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)"
     }
   }
 }

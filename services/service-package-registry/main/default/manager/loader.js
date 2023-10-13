@@ -16,6 +16,11 @@ const getPackageYmlData = (packagePath)=>{
     if(fs.existsSync(path.join(packagePath, 'steedos.package.yml'))){
         packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'steedos.package.yml'));
     }
+    if(fs.existsSync(path.join(packagePath, 'README.md'))){
+        packageYmlData.readme = metaDataCore.loadFile(path.join(packagePath, 'README.md'));
+    }else if(fs.existsSync(path.join(packagePath, 'readme.md'))){
+        packageYmlData.readme = metaDataCore.loadFile(path.join(packagePath, 'readme.md'));
+    }
     return packageYmlData;
 }
 

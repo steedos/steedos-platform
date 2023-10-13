@@ -1,0 +1,12 @@
+name: steedos_package_detail
+is_active: true
+label: 软件包详细页面
+object_name: steedos_packages
+pageAssignments:
+  - type: orgDefault
+    page: steedos_package_detail
+    desktop: true
+    mobile: true
+render_engine: amis
+type: record
+widgets: []
