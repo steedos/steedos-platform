@@ -1,0 +1,113 @@
+{
+    "type": "page",
+    "body": [
+        {
+            "type": "steedos-record-service",
+            "body": [
+                {
+                    "type": "steedos-record-detail-header",
+                    "label": "标题面板",
+                    "objectApiName": "${objectName}",
+                    "recordId": "${recordId}",
+                    "id": "u:9d9bc707bfd2",
+                    "schemaFilter": "config.body[0].body[0].columns[0].body[0].columns[1].body[0].tpl='\\${name}'; config.body[0].body[0].columns[0].body[0].columns[0].body[1]={type: 'container', hiddenOn: '\\${!name}', body: [{className: 'w-9 h-9 rounded', type:'steedos-icon',name: '\\${record.icon}', colorVariant:'base', hiddenOn: '\\${!record.icon}', height:'2.25rem', width:'2.25rem'}, {type: 'avatar', className:'w-9 h-9 rounded text-white bg-blue-600', shape: 'square', hiddenOn: '\\${!!record.icon}', text: '\\${name|split:/|last|substring:0:2|upperCase}'}]};config.body[0].body[0].columns[0].body[0].columns[1].body[1] = Object.assign({}, config.body[0].body[0].columns[0].body[0].columns[1].body[1], {type: 'tag', label: '\\${record.version}', displayMode: 'status', color: '\\${record.status == \"enable\" ? \"active\" : record.status == \"starting\" ? \"processing\" : \"inactive\"}',className: 'package-status p-0', style: {background: 'transparent'}}); "
+                },
+                {
+                    "type": "tabs",
+                    "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
+                    "tabs": [
+                        {
+                            "title": "摘要",
+                            "body": [
+                                {
+                                    "type": "markdown",
+                                    "id": "u:53a87f0b73be",
+                                    "name": "_master.record.readme",
+                                    "options": {
+                                        "html": true
+                                    }
+                                }
+                            ],
+                            "id": "u:8ca26c842ff6"
+                        },
+                        {
+                            "title": "软件包组件",
+                            "body": [
+                                {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "${objectName}",
+                                    "recordId": "${recordId}",
+                                    "appId": "${appId}",
+                                    "id": "u:fec578db3278",
+                                    "fields": [
+                                        "metadata",
+                                        "metadata.$.label",
+                                        "metadata.$.api_name",
+                                        "metadata.$.type"
+                                    ],
+                                    "fieldsExtend": {
+                                        "metadata": {
+                                            "label": false
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "title": "详细信息",
+                            "body": [
+                                {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "${objectName}",
+                                    "recordId": "${recordId}",
+                                    "appId": "${appId}",
+                                    "id": "u:fec578db3278",
+                                    "mode": "read",
+                                    "className": "mb-4",
+                                    "excludedFields": [
+                                        "metadata"
+                                    ]
+                                }
+                            ],
+                            "className": "px-0 py-4",
+                            "id": "u:5d4e7e3f6ecc"
+                        }
+                    ],
+                    "id": "u:148cf8e840eb"
+                },
+                {
+                    "type": "steedos-object-form",
+                    "label": "对象表单",
+                    "objectApiName": "${objectName}",
+                    "recordId": "${recordId}",
+                    "appId": "${appId}",
+                    "id": "u:fec578db3278",
+                    "className": "hidden"
+                }
+            ],
+            "regions": [
+                "body"
+            ],
+            "id": "page_steedos_packages_record_detail",
+            "name": "page_steedos_packages_record_detail",
+            "objectApiName": "${objectName}",
+            "bodyClassName": "",
+            "className": "object-detail-page"
+        }
+    ],
+    "id": "u:81b404eac916",
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "context": {}
+    },
+    "bodyClassName": "p-0",
+    "css": {
+        ".antd-Tag--prev": {
+            "display": "inline-block"
+        }
+    }
+}

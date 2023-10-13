@@ -14,6 +14,8 @@ export function loadFile(filePath){
             json = yaml.load(fs.readFileSync(filePath, 'utf8'));
         else if(extname.toLocaleLowerCase() === '.js'){
             json = safeEval(fs.readFileSync(filePath, 'utf8'), true);
+        }else if(extname.toLocaleLowerCase() === '.md'){
+            json = fs.readFileSync(filePath, 'utf8');
         }
     } catch (error) {
         console.error('loadFile error', filePath, error);
