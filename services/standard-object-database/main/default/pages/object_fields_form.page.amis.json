@@ -1,0 +1,26 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "object_fields",
+            "recordId": "${recordId}",
+            "className": "",
+            "enableTabs": true,
+            "mode": "edit",
+            "layout": "normal",
+            "submitSuccActions": [
+                {
+                    "actionType": "custom",
+                    "script": "setTimeout(function(){doAction({'actionType': 'setValue','componentId': 'form_object_fields','args': {'value': {'sort_no': event.data.sort_no + 10}}})}, 300)"
+                }
+            ]
+        }
+    ],
+    "data": {
+        "context": {}
+    },
+    "name": "object_fields_form",
+    "id": "u:bb11df394baf"
+}
