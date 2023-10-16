@@ -372,6 +372,15 @@ fields:
     rows: 3
     is_wide: true
     hidden: true
+  field_groups:
+    type: grid
+    blackbox: true
+    is_wide: true
+    hidden: false
+  field_groups.$.group_name:
+    type: text
+  field_groups.$.visible_on:
+    type: text
 paging:
   enabled: false
 relatedList:
