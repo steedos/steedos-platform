@@ -3,15 +3,10 @@ version: "3.9"
 services:
 
   steedos:
-    build: 
-      context: ./
-      dockerfile: ./Dockerfile
-    image: steedos/steedos-community
+    image: steedos/steedos-community:2.5
     ports:
-      - "5000:5000"
+      - "80:3000"
     environment:
-      - ROOT_URL=http://127.0.0.1:5000
-      - PORT=5000
       - MONGO_URL=mongodb://mongodb:27017/steedos
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - TRANSPORTER=redis://redis:6379

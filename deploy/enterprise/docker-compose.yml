@@ -3,9 +3,6 @@ version: "3.9"
 services:
 
   steedos-enterprise:
-    build: 
-      context: ./
-      dockerfile: ./Dockerfile
     image: steedos/steedos-enterprise:latest
     container_name: steedos-enterprise
     ports:
@@ -13,9 +10,7 @@ services:
       - "443:443"  
       - "9001:9001"  
     environment:
-      - ROOT_URL=http://127.0.0.1:3000
       - STEEDOS_LICENSE=trial
-      - STEEDOS_LOG_LEVEL=info
     tty: true
     volumes:
       - "./storage:/steedos-storage"
