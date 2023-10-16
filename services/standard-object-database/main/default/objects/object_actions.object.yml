@@ -96,7 +96,7 @@ fields:
   type: 
     type: select
     sort_no: 170
-    hidden: true
+    visible_on: "${false}"
     options:
       - label: Custom JavaScript
         value: script
@@ -129,6 +129,14 @@ fields:
     is_wide: true
     hidden: true
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+  is_system:
+    type: boolean
+    label: System
+    # omit: true
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
+    sort_no: 500
 form:
   initialValues: !!js/function |
     function(){
@@ -140,6 +148,9 @@ actions:
   showDesign: 
     label: 设计器
     on: record_only
+  customize:
+    label: 自定义
+    on: record_only
 list_views:
   all:
     columns:
@@ -149,6 +160,7 @@ list_views:
       - 'on'
       - is_enable
       - modified
+      - is_system
     label: All
     filter_scope: space
 permission_set:

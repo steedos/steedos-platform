@@ -1,13 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-28 11:07:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-29 11:26:31
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-16 13:58:22
  * @Description: 
  */
 const InternalData = require('@steedos/standard-objects').internalData;
 const objectql = require('@steedos/objectql');
 const auth = require("@steedos/auth");
+const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
 module.exports = {
     beforeInsert: async function(){
         const { doc } = this;
@@ -94,5 +95,8 @@ module.exports = {
                 }
             }
         }
+    },
+    afterDelete: async function(){
+        await sleep(1000 * 2);
     }
 }

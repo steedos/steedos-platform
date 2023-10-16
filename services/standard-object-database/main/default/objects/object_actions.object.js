@@ -76,7 +76,7 @@ function allowChangeObject(){
   }
 }
 
-Creator.Objects.object_actions.triggers = {
+const triggers = {
   // "after.insert.server.object_actions": {
   //   on: "server",
   //   when: "after.insert",
@@ -150,3 +150,5 @@ Creator.Objects.object_actions.triggers = {
     }
   }
 }
+
+Creator.Objects.object_actions.triggers = Object.assign(Creator.Objects.object_actions.triggers || {}, triggers);

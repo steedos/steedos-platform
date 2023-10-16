@@ -239,7 +239,7 @@ async function getObjectActions(objectName, userId){
         // let originalActions = _.keys(getOriginalObjectActions(objectName))
         _.each(object.actions, function(action){
             // if(!action._id && _.include(originalActions, action.name)){ //
-                actions.push(Object.assign({_id: `${objectName}.${action.name}`, _name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
+                actions.push(Object.assign({_id: `${objectName}.${action.name}`, is_system: true,_name: action.name, object: objectName, is_enable: true, record_permissions: permissions}, action))
             // }
         })
         return actions
