@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-05 16:47:05
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-10-16 16:50:45
  * @Description: 
  */
 module.exports = {
@@ -22,8 +22,8 @@ module.exports = {
       FlowRouter.reload();
     }
   },
-  createDefaultRecordViewVisible: function(object_name, record_id, record_permissions){
-    if(!Creator.isSpaceAdmin()){
+  createDefaultRecordViewVisible: function(object_name, record_id, record_permissions, data){
+    if(!Creator.isSpaceAdmin() || data.record.name == 'users'){
         return false
     }
     return true;

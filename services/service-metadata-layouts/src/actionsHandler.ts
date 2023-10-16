@@ -13,6 +13,24 @@ async function register(ctx, apiName, data, meta){
     return await ctx.broker.call('metadata.add', {key: cacherKey(data.object_name, apiName), data: data}, {meta: meta});
 }
 
+function defaultsDeep(obj, sources) {
+    let output = {};
+    _.toArray(arguments).reverse().forEach(item=> {
+        _.mergeWith(output, item, (objectValue, sourceValue) => {
+            if(_.isArray(sourceValue)){
+                if(_.isArray(objectValue)){
+                    return _.uniqBy(_.compact(_.concat(objectValue, sourceValue)), 'name')
+                }else{
+                    return sourceValue
+                }
+            }else{
+                return undefined;
+            }
+        });
+    });
+    return output;
+};
+
 export const ActionHandlers = {
     async get(ctx: any): Promise<any> {
         return await ctx.broker.call('metadata.get', {key: getMatadataCacherKey(ctx.params.objectLayoutFullName)}, {meta: ctx.meta})
@@ -26,7 +44,7 @@ export const ActionHandlers = {
         const metadataApiName = ctx.params.layoutApiName;
         const metadataConfig = await getServiceConfig(ctx, serviceName, `${config.object_name}.${metadataApiName}`)
         if(metadataConfig && metadataConfig.metadata){
-            config = _.defaultsDeep(config, metadataConfig.metadata);
+            config = defaultsDeep(config, metadataConfig.metadata);
         }
         await ctx.broker.call('metadata.addServiceMetadata', {key: cacherKey(config.object_name, metadataApiName), data: config}, {meta: Object.assign({}, ctx.meta, {metadataType: METADATA_TYPE, metadataApiName: metadataApiName})})
         const layoutConfig = await refresh(ctx, metadataApiName);
