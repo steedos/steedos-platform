@@ -191,3 +191,7 @@ tbody .color-priority-muted *{
 .instance-suggestion{
     background: #ffffff !important;
 }
+
+.instance .form-group select.form-control{
+    height: 34px;
+}
