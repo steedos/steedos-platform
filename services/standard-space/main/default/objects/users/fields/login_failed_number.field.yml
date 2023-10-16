@@ -3,3 +3,4 @@ type: number
 omit: true
 hidden: true
 sort_no: 260
+label: Login Failed Number

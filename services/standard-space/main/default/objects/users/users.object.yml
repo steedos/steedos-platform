@@ -2,4 +2,4 @@ name: users
 label: User
 icon: user
 enable_api: true
-hidden: true
+hidden: false
