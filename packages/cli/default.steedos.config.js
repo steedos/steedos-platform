@@ -36,7 +36,13 @@ if(_.isEmpty(process.env.SERIALIZER)){
 	process.env.SERIALIZER = 'JSON'
 }
 
-process.env.ROOT_URL =  process.env.ROOT_URL.replace(/\/+$/, "");
+if (_.isEmpty(process.env.ROOT_URL)) {
+	console.error("ERROR: Environment variable ROOT_URL is not defined.")
+	process.env.ROOT_URL = "http://localhost"
+}
+
+process.env.ROOT_URL = process.env.ROOT_URL.replace(/\/+$/, "");
+
 /**
  * Steedos ServiceBroker configuration file
  *
