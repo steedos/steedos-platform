@@ -502,6 +502,9 @@ actions:
   delete_object:
     on: record_more
     label: 删除
+  design_object_fields:
+    on: record_only
+    label: 设计字段布局
   # export:
   #   label: Export
   #   visible: true
