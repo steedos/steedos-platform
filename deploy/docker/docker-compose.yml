@@ -5,9 +5,10 @@ services:
   steedos:
     image: steedos/steedos-community:2.5
     ports:
-      - "80:3000"
+      - "80:80"
     environment:
       - ROOT_URL=http://127.0.0.1
+      - PORT=80
       - MONGO_URL=mongodb://mongodb:27017/steedos
       - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
       - TRANSPORTER=redis://redis:6379
