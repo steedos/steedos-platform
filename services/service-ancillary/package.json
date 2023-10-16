@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-ancillary",
-  "version": "2.5.16-beta.3",
+  "version": "2.5.16-beta.4",
   "description": "",
   "main": "package.service.js",
   "scripts": {
@@ -17,5 +17,5 @@
     "express-xml-bodyparser": "0.3.0",
     "xml2js": "0.4.23"
   },
-  "gitHead": "d878d9f91acc8b15307f2483cb0dcc4cd5f6e937"
+  "gitHead": "ccb7b9147e269e1dd678765163340db756655199"
 }
