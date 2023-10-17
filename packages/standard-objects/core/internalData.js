@@ -212,7 +212,7 @@ async function getObjectFields(objectName, userId, all){
 
         _.each(object.fields, function(field){
             if(!field._id && (all || _.include(originalFieldsName, field.name))){
-                fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
+                fields.push(Object.assign({_id: `${objectName}.${field.name}`, is_system: true, _name: field.name, object: objectName, record_permissions: Object.assign({}, permissions, {allowEdit: true})}, field))
             }
         })
         return fields

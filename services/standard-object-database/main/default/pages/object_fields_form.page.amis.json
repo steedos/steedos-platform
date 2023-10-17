@@ -10,6 +10,7 @@
             "enableTabs": true,
             "mode": "edit",
             "layout": "normal",
+            "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
             "submitSuccActions": [
                 {
                     "actionType": "custom",

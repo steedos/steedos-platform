@@ -131,7 +131,7 @@ fields:
     visible_on: "{{formData.type == 'amis_button' ? true: false}}"
   is_system:
     type: boolean
-    label: System
+    label: 系统
     # omit: true
     readonly: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
