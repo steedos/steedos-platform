@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-17 14:52:50
+ * @LastEditTime: 2023-10-17 17:22:19
  * @Description: 
  */
 "use strict";
@@ -43,7 +43,6 @@ module.exports = {
 				"object_fields__upsert(id: String, doc: JSON): object_fields"
 			},
 			async handler(ctx) {
-				console.log(`object_fields__upsert===>`, ctx.params);
 				const userSession = ctx.meta.user;
                 let { id, doc } = ctx.params;
                 let data = '';
