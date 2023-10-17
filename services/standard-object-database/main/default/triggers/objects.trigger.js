@@ -169,7 +169,7 @@ module.exports = {
         }
         */
 
-        await sleep(1000 * 2)
+        // await sleep(1000 * 2)
     },
     afterDelete: async function(){
         const { previousDoc: object, spaceId } = this;
