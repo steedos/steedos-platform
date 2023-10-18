@@ -134,9 +134,9 @@ module.exports = {
             const latestDoc = await obj.findOne(id);
             const newObjName = doc.name;
             // !!!暂不允许修改name
-            if (newObjName &&  (latestDoc.name != newObjName)) {
-                throw new Error('禁止修改API 名称。');
-            }
+            // if (newObjName &&  (latestDoc.name != newObjName)) {
+            //     throw new Error('禁止修改API 名称。');
+            // }
             /*
             if (newObjName &&  (latestDoc.name != newObjName) && latestDoc.datasource === 'default') {
                 const datasource = objectql.getDataSource(latestDoc.datasource);
