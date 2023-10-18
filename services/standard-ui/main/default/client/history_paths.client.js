@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-09-11 17:44:01
+ * @LastEditTime: 2023-10-18 16:58:55
  */
 var buttonTriggerHistoryPathsChange;
 
@@ -10,7 +10,6 @@ let historyPathsStoreKey = "history_paths";
 
 // 切换应用、对象、列表视图时清除本地存储中的过滤条件
 function clearHistoryFilters(context, lastPath, paths) {
-    debugger;
     const path = context.path;
     const params = context.params || {};
     if (!lastPath || lastPath.params.app_id != params.app_id || lastPath.params.object_name != params.object_name || lastPath.params.list_view_id != params.list_view_id) {
