@@ -87,6 +87,10 @@ listviews:
     label: All Pages
   recent:
     label: Recently Viewed
+  customize:
+    label: Customize
+  system:
+    label: System
 actions:
   customPage:
     label: Custom Page

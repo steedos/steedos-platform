@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-meteor-package-loader",
-  "version": "2.5.16-beta.4",
+  "version": "2.5.16-beta.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/metadata-core": "2.5.16-beta.4",
-    "@steedos/objectql": "2.5.16-beta.4",
-    "@steedos/router": "2.5.16-beta.4",
-    "@steedos/service-package-loader": "2.5.16-beta.4",
+    "@steedos/metadata-core": "2.5.16-beta.5",
+    "@steedos/objectql": "2.5.16-beta.5",
+    "@steedos/router": "2.5.16-beta.5",
+    "@steedos/service-package-loader": "2.5.16-beta.5",
     "clone": "^2.1.2",
     "moleculer": "^0.14.25",
     "underscore": "^1.12.0"
@@ -25,5 +25,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ccb7b9147e269e1dd678765163340db756655199"
+  "gitHead": "685eafb2b8403fbdf33fe6e31da2ce2264b15d97"
 }
