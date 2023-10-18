@@ -10,6 +10,7 @@ let historyPathsStoreKey = "history_paths";
 
 // 切换应用、对象、列表视图时清除本地存储中的过滤条件
 function clearHistoryFilters(context, lastPath, paths) {
+    debugger;
     const path = context.path;
     const params = context.params || {};
     if (!lastPath || lastPath.params.app_id != params.app_id || lastPath.params.object_name != params.object_name || lastPath.params.list_view_id != params.list_view_id) {
@@ -28,10 +29,10 @@ function clearHistoryFilters(context, lastPath, paths) {
                     }
                 }
             }
-            listViewPropsStoreKey = lastPath.path + "/crud";
+            listViewPropsStoreKey = lastPath.path.split('?')[0] + "/crud";
         }
         else {
-            listViewPropsStoreKey = path + "/crud";
+            listViewPropsStoreKey = path.split('?')[0] + "/crud";
         }
         sessionStorage.removeItem(listViewPropsStoreKey);
     }
