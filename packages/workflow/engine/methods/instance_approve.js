@@ -64,6 +64,7 @@ module.exports = {
             setObj = {};
             trace.approves.forEach(function (approve, idx) {
                 if (approve._id === approveId) {
+                    setObj['change_time'] = new Date();
                     setObj[`traces.$.approves.${idx}.description`] = description;
                     setObj[`traces.$.approves.${idx}.finish_date`] = finish_date;
                     setObj[`traces.$.approves.${idx}.cost_time`] = new Date() - approve.start_date;
