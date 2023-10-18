@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-mongodb-server",
-  "version": "2.5.16-beta.4",
+  "version": "2.5.16-beta.5",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
@@ -10,5 +10,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ccb7b9147e269e1dd678765163340db756655199"
+  "gitHead": "685eafb2b8403fbdf33fe6e31da2ce2264b15d97"
 }
