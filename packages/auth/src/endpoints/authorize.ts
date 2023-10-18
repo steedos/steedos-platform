@@ -10,7 +10,7 @@ export const authorize = async (req: Request, res: Response) => {
     let redirect_uri = req.query.redirect_uri ? req.query.redirect_uri as string : '/'
     if (user) {
         if (redirect_uri.indexOf('no_redirect=1') < 0) {
-            redirect_uri = redirect_uri.indexOf("?") > 0 ? redirect_uri + 'no_redirect=1' : redirect_uri + '?no_redirect=1';
+            redirect_uri = redirect_uri.indexOf("?") > 0 ? redirect_uri + '&no_redirect=1' : redirect_uri + '?no_redirect=1';
             res.redirect(redirect_uri);
         }
         res.end();
