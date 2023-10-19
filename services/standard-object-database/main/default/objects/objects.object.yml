@@ -64,6 +64,8 @@ fields:
     label: Enable
     type: boolean
     defaultValue: true
+    amis:
+      disabledOn: "${is_system == true}"
   in_development:
     type: select
     label: Development State
@@ -75,6 +77,8 @@ fields:
         value: "0" 
     defaultValue: "1"
     required: true
+    amis:
+      disabledOn: "${is_system == true}"
   enable_search:
     type: boolean
     label: Enable Search
