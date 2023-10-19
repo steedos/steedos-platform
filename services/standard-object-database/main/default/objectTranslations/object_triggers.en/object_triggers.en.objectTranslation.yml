@@ -6,7 +6,7 @@ fields:
     label: Name
     help: 
     description: 
-  object:
+  listenTo:
     label: Object
     help: 
     description: 
@@ -38,6 +38,10 @@ fields:
       Execute Script  <a target="_blank"
       href="https://developer.steedos.com/developer/object_trigger">View
       Help</a>
+    help: 
+    description: 
+  is_system:
+    label: System
     help: 
     description: 
 listviews:
