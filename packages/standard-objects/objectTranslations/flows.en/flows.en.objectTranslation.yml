@@ -267,6 +267,8 @@ groups:
 listviews:
   all:
     label: All Workflows
+  customize:
+    label: Customize
 actions:
   standard_new:
     label: New

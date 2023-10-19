@@ -44,3 +44,5 @@ fields:
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义

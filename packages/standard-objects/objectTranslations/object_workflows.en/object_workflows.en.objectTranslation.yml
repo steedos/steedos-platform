@@ -87,6 +87,8 @@ listviews:
     label: Default
   all:
     label: All Rules
+  customize:
+    label: Customize
 actions:
   forceSync:
     label: sync history approvals

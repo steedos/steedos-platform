@@ -515,6 +515,20 @@ list_views:
     sort:
       - - modified
         - desc
+  customize:
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
+    columns:
+      - name
+      - state
+      - category
+      - sort_no
+      - modified
+    sort:
+      - - modified
+        - desc
 actions:
   standard_new:
     label: New

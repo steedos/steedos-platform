@@ -65,6 +65,8 @@ fields:
 listviews:
   all:
     label: All
+  customize:
+    label: Customize
 CustomLabels:
   _object_actions_none_todo: >-
     The action instance is not configured, please configure it in the code.<a

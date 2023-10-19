@@ -106,6 +106,8 @@ fields:
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义
 groups:
   general_information: 基本信息
   buttons: 按钮
