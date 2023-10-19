@@ -58,7 +58,7 @@
                                     "name": "name",
                                     "label": "API 名称",
                                     "labelRemark": "API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符",
-                                    "required": false,
+                                    "requiredOn": "${!!recordId}",
                                     "type": "input-text",
                                     "className": "m-0",
                                     "labelClassName": "text-left",
