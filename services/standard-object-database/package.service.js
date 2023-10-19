@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-17 17:22:19
+ * @LastEditTime: 2023-10-19 13:30:24
  * @Description: 
  */
 "use strict";
@@ -37,6 +37,47 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		objects__upsert: {
+			graphql: {
+				mutation:
+				"objects__upsert(id: String, doc: JSON): objects"
+			},
+			async handler(ctx) {
+				const userSession = ctx.meta.user;
+                let { id, doc } = ctx.params;
+                let data = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+				
+				const object = await this.getObject('objects');
+				const dbRecord = await object.directFind({filters: ['_id','=',id]});
+				if(dbRecord.length === 0){
+					// const newId = await object._makeNewID();
+					const now = new Date();
+					await object.directInsert(Object.assign({}, data, {
+						// _id: newId,
+						_id: id, // saas模式不支持修改对象
+						owner: userSession.userId,
+						space: userSession.spaceId,
+						created: now,
+						modified: now,
+						created_by: userSession.userId,
+						modified_by: userSession.userId,
+						company_id: userSession.company_id,
+						company_ids: userSession.company_ids,
+						extend: data.name,
+						custom: false,
+						is_system: true
+					}));					
+					// id = newId;
+				}
+                return object.update(id, data, userSession)
+			},
+		},
 		object_fields__upsert: {
 			graphql: {
 				mutation:

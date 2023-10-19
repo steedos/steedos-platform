@@ -438,8 +438,6 @@ fields:
     scale: 0
     visible_on: "{{formData.type === 'textarea' ? true: false}}"
     required: "{{formData.type === 'textarea' ? true: false}}"
-    amis:
-      disabledOn: "${is_system == true}"
     # defaultValue: "{{formData.type === 'textarea' ? 3 : 0}}"
   # allowedValues:
   #   type: text

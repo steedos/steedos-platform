@@ -23,6 +23,8 @@ fields:
     #     return options;
     #   }
     defaultValue: 'default'
+    amis:
+      disabledOn: "${is_system == true}"
   label:
     type: text
     label: Label
@@ -38,6 +40,8 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+    amis:
+      disabledOn: "${is_system == true}"
   icon:
     type: lookup
     label: Icon
@@ -171,6 +175,8 @@ fields:
     searchable: true
     inlineHelpText: The default data source does not support this property
     group: External data source
+    amis:
+      disabledOn: "${is_system == true}"
   version:
     readonly: true
     label: Version
@@ -371,6 +377,9 @@ fields:
     language: javascript
     rows: 3
     is_wide: true
+    hidden: true
+  extend:
+    type: text
     hidden: true
 paging:
   enabled: false
