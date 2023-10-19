@@ -769,6 +769,19 @@ list_views:
         order: asc
     label: All
     filter_scope: space
+  customize:
+    columns:
+      - label
+      - name
+      - group
+      - type
+      - object
+      - sort_no
+      - modified
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
 actions: 
   recomputeFormulaValues: 
     label: Recompute Formula Values

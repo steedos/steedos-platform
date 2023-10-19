@@ -158,6 +158,8 @@ groups:
 listviews:
   all:
     label: All List View
+  customize:
+    label: Customize
 actions:
   customize:
     label: Customize

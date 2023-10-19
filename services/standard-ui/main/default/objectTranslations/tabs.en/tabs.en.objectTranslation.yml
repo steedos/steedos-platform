@@ -61,3 +61,5 @@ fields:
 listviews:
   all:
     label: All Tabs
+  customize:
+    label: Customize

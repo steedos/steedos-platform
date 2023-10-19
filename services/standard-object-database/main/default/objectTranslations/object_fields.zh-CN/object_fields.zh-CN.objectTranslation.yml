@@ -320,6 +320,8 @@ groups:
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义
 actions:
   recomputeFormulaValues:
     label: 重算公式值

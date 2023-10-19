@@ -155,6 +155,8 @@ groups:
 listviews:
   all:
     label: 全部
+  customize:
+    label: 自定义
 actions:
   customize:
     label: 自定义

@@ -1,0 +1,8 @@
+name: metadata
+allow_anonymous: true
+is_active: true
+label: 元数据微页面
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []
