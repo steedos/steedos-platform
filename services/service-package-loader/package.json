@@ -13,6 +13,7 @@
     "@steedos/metadata-core": "2.5.16",
     "@steedos/metadata-registrar": "2.5.16",
     "@steedos/router": "2.5.16",
+    "@steedos/service-object-mixin": "2.5.16",
     "clone": "^2.1.2",
     "moleculer": "^0.14.25",
     "underscore": "^1.12.0"
