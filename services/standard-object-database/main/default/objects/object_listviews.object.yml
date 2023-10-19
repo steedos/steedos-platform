@@ -16,6 +16,8 @@ fields:
     searchable: true
     index: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+    amis:
+      requiredOn: "${!!recordId}" #编辑记录时必填，新建记录时不必填走触发器给默认值
   object_name:
     label: Object
     type: master_detail
