@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "steedos-packages/*"
+  ],
+  "repository": "git://github.com/steedos/steedos-project-template.git",
+  "scripts": {
+    "start": "moleculer-runner steedos-packages/*/package.service.js --hot --repl",
+    "repl": "moleculer-runner --repl"
+  },
+  "dependencies": {
+    "@steedos/service-package-loader": "^2.5"
+  },
+  "devDependencies": {
+  }
+}
