@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-19 13:30:24
+ * @LastEditTime: 2023-10-19 16:09:02
  * @Description: 
  */
 "use strict";
@@ -51,6 +51,11 @@ module.exports = {
                 } else {
                     data = JSON.parse(JSON.stringify(doc));
                 }
+
+				if(data.form && _.isString(data.form)){
+					data.form = JSON.parse(data.form)
+				}
+
                 delete data.space;
 				
 				const object = await this.getObject('objects');
