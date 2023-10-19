@@ -1951,7 +1951,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!_.isEmpty(userSession)){
             let allow = await this.allow(method, userSession)
             if (!allow) {
-                throw new Error(`${this.name} not find permission`)
+                throw new Error(`${this.name} not ${method} permission`)
             }
         }
 
