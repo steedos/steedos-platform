@@ -1,0 +1,256 @@
+{
+    "type": "page",
+    "title": "Welcome to Steedos",
+    "body": [
+        {
+            "type": "tabs",
+            "id": "u:688bc8415b59",
+            "tabs": [
+                {
+                    "title": "对象",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "objects",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:6f86e8fc0bac"
+                        }
+                    ],
+                    "id": "u:1f46ff0c18e9"
+                },
+                {
+                    "title": "字段",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_fields",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:3ce7bf1fb9fc"
+                        }
+                    ],
+                    "id": "u:a7903575040d"
+                },
+                {
+                    "title": "列表视图",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_listviews",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:59b92e6a3fd2"
+                },
+                {
+                    "title": "操作按钮",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_actions",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:936ab602e2a9"
+                },
+                {
+                    "title": "页面布局",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_layouts",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE",
+                            "crud": {
+                                "footerToolbar": [],
+                                "id": "u:8cf8bde10dcb"
+                            }
+                        }
+                    ],
+                    "id": "u:3729aa71eccf"
+                },
+                {
+                    "title": "对象权限",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "permission_objects",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:5b798c6b51b3"
+                },
+                {
+                    "title": "触发器",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_triggers",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:23536bfbc790"
+                },
+                {
+                    "title": "流程映射",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_workflows",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE",
+                            "crud": {
+                                "footerToolbar": []
+                            }
+                        }
+                    ],
+                    "id": "u:648cb5bbffac"
+                },
+                {
+                    "title": "验证规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "object_validation_rules",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:8a66c9a8a31a"
+                },
+                {
+                    "title": "限制规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "restriction_rules",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ]
+                },
+                {
+                    "title": "共享规则",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "share_rules",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ]
+                },
+                {
+                    "title": "选项卡",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "id": "u:65e97e052474",
+                            "label": "列表视图",
+                            "objectApiName": "tabs",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "formFactor": "LARGE",
+                            "crud": {
+                                "footerToolbar": []
+                            }
+                        }
+                    ],
+                    "id": "u:32b59a9e8fd2"
+                },
+                {
+                    "title": "流程",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "flows",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "formFactor": "LARGE",
+                            "id": "u:749d0595fbf8",
+                            "crud": {
+                                "footerToolbar": []
+                            }
+                        }
+                    ],
+                    "id": "u:785fa47d408e"
+                },
+                {
+                    "title": "微页面",
+                    "body": [
+                        {
+                            "type": "steedos-object-listview",
+                            "label": "列表视图",
+                            "objectApiName": "pages",
+                            "listName": "customize",
+                            "showHeader": true,
+                            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 mb-4",
+                            "id": "u:65e97e052474",
+                            "formFactor": "LARGE"
+                        }
+                    ],
+                    "id": "u:936ab602e2a9"
+                }
+            ],
+            "tabsMode": "vertical"
+        }
+    ],
+    "regions": [
+        "body"
+    ],
+    "data": {
+        "initialValues": {},
+        "appId": "builder",
+        "title": "",
+        "context": {}
+    },
+    "id": "u:dafae0b298ee"
+}
