@@ -135,6 +135,7 @@ module.exports = {
         var setObj = {};
         var ins_id = approve.instance;
         var trace_id = approve.trace;
+        var approve_id = approve._id;
         var instance = db.instances.findOne(ins_id, {
             fields: {
                 traces: 1
@@ -148,7 +149,7 @@ module.exports = {
         var index = 0;
 
         current_trace.approves.forEach(function (a, idx) {
-            if (a.type == 'cc' && a.handler == current_user_id && !a.is_read) {
+            if (approve_id == a._id && a.type == 'cc' && a.handler == current_user_id && !a.is_read) {
                 index = idx;
             }
         });
@@ -186,7 +187,7 @@ module.exports = {
             if (t.approves) {
                 for (let aidx = 0; aidx < t.approves.length; aidx++) {
                     const a = t.approves[aidx];
-                    if (a.type == 'cc' && a.handler == current_user_id && a.is_finished == false) {
+                    if (approve_id == a._id && a.type == 'cc' && a.handler == current_user_id && a.is_finished == false) {
                         var upobj = {};
                         var key_str = 'traces.$.approves.' + aidx + '.';
                         upobj[key_str + 'is_finished'] = true;
@@ -234,16 +235,24 @@ module.exports = {
 
             db.instances.update({
                 _id: ins_id,
-                'traces._id': myApprove.trace
+                cc_users: current_user_id
             }, {
                 $set: setObj,
-                $pull: {
-                    cc_users: current_user_id
+                $unset: {
+                    'cc_users.$': true
                 },
                 $addToSet: {
                     outbox_users: {
                         $each: [current_user_id, myApprove.user]
                     }
+                }
+            });
+
+            db.instances.update({
+                _id: ins_id,
+            }, {
+                $pull: {
+                    cc_users: null
                 }
             });
 
