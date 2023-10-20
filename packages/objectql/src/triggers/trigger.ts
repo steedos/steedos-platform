@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-21 17:15:23
+ * @LastEditTime: 2023-10-20 15:06:18
  * @Description: 
  */
 const { NodeVM } = require('vm2');
@@ -32,7 +32,8 @@ export const runTriggerFunction = (code, thisArg, ...args)=>{
                 moment: require('moment'),
                 validator: require('validator'),
                 // dateFNS: require('date-fns'),
-                Filters: require('@steedos/filters')
+                Filters: require('@steedos/filters'),
+                filters: require('@steedos/filters')
             },
             services: (global as any).services,
             objects: (global as any).objects,
