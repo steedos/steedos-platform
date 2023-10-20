@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "848ab75c18392f99e1147290e689df007621015b.js",
+      "path": "1abb58f8958d247498c9a74c78a248b7b74920e0.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/848ab75c18392f99e1147290e689df007621015b.js?meteor_js_resource=true",
-      "size": 4283941,
-      "hash": "848ab75c18392f99e1147290e689df007621015b",
-      "sri": "4odV4qdTqtBqYZQp2QzHP7WB2wLxmC+LdVAGEw2dwhas7DMj6KBP9ayCJ0ZehU9PBIzs+CCDxxlKub/hUhiEyQ=="
+      "url": "/1abb58f8958d247498c9a74c78a248b7b74920e0.js?meteor_js_resource=true",
+      "size": 4284085,
+      "hash": "1abb58f8958d247498c9a74c78a248b7b74920e0",
+      "sri": "UpfFYRiR6HJJ6K19kAqGP2k+eDctg/257zpIkOo4L87V9Xqcv3NDGtcymvlzbSogK3SaM/duI1qFU36gfucb7A=="
     },
     {
-      "path": "848ab75c18392f99e1147290e689df007621015b.stats.json",
+      "path": "1abb58f8958d247498c9a74c78a248b7b74920e0.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/848ab75c18392f99e1147290e689df007621015b.stats.json?meteor_js_resource=true",
+      "url": "/1abb58f8958d247498c9a74c78a248b7b74920e0.stats.json?meteor_js_resource=true",
       "size": 92296,
-      "hash": "88a9a9a663017f78cb9c0590c6899e7a53aa0e8b",
-      "sri": "M9orSDAAFrVaOjdFL/VStECh1sfCRpKap8HhKG/oeEWbcJfwNyUn6MEE8GvDjEDpqap+nRE4JbLVb090LXj1hg=="
+      "hash": "bc1c61ae5be100fb7ec30190c1cf639a41df9b74",
+      "sri": "fQ74JZeKXtc6bD0uDIXBhLQ6I9Dog/B4K1//h40R1+9rcEY3OTxoRuxh6rlO11apa3VWoh/Co8+JZAAmFcDdFA=="
     },
     {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
@@ -318,8 +318,8 @@
       "cacheable": false,
       "url": "/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
-      "sri": null
+      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
+      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
       "path": "assets/icons/License-for-icons.txt",

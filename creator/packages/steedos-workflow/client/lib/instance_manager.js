@@ -787,6 +787,16 @@ InstanceManager.getCurrentApprove = function () {
 				}
 			})
 		})
+		// 如果instanceTaskId存在则以instanceTaskId为准
+		if(Session.get('instanceTaskId')){
+			_.each(instance.traces, function (t) {
+				_.each(t.approves, function (a) {
+					if (a._id === Session.get('instanceTaskId')) {
+						currentApprove = a;
+					}
+				})
+			})
+		}
 	}
 
 	if (!currentApprove)
