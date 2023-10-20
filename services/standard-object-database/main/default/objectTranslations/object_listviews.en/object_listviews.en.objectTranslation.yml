@@ -153,6 +153,8 @@ fields:
     label: Field
     help: 
     description: 
+  is_enable:
+    label: Enable
 groups:
   advanced: Advanced
 listviews:

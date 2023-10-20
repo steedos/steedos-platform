@@ -223,6 +223,10 @@ fields:
     type: number
     scale: 0
     defaultValue: 100
+  is_enable:
+    type: boolean
+    label: Enable
+    defaultValue: true
   is_system:
     type: boolean
     label: System
@@ -267,6 +271,7 @@ list_views:
       - shared
       - owner
       - modified
+      - is_enable
       - is_system
     label: All List Views
     filter_scope: space

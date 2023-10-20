@@ -146,6 +146,8 @@ fields:
     description: 
   sort_no:
     label: 排序号
+  is_enable:
+    label: 启用
   enable_amis_schema: 
     label: 使用 amis自定义列表
   amis_schema: 
