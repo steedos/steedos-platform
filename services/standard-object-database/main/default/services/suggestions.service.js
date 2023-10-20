@@ -36,10 +36,8 @@ module.exports = {
                 objectsTypes = objectsTypes + '}'
 
                 return `
-                    declare var _: any;
-                    declare var moment: any;
-                    declare var validator: any;
-                    declare var Filters: any;
+                    
+                    declare var global = {_: any, moment: any, validator: any, filters: any};
 
                     declare type TriggerParams = {
                         isInsert?: boolean;
@@ -76,7 +74,7 @@ module.exports = {
                             logger: any;
                             metadata: any;
                         },
-                        getObject(objectName: string): any;
+                        getObject(objectName: string): SteedosObjectType;
                         getUser(userId: string, spaceId: string): Promise<SteedosUserSession>;
                         makeNewID(): string;
                     };
@@ -125,6 +123,7 @@ module.exports = {
                         directUpdate(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession): Promise<any>;
                         directDelete(id: SteedosIDType, userSession?: SteedosUserSession): Promise<any>;
                         count(query: SteedosQueryOptions, userSession?: SteedosUserSession): Promise<any>;
+                        _makeNewID(): Promise<any>;
                     }
                     ${objectsTypes}
                     ${servicesTypes}
