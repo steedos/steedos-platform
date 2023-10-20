@@ -787,6 +787,16 @@ InstanceManager.getCurrentApprove = function () {
 				}
 			})
 		})
+		// 如果instanceTaskId存在则以instanceTaskId为准
+		if(Session.get('instanceTaskId')){
+			_.each(instance.traces, function (t) {
+				_.each(t.approves, function (a) {
+					if (a._id === Session.get('instanceTaskId')) {
+						currentApprove = a;
+					}
+				})
+			})
+		}
 	}
 
 	if (!currentApprove)
@@ -1026,6 +1036,7 @@ InstanceManager.submitIns = function () {
 					toastr.success(TAPi18n.__('Submitted successfully'));
 					Session.set("instance_submitting", false);
 					FlowRouter.go("/workflow/space/" + Session.get("spaceId") + "/" + Session.get("box"));
+					Session.set("instanceId", null);
 				};
 			});
 		} else {
