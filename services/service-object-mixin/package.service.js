@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-08-03 11:02:58
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-10-21 11:34:41
  * @Description: 
  */
 "use strict";
@@ -358,6 +358,32 @@ module.exports = {
                     }
 
                 }
+            }
+        },
+        /**
+         * 获取用户userSession
+         * 示例：const userSession = await this.getUser(userId, spaceId);
+         * @typedef {import('@steedos/objectql').SteedosUserSession} 用户的userSession
+         * @param string userId 必填
+         * @param string spaceId 非必填
+         * @returns object SteedosUserSession
+         */
+        getUser: {
+            async handler(userId, spaceId) {
+                return await this.broker.call("@steedos/service-accounts.getUserSession", {
+                    userId,
+                    spaceId
+                })
+            }
+        },
+        /**
+         * 生成主键
+         * 示例：const newId = await this.makeNewID();
+         * @returns string id
+         */
+        makeNewID: {
+            async handler() {
+                return await this.broker.call("objectql.makeNewID")
             }
         }
 
