@@ -68,7 +68,8 @@
     "body"
   ],
   "data": {
-    "objectName": "object_layouts"
+    "objectName": "object_layouts",
+    "field_groups": "${recordId?[]:_master.record.field_groups}"
   },
   "id": "u:3b0de7e88def",
   "bodyClassName": "p-0",
