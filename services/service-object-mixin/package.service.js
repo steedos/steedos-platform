@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-21 11:34:41
+ * @LastEditTime: 2023-10-21 13:51:19
  * @Description: 
  */
 "use strict";
@@ -363,10 +363,9 @@ module.exports = {
         /**
          * 获取用户userSession
          * 示例：const userSession = await this.getUser(userId, spaceId);
-         * @typedef {import('@steedos/objectql').SteedosUserSession} 用户的userSession
          * @param string userId 必填
          * @param string spaceId 非必填
-         * @returns object SteedosUserSession
+         * @returns {import('@steedos/objectql').SteedosUserSession} 用户的userSession
          */
         getUser: {
             async handler(userId, spaceId) {
