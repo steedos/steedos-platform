@@ -1,0 +1,236 @@
+{
+  "type": "page",
+  "title": "Welcome to Steedos",
+  "body": [
+    {
+      "type": "service",
+      "body": [
+        {
+          "type": "service",
+          "id": "service_field_design",
+          "body": [
+            {
+              "type": "form",
+              "title": "",
+              "body": [
+                {
+                  "type": "button",
+                  "id": "u:ec9931ea883c",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "type": "dialog",
+                    "title": "设置分组",
+                    "size": "lg",
+                    "body": [
+                      {
+                        "type": "input-table",
+                        "name": "setting_groups",
+                        "addable": true,
+                        "editable": true,
+                        "columns": [
+                          {
+                            "name": "group_name",
+                            "label": "名称",
+                            "id": "u:ee2fb813a3e7"
+                          },
+                          {
+                            "name": "visible_on",
+                            "label": "显示条件",
+                            "id": "u:ed37c3ff9dcb"
+                          }
+                        ],
+                        "value": "${groups}",
+                        "removable": true,
+                        "id": "u:e9f43ef94d08"
+                      }
+                    ],
+                    "onEvent": {
+                      "confirm": {
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "//整理分组数据\nconst setting_groups = event.data.setting_groups;\nsetting_groups.forEach(function (group) {\n  if (!group.id) {\n    group.id = group.group_name;\n  }\n})\n\n//整理字段与分组关系的数据\nconst fieldForGroup = {};\nlet oldGroup = event.data.fieldForGroup;\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[\"未分组\"] = _.unionBy(fieldForGroup[\"未分组\"], value);\n  });\n}\nconsole.log(\"setting_groups,fieldForGroup===>\", setting_groups, fieldForGroup);\n//修改面板上的数据\ndoAction({\n  actionType: 'setValue',\n  componentId: 'form_field_design',\n  args: {\n    value: { \n      fieldForGroup\n    }\n  }\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});"
+                          }
+                        ]
+                      }
+                    },
+                    "id": "u:e02c8f59216e",
+                    "closeOnEsc": false,
+                    "closeOnOutside": false,
+                    "showCloseButton": true,
+                    "showErrorMsg": true,
+                    "showLoading": true
+                  },
+                  "label": "设置分组",
+                  "onEvent": {
+                    "@data.changed.object_fields": {
+                      "actions": [
+                        {
+                          "actionType": "custom",
+                          "script": "const fieldForGroup = context.props.data.fieldForGroup;\n_.forIn(fieldForGroup, function (group, group_name) {\n  _.remove(group, function (field) {\n    return field === event.data._id;\n  })\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { fieldForGroup }\n  }\n});\n"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "steedos-board",
+                  "id": "steedos_field_deign",
+                  "columns": 2,
+                  "name": "fieldForGroup",
+                  "boardSource": "${groups}",
+                  "boardClassName": "bg-gray-50 p-2 border rounded shadow",
+                  "boardHeader": {
+                    "type": "tpl",
+                    "tpl": "字段分组：${group_name}",
+                    "id": "u:76d9a6c7d401"
+                  },
+                  "cardClassName": "bg-white border w-full p-2 rounded shadow",
+                  "cardSchema": {
+                    "type": "card",
+                    "header": {
+                      "className": "items-center",
+                      "title": "${label}(${name})"
+                    },
+                    "toolbar": [
+                      {
+                        "type": "steedos-dropdown-button",
+                        "label": "xxx",
+                        "buttons": [
+                          {
+                            "type": "steedos-object-button",
+                            "name": "standard_edit",
+                            "objectName": "object_fields",
+                            "className": "antd-Button--default"
+                          },
+                          {
+                            "type": "steedos-object-button",
+                            "name": "standard_delete",
+                            "objectName": "object_fields",
+                            "className": "antd-Button--default"
+                          }
+                        ],
+                        "placement": "bottomRight",
+                        "overlayClassName": "shadow !min-w-[160px]",
+                        "trigger": [
+                          "click"
+                        ],
+                        "id": "u:c2140a365019",
+                        "className": "mx-3"
+                      }
+                    ],
+                    "className": "mb-0",
+                    "id": "u:296298da1bef"
+                  },
+                  "cardSource": "${fields}",
+                  "vertical": true,
+                  "onEvent": {
+                    "change": {
+                      "actions": [
+                        {
+                          "actionType": "toast",
+                          "args": {
+                            "msgType": "warning",
+                            "msg": "我是全局警告消息，可以配置不同类型和弹出位置~",
+                            "position": "top-right"
+                          }
+                        },
+                        {
+                          "actionType": "custom",
+                          "script": "debugger;"
+                        }
+                      ]
+                    }
+                  },
+                  "value": "${value}"
+                }
+              ],
+              "id": "form_field_design",
+              "api": {
+                "url": "${context.rootUrl}/graphql",
+                "method": "post",
+                "dataType": "json",
+                "headers": {
+                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                },
+                "requestAdaptor": "// debugger;\nvar graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = api.data.groups;\n_.remove(field_groups, { id: '未分组' }); \nfield_groups = api.data.groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'update0:objects__update(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据fieldForGroup,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.fieldForGroup, function (items,key) {\n  _.forEach(items, function (item) {\n    const itemOrder = 'update' + index + ':object_fields__update(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ sort_no: index, group: key == \"未分组\"?null:key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
+                "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
+                "messages": {},
+                "data": {
+                  "fieldForGroup": "${fieldForGroup}",
+                  "groups": "${groups}",
+                  "fields": "${fields}",
+                  "$self": "$$"
+                }
+              },
+              "debug": true,
+              "actions": [
+                {
+                  "type": "submit",
+                  "label": "保存",
+                  "id": "u:89e49bc61371"
+                }
+              ],
+              "visibleOn": "${dataInitialed}"
+            }
+          ],
+          "api": {
+            "method": "post",
+            "url": "${context.rootUrl}/graphql?designObjectId=${designObjectId}",
+            "data": {
+              "query": "{fields:object_fields(filters: [[\"object\",\"=\",\"${designObjectName}\"]],sort: \"sort_no asc\"){_id,label,name,group,type,sort_no,modified,is_wide,recordPermissions: _permissions{allowEdit}}}",
+              "field_groups": "${field_groups}",
+              "dataInitialed": "${dataInitialed}"
+            },
+            "headers": {
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+            },
+            "messages": {},
+            "requestAdaptor": "",
+            "adaptor": "debugger;\r\n//筛选出可编辑的字段\r\nvar oldFields = _.filter(payload.data.fields, function (obj) { return obj.recordPermissions.allowEdit; });\r\n//将group为空的字段分为未分组的组中\r\noldFields = _.map(oldFields, function (obj) {\r\n  if (obj.group === null) {\r\n    obj.group = \"未分组\";\r\n  }\r\n  return obj;\r\n});\r\n\r\n//整合出字段的属性集合\r\nconst fields = oldFields.map((field) => {\r\n  return {\r\n    \"id\": field._id,\r\n    \"name\": field.name,\r\n    \"label\": field.label,\r\n    \"_id\": field._id,\r\n    \"columnSpan\": field.is_wide ? 2 : 1\r\n  }\r\n})\r\n\r\n//判断是否第一次调用接口，不是的话，只返回fields\r\nif (api.data.dataInitialed) {\r\n  return payload = {\r\n    data: {\r\n      fields\r\n    }\r\n  }\r\n}\r\n\r\n//从字段的group属性中，整合出字段分组的属性集合\r\nlet field_groups = _.map(_.uniqBy(oldFields, \"group\"), function (obj) {\r\n  return {\r\n    \"id\": obj.group,\r\n    \"group_name\": obj.group,\r\n    \"visible_on\": \"\"\r\n  };\r\n});\r\n\r\n//合并对象上的field_groups与字段上的group\r\nconst groups = _.unionBy(api.data.field_groups, field_groups, 'id');\r\n\r\n\r\n\r\n//整合字段与分组的关系\r\nconst oldFieldsInGroups = _.groupBy(oldFields, \"group\");\r\nconst value = _.mapValues(_.groupBy(groups, \"id\"), function (group,key) {\r\n  if (oldFieldsInGroups[key]) {\r\n    return _.map(oldFieldsInGroups[key], function (obj) {\r\n      return obj._id;\r\n    });\r\n  } else {\r\n    return [];\r\n  }\r\n});\r\n\r\nreturn payload = {\r\n  data: {\r\n    fields,\r\n    groups,\r\n    value,\r\n    dataInitialed: true\r\n  }\r\n};",
+            "sendOn": "!!this.designObjectId"
+          },
+          "messages": {},
+          "onEvent": {
+            "@data.changed.object_fields": {
+              "actions": [
+                {
+                  "actionType": "reload"
+                }
+              ]
+            }
+          },
+          "initFetch": false
+        }
+      ],
+      "id": "u:02f594329e1e",
+      "api": {
+        "method": "post",
+        "url": "${context.rootUrl}/graphql",
+        "data": {
+          "query": "{fields:objects(filters: [[\"name\",\"=\",\"${designObjectName}\"]]){_id,name,field_groups}}"
+        },
+        "headers": {
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        },
+        "messages": {},
+        "requestAdaptor": "",
+        "adaptor": "const field_groups = payload.data.fields[0] && _.map(payload.data.fields[0].field_groups, function (obj) {\r\n  return {\r\n    \"id\": obj.group_name,\r\n    \"group_name\": obj.group_name,\r\n    \"visible_on\": obj.visible_on\r\n  }\r\n});field_groups.push({id:\"未分组\",\r\ngroup_name:\"未分组\",\r\n\"visible_on\": \"\"\r\n  });return payload = {\r\n  data: {\r\n    field_groups,designObjectId:payload.data.fields[0] && payload.data.fields[0]._id \r\n  }\r\n}"
+      },
+      "messages": {}
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    "recordId": "",
+    "initialValues": {
+    },
+    "appId": "builder",
+    "title": "",
+    "dataInitialed": false,
+    "context": "${context}"
+  },
+  "id": "u:993ee4316643"
+}

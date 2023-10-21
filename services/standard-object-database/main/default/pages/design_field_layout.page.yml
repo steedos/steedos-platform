@@ -1,0 +1,7 @@
+name: design_field_layout
+is_active: true
+label: 设计字段布局
+pageAssignments: []
+render_engine: amis
+type: app
+widgets: []

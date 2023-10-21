@@ -1,4 +1,42 @@
 module.exports = {
+    design_field_layout: function (object_name, record_id, item_element) {
+        var record = this.record || Creator.getObjectById(record_id);
+        if (record && record.record) {
+            record = record.record;
+        }
+        if (!record) {
+            return toastr.error("未找到记录");
+        }
+
+        if (record.is_enable === false) {
+            return toastr.warning("请先启动对象");
+        }
+
+        if (record.datasource && record.datasource != 'default' && record.datasource != 'meteor') {
+            var datasource = Creator.odata.get('datasources', record.datasource, 'is_enable');
+            if (!datasource) {
+                return toastr.error("未找到数据源");
+            }
+            if (!datasource.is_enable) {
+                return toastr.warning("请先启动数据源");
+            }
+        }
+
+        window.open(Creator.getRelativeUrl("/app/-/page/design_field_layout?designObjectName=" + record.name));
+    },
+    design_field_layoutVisible: function (object_name, record_id, record_permissions, data) {
+        var record = data && data.record;
+        if (!Creator.isSpaceAdmin()) {
+            return false
+        }
+        if (!record) {
+            record = Creator.odata.get("objects", record_id, "is_deleted");
+        }
+
+        if (record && !record.is_deleted && record.name != 'users' && !record.is_system) {
+            return true;
+        }
+    },
   show_object: function (object_name, record_id, item_element) {
     var record = this.record || Creator.getObjectById(record_id);
     if(record && record.record){
