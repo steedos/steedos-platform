@@ -171,6 +171,30 @@
                                     "id": "u:25a6ee957503"
                                 },
                                 {
+                                    "label": "显示模式",
+                                    "name": "crud_mode",
+                                    "type": "select",
+                                    "en-US": {
+                                        "label": "Crud Mode"
+                                    },
+                                    "options": [
+                                        {
+                                            "label": "表格",
+                                            "value": "table",
+                                            "en-US": {
+                                                "label": "Table"
+                                            }
+                                        },
+                                        {
+                                            "label": "卡片",
+                                            "value": "cards",
+                                            "en-US": {
+                                                "label": "Cards"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
                                     "label": "显示的列",
                                     "type": "transfer",
                                     "name": "columns",
@@ -541,7 +565,7 @@
                 "data": {
                     "recordId": "${recordId}",
                     "defaultData": "${defaultData}",
-                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,requestAdaptor,adaptor,filter_scope,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
+                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,requestAdaptor,adaptor,filter_scope,crud_mode,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
                 },
                 "replaceData": false,
                 "responseData": {

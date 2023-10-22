@@ -146,6 +146,15 @@ fields:
     description: 
   sort_no:
     label: 排序号
+  crud_mode:
+    label: 显示模式
+    help: 
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
+    description: 
   enable_amis_schema: 
     label: 使用 amis自定义列表
   amis_schema: 

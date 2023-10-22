@@ -125,6 +125,15 @@ fields:
     label: Value
     help: 
     description: 
+  crud_mode:
+    label: Crud Mode
+    help: 
+    options:
+      - label: Table
+        value: table
+      - label: Cards
+        value: cards
+    description: 
   filter_logic:
     label: Logic
     help: 

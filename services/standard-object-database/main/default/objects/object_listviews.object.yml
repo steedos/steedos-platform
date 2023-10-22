@@ -225,6 +225,14 @@ fields:
     type: number
     scale: 0
     defaultValue: 100
+  crud_mode:
+    label: 显示模式
+    type: select
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
   is_system:
     type: boolean
     label: System
