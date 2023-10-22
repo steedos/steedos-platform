@@ -9,6 +9,7 @@
       "showHeader": true,
       "className": "sm:border sm:rounded sm:border-gray-300 mb-4",
       "id": "u:70d5861033de",
+      "crudMode": "cards",
       "crud": {
         "columnsCount": 4,
         "id": "u:553974f9435b",
@@ -21,23 +22,18 @@
             "actionType": "link",
             "link": "/app/admin/steedos_packages/view/${_id}"
           },
-          "header": {
-            "avatar": "${icon}",
-            "avatarText": "${label|split:/|last|substring:0:2|upperCase}",
-            "avatarClassName": "pull-left thumb-md b-3x m-r slds-icon slds-icon_container slds-icon-standard-user",
-            "avatarTextBackground": [
-              "#34becd"
-            ],
-            "className": "bg-white",
-            "title": "${label}",
-            "subTitle": "${description}",
-            "subTitlePlaceholder": "--",
-            "description": "<span class=\"bg-${status === 'enable' ? 'green': 'gray'}-300 border rounded-full px-2 py-0.5 mt-2 inline-block\">$_display.status</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span>"
-          },
+          "useCardLabel": false,
+          "body": [
+            {
+              "type": "tpl",
+              "tpl": "<div class='antd-Card-heading bg-white'><span class='antd-Card-avtar pull-left thumb-md b-3x m-r slds-icon slds-icon_container slds-icon-${iconCategory}-${iconName}'><img class='antd-Card-img'src='${icon}' /></span><div class='antd-Card-meta'><div class='antd-Card-title'><span class='antd-TplField'><span>${label}</span></span></div><div class='antd-Card-subTitle'><span class='antd-TplField'><span>${description}</span></span></div><div class='antd-Card-desc'><span class='antd-TplField'><span><span class='bg-green-300 border rounded-full px-2 py-0.5 mt-2 inline-block'>${_display.status}</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span></span></span></div></div></div>"
+            }
+          ],
           "actions": [
             {
               "label": "${uiSchema.actions.enable.label}",
               "disabledOn": "${status === 'enable'}",
+              "className": "mr-4",
               "onEvent": {
                 "click": {
                   "actions": [
@@ -63,7 +59,8 @@
                   ]
                 }
               },
-              "id": "u:7e1db04924da"
+              "id": "u:7e1db04924da",
+              "className": "mr-4"
             }
           ],
           "type": "card",
@@ -131,6 +128,26 @@
       "-webkit-line-clamp": "1",
       "max-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)",
       "min-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left": {
+      "align-items": "start"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left .antd-Card-multiMedia-flex .antd-Card-footer-wrapper": {
+      "margin-left": "-80px",
+      "border-top": "solid 1px #000"
+    },
+    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left .antd-Card-multiMedia-flex .antd-Card-footer-wrapper .antd-Card-actions": {
+      "width": "100%"
+    },
+    ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card": {
+      "padding-top": "2px"
+    },
+    ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card .antd-Card-body": {
+      "padding-left": "0px",
+      "padding-right": "0px",
+      "padding-top": "0px",
+      "margin-top": "0px",
+      "padding-bottom": "0px"
     }
   }
 }

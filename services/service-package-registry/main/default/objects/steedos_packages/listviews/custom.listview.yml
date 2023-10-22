@@ -9,6 +9,9 @@ filters: [["static","!=", true]]
 adaptor: |
   if(payload.data.rows.length){
     payload.data.rows.forEach(function(row){
+      if(!row.icon){
+        row.icon = "standard.default";
+      }
       if(row.icon){
         if(!/^http(s?):\/\//.test(row.icon)){
           var iconCategory = "standard";
@@ -18,7 +21,14 @@ adaptor: |
             iconCategory = tags[0];
             iconName = tags[1];
           }
-          row.icon = "https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.0/assets/icons/" + iconCategory + "/" + iconName + "_120.png";
+          row.iconCategory = iconCategory;
+          row.iconName = iconName;
+          row.icon = "https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.0/assets/icons/" + iconCategory + "/" + iconName.replace("-", "_") + "_120.png";
+        }
+        else{
+          /*http(s)://开头则给个默认的背景色*/
+          row.iconCategory = "standard";
+          row.iconName = "default";
         }
       }
     });
