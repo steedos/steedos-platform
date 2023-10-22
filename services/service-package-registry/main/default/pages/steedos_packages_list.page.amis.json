@@ -129,25 +129,15 @@
       "max-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)",
       "min-height": "calc(var(--fontSizeBase) * var(--lineHeightBase) * 1)"
     },
-    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left": {
-      "align-items": "start"
-    },
-    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left .antd-Card-multiMedia-flex .antd-Card-footer-wrapper": {
-      "margin-left": "-80px",
-      "border-top": "solid 1px #000"
-    },
-    ".antd-Crud .antd-Cards .antd-Card .antd-Card-multiMedia--left .antd-Card-multiMedia-flex .antd-Card-footer-wrapper .antd-Card-actions": {
-      "width": "100%"
-    },
-    ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card": {
-      "padding-top": "2px"
-    },
     ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card .antd-Card-body": {
       "padding-left": "0px",
       "padding-right": "0px",
       "padding-top": "0px",
       "margin-top": "0px",
       "padding-bottom": "0px"
+    },
+    ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card": {
+      "padding-top": "2px"
     }
   }
 }
