@@ -6,7 +6,7 @@ fields:
     label: 名称
     help: 
     description: 
-  object:
+  listenTo:
     label: 所属对象
     help: 
     description: 
@@ -37,6 +37,12 @@ fields:
     label: 内容
     help: 
     description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义

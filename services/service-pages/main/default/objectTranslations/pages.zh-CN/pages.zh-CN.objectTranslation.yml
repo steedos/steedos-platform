@@ -87,6 +87,10 @@ listviews:
     label: 所有
   recent:
     label: 最近查看
+  customize:
+    label: 自定义
+  system:
+    label: 系统
 actions:
   customPage:
     label: 自定义

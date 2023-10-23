@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-10 17:23:06
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-10-21 10:56:28
  * @Description: 
  */
 "use strict";
@@ -10,6 +10,7 @@
 const objectql = require('@steedos/objectql');
 const { getObject } = objectql;
 
+const { ObjectId } = require('mongodb');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -506,7 +507,12 @@ module.exports = {
                 const { objectName, doc } = ctx.params;
                 return await this.encryptFieldValue(objectName, doc);
             }
-        }
+        },
+        makeNewID: {
+            async handler(ctx) {
+                return new ObjectId().toHexString();
+            }
+        },
 
     },
 

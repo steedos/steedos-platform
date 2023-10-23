@@ -6,7 +6,7 @@ fields:
     label: Name
     help: 
     description: 
-  object:
+  listenTo:
     label: Object
     help: 
     description: 
@@ -40,6 +40,12 @@ fields:
       Help</a>
     help: 
     description: 
+  is_system:
+    label: System
+    help: 
+    description: 
 listviews:
   all:
     label: All Triggers
+  customize:
+    label: Customize

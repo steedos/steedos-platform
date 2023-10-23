@@ -60,9 +60,7 @@ fields:
     is_wide: true
     required: true
     defaultValue: |-
-      // _ : lodash
-      // moment: moment
-      // validator: validator
+      // global: {_:lodash, moment, validator, filters}
       // ctx
       // objects
       // services
@@ -95,6 +93,17 @@ list_views:
       - isEnabled
       - is_system
     label: All
+    filter_scope: space
+  customize:
+    columns:
+      - name
+      - listenTo
+      - when
+      - isEnabled
+      - is_system
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
     filter_scope: space
 permission_set:
   user:

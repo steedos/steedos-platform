@@ -57,7 +57,20 @@ actions:
     on: record
 list_views:
   all:
-    label: All Roles
+    label: 所有
+    filter_scope: space
+    columns:
+      - name
+      - object_name
+      - active
+      - entry_criteria
+      - record_filter
+      - description
+      - is_system
+  customize:
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
     filter_scope: space
     columns:
       - name

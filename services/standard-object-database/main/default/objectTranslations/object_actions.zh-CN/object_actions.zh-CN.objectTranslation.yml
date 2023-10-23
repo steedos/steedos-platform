@@ -62,6 +62,8 @@ fields:
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义
 CustomLabels:
   _object_actions_none_todo: >-
     未配置操作按钮实例，请在代码中配置。<a target='_blank'

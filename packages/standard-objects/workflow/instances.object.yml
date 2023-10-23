@@ -15,11 +15,18 @@ fields:
     searchable: true
     is_wide: true
     name: name
+    filterable: true
     amis:
       className:
         'color-priority-danger': "${extras && extras.priority == '特急'}"
         'color-priority-warning': "${extras && extras.priority == '紧急'}"
         'color-priority-muted': "${extras && extras.priority == '办文'}" 
+  submitter_name:
+    type: text
+    label: Submitter's Name
+    hidden: false
+    name: submitter_name
+    filterable: true
   flow:
     label: Workflow
     type: lookup
@@ -42,7 +49,7 @@ fields:
     reference_to: forms
     readonly: true
     name: form
-    filterable: true
+    filterable: false
   form_version:
     label: Form Version
     type: text
@@ -54,24 +61,26 @@ fields:
     reference_to: users
     readonly: true
     name: submitter
-    filterable: true
+    filterable: false
     write_requires_master_read: true
-  submitter_name:
+  applicant_organization_name:
     type: text
-    label: Submitter's Name
+    label: Applicant Department's Name
     hidden: false
-    name: submitter_name
+    name: applicant_organization_name
+    filterable: true
   submit_date:
     type: datetime
     label: Submit Date
     name: submit_date
     sortable: true
+    filterable: true
   applicant:
     type: lookup
     label: Applicant
     reference_to: users
     name: applicant
-    filterable: true
+    filterable: false
   applicant_name:
     type: text
     label: Applicant's Name
@@ -82,12 +91,7 @@ fields:
     label: Applicant Department
     reference_to: organizations
     name: applicant_organization
-    filterable: true
-  applicant_organization_name:
-    type: text
-    label: Applicant Department's Name
-    hidden: false
-    name: applicant_organization_name
+    filterable: false
   applicant_organization_fullname:
     type: text
     label: Applicant Department's Fullname
@@ -110,14 +114,14 @@ fields:
     reference_to: users
     label: Inbox Users
     name: inbox_users
-    filterable: true
+    filterable: false
   outbox_users:
     type: lookup
     multiple: true
     reference_to: users
     label: Outbox Users
     name: outbox_users
-    filterable: true
+    filterable: false
   traces:
     type: '[Object]'
     blackbox: true
@@ -148,7 +152,7 @@ fields:
     reference_to: categories
     hidden: true
     name: category
-    filterable: true
+    filterable: false
   state:
     label: Processing State
     type: select
@@ -171,6 +175,7 @@ fields:
     label: Archived
     hidden: false
     name: is_archived
+    filterable: true
   is_deleted:
     type: boolean
     label: Deleted
@@ -186,7 +191,7 @@ fields:
     label: Related Instances
     is_wide: true
     name: related_instances
-    filterable: true
+    filterable: false
   record_ids:
     label: Record IDs
     type: lookup

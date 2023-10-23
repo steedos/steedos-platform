@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-01-14 11:31:56
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-14 09:46:14
+ * @LastEditTime: 2023-10-18 09:50:42
  * @Description:
  */
 const objectql = require("@steedos/objectql");
@@ -90,7 +90,7 @@ module.exports = {
         if(appId && allData !=true){
           query.filters = [['app', '=', appId]] 
         }
-        console.log(`getAppCategoriesIds`, appId, allData, query)
+        // console.log(`getAppCategoriesIds`, appId, allData, query)
         const categories = await objectql.getObject('categories').find(query);
         return _.map(categories, '_id');
       }

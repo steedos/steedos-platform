@@ -118,3 +118,4 @@ CustomTabs:
   admin_holidays: Holidays
   admin_business_hours: Business Hours
   admin_api_keys: API Keys
+  admin_metadata: Metadata

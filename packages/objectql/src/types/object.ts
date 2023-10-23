@@ -540,7 +540,8 @@ export class SteedosObjectType extends SteedosObjectProperties {
         for (const trigger of triggers) {
             let params = generateActionParams(when, context);
             const result = await runTriggerFunction(trigger.metadata.handler, {
-                
+                getObject: getObject,
+                getUser: auth.getSessionByUserId
             }, {
                 params: params,
                 broker: broker,
@@ -1951,7 +1952,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if(!_.isEmpty(userSession)){
             let allow = await this.allow(method, userSession)
             if (!allow) {
-                throw new Error(`${this.name} not find permission`)
+                throw new Error(`${this.name} not ${method} permission`)
             }
         }
 

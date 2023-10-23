@@ -60,6 +60,8 @@ fields:
 listviews:
   all:
     label: All
+  customize:
+    label: Customize
 groups:
   general_information: General Information
   buttons: Buttons

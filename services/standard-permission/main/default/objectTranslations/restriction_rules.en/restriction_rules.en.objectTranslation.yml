@@ -33,3 +33,8 @@ fields:
 actions:
   customize:
     label: Customize
+listviews:
+  all:
+    label: All Roles
+  customize:
+    label: Customize

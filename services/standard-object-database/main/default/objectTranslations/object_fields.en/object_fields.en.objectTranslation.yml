@@ -347,6 +347,8 @@ groups:
 listviews:
   all:
     label: All
+  customize:
+    label: Customize
 actions:
   recomputeFormulaValues:
     label: Recompute Formula Values
