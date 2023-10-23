@@ -1,2 +1,3 @@
-## 功能说明
-- 数据统计
+# Query Builder
+
+Connect to the database and execute custom queries.

@@ -2,7 +2,7 @@
   "name": "@steedos/service-charts",
   "private": false,
   "version": "2.5.17-beta.5",
-  "description": "自定义查询",
+  "description": "Connect to the database and execute custom queries.",
   "main": "package.service.js",
   "repository": {
     "type": "git",
