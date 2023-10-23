@@ -17,7 +17,8 @@
     "create-steedos-app": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/",
