@@ -8,7 +8,7 @@ module.exports = {
             return toastr.error("未找到记录");
         }
 
-        window.open(Creator.getRelativeUrl("/app/-/page/design_field_layout?designObjectName=" + record.name));
+        window.open(Creator.getRelativeUrl("/api/page/view/design_field_layout?designObjectName=" + record.name));
     },
     design_field_layoutVisible: function (object_name, record_id, record_permissions, data) {
         var record = data && data.record;
