@@ -67,7 +67,8 @@
                       "actions": [
                         {
                           "actionType": "custom",
-                          "script": "const fieldForGroup = context.props.data.fieldForGroup;\n_.forIn(fieldForGroup, function (group, group_name) {\n  _.remove(group, function (field) {\n    return field === event.data._id;\n  })\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { fieldForGroup }\n  }\n});\n"
+                          "script": "const fieldForGroup = context.props.data.fieldForGroup;\n_.forIn(fieldForGroup, function (group, group_name) {\n  _.remove(group, function (field) {\n    return field === event.data._id;\n  })\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { fieldForGroup }\n  }\n});\n",
+                          "expression": "${event.data.delete == 1}"
                         }
                       ]
                     }
