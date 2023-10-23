@@ -14,54 +14,75 @@
               "title": "",
               "body": [
                 {
-                  "type": "button",
-                  "id": "u:ec9931ea883c",
-                  "actionType": "dialog",
-                  "dialog": {
-                    "type": "dialog",
-                    "title": "设置分组",
-                    "size": "lg",
-                    "body": [
-                      {
-                        "type": "input-table",
-                        "name": "setting_groups",
-                        "addable": true,
-                        "editable": true,
-                        "columns": [
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "button",
+                      "id": "u:ec9931ea883c",
+                      "actionType": "dialog",
+                      "dialog": {
+                        "type": "dialog",
+                        "title": "设置分组",
+                        "size": "lg",
+                        "body": [
                           {
-                            "name": "group_name",
-                            "label": "名称",
-                            "id": "u:ee2fb813a3e7"
-                          },
-                          {
-                            "name": "visible_on",
-                            "label": "显示条件",
-                            "id": "u:ed37c3ff9dcb"
+                            "type": "input-table",
+                            "name": "setting_groups",
+                            "addable": true,
+                            "editable": true,
+                            "columns": [
+                              {
+                                "name": "group_name",
+                                "label": "名称",
+                                "id": "u:ee2fb813a3e7"
+                              },
+                              {
+                                "name": "visible_on",
+                                "label": "显示条件",
+                                "id": "u:ed37c3ff9dcb"
+                              }
+                            ],
+                            "value": "${groups}",
+                            "removable": true,
+                            "id": "u:e9f43ef94d08"
                           }
                         ],
-                        "value": "${groups}",
-                        "removable": true,
-                        "id": "u:e9f43ef94d08"
-                      }
-                    ],
-                    "onEvent": {
-                      "confirm": {
-                        "actions": [
-                          {
-                            "actionType": "custom",
-                            "script": "//整理分组数据\nconst setting_groups = event.data.setting_groups;\nsetting_groups.forEach(function (group) {\n  if (!group.id) {\n    group.id = group.group_name;\n  }\n})\n\n//整理字段与分组关系的数据\nconst fieldForGroup = {};\nlet oldGroup = event.data.fieldForGroup;\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[\"未分组\"] = _.unionBy(fieldForGroup[\"未分组\"], value);\n  });\n}\nconsole.log(\"setting_groups,fieldForGroup===>\", setting_groups, fieldForGroup);\n//修改面板上的数据\ndoAction({\n  actionType: 'setValue',\n  componentId: 'form_field_design',\n  args: {\n    value: { \n      fieldForGroup\n    }\n  }\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});"
+                        "onEvent": {
+                          "confirm": {
+                            "actions": [
+                              {
+                                "actionType": "custom",
+                                "script": "//整理分组数据\nconst setting_groups = event.data.setting_groups;\nsetting_groups.forEach(function (group) {\n  if (!group.id) {\n    group.id = group.group_name;\n  }\n})\n\n//整理字段与分组关系的数据\nconst fieldForGroup = {};\nlet oldGroup = event.data.fieldForGroup;\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[\"未分组\"] = _.unionBy(fieldForGroup[\"未分组\"], value);\n  });\n}\nconsole.log(\"setting_groups,fieldForGroup===>\", setting_groups, fieldForGroup);\n//修改面板上的数据\ndoAction({\n  actionType: 'setValue',\n  componentId: 'form_field_design',\n  args: {\n    value: { \n      fieldForGroup\n    }\n  }\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});"
+                              }
+                            ]
                           }
-                        ]
-                      }
+                        },
+                        "id": "u:e02c8f59216e",
+                        "closeOnEsc": false,
+                        "closeOnOutside": false,
+                        "showCloseButton": true,
+                        "showErrorMsg": true,
+                        "showLoading": true
+                      },
+                      "label": "设置分组",
+                      "className": ""
                     },
-                    "id": "u:e02c8f59216e",
-                    "closeOnEsc": false,
-                    "closeOnOutside": false,
-                    "showCloseButton": true,
-                    "showErrorMsg": true,
-                    "showLoading": true
-                  },
-                  "label": "设置分组",
+                    {
+                      "type": "steedos-object-button",
+                      "name": "standard_new",
+                      "objectName": "object_fields",
+                      "className": "button_standard_new",
+                      "id": "u:c8127e35c721"
+                    },
+                    {
+                      "type": "button",
+                      "label": "保存",
+                      "actionType": "submit",
+                      "className": "float-right",
+                      "id": "u:d9039421ea6b"
+                    }
+                  ],
+                  "id": "u:e7d32fc080dd",
                   "onEvent": {
                     "@data.changed.object_fields": {
                       "actions": [
@@ -166,13 +187,6 @@
                 }
               },
               "debug": true,
-              "actions": [
-                {
-                  "type": "submit",
-                  "label": "保存",
-                  "id": "u:89e49bc61371"
-                }
-              ],
               "visibleOn": "${dataInitialed}"
             }
           ],
