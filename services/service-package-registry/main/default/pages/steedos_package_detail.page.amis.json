@@ -17,7 +17,7 @@
                     "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
                     "tabs": [
                         {
-                            "title": "摘要",
+                            "title": "简介",
                             "body": [
                                 {
                                     "type": "markdown",
@@ -52,7 +52,8 @@
                                         }
                                     }
                                 }
-                            ]
+                            ],
+                            "className": "p-0"
                         },
                         {
                             "title": "详细信息",
@@ -71,7 +72,7 @@
                                     ]
                                 }
                             ],
-                            "className": "px-0 py-4",
+                            "className": "p-0",
                             "id": "u:5d4e7e3f6ecc"
                         }
                     ],
