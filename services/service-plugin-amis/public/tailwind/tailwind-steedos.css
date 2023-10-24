@@ -296,11 +296,6 @@
   border-color: rgb(229 231 235 / var(--tw-border-opacity))
 }
 
-.bg-blue-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 99 235 / var(--tw-bg-opacity))
-}
-
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
@@ -398,11 +393,6 @@
 
 .leading-none {
   line-height: 1
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 .text-gray-600 {
