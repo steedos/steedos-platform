@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-27 11:36:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-29 18:12:38
+ * @LastEditTime: 2023-10-24 09:57:04
  * @Description: 
  */
 import { registerPackageQueries } from "./query";
@@ -34,8 +34,7 @@ export const registerMetadataConfigs = async (filePath, datasourceApiName, servi
     await registerPackageShareRules(filePath, serviceName);
     await registerPackageRestrictionRules(filePath, serviceName);
     
-    //TODO 仅主服务需要?
-    loadPackageClientScripts(serviceName, filePath);
+    await loadPackageClientScripts(serviceName, filePath);
     addServerScriptFiles(filePath);
     
     await addTranslationsFiles(filePath);

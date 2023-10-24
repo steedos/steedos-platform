@@ -154,7 +154,7 @@ module.exports = {
      * Service stopped lifecycle event handler
      */
     async stopped() {
-        objectql.deletePackageClientScripts(this.name);
+        await objectql.deletePackageClientScripts(this.name);
         await this.broker.call(`metadata.refreshServiceMetadatas`, {offlinePackageServices: [
             {
                 name: this.name,
