@@ -67,7 +67,7 @@
           "id": "u:2bb7748ac402"
         }
       },
-      "adaptor": "if (payload.data.rows.length) {\n  payload.data.rows.forEach(function (row) {\n    if (!row.icon) {\n      row.icon = \"standard.default\";\n    }\n    if (row.icon) {\n      if (!/^http(s?):\\/\\//.test(row.icon)) {\n        var iconCategory = \"standard\";\n        var iconName = row.icon;\n        var tags = row.icon.split(\".\");\n        if (tags.length > 1) {\n          iconCategory = tags[0];\n          iconName = tags[1];\n        }\n        row.iconCategory = iconCategory;\n        row.iconName = iconName;\n        row.icon = \"https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.0/assets/icons/\" + iconCategory + \"/\" + iconName.replace(\"-\", \"_\") + \"_120.png\";\n      }\n    }\n  });\n}\nreturn payload;"
+      "adaptor": "if (payload.data.rows.length) {\n  var unpkgUrl = window.Builder && window.Builder.settings.unpkgUrl || \"\";\n  payload.data.rows.forEach(function (row) {\n    if (!row.icon) {\n      row.icon = \"standard.default\";\n    }\n    if (row.icon) {\n      if (!/^http(s?):\\/\\//.test(row.icon)) {\n        var iconCategory = \"standard\";\n        var iconName = row.icon;\n        var tags = row.icon.split(\".\");\n        if (tags.length > 1) {\n          iconCategory = tags[0];\n          iconName = tags[1];\n        }\n        row.iconCategory = iconCategory;\n        row.iconName = iconName;\n        row.icon = unpkgUrl + \"/@salesforce-ux/design-system@2.22.0/assets/icons/\" + iconCategory + \"/\" + iconName.replace(\"-\", \"_\") + \"_120.png\";\n      }\n    }\n  });\n}\nreturn payload;"
     }
   ],
   "regions": [
