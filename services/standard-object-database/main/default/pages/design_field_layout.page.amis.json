@@ -68,11 +68,72 @@
                       "className": ""
                     },
                     {
-                      "type": "steedos-object-button",
-                      "name": "standard_new",
-                      "objectName": "object_fields",
-                      "className": "button_standard_new",
-                      "id": "u:c8127e35c721"
+                      "type": "button",
+                      "label": "新增字段",
+                      "onEvent": {
+                        "click": {
+                          "weight": 0,
+                          "actions": [
+                            {
+                              "dialog": {
+                                "type": "dialog",
+                                "title": "新增字段",
+                                "data": {
+                                  "appId": "${appId}",
+                                  "global": "${global}",
+                                  "context": "${context}",
+                                  "designObjectName": "${designObjectName}",
+                                  "_master": "${_master}"
+                                },
+                                "body": [
+                                  {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "object_fields",
+                                    "recordId": "",
+                                    "mode": "edit",
+                                    "defaultData": {
+                                      "name": "",
+                                      "shared": false,
+                                      "object": "${designObjectName}"
+                                    },
+                                    "fieldsExtend": {
+                                      "object": {
+                                        "amis": {
+                                          "disabledOn": "true"
+                                        }
+                                      }
+                                    },
+                                    "fields": "",
+                                    "onEvent": {
+                                      "submitSucc": {
+                                        "weight": 0,
+                                        "actions": [
+                                          {
+                                            "actionType": "custom",
+                                            "script": "debugger;"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "id": "u:b71796d3cb8c",
+                                    "className": "mb-4"
+                                  }
+                                ],
+                                "showCloseButton": true,
+                                "showErrorMsg": true,
+                                "showLoading": true,
+                                "closeOnEsc": false,
+                                "dataMapSwitch": false,
+                                "size": "lg",
+                                "id": "u:066b3884bdd8"
+                              },
+                              "actionType": "dialog"
+                            }
+                          ]
+                        }
+                      },
+                      "id": "u:5857ae729799"
                     },
                     {
                       "type": "button",
@@ -218,7 +279,7 @@
         "method": "post",
         "url": "${context.rootUrl}/graphql",
         "data": {
-          "query": "{fields:objects(filters: [[\"name\",\"=\",\"${designObjectName}\"]]){_id,name,field_groups}}"
+          "query": "{objects(filters: [[\"name\",\"=\",\"${designObjectName}\"]]){_id,name,field_groups}}"
         },
         "headers": {
           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -226,7 +287,7 @@
         "messages": {
         },
         "requestAdaptor": "",
-        "adaptor": "const field_groups = payload.data.fields[0] && _.map(payload.data.fields[0].field_groups, function (obj) {\r\n  return {\r\n    \"id\": obj.group_name,\r\n    \"group_name\": obj.group_name,\r\n    \"visible_on\": obj.visible_on\r\n  }\r\n});field_groups.push({id:\"未分组\",\r\ngroup_name:\"未分组\",\r\n\"visible_on\": \"\"\r\n  });return payload = {\r\n  data: {\r\n    field_groups,designObjectId:payload.data.fields[0] && payload.data.fields[0]._id \r\n  }\r\n}"
+        "adaptor": "const field_groups = payload.data.objects[0] && _.map(payload.data.objects[0].field_groups, function (obj) {\r\n  return {\r\n    \"id\": obj.group_name,\r\n    \"group_name\": obj.group_name,\r\n    \"visible_on\": obj.visible_on\r\n  }\r\n});\r\nfield_groups.push({\r\n  id: \"未分组\",\r\n  group_name: \"未分组\",\r\n  \"visible_on\": \"\"\r\n});\r\nconst designObjectId = payload.data.objects[0] && payload.data.objects[0]._id;\r\nreturn payload = {\r\n  data: {\r\n    field_groups,\r\n    designObjectId,\r\n    _master: {\r\n      recordId: designObjectId\r\n    }\r\n  }\r\n}"
       },
       "messages": {
       }
