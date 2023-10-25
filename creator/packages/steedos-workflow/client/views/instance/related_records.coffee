@@ -2,6 +2,7 @@ Template.related_records.helpers RelatedRecords.helpers
 
 Template.related_records.events
 	'click .ins-related-records': (event, template)->
+		event.preventDefault();
 		creatorService = Meteor.settings.public.webservices?.creator?.url
 		ins = WorkflowManager.getInstance()
 		if creatorService && ins
