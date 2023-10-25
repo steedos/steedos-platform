@@ -226,9 +226,9 @@ SteedosTable.showModal = function (field, index, method) {
     var modalData = SteedosTable.getModalData(field, index);
 
     modalData.method = method;
-
-    Modal.show("steedosTableModal", modalData);
-
+    setTimeout(function(){
+        Modal.show("steedosTableModal", modalData);
+    }, 300)
 }
 
 SteedosTable.getKeys = function (field) {
