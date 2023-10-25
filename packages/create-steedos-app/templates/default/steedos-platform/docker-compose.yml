@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  steedos:
+    image: steedos/steedos-community:2.5
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - ROOT_URL=http://127.0.0.1:5000
+      - MONGO_URL=mongodb://mongodb:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongodb:27017/local
+      - TRANSPORTER=redis://redis:6379
+      - CACHER=redis://redis:6379/1
+      - STEEDOS_STORAGE_DIR=./steedos-storage
+    volumes:
+      - "./steedos-storage:/steedos-storage"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+        
+  redis:
+    image: redis:6.2.10
+    command: "redis-server --save \"\" --appendonly no --loglevel warning"
+    ports:
+      - "6379:6379"
+  
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - 27017:27017
+    command: "--bind_ip_all --replSet steedos --logpath /var/log/mongodb/mongod.log"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - './steedos-storage-mongodb:/data/db'
+
+  mongodb-init:
+    image: mongo:4.4
+    restart: "no"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    command: >
+      mongo --host mongodb:27017 --eval "rs.initiate({ _id: 'steedos', members: [{_id: 0, host: 'mongodb:27017'}]})"

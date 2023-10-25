@@ -1,6 +1,6 @@
 {
   "name": "create-steedos-app",
-  "version": "2.5.16",
+  "version": "2.5.17-beta.7",
   "keywords": [
     "react",
     "steedos"
@@ -17,7 +17,8 @@
     "create-steedos-app": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/",
@@ -48,5 +49,5 @@
   "engines": {
     "node": ">=12.22.0"
   },
-  "gitHead": "29c5576aac882d8ae615c0542c458bb82afd77db"
+  "gitHead": "48aad195eed77967f3b5fcb3a1646362358e34cb"
 }

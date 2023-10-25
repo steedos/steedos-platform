@@ -1,0 +1,13 @@
+{
+    "name": "steedos-platform",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      "start": "steedos start"
+    },
+    "dependencies": {
+      "@steedos/service-community": "^2.5"
+    }
+  }
+  

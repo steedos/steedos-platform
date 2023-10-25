@@ -94,6 +94,17 @@ list_views:
       - is_system
     label: All
     filter_scope: space
+  customize:
+    columns:
+      - name
+      - listenTo
+      - when
+      - isEnabled
+      - is_system
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
 permission_set:
   user:
     allowCreate: false

@@ -15,20 +15,3 @@ scrolling_mode: standard
 shared: true
 show_count: false
 type: grid
-adaptor: |
-  if(payload.data.rows.length){
-    payload.data.rows.forEach(function(row){
-      if(row.icon){
-        if(!/^http(s?):\/\//.test(row.icon)){
-          var iconCategory = "standard";
-          var iconName = row.icon;
-          var tags = row.icon.split(".");
-          if(tags.length > 1){
-            iconCategory = tags[0];
-            iconName = tags[1];
-          }
-          row.icon = "https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.0/assets/icons/" + iconCategory + "/" + iconName + "_120.png";
-        }
-      }
-    });
-  }

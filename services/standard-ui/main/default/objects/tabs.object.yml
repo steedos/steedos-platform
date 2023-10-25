@@ -109,7 +109,20 @@ fields:
     disabled: true
 list_views:
   all:
-    label: All Apps
+    label: All Tabs
+    filter_scope: space
+    columns:
+      - label
+      - name
+      # - parent
+      - desktop
+      - mobile
+      - type
+      - is_system
+  customize:
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
     filter_scope: space
     columns:
       - label

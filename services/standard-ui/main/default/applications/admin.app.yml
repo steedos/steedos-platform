@@ -74,6 +74,9 @@ tab_items:
   admin_developer:
     group: development
     index: 19.50
+  admin_metadata:
+    group: development
+    index: 19.505
   admin_developer_triggers:
     group: development
     index: 19.51

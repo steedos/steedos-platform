@@ -210,10 +210,8 @@ export async function createApp({
       version: '0.1.0',
       private: true,
       scripts: {
-        docker: "docker-compose up",
         start: "moleculer-runner services/*/package.service.js --hot --repl",
         repl: "moleculer-runner --repl",
-        nodered: "node-red --settings nodered.config.js"
       }
     }
     /**
@@ -232,15 +230,13 @@ export async function createApp({
      */
     const dependencies = [
       '@steedos/service-package-loader',
-      '@steedos/node-red-contrib-steedos',
       'dotenv-flow',
-      'moleculer-repl',
-      'node-red'
+      'moleculer-repl'
     ]
     /**
      * Default devDependencies.
      */
-    const devDependencies = ['eslint']
+    const devDependencies = []
     /**
      * TypeScript projects will have type definitions and other devDependencies.
      */
@@ -299,6 +295,9 @@ export async function createApp({
           // README.md is ignored by webpack-asset-relocator-loader used by ncc:
           // https://github.com/vercel/webpack-asset-relocator-loader/blob/e9308683d47ff507253e37c9bcbb99474603192b/src/asset-relocator.js#L227
           case 'README-template.md': {
+            return 'README.md'
+          }
+          case 'README.md': {
             return 'README.md'
           }
           default: {

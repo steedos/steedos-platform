@@ -1,64 +1,87 @@
-华炎魔方模版项目
-===
 
-<p align="center">
-<a href="./README_en.md">English</a>
-<a href="https://www.steedos.cn/docs/"> · 文档</a>
-<a href="https://www.steedos.cn/videos/"> · 视频</a>
-<a href="https://demo.steedos.cn"> · 试用</a>
-</p>
+# Steedos DX Project Template
 
+Steedos Developer Experience (DX) is a new way to manage and develop apps on the Steedos Low-Code Platform across their entire lifecycle. It brings together the best of the Low-Code Platform to enable source-driven development, team collaboration with governance, and new levels of agility for custom app development on Steedos.
 
-<p align="center" style="border-top: solid 1px #cccccc">
-  华炎魔方是 <a href="https://developer.salesforce.com/developer-centers/developer-experience" target="_blank">Salesforce Developer Experience (DX)</a> 的开源替代方案，将低代码技术与 <a href="https://www.steedos.cn/docs/deploy/devops"> DevOps 工具</a> 结合，实现敏捷开发的新高度。 
-</p>
+- [What is Steedos DX](https://docs.steedos.com/developer/setup/steedos-dx)
+- [What is Steedos Package](https://docs.steedos.com/developer/package/overview)
 
-<h3 align="center">
- 🤖 🎨 🚀
-</h3>
+# Getting Started
 
+## Run Steedos Platform
 
-# 快速向导
-
-## 启动华炎魔方
-
-开发软件包之前，先启动花华炎魔方服务。
-
-1. 将 .env 复制为 .env.local，并修改相关配置参数。
-2. 使用 docker 启动华炎魔方。
+First, you must run Steedos Platform. You can follow the [Self Hosting Tutorial](/deploy/deploy-docker) to deploy Steedos on a server, or launch a local Steedos Platform.
 
 ```bash
+cd steedos-platform
 docker-compose up
 ```
 
-## 访问华炎魔方
+You can also refer to the instructions in the `./steedos-platform` dir to run Steedos Platform with Node.js.
 
-打开浏览器，访问 http://127.0.0.1:5000，进入华炎魔方。
+### Register Admin Account
 
-进入设置应用，可以：
-- 创建自定义对象
-- 创建应用
-- 创建微页面
+Upon its first launch, the system will prompt you to register an account and create an organization. This account will also become the administrator account for the organization.
 
-## 开发软件包
+### Create an API Key
 
-可以使用微服务的方式扩展华炎魔方。可以参考 services 文件夹下的例子。
+You can log in to the Steedos server with administrator credentials, go to the settings app, select the API Key menu, and create a new API Key.
+
+## Setup Environment Variable
+
+### Setup TRANSPORTER
+
+The Steedos package operates using the [Moleculer](https://moleculer.services/docs) microservices framework, connecting microservices through the configuration of a unified Transporter.
+
+[Moleculer Transporter](https://moleculer.services/docs/0.14/networking) is an important module if you are running services on multiple nodes. Transporter communicates with other nodes. It transfers events, calls requests and processes responses …etc. If multiple instances of a service are running on different nodes then the requests will be load-balanced among them.
+
+```bash
+TRANSPORTER=redis://127.0.0.1:6379
+```
+:::tip
+Please make sure the TRANSPORTER you configured matches the Steedos server you wish to connect to and that the network is interconnected. 
+:::
+
+:::danger
+For running in a production environment, be sure to configure the Redis password.
+:::
+
+### Setup Metadata Server
+
+Setup environment variables required for metadata synchronization.
+
+```bash
+steedos source:config
+```
+
+- Metadata Server: METADATA_SERVER is the ROOT_URL of the Steedos server you wish to connect to.
+- Metadata API Key: METADATA_APIKEY is used to authenticate your identity. 
+
+This command writes environment variables into the .env.local file, 
+
+```bash
+METADATA_SERVER=
+METADATA_APIKEY=
+```
+
+You can also set the above environment variables directly without running the command.
+
+## Run Steedos Packages
+
+### Install Dependences
 
 ```bash
 yarn
-yarn start
 ```
 
-## 使用 Node-RED
+### Run Packages
 
-[Node-Red](https://nodered.org/) 是 IBM 开源的服务端低代码开发工具，提供了可视化的开发环境，开发华炎魔方微服务。
-
-- 创建定时任务
-- 自定义微服务
-- 自定义API
-- 自定义触发器
-- 接收和推送消息
+You can use the [moleculer-runner](https://moleculer.services/docs/0.14/runner) command to launch the steedos packages.
 
 ```bash
-yarn nodered
+yarn moleculer-runner steedos-packages/*/package.service.js --hot --repl
 ```
+
+:::tip
+Please note that the Steedos DX project supports multi-package development, and the above command simultaneously launches all packages under the steedos-packages folder.
+:::

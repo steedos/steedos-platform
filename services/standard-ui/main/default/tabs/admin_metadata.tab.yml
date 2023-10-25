@@ -1,0 +1,22 @@
+name: admin_metadata
+desktop: true
+icon: entity
+is_new_window: false
+is_use_iframe: false
+label: 元数据
+mobile: true
+page: metadata
+type: page
+permissions:
+  - permission: 'on'
+    permission_set: admin
+  - permission: 'off'
+    permission_set: user
+  - permission: 'off'
+    permission_set: customer
+  - permission: 'off'
+    permission_set: supplier
+  - permission: 'off'
+    permission_set: organization_admin
+  - permission: 'off'
+    permission_set: workflow_admin

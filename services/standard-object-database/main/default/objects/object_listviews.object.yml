@@ -16,6 +16,8 @@ fields:
     searchable: true
     index: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+    amis:
+      requiredOn: "${!!recordId}" #编辑记录时必填，新建记录时不必填走触发器给默认值
   object_name:
     label: Object
     type: master_detail
@@ -227,6 +229,14 @@ fields:
     type: boolean
     label: Enable
     defaultValue: true
+  crud_mode:
+    label: 显示模式
+    type: select
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
   is_system:
     type: boolean
     label: System
@@ -274,6 +284,18 @@ list_views:
       - is_enable
       - is_system
     label: All List Views
+    filter_scope: space
+  customize:
+    columns:
+      - label
+      - name
+      - shared
+      - owner
+      - modified
+      - is_system
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
     filter_scope: space
 actions:
   customize:

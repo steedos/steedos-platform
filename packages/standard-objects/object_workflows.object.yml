@@ -182,6 +182,15 @@ list_views:
       - flow_id
     label: All Rules
     filter_scope: space
+  customize:
+    columns:
+      - name
+      - object_name
+      - flow_id
+    label: 自定义
+    filters:
+      - ["is_system","<>",true]
+    filter_scope: space
 actions:
   forceSync:
     label: sync history approvals

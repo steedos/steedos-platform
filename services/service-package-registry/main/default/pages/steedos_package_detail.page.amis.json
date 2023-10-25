@@ -10,14 +10,14 @@
                     "objectApiName": "${objectName}",
                     "recordId": "${recordId}",
                     "id": "u:9d9bc707bfd2",
-                    "schemaFilter": "config.body[0].body[0].columns[0].body[0].columns[1].body[0].tpl='\\${name}'; config.body[0].body[0].columns[0].body[0].columns[0].body[1]={type: 'container', hiddenOn: '\\${!name}', body: [{className: 'w-9 h-9 rounded', type:'steedos-icon',name: '\\${record.icon}', colorVariant:'base', hiddenOn: '\\${!record.icon}', height:'2.25rem', width:'2.25rem'}, {type: 'avatar', className:'w-9 h-9 rounded text-white bg-blue-600', shape: 'square', hiddenOn: '\\${!!record.icon}', text: '\\${name|split:/|last|substring:0:2|upperCase}'}]};config.body[0].body[0].columns[0].body[0].columns[1].body[1] = Object.assign({}, config.body[0].body[0].columns[0].body[0].columns[1].body[1], {type: 'tag', label: '\\${record.version}', displayMode: 'status', color: '\\${record.status == \"enable\" ? \"active\" : record.status == \"starting\" ? \"processing\" : \"inactive\"}',className: 'package-status p-0', style: {background: 'transparent'}}); "
+                    "schemaFilter": "config.body[0].body[0].columns[0].body[0].columns[1].body[0].tpl='\\${name}'; config.body[0].body[0].columns[0].body[0].columns[0].body[1]={type: 'container', hiddenOn: '\\${!record}', body: [{className: 'w-9 h-9 rounded', type:'steedos-icon',name: '\\${record.icon || \"default\"}', colorVariant:'base', hiddenOn: '\\${!record}', height:'2.25rem', width:'2.25rem'}]};config.body[0].body[0].columns[0].body[0].columns[1].body[1] = Object.assign({}, config.body[0].body[0].columns[0].body[0].columns[1].body[1], {type: 'tag', label: '\\${record.version}', displayMode: 'status', color: '\\${record.status == \"enable\" ? \"active\" : record.status == \"starting\" ? \"processing\" : \"inactive\"}',className: 'package-status p-0', style: {background: 'transparent'}}); "
                 },
                 {
                     "type": "tabs",
                     "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
                     "tabs": [
                         {
-                            "title": "摘要",
+                            "title": "简介",
                             "body": [
                                 {
                                     "type": "markdown",
@@ -52,7 +52,8 @@
                                         }
                                     }
                                 }
-                            ]
+                            ],
+                            "className": "p-0"
                         },
                         {
                             "title": "详细信息",
@@ -71,7 +72,7 @@
                                     ]
                                 }
                             ],
-                            "className": "px-0 py-4",
+                            "className": "p-0",
                             "id": "u:5d4e7e3f6ecc"
                         }
                     ],
@@ -97,13 +98,13 @@
             "className": "object-detail-page"
         }
     ],
-    "id": "u:81b404eac916",
     "regions": [
         "body"
     ],
     "data": {
         "context": {}
     },
+    "id": "u:81b404eac916",
     "bodyClassName": "p-0",
     "css": {
         ".antd-Tag--prev": {

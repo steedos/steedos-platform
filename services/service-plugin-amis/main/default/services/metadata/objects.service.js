@@ -236,7 +236,7 @@ module.exports = {
 
                 let output = [];
                 output =  _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field)=>{
-                    if((include_hide || !field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)){
+                    if((include_hide || !field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown"], field.type)){
                         // 隐藏的字段 和 字段类型 判断
                         return {
                             value: field.name,
@@ -342,7 +342,7 @@ module.exports = {
                         })
                         let relatedOptions = [];
                         relatedOptions = _.uniq(_.compact(_.map(_.sortBy(fieldsArr, "sort_no"), (field) => {
-                            if ((!field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown", "html"], field.type)) {
+                            if ((!field.hidden) && !_.includes(["grid", "object", "[Object]", "[object]", "Object", "markdown"], field.type)) {
                                 return {
                                     'value': field.name,
                                     'label': field.label || field.name

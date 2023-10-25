@@ -87,6 +87,8 @@ listviews:
     label: 默认
   all:
     label: 全部
+  customize:
+    label: 自定义
 actions:
   forceSync:
     label: 同步历史申请单

@@ -10,12 +10,15 @@ const _ = require('lodash');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
 const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
+
+const objectMixin = require('@steedos/service-object-mixin')
+
 const loadFlowFile = new metaDataCore.LoadFlowFile();
 
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
-    if(fs.existsSync(path.join(packagePath, 'steedos.package.yml'))){
-        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'steedos.package.yml'));
+    if(fs.existsSync(path.join(packagePath, 'package.service.yml'))){
+        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'package.service.yml'));
     }
     if(fs.existsSync(path.join(packagePath, 'README.md'))){
         packageYmlData.readme = metaDataCore.loadFile(path.join(packagePath, 'README.md'));
@@ -31,6 +34,8 @@ const getPackageYmlData = (packagePath)=>{
 
 module.exports = {
     name: "service-package-loader",
+
+	mixins: [objectMixin],
     
     triggerLoader,
 

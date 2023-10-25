@@ -148,6 +148,15 @@ fields:
     label: 排序号
   is_enable:
     label: 启用
+  crud_mode:
+    label: 显示模式
+    help: 
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
+    description: 
   enable_amis_schema: 
     label: 使用 amis自定义列表
   amis_schema: 
@@ -157,6 +166,8 @@ groups:
 listviews:
   all:
     label: 全部
+  customize:
+    label: 自定义
 actions:
   customize:
     label: 自定义

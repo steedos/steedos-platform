@@ -1,7 +1,0 @@
-{
-  "packages": [
-    "services/*"
-  ],
-  "version": "0.0.1",
-  "useNx": false
-}

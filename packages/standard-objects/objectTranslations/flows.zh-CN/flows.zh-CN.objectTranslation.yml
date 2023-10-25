@@ -264,6 +264,8 @@ groups:
 listviews:
   all:
     label: 所有
+  customize:
+    label: 自定义
 actions:
   standard_new:
     label: 新建
