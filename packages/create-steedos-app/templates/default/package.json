@@ -13,5 +13,6 @@
     "@steedos/service-package-loader": "^2.5"
   },
   "devDependencies": {
+    "moleculer-repl": "^0.7.4"
   }
 }
