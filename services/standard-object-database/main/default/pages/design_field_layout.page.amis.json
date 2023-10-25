@@ -150,16 +150,8 @@
                     "change": {
                       "actions": [
                         {
-                          "actionType": "toast",
-                          "args": {
-                            "msgType": "warning",
-                            "msg": "我是全局警告消息，可以配置不同类型和弹出位置~",
-                            "position": "top-right"
-                          }
-                        },
-                        {
                           "actionType": "custom",
-                          "script": "debugger;"
+                          "script": "const newGroups = _.keys(event.data.value);\nconst lastGroups = _.map(context.props.data.groups, 'group_name');\nif (newGroups != lastGroups) {\n  doAction({\n    actionType: 'setValue',\n    componentId: 'service_field_design',\n    args: {\n      value: {\n        groups: field_groups = _.sortBy(context.props.data.groups, function (group) { return _.findIndex(newGroups, function (group_name) { return group.group_name === group_name; }); })\n      }\n    }\n  });\n}\n"
                         }
                       ]
                     }
@@ -175,7 +167,7 @@
                 "headers": {
                   "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                 },
-                "requestAdaptor": "// debugger;\nvar graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = api.data.groups;\n_.remove(field_groups, { id: '未分组' }); \nfield_groups = api.data.groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'update0:objects__update(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据fieldForGroup,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.fieldForGroup, function (items,key) {\n  _.forEach(items, function (item) {\n    const itemOrder = 'update' + index + ':object_fields__update(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ sort_no: index, group: key == \"未分组\"?null:key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
+                "requestAdaptor": "var graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = _.cloneDeep(api.data.groups);\n_.remove(field_groups, { id: '未分组' }); \nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'update0:objects__update(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据fieldForGroup,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.fieldForGroup, function (items,key) {\n  _.forEach(items, function (item) {\n    const itemOrder = 'update' + index + ':object_fields__update(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ sort_no: index, group: key == \"未分组\"?null:key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
                 "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
                 "messages": {
                 },
