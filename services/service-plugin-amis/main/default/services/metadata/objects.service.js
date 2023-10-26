@@ -121,20 +121,34 @@ module.exports = {
                 const fieldsOptions = await this.getObjectFieldsOptions(ctx);
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || "zh-CN";
+                const objectName = ctx.params.objectName;
+                const object = await objectql.getSteedosSchema().getObject(objectName);
+                const objectConfig = object.toConfig();
+                const fields = objectConfig.fields;
+
+                // image、file、lookup、master_detail、select 不参与排序
+                let ascChildren = [];
+                _.forEach(fieldsOptions, (opt)=>{
+                    if(["image","file","lookup","master_detail","select"].indexOf(fields[opt.value].type)<0){
+                        ascChildren.push({label: `${opt.label}(${steedosI18n.t('asc', {}, lng)})`, value: `${opt.value}:asc`})
+                    }
+                })
+                let descChildren = [];
+                _.forEach(fieldsOptions, (opt)=>{
+                    if(["image","file","lookup","master_detail","select"].indexOf(fields[opt.value].type)<0){
+                        descChildren.push({label: `${opt.label}(${steedosI18n.t('desc', {}, lng)})`, value: `${opt.value}:desc`})
+                    }
+                })
                 const options = [
                     {
                         label: steedosI18n.t('asc', {}, lng),
                         searchable: true,
-                        children: _.map(fieldsOptions, (opt)=>{
-                            return {label: `${opt.label}(${steedosI18n.t('asc', {}, lng)})`, value: `${opt.value}:asc`}
-                        })
+                        children: ascChildren
                     },
                     {
                         label: steedosI18n.t('desc', {}, lng),
                         searchable: true,
-                        children: _.map(fieldsOptions, (opt)=>{
-                            return {label: `${opt.label}(${steedosI18n.t('desc', {}, lng)})`, value: `${opt.value}:desc`}
-                        })
+                        children: descChildren
                     }
                 ];
 
