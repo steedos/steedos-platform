@@ -2,7 +2,7 @@ name: all
 columns:
   - name
   - sort_no
-  # - hidden
+  - hidden
 label: All Departments
 filter_scope: space
 sort:
