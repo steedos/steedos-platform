@@ -4,7 +4,7 @@ CustomApplications:
     description: null
 CustomLabels:
   menu_user_interface: User Interface
-  menu_pages: Mini Page
+  menu_pages: Micro Pages
   page_assignments_error_not_allowed_to_application_pages: Prohibit assigning permissions to application pages
   page_assignments_error_organization_default_already_exists: Authorization for 'Organization Default Settings' already exists
   page_assignments_error_application_default_already_exists: Authorization for 'Application Default Settings' already exists
