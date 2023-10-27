@@ -1,32 +1,17 @@
 /*
  * @Author: 孙浩林 sunhaolin@steedos.com
- * @Date: 2022-07-15 18:16:49
+ * @Date: 2023-10-26 10:31:50
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-26 14:49:19
- * @FilePath: /steedos-platform-2.3/packages/data-import/src/imports/ImportFlow.ts
+ * @LastEditTime: 2023-10-26 10:46:25
+ * @FilePath: /steedos-platform-2.3/services/service-package-loader/src/imports/ImportFlow.ts
  * @Description: 
  */
-import { DbManager } from '@steedos/metadata-api/lib/util/dbManager'
-import { flowsToDb } from '@steedos/metadata-api/lib/metadata/collection/flow'
-// import { checkNameEquals } from '@steedos/metadata-api/lib/util/check_name_equals'
 import { loadFile, syncMatchFiles } from '@steedos/metadata-core';
 import { Base } from './Base';
-const path = require('path');
-const _ = require('underscore');
-
-const transactionOptions: any = {
-    readPreference: 'primary',
-    readConcern: { level: 'majority' },
-    writeConcern: { w: 'majority' }
-};
+import path = require('path');
+import _ = require('lodash');
 
 export default class ImportFlow implements Base {
-    objectName: string = "flows";
-    userSession: any;
-
-    constructor(userSession: any) {
-        this.userSession = userSession;
-    }
 
     readFile(filePath: string): any {
         const filePatten = [
@@ -42,8 +27,6 @@ export default class ImportFlow implements Base {
             let form = {};
             try {
                 if (json) {
-
-                    // checkNameEquals(json, formName, matchedPath, TypeInfoKeys.Flow);
 
                     let flowKeys = _.keys(json);
                     for (let m in flowKeys) {
@@ -67,24 +50,4 @@ export default class ImportFlow implements Base {
         return flows;
     }
 
-    async fileRecordsToDB(flows: object) {
-        const dbManager = new DbManager(this.userSession);
-        try {
-            await dbManager.connect();
-            const session = await dbManager.startSession();
-            try {
-                await session.withTransaction(async () => {
-                    await flowsToDb(dbManager, flows, true);
-                }, transactionOptions);
-            } catch (err) {
-                console.log(err)
-                throw err
-            }
-        } catch (error) {
-            console.error(error)
-        } finally {
-            await dbManager.endSession();
-            await dbManager.close();
-        }
-    }
 }

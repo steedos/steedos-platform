@@ -28,6 +28,8 @@ const getPackageYmlData = (packagePath)=>{
     return packageYmlData;
 }
 
+const methods = require('./lib/methods')
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -73,8 +75,11 @@ module.exports = {
             }
         },
         "space.initialized": {
-            async handler() {
+            async handler(ctx) {
                 await this.loadDataOnServiceStarted();
+                const spaceDoc = ctx.params
+                // 扫描main/default/data文件夹
+                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, spaceDoc._id);
             }
         }
     },
@@ -83,6 +88,8 @@ module.exports = {
      * Methods
      */
     methods: {
+        ...methods,
+
         checkPackageMetadataFiles: async function (packagePath) {
 
             if(this.core){

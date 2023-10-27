@@ -59,17 +59,19 @@ export class DbManager {
         return await this.client.db().collection(collectionName).insertOne(doc, {session: this.session});
     }
 
-    async insertMany(collectionName:string, docs:any[]) {
-        for(var i=0; i<docs.length; i++){
-            docs[i]['_id'] = new ObjectId().toHexString();
-            docs[i]['space'] = this.userSession.spaceId;
+    async insertMany(collectionName:string, docs:any[], autoGenerateId = true) {
+        if(autoGenerateId){
+            for(var i=0; i<docs.length; i++){
+                docs[i]['_id'] = new ObjectId().toHexString();
+                docs[i]['space'] = this.userSession.spaceId;
 
-            const now = new Date()
-            docs[i]['owner'] = this.userSession.userId
-            docs[i]['created'] = now
-            docs[i]['created_by'] = this.userSession.userId
-            docs[i]['modified'] = now
-            docs[i]['modified_by'] = this.userSession.userId
+                const now = new Date()
+                docs[i]['owner'] = this.userSession.userId
+                docs[i]['created'] = now
+                docs[i]['created_by'] = this.userSession.userId
+                docs[i]['modified'] = now
+                docs[i]['modified_by'] = this.userSession.userId
+            }
         }
         return await this.client.db().collection(collectionName).insertMany(docs, {session: this.session});
     }
