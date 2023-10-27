@@ -109,9 +109,9 @@ export async function importData(data: importDataType, onlyInsert: boolean = tru
         flow: new ImportFlow(userSession)
     }
 
-    const csvData = data?.csv
-    const jsonData = data?.json
-    const flowData = data?.flow
+    const csvData = data?.csv || []
+    const jsonData = data?.json || []
+    const flowData = data?.flow || {}
 
     if (onlyInsert) {
         var dbManager = new DbManager(userSession);
