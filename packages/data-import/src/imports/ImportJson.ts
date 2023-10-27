@@ -6,7 +6,7 @@ import { syncMatchFiles } from '@steedos/metadata-core';
 const path = require('path');
 const fs = require("fs");
 import { EJSON } from 'bson'
-import { formatResults, preCreateCollection } from '..';
+import { formatResults, preCreateCollection, readFileResult } from '..';
 
 const transactionOptions: any = {
     readPreference: 'primary',
@@ -53,15 +53,14 @@ export default class ImportJson implements Base {
         return results
     }
 
-    async fileRecordsToDB(filePath: string) {
+    async fileRecordsToDB(jsonData: readFileResult[]) {
         const userSession = this.userSession
         const { spaceId, userId, company_id, company_ids } = userSession
         var dbManager = new DbManager(userSession);
         const now = new Date()
         try {
-            let results: any = await this.readFile(filePath);
 
-            results = formatResults(results, userSession)
+            let results = formatResults(jsonData, userSession)
 
             await dbManager.connect();
 

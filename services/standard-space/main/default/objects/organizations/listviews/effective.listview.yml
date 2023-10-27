@@ -1,0 +1,10 @@
+name: effective
+columns:
+  - name
+  - sort_no
+label: Effective Departments 
+filters: ["hidden","<>",true]
+filter_scope: space
+sort:
+  - field_name: sort_no
+    order: desc

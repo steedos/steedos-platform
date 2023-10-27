@@ -51,6 +51,10 @@ groups:
 listviews:
   all:
     label: All Departments
+  lookup:
+    label: Lookup Departments
+  effective:
+    label: Effective Departments
 actions:
   standard_query:
     label: Search

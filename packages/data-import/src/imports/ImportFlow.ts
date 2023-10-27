@@ -1,3 +1,11 @@
+/*
+ * @Author: 孙浩林 sunhaolin@steedos.com
+ * @Date: 2022-07-15 18:16:49
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-10-26 14:49:19
+ * @FilePath: /steedos-platform-2.3/packages/data-import/src/imports/ImportFlow.ts
+ * @Description: 
+ */
 import { DbManager } from '@steedos/metadata-api/lib/util/dbManager'
 import { flowsToDb } from '@steedos/metadata-api/lib/metadata/collection/flow'
 // import { checkNameEquals } from '@steedos/metadata-api/lib/util/check_name_equals'
@@ -59,10 +67,9 @@ export default class ImportFlow implements Base {
         return flows;
     }
 
-    async fileRecordsToDB(filePath: string) {
+    async fileRecordsToDB(flows: object) {
         const dbManager = new DbManager(this.userSession);
         try {
-            const flows = await this.readFile(filePath);
             await dbManager.connect();
             const session = await dbManager.startSession();
             try {
