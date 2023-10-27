@@ -203,18 +203,20 @@
                     "id": "u:111b043b193c"
                   }
                 ],
-                "messages": "",
+                "messages": {},
                 "api": {
                   "method": "post",
                   "url": "${context.rootUrl}/graphql",
-                  "adaptor": " let data = payload.data;  data.tabs_options = [];  if (data.options && data.options.length) {    data.tabs_options = data.options.map(function (option) {       option.label = option.label + '(' + option.value + ')';      return option;    });  }  if (!api.body.recordId) {    const defaultValues = {      is_creator: true,      mobile: true,      visible: true,      sort: 9100    }    ;data = Object.assign({}, data, defaultValues);  }  delete data.options  ;payload.data = data;  return payload;  ",
+                  "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) {\n    option.label = option.label + '(' + option.value + ')';\n    return option;\n  });\n}\nif (!api.body.recordId) {\n  const defaultValues = {\n    is_creator: true,\n    mobile: true,\n    visible: true,\n    sort: 9100\n  };\n  data = Object.assign({}, data, defaultValues);\n}\ndelete data.options;\npayload.data = data;\nreturn payload;  ",
                   "data": {
                     "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}",
                     "recordId": "${recordId}"
                   },
                   "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                  }
+                  },
+                  "messages": {},
+                  "requestAdaptor": ""
                 }
               }
             ],
