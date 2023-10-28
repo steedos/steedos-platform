@@ -203,72 +203,36 @@
                     "id": "u:111b043b193c"
                   }
                 ],
-                "messages": "",
+                "messages": {},
                 "api": {
                   "method": "post",
                   "url": "${context.rootUrl}/graphql",
-                  "adaptor": " let data = payload.data;  data.tabs_options = [];  if (data.options && data.options.length) {    data.tabs_options = data.options.map(function (option) {       option.label = option.label + '(' + option.value + ')';      return option;    });  }  if (!api.body.recordId) {    const defaultValues = {      is_creator: true,      mobile: true,      visible: true,      sort: 9100    }    ;data = Object.assign({}, data, defaultValues);  }  delete data.options  ;payload.data = data;  return payload;  ",
+                  "adaptor": "let data = payload.data;\ndata.tabs_options = [];\nif (data.options && data.options.length) {\n  data.tabs_options = data.options.map(function (option) {\n    option.label = option.label + '(' + option.value + ')';\n    return option;\n  });\n}\nif (!api.body.recordId) {\n  const defaultValues = {\n    is_creator: true,\n    mobile: true,\n    visible: true,\n    sort: 9100\n  };\n  data = Object.assign({}, data, defaultValues);\n}\ndelete data.options;\npayload.data = data;\nreturn payload;  ",
                   "data": {
                     "query": "{options:tabs{_id label:label value:name,type,object,desktop,mobile}}",
                     "recordId": "${recordId}"
                   },
                   "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                  }
+                  },
+                  "messages": {},
+                  "requestAdaptor": ""
                 }
               }
-            ]
+            ],
+            "id": "u:0f089a2850b6"
           }
         },
         "objects": {
           "amis": {
-            "name": "objects",
-            "type": "select",
-            "className": "m-0",
-            "labelClassName": "text-left",
-            "id": "u:4e5047e44905",
-            "joinValues": false,
-            "extractValue": true,
-            "labelField": "label",
-            "valueField": "value",
-            "multiple": true,
-            "checkAll": false,
-            "searchable": true,
-            "menuTpl": "",
-            "source": {
-              "method": "get",
-              "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-              "headers": {
-                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-              }
-            },
-            "autoComplete": ""
+            "visible": false,
+            "id": "u:0da32850b9c4"
           }
         },
         "mobile_objects": {
           "amis": {
-            "name": "mobile_objects",
-            "type": "select",
-            "className": "m-0",
-            "labelClassName": "text-left",
-            "id": "u:cfaeb2f857a8",
-            "joinValues": false,
-            "extractValue": true,
-            "labelField": "label",
-            "valueField": "value",
-            "multiple": true,
-            "checkAll": false,
-            "searchable": true,
-            "menuTpl": "",
-            "source": {
-              "method": "get",
-              "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-              "messages": {},
-              "headers": {
-                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-              }
-            },
-            "autoComplete": ""
+            "visible": false,
+            "id": "u:e6a9ebf91dbc"
           }
         }
       },
