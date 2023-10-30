@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-19 16:09:02
+ * @LastEditTime: 2023-10-30 17:18:36
  * @Description: 
  */
 "use strict";
@@ -100,23 +100,29 @@ module.exports = {
                 delete data.space;
 				
 				const object = await this.getObject('object_fields');
-
 				if(id.indexOf('.') > 0){
-					const newId = await object._makeNewID();
-					const now = new Date();
-					await object.directInsert(Object.assign({}, data, {
-						_id: newId,
-						name: data._name,
-						owner: userSession.userId,
-						space: userSession.spaceId,
-						created: now,
-						modified: now,
-						created_by: userSession.userId,
-						modified_by: userSession.userId,
-						company_id: userSession.company_id,
-						company_ids: userSession.company_ids
-					}));					
-					id = newId;
+					const [objectName, fieldName] = id.split('.');
+					const dbRecord = await object.directFind({filters: [['object','=',objectName], ['name','=',fieldName]]});
+					if(dbRecord.length > 0){
+						id = dbRecord[0]._id;
+					}else{
+						const newId = await object._makeNewID();
+						const now = new Date();
+						await object.directInsert(Object.assign({}, data, {
+							_id: newId,
+							name: data._name || fieldName,
+							owner: userSession.userId,
+							space: userSession.spaceId,
+							object: objectName,
+							created: now,
+							modified: now,
+							created_by: userSession.userId,
+							modified_by: userSession.userId,
+							company_id: userSession.company_id,
+							company_ids: userSession.company_ids
+						}));					
+						id = newId;
+					}
 				}
                 return object.update(id, data, userSession)
 			},
