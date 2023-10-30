@@ -1,36 +1,5 @@
-### 安装 yarn
-```
-npm i yarn -g
-```
+# Object Schema Builder
 
-### 国内建议使用npm淘宝镜像
-```
-npm config set registry https://registry.npmmirror.com/
-```
+By enabling this package, a new "Schema Builder" button is added within the object manager interface. 
 
-### 使用yarn安装依赖包
-```
-yarn
-```
-
-### 启动服务器
-```
-yarn start
-```
-
-### 启动前端调试
-```
-yarn fe-watch
-```
-
-
-### 编译前端
-```
-yarn fe-build
-```
-
-### 了解更多
-- [开发文档](https://www.steedos.com/developer/)
-
-## 功能说明
-- 用于生成表结构关系图
+Clicking this button allows you to view the object relationship graph.

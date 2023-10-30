@@ -48,6 +48,8 @@ export * from './metadata-register/query'
 export * from './metadata-register/chart'
 export * from './metadata-register/permissionTabs';
 export * from './metadata-register/import';
+export * from './metadata-register/clientJS';
+
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;
@@ -115,6 +117,7 @@ function transformMetadata(params, meta) {
     return {
         ...meta.caller,
         metadata: params.data,
+        timestamp: new Date().getTime()
     };
 }
 

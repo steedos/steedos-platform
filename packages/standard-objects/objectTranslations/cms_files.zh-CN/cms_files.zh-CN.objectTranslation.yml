@@ -28,7 +28,7 @@ fields:
     description: 
 listviews:
   all:
-    label: 
+    label: 所有
 actions:
   standard_new:
     label: 新建

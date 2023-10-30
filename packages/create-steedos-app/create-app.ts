@@ -229,14 +229,14 @@ export async function createApp({
      * Default dependencies.
      */
     const dependencies = [
-      '@steedos/service-package-loader',
-      'dotenv-flow',
-      'moleculer-repl'
+      '@steedos/service-package-loader'
     ]
     /**
      * Default devDependencies.
      */
-    const devDependencies = []
+    const devDependencies = [
+      'moleculer-repl'
+    ]
     /**
      * TypeScript projects will have type definitions and other devDependencies.
      */

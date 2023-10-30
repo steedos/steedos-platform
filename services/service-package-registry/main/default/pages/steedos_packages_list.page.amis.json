@@ -26,7 +26,7 @@
           "body": [
             {
               "type": "tpl",
-              "tpl": "<div class='antd-Card-heading bg-white'><span class='antd-Card-avtar pull-left thumb-md b-3x m-r slds-icon slds-icon_container slds-icon-${iconCategory}-${iconName}'><img class='antd-Card-img'src='${icon}' /></span><div class='antd-Card-meta'><div class='antd-Card-title'><span class='antd-TplField'><span>${label}</span></span></div><div class='antd-Card-subTitle'><span class='antd-TplField'><span>${description}</span></span></div><div class='antd-Card-desc'><span class='antd-TplField'><span><span class='bg-green-300 border rounded-full px-2 py-0.5 mt-2 inline-block'>${_display.status}</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span></span></span></div></div></div>"
+              "tpl": "<div class='antd-Card-heading bg-white'><span class='antd-Card-avtar pull-left thumb-md m-r slds-icon slds-icon_container slds-icon-${iconCategory}-${iconName} ${display === \"split\" && 'hidden'}'><img class='antd-Card-img'src='${icon}' /></span><div class='antd-Card-meta'><div class='antd-Card-title'><span class='antd-TplField'><span>${label}</span></span></div><div class='antd-Card-subTitle'><span class='antd-TplField'><span>${description}</span></span></div><div class='antd-Card-desc'><span class='antd-TplField'><span><span class='bg-green-300 rounded-full px-2 py-0.5 mt-2 inline-block'>${_display.status}</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span></span></span></div></div></div>"
             }
           ],
           "actions": [
@@ -67,7 +67,7 @@
           "id": "u:2bb7748ac402"
         }
       },
-      "adaptor": "if (payload.data.rows.length) {\n  payload.data.rows.forEach(function (row) {\n    if (!row.icon) {\n      row.icon = \"standard.default\";\n    }\n    if (row.icon) {\n      if (!/^http(s?):\\/\\//.test(row.icon)) {\n        var iconCategory = \"standard\";\n        var iconName = row.icon;\n        var tags = row.icon.split(\".\");\n        if (tags.length > 1) {\n          iconCategory = tags[0];\n          iconName = tags[1];\n        }\n        row.iconCategory = iconCategory;\n        row.iconName = iconName;\n        row.icon = \"https://unpkg.steedos.cn/@salesforce-ux/design-system@2.22.0/assets/icons/\" + iconCategory + \"/\" + iconName.replace(\"-\", \"_\") + \"_120.png\";\n      }\n      else {\n        /*http(s)://开头则给个默认的背景色*/\n        row.iconCategory = \"standard\";\n        row.iconName = \"default\";\n      }\n    }\n  });\n}\nreturn payload;"
+      "adaptor": "if (payload.data.rows.length) {\n  var unpkgUrl = window.Builder && window.Builder.settings.unpkgUrl || \"\";\n  payload.data.rows.forEach(function (row) {\n    if (!row.icon) {\n      row.icon = \"standard.default\";\n    }\n    if (row.icon) {\n      if (!/^http(s?):\\/\\//.test(row.icon)) {\n        var iconCategory = \"standard\";\n        var iconName = row.icon;\n        var tags = row.icon.split(\".\");\n        if (tags.length > 1) {\n          iconCategory = tags[0];\n          iconName = tags[1];\n        }\n        row.iconCategory = iconCategory;\n        row.iconName = iconName;\n        row.icon = unpkgUrl + \"/@salesforce-ux/design-system@2.22.0/assets/icons/\" + iconCategory + \"/\" + iconName.replace(\"-\", \"_\") + \"_120.png\";\n      }\n    }\n  });\n}\nreturn payload;"
     }
   ],
   "regions": [

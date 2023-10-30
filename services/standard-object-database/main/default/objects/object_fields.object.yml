@@ -31,6 +31,8 @@ fields:
     required: true
     visible_on: "{{global.mode !='read' ? true : false}}"
     sort_no: 130
+    amis:
+      disabledOn: "${is_system == true}"
   name:
     type: text
     label: API Name
@@ -41,6 +43,8 @@ fields:
     readonly: true
     visible_on: "{{global.mode !='read' ? false : true}}"
     sort_no: 140
+    amis:
+      disabledOn: "${is_system == true}"
   type:
     type: select
     label: Type
@@ -98,6 +102,7 @@ fields:
         value: summary
     sort_no: 150
     amis:
+      disabledOn: "${is_system == true}"
       onEvent:
         change:
           weight: 0
@@ -204,6 +209,8 @@ fields:
         value: yaml
     sort_no: 155
     visible_on: "{{['code'].indexOf(formData.type) > -1 ? true: false}}"
+    amis:
+      disabledOn: "${is_system == true}"
   defaultValue:
     type: text
     label: Default Value
@@ -218,6 +225,8 @@ fields:
     sort_no: 175
     defaultValue: bd09
     visible_on: "{{['location'].indexOf(formData.type) > -1 ? true: false}}"
+    amis:
+      disabledOn: "${is_system == true}"
   reference_to:
     type: lookup
     label: Reference to
@@ -228,6 +237,7 @@ fields:
     sort_no: 180
     amis:
       menuTpl: "<div>${label}(${value})</div>"
+      disabledOn: "${is_system == true}"
   depend_on:
     type: lookup
     group: Advanced
@@ -248,12 +258,16 @@ fields:
         }
       }
     sort_no: 445
+    amis:
+      disabledOn: "${is_system == true}"
   create:
     type: boolean
     label: 是否显示新建按钮
     defaultValue: true
     visible_on: "{{['lookup'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 185
+    amis:
+      disabledOn: "${is_system == true}"
   reference_to_field:
     type: lookup
     group: Advanced
@@ -274,18 +288,24 @@ fields:
         }
       }
     sort_no: 440
+    amis:
+      disabledOn: "${is_system == true}"
   multiple:
     type: boolean
     label: Multiple
     inlineHelpText: Single choice and multiple choice switch to each other. Please resubmit the existing records or modify the saving format of this field in the database.
     visible_on: "{{['select', 'lookup', 'image','file'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 190
+    amis:
+      disabledOn: "${is_system == true}"
   write_requires_master_read:
     label: Write requires master read
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
     visible_on: "{{formData.type === 'master_detail' ? true: false}}"
     sort_no: 200
+    amis:
+      disabledOn: "${is_system == true}"
   formula:
     label: Formula
     type: textarea
@@ -294,6 +314,8 @@ fields:
     visible_on: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['autonumber', 'formula'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 210
+    amis:
+      disabledOn: "${is_system == true}"
   data_type:
     type: lookup
     label: Data Type
@@ -308,6 +330,8 @@ fields:
     visible_on: "{{['formula','select'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 220
+    amis:
+      disabledOn: "${is_system == true}"
   filtersFunction:
     label: filters Function
     type: code
@@ -317,6 +341,7 @@ fields:
     sort_no: 448
     group: Advanced
     amis:
+      disabledOn: "${is_system == true}"
       placeholder: |-
         function(filters, values){
         
@@ -333,6 +358,7 @@ fields:
     scale: 0
     amis: 
       value: 18
+      disabledOn: "${is_system == true}"
     # defaultValue: 18
     visible_on: "{{
       (function(){
@@ -372,6 +398,7 @@ fields:
     # defaultValue: 2
     amis:
       value: 2
+      disabledOn: "${is_system == true}"
     min: 0
     inlineHelpText: If the field type is a Percent, this indicates the number of decimal places the field will display, for example, two decimal places will display as 10.20%.
     visible_on: "{{
@@ -426,6 +453,8 @@ fields:
     visible_on: "{{formData.type === 'select' ? true: false}}"
     required: "{{formData.type === 'select' ? true: false}}"
     sort_no: 280
+    amis:
+      disabledOn: "${is_system == true}"
   options.$:
     label: Options
     blackbox: true
@@ -459,6 +488,8 @@ fields:
     visible_on: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
     required: "{{['formula'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 290
+    amis:
+      disabledOn: "${is_system == true}"
   summary_object:
     type: lookup
     label: Object to Summarize
@@ -468,6 +499,7 @@ fields:
     depend_on:
       - object
     amis:
+      disabledOn: "${is_system == true}"
       "source": 
         "method": "get"
         "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/detailLists/options?depend_on_object=${object}"
@@ -532,6 +564,8 @@ fields:
     visible_on: "{{formData.type === 'summary' ? true: false}}"
     required: "{{formData.type === 'summary' ? true: false}}"
     sort_no: 310
+    amis:
+      disabledOn: "${is_system == true}"
   summary_field:
     type: lookup
     label: Field to Aggregate
@@ -543,6 +577,7 @@ fields:
       - summary_type
     defaultIcon: service_contract
     amis:
+      disabledOn: "${is_system == true}"
       "autoComplete": 
         "method": "get"
         "url": "${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}"
@@ -564,6 +599,8 @@ fields:
       - summary_object
     visible_on: "{{formData.type === 'summary' && global.mode !='read' ? true: false}}"
     sort_no: 330
+    amis:
+      disabledOn: "${is_system == true}"
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -624,18 +661,24 @@ fields:
     group: External data source
     # visible_on: "{{true}}"
     sort_no: 340
+    amis:
+      disabledOn: "${is_system == true}"
   primary:
     type: boolean
     label: Primary Key
     group: External data source
     # visible_on: "{{true}}"
     sort_no: 350
+    amis:
+      disabledOn: "${is_system == true}"
   generated:
     type: boolean
     label: Generated
     group: External data source
     # visible_on: "{{formData.database_name || formData.datasource ? true: false}}"
     sort_no: 360
+    amis:
+      disabledOn: "${is_system == true}"
   sort_no:
     label: Sort Number
     type: number
@@ -649,6 +692,8 @@ fields:
     label: Is Name
     group: Advanced
     sort_no: 380
+    amis:
+      disabledOn: "${is_system == true}"
   required:
     type: boolean
     label: Required
@@ -656,6 +701,7 @@ fields:
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
     sort_no: 272
     amis:
+      disabledOn: "${is_system == true}"
       onEvent:
         change:
           weight: 0
@@ -681,7 +727,7 @@ fields:
     defaultValue: clear
     amis:
       "id": "u:6a556d8a8514"
-      "disabledOn": "${required==true}"
+      "disabledOn": "${required==true || is_system == true}"
   is_wide:
     type: boolean
     label: Is Wide
@@ -725,6 +771,8 @@ fields:
     # group: Advanced
     visible_on: "{{formData.type === 'url' ? true: false}}"
     sort_no: 440
+    amis:
+      disabledOn: "${is_system == true}"
   visible_on:
     type: textarea
     label: Visible On
@@ -752,6 +800,10 @@ fields:
     group: Advanced
     sort_no: 455
     inlineHelpText: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7' target='_blank'>查看帮助</a>
+  is_system:
+    type: boolean
+    label: System
+    visible_on: "{{false}}"
 paging:
   enabled: false
 list_views:

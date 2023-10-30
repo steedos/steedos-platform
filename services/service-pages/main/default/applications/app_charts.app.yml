@@ -12,7 +12,7 @@ admin_menus:
     permission_sets:
       - admin
   - _id: pages
-    name: Mini Pages
+    name: Micro Pages
     object_name: pages
     parent: user_interface
     sort: 300

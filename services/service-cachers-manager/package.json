@@ -1,15 +1,15 @@
 {
   "name": "@steedos/service-cachers-manager",
-  "version": "2.5.17-beta.5",
+  "version": "2.5.17",
   "main": "package.service.js",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@steedos/cachers": "2.5.17-beta.5",
-    "@steedos/metadata-registrar": "2.5.17-beta.5"
+    "@steedos/cachers": "2.5.17",
+    "@steedos/metadata-registrar": "2.5.17"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "838d5fe29d704ef8adf741774452743d912c224f"
+  "gitHead": "c1e5161c0f7357c2daf621a09818f675fa76861e"
 }

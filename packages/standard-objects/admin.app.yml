@@ -242,12 +242,6 @@ admin_menus:
       - admin
     object_name: workflow_rule
     parent: process_automation
-  - _id: object_validation_rules
-    name: Object Validation Rules
-    permission_sets:
-      - admin
-    object_name: object_validation_rules
-    parent: process_automation
   - _id: workflow_actions
     name: Workflow Actions
     permission_sets:

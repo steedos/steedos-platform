@@ -39,6 +39,16 @@ fields:
     label: Valid
     readonly: true
     name: is_valid
+  help_text:
+    type: text
+    label: help text
+    readonly: true
+    name: help_text
+  error_message:
+    type: text
+    label: error message
+    readonly: true
+    name: error_message
   instance_style:
     type: select
     label: Instance Style

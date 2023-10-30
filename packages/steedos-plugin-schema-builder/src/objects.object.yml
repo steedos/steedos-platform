@@ -1,6 +1,6 @@
 extend: objects
 actions:
   schemaBuilder:
-    label: 对象关系图
+    label: Schema Builder
     visible: true
     on: list

@@ -17,8 +17,8 @@ const loadFlowFile = new metaDataCore.LoadFlowFile();
 
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
-    if(fs.existsSync(path.join(packagePath, 'steedos.package.yml'))){
-        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'steedos.package.yml'));
+    if(fs.existsSync(path.join(packagePath, 'package.service.yml'))){
+        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'package.service.yml'));
     }
     if(fs.existsSync(path.join(packagePath, 'README.md'))){
         packageYmlData.readme = metaDataCore.loadFile(path.join(packagePath, 'README.md'));
@@ -27,6 +27,8 @@ const getPackageYmlData = (packagePath)=>{
     }
     return packageYmlData;
 }
+
+const methods = require('./lib/methods')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -73,8 +75,11 @@ module.exports = {
             }
         },
         "space.initialized": {
-            async handler() {
+            async handler(ctx) {
                 await this.loadDataOnServiceStarted();
+                const spaceDoc = ctx.params
+                // 扫描main/default/data文件夹
+                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, spaceDoc._id);
             }
         }
     },
@@ -83,6 +88,8 @@ module.exports = {
      * Methods
      */
     methods: {
+        ...methods,
+
         checkPackageMetadataFiles: async function (packagePath) {
 
             if(this.core){
@@ -92,16 +99,6 @@ module.exports = {
             let publicPath = path.join(packagePath, 'public');
             if (this.settings.packageInfo.loadPublicFolder && fs.existsSync(publicPath)) {
                 this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
-            }
-
-            // 扫描软件包中的元数据, 如果有 .client.js 文件, 则输出警告信息
-            const filePatten = [
-                path.join(packagePath, "**", "*.client.js"),
-                "!" + path.join(packagePath, "node_modules"),
-            ]
-            const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
-            for await (const filePath of matchedPaths) {
-                this.broker.logger.warn(`The client.js file has been deprecated. ${filePath}`); 
             }
 
             // 扫描软件包中的元数据, 如果有 .object.js 文件, 则输出警告信息
@@ -170,7 +167,7 @@ module.exports = {
             await triggerYmlLoader.load(this.broker, packagePath, name);
             await importLoader.load(this.broker, packagePath, name);
             if(this.core){
-                this.core.loadClientScripts();
+                // this.core.loadClientScripts();
                 const routersInfo = await this.loadPackageRouters(packagePath, name);
                 await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             }
@@ -400,7 +397,7 @@ module.exports = {
                 })
             }
             await this.objectql.deletePackageClientScripts(this.name);
-            await this.core.loadClientScripts();
+            // await this.core.loadClientScripts();
         }
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{

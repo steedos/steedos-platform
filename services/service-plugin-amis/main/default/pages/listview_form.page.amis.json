@@ -140,9 +140,9 @@
                                     "tpl": null,
                                     "className": "m-0",
                                     "labelClassName": "text-left",
-                                    "option": "共享视图到工作区",
+                                    "label": "共享视图到工作区",
                                     "en-US": {
-                                        "option": "Shared to All Users"
+                                        "label": "Shared to All Users"
                                     },
                                     "id": "u:3ba5090f7fd0"
                                 },
@@ -152,9 +152,9 @@
                                     "tpl": null,
                                     "className": "m-0",
                                     "labelClassName": "text-left",
-                                    "option": "显示条目数",
+                                    "label": "显示条目数",
                                     "en-US": {
-                                        "option": "Show Record Count"
+                                        "label": "Show Record Count"
                                     },
                                     "id": "u:811f0c5d03ad"
                                 },
@@ -171,9 +171,22 @@
                                     "id": "u:25a6ee957503"
                                 },
                                 {
+                                    "name": "is_enable",
+                                    "label": "启用",
+                                    "type": "switch",
+                                    "precision": 0,
+                                    "className": "m-0",
+                                    "labelClassName": "text-left",
+                                    "en-US": {
+                                        "label": "Sort NO."
+                                    },
+                                    "id": "u:25a6ee957503"
+                                },
+                                {
                                     "label": "显示模式",
                                     "name": "crud_mode",
                                     "type": "select",
+                                    "value": "table",
                                     "en-US": {
                                         "label": "Crud Mode"
                                     },
@@ -561,11 +574,11 @@
                 "method": "post",
                 "url": "${context.rootUrl}/graphql?rf=1653731141728",
                 "cache": 100,
-                "adaptor": "const recordId = api.body.recordId;\nvar data;\nif (recordId) {\n        data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n    //数据格式转换\n    if (data) {\n        data.columns = lodash.map(data.columns, 'field');\n        data.sort = lodash.map(data.sort, (item) => {\n            return `${item.field_name}:${item.order || 'asc'}`\n        });\n        data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n        data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n        if (data.filters && lodash.isString(data.filters)) {\n            try {\n                data.filters = JSON.parse(data.filters);\n            } catch (e) { }\n        }\n\n        if (data.filters && lodash.isString(data.filters)) {\n            data._filters_type_controller = 'function';\n        } else {\n            data._filters_type_controller = 'conditions'\n        }\n\n        if (data._filters_type_controller === 'conditions') {\n            data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n        } else {\n            data._filters_function = data.filters;\n        }\n    }\n} else {\n    const defaultData = api.body.defaultData;\n    let defaultValues = {};\n    // TODO:字段默认值后期添加\n    if(defaultData && _.isObject(defaultData) && !_.isArray(defaultData)){\n        data = Object.assign({}, defaultValues, defaultData)\n    }\n}\nfor (key in data) {\n    if (data[key] === null) {\n        delete data[key];\n    }\n}\npayload.data = data;\ndelete payload.extensions;\nreturn payload;",
+                "adaptor": "const recordId = api.body.recordId;\nvar data;\nif (recordId) {\n        data = payload.data.data[0] || { _filters_type_controller: 'conditions' };\n    //数据格式转换\n    if (data) {\n        data.columns = lodash.map(data.columns, 'field');\n        data.sort = lodash.map(data.sort, (item) => {\n            return `${item.field_name}:${item.order || 'asc'}`\n        });\n        data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n        data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n        if (data.filters && lodash.isString(data.filters)) {\n            try {\n                data.filters = JSON.parse(data.filters);\n            } catch (e) { }\n        }\n\n        if (data.filters && lodash.isString(data.filters)) {\n            data._filters_type_controller = 'function';\n        } else {\n            data._filters_type_controller = 'conditions'\n        }\n\n        if (data._filters_type_controller === 'conditions') {\n            data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n        } else {\n            data._filters_function = data.filters;\n        }\n    }\n} else {\n    const defaultData = api.body.defaultData;\n    let defaultValues = {};\n    // TODO:字段默认值后期添加\n    if(defaultData && _.isObject(defaultData) && !_.isArray(defaultData)){\n        data = Object.assign({}, defaultValues, defaultData)\n    }\n}\nfor (key in data) {\n    if (data[key] === null) {\n        delete data[key];\n    }\n}\npayload.data = data;\ndelete payload.extensions; if(data.is_enable != false){data.is_enable=true;};\nreturn payload;",
                 "data": {
                     "recordId": "${recordId}",
                     "defaultData": "${defaultData}",
-                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,requestAdaptor,adaptor,filter_scope,crud_mode,shared,show_count,columns,filter_fields,sort,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
+                    "query": "{data:object_listviews(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,label,name,object_name,requestAdaptor,adaptor,filter_scope,shared,show_count,columns,filter_fields,sort,is_enable,crud_mode,filters,filter_logic,mobile_columns,searchable_fields,sort_no,created,created_by:created_by__expand{_id,name},modified,modified_by:modified_by__expand{_id,name},enable_amis_schema,amis_schema,_display{shared,show_count,created,modified}}}"
                 },
                 "replaceData": false,
                 "responseData": {

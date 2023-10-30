@@ -1,0 +1,31 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "objects",
+            "recordId": "${recordId}",
+            "className": "",
+            "enableTabs": true,
+            "mode": "edit",
+            "layout": "normal",
+            "apiRequestAdaptor": "console.log('api.data.query===', api.data.query);api.data.query = api.data.query.replace('objects__update', 'objects__upsert')",
+            "submitSuccActions": [
+                {
+                    "actionType": "toast",
+                    "args": {
+                      "msgType": "success",
+                      "msg": "操作成功, 请刷新浏览器后查看效果",
+                      "position": "top-right"
+                    }
+                }
+            ]
+        }
+    ],
+    "data": {
+        "context": {}
+    },
+    "name": "object_fields_form",
+    "id": "u:bb11df394baf"
+}

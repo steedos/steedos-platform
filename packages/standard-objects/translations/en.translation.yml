@@ -90,7 +90,7 @@ CustomTabs:
   admin_objects: Objects
   admin_datasources: External Data Sources
   admin_queue_import: Data Import
-  admin_pages: Mini Pages
+  admin_pages: Micro Pages
   admin_tabs: Tabs
   admin_queries: Queries
   admin_charts: Charts

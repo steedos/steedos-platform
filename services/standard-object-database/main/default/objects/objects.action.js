@@ -45,8 +45,7 @@ module.exports = {
             return toastr.warning("请先启动数据源");
         }
     }
-
-    window.open(Creator.getRelativeUrl("/app/admin/" + record.name));
+    window.open(Creator.getRelativeUrl("/app/admin/" + (record.name || this.record.name)));
     // SteedosUI.Object.getUISchema(record.name).then((res)=>{
     //     if(res.idFieldName){
     //         window.open(Creator.getRelativeUrl("/app/-/" + record.name));

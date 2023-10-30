@@ -23,6 +23,8 @@ fields:
     #     return options;
     #   }
     defaultValue: 'default'
+    amis:
+      disabledOn: "${is_system == true}"
   label:
     type: text
     label: Label
@@ -38,6 +40,8 @@ fields:
     index: true
     required: true
     inlineHelpText: Can only contain lowercase letters and numbers, must start with a letter, cannot end with an underscore character or contain two consecutive underscore characters
+    amis:
+      disabledOn: "${is_system == true}"
   icon:
     type: lookup
     label: Icon
@@ -60,6 +64,8 @@ fields:
     label: Enable
     type: boolean
     defaultValue: true
+    amis:
+      disabledOn: "${is_system == true}"
   in_development:
     type: select
     label: Development State
@@ -71,6 +77,8 @@ fields:
         value: "0" 
     defaultValue: "1"
     required: true
+    amis:
+      disabledOn: "${is_system == true}"
   enable_search:
     type: boolean
     label: Enable Search
@@ -171,6 +179,8 @@ fields:
     searchable: true
     inlineHelpText: The default data source does not support this property
     group: External data source
+    amis:
+      disabledOn: "${is_system == true}"
   version:
     readonly: true
     label: Version
@@ -381,6 +391,9 @@ fields:
     type: text
   field_groups.$.visible_on:
     type: text
+  extend:
+    type: text
+    hidden: true
 paging:
   enabled: false
 relatedList:

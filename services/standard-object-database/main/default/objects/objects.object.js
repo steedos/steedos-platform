@@ -233,7 +233,7 @@ function onChangeObjectName(oldName, newDoc){
         multi: true
     });
     //修改trigger
-    Creator.getCollection("object_triggers").direct.update({space: newDoc.space, object: oldName}, {$set: {object: newDoc.name}}, {
+    Creator.getCollection("object_triggers").direct.update({space: newDoc.space, listenTo: oldName}, {$set: {listenTo: newDoc.name}}, {
         multi: true
     });
     //字段表中的reference_to
