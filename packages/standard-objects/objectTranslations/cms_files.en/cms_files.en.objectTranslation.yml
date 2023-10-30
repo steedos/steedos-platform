@@ -28,7 +28,7 @@ fields:
     description: 
 listviews:
   all:
-    label: 
+    label: all
 actions:
   standard_new:
     label: New

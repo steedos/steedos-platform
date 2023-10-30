@@ -51,6 +51,10 @@ groups:
 listviews:
   all:
     label: 所有
+  lookup: 
+    label: 相关
+  effective:
+    label: 有效部门
 actions:
   standard_query:
     label: 查找
