@@ -733,6 +733,9 @@ actions:
   standard_delete:
     visible: false
     'on': record_more
+  standard_delete_many:
+    visible: false
+    'on': list
   designFlow:
     label: Flow Designer
     visible: !<tag:yaml.org,2002:js/function> |-
