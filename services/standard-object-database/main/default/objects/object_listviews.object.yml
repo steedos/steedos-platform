@@ -225,6 +225,10 @@ fields:
     type: number
     scale: 0
     defaultValue: 100
+  is_enable:
+    type: boolean
+    label: Enable
+    defaultValue: true
   crud_mode:
     label: 显示模式
     type: select
@@ -277,6 +281,7 @@ list_views:
       - shared
       - owner
       - modified
+      - is_enable
       - is_system
     label: All List Views
     filter_scope: space

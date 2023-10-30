@@ -1527,8 +1527,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         })
         const listViews = {}
-        _.map(_.sortBy(_.values(objectConfig.list_views) , 'sort_no'), (listView)=>{
-            listViews[listView.name] = listView;
+        _.map(_.sortBy(_.values(objectConfig.list_views) , 'sort_no'), (listView: any)=>{
+            if(listView.is_enable != false){
+                listViews[listView.name] = listView;
+            }
         })
         objectConfig.list_views = listViews;
 

@@ -118,7 +118,7 @@ async function getObjects(userId){
                 // 默认值配置为true
                 _obj.enable_inline_edit = true;
             }
-            objects[_obj.name] = Object.assign({}, _obj, objectBaseFields)
+            objects[_obj.name] = Object.assign({}, _obj, objectBaseFields, {record_permissions: Object.assign({}, permissions, {allowEdit: true})})
         }
       });
       steedosI18n.translationObjects(lng, objects)
@@ -183,7 +183,7 @@ async function getObject(id, userId){
             // 默认值配置为true
             object.enable_inline_edit = true;
         }
-        return Object.assign({}, object, objectBaseFields);
+        return Object.assign({}, object, objectBaseFields, {record_permissions: Object.assign({}, permissions, {allowEdit: true})});
     } catch (error) {
         console.log(`error`, error)
         return null;
@@ -212,7 +212,7 @@ async function getObjectFields(objectName, userId, all){
 
         _.each(object.fields, function(field){
             if(!field._id && (all || _.include(originalFieldsName, field.name))){
-                fields.push(Object.assign({_id: `${objectName}.${field.name}`, _name: field.name, object: objectName, record_permissions: permissions}, field))
+                fields.push(Object.assign({_id: `${objectName}.${field.name}`, is_system: true, _name: field.name, object: objectName, record_permissions: Object.assign({}, permissions, {allowEdit: true})}, field))
             }
         })
         return fields

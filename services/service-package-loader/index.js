@@ -101,16 +101,6 @@ module.exports = {
                 this.broker.logger.warn(`The public folder has been deprecated. ${publicPath}`); 
             }
 
-            // 扫描软件包中的元数据, 如果有 .client.js 文件, 则输出警告信息
-            const filePatten = [
-                path.join(packagePath, "**", "*.client.js"),
-                "!" + path.join(packagePath, "node_modules"),
-            ]
-            const matchedPaths = metaDataCore.syncMatchFiles(filePatten);
-            for await (const filePath of matchedPaths) {
-                this.broker.logger.warn(`The client.js file has been deprecated. ${filePath}`); 
-            }
-
             // 扫描软件包中的元数据, 如果有 .object.js 文件, 则输出警告信息
             const filePatten2 = [
                 path.join(packagePath, "**", "*.object.js"),
@@ -177,7 +167,7 @@ module.exports = {
             await triggerYmlLoader.load(this.broker, packagePath, name);
             await importLoader.load(this.broker, packagePath, name);
             if(this.core){
-                this.core.loadClientScripts();
+                // this.core.loadClientScripts();
                 const routersInfo = await this.loadPackageRouters(packagePath, name);
                 await this.broker.call(`@steedos/service-packages.setPackageRoutersInfo`, {packageName: name, data: routersInfo});
             }
@@ -407,7 +397,7 @@ module.exports = {
                 })
             }
             await this.objectql.deletePackageClientScripts(this.name);
-            await this.core.loadClientScripts();
+            // await this.core.loadClientScripts();
         }
         this.broker.call(`@steedos/service-packages.offline`, {serviceInfo: {name: this.name, nodeID: this.broker.nodeID, instanceID: this.broker.instanceID}})
         await this.broker.call(`metadata.refreshServiceMetadatas`, { offlinePackageServices: [{

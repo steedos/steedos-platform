@@ -146,6 +146,8 @@ fields:
     description: 
   sort_no:
     label: 排序号
+  is_enable:
+    label: 启用
   crud_mode:
     label: 显示模式
     help: 

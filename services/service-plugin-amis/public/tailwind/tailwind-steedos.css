@@ -89,6 +89,10 @@
   margin: -2rem
 }
 
+.m-auto {
+  margin: auto
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem
@@ -102,6 +106,11 @@
 .-mx-11 {
   margin-left: -2.75rem;
   margin-right: -2.75rem
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem
 }
 
 .mb-4 {
@@ -205,8 +214,16 @@
   min-width: 240px
 }
 
+.\!min-w-\[160px\] {
+  min-width: 160px !important
+}
+
 .min-w-\[200px\] {
   min-width: 200px
+}
+
+.max-w-xl {
+  max-width: 36rem
 }
 
 .flex-1 {
@@ -274,6 +291,10 @@
   border-width: 1px
 }
 
+.border-0 {
+  border-width: 0px
+}
+
 .border-b {
   border-bottom-width: 1px
 }
@@ -306,9 +327,18 @@
   background-color: rgb(134 239 172 / var(--tw-bg-opacity))
 }
 
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity))
+}
+
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))
+}
+
+.bg-none {
+  background-image: none
 }
 
 .p-0 {
@@ -321,6 +351,10 @@
 
 .p-2 {
   padding: 0.5rem
+}
+
+.p-1 {
+  padding: 0.25rem
 }
 
 .px-2 {
@@ -417,6 +451,12 @@
 .shadow-none {
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
