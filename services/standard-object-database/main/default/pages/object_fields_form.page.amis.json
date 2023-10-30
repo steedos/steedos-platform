@@ -10,10 +10,19 @@
             "enableTabs": true,
             "mode": "edit",
             "layout": "normal",
+            "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
             "submitSuccActions": [
                 {
                     "actionType": "custom",
                     "script": "setTimeout(function(){doAction({'actionType': 'setValue','componentId': 'form_object_fields','args': {'value': {'sort_no': event.data.sort_no + 10}}})}, 300)"
+                },
+                {
+                    "actionType": "toast",
+                    "args": {
+                      "msgType": "success",
+                      "msg": "操作成功, 请刷新浏览器后查看效果",
+                      "position": "top-right"
+                    }
                 }
             ]
         }

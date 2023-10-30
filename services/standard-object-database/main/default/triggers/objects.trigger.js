@@ -36,28 +36,6 @@ module.exports = {
             }
         })
     },
-    afterAggregate: async function(){
-        let userId = this.userId
-        let spaceId = this.spaceId;
-        for (const doc of this.data.values) {
-            doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
-        }
-        // this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
-
-        this.data.values = this.data.values.concat(await InternalData.getObjects(userId));
-
-        this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-        
-        _.each(this.data.values, function(value){
-            if(value){
-                delete value.actions;
-                delete value.fields;
-                delete value.list_views;
-                delete value.permission_set;
-                delete value.triggers;
-            }
-        })
-    },
     afterCount: async function(){
         let userId = this.userId
         let spaceId = this.spaceId;
@@ -134,9 +112,9 @@ module.exports = {
             const latestDoc = await obj.findOne(id);
             const newObjName = doc.name;
             // !!!暂不允许修改name
-            if (newObjName &&  (latestDoc.name != newObjName)) {
-                throw new Error('禁止修改API 名称。');
-            }
+            // if (newObjName &&  (latestDoc.name != newObjName)) {
+            //     throw new Error('禁止修改API 名称。');
+            // }
             /*
             if (newObjName &&  (latestDoc.name != newObjName) && latestDoc.datasource === 'default') {
                 const datasource = objectql.getDataSource(latestDoc.datasource);
@@ -169,7 +147,7 @@ module.exports = {
         }
         */
 
-        await sleep(1000 * 2)
+        // await sleep(1000 * 2)
     },
     afterDelete: async function(){
         const { previousDoc: object, spaceId } = this;

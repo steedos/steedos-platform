@@ -42,7 +42,7 @@ const extendSimpleSchema = () => {
     });
 }
 
-export const loadClientScripts = ()=>{
+export const loadClientScripts = async ()=>{
     try {
         if(typeof WebAppInternals !== 'undefined'){
             let clientCodes = getClientBaseObject();
@@ -52,7 +52,9 @@ export const loadClientScripts = ()=>{
                 clientCodes = clientCodes + '\r\n;' + `try{${code}}catch(error){console.error('client.js [${scriptFile}] error', error)}` + '\r\n;'
             });
     
-            clientCodes = clientCodes + getClientScripts();
+            const packageClientScripts = await getClientScripts();
+
+            clientCodes = clientCodes + packageClientScripts;
     
             WebAppInternals.additionalStaticJs["/steedos_dynamic_scripts.js"] = `$.getScript( Meteor.isCordova ? '${objectql.absoluteUrl("/steedos-init.js")}' : '/steedos-init.js', function(){${clientCodes}})`
         }

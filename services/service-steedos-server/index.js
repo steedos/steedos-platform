@@ -132,6 +132,16 @@ module.exports = {
 				
 			}
 		},
+		'clientJS.changed': async function (ctx){
+			if (this.clientJSChangeTimeoutId) {
+				clearTimeout(this.clientJSChangeTimeoutId)
+			}
+			this.clientJSChangeTimeoutId = setTimeout(() => {
+				const steedos = require('@steedos/core')
+				steedos.loadClientScripts();
+				this.clientJSChangeTimeoutId = null;
+			}, 1000)
+		}
 	},
 
 	/**

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-09 11:02:47
+ * @LastEditTime: 2023-10-23 16:57:53
  * @Description: 
  */
 'use strict';
@@ -120,6 +120,21 @@ var DesignerAPI = {
         		<iframe id="ifrDesigner" src="" width="100%" height="100%" nwdisable="true" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
         		<script type="text/javascript" src="${this.getAbsoluteUrl("/lib/jquery/jquery-1.11.2.min.js")}"></script>
         		<script type="text/javascript">
+					$("#ifrDesigner").on("load", function(){
+						var self = this;
+						var sId = setInterval(function(){
+							let bar = $($(self)[0].contentWindow.document).find(".navigation-bar");
+							var scope = $($(bar[1]).next()[0]).children(":first");
+							let leftBtn = $(".htv3.designer.square.sc-view.sc-segment-view.sc-static-layout.segment.sc-first-segment.sc-segment-0.sc-large-size", scope)
+							if(leftBtn.length > 0){
+								clearInterval(sId);
+								leftBtn.css("display","none");
+								let reftBtn = $(".htv3.designer.square.sc-view.sc-segment-view.sc-static-layout.segment.sc-last-segment.sc-segment-1.sc-large-size.sel", scope);
+								$('.left',reftBtn).css("background-position", "0px -3034px")
+							}
+						}, 100);
+						
+					});
         			var designer = {
             				urlQuery:function(name){
             					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

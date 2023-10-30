@@ -1,0 +1,117 @@
+name: edit_form
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "编辑表单",
+              "id": "u:edit_form",
+              "editorState": "default",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "actionType": "dialog",
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "编辑表单",
+                                  "body": [
+                                      {
+                                          "type": "form",
+                                          "title": "表单",
+                                          "body": [
+                                              {
+                                                  "type": "textarea",
+                                                  "label": "表单描述",
+                                                  "name": "description",
+                                                  "id": "u:84af37d53da4",
+                                                  "minRows": 3,
+                                                  "maxRows": 20
+                                              },
+                                              {
+                                                  "type": "editor",
+                                                  "label": "表单脚本",
+                                                  "name": "form_script",
+                                                  "id": "u:025f8c4f09b6",
+                                                  "minRows": 3,
+                                                  "maxRows": 20
+                                              },
+                                              {
+                                                  "type": "textarea",
+                                                  "label": "标题公式",
+                                                  "name": "name_forumla",
+                                                  "id": "u:69b6536e9fd8",
+                                                  "minRows": 3,
+                                                  "maxRows": 20
+                                              },
+                                              {
+                                                  "type": "select",
+                                                  "label": "表单样式",
+                                                  "name": "instance_style",
+                                                  "options": [
+                                                      {
+                                                          "label": "表格",
+                                                          "value": "table"
+                                                      },
+                                                      {
+                                                          "label": "默认",
+                                                          "value": "default"
+                                                      }
+                                                  ],
+                                                  "id": "u:ffe021fde250",
+                                                  "multiple": false,
+                                                  "value": ""
+                                              }
+                                          ],
+                                          "id": "u:f2e844854529",
+                                          "debug": false,
+                                          "initApi": {
+                                              "url": "${context.rootUrl}/graphql",
+                                              "method": "post",
+                                              "requestAdaptor": "\n\n\nconsole.log('api', api);\n\n\napi.data = {\n  query: `{forms__findOne(id: \"${api.data.form}\"){\n  id:_id,  current,\n    name,\n    is_valid,space,\n    description,\n    help_text,\n    error_message,\n    category,\n    instance_style\n  }}`\n}\n\n\nreturn api;",
+                                              "adaptor": "console.log('payload====>', payload); payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
+                                              "messages": {}
+                                          },
+                                          "api": {
+                                              "url": "${context.rootUrl}/am/forms",
+                                              "method": "put",
+                                              "requestAdaptor": "console.log('save api', api);\nconst form = api.data._form;\nform.instance_style = api.data.instance_style;\nform.description = api.data.description;\nform.current.name_forumla = api.data.name_forumla;\nform.current.form_script = api.data.form_script;\napi.data = {\n  Forms: [form]\n}\n\n\nreturn api;",
+                                              "adaptor": "",
+                                              "messages": {}
+                                          }
+                                      }
+                                  ],
+                                  "showCloseButton": true,
+                                  "showErrorMsg": true,
+                                  "showLoading": true,
+                                  "className": "app-popover",
+                                  "id": "u:cfa6a6682268",
+                                  "size": "md",
+                                  "closeOnEsc": false
+                              }
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "id": "u:507e1ca4010c",
+      "bodyClassName": "p-0"
+  }
+is_enable: true
+label: 编辑表单
+'on': record_only
+type: amis_button
+visible: true

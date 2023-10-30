@@ -238,7 +238,7 @@ function checkMasterDetailTypeField(doc, oldReferenceTo) {
 
 function onChangeName(oldName, newDoc){
   var newName = newDoc.name
-  Creator.getCollection("object_listviews").direct.find({space: newDoc.space, object_name: newDoc.object}, {fields: {_id:1, columns: 1}}).forEach(function(view){
+  Creator.getCollection("object_listviews").direct.find({space: newDoc.space, object_name: newDoc.object}, {fields: {_id:1, columns: 1, name: 1}}).forEach(function(view){
     if(_.isArray(view.columns)){
       var columns = [];
       _.each(view.columns, function(column){
@@ -258,7 +258,8 @@ function onChangeName(oldName, newDoc){
           columns.push(column)
         }
       });
-      Creator.getCollection("object_listviews").update({_id: view._id}, {$set: {columns: columns}});
+      // 由于 https://github.com/steedos/steedos-platform/issues/4655 改动, 修改列表视图的时候, 必须要传入name, 否则会报错
+      Creator.getCollection("object_listviews").update({_id: view._id}, {$set: {name: view.name, columns: columns}});
     }
   })
 }
