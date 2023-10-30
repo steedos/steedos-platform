@@ -342,6 +342,9 @@ router.delete('/am/forms', async function (req, res) {
                             instanceCollection.direct.remove(instance_fd["_id"])
                         })
 
+                        // 删除instance_tasks
+                        db.instance_tasks.direct.remove({ form: form["id"] })
+
                         // 删除表单
                         let deleted_form = Object.assign({}, f);
                         deleted_form['deleted'] = now;
