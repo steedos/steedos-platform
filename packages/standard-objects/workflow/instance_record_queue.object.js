@@ -1,3 +1,5 @@
+// 审批单同步到台账
+
 const objectql = require('@steedos/objectql');
 const Future = require('fibers/future');
 var runQuoted = function (objectName, recordId) {

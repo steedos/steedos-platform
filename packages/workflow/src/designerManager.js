@@ -528,7 +528,11 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             break;
         case 'image':
         case 'file':
-            formField.type = "input";
+            formField.type = objField.type;
+            break;
+        case 'master_detail':
+        case 'lookup':
+            formField.type = objField.type;
             break;
         case 'formula':
             switch (objField.data_type) {
