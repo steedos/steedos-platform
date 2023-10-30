@@ -159,7 +159,7 @@
                       "type": "steedos-board",
                       "id": "steedos_field_deign",
                       "columns": 2,
-                      "name": "fieldForGroup",
+                      "name": "design_field",
                       "boardSource": "${groups}",
                       "boardClassName": "bg-gray-50 p-2 border rounded shadow",
                       "boardHeader": {
@@ -227,12 +227,12 @@
                     "headers": {
                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                     },
-                    "requestAdaptor": "var graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = _.cloneDeep(api.data.groups);\n_.remove(field_groups, { is_default: true }); \nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'update0:objects__update(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据fieldForGroup,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.fieldForGroup, function (items,key) {\n  _.forEach(items, function (item) {\n    const itemOrder = 'update' + index + ':object_fields__update(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ sort_no: index, group: key == \"未分组\"?null:key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
+                    "requestAdaptor": "var graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = _.cloneDeep(api.data.groups);\n_.remove(field_groups, { is_default: true }); \nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'update0:objects__update(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据design_field,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.design_field, function (items,key) {\n  _.forEach(items, function (item) {\n    const itemOrder = 'update' + index + ':object_fields__update(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ sort_no: index, group: key == \"未分组\"?null:key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
                     "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
                     "messages": {
                     },
                     "data": {
-                      "fieldForGroup": "${fieldForGroup}",
+                      "design_field": "${design_field}",
                       "groups": "${groups}",
                       "fields": "${fields}",
                       "$self": "$$"
@@ -243,23 +243,7 @@
                   "name": "form_design_form"
                 }
               ],
-              "id": "u:3a90104cb6b4",
-              "onEvent": {
-                "@data.changed.object_fields": {
-                  "actions": [
-                    {
-                      "actionType": "custom",
-                      "script": "const fieldForGroup = context.props.data.fieldForGroup;\n_.forIn(fieldForGroup, function (group, group_name) {\n  _.remove(group, function (field) {\n    return field === event.data._id;\n  })\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: \"service_field_design\",\n  args: {\n    value: { fieldForGroup }\n  }\n});\n",
-                      "expression": "${event.data.delete == 1}"
-                    },
-                    {
-                      "actionType": "custom",
-                      "script": "const fieldForGroup = context.props.data.fieldForGroup;\nif (event.data.group) {\n  if (fieldForGroup[event.data.group]) {\n    fieldForGroup[event.data.group].push(event.data.result.data.recordId);\n  } else {\n    fieldForGroup[event.data.group] = [event.data.result.data.recordId]\n  }\n} else {\n  fieldForGroup[\"未分组\"].push(event.data.result.data.recordId);\n}\ndoAction({\n  actionType: 'setValue',\n  componentId: \"service_field_design\",\n  args: {\n    value: { fieldForGroup }\n  }\n});\n",
-                      "expression": "${event.data.create == true}"
-                    }
-                  ]
-                }
-              }
+              "id": "u:3a90104cb6b4"
             }
           ],
           "api": {
@@ -286,6 +270,16 @@
               "actions": [
                 {
                   "actionType": "reload"
+                },
+                {
+                  "actionType": "custom",
+                  "script": "const fieldForGroup = context.props.data.fieldForGroup;\n_.forIn(fieldForGroup, function (group, group_name) {\n  _.remove(group, function (field) {\n    return field === event.data._id;\n  })\n});\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field:fieldForGroup }\n  }\n});\n",
+                  "expression": "${event.data.delete == 1}"
+                },
+                {
+                  "actionType": "custom",
+                  "script": "const fieldForGroup = context.props.data.fieldForGroup;\nlet isEdit = false;\n_.forIn(fieldForGroup, function (value, key) {\n  if (_.includes(value, event.data.result.data.recordId)) isEdit = true;\n});\nif (!isEdit) {\n  if (event.data.group) {\n    if (fieldForGroup[event.data.group]) {\n      fieldForGroup[event.data.group].push(event.data.result.data.recordId);\n    } else {\n      fieldForGroup[event.data.group] = [event.data.result.data.recordId]\n    }\n  } else {\n    fieldForGroup[\"未分组\"].push(event.data.result.data.recordId);\n  }\n  doAction({\n    actionType: 'setValue',\n    componentId: \"form_field_design\",\n    args: {\n      value: { design_field: fieldForGroup }\n    }\n  });\n}\n\n",
+                  "expression": "${event.data.delete != 1}"
                 }
               ]
             }
