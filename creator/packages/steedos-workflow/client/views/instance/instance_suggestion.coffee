@@ -393,7 +393,7 @@ Template.instance_suggestion.events
 		lastSignApprove = InstanceSignText.helpers.getLastSignApprove()
 
 		setTimeout ()->
-			if (insId == Session.get('instanceId'))
+			if insId == Session.get('instanceId') && FlowRouter.current().params.record_id == Session.get('instanceTaskId')
 				InstanceManager.saveIns(true);
 				InstanceManager.updateApproveSign(sign_field_code, suggestion_val, "update", lastSignApprove)
 		

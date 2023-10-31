@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-30 17:18:36
+ * @LastEditTime: 2023-10-31 10:25:17
  * @Description: 
  */
 "use strict";
@@ -57,6 +57,10 @@ module.exports = {
 				}
 
                 delete data.space;
+
+				if(data.is_system){
+					data = _.pick(data, ['label', 'icon', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_workflow', 'enable_instances', 'enable_inline_edit', 'enable_tree', 'enable_enhanced_lookup', 'description', 'is_deleted'])
+				}
 				
 				const object = await this.getObject('objects');
 				const dbRecord = await object.directFind({filters: ['_id','=',id]});
@@ -98,6 +102,10 @@ module.exports = {
                     data = JSON.parse(JSON.stringify(doc));
                 }
                 delete data.space;
+
+				if(data.is_system){
+					data = _.pick(data, ['label', 'defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis'])
+				}
 				
 				const object = await this.getObject('object_fields');
 				if(id.indexOf('.') > 0){
@@ -119,7 +127,8 @@ module.exports = {
 							created_by: userSession.userId,
 							modified_by: userSession.userId,
 							company_id: userSession.company_id,
-							company_ids: userSession.company_ids
+							company_ids: userSession.company_ids,
+							is_system: true
 						}));					
 						id = newId;
 					}

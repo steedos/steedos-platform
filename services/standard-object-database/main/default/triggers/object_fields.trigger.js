@@ -222,7 +222,7 @@ module.exports = {
         if(!objectName && filters._id && filters._id.indexOf(".") > -1){
             objectName = filters._id.split('.')[0];
         }
-        if(objectName){
+        if(objectName){ 
             let fields = await InternalData.getObjectFields(objectName, this.userId, filters.name ? true : false);
             if(fields){
                 _.each(fields, (field)=>{
@@ -230,6 +230,20 @@ module.exports = {
                 })
                 // this.data.values = this.data.values.concat(fields)
                 this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);
+            }
+        }
+
+        const dbSystemField = _.find(this.data.values, (field)=>{return field.is_system && field._id && field._id.indexOf('.') == -1})
+        if(dbSystemField){
+            const obj = await InternalData.getObject(dbSystemField.object, this.userId)
+            if(obj){
+                this.data.values = _.map(this.data.values, (item)=>{
+                    if(item.is_system){
+                        return Object.assign(item, _.find(obj.fields, (field)=>{return field.name === item.name}))
+                    }else{
+                        return item;
+                    }
+                })
             }
         }
     },
@@ -327,7 +341,12 @@ module.exports = {
         }
         if(["parent","children"].indexOf(dbDoc._name) > -1){
             let isImportField = false;
-            if(doc._name !== dbDoc._name || doc.type !== dbDoc.type || doc.object !== dbDoc.object || doc.reference_to !== dbDoc.reference_to || !!doc.multiple !== !!dbDoc.multiple || ("children" === dbDoc._name && doc.omit !== true)){
+            if((doc._name != undefined && doc._name !== dbDoc._name) || 
+                (doc.type != undefined && doc.type !== dbDoc.type) || 
+                (doc.object != undefined && doc.object !== dbDoc.object) || 
+                (doc.reference_to != undefined && doc.reference_to !== dbDoc.reference_to) || 
+                (doc.multiple != undefined && !!doc.multiple !== !!dbDoc.multiple) || 
+                (doc.omit != undefined && ("children" === dbDoc._name && doc.omit !== true))){
                 isImportField = true;
             }
             if(isImportField){
@@ -362,7 +381,7 @@ module.exports = {
         // !!!暂不允许修改字段类型
         if (_.has(doc, 'type')) {
             const newFieldType = doc.type;
-            if (newFieldType &&  (latestDoc.type != newFieldType)) {
+            if (latestDoc.type && newFieldType &&  (latestDoc.type != newFieldType)) {
                 throw new Error('禁止修改字段类型。');
             }
         }

@@ -34,11 +34,11 @@ fields:
     type: text
     readonly: true
     # visible_on: "{{global.mode ==='read' ? true : false}}"
-  "metadata.parent":
-    label: Parent 
-    type: master_detail
-    reference_to: cms_files
-    visible_on: "{{false}}"
+  # "metadata.parent":
+  #   label: Parent 
+  #   type: master_detail
+  #   reference_to: cms_files
+  #   visible_on: "{{false}}"
   uploadedAt: 
     label: Upload Time
     type: "datetime"
