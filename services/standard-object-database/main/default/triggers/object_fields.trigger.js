@@ -341,7 +341,12 @@ module.exports = {
         }
         if(["parent","children"].indexOf(dbDoc._name) > -1){
             let isImportField = false;
-            if(doc._name !== dbDoc._name || doc.type !== dbDoc.type || doc.object !== dbDoc.object || doc.reference_to !== dbDoc.reference_to || !!doc.multiple !== !!dbDoc.multiple || ("children" === dbDoc._name && doc.omit !== true)){
+            if((doc._name != undefined && doc._name !== dbDoc._name) || 
+                (doc.type != undefined && doc.type !== dbDoc.type) || 
+                (doc.object != undefined && doc.object !== dbDoc.object) || 
+                (doc.reference_to != undefined && doc.reference_to !== dbDoc.reference_to) || 
+                (doc.multiple != undefined && !!doc.multiple !== !!dbDoc.multiple) || 
+                (doc.omit != undefined && ("children" === dbDoc._name && doc.omit !== true))){
                 isImportField = true;
             }
             if(isImportField){
