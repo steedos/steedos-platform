@@ -78,6 +78,8 @@ const objectFind = function (objectApiName, query) {
     }, { objectApiName: objectApiName, query })
 }
 
+Steedos.objectFind = objectFind;
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
@@ -512,6 +514,62 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
         return formField;
     }
 
+    var getFileFieldValue = function(recordFieldId, fType) {
+        var collection, files, query, value;
+        if (_.isEmpty(recordFieldId)) {
+          return;
+        }
+        if (fType === 'image') {
+          collection = 'images';
+        } else if (fType === 'file') {
+          collection = 'files';
+        }
+        if (_.isString(recordFieldId)) {
+          query = {
+            _id: {
+              $in: [recordFieldId]
+            }
+          };
+        } else {
+          query = {
+            _id: {
+              $in: recordFieldId
+            }
+          };
+        }
+        files = Creator.Collections["cfs." + collection + ".filerecord"].find(query);
+        value = [];
+        files.forEach(function(f) {
+          var newFile;
+          newFile = new FS.File();
+          return newFile.attachData(f.createReadStream('files'), {
+            type: f.original.type
+          }, function(err) {
+            var metadata;
+            if (err) {
+              throw new Meteor.Error(err.error, err.reason);
+            }
+            newFile.name(f.name());
+            newFile.size(f.size());
+            metadata = {
+              owner: f.metadata.owner
+            };
+            newFile.metadata = metadata;
+            newFile._id = Creator.Collections.instances._makeNewID();
+            cfs[collection].insert(newFile);
+            return value.push(newFile._id);
+          });
+        });
+        if (value.length > 0) {
+          if (_.isString(recordFieldId)) {
+            return value[0];
+          } else {
+            return value;
+          }
+        }
+      };
+      
+
     field_map_back.forEach(function (fm) {
         //workflow 的子表到creator object 的相关对象
         var relatedObjectField = getRelatedObjectField(fm.object_field);
@@ -642,6 +700,38 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         } else {
                             obj[fm.object_field] = values[fm.workflow_field];
                         }
+                    }else if(oField.type == 'image' && wField.type == 'image'){
+                        var ids = record[fm.object_field];
+                        if(_.isString(ids)){
+                            ids = [ids];
+                        }
+                        if(ids){
+                            var removeOldFiles = function (cb) {
+                                return cfs.images.remove({
+                                    '_id': {$in: ids}
+                                }, cb);
+                            };
+                            Meteor.wrapAsync(removeOldFiles)();
+                        }
+
+                        obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'image')
+
+                    }else if(oField.type == 'file' && wField.type == 'file'){
+                        var ids = record[fm.object_field];
+                        if(_.isString(ids)){
+                            ids = [ids];
+                        }
+                        if(ids){
+                            var removeOldFiles = function (cb) {
+                                return cfs.files.remove({
+                                    '_id': {$in: ids}
+                                }, cb);
+                            };
+                            Meteor.wrapAsync(removeOldFiles)();
+                        }
+                        obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'file')
+                    }else if (['lookup', 'master_detail'].includes(oField.type) && wField.type == 'lookup'){
+                        obj[fm.object_field] = values[fm.workflow_field]
                     }
                     // 日期、日期时间
                     else if (oField.type === 'date' || oField.type === 'datetime') {

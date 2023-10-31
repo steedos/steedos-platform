@@ -339,6 +339,55 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 					return getLinkText(item, item['@label'], detail_url)
 			else
 				value = getLinkText(value, value['@label'], detail_url)
+		when 'image'
+			if field.is_multiselect
+				value = _.map value, (item)->
+					return '<div class="antd-ImageControl-item is-uploaded">
+						<div class="antd-Image antd-Image--thumb antd-ImageControl-image">
+							<div class="antd-Image-thumbWrap">
+								<div class="antd-Image-thumb"><img class="antd-Image-image"
+										src="/api/files/images/'+item+'"></div>
+							</div>
+						</div>
+					</div>'
+				value = value.join("");
+			else
+				value = '<div class="antd-ImageControl-item is-uploaded">
+						<div class="antd-Image antd-Image--thumb antd-ImageControl-image">
+							<div class="antd-Image-thumbWrap">
+								<div class="antd-Image-thumb"><img class="antd-Image-image"
+										src="/api/files/files/'+value+'"></div>
+							</div>
+						</div>
+					</div>'
+		when 'file'
+			if value
+				if !field.is_multiselect
+					value = [value]
+				if Meteor.isClient
+					res = Steedos.authRequest('/api/v1/cfs_files_filerecord?filters=[["_id","in", '+JSON.stringify(value)+']]&fields=["_id","original"]', {async:false})
+					records = res.data.items
+				else if Meteor.isServer
+					records = Steedos.objectFind("cfs_files_filerecord", { filters: [["_id", 'in', value]], fields: ["_id", "original"] });
+
+				value = _.map records, (item)->
+					return "<a href='#{Steedos.absoluteUrl('/api/files/files/'+item._id+'?download=true')}' target='_blank' style='display: block;'>#{item.original.name}</a>"
+
+				value = value.join("");
+		when 'lookup'
+			if value
+				if !field.is_multiselect
+					value = [value]
+				
+				if Meteor.isClient
+					res = Steedos.authRequest('/api/v1/'+field.reference_to+'?filters=[["'+(field.reference_to_field || '_id')+'","in", '+JSON.stringify(value)+']]&fields=["_id","name"]', {async:false})
+					records = res.data.items
+				else if Meteor.isServer
+					records = Steedos.objectFind(field.reference_to, { filters: [[(field.reference_to_field || '_id'), 'in', value]], fields: ["_id", "name"] });
+				value = _.map records, (item)->
+					return "<a href='#{Steedos.absoluteUrl('/app/-/'+field.reference_to+'/view/'+item._id)}' target='_blank'>#{item.name}</a>"
+
+				value = value.join("");	
 		when 'html'
 			value = if value then "<div class=\"steedos-html\">#{value}</div>" else ''
 
@@ -844,6 +893,227 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 						padding-left: 15px;
 						padding-right: 15px;
 					}
+
+					.antd-ImageControl-item {
+					border-radius: var(--ImageControl-addBtn-borderRadius);
+					vertical-align: top;
+					padding: var(--gap-xs);
+					display: inline-block;
+					margin-right: var(--gap-base);
+					margin-bottom: var(--gap-base);
+					position: relative;
+					width: 7.5rem;
+					}
+					.antd-ImageControl-item.is-invalid {
+					padding: 0;
+					border-color: var(--FileControl-danger-color);
+					}
+					.antd-ImageControl-item svg.icon-refresh {
+					transform: rotate(180deg);
+					}
+					.antd-ImageControl-filename {
+					display: inline-flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					color: var(--FileControl-danger-color);
+					}
+					.antd-ImageControl-filename > svg.icon-image {
+					margin-bottom: 8px;
+					width: 24px;
+					height: 24px;
+					}
+					.antd-ImageControl-filename > span {
+					max-width: 100%;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					}
+					.antd-ImageControl-image {
+					width: 100%;
+					height: 100%;
+					padding: 0;
+					border: none;
+					display: block;
+					}
+					.antd-ImageControl-itemClear {
+					position: absolute;
+					cursor: pointer;
+					color: #999;
+					top: 5px;
+					right: 5px;
+					line-height: 1;
+					}
+					.antd-ImageControl-itemClear > svg {
+					top: 0;
+					width: 10px;
+					height: 10px;
+					}
+					.antd-ImageControl-itemInfo {
+					display: inline-flex;
+					width: 110px;
+					height: 110px;
+					justify-content: center;
+					align-items: center;
+					align-content: center;
+					flex-wrap: wrap;
+					}
+					.antd-ImageControl-itemInfo > p {
+					width: 100%;
+					text-align: center;
+					font-size: 12px;
+					margin-bottom: 5px;
+					}
+					.antd-ImageControl-progress {
+					width: 70px;
+					height: 5px;
+					background: #ebebeb;
+					}
+					.antd-ImageControl-progressValue {
+					height: 5px;
+					border-radius: var(--ImageControl-progress-borderRadius);
+					display: block;
+					background: var(--info);
+					min-width: 10%;
+					transition: ease-out width var(--animation-duration);
+					}
+					.antd-ImageControl-item.is-invalid .antd-ImageControl-itemClear {
+					display: none;
+					}
+					.antd-ImageControl-item.is-invalid:hover .antd-ImageControl-itemClear {
+					display: block;
+					}
+					.antd-ImageControl-errorMsg {
+					color: var(--danger);
+					margin: 5px 0 0;
+					}
+					.antd-ImageControl-uploadBtn {
+					margin-top: 5px;
+					}
+					.antd-ImageControl-cropperWrapper {
+					position: relative;
+					}
+					.antd-ImageControl-cropperWrapper img {
+					max-width: 100%;
+					max-height: 400px;
+					}
+					.antd-ImageControl-croperToolbar {
+					display: inline-flex;
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					flex-direction: column;
+					align-items: flex-end;
+					background: #fff;
+					border-radius: 4px;
+					margin: 0.5rem;
+					box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+					}
+					.antd-ImageControl-croperToolbar > a {
+					color: var(--Form-item-fontColor);
+					padding: 2px 5px;
+					cursor: pointer;
+					font-size: 18px;
+					}
+					.antd-ImageControl-croperToolbar > a:hover {
+					color: var(--link-color);
+					}
+					.antd-ImageControl-acceptTip {
+					height: 120px;
+					color: #999;
+					border: 2px dashed var(--borderColor);
+					border-color: var(--info);
+					background: #f3f9fe;
+					border-radius: var(--borderRadius);
+					line-height: 120px;
+					text-align: center;
+					}
+					.antd-ImageControl-fixed-size {
+					width: 100%;
+					height: 100%;
+					padding: 0;
+					}
+					.antd-ImageControl-fixed-size .antd-ImageControl-itemOverlay {
+					width: 100%;
+					height: 100%;
+					}
+
+					.antd-Images {
+						display: flex;
+						flex-wrap: wrap;
+						margin: calc(var(--gap-xs) * -1);
+						}
+						.antd-Images-item {
+						display: flex;
+						margin: var(--gap-xs);
+						}
+						.antd-Image {
+						border: var(--borderWidth) solid var(--borderColor);
+						}
+						.antd-Image--thumb {
+						display: inline-block;
+						padding: var(--gap-xs);
+						}
+						.antd-Image-thumbWrap {
+						position: relative;
+						}
+						.antd-Image-image {
+						display: block;
+						}
+						.antd-Image-image--loading {
+						visibility: hidden;
+						}
+						.antd-Image--original .antd-Image-image {
+						max-width: 100%;
+						max-height: 100%;
+						width: auto;
+						margin: auto;
+						}
+						.antd-Image-thumb {
+						width: 6.875rem;
+						height: 6.875rem;
+						position: relative;
+						overflow: hidden;
+						}
+						.antd-Image-thumb > img {
+						position: absolute;
+						left: 50%;
+						top: 50%;
+						max-height: 100%;
+						width: auto;
+						transform: translate(-50%, -50%);
+						}
+						.antd-Image-info {
+						padding: 5px 10px;
+						}
+						.antd-Image--thumb .antd-Image-info {
+						width: 6.875rem;
+						padding: 0;
+						}
+						.antd-Image-thumb--4-3 {
+						height: 5.15625rem;
+						}
+						.antd-Image-thumb--16-9 {
+						height: 3.8671875rem;
+						}
+						.antd-Image-thumb--fixed-size {
+						min-width: 6.875rem;
+						min-height: 6.875rem;
+						width: 100%;
+						padding: 0;
+						height: 100%;
+						}
+						.antd-Image-thumb--fixed-size .antd-Image-thumb {
+						width: 100%;
+						}
+						.antd-Image-thumb--fixed-size .antd-Image-thumb > img {
+						width: auto;
+						height: 100%;
+						}
+						.antd-Image-thumb--w-full > img {
+						width: 100%;
+						height: auto;
+						}
 
 					#{options?.styles || ""}
 

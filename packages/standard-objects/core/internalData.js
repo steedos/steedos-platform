@@ -208,7 +208,6 @@ async function getObjectFields(objectName, userId, all){
         if(baseObject && baseObject.fields){
             originalFieldsName = originalFieldsName.concat(_.difference(_.keys(getOriginalObjectFields(objectName)), _.keys(baseObject.fields)));
         }
-        
 
         _.each(object.fields, function(field){
             if(!field._id && (all || _.include(originalFieldsName, field.name))){

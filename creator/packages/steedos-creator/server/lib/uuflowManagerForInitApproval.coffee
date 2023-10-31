@@ -387,7 +387,6 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						owner: f.metadata.owner
 					}
 					newFile.metadata = metadata;
-					console.log("newFile===>", newFile)
 					newFile._id = Creator.Collections.instances._makeNewID();
 					cfs[collection].insert(newFile);
 					value.push(newFile._id)

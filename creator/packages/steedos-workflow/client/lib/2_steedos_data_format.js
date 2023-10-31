@@ -267,6 +267,8 @@ var s_autoform = function (schema, field) {
             }else{
                 schema.type = String;
             }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
             autoform.type = 'steedos-field'
             autoform.fieldType = 'image'
             break;
@@ -278,6 +280,8 @@ var s_autoform = function (schema, field) {
             }else{
                 schema.type = String;
             }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
             autoform.type = 'steedos-field'
             autoform.fieldType = 'file'
             break;
@@ -289,12 +293,13 @@ var s_autoform = function (schema, field) {
             }else{
                 schema.type = String;
             }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
             autoform.type = 'steedos-field'
-            autoform.props = {
-                reference_to: field.reference_to,
-                reference_to_field: field.reference_to_field,
-                config: field.config
-            };
+            autoform.fieldType = 'lookup'
+            autoform.reference_to= field.reference_to,
+            autoform.reference_to_field= field.reference_to_field
+            autoform.config = field.config;
             break;
         default:
             schema.type = String;

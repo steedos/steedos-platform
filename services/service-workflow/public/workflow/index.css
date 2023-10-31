@@ -195,3 +195,13 @@ tbody .color-priority-muted *{
 .instance .form-group select.form-control{
     height: 34px;
 }
+
+
+
+.af-steedos-field .antd-FileControl-dropzone.disabled{
+    display: none;
+}
+
+.af-steedos-field .antd-ImageControl-addBtn.is-disabled{
+    display: none;
+}
