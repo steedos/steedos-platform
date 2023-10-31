@@ -816,6 +816,7 @@ list_views:
       - object
       - sort_no
       - modified
+      - is_system
     sort:
       - field_name: sort_no
         order: asc
@@ -830,6 +831,7 @@ list_views:
       - object
       - sort_no
       - modified
+      - is_system
     label: 自定义
     filters:
       - ["is_system","<>",true]

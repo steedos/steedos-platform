@@ -6,6 +6,10 @@ fields:
     label: 所属对象
     help: 
     description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
   label:
     label: 显示名称
     help: 
