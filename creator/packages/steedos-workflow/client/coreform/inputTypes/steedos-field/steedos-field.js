@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-30 19:21:46
+ * @LastEditTime: 2023-10-31 17:04:51
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -17,7 +17,6 @@ if (Meteor.isClient) {
         // 输出值
         valueOut: function () {
             const val = this.data("value");
-            console.log('valueOut', val);
             if(_.isString(val)){
                 if(val.indexOf('/') > -1){
                     return _.last(lodash.split(val, '/'))
@@ -27,7 +26,6 @@ if (Meteor.isClient) {
 
             if(_.isArray(val)){
                 return _.map(val, (v)=>{
-                    console.log('valueOut--->', v)
                     if(_.isObject(v) && v.value){
                         return v.value
                     }else if(v.indexOf('/') > -1){
@@ -64,7 +62,6 @@ if (Meteor.isClient) {
 
     // 渲染afSteedosField模板
     Template.afSteedosField.rendered = function () {
-        console.log('afSteedosField rendered', this)
         const atts = this.data.atts;
         // 获取值
         let ids = this.data.value;
@@ -154,7 +151,6 @@ if (Meteor.isClient) {
             }
         };
         
-        console.log(`steedos field schema: `, schema);
         // 渲染amis
         Steedos.Page.render($("#"+atts.id)[0], schema, Object.assign({}, {}));
     };
