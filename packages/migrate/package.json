@@ -1,6 +1,6 @@
 {
   "name": "@steedos/migrate",
-  "version": "2.5.18-beta.1",
+  "version": "2.5.18-beta.2",
   "description": "Migration scripts for steedos",
   "main": "index.js",
   "license": "MIT",
@@ -12,5 +12,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c4ba4e73e2182af6a1b825988b5d325c4af918ff"
+  "gitHead": "0f48957d39df17d699a5177f473401362a9916bf"
 }
