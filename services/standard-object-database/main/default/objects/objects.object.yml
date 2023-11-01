@@ -382,6 +382,15 @@ fields:
     rows: 3
     is_wide: true
     hidden: true
+  field_groups:
+    type: grid
+    blackbox: true
+    is_wide: true
+    hidden: false
+  field_groups.$.group_name:
+    type: text
+  field_groups.$.visible_on:
+    type: text
   extend:
     type: text
     hidden: true
@@ -506,6 +515,9 @@ actions:
   delete_object:
     on: record_more
     label: 删除
+  design_field_layout:
+    on: record_only
+    label: 设计字段布局
   # export:
   #   label: Export
   #   visible: true

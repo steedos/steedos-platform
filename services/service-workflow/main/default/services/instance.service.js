@@ -136,7 +136,6 @@ module.exports = {
                     }
                     break;
                 default:
-                    filter.push(['state', '=', 'none']);
                     break;
             }
 

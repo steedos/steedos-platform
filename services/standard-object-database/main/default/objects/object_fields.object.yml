@@ -863,7 +863,8 @@ relatedList:
 form:
   initialValues: !!js/function |
     function(){
-      var object = Creator.odata.get('objects', Session.get("record_id"), "fields_serial_number");
+      //应用程序微页面内Session.get("record_id")获取不到值（比如设计字段布局微页面）
+      var object = Creator.odata.get('objects', Session.get("record_id") || (this.master && this.master.recordId), "fields_serial_number");
       if(object){
         let fields_serial_number = object.fields_serial_number
         if(!fields_serial_number || fields_serial_number < 100){

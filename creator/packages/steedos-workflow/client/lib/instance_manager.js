@@ -630,6 +630,10 @@ InstanceManager.getInstanceFormValue = function(){
 			return ;
 		}
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
+		// 指定分析特定流程字段值异常问题
+		if ("" == autoFormValue["文件标题"] && "4c0acf34-aaa2-4834-a189-dd742e987382" == WorkflowManager.getInstance()?.flow) {
+			localStorage.setItem("__autoFormValue", JSON.stringify(autoFormValue));
+		}
 	}
 	return autoFormValue;
 }
@@ -874,7 +878,10 @@ InstanceManager.saveIns = function (noWarn) {
 		$('body').addClass("loading");
 	}
 	var instance = WorkflowManager.getInstance();
+	var insFormValues;
 	if (instance) {
+		insFormValues = InstanceManager.getInstanceValuesByAutoForm();
+
 		if (instance.state != 'draft') {
 			InstanceManager.updateApproveSign('', $("#suggestion").val(), "update", InstanceSignText.helpers.getLastSignApprove())
 		}
@@ -956,7 +963,7 @@ InstanceManager.saveIns = function (noWarn) {
 			});
 		} else if (state == "pending") {
 			var myApprove = InstanceManager.getMyApprove();
-			myApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+			myApprove.values = insFormValues
 
 			if (!_.isEmpty(myApprove) && !_.isEmpty(myApprove._id)) {
 				Meteor.call("inbox_save_instance", myApprove, function (error, result) {
