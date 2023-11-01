@@ -17,7 +17,7 @@
                 "items": [
                   {
                     "type": "tpl",
-                    "tpl": "设计字段布局 ${designObjectLabel}(${designObjectName})",
+                    "tpl": "<p><h4><strong>设计字段布局</strong></h4> ${designObjectLabel}<span style=\"color: rgb(149, 165, 166);\">  ${designObjectName}</span></p>",
                     "id": "u:4c7bef616400"
                   },
                   {
@@ -161,23 +161,28 @@
                       "columns": 2,
                       "name": "design_field",
                       "boardSource": "${groups}",
-                      "boardClassName": "bg-gray-50 p-2 border rounded shadow",
+                      "boardClassName": "bg-gray-50 p-2 ",
+                      "header": {
+                        "className": ""
+                      },
                       "boardHeader": {
                         "type": "tpl",
-                        "tpl": "字段分组：${group_name}",
+                        "tpl": "${group_name}",
                         "id": "u:76d9a6c7d401"
                       },
                       "cardClassName": "p-1 bg-white border w-full rounded shadow",
                       "cardSchema": {
                         "type": "card",
-                        "header": {
-                          "className": "items-center py-0 border-0",
-                          "title": "${label}(${_name})"
-                        },
-                        "toolbar": [
+                        "body": [
+                          {
+                            "type": "tpl",
+                            "tpl": "<p><strong>${label}</strong> ${designObjectLabel}<span style=\"color: rgb(149, 165, 166);\">${_name}</span></p>",
+                            "className": "w-4/5",
+                            "inline": true
+                          },
                           {
                             "type": "steedos-dropdown-button",
-                            "label": "xxx",
+                            "label": "",
                             "buttons": [
                               {
                                 "type": "steedos-object-button",
@@ -198,9 +203,12 @@
                               "click"
                             ],
                             "id": "u:c2140a365019",
-                            "className": "mx-3 hidden"
+                            "mode": "edit",
+                            "className": "mr-7 w-fit h-fit opacity-0"
                           }
                         ],
+                        "bodyClassName": "h-7  flex justify-between items-center p-0 pl-10 my-2",
+                        "toolbar": [ ],
                         "className": "mb-0 border-0 bg-none card",
                         "id": "u:296298da1bef"
                       },
@@ -243,7 +251,7 @@
                   "name": "form_design_form"
                 }
               ],
-              "className": "Panel--default max-w-xl m-auto",
+              "className": "Panel--default max-w-4xl m-auto",
               "id": "u:3a90104cb6b4"
             }
           ],
@@ -331,8 +339,11 @@
   },
   "id": "u:993ee4316643",
   "css": {
-    ".steedos-design-field .card:hover .slds-button": {
-      "display": "inline-block"
+    ".steedos-design-field li.p-1:hover .opacity-0": {
+      "opacity": "0.99"
+    },
+    ".antd-TplField p": {
+      "margin": "0.625rem 0.625rem"
     }
   },
   "className": "steedos-design-field"
