@@ -578,7 +578,6 @@ fields:
     defaultIcon: service_contract
     amis:
       disabledOn: "${is_system == true}"
-      type: "select"
       "source": 
         "method": "get"
         "url": "${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}"
