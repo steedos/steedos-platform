@@ -576,9 +576,10 @@ fields:
       - summary_object
       - summary_type
     defaultIcon: service_contract
+    enable_enhanced_lookup: false
     amis:
       disabledOn: "${is_system == true}"
-      "source": 
+      "autoComplete": 
         "method": "get"
         "url": "${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}"
         "data": 
@@ -810,6 +811,10 @@ fields:
   is_system:
     type: boolean
     label: System
+    visible_on: "{{false}}"
+  enable_enhanced_lookup:
+    type: boolean
+    label: Enable Enhanced Lookup
     visible_on: "{{false}}"
 paging:
   enabled: false

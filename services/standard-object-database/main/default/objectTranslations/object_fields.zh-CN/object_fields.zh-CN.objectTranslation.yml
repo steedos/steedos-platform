@@ -228,6 +228,10 @@ fields:
     label: 值
     help: 
     description: 
+  summary_depend_on:
+    label: 汇总依赖的字段
+    help: 汇总时依赖了子表的哪些字段，当这些字段值变更时会触发重算主表记录的汇总字段值
+    description: 
   column_name:
     label: 数据库字段名
     help: 仅支持关系型数据库
@@ -321,6 +325,9 @@ fields:
   amis:
     label: Amis 属性
     help: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7' target='_blank'>查看帮助</a>
+  enable_enhanced_lookup:
+    label: 启用弹出窗口查找模式
+    help: 
     description: 
 groups:
   external_data_source: 外部数据源
