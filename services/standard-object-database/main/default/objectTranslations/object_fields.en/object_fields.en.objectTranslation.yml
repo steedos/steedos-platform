@@ -295,7 +295,11 @@ fields:
     description: 
   index:
     label: Is Index Field
-    help: 
+    help: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
+    description: 
+  unique:
+    label: Unique Index
+    help: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
     description: 
   sortable:
     label: Sortable

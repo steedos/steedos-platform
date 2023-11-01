@@ -279,7 +279,11 @@ fields:
     description: 
   index:
     label: 创建索引
-    help: 
+    help: 默认每天凌晨执行一次创建，已有的索引不重复创建。
+    description: 
+  unique:
+    label: 创建唯一索引
+    help: 默认每天凌晨执行一次创建，已有的索引不重复创建。
     description: 
   sortable:
     label: 可排序
