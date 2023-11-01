@@ -387,6 +387,7 @@ fields:
     blackbox: true
     is_wide: true
     hidden: false
+    visible_on: "${false}"
   field_groups.$.group_name:
     type: text
   field_groups.$.visible_on:
