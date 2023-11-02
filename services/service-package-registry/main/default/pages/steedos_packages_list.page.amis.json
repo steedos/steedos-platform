@@ -48,7 +48,7 @@
             },
             {
               "label": "${uiSchema.actions.disable.label}",
-              "disabledOn": "${status !== 'enable'}",
+              "disabledOn": "${status !== 'enable' || window:Meteor.settings.public.enable_saas}",
               "onEvent": {
                 "click": {
                   "actions": [
