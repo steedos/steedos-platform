@@ -32,7 +32,7 @@
           "actions": [
             {
               "label": "${uiSchema.actions.enable.label}",
-              "disabledOn": "${status === 'enable'}",
+              "disabledOn": "${status === 'enable' || window:Meteor.settings.public.enable_saas}",
               "className": "mr-4",
               "onEvent": {
                 "click": {
