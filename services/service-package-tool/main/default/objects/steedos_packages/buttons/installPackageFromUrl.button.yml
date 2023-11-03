@@ -19,6 +19,7 @@ amis_schema: |-
                                   "type": "dialog",
                                   "title": "${'steedos_packages.install.install_package_from_url' | t}",
                                   "body": [
+                                        
                                       {
                                           "type": "form",
                                           "id": "u:add9d810b386",
@@ -27,62 +28,20 @@ amis_schema: |-
                                               {
                                                   "label": "${'steedos_packages.install.package_name' | t}",
                                                   "type": "input-text",
-                                                  "name": "module",
+                                                  "name": "package",
                                                   "id": "u:524cb8f8d888",
                                                   "required": true
-                                              },
-                                              {
-                                                  "type": "radios",
-                                                  "label": "",
-                                                  "name": "type",
-                                                  "options": [
-                                                      {
-                                                          "label": "版本号安装",
-                                                          "value": "version"
-                                                      },
-                                                      {
-                                                          "label": "软件包地址安装",
-                                                          "value": "A"
-                                                      }
-                                                  ],
-                                                  "id": "u:9340f42fd219",
-                                                  "value": "version"
-                                              },
-                                              {
-                                                  "label": "${'steedos_packages.install.url' | t}",
-                                                  "type": "input-text",
-                                                  "name": "url",
-                                                  "id": "u:524cb8f8d888",
-                                                  "placeholder": "",
-                                                  "hiddenOn": "this.type == 'version'"
-                                              },
-                                              {
-                                                  "label": "${'steedos_packages.install.version_number' | t}",
-                                                  "type": "input-text",
-                                                  "name": "version",
-                                                  "id": "u:524cb8f8d888",
-                                                  "placeholder": "如未填写, 则安装最新正式版",
-                                                  "hiddenOn": "this.type != 'version'"
-                                              },
-                                              {
-                                                  "type": "input-text",
-                                                  "label": "${'steedos_packages.install.authentication_information' | t}",
-                                                  "name": "password",
-                                                  "id": "u:25e4f0cdf57b",
-                                                  "showCounter": false,
-                                                  "validations": {},
-                                                  "validationErrors": {}
                                               }
                                           ],
                                           "mode": "normal",
                                           "api": {
                                               "method": "post",
-                                              "url": "${context.rootUrl}/api/nodes/cloud/saas/packages/url",
+                                              "url": "${context.rootUrl}/api/nodes/package/add",
                                               "data": {
                                                   "&": "$$"
                                               },
                                               "dataType": "json",
-                                              "requestAdaptor": "api.data = {\n  module: api.body.module,\n  version: api.body.version,\n  url: api.body.url,\n  auth: api.body.auth\n};",
+                                              "requestAdaptor": "api.data = {package: api.body.package};",
                                               "headers": {
                                                   "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                               }
@@ -109,13 +68,25 @@ amis_schema: |-
                                                 ]
                                             }
                                             }
-                                      }
+                                      },
+                                      {
+                                        "type": "tpl",
+                                        "tpl": "<br/>"
+                                      },
+                                      {
+                                        "type": "markdown",
+                                        "value": "##### 您可以使用以下选项之一指定版本： \r- `package-name`安装包的“最新”版本。 \r- `package-name@1.2.3`从以下位置安装包的特定版本 注册表。 \r- `package-name@tag`安装特定的“标签”。（例如）beta、next、latest"
+                                        },
+                                        {
+                                        "type": "markdown",
+                                        "value": "##### 您还可以指定来自不同位置的包：\r- `package-name` 从 npm 注册表安装包 \r- `file:/path/to/local/folder`安装一个位于本地文件系统的包。这对于测试您尚未发布到注册表的软件包很有用。 \r- `file:/path/to/local/tarball.tgz`从 gzip 压缩的 tarball，可用于在发布包之前共享包。 \r- `link:/path/to/local/folder`安装指向软件包的符号链接:在本地文件系统上。适用于monorepo环境。 \r- `<git remote url>`从远程 Git 存储库安装包。 \r- `<git remote url>#<branch/commit/tag>`从远程安装软件包特定 git 分支、git commit 或 git 标签处的 git 存储库。 \r- `https://my-project.org/package.tgz` 从远程gzip压缩压缩包。"
+                                        }
                                   ],
                                   "id": "u:efa30bace722",
                                   "closeOnEsc": true,
                                   "closeOnOutside": false,
                                   "showCloseButton": true,
-                                  "size": "md"
+                                  "size": "lg"
                               }
                           }
                       ],

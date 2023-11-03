@@ -244,6 +244,10 @@ fields:
     label: Value
     help: 
     description: 
+  summary_depend_on:
+    label: Recalculate Summary Depend On
+    help: Which fields of the child table are dependent on when the summary is performed. When the values of these fields change, a recalculation of the summary field values of the primary table records is triggered.
+    description: 
   column_name:
     label: Database column name
     help: Only supports relational databases.
@@ -295,7 +299,11 @@ fields:
     description: 
   index:
     label: Is Index Field
-    help: 
+    help: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
+    description: 
+  unique:
+    label: Unique Index
+    help: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
     description: 
   sortable:
     label: Sortable
@@ -339,6 +347,10 @@ fields:
     description: 
   amis:
     label: Amis Attribute
+    help: 
+    description: 
+  enable_enhanced_lookup:
+    label: Enable Enhanced Lookup
     help: 
     description: 
 groups:

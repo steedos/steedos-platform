@@ -68,8 +68,38 @@
                                     "mode": "read",
                                     "className": "mb-4",
                                     "excludedFields": [
-                                        "metadata"
+                                        "metadata",
+                                        "dependencies"
                                     ]
+                                }
+                            ],
+                            "className": "p-0",
+                            "id": "u:5d4e7e3f6ecc"
+                        },
+                        {
+                            "title": "依赖服务",
+                            "body": [
+                                {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "${objectName}",
+                                    "recordId": "${recordId}",
+                                    "appId": "${appId}",
+                                    "id": "u:fec578db3278",
+                                    "mode": "read",
+                                    "className": "mb-4",
+                                    "fields": [
+                                        "dependencies"
+                                    ],
+                                    "fieldsExtend": {
+                                        "dependencies": {
+                                            "label": false,
+                                            "amis": {
+                                                "type": "tpl",
+                                                "tpl": "${dependencies | join:&nbsp;}"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "className": "p-0",

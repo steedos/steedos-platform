@@ -2,3 +2,5 @@ name: submitter_name
 label: 提交人姓名
 type: text
 sort_no: 280
+filterable: true
+searchable: true

@@ -24,6 +24,9 @@ module.exports = {
         })
     },
     reloadVisible: function (object_name,record_id) {
+        if(Meteor.settings.public.enable_saas){
+            return false;
+        }
         const record = Creator.odata.get(object_name,record_id);
         if(record.status === 'enable'){
             return true;

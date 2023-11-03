@@ -26,13 +26,13 @@
           "body": [
             {
               "type": "tpl",
-              "tpl": "<div class='antd-Card-heading bg-white'><span class='antd-Card-avtar pull-left thumb-md m-r slds-icon slds-icon_container slds-icon-${iconCategory}-${iconName} ${display === \"split\" && 'hidden'}'><img class='antd-Card-img'src='${icon}' /></span><div class='antd-Card-meta'><div class='antd-Card-title'><span class='antd-TplField'><span>${label}</span></span></div><div class='antd-Card-subTitle'><span class='antd-TplField'><span>${description}</span></span></div><div class='antd-Card-desc'><span class='antd-TplField'><span><span class='bg-green-300 rounded-full px-2 py-0.5 mt-2 inline-block'>${_display.status}</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span></span></span></div></div></div>"
+              "tpl": "<div class='antd-Card-heading bg-white'><span class='antd-Card-avtar pull-left thumb-md m-r slds-icon slds-icon_container slds-icon-${iconCategory}-${iconName} ${display === \"split\" && 'hidden'}'><img class='antd-Card-img'src='${icon}' /></span><div class='antd-Card-meta'><div class='antd-Card-title'><span class='antd-TplField' title='${label}'><span>${label}</span></span></div><div class='antd-Card-subTitle'><span class='antd-TplField' title='${description}'><span>${description}</span></span></div><div class='antd-Card-desc'><span class='antd-TplField'><span><span class='bg-${status === 'enable' ? 'green': 'gray'}-300 rounded-full px-2 py-0.5 mt-2 inline-block'>${_display.status}</span><span class='text-gray-600 px-2 py-0.5 mt-2 inline-block float-right'>${version}</span></span></span></div></div></div>"
             }
           ],
           "actions": [
             {
               "label": "${uiSchema.actions.enable.label}",
-              "disabledOn": "${status === 'enable'}",
+              "disabledOn": "${status === 'enable' || window:Meteor.settings.public.enable_saas}",
               "className": "mr-4",
               "onEvent": {
                 "click": {
@@ -48,7 +48,7 @@
             },
             {
               "label": "${uiSchema.actions.disable.label}",
-              "disabledOn": "${status !== 'enable'}",
+              "disabledOn": "${status !== 'enable' || window:Meteor.settings.public.enable_saas}",
               "onEvent": {
                 "click": {
                   "actions": [

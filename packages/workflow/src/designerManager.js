@@ -505,13 +505,18 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'master_detail':
             let refObjName = objField.reference_to;
             if (_.isString(refObjName)) {
-                const refObj = objectql.getObject(refObjName);
-                const nameFieldKey = await refObj.getNameFieldKey();
-                formField.type = "odata";
-                formField.url = `/api/v4/${refObjName}?$top=20`;
-                formField.search_field = nameFieldKey;
-                formField.formula = `{${formField.code}.${nameFieldKey}}`;
+                // const refObj = objectql.getObject(refObjName);
+                // const nameFieldKey = await refObj.getNameFieldKey();
+                // formField.type = "odata";
+                // formField.url = `/api/v4/${refObjName}?$top=20`;
+                // formField.search_field = nameFieldKey;
+                // formField.formula = `{${formField.code}.${nameFieldKey}}`;
+                formField.type = objField.type;
+                formField.reference_to = objField.reference_to;
+                formField.reference_to_fields = objField.reference_to_fields;
+                formField.config = JSON.stringify({filters: objField.filters, amis: objField.amis});
             }
+            
             break;
         case 'autonumber':
             formField.type = "input";
@@ -528,7 +533,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             break;
         case 'image':
         case 'file':
-            formField.type = "input";
+            formField.type = objField.type;
             break;
         case 'formula':
             switch (objField.data_type) {

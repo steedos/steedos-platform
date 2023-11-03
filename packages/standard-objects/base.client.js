@@ -11,8 +11,7 @@ Steedos.StandardObjects = {
             },
             standard_new:{
                 visible: function (object_name) {
-                    var permissions;
-                    permissions = Creator.getPermissions(object_name);
+                    var permissions = Creator.getPermissions(object_name);
                     if (permissions) {
                         return permissions["allowCreate"];
                     }
@@ -20,6 +19,10 @@ Steedos.StandardObjects = {
             },
             standard_edit:{
                 visible: function (object_name, record_id, record_permissions) {
+                    var permissions = Creator.getPermissions(object_name);
+                    if (permissions && permissions["allowEdit"] != true) {
+                        return false;
+                    }
                     var perms, record;
                     perms = {};
                     if (record_permissions) {
@@ -36,6 +39,10 @@ Steedos.StandardObjects = {
             },
             standard_delete:{
                 visible: function (object_name, record_id, record_permissions) {
+                    var permissions = Creator.getPermissions(object_name);
+                    if (permissions && permissions["allowDelete"] != true) {
+                        return false;
+                    }
                     var perms, record;
                     perms = {};
                     if (record_permissions) {

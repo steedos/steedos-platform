@@ -20,6 +20,7 @@ getDocument = (context) ->
 	if collection != null then collection.findOne(id) else undefined
 
 Template.afFileUpload.onCreated ->
+	console.log('==Template.afFileUpload.onCreated===')
 	self = undefined
 	self = this
 	@value = new ReactiveVar(@data.value)

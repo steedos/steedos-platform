@@ -576,6 +576,7 @@ fields:
       - summary_object
       - summary_type
     defaultIcon: service_contract
+    enable_enhanced_lookup: false
     amis:
       disabledOn: "${is_system == true}"
       "autoComplete": 
@@ -587,7 +588,7 @@ fields:
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.summary_object && !!this.summary_type"
         "adaptor": "const summary_type = api.body.summary_type;\nconst term = api.query.term;\nlet fields = payload.fields;\nlet options = [];\nif (fields) {\n  if (summary_type && summary_type !== \"count\") {\n    if (summary_type === \"sum\" || summary_type === \"avg\") {\n      /*sum/avg类型可以汇总数值、金额、百分比字段*/\n      _.forEach(fields, (value, key) => {\n        let fieldType = value.type;\n        if ([\"formula\", \"summary\"].indexOf(fieldType) > -1) {\n          /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/\n          fieldType = value.data_type;\n        }\n        if ([\"number\", \"currency\", \"percent\"].indexOf(fieldType) > -1) {\n          options.push({ label: value.label, value: value.name });\n        }\n      })\n    }\n    else {\n      /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/\n      _.forEach(fields, (value, key) => {\n        let fieldType = value.type;\n        if ([\"formula\", \"summary\"].indexOf(fieldType) > -1) {\n          /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/\n          fieldType = value.data_type;\n        }\n        if ([\"number\", \"currency\", \"percent\", \"date\", \"datetime\"].indexOf(fieldType) > -1) {\n          options.push({ label: value.label, value: value.name });\n        }\n      })\n    }\n  }\n  if (term) {\n    options = _.filter(options, (item) => {\n      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;\n    })\n  }\n}\npayload = {\n  data: { options: options },\n  msg: \"\",\n  status: 0\n}\nreturn payload;"
-    visible_on: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
+    visible_on: "{{formData.type === 'summary' && formData.summary_object && formData.summary_type && formData.summary_type !== 'count'}}"
     required: "{{formData.type === 'summary' && formData.summary_type !== 'count' ? true: false}}"
     sort_no: 320
   summary_filters:
@@ -750,6 +751,13 @@ fields:
     label: Is Index Field
     group: Advanced
     sort_no: 410
+    inlineHelpText: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
+  unique:
+    type: boolean
+    label: Unique Index
+    group: Advanced
+    sort_no: 411
+    inlineHelpText: The Creation Is Executed Once A Day By Default And The Existing Indexes Are Not Repeatedly Created.
   sortable:
     type: boolean
     label: Sortable
@@ -803,6 +811,10 @@ fields:
   is_system:
     type: boolean
     label: System
+    visible_on: "{{false}}"
+  enable_enhanced_lookup:
+    type: boolean
+    label: Enable Enhanced Lookup
     visible_on: "{{false}}"
 paging:
   enabled: false

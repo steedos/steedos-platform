@@ -101,6 +101,15 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 			when 'html'
 				field.type = 'html'
 				fields.push field
+			when 'file'
+				field.type = 'file';
+				fields.push field;
+			when 'image'
+				field.type = 'image';
+				fields.push field;
+			when 'lookup'
+				field.type = 'lookup';
+				fields.push field;
 			else
 				console.log(f.code, f.name, f.type)
 

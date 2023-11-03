@@ -259,6 +259,48 @@ var s_autoform = function (schema, field) {
             //     };
             // }
             break;
+        case 'image':
+            console.log('=======file field:', field)
+            if(is_multiselect){
+                schema.type = [String];
+                autoform.multiple = true;
+            }else{
+                schema.type = String;
+            }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
+            autoform.type = 'steedos-field'
+            autoform.fieldType = 'image'
+            break;
+        case 'file':
+            console.log('=======file field:', field)
+            if(is_multiselect){
+                schema.type = [String];
+                autoform.multiple = true;
+            }else{
+                schema.type = String;
+            }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
+            autoform.type = 'steedos-field'
+            autoform.fieldType = 'file'
+            break;
+        case 'lookup':
+            console.log('=======file lookup:', field)
+            if(is_multiselect){
+                schema.type = [String];
+                autoform.multiple = true;
+            }else{
+                schema.type = String;
+            }
+            autoform.readonly = (permission == 'readonly');
+            autoform.disabled = (permission == 'readonly');
+            autoform.type = 'steedos-field'
+            autoform.fieldType = 'lookup'
+            autoform.reference_to= field.reference_to,
+            autoform.reference_to_field= field.reference_to_field
+            autoform.config = field.config;
+            break;
         default:
             schema.type = String;
             autoform.readonly = (permission == 'readonly');
@@ -282,6 +324,7 @@ var s_autoform = function (schema, field) {
 
         autoform.options = afoptions;
     }
+    console.log(`autoform`, autoform)
     return autoform;
 };
 
@@ -359,7 +402,7 @@ WorkflowManager_format.getTableItemSchema = function (field) {
             fieldSchema[field.code + "." + sfield.code] = sfields_schema;
         });
     }
-
+    console.log(`getTableItemSchema fieldSchema`, fieldSchema)
     return fieldSchema;
 }
 

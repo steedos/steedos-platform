@@ -1,0 +1,86 @@
+name: edit_npmrc
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "验证信息",
+              "id": "u:edit_npmrc",
+              "editorState": "default",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "actionType": "dialog",
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "验证信息",
+                                  "body": [
+                                      {
+                                          "type": "form",
+                                          "title": "表单",
+                                          "body": [
+                                              {
+                                                  "type": "editor",
+                                                  "label": false,
+                                                  "name": "npmrc",
+                                                  "id": "u:71b44f532def",
+                                                  "language": "bat"
+                                              }
+                                          ],
+                                          "id": "u:c9b0e17d4ebd",
+                                          "initApi": {
+                                              "url": "/api/nodes/npmrc",
+                                              "method": "get"
+                                          },
+                                          "api": {
+                                              "url": "/api/nodes/npmrc",
+                                              "method": "post",
+                                              "requestAdaptor": "",
+                                              "adaptor": "",
+                                              "messages": {}
+                                          }
+                                      },
+                                      {
+                                        "type": "tpl",
+                                        "tpl": "<br/>"
+                                      },
+                                        {
+                                        "type": "markdown",
+                                        "value": "##### 验证信息说明(.npmrc)：\r- `; 为范围包设置新的注册表`\r- `@myscope:registry=https://mycustomregistry.example.org`\r- `; 配置新注册表的认证信息(可选)`\r- `//mycustomregistry.example.org:_authToken=\"认证信息\"`"
+                                        }
+                                  ],
+                                  "showCloseButton": true,
+                                  "showErrorMsg": true,
+                                  "showLoading": true,
+                                  "className": "app-popover",
+                                  "id": "u:00682dd0eb74",
+                                  "closeOnEsc": false,
+                                  "size": "lg"
+                              }
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:743d34f49376"
+  }
+is_enable: true
+label: 验证信息
+'on': list
+type: amis_button
+visible: true

@@ -16,7 +16,12 @@ module.exports = {
                         module: record.name,
                         nodeID: window.$("#steedos_package_main_node").val()
                     }),
-                    success: function(){
+                    success: function(data){
+                        if(data.status == 1){
+                            toastr.clear();
+                            toastr.error(data.msg);
+                            return;
+                        }
                         setTimeout(function(){
                             if (FlowRouter.current().params.record_id) {
                                 SteedosUI.reloadRecord(object_name, record_id)
@@ -35,6 +40,9 @@ module.exports = {
         })
     },
     enableVisible: function (object_name,record_id) {
+        if(Meteor.settings.public.enable_saas){
+            return false;
+        }
         const record = Creator.odata.get(object_name,record_id);
         if(record.status !== 'enable'){
             return true;

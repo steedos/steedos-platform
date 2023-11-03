@@ -35,6 +35,9 @@ module.exports = {
         })
     },
     uninstallVisible: function (object_name,record_id) {
+        if(Meteor.settings.public.enable_saas){
+            return false;
+        }
         const record = Creator.odata.get(object_name,record_id);
         if(record.local || record.static){
             return false;

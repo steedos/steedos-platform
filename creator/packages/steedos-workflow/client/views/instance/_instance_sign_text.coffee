@@ -111,6 +111,8 @@ InstanceSignText.helpers =
 
 	isMyApprove: (approve, only_cc_opinion) ->
 		if Meteor.isClient
+			if Session.get("box") == 'inbox'
+				return false;
 			ins = WorkflowManager.getInstance();
 
 			currentApprove = InstanceManager.getCurrentApprove()

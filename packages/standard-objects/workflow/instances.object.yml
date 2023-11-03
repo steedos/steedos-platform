@@ -27,6 +27,7 @@ fields:
     hidden: false
     name: submitter_name
     filterable: true
+    searchable: true
   flow:
     label: Workflow
     type: lookup

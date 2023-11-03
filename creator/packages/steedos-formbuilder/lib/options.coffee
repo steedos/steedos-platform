@@ -1,13 +1,13 @@
 # 定义 formBuilder 所有的字段类型
 FORMBUILDERFIELDTYPES = ["autocomplete", "paragraph", "header", "select",
-	"checkbox-group", "radio-group", "checkbox", "text", "file",
+	"checkbox-group", "radio-group", "checkbox", "text", "file", "image", "lookup"
 	"date", "number", "textarea",
 	"dateTime", "dateNew", "checkboxBoolean", "email", "url", "password", "user", "group",
 	"table", "section",
 	"odata", "html"]
 
-# 定义 禁用 的字段类型
-DISABLEFIELDS = ['button', 'file', 'paragraph', 'autocomplete', 'hidden', 'date', 'header']
+# 定义 禁用 的字段类型 'file', 
+DISABLEFIELDS = ['button', 'paragraph', 'autocomplete', 'hidden', 'date', 'header'] 
 
 # 定义 禁用 的按钮
 DISABLEDACTIONBUTTONS = ['clear', 'data', 'save']
@@ -18,7 +18,7 @@ DISABLEDATTRS = ['description', 'maxlength', 'placeholder', "access", "value", '
 
 # 定义字段类型排序
 CONTROLORDER = ['text', 'textarea', 'number', 'dateNew', 'dateTime', 'date', 'checkboxBoolean',
-	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "odata", "html", 'table', 'section']
+	'email', 'url', 'password', 'select', 'user', 'group', "radio-group", "checkbox-group", "file", "image", "lookup", "odata", "html", 'table', 'section']
 
 # 获取各字段类型禁用的字段属性
 #TYPEUSERDISABLEDATTRS = (()->
@@ -114,6 +114,24 @@ OPTIONSUSERATTRS = {
 	}
 }
 
+# 定义字段属性: lookup字段
+LOOKUP_PROPS={
+	reference_to: {
+		label: '相关对象(object name)',
+		type: 'text',
+		required: 'true'
+	},
+	reference_to_field: {
+		label: '相关对象字段(field name)',
+		type: 'text'
+	},
+
+	config: {
+		label: '配置',
+		type: 'textarea'
+	}
+}
+
 # 获取各字段类型的属性
 getTypeUserAttrs = ()->
 	clone = require('clone')
@@ -157,6 +175,12 @@ getTypeUserAttrs = ()->
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, BASEUSERATTRS
 			when 'group'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, BASEUSERATTRS
+			when 'file'
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'default_value', 'is_list_display')
+			when 'image'
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'default_value', 'is_list_display')
+			when 'lookup'
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, BASEUSERATTRS, LOOKUP_PROPS
 			when 'table'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, {
 					_id: {
@@ -361,6 +385,20 @@ getFields = ()->
 				type: "html"
 			}
 			icon: "H"
+		},
+		{
+			label: "Image"
+			attrs: {
+				type: "image"
+			}
+			icon: "🖼"
+		},
+		{
+			label: "Lookup"
+			attrs: {
+				type: "lookup"
+			}
+			icon: "L"
 		}
 	]
 
@@ -485,6 +523,18 @@ getFieldTemplates = ()->
 				fieldData.className = 'form-control'
 			return {
 				field: "<textarea id='#{fieldData.name}' autocomplete='off' #{Creator.formBuilder.utils.attrString(fieldData)}>",
+			};
+		image: (fieldData)->
+			if !fieldData.className
+				fieldData.className = 'form-control'
+			return {
+				field: "<div id='#{fieldData.name}' type='text' readonly #{Creator.formBuilder.utils.attrString(fieldData)}>",
+			};
+		lookup: (fieldData)->
+			if !fieldData.className
+				fieldData.className = 'form-control'
+			return {
+				field: "<div id='#{fieldData.name}' type='text' readonly #{Creator.formBuilder.utils.attrString(fieldData)}>",
 			};
 	}
 

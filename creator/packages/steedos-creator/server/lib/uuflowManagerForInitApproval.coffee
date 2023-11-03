@@ -1,3 +1,4 @@
+# 发起审批
 _eval = require('eval')
 objectql = require('@steedos/objectql');
 
@@ -359,6 +360,41 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						orgs.push(org)
 			return orgs
 
+		getFileFieldValue = (recordFieldId, fType)->
+			if _.isEmpty(recordFieldId)
+				return 
+			if fType == 'image'
+				collection = 'images'
+			else if fType == 'file'
+				collection = 'files'
+			if _.isString(recordFieldId)
+				query = {_id: {$in: [recordFieldId]}}
+			else
+				query = {_id: {$in: recordFieldId}}
+			files = Creator.Collections["cfs.#{collection}.filerecord"].find(query);
+			value = []
+			files.forEach (f) ->
+				newFile = new FS.File()
+				newFile.attachData f.createReadStream('files'), {
+						type: f.original.type
+				}, (err) ->
+					if (err)
+						throw new Meteor.Error(err.error, err.reason)
+
+					newFile.name(f.name())
+					newFile.size(f.size())
+					metadata = {
+						owner: f.metadata.owner
+					}
+					newFile.metadata = metadata;
+					newFile._id = Creator.Collections.instances._makeNewID();
+					cfs[collection].insert(newFile);
+					value.push(newFile._id)
+			if value.length > 0
+				if _.isString(recordFieldId)
+					return value[0]
+				else
+					return value; 
 		tableFieldCodes = []
 		tableFieldMap = []
 		tableToRelatedMap = {}
@@ -489,6 +525,10 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						values[workflow_field] = selectFieldValue
 			else if formField && objField && formField.type == 'date' && recordFieldValue
 				values[workflow_field] = uuflowManagerForInitApproval.formatDate(recordFieldValue) # Date转String
+			else if formField && objField && recordFieldValue && (formField.type == 'image' || formField.type == 'file')
+				values[workflow_field] = getFileFieldValue(recordFieldValue, formField.type)
+			else if formField && objField && recordFieldValue && formField.type == 'lookup' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
+				values[workflow_field] = record[object_field]
 			else if record.hasOwnProperty(object_field)
 				values[workflow_field] = record[object_field]
 

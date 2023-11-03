@@ -440,6 +440,10 @@
         "amis": {
             "type": "object",
             "description": "amis属性"
+        },
+        "enable_enhanced_lookup": {
+            "type": "boolean",
+            "description": "启用增强lookup模式，当开启时，该字段会弹出窗口显示可选项！"
         }
     }
 }
