@@ -54,10 +54,6 @@
   position: absolute
 }
 
-.relative {
-  position: relative
-}
-
 .sticky {
   position: sticky
 }
@@ -67,10 +63,6 @@
   right: 0px;
   bottom: 0px;
   left: 0px
-}
-
-.isolate {
-  isolation: isolate
 }
 
 .z-20 {
@@ -349,11 +341,6 @@
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
-.bg-green-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity))
 }
 
 .bg-gray-50 {
