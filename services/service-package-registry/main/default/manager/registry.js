@@ -14,6 +14,8 @@ let installDenyList = [];
 let installAllAllowed = true;
 let installVersionRestricted = false;
 var activePromise = Promise.resolve();
+const _ = require('lodash');
+const npa = require("npm-package-arg");
 
 log.init({});
 
@@ -268,6 +270,27 @@ async function installModule(module, version, url, registry_url) {
     return activePromise;
 }
 
+async function yarnAddPackage(yarnPackage){
+    var installDir = settings.userDir || ".";
+    var yarnArgs = ['add', '-E', ...yarnPackage.split(' '), '--json'];
+    const data = await exec.run(yarnCommand, yarnArgs, {cwd: installDir}, true);
+    const formatData = JSON.parse(_.last(_.compact(data.stdout.split('\n'))))
+    // 解析 yarn add 返回的结果
+    const steedosPackages = [];
+    _.each(formatData.data.trees, (module)=>{
+        const parsed = npa(module.name);
+        const packagePath = path.dirname(require.resolve(`${parsed.name}/package.json`, {
+            paths: [path.join(installDir, 'node_modules')]
+        }))
+        steedosPackages.push({
+            name: parsed.name,
+            version: parsed.rawSpec,
+            path: packagePath
+        })
+    })
+    return steedosPackages;
+}
+
 
 async function uninstallModule(module){
     if (Buffer.isBuffer(module)) {
@@ -326,5 +349,6 @@ const isPackageUrl = (url)=>{
 module.exports = {
     installModule,
     uninstallModule,
-    isPackageUrl
+    isPackageUrl,
+    yarnAddPackage
 }

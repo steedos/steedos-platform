@@ -10,6 +10,21 @@ const packagesFilePath = path.join(userDir, 'steedos-packages.yml');
 const metadataApi = require('@steedos/metadata-api');
 const util = require('./util');
 const metaDataCore = require('@steedos/metadata-core');
+const npmRCFilePath = path.join(userDir, '.npmrc')
+
+// 读取.steedos下的.npmrc文件内容
+const getNpmrc = ()=>{
+    let npmrc = "";
+    if(fs.existsSync(npmRCFilePath)){
+        npmrc = fs.readFileSync(npmRCFilePath, 'utf8')
+    }
+    return npmrc;
+}
+
+// 写入.steedos下的.npmrc文件内容
+const setNpmrc = (data)=>{
+    fs.writeFileSync(npmRCFilePath, data);
+}
 
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
@@ -405,5 +420,8 @@ module.exports = {
     getPackageInfo,
     getPackageMetadata,
     installPackage,
-    getPackageYmlData
+    getPackageYmlData,
+    getNpmrc,
+    setNpmrc,
+    getPackageConfig
 }

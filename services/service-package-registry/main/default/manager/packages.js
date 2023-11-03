@@ -186,9 +186,11 @@ const scanPackageMetadatas = async (packagePath) => {
     return packageMetadatas;
 }
 
-const checkDependencies = async (packagePath)=>{
-    const packageServiceConfig = require(path.join(packagePath, 'package.service.js'));
-    const dependencies = (packageServiceConfig && packageServiceConfig.dependencies) || [];
+const checkDependencies = async (packagePath, dependencies)=>{
+    if(!dependencies){
+        const packageServiceConfig = require(path.join(packagePath, 'package.service.js'));
+        dependencies = (packageServiceConfig && packageServiceConfig.dependencies) || [];
+    }
     for(const item of dependencies){
         const hasService = await objectql.getSteedosSchema().broker.registry.hasService(item);
         if(!hasService){

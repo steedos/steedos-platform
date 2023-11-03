@@ -155,13 +155,20 @@ module.exports = {
 		enablePackage:{
 			async handler(ctx) {
 				const { module } = ctx.params
-                let packageConfig = await loader.enablePackage(module);
+				let packageConfig = await loader.getPackageConfig(module);
+
+				const packageYmlData = loader.getPackageYmlData(packageConfig.path);
+
+				if(packageYmlData.dependencies){
+					await packages.checkDependencies(path.resolve(packageConfig.path), packageYmlData.dependencies || [])
+				}
+                packageConfig = await loader.enablePackage(module);
+
 				if(packageConfig.static){
 					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
 				}
-				await packages.checkDependencies(path.resolve(packageConfig.path))
+
 				const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packageConfig.path));
-				const packageYmlData = loader.getPackageYmlData(packageConfig.path);
 				await ctx.broker.call(`@steedos/service-packages.install`, {
 					serviceInfo: Object.assign({}, packageConfig, {
 						packageYmlData,
@@ -225,8 +232,24 @@ module.exports = {
 			async handler(ctx) {
 				return await this.addPackages(ctx);
 			}
+		},
+		getNpmrc: {
+			async handler(ctx){
+				return await loader.getNpmrc()
+			}
+		},
+		setNpmrc: {
+			async handler(ctx){
+				const { npmrc } = ctx.params;
+				return await loader.setNpmrc(npmrc)
+			}
+		},
+		yarnAddPackage: {
+			async handler(ctx) {
+				const { yarnPackage } = ctx.params;
+				return await this.yarnAddPackage(yarnPackage);
+            }
 		}
-
 	},
 
 	/**
@@ -489,6 +512,34 @@ module.exports = {
 					}
 				}
 			}
+		},
+		yarnAddPackage: {
+			async handler(yarnPackage) {
+                const packages = await registry.yarnAddPackage(yarnPackage);
+				for (const packageInfo of packages) {
+					const packagePath = packageInfo.path;
+					loader.appendToPackagesConfig(packageInfo.name, {
+						version: packageInfo.version,
+						path: util.getPackageRelativePath(process.cwd(), packagePath),
+						enable: false
+					});
+					const metadata = await loader.getPackageMetadata(util.getPackageRelativePath(process.cwd(), packagePath));
+					const packageYmlData = loader.getPackageYmlData(packagePath);
+					await this.broker.call(`@steedos/service-packages.install`, {
+						serviceInfo: Object.assign({}, {
+							version: packageInfo.version,
+							path: packageInfo.path
+						}, {
+							packageYmlData: packageYmlData,
+							name: packageInfo.name,
+							enable: false, 
+							nodeID: broker.nodeID, 
+							instanceID: broker.instanceID,
+							metadata: metadata
+						})
+					})
+				}
+            }
 		}
 	},
 

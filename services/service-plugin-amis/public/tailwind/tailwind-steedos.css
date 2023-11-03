@@ -54,6 +54,10 @@
   position: absolute
 }
 
+.relative {
+  position: relative
+}
+
 .sticky {
   position: sticky
 }
@@ -63,6 +67,10 @@
   right: 0px;
   bottom: 0px;
   left: 0px
+}
+
+.isolate {
+  isolation: isolate
 }
 
 .z-20 {
@@ -300,12 +308,12 @@
   white-space: nowrap
 }
 
-.rounded-full {
-  border-radius: 9999px
-}
-
 .rounded {
   border-radius: 0.25rem
+}
+
+.rounded-full {
+  border-radius: 9999px
 }
 
 .border {
