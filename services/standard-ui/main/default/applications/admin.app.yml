@@ -137,9 +137,6 @@ tab_items:
   # admin_dashboard:
   #   group: 高级设置
   #   index: 35
-  admin_audit_records:
-    group: advanced_settings
-    index: 36
   admin_autonumber:
     group: advanced_settings
     index: 37

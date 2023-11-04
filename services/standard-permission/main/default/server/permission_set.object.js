@@ -28,17 +28,17 @@ Creator.Objects['permission_set'].triggers = Object.assign({}, Creator.Objects['
                 if(!doc.license){
                     // throw new Meteor.Error(500, "请指定许可证");
                 }else{
-                    if(_.indexOf(_.pluck(Steedos.getLicenseOptionsSync(doc.space), 'value'), doc.license) < 0){
-                        throw new Meteor.Error(500, "无效的许可证");
-                    }
+                    // if(_.indexOf(_.pluck(Steedos.getLicenseOptionsSync(doc.space), 'value'), doc.license) < 0){
+                    //     throw new Meteor.Error(500, "无效的许可证");
+                    // }
                 }
             }
 
-            if(doc.license){
-                if(_.indexOf(_.pluck(Steedos.getLicenseOptionsSync(doc.space), 'value'), doc.license) < 0){
-                    throw new Meteor.Error(500, "无效的许可证");
-                }
-            }
+            // if(doc.license){
+            //     if(_.indexOf(_.pluck(Steedos.getLicenseOptionsSync(doc.space), 'value'), doc.license) < 0){
+            //         throw new Meteor.Error(500, "无效的许可证");
+            //     }
+            // }
 
             if(doc.type === 'profile'){
                 delete doc.users
