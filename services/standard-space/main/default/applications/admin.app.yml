@@ -1,8 +1,0 @@
-name: logs
-code: admin
-tab_items:
-  admin_operation_logs:
-    group: advanced_settings
-    index: 60
-objects: []
-sort: 999999
