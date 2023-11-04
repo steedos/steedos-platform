@@ -157,6 +157,10 @@ module.exports = {
 				const { module } = ctx.params
 				let packageConfig = await loader.getPackageConfig(module);
 
+				if(packageConfig.static){
+					packageConfig = Object.assign({}, packageConfig, this.getStaticPackageInfo(packageConfig, packageConfig.name))
+				}
+
 				const packageYmlData = loader.getPackageYmlData(packageConfig.path);
 
 				if(packageYmlData.dependencies){
@@ -501,7 +505,7 @@ module.exports = {
 								instanceID: this.broker.instanceID, 
 								path: _packageInfo.path,
 								local: _packageInfo.local, 
-								enable: _packageInfo.enable, 
+								enable: false, 
 								version: _packageInfo.version, 
 								description: _packageInfo.description,
 								metadata: metadata,

@@ -100,6 +100,8 @@ const appendToPackagesConfig = (packageName, options, actionName)=>{
 }
 
 const loadPackages = async ()=>{
+    let schema = objectql.getSteedosSchema();
+    let broker = schema.broker;
     const packages = loadPackagesConfig();
     for (const packageName in packages) {
         const package = packages[packageName]
@@ -109,10 +111,12 @@ const loadPackages = async ()=>{
                     const packagePath = package.path || path.dirname(require.resolve(`${packageName}/package.json`))
                     if(packagePath){
                         const packageInfo = await loadPackage(packageName, packagePath);
-                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                        if(packageInfo){
+                            appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                        }
                     }
                 } catch (error) {
-                    console.error(error)
+                    broker.logger.error(`start package ${packageName} error: ${error.message}`)
                 }
 
             }else if(package.local !== true){
@@ -130,7 +134,7 @@ const loadPackages = async ()=>{
                         const packageInfo = await loadPackage(packageName);
                         appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: false});
                     } catch (error) {
-                        console.error(error)
+                        broker.logger.error(`start package ${packageName} error: ${error.message}`)
                     }
                 }
             }else if(package.local === true && package.static != true){
@@ -139,9 +143,13 @@ const loadPackages = async ()=>{
                     packagePath = path.resolve(process.cwd(), packagePath)
                 }
                 if(packagePath){
-                    const packageInfo = await loadPackage(packageName, packagePath);
-                    if(packageInfo){
-                        appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                    try {
+                        const packageInfo = await loadPackage(packageName, packagePath);
+                        if(packageInfo){
+                            appendToPackagesConfig(packageInfo.name, {version: packageInfo.version, description: packageInfo.description, local: true});
+                        }
+                    } catch (error) {
+                        broker.logger.error(`start package ${packageName} error: ${error.message}`)
                     }
                 }
             }
@@ -232,7 +240,7 @@ const loadDependency = async (mainPackageInfo = {}, dependencyName, dependencyVe
 }
 
 const loadPackage = async (packageName, packagePath)=>{
-    try {
+    // try {
         if(!packagePath){
             packagePath = path.dirname(require.resolve(`${packageName}/package.json`, {
                 paths: [path.join(userDir, 'node_modules')]
@@ -246,19 +254,28 @@ const loadPackage = async (packageName, packagePath)=>{
             return ;
         }
         const packageInfo = require(path.join(packagePath, 'package.json'));
+        const packageYml = getPackageYmlData(packagePath);
+
+        if(packageYml && packageYml.license && _.isArray(packageYml.license) && packageYml.license.length > 0){
+            const has = await broker.call('@steedos/service-license.checkProducts', {keys: packageYml.license});
+            if(!has){
+                throw new Error(`Software package 「${packageName}」 requires 「${packageYml.license.join(',')}」 license.`)    
+            }
+        }
+        
         await destroyExistThePackageService(packageInfo);
         await steedos.loadPackage(packagePath);
-        const packageConfig = getPackageConfig(packageName);
-        if(packageInfo.dependencies){
-            for (const dependencyName in packageInfo.dependencies) {
-                const dependencyVersion = packageInfo.dependencies[dependencyName];
-                await loadDependency(packageConfig, dependencyName, dependencyVersion);
-            }
-        }   
+        // const packageConfig = getPackageConfig(packageName);
+        // if(packageInfo.dependencies){
+        //     for (const dependencyName in packageInfo.dependencies) {
+        //         const dependencyVersion = packageInfo.dependencies[dependencyName];
+        //         await loadDependency(packageConfig, dependencyName, dependencyVersion);
+        //     }
+        // }   
         return Object.assign({packagePath: packagePath}, packageInfo);
-    } catch (error) {
-        console.error(packageName, packagePath, error)
-    }
+    // } catch (error) {
+        // console.error(packageName, packagePath, error)
+    // }
 }
 
 const disablePackage = async (packageName)=>{
@@ -303,6 +320,7 @@ const removePackageConfig = (packageName)=>{
 const getPackageConfig = (packageName)=>{
     const packages = loadPackagesConfig();
     return _.find(packages, (info, name)=>{
+        info.name = name;
         return packageName == name
     });
 }
