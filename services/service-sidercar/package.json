@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-sidecar",
-  "version": "2.5.18-beta.4",
+  "version": "2.5.18-beta.5",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
@@ -13,5 +13,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dbed817b5b9689fd0ee6bbfb8e9911a18a3c8403"
+  "gitHead": "09dfecc5247427b9b465c26bd9b183c21545eb1d"
 }
