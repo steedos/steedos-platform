@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-permissionsets",
-  "version": "2.5.18-beta.7",
+  "version": "2.5.18-beta.8",
   "description": "",
   "main": "lib/permissionsets.service.js",
   "scripts": {
@@ -32,5 +32,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "50a0f4cc2d0a9e46ec41350398dc4a49cd589b1d"
+  "gitHead": "2e29ea1f527500b312f17a603813351d13178c9f"
 }

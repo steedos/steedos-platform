@@ -8,5 +8,5 @@
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "version": "2.5.18-beta.7"
+  "version": "2.5.18-beta.8"
 }
