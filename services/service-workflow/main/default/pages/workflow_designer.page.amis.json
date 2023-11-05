@@ -6,726 +6,766 @@
             "type": "service",
             "id": "service_react_flow",
             "body": [
-                {
+              {
+                "type": "panel",
+                "body": [
+                  {
                     "type": "panel",
                     "body": [
-                        {
-                            "type": "panel",
-                            "body": [
-                                {
-                                    "type": "tabs",
-                                    "id": "tabs_react_flow",
-                                    "tabs": [
-                                        {
-                                            "title": "流程信息",
-                                            "tab": [
-                                                {
-                                                    "type": "form",
-                                                    "wrapWithPanel": false,
-                                                    "body": [
-                                                        {
-                                                            "label": "流程名称",
-                                                            "type": "input-text",
-                                                            "name": "flow.name",
-                                                            "id": "u:ded33d6cc55e",
-                                                            "required": true
-                                                        },
-                                                        {
-                                                            "label": "流程描述",
-                                                            "type": "input-text",
-                                                            "name": "flow.description",
-                                                            "id": "u:72318c2f6664"
-                                                        },
-                                                        {
-                                                            "label": "创建时间",
-                                                            "type": "input-text",
-                                                            "name": "_display.created",
-                                                            "static": true,
-                                                            "id": "u:a0ad60dadeb1"
-                                                        },
-                                                        {
-                                                            "label": "创建人",
-                                                            "type": "input-text",
-                                                            "name": "_display.created_by.label",
-                                                            "static": true,
-                                                            "id": "u:80a8e4172436"
-                                                        }
-                                                    ],
-                                                    "id": "u:505aed37e326",
-                                                    "debug": false,
-                                                    "onEvent": {
-                                                        "change": {
-                                                            "weight": 0,
-                                                            "actions": [
-                                                                {
-                                                                    "componentId": "service_react_flow",
-                                                                    "actionType": "setValue",
-                                                                    "args": {
-                                                                        "value": {
-                                                                            "flow.name": "${flow.name}",
-                                                                            "flow.description": "${flow.description}"
-                                                                        }
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                }
-                                            ],
-                                            "id": "u:bbe62967461e",
-                                            "className": "px-0"
-                                        },
-                                        {
-                                            "title": "画图",
-                                            "tab": [
-                                                {
-                                                    "$ref": "buttonAddStep",
-                                                    "label": "审批",
-                                                    "stepProps": {
-                                                        "name": "审批",
-                                                        "step_type": "sign",
-                                                        "allowDistribute": false,
-                                                        "allow_pick_approve_users": false,
-                                                        "allow_skip": false,
-                                                        "can_edit_main_attach": false,
-                                                        "can_edit_normal_attach": true,
-                                                        "cc_alert": false,
-                                                        "cc_has_edit_permission": false,
-                                                        "cc_must_finished": false,
-                                                        "deal_type": "pickupAtRuntime",
-                                                        "disableCC": false,
-                                                        "timeout_hours": "168.00",
-                                                        "approver_hr_roles": [],
-                                                        "approver_org_field": "",
-                                                        "approver_orgs": [],
-                                                        "approver_roles": [],
-                                                        "approver_step": "",
-                                                        "approver_user_field": "",
-                                                        "approver_users": [],
-                                                        "description": "",
-                                                        "permissions": {}
-                                                    },
-                                                    "id": "u:e02e02910f9e"
-                                                },
-                                                {
-                                                    "$ref": "buttonAddStep",
-                                                    "label": "会签",
-                                                    "stepProps": {
-                                                        "name": "会签",
-                                                        "step_type": "counterSign",
-                                                        "allowDistribute": false,
-                                                        "allow_pick_approve_users": false,
-                                                        "allow_skip": false,
-                                                        "can_edit_main_attach": false,
-                                                        "can_edit_normal_attach": true,
-                                                        "cc_alert": false,
-                                                        "cc_has_edit_permission": false,
-                                                        "cc_must_finished": false,
-                                                        "deal_type": "pickupAtRuntime",
-                                                        "disableCC": false,
-                                                        "timeout_hours": "168.00",
-                                                        "allowBatch": false,
-                                                        "oneClickApproval": false,
-                                                        "oneClickRejection": false,
-                                                        "approver_hr_roles": [],
-                                                        "approver_org_field": "",
-                                                        "approver_orgs": [],
-                                                        "approver_roles": [],
-                                                        "approver_step": "",
-                                                        "approver_user_field": "",
-                                                        "approver_users": [],
-                                                        "description": "",
-                                                        "permissions": {}
-                                                    },
-                                                    "id": "u:3d55a6911d13"
-                                                },
-                                                {
-                                                    "$ref": "buttonAddStep",
-                                                    "label": "填写",
-                                                    "stepProps": {
-                                                        "name": "填写",
-                                                        "step_type": "submit",
-                                                        "allowDistribute": false,
-                                                        "allow_pick_approve_users": false,
-                                                        "allow_skip": false,
-                                                        "can_edit_main_attach": false,
-                                                        "can_edit_normal_attach": true,
-                                                        "cc_alert": false,
-                                                        "cc_has_edit_permission": false,
-                                                        "cc_must_finished": false,
-                                                        "deal_type": "pickupAtRuntime",
-                                                        "disableCC": false,
-                                                        "timeout_hours": "168.00",
-                                                        "approver_hr_roles": [],
-                                                        "approver_org_field": "",
-                                                        "approver_orgs": [],
-                                                        "approver_roles": [],
-                                                        "approver_step": "",
-                                                        "approver_user_field": "",
-                                                        "approver_users": [],
-                                                        "description": "",
-                                                        "permissions": {},
-                                                        "allowBatch": false
-                                                    },
-                                                    "id": "u:1dc1bcb7f401"
-                                                },
-                                                {
-                                                    "$ref": "buttonAddStep",
-                                                    "label": "条件",
-                                                    "stepProps": {
-                                                        "name": "条件",
-                                                        "step_type": "condition",
-                                                        "timeout_hours": "168.00",
-                                                        "approver_org_field": "",
-                                                        "approver_orgs": [],
-                                                        "approver_step": "",
-                                                        "approver_user_field": "",
-                                                        "approver_users": [],
-                                                        "deal_type": "",
-                                                        "description": "",
-                                                        "permissions": {}
-                                                    },
-                                                    "id": "u:9a7cf380d1fa"
-                                                }
-                                            ],
-                                            "id": "u:64e15bf9f638",
-                                            "className": "px-0"
-                                        },
-                                        {
-                                            "title": "属性",
-                                            "tab": [
-                                                {
-                                                    "type": "tpl",
-                                                    "tpl": "请从画布中选择步骤或连线",
-                                                    "id": "u:75ebba17ee37",
-                                                    "visibleOn": "${reactFlowSelection.nodes.length === 0 && reactFlowSelection.edges.length === 0}",
-                                                    "className": "absolute top-1/2 left-0 right-0 text-center"
-                                                },
-                                                {
-                                                    "type": "each",
-                                                    "id": "u:de445fd7654a",
-                                                    "items": {
-                                                        "type": "form",
-                                                        "debug": true,
-                                                        "body": [
-                                                            {
-                                                                "type": "input-text",
-                                                                "name": "data.name",
-                                                                "label": "步骤名称:",
-                                                                "id": "u:561792782229",
-                                                                "required": true
-                                                            },
-                                                            {
-                                                                "type": "input-text",
-                                                                "name": "data.description",
-                                                                "label": "描述:",
-                                                                "id": "u:ace132578700"
-                                                            },
-                                                            {
-                                                                "name": "data.deal_type",
-                                                                "label": "处理人:",
-                                                                "type": "select",
-                                                                "source": "${data.step_type == 'counterSign'?deal_type_options_for_counterSign:deal_type_options}",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "required": true,
-                                                                "id": "u:b393d6e32d3f"
-                                                            },
-                                                            {
-                                                                "type": "steedos-field",
-                                                                "config": {
-                                                                    "name": "data.approver_users",
-                                                                    "filterable": false,
-                                                                    "hidden": false,
-                                                                    "index": false,
-                                                                    "is_name": false,
-                                                                    "is_wide": false,
-                                                                    "label": "人员:",
-                                                                    "multiple": true,
-                                                                    "omit": false,
-                                                                    "readonly": false,
-                                                                    "reference_to": "space_users",
-                                                                    "reference_to_field": "user",
-                                                                    "required": true,
-                                                                    "searchable": false,
-                                                                    "sort_no": 250,
-                                                                    "sortable": true,
-                                                                    "type": "lookup",
-                                                                    "amis": {
-                                                                        "visibleOn": "${data.deal_type == 'specifyUser'}",
-                                                                        "clearValueOnHidden": false,
-                                                                        "id": "u:26d57956b64f"
-                                                                    }
-                                                                },
-                                                                "id": "u:59879ad86dc4"
-                                                            },
-                                                            {
-                                                                "type": "steedos-field",
-                                                                "config": {
-                                                                    "name": "data.approver_roles",
-                                                                    "filterable": false,
-                                                                    "hidden": false,
-                                                                    "index": false,
-                                                                    "is_name": false,
-                                                                    "is_wide": false,
-                                                                    "label": "审批岗位:",
-                                                                    "multiple": true,
-                                                                    "omit": false,
-                                                                    "readonly": false,
-                                                                    "reference_to": "flow_roles",
-                                                                    "required": true,
-                                                                    "searchable": false,
-                                                                    "sort_no": 250,
-                                                                    "sortable": true,
-                                                                    "type": "lookup",
-                                                                    "filtersFunction": "function(filters, values) {\n  return [\"company_id\", \"in\", [null, \"\", values.flow.company_id]]\n}",
-                                                                    "amis": {
-                                                                        "visibleOn": "${data.deal_type == 'applicantRole'}",
-                                                                        "menuTpl": "",
-                                                                        "clearValueOnHidden": false,
-                                                                        "id": "u:49bc5fbee28f"
-                                                                    }
-                                                                },
-                                                                "id": "u:4438709fe550"
-                                                            },
-                                                            {
-                                                                "type": "steedos-field",
-                                                                "config": {
-                                                                    "name": "data.approver_hr_roles",
-                                                                    "filterable": false,
-                                                                    "hidden": false,
-                                                                    "index": false,
-                                                                    "is_name": false,
-                                                                    "is_wide": false,
-                                                                    "label": "角色:",
-                                                                    "multiple": true,
-                                                                    "omit": false,
-                                                                    "readonly": false,
-                                                                    "reference_to": "roles",
-                                                                    "required": true,
-                                                                    "searchable": false,
-                                                                    "sort_no": 250,
-                                                                    "sortable": true,
-                                                                    "type": "lookup",
-                                                                    "amis": {
-                                                                        "visibleOn": "${data.deal_type == 'hrRole'}",
-                                                                        "menuTpl": "",
-                                                                        "clearValueOnHidden": false,
-                                                                        "id": "u:8514ad68ce93"
-                                                                    }
-                                                                },
-                                                                "id": "u:31aa91ab6f77"
-                                                            },
-                                                            {
-                                                                "type": "steedos-field",
-                                                                "config": {
-                                                                    "name": "data.approver_orgs",
-                                                                    "filterable": false,
-                                                                    "hidden": false,
-                                                                    "index": false,
-                                                                    "is_name": false,
-                                                                    "is_wide": false,
-                                                                    "label": "部门:",
-                                                                    "multiple": true,
-                                                                    "omit": false,
-                                                                    "readonly": false,
-                                                                    "reference_to": "organizations",
-                                                                    "required": true,
-                                                                    "searchable": false,
-                                                                    "sort_no": 250,
-                                                                    "sortable": true,
-                                                                    "type": "lookup",
-                                                                    "amis": {
-                                                                        "visibleOn": "${data.deal_type == 'specifyOrg'}",
-                                                                        "clearValueOnHidden": false,
-                                                                        "id": "u:c721cc9516e6"
-                                                                    }
-                                                                },
-                                                                "id": "u:7fd787d10e7f"
-                                                            },
-                                                            {
-                                                                "type": "input-number",
-                                                                "label": "超时提醒(小时):",
-                                                                "precision": 2,
-                                                                "name": "data.timeout_hours",
-                                                                "visibleOn": "${data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:a79c94b928e3"
-                                                            },
-                                                            {
-                                                                "name": "data.disableCC",
-                                                                "type": "checkbox",
-                                                                "option": "禁止传阅",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:9eb669f35731"
-                                                            },
-                                                            {
-                                                                "name": "data.allowDistribute",
-                                                                "type": "checkbox",
-                                                                "option": "允许分发",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:e7f7af3b16f2"
-                                                            },
-                                                            {
-                                                                "name": "data.can_edit_main_attach",
-                                                                "type": "checkbox",
-                                                                "option": "修改正文",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end'}",
-                                                                "id": "u:40838de90545"
-                                                            },
-                                                            {
-                                                                "name": "data.can_edit_normal_attach",
-                                                                "type": "checkbox",
-                                                                "option": "修改附件",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end'}",
-                                                                "id": "u:0875dadff333"
-                                                            },
-                                                            {
-                                                                "name": "data.cc_must_finished",
-                                                                "type": "checkbox",
-                                                                "option": "必须等待传阅完成",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:2ea52c0a4f13"
-                                                            },
-                                                            {
-                                                                "name": "data.cc_alert",
-                                                                "type": "checkbox",
-                                                                "option": "弹出传阅提醒",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:34e1f13c54d6"
-                                                            },
-                                                            {
-                                                                "name": "data.allowBatch",
-                                                                "type": "checkbox",
-                                                                "option": "批量审批",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:1c5109954795"
-                                                            },
-                                                            {
-                                                                "name": "data.oneClickApproval",
-                                                                "type": "checkbox",
-                                                                "option": "一键核准",
-                                                                "visibleOn": "${data.step_type == 'counterSign'}",
-                                                                "id": "u:a569a1461a53"
-                                                            },
-                                                            {
-                                                                "name": "data.oneClickRejection",
-                                                                "type": "checkbox",
-                                                                "option": "一键驳回",
-                                                                "visibleOn": "${data.step_type == 'counterSign'}",
-                                                                "id": "u:24e7ed3e801c"
-                                                            },
-                                                            {
-                                                                "name": "data.allow_pick_approve_users",
-                                                                "type": "checkbox",
-                                                                "option": "允许审批时指定处理人",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:ec46102a2495"
-                                                            },
-                                                            {
-                                                                "name": "data.allow_skip",
-                                                                "type": "checkbox",
-                                                                "option": "允许开始步骤指定跳过此步骤",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:3033ecb92058"
-                                                            },
-                                                            {
-                                                                "name": "data.cc_has_edit_permission",
-                                                                "type": "checkbox",
-                                                                "option": "按传阅者的权限编辑表单",
-                                                                "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
-                                                                "id": "u:d4da050e32e8"
-                                                            }
-                                                        ],
-                                                        "wrapWithPanel": false,
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "weight": 0,
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "custom",
-                                                                        "script": "let data = event.data.data;\n//变更处理人的时候，处理人相关属性清空\nif (event.data.data.deal_type != event.data.__super.__prev.data.deal_type) {\n  data = {\n    ...data,\n    approver_hr_roles: [],\n    approver_org_field: '',\n    approver_orgs: [],\n    approver_roles: [],\n    approver_step: '',\n    approver_user_field: '',\n    approver_users: []\n  };\n  doAction({\n    actionType: 'setValue',\n    args: {\n      value: {\n        data\n      }\n    }\n  });\n}\nevent.data.reactFlowInstance.setNodes(function (nds) {\n  return nds.map((node) => {\n    if (node.id === event.data.id) {\n    node.data = {\n        ...node.data,\n        ...data,\n      };\n      node.data.label = Steedos.getWorkflowStepLabel(node.data);\n    }\n    return node;\n  })\n});"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        "id": "u:c8208247a69d"
-                                                    },
-                                                    "source": "${reactFlowSelection.nodes}",
-                                                    "visibleOn": "${reactFlowSelection.nodes.length}"
-                                                },
-                                                {
-                                                    "type": "each",
-                                                    "items": {
-                                                        "type": "form",
-                                                        "debug": true,
-                                                        "body": [
-                                                            {
-                                                                "type": "input-text",
-                                                                "name": "data.name",
-                                                                "label": "连线名称:",
-                                                                "id": "u:3de37a96b91a"
-                                                            },
-                                                            {
-                                                                "type": "input-text",
-                                                                "name": "data.condition",
-                                                                "label": "连线条件:",
-                                                                "required": true,
-                                                                "placeholder": "例如：{金额}>10"
-                                                            },
-                                                            {
-                                                                "type": "checkbox",
-                                                                "name": "data.timeout_line",
-                                                                "label": "超时设置:",
-                                                                "id": "u:f0fc5232275c",
-                                                                "option": "超时自动流转到此路径"
-                                                            }
-                                                        ],
-                                                        "wrapWithPanel": false,
-                                                        "id": "u:6767d57a2ec1",
-                                                        "onEvent": {
-                                                            "change": {
-                                                                "weight": 0,
-                                                                "actions": [
-                                                                    {
-                                                                        "actionType": "custom",
-                                                                        "script": "\nevent.data.reactFlowInstance.setEdges(function (eds) {\n  return eds.map((edge) => {\n    if (edge.id === event.data.id) {\n      edge.data = {\n        ...edge.data,\n        ...event.data.data,\n      };\n      edge.label = edge.data.name;\n    }\n    return edge;\n  })\n});"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    "id": "u:d835e9606d64",
-                                                    "source": "${reactFlowSelection.edges}",
-                                                    "visibleOn": "${reactFlowSelection.edges.length}"
-                                                }
-                                            ],
-                                            "id": "u:406e84d38bbe",
-                                            "className": "px-0"
-                                        },
-                                        {
-                                            "title": "权限",
-                                            "tab": [
-                                                {
-                                                    "type": "input-tree",
-                                                    "label": "请勾选本步骤允许编辑的字段",
-                                                    "name": "tree",
-                                                    "multiple": true,
-                                                    "autoCheckChildren": true,
-                                                    "source": "${permissionsOptions}",
-                                                    "id": "u:a8e4ac91a3d3",
-                                                    "showIcon": false,
-                                                    "heightAuto": true
-                                                }
-                                            ],
-                                            "visibleOn": "${reactFlowSelection.nodes.length && reactFlowSelectedNode.data.step_type != 'condition' && reactFlowSelectedNode.data.step_type != 'end'}",
-                                            "id": "u:d7050d1d672f"
+                      {
+                        "type": "tabs",
+                        "id": "tabs_react_flow",
+                        "tabs": [
+                          {
+                            "title": "流程信息",
+                            "tab": [
+                              {
+                                "type": "form",
+                                "wrapWithPanel": false,
+                                "body": [
+                                  {
+                                    "label": "流程名称",
+                                    "type": "input-text",
+                                    "name": "flow.name",
+                                    "id": "u:ded33d6cc55e",
+                                    "required": true
+                                  },
+                                  {
+                                    "label": "流程描述",
+                                    "type": "input-text",
+                                    "name": "flow.description",
+                                    "id": "u:72318c2f6664"
+                                  },
+                                  {
+                                    "label": "创建时间",
+                                    "type": "input-text",
+                                    "name": "_display.created",
+                                    "static": true,
+                                    "id": "u:a0ad60dadeb1"
+                                  },
+                                  {
+                                    "label": "创建人",
+                                    "type": "input-text",
+                                    "name": "_display.created_by.label",
+                                    "static": true,
+                                    "id": "u:80a8e4172436"
+                                  }
+                                ],
+                                "id": "u:505aed37e326",
+                                "debug": false,
+                                "onEvent": {
+                                  "change": {
+                                    "weight": 0,
+                                    "actions": [
+                                      {
+                                        "componentId": "service_react_flow",
+                                        "actionType": "setValue",
+                                        "args": {
+                                          "value": {
+                                            "flow.name": "${flow.name}",
+                                            "flow.description": "${flow.description}"
+                                          }
                                         }
-                                    ],
-                                    "contentClassName": "bg-gray-50"
+                                      }
+                                    ]
+                                  }
                                 }
+                              }
                             ],
-                            "id": "u:a585ef75560b",
-                            "className": "absolute top-0 right-0 bottom-0 w-80 z-10 m-0 rounded-none overflow-auto bg-gray-50 border-none border-left",
-                            "title": "",
-                            "affixFooter": false
-                        },
-                        {
-                            "type": "steedos-react-flow",
-                            "id": "u:4dc36cb794c7",
-                            "onEvent": {
-                                "getInstance": {
-                                    "weight": 0,
-                                    "actions": [
-                                        {
-                                            "actionType": "setValue",
-                                            "args": {
-                                                "value": {
-                                                    "reactFlowInstance": "${event.data.reactFlowInstance}"
-                                                }
-                                            },
-                                            "componentId": "service_react_flow"
-                                        }
-                                    ]
+                            "id": "u:bbe62967461e",
+                            "className": "px-0"
+                          },
+                          {
+                            "title": "画图",
+                            "tab": [
+                              {
+                                "$ref": "buttonAddStep",
+                                "label": "审批",
+                                "stepProps": {
+                                  "name": "审批",
+                                  "step_type": "sign",
+                                  "allowDistribute": false,
+                                  "allow_pick_approve_users": false,
+                                  "allow_skip": false,
+                                  "can_edit_main_attach": false,
+                                  "can_edit_normal_attach": true,
+                                  "cc_alert": false,
+                                  "cc_has_edit_permission": false,
+                                  "cc_must_finished": false,
+                                  "deal_type": "pickupAtRuntime",
+                                  "disableCC": false,
+                                  "timeout_hours": "168.00",
+                                  "approver_hr_roles": [
+                                  ],
+                                  "approver_org_field": "",
+                                  "approver_orgs": [
+                                  ],
+                                  "approver_roles": [
+                                  ],
+                                  "approver_step": "",
+                                  "approver_user_field": "",
+                                  "approver_users": [
+                                  ],
+                                  "description": "",
+                                  "permissions": {
+                                  }
                                 },
-                                "selectionChange": {
-                                    "weight": 0,
-                                    "actions": [
+                                "id": "u:e02e02910f9e"
+                              },
+                              {
+                                "$ref": "buttonAddStep",
+                                "label": "会签",
+                                "stepProps": {
+                                  "name": "会签",
+                                  "step_type": "counterSign",
+                                  "allowDistribute": false,
+                                  "allow_pick_approve_users": false,
+                                  "allow_skip": false,
+                                  "can_edit_main_attach": false,
+                                  "can_edit_normal_attach": true,
+                                  "cc_alert": false,
+                                  "cc_has_edit_permission": false,
+                                  "cc_must_finished": false,
+                                  "deal_type": "pickupAtRuntime",
+                                  "disableCC": false,
+                                  "timeout_hours": "168.00",
+                                  "allowBatch": false,
+                                  "oneClickApproval": false,
+                                  "oneClickRejection": false,
+                                  "approver_hr_roles": [
+                                  ],
+                                  "approver_org_field": "",
+                                  "approver_orgs": [
+                                  ],
+                                  "approver_roles": [
+                                  ],
+                                  "approver_step": "",
+                                  "approver_user_field": "",
+                                  "approver_users": [
+                                  ],
+                                  "description": "",
+                                  "permissions": {
+                                  }
+                                },
+                                "id": "u:3d55a6911d13"
+                              },
+                              {
+                                "$ref": "buttonAddStep",
+                                "label": "填写",
+                                "stepProps": {
+                                  "name": "填写",
+                                  "step_type": "submit",
+                                  "allowDistribute": false,
+                                  "allow_pick_approve_users": false,
+                                  "allow_skip": false,
+                                  "can_edit_main_attach": false,
+                                  "can_edit_normal_attach": true,
+                                  "cc_alert": false,
+                                  "cc_has_edit_permission": false,
+                                  "cc_must_finished": false,
+                                  "deal_type": "pickupAtRuntime",
+                                  "disableCC": false,
+                                  "timeout_hours": "168.00",
+                                  "approver_hr_roles": [
+                                  ],
+                                  "approver_org_field": "",
+                                  "approver_orgs": [
+                                  ],
+                                  "approver_roles": [
+                                  ],
+                                  "approver_step": "",
+                                  "approver_user_field": "",
+                                  "approver_users": [
+                                  ],
+                                  "description": "",
+                                  "permissions": {
+                                  },
+                                  "allowBatch": false
+                                },
+                                "id": "u:1dc1bcb7f401"
+                              },
+                              {
+                                "$ref": "buttonAddStep",
+                                "label": "条件",
+                                "stepProps": {
+                                  "name": "条件",
+                                  "step_type": "condition",
+                                  "timeout_hours": "168.00",
+                                  "approver_org_field": "",
+                                  "approver_orgs": [
+                                  ],
+                                  "approver_step": "",
+                                  "approver_user_field": "",
+                                  "approver_users": [
+                                  ],
+                                  "deal_type": "",
+                                  "description": "",
+                                  "permissions": {
+                                  }
+                                },
+                                "id": "u:9a7cf380d1fa"
+                              }
+                            ],
+                            "id": "u:64e15bf9f638",
+                            "className": "px-0"
+                          },
+                          {
+                            "title": "属性",
+                            "tab": [
+                              {
+                                "type": "tpl",
+                                "tpl": "请从画布中选择步骤或连线",
+                                "id": "u:75ebba17ee37",
+                                "visibleOn": "${reactFlowSelection.nodes.length === 0 && reactFlowSelection.edges.length === 0}",
+                                "className": "absolute top-1/2 left-0 right-0 text-center"
+                              },
+                              {
+                                "type": "each",
+                                "id": "u:de445fd7654a",
+                                "items": {
+                                  "type": "form",
+                                  "debug": true,
+                                  "body": [
+                                    {
+                                      "type": "input-text",
+                                      "name": "data.name",
+                                      "label": "步骤名称:",
+                                      "id": "u:561792782229",
+                                      "required": true
+                                    },
+                                    {
+                                      "type": "input-text",
+                                      "name": "data.description",
+                                      "label": "描述:",
+                                      "id": "u:ace132578700"
+                                    },
+                                    {
+                                      "name": "data.deal_type",
+                                      "label": "处理人:",
+                                      "type": "select",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "required": true,
+                                      "id": "u:b393d6e32d3f",
+                                      "options": [
                                         {
-                                            "actionType": "setValue",
-                                            "args": {
-                                                "value": {
-                                                    "reactFlowSelection": "${event.data}",
-                                                    "reactFlowSelectedNode": "${event.data.nodes[0]}",
-                                                    "reactFlowSelectedEdge": "${event.data.edges[0]}"
-                                                }
-                                            },
-                                            "componentId": "service_react_flow"
+                                          "label": "审批时指定人员",
+                                          "value": "pickupAtRuntime"
                                         },
                                         {
-                                            "actionType": "changeActiveKey",
-                                            "args": {
-                                                "activeKey": 3
-                                            },
-                                            "componentId": "tabs_react_flow",
-                                            "expression": "${event.data.nodes.length || event.data.edges.length}"
+                                          "label": "指定人员",
+                                          "value": "specifyUser"
                                         },
                                         {
-                                            "actionType": "changeActiveKey",
-                                            "args": {
-                                                "activeKey": 1
-                                            },
-                                            "componentId": "tabs_react_flow",
-                                            "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
+                                          "label": "指定角色",
+                                          "value": "hrRole"
                                         },
                                         {
-                                            "actionType": "custom",
-                                            "script": "console.log('event.data===>',event.data);Steedos.validateWokflowCurrentStep(context, doAction, event);"
-                                        }
-                                    ]
-                                },
-                                "edgesChange": {
-                                    "weight": 0,
-                                    "actions": [
+                                          "label": "指定审批岗位",
+                                          "value": "applicantRole"
+                                        },
                                         {
-                                            "actionType": "custom",
-                                            "script": "Steedos.validateWokflow(context, doAction, event);"
-                                        }
-                                    ]
-                                },
-                                "nodesChange": {
-                                    "weight": 0,
-                                    "actions": [
+                                          "label": "申请人的上级",
+                                          "value": "applicantSuperior",
+                                          "visibleOn": "${data.step_type != 'counterSign'}"
+                                        },
                                         {
-                                            "actionType": "custom",
-                                            "script": "Steedos.validateWokflow(context, doAction, event);"
+                                          "label": "申请人",
+                                          "value": "applicant",
+                                          "visibleOn": "${data.step_type != 'counterSign'}"
+                                        },
+                                        {
+                                          "label": "指定部门",
+                                          "value": "specifyOrg"
+                                        },
+                                        {
+                                          "label": "指定人员字段",
+                                          "value": "userField",
+                                          "visibleOn": "${COUNT(fieldListForUser)>0}"
+                                        },
+                                        {
+                                          "label": "指定人员字段相关审批岗位",
+                                          "value": "userFieldRole",
+                                          "visibleOn": "${COUNT(fieldListForUser)>0}"
+                                        },
+                                        {
+                                          "label": "指定部门字段",
+                                          "value": "orgField",
+                                          "visibleOn": "${COUNT(fieldListForOrg)>0}"
+                                        },
+                                        {
+                                          "label": "指定部门字段相关审批岗位",
+                                          "value": "orgFieldRole",
+                                          "visibleOn": "${COUNT(fieldListForOrg)>0}"
                                         }
-                                    ]
-                                }
-                            },
-                            "name": "flow_chart",
-                            "wrapperClassName": "absolute top-0 right-80 bottom-0 left-0",
-                            "config": "${config}",
-                            "visibleOn": "${config.nodes.length}",
-                            "backgroundConfig": {
-                                "variant": "lines"
-                            }
-                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "steedos-field",
+                                      "config": {
+                                        "name": "data.approver_users",
+                                        "filterable": false,
+                                        "hidden": false,
+                                        "index": false,
+                                        "is_name": false,
+                                        "is_wide": false,
+                                        "label": "人员:",
+                                        "multiple": true,
+                                        "omit": false,
+                                        "readonly": false,
+                                        "reference_to": "space_users",
+                                        "reference_to_field": "user",
+                                        "required": true,
+                                        "searchable": false,
+                                        "sort_no": 250,
+                                        "sortable": true,
+                                        "type": "lookup",
+                                        "amis": {
+                                          "visibleOn": "${data.deal_type == 'specifyUser'}",
+                                          "clearValueOnHidden": false,
+                                          "id": "u:26d57956b64f"
+                                        }
+                                      },
+                                      "id": "u:59879ad86dc4"
+                                    },
+                                    {
+                                      "type": "steedos-field",
+                                      "config": {
+                                        "name": "data.approver_roles",
+                                        "filterable": false,
+                                        "hidden": false,
+                                        "index": false,
+                                        "is_name": false,
+                                        "is_wide": false,
+                                        "label": "审批岗位:",
+                                        "multiple": false,
+                                        "omit": false,
+                                        "readonly": false,
+                                        "reference_to": "flow_roles",
+                                        "required": true,
+                                        "searchable": false,
+                                        "sort_no": 250,
+                                        "sortable": true,
+                                        "type": "lookup",
+                                        "filtersFunction": "function(filters, values) {\n  return [\"company_id\", \"in\", [null, \"\", values.flow.company_id]]\n}",
+                                        "optionsFunction": "function(filters, values) {\n  return  _.map(payload.data.options,function(option) {return{...option,value: [option.value]}});\n}",
+                                        "amis": {
+                                          "visibleOn": "${data.deal_type == 'applicantRole' || data.deal_type == 'orgFieldRole' || data.deal_type == 'userFieldRole'}",
+                                          "menuTpl": "",
+                                          "clearValueOnHidden": false,
+                                          "id": "u:49bc5fbee28f"
+                                        }
+                                      },
+                                      "id": "u:4438709fe550"
+                                    },
+                                    {
+                                      "type": "steedos-field",
+                                      "config": {
+                                        "name": "data.approver_hr_roles",
+                                        "filterable": false,
+                                        "hidden": false,
+                                        "index": false,
+                                        "is_name": false,
+                                        "is_wide": false,
+                                        "label": "角色:",
+                                        "multiple": true,
+                                        "omit": false,
+                                        "readonly": false,
+                                        "reference_to": "roles",
+                                        "required": true,
+                                        "searchable": false,
+                                        "sort_no": 250,
+                                        "sortable": true,
+                                        "type": "lookup",
+                                        "amis": {
+                                          "visibleOn": "${data.deal_type == 'hrRole'}",
+                                          "menuTpl": "",
+                                          "clearValueOnHidden": false,
+                                          "id": "u:8514ad68ce93"
+                                        }
+                                      },
+                                      "id": "u:31aa91ab6f77"
+                                    },
+                                    {
+                                      "type": "steedos-field",
+                                      "config": {
+                                        "name": "data.approver_orgs",
+                                        "filterable": false,
+                                        "hidden": false,
+                                        "index": false,
+                                        "is_name": false,
+                                        "is_wide": false,
+                                        "label": "部门:",
+                                        "multiple": true,
+                                        "omit": false,
+                                        "readonly": false,
+                                        "reference_to": "organizations",
+                                        "required": true,
+                                        "searchable": false,
+                                        "sort_no": 250,
+                                        "sortable": true,
+                                        "type": "lookup",
+                                        "amis": {
+                                          "visibleOn": "${data.deal_type == 'specifyOrg'}",
+                                          "clearValueOnHidden": false,
+                                          "id": "u:c721cc9516e6"
+                                        }
+                                      },
+                                      "id": "u:7fd787d10e7f"
+                                    },
+                                    {
+                                      "name": "data.approver_user_field",
+                                      "label": "人员字段:",
+                                      "type": "select",
+                                      "visibleOn": "${data.deal_type == 'userField' || data.deal_type == 'userFieldRole'}",
+                                      "required": true,
+                                      "source": "${fieldListForUser}"
+                                    },
+                                    {
+                                      "name": "data.approver_org_field",
+                                      "label": "部门字段:",
+                                      "type": "select",
+                                      "visibleOn": "${data.deal_type == 'orgField' || data.deal_type == 'orgFieldRole'}",
+                                      "required": true,
+                                      "source": "${fieldListForOrg}"
+                                    },
+                                    {
+                                      "type": "input-number",
+                                      "label": "超时提醒(小时):",
+                                      "precision": 2,
+                                      "name": "data.timeout_hours",
+                                      "visibleOn": "${data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:a79c94b928e3"
+                                    },
+                                    {
+                                      "name": "data.disableCC",
+                                      "type": "checkbox",
+                                      "option": "禁止传阅",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:9eb669f35731"
+                                    },
+                                    {
+                                      "name": "data.allowDistribute",
+                                      "type": "checkbox",
+                                      "option": "允许分发",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:e7f7af3b16f2"
+                                    },
+                                    {
+                                      "name": "data.can_edit_main_attach",
+                                      "type": "checkbox",
+                                      "option": "修改正文",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end'}",
+                                      "id": "u:40838de90545"
+                                    },
+                                    {
+                                      "name": "data.can_edit_normal_attach",
+                                      "type": "checkbox",
+                                      "option": "修改附件",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end'}",
+                                      "id": "u:0875dadff333"
+                                    },
+                                    {
+                                      "name": "data.cc_must_finished",
+                                      "type": "checkbox",
+                                      "option": "必须等待传阅完成",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:2ea52c0a4f13"
+                                    },
+                                    {
+                                      "name": "data.cc_alert",
+                                      "type": "checkbox",
+                                      "option": "弹出传阅提醒",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:34e1f13c54d6"
+                                    },
+                                    {
+                                      "name": "data.allowBatch",
+                                      "type": "checkbox",
+                                      "option": "批量审批",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:1c5109954795"
+                                    },
+                                    {
+                                      "name": "data.oneClickApproval",
+                                      "type": "checkbox",
+                                      "option": "一键核准",
+                                      "visibleOn": "${data.step_type == 'counterSign'}",
+                                      "id": "u:a569a1461a53"
+                                    },
+                                    {
+                                      "name": "data.oneClickRejection",
+                                      "type": "checkbox",
+                                      "option": "一键驳回",
+                                      "visibleOn": "${data.step_type == 'counterSign'}",
+                                      "id": "u:24e7ed3e801c"
+                                    },
+                                    {
+                                      "name": "data.allow_pick_approve_users",
+                                      "type": "checkbox",
+                                      "option": "允许审批时指定处理人",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:ec46102a2495"
+                                    },
+                                    {
+                                      "name": "data.allow_skip",
+                                      "type": "checkbox",
+                                      "option": "允许开始步骤指定跳过此步骤",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:3033ecb92058"
+                                    },
+                                    {
+                                      "name": "data.cc_has_edit_permission",
+                                      "type": "checkbox",
+                                      "option": "按传阅者的权限编辑表单",
+                                      "visibleOn": "${data.step_type != 'condition' && data.step_type !='end' && data.step_type != 'start'}",
+                                      "id": "u:d4da050e32e8"
+                                    }
+                                  ],
+                                  "wrapWithPanel": false,
+                                  "onEvent": {
+                                    "change": {
+                                      "weight": 0,
+                                      "actions": [
+                                        {
+                                          "actionType": "custom",
+                                          "script": "let data = event.data.data;\n//变更处理人的时候，处理人相关属性清空\nif (event.data.data.deal_type != event.data.__super.__prev.data.deal_type) {\n  data = {\n    ...data,\n    approver_hr_roles: [],\n    approver_org_field: '',\n    approver_orgs: [],\n    approver_roles: [],\n    approver_step: '',\n    approver_user_field: '',\n    approver_users: []\n  };\n  doAction({\n    actionType: 'setValue',\n    args: {\n      value: {\n        data\n      }\n    }\n  });\n}\nevent.data.reactFlowInstance.setNodes(function (nds) {\n  return nds.map((node) => {\n    if (node.id === event.data.id) {\n    node.data = {\n        ...node.data,\n        ...data,\n      };\n      node.data.label = Steedos.getWorkflowStepLabel(node.data);\n    }\n    return node;\n  })\n});"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "id": "u:c8208247a69d"
+                                },
+                                "source": "${reactFlowSelection.nodes}",
+                                "visibleOn": "${reactFlowSelection.nodes.length}"
+                              },
+                              {
+                                "type": "each",
+                                "items": {
+                                  "type": "form",
+                                  "debug": true,
+                                  "body": [
+                                    {
+                                      "type": "input-text",
+                                      "name": "data.name",
+                                      "label": "连线名称:",
+                                      "id": "u:3de37a96b91a"
+                                    },
+                                    {
+                                      "type": "input-text",
+                                      "name": "data.condition",
+                                      "label": "连线条件:",
+                                      "required": true,
+                                      "placeholder": "例如：{金额}>10"
+                                    },
+                                    {
+                                      "type": "checkbox",
+                                      "name": "data.timeout_line",
+                                      "label": "超时设置:",
+                                      "id": "u:f0fc5232275c",
+                                      "option": "超时自动流转到此路径"
+                                    }
+                                  ],
+                                  "wrapWithPanel": false,
+                                  "id": "u:6767d57a2ec1",
+                                  "onEvent": {
+                                    "change": {
+                                      "weight": 0,
+                                      "actions": [
+                                        {
+                                          "actionType": "custom",
+                                          "script": "\nevent.data.reactFlowInstance.setEdges(function (eds) {\n  return eds.map((edge) => {\n    if (edge.id === event.data.id) {\n      edge.data = {\n        ...edge.data,\n        ...event.data.data,\n      };\n      edge.label = edge.data.name;\n    }\n    return edge;\n  })\n});"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "id": "u:d835e9606d64",
+                                "source": "${reactFlowSelection.edges}",
+                                "visibleOn": "${reactFlowSelection.edges.length}"
+                              }
+                            ],
+                            "id": "u:406e84d38bbe",
+                            "className": "px-0"
+                          },
+                          {
+                            "title": "权限",
+                            "tab": [
+                              {
+                                "type": "input-tree",
+                                "label": "请勾选本步骤允许编辑的字段",
+                                "name": "tree",
+                                "multiple": true,
+                                "autoCheckChildren": true,
+                                "source": "${permissionsOptions}",
+                                "id": "u:a8e4ac91a3d3",
+                                "showIcon": false,
+                                "heightAuto": true
+                              }
+                            ],
+                            "visibleOn": "${reactFlowSelection.nodes.length && reactFlowSelectedNode.data.step_type != 'condition' && reactFlowSelectedNode.data.step_type != 'end'}",
+                            "id": "u:d7050d1d672f"
+                          }
+                        ],
+                        "contentClassName": "bg-gray-50"
+                      }
                     ],
-                    "id": "u:eeee71a41b86",
-                    "affixFooter": false,
-                    "className": "Panel--default h-full warpper-panel bg-white",
-                    "bodyClassName": "warpper-panel-body relative",
-                    "header": [
-                        {
-                            "type": "tpl",
-                            "id": "u:b2ad0b257ab1",
-                            "className": "flex flex-1 justify-center",
-                            "tpl": "${flow.name}"
-                        },
-                        {
-                            "type": "button",
-                            "label": "保存",
-                            "id": "u:6609db3e32cf",
-                            "className": "mr-3",
-                            "onEvent": {
-                                "click": {
-                                    "weight": 0,
-                                    "actions": [
-                                        {
-                                            "actionType": "custom",
-                                            "script": "debugger;\n\n/**\n * 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\n * 1.需要把edges分别存入每个nodes中作为step返回；\n * 2.权限input-tree选中值要转换存入每个步骤的permissions属性中；\n * 3.参考老流程设计器前端代码 https://github.com/steedos/steedos-web，补充必要的连线和步骤属性等规则\n * 4.参考老流程设计器保存接口代码 https://github.com/steedos/steedos-platform/blob/3ff728a72933f8007642736a8082350989545542/packages/workflow/src/designerRouter.js#L378，补充必要的连线和步骤属性等规则\n */\nfunction getStepsForSave(nodes, edges) {\n  let steps = nodes;\n  return steps;\n}\n\nSteedos.validateWokflow(context, doAction, event);\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
-                                        },
-                                        {
-                                            "actionType": "ajax",
-                                            "outputVar": "responseResult",
-                                            "args": {
-                                                "options": {},
-                                                "api": {
-                                                    "url": "/testSaveFlow",
-                                                    "method": "post",
-                                                    "requestAdaptor": "",
-                                                    "adaptor": "",
-                                                    "messages": {},
-                                                    "data": {
-                                                        "Flows": "${flowsForSave}"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    "headerClassName": "flex justify-between items-center h-12 border-bottom bg-gray-50 rounded-t-md",
+                    "id": "u:a585ef75560b",
+                    "className": "absolute top-0 right-0 bottom-0 w-80 z-10 m-0 rounded-none overflow-auto bg-gray-50 border-none border-left",
                     "title": "",
-                    "actions": []
-                }
+                    "affixFooter": false
+                  },
+                  {
+                    "type": "steedos-react-flow",
+                    "id": "u:4dc36cb794c7",
+                    "onEvent": {
+                      "getInstance": {
+                        "weight": 0,
+                        "actions": [
+                          {
+                            "actionType": "setValue",
+                            "args": {
+                              "value": {
+                                "reactFlowInstance": "${event.data.reactFlowInstance}"
+                              }
+                            },
+                            "componentId": "service_react_flow"
+                          }
+                        ]
+                      },
+                      "selectionChange": {
+                        "weight": 0,
+                        "actions": [
+                          {
+                            "actionType": "setValue",
+                            "args": {
+                              "value": {
+                                "reactFlowSelection": "${event.data}",
+                                "reactFlowSelectedNode": "${event.data.nodes[0]}",
+                                "reactFlowSelectedEdge": "${event.data.edges[0]}"
+                              }
+                            },
+                            "componentId": "service_react_flow"
+                          },
+                          {
+                            "actionType": "changeActiveKey",
+                            "args": {
+                              "activeKey": 3
+                            },
+                            "componentId": "tabs_react_flow",
+                            "expression": "${event.data.nodes.length || event.data.edges.length}"
+                          },
+                          {
+                            "actionType": "changeActiveKey",
+                            "args": {
+                              "activeKey": 1
+                            },
+                            "componentId": "tabs_react_flow",
+                            "expression": "${event.data.nodes.length === 0 && event.data.edges.length === 0}"
+                          },
+                          {
+                            "actionType": "custom",
+                            "script": "console.log('event.data===>',event.data);Steedos.validateWokflowCurrentStep(context, doAction, event);"
+                          }
+                        ]
+                      },
+                      "edgesChange": {
+                        "weight": 0,
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "Steedos.validateWokflow(context, doAction, event);"
+                          }
+                        ]
+                      },
+                      "nodesChange": {
+                        "weight": 0,
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "Steedos.validateWokflow(context, doAction, event);"
+                          }
+                        ]
+                      }
+                    },
+                    "name": "flow_chart",
+                    "wrapperClassName": "absolute top-0 right-80 bottom-0 left-0",
+                    "config": "${config}",
+                    "visibleOn": "${config.nodes.length}",
+                    "backgroundConfig": {
+                      "variant": "lines"
+                    }
+                  }
+                ],
+                "id": "u:eeee71a41b86",
+                "affixFooter": false,
+                "className": "Panel--default h-full warpper-panel bg-white",
+                "bodyClassName": "warpper-panel-body relative",
+                "header": [
+                  {
+                    "type": "tpl",
+                    "id": "u:b2ad0b257ab1",
+                    "className": "flex flex-1 justify-center",
+                    "tpl": "${flow.name}"
+                  },
+                  {
+                    "type": "button",
+                    "label": "保存",
+                    "id": "u:6609db3e32cf",
+                    "className": "mr-3",
+                    "onEvent": {
+                      "click": {
+                        "weight": 0,
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "debugger;\n\n/**\n * 根据reactFlowData.nodes,reactFlowData.edges生成需要保存的步骤集合，连线在步骤里面\n * 1.需要把edges分别存入每个nodes中作为step返回；\n * 2.权限input-tree选中值要转换存入每个步骤的permissions属性中；\n * 3.参考老流程设计器前端代码 https://github.com/steedos/steedos-web，补充必要的连线和步骤属性等规则\n * 4.参考老流程设计器保存接口代码 https://github.com/steedos/steedos-platform/blob/3ff728a72933f8007642736a8082350989545542/packages/workflow/src/designerRouter.js#L378，补充必要的连线和步骤属性等规则\n */\nfunction getStepsForSave(nodes, edges) {\n  let steps = nodes;\n  return steps;\n}\n\nSteedos.validateWokflow(context, doAction, event);\n\nvar reactFlowInstance = event.data.reactFlowInstance;\nvar reactFlowData = reactFlowInstance && reactFlowInstance.toObject();\nvar steps = getStepsForSave(reactFlowData.nodes, reactFlowData.edges);\nvar flow = event.data.flow;\ndelete flow._display;\ndelete flow.form__expand;\nevent.data.flowsForSave = [{\n  ...flow,\n  current: {\n    ...flow.current,\n    steps\n  }\n}]\n"
+                          },
+                          {
+                            "actionType": "ajax",
+                            "outputVar": "responseResult",
+                            "args": {
+                              "options": {
+                              },
+                              "api": {
+                                "url": "/testSaveFlow",
+                                "method": "post",
+                                "requestAdaptor": "",
+                                "adaptor": "",
+                                "messages": {
+                                },
+                                "data": {
+                                  "Flows": "${flowsForSave}"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "headerClassName": "flex justify-between items-center h-12 border-bottom bg-gray-50 rounded-t-md",
+                "title": "",
+                "actions": [
+                ]
+              }
             ],
             "className": "w-full h-full",
-            "messages": {},
-            "data": {
-                "deal_type_options": [
-                    {
-                        "label": "审批时指定人员",
-                        "value": "pickupAtRuntime"
-                    },
-                    {
-                        "label": "指定人员",
-                        "value": "specifyUser"
-                    },
-                    {
-                        "label": "指定角色",
-                        "value": "hrRole"
-                    },
-                    {
-                        "label": "指定审批岗位",
-                        "value": "applicantRole"
-                    },
-                    {
-                        "label": "申请人的上级",
-                        "value": "applicantSuperior"
-                    },
-                    {
-                        "label": "申请人",
-                        "value": "applicant"
-                    },
-                    {
-                        "label": "指定部门",
-                        "value": "specifyOrg"
-                    }
-                ],
-                "deal_type_options_for_counterSign": [
-                    {
-                        "label": "审批时指定人员",
-                        "value": "pickupAtRuntime"
-                    },
-                    {
-                        "label": "指定人员",
-                        "value": "specifyUser"
-                    },
-                    {
-                        "label": "指定角色",
-                        "value": "hrRole"
-                    },
-                    {
-                        "label": "指定审批岗位",
-                        "value": "applicantRole"
-                    },
-                    {
-                        "label": "指定部门",
-                        "value": "specifyOrg"
-                    }
-                ]
+            "messages": {
             },
             "api": {
-                "url": "/graphql",
-                "method": "post",
-                "messages": {},
-                "requestAdaptor": "const flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            api_name, app, category, code_formula, current, current_no, description, \n            form, help_text, is_deleted, is_valid, name, name_formula\n            space, state, created, created_by, modified, modified_by,\n            object_name, owner,company_id\n            form__expand{\n                name,\n                current\n            },\n            _display:_ui{ created,created_by,modified,modified_by }\n        }\n    }\n`;\nreturn api;\n\n",
-                "adaptor": "const data = payload.data.data && payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\n\n\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      sourcePosition: \"right\",\n      targetPosition: \"left\",\n      data: {\n        label: Steedos.getWorkflowStepLabel(step),\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id || Steedos.getWorkflowUUID(),\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          markerEnd: {\n            type: \"arrowclosed\",\n            width: 20,\n            height: 20,\n            // color: '#999',\n          },\n          style: {\n            // stroke: \"#999\",\n            strokeWidth: 1\n          },\n          labelStyle: {\n            fontSize: \"15px\"\n          },\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\n\nvar formData = data.form__expand;\nvar formFields = formData.current.fields;\nvar fieldsOptios = [];\nif (formFields && formFields.length) { \n  formFields.forEach(function (item) { \n    fieldsOptios.push({\n      label: item.name,\n      value: item.code\n    });\n  });\n}\nvar permissionsOptions = [{\n  label: formData.name,\n  value: \"__form\",\n  children: fieldsOptios\n}];\n\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\n\n// TODO:permissionsOptions对应的input-tree需要初始值，从每个步骤的permissions属性值中转换可得到初始值。\n\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"flow\": {\n      ...data,\n      flowtype: \"new\"//写死，流程对象没有这个字段，但是老的流程设计器startup返回了此字段且此字段要保存\n    },\n    \"permissionsOptions\": permissionsOptions,\n    \"config\": convertedConfigData\n  }\n}",
-                "dataType": "json"
+              "url": "/graphql",
+              "method": "post",
+              "messages": {
+              },
+              "requestAdaptor": "const flowId = api.data.flowId;\napi.data.query = `\n    {\n        data: flows(filters: [\"_id\", \"=\", \"`+ flowId +`\"]){\n            api_name, app, category, code_formula, current, current_no, description, \n            form, help_text, is_deleted, is_valid, name, name_formula\n            space, state, created, created_by, modified, modified_by,\n            object_name, owner,company_id\n            form__expand{\n                name,\n                current\n            },\n            _display:_ui{ created,created_by,modified,modified_by }\n        }\n    }\n`;\nreturn api;\n\n",
+              "adaptor": "const data = payload.data.data && payload.data.data[0];\nlet convertedNodes = [];\nlet convertedEdges = [];\n\n\nif (data && data.current && data.current.steps && data.current.steps.length) {\n  data.current.steps.forEach(function (step) {\n    var type;\n    if (step.step_type == \"start\") {\n      // 开始结点有可能作为连线的终点\n      // type = \"input\";\n    }\n    else if (step.step_type == \"end\") {\n      type = \"output\";\n    }\n    convertedNodes.push({\n      id: step._id,\n      type: type,\n      position: {\n        x: step.posx,\n        y: step.posy\n      },\n      sourcePosition: \"right\",\n      targetPosition: \"left\",\n      data: {\n        label: Steedos.getWorkflowStepLabel(step),\n        ...step\n      }\n    });\n    if (step.lines) {\n      step.lines.forEach(function (line) {\n        convertedEdges.push({\n          id: line._id || Steedos.getWorkflowUUID(),\n          label: line.name,\n          source: step._id,\n          target: line.to_step,\n          markerEnd: {\n            type: \"arrowclosed\",\n            width: 20,\n            height: 20,\n            // color: '#999',\n          },\n          style: {\n            // stroke: \"#999\",\n            strokeWidth: 1\n          },\n          labelStyle: {\n            fontSize: \"15px\"\n          },\n          data: {\n            ...line\n          }\n        });\n      });\n    }\n  });\n}\n\nvar formData = data.form__expand;\nvar formFields = formData.current.fields;\nvar fieldsOptios = [];\nvar fieldListForUser = [];\nvar fieldListForOrg = [];\nif (formFields && formFields.length) { \n  formFields.forEach(function (item) { \n    fieldsOptios.push({\n      label: item.name,\n      value: item.code\n    });\n    if (item.type == \"user\") {\n      fieldListForUser.push({\n        label: item.code,\n        value: item._id\n      })\n    } else if (item.type == \"group\") {\n      fieldListForOrg.push({\n        label: item.code,\n        value: item._id\n      })\n    }\n  });\n}\nvar permissionsOptions = [{\n  label: formData.name,\n  value: \"__form\",\n  children: fieldsOptios\n}];\n\nlet convertedConfigData = {\n  nodes: convertedNodes,\n  edges: convertedEdges\n};\n\n// TODO:permissionsOptions对应的input-tree需要初始值，从每个步骤的permissions属性值中转换可得到初始值。\n\nreturn {\n  \"status\": 0,\n  \"msg\": \"\",\n  \"data\": {\n    \"flow\": {\n      ...data,\n      flowtype: \"new\"//写死，流程对象没有这个字段，但是老的流程设计器startup返回了此字段且此字段要保存\n    },\n    \"permissionsOptions\": permissionsOptions,\n    \"config\": convertedConfigData,\n    \"fieldListForUser\": fieldListForUser,\n    \"fieldListForOrg\": fieldListForOrg\n  }\n}",
+              "dataType": "json",
+              "data": {
+                "flowId": "${flowId}"
+              }
             }
-        }
+          }
     ],
     "regions": [
         "body"
