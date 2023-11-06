@@ -3988,13 +3988,6 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/minipass@*":
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/@types/minipass/-/minipass-3.3.5.tgz#ba65aaae3fe7318520bd4a40bc71c53fc8826e45"
-  integrity sha512-M2BLHQdEmDmH671h0GIlOQQJrgezd1vNqq7PVj1VOsHZ2uQQb4iPiQIl0SlMdhxZPUsLIfEklmeEHXg8DJRewA==
-  dependencies:
-    minipass "*"
-
 "@types/node@*", "@types/node@>=10.0.0", "@types/node@>=13.7.0":
   version "18.11.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
@@ -4139,13 +4132,13 @@
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.8.tgz#b94a4391c85666c7b73299fd3ad79d4faa435310"
   integrity sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==
 
-"@types/tar@4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@types/tar/-/tar-4.0.3.tgz#e2cce0b8ff4f285293243f5971bd7199176ac489"
-  integrity sha512-Z7AVMMlkI8NTWF0qGhC4QIX0zkV/+y0J8x7b/RsHrN0310+YNjoJd8UrApCiGBCWtKjxS9QhNqLi2UJNToh5hA==
+"@types/tar@6.1.7":
+  version "6.1.7"
+  resolved "https://registry.yarnpkg.com/@types/tar/-/tar-6.1.7.tgz#c4244e478fe6a3f36ea3fe2de69d3053d7ddcd28"
+  integrity sha512-57ovoJf/lFhugSbDqDgpulTfm78uwO0Pa3EwgO3Op2IAIDZaDE4Z/orZ2yl25QRr8NQa1xjms9ElcoHx4pUedQ==
   dependencies:
-    "@types/minipass" "*"
     "@types/node" "*"
+    minipass "^4.0.0"
 
 "@types/tmp@^0.2.0":
   version "0.2.3"
@@ -12539,13 +12532,6 @@ minipass-sized@^1.0.3:
   dependencies:
     minipass "^3.0.0"
 
-minipass@*, minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.3.4.tgz#ca99f95dd77c43c7a76bf51e6d200025eee0ffae"
-  integrity sha512-I9WPbWHCGu8W+6k1ZiGpPu0GkoKBeorkfKNuAFBNS1HNFJvke82sxvI5bzcCNpWPorkOO5QQ+zomzzwRxejXiw==
-  dependencies:
-    yallist "^4.0.0"
-
 minipass@^2.3.5, minipass@^2.6.0, minipass@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.9.0.tgz#e713762e7d3e32fed803115cf93e04bca9fcc9a6"
@@ -12553,6 +12539,13 @@ minipass@^2.3.5, minipass@^2.6.0, minipass@^2.9.0:
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
+
+minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.3.4.tgz#ca99f95dd77c43c7a76bf51e6d200025eee0ffae"
+  integrity sha512-I9WPbWHCGu8W+6k1ZiGpPu0GkoKBeorkfKNuAFBNS1HNFJvke82sxvI5bzcCNpWPorkOO5QQ+zomzzwRxejXiw==
+  dependencies:
+    yallist "^4.0.0"
 
 minipass@^3.1.6:
   version "3.3.6"
