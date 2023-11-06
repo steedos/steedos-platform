@@ -1,13 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "moduleResolution": "node",
-    "strict": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": false,
-    "declaration": true,
-    "removeComments": true
+      "module": "commonjs",
+      "target": "ES2017",
+      "noImplicitAny": false,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true,
+      "declaration": true,
+      "noFallthroughCasesInSwitch": true,
+      "stripInternal": true,
+      "strictNullChecks": true,
+      "resolveJsonModule": true,
+      "outDir": "./dist",
+      "newLine": "LF",
+      "lib": [
+          "es2017"
+      ],
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "removeComments": true
   },
-  "exclude": ["templates", "dist"]
+  "include": [
+      "./src",
+  ],
+  "exclude": [
+    "./package.json",
+    "**/node_modules",
+    "**/*.spec.ts"
+  ]
 }

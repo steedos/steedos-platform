@@ -174,7 +174,7 @@ export async function createApp({
     const ignorePath = path.join(root, '.gitignore')
     if (!fs.existsSync(ignorePath)) {
       fs.copyFileSync(
-        path.join(__dirname, 'templates', template, 'gitignore'),
+        path.join(__dirname, '..', 'templates', template, 'gitignore'),
         ignorePath
       )
     }
@@ -183,7 +183,7 @@ export async function createApp({
     const tsconfigPath = path.join(root, 'tsconfig.json')
     if (fs.existsSync(tsconfigPath)) {
       fs.copyFileSync(
-        path.join(__dirname, 'templates', 'typescript', 'next-env.d.ts'),
+        path.join(__dirname, '..', 'templates', 'typescript', 'next-env.d.ts'),
         path.join(root, 'next-env.d.ts')
       )
     }
@@ -282,7 +282,7 @@ export async function createApp({
     await cpy(['**'], root, {
       dot: true,
       parents: true,
-      cwd: path.join(__dirname, 'templates', template),
+      cwd: path.join(__dirname, '..', 'templates', template),
       // rename: (name) => {
       //   switch (name) {
       //     case 'env':
