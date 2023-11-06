@@ -219,20 +219,58 @@
                   "requestAdaptor": ""
                 }
               }
-            ],
-            "id": "u:0f089a2850b6"
+            ]
           }
         },
         "objects": {
           "amis": {
-            "visible": false,
-            "id": "u:0da32850b9c4"
+            "name": "objects",
+            "type": "select",
+            "className": "m-0",
+            "labelClassName": "text-left",
+            "id": "u:4e5047e44905",
+            "joinValues": false,
+            "extractValue": true,
+            "labelField": "label",
+            "valueField": "value",
+            "multiple": true,
+            "checkAll": false,
+            "searchable": true,
+            "menuTpl": "",
+            "source": {
+              "method": "get",
+              "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+              "headers": {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+              }
+            },
+            "autoComplete": ""
           }
         },
         "mobile_objects": {
           "amis": {
-            "visible": false,
-            "id": "u:e6a9ebf91dbc"
+            "name": "mobile_objects",
+            "type": "select",
+            "className": "m-0",
+            "labelClassName": "text-left",
+            "id": "u:cfaeb2f857a8",
+            "joinValues": false,
+            "extractValue": true,
+            "labelField": "label",
+            "valueField": "value",
+            "multiple": true,
+            "checkAll": false,
+            "searchable": true,
+            "menuTpl": "",
+            "source": {
+              "method": "get",
+              "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+              "messages": {},
+              "headers": {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+              }
+            },
+            "autoComplete": ""
           }
         }
       },
