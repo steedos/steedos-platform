@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-31 17:04:51
+ * @LastEditTime: 2023-11-06 15:31:12
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -127,6 +127,7 @@ if (Meteor.isClient) {
                                     multiple: atts.multiple,
                                     reference_to: atts.reference_to,
                                     reference_to_field: atts.reference_to_field,
+                                    filters: _.isString(atts.filters) ? JSON.parse(atts.filters) : atts.filters,
                                     amis: {
                                         value: values,
                                         static: disabled,

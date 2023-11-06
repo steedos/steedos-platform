@@ -299,6 +299,7 @@ var s_autoform = function (schema, field) {
             autoform.fieldType = 'lookup'
             autoform.reference_to= field.reference_to,
             autoform.reference_to_field= field.reference_to_field
+            autoform.filters = field.filters;
             autoform.config = field.config;
             break;
         default:

@@ -28,7 +28,7 @@ export enum SteedosMetadataTypeInfoKeys {
     Trigger = 'Trigger',
     Translation = 'Translation',
     ObjectTranslation = 'CustomObjectTranslation',
-    Dashboard = 'Dashboard',
+    // Dashboard = 'Dashboard',
     Flow = 'Flow',
     Role = 'Role',
     FlowRole = 'FlowRole',
@@ -40,7 +40,9 @@ export enum SteedosMetadataTypeInfoKeys {
     Tab = "Tab",
     RestrictionRule = "RestrictionRule",
     ShareRule = "ShareRule",
-    Import = "Import"
+    Import = "Import",
+    Question = "Question",
+    Dashboard = "Dashboard"
 }
 
 const loadType = function (filePath){

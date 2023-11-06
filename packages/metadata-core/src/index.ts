@@ -157,14 +157,16 @@ export function getFileinfoByFilename(filename) {
         itemName = _.first(parts);
         unPackageYmlFile = true;
     
-    }else if(filename.endsWith('.dashboard.yml')){
-        metadataName = TypeInfoKeys.Dashboard;
+    }
+    // else if(filename.endsWith('.dashboard.yml')){
+    //     metadataName = TypeInfoKeys.Dashboard;
 
-        var parts = filename.split('.');
-        itemName = _.first(parts);
-        unPackageYmlFile = true;
+    //     var parts = filename.split('.');
+    //     itemName = _.first(parts);
+    //     unPackageYmlFile = true;
     
-    }else if(filename.endsWith('.workflow.yml')){
+    // }
+    else if(filename.endsWith('.workflow.yml')){
         metadataName = TypeInfoKeys.Workflow;
         itemName = _.first(filename.split('.'));
 
@@ -220,6 +222,14 @@ export function getFileinfoByFilename(filename) {
         itemName = _.first(filename.split('.'));
     }else if(filename.endsWith('.import.yml')){
         metadataName = TypeInfoKeys.Import;
+        itemName = _.first(filename.split('.'));
+
+    }else if(filename.endsWith('.dashboard.yml')){
+        metadataName = TypeInfoKeys.Dashboard;
+        itemName = _.first(filename.split('.'));
+
+    }else if(filename.endsWith('.question.yml')){
+        metadataName = TypeInfoKeys.Question;
         itemName = _.first(filename.split('.'));
 
     }else{

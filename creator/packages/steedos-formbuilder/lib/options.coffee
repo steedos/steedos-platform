@@ -115,20 +115,27 @@ OPTIONSUSERATTRS = {
 }
 
 # 定义字段属性: lookup字段
-LOOKUP_PROPS={
+LOOKUPPROPS={
 	reference_to: {
 		label: '相关对象(object name)',
 		type: 'text',
-		required: 'true'
+		required: true,
+		value: ''
 	},
 	reference_to_field: {
 		label: '相关对象字段(field name)',
-		type: 'text'
+		type: 'text',
+		value: ''
 	},
-
+	filters: {
+		label: '过滤条件',
+		type: 'textarea',
+		value: ''
+	},
 	config: {
-		label: '配置',
-		type: 'textarea'
+		label: '字段配置',
+		type: 'textarea',
+		value: ''
 	}
 }
 
@@ -180,7 +187,7 @@ getTypeUserAttrs = ()->
 			when 'image'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'default_value', 'is_list_display')
 			when 'lookup'
-				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, BASEUSERATTRS, LOOKUP_PROPS
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, MULTISELECTUSERATTRS, BASEUSERATTRS, LOOKUPPROPS
 			when 'table'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, {
 					_id: {

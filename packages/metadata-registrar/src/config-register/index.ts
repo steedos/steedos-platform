@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-27 11:36:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-24 09:57:04
+ * @LastEditTime: 2023-11-06 17:00:35
  * @Description: 
  */
 import { registerPackageQueries } from "./query";
@@ -17,6 +17,8 @@ import { registerPackageApps } from "./app";
 import { addObjectConfigFiles, addObjectDataFiles, addRouterFiles, addServerScriptFiles } from "./core";
 import { addConfigFiles } from "../config";
 import { loadPackageClientScripts } from "./client_script";
+import { registerPackageQuestion } from './question'
+import { registerPackageDashboard } from './dashboard'
 
 export { loadStandardMetadata } from './core'
 
@@ -32,6 +34,8 @@ export const registerMetadataConfigs = async (filePath, datasourceApiName, servi
     await registerPackagePages(filePath, serviceName);
     await registerPackageTabs(filePath, serviceName);
     await registerPackageShareRules(filePath, serviceName);
+    await registerPackageQuestion(filePath, serviceName);
+    await registerPackageDashboard(filePath, serviceName)
     await registerPackageRestrictionRules(filePath, serviceName);
     
     await loadPackageClientScripts(serviceName, filePath);

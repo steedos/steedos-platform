@@ -270,7 +270,7 @@ class ZipDescription{
                 }
             }else if(!(basename.endsWith('objectTranslation.yml') 
                     || basename.endsWith('translation.yml')
-                    || basename.endsWith('dashboard.yml')
+                    // || basename.endsWith('dashboard.yml')
                     || basename.endsWith('workflow.yml'))){
                 
                 if(parentName){
