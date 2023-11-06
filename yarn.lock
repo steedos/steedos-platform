@@ -3587,6 +3587,15 @@
   dependencies:
     lodash "^4.17.21"
 
+"@steedos/filters@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.5.11-beta.10.tgz#d459bc661e730ed2e9a6b5218e4a18e8ffef15ec"
+  integrity sha512-vr5opZDhwx3JgErhwSUJxEYIXQy+tqfwkTY4eVIoOQS/sqNy7zNGrAcbrE4cJ1twOpVKt2Ji48rk+1EFJjj9zQ==
+  dependencies:
+    "@babel/runtime" "7.12.18"
+    lodash "4.17.21"
+    moment "^2.24.0"
+
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/@steedos/mongodb-memory-server-core/-/mongodb-memory-server-core-7.0.0-beta.14.tgz#a9b8ea6ac08160bff416c2afc35c656d7fdb9f23"
@@ -3612,6 +3621,19 @@
     yauzl "^2.10.0"
   optionalDependencies:
     rimraf "^3.0.2"
+
+"@steedos/odata-v4-mongodb@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-mongodb/-/odata-v4-mongodb-2.5.11-beta.10.tgz#585b5202e855710dd7718f4ccb9b244991cfdeeb"
+  integrity sha512-JjJ2BmKYcs86Uoe4mUtwhHs7LKxDsWxGWLOc8bv56LdHN38YGZEI1vpgXwCHI4xKvNRyaSsEHYSVoKeYxPo+Cw==
+  dependencies:
+    "@steedos/odata-v4-parser" "2.5.11-beta.10"
+    odata-v4-literal "^0.1.0"
+
+"@steedos/odata-v4-parser@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
+  integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
 
 "@steedos/steedos-plugin-workflow@^2.1.3":
   version "2.1.3"

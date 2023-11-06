@@ -1,14 +1,14 @@
 import * as _ from 'underscore'
 
-import {objectsToDb} from '../collection/object'
-import {fieldsToDb} from '../collection/field'
-import {actionsToDb} from '../collection/action'
-import {listviewsToDb} from '../collection/listview'
-import {validationsToDb} from '../collection/objectValidation'
-import {objectPermissionsToDb} from '../collection/objectPermission'
-import {permissionSetsToDb} from '../collection/permissionset'
-import {applicationsToDb} from '../collection/application'
-import {reportsToDb} from '../collection/report'
+import { objectsToDb } from '../collection/object'
+import { fieldsToDb } from '../collection/field'
+import { actionsToDb } from '../collection/action'
+import { listviewsToDb } from '../collection/listview'
+import { validationsToDb } from '../collection/objectValidation'
+import { objectPermissionsToDb } from '../collection/objectPermission'
+import { permissionSetsToDb } from '../collection/permissionset'
+import { applicationsToDb } from '../collection/application'
+import { reportsToDb } from '../collection/report'
 import { workflowsToDb } from '../collection/workflow'
 import { flowsToDb } from '../collection/flow'
 import { approvalProcessesToDb } from '../collection/approvalProcess'
@@ -25,7 +25,8 @@ import { RestrictionRuleCollection } from '../collection/restrictionRule'
 import { ProcessCollection } from '../collection/process'
 import { TriggerCollection } from '../collection/trigger'
 import { ImportCollection } from '../collection/import'
-
+import { QuestionCollection } from '../collection/question'
+import { DashboardCollection } from '../collection/dashboard'
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -36,12 +37,14 @@ const restrictionRuleCollection = new RestrictionRuleCollection();
 const processCollection = new ProcessCollection();
 const triggerCollection = new TriggerCollection();
 const importCollection = new ImportCollection();
+const questionCollection = new QuestionCollection();
+const dashboardCollection = new DashboardCollection();
 
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo, hasChild, getChilds } from '@steedos/metadata-core';
 
-async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, parentName?, assistRecords?){
+async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, parentName?, assistRecords?) {
 
-    switch(metadataName){
+    switch (metadataName) {
         case TypeInfoKeys.Object:
             await objectsToDb(dbManager, metatdataRecords);
             break;
@@ -74,7 +77,7 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
             await permissionSetsToDb(dbManager, metatdataRecords, true);
             break;
 
-        case TypeInfoKeys.Process: 
+        case TypeInfoKeys.Process:
             await processCollection.deploy(dbManager, metatdataRecords);
             break;
 
@@ -93,11 +96,11 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
         case TypeInfoKeys.Flow:
             await flowsToDb(dbManager, metatdataRecords);
             break;
-            
+
         case TypeInfoKeys.ApprovalProcess:
             await approvalProcessesToDb(dbManager, metatdataRecords);
             break;
-        
+
         case TypeInfoKeys.Role:
             await rolesToDb(dbManager, metatdataRecords);
             break;
@@ -113,7 +116,7 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
         case TypeInfoKeys.Chart:
             await chartCollection.deploy(dbManager, metatdataRecords);
             break;
-        
+
         case TypeInfoKeys.Query:
             await queryCollection.deploy(dbManager, metatdataRecords);
             break;
@@ -136,13 +139,19 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
         case TypeInfoKeys.Import:
             await importCollection.deploy(dbManager, metatdataRecords);
             break;
+        case TypeInfoKeys.Question:
+            await questionCollection.deploy(dbManager, metatdataRecords);
+            break;
+        case TypeInfoKeys.Dashboard:
+            await dashboardCollection.deploy(dbManager, metatdataRecords);
+            break;
         default:
             break;
     }
 }
-export async function jsonToDb(steedosPackage, dbManager, session){
+export async function jsonToDb(steedosPackage, dbManager, session) {
 
-    const transactionOptions:any = {
+    const transactionOptions: any = {
         readPreference: 'primary',
         readConcern: { level: 'majority' },
         writeConcern: { w: 'majority' }
@@ -152,25 +161,25 @@ export async function jsonToDb(steedosPackage, dbManager, session){
         await session.withTransaction(async () => {
 
             const topKeys = [TypeInfoKeys.Profile, TypeInfoKeys.Permissionset, TypeInfoKeys.Role, TypeInfoKeys.FlowRole, TypeInfoKeys.Object]
-            var keys = _.sortBy(_.keys(steedosPackage), function(key){ 
-                return _.include(topKeys, key) ? -1: 1
+            var keys = _.sortBy(_.keys(steedosPackage), function (key) {
+                return _.include(topKeys, key) ? -1 : 1
             })
-            
-            for(const metadataName of keys){
+
+            for (const metadataName of keys) {
                 var metatdataRecords = steedosPackage[metadataName];
-                if(hasChild(metadataName)){
+                if (hasChild(metadataName)) {
 
                     const childs = getChilds(metadataName)
-                    
-                    for(const metatdataRecordName in metatdataRecords){ // accounts,agreement
+
+                    for (const metatdataRecordName in metatdataRecords) { // accounts,agreement
                         var metatdataRecord = metatdataRecords[metatdataRecordName];
-                        for(const childMetadataName of childs){
+                        for (const childMetadataName of childs) {
                             var childMetadataRecords = metatdataRecord[childMetadataName];
 
-                            if(childMetadataName == TypeInfoKeys.Permission){
+                            if (childMetadataName == TypeInfoKeys.Permission) {
                                 var assistRecords = steedosPackage[TypeInfoKeys.Permissionset]
                                 await metatdataRecordsToDb(dbManager, childMetadataName, childMetadataRecords, metatdataRecordName, assistRecords);
-                            }else{
+                            } else {
 
                                 await metatdataRecordsToDb(dbManager, childMetadataName, childMetadataRecords, metatdataRecordName);
                             }
@@ -180,10 +189,10 @@ export async function jsonToDb(steedosPackage, dbManager, session){
                 }
                 await metatdataRecordsToDb(dbManager, metadataName, metatdataRecords)
             }
-            
+
 
         }, transactionOptions);
-    } catch(err) {
+    } catch (err) {
         console.log(err)
         throw err
     }
