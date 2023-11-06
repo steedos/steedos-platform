@@ -3587,6 +3587,15 @@
   dependencies:
     lodash "^4.17.21"
 
+"@steedos/filters@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/filters/-/filters-2.5.11-beta.10.tgz#d459bc661e730ed2e9a6b5218e4a18e8ffef15ec"
+  integrity sha512-vr5opZDhwx3JgErhwSUJxEYIXQy+tqfwkTY4eVIoOQS/sqNy7zNGrAcbrE4cJ1twOpVKt2Ji48rk+1EFJjj9zQ==
+  dependencies:
+    "@babel/runtime" "7.12.18"
+    lodash "4.17.21"
+    moment "^2.24.0"
+
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/@steedos/mongodb-memory-server-core/-/mongodb-memory-server-core-7.0.0-beta.14.tgz#a9b8ea6ac08160bff416c2afc35c656d7fdb9f23"
@@ -3612,6 +3621,19 @@
     yauzl "^2.10.0"
   optionalDependencies:
     rimraf "^3.0.2"
+
+"@steedos/odata-v4-mongodb@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-mongodb/-/odata-v4-mongodb-2.5.11-beta.10.tgz#585b5202e855710dd7718f4ccb9b244991cfdeeb"
+  integrity sha512-JjJ2BmKYcs86Uoe4mUtwhHs7LKxDsWxGWLOc8bv56LdHN38YGZEI1vpgXwCHI4xKvNRyaSsEHYSVoKeYxPo+Cw==
+  dependencies:
+    "@steedos/odata-v4-parser" "2.5.11-beta.10"
+    odata-v4-literal "^0.1.0"
+
+"@steedos/odata-v4-parser@2.5.11-beta.10":
+  version "2.5.11-beta.10"
+  resolved "https://registry.yarnpkg.com/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
+  integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
 
 "@steedos/steedos-plugin-workflow@^2.1.3":
   version "2.1.3"
@@ -3966,13 +3988,6 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/minipass@*":
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/@types/minipass/-/minipass-3.3.5.tgz#ba65aaae3fe7318520bd4a40bc71c53fc8826e45"
-  integrity sha512-M2BLHQdEmDmH671h0GIlOQQJrgezd1vNqq7PVj1VOsHZ2uQQb4iPiQIl0SlMdhxZPUsLIfEklmeEHXg8DJRewA==
-  dependencies:
-    minipass "*"
-
 "@types/node@*", "@types/node@>=10.0.0", "@types/node@>=13.7.0":
   version "18.11.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
@@ -4117,13 +4132,13 @@
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.8.tgz#b94a4391c85666c7b73299fd3ad79d4faa435310"
   integrity sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==
 
-"@types/tar@4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@types/tar/-/tar-4.0.3.tgz#e2cce0b8ff4f285293243f5971bd7199176ac489"
-  integrity sha512-Z7AVMMlkI8NTWF0qGhC4QIX0zkV/+y0J8x7b/RsHrN0310+YNjoJd8UrApCiGBCWtKjxS9QhNqLi2UJNToh5hA==
+"@types/tar@6.1.7":
+  version "6.1.7"
+  resolved "https://registry.yarnpkg.com/@types/tar/-/tar-6.1.7.tgz#c4244e478fe6a3f36ea3fe2de69d3053d7ddcd28"
+  integrity sha512-57ovoJf/lFhugSbDqDgpulTfm78uwO0Pa3EwgO3Op2IAIDZaDE4Z/orZ2yl25QRr8NQa1xjms9ElcoHx4pUedQ==
   dependencies:
-    "@types/minipass" "*"
     "@types/node" "*"
+    minipass "^4.0.0"
 
 "@types/tmp@^0.2.0":
   version "0.2.3"
@@ -12517,13 +12532,6 @@ minipass-sized@^1.0.3:
   dependencies:
     minipass "^3.0.0"
 
-minipass@*, minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.3.4.tgz#ca99f95dd77c43c7a76bf51e6d200025eee0ffae"
-  integrity sha512-I9WPbWHCGu8W+6k1ZiGpPu0GkoKBeorkfKNuAFBNS1HNFJvke82sxvI5bzcCNpWPorkOO5QQ+zomzzwRxejXiw==
-  dependencies:
-    yallist "^4.0.0"
-
 minipass@^2.3.5, minipass@^2.6.0, minipass@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.9.0.tgz#e713762e7d3e32fed803115cf93e04bca9fcc9a6"
@@ -12531,6 +12539,13 @@ minipass@^2.3.5, minipass@^2.6.0, minipass@^2.9.0:
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
+
+minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.3.4.tgz#ca99f95dd77c43c7a76bf51e6d200025eee0ffae"
+  integrity sha512-I9WPbWHCGu8W+6k1ZiGpPu0GkoKBeorkfKNuAFBNS1HNFJvke82sxvI5bzcCNpWPorkOO5QQ+zomzzwRxejXiw==
+  dependencies:
+    yallist "^4.0.0"
 
 minipass@^3.1.6:
   version "3.3.6"

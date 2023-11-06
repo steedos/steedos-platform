@@ -80,6 +80,7 @@
                         "label": "新增字段",
                         "actionType": "dialog",
                         "id": "u:5857ae729799",
+                        "visible": false,
                         "dialog": {
                           "type": "dialog",
                           "title": "新增字段",

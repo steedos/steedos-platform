@@ -8,7 +8,7 @@ import checkForUpdate from 'update-check'
 import { createApp, DownloadError } from './create-app'
 import { getPkgManager } from './helpers/get-pkg-manager'
 import { validateNpmName } from './helpers/validate-pkg'
-import packageJson from './package.json'
+const packageJson = require('../package.json');
 
 let projectPath: string = ''
 

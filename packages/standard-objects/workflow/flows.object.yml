@@ -34,6 +34,7 @@ fields:
     reference_to: categories
     name: category
     filterable: true
+    required: true
   state:
     label: State
     type: select
@@ -577,7 +578,7 @@ actions:
                                                   "type": "select",
                                                   "name": "category",
                                                   "label": "${'flows.standard_new.category' | t}",
-                                                  "required": false,
+                                                  "required": true,
                                                   "joinValues": false,
                                                   "extractValue": true,
                                                   "autoComplete": {
