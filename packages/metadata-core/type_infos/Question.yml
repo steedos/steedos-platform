@@ -1,0 +1,13 @@
+metadataName: Question
+isAddressable: true
+isSourceTracked: true
+tableName: analytics_card
+ext: question
+hasContent: false
+defaultDirectory: questions
+nameForMsgs: Question
+nameForMsgsPlural: Questions
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

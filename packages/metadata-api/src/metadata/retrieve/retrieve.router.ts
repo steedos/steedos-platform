@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2023-03-07 15:58:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-07-28 17:19:19
+ * @Description: 
+ */
 const express = require("express");
 const router = express.Router();
 const fs = require('fs');
@@ -60,10 +67,12 @@ const downloadMetadata = async function (req, res) {
                 });        
                 res.end(zipBuffer.toString());
             }catch(err){
+                console.error(err);
                 res.status(500).send({ status: 'error', message: err.message });
             }
         });
     }catch(err){
+        console.error(err);
         return res.status(500).send({ status: 'error', message: err.message });
     }
 }

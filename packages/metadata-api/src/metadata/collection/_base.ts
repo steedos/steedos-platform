@@ -7,11 +7,15 @@ export class MetadataBaseCollection{
     collectionName: string;
     relatedProperties: Array<string>;
 
-    formatDataOnRetrieve(metadata){
+    getIdKey(){
+        return 'name';
+    }
+
+    formatDataOnRetrieve(metadata, dbManager){
         return metadata;
     }
 
-    formatDataOnDeploy(metadata){
+    formatDataOnDeploy(metadata, dbManager){
         return metadata;
     }
     
@@ -30,7 +34,7 @@ export class MetadataBaseCollection{
             for(var i=0; i<metadataList.length; i++){
                 var metadataItem = metadataList[i]
                 var metadataFullName = getFullName(this.metadataName, metadataItem)
-                packageMetadata[metadataFullName] = this.formatDataOnRetrieve(metadataItem)
+                packageMetadata[metadataFullName] = await this.formatDataOnRetrieve(metadataItem, dbManager)
             }
         }else{
     
@@ -40,14 +44,14 @@ export class MetadataBaseCollection{
            
                 var metadataItem = await this.get(dbManager, metadataApiName);
                 var metadataFullName = getFullName(this.metadataName, metadataItem)
-                packageMetadata[metadataFullName] = this.formatDataOnRetrieve(metadataItem);
+                packageMetadata[metadataFullName] = await this.formatDataOnRetrieve(metadataItem, dbManager);
             }
         }
     }
 
     async deploy(dbManager, metadataList){
         for(const metadataName in metadataList){
-            var metadata = this.formatDataOnDeploy(metadataList[metadataName]);
+            var metadata = await this.formatDataOnDeploy(metadataList[metadataName], dbManager);
             // await checkComponentsExist(dbManager, layout);
             delete metadata.__filename
             await this.save(dbManager, metadata);
@@ -82,7 +86,8 @@ export class MetadataBaseCollection{
     }
 
     protected async save(dbManager, data){
-        var filter = {name: data.name};
+        var idKey = this.getIdKey();
+        var filter = {[idKey]: data[idKey]};
         var record = await dbManager.findOne(this.collectionName, filter);
     
         if(record == null){

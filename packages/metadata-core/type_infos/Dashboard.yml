@@ -1,0 +1,13 @@
+metadataName: Dashboard
+isAddressable: true
+isSourceTracked: true
+tableName: analytics_dashboard
+ext: dashboard
+hasContent: false
+defaultDirectory: dashboards
+nameForMsgs: Dashboard
+nameForMsgsPlural: Dashboards
+contentIsBinary: false
+hasStandardMembers: true
+deleteSupported: true
+hasVirtualSubtypes: true

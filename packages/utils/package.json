@@ -1,0 +1,23 @@
+{
+  "name": "@steedos/utils",
+  "private": false,
+  "version": "2.5.11-beta.10",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -rf ./lib && tsc"
+  },
+  "dependencies":{
+    "mingo": "^6.0.5",
+    "@steedos/filters": "2.5.11-beta.10",
+    "@steedos/odata-v4-mongodb": "2.5.11-beta.10",
+    "clone": "^2.1.2",
+    "underscore": "1.5.2"
+  },
+  "author": "",
+  "license": "ISC",
+  "types": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:03
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-24 11:54:11
+ * @LastEditTime: 2023-11-06 17:00:51
  * @Description: 
  */
 
@@ -28,6 +28,8 @@ const objectTriggerService = require('./lib/objectTriggerService');
 const permissionTabsService = require('./lib/permissionTabsService');
 const importService = require('./lib/importService');
 const clientJSService = require('./lib/clientJSService');
+const questionService = require('./lib/questionService')
+const dashboardService = require('./lib/dashboardService')
 module.exports = {
 	name: "metadata-server",
 
@@ -56,6 +58,8 @@ module.exports = {
     this.broker.createService(permissionTabsService);
     this.broker.createService(importService);
     this.broker.createService(clientJSService);
+    this.broker.createService(questionService);
+    this.broker.createService(dashboardService);
   },
 
   async started() {

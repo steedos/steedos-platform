@@ -50,6 +50,9 @@ export * from './metadata-register/permissionTabs';
 export * from './metadata-register/import';
 export * from './metadata-register/clientJS';
 
+export * from './metadata-register/question'
+export * from './metadata-register/dashboard'
+
 let savePackageServicesTimeoutID: any = null;
 
 const useScan = true;
