@@ -438,7 +438,7 @@ module.exports = {
                                                         "data": {
                                                             "&": "$$"
                                                         },
-                                                        "requestAdaptor": "n\napi.data = {\n  comment: api.body.comment\n};\n\nif (api.body.approver) {\n  api.data.approver = api.body.approver;\n}\n\nreturn api;",
+                                                        "requestAdaptor": "\napi.data = {\n  comment: api.body.comment\n};\n\nif (api.body.approver) {\n  api.data.approver = api.body.approver;\n}\n\nreturn api;",
                                                         "adaptor": "\npayload.data = {};\npayload.data.showApprover = payload.error === 'process_approval_error_needToChooseApprover'\n\nif (payload.state === 'FAILURE') {\n  if (payload.data.showApprover) {\n    payload.msg = \"请选择下一位批准人\";\n  } else { \n    payload.msg = window.t(payload.error)\n  }\n}\n\n\nreturn payload;",
                                                         "responseData": {
                                                             "&": "$$"
