@@ -30,7 +30,8 @@ getRedirectUrl = ()->
 
 Steedos.logout = (redirect)->
 	Accounts._unstoreLoginToken();
-	Setup.clearAuthLocalStorage()
+	Setup.clearAuthLocalStorage();
+	sessionStorage.clear();
 	accountsUrl = Meteor.settings.public?.webservices?.accounts?.url
 	if accountsUrl
 		if !redirect
