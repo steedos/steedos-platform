@@ -79,9 +79,10 @@
           "query": "{object_field_groups:objects(filters: [[\"name\",\"=\",\"${_master.record.name}\"]]){_id,name,field_groups}}"
         },
         "requestAdaptor": "",
-        "adaptor": "return payload = {\n  data: {\n    object_field_groups: payload.data.object_field_groups[0].field_groups\n  }\n}",
+        "adaptor": "var field_groups = payload.data.object_field_groups;\nfield_groups = field_groups && field_groups.length > 0 && field_groups[0].field_groups;\nreturn payload = {\n  data: {\n    object_field_groups: field_groups\n  }\n}",
         "messages": {}
-      }
+      },
+      "messages": {}
     }
   ],
   "regions": [
