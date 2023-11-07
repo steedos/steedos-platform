@@ -3,7 +3,7 @@
   "body": [
     {
       "type": "service",
-      "body":[
+      "body": [
         {
           "type": "steedos-object-form",
           "mode": "edit",
@@ -80,8 +80,7 @@
         },
         "requestAdaptor": "",
         "adaptor": "return payload = {\n  data: {\n    object_field_groups: payload.data.object_field_groups[0].field_groups\n  }\n}",
-        "messages": {
-        }
+        "messages": {}
       }
     }
   ],
