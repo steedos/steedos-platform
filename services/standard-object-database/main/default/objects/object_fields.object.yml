@@ -105,6 +105,7 @@ fields:
     sort_no: 150
     amis:
       disabledOn: "${is_system == true}"
+      searchable: true
       onEvent:
         change:
           weight: 0
