@@ -139,6 +139,13 @@
     },
     ".steedos-object-table.steedos-crud-mode-cards .antd-Crud .antd-Cards .antd-Cards-body .antd-Card": {
       "padding-top": "2px"
+    },
+    ".antd-Card-actions a[disabled]":{
+      "box-shadow": "none",
+      "cursor": "not-allowed"
+    },
+    ".antd-Card-actions a[disabled]:hover": {
+      "color": "rgba(0,0,0,.25)"
     }
   }
 }

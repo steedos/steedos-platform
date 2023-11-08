@@ -5,6 +5,8 @@ const serviceName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
 const { excuteTriggers } = require('./main/default/utils/trigger');
 
+const rests = require('./src/rests')
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -32,6 +34,8 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		...rests,
+
 		create_instance: {
 			params:
 			{

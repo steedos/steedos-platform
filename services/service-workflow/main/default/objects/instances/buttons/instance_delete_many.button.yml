@@ -1,0 +1,123 @@
+name: instance_delete_many
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "删除",
+              "id": "u:instance_delete_many",
+              "editorState": "default",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "actionType": "custom",
+                              "script": "/* 自定义JS使用说明：\n  * 1.动作执行函数doAction，可以执行所有类型的动作\n  * 2.通过上下文对象context可以获取当前组件实例，例如context.props可以获取该组件相关属性\n  * 3.事件对象event，在doAction之后执行event.stopPropagation();可以阻止后续动作执行\n*/\n\nconst uiSchema = event.data.uiSchema;\nconst objectName = event.data.objectName;\nconst listViewRef = event.context.scoped.getComponentById(\"listview_\" + objectName);\nconst selectedItems = listViewRef && listViewRef.props.store.toJSON().selectedItems || [];\nevent.data.selectedIds = _.map(selectedItems, uiSchema.idFieldName || '_id');\nconsole.log(selectedItems);\nif (selectedItems.length === 0) {\n  doAction({ actionType: 'toast', args: { msg: '请至少选择一条记录' } });\n  event.stopPropagation();\n};\n"
+                          },
+                          {
+                              "actionType": "dialog",
+                              "dialog": {
+                                  "type": "dialog",
+                                  "title": "系统消息",
+                                  "body": [
+                                      {
+                                          "type": "tpl",
+                                          "tpl": "确认要删除吗?",
+                                          "wrapperComponent": "",
+                                          "inline": false,
+                                          "id": "u:0c42a6d112aa"
+                                      }
+                                  ],
+                                  "showCloseButton": true,
+                                  "showErrorMsg": true,
+                                  "showLoading": true,
+                                  "className": "app-popover",
+                                  "id": "u:42923ccc1c7e",
+                                  "actions": [
+                                      {
+                                          "type": "button",
+                                          "label": "取消",
+                                          "onEvent": {
+                                              "click": {
+                                                  "actions": [
+                                                      {
+                                                          "actionType": "closeDialog"
+                                                      }
+                                                  ]
+                                              }
+                                          },
+                                          "id": "u:452a4266d20f",
+                                          "editorState": "default"
+                                      },
+                                      {
+                                          "type": "button",
+                                          "label": "确认",
+                                          "onEvent": {
+                                              "click": {
+                                                  "actions": [
+                                                      {
+                                                          "actionType": "ajax",
+                                                          "outputVar": "responseResult",
+                                                          "args": {
+                                                              "options": {},
+                                                              "api": {
+                                                                  "url": "${context.rootUrl}/api/workflow/instance/batch/delete/drafts",
+                                                                  "method": "post",
+                                                                  "requestAdaptor": "",
+                                                                  "adaptor": "",
+                                                                  "messages": {},
+                                                                  "dataType": "json",
+                                                                  "headers": {
+                                                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                                                                  },
+                                                                  "data": {
+                                                                      "ids": "${selectedIds}"
+                                                                  }
+                                                              }
+                                                          }
+                                                      },
+                                                      {
+                                                          "actionType": "closeDialog",
+                                                          "expression": "${event.data.responseResult.responseStatus===0}"
+                                                      },
+                                                      {
+                                                          "actionType": "refresh",
+                                                          "expression": "${event.data.responseResult.responseStatus===0}"
+                                                      }
+                                                  ]
+                                              }
+                                          },
+                                          "id": "u:fa92a7ba67ed",
+                                          "editorState": "default",
+                                          "level": "danger"
+                                      }
+                                  ],
+                                  "closeOnEsc": false
+                              }
+                          }
+                      ]
+                  }
+              },
+              "hiddenOn": "${${listName}!==\"draft\"}"
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "id": "u:40d89b5cc6bf",
+      "bodyClassName": "p-0"
+  }
+is_enable: true
+label: 删除
+'on': list
+type: amis_button
+visible: true
