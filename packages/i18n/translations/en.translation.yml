@@ -2024,3 +2024,4 @@ CustomLabels:
       text: Are you sure you want to disable  
       toast_info: Disabling, please wait...
       toastr_success: Disabled successfully
+  duplicate_key_error: The field [{$fieldLabel}] has a duplicate value, please re-enter.

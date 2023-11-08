@@ -170,6 +170,9 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             }
             index[idxFieldName] = indexValue;
             let unique = !!this.unique && (indexValue === 1 || indexValue === -1);
+            if (unique && 'space' != idxFieldName) {
+                index['space'] = 1; // 工作区唯一
+            }
             return {
                 key: index, 
                 name: indexName,

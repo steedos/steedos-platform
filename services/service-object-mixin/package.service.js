@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-21 13:51:19
+ * @LastEditTime: 2023-11-08 09:19:14
  * @Description: 
  */
 "use strict";
@@ -354,6 +354,18 @@ module.exports = {
                             meta: {
                                 user: userSession
                             }
+                        })
+                    },
+                    createIndex: async (fieldName) => {
+                        return await this.broker.call("objectql.createIndex", {
+                            objectName,
+                            fieldName
+                        })
+                    },
+                    dropIndex: async (fieldName) => {
+                        return await this.broker.call("objectql.dropIndex", {
+                            objectName,
+                            fieldName
                         })
                     }
 

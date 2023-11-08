@@ -24,6 +24,8 @@ import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
 
+declare var TAPi18n;
+
 const auth = require("@steedos/auth");
 
 const clone = require('clone')
@@ -844,6 +846,83 @@ export class SteedosObjectType extends SteedosObjectProperties {
             // }
         }
     }
+    /**
+     * 处理唯一索引报错
+     * @param error 
+     * @param userSession 
+     */
+    private handlerDuplicateKeyError(error: Error, userSession?: SteedosUserSession) {
+        const errMsg = error.message
+        if (errMsg.includes('E11000')) {
+            // 解析出字段名
+            const match = errMsg.match(/index: c2_(\w+) dup key/)
+            if (match && match.length > 1) {
+                const fieldName = match[1]
+                const field = this.fields[fieldName]
+                if (field) {
+                    const locale = userSession?.locale;
+                    const errorMessage = TAPi18n.__('duplicate_key_error', { fieldLabel: field.label }, locale);
+                    throw new Error(errorMessage)
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取mongodb collection
+     * @returns mongoCollection
+     */
+    private async getCollection(){
+        if (this.datasource.driver === SteedosDatabaseDriverType.Mongo || this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo) {
+            const adapter = this.datasource.adapter;
+            await adapter.connect()
+            let collection = (adapter as any).collection(this.name);
+            if (this.datasource.driver === SteedosDatabaseDriverType.MeteorMongo) {
+                let defaultAdapter = getDataSource('default').adapter
+                await defaultAdapter.connect();
+                collection = (defaultAdapter as any).collection(this.name);
+            }
+            return collection;
+        }
+    }
+
+    /**
+     * 创建字段索引
+     * @param fieldName 字段名
+     */
+    async createIndex(fieldName: string) {
+        console.log('createIndex', fieldName)
+        const collection = await this.getCollection();
+        if (collection) {
+            const field = this.fields[fieldName];
+            const indexInfo = field.getIndexInfo();
+            const key = indexInfo.key;
+            delete indexInfo.key;
+            try {
+                await collection.createIndex(key, indexInfo)
+            } catch (error) {
+                // DO NOTHING
+            }
+        }
+    }
+
+    /**
+     * 删除字段索引
+     * @param fieldName 字段名
+     */
+    async dropIndex(fieldName: string) {
+        console.log('dropIndex', fieldName)
+        const collection = await this.getCollection();
+        if (collection) {
+            const field = this.fields[fieldName];
+            const indexName = field.getIndexName();
+            try {
+                await collection.dropIndex(indexName)
+            } catch (error) {
+                // DO NOTHING
+            }
+        }
+    }
 
     //TODO 处理对象继承
     extend_TODO(config: SteedosObjectTypeConfig) {
@@ -1118,15 +1197,25 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        doc = this.formatRecord(doc);
-        return await this.callAdapter('insert', this.table_name, doc, userSession)
+        try {
+            doc = this.formatRecord(doc);
+            return await this.callAdapter('insert', this.table_name, doc, userSession)
+        } catch (error) {
+            this.handlerDuplicateKeyError(error, userSession)
+            throw new Error(error)
+        }
     }
 
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        doc = this.formatRecord(doc);
-        // await this.processUneditableFields(userSession, doc)
-        let clonedId = id;
-        return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
+        try {
+            doc = this.formatRecord(doc);
+            // await this.processUneditableFields(userSession, doc)
+            let clonedId = id;
+            return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
+        } catch (error) {
+            this.handlerDuplicateKeyError(error, userSession)
+            throw new Error(error)
+        }
     }
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {

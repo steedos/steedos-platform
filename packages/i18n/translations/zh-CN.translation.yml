@@ -1872,3 +1872,4 @@ CustomLabels:
         text: 确定要停用 
         toast_info: 停用中，请稍后..
         toastr_success: 已停用
+  duplicate_key_error: 字段【{$fieldLabel}】值重复，请重新填写。
