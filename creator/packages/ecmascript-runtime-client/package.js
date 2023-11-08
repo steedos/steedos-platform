@@ -24,8 +24,8 @@ Package.onUse(function(api) {
   api.mainModule('versions.js', 'server');
   api.mainModule('modern.js', 'client');
 
-  api.mainModule('legacy.js', 'legacy');
-  api.export('Symbol', 'legacy');
-  api.export('Map', 'legacy');
-  api.export('Set', 'legacy');
+  // api.mainModule('legacy.js', 'legacy');
+  // api.export('Symbol', 'legacy');
+  // api.export('Map', 'legacy');
+  // api.export('Set', 'legacy');
 });

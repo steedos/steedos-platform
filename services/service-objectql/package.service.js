@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-21 10:56:28
+ * @LastEditTime: 2023-11-08 13:47:58
  * @Description: 
  */
 "use strict";
@@ -511,6 +511,28 @@ module.exports = {
         makeNewID: {
             async handler(ctx) {
                 return new ObjectId().toHexString();
+            }
+        },
+        createIndex: {
+            params: {
+                objectName: { type: "string" },
+                fieldName: { type: "string" },
+            },
+            async handler(ctx) {
+                const { objectName, fieldName } = ctx.params;
+                const obj = getObject(objectName)
+                return await obj.createIndex(fieldName);
+            }
+        },
+        dropIndex: {
+            params: {
+                objectName: { type: "string" },
+                fieldName: { type: "string" },
+            },
+            async handler(ctx) {
+                const { objectName, fieldName } = ctx.params;
+                const obj = getObject(objectName)
+                return await obj.dropIndex(fieldName);
             }
         },
 

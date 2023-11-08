@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-31 10:25:17
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-11-04 16:05:25
  * @Description: 
  */
 "use strict";
@@ -10,6 +10,9 @@ const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
 const serviceObjectMixin = require('@steedos/service-object-mixin');
+
+const triggers = require('./src/triggers');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -37,6 +40,8 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
+		...triggers,
+
 		objects__upsert: {
 			graphql: {
 				mutation:
