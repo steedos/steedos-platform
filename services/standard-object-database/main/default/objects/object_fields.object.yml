@@ -17,6 +17,8 @@ fields:
     write_requires_master_read: true
     filters: ['name', 'notcontains', ['base','core','space_users_invite','_object_reload_logs']]
     sort_no: 110
+    amis:
+      disabledOn: "true"
   label:
     type: text
     required: true
