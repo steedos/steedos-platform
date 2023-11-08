@@ -891,7 +891,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
      * @param fieldName 字段名
      */
     async createIndex(fieldName: string) {
-        console.log('createIndex', fieldName)
         const collection = await this.getCollection();
         if (collection) {
             const field = this.fields[fieldName];
@@ -911,7 +910,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
      * @param fieldName 字段名
      */
     async dropIndex(fieldName: string) {
-        console.log('dropIndex', fieldName)
         const collection = await this.getCollection();
         if (collection) {
             const field = this.fields[fieldName];
