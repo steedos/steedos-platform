@@ -900,7 +900,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             try {
                 await collection.createIndex(key, indexInfo)
             } catch (error) {
-                // DO NOTHING
+                console.log(error);
             }
         }
     }
@@ -917,7 +917,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             try {
                 await collection.dropIndex(indexName)
             } catch (error) {
-                // DO NOTHING
+                console.log(error);
             }
         }
     }
