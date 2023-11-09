@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "cb373861d42248877d7a430743ad4e823d85f3b0.js",
+      "path": "01e5f59c42263c3ea24b47713811f8e3bab6291e.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/cb373861d42248877d7a430743ad4e823d85f3b0.js?meteor_js_resource=true",
+      "url": "/01e5f59c42263c3ea24b47713811f8e3bab6291e.js?meteor_js_resource=true",
       "size": 4299090,
-      "hash": "cb373861d42248877d7a430743ad4e823d85f3b0",
-      "sri": "mI5ndXzKlQfSke3wA0UZiFMR0EEf3k52dbQ4i/pEXfi281A9q2CddpTqpJB7XxSlZNfUXH1AjbbvwqPyZligjw=="
+      "hash": "01e5f59c42263c3ea24b47713811f8e3bab6291e",
+      "sri": "fT0h766mL/1Sr56ULqrXeWJcbQDgxbE1FK4GUCx2Kpc/TgjDBhS7Fxqn4DAF37U40z//17d6l7tG++uHSQuDhw=="
     },
     {
-      "path": "cb373861d42248877d7a430743ad4e823d85f3b0.stats.json",
+      "path": "01e5f59c42263c3ea24b47713811f8e3bab6291e.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/cb373861d42248877d7a430743ad4e823d85f3b0.stats.json?meteor_js_resource=true",
+      "url": "/01e5f59c42263c3ea24b47713811f8e3bab6291e.stats.json?meteor_js_resource=true",
       "size": 92670,
-      "hash": "72b733dbd5dcd85cad050e1fce5403bf0669089c",
-      "sri": "kJB44Cc8IlR8zqGqdAQ/pJAafkJXhWTCeJzKRbZJL0n/phBqJTfHqheRT7acTlB6aw72lBj7piXZl2PMb892VQ=="
+      "hash": "306424a045ae49901ad00302ca6e396493ad8e8a",
+      "sri": "emGKnc8gdrbCgxbgW4EK3NO5taWbBnP5NI7zx93rFHA7l7idCibPzZ7f1Rj35QP4naXQuZmQAidgetICmugNrw=="
     },
     {
       "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
@@ -178,8 +178,8 @@
       "cacheable": false,
       "url": "/packages/steedos_autoform-lookup/img/loading.gif",
       "size": 1456,
-      "hash": "3e95eac46ab7d984594478c90ccb439ec03b5525",
-      "sri": null
+      "hash": "7a341dbfcb18bcc7242af96f10a3544288afedc9",
+      "sri": "MkNG30R5o6Vzhrazl/APMWk6Ql65itud5pDYbnIVOjv2NAJOuY8i/eZWauSmOI4WZlFN1NKojCxKG2fM03dXwA=="
     },
     {
       "path": "packages/vazco_universe-selectize/img/loading.gif",
@@ -198,8 +198,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
       "size": 20127,
-      "hash": "30407a683746065f032a7a61ff50f24b008cc8b3",
-      "sri": null
+      "hash": "fdefb04bdd78ef36598d9c76678991896afd4681",
+      "sri": "78kQyWufXFjqEahFd89grplVA7HuZwu359SkE7dAN2mSD4JgC1gfG9TuA9ccdsFSVfCXLtZq2WlIe1pAQ/RyxA=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
@@ -208,8 +208,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
       "size": 108738,
-      "hash": "79a351a269ccbdab7745962bfd40cf86c2b9bc95",
-      "sri": null
+      "hash": "714c8aa3ab61ae93c1e1efe8a2738e6f36508bde",
+      "sri": "wud+qzJ68UaQl8MbwNr4IMBmsCIgWdj/Ds68qXS2K3U16W8fNWZDsrYnY6kk0EDkrJsgl+HeLCIiZBH96HI3Qw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
@@ -218,8 +218,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
       "size": 45404,
-      "hash": "3a900bcba1505bbef235f1b497513a1bd894f434",
-      "sri": null
+      "hash": "4fb413597d028e8b079c10dccad4a20590a42688",
+      "sri": "KwZuBlBu8g1paY03zexVIXbvP2ShFRqZodAtctOc4SxP9hbcCKr7LMrqEu/XofRrcBUWpVnlaQxXo0sSduiCJg=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
@@ -228,8 +228,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
       "size": 23424,
-      "hash": "434169edd7cbbb36bb43e25d78c7ceb26beac9b4",
-      "sri": null
+      "hash": "f96aefe5353b8560b49a55d4a311979c7e67068d",
+      "sri": "9TZqslWv7+P+BhUOhQnndrVhj/UP4+D6jk1xXWRbHkTd860YXiHfGiduCLNwf1WGbLKoPS8yWlaIX8uOV6dKZw=="
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
@@ -238,8 +238,8 @@
       "cacheable": false,
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
-      "hash": "b3253b854b958bb4f2e4c2dae5ff45c8237dc1d6",
-      "sri": null
+      "hash": "3e4284be2fe535fb57049c3994295baa0abbdb66",
+      "sri": "OBGAT1bsPILwvvNd4KklDlRqHjV/tZ4nhPYQ1jj+w1Wie0gOP3liQ8Dj03Q74+rdqPkGTCtbSVd+FrfkDvzbgw=="
     },
     {
       "path": "packages/steedos_ionicons/fonts/ionicons.eot",
@@ -318,8 +318,8 @@
       "cacheable": false,
       "url": "/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
-      "sri": null
+      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
+      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
     },
     {
       "path": "assets/icons/License-for-icons.txt",
