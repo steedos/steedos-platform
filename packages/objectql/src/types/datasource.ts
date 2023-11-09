@@ -28,7 +28,7 @@ import {
 import { SteedosDriverConfig } from '../driver';
 import { createDataSourceService } from '../services/index';
 import path = require('path');
-import { getObjectConfig, registerMetadataConfigs } from '@steedos/metadata-registrar';
+import { getObjectConfig, registerMetadataConfigs, setObjectConfig } from '@steedos/metadata-registrar';
 const clone = require('clone')
 const cachers = require('@steedos/cachers');
 let Fiber = require('fibers');
@@ -256,6 +256,8 @@ export class SteedosDataSourceType implements Dictionary {
         if (localObjectConfig) {
             objectConfig.listeners = localObjectConfig.listeners;
             objectConfig.methods = localObjectConfig.methods;
+        }else{
+            setObjectConfig(objectConfig)
         }
         // else {
         //     if (this.name === "meteor" || this.name === "default") {
