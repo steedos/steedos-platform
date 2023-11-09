@@ -1200,7 +1200,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return await this.callAdapter('insert', this.table_name, doc, userSession)
         } catch (error) {
             this.handlerDuplicateKeyError(error, userSession)
-            throw new Error(error)
+            throw error
         }
     }
 
@@ -1212,7 +1212,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
         } catch (error) {
             this.handlerDuplicateKeyError(error, userSession)
-            throw new Error(error)
+            throw error
         }
     }
 
