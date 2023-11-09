@@ -41,25 +41,25 @@ fields:
     group: Select Assigned User
   assigned_user_field:
     type: lookup
+    reference_to: object_fields
+    reference_to_field: name
     multiple: true
     is_wide: true
     group: Select Assigned User
     showIcon: false
     depend_on:
       - object_name
-    optionsFunction: !!js/function |
-      function (doc){
-        var object = Creator.getObject(doc.object_name);
-        var options = [];
-        if(object){
-          var userFields = _.filter(object.fields, function(field){
-            return (field.type === 'lookup' || field.type === 'master_detail') && field.omit != true && (field.reference_to === 'users' || ('space_users' === field.reference_to && 'user' === field.reference_to_field))
-          });
-          _.each(userFields, function(field){
-            options.push({label:field.label, value:field.name});
-          })
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.object_name){
+          return [
+            ['object', '=', values.object_name],
+            ['type','=',['lookup','master_detail']],
+            [['reference_to','=','users'],'or',[['reference_to','=','space_users'],['reference_to_field','=','user']]]
+          ]
+        }else{
+          return ['_id', '=', 'no']
         }
-        return options;
       }
 form:
   beforeEdit: !!js/function |
