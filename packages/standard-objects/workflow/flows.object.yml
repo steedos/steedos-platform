@@ -1129,7 +1129,17 @@ actions:
                                                     "tpl": null,
                                                     "labelClassName": "text-left",
                                                     "id": "u:bbd1c15b6504",
-                                                    "name": "required"
+                                                    "name": "required",
+                                                    "onEvent": {
+                                                      "change": {
+                                                        "actions": [
+                                                          {
+                                                            "actionType": "custom",
+                                                            "script": "let fId = event.data._id;let newFields = _.map(event.data.fields, (field)=>{  if(field._id === fId){    field.required = event.data.required  };  return field;});setTimeout(function () {  doAction({    actionType: \"setValue\",    componentId: \"addFormFieldsForm\",    args: { value: {fields: newFields} },  });}, 300);"
+                                                          }
+                                                        ]
+                                                      }
+                                                    }
                                                   },
                                                   "id": "u:e54afb5cc05c",
                                                   "placeholder": "-"
