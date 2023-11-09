@@ -155,6 +155,12 @@ fields:
         value: user
       - label: Geolocation
         value: geolocation
+      - label: Image
+        value: image
+      - label: File
+        value: file
+      - label: Lookup
+        value: lookup
     readonly: true
     name: current.fields.$.type
     filterable: true

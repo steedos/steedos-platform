@@ -120,6 +120,12 @@ fields:
         value: user
       - label: Geolocation
         value: geolocation
+      - label: 图片
+        value: image
+      - label: 附件
+        value: file
+      - label: 相关记录
+        value: lookup
     description:
   current.fields.$.is_required:
     label: 必填

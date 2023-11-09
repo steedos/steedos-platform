@@ -119,6 +119,12 @@ fields:
         value: user
       - label: GeolocationR
         value: geolocationR
+      - label: Image
+        value: image
+      - label: File
+        value: file
+      - label: Lookup
+        value: lookup
     description: 
   current.fields.$.is_required:
     label: Required
