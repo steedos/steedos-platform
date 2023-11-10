@@ -213,7 +213,8 @@ module.exports = {
             label: "Create Approval",
             on: "list",
             type: "amis_button",
-            visible: function(object_name){
+            visible: function(object_name, record_id, record_permissions, data){
+                if (data._isRelated) return false;
                 return lodash.filter(Creator.object_workflows, (item)=>{return item.object_name == object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj')}).length > 0
             },
             amis_schema: {
