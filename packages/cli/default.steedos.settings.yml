@@ -33,6 +33,9 @@ public:
     dsn: ${STEEDOS_SENTRY_DSN}
   vconsole:
     url: ${STEEDOS_PUBLIC_SCRIPT_VCONSOLE}
+  accounts:
+    is_username_skip_minrequiredlength: ${STEEDOS_ACCOUNT_USERNAME_MIN_LENGTH}
+    UTF8_Names_Validation: ${STEEDOS_ACCOUNT_NAME_VALIDATION}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:
