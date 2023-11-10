@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-10 15:07:07
+ * @LastEditTime: 2023-11-10 16:53:59
  * @Description: 
  */
 "use strict";
@@ -114,7 +114,7 @@ module.exports = {
 					}
 				}
 				if(data.is_system){
-					data = _.pick(data, ['label', 'defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis'])
+					data = _.pick(data, ['label', 'defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required'])
 				}
                 return object.update(id, data, userSession)
 			},
