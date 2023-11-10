@@ -1,6 +1,6 @@
 
 JsonRoutes.add "get", "/steedos-css", (req, res, next)->
-
+	res.setHeader('Content-type', 'text/css');
 	allCss = WebApp.getRefreshableAssets()
 
 	allCssLink = ""
