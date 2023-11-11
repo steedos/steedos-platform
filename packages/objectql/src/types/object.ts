@@ -2038,7 +2038,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             throw new Error('Adapted does not support "' + method + '" method');
         }
         const userSession: SteedosUserSession = args[args.length - 1];
-        if(!_.isEmpty(userSession)){
+        if(!_.isEmpty(userSession) && !this.isDirectCRUD(method)){
             let allow = await this.allow(method, userSession)
             if (!allow) {
                 throw new Error(`${this.name} not ${method} permission`)
