@@ -627,8 +627,9 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                 if (!wField) {
                     console.log('fm.workflow_field: ', fm.workflow_field)
                 }
+                var oFieldType = oField.data_type || oField.type
                 // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oField.type) 
+                if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oFieldType) 
                     && (['users', 'organizations'].includes(oField.reference_to) || ('space_users' == oField.reference_to && 'user' == oField.reference_to_field))) {
                     if (!_.isEmpty(values[fm.workflow_field])) {
                         if (oField.multiple && wField.is_multiselect) {
@@ -638,7 +639,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         }
                     }
                 }
-                else if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
+                else if (!oField.multiple && ['lookup', 'master_detail'].includes(oFieldType) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
                     // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
                     var oCollection = objectql.getObject(oField.reference_to)
                     var referObjectNameFieldKey = getObjectNameFieldKey(oField.reference_to);
@@ -674,7 +675,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                     }
                 }
                 else {
-                    if (oField.type === "boolean") {
+                    if (oFieldType === "boolean") {
                         var tmp_field_value = values[fm.workflow_field];
                         if (['true', '是'].includes(tmp_field_value)) {
                             obj[fm.object_field] = true;
@@ -684,12 +685,12 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             obj[fm.object_field] = tmp_field_value;
                         }
                     }
-                    else if (oField.type === 'number' || oField.type === 'currency' || oField.type === 'percent') {
+                    else if (oFieldType === 'number' || oFieldType === 'currency' || oFieldType === 'percent') {
                         if (values[fm.workflow_field] && typeof (Number(values[fm.workflow_field])) === 'number') {
                             obj[fm.object_field] = Number(values[fm.workflow_field]);
                         }
                     }
-                    else if (['lookup', 'master_detail'].includes(oField.type) && wField.type === 'odata') {
+                    else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type === 'odata') {
                         let referToField = oField.reference_to_field || '_id'
                         if (oField.multiple && wField.is_multiselect) {
                             obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], referToField))
@@ -700,7 +701,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                         } else {
                             obj[fm.object_field] = values[fm.workflow_field];
                         }
-                    }else if(oField.type == 'image' && wField.type == 'image'){
+                    }else if(oFieldType == 'image' && wField.type == 'image'){
                         var ids = record[fm.object_field];
                         if(_.isString(ids)){
                             ids = [ids];
@@ -716,7 +717,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
 
                         obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'image')
 
-                    }else if(oField.type == 'file' && wField.type == 'file'){
+                    }else if(oFieldType == 'file' && wField.type == 'file'){
                         var ids = record[fm.object_field];
                         if(_.isString(ids)){
                             ids = [ids];
@@ -730,11 +731,11 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             Meteor.wrapAsync(removeOldFiles)();
                         }
                         obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'file')
-                    }else if (['lookup', 'master_detail'].includes(oField.type) && wField.type == 'lookup'){
+                    }else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type == 'lookup'){
                         obj[fm.object_field] = values[fm.workflow_field]
                     }
                     // 日期、日期时间
-                    else if (oField.type === 'date' || oField.type === 'datetime') {
+                    else if (oFieldType === 'date' || oFieldType === 'datetime') {
                         if (values[fm.workflow_field] && _.isDate(new Date(values[fm.workflow_field]))) {
                             obj[fm.object_field] = new Date(values[fm.workflow_field]);
                         }
@@ -865,7 +866,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             if (!relatedObjectField || !formField) {
                                 return
                             }
-                            if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type)) {
+                            var relatedFieldType = relatedObjectField.data_type || relatedObjectField.type
+                            if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedFieldType)) {
                                 let referToField = relatedObjectField.reference_to_field || '_id'
                                 if (!_.isEmpty(relatedObjectFieldValue)) {
                                     if (relatedObjectField.multiple && formField.is_multiselect) {
@@ -876,7 +878,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 }
                             }
                             // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                            if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) 
+                            if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedFieldType) 
                                 && (['users', 'organizations'].includes(relatedObjectField.reference_to) || ('space_users' == relatedObjectField.reference_to && 'user' == relatedObjectField.reference_to_field)) ) {
                                 if (!_.isEmpty(relatedObjectFieldValue)) {
                                     if (relatedObjectField.multiple && formField.is_multiselect) {
@@ -887,7 +889,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 }
                             }
                             // 复选框
-                            if (relatedObjectField.type === "boolean") {
+                            if (relatedFieldType === "boolean") {
                                 if (['true', '是'].includes(relatedObjectFieldValue)) {
                                     relatedObjectFieldValue = true;
                                 } else if (['false', '否'].includes(relatedObjectFieldValue)) {
@@ -895,13 +897,13 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 }
                             }
                             // 数值、金额、百分比
-                            else if (relatedObjectField.type === 'number' || relatedObjectField.type === 'currency' || relatedObjectField.type === 'percent') {
+                            else if (relatedFieldType === 'number' || relatedFieldType === 'currency' || relatedFieldType === 'percent') {
                                 if (relatedObjectFieldValue && typeof (Number(relatedObjectFieldValue)) === 'number') {
                                     relatedObjectFieldValue = Number(relatedObjectFieldValue);
                                 }
                             }
                             // 日期、日期时间
-                            else if (relatedObjectField.type === 'date' || relatedObjectField.type === 'datetime') {
+                            else if (relatedFieldType === 'date' || relatedFieldType === 'datetime') {
                                 if (relatedObjectFieldValue && _.isDate(new Date(relatedObjectFieldValue))) {
                                     relatedObjectFieldValue = new Date(relatedObjectFieldValue);
                                 }

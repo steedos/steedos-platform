@@ -92,6 +92,10 @@ export const getObjectConfig = (object_name: string):any => {
     return _.find(_objectConfigs, {name: object_name})
 }
 
+export const setObjectConfig = (config: any):any =>{
+    _objectConfigs.push(config);
+}
+
 export const addObjectConfigFiles = async (filePath: string, datasource: string, serviceName?: string) => {
     if(!path.isAbsolute(filePath)){
         throw new Error(`${filePath} must be an absolute path`);

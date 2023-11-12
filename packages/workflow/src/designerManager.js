@@ -536,18 +536,13 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
             formField.type = objField.type;
             break;
         case 'formula':
+        case 'summary':
             switch (objField.data_type) {
                 case 'boolean':
                     formField.type = "checkbox";
                     break;
                 case 'number':
-                    formField.type = "number";
-                    formField.digits = objField.scale;
-                    break;
                 case 'currency':
-                    formField.type = "number";
-                    formField.digits = objField.scale;
-                    break;
                 case 'percent':
                     formField.type = "number";
                     formField.digits = objField.scale;
@@ -564,9 +559,6 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 default:
                     break;
             }
-            break;
-        case 'summary':
-            formField.type = "input";
             break;
         default:
             break;

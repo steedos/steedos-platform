@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-23 16:57:53
+ * @LastEditTime: 2023-11-10 15:46:03
  * @Description: 
  */
 'use strict';
@@ -130,7 +130,11 @@ var DesignerAPI = {
 								clearInterval(sId);
 								leftBtn.css("display","none");
 								let reftBtn = $(".htv3.designer.square.sc-view.sc-segment-view.sc-static-layout.segment.sc-last-segment.sc-segment-1.sc-large-size.sel", scope);
-								$('.left',reftBtn).css("background-position", "0px -3034px")
+								if(window.devicePixelRatio == 2){
+									$('.left',reftBtn).css("background-position", "0px -3536px")
+								}else{
+									$('.left',reftBtn).css("background-position", "0px -3034px")
+								}
 							}
 						}, 100);
 						

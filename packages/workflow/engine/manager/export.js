@@ -137,25 +137,58 @@ steedosExport.form = function (formId, flowId, is_copy, company_id) {
             var number_rule, number_rule_name;
             number_rule_name = _getNumberRuleName(str);
             if (number_rule_name) {
-                number_rule = db.instance_number_rules.findOne({
-                    space: spaceId,
-                    name: number_rule_name
-                }, {
-                    fields: {
-                        _id: 1,
-                        name: 1,
-                        year: 1,
-                        first_number: 1,
-                        rules: 1
+                // 这里需要考虑是直接使用的自动编号，还是使用的选择框字段；如果是选择框字段则number_rule_name为{xxx}的带大括号的格式，要根据选择框字段选项值找自动编号；目前只考虑选择框字段。
+                if (number_rule_name.startsWith("{") && number_rule_name.endsWith("}")){
+                    // 解析出{}之间的字符
+                    const fieldName = number_rule_name.substring(1, number_rule_name.length - 1);
+                    const field = c_fields.find(f => f.name === fieldName && f.type === 'select');
+                    if (field) {
+                        // 解析出options
+                        const options = field.options.split("\n");
+                        const rule_names = options.map(o => o.split(":")[1] || o.split(":")[0]);
+                        for (const rule_name of rule_names) {
+                            const rule = db.instance_number_rules.findOne({
+                                space: spaceId,
+                                name: rule_name
+                            }, {
+                                fields: {
+                                    _id: 1,
+                                    name: 1,
+                                    year: 1,
+                                    first_number: 1,
+                                    rules: 1
+                                }
+                            });
+                            if (rule) {
+                                rule.number = 0;
+                                if (!instance_number_rules.findPropertyByPK("_id", rule._id)) {
+                                    delete rule._id;
+                                    instance_number_rules.push(rule);
+                                }
+                            }
+                        }
                     }
-                });
-                if (!number_rule) {
-                    throw new Error('not find instance number rule, name is ' + number_rule_name);
-                }
-                number_rule.number = 0;
-                if (!instance_number_rules.findPropertyByPK("_id", number_rule._id)) {
-                    delete number_rule._id;
-                    instance_number_rules.push(number_rule);
+                } else {
+                    number_rule = db.instance_number_rules.findOne({
+                        space: spaceId,
+                        name: number_rule_name
+                    }, {
+                        fields: {
+                            _id: 1,
+                            name: 1,
+                            year: 1,
+                            first_number: 1,
+                            rules: 1
+                        }
+                    });
+                    if (!number_rule) {
+                        throw new Error('not find instance number rule, name is ' + number_rule_name);
+                    }
+                    number_rule.number = 0;
+                    if (!instance_number_rules.findPropertyByPK("_id", number_rule._id)) {
+                        delete number_rule._id;
+                        instance_number_rules.push(number_rule);
+                    }
                 }
             }
             return instance_number_rules;

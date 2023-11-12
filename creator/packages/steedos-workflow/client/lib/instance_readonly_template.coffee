@@ -356,7 +356,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 						<div class="antd-Image antd-Image--thumb antd-ImageControl-image">
 							<div class="antd-Image-thumbWrap">
 								<div class="antd-Image-thumb"><img class="antd-Image-image"
-										src="/api/files/files/'+value+'"></div>
+										src="/api/files/images/'+value+'"></div>
 							</div>
 						</div>
 					</div>'

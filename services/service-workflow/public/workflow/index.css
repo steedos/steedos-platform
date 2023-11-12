@@ -205,3 +205,10 @@ tbody .color-priority-muted *{
 .af-steedos-field .antd-ImageControl-addBtn.is-disabled{
     display: none;
 }
+
+#instanceform .antd-ImageControl-item{
+    border: none;
+    padding: 0px;
+    margin-bottom: 6px;
+    margin-right: 6px;
+}

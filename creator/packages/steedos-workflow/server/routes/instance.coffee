@@ -102,6 +102,7 @@ getInstanceReadOnly = (req, res, next, options) ->
 
 	html = InstanceReadOnlyTemplate.getInstanceHtml(user, space, instance, options)
 	dataBuf = new Buffer(html);
+	res.setHeader('Content-type', 'text/html; charset=utf-8');
 	res.setHeader('content-length', dataBuf.length)
 	res.setHeader('content-range', "bytes 0-#{dataBuf.length - 1}/#{dataBuf.length}")
 	res.statusCode = 200

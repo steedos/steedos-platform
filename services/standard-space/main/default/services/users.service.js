@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-01 13:10:09
+ * @LastEditTime: 2023-11-10 10:16:46
  * @Description: 
  */
 "use strict";
@@ -123,7 +123,7 @@ module.exports = {
             }
             const steedosConfig = getSteedosConfig();
             const accountsConfig = steedosConfig.public.accounts || {};
-            if (!accountsConfig.is_username_skip_minrequiredlength) {
+            if (accountsConfig.is_username_skip_minrequiredlength != true && accountsConfig.is_username_skip_minrequiredlength != 'true') {
                 if (username.length < 6) {
                     throw new Error('username-minrequiredlength', "username-minrequiredlength");
                 }
