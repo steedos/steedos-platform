@@ -818,7 +818,7 @@ fields:
   enable_enhanced_lookup:
     type: boolean
     label: Enable Enhanced Lookup
-    visible_on: "{{false}}"
+    hidden: true # 这里不可以用 visible_on: "{{false}}"，否则在界面上新建字段时会被默认设置为false
 paging:
   enabled: false
 list_views:
