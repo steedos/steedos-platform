@@ -117,13 +117,13 @@ OPTIONSUSERATTRS = {
 # 定义字段属性: lookup字段
 LOOKUPPROPS={
 	reference_to: {
-		label: '相关对象(object name)',
+		label: '相关对象',
 		type: 'text',
-		required: true,
+		required: 'true',
 		value: ''
 	},
 	reference_to_field: {
-		label: '相关对象字段(field name)',
+		label: '相关对象字段',
 		type: 'text',
 		value: ''
 	},

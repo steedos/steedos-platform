@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-10 10:16:46
+ * @LastEditTime: 2023-11-13 11:35:27
  * @Description: 
  */
 "use strict";
@@ -123,10 +123,9 @@ module.exports = {
             }
             const steedosConfig = getSteedosConfig();
             const accountsConfig = steedosConfig.public.accounts || {};
-            if (accountsConfig.is_username_skip_minrequiredlength != true && accountsConfig.is_username_skip_minrequiredlength != 'true') {
-                if (username.length < 6) {
-                    throw new Error('username-minrequiredlength', "username-minrequiredlength");
-                }
+            const usernameMinLength = accountsConfig.username_min_length ? Number(accountsConfig.username_min_length) : 6
+            if (username.length <  usernameMinLength) {
+                throw new Error(`The username minimum length can not be less than ${usernameMinLength} digits`);
             }
             try {
                 if (accountsConfig.UTF8_Names_Validation) {
