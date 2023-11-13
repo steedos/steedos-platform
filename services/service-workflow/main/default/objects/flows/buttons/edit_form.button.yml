@@ -23,6 +23,12 @@ amis_schema: |-
                                           "title": "表单",
                                           "body": [
                                               {
+                                                  "type": "input-text",
+                                                  "label": "表单名称",
+                                                  "name": "name",
+                                                  "id": "u:84af37d53da42"
+                                              },
+                                              {
                                                   "type": "textarea",
                                                   "label": "表单描述",
                                                   "name": "description",
@@ -70,14 +76,14 @@ amis_schema: |-
                                           "initApi": {
                                               "url": "${context.rootUrl}/graphql",
                                               "method": "post",
-                                              "requestAdaptor": "\n\n\nconsole.log('api', api);\n\n\napi.data = {\n  query: `{forms__findOne(id: \"${api.data.form}\"){\n  id:_id,  current,\n    name,\n    is_valid,space,\n    description,\n    help_text,\n    error_message,\n    category,\n    instance_style\n  }}`\n}\n\n\nreturn api;",
-                                              "adaptor": "console.log('payload====>', payload); payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
+                                              "requestAdaptor": "\n\n\n\n\napi.data = {\n  query: `{forms__findOne(id: \"${api.data.form}\"){\n  id:_id,  current,\n    name,\n    is_valid,space,\n    description,\n    help_text,\n    error_message,\n    category,\n    instance_style\n  }}`\n}\n\n\nreturn api;",
+                                              "adaptor": " payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,name: payload.data.forms__findOne.name, description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
                                               "messages": {}
                                           },
                                           "api": {
                                               "url": "${context.rootUrl}/am/forms",
                                               "method": "put",
-                                              "requestAdaptor": "console.log('save api', api);\nconst form = api.data._form;\nform.instance_style = api.data.instance_style;\nform.description = api.data.description;\nform.current.name_forumla = api.data.name_forumla;\nform.current.form_script = api.data.form_script;\napi.data = {\n  Forms: [form]\n}\n\n\nreturn api;",
+                                              "requestAdaptor": "\nconst form = api.data._form;\nform.instance_style = api.data.instance_style;\nform.name=api.data.name;\nform.description = api.data.description;\nform.current.name_forumla = api.data.name_forumla;\nform.current.form_script = api.data.form_script;\napi.data = {\n  Forms: [form]\n}\n\n\nreturn api;",
                                               "adaptor": "",
                                               "messages": {}
                                           }
