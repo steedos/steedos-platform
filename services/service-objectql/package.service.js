@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-08 13:47:58
+ * @LastEditTime: 2023-11-14 10:43:21
  * @Description: 
  */
 "use strict";
@@ -535,6 +535,11 @@ module.exports = {
                 return await obj.dropIndex(fieldName);
             }
         },
+        getPrimarySpaceId: {
+            async handler(ctx) {
+                return await this.getPrimarySpaceId()
+            }
+        }
 
     },
 
@@ -592,6 +597,26 @@ module.exports = {
                 console.error(`[字段级加密] 对象${objectName}中字段加密失败：`, error);
             }
             return doc;
+        },
+        getPrimarySpaceId: async function () {
+            const steedosConfig = objectql.getSteedosConfig();
+            let spaceId;
+            if (steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id) {
+                spaceId = steedosConfig.tenant._id
+            }
+            if (!spaceId) {
+                const datasource = objectql.getDataSource('default');
+                if (datasource) {
+                    const adapter = datasource.adapter;
+                    await adapter.connect()
+                    const collection = adapter.collection('spaces');
+                    const space = await collection.findOne()
+                    if (space) {
+                        spaceId = space._id;
+                    }
+                }
+            }
+            return spaceId
         }
     },
 

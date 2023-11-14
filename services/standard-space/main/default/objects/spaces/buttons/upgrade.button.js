@@ -7,6 +7,6 @@
  */
 module.exports = { 
     upgrade: function () {
-        window.open(`https://www.steedos.com/products/platform-enterprise`);
+        window.open(`https://www.steedos.com/pricing/platform`);
     }
  }
