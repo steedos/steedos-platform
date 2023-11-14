@@ -78,7 +78,7 @@ module.exports = {
             async handler(ctx) {
                 const spaceDoc = ctx.params
                 // 扫描main/default/data文件夹
-                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, spaceDoc._id);
+                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), false, spaceDoc._id);
                 await this.loadDataOnServiceStarted();
             }
         }
