@@ -2,14 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-27 12:09:49
+ * @LastEditTime: 2023-11-14 11:19:50
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
-const packageLoader = require('@steedos/service-package-loader');
-const path = require('path');
 const objectql = require('@steedos/objectql');
 const { importData } = require('./lib')
 /**
@@ -19,16 +17,12 @@ const { importData } = require('./lib')
 module.exports = {
     name: packageName,
     namespace: "steedos",
-    mixins: [packageLoader],
+    mixins: [],
     /**
      * Settings
      */
     settings: {
-        packageInfo: {
-            path: path.join(__dirname, 'lib'),
-            name: packageName,
-            isPackage: false
-        }
+
     },
 
     /**
@@ -63,7 +57,6 @@ module.exports = {
             data: {
                 "csv": [{ objectName: 'warehouse', records: [ [Object] ]],
                 "json": [{ objectName: 'house', records: [ [Object] ]],
-                "flow": { flowApiName1: {}, flowApiName2: {} },
             },
             spaceId,
             onlyInsert: true,
@@ -94,10 +87,6 @@ module.exports = {
                                     records: { type: "array", items: "object" },
                                 }
                             },
-                            optional: true,
-                        },
-                        flow: {
-                            type: "object",
                             optional: true,
                         },
                     }

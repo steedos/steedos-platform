@@ -56,7 +56,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: ['metadata-server', '@steedos/service-project', '@steedos/service-packages'],
+    dependencies: ['metadata-server', '@steedos/service-project', '@steedos/service-packages', 'objectql', '@steedos/data-import'],
 
     /**
      * Actions
@@ -76,10 +76,10 @@ module.exports = {
         },
         "space.initialized": {
             async handler(ctx) {
-                await this.loadDataOnServiceStarted();
                 const spaceDoc = ctx.params
                 // 扫描main/default/data文件夹
                 await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, spaceDoc._id);
+                await this.loadDataOnServiceStarted();
             }
         }
     },
@@ -236,6 +236,12 @@ module.exports = {
             return await this.broker.destroyService(this);
         },
         async onStarted(){
+
+            // 扫描main/default/data文件夹，在加载.flow.json前执行
+            const primarySpaceId = await this.broker.call("objectql.getPrimarySpaceId");
+            if (primarySpaceId) {
+                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), true, primarySpaceId);
+            }
 
             this.checkPackageMetadataFiles(this.settings.packageInfo.path)
 

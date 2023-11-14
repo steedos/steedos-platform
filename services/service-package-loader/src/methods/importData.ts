@@ -2,7 +2,7 @@
  * @Author: 孙浩林 sunhaolin@steedos.com
  * @Date: 2023-10-26 10:22:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-27 12:12:57
+ * @LastEditTime: 2023-11-14 11:10:53
  * @FilePath: /steedos-platform-2.3/services/service-package-loader/src/methods/importData.ts
  * @Description: 
  */
@@ -32,7 +32,7 @@ export async function handler(filePath: string, onlyInsert: boolean, spaceId: st
 
     const flowData = await importer.flow.readFile(filePath);
 
-    await this.broker.call("~packages-@steedos/data-import.importData", {
+    await this.broker.call("@steedos/data-import.importData", {
         data: {
             "csv": csvData,
             "json": jsonData,

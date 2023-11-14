@@ -2,13 +2,13 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-10-21 09:57:01
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-27 12:55:47
+ * @LastEditTime: 2023-11-14 11:13:54
  * @Description: 
 -->
 ## 功能说明
 - 此包是系统设置中的数据导入功能，可通过excel导入对象数据
 
-### 提供importData action 支持导入{objectname}.data.json、{objectname}.data.csv、{flowApiname}.flow.data.json数据
+### 提供importData action 支持导入{objectname}.data.json、{objectname}.data.csv数据
 
 - 比如在自定义的软件包package.service.js中监听系统初始化事件调用importData导入软件包中的数据：
 
@@ -21,11 +21,10 @@ module.exports = {
     events: {
         // 系统初始化成功
         'service-cloud-init.succeeded': async function (ctx) {
-            await this.broker.call("~packages-@steedos/data-import.importData", {
+            await this.broker.call("@steedos/data-import.importData", {
                 data: {
                     "csv": csvData,
                     "json": jsonData,
-                    "flow": flowData,
                 },
                 spaceId,
                 onlyInsert: true,
@@ -43,7 +42,6 @@ module.exports = {
     data: {
         "csv": [{ objectName: 'warehouse', records: [ [Object] ]],
         "json": [{ objectName: 'house', records: [ [Object] ]],
-        "flow": { flowApiName1: {}, flowApiName2: {} },
     },
     spaceId,
     onlyInsert: true,
@@ -74,10 +72,6 @@ module.exports = {
                             records: { type: "array", items: "object" },
                         }
                     },
-                    optional: true,
-                },
-                flow: {
-                    type: "object",
                     optional: true,
                 },
             }

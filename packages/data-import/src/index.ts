@@ -3,9 +3,10 @@ import { keyBy, isEmpty } from 'lodash'
 import { getSteedosConfig } from '@steedos/objectql'
 import ImportJson from './imports/ImportJson'
 import ImportCsv from './imports/ImportCsv'
-import ImportFlow from './imports/ImportFlow'
 import { userSessionType } from './types'
 import _ from 'lodash'
+
+export { importWithCmsFile } from './objectImport'
 
 export async function getUserSession(spaceId?: string): Promise<userSessionType | any> {
     var dbManager = new DbManager({});
@@ -106,12 +107,10 @@ export async function importData(data: importDataType, onlyInsert: boolean = tru
     const importer = {
         csv: new ImportCsv(userSession),
         json: new ImportJson(userSession),
-        flow: new ImportFlow(userSession)
     }
 
     const csvData = data?.csv || []
     const jsonData = data?.json || []
-    const flowData = data?.flow || {}
 
     if (onlyInsert) {
         var dbManager = new DbManager(userSession);
@@ -127,26 +126,14 @@ export async function importData(data: importDataType, onlyInsert: boolean = tru
                 }
             }
             //检查json数据是否存在
-            for (const result of jsonData) {
+            const jsonResult = formatResults(jsonData, userSession)
+            for (const result of jsonResult) {
                 const objectName = result.objectName;
                 const records = result.records;
                 const recordsIds = _.map(records, '_id');
                 const dbRecords = await dbManager.find(objectName, { _id: { $in: recordsIds } }, false, 0, { projection: { _id: 1 } });
                 if (dbRecords.length > 0) {
                     throw new Error(`停止导入数据：${result.objectName}对象已存在${dbRecords.length}条记录`);
-                }
-            }
-            //检查flow数据是否存在
-            for (const formName in flowData) {
-                var form = flowData[formName];
-
-                let flowApiName = form.api_name
-
-                if (flowApiName) {
-                    let flow = await dbManager.findOneWithProjection('flows', { api_name: flowApiName }, { form: 1 })
-                    if (flow) {
-                        throw new Error(`停止导入数据：流程${flowApiName}已存在`);
-                    }
                 }
             }
         } catch (error) {
@@ -157,7 +144,6 @@ export async function importData(data: importDataType, onlyInsert: boolean = tru
             await dbManager.close();
         }
     }
-    importer.csv.fileRecordsToDB(csvData);
-    importer.json.fileRecordsToDB(jsonData);
-    importer.flow.fileRecordsToDB(flowData);
+    await importer.csv.fileRecordsToDB(csvData);
+    await importer.json.fileRecordsToDB(jsonData);
 }

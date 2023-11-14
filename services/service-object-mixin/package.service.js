@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-08 09:19:14
+ * @LastEditTime: 2023-11-14 10:27:19
  * @Description: 
  */
 "use strict";
@@ -27,7 +27,7 @@ module.exports = {
     /**
      * Dependencies
      */
-    dependencies: [],
+    dependencies: ['objectql'],
 
     /**
      * Actions
