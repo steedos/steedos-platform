@@ -1,0 +1,114 @@
+version: "3.9"
+
+services:
+
+  # Steedos Platform
+  steedos:
+    image: steedos/steedos-enterprise:latest
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9001:9001"
+    volumes:
+      - "./storage:/steedos-storage"
+    environment:
+      - ROOT_URL=http://127.0.0.1
+      - MONGO_URL=mongodb://root:${MONGODB_PASSWORD:-steedos}@${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-steedos}?authSource=admin
+      - MONGO_OPLOG_URL=mongodb://root:${MONGODB_PASSWORD:-steedos}@${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?authSource=admin
+      - STEEDOS_LICENSE=trial
+      - NPM_CACHE_ENABLED=true
+      - NPM_CACHE_PACKAGE_CONTENT=true
+      - NPM_REGISTRY_URL=https://registry.npmmirror.com
+      - STEEDOS_CFS_STORE=S3
+      - STEEDOS_CFS_AWS_S3_ENDPOINT=http://minio:9000
+      - STEEDOS_CFS_AWS_S3_FORCE_PATH_STYLE=true
+      - STEEDOS_CFS_AWS_S3_BUCKET=${MINIO_DEFAULT_BUCKETS:-steedos}
+      - STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID=${MINIO_ROOT_USER:-steedos}
+      - STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD:-steedos123}
+      - TRANSPORTER=redis://:${REDIS_PASSWORD:-steedos}@redis:6379
+      - CACHER=redis://:${REDIS_PASSWORD:-steedos}@redis:6379/1
+    depends_on:
+      redis:
+        condition: service_started
+      mongodb:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
+  # Cache Service
+  redis:
+    image: bitnami/redis:6.0
+    command: "redis-server --requirepass ${REDIS_PASSWORD:-steedos}  --save \"\" --appendonly no --loglevel warning"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-steedos}
+    ports:
+      - "6379:6379"
+
+  # S3 Storage Service
+  minio:
+    image: bitnami/minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-steedos}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-steedos123}
+      MINIO_DEFAULT_BUCKETS: ${MINIO_DEFAULT_BUCKETS:-steedos}
+    volumes:
+      - steedos-minio-data:/data
+    ports:
+      - "8001:9001"
+
+  mongodb:
+    image: bitnami/mongodb:4.4
+    ports:
+      - 27017:27017
+    environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=${MONGODB_PASSWORD:-steedos}
+      - MONGODB_PORT_NUMBER=${MONGODB_PORT_NUMBER:-27017}
+      - MONGODB_INITIAL_PRIMARY_HOST=${MONGODB_INITIAL_PRIMARY_HOST:-mongodb}
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}
+      - MONGODB_REPLICA_SET_NAME=${MONGODB_REPLICA_SET_NAME:-steedos}
+      - MONGODB_REPLICA_SET_KEY=${MONGODB_REPLICA_SET_KEY:-steedos}
+      - MONGODB_ENABLE_JOURNAL=${MONGODB_ENABLE_JOURNAL:-true}
+      - MONGODB_ADVERTISED_HOSTNAME=${MONGODB_ADVERTISED_HOSTNAME:-mongodb}
+    healthcheck:
+      test: echo 'rs.status().ok' | mongo admin -u root -p ${MONGODB_PASSWORD:-steedos} --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - 'steedos-mongodb-data:/bitnami'
+
+  # Low-code programming for event-driven applications
+  nodered:
+    image: steedos/node-red:latest
+    environment:
+      - TRANSPORTER=nats://${NATS_USERNAME:-steedos}:${NATS_USERNAME:-steedos}@nats:4222
+      - TZ=Asia/Beijing
+      - NODE_RED_USERNAME=${NODE_RED_USERNAME:-steedos}
+      - NODE_RED_PASSWORD=${NODE_RED_PASSWORD:-steedos}
+      - NODE_RED_THEME_TITLE=Steedos Node-RED
+      # - NODE_RED_STORAGE=mongodb
+      # - NODE_RED_MONGO_URL=mongodb://root:${MONGODB_ROOT_PASSWORD}@mongodb/${MONGODB_DATABASE}?authSource=admin
+      - NODE_RED_STORAGE=s3
+      - S3_ACCESS_KEY_ID=${MINIO_ROOT_USER:-steedos}
+      - S3_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD:-steedos123}
+      - S3_ENDPOINT=http://minio:9000
+      - S3_FORCE_PATH_STYLE=1
+      - S3_SIGNATURE_VERSION=v4
+      - S3_BUCKET=nodered-prod # Optional
+      - S3_REGION=
+      - S3_APP_NAME=steedos # Directory on S3
+    volumes:
+      - steedos-nodered-data:/data
+    depends_on:
+      - minio
+    ports:
+      - "1880:1880"
+
+volumes:
+  steedos-minio-data:
+    driver: local
+  steedos-mongodb-data:
+    driver: local
+  steedos-nodered-data:
+    driver: local
