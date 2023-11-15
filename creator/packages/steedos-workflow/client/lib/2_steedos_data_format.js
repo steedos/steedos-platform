@@ -260,7 +260,6 @@ var s_autoform = function (schema, field) {
             // }
             break;
         case 'image':
-            console.log('=======file field:', field)
             if(is_multiselect){
                 schema.type = [String];
                 autoform.multiple = true;
@@ -273,7 +272,6 @@ var s_autoform = function (schema, field) {
             autoform.fieldType = 'image'
             break;
         case 'file':
-            console.log('=======file field:', field)
             if(is_multiselect){
                 schema.type = [String];
                 autoform.multiple = true;
@@ -286,7 +284,6 @@ var s_autoform = function (schema, field) {
             autoform.fieldType = 'file'
             break;
         case 'lookup':
-            console.log('=======file lookup:', field)
             if(is_multiselect){
                 schema.type = [String];
                 autoform.multiple = true;
