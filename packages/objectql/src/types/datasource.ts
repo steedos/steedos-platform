@@ -138,7 +138,7 @@ export class SteedosDataSourceType implements Dictionary {
     }
 
     getCacheObjects() {
-        return clone(this.cacheObjects);
+        return clone(this.cacheObjects, false);
     }
 
     getCacheObject(objectName){
