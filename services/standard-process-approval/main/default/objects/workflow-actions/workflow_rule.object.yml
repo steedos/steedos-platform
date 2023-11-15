@@ -137,30 +137,19 @@ fields:
   time_triggers.$.date_field:
     label: 日期字段
     type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
     depend_on:
       - object_name
-    optionsFunction: !!js/function |
-      function (values) {
-        console.log('values: ', values);
-        const object_name = values.object_name;
-        const options = [];
-        if (object_name) {
-          var object = Creator.getObject(object_name);
-          var objectLabel = object.label;
-          var fields = object.fields;
-          for(const key in fields) {
-            if (Object.hasOwnProperty.call(fields, key)) {
-              const f = fields[key]
-              if (!f.hidden && (f.type == 'datetime' || f.type == 'date')) {
-                options.push({
-                  label: objectLabel + ': ' + f.label,
-                  value: f.name
-                })
-              }
-            }
-          }
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        const objectName = values.object_name;
+        if(objectName){
+          return [['object', '=', objectName], ['type', '=', ['datetime','date']]]
+        }else{
+          return ['_id', '=', 'no']
         }
-        return options
       }
   time_triggers.$.updates_field_actions:
     type: lookup

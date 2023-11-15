@@ -255,6 +255,9 @@ module.exports = {
         if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'name')){
             query.fields.push('name')
         }
+        if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'type')){
+            query.fields.push('type')
+        }
     },
     beforeAggregate: async function(){
         const { query } = this;
