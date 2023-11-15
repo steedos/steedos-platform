@@ -31,6 +31,9 @@ fields:
   field_map.$.workflow_field:
     label: Field of Workflow
     type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
     depend_on:
       - flow_id
     amis: 
@@ -106,6 +109,9 @@ fields:
   field_map_back.$.workflow_field:
     label: Field of Workflow
     type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    enable_enhanced_lookup: false
     depend_on:
       - flow_id
     amis: 
