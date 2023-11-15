@@ -82,7 +82,7 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-RUN npm i --production  && npm cache clean --force
+RUN yarn && yarn cache clean
 
 # steedosctl
 COPY ./app/steedosctl /opt/steedos/steedosctl
