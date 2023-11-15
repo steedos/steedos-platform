@@ -85,7 +85,16 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const spaceId = userSession.spaceId;
                 const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
-                const allObjects = _.pluck(clone(allMetadataObjects), 'metadata');
+                const allObjects = _.map(allMetadataObjects, (metadataObject)=>{
+                    return {
+                        name: metadataObject.metadata.name,
+                        label: metadataObject.metadata.label,
+                        NAME_FIELD_KEY: metadataObject.metadata.NAME_FIELD_KEY,
+                        hidden: metadataObject.metadata.hidden,
+                        list_views: clone(metadataObject.metadata.list_views),
+                    };
+                })
+                // _.pluck(clone(allMetadataObjects), 'metadata');
 
                 const query = {
                     filters: [ ['hidden', '!=', true] , ['name', '<>', ExcludeObjectNames]],
@@ -96,11 +105,8 @@ module.exports = {
                         NAME_FIELD_KEY: 1
                     }
                 };
-
                 const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
-
                 const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '!=', false]]})
-
                 _.each(objects, (object)=>{
                     if(object && object.name){
 
@@ -120,7 +126,13 @@ module.exports = {
                                     label: 1
                                 }
                             }, spaceId);
-                            
+                            // object.list_views = _.each(_.values(object.list_views), (listview)=>{
+                            //     return {
+                            //         _id: listview._id,
+                            //         name: listview.name,
+                            //         label: listview.label
+                            //     }
+                            // });
                         }
 
                         if(_.isEmpty(object.list_views)){
@@ -218,8 +230,16 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const spaceId = userSession.spaceId;
                 const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
-                const allObjects = _.pluck(clone(allMetadataObjects), 'metadata');
-
+                const allObjects = _.map(allMetadataObjects, (metadataObject)=>{
+                    return {
+                        name: metadataObject.metadata.name,
+                        label: metadataObject.metadata.label,
+                        NAME_FIELD_KEY: metadataObject.metadata.NAME_FIELD_KEY,
+                        hidden: metadataObject.metadata.hidden,
+                        list_views: clone(metadataObject.metadata.list_views),
+                        fields: clone(metadataObject.metadata.fields),
+                    };
+                });
                 const object = await objectql.getSteedosSchema().getObject(objectName);
                 const objectConfig = object.toConfig();
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
@@ -238,7 +258,6 @@ module.exports = {
                 let details = relationsInfo && relationsInfo.details;
                 const lookupDetails = relationsInfo && relationsInfo.lookup_details;
                 details = _.union(details, lookupDetails);
-
                 _.each(details, function(related){
                     /*related可能是一个lookup_details，它是对象而不是字符串，从中取出key值*/
                     if(typeof related !== "string"){
@@ -284,12 +303,19 @@ module.exports = {
                         fields: 1
                     }
                 };
-
-                let objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+                let objects = _.map(_.filter((allObjects), (obj)=>{
+                    return obj.hidden != true;
+                }), (obj)=>{
+                    return {
+                        name: obj.name,
+                        label: obj.label,
+                        list_views: obj.list_views,
+                        fields: obj.fields
+                    }
+                })
                 objects = objects.filter(function(object){
                     return relatedListObjects.includes(object.name);
                 });
-
                 const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '!=', false]]})
 
                 _.each(objects, (object)=>{
