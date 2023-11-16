@@ -133,7 +133,7 @@ export class MetadataDriver implements SteedosDriver {
                 spaceId = space;
             }
         }
-        const _collection = clone(collection);
+        const _collection = clone(collection, false);
         _.each(_collection, function(item) {
             try {
                 if (!item.space && spaceId) {

@@ -194,7 +194,7 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const spaceId = userSession.spaceId;
                 const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
-                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const allObjects = _.map(allMetadataObjects, 'metadata');
                 const query = {
                     filters: [  ['name', '<>', ExcludeObjectNames]], //['hidden', '!=', true] ,
                     projection: {
@@ -203,7 +203,14 @@ module.exports = {
                     }
                 };
 
-                const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
+                const objects = _.map(_.filter(allObjects, (obj)=>{
+                    return !_.includes(ExcludeObjectNames, obj.name)
+                }), (obj)=>{
+                    return {
+                        name: obj.name,
+                        label: obj.label
+                    }
+                })
 
                 _.each(objects, (object)=>{
                     if(object && object.name){
@@ -585,7 +592,7 @@ module.exports = {
                 const objectTabs = await objectql.getObject('tabs').find({filters: [['type', '=', "object"]]});
                 const tabObjects = _.map(objectTabs, "object");
                 const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
-                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const allObjects = _.map(allMetadataObjects, 'metadata');
                 const query = {
                     filters: [['hidden', '!=', true], ['name', '<>', tabObjects]],
                     projection: {
@@ -625,7 +632,7 @@ module.exports = {
                 const companyId = userSession.company_id;
                 const companyIds = userSession.company_ids;
                 const allMetadataObjects = await objectql.getSteedosSchema().getAllObject();
-                const allObjects = _.map(clone(allMetadataObjects), 'metadata');
+                const allObjects = _.map(allMetadataObjects, 'metadata');
                 const query = {
                     filters: [['name', 'in', selectedObjects]], //['hidden', '!=', true] ,
                     projection: {
