@@ -122,6 +122,7 @@ fields:
     #     }
     #   }
     reference_to: object_fields
+    enable_enhanced_lookup: false
     reference_to_field: name
     amis: 
       "autoComplete": 
