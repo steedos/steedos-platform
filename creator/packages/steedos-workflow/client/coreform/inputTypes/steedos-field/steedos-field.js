@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-14 13:53:59
+ * @LastEditTime: 2023-11-16 11:15:19
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -17,6 +17,7 @@ if (Meteor.isClient) {
         // 输出值
         valueOut: function () {
             const val = this.data("value");
+            const multiple = this.data('multiple') == 'true' || this.data('multiple') == true
             if(_.isString(val)){
                 if(val.indexOf('/') > -1){
                     return _.last(lodash.split(val, '/'))
@@ -25,14 +26,18 @@ if (Meteor.isClient) {
             }
 
             if(_.isArray(val)){
-                return _.map(val, (v)=>{
+                const rval = _.map(val, (v)=>{
                     if(_.isObject(v) && v.value){
                         return v.value
                     }else if(v.indexOf('/') > -1){
                         return _.last(lodash.split(v, '/'))
                     }
                     return v
-                })
+                });
+                if(multiple != true && rval.length > 0){
+                    return rval[0]
+                }
+                return rval;
             }else if(_.isObject(val)){
                 if(val.value){
                     return val.value
@@ -76,7 +81,7 @@ if (Meteor.isClient) {
                 // 遍历值，获取图片链接
                 _.each(ids, (id)=>{
                     values.push(window.getImageFieldUrl(Meteor.absoluteUrl(`/api/files/images/${id}`)))
-                })
+                });
             }else if(atts.fieldType === 'file'){
                 if(_.isString(ids)){
                     ids = [ids]
@@ -102,6 +107,7 @@ if (Meteor.isClient) {
             disabled = true;
           }
         $("#"+atts.id).data('value', values);
+        $("#"+atts.id).data('multiple', atts.multiple);
         const config = JSON.parse(atts.config || "{}");
         const schema = {
             render_engine: 'amis',
@@ -153,6 +159,7 @@ if (Meteor.isClient) {
                 ]
             }
         };
+        // console.log(`afSteedosField`, ids, schema)
         // 渲染amis
         Steedos.Page.render($("#"+atts.id)[0], schema, Object.assign({}, {}));
     };
