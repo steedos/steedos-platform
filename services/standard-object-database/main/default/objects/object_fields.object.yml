@@ -729,9 +729,6 @@ fields:
     sort_no: 276
     is_wide: true
     defaultValue: clear
-    amis:
-      "id": "u:6a556d8a8514"
-      "disabledOn": "${required==true || is_system == true}"
   is_wide:
     type: boolean
     label: Is Wide
