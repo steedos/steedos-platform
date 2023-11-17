@@ -345,13 +345,17 @@ export class SteedosMongoDriver implements SteedosDriver {
             selector = { _id: id };
         }
 
-        const options = {$set: {}};
+        const options = {$set: {}, $unset: {}};
         const keys = _.keys(data);
         _.each(keys, function(key){
             if(_.include(['$inc','$min','$max','$mul'], key)){
                 options[key] = data[key];
             }else{
-                options.$set[key] = data[key];
+                if (null === data[key]) {
+                    options.$unset[key] = 1;
+                } else {
+                    options.$set[key] = data[key];
+                }
             }
         })
         let result = await collection.updateOne(selector, options);
