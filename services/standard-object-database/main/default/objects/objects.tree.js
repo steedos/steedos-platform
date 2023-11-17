@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-05-24 14:03:39
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-11-17 15:48:30
  * @Description: 
  */
 var objectql = require('@steedos/objectql');
@@ -11,6 +11,7 @@ async function insertParentAndChildrenFieldForTreeObject(doc, needToCheckExists)
     const baseProps = {
         object: doc.name,
         reference_to: doc.name,
+        deleted_lookup_record_behavior: "clear",
         type: 'lookup',
         owner: doc.owner,
         space: doc.space,

@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-06-16 13:43:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-11-17 13:35:54
  * @Description: 
  */
 "use strict";
@@ -153,21 +153,6 @@ async function insertVaildate(doc) {
             });
         }
         if (selector.length > 0) {
-            userCount = await new Promise((resolve, reject) => {
-                Fiber(function () {
-                    try {
-                        resolve(db.users.find({
-                            $or: selector
-                        }).count())
-                    } catch (error) {
-                        reject(error)
-                    }
-                }).run()
-            })
-
-            if (userCount > 0) {
-                throw new Error("space_users_error_user_exists");
-            }
             spaceUserCount = await new Promise((resolve, reject) => {
                 Fiber(function () {
                     try {
@@ -183,7 +168,28 @@ async function insertVaildate(doc) {
                         reject(error)
                     }
                 }).run()
+            });
+
+            if (spaceUserCount > 0) {
+                throw new Error("space_users_error_space_user_exists");
+            }
+
+            userCount = await new Promise((resolve, reject) => {
+                Fiber(function () {
+                    try {
+                        resolve(db.users.find({
+                            $or: selector
+                        }).count())
+                    } catch (error) {
+                        reject(error)
+                    }
+                }).run()
             })
+
+            if (userCount > 0) {
+                throw new Error("space_users_error_user_exists");
+            }
+
         }
 
     }

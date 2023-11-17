@@ -154,6 +154,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             let index = {}; 
             let indexValue: any =  null;
             let sparse = false;
+            let partialFilterExpression: object;
             if (this.index) {
                 indexValue = this.index;
                 if (indexValue === true){
@@ -172,6 +173,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
             let unique = !!this.unique && (indexValue === 1 || indexValue === -1);
             if (unique && 'space' != idxFieldName) {
                 index['space'] = 1; // 工作区唯一
+                partialFilterExpression = { [idxFieldName]: { $exists: true } }; // 创建部分索引
             }
             return {
                 key: index, 
@@ -179,6 +181,7 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                 unique: unique,
                 sparse: sparse,
                 background: true, //兼容4.2之前的数据库版本
+                partialFilterExpression
             }
         }
     }

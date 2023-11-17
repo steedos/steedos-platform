@@ -455,33 +455,6 @@ var triggers = {
         throw new Meteor.Error(500, "华炎云服务不包含自定义业务对象的功能，请部署私有云版本");
       }
 
-      const staticRequiredFields = ['object','label','_name','type'];
-      // const staticRequiredFieldLabel = ['所属对象','显示名称','字段名','字段类型'];
-      for(let i = 0; i<staticRequiredFields.length; i++){
-        const fieldName = staticRequiredFields[i];
-        const fieldValue = doc[fieldName];
-        if(!fieldValue){
-          throw new Meteor.Error(fieldName, "必填字段");
-        }
-      }
-      //  options子字段、precision、scale、summary_field不参与以下简单动态必填字段组。
-      const dynamicsRequired = [
-        ['language',['code']],['reference_to',['lookup', 'master_detail']],['formula',['autonumber', 'formula']],
-        ['data_type',['formula']],['rows',['textarea']],['options',['select']],
-        ['formula_blank_value',['formula']],['summary_object',['summary']],['summary_type',['summary']],
-        ['deleted_lookup_record_behavior',['lookup']]
-      ];
-
-      for(let i = 0; i<dynamicsRequired.length; i++){
-        if( dynamicsRequired[i][1].indexOf(doc.type) > -1 ){
-          const fieldName = dynamicsRequired[i][0];
-          const fieldValue = doc[fieldName];
-          if(!fieldValue){
-            throw new Meteor.Error(fieldName, "动态必填字段");
-          }
-        }
-      }
-
       checkName(doc._name);
       if(['name','owner','parent','children'].indexOf(doc._name)>-1){
         doc.name = doc._name;
