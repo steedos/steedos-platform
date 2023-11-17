@@ -3,6 +3,12 @@ var objectql = require('@steedos/objectql');
 var clone = require('clone');
 var objectCore = require('./objects.core.js');
 
+const objectFieldsFind = function (filter) {
+    return objectql.wrapAsync(async function () {
+        return await objectql.getObject('object_fields').find(this.filter);
+    }, { filter: filter })
+}
+
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 
 function canRemoveNameFileld(doc){
@@ -105,20 +111,18 @@ function _syncToObject(doc, event) {
 };
 
 function isRepeatedName(doc, name) {
-  var other;
-  other = Creator.getCollection("object_fields").find({
-    object: doc.object,
-    space: doc.space,
-    _id: {
-      $ne: doc._id
-    },
-    name: name || doc.name
-  }, {
-    fields: {
-      _id: 1
-    }
+  var other = objectFieldsFind({
+    filters: [[
+      'object', '=', doc.object
+    ], [
+      'space', '=', doc.space
+    ], [
+      '_id', '!=', doc._id
+    ], [
+      'name', '=', name || doc.name
+    ]]
   });
-  if (other.count() > 0) {
+  if (other.length > 0) {
     return true;
   }
   return false;
@@ -492,8 +496,9 @@ var triggers = {
       if(doc.name === 'name' || doc.is_name){
         checkNameField({type: doc.type})
       }
-
+      console.log('insert', doc)
       if (isRepeatedName(doc)) {
+        
         throw new Meteor.Error(doc.name, "字段名不能重复");
       }
 
