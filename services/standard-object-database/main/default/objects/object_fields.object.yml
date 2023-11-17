@@ -689,12 +689,12 @@ fields:
     defaultValue: 100
     scale: 0
     sortable: true
-    group: Advanced
+    group: ui
     sort_no: 370
   is_name:
     type: boolean
     label: Is Name
-    group: Advanced
+    group: External data source
     sort_no: 380
     amis:
       disabledOn: "${is_system == true}"
@@ -736,19 +736,20 @@ fields:
     type: boolean
     label: Is Wide
     # group: Advanced
-  # readonly:
-  #   type: boolean
-  #   label: Readonly
-  #   group: Advanced
-  # hidden:
-  #   type: boolean
-  #   label: Hidden
-  #   group: Advanced
+    sort_no: 274
+    group: ui
+  readonly:
+    type: boolean
+    label: Readonly
+    group: ui
+  hidden:
+    type: boolean
+    label: Hidden
+    group: ui
   # omit:
   #   type: boolean
   #   label: Omit
   #   group: Advanced
-    sort_no: 274
   index:
     type: boolean
     label: Is Index Field
@@ -764,17 +765,17 @@ fields:
   sortable:
     type: boolean
     label: Sortable
-    group: Advanced
+    group: ui
     sort_no: 420
   searchable:
     type: boolean
     label: Searchable
-    group: Advanced
+    group: ui
     sort_no: 428
   filterable:
     type: boolean
     label: Filterable
-    group: Advanced
+    group: ui
     sort_no: 430
   show_as_qr:
     type: boolean
@@ -788,7 +789,7 @@ fields:
     type: textarea
     label: Visible On
     is_wide: true
-    group: Advanced
+    group: ui
     sort_no: 450
     inlineHelpText: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes#%E5%AD%97%E6%AE%B5%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F' target='_blank'>查看帮助</a>
   inlineHelpText:
@@ -831,6 +832,8 @@ list_views:
       - object
       - sort_no
       - modified
+      - hidden
+      - readonly
       - is_system
     sort:
       - field_name: sort_no
@@ -846,6 +849,8 @@ list_views:
       - object
       - sort_no
       - modified
+      - hidden
+      - readonly
       - is_system
     label: 自定义
     filters:

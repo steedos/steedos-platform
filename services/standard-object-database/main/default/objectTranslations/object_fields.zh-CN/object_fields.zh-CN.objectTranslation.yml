@@ -332,6 +332,7 @@ fields:
 groups:
   external_data_source: 外部数据源
   advanced: 高级
+  ui: 界面布局
 listviews:
   all:
     label: 所有
