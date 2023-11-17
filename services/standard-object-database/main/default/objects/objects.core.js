@@ -216,6 +216,16 @@ function loadObject(doc, oldDoc) {
 
         originalObject.isMain = true;
 
+        const objConfig = register.getOriginalObjectConfig(doc.name);
+
+        if(objConfig){
+            _.each(objConfig.fields, (config, name)=>{
+                if(!config._id && !doc.fields[name]){
+                    doc.fields[name] = config;
+                }
+            })
+        }
+
         register.addObjectConfig(doc, datasourceName);
         register.loadObjectLazyListViews(doc.name);
         register.loadObjectLazyActions(doc.name);
