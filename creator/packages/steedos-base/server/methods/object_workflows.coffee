@@ -15,10 +15,11 @@ Meteor.methods
 
         ows = Creator.getCollection('object_workflows').find({ space: spaceId }, { fields: { object_name: 1, flow_id: 1, space: 1, sync_direction: 1 } }).fetch()
         _.each ows,(o) ->
-            fl = Creator.getCollection('flows').findOne({_id: o.flow_id, state: 'enabled', forbid_initiate_instance: { $ne: true } }, { fields: { name: 1, perms: 1 } })
+            fl = Creator.getCollection('flows').findOne({_id: o.flow_id, state: 'enabled'}, { fields: { name: 1, perms: 1, forbid_initiate_instance: 1 } })
             if fl
                 o.flow_name = fl.name
                 o.can_add = false
+                o.forbid_initiate_instance = fl.forbid_initiate_instance
 
                 perms = fl.perms
                 if perms
