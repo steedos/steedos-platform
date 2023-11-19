@@ -111,6 +111,28 @@ uuflowManager.getFlow = function (flow_id, options) {
     return flow;
 };
 
+uuflowManager.getFlowVersion = function (flow, flow_version) {
+    var flow_v;
+    flow_v = null;
+    if (flow_version === flow.current._id) {
+        flow_v = flow.current;
+    } else {
+        flow_v = _.find(flow.historys, function (flow_h) {
+            return flow_version === flow_h._id;
+        });
+    }
+    if (!flow_v) {
+        throw new Meteor.Error('error!', '未找到流程对应的版本');
+    }
+    return flow_v;
+};
+
+uuflowManager.getStepFromSteps = function (steps, stepId) {
+    return _.find(steps, function (step) {
+        return step._id === stepId;
+    })
+};
+
 uuflowManager.getSpaceUserOrgInfo = function (space_user) {
     if (process.env.STEEDOS_DEBUG) {
         console.time('uuflowManager.getSpaceUserOrgInfo');
@@ -721,6 +743,21 @@ uuflowManager.getNextSteps = function (instance, flow, step, judge, values) {
             return rev_nextSteps.push(nextStepId);
         }
     });
+    // 包含 always_enter_step 值为false的步骤及步骤下一步骤为条件节点的下一步
+    const flowVersion = uuflowManager.getFlowVersion(flow, instance.flow_version)
+    const flowVersionSteps = flowVersion.steps
+    for (const step of flowVersionSteps) {
+        if (false === step.always_enter_step) {
+            step.lines.map(function(line){
+                const toStepId = line.to_step
+                rev_nextSteps.push(toStepId)
+                const toStep = uuflowManager.getStepFromSteps(flowVersionSteps, toStepId)
+                if ("condition" === toStep.step_type) {
+                    toStep.lines.map(function(line){ rev_nextSteps.push(line.to_step) })
+                }
+            });
+        };
+    }
     rev_nextSteps = _.uniq(rev_nextSteps);
     return rev_nextSteps;
 };
@@ -823,8 +860,8 @@ uuflowManager.getInstanceName = function (instance, vals) {
     // 显示下拉框字段类型的label
     if (form_v.fields) {
         for (const field of form_v.fields) {
-            if(["select", "multiSelect", "radio"].indexOf(field.type) > -1){
-                var fieldOptions = field.options.split("\n").map(function(n){
+            if (["select", "multiSelect", "radio"].indexOf(field.type) > -1) {
+                var fieldOptions = field.options.split("\n").map(function (n) {
                     var itemSplits = n.split(":")
                     return {
                         label: itemSplits[0],
@@ -835,16 +872,16 @@ uuflowManager.getInstanceName = function (instance, vals) {
                 switch (field.type) {
                     case 'select':
                     case 'radio':
-                        var selectedOption = fieldOptions.find(function(item){ return item.value == value; })
-                        if(selectedOption){
+                        var selectedOption = fieldOptions.find(function (item) { return item.value == value; })
+                        if (selectedOption) {
                             values[field.code] = selectedOption.label
                         }
                         break;
                     case 'multiSelect':
                         var splitedValues = value.split(",");
-                        var selectedOptions = fieldOptions.filter(function(item){ return splitedValues.indexOf(item.value) > -1; });
-                        if(selectedOptions.length){
-                            values[field.code] = selectedOptions.map(function(item){ return item.label; }).join(",");
+                        var selectedOptions = fieldOptions.filter(function (item) { return splitedValues.indexOf(item.value) > -1; });
+                        if (selectedOptions.length) {
+                            values[field.code] = selectedOptions.map(function (item) { return item.label; }).join(",");
                         }
                         break;
                 }
@@ -3839,7 +3876,7 @@ uuflowManager.caculateExtras = function (values, formDoc, formVersionId) {
     if (_.isEmpty(values)) {
         return
     }
-    
+
     const extras = {}
     const formVersion = uuflowManager.getFormVersion(formDoc, formVersionId)
     _.each(formVersion.fields, function (field) {

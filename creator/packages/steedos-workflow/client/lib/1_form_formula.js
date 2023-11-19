@@ -303,6 +303,31 @@ Form_formula.getNextStepsFromCondition = function(step, autoFormDoc, fields){
 };
 
 /**
+ * 
+ * @param {string} script 
+ * @param {object} autoFormDoc 
+ * @param {object} fields 
+ * @returns 
+ */
+Form_formula.runFormulaScript = function (script, autoFormDoc, fields) {
+    Form_formula.field_values = Form_formula.init_formula_values(fields, autoFormDoc);
+
+    var conditionStr = script.toString();
+    conditionStr = conditionStr.replace(/\=/g, "==").replace(/\>==/g, ">=").replace(/\<==/g, "<=").replace(/\======/g, "===").replace(/\====/g, "==");
+    conditionStr = Form_formula.prependPrefixForFormula("Form_formula.field_values", conditionStr);
+
+    try {
+        if (eval(conditionStr.replace(/[\r\n]+/g, '\\n'))) {
+            return true
+        }
+    } catch (err) {
+        console.log("脚本[" + conditionStr + "]执行异常：" + err.message);
+    }
+
+    return false;
+};
+
+/**
     * 获得公式需要用到的初始值
     * 输入：fields, values, applicant
     * formula_values
