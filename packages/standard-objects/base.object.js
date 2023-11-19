@@ -215,7 +215,7 @@ module.exports = {
             type: "amis_button",
             visible: function(object_name, record_id, record_permissions, data){
                 if (data._isRelated) return false;
-                return lodash.filter(Creator.object_workflows, (item)=>{return item.object_name == object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj')}).length > 0
+                return lodash.filter(Creator.object_workflows, (item)=>{return item.object_name == object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance}).length > 0
             },
             amis_schema: {
                 "type": "service",
@@ -231,7 +231,7 @@ module.exports = {
                                 "actions": [
                                     {
                                         "actionType": "custom",
-                                        "script": "// 编写判断,当前可发起的流程是单个还是多个. 并返回数据用于控制下个事件是直接新建申请单草稿还是弹出流程让选择\n\nconst flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
+                                        "script": "// 编写判断,当前可发起的流程是单个还是多个. 并返回数据用于控制下个事件是直接新建申请单草稿还是弹出流程让选择\n\nconst flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
                                     },
                                     {
                                         "actionType": "ajax",
@@ -280,7 +280,7 @@ module.exports = {
                                                                 "method": "get",
                                                                 "url": "${context.rootUrl}/api/workflow/v2/get_object_workflows",
                                                                 "requestAdaptor": "api.data = {};return api;",
-                                                                "adaptor":"return {  data: _.filter(payload, (item) => { return item.object_name == api.body.objectName && item.can_add && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj')})};",
+                                                                "adaptor":"return {  data: _.filter(payload, (item) => { return item.object_name == api.body.objectName && item.can_add && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'ins_to_obj') && true !== item.forbid_initiate_instance })};",
                                                                 "messages": {},
                                                                 "dataType": "json",
                                                                 "headers": {
