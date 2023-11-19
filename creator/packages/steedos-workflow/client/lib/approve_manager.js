@@ -182,8 +182,71 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     if (currentStep.step_type == "counterSign" && rev_nextSteps.length > 1 && !currentStep.oneClickRejection) {
         rev_nextSteps = [];
     }
+
+    // 如果步骤的 always_enter_step (始终进入此步骤（默认选中，历史流程如果未配置，也是选中）) 值为false，那么需要运行脚本 enter_step_condition (步骤条件)
+    // 如结果中包含条件节点则需要继续计算条件节点下一步
+    const needRemoveSteps = {}, needAddSteps = {};
+    for (const step of rev_nextSteps) {
+        ApproveManager.caculateNextStepsByEnterStepCondition(step, autoFormDoc, fields, needRemoveSteps, needAddSteps)
+    }
+    if (!_.isEmpty(needRemoveSteps) && !_.isEmpty(needAddSteps)) {
+        for (const id in needAddSteps) {
+            if (Object.hasOwnProperty.call(needAddSteps, id)) {
+                const index = rev_nextSteps.findIndex(item => item.id == id)
+                if (-1 === index) {
+                    rev_nextSteps.push(needAddSteps[id])
+                }
+            }
+        }
+        for (const id in needRemoveSteps) {
+            if (Object.hasOwnProperty.call(needRemoveSteps, id)) {
+                const index = rev_nextSteps.findIndex(item => item.id == id)
+                if (-1 != index) {
+                    rev_nextSteps.splice(index, 1)
+                }
+            }
+        }
+        var conditionNextSteps = new Array();
+        rev_nextSteps.forEach(function(nextStep, idx) {
+            if (nextStep.step_type == "condition") {
+                if(!judge && nextStep.step_type == 'sign'){
+                    judge = 'approved'
+                }
+                conditionNextSteps = conditionNextSteps.concat(ApproveManager.getNextSteps(instance, nextStep, judge, autoFormDoc, fields, showSkipStep));
+                // 移除条件节点
+                rev_nextSteps.splice(idx, 1)
+            }
+        })
+        rev_nextSteps = rev_nextSteps.concat(conditionNextSteps);
+        //去除重复
+        rev_nextSteps = rev_nextSteps.uniqById();
+    }
+
     return rev_nextSteps;
 };
+
+ApproveManager.caculateNextStepsByEnterStepCondition = function(step, autoFormDoc, fields, needRemoveSteps = {}, needAddSteps = {}) {
+    if (false === step.always_enter_step) {
+        let enterStepCondition = step.enter_step_condition
+        let result = Form_formula.runFormulaScript(enterStepCondition, autoFormDoc, fields)
+        if (false === result) {
+            needRemoveSteps[step.id] = step;
+            if (step.lines && step.lines.length > 0) {
+                const toStepIds = step.lines.map(function(s){ return s.to_step})
+                for (const stepId of toStepIds) {
+                    const s = WorkflowManager.getInstanceStep(stepId)
+                    if (s) {
+                        ApproveManager.caculateNextStepsByEnterStepCondition(s, autoFormDoc, fields, needRemoveSteps, needAddSteps)
+                    }
+                }
+            }
+        } else {
+            needAddSteps[step.id] = step;
+        }
+    } else {
+        needAddSteps[step.id] = step;
+    }
+}
 
 ApproveManager.getStepApproveUsers = function(instance, nextStepId){
 

@@ -3635,10 +3635,10 @@
   resolved "https://registry.yarnpkg.com/@steedos/odata-v4-parser/-/odata-v4-parser-2.5.11-beta.10.tgz#393281641f59538e3361dfc864628e79034215c9"
   integrity sha512-DBEa7uSwfcf9G1C9myZOyJSxClu0FODmGLDVORoWDCIwBSS8UZp/fa87Q0TyRBS8MW3KBAdbINsIUS8GRow71w==
 
-"@steedos/steedos-plugin-workflow@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.1.3.tgz#b1873477d88fa5ef9ff377a68f10c59ba67ec359"
-  integrity sha512-t4qjId6AwkIdPLYfitHxdSLNmhvm7gUc9XhXd8zok6yTmSBoPN/mChCxI+avazvwKuLg0dsLwkF/kYS1oC8VOg==
+"@steedos/steedos-plugin-workflow@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@steedos/steedos-plugin-workflow/-/steedos-plugin-workflow-2.1.4.tgz#63d2fd6708d74f28862ae5e5d0e35f62469c94fe"
+  integrity sha512-fD4g/aQWw8IBmp3zutMcfRW71E+xntNMyIVTX2sETpe7zBgfQpfLuHfu4m3Pqp2qPUAyucnyZZIWf90DdMFReQ==
   dependencies:
     body-parser "^1.19.0"
     express "^4.17.1"
