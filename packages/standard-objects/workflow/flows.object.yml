@@ -753,7 +753,7 @@ actions:
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, data) {
               var record = data && data.record;
-              if(record.enable_amisform){
+              if(record.object_name || record.enable_amisform){
                 return false;
               };
               return true;
