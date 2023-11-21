@@ -1,6 +1,6 @@
 {
   "name": "@steedos/odata-v4-parser",
-  "version": "2.5.20-beta.13",
+  "version": "2.5.20-beta.14",
   "description": "OData v4 Parser",
   "main": "lib/parser.js",
   "repository": {
@@ -20,5 +20,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "34cc6265b7793bfc131b0de3065ca2a445208820"
+  "gitHead": "045588388eb081d1b2423a4a2b09ddcd0fb6a85e"
 }
