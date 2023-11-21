@@ -26,7 +26,7 @@ fields:
         value: onCreateOnly
       - label: 新建时，和每次编辑时
         value: onAllChanges
-      - label: 新建时，或编辑数据导致条件成立
+      - label: 新建时，和编辑数据导致条件成立时
         value: onCreateOrTriggeringUpdate
     description: 
   formula:
