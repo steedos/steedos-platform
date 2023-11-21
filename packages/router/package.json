@@ -1,7 +1,7 @@
 {
   "name": "@steedos/router",
   "private": false,
-  "version": "2.5.20-beta.10",
+  "version": "2.5.20-beta.11",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -18,5 +18,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "42a5b30eb9031f18283b2b10f1983ede714d7f49"
+  "gitHead": "8b44f35dc1746ac7d09136ce66e5f4254b551fca"
 }
