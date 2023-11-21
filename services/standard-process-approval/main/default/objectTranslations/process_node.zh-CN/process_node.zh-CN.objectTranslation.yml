@@ -89,7 +89,7 @@ fields:
     help: 
     description: 
   approval_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
   rejection_updates_field_actions:
@@ -97,7 +97,7 @@ fields:
     help: 
     description: 
   rejection_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
 groups:

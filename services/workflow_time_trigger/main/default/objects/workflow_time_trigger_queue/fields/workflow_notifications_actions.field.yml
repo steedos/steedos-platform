@@ -1,7 +1,7 @@
 name: workflow_notifications_actions
 type: lookup
 multiple: true
-label: 工作流操作：工作流通知
+label: 工作流操作：消息提醒
 is_wide: true
 reference_to: workflow_notifications
 reference_to_field: name

@@ -38,7 +38,7 @@ fields:
     help: 
     description: 
   workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
   workflow_outbound_messages_actions:

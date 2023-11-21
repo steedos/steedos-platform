@@ -55,7 +55,7 @@ fields:
     help: 
     description: 
   initial_submission_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
   final_approval_record_lock:
@@ -72,7 +72,7 @@ fields:
     help: 
     description: 
   final_approval_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
   final_rejection_record_lock:
@@ -89,7 +89,7 @@ fields:
     help: 
     description: 
   final_rejection_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
   recall_record_lock:
@@ -106,7 +106,7 @@ fields:
     help: 
     description: 
   recall_workflow_notifications_actions:
-    label: 工作流通知
+    label: 消息提醒
     help: 
     description: 
 groups:

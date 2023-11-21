@@ -52,7 +52,7 @@ CustomLabels:
   menu_workflow_rules: 工作流规则
   menu_workflow_actions: 工作流操作
   menu_field_updates: 字段更新
-  menu_workflow_notifications: 工作流通知
+  menu_workflow_notifications: 消息提醒
   menu_workflow_outbound_messages: 出站消息
   menu_object_validation_rules: 对象验证规则
   menu_api_keys: API Key
@@ -100,7 +100,7 @@ CustomTabs:
   admin_workflow_rule: 工作流规则
   admin_object_validation_rules: 对象验证规则
   admin_action_field_updates: 字段更新
-  admin_workflow_notifications: 工作流通知
+  admin_workflow_notifications: 消息提醒
   admin_workflow_outbound_messages: 出站消息
   admin_roles: 角色
   admin_flow_roles: 岗位
