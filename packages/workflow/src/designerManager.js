@@ -511,9 +511,9 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 // formField.url = `/api/v4/${refObjName}?$top=20`;
                 // formField.search_field = nameFieldKey;
                 // formField.formula = `{${formField.code}.${nameFieldKey}}`;
-                formField.type = objField.type;
+                formField.type = 'lookup';
                 formField.reference_to = objField.reference_to;
-                formField.reference_to_fields = objField.reference_to_fields;
+                formField.reference_to_field = objField.reference_to_field;
                 formField.config = JSON.stringify({filters: objField.filters, amis: objField.amis});
             }
             

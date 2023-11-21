@@ -66,7 +66,7 @@ module.exports = {
                         if (updates_field_actions) {
                             await objectql.runFieldUpdateActions(updates_field_actions, record_id);
                         }
-                        // 工作流通知
+                        // 消息提醒
                         if (workflow_notifications_actions) {
                             await objectql.runWorkflowNotifyActions(workflow_notifications_actions, record_id);
                         }

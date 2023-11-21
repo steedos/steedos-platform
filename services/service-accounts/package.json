@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-accounts",
-  "version": "2.5.20-beta.10",
+  "version": "2.5.20-beta.11",
   "main": "package.service.js",
   "license": "MIT",
   "dependencies": {
@@ -10,5 +10,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "42a5b30eb9031f18283b2b10f1983ede714d7f49"
+  "gitHead": "8b44f35dc1746ac7d09136ce66e5f4254b551fca"
 }

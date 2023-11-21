@@ -134,7 +134,7 @@
 
 - 字段更新 [action_field_updates](/packages/standard-objects/workflow-actions/action_field_updates.object.yml)：用于保存管理员在流程自动化配置中配置的字段更新信息，详细请参考文档 [字段更新](https://www.steedos.cn/docs/admin/auto_process#%E5%AD%97%E6%AE%B5%E6%9B%B4%E6%96%B0)。
 
-- 工作流通知 [workflow_notifications](/packages/standard-objects/workflow-actions/workflow_notifications.object.yml)：用于保存管理员在流程自动化配置中配置的工作流通知信息，详细请参考文档 [工作流通知](https://www.steedos.cn/docs/admin/auto_process#%E5%B7%A5%E4%BD%9C%E6%B5%81%E9%80%9A%E7%9F%A5)。
+- 消息提醒 [workflow_notifications](/packages/standard-objects/workflow-actions/workflow_notifications.object.yml)：用于保存管理员在流程自动化配置中配置的工作流通知信息，详细请参考文档 [消息提醒](https://www.steedos.cn/docs/admin/auto_process#%E5%B7%A5%E4%BD%9C%E6%B5%81%E9%80%9A%E7%9F%A5)。
 
 - 工作流规则 [workflow_rule](/packages/standard-objects/workflow-actions/workflow_rule.object.yml)：用于保存管理员在流程自动化配置中配置的工作流规则，详细请参考文档 [工作流规则](https://www.steedos.cn/docs/admin/auto_process#%E5%B7%A5%E4%BD%9C%E6%B5%81%E8%A7%84%E5%88%99)。
 

@@ -753,7 +753,7 @@ actions:
     visible: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, record_permissions, data) {
               var record = data && data.record;
-              if(record.enable_amisform){
+              if(record.object_name || record.enable_amisform){
                 return false;
               };
               return true;
@@ -1180,6 +1180,7 @@ actions:
                                                     "id": "u:c405734543e0",
                                                     "closeOnEsc": false,
                                                     "closeOnOutside": false,
+                                                    "size": "lg",
                                                     "showCloseButton": true
                                                   },
                                                   "label": "${'flows.addFormFields.set_fields' | t}",
@@ -1351,6 +1352,7 @@ actions:
                                                     "id": "u:3663990f226a",
                                                     "closeOnEsc": false,
                                                     "closeOnOutside": false,
+                                                    "size": "lg",
                                                     "showCloseButton": true
                                                   },
                                                   "label": "${'flows.addFormFields.set_subform' | t}",

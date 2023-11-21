@@ -1,5 +1,5 @@
 name: workflow_notifications
-label: 工作流通知
+label: 消息提醒
 description:
 fields:
   name:

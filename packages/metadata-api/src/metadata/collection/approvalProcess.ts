@@ -156,7 +156,7 @@ async function getProcessActionIds(dbManager, approvalProcess) {
         } 
     }
 
-    // 工作流通知现在直接保存的就是name，无需转换
+    // 消息提醒现在直接保存的就是name，无需转换
     // 但需兼容旧数据
     if(approvalProcess.initial_submission_workflow_notifications_actions){
         for(let i=0; i<approvalProcess.initial_submission_workflow_notifications_actions.length; i++){

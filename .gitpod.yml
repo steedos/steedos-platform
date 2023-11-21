@@ -3,7 +3,7 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 6000
+  - port: 5000
     onOpen: ignore
     visibility: public
   - port: 3000
@@ -29,8 +29,8 @@ ports:
 tasks:
   - name: Docker
     command: |
-      echo "ROOT_URL=$(gp url 6000)" >> .env.local 
-      echo "METADATA_SERVER=$(gp url 6000)" >> .env.local
+      echo "ROOT_URL=$(gp url 5000)" >> .env.local 
+      echo "METADATA_SERVER=$(gp url 5000)" >> .env.local
       echo "ROOT_URL=$(gp url 80)" >> deploy/enterprise/.env 
       yarn docker:db
   - name: Steedos
