@@ -305,12 +305,11 @@ Form_formula.getNextStepsFromCondition = function(step, autoFormDoc, fields){
 /**
  * 
  * @param {string} script 
- * @param {object} autoFormDoc 
- * @param {object} fields 
+ * @param {object} fieldValues
  * @returns 
  */
-Form_formula.runFormulaScript = function (script, autoFormDoc, fields) {
-    Form_formula.field_values = Form_formula.init_formula_values(fields, autoFormDoc);
+Form_formula.runFormulaScript = function (script, fieldValues) {
+    Form_formula.field_values = fieldValues
 
     var conditionStr = script.toString();
     conditionStr = conditionStr.replace(/\=/g, "==").replace(/\>==/g, ">=").replace(/\<==/g, "<=").replace(/\======/g, "===").replace(/\====/g, "==");

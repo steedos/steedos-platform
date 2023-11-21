@@ -187,7 +187,7 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     // 如结果中包含条件节点则需要继续计算条件节点下一步
     const needRemoveSteps = {}, needAddSteps = {};
     for (const step of rev_nextSteps) {
-        ApproveManager.caculateNextStepsByEnterStepCondition(step, autoFormDoc, fields, needRemoveSteps, needAddSteps)
+        ApproveManager.caculateNextStepsByEnterStepCondition(instance, step, autoFormDoc, fields, needRemoveSteps, needAddSteps)
     }
     if (!_.isEmpty(needRemoveSteps) && !_.isEmpty(needAddSteps)) {
         for (const id in needAddSteps) {
@@ -225,10 +225,23 @@ ApproveManager.getNextSteps = function(instance, currentStep, judge, autoFormDoc
     return rev_nextSteps;
 };
 
-ApproveManager.caculateNextStepsByEnterStepCondition = function(step, autoFormDoc, fields, needRemoveSteps = {}, needAddSteps = {}) {
+ApproveManager.caculateNextStepsByEnterStepCondition = function(instance, step, autoFormDoc, fields, needRemoveSteps = {}, needAddSteps = {}) {
     if (false === step.always_enter_step) {
+        const stepId = step.id;
+        // 获取step处理人
+        const users = ApproveManager.getStepApproveUsers(instance, stepId)
+        const spaceId = instance.space
+        const approvers = []
+        users.forEach(user => {
+            approvers.push(Formula_data.getUser(spaceId, user.id))
+        })
         let enterStepCondition = step.enter_step_condition
-        let result = Form_formula.runFormulaScript(enterStepCondition, autoFormDoc, fields)
+        const fieldValues = Form_formula.init_formula_values(fields, autoFormDoc);
+        fieldValues.step = {
+            ...step,
+            approvers
+        };
+        let result = Form_formula.runFormulaScript(enterStepCondition, fieldValues)
         if (false === result) {
             needRemoveSteps[step.id] = step;
             if (step.lines && step.lines.length > 0) {
