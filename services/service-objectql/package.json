@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-objectql",
-    "version": "2.5.20-beta.14",
+    "version": "2.5.20-beta.15",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -13,8 +13,8 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "045588388eb081d1b2423a4a2b09ddcd0fb6a85e",
+    "gitHead": "52f8a57dda265bd97c41a0cb09b3457704c221f3",
     "dependencies": {
-        "@steedos/objectql": "2.5.20-beta.14"
+        "@steedos/objectql": "2.5.20-beta.15"
     }
 }
