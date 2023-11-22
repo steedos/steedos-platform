@@ -249,7 +249,7 @@ ApproveManager.caculateNextStepsByEnterStepCondition = function(instance, step, 
                 for (const stepId of toStepIds) {
                     const s = WorkflowManager.getInstanceStep(stepId)
                     if (s) {
-                        ApproveManager.caculateNextStepsByEnterStepCondition(s, autoFormDoc, fields, needRemoveSteps, needAddSteps)
+                        ApproveManager.caculateNextStepsByEnterStepCondition(instance, s, autoFormDoc, fields, needRemoveSteps, needAddSteps)
                     }
                 }
             }
