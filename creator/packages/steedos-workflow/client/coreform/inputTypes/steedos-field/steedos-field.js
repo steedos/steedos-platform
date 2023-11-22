@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-22 11:10:37
+ * @LastEditTime: 2023-11-22 16:17:28
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -123,7 +123,7 @@ if (Meteor.isClient) {
                         "actions": false,
                         "wrapWithPanel": false,
                         id: 'steedosField_' + atts.id,
-                        data: disabled ? {[atts.name]: values} : undefined,
+                        data: disabled ? {[atts.name]: values, _display: {}} : {_display: {}},
                         body: [
                             {
                                 type: 'steedos-field',
