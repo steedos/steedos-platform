@@ -626,6 +626,7 @@ actions:
                                                       "label": "${'flows.standard_new.binding_objects' | t}",
                                                       "type": "select",
                                                       "name": "object_name2",
+                                                      "clearable": true,
                                                       "id": "u:4e769995f638",
                                                       "required": false,
                                                       "joinValues": false,
