@@ -171,6 +171,8 @@ Template.instancePrint.onRendered ->
 	$("body").css("background-image","");
 	$("body").css("background","silver");
 
+	$("body").css("position","static");
+
 	# package twbs:bootstrap 中写了table table-bordered的打印样式,会导致申请单打印时, border异常, 因此在打印时,异常子表的这2个class
 	$(".autoform-table").removeClass('table table-bordered');
 
