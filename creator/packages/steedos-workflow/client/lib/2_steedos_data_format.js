@@ -322,7 +322,6 @@ var s_autoform = function (schema, field) {
 
         autoform.options = afoptions;
     }
-    console.log(`autoform`, autoform)
     return autoform;
 };
 

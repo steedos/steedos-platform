@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-16 11:15:19
+ * @LastEditTime: 2023-11-22 11:10:37
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -106,8 +106,9 @@ if (Meteor.isClient) {
         if(atts.hasOwnProperty("disabled") || atts.hasOwnProperty("readonly")){
             disabled = true;
           }
-        $("#"+atts.id).data('value', values);
-        $("#"+atts.id).data('multiple', atts.multiple);
+          
+        $("[name='"+atts.name+"']").data('value', values);
+        $("[name='"+atts.name+"']").data('multiple', atts.multiple);
         const config = JSON.parse(atts.config || "{}");
         const schema = {
             render_engine: 'amis',
@@ -150,7 +151,7 @@ if (Meteor.isClient) {
                                 actions: [
                                     {
                                         "actionType": "custom",
-                                        "script": "console.log('form change event', event);$(\"#"+atts.id+"\").data('value', event.data['"+atts.name+"'])"
+                                        "script": "$(\"[name='"+atts.name+"']\").data('value', event.data['"+atts.name+"'])"
                                     }
                                 ]
                             }
@@ -159,7 +160,7 @@ if (Meteor.isClient) {
                 ]
             }
         };
-        // console.log(`afSteedosField`, ids, schema)
+        // console.log(`afSteedosField`, ids, schema, atts)
         // 渲染amis
         Steedos.Page.render($("#"+atts.id)[0], schema, Object.assign({}, {}));
     };

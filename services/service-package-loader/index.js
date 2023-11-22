@@ -18,7 +18,7 @@ const loadFlowFile = new metaDataCore.LoadFlowFile();
 const getPackageYmlData = (packagePath)=>{
     let packageYmlData = {};
     if(fs.existsSync(path.join(packagePath, 'package.service.yml'))){
-        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'package.service.yml'));
+        packageYmlData = metaDataCore.loadFile(path.join(packagePath, 'package.service.yml')) || {};
     }
     if(fs.existsSync(path.join(packagePath, 'README.md'))){
         packageYmlData.readme = metaDataCore.loadFile(path.join(packagePath, 'README.md'));
