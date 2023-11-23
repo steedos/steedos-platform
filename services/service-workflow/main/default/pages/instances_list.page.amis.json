@@ -94,7 +94,7 @@
                             },
                             {
                               "actionType": "custom",
-                              "script": "if(window.innerWidth < 768){document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open');document.querySelector('.isInset').classList.remove('inset-0') }"
+                              "script": "if (window.innerWidth < 768) { document.querySelector('.instances-customPage').classList.remove('instances-sidebar-open'); document.querySelector('.isInset').classList.remove('inset-0') }\n//获取上一次的flowId和categoryId\nconst lastFlowId = event.data.flowId;\nconst lastCategoryId = event.data.categoryId;\n//从value中获取最新的flowId\nvar flowIdRegex = /&flowId=([^&]+)/;\nvar flowIdMatch = event.data.value.match(flowIdRegex);\nconst flowId = flowIdMatch && flowIdMatch.length > 0 ? flowIdMatch[1] : \"\";\n//从value中获取最新的categoryId\nvar categoryIdRegex = /&categoryId=([^&]+)/;\nvar categoryIdMatch = event.data.value.match(categoryIdRegex);\nconst categoryId = categoryIdMatch && categoryIdMatch.length > 0 ? categoryIdMatch[1] : \"\";\n//获取上一次的listname和最新的listname\nconst lastListName = event.data.listName;\nconst listName = event.data.value.split('?')[0].split('instances/grid/')[1];\nif (lastListName == \"monitor\" && listName == \"monitor\" && (flowId != lastFlowId || categoryId != lastCategoryId)) {\n  listViewPropsStoreKey = window.location.pathname + \"/crud\";\n  sessionStorage.removeItem(listViewPropsStoreKey);\n  sessionStorage.removeItem(listViewPropsStoreKey + \"/query\");\n}"
                             },
                             {
                               "actionType": "setValue",
