@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-02-27 15:51:42
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-08-18 10:19:20
+ * @LastEditors: 涂佳俊 tujiajun@steedos.com
+ * @LastEditTime: 2023-11-23 18:02:20
  * @FilePath: /project-ee/Users/yinlianghui/Documents/GitHub/steedos-platform2-4/services/service-workflow/main/default/routes/api_workflow_nav.router.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -130,10 +130,14 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   const output = [];
   let data = {};
   let monitorIsUnfolded = false;
+  let appFilter = `(filters:["app","=","${appId}"])`;
+  if(appId == "approve_workflow"){
+    appFilter = "";
+  }
   let currentAppCategories = await objectql.broker.call('api.graphql', {
     query: `
       query {
-        categories(filters:["app","=","${appId}"]){
+        categories${appFilter}{
           _id
         }
       }
