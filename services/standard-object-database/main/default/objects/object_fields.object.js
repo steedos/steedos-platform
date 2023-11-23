@@ -9,6 +9,13 @@ const objectFieldsFind = function (filter) {
     }, { filter: filter })
 }
 
+
+const getRecords = function (objectName) {
+  return objectql.wrapAsync(async function () {
+      return await objectql.getObject(this.objectName).directFind({fields:["_id"], top: 1});
+  }, { objectName: objectName })
+}
+
 const MAX_MASTER_DETAIL_LEAVE = objectql.MAX_MASTER_DETAIL_LEAVE;
 
 function canRemoveNameFileld(doc){
@@ -432,11 +439,11 @@ var triggers = {
         }
       });
       if (object) {
-        object_documents = Creator.getCollection(object.name).find();
-        if ((modifier != null ? (ref6 = modifier.$set) != null ? ref6.reference_to : void 0 : void 0) && doc.reference_to !== _reference_to && object_documents.count() > 0) {
+        object_documents = getRecords(object.name);
+        if ((modifier != null ? (ref6 = modifier.$set) != null ? ref6.reference_to : void 0 : void 0) && doc.reference_to !== _reference_to && object_documents.length > 0) {
           throw new Meteor.Error(500, `对象${object.label}中已经有记录，不能修改reference_to字段`);
         }
-        if ((modifier != null ? (ref7 = modifier.$unset) != null ? ref7.reference_to : void 0 : void 0) && doc.reference_to !== _reference_to && object_documents.count() > 0) {
+        if ((modifier != null ? (ref7 = modifier.$unset) != null ? ref7.reference_to : void 0 : void 0) && doc.reference_to !== _reference_to && object_documents.length > 0) {
           throw new Meteor.Error(500, `对象${object.label}中已经有记录，不能修改reference_to字段`);
         }
       }
