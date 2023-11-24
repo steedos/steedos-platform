@@ -31,6 +31,9 @@ list_views:
       - name
       - sort_no
       - app
+    sort:
+      - field_name: sort_no
+        order: asc
 permission_set:
   user:
     allowCreate: false
