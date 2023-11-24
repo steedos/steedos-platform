@@ -1,7 +1,7 @@
 {
   "name": "@steedos/service-charts",
   "private": false,
-  "version": "2.5.20-beta.17",
+  "version": "2.5.20-beta.18",
   "description": "Connect to the database and execute custom queries.",
   "main": "package.service.js",
   "repository": {
@@ -17,9 +17,9 @@
     "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/app-admin"
   },
   "devDependencies": {
-    "@steedos/service-metadata-server": "2.5.20-beta.17",
-    "@steedos/service-package-loader": "2.5.20-beta.17",
-    "@steedos/service-steedos-server": "2.5.20-beta.17",
+    "@steedos/service-metadata-server": "2.5.20-beta.18",
+    "@steedos/service-package-loader": "2.5.20-beta.18",
+    "@steedos/service-steedos-server": "2.5.20-beta.18",
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "ioredis": "^4.22.0",
@@ -34,7 +34,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e08aff7412471f62dc93de6cae4488d353afe26e",
+  "gitHead": "5bc21369ead7ec6b57f3739298bfbe66b36d8878",
   "dependencies": {
     "duration": "^0.2.2",
     "json2csv": "5.0.6",

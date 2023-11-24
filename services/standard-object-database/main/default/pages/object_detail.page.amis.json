@@ -125,18 +125,18 @@
                     ]
                 },
                 {
-                    "title": "${'objects_amis_process_mapping' | t}",
+                    "title": "${'objects_amis_object_workflows' | t}",
+                    "hiddenOn": "${_master.record.enable_workflow != true}",
                     "body": [
                         {
                             "type": "steedos-object-related-listview",
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "object_workflows",
-                            "perPage": 20,
-                            "id": "u:e14df76cfa51"
+                            "relatedKey": "object_name",
+                            "perPage": 20
                         }
-                    ],
-                    "id": "u:cbc13e1a7033"
+                    ]
                 },
                 {
                     "title": "${'objects_amis_validation_rule' | t}",
@@ -171,20 +171,6 @@
                             "objectApiName": "objects",
                             "recordId": "${recordId}",
                             "relatedObjectApiName": "share_rules",
-                            "relatedKey": "object_name",
-                            "perPage": 20
-                        }
-                    ]
-                },
-                {
-                    "title": "${'objects_amis_object_workflows' | t}",
-					"hiddenOn": "${_master.record.enable_workflow != true}",
-                    "body": [
-                        {
-                            "type": "steedos-object-related-listview",
-                            "objectApiName": "objects",
-                            "recordId": "${recordId}",
-                            "relatedObjectApiName": "object_workflows",
                             "relatedKey": "object_name",
                             "perPage": 20
                         }

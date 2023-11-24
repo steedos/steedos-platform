@@ -1231,12 +1231,12 @@ CustomLabels:
   flow_roles: 审批岗位
   flow_roles_name: 岗位名称
   flow_positions: 岗位成员
-  flow_positions_role: 岗位
+  flow_positions_role: 审批岗位
   flow_positions_org: 审批范围
-  flow_positions_users: 岗位成员
-  flow_positions_role_name(): 岗位
+  flow_positions_users: 审批岗位成员
+  flow_positions_role_name(): 审批岗位
   flow_positions_org_name(): 审批范围
-  flow_positions_users_name(): 岗位成员
+  flow_positions_users_name(): 审批岗位成员
   workflow_table_confirm: 确认
   workflow_table_delete: 删除
   Attachment deleted successfully: 文件删除成功!

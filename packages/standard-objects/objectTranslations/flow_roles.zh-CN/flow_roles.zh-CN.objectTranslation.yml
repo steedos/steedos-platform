@@ -1,5 +1,5 @@
 name: flow_roles
-label: 岗位
+label: 审批岗位
 description: 
 fields:
   name:

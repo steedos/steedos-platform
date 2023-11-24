@@ -156,9 +156,9 @@
 
 - 流程分类 [categories](/packages/standard-objects/workflow/categories.object.yml)：用于保存管理员在设置应用中为审批王应用配置的流程分类。
 
-- 岗位 [flow_roles](/packages/standard-objects/workflow/flow_roles.object.yml)：用于保存管理员在设置应用中为审批王应用配置的岗位。
+- 审批岗位 [flow_roles](/packages/standard-objects/workflow/flow_roles.object.yml)：用于保存管理员在设置应用中为审批王应用配置的岗位。
 
-- 岗位成员 [flow_positions](/packages/standard-objects/workflow/flow_positions.object.yml)：用于保存管理员在设置应用中为审批王应用配置的岗位成员。
+- 审批岗位成员 [flow_positions](/packages/standard-objects/workflow/flow_positions.object.yml)：用于保存管理员在设置应用中为审批王应用配置的岗位成员。
 
 - 审批（申请单） [instances](/packages/standard-objects/workflow/instances.object.yml)：用于保存业务人员填写的申请单和签核历程。
 

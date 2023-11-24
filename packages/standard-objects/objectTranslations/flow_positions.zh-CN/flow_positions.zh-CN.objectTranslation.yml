@@ -1,9 +1,9 @@
 name: flow_positions
-label: 岗位成员
+label: 审批岗位成员
 description: 
 fields:
   role:
-    label: 岗位
+    label: 审批岗位
     help: 
     description: 
   users:

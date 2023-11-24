@@ -2,7 +2,7 @@ name: admin_flow_roles
 desktop: true
 icon: queue
 is_new_window: false
-label: 岗位
+label: 审批岗位
 mobile: true
 permissions:
   - permission: 'on'

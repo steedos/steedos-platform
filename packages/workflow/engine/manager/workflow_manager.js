@@ -130,7 +130,7 @@ WorkflowManager.getSpacePositions = function (spaceId) {
 	}).fetch();
 };
 
-//获取用户岗位
+//获取用户审批岗位
 WorkflowManager.getUserRoles = function (spaceId, orgId, userId) {
 
 	var userRoles = new Array();
