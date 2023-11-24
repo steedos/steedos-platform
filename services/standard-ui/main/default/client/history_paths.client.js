@@ -1,8 +1,8 @@
 /*
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2023-05-16 17:00:38
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2023-10-18 16:58:55
+ * @LastEditors: 涂佳俊 tujiajun@steedos.com
+ * @LastEditTime: 2023-11-23 17:22:22
  */
 var buttonTriggerHistoryPathsChange;
 
@@ -34,6 +34,7 @@ function clearHistoryFilters(context, lastPath, paths) {
             listViewPropsStoreKey = path.split('?')[0] + "/crud";
         }
         sessionStorage.removeItem(listViewPropsStoreKey);
+        sessionStorage.removeItem(listViewPropsStoreKey + "/query");
     }
 }
 

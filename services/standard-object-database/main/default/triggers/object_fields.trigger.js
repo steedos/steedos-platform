@@ -226,7 +226,11 @@ module.exports = {
             let fields = await InternalData.getObjectFields(objectName, this.userId, filters.name ? true : false);
             if(fields){
                 _.each(fields, (field)=>{
-                    this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
+                    if(!_.find(this.data.values, (item)=>{
+                        return item.object == field.object && item.name == field.name
+                    })){
+                        this.data.values.push(Object.assign({_id: `${objectName}.${field.name}`}, field))
+                    }
                 })
                 // this.data.values = this.data.values.concat(fields)
                 this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, this.spaceId);

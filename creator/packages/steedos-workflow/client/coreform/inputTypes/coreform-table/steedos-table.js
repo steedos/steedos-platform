@@ -547,6 +547,11 @@ SteedosTable.getTDValue = function (field, value) {
                     }
                 }
                 break;
+            case 'file':
+            case 'lookup':
+            case 'image':
+                td_value = InstanceReadOnlyTemplate.getValue(value, field);
+                break
             default:
                 td_value = value ? value : '';
                 break;

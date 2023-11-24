@@ -631,8 +631,24 @@ InstanceManager.getInstanceFormValue = function(){
 		}
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
 		// 指定分析特定流程字段值异常问题
-		if ("" == autoFormValue["文件标题"] && "4c0acf34-aaa2-4834-a189-dd742e987382" == WorkflowManager.getInstance()?.flow) {
-			localStorage.setItem("__autoFormValue", JSON.stringify(autoFormValue));
+		const instance = WorkflowManager.getInstance();
+		if (instance && 'draft' != instance.state && !autoFormValue["文件标题"] && "4c0acf34-aaa2-4834-a189-dd742e987382" == instance.flow) {
+			const currentApprove = InstanceManager.getCurrentApprove();
+			Sentry.captureMessage("申请单值丢失", {
+				contexts: {
+					flowId: instance.flow,
+					instanceId: instance._id,
+					userId: Meteor.userId(),
+					box: Session.get('box'),
+					currentApprove: currentApprove,
+					autoFormValue: autoFormValue,
+					instanceValues: instance.values
+				},
+				user: {
+					id: Meteor.userId()
+				},
+				level: 'error'
+			});
 		}
 	}
 	return autoFormValue;

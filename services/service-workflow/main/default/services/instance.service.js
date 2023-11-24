@@ -240,6 +240,9 @@ module.exports = {
     },
     getAppCategoriesIds: {
         async handler(appId) {
+          if(appId == "approve_workflow"){
+            return [];
+          }
           const categories = await objectql.getObject('categories').directFind({ filters: [['app', '=', appId]] });
           return _.map(categories, '_id');
         }

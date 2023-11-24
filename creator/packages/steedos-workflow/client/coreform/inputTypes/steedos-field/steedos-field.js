@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-10-28 15:25:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-22 16:17:28
+ * @LastEditTime: 2023-11-23 13:27:39
  * @Description: 
  */
 if (Meteor.isClient) {
@@ -151,7 +151,7 @@ if (Meteor.isClient) {
                                 actions: [
                                     {
                                         "actionType": "custom",
-                                        "script": "$(\"[name='"+atts.name+"']\").data('value', event.data['"+atts.name+"'])"
+                                        "script": "console.debug('steedos field change:',event); $(\"[name='"+atts.name+"']\").data('value', _.get(event.data, '"+atts.name+"'))"
                                     }
                                 ]
                             }
@@ -160,7 +160,7 @@ if (Meteor.isClient) {
                 ]
             }
         };
-        // console.log(`afSteedosField`, ids, schema, atts)
+        console.log(`afSteedosField`, ids, schema, atts)
         // 渲染amis
         Steedos.Page.render($("#"+atts.id)[0], schema, Object.assign({}, {}));
     };
