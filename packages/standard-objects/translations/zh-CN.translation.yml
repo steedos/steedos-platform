@@ -65,8 +65,8 @@ CustomLabels:
   app_workflow_name: 审批王
   menu_menu_workflow: 审批王
   menu_flows: 流程
-  menu_flow_roles: 岗位
-  menu_flow_positions: 岗位成员
+  menu_flow_roles: 审批岗位
+  menu_flow_positions: 审批岗位成员
   menu_categories: 流程分类
   menu_instance_number_rules: 申请编号
   menu_space_user_signs: 图片签名
@@ -103,7 +103,7 @@ CustomTabs:
   admin_workflow_notifications: 消息提醒
   admin_workflow_outbound_messages: 出站消息
   admin_roles: 角色
-  admin_flow_roles: 岗位
+  admin_flow_roles: 审批岗位
   admin_flows: 流程
   admin_categories: 流程分类
   admin_instance_number_rules: 流程编号

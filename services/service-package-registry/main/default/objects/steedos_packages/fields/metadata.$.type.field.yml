@@ -33,7 +33,7 @@ options:
     value: ApprovalProcess
   - label: 角色
     value: Role
-  - label: 岗位
+  - label: 审批岗位
     value: FlowRole
   - label: 查询
     value: Query
