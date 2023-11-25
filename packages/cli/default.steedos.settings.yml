@@ -94,12 +94,14 @@ email:
   secure: ${STEEDOS_EMAIL_PASSWORD}
   signname: ${STEEDOS_EMAIL_SIGNNAME}
 cron:
+  enabled: ${STEEDOS_CRON_ENABLED}
   instancerecordqueue_interval: ${STEEDOS_CRON_INSTANCERECORDQUEUE_INTERVAL}
   mailqueue_interval: ${STEEDOS_CRON_MAILQUEUE_INTERVAL}
   push_interval: ${STEEDOS_CRON_PUSH_INTERVAL}
   webhookqueue_interval: ${STEEDOS_CRON_WEBHOOKQUEUE_INTERVAL}
   build_index: ${STEEDOS_CRON_BUILD_INDEX}
   objectwebhooksqueue_interval: ${STEEDOS_CRON_OBJECTWEBHOOKSQUEUE_INTERVAL}
+  workflow_rule_interval: ${STEEDOS_CRON_WORKFLOW_RULE}
 instances_stat:
   schedule: ${STEEDOS_INSTANCES_STAT_SCHEDULE}
 dingtalk:

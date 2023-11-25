@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 17:53:55
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-29 16:09:20
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-11-25 13:03:27
  * @Description: 执行工作流时间触发器队列
  */
 
@@ -11,6 +11,7 @@
 
 const schedule = require('node-schedule');
 const objectql = require('@steedos/objectql');
+const { DEFAULT_STEEDOS_CRON_WORKFLOW_RULE } = require('./consts')
 
 module.exports = {
     /*
@@ -25,12 +26,15 @@ module.exports = {
     */
     run: async function (options = {}) {
         // STEEDOS_CRON_WORKFLOW_RULE='*/10 * * * * *'
-        const rule = process.env.STEEDOS_CRON_WORKFLOW_RULE
-        if (!rule) {
+        const steedosConfig = objectql.getSteedosConfig() || {};
+        const cron = steedosConfig.cron;
+        if (!cron || 'false' == cron.enabled) {
             return;
         }
+        const rule = cron.workflow_rule_interval || DEFAULT_STEEDOS_CRON_WORKFLOW_RULE
 
-        console.log('time_trigger_queue schedule running...')
+        // console.log('rule:', rule)
+        // console.log('time_trigger_queue schedule running...')
         const opt = {
             excuteBatchSize: 10,
             keepDocs: true,
