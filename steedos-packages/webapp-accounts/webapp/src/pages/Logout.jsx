@@ -20,10 +20,13 @@ class Logout extends React.PureComponent {
   }
 
   componentDidMount() {
-
     let redirect_uri = new URLSearchParams(this.props.location.search).get('redirect_uri')
     if (!redirect_uri)
       redirect_uri = '/login'
+    if(this.props.tenant.page_logout){
+      // TODO 给 page logout 拼接 redirect url?
+      redirect_uri = `location:${this.props.tenant.page_logout}`;
+    }
     GlobalAction.emitUserLoggedOutEvent(redirect_uri);
   }
 
@@ -36,6 +39,7 @@ function mapStateToProps(state) {
   return {
     currentUser: getCurrentUser(state),
     settings: getSettings(state),
+    tenant: getTenant(state),
   };
 }
 

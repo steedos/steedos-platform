@@ -39,6 +39,32 @@ export function selectSpace(spaceId?: string | null): ActionFunc {
   };
 }
 
+export function acceptInvitation(spaceId, email): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+    try {
+        const result = await Client4.acceptInvitation(spaceId, email);
+    } catch (error: any) {
+        forceLogoutIfNecessary(error, dispatch, getState);
+        dispatch(logError(error));
+        return {error};
+    }
+    return {data: spaceId};
+  };
+}
+
+export function declineInvitation(spaceId, email): ActionFunc {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+    try {
+        const result = await Client4.declineInvitation(spaceId, email);
+    } catch (error: any) {
+        forceLogoutIfNecessary(error, dispatch, getState);
+        dispatch(logError(error));
+        return {error};
+    }
+    return {data: spaceId};
+  };
+}
+
 export function getMySpaces(): ActionFunc {
   return bindClientFunc({
       clientFunc: Client4.getMySpaces,

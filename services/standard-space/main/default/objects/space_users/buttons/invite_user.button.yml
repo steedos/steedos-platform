@@ -1,15 +1,13 @@
-name: clear_login_tokens
+name: invite_user
 amis_schema: |-
   {
       "type": "service",
       "body": [
           {
               "type": "button",
-              "label": "注销所有登录",
-              "id": "u:clear_login_tokens",
+              "label": "重新邀请",
+              "id": "u:invite_user",
               "editorState": "default",
-              "confirmText": "注销所有登录后, 用户所有已登录的流程器、客户端都需要重新登录. 确定要清理吗?",
-              "hiddenOn": "context.user.is_space_admin != true || Meteor.settings.public.enable_saas == true",
               "onEvent": {
                   "click": {
                       "weight": 0,
@@ -20,12 +18,12 @@ amis_schema: |-
                               "args": {
                                   "options": {},
                                   "api": {
-                                      "url": "${context.rootUrl}/api/users/${record.user}/clear_login_tokens",
+                                      "url": "${context.rootUrl}/api/users/${record.user}/invite_user",
                                       "method": "get",
                                       "requestAdaptor": "",
                                       "adaptor": "",
                                       "messages": {
-                                          "success": "注销成功"
+                                          "success": "已邀请"
                                       }
                                   }
                               }
@@ -49,7 +47,7 @@ amis_schema: |-
       "id": "u:0ef6ed9aee76"
   }
 is_enable: true
-label: 注销所有登录
-'on': record_more
+label: 重新邀请
+'on': record_only
 type: amis_button
 visible: true

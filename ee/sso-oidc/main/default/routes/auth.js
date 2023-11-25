@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.oidcLogin = exports.oidcPreAuth = exports.oidcAuth = exports.oidcStrategyFactory = exports.oidcCallbackUrl = void 0;
+exports.oidcLogout = exports.oidcLogin = exports.oidcPreAuth = exports.oidcAuth = exports.oidcStrategyFactory = exports.oidcCallbackUrl = void 0;
 const tslib_1 = require("tslib");
 const core = require("./core");
 const { oidc } = require("./middleware");
@@ -112,3 +112,18 @@ const oidcLogin = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, 
     });
 });
 exports.oidcLogin = oidcLogin;
+const logoutUrl = function (redirectUrl, idTokenHint) {
+    const { endSessionEndpoint } = oidcStrategy.config;
+    const url = new URL(endSessionEndpoint);
+    if (redirectUrl) {
+        url.searchParams.set('post_logout_redirect_uri', redirectUrl);
+    }
+    if (idTokenHint) {
+        url.searchParams.set('id_token_hint', idTokenHint);
+    }
+    return url.toString();
+};
+const oidcLogout = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    return res.redirect(302, logoutUrl(process.env.ROOT_URL));
+});
+exports.oidcLogout = oidcLogout;

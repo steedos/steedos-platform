@@ -25,7 +25,8 @@ import { login } from './endpoints/login';
 import { getMySpaces } from './endpoints/spaces';
 import { verify_email, verify_mobile} from './endpoints/password/verify';
 import { geetest_init,geetest_validate } from './endpoints/geetestV3/geetest-init'
-
+import { AcceptInvitation } from './endpoints/steedos/accept_invitation';
+import { DeclineInvitation} from './endpoints/steedos/decline_invitation';
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -57,7 +58,8 @@ const accountsExpress = (
   router.get(`${path}/settings`, userLoader(accountsServer), getSettings(accountsServer));
   router.get(`${path}/tenant/:id`, userLoader(accountsServer), getTenant(accountsServer));
   // router.post(`${path}/tenant`, userLoader(accountsServer), createTenant(accountsServer));
-
+  router.post(`${path}/acceptInvitation`, userLoader(accountsServer), AcceptInvitation(accountsServer));
+  router.post(`${path}/declineInvitation`, userLoader(accountsServer), DeclineInvitation(accountsServer));
   router.post(`${path}/refreshTokens`, refreshAccessToken(accountsServer));
 
   router.post(`${path}/logout`, userLoader(accountsServer), logout(accountsServer));

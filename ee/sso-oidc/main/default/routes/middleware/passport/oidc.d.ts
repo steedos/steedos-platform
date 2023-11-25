@@ -7,6 +7,7 @@ export declare const strategyFactory: (config: any, callbackUrl: any, saveUserFn
         authorizationURL: any;
         tokenURL: any;
         userInfoURL: any;
+        endSessionEndpoint: any;
         clientID: any;
         clientSecret: any;
         callbackURL: any;

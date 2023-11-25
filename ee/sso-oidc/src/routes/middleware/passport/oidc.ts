@@ -119,6 +119,7 @@ export const strategyFactory = async function (config, callbackUrl, saveUserFn) 
       authorizationURL: body.authorization_endpoint,
       tokenURL: body.token_endpoint,
       userInfoURL: body.userinfo_endpoint,
+      endSessionEndpoint: body.end_session_endpoint,
       clientID: clientID,
       clientSecret: clientSecret,
       callbackURL: callbackUrl,

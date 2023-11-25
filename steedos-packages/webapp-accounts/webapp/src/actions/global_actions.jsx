@@ -97,6 +97,9 @@ export async function redirectUserToVerifyMobile(location){
 export function redirectTo(redirectTo, location) {
     if (!redirectTo) 
         return;
+    if(redirectTo.startsWith("location:")){
+        return document.location.href=redirectTo.substr(9)
+    }
 
     if (redirectTo && redirectTo.indexOf('no_redirect=1')<0) {
       const userId = LocalStorageStore.getItem('userId');

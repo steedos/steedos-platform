@@ -125,5 +125,7 @@
     "accounts.privacyURL": "https://www.steedos.com/cn/steedos/privacy/",
     "accounts.logoURL":"/images/logo_platform.png",
     "accounts.passwordLogin": "密码登录",
-    "accounts.codeLogin": "验证码登录"
+    "accounts.codeLogin": "验证码登录",
+    "accounts.accept_invitation": "接受邀请",
+    "accounts.decline_invitation": "拒绝"
 }

@@ -1,6 +1,14 @@
 name: invite_state
 label: Invitation Status
-type: text
-omit: true
-hidden: true
+type: select
+options:
+  - label: Pending
+    value: pending
+    color: d3d3d3
+  - label: Accepted
+    value: accepted
+    color: 008000
+  - label: Refused
+    value: refused
+    color: ff0000
 sort_no: 330

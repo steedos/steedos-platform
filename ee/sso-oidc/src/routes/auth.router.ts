@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 17:15:52
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-16 14:50:42
+ * @LastEditTime: 2023-11-24 14:50:32
  * @Description: 
  */
 const ejs = require('ejs');
@@ -14,6 +14,7 @@ router
   .get("/api/global/auth/oidc/config", //"/api/global/auth/oidc/configs/:configId",
     authController.oidcPreAuth
   )
+  .get("/api/global/auth/oidc/logout", authController.oidcLogout)
   .get("/api/global/auth/oidc/callback", authController.oidcAuth)
   .get("/api/global/auth/oidc/error-callback", async function(req, res){
       const filename = path.join(__dirname, '..', '..', '..', 'ejs', 'error-callback.ejs')

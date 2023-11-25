@@ -230,7 +230,23 @@ export default class Client4 {
         );
 
     };
+    acceptInvitation = (spaceId: string, email: string) => {
+        this.trackEvent('api', 'api_users_accept_invitation');
+        const result:any = this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/acceptInvitation`,
+            {method: 'POST', body: JSON.stringify({email: email, tenantId: spaceId})},
+        );
+        return result
+    };
 
+    declineInvitation = (spaceId: string, email: string) => {
+        this.trackEvent('api', 'api_users_decline_invitation');
+        const result:any = this.doFetch<UserProfile>(
+            `${this.getAccountsRoute()}/declineInvitation`,
+            {method: 'POST', body: JSON.stringify({email: email, tenantId: spaceId})},
+        );
+        return result
+    };
 
     createUser = (user: UserProfile, token: string, inviteId: string, redirect: string) => {
         this.trackEvent('api', 'api_users_createUser');

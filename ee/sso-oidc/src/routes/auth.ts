@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-24 18:15:05
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-07 09:39:42
+ * @LastEditTime: 2023-11-24 15:51:01
  * @Description: 
  */
 const core = require("./core")
@@ -139,4 +139,24 @@ export const oidcLogin = async (req: any, res: any, next: any) => {
       }
     }
   );
+}
+
+
+const logoutUrl = function (redirectUrl, idTokenHint?) {
+  const { endSessionEndpoint } = oidcStrategy.config;
+  const url = new URL(endSessionEndpoint)
+
+  if (redirectUrl) {
+    url.searchParams.set('post_logout_redirect_uri', redirectUrl)
+  }
+
+  if (idTokenHint) {
+    url.searchParams.set('id_token_hint', idTokenHint)
+  }
+
+  return url.toString()
+}
+
+export const oidcLogout = async (req: any, res: any, next: any) =>{
+  return res.redirect(302, logoutUrl(process.env.ROOT_URL));
 }
