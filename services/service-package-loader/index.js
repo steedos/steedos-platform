@@ -10,7 +10,7 @@ const _ = require('lodash');
 const fs = require("fs");
 const metaDataCore = require('@steedos/metadata-core');
 const { registerMetadataConfigs, loadStandardMetadata, loadRouters } = require('@steedos/metadata-registrar');
-
+const moment = require('moment');
 const objectMixin = require('@steedos/service-object-mixin')
 
 const loadFlowFile = new metaDataCore.LoadFlowFile();
@@ -253,7 +253,7 @@ module.exports = {
                 }
             }
     
-            console.time(`service ${this.name} started`)
+            const startTime = moment();
             let packageInfo = this.settings.packageInfo;
             if (!packageInfo) {
                 return;
@@ -288,7 +288,8 @@ module.exports = {
     
             // await this.loadPackagePublicFiles(_path);
             this.started = true;
-            console.timeEnd(`service ${this.name} started`)
+            const endTime = moment();
+            console.log(`service ${this.name} started:`, `${endTime.diff(startTime, 'seconds', true)}s`);
             if(this.afterStart){
                 try {
                     await this.afterStart();

@@ -8,6 +8,7 @@ const path = require('path');
 const Future = require('fibers/future');
 const _ = require('lodash');
 const metaDataCore = require('@steedos/metadata-core');
+const moment = require('moment');
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -107,7 +108,7 @@ module.exports = {
             }
         },
         async onStarted(){
-            console.time(`service ${this.name} started`)
+            const startTime = moment()
             let packageInfo = this.settings.packageInfo;
             if (!packageInfo) {
                 return;
@@ -121,8 +122,9 @@ module.exports = {
             await this.loadPackageMetadataFiles(path, this.name);
 
             await this.loadPackageMetadataServices(path);
-
-            console.timeEnd(`service ${this.name} started`)
+            
+            const endTime = moment();
+            console.log(`service ${this.name} started:`, `${endTime.diff(startTime, 'seconds', true)}s`);
             // console.log(`service ${this.name} started`);
         }
 	},
