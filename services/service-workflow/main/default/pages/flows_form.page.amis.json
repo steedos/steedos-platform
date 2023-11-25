@@ -1,0 +1,20 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象表单",
+            "objectApiName": "flows",
+            "recordId": "${recordId}",
+            "className": "",
+            "enableTabs": true,
+            "mode": "edit",
+            "layout": "normal"
+        }
+    ],
+    "data": {
+        "context": {}
+    },
+    "name": "flows_form",
+    "id": "u:bb11df3flows"
+}
