@@ -135,6 +135,7 @@
 										"current",
 										"current.fields",
 										"current.fields.$.name",
+										"current.fields.$.code",
 										"current.fields.$.type",
 										"current.fields.$.is_required",
 										"current.fields.$.is_wide",
