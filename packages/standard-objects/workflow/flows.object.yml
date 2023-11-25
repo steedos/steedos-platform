@@ -11,7 +11,7 @@ fields:
     label: Name
     required: false
     searchable: true
-    readonly: true
+    # readonly: true
     name: name
   api_name:
     type: text
