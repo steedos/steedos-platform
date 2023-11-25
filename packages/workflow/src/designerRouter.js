@@ -105,7 +105,12 @@ router.post('/am/forms', async function (req, res) {
             const tables = await designerManager.transformObjectDetailFieldsToFormTableFields(instance_table_fields)
             // 执行者的身份校验
             await designerManager.checkSpaceUserBeforeUpdate(form['space'], userId, req.user.roles)
-
+            let name_forumla = null;
+            if(objectName && _.find(instanceFields, function (field) {
+                return field.name == 'name'
+            })){
+                name_forumla = '{name}'
+            }
             await new Promise(function (resolve, reject) {
                 Fiber(function () {
                     try {
@@ -138,6 +143,7 @@ router.post('/am/forms', async function (req, res) {
                         }
                         let current = {
                             _id: form["current"]["id"],
+                            name_forumla: name_forumla,
                             form: newForm._id,
                             _rev: 1,
                             created: now,
