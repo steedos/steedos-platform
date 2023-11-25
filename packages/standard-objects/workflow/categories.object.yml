@@ -18,7 +18,7 @@ fields:
     reference_to_field: code
     name: app
     filterable: true
-    required: true
+    required: false
   sort_no:
     label: Sort Number
     type: number
