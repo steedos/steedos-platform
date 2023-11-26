@@ -210,7 +210,7 @@
                           }
                         ],
                         "bodyClassName": "h-7  flex justify-between items-center p-0 pl-10 my-2",
-                        "toolbar": [ ],
+                        "toolbar": [],
                         "className": "mb-0 border-0 bg-none card",
                         "id": "u:296298da1bef"
                       },
@@ -239,8 +239,7 @@
                     },
                     "requestAdaptor": "var graphqlOrder = \"\";\n//根据groups，修改对象的字段分组field_groups\nvar field_groups = _.cloneDeep(api.data.groups);\n_.remove(field_groups, { is_default: true });\nfield_groups = field_groups.map(function (group) {\n  return _.omit(group, 'id');\n})\nconst groupOrder = 'upsert0:objects__upsert(id:\"' + api.data.$self.designObjectId + '\" , doc:' + JSON.stringify(JSON.stringify({ field_groups })) + ') {_id}';\ngraphqlOrder += groupOrder;\n\n//根据design_field,修改对象字段的sort_no与groups\nvar index = 1;\n_.forEach(api.data.design_field, function (items, key) {\n  _.forEach(items, function (item) {\n    const field = _.find(api.data.fields, { 'id': item });\n    const itemOrder = 'upsert' + index + ':object_fields__upsert(id:\"' + item + '\" , doc:' + JSON.stringify(JSON.stringify({ object: api.data.$self.designObjectName, _name: field._name, label: field.label, sort_no: index * 10, group: key == \"未分组\" ? null : key })) + '){_id}\\n';\n    graphqlOrder += itemOrder;\n    index++;\n  })\n})\n\ngraphqlOrder = 'mutation {' + graphqlOrder + '}';\nreturn {\n  ...api,\n  data: {\n    query: graphqlOrder\n  }\n}",
                     "adaptor": "if (payload.errors) {\n  payload.status = 2;\n  payload.msg = window.t ? window.t(payload.errors[\n    0\n  ].message) : payload.errors[\n    0\n  ].message;\n}\nreturn payload;",
-                    "messages": {
-                    },
+                    "messages": {},
                     "data": {
                       "design_field": "${design_field}",
                       "groups": "${groups}",
@@ -271,14 +270,12 @@
             "headers": {
               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
             },
-            "messages": {
-            },
+            "messages": {},
             "requestAdaptor": "",
             "adaptor": "//筛选出可编辑的字段\r\n\r\nvar oldFields = _.filter(payload.data.fields, function (obj) { return obj.recordPermissions.allowEdit; });\r\n//将group为空的字段分为未分组的组中\r\noldFields = _.map(oldFields, function (obj) {\r\n  obj.originId = obj._id;\r\n  if (obj.group === null) {\r\n    obj.group = \"未分组\";\r\n  }\r\n  if (obj.is_system) {\r\n    obj._id = api.data.designObjectName + \".\" + obj._name;\r\n  }\r\n  return obj;\r\n});\r\n\r\n//整合出字段的属性集合\r\nconst fields = oldFields.map((field) => {\r\n  return {\r\n    \"id\": field._id,\r\n    \"_name\": field._name,\r\n    \"label\": field.label,\r\n    \"_id\": field.originId,\r\n    \"columnSpan\": field.is_wide ? 2 : 1\r\n  }\r\n})\r\n\r\n//从字段的group属性中，整合出字段分组的属性集合\r\nlet field_groups = _.map(_.uniqBy(oldFields, \"group\"), function (obj) {\r\n  return {\r\n    \"id\": obj.group,\r\n    \"group_name\": obj.group,\r\n    \"visible_on\": \"\"\r\n  };\r\n});\r\n\r\n//合并对象上的field_groups与字段上的group\r\nconst groups = _.unionBy(api.data.field_groups, field_groups, 'id');\r\n\r\n//判断是否第一次调用接口，不是的话（说明是触发了datachange事件），返回fields与fieldUpdateData\r\nif (api.data.dataInitialed) {\r\n  const eventData = api.data.eventData;\r\n  let fieldUpdateData = \"\";\r\n  const fieldForGroup = api.data.fieldForGroup;\r\n  let fieldForGroupLength = 0;\r\n  _.forIn(fieldForGroup, function (value, key) {\r\n    fieldForGroupLength += value.length;\r\n  });\r\n  if (fieldForGroupLength < fields.length) {\r\n    fieldUpdateData = {\r\n      type: \"insert\",\r\n      id: eventData.result.data.recordId\r\n    }\r\n  } else if (fieldForGroupLength > fields.length) {\r\n    fieldUpdateData = {\r\n      type: \"delete\",\r\n      id: eventData._id\r\n    }\r\n  }\r\n  return payload = {\r\n    data: {\r\n      fields,\r\n      fieldUpdateData\r\n    }\r\n  }\r\n}\r\n\r\n//整合字段与分组的关系\r\nconst oldFieldsInGroups = _.groupBy(oldFields, \"group\");\r\nconst fieldForGroup = _.mapValues(_.groupBy(groups, \"id\"), function (group,key) {\r\n  if (oldFieldsInGroups[key]) {\r\n    return _.map(oldFieldsInGroups[key], function (obj) {\r\n      return obj._id;\r\n    });\r\n  } else {\r\n    return [];\r\n  }\r\n});\r\n\r\nreturn payload = {\r\n  data: {\r\n    fields,\r\n    groups,\r\n    fieldForGroup,\r\n    dataInitialed: true\r\n  }\r\n};",
             "sendOn": "!!this.designObjectId"
           },
-          "messages": {
-          },
+          "messages": {},
           "onEvent": {
             "fetchInited": {
               "actions": [
@@ -306,13 +303,11 @@
         "headers": {
           "Authorization": "Bearer ${context.tenantId},${context.authToken}"
         },
-        "messages": {
-        },
+        "messages": {},
         "requestAdaptor": "",
         "adaptor": "const field_groups = payload.data.objects[0] && _.map(payload.data.objects[0].field_groups, function (obj) {\r\n  return {\r\n    \"id\": obj.group_name,\r\n    \"group_name\": obj.group_name,\r\n    \"visible_on\": obj.visible_on\r\n  }\r\n});\r\nfield_groups.unshift({\r\n  id: \"未分组\",\r\n  group_name: \"未分组\",\r\n  visible_on: \"\",\r\n  is_default: true\r\n});\r\nconst designObjectId = payload.data.objects[0] && payload.data.objects[0]._id;\r\nreturn payload = {\r\n  data: {\r\n    field_groups,\r\n    designObjectId,\r\n designObjectLabel: payload.data.objects[0] && payload.data.objects[0].label,\r\n   _master: {\r\n      recordId: designObjectId\r\n    }\r\n  }\r\n}"
       },
-      "messages": {
-      },
+      "messages": {},
       "onEvent": {
         "@data.changed.object_fields": {
           "actions": [
@@ -332,8 +327,7 @@
     "body"
   ],
   "data": {
-    "initialValues": {
-    },
+    "initialValues": {},
     "appId": "builder",
     "title": "",
     "context": "${context}",
