@@ -178,17 +178,34 @@ amis_schema: |-
                           "type": "checkbox",
                           "name": "saveInstanceToAttachment",
                           "id": "u:da17af0371f8",
-                          "option": "将原表单存储为附件"
+                          "option": "将原表单存储为附件",
+                          "hiddenOn": "${enable_distribute_instance_to_attachment != true}"
                         },
                         {
                           "type": "checkbox",
                           "name": "instance_related",
                           "id": "u:da17af0371f9",
-                          "option": "自动创建关联文件"
+                          "option": "自动创建关联文件",
+                          "hiddenOn": "${enable_distribute_instance_related != true}"
                         }
                       ],
                       "id": "u:742f9c0dc8a1",
                       "mode": "normal",
+                      "initApi": {
+                        "url": "${context.rootUrl}/graphql",
+                        "method": "post",
+                        "dataType": "json",
+                        "data": {
+                          "&": "$$",
+                          "record": "${record}",
+                          "context": "${context}"
+                        },
+                        "requestAdaptor": "api.data={query: '{flows__findOne(id: \"'+api.body.record.flow+'\"){enable_distribute_instance_to_attachment, enable_distribute_instance_related}}'}; return api;",
+                        "adaptor": "console.log('payload', payload);payload.data=payload.data.flows__findOne; \nreturn payload;",
+                        "headers": {
+                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        }
+                      },
                       "api": {
                         "url": "${context.rootUrl}/api/workflow/v2/instance/forward",
                         "method": "post",

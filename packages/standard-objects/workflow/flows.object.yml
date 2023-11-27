@@ -460,6 +460,14 @@ fields:
     group: Distribution
     omit: true
     hidden: true
+  enable_distribute_instance_to_attachment:
+    type: boolean
+    label: 分发时允许将原表单存储为附件
+    group: Distribution
+  enable_distribute_instance_related:
+    type: boolean
+    label: 分发时允许自动创建关联文件
+    group: Distribution
   name_formula:
     label: Formula of Title
     type: text
