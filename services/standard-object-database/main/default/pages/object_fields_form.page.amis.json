@@ -3,7 +3,7 @@
     "body": [
         {
             "type": "steedos-object-form",
-            "label": "对象表单",
+            "label": "对象字段表单",
             "objectApiName": "object_fields",
             "recordId": "${recordId}",
             "className": "",

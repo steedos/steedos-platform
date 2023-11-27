@@ -4,3 +4,4 @@ label: Email
 searchable: true
 index: true
 sort_no: 120
+required: true

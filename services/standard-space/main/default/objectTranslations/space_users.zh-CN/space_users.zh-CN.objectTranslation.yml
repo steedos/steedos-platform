@@ -112,8 +112,13 @@ fields:
     description: 
   invite_state:
     label: 邀请状态
-    help: 
-    description: 
+    options:
+    - label: 待接受
+      value: pending
+    - label: 已接受
+      value: accepted
+    - label: 已拒绝
+      value: refused
   user:
     label: 用户
     help: 

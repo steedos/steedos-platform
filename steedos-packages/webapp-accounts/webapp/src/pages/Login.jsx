@@ -56,6 +56,12 @@ class Login extends React.Component {
   constructor(props, context) {
 
     super(props, context);
+
+    if(this.props.tenant.page_login){
+      // TODO 给 page login 拼接 redirect url?
+      return window.location.href = this.props.tenant.page_login;
+    }
+
     let inApp = false
     let email = '';
     if ((new URLSearchParams(this.props.location.search)).get('email')) {

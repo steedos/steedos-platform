@@ -37,14 +37,6 @@ amis_schema: |-
                                                   "maxRows": 20
                                               },
                                               {
-                                                  "type": "editor",
-                                                  "label": "表单脚本",
-                                                  "name": "form_script",
-                                                  "id": "u:025f8c4f09b6",
-                                                  "minRows": 3,
-                                                  "maxRows": 20
-                                              },
-                                              {
                                                   "type": "textarea",
                                                   "label": "标题公式",
                                                   "name": "name_forumla",
@@ -53,22 +45,12 @@ amis_schema: |-
                                                   "maxRows": 20
                                               },
                                               {
-                                                  "type": "select",
-                                                  "label": "表单样式",
-                                                  "name": "instance_style",
-                                                  "options": [
-                                                      {
-                                                          "label": "表格",
-                                                          "value": "table"
-                                                      },
-                                                      {
-                                                          "label": "默认",
-                                                          "value": "default"
-                                                      }
-                                                  ],
-                                                  "id": "u:ffe021fde250",
-                                                  "multiple": false,
-                                                  "value": ""
+                                                  "type": "editor",
+                                                  "label": "表单脚本",
+                                                  "name": "form_script",
+                                                  "id": "u:025f8c4f09b6",
+                                                  "minRows": 3,
+                                                  "maxRows": 20
                                               }
                                           ],
                                           "id": "u:f2e844854529",

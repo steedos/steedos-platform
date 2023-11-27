@@ -13,6 +13,7 @@ const path = require("path");
 const router = require('@steedos/router').staticRouter();
 router
     .get("/api/global/auth/oidc/config", authController.oidcPreAuth)
+    .get("/api/global/auth/oidc/logout", authController.oidcLogout)
     .get("/api/global/auth/oidc/callback", authController.oidcAuth)
     .get("/api/global/auth/oidc/error-callback", function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {

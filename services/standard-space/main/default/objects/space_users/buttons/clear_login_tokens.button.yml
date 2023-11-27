@@ -9,7 +9,7 @@ amis_schema: |-
               "id": "u:clear_login_tokens",
               "editorState": "default",
               "confirmText": "注销所有登录后, 用户所有已登录的流程器、客户端都需要重新登录. 确定要清理吗?",
-              "hiddenOn": "context.user.is_space_admin != true",
+              "hiddenOn": "context.user.is_space_admin != true || Meteor.settings.public.enable_saas == true",
               "onEvent": {
                   "click": {
                       "weight": 0,

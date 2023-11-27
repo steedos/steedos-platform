@@ -1,0 +1,12 @@
+name: flows_form
+is_active: true
+label: 流程表单
+object_name: flows
+pageAssignments:
+  - type: orgDefault
+    page: flows_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []

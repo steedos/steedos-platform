@@ -1,6 +1,6 @@
 name: object_form
 is_active: true
-label: 对象字段表单
+label: 对象表单
 object_name: objects
 pageAssignments:
   - type: orgDefault

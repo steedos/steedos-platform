@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-17 13:35:54
+ * @LastEditTime: 2023-11-22 17:17:32
  * @Description: 
  */
 "use strict";
@@ -48,6 +48,12 @@ function checkMobile(mobile, config) {
     }
 }
 
+/**
+ * 验证需要添加的space_users是否合法
+ * 如果返回值是user, 则表示user已存在, 不需要再添加. 用于后续处理.
+ * @param {*} doc 
+ * @returns 
+ */
 async function insertVaildate(doc) {
     const spaceObj = getObject('spaces')
     const userObj = getObject('users')
@@ -174,19 +180,24 @@ async function insertVaildate(doc) {
                 throw new Error("space_users_error_space_user_exists");
             }
 
-            userCount = await new Promise((resolve, reject) => {
+            const users = await new Promise((resolve, reject) => {
                 Fiber(function () {
                     try {
                         resolve(db.users.find({
                             $or: selector
-                        }).count())
+                        }).fetch())
                     } catch (error) {
                         reject(error)
                     }
                 }).run()
             })
 
-            if (userCount > 0) {
+            if (users.length == 1) {
+                // throw new Error("space_users_error_user_exists");
+                // 如果user已存在且只有1条时, 则return user
+                return users[0];
+            }else if(users.length > 1){
+                // 如果user已存在且有多条时, 则抛错, 需要人工介入.
                 throw new Error("space_users_error_user_exists");
             }
 
@@ -368,6 +379,7 @@ module.exports = {
     listenTo: 'space_users',
 
     beforeInsert: async function () {
+        const enableSaas = validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true);
         const { doc } = this
         const userId = this.userId || doc.created_by
         const broker = getSteedosSchema().broker
@@ -377,8 +389,16 @@ module.exports = {
         if (doc.email) {
             doc.email = doc.email.toLowerCase().trim();
         }
-        await insertVaildate(doc);
-
+        const userRecord = await insertVaildate(doc);
+        if(!doc.user && userRecord){
+            doc.user = userRecord._id;
+            if(enableSaas){
+                doc.user_accepted = enableSaas != true;
+                if(enableSaas){
+                    doc.invite_state = "pending";
+                }
+            }
+        }
         if (doc.profile) {
             const isSpaceOwner = await broker.call('spaces.isSpaceOwner', { spaceId: doc.space, userId: userId })
             if (doc.profile === 'admin' && !isSpaceOwner) {
@@ -387,6 +407,7 @@ module.exports = {
         } else {
             doc.profile = 'user'
         }
+        
         if (doc.user) {
             doc.owner = doc.user
             let userDoc = await userObj.findOne(doc.user);
@@ -408,19 +429,9 @@ module.exports = {
                         doc.user_accepted = true;
                     }
                 } else {
-                    const steedosConfig = getSteedosConfig();
-                    if (steedosConfig.tenant && steedosConfig.tenant.saas) {
-                        // 云版要求用户接受邀请才让用户在新加入的工作区生效
+                    doc.user_accepted = enableSaas != true;
+                    if(enableSaas){
                         doc.invite_state = "pending";
-                        // 云版强制设置user_accepted为false
-                        doc.user_accepted = false;
-                    }
-                    else {
-                        // 落地版本不需要用户接受邀请才让用户在新加入的工作区生效，而是直接生效
-                        // 落地版本设置user_accepted为传入的值，由管理员在新建用户的界面设置
-                        if (!doc.user_accepted) {
-                            doc.user_accepted = false;
-                        }
                     }
                 }
 

@@ -6,7 +6,7 @@ import {
   Session,
   User,
 } from '../types';
-import { get, merge, trim, map } from 'lodash';
+import { get, merge, trim, map, find } from 'lodash';
 import { Collection, Db, ObjectId } from 'mongodb';
 
 import { AccountsMongoOptions, MongoUser } from './types';
@@ -931,8 +931,8 @@ export class Mongo implements DatabaseInterface {
   public async getMySpaces(userId: string): Promise<any | null> {
     const userSpaces: any = await this.db
       .collection("space_users")
-      .find({ user: userId })
-      .project({ space: 1 })
+      .find({ user: userId, invite_state: {$ne: "refused"} })
+      .project({ space: 1, user_accepted: 1, invite_state: 1 })
       .toArray();
     const spaceIds = map(userSpaces, "space");
     const spaces = await this.db
@@ -941,7 +941,16 @@ export class Mongo implements DatabaseInterface {
       .project({ name: 1 })
       .toArray();
 
-    return spaces;
+    return map(spaces, function(space) {
+      const spaceUser = find(userSpaces, (item)=>{
+        return item.space == space._id;
+      });
+      return {
+        ...space,
+        user_accepted: spaceUser.user_accepted,
+        invite_state: spaceUser.invite_state
+      }
+    });
   }
 
 

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-13 11:35:27
+ * @LastEditTime: 2023-11-25 11:33:50
  * @Description: 
  */
 "use strict";
@@ -64,6 +64,13 @@ module.exports = {
                 if(!userId){
                     return "缺少参数"
                 }
+
+                // 如果是saas环境, 禁止清理登录tokens.
+                const enableSaas = validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true);
+                if(enableSaas){
+                    return "禁止操作"
+                }
+
                 const dbUser = await getObject('users').findOne(userId)
                 if(dbUser){
                     // 1 清空 登录tokens
@@ -88,6 +95,30 @@ module.exports = {
                           ids: [dbUser._id]
                         }
                     })
+                }
+            }
+        },
+        invite_user: {
+            rest: {
+                method: "GET",
+                fullPath: "/api/users/:userId/invite_user",
+            },
+            params: {
+                userId: { type: "string" }
+            },
+            async handler(ctx) {
+                const { user, userAgent, clientIp } = ctx.meta;
+                const { userId } = ctx.params;
+                const { spaceId } = user;
+                if(!user.is_space_admin){
+                    return '非管理员无权操作'
+                }
+                if(!userId){
+                    return "缺少参数"
+                }
+                const su = await getObject('space_users').find({filters: [['user', '=', userId], ['space', '=', spaceId], ['user_accepted', '=', false], ['invite_state', '=', 'refused']]})
+                if(su.length == 1){
+                    await getObject('space_users').directUpdate(su[0]._id, {invite_state: 'pending', user_accepted: false})
                 }
             }
         }

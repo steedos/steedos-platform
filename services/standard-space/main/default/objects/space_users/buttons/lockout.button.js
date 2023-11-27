@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-13 10:15:57
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-11-25 10:33:27
  * @Description: 
  */
 module.exports = {
@@ -38,6 +38,9 @@ module.exports = {
         var record = data && data.record;
         if ((record.user && record.user._id) === Steedos.userId()) {
             return;
+        }
+        if(record.invite_state == 'refused' || record.invite_state == 'pending'){
+            return false;
         }
         var organization = Session.get("organization");
         var allowEdit = Creator.baseObject.actions.standard_edit.visible.apply(this, arguments);

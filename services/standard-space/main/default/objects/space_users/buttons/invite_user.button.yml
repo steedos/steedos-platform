@@ -1,0 +1,53 @@
+name: invite_user
+amis_schema: |-
+  {
+      "type": "service",
+      "body": [
+          {
+              "type": "button",
+              "label": "重新邀请",
+              "id": "u:invite_user",
+              "editorState": "default",
+              "onEvent": {
+                  "click": {
+                      "weight": 0,
+                      "actions": [
+                          {
+                              "actionType": "ajax",
+                              "outputVar": "responseResult",
+                              "args": {
+                                  "options": {},
+                                  "api": {
+                                      "url": "${context.rootUrl}/api/users/${record.user}/invite_user",
+                                      "method": "get",
+                                      "requestAdaptor": "",
+                                      "adaptor": "",
+                                      "messages": {
+                                          "success": "已邀请"
+                                      }
+                                  }
+                              }
+                          }
+                      ]
+                  }
+              }
+          }
+      ],
+      "regions": [
+          "body"
+      ],
+      "data": {
+          "context": {},
+          "dataComponentId": "",
+          "record_id": "",
+          "record": {},
+          "permissions": {}
+      },
+      "bodyClassName": "p-0",
+      "id": "u:0ef6ed9aee76"
+  }
+is_enable: true
+label: 重新邀请
+'on': record_only
+type: amis_button
+visible: true

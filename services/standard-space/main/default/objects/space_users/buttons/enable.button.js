@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-13 10:16:22
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2023-11-25 10:32:40
  * @Description: 
  */
 module.exports = {
@@ -76,6 +76,10 @@ module.exports = {
         if (!allowEdit) {
             // permissions配置没有权限则不给权限
             return false
+        }
+
+        if(record.invite_state == 'refused' || record.invite_state == 'pending'){
+            return false;
         }
 
         // 组织管理员要单独判断，只给到有对应分部的组织管理员权限

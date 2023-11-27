@@ -103,5 +103,7 @@
     "accounts.logoURL":"/images/logo_platform.en-us.png",
     "accounts.invalidVerifyParam": "Invalid validation parameter",
     "accounts.passwordLogin": "Login with password",
-    "accounts.codeLogin": "Login with Verify code"
+    "accounts.codeLogin": "Login with Verify code",
+    "accounts.accept_invitation": "Accept invitation",
+    "accounts.decline_invitation": "Decline"
 }
