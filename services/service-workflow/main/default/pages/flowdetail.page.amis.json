@@ -26,6 +26,7 @@
 									"labelAlign": "left",
 									"id": "u:46f4dc4412c0",
 									"className": "mb-4",
+									"enableTabs": true,
 									"excludedFields": [
 										"object_name",
 										"instance_fields",

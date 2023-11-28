@@ -253,6 +253,10 @@ fields:
     label: 审批王端禁止发起流程
     help:
     description:
+  enable_distribute_instance_to_attachment:
+    label: 分发时允许将原表单存储为附件
+  enable_distribute_instance_related:
+    label: 分发时允许自动创建关联文件
 groups:
   template: 模板
   synchronization: 归档

@@ -256,6 +256,10 @@ fields:
     label: Forbid initiate instance
     help:
     description:
+  enable_distribute_instance_to_attachment:
+    label: Enable attaching the original form during distribution
+  enable_distribute_instance_related:
+    label: Enable automatic creation of associated files during distribution.
 groups:
   template: Template
   synchronization: Synchronization
