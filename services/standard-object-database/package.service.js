@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-10 16:53:59
+ * @LastEditTime: 2023-11-29 14:49:20
  * @Description: 
  */
 "use strict";
@@ -114,7 +114,8 @@ module.exports = {
 					}
 				}
 				if(data.is_system){
-					data = _.pick(data, ['label', 'defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required'])
+					// 'label' 先禁止编辑label , 目前由于i18n的问题导致 label无效.
+					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden']);
 				}
                 return object.update(id, data, userSession)
 			},
