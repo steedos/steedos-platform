@@ -25,6 +25,8 @@ fields:
     label: Label
     is_name: true
     sort_no: 120
+    amis:
+      disabledOn: "${is_system == true}"
   _name:
     type: text
     label: Field Name
