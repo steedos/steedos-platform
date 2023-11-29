@@ -102,11 +102,13 @@ fields:
     inlineHelpText: Run Time-Dependent Actions if the following filters are met.
     group: time_dependent_action
   time_triggers:
-    type: grid
+    type: table
     label: 时间触发器
     is_wide: true
     required: false
     group: time_dependent_action
+    amis:
+      columns: ["number", "unit", "type", "date_field"]
   time_triggers.$:
     label: Field
     blackbox: true
