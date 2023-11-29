@@ -22,6 +22,7 @@ const FIELDTYPES = [
     "lookup",  // "id": 一对一, ["id0","id1"]: 一对多， 需要新增关系表（p, m）, {o:'object_name', ids: ['', '']}：新增关系表(p, o, m)
     "master_detail",
     "grid", // [{},{}] ： 一对多
+    "table", // [{},{}] ： 一对多
     "url",
     "email",
     "avatar", //TODO
@@ -295,6 +296,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                // }
                return SteedosFieldDBType.varchar
            case 'grid':
+               return SteedosFieldDBType.array
+           case 'table':
                return SteedosFieldDBType.array
            case 'url':
                return SteedosFieldDBType.varchar
