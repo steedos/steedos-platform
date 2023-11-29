@@ -35,6 +35,162 @@ objectUpdate = (objectApiName, id, data) ->
 			cb(reject, resolve)
 		)(objectApiName, id, data)
 
+getRelatedObjectFieldCode =  (relatedObjectsKeys, key) ->
+	return _.find relatedObjectsKeys,  (relatedObjectsKey) ->
+		return key.startsWith(relatedObjectsKey + '.')
+
+getFormTableFieldCode = (formTableFieldsCode, key) ->
+	return _.find formTableFieldsCode,  (formTableFieldCode) ->
+		return key.startsWith(formTableFieldCode + '.')
+
+getFormTableField = (formTableFields, key) ->
+	return _.find formTableFields,  (f) ->
+		return f.code == key
+
+getFormField = (formFields, key) ->
+	ff = null
+	_.forEach formFields, (f) ->
+		if ff
+			return
+		if f.type == 'section'
+			ff = _.find f.fields,  (sf) ->
+				return sf.code == key
+		else if f.code == key
+			ff = f
+
+	return ff
+
+getFormTableSubField = (tableField, subFieldCode) ->
+	return _.find tableField.fields,  (f) ->
+		return f.code == subFieldCode
+
+getFieldOdataValue = (objName, id, referenceToFieldName) ->
+	# obj = Creator.getCollection(objName)
+	obj = objectql.getObject(objName)
+	nameKey = getObjectNameFieldKey(objName)
+	if !obj
+		return
+	if _.isString id
+		# _record = obj.findOne(id)
+		_record = objectFindOne(objName, { filters: [[referenceToFieldName, '=', id]]})
+		if _record
+			_record['@label'] = _record[nameKey]
+			return _record
+	else if _.isArray id
+		_records = []
+		# obj.find({ _id: { $in: id } })
+		objectFind(objName, { filters: [[referenceToFieldName, 'in', id]]}).forEach (_record) ->
+			_record['@label'] = _record[nameKey]
+			_records.push _record
+		if !_.isEmpty _records
+			return _records
+	return
+
+getSelectUserValue = (userId, spaceId) ->
+	su = Creator.getCollection('space_users').findOne({ space: spaceId, user: userId })
+	su.id = userId
+	return su
+
+getSelectUserValues = (userIds, spaceId) ->
+	sus = []
+	if _.isArray userIds
+		_.each userIds, (userId) ->
+			su = getSelectUserValue(userId, spaceId)
+			if su
+				sus.push(su)
+	return sus
+
+getSelectOrgValue = (orgId, spaceId) ->
+	org = Creator.getCollection('organizations').findOne(orgId, { fields: { _id: 1, name: 1, fullname: 1 } })
+	org.id = orgId
+	return org
+
+getSelectOrgValues = (orgIds, spaceId) ->
+	orgs = []
+	if _.isArray orgIds
+		_.each orgIds, (orgId) ->
+			org = getSelectOrgValue(orgId, spaceId)
+			if org
+				orgs.push(org)
+	return orgs
+
+getFileFieldValue = (recordFieldId, fType)->
+	if _.isEmpty(recordFieldId)
+		return 
+	if fType == 'image'
+		collection = 'images'
+	else if fType == 'file'
+		collection = 'files'
+	if _.isString(recordFieldId)
+		query = {_id: {$in: [recordFieldId]}}
+	else
+		query = {_id: {$in: recordFieldId}}
+	files = Creator.Collections["cfs.#{collection}.filerecord"].find(query);
+	value = []
+	files.forEach (f) ->
+		newFile = new FS.File()
+		newFile.attachData f.createReadStream('files'), {
+				type: f.original.type
+		}, (err) ->
+			if (err)
+				throw new Meteor.Error(err.error, err.reason)
+
+			newFile.name(f.name())
+			newFile.size(f.size())
+			metadata = {
+				owner: f.metadata.owner
+			}
+			newFile.metadata = metadata;
+			newFile._id = Creator.Collections.instances._makeNewID();
+			cfs[collection].insert(newFile);
+			value.push(newFile._id)
+	if value.length > 0
+		if _.isString(recordFieldId)
+			return value[0]
+		else
+			return value;
+
+getInstanceFieldValue = (objField, formField, record, object_field, spaceId) ->
+	recordFieldValue = record[objField.name]
+	value
+	# lookup、master_detail字段同步到odata字段
+	if formField && objField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
+		referenceToFieldName = objField.reference_to_field || '_id'
+		referenceToObjectName = objField.reference_to
+		odataFieldValue
+		if objField.multiple && formField.is_multiselect
+			odataFieldValue = getFieldOdataValue(referenceToObjectName, recordFieldValue, referenceToFieldName)
+		else if !objField.multiple && !formField.is_multiselect
+			odataFieldValue = getFieldOdataValue(referenceToObjectName, recordFieldValue, referenceToFieldName)
+		value = odataFieldValue
+	else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && (['users', 'organizations'].includes(objField.reference_to) || ('space_users' == objField.reference_to && 'user' == objField.reference_to_field) )
+		if !_.isEmpty(recordFieldValue)
+			selectFieldValue
+			if formField.type == 'user'
+				if objField.multiple && formField.is_multiselect
+					selectFieldValue = getSelectUserValues(recordFieldValue, spaceId)
+				else if !objField.multiple && !formField.is_multiselect
+					selectFieldValue = getSelectUserValue(recordFieldValue, spaceId)
+			else if formField.type == 'group'
+				if objField.multiple && formField.is_multiselect
+					selectFieldValue = getSelectOrgValues(recordFieldValue, spaceId)
+				else if !objField.multiple && !formField.is_multiselect
+					selectFieldValue = getSelectOrgValue(recordFieldValue, spaceId)
+			if selectFieldValue
+				value = selectFieldValue
+	else if formField && objField && formField.type == 'date' && recordFieldValue
+		value = uuflowManagerForInitApproval.formatDate(recordFieldValue) # Date转String
+	else if formField && objField && recordFieldValue && (formField.type == 'image' || formField.type == 'file')
+		value = getFileFieldValue(recordFieldValue, formField.type)
+	else if formField && objField && recordFieldValue && formField.type == 'lookup' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
+		value = recordFieldValue
+	else if formField && objField && recordFieldValue && (formField.type == 'multiSelect')
+		value = recordFieldValue.join(',')
+	else if record.hasOwnProperty(object_field)
+		value = recordFieldValue
+	
+	return value
+
 uuflowManagerForInitApproval = {}
 
 uuflowManagerForInitApproval.check_authorization = (req) ->
@@ -281,120 +437,6 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			return formField.type == 'table'
 		formTableFieldsCode = _.pluck(formTableFields, 'code')
 
-		getRelatedObjectFieldCode =  (key) ->
-			return _.find relatedObjectsKeys,  (relatedObjectsKey) ->
-				return key.startsWith(relatedObjectsKey + '.')
-
-		getFormTableFieldCode = (key) ->
-			return _.find formTableFieldsCode,  (formTableFieldCode) ->
-				return key.startsWith(formTableFieldCode + '.')
-
-		getFormTableField = (key) ->
-			return _.find formTableFields,  (f) ->
-				return f.code == key
-
-		getFormField = (key) ->
-			ff = null
-			_.forEach formFields, (f) ->
-				if ff
-					return
-				if f.type == 'section'
-					ff = _.find f.fields,  (sf) ->
-						return sf.code == key
-				else if f.code == key
-					ff = f
-
-			return ff
-
-		getFormTableSubField = (tableField, subFieldCode) ->
-			return _.find tableField.fields,  (f) ->
-				return f.code == subFieldCode
-
-		getFieldOdataValue = (objName, id, referenceToFieldName) ->
-			# obj = Creator.getCollection(objName)
-			obj = objectql.getObject(objName)
-			nameKey = getObjectNameFieldKey(objName)
-			if !obj
-				return
-			if _.isString id
-				# _record = obj.findOne(id)
-				_record = objectFindOne(objName, { filters: [[referenceToFieldName, '=', id]]})
-				if _record
-					_record['@label'] = _record[nameKey]
-					return _record
-			else if _.isArray id
-				_records = []
-				# obj.find({ _id: { $in: id } })
-				objectFind(objName, { filters: [[referenceToFieldName, 'in', id]]}).forEach (_record) ->
-					_record['@label'] = _record[nameKey]
-					_records.push _record
-				if !_.isEmpty _records
-					return _records
-			return
-
-		getSelectUserValue = (userId, spaceId) ->
-			su = Creator.getCollection('space_users').findOne({ space: spaceId, user: userId })
-			su.id = userId
-			return su
-
-		getSelectUserValues = (userIds, spaceId) ->
-			sus = []
-			if _.isArray userIds
-				_.each userIds, (userId) ->
-					su = getSelectUserValue(userId, spaceId)
-					if su
-						sus.push(su)
-			return sus
-
-		getSelectOrgValue = (orgId, spaceId) ->
-			org = Creator.getCollection('organizations').findOne(orgId, { fields: { _id: 1, name: 1, fullname: 1 } })
-			org.id = orgId
-			return org
-
-		getSelectOrgValues = (orgIds, spaceId) ->
-			orgs = []
-			if _.isArray orgIds
-				_.each orgIds, (orgId) ->
-					org = getSelectOrgValue(orgId, spaceId)
-					if org
-						orgs.push(org)
-			return orgs
-
-		getFileFieldValue = (recordFieldId, fType)->
-			if _.isEmpty(recordFieldId)
-				return 
-			if fType == 'image'
-				collection = 'images'
-			else if fType == 'file'
-				collection = 'files'
-			if _.isString(recordFieldId)
-				query = {_id: {$in: [recordFieldId]}}
-			else
-				query = {_id: {$in: recordFieldId}}
-			files = Creator.Collections["cfs.#{collection}.filerecord"].find(query);
-			value = []
-			files.forEach (f) ->
-				newFile = new FS.File()
-				newFile.attachData f.createReadStream('files'), {
-						type: f.original.type
-				}, (err) ->
-					if (err)
-						throw new Meteor.Error(err.error, err.reason)
-
-					newFile.name(f.name())
-					newFile.size(f.size())
-					metadata = {
-						owner: f.metadata.owner
-					}
-					newFile.metadata = metadata;
-					newFile._id = Creator.Collections.instances._makeNewID();
-					cfs[collection].insert(newFile);
-					value.push(newFile._id)
-			if value.length > 0
-				if _.isString(recordFieldId)
-					return value[0]
-				else
-					return value; 
 		tableFieldCodes = []
 		tableFieldMap = []
 		tableToRelatedMap = {}
@@ -404,10 +446,10 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			workflow_field = fm.workflow_field
 			if !object_field || !workflow_field
 				throw new Meteor.Error(400, '未找到字段，请检查对象流程映射字段配置')
-			relatedObjectFieldCode = getRelatedObjectFieldCode(object_field)
-			formTableFieldCode = getFormTableFieldCode(workflow_field)
+			relatedObjectFieldCode = getRelatedObjectFieldCode(relatedObjectsKeys, object_field)
+			formTableFieldCode = getFormTableFieldCode(formTableFieldsCode, workflow_field)
 			objField = object.fields[object_field]
-			formField = getFormField(workflow_field)
+			formField = getFormField(formFields, workflow_field)
 			recordFieldValue = record[object_field]
 			# 处理子表字段
 			if relatedObjectFieldCode
@@ -459,78 +501,16 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 				if object
 					objectField = object.fields[objectFieldName]
 					if objectField && formField && ['lookup', 'master_detail'].includes(objectField.type) && _.isString(objectField.reference_to)
-						# fieldsObj = {}
-						# fieldsObj[lookupFieldName] = 1
-						# lookupObjectRecord = Creator.getCollection(objectField.reference_to, spaceId).findOne(record[objectFieldName], { fields: fieldsObj })
 						lookupObjectRecord = objectFindOne(objectField.reference_to, { filters: [['_id', '=', record[objectFieldName]]], fields: [lookupFieldName] })
 						if !lookupObjectRecord
 							return
 						objectFieldObjectName = objectField.reference_to
 						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
-						referenceToFieldValue = lookupObjectRecord[lookupFieldName]
-						if objectLookupField && formField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objectLookupField.type) && _.isString(objectLookupField.reference_to)
-							referenceToFieldName = objectLookupField.reference_to_field || '_id'
-							referenceToObjectName = objectLookupField.reference_to
-							odataFieldValue
-							if objectField.multiple && formField.is_multiselect
-								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-							else if !objectField.multiple && !formField.is_multiselect
-								odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-							values[workflow_field] = odataFieldValue
-						else if objectLookupField && formField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objectLookupField.type) && (['users', 'organizations'].includes(objectLookupField.reference_to) || ('space_users' == objectLookupField.reference_to && 'user' == objectLookupField.reference_to_field) )
-							if !_.isEmpty(referenceToFieldValue)
-								lookupSelectFieldValue
-								if formField.type == 'user'
-									if objectLookupField.multiple && formField.is_multiselect
-										lookupSelectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
-									else if !objectLookupField.multiple && !formField.is_multiselect
-										lookupSelectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
-								else if formField.type == 'group'
-									if objectLookupField.multiple && formField.is_multiselect
-										lookupSelectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
-									else if !objectLookupField.multiple && !formField.is_multiselect
-										lookupSelectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
-								if lookupSelectFieldValue
-									values[workflow_field] = lookupSelectFieldValue
-						else
-							values[workflow_field] = lookupObjectRecord[lookupFieldName]
 
-			# lookup、master_detail字段同步到odata字段
-			else if formField && objField && formField.type == 'odata' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
-				referenceToFieldName = objField.reference_to_field || '_id'
-				referenceToObjectName = objField.reference_to
-				referenceToFieldValue = record[objField.name]
-				odataFieldValue
-				if objField.multiple && formField.is_multiselect
-					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-				else if !objField.multiple && !formField.is_multiselect
-					odataFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-				values[workflow_field] = odataFieldValue
-			else if formField && objField && ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(objField.type) && (['users', 'organizations'].includes(objField.reference_to) || ('space_users' == objField.reference_to && 'user' == objField.reference_to_field) )
-				referenceToFieldValue = record[objField.name]
-				if !_.isEmpty(referenceToFieldValue)
-					selectFieldValue
-					if formField.type == 'user'
-						if objField.multiple && formField.is_multiselect
-							selectFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
-						else if !objField.multiple && !formField.is_multiselect
-							selectFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
-					else if formField.type == 'group'
-						if objField.multiple && formField.is_multiselect
-							selectFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
-						else if !objField.multiple && !formField.is_multiselect
-							selectFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
-					if selectFieldValue
-						values[workflow_field] = selectFieldValue
-			else if formField && objField && formField.type == 'date' && recordFieldValue
-				values[workflow_field] = uuflowManagerForInitApproval.formatDate(recordFieldValue) # Date转String
-			else if formField && objField && recordFieldValue && (formField.type == 'image' || formField.type == 'file')
-				values[workflow_field] = getFileFieldValue(recordFieldValue, formField.type)
-			else if formField && objField && recordFieldValue && formField.type == 'lookup' && ['lookup', 'master_detail'].includes(objField.type) && _.isString(objField.reference_to)
-				values[workflow_field] = record[object_field]
-			else if record.hasOwnProperty(object_field)
-				values[workflow_field] = record[object_field]
+						values[workflow_field] = getInstanceFieldValue(objectLookupField, formField, lookupObjectRecord, lookupFieldName, spaceId)
+			else
+				values[workflow_field] = getInstanceFieldValue(objField, formField, record, object_field, spaceId)
 
 		# 表格字段
 		_.uniq(tableFieldCodes).forEach (tfc) ->
@@ -549,7 +529,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 		# 同步子表数据至表单表格
 		_.each tableToRelatedMap,  (map, key) ->
 			tableCode = map._FROM_TABLE_CODE
-			formTableField = getFormTableField(tableCode)
+			formTableField = getFormTableField(formTableFields, tableCode)
 			if !tableCode
 				console.warn('tableToRelated: [' + key + '] missing corresponding table.')
 			else
@@ -583,31 +563,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							relatedObjectField = relatedObject.fields[fieldKey]
 							if !formField || !relatedObjectField
 								return
-							if formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedObjectField.type) && _.isString(relatedObjectField.reference_to)
-								referenceToFieldName = relatedObjectField.reference_to_field || '_id'
-								referenceToObjectName = relatedObjectField.reference_to
-								referenceToFieldValue = rr[fieldKey]
-								if relatedObjectField.multiple && formField.is_multiselect
-									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-								else if !relatedObjectField.multiple && !formField.is_multiselect
-									tableFieldValue = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName)
-							else if ['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedObjectField.type) && ['users', 'organizations'].includes(relatedObjectField.reference_to)
-								referenceToFieldValue = rr[fieldKey]
-								if !_.isEmpty(referenceToFieldValue)
-									if formField.type == 'user'
-										if relatedObjectField.multiple && formField.is_multiselect
-											tableFieldValue = getSelectUserValues(referenceToFieldValue, spaceId)
-										else if !relatedObjectField.multiple && !formField.is_multiselect
-											tableFieldValue = getSelectUserValue(referenceToFieldValue, spaceId)
-									else if formField.type == 'group'
-										if relatedObjectField.multiple && formField.is_multiselect
-											tableFieldValue = getSelectOrgValues(referenceToFieldValue, spaceId)
-										else if !relatedObjectField.multiple && !formField.is_multiselect
-											tableFieldValue = getSelectOrgValue(referenceToFieldValue, spaceId)
-							else if formField.type == 'date' && rr[fieldKey]
-								tableFieldValue = uuflowManagerForInitApproval.formatDate(rr[fieldKey]) # Date转String
-							else
-								tableFieldValue = rr[fieldKey]
+							tableFieldValue = getInstanceFieldValue(relatedObjectField, formField, rr, fieldKey, spaceId)
 							tableValueItem[formFieldKey] = tableFieldValue
 					if !_.isEmpty(tableValueItem)
 						tableValueItem._id = rr._id

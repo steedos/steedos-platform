@@ -104,6 +104,259 @@ var sendWorker = function (task, interval) {
     }, interval);
 };
 
+const getRelatedObjectField = function (relatedObjectsKeys, key) {
+    return _.find(relatedObjectsKeys, function (relatedObjectsKey) {
+        return key.startsWith(relatedObjectsKey + '.');
+    })
+};
+
+const getFormTableField = function (formTableFieldsCode, key) {
+    return _.find(formTableFieldsCode, function (formTableFieldCode) {
+        return key.startsWith(formTableFieldCode + '.');
+    })
+};
+
+const getFormField = function (_formFields, _fieldCode) {
+    var formField = null;
+    _.each(_formFields, function (ff) {
+        if (!formField) {
+            if (ff.code === _fieldCode) {
+                formField = ff;
+            } else if (ff.type === 'section') {
+                _.each(ff.fields, function (f) {
+                    if (!formField) {
+                        if (f.code === _fieldCode) {
+                            formField = f;
+                        }
+                    }
+                })
+            } else if (ff.type === 'table') {
+                _.each(ff.fields, function (f) {
+                    if (!formField) {
+                        if (f.code === _fieldCode) {
+                            formField = f;
+                        }
+                    }
+                })
+            }
+        }
+    });
+    return formField;
+}
+
+const getFileFieldValue = function (recordFieldId, fType) {
+    var collection, files, query, value;
+    if (_.isEmpty(recordFieldId)) {
+        return;
+    }
+    if (fType === 'image') {
+        collection = 'images';
+    } else if (fType === 'file') {
+        collection = 'files';
+    }
+    if (_.isString(recordFieldId)) {
+        query = {
+            _id: {
+                $in: [recordFieldId]
+            }
+        };
+    } else {
+        query = {
+            _id: {
+                $in: recordFieldId
+            }
+        };
+    }
+    files = Creator.Collections["cfs." + collection + ".filerecord"].find(query);
+    value = [];
+    files.forEach(function (f) {
+        var newFile;
+        newFile = new FS.File();
+        return newFile.attachData(f.createReadStream('files'), {
+            type: f.original.type
+        }, function (err) {
+            var metadata;
+            if (err) {
+                throw new Meteor.Error(err.error, err.reason);
+            }
+            newFile.name(f.name());
+            newFile.size(f.size());
+            metadata = {
+                owner: f.metadata.owner
+            };
+            newFile.metadata = metadata;
+            newFile._id = Creator.Collections.instances._makeNewID();
+            cfs[collection].insert(newFile);
+            return value.push(newFile._id);
+        });
+    });
+    if (value.length > 0) {
+        if (_.isString(recordFieldId)) {
+            return value[0];
+        } else {
+            return value;
+        }
+    }
+};
+
+const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId) {
+    let value;
+    var oFieldType = oField.data_type || oField.type;
+    // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
+    if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oFieldType)
+        && (['users', 'organizations'].includes(oField.reference_to) || ('space_users' == oField.reference_to && 'user' == oField.reference_to_field))) {
+        if (!_.isEmpty(wfValue)) {
+            if (oField.multiple && wField.is_multiselect) {
+                value = _.compact(_.pluck(wfValue, 'id'))
+            } else if (!oField.multiple && !wField.is_multiselect) {
+                value = wfValue.id
+            }
+        }
+    }
+    else if (!oField.multiple && ['lookup', 'master_detail'].includes(oFieldType) && _.isString(oField.reference_to) && _.isString(wfValue)) {
+        var oCollection = objectql.getObject(oField.reference_to)
+        var referObjectNameFieldKey = getObjectNameFieldKey(oField.reference_to);
+        if (oCollection && referObjectNameFieldKey) {
+            // 先认为此值是referObject _id字段值
+            let referToField = oField.reference_to_field || '_id'
+            var referData = objectFindOne(oField.reference_to, { filters: [[referToField, '=', wfValue]], fields: [referToField] });
+            if (referData) {
+                value = referData[referToField];
+            }
+
+            // 其次认为此值是referObject NAME_FIELD_KEY值
+            if (!referData) {
+                var nameFieldKey = referObjectNameFieldKey;
+                var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId], [nameFieldKey, '=', wfValue]], fields: ['_id'] });
+                if (referData) {
+                    value = referData._id;
+                }
+            }
+
+        }
+    }
+    else if (oFieldType === "boolean") {
+        var tmp_field_value = wfValue;
+        if (['true', '是'].includes(tmp_field_value)) {
+            value = true;
+        } else if (['false', '否'].includes(tmp_field_value)) {
+            value = false;
+        } else {
+            value = tmp_field_value;
+        }
+    }
+    else if (oFieldType === 'number' || oFieldType === 'currency' || oFieldType === 'percent') {
+        if (wfValue && typeof (Number(wfValue)) === 'number') {
+            value = Number(wfValue);
+        }
+    }
+    else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type === 'odata') {
+        let referToField = oField.reference_to_field || '_id'
+        if (oField.multiple && wField.is_multiselect) {
+            value = _.compact(_.pluck(wfValue, referToField))
+        } else if (!oField.multiple && !wField.is_multiselect) {
+            if (!_.isEmpty(wfValue)) {
+                value = wfValue[referToField]
+            }
+        } else {
+            value = wfValue;
+        }
+    } else if (oFieldType == 'image' && wField.type == 'image') {
+        var ids = ofValue;
+        if (_.isString(ids)) {
+            ids = [ids];
+        }
+        if (ids) {
+            var removeOldFiles = function (cb) {
+                return cfs.images.remove({
+                    '_id': { $in: ids }
+                }, cb);
+            };
+            Meteor.wrapAsync(removeOldFiles)();
+        }
+
+        value = getFileFieldValue(wfValue, 'image')
+
+    } else if (oFieldType == 'file' && wField.type == 'file') {
+        var ids = ofValue;
+        if (_.isString(ids)) {
+            ids = [ids];
+        }
+        if (ids) {
+            var removeOldFiles = function (cb) {
+                return cfs.files.remove({
+                    '_id': { $in: ids }
+                }, cb);
+            };
+            Meteor.wrapAsync(removeOldFiles)();
+        }
+        value = getFileFieldValue(wfValue, 'file')
+    } else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type == 'lookup') {
+        value = wfValue
+    }
+    // 日期、日期时间
+    else if (oFieldType === 'date' || oFieldType === 'datetime') {
+        if (wfValue && _.isDate(new Date(wfValue))) {
+            value = new Date(wfValue);
+        }
+    }
+    else if (oField.multiple && oFieldType == 'select' && wField.type == 'multiSelect') {
+        if (wfValue) {
+            value = wfValue.split(',');
+        }
+    }
+    else {
+        value = wfValue;
+    }
+    return value;
+};
+
+const updateLookupOrMasterDetailFieldValues = function (field_map_back, values, ins, objectInfo, record) {
+    var field_map_back = field_map_back || [];
+    var objectFields = objectInfo.fields;
+
+    field_map_back.forEach(function (fm) {
+        if (values.hasOwnProperty(fm.workflow_field)) {
+            if (fm.object_field.indexOf('.') > -1) {
+                var temObjFields = fm.object_field.split('.');
+                if (temObjFields.length === 2) {
+                    var objField = temObjFields[0];
+                    var referObjField = temObjFields[1];
+                    var oField = objectFields[objField];
+                    if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
+                        var oCollection = objectql.getObject(oField.reference_to)
+                        if (oCollection && record && record[objField]) {
+                            var referSetObj = {};
+                            referSetObj[referObjField] = values[fm.workflow_field];
+                            objectUpdate(oField.reference_to, record[objField], referSetObj)
+                        }
+                    }
+                }
+            }
+        } else if (fm.workflow_field.startsWith('instance.')) {
+            var insField = fm.workflow_field.split('instance.')[1];
+            if (InstanceRecordQueue.syncInsFields.includes(insField)) {
+                if (fm.object_field.indexOf('.') > -1) {
+                    var temObjFields = fm.object_field.split('.');
+                    if (temObjFields.length === 2) {
+                        var objField = temObjFields[0];
+                        var referObjField = temObjFields[1];
+                        var oField = objectFields[objField];
+                        if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
+                            var oCollection = objectql.getObject(oField.reference_to)
+                            if (oCollection && record && record[objField]) {
+                                var referSetObj = {};
+                                referSetObj[referObjField] = ins[insField];
+                                objectUpdate(oField.reference_to, record[objField], referSetObj)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
 /*
     options: {
         // Controls the sending interval
@@ -474,106 +727,10 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
     });
     var formTableFieldsCode = _.pluck(formTableFields, 'code');
 
-    var getRelatedObjectField = function (key) {
-        return _.find(relatedObjectsKeys, function (relatedObjectsKey) {
-            return key.startsWith(relatedObjectsKey + '.');
-        })
-    };
-
-    var getFormTableField = function (key) {
-        return _.find(formTableFieldsCode, function (formTableFieldCode) {
-            return key.startsWith(formTableFieldCode + '.');
-        })
-    };
-
-    var getFormField = function (_formFields, _fieldCode) {
-        var formField = null;
-        _.each(_formFields, function (ff) {
-            if (!formField) {
-                if (ff.code === _fieldCode) {
-                    formField = ff;
-                } else if (ff.type === 'section') {
-                    _.each(ff.fields, function (f) {
-                        if (!formField) {
-                            if (f.code === _fieldCode) {
-                                formField = f;
-                            }
-                        }
-                    })
-                } else if (ff.type === 'table') {
-                    _.each(ff.fields, function (f) {
-                        if (!formField) {
-                            if (f.code === _fieldCode) {
-                                formField = f;
-                            }
-                        }
-                    })
-                }
-            }
-        });
-        return formField;
-    }
-
-    var getFileFieldValue = function(recordFieldId, fType) {
-        var collection, files, query, value;
-        if (_.isEmpty(recordFieldId)) {
-          return;
-        }
-        if (fType === 'image') {
-          collection = 'images';
-        } else if (fType === 'file') {
-          collection = 'files';
-        }
-        if (_.isString(recordFieldId)) {
-          query = {
-            _id: {
-              $in: [recordFieldId]
-            }
-          };
-        } else {
-          query = {
-            _id: {
-              $in: recordFieldId
-            }
-          };
-        }
-        files = Creator.Collections["cfs." + collection + ".filerecord"].find(query);
-        value = [];
-        files.forEach(function(f) {
-          var newFile;
-          newFile = new FS.File();
-          return newFile.attachData(f.createReadStream('files'), {
-            type: f.original.type
-          }, function(err) {
-            var metadata;
-            if (err) {
-              throw new Meteor.Error(err.error, err.reason);
-            }
-            newFile.name(f.name());
-            newFile.size(f.size());
-            metadata = {
-              owner: f.metadata.owner
-            };
-            newFile.metadata = metadata;
-            newFile._id = Creator.Collections.instances._makeNewID();
-            cfs[collection].insert(newFile);
-            return value.push(newFile._id);
-          });
-        });
-        if (value.length > 0) {
-          if (_.isString(recordFieldId)) {
-            return value[0];
-          } else {
-            return value;
-          }
-        }
-      };
-      
-
     field_map_back.forEach(function (fm) {
         //workflow 的子表到creator object 的相关对象
-        var relatedObjectField = getRelatedObjectField(fm.object_field);
-        var formTableField = getFormTableField(fm.workflow_field);
+        var relatedObjectField = getRelatedObjectField(relatedObjectsKeys, fm.object_field);
+        var formTableField = getFormTableField(formTableFieldsCode, fm.workflow_field);
         if (relatedObjectField) {
             var oTableCode = fm.object_field.split('.')[0];
             var oTableFieldCode = fm.object_field.split('.')[1];
@@ -627,123 +784,9 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                 if (!wField) {
                     console.log('fm.workflow_field: ', fm.workflow_field)
                 }
-                var oFieldType = oField.data_type || oField.type
-                // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                if (['user', 'group'].includes(wField.type) && ['lookup', 'master_detail'].includes(oFieldType) 
-                    && (['users', 'organizations'].includes(oField.reference_to) || ('space_users' == oField.reference_to && 'user' == oField.reference_to_field))) {
-                    if (!_.isEmpty(values[fm.workflow_field])) {
-                        if (oField.multiple && wField.is_multiselect) {
-                            obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], 'id'))
-                        } else if (!oField.multiple && !wField.is_multiselect) {
-                            obj[fm.object_field] = values[fm.workflow_field].id
-                        }
-                    }
-                }
-                else if (!oField.multiple && ['lookup', 'master_detail'].includes(oFieldType) && _.isString(oField.reference_to) && _.isString(values[fm.workflow_field])) {
-                    // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
-                    var oCollection = objectql.getObject(oField.reference_to)
-                    var referObjectNameFieldKey = getObjectNameFieldKey(oField.reference_to);
-                    if (oCollection && referObjectNameFieldKey) {
-                        // 先认为此值是referObject _id字段值
-                        // var referData = oCollection.findOne(values[fm.workflow_field], {
-                        //     fields: {
-                        //         _id: 1
-                        //     }
-                        // });
-                        let referToField = oField.reference_to_field || '_id'
-                        var referData = objectFindOne(oField.reference_to, { filters: [[referToField, '=', values[fm.workflow_field]]], fields: [referToField] });
-                        if (referData) {
-                            obj[fm.object_field] = referData[referToField];
-                        }
-
-                        // 其次认为此值是referObject NAME_FIELD_KEY值
-                        if (!referData) {
-                            var nameFieldKey = referObjectNameFieldKey;
-                            // var selector = {};
-                            // selector[nameFieldKey] = values[fm.workflow_field];
-                            // referData = oCollection.findOne(selector, {
-                            //     fields: {
-                            //         _id: 1
-                            //     }
-                            // });
-                            var referData = objectFindOne(oField.reference_to, { filters: [['space', '=', spaceId], [nameFieldKey, '=', values[fm.workflow_field]]], fields: ['_id'] });
-                            if (referData) {
-                                obj[fm.object_field] = referData._id;
-                            }
-                        }
-
-                    }
-                }
-                else {
-                    if (oFieldType === "boolean") {
-                        var tmp_field_value = values[fm.workflow_field];
-                        if (['true', '是'].includes(tmp_field_value)) {
-                            obj[fm.object_field] = true;
-                        } else if (['false', '否'].includes(tmp_field_value)) {
-                            obj[fm.object_field] = false;
-                        } else {
-                            obj[fm.object_field] = tmp_field_value;
-                        }
-                    }
-                    else if (oFieldType === 'number' || oFieldType === 'currency' || oFieldType === 'percent') {
-                        if (values[fm.workflow_field] && typeof (Number(values[fm.workflow_field])) === 'number') {
-                            obj[fm.object_field] = Number(values[fm.workflow_field]);
-                        }
-                    }
-                    else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type === 'odata') {
-                        let referToField = oField.reference_to_field || '_id'
-                        if (oField.multiple && wField.is_multiselect) {
-                            obj[fm.object_field] = _.compact(_.pluck(values[fm.workflow_field], referToField))
-                        } else if (!oField.multiple && !wField.is_multiselect) {
-                            if (!_.isEmpty(values[fm.workflow_field])) {
-                                obj[fm.object_field] = values[fm.workflow_field][referToField]
-                            }
-                        } else {
-                            obj[fm.object_field] = values[fm.workflow_field];
-                        }
-                    }else if(oFieldType == 'image' && wField.type == 'image'){
-                        var ids = record[fm.object_field];
-                        if(_.isString(ids)){
-                            ids = [ids];
-                        }
-                        if(ids){
-                            var removeOldFiles = function (cb) {
-                                return cfs.images.remove({
-                                    '_id': {$in: ids}
-                                }, cb);
-                            };
-                            Meteor.wrapAsync(removeOldFiles)();
-                        }
-
-                        obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'image')
-
-                    }else if(oFieldType == 'file' && wField.type == 'file'){
-                        var ids = record[fm.object_field];
-                        if(_.isString(ids)){
-                            ids = [ids];
-                        }
-                        if(ids){
-                            var removeOldFiles = function (cb) {
-                                return cfs.files.remove({
-                                    '_id': {$in: ids}
-                                }, cb);
-                            };
-                            Meteor.wrapAsync(removeOldFiles)();
-                        }
-                        obj[fm.object_field] = getFileFieldValue(values[fm.workflow_field], 'file')
-                    }else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type == 'lookup'){
-                        obj[fm.object_field] = values[fm.workflow_field]
-                    }
-                    // 日期、日期时间
-                    else if (oFieldType === 'date' || oFieldType === 'datetime') {
-                        if (values[fm.workflow_field] && _.isDate(new Date(values[fm.workflow_field]))) {
-                            obj[fm.object_field] = new Date(values[fm.workflow_field]);
-                        }
-                    }
-                    else {
-                        obj[fm.object_field] = values[fm.workflow_field];
-                    }
-                }
+                const ofValue = record ? record[fm.object_field] : null
+                const wfValue = values[fm.workflow_field]
+                obj[fm.object_field] = getRecordFieldValue(oField, wField, ofValue, wfValue, spaceId)
             } else {
                 if (fm.object_field.indexOf('.') > -1) {
                     var temObjFields = fm.object_field.split('.');
@@ -758,22 +801,11 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 var referSetObj = {};
                                 referSetObj[referObjField] = values[fm.workflow_field];
                                 objectUpdate(oField.reference_to, record[objField], referSetObj)
-                                // oCollection.update(record[objField], {
-                                //     $set: referSetObj
-                                // })
                             }
                         }
                     }
                 }
-                // else{
-                // 	var relatedObject = _.find(relatedObjects, function(_relatedObject){
-                // 		return _relatedObject.object_name === fm.object_field
-                // 	})
-                //
-                // 	if(relatedObject){
-                // 		obj[fm.object_field] = values[fm.workflow_field];
-                // 	}
-                // }
+
             }
 
         }
@@ -790,15 +822,11 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             var referObjField = temObjFields[1];
                             var oField = objectFields[objField];
                             if (!oField.multiple && ['lookup', 'master_detail'].includes(oField.type) && _.isString(oField.reference_to)) {
-                                // var oCollection = Creator.getCollection(oField.reference_to, spaceId)
                                 var oCollection = objectql.getObject(oField.reference_to)
                                 if (oCollection && record && record[objField]) {
                                     var referSetObj = {};
                                     referSetObj[referObjField] = ins[insField];
                                     objectUpdate(oField.reference_to, record[objField], referSetObj)
-                                    // oCollection.update(record[objField], {
-                                    //     $set: referSetObj
-                                    // })
                                 }
                             }
                         }
@@ -846,6 +874,10 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
             var relatedObjectValues = [];
             var relatedObjectFields = getObjectFields(relatedObjectName)
             _.each(values[tableCode], function (tableValueItem) {
+                let relateRecord;
+                if (tableValueItem._id) {
+                    relateRecord = objectFindOne(relatedObjectName, { filters: [['_id', '=', tableValueItem._id]] });
+                }
                 var relatedObjectValue = {};
                 _.each(map, function (valueKey, fieldKey) {
                     if (fieldKey != '_FROM_TABLE_CODE') {
@@ -866,50 +898,8 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                             if (!relatedObjectField || !formField) {
                                 return
                             }
-                            var relatedFieldType = relatedObjectField.data_type || relatedObjectField.type
-                            if (formField.type == 'odata' && ['lookup', 'master_detail'].includes(relatedFieldType)) {
-                                let referToField = relatedObjectField.reference_to_field || '_id'
-                                if (!_.isEmpty(relatedObjectFieldValue)) {
-                                    if (relatedObjectField.multiple && formField.is_multiselect) {
-                                        relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, referToField))
-                                    } else if (!relatedObjectField.multiple && !formField.is_multiselect) {
-                                        relatedObjectFieldValue = relatedObjectFieldValue[referToField]
-                                    }
-                                }
-                            }
-                            // 表单选人选组字段 至 对象 lookup master_detail类型字段同步
-                            if (['user', 'group'].includes(formField.type) && ['lookup', 'master_detail'].includes(relatedFieldType) 
-                                && (['users', 'organizations'].includes(relatedObjectField.reference_to) || ('space_users' == relatedObjectField.reference_to && 'user' == relatedObjectField.reference_to_field)) ) {
-                                if (!_.isEmpty(relatedObjectFieldValue)) {
-                                    if (relatedObjectField.multiple && formField.is_multiselect) {
-                                        relatedObjectFieldValue = _.compact(_.pluck(relatedObjectFieldValue, 'id'))
-                                    } else if (!relatedObjectField.multiple && !formField.is_multiselect) {
-                                        relatedObjectFieldValue = relatedObjectFieldValue.id
-                                    }
-                                }
-                            }
-                            // 复选框
-                            if (relatedFieldType === "boolean") {
-                                if (['true', '是'].includes(relatedObjectFieldValue)) {
-                                    relatedObjectFieldValue = true;
-                                } else if (['false', '否'].includes(relatedObjectFieldValue)) {
-                                    relatedObjectFieldValue = false;
-                                }
-                            }
-                            // 数值、金额、百分比
-                            else if (relatedFieldType === 'number' || relatedFieldType === 'currency' || relatedFieldType === 'percent') {
-                                if (relatedObjectFieldValue && typeof (Number(relatedObjectFieldValue)) === 'number') {
-                                    relatedObjectFieldValue = Number(relatedObjectFieldValue);
-                                }
-                            }
-                            // 日期、日期时间
-                            else if (relatedFieldType === 'date' || relatedFieldType === 'datetime') {
-                                if (relatedObjectFieldValue && _.isDate(new Date(relatedObjectFieldValue))) {
-                                    relatedObjectFieldValue = new Date(relatedObjectFieldValue);
-                                }
-                            }
-
-                            relatedObjectValue[fieldKey] = relatedObjectFieldValue;
+                            const ofValue = relateRecord ? relateRecord[fieldKey] : null;
+                            relatedObjectValue[fieldKey] = getRecordFieldValue(relatedObjectField, formField, ofValue, relatedObjectFieldValue, spaceId);
                         }
                     }
                 });
@@ -1159,7 +1149,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     newRecordId = makeNewID(ow.object_name),
                     objectName = ow.object_name,
                     syncDirection = ow.sync_direction || 'both';
-                    lock_record_after_approval = ow.lock_record_after_approval || false;
+                lock_record_after_approval = ow.lock_record_after_approval || false;
 
                 if (!['both', 'ins_to_obj'].includes(syncDirection)) {
                     return;
@@ -1172,7 +1162,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 newObj._id = newRecordId;
                 newObj.space = spaceId;
                 newObj.name = newObj.name || ins.name;
-                
+
                 newObj.locked = true;
 
                 var instance_state = ins.state;
@@ -1207,9 +1197,8 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     var relatedObjectsValue = syncValues.relatedObjectsValue;
                     InstanceRecordQueue.syncRelatedObjectsValue(newRecordId, relatedObjects, relatedObjectsValue, spaceId, ins, newObj.locked);
                     // workflow里发起审批后，同步时也可以修改相关表的字段值 #1183
-                    // var record = objectCollection.findOne(newRecordId);
                     var record = objectFindOne(objectName, { filters: [['_id', '=', newRecordId]] });
-                    InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record);
+                    updateLookupOrMasterDetailFieldValues(ow.field_map_back, values, ins, objectInfo, record)
                 }
 
                 // 附件同步
