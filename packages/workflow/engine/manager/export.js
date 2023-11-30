@@ -161,7 +161,7 @@ steedosExport.form = function (formId, flowId, is_copy, company_id) {
                             });
                             if (rule) {
                                 rule.number = 0;
-                                if (!instance_number_rules.findPropertyByPK("_id", rule._id)) {
+                                if (!instance_number_rules.findPropertyByPK("name", rule.name)) {
                                     delete rule._id;
                                     instance_number_rules.push(rule);
                                 }
@@ -185,7 +185,7 @@ steedosExport.form = function (formId, flowId, is_copy, company_id) {
                         throw new Error('not find instance number rule, name is ' + number_rule_name);
                     }
                     number_rule.number = 0;
-                    if (!instance_number_rules.findPropertyByPK("_id", number_rule._id)) {
+                    if (!instance_number_rules.findPropertyByPK("name", number_rule.name)) {
                         delete number_rule._id;
                         instance_number_rules.push(number_rule);
                     }

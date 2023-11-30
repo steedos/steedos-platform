@@ -133,7 +133,7 @@ async function steedosExportForm(dbManager, formId, flowId?, is_copy?, company_i
                 }
                 number_rule.number = 0
 
-                if (!_.where(instance_number_rules, { _id: number_rule._id })) {
+                if (_.isEmpty(_.where(instance_number_rules, { name: number_rule.name }))) {
                     //!instance_number_rules.findPropertyByPK("_id", number_rule._id)
 
                     delete number_rule._id

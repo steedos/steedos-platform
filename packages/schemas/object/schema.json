@@ -363,6 +363,7 @@
                                 "lookup",
                                 "master_detail",
                                 "grid",
+                                "table",
                                 "url",
                                 "email",
                                 "avatar",
