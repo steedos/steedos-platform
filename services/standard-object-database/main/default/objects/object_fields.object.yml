@@ -108,26 +108,6 @@ fields:
     amis:
       disabledOn: "${is_system == true}"
       searchable: true
-      onEvent:
-        change:
-          weight: 0
-          actions:
-            - componentId: 'u:6a556d8a8514'
-              args:
-                value: '${"lookup"=== type}'
-              actionType: visibility
-            - componentId: 'u:6a556d8a8514'
-              args:
-                value: clear
-              groupType: component
-              actionType: setValue
-              expression: '${"lookup"=== type && required!=true}'
-            - componentId: 'u:6a556d8a8514'
-              args:
-                value: retain
-              groupType: component
-              actionType: setValue
-              expression: '${"lookup"=== type && required==true}'
   language:
     type: select
     label: 语言
@@ -706,18 +686,6 @@ fields:
     # group: Advanced
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
     sort_no: 272
-    amis:
-      # disabledOn: "${is_system == true}"
-      onEvent:
-        change:
-          weight: 0
-          actions:
-            - componentId: 'u:6a556d8a8514'
-              args:
-                value: retain
-              groupType: component
-              actionType: setValue
-              expression: '${"lookup"=== type && required==true}'
   deleted_lookup_record_behavior:
     type: select
     label: 如果相关表记录被删除怎么办？
@@ -730,10 +698,9 @@ fields:
         value: retain
     sort_no: 276
     is_wide: true
-    defaultValue: clear
     amis:
-      "id": "u:6a556d8a8514"
       "disabledOn": "${required==true}"
+      "value": "${IFS(true===required, \"retain\", !required && !deleted_lookup_record_behavior, \"clear\", deleted_lookup_record_behavior)}"
   is_wide:
     type: boolean
     label: Is Wide
