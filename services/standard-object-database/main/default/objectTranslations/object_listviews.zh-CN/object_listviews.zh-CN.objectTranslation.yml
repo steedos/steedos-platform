@@ -161,8 +161,21 @@ fields:
     label: 使用 amis自定义列表
   amis_schema: 
     label: Amis Schema
+  requestAdaptor:
+    label: 发送适配器
+    help: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
+    description: 
+  adaptor:
+    label: 接收适配器
+    help: "函数签名: (payload, response, api) => payload"
+    description: 
 groups:
   advanced: 高级
+  sort: 分类
+  filters: 过滤
+  mobile: 手机端
+  search_term: 搜索项
+  data_interface: 数据接口
 listviews:
   all:
     label: 全部

@@ -123,7 +123,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-    group: 排序
+    group: sort
   sort.$:
     label: Order
     blackbox: true
@@ -150,7 +150,7 @@ fields:
     readonly: false
     depend_on:
       - object_name
-    group: 过滤
+    group: filters
   # filters.$:
   #   label: Filter
   #   blackbox: true
@@ -211,7 +211,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-    group: 手机端
+    group: mobile
   mobile_columns.$:
     label: Column
     blackbox: true
@@ -229,7 +229,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-    group: 搜索项
+    group: search_term
   searchable_fields.$:
     label: Column
     blackbox: true
@@ -263,24 +263,23 @@ fields:
     # visible_on: "{{formData.enable_amis_schema}}"
     visible_on: "{{false}}"
   requestAdaptor:
-    label: 发送适配器
+    label: Request Adaptor
     type: code
     language: "javascript"
     is_wide: true
     inlineHelpText: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
-    group: 数据接口
-    amis: 
-      description: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
-    
+    group: data_interface
+    # amis: 
+    #   description: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
   adaptor:
-    label: 接收适配器
+    label: Adaptor
     type: code
     language: "javascript"
     is_wide: true
     inlineHelpText: "函数签名: (payload, response, api) => payload"
-    group: 数据接口
-    amis: 
-      description: "函数签名: (payload, response, api) => payload"
+    group: data_interface
+    # amis: 
+    #   description: "函数签名: (payload, response, api) => payload"
     
 paging:
   enabled: false

@@ -9,6 +9,8 @@
             "className": "sm:border sm:rounded sm:border-gray-300 bg-white p-4",
             "id": "u:f0b602f267d1",
             "mode": "edit",
+            "enableTabs": true,
+            "tabsMode": "line",
             "fieldsExtend": {
                 "columns": {
                     "amis": {
@@ -73,34 +75,6 @@
                         "type": "group",
                         "body": [
                             {
-                                "type": "transfer",
-                                "label": "默认过滤字段",
-                                "id": "u:ea994ad5816d",
-                                "source": {
-                                    "method": "get",
-                                    "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                                    "headers": {
-                                        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                                    },
-                                    "data": null,
-                                    "requestAdaptor": "",
-                                    "adaptor": "",
-                                    "sendOn": "!!this.object_name"
-                                },
-                                "className": "col-span-2 m-0",
-                                "visibleOn": "false && !!this.object_name",
-                                "en-US": {
-                                    "label": "Default Filter Fields"
-                                },
-                                "name": "filter_fields",
-                                "options": [],
-                                "searchable": true,
-                                "sortable": true,
-                                "joinValues": false,
-                                "extractValue": true,
-                                "multiple": true
-                            },
-                            {
                                 "type": "radios",
                                 "label": "过滤器配置方式",
                                 "name": "_filters_type_controller",
@@ -125,7 +99,7 @@
                             },
                             {
                                 "type": "condition-builder",
-                                "label": "条件组件",
+                                "label": "",
                                 "name": "_filters_conditions",
                                 "description": "",
                                 "id": "u:a9f2232e30d7",
@@ -190,9 +164,7 @@
                 },
                 "searchable_fields": {
                     "amis": {
-                        "label": "默认可搜索字段",
                         "type": "transfer",
-                        "name": "searchable_fields",
                         "options": [],
                         "selectMode": "list",
                         "searchable": true,
