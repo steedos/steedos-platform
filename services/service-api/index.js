@@ -328,9 +328,9 @@ module.exports = {
 		 * @param {Object.<string, any>} args - Arguments passed to GraphQL child resolver
 		 * @returns {string} Key to the dataloader instance
 		 */
-		getObjectDataLoaderMapKey(objectName, referenceToField = '_id') {
+		getObjectDataLoaderMapKey(objectName, referenceToField = '_id', spaceId) {
 			if (objectName) {
-				const key = `object:${objectName}.${referenceToField}`;
+				const key = `${spaceId}_object:${objectName}.${referenceToField}`;
 				if(!ObjectDataLoaderMapKeys[objectName]){
 					ObjectDataLoaderMapKeys[objectName] = [] ;
 				}
@@ -345,9 +345,12 @@ module.exports = {
 		async objectDataLoaderHandler(actionName, staticParams, rootParams, graphqlCtx) {
 			const rootKeys = Object.keys(rootParams);
 			const {root, args, context, resolveInfo} = graphqlCtx;
+			const userSession = context.ctx.meta.user;
+			const spaceId = userSession.spaceId;
 			const dataLoaderMapKey = this.getObjectDataLoaderMapKey(
 				staticParams.__objectName || staticParams.objectName
 				, staticParams.referenceToField || '_id'
+				, spaceId
 			);
 			const objectDataLoaders = this.objectDataLoaders;
 			// if a dataLoader batching parameter is specified, then all root params can be data loaded;
@@ -370,7 +373,8 @@ module.exports = {
 					batchedParamKey,
 					staticParams,
 					args,
-					{ hashCacheKey: dataLoaderUseAllRootKeys } // must hash the cache key if not loading scalar
+					{ hashCacheKey: dataLoaderUseAllRootKeys }, // must hash the cache key if not loading scalar
+					spaceId
 				);
 				objectDataLoaders.set(dataLoaderMapKey, dataLoader);
 			}
@@ -465,10 +469,13 @@ module.exports = {
 					if(useObjectDataLoader){
 						return await this.objectDataLoaderHandler(actionName, staticParams, rootParams, {root, args, context, resolveInfo});
 					}else if (useDataLoader) {
+						const userSession = context.ctx.meta.user;
+						const spaceId = userSession.spaceId;
 						const dataLoaderMapKey = this.getDataLoaderMapKey(
 							actionName,
 							staticParams,
-							args
+							args,
+							spaceId
 						);
 						// if a dataLoader batching parameter is specified, then all root params can be data loaded;
 						// otherwise use only the primary rootParam
@@ -490,7 +497,8 @@ module.exports = {
 								batchedParamKey,
 								staticParams,
 								args,
-								{ hashCacheKey: dataLoaderUseAllRootKeys } // must hash the cache key if not loading scalar
+								{ hashCacheKey: dataLoaderUseAllRootKeys }, // must hash the cache key if not loading scalar
+								spaceId
 							);
 							context.dataLoaders.set(dataLoaderMapKey, dataLoader);
 						}
@@ -904,6 +912,25 @@ module.exports = {
 		},
 
 		/**
+		 * Get the unique key assigned to the DataLoader map
+		 * @param {string} actionName - Fully qualified action name to bind to dataloader
+		 * @param {Object.<string, any>} staticParams - Static parameters to use in dataloader
+		 * @param {Object.<string, any>} args - Arguments passed to GraphQL child resolver
+		 * @returns {string} Key to the dataloader instance
+		 */
+		getDataLoaderMapKey(actionName, staticParams, args, spaceId) {
+			if (Object.keys(staticParams).length > 0 || Object.keys(args).length > 0) {
+				// create a unique hash of the static params and the arguments to ensure a unique DataLoader instance
+				const actionParams = _.defaultsDeep({}, args, staticParams);
+				const paramsHash = hash(actionParams);
+				return `${spaceId}_${actionName}:${paramsHash}`;
+			}
+
+			// if no static params or arguments are present then the action name can serve as the key
+			return actionName;
+		},
+
+		/**
 			 * Build a DataLoader instance
 			 *
 			 * @param {Object} ctx - Moleculer context
@@ -921,11 +948,13 @@ module.exports = {
 			batchedParamKey,
 			staticParams,
 			args,
-			{ hashCacheKey = false } = {}
+			{ hashCacheKey = false } = {},
+			spaceId
 		) {
 			const batchLoadFn = keys => {
 				const rootParams = { [batchedParamKey]: keys };
-				return ctx.call(actionName, _.defaultsDeep({}, args, rootParams, staticParams));
+				// !!! 这里的ctx是buildDataLoader时传进来的参数，在后续触发执行batchLoadFn时ctx.meta中的信息依然是旧的，故此函数体中代码不要使用ctx.meta中的信息
+				return ctx.call(actionName, _.defaultsDeep({}, args, rootParams, staticParams), { meta: { ...ctx.meta, spaceId } });
 			};
 
 			const dataLoaderOptions = this.dataLoaderOptions.get(actionName) || {};
