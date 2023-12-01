@@ -64,6 +64,23 @@ fields:
         value: infinite
     defaultValue: '"standard"'
     hidden: true
+  sort_no:
+    label: Sort no
+    type: number
+    scale: 0
+    defaultValue: 100
+  is_enable:
+    type: toggle
+    label: Enable
+    defaultValue: true
+  crud_mode:
+    label: 显示模式
+    type: select
+    options:
+      - label: 表格
+        value: table
+      - label: 卡片
+        value: cards
   columns:
     label: Columns
     type: grid
@@ -95,6 +112,7 @@ fields:
     type: lookup
     multiple: true
     is_wide: true
+    hidden: true
     depend_on:
       - object_name
     reference_to: object_fields
@@ -105,6 +123,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
+    group: 排序
   sort.$:
     label: Order
     blackbox: true
@@ -129,9 +148,9 @@ fields:
     is_wide: true
     hidden: false
     readonly: false
-    visible_on: "{{global.mode ==='read' ? true : false}}"
     depend_on:
       - object_name
+    group: 过滤
   # filters.$:
   #   label: Filter
   #   blackbox: true
@@ -192,6 +211,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
+    group: 手机端
   mobile_columns.$:
     label: Column
     blackbox: true
@@ -209,6 +229,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
+    group: 搜索项
   searchable_fields.$:
     label: Column
     blackbox: true
@@ -220,23 +241,6 @@ fields:
     is_wide: false
     reference_to: object_fields
     reference_to_field: name
-  sort_no:
-    label: Sort no
-    type: number
-    scale: 0
-    defaultValue: 100
-  is_enable:
-    type: boolean
-    label: Enable
-    defaultValue: true
-  crud_mode:
-    label: 显示模式
-    type: select
-    options:
-      - label: 表格
-        value: table
-      - label: 卡片
-        value: cards
   is_system:
     type: boolean
     label: System
@@ -257,6 +261,7 @@ fields:
     required: false
     is_wide: true
     # visible_on: "{{formData.enable_amis_schema}}"
+    visible_on: "{{false}}"
   requestAdaptor:
     label: 发送适配器
     type: code
@@ -264,6 +269,9 @@ fields:
     is_wide: true
     inlineHelpText: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
     group: 数据接口
+    amis: 
+      description: "函数签名：(api) => api， 数据在 api.data 中，修改后返回 api 对象。"
+    
   adaptor:
     label: 接收适配器
     type: code
@@ -271,6 +279,9 @@ fields:
     is_wide: true
     inlineHelpText: "函数签名: (payload, response, api) => payload"
     group: 数据接口
+    amis: 
+      description: "函数签名: (payload, response, api) => payload"
+    
 paging:
   enabled: false
 list_views:
