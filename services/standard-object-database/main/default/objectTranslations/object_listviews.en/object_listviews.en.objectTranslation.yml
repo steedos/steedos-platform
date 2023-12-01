@@ -164,8 +164,23 @@ fields:
     description: 
   is_enable:
     label: Enable
+    help: 
+    description: 
+  requestAdaptor:
+    label: Request Adaptor
+    help: "Function signature: (api)=>api, the data is in api.data, and after modification, the api object is returned."
+    description: 
+  adaptor:
+    label: Adaptor
+    help: "Function signature: (payload, response, api)=>payload"
+    description: 
 groups:
   advanced: Advanced
+  sort: Sort
+  filters: Filters
+  mobile: Mobile
+  search_term: Search Term
+  data_interface: Data Interface
 listviews:
   all:
     label: All List View

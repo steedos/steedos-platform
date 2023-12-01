@@ -57,14 +57,15 @@ export function getGraphqlActions(
                 id = [id]
             }
             const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
-            if(referenceToField && referenceToField != '_id' && objectName != 'users' && objectName != 'spaces' && ctx.meta.user.spaceId){
-                selector.filters.push(["space", "=", ctx.meta.user.spaceId])
+            const spaceId = ctx.meta.spaceId || ctx.meta.user.spaceId;
+            if(referenceToField && referenceToField != '_id' && objectName != 'users' && objectName != 'spaces' && spaceId){
+                selector.filters.push(["space", "=", spaceId])
             }
-            const { resolveInfo } = ctx.meta;
-            const fieldNames = getQueryFields(resolveInfo);
-            if (!_.isEmpty(fieldNames)) {
-                selector.fields = fieldNames;
-            }
+            // const { resolveInfo } = ctx.meta;
+            // const fieldNames = getQueryFields(resolveInfo);
+            // if (!_.isEmpty(fieldNames)) {
+            //     selector.fields = fieldNames;
+            // }
 
             // return (await obj.find(selector))[0];
             delete selector.fields;
