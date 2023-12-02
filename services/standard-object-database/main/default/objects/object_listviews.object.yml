@@ -83,9 +83,10 @@ fields:
         value: cards
   columns:
     label: Columns
-    type: grid
+    type: table
     is_wide: true
     required: true
+    group: show_columns
   columns.$:
     label: Column
     blackbox: true
@@ -100,6 +101,11 @@ fields:
       - object_name
     reference_to: object_fields
     reference_to_field: name
+    enable_enhanced_lookup: false
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.object_name]
+      }
   columns.$.width:
     label: Width
     type: text
@@ -211,7 +217,7 @@ fields:
     is_wide: true
     depend_on:
       - object_name
-    group: mobile
+    group: show_columns
   mobile_columns.$:
     label: Column
     blackbox: true

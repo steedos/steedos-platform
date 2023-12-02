@@ -61,7 +61,7 @@ fields:
         value: infinite
     description: 
   columns:
-    label: Columns
+    label: PC Columns
     help: 
     description: 
   columns.$:
@@ -176,9 +176,9 @@ fields:
     description: 
 groups:
   advanced: Advanced
+  show_columns: Show Columns
   sort: Sort
   filters: Filters
-  mobile: Mobile
   search_term: Search Term
   data_interface: Data Interface
 listviews:

@@ -52,7 +52,7 @@ fields:
         value: infinite
     description: 
   columns:
-    label: 显示的列
+    label: 电脑端显示的列
     help: 
     description: 
   columns.$:
@@ -171,9 +171,9 @@ fields:
     description: 
 groups:
   advanced: 高级
+  show_columns: 显示列
   sort: 分类
   filters: 过滤
-  mobile: 手机端
   search_term: 搜索项
   data_interface: 数据接口
 listviews:
