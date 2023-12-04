@@ -77,9 +77,10 @@ module.exports = {
         "space.initialized": {
             async handler(ctx) {
                 const spaceDoc = ctx.params
+                const spaceId = spaceDoc._id
                 // 扫描main/default/data文件夹
-                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), false, spaceDoc._id);
-                await this.loadDataOnServiceStarted();
+                await this.importData(path.join(this.settings.packageInfo.path, 'main', 'default', 'data'), false, spaceId);
+                await this.loadDataOnServiceStarted(spaceId);
             }
         }
     },
@@ -121,24 +122,28 @@ module.exports = {
                 this.broker.logger.warn(`The router.js file has been deprecated. ${filePath}`); 
             }
         },
-        sendPackageFlowToDb: async function(packagePath, name) {
+        sendPackageFlowToDb: async function(packagePath, name, spaceId) {
             const flows = loadFlowFile.load(path.join(packagePath, '**'));
             for (const apiName in flows) {
                 const flow = flows[apiName];
                 const flowFilePath = flow.__filename;
                 delete flow.__filename;
                 try {
-                    await this.importFlow(flow, name);
+                    await this.importFlow(flow, name, spaceId);
                 } catch (error) {
                     console.error(`importFlow error`, flowFilePath, error)
                 }
             }
         },
 
-        importFlow: async function(flow, name) {
-            return await this.broker.call('steedos-server.importFlow', {flow, name});
+        importFlow: async function(flow, name, spaceId) {
+            return await this.broker.call('steedos-server.importFlow', {flow, name, spaceId});
         }, 
-        loadDataOnServiceStarted: async function(){
+        /**
+         * @param {string} spaceId 非必传
+         * @returns 
+         */
+        loadDataOnServiceStarted: async function(spaceId){
             let packageInfo = this.settings.packageInfo;
             if (!packageInfo) {
                 return;
@@ -147,7 +152,7 @@ module.exports = {
 
             this.loadPackagePublicFiles(_path);
             if(_path){
-                this.sendPackageFlowToDb(_path)
+                this.sendPackageFlowToDb(_path, null, spaceId)
                 processLoader.sendPackageProcessToDb(_path);
             }
         },
