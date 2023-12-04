@@ -181,5 +181,17 @@
     "name": "page_edit_${recordId}",
     "initApi": null,
     "initFetch": null,
-    "id": "u:6ada123f9d4a"
+    "id": "u:6ada123f9d4a",
+    "onEvent": {
+      "init": {
+        "weight": 0,
+        "actions": [
+          {
+            "actionType": "custom",
+            "script": "//初始化时给外层dialog加上类名，使过滤组件popover正常显示\n$('.steedos-object-listview-form-page').closest('.amis-dialog-widget.antd-Modal').addClass('steedos-overflow-visible-dialog');"
+          }
+        ]
+      }
+    },
+    "className": "steedos-object-listview-form-page"
 }
