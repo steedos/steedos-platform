@@ -6,7 +6,7 @@
         "label": "对象表单",
         "objectApiName": "object_listviews",
         "recordId": "${recordId}",
-        "className": "sm:border sm:rounded sm:border-gray-300 bg-white p-4",
+        "className": "sm:rounded sm:border-gray-300 bg-white",
         "id": "u:f0b602f267d1",
         "mode": "edit",
         "enableTabs": true,
