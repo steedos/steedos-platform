@@ -13,6 +13,7 @@
         "tabsMode": "line",
         "fieldsExtend": {
           "sort": {
+            "label": "",
             "amis": {
               "type": "tabs-transfer",
               "options": [
@@ -45,6 +46,7 @@
             }
           },
           "filters": {
+            "label": "",
             "amis": {
               "type": "group",
               "body": [
@@ -137,6 +139,7 @@
             }
           },
           "searchable_fields": {
+            "label":"",
             "amis": {
               "type": "transfer",
               "options": [
