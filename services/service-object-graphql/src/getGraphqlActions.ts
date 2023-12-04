@@ -57,7 +57,7 @@ export function getGraphqlActions(
                 id = [id]
             }
             const selector: any = { filters: [[referenceToField || "_id", "in", id]] };
-            const spaceId = ctx.meta.spaceId || ctx.meta.user.spaceId;
+            const spaceId = ctx.meta.spaceId || ctx.meta.user?.spaceId;
             if(referenceToField && referenceToField != '_id' && objectName != 'users' && objectName != 'spaces' && spaceId){
                 selector.filters.push(["space", "=", spaceId])
             }
