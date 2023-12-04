@@ -87,6 +87,13 @@ fields:
     is_wide: true
     required: true
     group: show_columns
+    amis:
+      columns:
+        - field
+        - name: width
+          width: 100
+        - name: wrap
+          width: 100
   columns.$:
     label: Column
     blackbox: true
@@ -109,10 +116,9 @@ fields:
   columns.$.width:
     label: Width
     type: text
-  # ag-grid配置rowModelType为infinite的话，列的warp属性功能异常，即不会换行显示且显示效果异常 #258
-  # columns.$.wrap:
-  #   label: Wrap
-  #   type: boolean
+  columns.$.wrap:
+    label: Wrap
+    type: boolean
   filter_fields:
     label: Default Filter Fields
     type: lookup
