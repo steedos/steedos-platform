@@ -202,6 +202,31 @@ export class ActionHandlers {
         return true;
     }
 
+    async removeConfig(ctx: any): Promise<boolean>{
+        const { serviceName = '~database-objects', objectName } = ctx.params;
+        await Register.deleteServiceMetadata(ctx.broker, {
+            nodeID: ctx.broker.nodeID, 
+            serviceName: serviceName, 
+            metadataType: METADATA_TYPE, 
+            metadataApiName: objectName
+        });
+        const objectConfig = await refreshObject(ctx, objectName);
+
+        if (!objectConfig) {
+            return;
+        }
+        const objectServiceName = getObjectServiceName(objectName);
+        await this.registerObject(ctx, objectName, objectConfig, {
+            caller: {
+                // nodeID: broker.nodeID,
+                service: {
+                    name: objectServiceName,
+                }
+            }
+        });
+        return true;
+    }   
+
     async delete(ctx: any): Promise<boolean>{
         // console.log(`delete==================`, ctx.params.objectApiName);
         return await this.deleteObject(ctx, ctx.params.objectApiName)

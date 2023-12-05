@@ -68,6 +68,7 @@ fields:
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.object_name"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst options = [];\nfor (const item of data.options) {\n  if (item.value.startsWith('cms_files.') || item.value.startsWith('tasks.') || item.value.startsWith('notes.') || item.value.startsWith('events.') || item.value.startsWith('instances.') || item.value.startsWith('approvals.') || item.value.startsWith('process_instance_history.') || item.value.startsWith('audit_records.')) {\n    continue;\n  }\n  options.push(item);\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
       "source": 
         "method": "get"
         "cache": 120000
@@ -75,6 +76,7 @@ fields:
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.object_name"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst options = [];\nfor (const item of data.options) {\n  if (item.value.startsWith('cms_files.') || item.value.startsWith('tasks.') || item.value.startsWith('notes.') || item.value.startsWith('events.') || item.value.startsWith('instances.') || item.value.startsWith('approvals.') || item.value.startsWith('process_instance_history.') || item.value.startsWith('audit_records.')) {\n    continue;\n  }\n  options.push(item);\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
   field_map_back:
     label: Field Mappings（from Workflow to Object）
     type: grid
@@ -99,6 +101,7 @@ fields:
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.object_name"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst options = [];\nfor (const item of data.options) {\n  if (item.value.startsWith('cms_files.') || item.value.startsWith('tasks.') || item.value.startsWith('notes.') || item.value.startsWith('events.') || item.value.startsWith('instances.') || item.value.startsWith('approvals.') || item.value.startsWith('process_instance_history.') || item.value.startsWith('audit_records.')) {\n    continue;\n  }\n  options.push(item);\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
       "source": 
         "method": "get"
         "cache": 120000
@@ -106,6 +109,7 @@ fields:
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.object_name"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst options = [];\nfor (const item of data.options) {\n  if (item.value.startsWith('cms_files.') || item.value.startsWith('tasks.') || item.value.startsWith('notes.') || item.value.startsWith('events.') || item.value.startsWith('instances.') || item.value.startsWith('approvals.') || item.value.startsWith('process_instance_history.') || item.value.startsWith('audit_records.')) {\n    continue;\n  }\n  options.push(item);\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
   field_map_back.$.workflow_field:
     label: Field of Workflow
     type: lookup

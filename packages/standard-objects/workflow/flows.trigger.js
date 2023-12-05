@@ -10,8 +10,8 @@ function getFlows(){
 
 module.exports = {
     beforeInsert: async function () {
-        if(this.doc.api_name){
-            await util.checkAPIName(this.object_name, 'api_name', this.doc.api_name, undefined, undefined);
+        if(this.doc.api_name && this.doc.space){
+            await util.checkAPIName(this.object_name, 'api_name', this.doc.api_name, undefined, [['space', '=', this.doc.space]]);
         }
     },
     beforeUpdate: async function () {
@@ -19,8 +19,9 @@ module.exports = {
         if(_.has(this.doc, 'api_name')){
             api_name = this.doc.api_name
         }
-        if(api_name){
-            await util.checkAPIName(this.object_name, 'api_name', api_name, this.id, null);
+        const spaceId = this.spaceId
+        if(api_name && spaceId){
+            await util.checkAPIName(this.object_name, 'api_name', api_name, this.id, [['space', '=', spaceId]]);
         }
     },
     afterFind: async function(){

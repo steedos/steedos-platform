@@ -172,7 +172,7 @@ fields:
 groups:
   advanced: 高级
   show_columns: 显示列
-  sort: 分类
+  sort: 排序
   filters: 过滤
   search_term: 搜索项
   data_interface: 数据接口

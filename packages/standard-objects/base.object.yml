@@ -116,7 +116,8 @@ fields:
   locked:
     label: Locked
     type: boolean
-    hidden: true
+    hidden: false
+    visible_on: "{{false}}"
     sort_no: 1100
   company_id:
     label: Division
@@ -168,6 +169,7 @@ fields:
     sortable: true
     index: true
     multiple: true
+    hidden: false
     defaultValue: !!js/function |
       function(){
         return Steedos.StandardObjects.Base.Fields.companyIds.defaultValue.apply(this, arguments)
@@ -203,7 +205,7 @@ fields:
         }
         return queryFilter;
       }
-    hidden: true
+    visible_on: "{{false}}"
     sort_no: 1300
   instance_state:
     label: Instance State

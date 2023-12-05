@@ -2,11 +2,12 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-06-27 09:32:45
+ * @LastEditTime: 2023-12-05 11:04:22
  * @Description: 
  */
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
+const register = require('@steedos/metadata-registrar');
 var lodash = require('lodash');
 Meteor.startup(function () {
     var _change, _remove, inited = false;
@@ -48,6 +49,11 @@ Meteor.startup(function () {
             },
             removed: function (oldDocument) {
                 if(inited){
+                    const objConfig = register.getOriginalObjectConfig(oldDocument.object);
+                    if(objConfig && objConfig.actions[oldDocument.name]){
+                        return _change(Object.assign(objConfig.actions[oldDocument.name], {_previousName: oldDocument.name}));
+                    }
+
                     return _remove(oldDocument);
                 }
             }

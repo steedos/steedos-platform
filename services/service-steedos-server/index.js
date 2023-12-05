@@ -82,8 +82,8 @@ module.exports = {
 			this.setSettings(ctx.params)
 		},
 		async importFlow(ctx) {
-			const { flow, name } = ctx.params;
-			return await this.importFlow(flow, name)
+			const { flow, name, spaceId } = ctx.params;
+			return await this.importFlow(flow, name, spaceId)
 		},
 	},
 
@@ -293,8 +293,13 @@ module.exports = {
 				}
 			})
 		},
-
-		importFlow: async function(flow, name) {
+		/**
+		 * 导入流程
+		 * @param {object} flow 
+		 * @param {string} name 
+		 * @param {string} spaceId 非必传
+		 */
+		importFlow: async function(flow, name, spaceId) {
             await Future.task(() => {
                 try {
                     try {
@@ -311,7 +316,10 @@ module.exports = {
                     if(db && db.flows && steedosImport){
                         const steedosConfig = objectql.getSteedosConfig();
                         let space;
-                        if(steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
+                        if (spaceId) {
+                            space = db.spaces.findOne(spaceId)
+                        }
+                        if(!space && steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id){
                             space = db.spaces.findOne(steedosConfig.tenant._id)
                         }
                         if(!space){
@@ -325,7 +333,7 @@ module.exports = {
                             this.logger.warn(`not find api_name in file`);
                             return ;
                         }
-                        const dbFlow = db.flows.findOne({api_name: flow.api_name});
+                        const dbFlow = db.flows.findOne({api_name: flow.api_name, space: space._id});
                         if(!dbFlow){
                             if(flow && flow.current){
                                 if(!_.has(flow.current,'fields')){

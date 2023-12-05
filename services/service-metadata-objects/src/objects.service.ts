@@ -80,6 +80,11 @@ module.exports = {
                 return await this.objetActionHandlers.addConfigs(ctx);
             }
         }, 
+        removeConfig: {
+            async handler(ctx) {
+                return await this.objetActionHandlers.removeConfig(ctx);
+            }
+        },
         change: {
             async handler(ctx) {
                 return await this.objetActionHandlers.change(ctx);
