@@ -28,8 +28,7 @@ fields:
   filter_scope:
     label: Filter Scope
     type: select
-    amis:
-      value: space
+    defaultValue: space
     required: true
     options:
       - label: 我的
@@ -82,8 +81,7 @@ fields:
         value: table
       - label: 卡片
         value: cards
-    amis:
-      value: table
+    defaultValue: table
   columns:
     label: Columns
     type: table
