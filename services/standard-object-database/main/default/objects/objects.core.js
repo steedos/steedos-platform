@@ -21,6 +21,12 @@ function canLoadObject(name, datasource) {
     return true;
 }
 
+function removeObjectConfig(objectName){
+    broker.call('objects.removeConfig', {
+        objectName: objectName
+    });
+}
+
 function getDataSource(doc) {
     if (doc.datasource && !_.include(defaultDatasourcesName, doc.datasource)) {
         let datasource = Creator.getCollection("datasources").findOne({ _id: doc.datasource })
@@ -390,5 +396,5 @@ function triggerReloadObject(objectName, type, value, event){
 }
 
 module.exports = {
-    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject, triggerReloadObject, loadDBObject
+    loadObject, removeObject, getDataSourceName, canLoadObject, getObjectFromDB, getDataSource, reloadObject, triggerReloadObject, loadDBObject, removeObjectConfig
 }
