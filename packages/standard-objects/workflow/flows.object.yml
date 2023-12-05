@@ -1,7 +1,7 @@
 name: flows
 icon: environment_hub
 label: Workflow
-hidden: true
+hidden: false
 enable_files: true
 enable_dataloader: false
 version: 2
@@ -1234,7 +1234,7 @@ actions:
                                             "method": "get",
                                             "url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
                                             "sendOn": "!!this.object_name",
-                                            "adaptor": "let data = payload.data;\ndata.related_lists_options = data.options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+                                            "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst needToRemove = ['cms_files.parent', 'tasks.related_to', 'notes.related_to', 'events.related_to', 'instances.record_ids', 'approvals.related_to', 'process_instance_history.target_object', 'audit_records.related_to'];\nconst options = [];\nfor (const item of data.options) {\n  if (!needToRemove.includes(item.value)) {\n    options.push(item);\n  }\n}\ndata.related_lists_options = options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
                                             "headers": {
                                               "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                             }
