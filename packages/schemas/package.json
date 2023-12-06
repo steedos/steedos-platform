@@ -1,6 +1,6 @@
 {
   "name": "@steedos/schemas",
-  "version": "2.5.20",
+  "version": "2.6.2-beta.2",
   "main": "index.js",
   "repository": "https://github.com/steedos/schemas.git",
   "author": "sunhaolin <sunhaolin@hotoa.com>",
@@ -9,5 +9,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1e2c9a88c8eeddc492481195d2d8c5e3519680e8"
+  "gitHead": "ddef9fbc34afc7b57c59a31e9ed4f56818dc4c31"
 }
