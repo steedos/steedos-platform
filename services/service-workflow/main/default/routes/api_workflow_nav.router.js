@@ -127,23 +127,23 @@ const getCategoriesInbox = async (userSession, req, currentUrl) => {
 const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let hasFlowsPer = userSession.is_space_admin;
   const { appId } = req.params;
-  const output = [];
+  let output = [];
   let data = {};
   let monitorIsUnfolded = false;
-  let appFilter = `(filters:["app","=","${appId}"])`;
+  let appFilter = `,filters:["app","=","${appId}"]`;
   if(appId == "approve_workflow"){
     appFilter = "";
   }
-  let currentAppCategories = await objectql.broker.call('api.graphql', {
+  let categoriesData = await objectql.broker.call('api.graphql', {
     query: `
       query {
-        categories${appFilter}{
+        categories(sort:"sort_no desc"${appFilter}){
           _id
         }
       }
     `}
   )
-  currentAppCategories = lodash.map(currentAppCategories.data.categories, '_id');
+  let currentAppCategories = lodash.map(categoriesData.data.categories, '_id');
   if (!hasFlowsPer) {
     const flowIds = await new Promise(function (resolve, reject) {
       Fiber(function () {
@@ -158,7 +158,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     if (hasFlowsPer) {
       let query = `
         query {
-          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}]]){
+          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
@@ -173,7 +173,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     data = await objectql.broker.call('api.graphql', {
       query: `
         query {
-          flows(filters:["category","in",${JSON.stringify(currentAppCategories)}]){
+          flows(filters:["category","in",${JSON.stringify(currentAppCategories)}],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
@@ -228,6 +228,11 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
         unfolded: categoryIsUnfolded
       })
     })
+    output = lodash.sortBy(output, [function (o) {
+      return lodash.findIndex(categoriesData.data.categories, (e) => {
+        return e._id == o.options.value;
+      });
+    }]);
   }
   return {
     schema: output,
