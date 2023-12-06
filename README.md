@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://www.steedos.org">
-    <img alt="Steedos" src="https://steedos.github.io/assets/logo.png" width="80" />
+    <img alt="Steedos" src="https://www.steedos.org/img/logo.png" width="80" />
   </a>
 </p>
 <h1 align="center">
