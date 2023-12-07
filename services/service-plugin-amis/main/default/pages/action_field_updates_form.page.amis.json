@@ -27,7 +27,7 @@
               {
                 "type": "fieldSet",
                 "id": "u:3ce1d050bcac",
-                "title": "${'action_field_updates.action_field_updates_form.field_group_generalization' | t}",
+                "title": "",
                 "collapsable": true,
                 "body": [
                   {
@@ -231,7 +231,7 @@
               }
             },
             "initFetch": true,
-            "panelClassName": "m-0 sm:rounded-lg shadow-none",
+            "panelClassName": "m-0 sm:rounded-lg shadow-none no-border",
             "bodyClassName": "p-0",
             "className": "steedos-amis-form",
             "onEvent": {
@@ -262,5 +262,5 @@
     "regions": [
       "body"
     ],
-    "bodyClassName": ""
+    "bodyClassName": "p-0"
   }
