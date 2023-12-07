@@ -475,7 +475,11 @@ module.exports = {
 		},
 		getPackageInfo: {
 			handler(packageInfo, packageName){
-				const packageJson = require(`${_path}/package.json`);
+				let packagePath = packageInfo.path || path.dirname(require.resolve(`${packageName}/package.json`));
+				if(!path.isAbsolute(packagePath)){
+					packagePath = path.resolve(process.cwd(), packagePath)
+				}
+				const packageJson = require(`${packagePath}/package.json`);
 				return {
 					version: packageJson.version,
 					description: packageJson.description,
@@ -488,7 +492,7 @@ module.exports = {
 				//注册本地已安装的steedos packages
 				const installPackages = loader.loadPackagesConfig();
 				for (const name in installPackages) {
-					if (Object.hasOwnProperty.call(installPackages, name) && (packageName && packageName === name)) {
+					if (Object.hasOwnProperty.call(installPackages, name) && (packageName && packageName === name || !packageName)) {
 						let _packageInfo = installPackages[name];
 						if(_packageInfo.static){
 							_packageInfo = Object.assign({}, _packageInfo, this.getStaticPackageInfo(_packageInfo, name))

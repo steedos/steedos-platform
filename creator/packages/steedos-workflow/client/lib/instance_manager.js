@@ -632,7 +632,7 @@ InstanceManager.getInstanceFormValue = function(){
 		autoFormValue = _.extend(instanceformValues.insertDoc, instanceformValues.updateDoc.$unset);
 		// 指定分析特定流程字段值异常问题
 		const instance = WorkflowManager.getInstance();
-		if (instance && 'draft' != instance.state && !autoFormValue["文件标题"] && "4c0acf34-aaa2-4834-a189-dd742e987382" == instance.flow) {
+		if (instance && 'draft' != instance.state && !autoFormValue["文件标题"] && ("4c0acf34-aaa2-4834-a189-dd742e987382" == instance.flow || "fd456ae72001cb119a7a9076" == instance.flow)) {
 			const currentApprove = InstanceManager.getCurrentApprove();
 			Sentry.captureMessage("申请单值丢失", {
 				contexts: {
