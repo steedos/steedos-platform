@@ -282,11 +282,13 @@ async function yarnAddPackage(yarnPackage){
         const packagePath = path.dirname(require.resolve(`${parsed.name}/package.json`, {
             paths: [path.join(installDir, 'node_modules')]
         }))
-        steedosPackages.push({
-            name: parsed.name,
-            version: parsed.rawSpec,
-            path: packagePath
-        })
+        if(fs.existsSync(path.join(packagePath, 'package.service.js'))){
+            steedosPackages.push({
+                name: parsed.name,
+                version: parsed.rawSpec,
+                path: packagePath
+            })
+        }
     })
     return steedosPackages;
 }
