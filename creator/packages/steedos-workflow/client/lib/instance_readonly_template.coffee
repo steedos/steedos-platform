@@ -793,7 +793,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 		showTracesBtn = ""
 	else
 		showTracesBtn = """
-			<div class="navigation-bar btn-group no-print" style="min-width: 600px; z-index: 999">
+			<div class="navigation-bar btn-group no-print" style="min-width: 600px; z-index: 999; box-sizing: border-box;">
 				<div class="print-tool">
 					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-attachments" id="cbx-print-attachments" checked="checked"><span>#{TAPi18n.__('instance_attachment', {}, locale)}</span></label>
 					<label class="cbx-label"><input type="checkbox" class="cbx-print cbx-print-traces" id="cbx-print-traces" checked="#{traceCheck}"><span>#{TAPi18n.__('instance_approval_history', {}, locale)}</span></label>
@@ -1132,7 +1132,7 @@ InstanceReadOnlyTemplate.getInstanceHtml = (user, space, instance, options)->
 											<div class="instance-form box #{instanceBoxStyle}">
 												#{formDescriptionHtml}
 												<div class="box-body">
-													<div class="col-md-12">
+													<div class="col-md-12" style="box-sizing: border-box;">
 														<div class='attachments-section'>
 															#{attachment}
 															#{related_instances}
