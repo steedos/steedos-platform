@@ -12,6 +12,7 @@ const packageLoader = require('@steedos/service-meteor-package-loader');
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const validator = require('validator');
 const triggers = require('./src/triggers');
+const { checkAPIName } = require('@steedos/standard-objects').util
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -119,6 +120,19 @@ module.exports = {
 				}
                 return object.update(id, data, userSession)
 			},
+		},
+		checkAPIName: {
+			params: {
+				objectName: { type: 'string' },
+				fieldName: { type: 'string' },
+				fieldValue: { type: 'string' },
+				recordId: { type: 'string', optional: true },
+				filters: { type: 'array', optional: true, },
+			},
+			async handler (ctx) {
+				const { objectName, fieldName, fieldValue, recordId, filters } = ctx.params;
+				await checkAPIName(objectName, fieldName, fieldValue, recordId, filters)
+			}
 		},
 	},
 

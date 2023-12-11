@@ -27,6 +27,7 @@ import { TriggerCollection } from '../collection/trigger'
 import { ImportCollection } from '../collection/import'
 import { QuestionCollection } from '../collection/question'
 import { DashboardCollection } from '../collection/dashboard'
+import { PrintCollection } from '../collection/print'
 
 const queryCollection = new QueryCollection();
 const chartCollection = new ChartCollection();
@@ -39,6 +40,7 @@ const triggerCollection = new TriggerCollection();
 const importCollection = new ImportCollection();
 const questionCollection = new QuestionCollection();
 const dashboardCollection = new DashboardCollection();
+const printCollection = new PrintCollection();
 
 import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getMetadataTypeInfo, hasChild, getChilds } from '@steedos/metadata-core';
 
@@ -144,6 +146,9 @@ async function metatdataRecordsToDb(dbManager, metadataName, metatdataRecords, p
             break;
         case TypeInfoKeys.Dashboard:
             await dashboardCollection.deploy(dbManager, metatdataRecords);
+            break;
+        case TypeInfoKeys.Print:
+            await printCollection.deploy(dbManager, metatdataRecords);
             break;
         default:
             break;

@@ -42,7 +42,8 @@ export enum SteedosMetadataTypeInfoKeys {
     ShareRule = "ShareRule",
     Import = "Import",
     Question = "Question",
-    Dashboard = "Dashboard"
+    Dashboard = "Dashboard",
+    Print = "Print",
 }
 
 const loadType = function (filePath){
