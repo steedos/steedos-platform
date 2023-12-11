@@ -52,6 +52,7 @@ export * from './metadata-register/clientJS';
 
 export * from './metadata-register/question'
 export * from './metadata-register/dashboard'
+export * from './metadata-register/print'
 
 let savePackageServicesTimeoutID: any = null;
 
