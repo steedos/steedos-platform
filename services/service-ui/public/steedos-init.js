@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-02-26 15:22:12
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-27 13:22:22
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-12-11 15:35:34
  * @Description:
  */
 try {
@@ -138,7 +138,8 @@ try {
 
   window.getFirstListView = (objectName) => {
     const uiSchema = window.getUISchemaSync(objectName);
-    return _.first(_.sortBy(_.values(uiSchema.list_views), "sort_no"));
+    const disabled_list_views = uiSchema.permissions.disabled_list_views;
+    return _.first(_.sortBy(_.values(_.filter(uiSchema.list_views,function(o) { return disabled_list_views.indexOf(o._id)<0; })), "sort_no"));
   };
 
   window.getAppsSync = () => {
