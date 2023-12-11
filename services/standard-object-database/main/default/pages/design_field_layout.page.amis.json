@@ -182,81 +182,82 @@
                           {
                             "type": "tpl",
                             "tpl": "<p><strong>${label}</strong> ${designObjectLabel}<span style=\"color: rgb(149, 165, 166);\">${_name}</span></p>",
-                            "className": "w-4/5 field-amplify",
-                            "inline": true,
-                            "onEvent": {
-                              "click": {
-                                "actions": [
-                                  {
-                                    "actionType": "dialog",
-                                    "dialog": {
-                                      "type": "dialog",
-                                      "title": "编辑字段",
-                                      "data": {
-                                        "appId": "${appId}",
-                                        "global": "${global}",
-                                        "context": "${context}",
-                                        "designObjectName": "${designObjectName}",
-                                        "_master": "${_master}",
-                                        "_id": "${_id}"
-                                      },
-                                      "body": [
+                            "className": "w-4/5",
+                            "inline": true
+                          },
+                          {
+                            "type": "action",
+                            "className": "w-4/5 mr-7",
+                            "label": "",
+                            "id": "steedos-field-edit-button",
+                            "icon": "fa fa-pencil",
+                            "level": "link",
+                            "actionType": "dialog",
+                            "dialog": {
+                              "title": "编辑字段",
+                              "body": [
+                                {
+                                  "type": "steedos-object-form",
+                                  "label": "对象表单",
+                                  "objectApiName": "object_fields",
+                                  "recordId": "${_id}",
+                                  "mode": "edit",
+                                  "defaultData": {
+                                    "name": "",
+                                    "shared": false,
+                                    "object": "${designObjectName}"
+                                  },
+                                  "fields": [
+                                    "label",
+                                    "readonly",
+                                    "is_wide"
+                                  ],
+                                  "fieldsExtend": {
+                                    "label": {
+                                      "is_wide": true,
+                                      "group": ""
+                                    },
+                                    "readonly": {
+                                      "group": ""
+                                    },
+                                    "is_wide": {
+                                      "group": ""
+                                    }
+                                  },
+                                  "id": "u:b71796d3cb8c",
+                                  "className": "mb-4",
+                                  "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
+                                  "onEvent": {
+                                    "submitSucc": {
+                                      "weight": 0,
+                                      "actions": [
                                         {
-                                          "type": "steedos-object-form",
-                                          "label": "对象表单",
-                                          "objectApiName": "object_fields",
-                                          "recordId": "${_id}",
-                                          "mode": "edit",
-                                          "defaultData": {
-                                            "name": "",
-                                            "shared": false,
-                                            "object": "${designObjectName}"
-                                          },
-                                          "fields": [
-                                            "label",
-                                            "readonly",
-                                            "is_wide"
-                                          ],
-                                          "fieldsExtend": {
-                                            "label": {
-                                              "is_wide": true,
-                                              "group": ""
-                                            },
-                                            "readonly": {
-                                              "group": ""
-                                            },
-                                            "is_wide": {
-                                              "group": ""
-                                            }
-                                          },
-                                          "id": "u:b71796d3cb8c",
-                                          "className": "mb-4",
-                                          "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
-                                          "onEvent": {
-                                            "submitSucc": {
-                                              "weight": 0,
-                                              "actions": [
-                                                {
-                                                  "actionType": "custom",
-                                                  "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
-                                                }
-                                              ]
-                                            }
-                                          }
+                                          "actionType": "custom",
+                                          "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
                                         }
-                                      ],
-                                      "showCloseButton": true,
-                                      "showErrorMsg": true,
-                                      "showLoading": true,
-                                      "closeOnEsc": false,
-                                      "dataMapSwitch": false,
-                                      "size": "md",
-                                      "id": "u:066b3884bdd8"
+                                      ]
                                     }
                                   }
-                                ]
-                              }
-                            }
+                                }
+                              ],
+                              "type": "dialog",
+                              "data": {
+                                "appId": "${appId}",
+                                "global": "${global}",
+                                "context": "${context}",
+                                "designObjectName": "${designObjectName}",
+                                "_master": "${_master}",
+                                "_id": "${_id}"
+                              },
+                              "showCloseButton": true,
+                              "showErrorMsg": true,
+                              "showLoading": true,
+                              "closeOnEsc": false,
+                              "dataMapSwitch": false,
+                              "size": "md",
+                              "id": "u:066b3884bdd8"
+                            },
+                            "size": "xs"
                           }
                         ],
                         "bodyClassName": "h-7  flex justify-between items-center p-0 pl-10 my-2",
@@ -405,9 +406,6 @@
   "css": {
     ".antd-TplField p": {
       "margin": "0.625rem 0.625rem"
-    },
-    ".steedos-design-field li.p-1 .field-amplify:hover": {
-      "font-size": "17px"
     }
   },
   "className": "steedos-design-field",
