@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:02
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-28 11:44:18
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-12-10 16:02:11
  * @Description: 
  */
 export * from './loadChartFile'
@@ -21,3 +21,4 @@ export * from './loadAppFile';
 export * from './loadImportFile'
 export * from './loadQuestionFile'
 export * from './loadDashboardFile'
+export * from './loadPrintFile'

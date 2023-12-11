@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:03
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-06 17:00:51
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-12-10 16:16:36
  * @Description: 
  */
 
@@ -30,6 +30,7 @@ const importService = require('./lib/importService');
 const clientJSService = require('./lib/clientJSService');
 const questionService = require('./lib/questionService')
 const dashboardService = require('./lib/dashboardService')
+const printService = require('./lib/printService')
 module.exports = {
 	name: "metadata-server",
 
@@ -60,6 +61,7 @@ module.exports = {
     this.broker.createService(clientJSService);
     this.broker.createService(questionService);
     this.broker.createService(dashboardService);
+    this.broker.createService(printService);
   },
 
   async started() {

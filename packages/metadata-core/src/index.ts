@@ -232,6 +232,10 @@ export function getFileinfoByFilename(filename) {
         metadataName = TypeInfoKeys.Question;
         itemName = _.first(filename.split('.'));
 
+    }else if(filename.endsWith('.print.yml')){
+        metadataName = TypeInfoKeys.Print;
+        itemName = _.first(filename.split('.'));
+
     }else{
         unsupportedFile = filename;
         //throw new Error('unsupported filename:'+ filename);

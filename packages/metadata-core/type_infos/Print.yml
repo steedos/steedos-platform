@@ -1,0 +1,11 @@
+metadataName: Print
+isAddressable: true
+isSourceTracked: true
+ext: print
+tableName: object_print
+hasContent: false
+defaultDirectory: prints
+nameForMsgs: Print
+nameForMsgsPlural: Prints
+contentIsBinary: false
+deleteSupported: true
