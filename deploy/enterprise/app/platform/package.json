@@ -7,7 +7,7 @@
     "dependencies": {
       "@steedos/service-community": "~2.6",
       "@steedos/service-enterprise": "^2.5",
-      "@steedos-labs/analytics": "^0.0.10"
+      "@steedos-labs/analytics": "^0.0.12"
     },
     "resolutions": {
       "@azure/core-rest-pipeline": "1.12.1",
