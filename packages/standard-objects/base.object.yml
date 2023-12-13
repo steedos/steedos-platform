@@ -298,6 +298,8 @@ actions:
   standard_export_excel:
     label: Export Excel
     on: list
+  standard_print:
+    label: Print
 permission_set:
   none:
     allowCreate: false
