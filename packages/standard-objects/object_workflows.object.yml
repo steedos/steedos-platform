@@ -23,11 +23,13 @@ fields:
     reference_to: flows
   field_map:
     label: Field Mappings（from Object to Workflow）
-    type: grid
+    type: table
     is_wide: true
     depend_on:
       - object_name
       - flow_id
+    amis:
+      columns: ["workflow_field", "object_field"]
   field_map.$.workflow_field:
     label: Field of Workflow
     type: lookup
@@ -79,11 +81,13 @@ fields:
         "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst options = [];\nfor (const item of data.options) {\n  if (item.value.startsWith('cms_files.') || item.value.startsWith('tasks.') || item.value.startsWith('notes.') || item.value.startsWith('events.') || item.value.startsWith('instances.') || item.value.startsWith('approvals.') || item.value.startsWith('process_instance_history.') || item.value.startsWith('audit_records.')) {\n    continue;\n  }\n  options.push(item);\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
   field_map_back:
     label: Field Mappings（from Workflow to Object）
-    type: grid
+    type: table
     is_wide: true
     depend_on:
       - object_name
       - flow_id
+    amis:
+      columns: ["object_field","workflow_field"]
   field_map_back.$.object_field:
     label: Field of Object
     type: lookup

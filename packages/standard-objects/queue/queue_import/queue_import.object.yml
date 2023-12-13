@@ -88,12 +88,14 @@ fields:
 
   field_mappings:
     label: Field Mappings
-    type: grid
+    type: table
     is_wide: true
     defaultIcon: service_contract
     required: true
     name: field_mappings
     filterable: true
+    amis:
+      columns: ["header","api_name","matched_by","save_key_while_fail"]
   field_mappings.$:
     label: Column
     blackbox: true
