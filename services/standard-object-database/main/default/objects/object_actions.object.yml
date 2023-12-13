@@ -35,8 +35,8 @@ fields:
     defaultValue: true
   visible:
     type: boolean
-    omit: true
-    hidden: true
+    # omit: true
+    # hidden: true
     label: Visible
     sort_no: 150
   'on':

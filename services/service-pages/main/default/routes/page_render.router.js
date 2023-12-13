@@ -1,8 +1,8 @@
 /*
  * @Author: 孙浩林 6194896+sunhaolin@users.noreply.github.com
  * @Date: 2023-12-10 11:09:40
- * @LastEditors: 孙浩林 6194896+sunhaolin@users.noreply.github.com
- * @LastEditTime: 2023-12-10 13:25:51
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-12-12 17:19:23
  * @FilePath: /steedos-platform-2.3/services/service-pages/main/default/routes/page_render.router.js
  * @Description: 支持使用schemaApi动态渲染页面，支持匿名访问。
  */
@@ -13,7 +13,8 @@ const ejs = require('ejs');
 router.get('/api/page/render', async function (req, res) {
     try {
         res.set('Content-Type', 'text/html');
-        const { schemaApi } = req.query;
+        const { schemaApi, data: queryData } = req.query;
+
         const pageSchema = {
             "type": "page",
             "body": {
@@ -52,7 +53,8 @@ router.get('/api/page/render', async function (req, res) {
                 spaceId: ""
             },
             pageSchema: pageSchema,
-            __meteor_runtime_config__: __meteor_runtime_config__
+            __meteor_runtime_config__: __meteor_runtime_config__,
+            queryData,
         }
         const options = {}
         ejs.renderFile(filename, data, options, function (err, str) {

@@ -504,6 +504,75 @@ module.exports = {
                 return Steedos.StandardObjects.Base.Actions.standard_export_excel.todo.apply(this, arguments)
             }
         },
+        standard_print: {
+            label: "Print",
+            visible: false,
+            on: "record_only",
+            type: 'amis_button',
+            amis_schema: {
+                "type": "service",
+                "body": [
+                    {
+                        "type": "service",
+                        "body": [
+                            {
+                                "type": "dropdown-button",
+                                "label": "打印",
+                                "buttons": "${buttonOptions}",
+                                "id": "u:8cd2cefcaf9b",
+                                "disabled": false,
+                                "hidden": false
+                            },
+                            {
+                                "type": "tpl",
+                                "tpl": "${event.data.buttonOptions}",
+                                "inline": true,
+                                "wrapperComponent": "",
+                                "id": "u:2b16166fa061"
+                            }
+                        ],
+                        "id": "u:2b1dc4682c90",
+                        "messages": {},
+                        "api": {
+                            "url": "${context.rootUrl}/graphql",
+                            "method": "post",
+                            "messages": {
+                                "failed": ""
+                            },
+                            "requestAdaptor": "",
+                            "adaptor": "const buttonOptions = [];\nfor (const row of payload.data.rows) {\n  buttonOptions.push({\n    \"type\": \"button\",\n    \"label\": row.label,\n    \"onEvent\": {\n      \"click\": {\n        \"actions\": [\n          {\n            \"actionType\": \"url\",\n            \"args\": {\n              \"url\": \"${context.rootUrl}/api/page/render\",\n              \"blank\": true,\n              \"params\": {\n                \"schemaApi\": \"${context.rootUrl}/service/api/@steedos-labs/print/getPrintSchema/\" + row._id,\n                \"data\": {\n                  \"filters\": [\"_id\", \"=\", \"${recordId}\"]\n                }      \n              }\n            }\n          }\n        ]\n      }\n    }\n  })\n}\n\npayload.data = {\n  buttonOptions: buttonOptions \n}\nreturn payload",
+                            "headers": {
+                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                            },
+                            "data": {
+                                "&": "$$",
+                                "query": "{   rows: object_print(filters: [[\"object_name\", \"=\", \"${objectName}\"]]) {     _id     name   label   object_name   } }"
+                            }
+                        },
+                        "initFetch": true,
+                        "onEvent": {
+                            "init": {
+                                "weight": 0,
+                                "actions": []
+                            }
+                        },
+                        "name": "print"
+                    }
+                ],
+                "regions": [
+                    "body"
+                ],
+                "data": {
+                    "context": {},
+                    "dataComponentId": "",
+                    "record_id": "",
+                    "record": {},
+                    "permissions": {}
+                },
+                "id": "u:038c6047be31",
+                "bodyClassName": "p-0"
+            }
+        },
     },
     triggers: {
         "before.insert.client.default": {
