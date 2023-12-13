@@ -159,5 +159,7 @@ actions:
     label: Import Data
   standard_export_excel:
     label: Export Excel
+  standard_print:
+    label: Print
 groups:
   system_information: System Information
