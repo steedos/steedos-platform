@@ -278,6 +278,8 @@ actions:
     label: Delete
   standard_approve:
     label: Initiate Approval
+  standard_create_instance:
+    label: Create Approval
   standard_view_instance:
     label: View Instance
   standard_follow:
