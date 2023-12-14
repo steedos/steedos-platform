@@ -54,7 +54,7 @@ With its intuitive drag-and-drop interface, Steedos empowers both developers and
 
 Metadata can be synchronized as code, version controlled, and automated. For complex business logic, front-end and back-end code can be written to implement it。
 
-![Steedos Overview](http://www.steedos.org/assets/platform/platform-overview.png)
+![Steedos Overview](https://www.steedos.org/img/platform/steedos-dx.png)
 
 Steedos DX introduces a new way to organize your metadata and distribute your apps. You can benefit from modern collaboration technologies such as Git to version control everything across your team - your code, your org configuration, and your metadata. 
 
