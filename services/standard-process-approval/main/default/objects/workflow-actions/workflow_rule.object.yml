@@ -109,6 +109,7 @@ fields:
     group: time_dependent_action
     amis:
       columns: ["number", "unit", "type", "date_field"]
+      strictMode: false
   time_triggers.$:
     label: Field
     blackbox: true
