@@ -11,6 +11,7 @@ const FIELDTYPES = [
     "textarea",
     "html",
     "select",
+    "color",
     "boolean",
     "toggle",
     "date",
@@ -244,6 +245,8 @@ export class SteedosFieldType extends SteedosFieldProperties implements Dictiona
                }else{
                    return SteedosFieldDBType.varchar
                }
+           case 'color':
+               return SteedosFieldDBType.text
            case 'boolean':
                return SteedosFieldDBType.boolean
            case 'toggle':

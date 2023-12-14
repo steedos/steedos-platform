@@ -471,6 +471,9 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 }).join('\n');
             }
             break;
+        case 'color':
+            formField.type = "input";
+            break;
         case 'boolean':
             formField.type = "checkbox";
             break;

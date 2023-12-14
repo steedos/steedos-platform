@@ -1,3 +1,8 @@
+/*
+ * @LastEditTime: 2023-12-14 15:13:56
+ * @LastEditors: liaodaxue
+ * @customMade: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { IModel, IModule } from '../../../src/type'
 
 export type models = {
@@ -37,6 +42,7 @@ const FIELDTYPEMAP:any = {
     select: '选择框',
     text: '文本',
     textarea: '长文本',
+    color: '颜色',
     url: '网址',
     autonumber: '自动编号'
 }

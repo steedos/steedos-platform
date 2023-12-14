@@ -66,6 +66,8 @@ fields:
         value: markdown
       - label: Select
         value: select
+      - label: Color
+        value: color
       - label: Boolean
         value: boolean
       - label: Toggle

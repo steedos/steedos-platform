@@ -176,6 +176,7 @@ const getField = (objectName, fieldName, type, lng)=>{
         case 'autonumber':
         case 'url':
         case 'email':
+        case 'color':
         case 'text':
             field = {
                 type: 'text',

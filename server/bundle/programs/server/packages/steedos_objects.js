@@ -2851,6 +2851,9 @@ Creator.getObjectSchema = function (obj) {
     } else if (field.type === "password") {
       fs.type = String;
       fs.autoform.type = "password";
+    } else if (field.type === "color") {
+      fs.type = String;
+      fs.autoform.type = "color";
     } else if (field.type === "date") {
       fs.type = Date;
 

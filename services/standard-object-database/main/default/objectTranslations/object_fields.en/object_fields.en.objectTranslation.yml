@@ -37,6 +37,8 @@ fields:
         value: markdown
       - label: Select
         value: select
+      - label: Color
+        value: color
       - label: Checkbox
         value: boolean
       - label: Toggle

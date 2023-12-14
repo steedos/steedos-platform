@@ -38,6 +38,8 @@ fields:
         value: markdown
       - label: 选择框
         value: select
+      - label: 颜色
+        value: color
       - label: 复选框
         value: boolean
       - label: 开关

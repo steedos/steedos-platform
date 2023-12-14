@@ -266,6 +266,8 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
                         displayObj[name] = doc[name] || "";
                     } else if (fType == "html") {
                         displayObj[name] = doc[name] || "";
+                    } else if (fType == "color") {
+                        displayObj[name] = doc[name] || "";
                     } else if (fType == "select") {
                         let label = "";
                         let map = {};

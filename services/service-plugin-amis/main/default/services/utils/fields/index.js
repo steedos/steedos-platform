@@ -6,6 +6,7 @@ const AmisFormInputs = [
     'text',
     'date',
     'file',
+    'color',
     'avatar',
     'image',
     'datetime',
@@ -50,7 +51,7 @@ function getAmisStaticFieldType(type, readonly){
         }
         return type;
     }
-    if(_.include(['text'], type)){
+    if(_.include(['text','color'], type)){
         return `static-${type}`;
     }else{
         return 'static';
@@ -67,6 +68,8 @@ function getAmisFieldType(sField){
             return 'html';
         case 'select':
             return 'select';
+        case 'color':
+            return 'color';
         case 'boolean':
             return 'checkbox';
         case 'date':

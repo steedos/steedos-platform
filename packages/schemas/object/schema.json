@@ -351,6 +351,7 @@
                                 "textarea",
                                 "html",
                                 "select",
+                                "color",
                                 "boolean",
                                 "toggle",
                                 "date",
