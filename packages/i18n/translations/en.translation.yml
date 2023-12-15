@@ -1007,7 +1007,7 @@ CustomLabels:
   object_fields_error_option_color_not_valid: >-
     The incorrectly formatted option color value is defined in the field
     'Options' attribute. Enter the correct hexadecimal color value, such as
-    FFFFFF.
+    FFFFFF or #FFFFFF.
   picklist_options_error_color_not_valid: >-
     Background color format incorrect, please enter the correct hexadecimal
     color code, such as FFFFFF.
