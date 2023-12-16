@@ -46,6 +46,9 @@ function getSubstitutionDataType(objectName: string, fieldName: string, value: a
         case 'password':
             dateType = FormulonDataType.Text;
             break;
+        case 'color':
+            dateType = FormulonDataType.Text;
+            break;
         case 'autonumber':
             dateType = FormulonDataType.Text;
             break;

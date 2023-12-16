@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-03 16:17:49
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-12-14 15:05:58
  * @Description: 
  */
 
@@ -43,6 +43,7 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
         case 'text':
         case 'textarea':
         case 'html_text':
+        case 'color':
         case 'autonumber':
         case 'url':
         case 'email':

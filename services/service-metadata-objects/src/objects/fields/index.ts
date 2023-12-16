@@ -29,6 +29,8 @@ export function getDBType(objectName, field) {
             } else {
                 return SteedosFieldDBType.varchar;
             }
+        case "color":
+            return SteedosFieldDBType.text;
         case "boolean":
             return SteedosFieldDBType.boolean;
         case "toggle":

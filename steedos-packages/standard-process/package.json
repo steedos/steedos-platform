@@ -1,6 +1,6 @@
 {
   "name": "@steedos/standard-process",
-  "version": "2.6.2-beta.13",
+  "version": "2.6.2-beta.14",
   "main": "package.service.js",
   "scripts": {},
   "license": "MIT",
@@ -11,5 +11,5 @@
   "dependencies": {
     "lodash": "^4.17.21"
   },
-  "gitHead": "8b4dd42561a6499bdeb04a44fa628d78671405d6"
+  "gitHead": "d83f9ac489aa62196a2b1baf8f20129eade54d66"
 }
