@@ -7,11 +7,66 @@
         "objectApiName": "object_listviews",
         "recordId": "${recordId}",
         "className": "sm:rounded sm:border-gray-300 bg-white",
-        "id": "u:f0b602f267d1",
+        "form":{
+          "id": "form_object_listviews"
+        },
         "mode": "edit",
         "enableTabs": true,
         "tabsMode": "line",
         "fieldsExtend": {
+          "columns": {
+            "amis": {
+              "footerToolbar": [
+                {
+                  "type": "button",
+                  "label": "设置字段",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "type": "dialog",
+                    "body": [
+                      {
+                        "type": "transfer",
+                        "options": [],
+                        "multiple": true,
+                        "id": "u:92c0b3cccca0",
+                        "required": true,
+                        "placeholder": "-",
+                        "className": "col-span-2 m-0",
+                        "checkAll": false,
+                        "searchable": true,
+                        "sortable": true,
+                        "source": {
+                          "method": "get",
+                          "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                          "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                          },
+                          "requestAdaptor": "",
+                          "adaptor": ""
+                        },
+                        "joinValues": false,
+                        "extractValue": true,
+                        "name": "columns_quick_select",
+                        "value": "${columns|pick:field|split}"
+                      }
+                    ],
+                    "onEvent": {
+                      "confirm": {
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "const columns = [];\nconst columns_quick_select = _.cloneDeep(event.data.columns_quick_select);\n_.forEach(columns_quick_select, function (field) {\n  const column_field = _.find(event.data.columns, { field });\n  if (column_field) {\n    columns.push(column_field)\n  } else {\n    columns.push({\n      field\n    })\n  }\n})\ndoAction({\n  \"componentId\": \"form_object_listviews\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      columns\n    }\n  }\n});"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "addable": false,
+              "draggable": false
+            }
+          },
           "sort": {
             "label": "",
             "amis": {
