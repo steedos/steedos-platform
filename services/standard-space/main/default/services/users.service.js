@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-25 11:33:50
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-12-18 16:20:42
  * @Description: 
  */
 "use strict";
@@ -156,7 +156,7 @@ module.exports = {
             const accountsConfig = steedosConfig.public.accounts || {};
             const usernameMinLength = accountsConfig.username_min_length ? Number(accountsConfig.username_min_length) : 6
             if (username.length <  usernameMinLength) {
-                throw new Error(`The username minimum length can not be less than ${usernameMinLength} digits`);
+                throw new Error(`用户名最小长度不能小于 ${usernameMinLength} 位字符`);
             }
             try {
                 if (accountsConfig.UTF8_Names_Validation) {
