@@ -7,7 +7,7 @@
         "objectApiName": "object_listviews",
         "recordId": "${recordId}",
         "className": "sm:rounded sm:border-gray-300 bg-white",
-        "form":{
+        "form": {
           "id": "form_object_listviews"
         },
         "mode": "edit",
@@ -23,6 +23,7 @@
                   "actionType": "dialog",
                   "dialog": {
                     "type": "dialog",
+                    "size": "md",
                     "body": [
                       {
                         "type": "transfer",
@@ -71,8 +72,7 @@
             "label": "",
             "amis": {
               "type": "tabs-transfer",
-              "options": [
-              ],
+              "options": [],
               "id": "u:32f3e4e73115",
               "strictMode": true,
               "source": {
@@ -164,41 +164,63 @@
           },
           "mobile_columns": {
             "amis": {
-              "type": "transfer",
-              "id": "u:e80d9f58dfd0",
-              "selectMode": "list",
-              "searchable": true,
-              "searchApi": "",
-              "sortable": true,
-              "mode": "normal",
-              "searchResultMode": "list",
-              "joinValues": false,
-              "extractValue": true,
-              "source": {
-                "method": "get",
-                "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
-                "headers": {
-                  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-                },
-                "data": null,
-                "requestAdaptor": "",
-                "adaptor": "",
-                "sendOn": "!!this.object_name"
-              },
-              "visibleOn": "!!this.object_name",
-              "className": "col-span-2 m-0",
-              "en-US": {
-                "label": "Mobile Columns"
-              },
-              "multiple": true
+              "footerToolbar": [
+                {
+                  "type": "button",
+                  "label": "设置字段",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "type": "dialog",
+                    "size": "md",
+                    "body": [
+                      {
+                        "type": "transfer",
+                        "options": [],
+                        "multiple": true,
+                        "id": "u:92c0b3cccca0",
+                        "required": true,
+                        "placeholder": "-",
+                        "className": "col-span-2 m-0",
+                        "checkAll": false,
+                        "searchable": true,
+                        "sortable": true,
+                        "source": {
+                          "method": "get",
+                          "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
+                          "headers": {
+                            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                          },
+                          "requestAdaptor": "",
+                          "adaptor": ""
+                        },
+                        "joinValues": false,
+                        "extractValue": true,
+                        "name": "columns_quick_select",
+                        "value": "${mobile_columns|pick:field|split}"
+                      }
+                    ],
+                    "onEvent": {
+                      "confirm": {
+                        "actions": [
+                          {
+                            "actionType": "custom",
+                            "script": "const mobile_columns = [];\nconst columns_quick_select = _.cloneDeep(event.data.columns_quick_select);\n_.forEach(columns_quick_select, function (field) {\n  const column_field = _.find(event.data.mobile_columns, { field });\n  if (column_field) {\n    mobile_columns.push(column_field)\n  } else {\n    mobile_columns.push({\n      field\n    })\n  }\n})\ndoAction({\n  \"componentId\": event.data.__wrapperServiceId,\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      __changedItems: mobile_columns\n    }\n  }\n});\ndoAction({\n  \"componentId\": \"form_object_listviews\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      mobile_columns\n    }\n  }\n});"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "addable": false,
+              "draggable": false
             }
           },
           "searchable_fields": {
-            "label":"",
+            "label": "",
             "amis": {
               "type": "transfer",
-              "options": [
-              ],
+              "options": [],
               "selectMode": "list",
               "searchable": true,
               "searchApi": "",
@@ -225,8 +247,9 @@
             }
           }
         },
-        "initApiAdaptor": "\nvar data;\nif (recordId) {\n  data = payload.data || { _filters_type_controller: 'conditions' };\n  //数据格式转换\n  if (data) {\n    data.sort = lodash.map(data.sort, (item) => {\n      return item.field_name + \":\" + item.order;\n    });\n    data.mobile_columns = lodash.map(data.mobile_columns, 'field');\n    data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n      try {\n        data.filters = JSON.parse(data.filters);\n      } catch (e) { }\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n      data._filters_type_controller = 'function';\n    } else {\n      data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n      data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n      data._filters_function = data.filters;\n    }\n  }\n} else {\n const uiSchema = api.body.uiSchema;\n const defaultData = api.body.defaultData;\n  let defaultValues = {};\n _.each(uiSchema && uiSchema.fields, function (field) {\n    var value = SteedosUI.getFieldDefaultValue(field, api.body.global);\n    if (!_.isNil(value)) {\n      defaultValues[field.name] = value;\n    }\n  });\n if (defaultData && _.isObject(defaultData) && !_.isArray(defaultData)) {\n    data = Object.assign({}, defaultValues, defaultData)\n  }\n}\nfor (key in data) {\n  if (data[key] === null) {\n    delete data[key];\n  }\n}\npayload.data = data;\ndelete payload.extensions; if (data.is_enable != false) { data.is_enable = true; };\nreturn payload;",
-        "apiRequestAdaptor": "delete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.sort = lodash.map(formData.sort, (item) => {\n  const arr = item.split(':');\n  return { field_name: arr[0], order: arr[1] };\n});\n\nformData.mobile_columns = lodash.map(formData.mobile_columns, (item) => {\n  return { field: item };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n  return { field: item };\n});\n\nif (!formData._filters_type_controller) {\n  formData._filters_type_controller = 'conditions';\n}\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n  // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n  formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nquery = `mutation{record: object_listviews__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n  query = `mutation{record: object_listviews__update(id: \"` + formData._id + `\", doc: {__saveData}){_id}}`;\n};\n__saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;"
+        "initApiAdaptor": "\nvar data;\nif (recordId) {\n  data = payload.data || { _filters_type_controller: 'conditions' };\n  //数据格式转换\n  if (data) {\n    data.sort = lodash.map(data.sort, (item) => {\n      return item.field_name + \":\" + item.order;\n    });\n    data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n      try {\n        data.filters = JSON.parse(data.filters);\n      } catch (e) { }\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n      data._filters_type_controller = 'function';\n    } else {\n      data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n      data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n      data._filters_function = data.filters;\n    }\n  }\n} else {\n const uiSchema = api.body.uiSchema;\n const defaultData = api.body.defaultData;\n  let defaultValues = {};\n _.each(uiSchema && uiSchema.fields, function (field) {\n    var value = SteedosUI.getFieldDefaultValue(field, api.body.global);\n    if (!_.isNil(value)) {\n      defaultValues[field.name] = value;\n    }\n  });\n if (defaultData && _.isObject(defaultData) && !_.isArray(defaultData)) {\n    data = Object.assign({}, defaultValues, defaultData)\n  }\n}\nfor (key in data) {\n  if (data[key] === null) {\n    delete data[key];\n  }\n}\npayload.data = data;\ndelete payload.extensions; if (data.is_enable != false) { data.is_enable = true; };\nreturn payload;",
+        "apiRequestAdaptor": "delete formData.created;\ndelete formData.created_by;\ndelete formData.modified;\ndelete formData.modified_by;\ndelete formData._display;\n\n//数据格式转换\nformData.sort = lodash.map(formData.sort, (item) => {\n  const arr = item.split(':');\n  return { field_name: arr[0], order: arr[1] };\n});\n\nformData.searchable_fields = lodash.map(formData.searchable_fields, (item) => {\n  return { field: item };\n});\n\nif (!formData._filters_type_controller) {\n  formData._filters_type_controller = 'conditions';\n}\n\nif (formData._filters_type_controller === 'conditions' && formData._filters_conditions) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData._filters_conditions);\n  // formData.filters = JSON.stringify(window.amisConvert.conditionsToFilters(formData._filters_conditions), null, 4);\n} else {\n  formData.filters = formData._filters_function || null;\n}\n\ndelete formData._filters_type_controller;\ndelete formData._filters_conditions;\ndelete formData._filters_function;\n\nquery = `mutation{record: object_listviews__insert(doc: {__saveData}){_id}}`;\nif (formData.recordId) {\n  query = `mutation{record: object_listviews__update(id: \"` + formData._id + `\", doc: {__saveData}){_id}}`;\n};\n__saveData = JSON.stringify(JSON.stringify(formData));\n\napi.data = { query: query.replace('{__saveData}', __saveData) };\nreturn api;",
+        "id": "u:ce9e3fcc411a"
       }
     ],
     "regions": [
