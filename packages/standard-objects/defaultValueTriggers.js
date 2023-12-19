@@ -92,8 +92,8 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
             // 不支持也不需要给grid/object字段加默认值
             continue;
         }
-        if (!_.isNil(doc[key])) {
-            // doc中字段已有值的话不加默认值
+        if (!_.isNil(doc[key]) || doc[key]===null) {
+            // doc中字段已有值的话 || 默认值被手动清空 不加默认值 
             continue;
         }
         const field = fields[key];
