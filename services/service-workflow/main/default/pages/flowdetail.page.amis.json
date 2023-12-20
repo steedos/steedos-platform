@@ -130,8 +130,8 @@
 									"recordId": "${form}",
 									"id": "u:5df987ad9bc8",
 									"className": "bg-white m--8",
-									"mode": "read",
-									"initApiAdaptor": "_.each(payload.data.__record.current.fields, (item)=>{if(item.type =='table'){  var _item = _.find(payload.data.current.fields, function(__item){return __item.code == item.code}); if(_item){_item.children = item.fields;}  }}); return payload",
+									"mode": "edit",
+									"initApiAdaptor": "_.each(payload.data.current.fields, (item)=>{if(item.type =='table'){  var _item = _.find(payload.data.current.fields, function(__item){return __item.code == item.code}); if(_item){_item.children = item.fields;}  }}); return payload",
 									"fields": [
 										"current",
 										"current.fields",

@@ -89,7 +89,7 @@ fields:
     label: current
     type: object
     is_wide: true
-    readonly: true
+    # readonly: true
     blackbox: true
     name: current
   current.form_script:
@@ -105,9 +105,9 @@ fields:
     name: current.name_forumla
   current.fields:
     label: Fields
-    type: grid
+    type: table
     is_wide: true
-    readonly: true
+    # readonly: true
     name: current.fields
   current.fields.$.code:
     label: Code
@@ -161,33 +161,33 @@ fields:
         value: file
       - label: Lookup
         value: lookup
-    readonly: true
+    # readonly: true
     name: current.fields.$.type
     filterable: true
   current.fields.$.is_required:
     label: Required
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_required
   current.fields.$.is_wide:
     label: Wide
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_wide
   current.fields.$.is_list_display:
     label: Display in List
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_list_display
   current.fields.$.is_searchable:
     label: Searchable
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_searchable
   current.fields.$.is_multiselect:
     label: Multiselect
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_multiselect
   # company_id:
   #   required: false
