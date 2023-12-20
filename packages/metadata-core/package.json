@@ -1,6 +1,6 @@
 {
   "name": "@steedos/metadata-core",
-  "version": "2.6.2-beta.14",
+  "version": "2.6.2-beta.15",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@steedos/client": "2.6.2-beta.14",
+    "@steedos/client": "2.6.2-beta.15",
     "archiver": "^5.1.0",
     "chalk": "^4.1.0",
     "clone": "^2.1.2",
@@ -40,5 +40,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d83f9ac489aa62196a2b1baf8f20129eade54d66"
+  "gitHead": "848eb6cdf895971f0ea6638795e8be4e0b7d2b3b"
 }

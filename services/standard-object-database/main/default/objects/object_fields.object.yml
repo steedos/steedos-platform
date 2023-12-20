@@ -433,7 +433,7 @@ fields:
   #   group: Advanced
     sort_no: 270
   options:
-    type: grid
+    type: table
     label: Options
     is_wide: true
     inlineHelpText: The label and value of each option cannot be empty. Set the background color to FFFFFF in hexadecimal format.
@@ -456,7 +456,7 @@ fields:
     required: true
   options.$.color:
     label: Color
-    type: text
+    type: color
     required: false
   options.$.description:
     label: Description

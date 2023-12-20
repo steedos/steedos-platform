@@ -35,6 +35,7 @@
                           "body": [
                             {
                               "type": "form",
+                              "mode": "normal",
                               "body": [
                                 {
                                   "type": "steedos-input-table",
@@ -59,7 +60,8 @@
                                   "removable": true,
                                   "draggable": false,
                                   "showIndex": false,
-                                  "id": "u:776ec89804c0"
+                                  "id": "u:776ec89804c0",
+                                  "label": ""
                                 }
                               ]
                             }

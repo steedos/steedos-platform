@@ -65,9 +65,14 @@ const mixinOptions = {
 		logging: true,
 		// Route error handler
 		onError(req, res, err) {
-			res.setHeader("Content-Type", "application/json; charset=utf-8");
-			res.writeHead(err.code || 500);
-			res.end(JSON.stringify(err));
+			try {
+				res.setHeader("Content-Type", "application/json; charset=utf-8");
+				res.writeHead(err.code || 500);
+				res.end(JSON.stringify(err));
+			} catch (Exception) {
+				res.writeHead(500);
+				res.end(JSON.stringify(err));
+			}
 		}
 	},
 
@@ -213,9 +218,14 @@ module.exports = {
 
 				// Route error handler
 				onError(req, res, err) {
-					res.setHeader("Content-Type", "application/json; charset=utf-8");
-					res.writeHead(err.code || 500);
-					res.end(JSON.stringify({ error: err.message, detail: err }));
+					try {
+						res.setHeader("Content-Type", "application/json; charset=utf-8");
+						res.writeHead(err.code || 500);
+						res.end(JSON.stringify({ error: err.message, detail: err }));
+					} catch (error) {
+						res.writeHead(500);
+						res.end(JSON.stringify({ error: err.message}));
+					}
 				}
 			},
 			{
@@ -292,13 +302,22 @@ module.exports = {
 
 				// Route error handler
 				onError(req, res, err) {
-					res.setHeader("Content-Type", "application/json; charset=utf-8");
-					res.writeHead(err.code || 500);
-					res.end(JSON.stringify({
-						"status": -1,
-						"msg": err.message,
-						"data": {}
-					}));
+					try {
+						res.setHeader("Content-Type", "application/json; charset=utf-8");
+						res.writeHead(err.code || 500);
+						res.end(JSON.stringify({
+							"status": -1,
+							"msg": err.message,
+							"data": {}
+						}));
+					} catch (Exception) {
+						res.writeHead(500);
+						res.end(JSON.stringify({
+							"status": -1,
+							"msg": err.message,
+							"data": {}
+						}));
+					}
 				}
 			}
 		],
