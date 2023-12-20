@@ -411,7 +411,7 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = 'filesize'
 		else if field.type == "Object" || field.type == "object"
 			fs.type = Object
-		else if field.type == "grid"
+		else if field.type == "grid" || field.type == "table"
 			fs.type = Array
 			fs.autoform.editable = true
 			fs.autoform.type = "steedosGrid"
