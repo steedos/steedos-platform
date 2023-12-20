@@ -488,6 +488,8 @@ Creator.getObjectSchema = (obj) ->
 			fs.autoform.type = 'steedosEmail'
 		else if field.type == 'autonumber'
 			fs.type = String
+		else if field.type == 'color'
+			fs.type = String
 		else if field.type == 'formula'
 			fs = Creator.getObjectSchema({fields: {field: Object.assign({}, field, {type: field.data_type})}})[field.name]
 		else if field.type == 'summary'
