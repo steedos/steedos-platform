@@ -1,0 +1,14 @@
+{
+    "name": "steedos-community",
+    "private": true,
+    "scripts": {
+      "start": "steedos start"
+    },
+    "dependencies": {
+      "@steedos/service-community": "~2.6"
+    },
+    "resolutions": {
+      "@azure/core-rest-pipeline": "1.12.1",
+      "@azure/core-util": "1.5.0"
+    }
+  }

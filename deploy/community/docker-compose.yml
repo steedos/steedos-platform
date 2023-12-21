@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  steedos-community:
+    image: steedos/steedos-community:latest
+    container_name: steedos-community
+    ports:
+      - "80:80"    
+      - "443:443"  
+      - "9001:9001"  
+    environment:
+      - ROOT_URL=http://127.0.0.1
+      - STEEDOS_LICENSE=trial
+      - NPM_CACHE_ENABLED=true
+      - NPM_CACHE_PACKAGE_CONTENT=true
+      - NPM_REGISTRY_URL=https://registry.npmmirror.com
+    tty: true
+    volumes:
+      - "./storage:/steedos-storage"
+  

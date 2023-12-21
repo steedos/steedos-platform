@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-push",
-  "version": "2.6.2-beta.15",
+  "version": "2.6.2-beta.19",
   "description": "A Steedos App",
   "main": "package.service.js",
   "license": "MIT",
@@ -9,5 +9,5 @@
     "access": "public"
   },
   "scripts": {},
-  "gitHead": "848eb6cdf895971f0ea6638795e8be4e0b7d2b3b"
+  "gitHead": "eb16f99cb547d247aa72d1e9fa3ecffa9143eca6"
 }
