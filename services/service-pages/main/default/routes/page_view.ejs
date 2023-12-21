@@ -1,8 +1,8 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-08-01 17:47:18
- * @LastEditors: 易仕川 yishichuan@steedos.com
- * @LastEditTime: 2023-12-20 16:25:53
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2023-12-21 14:37:06
  * @Description: 
 -->
 <!DOCTYPE html>
@@ -189,7 +189,7 @@
 
     const container = $(".page-template-root")[0];
 
-    const queryData = <%- JSON.stringify(locals.queryData) %> || {};
+    const queryData = <%- JSON.stringify(locals.queryData || {}) %>;
 
     Steedos.Page.render(container, page, Object.assign({}, {
                     appId: appId,
