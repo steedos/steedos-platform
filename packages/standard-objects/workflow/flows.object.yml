@@ -517,6 +517,10 @@ list_views:
       - category
       - sort_no
       - modified
+    extra_columns:
+      - form
+      - object_name
+      - enable_amisform
     filter_fields:
       - state
       - category
@@ -771,7 +775,7 @@ actions:
     todo: !<tag:yaml.org,2002:js/function> |-
       function (object_name, record_id, fields) {
               return WorkflowCore.openFormDesign(Steedos.locale(), Steedos.spaceId(), this.record.record.form, Creator.getUserCompanyId());
-            }
+      }
   enableFlow:
     label: Enable Flow
     visible: !<tag:yaml.org,2002:js/function> |-
