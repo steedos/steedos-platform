@@ -80,4 +80,6 @@ CustomLabels:
       show_heading: Show Heading
       default_to_object_name: Default to object name
       displayed_fields: Displayed Fields
-      set_subform: Set Subform
+      set_subform: Set Subform,
+      select_fields: Select Fields
+      select_subform: Select Subform

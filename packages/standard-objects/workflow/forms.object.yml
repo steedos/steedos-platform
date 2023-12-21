@@ -109,6 +109,10 @@ fields:
     is_wide: true
     # readonly: true
     name: current.fields
+    amis: 
+      inlineEditMode: false
+      addable: false
+      affixHeader: true,
   current.fields.$.code:
     label: Code
     type: text
@@ -161,7 +165,7 @@ fields:
         value: file
       - label: Lookup
         value: lookup
-    # readonly: true
+    readonly: true
     name: current.fields.$.type
     filterable: true
   current.fields.$.is_required:
@@ -189,6 +193,12 @@ fields:
     type: boolean
     # readonly: true
     name: current.fields.$.is_multiselect
+  current.fields.$.visibleOn:
+    label: visibleOn
+    type: code
+    # readonly: true
+    is_wide: true
+    name: current.fields.$.visibleOn
   # company_id:
   #   required: false
   #   omit: false
