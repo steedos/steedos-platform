@@ -369,7 +369,7 @@ module.exports = {
                 if( doc.data_type === 'number' && !(_.isNumber(numberValue) && !_.isNaN(numberValue)) ){
                     throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入合法的数值。");
                 }
-                console.log('doc==>',doc.data_type , value)
+                // console.log('doc==>',doc.data_type , value)
                 if( doc.data_type === 'boolean' && ['true','false'].indexOf(value) < 0){
                     throw new Meteor.Error(500, "选择项中的选项值类型应该与数据类型值一致, 请输入 true 或 false。");
                 }
