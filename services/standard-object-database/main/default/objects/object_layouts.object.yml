@@ -64,7 +64,7 @@ fields:
       }
     group: general_information
   buttons:
-    type: grid
+    type: table
     blackbox: true
     is_wide: true
     depend_on:
@@ -76,6 +76,31 @@ fields:
     reference_to_field: name
     depend_on:
       - object_name
+    amis:
+      {
+        "autoComplete":
+          {
+            "method": "get",
+            "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
+            "sendOn": "!!this.object_name",
+            "headers":
+              {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}",
+              },
+            "cache": 120000,
+          },
+        "source":
+          {
+            "method": "get",
+            "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/actions/options",
+            "sendOn": "!!this.object_name",
+            "headers":
+              {
+                "Authorization": "Bearer ${context.tenantId},${context.authToken}",
+              },
+            "cache": 120000,
+          },
+      }
   buttons.$.visible_on:
     label: Visible on
     type: textarea
@@ -85,10 +110,13 @@ fields:
     blackbox: true
     is_wide: true
     hidden: false
+    label: 字段分组
   field_groups.$.group_name:
     type: text
+    label: 名称
   field_groups.$.visible_on:
     type: text
+    label: 显示条件
   fields:
     type: grid
     is_wide: true
