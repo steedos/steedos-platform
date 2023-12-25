@@ -124,6 +124,10 @@
   margin-top: -0.75rem
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem
+}
+
 .mt-3 {
   margin-top: 0.75rem
 }
@@ -196,12 +200,12 @@
   width: 2.5rem
 }
 
-.w-6\/12 {
-  width: 50%
-}
-
 .w-full {
   width: 100%
+}
+
+.w-6\/12 {
+  width: 50%
 }
 
 .w-4\/5 {
@@ -210,11 +214,6 @@
 
 .w-96 {
   width: 24rem
-}
-
-.min-w-max {
-  min-width: -moz-max-content;
-  min-width: max-content
 }
 
 .min-w-\[240px\] {
