@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-06 17:01:07
+ * @LastEditTime: 2023-12-25 20:45:41
  * @Description: 
  */
 ; (function () {
@@ -193,10 +193,10 @@
 
                 const amisSchema = getAmisSchema(ins, ctx.data.readonly);
 
-                const page = {
-                    name: "instanceAmisView",
-                    render_engine: "amis",
-                    schema: {
+                let schema = null;
+
+                if(!_.isEmpty(amisSchema)){
+                    schema = {
                         type: "service",
                         body: amisSchema,
                         id: "instanceAmisView",
@@ -204,6 +204,29 @@
                             instanceId: ins._id,
                         }
                     }
+                }else{
+                    schema = {
+                        'type': 'service',
+                        id: "instanceAmisView",
+                        schemaApi: {
+                            "method": "get",
+                            "url": `/api/workflow/instance/${ins._id}/getServiceSchema`,
+                            "data": {
+                                stepId: InstanceManager.getCurrentStep()._id,
+                                box: Session.get("box"),
+                                print: ctx.data.print
+                            }
+                        },
+                        data: {
+                            instanceId: ins._id,
+                        }
+                    }
+                }
+
+                const page = {
+                    name: "instanceAmisView",
+                    render_engine: "amis",
+                    schema: schema
                 }
         
                 const instanceValues = WorkflowManager_format.getAutoformSchemaValues();

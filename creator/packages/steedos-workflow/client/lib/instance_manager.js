@@ -857,7 +857,7 @@ InstanceManager.getMyApprove = function () {
 			}];
 		}
 
-		currentApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+		currentApprove.values = InstanceManager.getInstanceFormValue();
 
 		return currentApprove;
 	}
