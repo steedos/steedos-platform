@@ -129,7 +129,7 @@ fields:
     amis: 
       "autoComplete": 
         "method": "get"
-        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&term=${term}"
         "headers": 
           "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
         "sendOn": "!!this.object_name"

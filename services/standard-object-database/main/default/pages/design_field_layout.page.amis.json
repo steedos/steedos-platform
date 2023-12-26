@@ -217,7 +217,8 @@
                                   "fields": [
                                     "label",
                                     "readonly",
-                                    "is_wide"
+                                    "is_wide",
+                                    "visible_on"
                                   ],
                                   "fieldsExtend": {
                                     "label": {
@@ -228,6 +229,9 @@
                                       "group": ""
                                     },
                                     "is_wide": {
+                                      "group": ""
+                                    },
+                                    "visible_on": {
                                       "group": ""
                                     }
                                   },

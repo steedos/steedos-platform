@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-02-20 09:13:05
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2023-12-26 17:40:35
  * @Description: 
  */
 const express = require("express");
@@ -14,7 +14,7 @@ const Fiber = require("fibers");
 router.post('/api/workflow/v2/draft', core.requireAuthentication, async function (req, res) {
     try {
         let userSession = req.user;
-        const { instance } = req.body;
+        const { instance = {} } = req.body;
         if(!instance.space){
             instance.space = userSession.spaceId;
         }

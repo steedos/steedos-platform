@@ -59,6 +59,9 @@
             // window.React = window.__React;
             // window.ReactDOM = window.__ReactDOM;
             const AmisRenderers = [];
+            const amisVersion = window.amisRequire('amis').version;
+            const amisVersionClassName = "amis-" + amisVersion.split(".")[0] + "-" + amisVersion.split(".")[1];
+            document.getElementsByTagName('body')[0].className += " " + amisVersionClassName;
             let amisLib = amisRequire('amis');
             amisLib.registerFilter('t', function (key,param) {
               return typeof key === 'string' ? window.t(key,param) : key;

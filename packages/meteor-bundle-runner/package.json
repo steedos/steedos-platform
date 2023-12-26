@@ -1,6 +1,6 @@
 {
   "name": "@steedos/meteor-bundle-runner",
-  "version": "2.6.2-beta.19",
+  "version": "2.6.2-beta.24",
   "description": "Run meteor bundles and inject your own nodejs code.",
   "main": "index.js",
   "private": false,
@@ -26,5 +26,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "eb16f99cb547d247aa72d1e9fa3ecffa9143eca6"
+  "gitHead": "f1a65f88762e27fc0eabb38fb809f0439776223c"
 }

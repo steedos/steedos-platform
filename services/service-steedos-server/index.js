@@ -141,6 +141,38 @@ module.exports = {
 				steedos.loadClientScripts();
 				this.clientJSChangeTimeoutId = null;
 			}, 1000)
+		},
+
+		"*.*.metadata.objects.inserted": async function (ctx) {
+			let objectConfig = ctx.params.data;
+			// console.log(`${objectConfig.datasource}.${getObjectServiceName(objectConfig.name)}.metadata.objects.inserted`);
+			// 对象发生变化时，重新创建Steedos Object 对象
+			const datasource = objectql.getDataSource(objectConfig.datasource);
+			if (datasource) {
+				const localObjectConfig = objectql.getObjectConfig(objectConfig.name);
+				if (localObjectConfig) {
+					objectConfig.listeners = localObjectConfig.listeners;
+					objectConfig.methods = localObjectConfig.methods;
+				}
+
+				if (datasource.name === 'meteor' && Creator.Objects[objectConfig.name]) {
+					objectql.jsonToObject(objectConfig);
+					const localTriggers = (localObjectConfig).triggers;
+					if (localTriggers) {
+						objectConfig.triggers = localTriggers;
+					}
+					objectql.extend(objectConfig, { triggers: Creator.Objects[objectConfig.name].triggers }, { triggers: (localObjectConfig)._baseTriggers })
+					Creator.Objects[objectConfig.name] = objectConfig;
+
+					await Future.task(() => {
+						try {
+							Creator.loadObjects(objectConfig, objectConfig.name);
+						} catch (error) {
+							this.logger.error('metadata.objects.inserted error', objectConfig.name, error)
+						}
+					}).promise();
+				}
+			}
 		}
 	},
 
