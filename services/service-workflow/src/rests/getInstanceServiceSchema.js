@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-22 13:48:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-26 16:12:47
+ * @LastEditTime: 2023-12-26 18:44:32
  * @Description:
  * 1 使用instance获取申请单的表单及表单脚本
  * 2 获取表单版本上定义的字段
@@ -80,7 +80,7 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
   return steedosFields;
 }
 
-// 获取基于amis  Property 的打印schema
+// 获取基于amis  Property 的打印schema. 此方案对于子表字段显示不友好, Property始终有一个td显示label,导致子表不能占满行.
 const getPrintSchema = (instance, steedosFields)=>{
   const items = [];
   _.each(steedosFields, (sField)=>{
