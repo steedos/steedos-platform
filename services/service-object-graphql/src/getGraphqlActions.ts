@@ -783,7 +783,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 displayObj[name] = objectDoc
                             }
                         }
-                        else if (fType === 'grid') {
+                        else if (fType === 'grid' || 'table' === fType) {
                             if (doc[name] && _.isArray(doc[name])) {
                                 const gridDocs = []
                                 for (const gridDoc of doc[name]) {

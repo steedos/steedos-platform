@@ -1,6 +1,12 @@
 const objectql = require("@steedos/objectql");
 const config = objectql.getSteedosConfig();
 
+const objectUpdate = function (objectApiName, id, data) {
+  return objectql.wrapAsync(async function () {
+      return await objectql.getObject(this.objectApiName).update(this.id, this.data)
+  }, { objectApiName: objectApiName, id: id, data: data })
+}
+
 if (!db.instances) {
   const core = require('@steedos/core');
   db.instances = Creator.getCollection('instances') || core.newCollection('instances');
@@ -137,10 +143,11 @@ if (Meteor.isServer) {
       let recordObjName = recordIds[0].o;
       let recordId = recordIds[0].ids[0];
       if (recordObjName && recordId) {
-        let recordObj = Creator.getCollection(recordObjName);
-        if (recordObj) {
-          recordObj.update(recordId, { $unset: { "instances": 1, "instance_state": 1, "locked": 1 } });
-        }
+        // let recordObj = Creator.getCollection(recordObjName);
+        // if (recordObj) {
+        //   recordObj.update(recordId, { $unset: { "instances": 1, "instance_state": 1, "locked": 1 } });
+        // }
+        objectUpdate(recordObjName, recordId, { "instances": null, "instance_state": null, "locked": null })
       }
     }
   });
