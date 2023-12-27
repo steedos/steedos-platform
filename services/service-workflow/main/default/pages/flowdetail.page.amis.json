@@ -128,8 +128,11 @@
 																		"initApi": {
 																			"url": "${context.rootUrl}/graphql",
 																			"method": "post",
+																			"data": {
+																				"form": "${_master.record.form}"
+																			},
 																			"requestAdaptor": "\n\n\n\n\napi.data = {\n  query: `{forms__findOne(id: \"${api.data.form}\"){\n  id:_id,  current,\n    name,\n    is_valid,space,\n    description,\n    help_text,\n    error_message,\n    category,\n    instance_style\n  }}`\n}\n\n\nreturn api;",
-																			"adaptor": " payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,name: payload.data.forms__findOne.name, description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
+																			"adaptor": "payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,name: payload.data.forms__findOne.name, description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
 																			"messages": {}
 																		},
 																		"api": {
@@ -209,6 +212,9 @@
 									"initApi": {
 										"url": "${context.rootUrl}/graphql",
 										"method": "post",
+										"data": {
+											"form": "${_master.record.form}"
+										},
 										"requestAdaptor": "\n\n\n\n\napi.data = {\n  query: `{forms__findOne(id: \"${api.data.form}\"){\n  id:_id,  current,\n    name,\n    is_valid,space,\n    description,\n    help_text,\n    error_message,\n    category,\n    instance_style\n  }}`\n}\n\n\nreturn api;",
 										"adaptor": " payload.data = {_form: payload.data.forms__findOne, instance_style: payload.data.forms__findOne.instance_style,name: payload.data.forms__findOne.name, description:payload.data.forms__findOne.description, name_forumla: payload.data.forms__findOne.current.name_forumla,form_script: payload.data.forms__findOne.current.form_script};return payload;",
 										"messages": {}
@@ -642,7 +648,7 @@
 									"type": "steedos-object-form",
 									"label": "对象表单",
 									"objectApiName": "forms",
-									"recordId": "${form}",
+									"recordId": "${_master.record.form}",
 									"id": "u:5df987ad9bc8",
 									"className": "bg-white",
 									"mode": "edit",
@@ -661,7 +667,7 @@
 										"current.fields.$.visibleOn"
 									],
 									"fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}",
-									"formDataFilter": "console.log('formDataFilter===>', form , env, data); if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"})"
+									"formDataFilter": "if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"})"
 								}
 							],
 							"id": "u:827750209c5d",
