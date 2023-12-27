@@ -212,3 +212,47 @@ tbody .color-priority-muted *{
     margin-bottom: 6px;
     margin-right: 6px;
 }
+
+
+.instance-print #instanceAmisView .antd-Table-placeholder{
+    display: none;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > thead > tr{
+    border-bottom: none;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > thead > tr > th{
+    background: #ffffff;
+    border-color: #000000;
+    border-bottom: none;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > thead > tr:not(:last-child) {
+    border-bottom: #000000 1px solid;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > tbody > tr:last-child {
+    border-bottom: none;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > tbody > tr > td:not(:last-child) {
+    border-right: #000000 1px solid;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > tbody > tr:first-child {
+    border-top: #000000 1px solid;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > tbody > tr:not(:last-child) {
+    border-bottom: #000000 1px solid;
+}
+
+.instance-print #instanceAmisView .steedos-field-section{
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.instance-print #instanceAmisView .antd-Table {
+    margin-bottom: 0px;
+}

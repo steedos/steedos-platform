@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-22 13:48:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-26 18:44:32
+ * @LastEditTime: 2023-12-27 11:09:39
  * @Description:
  * 1 使用instance获取申请单的表单及表单脚本
  * 2 获取表单版本上定义的字段
@@ -15,13 +15,17 @@ const _ = (lodash = require("lodash"));
 const getFieldAmis = (field, static, fieldAmis = {}, ctx = {showBorderBottom: true})=>{
   let className = ''
   if(field.is_wide || field.type === 'group'){
-    className = 'col-span-2 m-1';
+    if(field.type === 'table'){
+      className = 'col-span-2 m-0';
+    }else{
+      className = 'col-span-2 m-1';
+    }
   }else{
     className = 'm-1';
   }
   if(static){
     fieldAmis.className = `${className} ${fieldAmis.className || ''}`;
-    if(ctx.showBorderBottom){
+    if(ctx.showBorderBottom && field.type != 'table' && ctx.inTable != true){
       fieldAmis.className = `border-b ${fieldAmis.className || ''}`;
     }
   }
@@ -54,7 +58,7 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
             }),
             name: `${field.code}.$.${fField.code}`,
             static: fStatic,
-            amis: getFieldAmis(fField, fStatic, fField.amis, ctx),
+            amis: getFieldAmis(fField, fStatic, fField.amis, Object.assign({}, ctx, {inTable: true})),
             description: null
           };
         }),
@@ -219,7 +223,7 @@ const getTdTitle = (field) => {
     body: [
       {
         type: "tpl",
-        tpl: `<div>${field.label} ${field.is_required ? '<span class="antd-Form-star">*</span>' : ''}</div>`,
+        tpl: `<div class='steedos-field-${field.type}'>${field.label}${field.is_required ? '<span class="antd-Form-star">*</span>' : ''}</div>`,
       },
     ],
     // "id": "u:9b001b7ff92d",
