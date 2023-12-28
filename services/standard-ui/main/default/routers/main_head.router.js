@@ -87,7 +87,7 @@ router.get('/main_head.css', async function(req, res){
     const ROOT_URL = platform === 'cordova' ? __meteor_runtime_config__.ROOT_URL : '';
 
     res.send(`
-        @import url("${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.19.0/assets/styles/salesforce-lightning-design-system.min.css");
+        @import url("${STEEDOS_UNPKG_URL}/@salesforce-ux/design-system@2.22.2/assets/styles/salesforce-lightning-design-system.min.css");
         @import url("${STEEDOS_AMIS_URL}/lib/themes/antd.css");
         @import url("${STEEDOS_AMIS_URL}/lib/helper.css");
         @import url("${STEEDOS_AMIS_URL}/sdk/iconfont.css");
