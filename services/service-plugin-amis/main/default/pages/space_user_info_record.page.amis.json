@@ -38,7 +38,7 @@
                                                         "body": {
                                                             "type": "tpl",
                                                             "className": "block",
-                                                            "tpl": "<img class='slds-icon slds-icon_container slds-icon-standard-user' src='${context.rootUrl}/unpkg.com/@salesforce-ux/design-system/assets/icons/standard/user.svg'>",
+                                                            "tpl": "<img class='slds-icon slds-icon_container slds-icon-standard-user' src='${context.rootUrl}/unpkg.com/@salesforce-ux/design-system@2.22.2/assets/icons/standard/user.svg'>",
                                                             "id": "u:9207cb731ca4"
                                                         },
                                                         "md": "auto",
