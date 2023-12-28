@@ -35,11 +35,12 @@ amis_schema: |-
                                                                     "url": "${context.rootUrl}/api/workflow/v2/draft",
                                                                     "method": "post",
                                                                     "dataType": "json",
-                                                                    "requestAdaptor": "const { flowId, context } = api.body;\napi.data = {\n  \"instance\": {\n    \"flow\": flowId,\n    \"applicant\": context.userId,\n    \"space\": context.tenantId\n  }\n}\nreturn api;",
                                                                     "data": {
-                                                                        "&": "$$",
-                                                                        "context": "${context}",
-                                                                        "flowId": "$event.data.value"
+                                                                        "instance":{
+                                                                            "applicant": "${context.userId}",
+                                                                            "space": "${context.tenantId}",
+                                                                            "flow": "$event.data.value"
+                                                                        }
                                                                     },
                                                                     "headers": {
                                                                         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
