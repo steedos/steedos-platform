@@ -1,0 +1,5 @@
+name: department
+label: 部门
+type: text
+hidden: true
+sort_no: 410

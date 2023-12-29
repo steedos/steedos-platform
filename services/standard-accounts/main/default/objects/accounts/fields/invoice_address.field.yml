@@ -1,0 +1,5 @@
+name: invoice_address
+label: 开票地址
+group: 开票信息
+type: text
+sort_no: 280

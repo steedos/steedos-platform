@@ -1,0 +1,5 @@
+name: account_number
+type: text
+label: 业务伙伴编号
+hidden: true
+sort_no: 260

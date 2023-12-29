@@ -1,0 +1,5 @@
+name: partner_account
+label: 合作伙伴
+type: boolean
+hidden: true
+sort_no: 370

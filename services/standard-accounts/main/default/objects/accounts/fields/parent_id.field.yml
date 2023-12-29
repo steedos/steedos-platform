@@ -1,0 +1,6 @@
+name: parent_id
+type: lookup
+label: 母公司
+reference_to: accounts
+inlineHelpText: 作为大公司或组织的子公司的母公司。父级业务伙伴必须是华炎魔方中的现有业务伙伴。您可输入业务伙伴名称，或使用查找图标选择（或创建）业务伙伴。
+sort_no: 150

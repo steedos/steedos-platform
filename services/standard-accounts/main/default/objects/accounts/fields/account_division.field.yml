@@ -1,0 +1,5 @@
+name: account_division
+label: 业务伙伴分部
+type: text
+hidden: true
+sort_no: 360

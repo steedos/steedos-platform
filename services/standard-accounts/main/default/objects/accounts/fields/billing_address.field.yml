@@ -1,0 +1,6 @@
+name: billing_address
+type: textarea
+label: 开单地址
+rows: 3
+group: 地址信息
+sort_no: 240

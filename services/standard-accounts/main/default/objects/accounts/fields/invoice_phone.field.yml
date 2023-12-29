@@ -1,0 +1,5 @@
+name: invoice_phone
+label: 开票电话
+group: 开票信息
+type: text
+sort_no: 290

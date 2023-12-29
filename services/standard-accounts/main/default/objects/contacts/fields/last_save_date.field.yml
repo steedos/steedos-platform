@@ -1,0 +1,5 @@
+name: last_save_date
+label: 上次保持联系保存日期
+type: date
+hidden: true
+sort_no: 270

@@ -1,0 +1,5 @@
+name: assistant
+label: 助理
+type: text
+hidden: true
+sort_no: 340

@@ -1,0 +1,5 @@
+name: title
+label: 职务
+type: text
+sortable: true
+sort_no: 150

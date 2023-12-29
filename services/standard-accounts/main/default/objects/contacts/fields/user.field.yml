@@ -1,0 +1,5 @@
+name: user
+type: lookup
+reference_to: users
+label: 外部用户
+sort_no: 240

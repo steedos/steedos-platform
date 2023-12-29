@@ -1,0 +1,76 @@
+name: state
+label: 区域
+type: select
+sortable: true
+options:
+  - label: 北京
+    value: BJ
+  - label: 上海
+    value: SH
+  - label: 重庆
+    value: CQ
+  - label: 天津
+    value: TJ
+  - label: 河北
+    value: HB
+  - label: 山西
+    value: SX
+  - label: 辽宁
+    value: LN
+  - label: 吉林
+    value: GL
+  - label: 黑龙江
+    value: HLJ
+  - label: 江苏
+    value: JS
+  - label: 浙江
+    value: ZJ
+  - label: 安徽
+    value: AH
+  - label: 福建
+    value: FJ
+  - label: 江西
+    value: JX
+  - label: 山东
+    value: SD
+  - label: 河南
+    value: HN
+  - label: 湖北
+    value: HUB
+  - label: 湖南
+    value: HUN
+  - label: 广东
+    value: GD
+  - label: 海南
+    value: HAN
+  - label: 四川
+    value: SC
+  - label: 贵州
+    value: GZ
+  - label: 云南
+    value: YN
+  - label: 陕西
+    value: SHX
+  - label: 甘肃
+    value: GS
+  - label: 青海
+    value: QH
+  - label: 内蒙古
+    value: NMG
+  - label: 广西
+    value: GX
+  - label: 西藏
+    value: XZ
+  - label: 宁夏
+    value: NX
+  - label: 新疆
+    value: XJ
+  - label: 香港
+    value: HK
+  - label: 澳门
+    value: AM
+  - label: 台湾
+    value: TW
+filterable: true
+inlineHelpText: 业务伙伴被分配至的区域。
+sort_no: 230

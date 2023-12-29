@@ -1,0 +1,10 @@
+name: contacts
+label: 联系人
+icon: contact
+enable_files: true
+enable_search: true
+enable_events: true
+enable_tasks: true
+enable_api: true
+enable_audit: true
+version: 2

@@ -1,0 +1,22 @@
+name: mine
+label: 我的业务伙伴
+columns:
+  - field: name
+    width: 300
+    wrap: true
+  - field: type
+    width: 120
+  - field: rating
+    width: 120
+  - field: billing_address
+    width: 400
+  - field: shipping_address
+    width: 400
+  - field: owner
+    width: 120
+filter_scope: mine
+filter_fields:
+  - type
+  - industry
+  - rating
+  - name

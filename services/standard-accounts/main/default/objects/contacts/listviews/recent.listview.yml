@@ -1,0 +1,11 @@
+name: recent
+label: 最近查看
+columns:
+  - name
+  - account
+  - email
+  - phone
+filter_fields:
+  - name
+  - account
+  - email

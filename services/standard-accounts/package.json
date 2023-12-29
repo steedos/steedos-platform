@@ -1,0 +1,17 @@
+{
+    "name": "@steedos/standard-accounts",
+    "version": "2.6.2-beta.26",
+    "main": "package.service.js",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "steedos"
+    ],
+    "dependencies": {},
+    "description": "steedos package",
+    "repository": {},
+    "license": "MIT",
+    "gitHead": "33e136753b4f5a83ecae093d63ef44b51c2bdfc9"
+}

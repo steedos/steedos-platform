@@ -1,0 +1,30 @@
+name: hotRating
+label: 非常重要的业务伙伴
+filters: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+      return [
+        ["rating","=","Hot"]
+      ];
+
+  }
+columns:
+  - field: name
+    width: 300
+    wrap: true
+  - field: type
+    width: 120
+  - field: rating
+    width: 120
+  - field: billing_address
+    width: 400
+  - field: shipping_address
+    width: 400
+  - field: owner
+    width: 120
+filter_scope: space
+filter_fields:
+  - type
+  - industry
+  - name
