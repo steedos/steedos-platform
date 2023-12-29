@@ -1,0 +1,6 @@
+name: is_supplier
+type: boolean
+label: 供应商
+hidden: false
+omit: false
+sort_no: 120

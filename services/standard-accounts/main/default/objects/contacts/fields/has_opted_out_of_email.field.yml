@@ -1,0 +1,6 @@
+name: has_opted_out_of_email
+label: 退出邮件列表
+type: boolean
+inlineHelpText: 是否将联系人包含在群发邮件列表中。
+hidden: true
+sort_no: 370

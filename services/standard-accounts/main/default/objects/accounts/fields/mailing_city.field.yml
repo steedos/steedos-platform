@@ -1,0 +1,6 @@
+name: mailing_city
+type: text
+label: 邮寄地址-城市
+group: 地址信息
+hidden: true
+sort_no: 480

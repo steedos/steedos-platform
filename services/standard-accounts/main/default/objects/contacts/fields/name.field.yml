@@ -1,0 +1,8 @@
+name: name
+type: text
+label: 姓名
+required: true
+searchable: true
+sortable: true
+index: true
+sort_no: 100

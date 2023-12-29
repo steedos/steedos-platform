@@ -1,0 +1,5 @@
+name: annual_revenue
+label: 年收入
+type: currency
+hidden: true
+sort_no: 340

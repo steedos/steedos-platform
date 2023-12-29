@@ -1,0 +1,6 @@
+name: do_not_call
+label: 请勿致电
+type: boolean
+inlineHelpText: 是否想要通过电话联系联系人。
+hidden: true
+sort_no: 360

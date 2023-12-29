@@ -1,0 +1,6 @@
+name: shipping_address
+type: textarea
+label: 发货地址
+rows: 3
+group: 地址信息
+sort_no: 250

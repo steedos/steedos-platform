@@ -1,0 +1,6 @@
+name: fax_opt_out
+label: 退出传真列表
+type: boolean
+inlineHelpText: 是否将联系人包含在传真中。
+hidden: true
+sort_no: 450

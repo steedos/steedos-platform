@@ -1,0 +1,16 @@
+name: ownership
+label: 所有权
+type: select
+sortable: true
+options:
+  - label: 国营
+    value: National
+  - label: 私营
+    value: Private
+  - label: 子公司
+    value: Subcompany
+  - label: 其他
+    value: Others
+inlineHelpText: 公司的所有权，例如，公有或私有。
+hidden: true
+sort_no: 350

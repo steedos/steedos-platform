@@ -1,0 +1,10 @@
+name: salutation
+type: select
+label: 性别
+hidden: true
+options:
+  - label: 男
+    value: Male
+  - label: 女
+    value: Female
+sort_no: 550
