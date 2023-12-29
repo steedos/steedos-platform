@@ -462,7 +462,7 @@ function getBuiltinPlugins () {
 		// "@steedos/service-files",
 		// "@steedos/steedos-plugin-schema-builder",
 	]
-	if ("true" != process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
+	if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
 		plugins.unshift("@steedos/standard-accounts");
 	}
 	return plugins
