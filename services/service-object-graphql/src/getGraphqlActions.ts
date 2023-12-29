@@ -488,6 +488,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                 try {
                     if (_.has(doc, name)) {
                         const fType = field.type;
+                        const dataType = field.data_type;
                         if (fType == "select") {
                             let label = "";
                             let map = {};
@@ -717,7 +718,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                         } else if (fType == "formula") {
                             displayObj[name] = formatBasicFieldValue(field.data_type, field, doc[name], objConfig, userSession);
                         } else if (fType == "summary") {
-                            displayObj[name] = formatBasicFieldValue('number', field, doc[name], objConfig, userSession);
+                            displayObj[name] = formatBasicFieldValue(dataType, field, doc[name], objConfig, userSession);
                         } else if (fType == "image" || fType == "file" || fType === 'avatar') {
                             const optionsStr = fType == "file" ? '?download=1' : ''
                             let fileValue: any = null;
