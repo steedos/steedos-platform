@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-22 13:48:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-27 11:09:39
+ * @LastEditTime: 2023-12-29 17:08:25
  * @Description:
  * 1 使用instance获取申请单的表单及表单脚本
  * 2 获取表单版本上定义的字段
@@ -130,6 +130,7 @@ const getPrintSchema2 = (instance, steedosFields)=>{
           fontFamily: "",
           fontSize: "20px",
           textAlign: "center",
+          fontBold: "700"
         },
       },
       {
@@ -232,6 +233,7 @@ const getTdTitle = (field) => {
       borderTopColor: "#000000",
       borderRightColor: "#000000",
       borderBottomColor: "#000000",
+      padding: "4px"
     },
   };
 };
@@ -321,6 +323,7 @@ const getSteedosFormSchema = (steedosFields) => {
   return {
     type: "form",
     wrapWithPanel: false,
+    debug: false,
     name: "instanceForm",
     id: "instanceForm",
     body: formFieldsSchema,
@@ -536,8 +539,6 @@ module.exports = {
 
     const isPrint = print === 'true' || print === true
   
-    console.log(`stepPermissions`, stepPermissions)
-
     // 1 将formFields转换为steedosFields
     const steedosFields = convertFormFieldsToSteedosFields(fields, stepPermissions, {showBorderBottom: isPrint != true});
 
