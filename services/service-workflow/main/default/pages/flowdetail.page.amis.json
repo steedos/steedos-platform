@@ -667,7 +667,7 @@
 										"current.fields.$.visibleOn"
 									],
 									"fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}",
-									"formDataFilter": "if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"})"
+									"formDataFilter": "if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"}, {          \"actionType\": \"ajax\",          \"outputVar\": \"responseResult\",          \"args\": {            \"options\": {              \"silent\": false            },            \"api\": {              \"url\": \"/api/workflow/updateFormFields\",              \"method\": \"post\",              \"requestAdaptor\": \"console.log('api.data', api, 'context', context);api.data = { formId: context.current.form, fields: context.current.fields };return api;\",              \"adaptor\": \"\",              \"messages\": {              },              \"dataType\": \"json\"            }          }        })"
 								}
 							],
 							"id": "u:827750209c5d",
