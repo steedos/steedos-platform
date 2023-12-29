@@ -226,7 +226,20 @@ tbody .color-priority-muted *{
     background: #ffffff;
     border-color: #000000;
     border-bottom: none;
+    padding-left: 4px;
+    padding-right: 4px;
 }
+
+
+.instance-print #instanceAmisView .antd-Table-table td {
+    border-bottom: #000000 1px solid;
+    padding: 0px;
+    margin: 0px;
+}
+
+.instance-print #instanceAmisView .antd-Table-table tr:last-child td {
+    border-bottom: none;
+   }
 
 .instance-print #instanceAmisView .antd-Table-table > thead > tr:not(:last-child) {
     border-bottom: #000000 1px solid;
@@ -255,4 +268,16 @@ tbody .color-priority-muted *{
 
 .instance-print #instanceAmisView .antd-Table {
     margin-bottom: 0px;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > thead > tr > th:first-child {
+    text-align: center;
+}
+
+.instance-print #instanceAmisView .antd-Table-table > tbody > tr > td:first-child {
+    text-align: center;
+}
+
+.instance-print #instanceAmisView .antd-Form-item {
+    padding: 0px !important;
 }
