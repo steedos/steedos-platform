@@ -581,6 +581,9 @@ InstanceManager.getFormFieldValue = function (fieldCode) {
 }
 
 function adjustFieldValue(field, value) {
+	if(field.steedos_field){
+		return value;
+	}
 	if (!value && value != false) {
 		return value;
 	}
