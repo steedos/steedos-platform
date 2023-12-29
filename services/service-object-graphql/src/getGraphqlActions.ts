@@ -487,7 +487,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                 const field = fields[name];
                 try {
                     if (_.has(doc, name)) {
-                        const fType = field.data_type || field.type;
+                        const fType = field.type;
                         if (fType == "select") {
                             let label = "";
                             let map = {};
