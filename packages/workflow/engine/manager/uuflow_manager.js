@@ -2476,6 +2476,7 @@ uuflowManager.submit_instance = function (instance_from_client, user_info) {
             } else {
                 // 验证下一步处理人next_user是否合法
                 checkUsers = getHandlersManager.getHandlers(instance_id, approve["next_steps"][0]["step"], current_user);
+                console.log(`next_step_users====>`, next_step_users, checkUsers)
                 if (!uuflowManager.checkNestStepUsersIsValid(next_step_users, checkUsers, next_step)) {
                     throw new Meteor.Error('error!', "指定的下一步处理人有误");
                 } else {

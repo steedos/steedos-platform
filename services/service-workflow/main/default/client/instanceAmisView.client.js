@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-25 20:45:41
+ * @LastEditTime: 2023-12-29 18:59:45
  * @Description: 
  */
 ; (function () {
@@ -205,20 +205,26 @@
                         }
                     }
                 }else{
+
+                    let schemaApiUrl = ctx.data.print ? `/api/workflow/form/${ins.form}/${ins.form_version}/print/schema` : `/api/workflow/form/${ins.form}/${ins.form_version}/schema`
+                    let schemaApiData = ctx.data.print ? {} : {
+                        flowId: ins.flow,
+                        flowVersionId: ins.flow_version,
+                        stepId: InstanceManager.getCurrentStep()._id,
+                        box: Session.get("box")
+                    }
+
                     schema = {
                         'type': 'service',
                         id: "instanceAmisView",
                         schemaApi: {
                             "method": "get",
-                            "url": `/api/workflow/instance/${ins._id}/getServiceSchema`,
-                            "data": {
-                                stepId: InstanceManager.getCurrentStep()._id,
-                                box: Session.get("box"),
-                                print: ctx.data.print
-                            }
+                            "url": schemaApiUrl,
+                            "data": schemaApiData
                         },
                         data: {
                             instanceId: ins._id,
+                            instance: ins
                         }
                     }
                 }
