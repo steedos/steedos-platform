@@ -690,7 +690,8 @@ async function transformObjectDetailFieldsToFormTableFields(instance_table_field
             "is_wide": true,
             "is_required": false,
             "fields": tFields,
-            "_id": await formObj._makeNewID()
+            "_id": await formObj._makeNewID(),
+            "relatedId": detailFieldFullname
         });
     }
     return tables
