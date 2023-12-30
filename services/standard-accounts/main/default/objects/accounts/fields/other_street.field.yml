@@ -1,0 +1,6 @@
+name: other_street
+type: text
+label: 其他地址-街道
+group: 其他地址信息
+hidden: true
+sort_no: 520

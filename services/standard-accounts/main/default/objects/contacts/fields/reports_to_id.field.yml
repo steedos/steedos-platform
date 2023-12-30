@@ -1,0 +1,7 @@
+name: reports_to_id
+type: lookup
+label: 直属上司
+reference_to: contacts
+create: true
+inlineHelpText: 联系人管理员的姓名。输入联系人名称，或从列表中选择联系人。
+sort_no: 130

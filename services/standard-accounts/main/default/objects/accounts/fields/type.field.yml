@@ -1,0 +1,27 @@
+name: type
+label: 类型
+type: select
+sortable: true
+options:
+  - label: 分析师
+    value: Analyst
+  - label: 竞争者
+    value: Competitor
+  - label: 顾客
+    value: Customer
+  - label: 集成商
+    value: Integrator
+  - label: 投资者
+    value: Investor
+  - label: 合作伙伴
+    value: Partner
+  - label: 公关媒体
+    value: Press
+  - label: 潜在
+    value: Prospect
+  - label: 代理商
+    value: Reseller
+  - label: 其他
+    value: Other
+filterable: true
+sort_no: 140

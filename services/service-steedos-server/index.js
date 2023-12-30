@@ -36,32 +36,7 @@ module.exports = {
 		apiServer: {
 			enabled: true
 		},
-		built_in_plugins: [
-			"@steedos/standard-space",
-			"@steedos/standard-object-database",
-			"@steedos/standard-process-approval",
-			"@steedos/standard-collaboration",
-			"@steedos/standard-ui",
-			"@steedos/standard-permission",
-			// "@steedos/webapp-public",
-			// "@steedos/service-ui",
-			"@steedos/service-cachers-manager", // 依赖了 steedos/core
-			"@steedos/workflow",
-			"@steedos/accounts",
-			"@steedos/plugin-company",
-			// "@steedos/word-template",
-			"@steedos/metadata-api", // ? TODO: 为啥使用meteor package load
-			"@steedos/data-import", // main 文件不是 package.service.js
-			"@steedos/service-fields-indexs", // 依赖了meteor collection
-			// "@steedos/service-accounts",
-			// "@steedos/service-charts",
-			// "@steedos/service-pages",
-			// "@steedos/service-workflow",
-			// "@steedos/service-plugin-amis",
-			// "@steedos/standard-process"
-			// "@steedos/service-files",
-			// "@steedos/steedos-plugin-schema-builder",
-		],
+		built_in_plugins: getBuiltinPlugins(),
 		plugins: [
 		]
 	},
@@ -459,3 +434,36 @@ module.exports = {
         schema.name = 'steedos-server';  //steedo-server 服务禁止修改name
     }
 };
+
+function getBuiltinPlugins () {
+	const plugins = [
+		"@steedos/standard-space",
+		"@steedos/standard-object-database",
+		"@steedos/standard-process-approval",
+		"@steedos/standard-collaboration",
+		"@steedos/standard-ui",
+		"@steedos/standard-permission",
+		// "@steedos/webapp-public",
+		// "@steedos/service-ui",
+		"@steedos/service-cachers-manager", // 依赖了 steedos/core
+		"@steedos/workflow",
+		"@steedos/accounts",
+		"@steedos/plugin-company",
+		// "@steedos/word-template",
+		"@steedos/metadata-api", // ? TODO: 为啥使用meteor package load
+		"@steedos/data-import", // main 文件不是 package.service.js
+		"@steedos/service-fields-indexs", // 依赖了meteor collection
+		// "@steedos/service-accounts",
+		// "@steedos/service-charts",
+		// "@steedos/service-pages",
+		// "@steedos/service-workflow",
+		// "@steedos/service-plugin-amis",
+		// "@steedos/standard-process"
+		// "@steedos/service-files",
+		// "@steedos/steedos-plugin-schema-builder",
+	]
+	if ("true" == process.env.STEEDOS_ENABLE_STANDARD_ACCOUNTS) {
+		plugins.unshift("@steedos/standard-accounts");
+	}
+	return plugins
+}

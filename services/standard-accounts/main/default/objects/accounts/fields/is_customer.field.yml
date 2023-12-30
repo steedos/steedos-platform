@@ -1,0 +1,6 @@
+name: is_customer
+type: boolean
+label: 客户
+hidden: false
+omit: false
+sort_no: 130

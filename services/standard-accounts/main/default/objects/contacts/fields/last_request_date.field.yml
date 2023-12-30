@@ -1,0 +1,5 @@
+name: last_request_date
+label: 上次保持联系请求日期
+type: date
+hidden: true
+sort_no: 280

@@ -1,0 +1,5 @@
+name: account_source
+type: text
+label: 业务伙伴来源
+hidden: true
+sort_no: 320

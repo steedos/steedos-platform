@@ -1,0 +1,30 @@
+name: lead_source
+type: select
+label: 潜在业务伙伴来源
+searchable: true
+sortable: true
+options:
+  - label: 广告
+    value: Advertisement
+  - label: 业务伙伴活动
+    value: Customer_Event
+  - label: 员工推荐
+    value: Employee_Referral
+  - label: 百度搜索
+    value: Baidu_AdWords
+  - label: 其他
+    value: Other
+  - label: 合作伙伴
+    value: Partner
+  - label: 采购清单
+    value: Purchased_List
+  - label: 贸易展览
+    value: Trade_Show
+  - label: 线上研讨
+    value: Webinar
+  - label: 网站
+    value: Website
+filterable: true
+inlineHelpText: 潜在业务伙伴来源，例如，广告、合作伙伴或 Web。
+hidden: true
+sort_no: 470

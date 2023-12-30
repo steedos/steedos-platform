@@ -1,0 +1,74 @@
+name: industry
+type: select
+label: 行业
+searchable: true
+sortable: true
+options:
+  - label: 农业
+    value: Agriculture
+  - label: 服饰
+    value: Apparel
+  - label: 银行
+    value: Banking
+  - label: 生物科技
+    value: Biotechnology
+  - label: 化工
+    value: Chemicals
+  - label: 通信
+    value: Communications
+  - label: 建筑
+    value: Construction
+  - label: 咨询
+    value: Consulting
+  - label: 教育
+    value: Education
+  - label: 电子
+    value: Electronics
+  - label: 能源
+    value: Energy
+  - label: 工程
+    value: Engineering
+  - label: 娱乐
+    value: Entertainment
+  - label: 环保
+    value: Environmental
+  - label: 金融
+    value: Finance
+  - label: 食品饮料
+    value: Food_&_Beverage
+  - label: 政府组织
+    value: Government
+  - label: 医疗保健
+    value: Healthcare
+  - label: 服务
+    value: Hospitality
+  - label: 保险
+    value: Insurance
+  - label: 机械
+    value: Machinery
+  - label: 制造
+    value: Manufacturing
+  - label: 媒体
+    value: Media
+  - label: 非牟利组织
+    value: Not_For_Profit
+  - label: 其他
+    value: Other
+  - label: 休闲
+    value: Recreation
+  - label: 零售
+    value: Retail
+  - label: 航运
+    value: Shipping
+  - label: 科技
+    value: Technology
+  - label: 电讯
+    value: Telecommunications
+  - label: 交通运输
+    value: Transportation
+  - label: 公用事业
+    value: Utilities
+  - label: 软件
+    value: Software
+filterable: true
+sort_no: 210

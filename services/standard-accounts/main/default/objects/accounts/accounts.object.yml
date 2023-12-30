@@ -1,0 +1,12 @@
+name: accounts
+label: 业务伙伴
+icon: account
+enable_files: true
+enable_search: true
+enable_events: true
+enable_tasks: true
+enable_api: true
+enable_share: true
+enable_audit: true
+enable_enhanced_lookup: true
+version: 2

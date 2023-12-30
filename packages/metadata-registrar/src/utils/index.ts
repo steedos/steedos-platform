@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:53:45
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-14 13:26:47
+ * @LastEditors: 易仕川 yishichuan@steedos.com
+ * @LastEditTime: 2023-12-28 10:09:18
  * @Description: 
  */
 import { isJsonMap, JsonMap, has, getJsonMap } from '@salesforce/ts-types';
@@ -145,7 +145,7 @@ export const loadObjects = (filePath: string) => {
     const matchedPaths: [string] = syncMatchFiles(filePatten);
     _.each(matchedPaths, (matchedPath: string) => {
       let json: any = loadFile(matchedPath);
-      const firstName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.field'));
+      const firstName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.field.yml'));
       if (!json.name) {
         json.name = firstName;
       }

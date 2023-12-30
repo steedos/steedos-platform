@@ -1,0 +1,5 @@
+name: phone
+type: text
+label: 电话
+defaultValue: ''
+sort_no: 180

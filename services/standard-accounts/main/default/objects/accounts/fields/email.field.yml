@@ -1,0 +1,5 @@
+name: email
+label: 电子邮件
+type: email
+hidden: true
+sort_no: 420
