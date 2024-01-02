@@ -292,7 +292,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId)
         }
         value = getFileFieldValue(wfValue, 'file')
     } else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type == 'lookup') {
-        value = wfValue
+        value = wfValue ? wfValue : null
     }
     // 日期、日期时间
     else if (oFieldType === 'date' || oFieldType === 'datetime') {
