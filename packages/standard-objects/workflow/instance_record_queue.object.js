@@ -301,9 +301,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId)
         }
     }
     else if (oField.multiple && oFieldType == 'select' && wField.type == 'multiSelect') {
-        if (wfValue) {
-            value = wfValue.split(',');
-        }
+        value = wfValue ? wfValue.split(',') : null;
     }
     else {
         value = wfValue;
