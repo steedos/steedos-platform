@@ -467,7 +467,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         }
       }
       if (error) {
-        errorInfo = errorInfo + "," + error;
+        errorInfo = errorInfo + "；" + error;
       }
     }
   }
@@ -720,7 +720,7 @@ const formatErrors = function(errorList) {
   if (errorList && _.isArray(errorList) && errorList.length > 0) {
     errors = "";
     _.each(errorList, (item, index) => {
-      errors = `${errors}\n:::warning\n${item}\n\n:::\n\n\\\n`;
+      errors = `${errors}\n<p>${item}</p>\n`;
     });
   }
 
