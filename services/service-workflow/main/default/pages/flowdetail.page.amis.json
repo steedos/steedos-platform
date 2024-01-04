@@ -127,7 +127,7 @@
 									"type": "steedos-object-form",
 									"label": "对象表单",
 									"objectApiName": "forms",
-									"recordId": "${form}",
+									"recordId": "${_master.record.form}",
 									"id": "u:5df987ad9bc8",
 									"className": "bg-white m--8",
 									"mode": "read",
