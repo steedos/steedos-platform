@@ -80,6 +80,8 @@ const objectFind = function (objectApiName, query) {
 
 Steedos.objectFind = objectFind;
 
+Steedos.getObjectNameFieldKey = getObjectNameFieldKey;
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
