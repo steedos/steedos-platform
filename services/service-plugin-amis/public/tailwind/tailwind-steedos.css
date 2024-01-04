@@ -54,6 +54,10 @@
   position: absolute
 }
 
+.relative {
+  position: relative
+}
+
 .sticky {
   position: sticky
 }
@@ -63,6 +67,10 @@
   right: 0px;
   bottom: 0px;
   left: 0px
+}
+
+.isolate {
+  isolation: isolate
 }
 
 .z-20 {
@@ -194,10 +202,6 @@
 
 .w-9 {
   width: 2.25rem
-}
-
-.w-10 {
-  width: 2.5rem
 }
 
 .w-full {
