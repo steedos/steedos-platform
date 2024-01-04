@@ -25,6 +25,8 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 	process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_UNPKG_URL + '/amis@' + process.env.STEEDOS_AMIS_VERSION;
+}else{
+	process.env.STEEDOS_AMIS_URL = process.env.STEEDOS_AMIS_URL.replace("https://unpkg.com", process.env.STEEDOS_UNPKG_URL)
 }
 process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
