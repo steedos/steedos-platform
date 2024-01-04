@@ -111,8 +111,8 @@ fields:
     name: current.fields
     amis: 
       inlineEditMode: false
-      addable: false
-      affixHeader: true,
+      # addable: false
+      columns: ["code", "name", "type", "is_required", "is_wide", "is_list_display", "is_searchable", "is_multiselect"]
   current.fields.$.code:
     label: Code
     type: text
@@ -194,11 +194,13 @@ fields:
     # readonly: true
     name: current.fields.$.is_multiselect
   current.fields.$.visibleOn:
-    label: visibleOn
+    label: visible On
     type: code
     # readonly: true
     is_wide: true
     name: current.fields.$.visibleOn
+    amis:
+      visibleOn: ${!!_master.record.object_name}
   # company_id:
   #   required: false
   #   omit: false

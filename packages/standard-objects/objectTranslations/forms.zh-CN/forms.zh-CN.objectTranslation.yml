@@ -147,6 +147,8 @@ fields:
     label: 可复选
     help:
     description:
+  current.fields.$.visibleOn:
+    label: 显隐的条件
 listviews:
   all:
     label: 所有
