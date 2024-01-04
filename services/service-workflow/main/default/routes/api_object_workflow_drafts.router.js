@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-09-15 13:09:51
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-01 19:26:50
+ * @LastEditTime: 2024-01-04 17:47:43
  * @Description: 
  */
 const express = require("express");
@@ -17,7 +17,7 @@ router.post('/api/object/workflow/drafts', core.requireAuthentication, async fun
         const { Instances } = req.body;
         const userId = userSession.userId;
         const inserted_instances = [];
-        Fiber(async function () {
+        Fiber(function () {
             try {
                 _.each(Instances, (instance_from_client)=>{
                     const new_ins_id = uuflowManagerForInitApproval.create_instance(instance_from_client, Object.assign({}, userSession, {_id: userSession.userId}))
