@@ -51,6 +51,7 @@ fields:
     readonly: true
     disabled: true
     visible_on: "{{global.mode ==='read' ? true : false}}"
+    sort_no: 99999
 actions:
   customize:
     label: 自定义
