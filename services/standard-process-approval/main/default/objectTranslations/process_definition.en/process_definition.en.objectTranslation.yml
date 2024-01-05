@@ -116,6 +116,10 @@ fields:
     label: 
     help: 
     description: 
+  is_system:
+    label: System
+    help: 
+    description: 
 groups:
   initial_submission_actions: Initial Submission Actions
   final_approval_actions: Final Approval Actions

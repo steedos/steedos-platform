@@ -526,7 +526,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 }
                                 let refObj = steedosSchema.getObject(refTo);
                                 let nameFieldKey = await refObj.getNameFieldKey();
-                                let objectDataLoader = refObj.enable_dataloader != false;
+                                let objectDataLoader = refObj.enable_dataloader != false && process.env.STEEDOS_GRAPHQL_ENABLE_DATALOADER != 'false';
                                 if(objectDataLoader){
                                     const results = await getObjectDisplayData('api', refTo, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);
                                     if(field.multiple){
@@ -643,7 +643,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                             let refObj = steedosSchema.getObject(refTo);
                             let nameFieldKey = await refObj.getNameFieldKey();
 
-                            let objectDataLoader = refObj.enable_dataloader != false;
+                            let objectDataLoader = refObj.enable_dataloader != false && process.env.STEEDOS_GRAPHQL_ENABLE_DATALOADER != 'false';
                             
                             if(objectDataLoader){
                                 const results = await getObjectDisplayData('api', field.reference_to, name, refField, graphqlCtx.objectDataLoaderHandler, graphqlCtx);

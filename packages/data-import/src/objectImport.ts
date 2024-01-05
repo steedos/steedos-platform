@@ -467,7 +467,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         }
       }
       if (error) {
-        errorInfo = errorInfo + "," + error;
+        errorInfo = errorInfo + "；" + error;
       }
     }
   }
@@ -570,6 +570,12 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
           if (!_.isString(jsonObj._id) || !/^[a-zA-Z0-9]*$/.test(jsonObj._id)) {
             throw new Error('Primary Key ( _id )必须为字母、数字组成的字符串。');
           }
+        }
+        // 如果导入时指定了owner，那么需要给company_id、company_ids赋值，权限保持一致
+        if (jsonObj.owner) {
+          const ownerSession = await auth.getSessionByUserId(jsonObj.owner, space)
+          jsonObj['company_id'] = ownerSession.company_id
+          jsonObj['company_ids'] = ownerSession.company_ids
         }
         await objectCollection.insert(jsonObj, options.userSession);
         insertInfo["create"] = true;
@@ -720,7 +726,7 @@ const formatErrors = function(errorList) {
   if (errorList && _.isArray(errorList) && errorList.length > 0) {
     errors = "";
     _.each(errorList, (item, index) => {
-      errors = `${errors}\n:::warning\n${item}\n\n:::\n\n\\\n`;
+      errors = `${errors}\n<p>${item}</p>\n`;
     });
   }
 

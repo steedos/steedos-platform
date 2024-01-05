@@ -13,7 +13,9 @@
         "tab_items": {
           "amis": {
             "name": "tab_items",
-            "type": "crud",
+            "type": "steedos-input-table",
+            "label": "",
+            "showIndex": true,
             "source": "${tab_items}",
             "strictMode": true,
             "affixHeader": false,
@@ -22,68 +24,49 @@
             "removable": true,
             "draggable": false,
             "headerToolbarClassName": "px-1 pb-3",
-            "columns": [
+            "fields": [
               {
-                "name": "index",
-                "label": "${'apps.apps_form.tab_number'| t}",
-                "type": "tpl",
-                "tpl": "${index+1}",
-                "className": "w-10",
-                "id": "u:c59784421c37"
-              },
-              {
-                "name": "tab_name_label",
                 "label": "${'apps.apps_form.tab' | t}",
-                "type": "tpl",
-                "id": "u:b95c69a1cd84",
-                "tpl": "${tabs_options|filter:value:equals:tab_name|pick:label}"
+                "type": "lookup",
+                "multiple": false,
+                "is_wide": false,
+                "required": true,
+                "reference_to": "tabs",
+                "reference_to_field": "name",
+                "sort_no": 30,
+                "name": "tab_name",
+                "hidden": false,
+                "readonly": false,
+                "disabled": false,
+                "_prefix": "tab_items."
               },
               {
-                "name": "group",
                 "label": "${'apps.apps_form.tab_grouping' | t}",
-                "id": "u:e532b1949676",
-                "quickEdit": {
+                "name": "group",
+                "_prefix": "tab_items.",
+                "type": "text",
+                "amis": {
                   "type": "select",
-                  "name": "group",
-                  "className": "m-0",
+                  "source": "${tab_groups|pick:group_name}",
                   "onEvent": {
                     "change": {
                       "actions": [
                         {
                           "actionType": "custom",
-                          "script": "const tabGroupKey = \"group\";const getTabsSortFun = function (groupNames) {  return function (m, n) {    var tempM = !!m[tabGroupKey] ? 1 : 0;    var tempN = !!n[tabGroupKey] ? 1 : 0;    if (!m[tabGroupKey] || !n[tabGroupKey]) {      return tempM - tempN;    }    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);  };};const quickEidtSaveForTab = function (input, prop_name) {  const currentPropValue = input.value;  const rowValue = input.__super;  const formValue = input.__super.__super.__super;  const tab_name = rowValue.tab_name;  rowValue[prop_name] = currentPropValue;  delete rowValue.index;  let newTabs = formValue.tab_items.map(function (item) {    if (item.tab_name == tab_name) {      return Object.assign({}, item, rowValue);    }    else {      return item;    }  });  const tabGroups = input.__super.__super.tab_groups;  const groupNames = _.compact(_.map(tabGroups, \"group_name\"));  if (groupNames && groupNames.length) {    newTabs.sort(getTabsSortFun(groupNames));  }  return {    tab_items: newTabs  }};const eventData = event.data;const newTabTtemsProp = quickEidtSaveForTab(eventData, \"group\");setTimeout(function () {   doAction({    actionType: 'setValue',    componentId: \"object_form\",    args: {      value: newTabTtemsProp    }  });},300);"
+                          "script": "const tabGroupKey = \"group\";const getTabsSortFun = function (groupNames) {  return function (m, n) {    var tempM = !!m[tabGroupKey] ? 1 : 0;    var tempN = !!n[tabGroupKey] ? 1 : 0;    if (!m[tabGroupKey] || !n[tabGroupKey]) {      return tempM - tempN;    }    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);  };};const quickEidtSaveForTab = function (input, prop_name) {  const currentPropValue = input.value;  const rowValue = input.__super;  const formValue = input.__super.__super;  const tab_name = rowValue.tab_name;  rowValue[prop_name] = currentPropValue;  delete rowValue.index;  let newTabs = formValue.tab_items.map(function (item) {    if (item.tab_name == tab_name) {      return Object.assign({}, item, rowValue);    }    else {      return item;    }  }); const tabGroups = input.__super.__super.tab_groups;  const groupNames = _.compact(_.map(tabGroups, \"group_name\"));  if (groupNames && groupNames.length) {    newTabs.sort(getTabsSortFun(groupNames));  }  return {    tab_items: newTabs  }};const eventData = event.data;const newTabTtemsProp = quickEidtSaveForTab(eventData, \"group\");setTimeout(function () {   doAction({    actionType: 'setValue',    componentId: \"object_form\",    args: {      value: newTabTtemsProp    }  });},300);"
                         }
                       ]
                     }
                   },
-                  "source": "${tab_groups|pick:group_name}",
-                  "checkAll": false,
-                  "selectFirst": false,
-                  "searchable": true,
-                  "clearable": true,
-                  "id": "u:8b3d6979e884",
-                  "multiple": false,
-                  "mode": "inline"
+                  "placeholder": "-"
                 },
-                "placeholder": "-"
-              },
-              {
-                "name": "tab_name_desktop",
-                "label": "${'apps.apps_form.tab_desktop' | t}",
-                "type": "tpl",
-                "id": "u:b95c69a1cd84",
-                "tpl": "${tabs_options|filter:value:equals:tab_name|first|pick:desktop|isTrue:'✔':'✘'}",
-                "placeholder": "-",
-                "remark": "${'apps.apps_form.tab_desktop_remark' | t}"
-              },
-              {
-                "name": "tab_name_mobile",
-                "label": "${'apps.apps_form.tab_mobile' | t}",
-                "type": "tpl",
-                "id": "u:b95c69a1cd84",
-                "tpl": "${tabs_options|filter:value:equals:tab_name|first|pick:mobile|isTrue:'✔':'✘'}",
-                "placeholder": "-",
-                "remark": "${'apps.apps_form.tab_mobile_remark' | t}"
+                "className": "m-0",
+                "checkAll": false,
+                "selectFirst": false,
+                "searchable": true,
+                "clearable": true,
+                "multiple": false,
+                "mode": "inline"
               }
             ],
             "headerToolbar": [
@@ -132,7 +115,7 @@
                           "actions": [
                             {
                               "actionType": "custom",
-                              "script": "const tabGroupKey = 'group';const getTabsSortFun = function (groupNames) {  return function (m, n) {    var tempM = !!m[tabGroupKey] ? 1 : 0;    var tempN = !!n[tabGroupKey] ? 1 : 0;    if (!m[tabGroupKey] || !n[tabGroupKey]) {      return tempM - tempN;    }    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);  };};const clearTabs = function (input) {   return {    tab_items: []  }};const convertDataForTabs = function (input) {  let pickedTabs = input.picked_tabs || [];  const superTabs = _.keyBy(input.__super.__super.tab_items, 'tab_name');  if (typeof pickedTabs === 'string') {    pickedTabs = pickedTabs.split(',');  } const tabOptions = _.keyBy(input.__super.tabs_options, 'value');  const convertedTabs = pickedTabs.map(function (tab_name) {    const superTab = superTabs[tab_name];    if (superTab) {      return superTab;    }    else {      const tabOption = tabOptions[tab_name];      return {        tab_name: tab_name,        group: tabOption.group      }    }  });   const tabGroups = input.__super.__super.tab_groups;   const groupNames = _.compact(_.map(tabGroups, 'group_name'));   if (groupNames && groupNames.length) {     convertedTabs.sort(getTabsSortFun(groupNames));   }  return {    tab_items: convertedTabs  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: 'object_form',  args: {    value: convertDataForTabs(eventData)  }});doAction({  actionType: 'setValue',  componentId: 'tabs-options-service',  args: {    value: convertDataForTabs(eventData)  }});"
+                              "script": "const tabGroupKey = 'group';const getTabsSortFun = function (groupNames) {  return function (m, n) {    var tempM = !!m[tabGroupKey] ? 1 : 0;    var tempN = !!n[tabGroupKey] ? 1 : 0;    if (!m[tabGroupKey] || !n[tabGroupKey]) {      return tempM - tempN;    }    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);  };};const clearTabs = function (input) {   return {    tab_items: []  }};const convertDataForTabs = function (input) {  let pickedTabs = input.picked_tabs || [];   const superTabs = _.keyBy(input.__super.tab_items, 'tab_name');  if (typeof pickedTabs === 'string') {    pickedTabs = pickedTabs.split(',');  } const tabOptions = _.keyBy(input.__super.tabs_options, 'value');  const convertedTabs = pickedTabs.map(function (tab_name) {    const superTab = superTabs[tab_name];    if (superTab) {      return superTab;    }    else {      const tabOption = tabOptions[tab_name];      return {        tab_name: tab_name,        group: tabOption.group      }    }  });  const tabGroups = input.__super.tab_groups;   const groupNames = _.compact(_.map(tabGroups, 'group_name'));   if (groupNames && groupNames.length) {     convertedTabs.sort(getTabsSortFun(groupNames));   }  return {    tab_items: convertedTabs  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: 'object_form',  args: {    value: convertDataForTabs(eventData)  }});doAction({  actionType: 'setValue',  componentId: 'tabs-options-service',  args: {    value: convertDataForTabs(eventData)  }});"
                             }
                           ]
                         }
@@ -185,7 +168,7 @@
                           "actions": [
                             {
                               "actionType": "custom",
-                              "script": "const tabGroupKey = 'group';const getTabsSortFun = function (groupNames) { return function (m, n) { var tempM = !!m[tabGroupKey] ? 1 : 0; var tempN = !!n[tabGroupKey] ? 1 : 0; if (!m[tabGroupKey] || !n[tabGroupKey]) { return tempM - tempN; } return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]); };};const clearTabs = function (input) { return { tab_items: [] }};const convertDataForGroups = function(input) { const settingGroups = input.setting_groups || []; const convertedGroups = _.uniqBy(settingGroups.map(function (item) { return { group_name: item.group_name, default_open: item.default_open } }), 'group_name'); const groupNames = _.compact(_.map(convertedGroups, 'group_name')); const tab_items = input.tab_items; tab_items?.sort(getTabsSortFun(groupNames)); return { tab_groups: convertedGroups, tab_items: tab_items }};const eventData = event.data;doAction({ actionType: 'setValue', componentId: 'object_form', args: { value: convertDataForGroups(eventData) }});"
+                              "script": "const tabGroupKey = 'group';\nconst getTabsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[tabGroupKey] ? 1 : 0;\n    var tempN = !!n[tabGroupKey] ? 1 : 0;\n    if (!m[tabGroupKey] || !n[tabGroupKey]) {\n      return tempM - tempN;\n    }\n    return groupNames.indexOf(m[tabGroupKey]) - groupNames.indexOf(n[tabGroupKey]);\n  };\n};\nconst clearTabs = function (input) { return { tab_items: [] } };\nconst convertDataForGroups = function (input) {\n \n  const settingGroups = input.setting_groups || [];\n  const convertedGroups = _.uniqBy(settingGroups.map(function (item) {\n    return { group_name: item.group_name, default_open: item.default_open }\n  }), 'group_name');\n  const groupNames = _.compact(_.map(convertedGroups, 'group_name'));\n  const tab_items = input.tab_items;\n  tab_items?.sort(getTabsSortFun(groupNames));\n  \n  return { tab_groups: convertedGroups, tab_items: tab_items }\n};\nconst eventData = event.data;\ndoAction(\n  {\n    actionType: 'setValue',\n    componentId: 'object_form',\n    args: { value: convertDataForGroups(eventData) }\n  }\n);"
                             }
                           ]
                         }
@@ -203,7 +186,8 @@
                     "id": "u:111b043b193c"
                   }
                 ],
-                "messages": {},
+                "messages": {
+                },
                 "api": {
                   "method": "post",
                   "url": "${context.rootUrl}/graphql",
@@ -215,11 +199,13 @@
                   "headers": {
                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                   },
-                  "messages": {},
+                  "messages": {
+                  },
                   "requestAdaptor": ""
                 }
               }
-            ]
+            ],
+            "id": "u:7949aecf0ca9"
           }
         },
         "objects": {
@@ -265,7 +251,8 @@
             "source": {
               "method": "get",
               "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-              "messages": {},
+              "messages": {
+              },
               "headers": {
                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
               }

@@ -1832,7 +1832,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 let detailFieldName = infos[1];
                 let related_field = await getObject(detailObjectApiName).getField(detailFieldName);
                 if(related_field){
-                    if((related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) && related_field.reference_to && related_field.reference_to == this.name){
+                    if((related_field.type == "master_detail" || (related_field.type == "lookup")) && related_field.reference_to && related_field.reference_to == this.name){
                         if(detailObjectApiName == "object_fields"){
                             related_objects.splice(0, 0, {object_name: detailObjectApiName, foreign_key: detailFieldName})
                         }else{
