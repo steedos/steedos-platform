@@ -24,7 +24,7 @@ const getInternalPermissionObjects = async function(){
         _.each(datasourceObjects, function(object) {
           const objectJSON  = object.metadata;
           const objectName = objectJSON.name;
-          if(!objectJSON._id && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
+          if((!objectJSON._id || (objectJSON._id && !!objectJSON.extend)) && !objectJSON.hidden && !_.include(InternalData.hiddenObjects, objectName)){
             let permission_set = objectJSON.permission_set
             _.each(permission_set, function(v, code){
                 objectsPermissions.push(Object.assign({}, v, {
