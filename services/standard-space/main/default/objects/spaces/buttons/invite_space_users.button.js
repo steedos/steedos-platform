@@ -34,7 +34,7 @@ module.exports = {
         });
     },
     invite_space_usersVisible: function(){
-        if (Creator.isSpaceAdmin()){
+        if (Creator.isSpaceAdmin() && Meteor.settings.public.accounts.disabled_account_register != true){
             let space = Creator.odata.get("spaces", Session.get("spaceId"), "enable_register");
             if(space && space.enable_register){
                 return true;

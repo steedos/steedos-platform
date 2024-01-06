@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 11:32:06
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-19 16:25:47
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-01-06 16:23:46
  * @Description: 
  */
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
         });
     },
     invite_space_usersVisible: function () {
-        if (Creator.isSpaceAdmin()) {
+        if (Creator.isSpaceAdmin() && Meteor.settings.public.accounts.disabled_account_register != true) {
             let space = Creator.odata.get("spaces", Session.get("spaceId"), "enable_register");
             if (space && space.enable_register) {
                 return true;
