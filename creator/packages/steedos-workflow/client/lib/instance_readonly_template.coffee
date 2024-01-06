@@ -331,7 +331,10 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = selectedOptions.map((item) -> return item.label).join(",")
 		when 'number'
 			if value or value == 0
-				value = Steedos.numberToString value, field.digits
+				if field.is_percent
+					value = Steedos.numberToPercentString value, field.digits
+				else
+					value = Steedos.numberToString value, field.digits
 		when 'odata'
 			detail_url = field.detail_url
 			if field.is_multiselect

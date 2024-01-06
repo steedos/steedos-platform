@@ -116,6 +116,13 @@ var s_autoform = function (schema, field) {
             autoform.disabled = (permission == 'readonly');
             autoform.type = 'coreform-number';
             autoform.step = number_step(field.digits); //控制有效位数
+            if (field.is_percent) {
+                autoform.type = 'steedos-field'
+                autoform.fieldType = 'percent'
+                autoform.config = JSON.stringify({
+                    scale: field.digits || 2
+                });
+            }
             break;
         case 'date':
             schema.type = String;
