@@ -243,6 +243,8 @@ export async function refreshObject(ctx, objectApiName) {
         baseObjectConfig,
         objectConfig
     );
+    
+    objectConfig.originalFields = _.keys(_objectConfig.fields)
 
     objectConfig.list_views = listviewDefaultsDeep({ list_views: {} }, ..._.sortBy(objectConfigs, function (o) {
         return o.isMain ? 1 : (-o.__timestamp || -1);
