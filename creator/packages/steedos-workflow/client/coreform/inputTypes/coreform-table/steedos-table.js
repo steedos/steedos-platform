@@ -535,7 +535,11 @@ SteedosTable.getTDValue = function (field, value) {
                 break;
             case 'number':
                 if (value || value == 0) {
-                    td_value = Steedos.numberToString(value, field.digits);
+                    if (field.is_percent) {
+                        td_value = Steedos.numberToPercentString(value, field.digits);
+                    } else {
+                        td_value = Steedos.numberToString(value, field.digits);
+                    }
                 }
                 break;
             case 'odata':

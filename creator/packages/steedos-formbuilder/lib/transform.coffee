@@ -179,6 +179,7 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 				field.type = 'radio'
 			when 'number'
 				field.digits = parseInt(field.digits)
+				field.is_percent = field.is_percent || false
 			when 'dateNew'
 				field.type = 'date'
 		formFields.push field
