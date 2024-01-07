@@ -313,6 +313,15 @@
         "version":{
             "type": "number",
             "description": "对象版本, 默认1.0"
+        },
+        "pages": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/pages"
+                }
+            }
         }
     },
     "definitions": {
@@ -1067,6 +1076,17 @@
                 "afterDelete": {
                     "type": "string",
                     "description": "删除后事件"
+                }
+            }
+        },
+        "pages": {
+            "type": "object",
+            "description": "微页面",
+            "additionalProperties": false,
+            "properties": {
+                "lookup": {
+                    "type": "string",
+                    "description": "lookup类型微页面"
                 }
             }
         }

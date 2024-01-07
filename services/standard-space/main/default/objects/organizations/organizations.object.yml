@@ -6,3 +6,28 @@ enable_tree: true
 enable_enhanced_lookup: true
 enable_inline_edit: false
 version: 2
+pages:
+  lookup: |-
+    {
+      "source": {
+        "url": "${context.rootUrl}/service/api/organizations/root",
+        "method": "get",
+        "data": null,
+        "headers": {
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        },
+        "requestAdaptor": "\n    return api;\n    ",
+        "adaptor": "\n    return payload;\n    "
+      },
+      "deferApi": {
+        "method": "post",
+        "url": "${context.rootUrl}/graphql",
+        "data": {
+          "$self": "$$",
+          "self": "$$"
+        },
+        "headers": {
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        }
+      }
+    }
