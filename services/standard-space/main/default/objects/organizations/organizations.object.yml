@@ -4,4 +4,5 @@ icon: team_member
 enable_search: true
 enable_tree: true
 enable_enhanced_lookup: true
+enable_inline_edit: false
 version: 2

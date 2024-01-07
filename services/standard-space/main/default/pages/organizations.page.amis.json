@@ -1,0 +1,45 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "steedos-object-listview",
+      "objectApiName": "organizations",
+      "columnsTogglable": false,
+      "showHeader": true,
+      "className": "sm:border bg-white sm:rounded border-gray-300 border-solid",
+      "id": "u:0e66353c4170",
+      "crudMode": "table",
+      "crud": {
+        "id": "u:fff9dabf57b1",
+        "deferApi": {
+          "method": "post",
+          "url": "${context.rootUrl}/graphql",
+          "data": {
+            "$self": "$$",
+            "self": "$$"
+          },
+          "headers": {
+            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+          },
+          "cache": 300000
+        }
+      },
+      "crudDataFilter": "/**\n * 转为es5 支持的多行文本脚本\n * 传入function，且函数休开始结束为多行注释符号包裹住（中间需要回车符）\n * 注意传入的function函数体内不能包含字符/$\n*/\nvar getMultiLineScript = function (fun) {\n  var strFun = fun.toString();\n  var lines = strFun.split(new RegExp(\"\\\\n\"));\n  lines.shift();\n  lines.pop();\n  return lines.join(\"\");\n}\n\n\n// crud.api中不用写接收适配器来根据节点children计算节点defer属性值，是因为服务端接口已经计算过了\ncrud.api = {\n  \"url\": \"${context.rootUrl}/service/api/organizations/root\",\n  \"method\": \"get\",\n  \"cache\": 3000,\n  \"headers\": {\n    \"Authorization\": \"Bearer ${context.tenantId},${context.authToken}\"\n  }\n}\n\ncrud.deferApi.requestAdaptor = getMultiLineScript(function () { /*\n  var selfData = JSON.parse(JSON.stringify(api.data.self));\n  let filters = [];\n  var dep = selfData._id;\n  if (dep) {\n    filters = [['parent', '=', dep]];\n  }\n  api.data.query = '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,name,sort_no,hidden,_display:_ui{sort_no,hidden},parent,children}}';\n  return api; \n*/});\n\n\ncrud.deferApi.adaptor = getMultiLineScript(function () { /*\n  var data = payload.data;\n  data.rows = data.rows.map(function (optionItem) {\n    optionItem.defer = !!(optionItem.children && optionItem.children.length);\n    delete optionItem.children;\n    return optionItem;\n  });\n\n  data.children = data.rows;\n  delete data.rows;\n  delete data.count;\n  return payload;\n*/});\n\nreturn crud;\n"
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "data": {
+    "objectName": "organizations",
+    "context": {
+      "rootUrl": "http://127.0.0.1:5800",
+      "tenantId": "654300b5074594d15147bcfa",
+      "userId": "654300a4074594d15147bcf8",
+      "authToken": "531545501717024dc6fdcc0bfb4b121b3d3ce40c71110dad0c1adb083ebdd54afddf2aa7dea7ed202bc2c0"
+    }
+  },
+  "id": "u:b7fa9418ef38",
+  "name": "page_organizations_list",
+  "bodyClassName": ""
+}
