@@ -1,13 +1,49 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-06 20:48:56
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-01-07 15:39:44
  * @Description: 
  */
 "use strict";
 const { getObject } = require("@steedos/objectql")
 const _ = require('underscore')
+
+/**
+ * 
+ * @param {*} rows rows内必须有value，parent，children
+ * @returns 把扁平的数据转换为树状结构的数据
+ * @options valueField为每一条记录的id
+ */
+function getTreeRoot(rows) {
+    const valueField = "_id";
+    const treeRecords = [];
+    const getRoot = (rows) => {
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].noParent = 0;
+            if (!!rows[i]["parent"]) {
+                let biaozhi = 1;
+                for (var j = 0; j < rows.length; j++) {
+                    if (rows[i]["parent"] == rows[j][valueField])
+                        biaozhi = 0;
+                }
+                if (biaozhi == 1) rows[i].noParent = 1;
+            } else rows[i].noParent = 1;
+        }
+    }
+    getRoot(rows);
+    _.each(rows, (row) => {
+        if (row.noParent == 1) {
+            let children = row["children"];
+            delete row["noParent"];
+            delete row["children"];
+            // 按amis crud的deferApi规范，节点defer为true表示有子节点
+            treeRecords.push(Object.assign({}, row, { defer: !!(children && children.length) }));
+        }
+    });
+    return treeRecords;
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -112,6 +148,13 @@ module.exports = {
                 return this.calculateUsers(ctx.params.orgId, ctx.params.isIncludeParents)
             }
         },
+        getOrganizationsRootNode: {
+        // 访问地址： GET /service/api/organizations/root
+          rest: { method: 'GET', path: '/root' },
+          async handler(ctx) {
+            return this.getOrganizationsRootNode(ctx)
+          }
+        }
     },
 
     /**
@@ -259,9 +302,38 @@ module.exports = {
                 }
             });
             return _.uniq(users);
+        },
+
+        /**
+         * 从所有组织数据中算出当前用户有权限访问的根组织节点
+         * @param {*} orgId 
+         * @returns 
+         */
+        async getOrganizationsRootNode(ctx) {
+            let graphqlResult = await this.broker.call('api.graphql', {
+              query: `
+                query {
+                  rows: organizations(filters: [],sort: \"sort_no desc\") {
+                    _id,
+                    name,
+                    sort_no,
+                    hidden,
+                    _display:_ui{sort_no,hidden},
+                    parent,
+                    children
+                  }
+                }
+              `},
+              {
+                meta: {
+                  user: ctx.meta.user
+                }
+              }
+            )
+            let orgs = graphqlResult.data.rows;
+            graphqlResult.data.rows = getTreeRoot(orgs);
+            return graphqlResult;
         }
-
-
     },
 
     /**

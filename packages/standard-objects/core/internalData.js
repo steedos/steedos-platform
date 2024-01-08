@@ -6,10 +6,6 @@ const clone = require("clone");
 const auth = require("@steedos/auth");
 const objectsCache = {
 }
-const objects60sCache = {
-    data: null,
-    timestamp: 0
-}
 
 const getLng = async function(userId){
     const userSession = await auth.getSessionByUserId(userId);
@@ -191,10 +187,6 @@ async function getObject(id, userId){
 }
 exports.getObject = getObject
 
-function getOriginalObjectFields(objectName){
-    if (!register.getOriginalObjectConfig(objectName)) return {}
-    return register.getOriginalObjectConfig(objectName).fields || {}
-}
 
 async function getObjectFields(objectName, userId, all){
     let object = await getObject(objectName, userId);
@@ -206,7 +198,7 @@ async function getObjectFields(objectName, userId, all){
 
         // 从 originalFieldsName 中排出掉 baseObject中的fields
         if(baseObject && baseObject.fields){
-            originalFieldsName = originalFieldsName.concat(_.difference(_.keys(getOriginalObjectFields(objectName)), _.keys(baseObject.fields)));
+            originalFieldsName = originalFieldsName.concat(_.difference(object.originalFields, _.keys(baseObject.fields)));
         }
 
         _.each(object.fields, function(field){

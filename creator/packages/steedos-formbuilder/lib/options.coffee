@@ -159,6 +159,11 @@ getTypeUserAttrs = ()->
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, OPTIONSUSERATTRS, textareaBaseAttrs, FORMULAUSERATTRS
 			when 'number'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, {
+					is_percent: {
+						label: '显示为百分比',
+						type: 'checkbox'
+						value: false
+					},
 					digits: {
 						label: "小数位数"
 						type: 'number'

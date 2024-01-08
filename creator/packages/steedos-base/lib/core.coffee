@@ -27,6 +27,9 @@ Steedos =
 			return number
 		else
 			return ""
+	numberToPercentString: (number, scale, notThousands) ->
+		newNumber = Number (number * 100).toFixed(scale)
+		return Steedos.numberToString(newNumber, scale, notThousands) + "%"
 	valiJquerySymbols: (str)->
 		# reg = /^[^!"#$%&'()*+,./:;<=>?@[\]^`{|}~]+$/g
 		reg = new RegExp("^[^!\"#$%&'()*\+,\.\/:;<=>?@[\\]^`{|}~]+$")
