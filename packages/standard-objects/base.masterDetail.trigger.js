@@ -43,13 +43,14 @@ const setDetailOwner = async function (doc, object_name, userId) {
                 let refFieldValue = doc[refField.name];
                 if(refFieldValue && _.isString(refFieldValue)) { /* isString是为排除字段属性multiple:true的情况 */
                     let nameFieldKey = await objMaster.getNameFieldKey();
-                    let recordMaster = await objMaster.findOne(refFieldValue, {fields:[nameFieldKey, "owner", "space", "locked", "company_id", "company_ids"]});
+                    let recordMaster = await objMaster.findOne(refFieldValue, {fields:[nameFieldKey, "owner", "space", "locked", "company_id", "company_ids"]}, userSession);
                     if(recordMaster){
                         if (userId && recordMaster.space){
                             masterAllow = false;
                             let masterRecordPerm = await objMaster.getRecordPermissions(recordMaster, userSession);
                             if (write_requires_master_read == true) {
-                                masterAllow = masterRecordPerm.allowRead;
+                                // masterAllow = masterRecordPerm.allowRead;
+                                masterAllow = true; // 如果能查看到recordMaster就认为对recordMaster有查看权限，考虑了共享规则。
                             }
                             else if (write_requires_master_read == false) {
                                 masterAllow = masterRecordPerm.allowEdit;
