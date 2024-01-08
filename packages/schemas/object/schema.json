@@ -319,7 +319,7 @@
             "additionalProperties": false,
             "patternProperties": {
                 "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
-                    "$ref": "#/definitions/pages"
+                    "$ref": "#/definitions/page"
                 }
             }
         }
@@ -1079,7 +1079,7 @@
                 }
             }
         },
-        "pages": {
+        "page": {
             "type": "object",
             "description": "微页面",
             "additionalProperties": false,

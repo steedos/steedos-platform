@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-08 09:59:25
+ * @LastEditTime: 2024-01-08 11:54:11
  * @Description: 
  */
 "use strict";
@@ -316,6 +316,7 @@ module.exports = {
                   rows: organizations(filters: [],sort: \"sort_no desc\") {
                     _id,
                     name,
+                    fullname,
                     sort_no,
                     hidden,
                     _display:_ui{sort_no,hidden},
