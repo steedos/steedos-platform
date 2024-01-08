@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@steedos/service-package-registry": "2.6.2-beta.33",
     "migrate": "^1.6.2",
     "mongodb": "^3.7.3"
   },

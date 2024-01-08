@@ -1,15 +1,16 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-01-13 14:21:44
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-01-08 16:55:47
  * @Description: 
  */
 const migrate = require('migrate')
 const path = require('path');
 const validator = require('validator');
-
-const stateStore = path.join(process.cwd(), '.steedos', '.migrate');
+const registry = require('@steedos/service-package-registry');
+const userDir = registry.settings.userDir;
+const stateStore = path.join(userDir, '.migrate');
 const migrationsDirectory = path.join(__dirname, 'migrations');
 
 const up = async function () {
