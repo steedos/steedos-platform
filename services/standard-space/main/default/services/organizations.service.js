@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-07 15:39:44
+ * @LastEditTime: 2024-01-08 09:59:25
  * @Description: 
  */
 "use strict";
@@ -332,6 +332,7 @@ module.exports = {
             )
             let orgs = graphqlResult.data.rows;
             graphqlResult.data.rows = getTreeRoot(orgs);
+            graphqlResult.data.count = orgs.length;
             return graphqlResult;
         }
     },

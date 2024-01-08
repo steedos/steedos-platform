@@ -617,16 +617,10 @@ module.exports = {
     afterInsert: async function () {
         const { doc } = this
         const broker = getSteedosSchema().broker
-        const contactsObj = getObject('contacts')
         if (doc.organizations) {
             for (const org of doc.organizations) {
                 await broker.call('organizations.updateUsers', { orgId: org })
             }
-        }
-        if (doc.contact_id) {
-            await contactsObj.directUpdate(doc.contact_id, {
-                user: doc.user
-            })
         }
 
         if (doc.profile === 'admin') {
