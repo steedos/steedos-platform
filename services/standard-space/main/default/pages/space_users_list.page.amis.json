@@ -4,6 +4,7 @@
         {
             "type": "service",
             "messages": {},
+            "className": "h-full",
             "body": [
                 {
                     "type": "wrapper",
@@ -164,7 +165,7 @@
     "pullRefresh": {
         "disabled": true
     },
-    "className": "space-users-list",
+    "className": "space-users-list h-full",
     "style": {
         "padding": "${displayAs == 'grid'?'':'0px'}"
     }

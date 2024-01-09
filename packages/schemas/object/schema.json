@@ -1085,8 +1085,19 @@
             "additionalProperties": false,
             "properties": {
                 "lookup": {
-                    "type": "string",
-                    "description": "lookup类型微页面"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "lookup类型微页面",
+                    "properties": {
+                        "is_enable": {
+                            "type": "boolean",
+                            "description": "是否启用"
+                        },
+                        "amis_schema": {
+                            "type": "object",
+                            "description": "amis schema"
+                        }
+                    }
                 }
             }
         }

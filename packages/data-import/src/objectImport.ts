@@ -24,6 +24,10 @@ const FILE_EXT_TYPES = ['.xlsx', '.xls'];
 
 const FIX_SECONDS = 43; // 解决 nodejs date.getTimezoneOffset不准问题 https://github.com/SheetJS/sheetjs/issues/2350
 
+function _getDate(date: Date, utcOffset: Number) {
+    return new Date(moment(date).add(utcOffset, 'h').add(FIX_SECONDS, 's').format('YYYY-MM-DD'));
+}
+
 function converterString(field_name, dataCell, jsonObj) {
   if (dataCell) {
     jsonObj[field_name] = dataCell.toString();
@@ -42,7 +46,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
 
   if (_.isDate(dataCell)) {
     try {
-      jsonObj[field_name] = new Date(moment(dataCell).add(utcOffset, 'h').add(FIX_SECONDS, 's').format('YYYY-MM-DD'));
+      jsonObj[field_name] = _getDate(dataCell, utcOffset)
     } catch (error) {
       return error.message
     }
@@ -54,7 +58,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = date;
+    jsonObj[field_name] = _getDate(date, utcOffset)
   } else {
     date_error = `${dataCell}不是日期类型数据`;
   }

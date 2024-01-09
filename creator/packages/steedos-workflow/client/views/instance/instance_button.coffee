@@ -155,12 +155,18 @@ instanceButtonHelpers =
 		unless record
 			return {}
 		record.box = Session.get("box")
+
+		if Session.get("box") is 'outbox'
+			distributeStepId = InstanceManager.getLastTraceStepId(record.traces)
+		else
+			distributeStepId = _.last(record.traces).step;
 		return {
 			app_id: Session.get("app_id")
 			object_name: Session.get("object_name")
 			permissions: Creator.getPermissions(),
 			record_id: record._id,
-			record: record
+			record: record,
+			distributeStepId: distributeStepId
 		} 
 
 	enabled_save: ->
