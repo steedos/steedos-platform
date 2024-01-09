@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-08 11:54:11
+ * @LastEditTime: 2024-01-09 14:42:55
  * @Description: 
  */
 "use strict";
@@ -38,7 +38,10 @@ function getTreeRoot(rows) {
             delete row["noParent"];
             delete row["children"];
             // 按amis crud的deferApi规范，节点defer为true表示有子节点
-            treeRecords.push(Object.assign({}, row, { defer: !!(children && children.length) }));
+            // 这里要额外返回动态的__reloadTag值是因为amis crud嵌套列表模式在触发crud reload动作时默认只重新请求api接口不会自动刷新整个列表（比如不会自动重新请求已展开子节点deferApi），
+            // 这里额外返回根节点数据跟前一次请求数据有变更的话，就能实现刷新整个crud，而不是只刷新根节点
+            // 不会自动刷新整个列表的话，点击部门列表右上角的刷新按钮，或者编辑行记录保存后整个列表的数据就是老的没有即时刷新
+            treeRecords.push(Object.assign({}, row, { defer: !!(children && children.length), __reloadTag: new Date().getTime() }));
         }
     });
     return treeRecords;
