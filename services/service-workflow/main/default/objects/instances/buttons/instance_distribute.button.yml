@@ -118,7 +118,7 @@ amis_schema: |-
                           "onlyLeaf": true,
                           "action": "distribute",
                           "distributeInstanceId": "${record._id}",
-                          "distributeStepId": "${record.traces | last | pick:step}"
+                          "distributeStepId": "${distributeStepId}"
                         },
                         {
                           "type": "steedos-select-user",
@@ -284,8 +284,7 @@ amis_schema: |-
             ],
             "weight": 0
           }
-        },
-        "hiddenOn": "!(record.approve.type != 'cc' && record.step && record.step.allowDistribute == true)"
+        }
       }
     ],
     "regions": [
