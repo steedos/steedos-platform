@@ -1088,6 +1088,7 @@ actions:
                               "extractValue": true,
                               "labelField": "label",
                               "valueField": "value",
+                              "visibleOn": "${!!current}",
                               "labelClassName": "text-left",
                               "en-US": {
                                 "label": "Object"
@@ -1105,6 +1106,7 @@ actions:
                             },
                             {
                               "type": "tabs",
+                              "visibleOn": "${!!current}",
                               "tabs": [
                                 {
                                   "title": "${'flows.addFormFields.application_form_fields' | t}",
@@ -1125,6 +1127,7 @@ actions:
                                               "addable": false,
                                               "removable": true,
                                               "draggable": false,
+                                              "visibleOn": "${!!fields_options}",
                                               "columns": [
                                                 {
                                                   "name": "field_name_label",
