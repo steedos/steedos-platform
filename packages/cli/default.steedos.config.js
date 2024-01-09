@@ -20,7 +20,7 @@ process.env.STEEDOS_UNPKG_URL =  process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "
 
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.2';
+	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.4';
 }
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
