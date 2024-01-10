@@ -147,8 +147,10 @@ module.exports = {
             const filters = [
               ["category", "=", category._id],
               ["state", "=", "enabled"],
-              ["forbid_initiate_instance", "!=", true]
             ];
+            if(action === "new"){
+              filters.push(["forbid_initiate_instance", "!=", true]);
+            }
             if (keywordsFilter) {
               filters.push(keywordsFilter)
             }
