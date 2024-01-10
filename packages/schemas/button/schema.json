@@ -87,6 +87,18 @@
                 "object"
             ],
             "description": ""
+        },
+        "license": {
+            "type": "array",
+            "description": "许可证",
+            "items": {
+                "type": "string",
+                "description": "许可证",
+                "enum": [
+                    "platform-enterprise",
+                    "platform-professional"
+                ]
+            }
         }
     }
 }

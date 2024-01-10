@@ -30,6 +30,10 @@ const auth = require("@steedos/auth");
 
 const clone = require('clone')
 
+const PLATFORM_ENTERPRISE = 'platform-enterprise';
+const PLATFORM_PROFESSIONAL = 'platform-professional';
+const LICENSE_SERVICE = '@steedos/service-license';
+
 // 主子表有层级限制，超过3层就报错，该函数判断当前对象作为主表对象往下的层级最多不越过3层，
 // 其3层指的是A-B-C-D，它们都有父子关系，A作为最顶层，该对象上不可以再创建主表子表关系字段，但是B、C、D上可以；
 // 或者如果当前对象上创建的主表子表关系字段指向的对象是D，那么也会超过3层的层级限制；
@@ -1530,6 +1534,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
     }
 
     async getRecordView(userSession, context: any = {}) {
+        let versionsMap = {}
+        if (global['HAS_LICENSE_SERVICE']) {
+            versionsMap = {
+                [PLATFORM_ENTERPRISE]: await broker.call(`${LICENSE_SERVICE}.isPlatformEnterprise`, { spaceId: userSession.spaceId }),
+                [PLATFORM_PROFESSIONAL]: await broker.call(`${LICENSE_SERVICE}.isPlatformProfessional`, { spaceId: userSession.spaceId })
+            }
+        }
         let { objectConfig, layouts, spaceProcessDefinition, dbListViews, rolesFieldsPermission, relationsInfo} = await this.getContext(userSession, context);
         const lng = userSession.language;
         const profile = userSession.profile;
@@ -1583,6 +1594,23 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 }
             })
         }
+        // 隐藏不在许可范围内的按钮
+        _.each(objectConfig.actions, function(action){
+            const license = action.license
+            if(license && _.isArray(license) && license.length > 0){
+                let visible = false;
+                for (const version of license) {
+                    if (versionsMap[version]) {
+                        visible = true;
+                        break;
+                    }
+                }
+                if (!visible) {
+                    action.visible = false
+                    action._visible = function(){return false}.toString()
+                }
+            }
+        })
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
         objectConfig.field_groups = objectLayout && objectLayout.field_groups
         
