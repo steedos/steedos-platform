@@ -549,6 +549,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                 case 'currency':
                     formField.type = "number";
                     formField.digits = objField.scale;
+                    break;
                 case 'percent':
                     formField.type = "number";
                     formField.digits = objField.scale;
