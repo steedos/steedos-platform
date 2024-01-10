@@ -1,0 +1,12 @@
+name: organizations
+is_active: true
+label: 部门列表
+object_name: organizations
+pageAssignments:
+  - type: orgDefault
+    page: organizations
+    desktop: true
+    mobile: true
+render_engine: amis
+type: list
+widgets: []

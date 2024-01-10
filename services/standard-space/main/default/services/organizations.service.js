@@ -1,13 +1,52 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-06 20:48:56
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-01-09 14:42:55
  * @Description: 
  */
 "use strict";
 const { getObject } = require("@steedos/objectql")
 const _ = require('underscore')
+
+/**
+ * 
+ * @param {*} rows rows内必须有value，parent，children
+ * @returns 把扁平的数据转换为树状结构的数据
+ * @options valueField为每一条记录的id
+ */
+function getTreeRoot(rows) {
+    const valueField = "_id";
+    const treeRecords = [];
+    const getRoot = (rows) => {
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].noParent = 0;
+            if (!!rows[i]["parent"]) {
+                let biaozhi = 1;
+                for (var j = 0; j < rows.length; j++) {
+                    if (rows[i]["parent"] == rows[j][valueField])
+                        biaozhi = 0;
+                }
+                if (biaozhi == 1) rows[i].noParent = 1;
+            } else rows[i].noParent = 1;
+        }
+    }
+    getRoot(rows);
+    _.each(rows, (row) => {
+        if (row.noParent == 1) {
+            let children = row["children"];
+            delete row["noParent"];
+            delete row["children"];
+            // 按amis crud的deferApi规范，节点defer为true表示有子节点
+            // 这里要额外返回动态的__reloadTag值是因为amis crud嵌套列表模式在触发crud reload动作时默认只重新请求api接口不会自动刷新整个列表（比如不会自动重新请求已展开子节点deferApi），
+            // 这里额外返回根节点数据跟前一次请求数据有变更的话，就能实现刷新整个crud，而不是只刷新根节点
+            // 不会自动刷新整个列表的话，点击部门列表右上角的刷新按钮，或者编辑行记录保存后整个列表的数据就是老的没有即时刷新
+            treeRecords.push(Object.assign({}, row, { defer: !!(children && children.length), __reloadTag: new Date().getTime() }));
+        }
+    });
+    return treeRecords;
+}
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -112,6 +151,13 @@ module.exports = {
                 return this.calculateUsers(ctx.params.orgId, ctx.params.isIncludeParents)
             }
         },
+        getOrganizationsRootNode: {
+        // 访问地址： GET /service/api/organizations/root
+          rest: { method: 'GET', path: '/root' },
+          async handler(ctx) {
+            return this.getOrganizationsRootNode(ctx)
+          }
+        }
     },
 
     /**
@@ -259,9 +305,40 @@ module.exports = {
                 }
             });
             return _.uniq(users);
+        },
+
+        /**
+         * 从所有组织数据中算出当前用户有权限访问的根组织节点
+         * @param {*} orgId 
+         * @returns 
+         */
+        async getOrganizationsRootNode(ctx) {
+            let graphqlResult = await this.broker.call('api.graphql', {
+              query: `
+                query {
+                  rows: organizations(filters: [],sort: \"sort_no desc\") {
+                    _id,
+                    name,
+                    fullname,
+                    sort_no,
+                    hidden,
+                    _display:_ui{sort_no,hidden},
+                    parent,
+                    children
+                  }
+                }
+              `},
+              {
+                meta: {
+                  user: ctx.meta.user
+                }
+              }
+            )
+            let orgs = graphqlResult.data.rows;
+            graphqlResult.data.rows = getTreeRoot(orgs);
+            graphqlResult.data.count = orgs.length;
+            return graphqlResult;
         }
-
-
     },
 
     /**

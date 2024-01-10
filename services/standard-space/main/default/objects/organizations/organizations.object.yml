@@ -4,4 +4,38 @@ icon: team_member
 enable_search: true
 enable_tree: true
 enable_enhanced_lookup: true
+enable_inline_edit: false
 version: 2
+pages:
+  lookup: 
+    is_enable: true
+    amis_schema: |-
+      {
+        "source": {
+          "url": "${context.rootUrl}/service/api/organizations/root",
+          "method": "get",
+          "cache": 300000,
+          "data": null,
+          "headers": {
+            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+          },
+          "requestAdaptor": "\nif (context.op === \"loadOptions\") {\n  var filters = [[\"_id\", \"=\", context.value]];\n  return Object.assign({}, api, {\n    \"method\": \"post\",\n    \"url\": context.context.rootUrl + \"/graphql\",\n    \"data\": {\n      \"query\": '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,fullname,name,sort_no,_display:_ui{sort_no},parent,children}}'\n    }\n  }); \n}\nelse { \n  return api;\n}",
+          "adaptor": "\nconst rows = _.map(payload.data.rows, function(item) {\n    delete item.children;\n    delete item.parent;\n    return item;\n});\npayload.data.rows = rows;\n\nreturn payload;"
+        },
+        "pickerSchema": {
+          "deferApi": {
+            "method": "post",
+            "url": "${context.rootUrl}/graphql",
+            "data": {
+              "$self": "$$",
+              "self": "$$"
+            },
+            "headers": {
+              "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+            },
+            "cache": 3000,
+            "requestAdaptor": "var selfData = JSON.parse(JSON.stringify(api.data.self));\nlet filters = [];\nvar dep = selfData._id;\nif (dep) {\n  filters = [['parent', '=', dep]];\n}\nreturn Object.assign({}, api, {\n  data: {\n    query: '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,fullname,name,sort_no,_display:_ui{sort_no},parent,children}}'\n  }\n}); ",
+            "adaptor": "var data = payload.data;\nif (data.children) {\n  return payload;\n}\ndata.rows = data.rows.map(function (optionItem) {\n  optionItem.defer = !!(optionItem.children && optionItem.children.length);\n  delete optionItem.children;\n  return optionItem;\n});\n\ndata.children = data.rows;\ndelete data.rows;\ndelete data.count;\nreturn payload;"
+          }
+        }
+      }

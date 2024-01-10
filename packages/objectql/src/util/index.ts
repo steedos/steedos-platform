@@ -200,6 +200,7 @@ export function getSteedosConfig(){
     if(STEEDOS_CONFIG){
         (STEEDOS_CONFIG as any).setTenant = (tenant)=>{
             STEEDOS_CONFIG.tenant = defaultsDeep(tenant, STEEDOS_CONFIG.tenant);
+            STEEDOS_CONFIG.public.accounts.disabled_account_register = tenant.disabled_account_register;
         }
     }
     return STEEDOS_CONFIG;

@@ -19,9 +19,7 @@ const npa = require("npm-package-arg");
 
 log.init({});
 
-const settings = {
-    userDir: path.join(process.cwd(), '.steedos')
-}
+const settings = require('../../../package.service').settings
 
 function checkModulePath(folder) {
     var moduleName;
@@ -352,5 +350,6 @@ module.exports = {
     installModule,
     uninstallModule,
     isPackageUrl,
-    yarnAddPackage
+    yarnAddPackage,
+    settings
 }

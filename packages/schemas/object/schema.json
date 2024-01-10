@@ -313,6 +313,15 @@
         "version":{
             "type": "number",
             "description": "对象版本, 默认1.0"
+        },
+        "pages": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[a-zA-Z_]\\w*(\\.\\$\\.\\w+)?[a-zA-Z0-9]*$": {
+                    "$ref": "#/definitions/page"
+                }
+            }
         }
     },
     "definitions": {
@@ -1067,6 +1076,28 @@
                 "afterDelete": {
                     "type": "string",
                     "description": "删除后事件"
+                }
+            }
+        },
+        "page": {
+            "type": "object",
+            "description": "微页面",
+            "additionalProperties": false,
+            "properties": {
+                "lookup": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "description": "lookup类型微页面",
+                    "properties": {
+                        "is_enable": {
+                            "type": "boolean",
+                            "description": "是否启用"
+                        },
+                        "amis_schema": {
+                            "type": "object",
+                            "description": "amis schema"
+                        }
+                    }
                 }
             }
         }

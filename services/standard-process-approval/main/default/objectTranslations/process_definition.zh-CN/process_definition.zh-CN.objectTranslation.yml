@@ -109,6 +109,10 @@ fields:
     label: 消息提醒
     help: 
     description: 
+  is_system:
+    label: 系统
+    help: 
+    description: 
 groups:
   initial_submission_actions: 初始提交操作
   final_approval_actions: 最终批准操作

@@ -505,6 +505,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'percent':
             formField.type = "number";
             formField.digits = objField.scale;
+            formField.is_percent = true;
             break;
         case 'password':
             formField.type = "password";
@@ -551,9 +552,12 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
                     break;
                 case 'number':
                 case 'currency':
+                    formField.type = "number";
+                    formField.digits = objField.scale;
                 case 'percent':
                     formField.type = "number";
                     formField.digits = objField.scale;
+                    formField.is_percent = true;
                     break;
                 case 'text':
                     formField.type = "input";

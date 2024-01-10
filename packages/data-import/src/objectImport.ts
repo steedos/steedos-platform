@@ -24,6 +24,10 @@ const FILE_EXT_TYPES = ['.xlsx', '.xls'];
 
 const FIX_SECONDS = 43; // 解决 nodejs date.getTimezoneOffset不准问题 https://github.com/SheetJS/sheetjs/issues/2350
 
+function _getDate(date: Date, utcOffset: Number) {
+    return new Date(moment(date).add(utcOffset, 'h').add(FIX_SECONDS, 's').format('YYYY-MM-DD'));
+}
+
 function converterString(field_name, dataCell, jsonObj) {
   if (dataCell) {
     jsonObj[field_name] = dataCell.toString();
@@ -42,7 +46,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
 
   if (_.isDate(dataCell)) {
     try {
-      jsonObj[field_name] = new Date(moment(dataCell).add(utcOffset, 'h').add(FIX_SECONDS, 's').format('YYYY-MM-DD'));
+      jsonObj[field_name] = _getDate(dataCell, utcOffset)
     } catch (error) {
       return error.message
     }
@@ -54,7 +58,7 @@ function converterDate(field_name, dataCell, jsonObj, utcOffset) {
     date.getFullYear() &&
     Object.prototype.toString.call(date) === "[object Date]"
   ) {
-    jsonObj[field_name] = date;
+    jsonObj[field_name] = _getDate(date, utcOffset)
   } else {
     date_error = `${dataCell}不是日期类型数据`;
   }
@@ -467,7 +471,7 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
         }
       }
       if (error) {
-        errorInfo = errorInfo + "," + error;
+        errorInfo = errorInfo + "；" + error;
       }
     }
   }
@@ -570,6 +574,12 @@ async function insertRow(dataRow, objectName, options: ImportOptions) {
           if (!_.isString(jsonObj._id) || !/^[a-zA-Z0-9]*$/.test(jsonObj._id)) {
             throw new Error('Primary Key ( _id )必须为字母、数字组成的字符串。');
           }
+        }
+        // 如果导入时指定了owner，那么需要给company_id、company_ids赋值，权限保持一致
+        if (jsonObj.owner) {
+          const ownerSession = await auth.getSessionByUserId(jsonObj.owner, space)
+          jsonObj['company_id'] = ownerSession.company_id
+          jsonObj['company_ids'] = ownerSession.company_ids
         }
         await objectCollection.insert(jsonObj, options.userSession);
         insertInfo["create"] = true;
@@ -720,7 +730,7 @@ const formatErrors = function(errorList) {
   if (errorList && _.isArray(errorList) && errorList.length > 0) {
     errors = "";
     _.each(errorList, (item, index) => {
-      errors = `${errors}\n:::warning\n${item}\n\n:::\n\n\\\n`;
+      errors = `${errors}\n<p>${item}</p>\n`;
     });
   }
 

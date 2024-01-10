@@ -262,6 +262,12 @@ fields:
         }
       }
     group: Recall Actions
+  is_system:
+    type: boolean
+    label: System
+    readonly: true
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    disabled: true
     
 relatedList:
   - process_node

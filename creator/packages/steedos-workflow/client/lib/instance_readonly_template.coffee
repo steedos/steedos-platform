@@ -331,7 +331,10 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = selectedOptions.map((item) -> return item.label).join(",")
 		when 'number'
 			if value or value == 0
-				value = Steedos.numberToString value, field.digits
+				if field.is_percent
+					value = Steedos.numberToPercentString value, field.digits
+				else
+					value = Steedos.numberToString value, field.digits
 		when 'odata'
 			detail_url = field.detail_url
 			if field.is_multiselect
@@ -378,14 +381,16 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			if value
 				if !field.is_multiselect
 					value = [value]
-				
 				if Meteor.isClient
-					res = Steedos.authRequest('/api/v1/'+field.reference_to+'?filters=[["'+(field.reference_to_field || '_id')+'","in", '+JSON.stringify(value)+']]&fields=["_id","name"]', {async:false})
+					uiSchema = Creator.getObject(field.reference_to)
+					nameField = uiSchema?.NAME_FIELD_KEY || 'name'
+					res = Steedos.authRequest('/api/v1/'+field.reference_to+'?filters=[["'+(field.reference_to_field || '_id')+'","in", '+JSON.stringify(value)+']]&fields=["_id","'+nameField+'"]', {async:false})
 					records = res.data.items
 				else if Meteor.isServer
-					records = Steedos.objectFind(field.reference_to, { filters: [[(field.reference_to_field || '_id'), 'in', value]], fields: ["_id", "name"] });
+					nameField = Steedos.getObjectNameFieldKey(field.reference_to);
+					records = Steedos.objectFind(field.reference_to, { filters: [[(field.reference_to_field || '_id'), 'in', value]], fields: ["_id", nameField] });
 				value = _.map records, (item)->
-					return "<a href='#{Steedos.absoluteUrl('/app/-/'+field.reference_to+'/view/'+item._id)}' target='_blank'>#{item.name}</a>"
+					return "<a href='#{Steedos.absoluteUrl('/app/-/'+field.reference_to+'/view/'+item._id)}' target='_blank'>#{item[nameField]}</a>"
 
 				value = value.join("");	
 		when 'html'

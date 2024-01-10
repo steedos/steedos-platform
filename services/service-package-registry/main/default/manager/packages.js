@@ -101,7 +101,7 @@ const getAllPackages = async ()=>{
     return packages;
 }
 
-const userDir = path.join(process.cwd(), '.steedos');
+const userDir = registry.settings.userDir;
 const maintainSystemFiles = ()=>{
     if(!fs.existsSync(userDir)){
         fs.mkdirSync(userDir);

@@ -1,14 +1,15 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-16 15:58:42
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-16 16:09:10
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-01-08 15:36:18
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-package-loader');
+const path = require('path');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -26,7 +27,8 @@ module.exports = {
 			path: __dirname,
 			name: this.name,
 			isPackage: false
-		}
+		},
+		userDir: process.env.STEEDOS_PACKAGE_STORAGE || path.join(process.cwd(), '.steedos'),
 	},
 
 	/**

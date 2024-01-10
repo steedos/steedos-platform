@@ -16,11 +16,11 @@ fields:
     is_wide: true
     name: name
     filterable: true
-    # amis:
-    #   className:
-    #     'color-priority-danger': "${extras && extras.priority == '特急'}"
-    #     'color-priority-warning': "${extras && extras.priority == '紧急'}"
-    #     'color-priority-muted': "${extras && extras.priority == '办文'}" 
+    amis:
+      className:
+        'color-priority-danger': "${extras && extras.priority == '特急'}"
+        'color-priority-warning': "${extras && extras.priority == '紧急'}"
+        'color-priority-muted': "${extras && extras.priority == '办文'}" 
   submitter_name:
     type: text
     label: Submitter's Name

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 17:00:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-07-03 11:39:40
+ * @LastEditTime: 2024-01-04 14:47:33
  * @Description: 
  */
 const { moleculerGql: gql } = require("moleculer-apollo-server");
@@ -68,7 +68,7 @@ export function generateSettingsGraphql(objectConfig: SteedosObjectTypeConfig, g
             let obj;
             try {
                 obj = getObject(refTo);
-                objectDataLoader = obj.enable_dataloader != false;
+                objectDataLoader = obj.enable_dataloader != false && process.env.STEEDOS_GRAPHQL_ENABLE_DATALOADER != 'false';
                 if (refTo != objectName && (!obj)) {
                     type += `${name}: ${field.multiple ? "[JSON]" : "JSON"} `; // 未找到关联对象时仍返回字段值
                     return type;

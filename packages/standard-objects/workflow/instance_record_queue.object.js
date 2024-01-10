@@ -80,6 +80,8 @@ const objectFind = function (objectApiName, query) {
 
 Steedos.objectFind = objectFind;
 
+Steedos.getObjectNameFieldKey = getObjectNameFieldKey;
+
 var _eval = require('eval');
 var isConfigured = false;
 var sendWorker = function (task, interval) {
@@ -295,7 +297,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId)
         }
         value = getFileFieldValue(wfValue, 'file')
     } else if (['lookup', 'master_detail'].includes(oFieldType) && wField.type == 'lookup') {
-        value = wfValue
+        value = wfValue ? wfValue : null
     }
     // 日期、日期时间
     else if (oFieldType === 'date' || oFieldType === 'datetime') {
@@ -304,9 +306,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId)
         }
     }
     else if (oField.multiple && oFieldType == 'select' && wField.type == 'multiSelect') {
-        if (wfValue) {
-            value = wfValue.split(',');
-        }
+        value = wfValue ? wfValue.split(',') : null;
     }
     else {
         value = wfValue;

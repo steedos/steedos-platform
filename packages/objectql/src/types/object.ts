@@ -125,7 +125,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 export const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['enable_dataloader', 'label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging"]
+const properties = ['originalFields', 'enable_dataloader', 'label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging"]
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -1832,7 +1832,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 let detailFieldName = infos[1];
                 let related_field = await getObject(detailObjectApiName).getField(detailFieldName);
                 if(related_field){
-                    if((related_field.type == "master_detail" || (related_field.type == "lookup" && related_field.relatedList)) && related_field.reference_to && related_field.reference_to == this.name){
+                    if((related_field.type == "master_detail" || (related_field.type == "lookup")) && related_field.reference_to && related_field.reference_to == this.name){
                         if(detailObjectApiName == "object_fields"){
                             related_objects.splice(0, 0, {object_name: detailObjectApiName, foreign_key: detailFieldName})
                         }else{
