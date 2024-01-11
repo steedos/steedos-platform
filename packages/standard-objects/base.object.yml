@@ -224,6 +224,7 @@ fields:
       - label: Terminated
         value: terminated
     visible_on: "{{false}}"
+    readonly: true
     sort_no: 1400
   process_state:
     label: Process State
