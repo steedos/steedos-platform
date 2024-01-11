@@ -1,7 +1,9 @@
 name: lookup
 label: lookup
 columns:
-  - name
+  - field: name
+    wrap: true
+    width: 300
   - flow_name
   - submitter
   - submit_date

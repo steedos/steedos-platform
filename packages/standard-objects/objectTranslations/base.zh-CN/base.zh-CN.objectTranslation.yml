@@ -137,6 +137,8 @@ fields:
 actions:
   standard_query:
     label: 查找
+  standard_create_instance:
+    label: 申请
   standard_new:
     label: 新建
   standard_open_view:
@@ -149,8 +151,6 @@ actions:
     label: 删除
   standard_approve:
     label: 发起审批
-  standard_create_instance:
-    label: 新建审批
   standard_view_instance:
     label: 查看审批单
   standard_follow:
