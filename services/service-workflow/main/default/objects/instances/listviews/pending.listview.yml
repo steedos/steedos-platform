@@ -1,7 +1,9 @@
 name: pending
 label: 进行中
 columns:
-  - name
+  - field: name
+    wrap: true
+    width: 300
   - applicant
   - submit_date
   - flow_name
