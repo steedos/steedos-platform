@@ -392,7 +392,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 				value = _.map records, (item)->
 					return "<a href='#{Steedos.absoluteUrl('/app/-/'+field.reference_to+'/view/'+item._id)}' target='_blank'>#{item[nameField]}</a>"
 
-				value = value.join("");	
+				value = value.join(" , ");	
 		when 'html'
 			value = if value then "<div class=\"steedos-html\">#{value}</div>" else ''
 
