@@ -508,17 +508,19 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         case 'lookup':
         case 'master_detail':
             let refObjName = objField.reference_to;
+            const refToField = objField.reference_to_field
             if (_.isString(refObjName)) {
-                // const refObj = objectql.getObject(refObjName);
-                // const nameFieldKey = await refObj.getNameFieldKey();
-                // formField.type = "odata";
-                // formField.url = `/api/v4/${refObjName}?$top=20`;
-                // formField.search_field = nameFieldKey;
-                // formField.formula = `{${formField.code}.${nameFieldKey}}`;
-                formField.type = 'lookup';
-                formField.reference_to = objField.reference_to;
-                formField.reference_to_field = objField.reference_to_field;
-                formField.config = JSON.stringify({filters: objField.filters, amis: objField.amis});
+                // 人员需转为选择人员字段、部门需转为选择部门字段
+                if ('users' == refObjName || ('space_users' == refObjName && 'user' == refToField)) {
+                    formField.type = 'user'
+                } else if ('organizations' == refObjName) {
+                    formField.type = 'group'
+                } else {
+                    formField.type = 'lookup';
+                    formField.reference_to = objField.reference_to;
+                    formField.reference_to_field = objField.reference_to_field;
+                    formField.config = JSON.stringify({filters: objField.filters, amis: objField.amis});
+                }
             }
             
             break;
