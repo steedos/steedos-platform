@@ -11,4 +11,3 @@ amis:
     'color-priority-danger': "${extras && extras.priority == '特急'}"
     'color-priority-warning': "${extras && extras.priority == '紧急'}"
     'color-priority-muted': "${extras && extras.priority == '办文'}" 
-    'break-all': true
