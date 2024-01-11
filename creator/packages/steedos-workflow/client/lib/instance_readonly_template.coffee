@@ -374,7 +374,12 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 					records = Steedos.objectFind("cfs_files_filerecord", { filters: [["_id", 'in', value]], fields: ["_id", "original"] });
 
 				value = _.map records, (item)->
-					return "<a href='#{Steedos.absoluteUrl('/api/files/files/'+item._id+'?download=true')}' target='_blank' style='display: block;'>#{item.original.name}</a>"
+					fileName = item.original.name;
+					fileUrl = Steedos.absoluteUrl('/api/files/files/'+item._id);
+					filePreviewHtml = '';
+					if [".pdf", ".jpg", ".jpeg", ".png", ".gif"].indexOf(fileName.slice(-4)) > -1
+						filePreviewHtml = "&ensp;<a href='#{fileUrl}' target='_blank' class='antd-Link'><span class='antd-TplField'><span>预览</span></span></a>"
+					return "<div><a href='#{fileUrl+'?download=true'}' target='_blank'>#{fileName}</a> #{filePreviewHtml ? filePreviewHtml : ''}</div>"
 
 				value = value.join("");
 		when 'lookup'
