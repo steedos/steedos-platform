@@ -211,6 +211,7 @@ module.exports = {
         },
         standard_create_instance: {
             label: "Create Approval",
+            sort: -1,
             on: "list",
             type: "amis_button",
             visible: function(object_name, record_id, record_permissions, data){
@@ -222,7 +223,7 @@ module.exports = {
                 "body": [
                     {
                         "type": "button",
-                        "label": "新建审批",
+                        "label": "申请",
                         "id": "u:standard_create_instance",
                         "editorState": "default",
                         "onEvent": {
