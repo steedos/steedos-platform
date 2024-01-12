@@ -185,6 +185,33 @@ fields:
     type: boolean
     defaultValue: false
     required: false
+  required_details:
+    label: Required Details
+    inlineHelpText: Is There A Record Of The Sub Check Table When Initiating The Approval.
+    type: select
+    multiple: true
+    is_wide: true
+    depend_on:
+      - object_name
+    amis:
+      disabledOn: "${is_system == true}"
+      "source": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst needToRemove = ['cms_files.parent', 'tasks.related_to', 'notes.related_to', 'events.related_to', 'instances.record_ids', 'approvals.related_to', 'process_instance_history.target_object', 'audit_records.related_to'];\nconst options = [];\nfor (const item of data.options) {\n  if (!needToRemove.includes(item.value)) {\n    options.push(item);\n  }\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
+        "sendOn": "this.object_name"
+        "requestAdaptor": ""
+      "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        "adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst needToRemove = ['cms_files.parent', 'tasks.related_to', 'notes.related_to', 'events.related_to', 'instances.record_ids', 'approvals.related_to', 'process_instance_history.target_object', 'audit_records.related_to'];\nconst options = [];\nfor (const item of data.options) {\n  if (!needToRemove.includes(item.value)) {\n    options.push(item);\n  }\n}\ndata.options = options;\npayload.data = data;\nreturn payload;\n"
+        "sendOn": "this.object_name"
+        "requestAdaptor": ""
+    
 list_views:
   default:
     columns:

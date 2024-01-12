@@ -80,6 +80,10 @@ fields:
   lock_record_after_approval:
     label: Lock record after approval
     description:
+  required_details:
+    label: Required Details
+    help: Is There A Record Of The Sub Check Table When Initiating The Approval.
+    description:
 groups:
   script: Script
 listviews:

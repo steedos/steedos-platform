@@ -80,6 +80,10 @@ fields:
   lock_record_after_approval:
     label: 审批完成后锁定记录
     description:
+  required_details:
+    label: 必填子表
+    help: 台账里发起审批时校验子表是否有记录。
+    description:
 groups:
   script: 脚本
 listviews:
