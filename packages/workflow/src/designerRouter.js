@@ -6,6 +6,8 @@ const objectql = require("@steedos/objectql");
 const _ = require('underscore');
 const bodyParser = require('body-parser');
 const Fiber = require('fibers');
+const steedosI18n = require("@steedos/i18n");
+
 const designerManager = require('./designerManager');
 
 const SteedosRouter = require('@steedos/router');
@@ -1111,6 +1113,9 @@ router.post('/am/forms/addFieldsFromObject', async function (req, res) {
         const formDoc = await formObj.findOne(formId);
         const obj = objectql.getObject(object_name);
         const objConfig = await obj.toConfig();
+        const userSession = req.user;
+        const lng = userSession.language || 'zh-CN';
+        steedosI18n.translationObject(lng, objConfig.name, objConfig);
 
         let updatedForms = [];
         let updatedFlows = [];
