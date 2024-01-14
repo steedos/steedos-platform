@@ -111,7 +111,7 @@ fields:
     name: current.fields
     amis: 
       inlineEditMode: false
-      # addable: false
+      addable: false
       columns: ["code", "name", "type", "is_required", "is_wide", "is_list_display", "is_searchable", "is_multiselect"]
   current.fields.$.code:
     label: Code
