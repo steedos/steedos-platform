@@ -362,6 +362,72 @@ router.get('/api/sync/qywxId', async function (req, res) {
     res.status(200).send({ message: "ok" });
 });
 
+// 企业微信第三方服务商回调验证
+router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: false }), async function (req, res) {
+    const broker = objectql.getSteedosSchema().broker
+    var query = req.query;
+    // 配置企业微信第三方应用验证参数
+    var AES_KEY = process.env.STEEDOS_QYWX_SAAS_ENCODINGAESKEY || "";
+    var TOKEN = process.env.STEEDOS_QYWX_SAAS_TOKEN || "";
+    var SUITEID = process.env.STEEDOS_QYWX_SAAS_SUITEID || "";
+
+    var signature = query['msg_signature'];
+    var timeStamp = query['timestamp'];
+    var nonce = query['nonce'];
+    var encrypt = req.body.xml.encrypt;
+
+    var token = TOKEN;
+    var aesKey = AES_KEY;
+    var suiteKey = SUITEID;
+
+    data = await broker.call('qywx.decrypt', {
+        signature: signature,
+        nonce: nonce,
+        timeStamp: timeStamp,
+        suiteKey: suiteKey,
+        token: token,
+        aesKey: aesKey,
+        encrypt: encrypt
+    });
+    var message = await parseXML(data.data);
+
+    if (!message.InfoType){
+        if (message.Event == "enter_agent"){
+            res.writeHead(200, {
+                "Content-Type": "text/plain"
+            });
+            res.end("success");
+            return res.end("success");
+        }
+    }else{
+        switch (message != null ? message.InfoType : void 0) {
+            case 'suite_ticket':
+                // SuiteTicket(message);
+                res.writeHead(200, {
+                    "Content-Type": "text/plain"
+                });
+                return res.end("success");
+            case 'create_auth':
+                res.writeHead(200, {
+                    "Content-Type": "text/plain"
+                });
+                res.end("success");
+                // return CreateAuth(message);
+            case 'cancel_auth':
+                res.writeHead(200, {
+                    "Content-Type": "text/plain"
+                });
+                res.end(result != null ? result.message : void 0);
+                // return CancelAuth(message);
+            // case 'change_auth':
+            //     return ChangeContact(message.AuthCorpId);
+            // case 'change_contact':
+            //     return ChangeContact(message.AuthCorpId);
+            
+        }
+    }
+});
+
 let getAbsoluteUrl = function (url) {
     var rootUrl;
     rootUrl = __meteor_runtime_config__ ? __meteor_runtime_config__.ROOT_URL_PATH_PREFIX : "";
