@@ -1,6 +1,6 @@
 {
     "name": "@steedos/service-object-mixin",
-    "version": "2.6.4-beta.5",
+    "version": "2.6.4-beta.6",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -13,5 +13,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "3743a0aec6c410a9d924574b0b73f67bd5ced614"
+    "gitHead": "63c446935fef9a8b83b7b34f11018310100f3669"
 }
