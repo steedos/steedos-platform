@@ -192,6 +192,8 @@ fields:
     label: Before Edit
   form.afterEdit:
     label: After Edit
+  compactLayouts:
+    label: Highlight Fields
 groups:
   external_data_source: External data source
   switch: Switch

@@ -260,7 +260,7 @@ fields:
 groups:
   template: 模板
   synchronization: 归档
-  script: 脚本
+  develop: 开发
   distribution: 分发
   others: 高级
   flowbindobject: 流程绑定对象
