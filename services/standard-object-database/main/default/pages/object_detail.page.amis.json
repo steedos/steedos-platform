@@ -18,6 +18,7 @@
                             "type": "steedos-object-form",
                             "label": "对象表单",
                             "mode": "read",
+                            "enableTabs": true,
                             "objectApiName": "${objectName}",
                             "labelAlign": "left",
                             "id": "u:4eb5fa6f6fad",
