@@ -95,6 +95,7 @@ fields:
     name: field_mappings
     filterable: true
     amis:
+      showIndex: true,
       columns: ["header","api_name","matched_by","save_key_while_fail"]
   field_mappings.$:
     label: Column

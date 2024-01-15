@@ -29,6 +29,7 @@ fields:
       - object_name
       - flow_id
     amis:
+      showIndex: true
       columns: ["workflow_field", "object_field"]
   field_map.$.workflow_field:
     label: Field of Workflow
@@ -87,6 +88,7 @@ fields:
       - object_name
       - flow_id
     amis:
+      showIndex: true
       columns: ["object_field","workflow_field"]
   field_map_back.$.object_field:
     label: Field of Object
