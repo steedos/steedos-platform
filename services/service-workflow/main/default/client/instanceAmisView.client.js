@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-06 17:01:07
+ * @LastEditTime: 2023-12-29 18:59:45
  * @Description: 
  */
 ; (function () {
@@ -193,10 +193,10 @@
 
                 const amisSchema = getAmisSchema(ins, ctx.data.readonly);
 
-                const page = {
-                    name: "instanceAmisView",
-                    render_engine: "amis",
-                    schema: {
+                let schema = null;
+
+                if(!_.isEmpty(amisSchema)){
+                    schema = {
                         type: "service",
                         body: amisSchema,
                         id: "instanceAmisView",
@@ -204,6 +204,35 @@
                             instanceId: ins._id,
                         }
                     }
+                }else{
+
+                    let schemaApiUrl = ctx.data.print ? `/api/workflow/form/${ins.form}/${ins.form_version}/print/schema` : `/api/workflow/form/${ins.form}/${ins.form_version}/schema`
+                    let schemaApiData = ctx.data.print ? {} : {
+                        flowId: ins.flow,
+                        flowVersionId: ins.flow_version,
+                        stepId: InstanceManager.getCurrentStep()._id,
+                        box: Session.get("box")
+                    }
+
+                    schema = {
+                        'type': 'service',
+                        id: "instanceAmisView",
+                        schemaApi: {
+                            "method": "get",
+                            "url": schemaApiUrl,
+                            "data": schemaApiData
+                        },
+                        data: {
+                            instanceId: ins._id,
+                            instance: ins
+                        }
+                    }
+                }
+
+                const page = {
+                    name: "instanceAmisView",
+                    render_engine: "amis",
+                    schema: schema
                 }
         
                 const instanceValues = WorkflowManager_format.getAutoformSchemaValues();

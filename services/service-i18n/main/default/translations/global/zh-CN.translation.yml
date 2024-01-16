@@ -80,4 +80,6 @@ CustomLabels:
       show_heading: 显示标题
       default_to_object_name: 默认为对象名称
       displayed_fields: 显示的字段
-      set_subform: 设置子表
+      set_subform: 设置子表,
+      select_fields: 选择字段
+      select_subform: 选择子表

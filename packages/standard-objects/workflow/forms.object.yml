@@ -89,7 +89,7 @@ fields:
     label: current
     type: object
     is_wide: true
-    readonly: true
+    # readonly: true
     blackbox: true
     name: current
   current.form_script:
@@ -105,10 +105,14 @@ fields:
     name: current.name_forumla
   current.fields:
     label: Fields
-    type: grid
+    type: table
     is_wide: true
-    readonly: true
+    # readonly: true
     name: current.fields
+    amis: 
+      inlineEditMode: false
+      addable: false
+      columns: ["code", "name", "type", "is_required", "is_wide", "is_list_display", "is_searchable", "is_multiselect"]
   current.fields.$.code:
     label: Code
     type: text
@@ -167,28 +171,36 @@ fields:
   current.fields.$.is_required:
     label: Required
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_required
   current.fields.$.is_wide:
     label: Wide
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_wide
   current.fields.$.is_list_display:
     label: Display in List
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_list_display
   current.fields.$.is_searchable:
     label: Searchable
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_searchable
   current.fields.$.is_multiselect:
     label: Multiselect
     type: boolean
-    readonly: true
+    # readonly: true
     name: current.fields.$.is_multiselect
+  current.fields.$.visibleOn:
+    label: visible On
+    type: code
+    # readonly: true
+    is_wide: true
+    name: current.fields.$.visibleOn
+    amis:
+      visibleOn: ${!!_master.record.object_name}
   # company_id:
   #   required: false
   #   omit: false

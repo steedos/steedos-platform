@@ -12,10 +12,14 @@ tab_groups:
   - group_name: object_settings
   - group_name: user_interface
   - group_name: statistical_analysis
-  - group_name: development
+  - group_name: development    
+    default_open: false
   - group_name: process_automation
+    default_open: false
   - group_name: approval_workflow
+    default_open: false
   - group_name: advanced_settings
+    default_open: false
 tab_items:
   # admin_space_user_info:
   #   group: 个人设置
@@ -29,10 +33,10 @@ tab_items:
   admin_space_info:
     group: company_settings
     index: 3
-  admin_organizations:
+  admin_company:
     group: company_settings
     index: 4
-  admin_company:
+  admin_organizations:
     group: company_settings
     index: 5
   admin_space_users:
@@ -47,30 +51,24 @@ tab_items:
   admin_apps:
     group: apps
     index: 10
-  admin_steedos_packages:
-    group: apps
-    index: 11
   admin_objects:
-    group: object_settings
+    group: apps
     index: 12
-  admin_datasources:
-    group: object_settings
-    index: 13
   admin_pages:
-    group: user_interface
-    index: 15
+    group: apps
+    index: 14
   admin_tabs:
-    group: user_interface
+    group: apps
     index: 16
-  admin_queries:
-    group: statistical_analysis
-    index: 17
-  admin_charts:
-    group: statistical_analysis
+  admin_queue_import:
+    group: apps
     index: 18
-  admin_stimulsoft_reports:
-    group: statistical_analysis
-    index: 19
+  admin_datasources:
+    group: apps
+    index: 20
+  admin_steedos_packages:
+    group: development
+    index: 18
   admin_developer:
     group: development
     index: 19.50
@@ -140,9 +138,6 @@ tab_items:
   admin_autonumber:
     group: advanced_settings
     index: 37
-  admin_queue_import:
-    group: advanced_settings
-    index: 38
   # admin_web_forms:
   #   group: 高级设置
   #   index: 38

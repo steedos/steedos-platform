@@ -19,3 +19,5 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: datasources
+license:
+  - platform-enterprise

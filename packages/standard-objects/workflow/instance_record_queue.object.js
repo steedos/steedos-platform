@@ -202,6 +202,9 @@ const getFileFieldValue = function (recordFieldId, fType) {
 };
 
 const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId) {
+    if(wField.steedos_field){
+        return wfValue
+    }
     let value;
     var oFieldType = oField.data_type || oField.type;
     // 表单选人选组字段 至 对象 lookup master_detail类型字段同步

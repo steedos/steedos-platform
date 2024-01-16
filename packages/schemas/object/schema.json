@@ -322,6 +322,10 @@
                     "$ref": "#/definitions/page"
                 }
             }
+        },
+        "compactLayouts": {
+            "type": "array",
+            "description": "高亮字段"
         }
     },
     "definitions": {
