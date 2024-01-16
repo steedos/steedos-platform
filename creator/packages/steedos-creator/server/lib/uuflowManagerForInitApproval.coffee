@@ -151,7 +151,11 @@ getFileFieldValue = (recordFieldId, fType)->
 		else
 			return value;
 
-getInstanceFieldValue = (objField, formField, record, object_field, spaceId) ->
+getInstanceFieldValue = (objField, formField, record, object_field, spaceId, recordFieldValue) ->
+
+	if formField.steedos_field
+		return recordFieldValue
+
 	recordFieldValue = record[objField.name]
 	value
 	# lookup、master_detail字段同步到odata字段
@@ -458,10 +462,13 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			return formField.type == 'table'
 		formTableFieldsCode = _.pluck(formTableFields, 'code')
 
+		# steedos field 中定义的grid、table类型字段
 		tableFieldCodes = []
 		tableFieldMap = []
+		# 相关表
 		tableToRelatedMap = {}
 
+		# field_map: 从台账到审批单的字段同步映射规则
 		ow.field_map?.forEach (fm) ->
 			object_field = fm.object_field
 			workflow_field = fm.workflow_field
@@ -486,10 +493,10 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 					tableToRelatedMap[tableToRelatedMapKey]['_FROM_TABLE_CODE'] = wTableCode
 
 				tableToRelatedMap[tableToRelatedMapKey][oTableFieldCode] = workflow_field
-			# 判断是否是表格字段
+			# 判断是否是表格字段(object field 的 grid、table)
 			else if workflow_field.indexOf('.') > 0 and object_field.indexOf('.$.') > 0
 				wTableCode = workflow_field.split('.')[0]
-				oTableCode = object_field.split('.$.')[0]
+				oTableCode = object_field.split('.$.')[0]  ref1.table1.$.name
 				if record.hasOwnProperty(oTableCode) and _.isArray(record[oTableCode])
 					tableFieldCodes.push(JSON.stringify({
 						workflow_table_field_code: wTableCode,
@@ -506,6 +513,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						referenceToFieldName = oTableCodeReferenceField.reference_to_field || '_id';
 						referenceToObjectName = oTableCodeReferenceField.reference_to;
 						referenceToFieldValue = record[oTableCodeReferenceField.name];
+						# 此处借助getFieldOdataValue函数的能力, 获取关联表(lookup)的记录. 此处未未考虑lookup单选的情况. 此处获取关系数据的所有字段, 交由下方的表格数据同步统一整理数据
 						referenceToDoc = getFieldOdataValue(referenceToObjectName, referenceToFieldValue, referenceToFieldName);
 						if referenceToDoc[gridCode]
 							record[oTableCode] = referenceToDoc[gridCode];
@@ -529,9 +537,9 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
 
-						values[workflow_field] = getInstanceFieldValue(objectLookupField, formField, lookupObjectRecord, lookupFieldName, spaceId)
+						values[workflow_field] = getInstanceFieldValue(objectLookupField, formField, lookupObjectRecord, lookupFieldName, spaceId, record[lookupFieldName])
 			else
-				values[workflow_field] = getInstanceFieldValue(objField, formField, record, object_field, spaceId)
+				values[workflow_field] = getInstanceFieldValue(objField, formField, record, object_field, spaceId, record[object_field])
 
 		# 表格字段
 		_.uniq(tableFieldCodes).forEach (tfc) ->
@@ -539,11 +547,11 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 			values[c.workflow_table_field_code] = []
 			record[c.object_table_field_code].forEach (tr) ->
 				newTr = {}
-				_.each tr, (v, k) ->
+				_.each tr, (tdValue, k) ->
 					tableFieldMap.forEach (tfm) ->
 						if tfm.object_field is (c.object_table_field_code + '.$.' + k)
 							wTdCode = tfm.workflow_field.split('.')[1]
-							newTr[wTdCode] = v
+							newTr[wTdCode] = tdValue
 				if not _.isEmpty(newTr)
 					values[c.workflow_table_field_code].push(newTr)
 
@@ -569,7 +577,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 					]
 				})
 
-				relatedRecords.forEach (rr) ->
+				relatedRecords.forEach (relatedRecord) ->
 					tableValueItem = {}
 					_.each map, (valueKey, fieldKey) ->
 						if fieldKey != '_FROM_TABLE_CODE'
@@ -584,12 +592,12 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							relatedObjectField = relatedObject.fields[fieldKey]
 							if !formField || !relatedObjectField
 								return
-							tableFieldValue = getInstanceFieldValue(relatedObjectField, formField, rr, fieldKey, spaceId)
+							tableFieldValue = getInstanceFieldValue(relatedObjectField, formField, relatedRecord, fieldKey, spaceId, relatedRecord[fieldKey])
 							tableValueItem[formFieldKey] = tableFieldValue
 					if !_.isEmpty(tableValueItem)
-						tableValueItem._id = rr._id
+						tableValueItem._id = relatedRecord._id
 						tableValues.push(tableValueItem)
-						relatedTableItems.push({ _table: { _id: rr._id, _code: tableCode } } )
+						relatedTableItems.push({ _table: { _id: relatedRecord._id, _code: tableCode } } )
 
 				values[tableCode] = tableValues
 				relatedTablesInfo[relatedObjectName] = relatedTableItems

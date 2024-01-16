@@ -441,6 +441,7 @@ fields:
     required: "{{formData.type === 'select' ? true: false}}"
     sort_no: 280
     amis:
+      showIndex: true
       disabledOn: "${is_system == true}"
   options.$:
     label: Options

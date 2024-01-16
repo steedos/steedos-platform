@@ -494,6 +494,7 @@ getHandlersManager.getHandlers = function (instance_id, step_id, login_user_id) 
         });
         // 取得最新的values
         newest_values = uuflowManager.getUpdatedValues(instance);
+        console.log(`newest_values`, newest_values, field_code, newest_values[field_code])
         // 获取user_id数组
         user_ids_names = new Array;
         if (newest_values[field_code]) {
@@ -516,6 +517,7 @@ getHandlersManager.getHandlers = function (instance_id, step_id, login_user_id) 
             }
             return user_ids.push(user["id"]);
         });
+        console.log(`newest_values`, user_ids_names, user_ids, _.uniq(user_ids))
         users = _.uniq(user_ids);
     } else if (deal_type === "specifyStepRole") {
         // 7.***********指定步骤处理审批岗位***********

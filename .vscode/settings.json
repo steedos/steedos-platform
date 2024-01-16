@@ -18,5 +18,8 @@
         "./packages/schemas/permissionset/schema.json": "/*.permissionset.yml",
         "./packages/schemas/profile/schema.json": "/*.profile.yml",
         "./packages/schemas/dashboard/schema.json": "/*.dashboard.yml"
-    }
+    },
+    "cSpell.words": [
+        "historys"
+    ]
 }

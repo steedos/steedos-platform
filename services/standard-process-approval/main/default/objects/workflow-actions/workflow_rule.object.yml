@@ -108,6 +108,7 @@ fields:
     required: false
     group: time_dependent_action
     amis:
+      showIndex: true
       columns: ["number", "unit", "type", "date_field"]
   time_triggers.$:
     label: Field

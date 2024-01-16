@@ -226,6 +226,7 @@
                                   "addable": true,
                                   "draggable": true,
                                   "editable": true,
+                                  "showIndex": true,
                                   "fields": [
                                     {
                                       "name": "group_name",

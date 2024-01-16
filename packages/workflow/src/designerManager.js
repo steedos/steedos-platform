@@ -5,6 +5,8 @@ const objectql = require("@steedos/objectql");
 const steedosSchema = objectql.getSteedosSchema();
 const Fiber = require('fibers');
 
+const lodash = require('lodash');
+
 async function getByAdminSpaceIds(spaceIds, companyId, isCompanyAdmin) {
     let filters = _makeInFilters('space', spaceIds);
     let spaceFilters = filters;
@@ -450,7 +452,10 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
         "is_required": objField.required || false,
         "is_multiselect": objField.multiple || false,
         "default_value": objField.defaultValue,
-        "_id": await formObj._makeNewID()
+        "_id": await formObj._makeNewID(),
+        "steedos_field": lodash.pickBy(objField, (v,k)=>{
+            return !lodash.includes(['_id', '_name', 'is_system', 'space', 'company_id', 'company_ids', 'object_name', 'owner', 'created', 'modified', 'created_by', 'modified_by'], k)
+        })
     };
     switch (objField.type) {
         case 'text':
@@ -692,7 +697,8 @@ async function transformObjectDetailFieldsToFormTableFields(instance_table_field
             "is_wide": true,
             "is_required": false,
             "fields": tFields,
-            "_id": await formObj._makeNewID()
+            "_id": await formObj._makeNewID(),
+            "relatedId": detailFieldFullname
         });
     }
     return tables

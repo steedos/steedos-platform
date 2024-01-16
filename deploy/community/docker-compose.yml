@@ -5,6 +5,9 @@ services:
   steedos-community:
     image: steedos/steedos-community:latest
     container_name: steedos-community
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - "80:80"    
       - "443:443"  
