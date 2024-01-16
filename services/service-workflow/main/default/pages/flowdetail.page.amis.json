@@ -631,6 +631,16 @@
 														"headers": {
 														  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
 														}
+													  },
+													  "onEvent": {
+														"submitSucc": {
+															"actions": [
+																{
+																	"componentId": "form_forms",
+																	"actionType": "reload"
+																}
+															]
+														}
 													  }
 													}
 												  ],
@@ -647,6 +657,7 @@
 								{
 									"type": "steedos-object-form",
 									"label": "对象表单",
+									"debug": false,
 									"objectApiName": "forms",
 									"recordId": "${_master.record.form}",
 									"id": "u:5df987ad9bc8",
