@@ -1,7 +1,0 @@
-name: contact_id
-type: lookup
-label: Contact
-reference_to: contacts
-visible_on: '{{global.mode ===''read'' ? true : false}}'
-readonly: true
-sort_no: 240

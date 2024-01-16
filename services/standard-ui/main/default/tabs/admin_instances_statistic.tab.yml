@@ -19,3 +19,6 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: instances_statistic
+license:
+  - platform-enterprise
+

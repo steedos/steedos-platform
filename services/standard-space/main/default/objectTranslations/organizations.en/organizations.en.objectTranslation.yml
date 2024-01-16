@@ -1,5 +1,5 @@
 name: organizations
-label: Department
+label: Organizational Structures
 description: 
 fields:
   name:
@@ -11,15 +11,15 @@ fields:
     help: 
     description: 
   parent:
-    label: Superior Department
+    label: Superior Organization
     help: 
     description: 
   parents:
-    label: All Superior Departments
+    label: All Superior Organization
     help: 
     description: 
   children:
-    label: Subordinate Department
+    label: Subordinate Organization
     help: 
     description: 
   sort_no:
@@ -27,7 +27,7 @@ fields:
     help: 
     description: 
   users:
-    label: Department Users
+    label: Organization Users
     help: 
     description: 
   company_id:
@@ -50,11 +50,11 @@ groups:
   systemfields: systemfields
 listviews:
   all:
-    label: All Departments
+    label: All Organizations
   lookup:
-    label: Lookup Departments
+    label: Lookup Organization
   effective:
-    label: Effective Departments
+    label: Effective Organizations
 actions:
   standard_query:
     label: Search

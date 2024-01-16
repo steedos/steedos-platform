@@ -8,7 +8,7 @@ CustomApplications:
     groups: 
       personal_settings: Personal Settings
       company_settings: Company Settings
-      apps: Apps
+      apps: Custom Apps
       object_settings: Object Settings
       user_interface: User Interface
       statistical_analysis: Data Analysis

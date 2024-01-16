@@ -2,7 +2,7 @@ name: admin_organizations
 desktop: true
 icon: team_member
 is_new_window: false
-label: 部门
+label: 组织结构
 mobile: true
 permissions:
   - permission: 'on'

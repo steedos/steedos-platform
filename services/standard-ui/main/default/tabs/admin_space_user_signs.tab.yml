@@ -19,3 +19,7 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: space_user_signs
+license:
+  - platform-professional
+  - platform-enterprise
+

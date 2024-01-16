@@ -359,7 +359,7 @@
 																					"actions": [
 																					  {
 																						"actionType": "custom",
-																						"script": "let fId = event.data._id;let newFields = _.map(event.data.fields, (field)=>{  if(field._id === fId){    field.required = event.data.required  };  return field;});setTimeout(function () {  doAction({    actionType: \"setValue\",    componentId: \"addFormFieldsForm\",    args: { value: {fields: newFields} },  });}, 300);"
+																						"script": "let fName = event.data.name;let newFields = _.map(event.data.fields, (field)=>{  if(field.name === fName){    field.required = event.data.required  };  return field;});setTimeout(function () {  doAction({    actionType: \"setValue\",    componentId: \"addFormFieldsForm\",    args: { value: {fields: newFields} },  });}, 300);"
 																					  }
 																					]
 																				  }
