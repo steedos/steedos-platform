@@ -1,5 +1,5 @@
 name: organizations
-label: 部门
+label: 组织机构
 description: 
 fields:
   name:
@@ -7,19 +7,19 @@ fields:
     help: 
     description: 
   fullname:
-    label: 部门全称
+    label: 组织全称
     help: 
     description: 
   parent:
-    label: 上级部门
+    label: 上级组织
     help: 
     description: 
   parents:
-    label: 上级部门
+    label: 上级组织
     help: 
     description: 
   children:
-    label: 下级部门
+    label: 下级组织
     help: 
     description: 
   sort_no:
@@ -54,7 +54,7 @@ listviews:
   lookup: 
     label: 相关
   effective:
-    label: 有效部门
+    label: 有效组织
 actions:
   standard_query:
     label: 查找

@@ -19,3 +19,5 @@ permissions:
     permission_set: workflow_admin
 type: object
 object: instance_number_rules
+license:
+  - platform-enterprise

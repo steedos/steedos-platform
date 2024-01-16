@@ -5,7 +5,7 @@ CustomApplications:
     groups: 
       personal_settings: 个人设置
       company_settings: 公司设置
-      apps: 应用程序
+      apps: 自定义应用
       object_settings: 对象设置
       user_interface: 用户界面
       statistical_analysis: 统计分析
