@@ -10,3 +10,9 @@ sidebar:
   hidden: true
   enable_hide: true
   clear_selection_while_hidden: true
+compactLayouts:
+  - email
+  - mobile
+  - organization
+  - company_id
+  - position
