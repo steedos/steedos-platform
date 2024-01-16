@@ -5,6 +5,9 @@ services:
   steedos-enterprise:
     image: steedos/steedos-enterprise:latest
     container_name: steedos-enterprise
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - "80:80"    
       - "443:443"  
