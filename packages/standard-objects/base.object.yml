@@ -224,6 +224,7 @@ fields:
       - label: Terminated
         value: terminated
     visible_on: "{{false}}"
+    readonly: true
     sort_no: 1400
   process_state:
     label: Process State
@@ -266,6 +267,8 @@ fields:
 actions:
   standard_query:
     label: Search
+  standard_create_instance:
+    label: Create Approval
   standard_new:
     label: New
   standard_open_view:
@@ -278,8 +281,6 @@ actions:
     label: Delete
   standard_approve:
     label: Initiate Approval
-  standard_create_instance:
-    label: Create Approval
   standard_view_instance:
     label: View Instance
   standard_follow:

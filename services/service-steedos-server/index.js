@@ -148,6 +148,16 @@ module.exports = {
 					}).promise();
 				}
 			}
+		},
+
+		"$services.changed": async function (ctx) {
+			const { broker } = ctx
+			const hasLicense = broker.registry.hasService('@steedos/service-license')
+			if (hasLicense){
+				global.HAS_LICENSE_SERVICE = true
+			} else {
+				global.HAS_LICENSE_SERVICE = false
+			}
 		}
 	},
 

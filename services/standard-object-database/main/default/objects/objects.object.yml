@@ -275,6 +275,19 @@ fields:
     omit: true
     disabled: true
     readonly: true
+  compactLayouts:
+    label: 高亮字段
+    type: lookup
+    multiple: true
+    reference_to: object_fields
+    reference_to_field: name
+    is_wide: true
+    depend_on:
+      - name
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function(filters, values){
+        return ['object', '=', values.name]
+      }
   form:
     type: object
     label: Form Events

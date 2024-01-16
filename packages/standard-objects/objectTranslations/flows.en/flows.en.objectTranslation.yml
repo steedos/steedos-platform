@@ -263,7 +263,7 @@ fields:
 groups:
   template: Template
   synchronization: Synchronization
-  script: Script
+  develop: Develop
   distribution: Distribution
   others: Others
   flowbindobject: Flow Bind Object

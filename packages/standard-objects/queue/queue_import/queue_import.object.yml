@@ -95,6 +95,7 @@ fields:
     name: field_mappings
     filterable: true
     amis:
+      showIndex: true,
       columns: ["header","api_name","matched_by","save_key_while_fail"]
   field_mappings.$:
     label: Column
@@ -128,6 +129,13 @@ fields:
     reference_to_field: name
     amis: 
       "autoComplete": 
+        "method": "get"
+        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&term=${term}"
+        "headers": 
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}" 
+        "sendOn": "!!this.object_name"
+        "adaptor": "payload.data.options = [{ label: \"Primary Key ( _id )\", value: \"_id\" }].concat(payload.data.options);\nreturn payload;"
+      "source": 
         "method": "get"
         "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options?include_deep=true&term=${term}"
         "headers": 

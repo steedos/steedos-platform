@@ -16,6 +16,7 @@ getRelateds = (objectApiName) ->
 
 objectFindOne = (objectApiName, query) ->
 	return Meteor.wrapAsync((objectApiName, query, cb) ->
+		query.top = 1
 		objectql.getObject(objectApiName).find(query).then (resolve, reject) ->
 			if (resolve && resolve.length > 0)
 				cb(reject, resolve[0])
@@ -194,6 +195,23 @@ getInstanceFieldValue = (objField, formField, record, object_field, spaceId, rec
 		value = recordFieldValue
 	
 	return value
+
+# requiredDetails结构["子表名.子表中master_detail字段名", ...]
+checkRequiredDetails = (requiredDetails, masterRecord) ->
+	if !_.isEmpty requiredDetails
+		# 检查子表必填，即子表必须有记录
+		requiredDetails.forEach (rd) ->
+			subTableName = rd.split('.')[0]
+			subTableMasterField = rd.split('.')[1]
+			subObjConfig = getObjectConfig subTableName
+			masterField = subObjConfig.fields[subTableMasterField]
+			refId = masterField.reference_to_field || '_id'
+			masterFieldValue = masterRecord[refId]
+			# 查询子表记录
+			subTableRecord = objectFindOne(subTableName, { filters: [[subTableMasterField, '=', masterFieldValue]], fields: [subTableMasterField] })
+			if !subTableRecord
+				throw new Error "请先新增#{subObjConfig.label}"
+		return
 
 uuflowManagerForInitApproval = {}
 
@@ -433,6 +451,9 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 	record = objectFindOne(objectName, { filters: [['_id', '=', recordId]]})
 	flow = Creator.getCollection('flows').findOne(flowId, { fields: { form: 1 } })
 	if ow and record
+		requiredDetails = ow.required_details || []
+		checkRequiredDetails(requiredDetails, record)
+
 		form = Creator.getCollection("forms").findOne(flow.form)
 		formFields = form.current.fields || []
 		relatedObjects = getRelateds(objectName)

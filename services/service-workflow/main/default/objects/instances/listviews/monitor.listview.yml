@@ -1,7 +1,9 @@
 name: monitor
 label: 监控箱
 columns:
-  - name
+  - field: name
+    wrap: true
+    width: 300
   - applicant
   - submit_date
   - flow_name

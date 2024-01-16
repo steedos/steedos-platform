@@ -404,7 +404,7 @@ fields:
     is_wide: true
     group: Template
     name: instance_template
-    visible_on: "${enable_amisform ? false : true}"
+    visible_on: "this.enable_amisform ? false : true"
   print_template:
     label: Print Template
     type: code
@@ -412,7 +412,7 @@ fields:
     is_wide: true
     group: Template
     name: print_template
-    visible_on: "${enable_amisform ? false : true}"
+    visible_on: "this.enable_amisform ? false : true"
   field_map:
     label: Mapping
     type: code
@@ -425,9 +425,9 @@ fields:
     type: code
     language: javascript
     is_wide: true
-    group: Script
+    group: Develop
     name: events
-    visible_on: "${enable_amisform ? false : true}"
+    visible_on: "this.enable_amisform ? false : true"
   distribute_optional_users:
     type: object
     label: Users to be Distributed

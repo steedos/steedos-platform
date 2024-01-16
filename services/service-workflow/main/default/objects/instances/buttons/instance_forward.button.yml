@@ -57,7 +57,7 @@ amis_schema: |-
                                               },
                                               {
                                                   "type": "checkbox",
-                                                  "name": "checkbox",
+                                                  "name": "hasSaveInstanceToAttachment",
                                                   "id": "u:da17af0371f8",
                                                   "option": "将原表单存储为附件"
                                               }
@@ -71,13 +71,13 @@ amis_schema: |-
                                                     "record": "${record}",
                                                     "context": "${context}"
                                                 },
-                                                "requestAdaptor": "console.log('====', api);const { record, flow_id, description, context } = api.data; var from_approve_id = null; if(record.approve && record.approve._id){from_approve_id = record.approve._id}else if(window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id){from_approve_id = window.InstanceManager.getCurrentApprove()._id} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": true,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [context.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
+                                                "requestAdaptor": "console.log('====', api);const { record, flow_id, description, hasSaveInstanceToAttachment, context: contextData } = api.data; var from_approve_id = null; if(record.approve && record.approve._id){from_approve_id = record.approve._id}else if(window.InstanceManager && window.InstanceManager.getCurrentApprove()?._id){from_approve_id = window.InstanceManager.getCurrentApprove()._id} \napi.data = {\n  \"instance_id\": record._id,\n  \"space_id\": record.space,\n  \"flow_id\": flow_id,\n  \"hasSaveInstanceToAttachment\": hasSaveInstanceToAttachment || false,\n  \"description\": description,\n  \"isForwardAttachments\": true,\n  \"selectedUsers\": [contextData.userId],\n  \"action_type\": \"forward\",\n  \"related\": false,\n  \"from_approve_id\": from_approve_id\n};\nreturn api;",
                                                 "headers": {
                                                     "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                                 },
                                                 "messages": {
-                                                    "success": "分发成功!",
-                                                    "failed": "分发失败"
+                                                    "success": "转发成功!",
+                                                    "failed": "转发失败"
                                                 }
                                             },
                                           "onEvent": {

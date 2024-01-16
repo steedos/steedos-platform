@@ -1,7 +1,9 @@
 name: inbox
 label: 待审批
 columns:
-  - instance_name
+  - field: instance_name
+    wrap: true
+    width: 300
   - submitter_name
   - submit_date
   - flow_name

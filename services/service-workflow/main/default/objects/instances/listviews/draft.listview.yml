@@ -1,7 +1,9 @@
 name: draft
 label: 草稿
 columns:
-  - name
+  - field: name
+    wrap: true
+    width: 300
   - flow_name
   - modified
 filter_scope: space

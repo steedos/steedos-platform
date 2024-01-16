@@ -16,6 +16,7 @@
         "fieldsExtend": {
           "columns": {
             "amis": {
+              "showIndex": true,
               "footerToolbar": [
                 {
                   "type": "button",
@@ -167,6 +168,7 @@
           },
           "mobile_columns": {
             "amis": {
+              "showIndex": true,
               "footerToolbar": [
                 {
                   "type": "button",

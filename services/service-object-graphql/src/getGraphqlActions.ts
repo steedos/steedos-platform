@@ -556,12 +556,17 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
     
                                     // 判断如果是 reference_to = object_fields &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
                                     if (refTo === 'object_fields' && refField == 'name') {
-                                        const refToObjectsField = _.find(fields, (_field) => {
-                                            return _field.reference_to === 'objects'
-                                        })
-                                        if (refToObjectsField) {
-                                            refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                        if(objConfig.name === 'objects'){
+                                            refFilters = [['object', '=', parentDoc['name']], refFilters]
+                                        }else{
+                                            const refToObjectsField = _.find(fields, (_field) => {
+                                                return _field.reference_to === 'objects'
+                                            })
+                                            if (refToObjectsField) {
+                                                refFilters = [['object', '=', parentDoc[refToObjectsField.name]], refFilters]
+                                            }
                                         }
+                                        
                                     }
     
                                     // 判断如果是 reference_to = object_actions &&  reference_to_field = name, 则额外添加查询条件 object 查询条件;
