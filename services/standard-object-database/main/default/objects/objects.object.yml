@@ -281,7 +281,7 @@ fields:
     multiple: true
     reference_to: object_fields
     reference_to_field: name
-    group: compactLayouts
+    group: compact_layouts
     is_wide: true
     depend_on:
       - name

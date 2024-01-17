@@ -198,6 +198,7 @@ groups:
   external_data_source: External data source
   switch: Switch
   script: Script
+  compact_layouts: Highlight Fields
 listviews:
   all:
     label: All Objects
@@ -216,7 +217,6 @@ actions:
     label: Copy OData URL
   createDefaultRecordView:
     label: Create Default Page Layout
-  compactLayouts: Highlight Fields
 CustomLabels:
   objects_field_datasource_defaultValue: Default data source
   objects_field_datasource_meteor: Meteor

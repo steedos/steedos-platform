@@ -197,7 +197,7 @@ groups:
   external_data_source: 外部数据源
   switch: 功能开关
   script: 脚本
-  compactLayouts: 高亮字段
+  compact_layouts: 高亮字段
 listviews:
   all:
     label: 全部
