@@ -40,7 +40,7 @@ const getTdInputTpl = (field, label) => {
         id: `field:${field.name}`,
         label: label,
         name: field.name,
-        field: Object.assign({}, field, { label: label }),
+        field: Object.assign({}, field, { label: label, showOperation: false }),
         static: true
     }
 };
