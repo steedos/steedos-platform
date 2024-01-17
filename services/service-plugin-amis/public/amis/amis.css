@@ -108,3 +108,7 @@
 .antd-Table-footToolbar .antd-Crud-pager .antd-Pagination > li > a{
     display: block;
 }
+
+.steedos-amis-form .antd-Form-control--withSize{
+    width: 100%;
+}
