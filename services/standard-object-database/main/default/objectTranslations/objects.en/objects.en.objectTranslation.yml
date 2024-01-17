@@ -198,6 +198,7 @@ groups:
   external_data_source: External data source
   switch: Switch
   script: Script
+  compact_layouts: Highlight Fields
 listviews:
   all:
     label: All Objects

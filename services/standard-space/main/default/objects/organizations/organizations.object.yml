@@ -19,7 +19,7 @@ pages:
           "headers": {
             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
           },
-          "requestAdaptor": "\nif (context.op === \"loadOptions\") {\n  var filters = [[\"_id\", \"=\", context.value]];\n  return Object.assign({}, api, {\n    \"method\": \"post\",\n    \"url\": context.context.rootUrl + \"/graphql\",\n    \"data\": {\n      \"query\": '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,fullname,name,sort_no,_display:_ui{sort_no},parent,children}}'\n    }\n  }); \n}\nelse { \n  return api;\n}",
+          "requestAdaptor": "\nif (context.op === \"loadOptions\") {\n  var filters = [[\"_id\", \"=\", context.value]];\n  return Object.assign({}, api, {\n    \"method\": \"post\",\n    \"url\": \"/graphql\",\n    \"data\": {\n      \"query\": '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,fullname,name,sort_no,_display:_ui{sort_no},parent,children}}'\n    }\n  }); \n}\nelse { \n  return api;\n}",
           "adaptor": "\nconst rows = _.map(payload.data.rows, function(item) {\n    delete item.children;\n    delete item.parent;\n    return item;\n});\npayload.data.rows = rows;\n\nreturn payload;"
         },
         "pickerSchema": {
