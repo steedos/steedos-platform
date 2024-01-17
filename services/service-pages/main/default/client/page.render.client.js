@@ -867,6 +867,7 @@
     }
     Steedos.Page.Header.getPage = function(appId, tabId){
         const logoSrc = Tracker.nonreactive(getSpaceLogo);
+        const isMobile = window.innerWidth <= 768
         return {
             render_engine: 'amis',
             name: 'steedosGlobalHeaderPage',
@@ -876,7 +877,40 @@
                 body: [
                     {
                       "type": "steedos-global-header",
-                      "logoSrc": logoSrc
+                      "logoSrc": logoSrc,
+                      "customButtons": [
+                        {
+                            "type": "button",
+                            "className": "toggle-sidebar",
+                            "visibleOn": "${AND(app.showSidebar,!" + isMobile + ")}",
+                            "onEvent": {
+                                "click": {
+                                    "actions": [
+                                        {
+                                            "actionType": "custom",
+                                            "script": "document.body.classList.toggle('sidebar-open')",
+                                        }
+                                    ]
+                                }
+                            },
+                            "body": [
+                                {
+                                    "type": "steedos-icon",
+                                    "category": "utility",
+                                    "name": "rows",
+                                    "colorVariant": "default",
+                                    "id": "u:afc3a08e8cf3",
+                                    "className": "slds-button_icon slds-global-header__icon"
+                                }
+                            ],
+                        },
+                        {
+                            "type": "steedos-app-launcher",
+                            "showAppName": false,
+                            "appId": "${app.id}",
+                            "visibleOn": "${isMobile}"
+                        }
+                    ]
                     },
                   ],
                 onEvent: {
