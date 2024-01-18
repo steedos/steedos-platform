@@ -59,7 +59,15 @@ const getSection = (fieldSchemaArray, sectionName, ctx = {}) => {
 
     const fieldSetBody = [];
 
-    for (const perField of sectionFields) {
+    for (let perField of sectionFields) {
+        if(perField.type === "table"){
+            let tableAmis = {};
+            tableAmis.fieldPrefix = perField.name + "_";
+            if(perField.amis){
+                tableAmis = Object.assign({}, tableAmis, perField.amis);
+            }
+            perField = Object.assign({}, perField, { amis: tableAmis });
+        }
         fieldSetBody.push({
             type: "steedos-field",
             id: `field:${perField.name}`,
