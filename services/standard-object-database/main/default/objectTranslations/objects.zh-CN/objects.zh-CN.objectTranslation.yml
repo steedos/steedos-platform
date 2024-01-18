@@ -87,6 +87,10 @@ fields:
     label: 启用弹出窗口查找模式
     help: 当启用时，与此对象关联的查找字段将以弹出窗口的形式显示其选项。
     description: 
+  enable_split:
+    label: 默认使用分栏视图
+    help: 
+    description: 
   description:
     label: 备注
     help: 
