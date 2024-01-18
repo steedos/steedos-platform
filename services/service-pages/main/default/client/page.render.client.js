@@ -47,9 +47,9 @@
         // const key = 'page_display'
         if(display){
             // console.log('=====getDisplay===setItem=>', key, display)
-            localStorage.setItem(key, display)
+            sessionStorage.setItem(key, display)
         }else{
-            display = localStorage.getItem(key);
+            display = sessionStorage.getItem(key);
         }
         if(!display && object.enable_split){
             display = "split";
