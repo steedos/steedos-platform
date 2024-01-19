@@ -40,16 +40,19 @@
     }
 
     Steedos.Page.getDisplay = (objectName)=>{
-
+        const object = Creator.getObject(objectName)
         let display = FlowRouter.current().queryParams.display;
         // console.log('=====getDisplay====>', display)
         const key = `tab_${objectName}_display`;
         // const key = 'page_display'
         if(display){
             // console.log('=====getDisplay===setItem=>', key, display)
-            localStorage.setItem(key, display)
+            sessionStorage.setItem(key, display)
         }else{
-            display = localStorage.getItem(key);
+            display = sessionStorage.getItem(key);
+        }
+        if(!display && object.enable_split){
+            display = "split";
         }
 
         return display;

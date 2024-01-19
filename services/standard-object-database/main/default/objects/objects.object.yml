@@ -149,6 +149,11 @@ fields:
     group: Switch
     defaultValue: true
     hidden: true
+  enable_split:
+    type: boolean
+    label: Enable Split
+    group: Switch
+    defaultValue: false
   # enable_audit:
   #   type: boolean
   #   label: Enable Audit

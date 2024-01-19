@@ -90,6 +90,10 @@ fields:
     label: Enable Enhanced Lookup
     help: When enabled, the lookup field associated with this object displays its options as a pop-up window.
     description: 
+  enable_split:
+    label: Enable Split
+    help: 
+    description: 
   description:
     label: Description
     help: 

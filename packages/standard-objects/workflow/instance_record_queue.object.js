@@ -201,8 +201,8 @@ const getFileFieldValue = function (recordFieldId, fType) {
     }
 };
 
-const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId) {
-    if(wField.steedos_field){
+const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId, enableAmisform) {
+    if (enableAmisform && wField.steedos_field) {
         return wfValue
     }
     let value;
@@ -699,7 +699,7 @@ InstanceRecordQueue.syncAttach = function (sync_attachment, insId, spaceId, newR
 InstanceRecordQueue.syncInsFields = ['name', 'submitter_name', 'applicant_name', 'applicant_organization_name', 'applicant_organization_fullname', 'state',
     'current_step_name', 'flow_name', 'category_name', 'submit_date', 'finish_date', 'final_decision', 'applicant_organization', 'applicant_company'
 ];
-InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectInfo, field_map_back_script, record) {
+InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectInfo, field_map_back_script, record, enableAmisform) {
     var
         obj = {},
         tableFieldCodes = [],
@@ -789,7 +789,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                 }
                 const ofValue = record ? record[fm.object_field] : null
                 const wfValue = values[fm.workflow_field]
-                obj[fm.object_field] = getRecordFieldValue(oField, wField, ofValue, wfValue, spaceId)
+                obj[fm.object_field] = getRecordFieldValue(oField, wField, ofValue, wfValue, spaceId, enableAmisform)
             } else {
                 if (fm.object_field.indexOf('.') > -1) {
                     var temObjFields = fm.object_field.split('.');
@@ -902,7 +902,7 @@ InstanceRecordQueue.syncValues = function (field_map_back, values, ins, objectIn
                                 return
                             }
                             const ofValue = relateRecord ? relateRecord[fieldKey] : null;
-                            relatedObjectValue[fieldKey] = getRecordFieldValue(relatedObjectField, formField, ofValue, relatedObjectFieldValue, spaceId);
+                            relatedObjectValue[fieldKey] = getRecordFieldValue(relatedObjectField, formField, ofValue, relatedObjectFieldValue, spaceId, enableAmisform);
                         }
                     }
                 });
@@ -1042,6 +1042,10 @@ InstanceRecordQueue.sendDoc = function (doc) {
     var values = ins.values,
         spaceId = ins.space;
 
+    const flowId = ins.flow
+    const flow = Creator.getCollection('flows').findOne(flowId, { fields: { enable_amisform: 1 } });
+    const enableAmisform = flow.enable_amisform
+
     if (records && !_.isEmpty(records)) {
         // 此情况属于从creator中发起审批，或者已经从Apps同步到了creator
         var objectName = records[0].o;
@@ -1066,7 +1070,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                     return;
                 }
                 var lock_record_after_approval = ow.lock_record_after_approval || false;
-                var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record)
+                var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, record, enableAmisform)
                 var setObj = syncValues.mainObjectValue;
 
                 var instance_state = ins.state;
@@ -1159,7 +1163,7 @@ InstanceRecordQueue.sendDoc = function (doc) {
                 }
 
                 var objectInfo = getObjectConfig(ow.object_name);
-                var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script);
+                var syncValues = InstanceRecordQueue.syncValues(ow.field_map_back, values, ins, objectInfo, ow.field_map_back_script, null, enableAmisform);
                 var newObj = syncValues.mainObjectValue;
 
                 newObj._id = newRecordId;
