@@ -68,6 +68,11 @@ const getSection = (fieldSchemaArray, sectionName, ctx = {}) => {
             }
             perField = Object.assign({}, perField, { amis: tableAmis });
         }
+
+        if(perField.type === 'formula' || perField.type === 'summary'){
+            perField = Object.assign({} , perField, {static: true});
+        }
+
         fieldSetBody.push({
             type: "steedos-field",
             id: `field:${perField.name}`,
