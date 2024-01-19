@@ -299,7 +299,7 @@ fields:
         "type": "transfer",
         "options": [],
         "multiple": true,
-        "required": true,
+        "required": false,
         "placeholder": "-",
         "className": "col-span-2 m-0 w-full",
         "searchable": true,
