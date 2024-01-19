@@ -140,7 +140,7 @@
                             autoVar: true,
                           })(AmisWrapper);
                           // 记录当前创建的amis自定义组件
-                          console.info('注册了一个自定义amis组件:', {
+                          console.debug('注册了一个自定义amis组件:', {
                             type: asset.type,
                             weight: asset.weight,
                             component: AmisWrapper,

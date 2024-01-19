@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-29 18:59:45
+ * @LastEditTime: 2024-01-19 10:14:24
  * @Description: 
  */
 ; (function () {
@@ -184,10 +184,10 @@
         }
         Steedos.Workflow.instanceAmisView = {
             onCreated: function(ctx){
-                console.log(`Steedos.Workflow.instanceAmisView: onCreated`, ctx)
+                console.debug(`Steedos.Workflow.instanceAmisView: onCreated`, ctx)
             },
             onRendered: function(ctx){
-                console.log(`Steedos.Workflow.instanceAmisView: onRendered`, ctx)
+                console.debug(`Steedos.Workflow.instanceAmisView: onRendered`, ctx)
                 const root = $("#instanceAmisView")[0];
                 const ins = WorkflowManager.getInstance();
 
