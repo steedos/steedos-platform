@@ -535,7 +535,8 @@
 																				"extractValue": true,
 																				"mode": "inline",
 																				"id": "u:a85f62af394f",
-																				"name": "field_names"
+																				"name": "field_names",
+																			  	"sortable": true
 																			  },
 																			  "type": "tpl",
 																			  "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.detail_field_fullname] ? data.related_object_fields_options[data.detail_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>",
