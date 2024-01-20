@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 15:07:13
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-01-20 17:08:17
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -12,7 +12,12 @@ const _ = require('underscore');
 async function getAll(){
     const schema = objectql.getSteedosSchema();
     const configs = await register.registerTab.getAll(schema.broker)
-    const dataList = _.pluck(configs, 'metadata');
+    const dataList = [];
+    for (const config of configs) {
+        if (config.metadata && !config.metadata.hidden) {
+            dataList.push(config.metadata); 
+        }
+    }
 
     _.each(dataList, function(item){
         if(!item._id){
