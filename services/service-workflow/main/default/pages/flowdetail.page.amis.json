@@ -11,6 +11,9 @@
 		},
 		".m--8": {
 			"margin": "-12px"
+		},
+		".page_flows_record_detail .antd-Combo-itemInner": {
+			"margin": "0"
 		}
 	}, 
 	"body": [
@@ -261,6 +264,7 @@
 								{
 									"type": "flex",
 									"justify": "flex-end",
+									"className": "py-2",
 									"items":  [
 									  {
 										"type": "button",
@@ -651,7 +655,8 @@
 											],
 											"weight": 0
 										  }
-										}
+										},
+										"className": "m-0"
 									  }
 									]
 								},
@@ -744,5 +749,5 @@
 	},
 	"id": "page_flows_record_detail",
 	"name": "page_flows_record_detail",
-	"bodyClassName": ""
+	"className": "page_flows_record_detail"
 }
