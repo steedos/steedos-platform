@@ -89,7 +89,7 @@ async function getAllTabs(ctx: any) {
 async function getContext(ctx: any) {
     const allTabs = await getAllTabs(ctx)
     // const allObject = await getSteedosSchema().getAllObject()
-    let hiddenTabNames = await getHiddenTabNames(ctx)
+    let hiddenTabNames = await getHiddenTabNames(ctx, allTabs)
     const notLicensedTabNames = await getNotLicensedTabNames(ctx, allTabs)
     hiddenTabNames = hiddenTabNames.concat(notLicensedTabNames)
     return {
@@ -151,7 +151,7 @@ function checkAppMobile(app, mobile) {
  * @param ctx 
  * @return ['tabName', ...]
  */
-async function getHiddenTabNames(ctx) {
+async function getHiddenTabNames(ctx, allTabs) {
     const userSession = ctx.meta.user
     if (!userSession) {
         throw new Error('no permission.')
@@ -169,6 +169,14 @@ async function getHiddenTabNames(ctx) {
             hiddenTabNames.push(permissionTab.tab)
         }
     }
+
+    // .tab.yml中配置了hidden:true
+    for (const config of allTabs) {
+        if (config.metadata && config.metadata.hidden) {
+            hiddenTabNames.push(config.metadata.name)
+        }
+    }
+
     return hiddenTabNames
 }
 

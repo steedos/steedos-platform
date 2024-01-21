@@ -11,6 +11,9 @@
 		},
 		".m--8": {
 			"margin": "-12px"
+		},
+		".page_flows_record_detail .antd-Combo-itemInner": {
+			"margin": "0"
 		}
 	}, 
 	"body": [
@@ -261,6 +264,7 @@
 								{
 									"type": "flex",
 									"justify": "flex-end",
+									"className": "py-2",
 									"items":  [
 									  {
 										"type": "button",
@@ -535,7 +539,8 @@
 																				"extractValue": true,
 																				"mode": "inline",
 																				"id": "u:a85f62af394f",
-																				"name": "field_names"
+																				"name": "field_names",
+																			  	"sortable": true
 																			  },
 																			  "type": "tpl",
 																			  "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.detail_field_fullname] ? data.related_object_fields_options[data.detail_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>",
@@ -650,7 +655,8 @@
 											],
 											"weight": 0
 										  }
-										}
+										},
+										"className": "m-0"
 									  }
 									]
 								},
@@ -743,5 +749,5 @@
 	},
 	"id": "page_flows_record_detail",
 	"name": "page_flows_record_detail",
-	"bodyClassName": ""
+	"className": "page_flows_record_detail"
 }

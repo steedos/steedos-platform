@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-05-24 12:32:57
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-07 19:49:48
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-01-20 11:21:14
  * @Description: 
  */
 const _ = require('underscore');
@@ -10,6 +10,8 @@ const NEEDSYNCATTRIBUTES = ['name', 'username', 'email', 'email_verified', 'mobi
 'mobile_verified', 'locale', 'avatar', 'last_logon', 'email_notification', 'sms_notification', 'password_expired'];
 const { Binary } = require('mongodb');
 const { getObject } = require('@steedos/objectql');
+const Fiber = require('fibers');
+
 
 getNeedSyncSet = function(doc, modifierSet){
     let syncSet = {};
@@ -70,10 +72,11 @@ exports.syncUserInfo = async function (doc, modifierSet) {
         _conertToBinary(needSyncProp);
 
         await userObj.directUpdate(doc.user, userProp)
-        await suObj.updateMany([
-            ['_id', '!=', doc._id],
-            ['user', '=', doc.user]
-        ], needSyncProp)
+        Fiber(function(){
+            return db.space_users.direct.update({_id: {$ne: doc._id}, user: doc.user}, {$set: needSyncProp}, {
+                multi: true
+            });
+        }).run();;
     }
 }
 

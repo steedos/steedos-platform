@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-22 13:48:46
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-29 19:02:14
+ * @LastEditTime: 2024-01-20 11:21:04
  * @Description:
  * 1 使用instance获取申请单的表单及表单脚本
  * 2 获取表单版本上定义的字段
@@ -24,7 +24,6 @@ module.exports = {
       fullPath: "/api/workflow/form/:formId/:formVersionId/schema",
     },
     async handler(ctx) {
-      console.log('in formSchema.................')
       const { formId, formVersionId, flowId, flowVersionId, box, stepId } = ctx.params;
   
       const formVersion = await getFormVersion(formId, formVersionId);
