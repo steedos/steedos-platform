@@ -63,6 +63,7 @@ const getSection = (fieldSchemaArray, sectionName, ctx = {}) => {
         if(perField.type === "table"){
             let tableAmis = {};
             tableAmis.fieldPrefix = perField.name + "_";
+            tableAmis.autoGeneratePrimaryKeyValue = true;
             if(perField.amis){
                 tableAmis = Object.assign({}, tableAmis, perField.amis);
             }
