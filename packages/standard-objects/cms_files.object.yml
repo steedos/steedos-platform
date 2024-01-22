@@ -197,7 +197,7 @@ actions:
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "api.data.append('record_id', api.body._master.recordId);api.data.append('parent', api.body._master.recordId);api.data.append('object_name', api.body._master.objectName); api.data.append('space', api.body.global.spaceId);api.data.append('owner', api.body.global.userId);api.data.append('owner_name', api.body.global.user.name);return api;"
+                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('parent', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;"
                             },
                             "onEvent": {
                                 "success": {
