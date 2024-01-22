@@ -74,8 +74,9 @@ Setup.validate = (onSuccess)->
 	console.log("Validating user...")
 	searchParams = new URLSearchParams(window.location.search);
 	# 优先使用 URL 变量
-	loginToken = searchParams.get("X-Auth-Token");
-	userId = searchParams.get("X-User-Id");
+	if Meteor.settings.public.accounts.enable_query_auth == true || Meteor.settings.public.accounts.enable_query_auth == 'true'
+		loginToken = searchParams.get("X-Auth-Token");
+		userId = searchParams.get("X-User-Id");
 	# 然后使用 Meteor LocalStorage 变量
 	if (!userId or !loginToken)
 		loginToken = Accounts._storedLoginToken()

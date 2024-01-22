@@ -36,6 +36,7 @@ public:
   accounts:
     username_min_length: ${STEEDOS_ACCOUNT_USERNAME_MIN_LENGTH}
     UTF8_Names_Validation: ${STEEDOS_ACCOUNT_NAME_VALIDATION}
+    enable_query_auth: ${STEEDOS_ENABLE_QUERY_AUTH}
 cfs:
   store: ${STEEDOS_CFS_STORE}
   local:

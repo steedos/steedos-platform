@@ -102,14 +102,14 @@ export function redirectTo(redirectTo, location) {
     }
 
     if (redirectTo && redirectTo.indexOf('no_redirect=1')<0) {
-      const userId = LocalStorageStore.getItem('userId');
-      const authToken =  LocalStorageStore.getItem('token');
-      const spaceId =  LocalStorageStore.getItem('spaceId');
+    //   const userId = LocalStorageStore.getItem('userId');
+    //   const authToken =  LocalStorageStore.getItem('token');
+    //   const spaceId =  LocalStorageStore.getItem('spaceId');
       
       redirectTo = redirectTo.indexOf("?")>0?redirectTo+'&no_redirect=1':redirectTo+'?no_redirect=1'
-      if (userId && authToken){
-        redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
-     }
+    //   if (userId && authToken){
+    //     redirectTo = `${redirectTo}&X-Auth-Token=${authToken}&X-User-Id=${userId}&X-Space-Id=${spaceId}`
+    //   }
 
       if (redirectTo.match(/^\/([^/]|$)/)){
           if(location){

@@ -122,9 +122,9 @@ export function goSpaceHome(location, settings): ActionFunc {
       }
       let u = new URL(redirect_uri);
 
-      u.searchParams.append('X-Space-Id',spaceId);
-      u.searchParams.append('X-Auth-Token',authToken);
-      u.searchParams.append('X-User-Id',userId);
+      // u.searchParams.append('X-Space-Id',spaceId);
+      // u.searchParams.append('X-Auth-Token',authToken);
+      // u.searchParams.append('X-User-Id',userId);
 
       if(u.origin != window.location.origin){
         // 不满足指定的域名校验
