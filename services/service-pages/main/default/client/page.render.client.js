@@ -54,6 +54,9 @@
         if(!display && object.enable_split){
             display = "split";
         }
+        if(window.innerWidth <= 768){
+            display = "grid"
+        }
 
         return display;
         
