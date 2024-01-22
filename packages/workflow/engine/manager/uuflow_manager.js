@@ -878,7 +878,7 @@ uuflowManager.getInstanceName = function (instance, vals) {
                         }
                         break;
                     case 'multiSelect':
-                        var splitedValues = value.split(",");
+                        var splitedValues = typeof value === 'string' ? value.split(",") : value;
                         var selectedOptions = fieldOptions.filter(function (item) { return splitedValues.indexOf(item.value) > -1; });
                         if (selectedOptions.length) {
                             values[field.code] = selectedOptions.map(function (item) { return item.label; }).join(",");
