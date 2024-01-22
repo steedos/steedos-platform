@@ -860,7 +860,11 @@ InstanceManager.getMyApprove = function () {
 			}];
 		}
 
-		currentApprove.values = InstanceManager.getInstanceFormValue();
+		if(InstanceManager.isAmisForm()){
+			currentApprove.values = InstanceManager.getInstanceFormValue();
+		}else{
+			currentApprove.values = InstanceManager.getInstanceValuesByAutoForm();
+		}
 
 		return currentApprove;
 	}
