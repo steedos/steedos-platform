@@ -309,6 +309,7 @@ fields:
         "source": {
           "method": "get",
           "url": "/service/api/amis-metadata-objects/objects/${name}/fields/options",
+          "sendOn": "${!!name && _master.recordId}"
         },
         "joinValues": false,
         "extractValue": true,
