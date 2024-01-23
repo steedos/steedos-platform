@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-29 17:16:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-12-29 18:50:16
+ * @LastEditTime: 2024-01-23 13:24:04
  * @Description: 
  */
 
@@ -55,12 +55,12 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
                         }),
                         name: `${field.code}.$.${fField.code}`,
                         static: fStatic,
-                        amis: getFieldAmis(fField, fStatic, fField.amis, Object.assign({}, ctx, { inTable: true })),
+                        amis: getFieldAmis(fField, fStatic, fField.steedos_field.amis, Object.assign({}, ctx, { inTable: true })),
                         description: null
                     };
                 }),
                 static: static,
-                amis: getFieldAmis(field, static, field.amis, ctx),
+                amis: getFieldAmis(field, static, field.steedos_field.amis, ctx),
                 description: null
             });
         } else {
@@ -72,12 +72,11 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
                 name: field.code,
                 label: field.name,
                 static: static,
-                amis: getFieldAmis(field, static, field.amis, ctx),
+                amis: getFieldAmis(field, static, field.steedos_field.amis, ctx),
                 description: null
             });
         }
     });
-
     return steedosFields;
 }
 
