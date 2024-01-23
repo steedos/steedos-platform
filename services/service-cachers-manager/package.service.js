@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
- * @LastEditors: Byran sunhaolin@steedos.com
- * @LastEditTime: 2023-06-28 10:45:45
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-01-23 14:36:47
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -216,6 +216,13 @@ module.exports = {
 					this.loadProfiles();
 					this.profilesChangeTimeoutId = null;
 				}, 2000)
+			}
+		},
+		"$user.logout": {
+			async handler(ctx) {
+				const { authToken } = ctx.params;
+				auth.removeUserTokenByToken(authToken)
+				console.log(`authToken`, authToken) 
 			}
 		}
 	},

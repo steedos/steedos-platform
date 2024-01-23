@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-19 09:23:20
+ * @LastEditTime: 2024-01-23 14:24:35
  * @Description: 
  */
 import * as express from 'express';
@@ -14,6 +14,7 @@ import { getObject } from '@steedos/objectql';
 import * as requestIp from 'request-ip';
 import { getUserAgent } from '../utils/get-user-agent';
 import isMobile from 'ismobilejs';
+import { getSteedosSchema } from '@steedos/objectql'
 export const logout = (accountsServer: AccountsServer) => async (
   req: express.Request,
   res: express.Response
@@ -70,7 +71,12 @@ export const logout = (accountsServer: AccountsServer) => async (
         o: "users",
         ids: [session?.userId]
       }
-    })
+    });
+
+    const broker = getSteedosSchema().broker;
+    broker.broadcast("$user.logout", {
+      authToken: authToken
+    });
   }
   res.json(null);
 };
