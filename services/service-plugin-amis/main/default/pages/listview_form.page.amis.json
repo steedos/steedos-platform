@@ -68,7 +68,22 @@
                 }
               ],
               "addable": false,
-              "draggable": false
+              "draggable": false,
+              "columns": [
+                {
+                  "name": "field",
+                  "inlineEditMode": false
+                },
+                {
+                  "name": "width",
+                  "width": 100
+                },
+                {
+                  "name": "wrap",
+                  "width": 50
+                }
+              ],
+              "inlineEditMode": true
             }
           },
           "sort": {
