@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-23 14:36:47
+ * @LastEditTime: 2024-01-23 16:47:39
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -222,7 +222,6 @@ module.exports = {
 			async handler(ctx) {
 				const { authToken } = ctx.params;
 				auth.removeUserTokenByToken(authToken)
-				console.log(`authToken`, authToken) 
 			}
 		}
 	},
