@@ -263,7 +263,7 @@ actions:
                         {
                             "type": "input-file",
                             "label": "",
-                            "name": "file",
+                            "name": "__file",
                             "id": "u:a58d02614e04",
                             "btnLabel": "上传",
                             "btnClassName": "m-0",
