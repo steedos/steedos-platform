@@ -29,7 +29,8 @@ _getFlowByForm = function (form, flowId, is_copy, company_id) {
                 field_map_script: 1,
                 field_map_back_script: 1,
                 sync_attachment: 1,
-                lock_record_after_approval: 1
+                lock_record_after_approval: 1,
+                required_details: 1,
             }
         }).fetch();
         if (!is_copy || (!company_id && flow.company_id) || (company_id && !flow.company_id) || (company_id !== flow.company_id)) {

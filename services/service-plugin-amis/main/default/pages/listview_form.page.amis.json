@@ -68,7 +68,22 @@
                 }
               ],
               "addable": false,
-              "draggable": false
+              "draggable": false,
+              "columns": [
+                {
+                  "name": "field",
+                  "inlineEditMode": false
+                },
+                {
+                  "name": "width",
+                  "width": 100
+                },
+                {
+                  "name": "wrap",
+                  "width": 50
+                }
+              ],
+              "inlineEditMode": true
             }
           },
           "sort": {
@@ -135,6 +150,7 @@
                 {
                   "type": "condition-builder",
                   "label": "",
+                  "labelClassName": "none",
                   "name": "_filters_conditions",
                   "description": "",
                   "id": "u:a9f2232e30d7",
@@ -149,7 +165,6 @@
                   "disabled": false,
                   "className": "col-span-2 m-0",
                   "visibleOn": "!!this.object_name",
-                  "labelClassName": "",
                   "en-US": {
                     "label": "Filters Conditions"
                   }
