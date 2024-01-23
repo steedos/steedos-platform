@@ -476,7 +476,7 @@ var triggers = {
       if(doc.name === 'name' || doc.is_name){
         checkNameField({type: doc.type})
       }
-      console.log('insert', doc)
+      // console.log('insert', doc)
       if (isRepeatedName(doc)) {
         
         throw new Meteor.Error(doc.name, "字段名不能重复");
