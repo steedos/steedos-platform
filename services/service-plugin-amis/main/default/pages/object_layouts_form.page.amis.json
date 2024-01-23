@@ -105,7 +105,17 @@
                 "id": "u:1120663b07c6",
                 "dialog": {
                   "title": "按钮明细"
-                }
+                },
+                "columns": [
+                  {
+                    "name": "button_name",
+                    "inlineEditMode": false
+                  },
+                  {
+                    "name": "visible_on"
+                  }
+                ],
+                "inlineEditMode": true
               }
             },
             "fields": {
@@ -227,6 +237,7 @@
                                   "draggable": true,
                                   "editable": true,
                                   "showIndex": true,
+                                  "removable": true,
                                   "fields": [
                                     {
                                       "name": "group_name",
