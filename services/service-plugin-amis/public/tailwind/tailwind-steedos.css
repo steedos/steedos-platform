@@ -202,10 +202,6 @@
   width: 2.25rem
 }
 
-.w-10 {
-  width: 2.5rem
-}
-
 .w-full {
   width: 100%
 }
@@ -220,11 +216,6 @@
 
 .w-96 {
   width: 24rem
-}
-
-.min-w-max {
-  min-width: -moz-max-content;
-  min-width: max-content
 }
 
 .min-w-\[240px\] {
