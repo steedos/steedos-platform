@@ -112,6 +112,8 @@ fields:
     amis: 
       inlineEditMode: false
       addable: false
+      # 强制规范组件的mode，否则在combo组件下显示异常
+      mode: normal
       columns: ["code", "name", "type", "is_required", "is_wide", "is_list_display", "is_searchable", "is_multiselect"]
   current.fields.$.code:
     label: Code

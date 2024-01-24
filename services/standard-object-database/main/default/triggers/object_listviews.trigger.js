@@ -35,6 +35,14 @@ module.exports = {
         if (!this.doc.name) {
             this.doc.name = 'listview_' + this.doc._id.toLowerCase();
         }
+        if (!this.doc.sort) {
+            this.doc.sort = [
+                {
+                    "field_name" : "created",
+                    "order" : "desc"
+                }
+            ]
+        }
         await util.checkAPIName(this.object_name, 'name', this.doc.name, undefined, [['is_system','!=', true], ['object_name','=', this.doc.object_name]]);
     },
     beforeUpdate: async function () {

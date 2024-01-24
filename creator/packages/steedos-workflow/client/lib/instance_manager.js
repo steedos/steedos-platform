@@ -347,7 +347,12 @@ function removeMessage(parent_group) {
 	$(".help-block", parent_group).html('');
 }
 
-InstanceManager.checkFormValue = function () {
+InstanceManager.checkFormValue = async function () {
+
+	if(ApproveManager.isReadOnly()){
+		return true;
+	}
+
 	if (InstanceManager.isCC(WorkflowManager.getInstance())) {
 		return;
 	}
@@ -359,13 +364,20 @@ InstanceManager.checkFormValue = function () {
 	InstanceManager.checkSuggestion();
 
 	//字段校验
-	var fieldsPermision = WorkflowManager.getInstanceFieldPermission();
 
-	for (var k in fieldsPermision) {
-		if (fieldsPermision[k] == 'editable') {
-			InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0], k);
+	if(InstanceManager.isAmisForm()){
+		return await SteedosUI.refs.instanceAmisView.getComponentById('instanceForm').validate();
+	}else{
+		var fieldsPermision = WorkflowManager.getInstanceFieldPermission();
+
+		for (var k in fieldsPermision) {
+			if (fieldsPermision[k] == 'editable') {
+				InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0], k);
+			}
 		}
 	}
+
+	
 }
 
 //下一步步骤校验
