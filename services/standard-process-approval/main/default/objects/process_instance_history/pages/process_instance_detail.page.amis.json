@@ -1,5 +1,5 @@
 {
-    "type": "page",
+    "type": "steedos-record-service",
     "body": [
         {
             "type": "service",
@@ -9,36 +9,11 @@
                     "label": "标题面板",
                     "objectApiName": "${objectName}",
                     "recordId": "${recordId}",
-                    "onEvent": {
-                        "recordLoaded": {
-                            "actions": [
-                                {
-                                    "actionType": "reload",
-                                    "data": {
-                                        "name": "${event.data.record.name}",
-                                        "record": "${event.data.record}",
-                                        "recordLoaded": true
-                                    },
-									"expression": "${event.data.objectName == \"process_instance_history\"}"
-                                },
-                                {
-                                    "actionType": "reload",
-                                    "componentId": "page_readonly_process_instance_history_header",
-                                    "data": {
-                                        "name": "${event.data.record.name}",
-                                        "record": "${event.data.record}",
-                                        "recordLoaded": true
-                                    },
-									"expression": "${event.data.objectName == \"process_instance_history\"}"
-                                }
-                            ]
-                        }
-                    },
-                    "id": "u:3142da7da301"
+                    "id": "u:229980175758"
                 },
                 {
                     "type": "tabs",
-                    "id": "u:ab1b39f4011e",
+                    "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
                     "tabs": [
                         {
                             "title": "详情",
@@ -58,14 +33,6 @@
                                             "mode": "read"
                                         }
                                     ]
-                                },
-                                {
-                                    "type": "steedos-object-form",
-                                    "id": "u:d1f14744310b",
-                                    "className": "antd-Form antd-Form--normal steedos-amis-form bg-white hidden",
-                                    "label": "对象表单",
-                                    "objectApiName": "${objectName}",
-                                    "recordId": "${recordId}"
                                 }
                             ],
                             "id": "u:78283d8a88a6",
@@ -92,26 +59,24 @@
                             ],
                             "id": "u:2828559659a3"
                         },
-                        {
-                            "title": "当前记录",
-                            "body": [
-                                {
-                                    "type": "steedos-object-form",
-                                    "id": "u:d1f14744310b",
-                                    "className": "antd-Form antd-Form--normal steedos-amis-form bg-white",
-                                    "label": "对象表单",
-                                    "objectApiName": "${objectName}",
-                                    "recordId": "${recordId}"
-                                }
-                            ],
-                            "id": "u:f3d64f216153",
-                            "className": "px-0"
-                        }
+                      {
+                        "title": "当前记录",
+                        "className": "px-0 py-4",
+                        "body": [
+                          {
+                            "type": "steedos-object-form",
+                            "label": "对象表单",
+                            "objectApiName": "${objectName}",
+                            "recordId": "${recordId}",
+                            "appId": "${appId}",
+                            "id": "u:417063b0c22f"
+                          }
+                        ],
+                        "id": "u:5d4e7e3f6ecc"
+                      }
                     ],
-                    "className": "antd-Tabs antd-Tabs--line bg-white border-gray-300 p-4 sm:border sm:mt-3 sm:rounded sm:shadow",
-                    "toolbarClassName": "",
-                    "contentClassName": ""
-                }
+                    "id": "u:e1251a3f5a0f"
+                  }
             ],
             "data": {
                 "_master.objectName": "${objectName}",
@@ -137,14 +102,21 @@
         }
     ],
     "regions": [
-        "body"
+      "body"
     ],
     "data": {
-        "objectName": "process_instance_history",
-        "recordId": "oaPathAspPZbjjjpm",
-        "context": {}
+      "objectName": "process_instance_history",
+      "recordId": "sJjFfTionvxrwrdF8",
+      "context": {
+        "rootUrl": "http://127.0.0.1:5900",
+        "tenantId": "63ed8fb288feeecd0165843d",
+        "userId": "1852bcb9-a3cb-4d04-905b-1cd12e4cdb3b",
+        "authToken": "655db0535cc3e217056b8fcb0aa270b8618128df0daad0076f9b90c4041a537f4aef46ed54131dc642afeb"
+      }
     },
     "id": "page_process_instance_history_record_detail",
     "name": "page_process_instance_history_record_detail",
-    "bodyClassName": ""
+    "objectApiName": "${objectName}",
+    "bodyClassName": "",
+    "className": "object-detail-page"
 }
