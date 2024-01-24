@@ -338,7 +338,13 @@ let objectTriggers = {
                 object_name: doc.name,
                 shared: true,
                 filter_scope: "space",
-                columns: [{field: 'name'}]
+                columns: [{field: 'name'}],
+                "sort" : [
+                    {
+                        "field_name" : "created",
+                        "order" : "desc"
+                    }
+                ]
             });
             Creator.getCollection("object_listviews").insert({
                 name: "recent",
