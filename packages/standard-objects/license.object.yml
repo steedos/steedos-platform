@@ -2,7 +2,7 @@ name: license
 label: License
 icon: webcart
 hidden: true
-enable_audit: true
+enable_audit: false
 fields:
   edition:
     type: text
