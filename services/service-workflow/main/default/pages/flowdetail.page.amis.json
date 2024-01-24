@@ -2,18 +2,21 @@
 	"type": "page",
 	"css": {
 		".antd-InputGroup-addOn": {
-			"border": "none !important",
-			"color": "#5f5f5f38"
+		  "border": "none !important",
+		  "color": "#5f5f5f38"
 		},
-		".antd-InputGroup-addOn:hover":{
-			"cursor": "pointer",
-			"color": "#5f5f5f"
+		".antd-InputGroup-addOn:hover": {
+		  "cursor": "pointer",
+		  "color": "#5f5f5f"
 		},
 		".m--8": {
-			"margin": "-12px"
+		  "margin": "-12px"
 		},
 		".page_flows_record_detail .antd-Combo-itemInner": {
-			"margin": "0"
+		  "margin": "0"
+		},
+		".steedos-flow-transfer-picker .antd-Form-value": {
+		  "width": "100%"
 		}
 	}, 
 	"body": [
@@ -266,117 +269,93 @@
 									"justify": "flex-end",
 									"className": "py-2",
 									"items":  [
-									  {
-										"type": "button",
-										"label": "${'flows.addFormFields.set_fields' | t}",
-										"visibleOn": "${_master.record.object_name}",
-										"id": "u:add_form_fields2",
-										"onEvent": {
-										  "click": {
-											"actions": [
-											  {
-												"actionType": "dialog",
-												"dialog": {
-												  "type": "dialog",
-												  "title": "${'flows.addFormFields.set_fields' | t}",
-												  "size": "lg",
-												  "data": {
-													"&": "$$",
-													"record_id": "${_master.record._id}",
-													"recordId": "${_master.record._id}",
-													"object_name": "${_master.record.object_name}"
-												  },
-												  "body": [
-													{
-													  "type": "form",
-													  "debug": false,
-													  "id": "addFormFieldsForm",
-													  "title": "表单",
+										{
+											"type": "button",
+											"label": "${'flows.addFormFields.set_fields' | t}",
+											"visibleOn": "${_master.record.object_name}",
+											"id": "u:add_form_fields2",
+											"onEvent": {
+											  "click": {
+												"actions": [
+												  {
+													"actionType": "dialog",
+													"dialog": {
+													  "type": "dialog",
+													  "title": "${'flows.addFormFields.set_fields' | t}",
+													  "size": "lg",
+													  "data": {
+														"&": "$$",
+														"record_id": "${_master.record._id}",
+														"recordId": "${_master.record._id}",
+														"object_name": "${_master.record.object_name}"
+													  },
 													  "body": [
 														{
-														  "label": "${'flows.addFormFields.binding_objects' | t}",
-														  "type": "select",
-														  "name": "object_name",
-														  "id": "u:4e769995f638",
-														  "required": true,
-														  "joinValues": false,
-														  "extractValue": true,
-														  "labelField": "label",
-														  "valueField": "value",
-														  "labelClassName": "text-left",
-														  "en-US": {
-															"label": "Object"
-														  },
-														  "checkAll": false,
-														  "searchable": true,
-														  "source": {
-															"method": "get",
-															"url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-															"headers": {
-															  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-															}
-														  },
-														  "multiple": false
-														},
-														{
-														  "type": "tabs",
-														  "tabs": [
+														  "type": "form",
+														  "debug": false,
+														  "id": "addFormFieldsForm",
+														  "title": "表单",
+														  "body": [
 															{
-															  "title": "${'flows.addFormFields.application_form_fields' | t}",
-															  "body": [
+															  "label": "${'flows.addFormFields.binding_objects' | t}",
+															  "type": "select",
+															  "name": "object_name",
+															  "id": "u:4e769995f638",
+															  "required": true,
+															  "joinValues": false,
+															  "extractValue": true,
+															  "labelField": "label",
+															  "valueField": "value",
+															  "labelClassName": "text-left",
+															  "en-US": {
+																"label": "Object"
+															  },
+															  "checkAll": false,
+															  "searchable": true,
+															  "source": {
+																"method": "get",
+																"url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+																"headers": {
+																  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																}
+															  },
+															  "multiple": false
+															},
+															{
+															  "type": "tabs",
+															  "tabs": [
 																{
-																  "type": "wrapper",
+																  "title": "${'flows.addFormFields.application_form_fields' | t}",
 																  "body": [
 																	{
 																	  "type": "service",
 																	  "body": [
 																		{
-																		  "name": "fields",
-																		  "required": true,
-																		  "type": "crud",
-																		  "strictMode": true,
-																		  "affixHeader": false,
+																		  "name": "instance_fields",
+																		  "type": "steedos-input-table",
 																		  "editable": true,
-																		  "addable": false,
 																		  "removable": true,
-																		  "draggable": false,
-																		  "columns": [
+																		  "showIndex": true,
+																		  "fields": [
 																			{
-																			  "name": "field_name_label",
+																			  "name": "name",
 																			  "label": "${'flows.addFormFields.field' | t}",
-																			  "type": "tpl",
-																			  "tpl": "${fields_options|filter:value:equals:name|pick:label}",
+																			  "type": "select",
+																			  "amis": {
+																				"source": "${fields_options}",
+																				"menuTpl": "",
+																				"id": "u:beecbd5b6b69"
+																			  },
 																			  "id": "u:b95c69a1cd84"
 																			},
 																			{
 																			  "name": "required",
 																			  "label": "${'flows.addFormFields.required' | t}",
-																			  "quickEdit": {
-																				"mode": "inline",
-																				"type": "checkbox",
-																				"tpl": null,
-																				"labelClassName": "text-left",
-																				"id": "u:bbd1c15b6504",
-																				"name": "required",
-																				"onEvent": {
-																				  "change": {
-																					"actions": [
-																					  {
-																						"actionType": "custom",
-																						"script": "let fName = event.data.name;let newFields = _.map(event.data.fields, (field)=>{  if(field.name === fName){    field.required = event.data.required  };  return field;});setTimeout(function () {  doAction({    actionType: \"setValue\",    componentId: \"addFormFieldsForm\",    args: { value: {fields: newFields} },  });}, 300);"
-																					  }
-																					]
-																				  }
-																				}
-																			  },
+																			  "type": "boolean",
 																			  "id": "u:e54afb5cc05c",
 																			  "placeholder": "-"
 																			}
 																		  ],
-																		  "className": "col-span-2",
-																		  "labelClassName": "text-left",
-																		  "source": "${fields}",
-																		  "footable": false,
 																		  "headerToolbar": [
 																			{
 																			  "type": "button",
@@ -389,8 +368,10 @@
 																					"name": "picked_fields",
 																					"sortable": true,
 																					"source": "${fields_options}",
-																					"value": "${fields|pick:name}",
+																					"value": "${instance_fields|pick:name}",
 																					"searchable": true,
+																					"joinValues": false,
+																					"extractValue": true,
 																					"id": "u:502c4ecd81b6"
 																				  }
 																				],
@@ -399,7 +380,7 @@
 																					"actions": [
 																					  {
 																						"actionType": "custom",
-																						"script": "const fieldGroupKey = \"group\";\nconst getFieldsSortFun = function (groupNames) {\n  return function (m, n) {\n    var tempM = !!m[fieldGroupKey] ? 1 : 0;\n    var tempN = !!n[fieldGroupKey] ? 1 : 0;\n    if (!m[fieldGroupKey] || !n[fieldGroupKey]) {\n      // 没有配置group属性的字段排在前面\n      return tempM - tempN;\n    }\n    // 字段所属分组不在groupNames时排在前面，其他字段按其所属分组在groupNames中的排序先后顺序排序，所属分组相同的字段排在一起。\n    return groupNames.indexOf(m[fieldGroupKey]) - groupNames.indexOf(n[fieldGroupKey]);\n  };\n}\n\n// 清空主表单fields字段值\nconst clearFields = function (input) { \n  return {\n    fields: []\n  }\n}\n\n// 把”设置字段“弹出窗口中设置的字段转为主表单fields字段值格式\nconst convertDataForFields = function (input) {\n  let pickedFields = input.picked_fields || [];\n  const superFields = _.keyBy(input.__super.fields, 'name');\n  if (typeof pickedFields === \"string\") {\n    pickedFields = pickedFields.split(\",\");\n  }\n  const fieldOptions = lodash.keyBy(input.__super.__super.__super.__super.__super.fields_options, \"value\");\n  const convertedFields = pickedFields.map(function (name) {\n    const superField = superFields[name];\n    if (superField) {\n      return superField;\n    }\n    else {\n      const fieldOption = fieldOptions[name];\n      return {\n        name: name,\n        is_readonly: fieldOption.readonly,\n        required: fieldOption.required,\n        group: fieldOption.group\n      }\n    }\n  });\n  const fieldGroups = input.__super.__super.__super.__super.__super.field_groups;\n  const groupNames = lodash.compact(lodash.map(fieldGroups, \"group_name\"));\n  // fields重新按分组排序\n  convertedFields.sort(getFieldsSortFun(groupNames));\n  return {\n    fields: convertedFields\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: clearFields()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"addFormFieldsForm\",\n    args: {\n      value: convertDataForFields(eventData)\n    }\n  });\n}, 300);\n\n"
+																						"script": "var instance_fields = [];\nvar picked_fields = _.cloneDeep(event.data.picked_fields);\n\n_.forEach(picked_fields, function (field) {\n  var table_field = _.find(event.data.instance_fields, { name: field });\n  if (table_field) {\n    instance_fields.push(table_field);\n  } else {\n    instance_fields.push({\n      name: field\n    });\n  }\n});\n\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_fields\n    }\n  }\n});\n"
 																					  }
 																					]
 																				  }
@@ -411,10 +392,27 @@
 																				"size": "lg",
 																				"showCloseButton": true
 																			  },
+																			  "className": "mb-2",
 																			  "label": "${'flows.addFormFields.select_fields' | t}",
 																			  "id": "u:853b890ab524"
 																			}
 																		  ],
+																		  "amis": {
+																			"columnsTogglable": false
+																		  },
+																		  "dialog": {
+																			"title": "字段明细"
+																		  },
+																		  "columns": [
+																			{
+																			  "name": "name",
+																			  "inlineEditMode": false
+																			},
+																			{
+																			  "name": "required"
+																			}
+																		  ],
+																		  "inlineEditMode": true,
 																		  "id": "u:22121edc42b1"
 																		}
 																	  ],
@@ -434,17 +432,10 @@
 																	  "placeholder": "-",
 																	  "messages": {}
 																	}
-																  ],
-																  "size": "none",
-																  "id": "u:100edb4c59d0"
-																}
-															  ]
-															},
-															{
-															  "title": "${'flows.addFormFields.application_form_subform' | t}",
-															  "body": [
+																  ]
+																},
 																{
-																  "type": "wrapper",
+																  "title": "${'flows.addFormFields.application_form_subform' | t}",
 																  "body": [
 																	{
 																	  "type": "service",
@@ -458,63 +449,54 @@
 																		  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
 																		}
 																	  },
-																	  "className": "col-span-2 m-0",
 																	  "affixFooter": false,
 																	  "body": [
 																		{
 																		  "name": "instance_table_fields",
-																		  "type": "crud",
-																		  "strictMode": true,
-																		  "affixHeader": false,
+																		  "type": "steedos-input-table",
 																		  "editable": true,
-																		  "addable": true,
 																		  "removable": true,
 																		  "draggable": false,
+																		  "showIndex": true,
+																		  "dialog": {
+																			"title": "子表明细"
+																		  },
 																		  "columns": [
 																			{
-																			  "name": "index",
-																			  "label": "${'flows.addFormFields.sequence' | t}",
-																			  "className": "w-10",
-																			  "type": "static",
-																			  "value": "${index + 1}",
-																			  "id": "u:a2f05dc83cd4"
+																			  "name": "detail_field_fullname",
+																			  "inlineEditMode": false
 																			},
+																			"label",
+																			"field_names"
+																		  ],
+																		  "inlineEditMode": true,
+																		  "fields": [
 																			{
-																			  "name": "related_field_fullname_label",
+																			  "name": "detail_field_fullname",
 																			  "label": "${'flows.addFormFields.subform_name' | t}",
-																			  "type": "tpl",
-																			  "tpl": "${related_lists_options|filter:value:equals:detail_field_fullname|pick:label}",
+																			  "type": "select",
+																			  "amis": {
+																				"source": "${related_lists_options}",
+																				"menuTpl": "",
+																				"id": "u:beecbd5b6b69"
+																			  },
 																			  "id": "u:5204fc0fbe1c"
 																			},
 																			{
 																			  "name": "label",
 																			  "label": "${'flows.addFormFields.show_heading' | t}",
-																			  "quickEdit": {
-																				"type": "input-text",
-																				"onEvent": {
-																				  "change": {
-																					"actions": [
-																					  {
-																						"actionType": "custom",
-																						"script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, prop_name) {\n  const currentPropValue = input.value;\n  const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") { \n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, \"label\")\n  }\n});\n"
-																					  }
-																					]
-																				  }
-																				},
-																				"labelRemark": "${'flows.addFormFields.default_to_object_name' | t}",
-																				"className": "m-0",
-																				"labelClassName": "text-left",
-																				"id": "u:5b30f2a71830",
-																				"name": "label"
-																			  },
+																			  "type": "text",
 																			  "id": "u:1267e4351d66",
 																			  "placeholder": "-"
 																			},
 																			{
 																			  "name": "field_names",
 																			  "label": "${'flows.addFormFields.displayed_fields' | t}",
-																			  "quickEdit": {
+																			  "type": "lookup",
+																			  "amis": {
 																				"type": "transfer-picker",
+																				"className": "w-full steedos-flow-transfer-picker",
+																				"inputClassName": "w-full",
 																				"source": {
 																				  "method": "get",
 																				  "url": "/service/api/amis-metadata-objects/objects/${detail_field_fullname|split:.|first}/fields/options",
@@ -525,31 +507,17 @@
 																				  "sendOn": "${!!detail_field_fullname && !detail_field_fullname.value}"
 																				},
 																				"searchable": true,
-																				"onEvent": {
-																				  "change": {
-																					"actions": [
-																					  {
-																						"actionType": "custom",
-																						"script": "// 字段列表每一列数据变量时立即同步值到表单中\nconst quickEidtSaveForRelatedList = function (input, rowValue, prop_name) {\n  \n  const currentPropValue = input.value;\n  // const rowValue = input;\n  delete rowValue.event;\n  const formValue = rowValue.__super.__super;\n  const detail_field_fullname = rowValue.detail_field_fullname;\n  rowValue[prop_name] = currentPropValue;\n  let newRelatedLists = formValue.instance_table_fields.map(function (item) {\n    if (item.detail_field_fullname == detail_field_fullname) {\n      if (prop_name === \"detail_field_fullname\") {\n        // 直接在表格上变更子表选项的话，清除其他属性值\n        return {\n          detail_field_fullname: currentPropValue,\n          sort_order: \"asc\"\n        }\n      }\n      else {\n        return Object.assign({}, item, rowValue);\n      }\n    }\n    else {\n      return item;\n    }\n  });\n  const newFormDoc = {\n    instance_table_fields: newRelatedLists\n  };\n  if (prop_name === \"field_names\" || prop_name === \"sort_field_name\") {\n    // 修改子表显示字段和排序字段时把变更后的字段值显示为label\n    const currentOptions = {};\n    currentOptions[detail_field_fullname] = input.options;\n    newFormDoc.related_object_fields_options = Object.assign({}, formValue.related_object_fields_options, currentOptions);\n  }\n  return newFormDoc;\n}\n\nconst eventData = event.data;\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: quickEidtSaveForRelatedList(eventData, context.props.data, \"field_names\")\n  }\n});\n"
-																					  }
-																					]
-																				  }
-																				},
 																				"joinValues": false,
 																				"extractValue": true,
 																				"mode": "inline",
 																				"id": "u:a85f62af394f",
 																				"name": "field_names",
-																			  	"sortable": true
+																				"sortable": true
 																			  },
-																			  "type": "tpl",
-																			  "tpl": "<%= data.related_object_fields_options && data.related_object_fields_options[data.detail_field_fullname] ? data.related_object_fields_options[data.detail_field_fullname].filter(function(item){ return data.field_names && data.field_names.indexOf(item.value) > -1;}).map(function(item){return item.label}) : data.field_names%>",
 																			  "id": "u:ce65d4020107",
 																			  "placeholder": "-"
 																			}
 																		  ],
-																		  "className": "col-span-2 m-0",
-																		  "labelClassName": "text-left",
 																		  "headerToolbar": [
 																			{
 																			  "type": "button",
@@ -562,7 +530,9 @@
 																					"name": "picked_related_lists",
 																					"sortable": true,
 																					"source": "${related_lists_options}",
-																					"value": "${instance_table_fields|pick:detail_field_fullname}",
+																					"value": "${instance_table_fields|pick:detail_field_fullname | split}",
+																					"joinValues": false,
+																					"extractValue": true,
 																					"searchable": true,
 																					"id": "u:ab6a6c9c8677"
 																				  }
@@ -572,7 +542,7 @@
 																					"actions": [
 																					  {
 																						"actionType": "custom",
-																						"script": "// 清空主表单related_lists字段值\nconst clearRelatedLists = function (input) {\n  return {\n    instance_table_fields: []\n  }\n}\n\n// 把”设置子表“弹出窗口中设置的子表转为主表单related_lists字段值格式\nconst convertDataForRelatedLists = function (input) {\n  let pickedRelateds = input.picked_related_lists || [];\n  const superRelateds = _.keyBy(input.__super.instance_table_fields, 'detail_field_fullname');\n  if (typeof pickedRelateds === \"string\") {\n    pickedRelateds = pickedRelateds.split(\",\");\n  }\n  const convertedRelateds = pickedRelateds.map(function (key) {\n    return superRelateds[key] || {\n      detail_field_fullname: key,\n      sort_order: \"asc\"\n    }\n  });\n  return {\n    instance_table_fields: convertedRelateds\n  }\n}\n\nconst eventData = event.data;\ndoAction({\n  actionType: 'setValue',\n  componentId: \"addFormFieldsForm\",\n  args: {\n    value: clearRelatedLists()\n  }\n});\n\nsetTimeout(function () {\n  doAction({\n    actionType: 'setValue',\n    componentId: \"addFormFieldsForm\",\n    args: {\n      value: convertDataForRelatedLists(eventData)\n    }\n  });\n}, 300);\n"
+																						"script": "const instance_table_fields = [];\nconst picked_related_lists = _.cloneDeep(event.data.picked_related_lists);\n_.forEach(picked_related_lists, function (related_list) {\n  const table_related_list = _.find(event.data.instance_table_fields, { detail_field_fullname: related_list });\n  if (table_related_list) {\n    instance_table_fields.push(table_related_list)\n  } else {\n    instance_table_fields.push({\n      detail_field_fullname: related_list\n    })\n  }\n})\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_table_fields\n    }\n  }\n});"
 																					  }
 																					]
 																				  }
@@ -584,80 +554,73 @@
 																				"size": "lg",
 																				"showCloseButton": true
 																			  },
+																			  "className": "mb-2",
 																			  "label": "${'flows.addFormFields.select_subform' | t}",
 																			  "id": "u:b9a5d3b611d7"
 																			}
 																		  ],
-																		  "source": "${instance_table_fields}",
-																		  "footable": false,
-																		  "messages": {},
-																		  "tableClassName": "min-w-max",
 																		  "id": "u:95aea10231d3"
 																		}
 																	  ],
 																	  "messages": {}
 																	}
-																  ],
-																  "size": "none",
-																  "id": "u:100edb4c59d0"
+																  ]
 																}
 															  ]
 															}
-														  ]
+														  ],
+														  "mode": "normal",
+														  "initApi": {
+															"method": "post",
+															"url": "${context.rootUrl}/graphql",
+															"sendOn": "!!this.recordId",
+															"cache": 100,
+															"adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n        return payload;\n        ",
+															"data": {
+															  "query": "{data:flows(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,company_id,name,api_name,form,category,state,is_valid,current_no,description,help_text,created_by,modified_by,current,perms,object_name,instance_fields,instance_table_fields,instance_template,print_template,field_map,events,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state,_display:_ui{company_id,form,category,state,is_valid,current_no,created_by,modified_by,object_name,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
+															},
+															"headers": {
+															  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+															}
+														  },
+														  "api": {
+															"method": "post",
+															"url": "${context.rootUrl}/am/forms/addFieldsFromObject",
+															"data": {
+															  "objectName": "${objectName}",
+															  "$": "$$",
+															  "recordId": "${recordId}"
+															},
+															"requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.instance_fields, object_name: api.body.$.object_name}",
+															"responseData": {
+															  "recordId": "${record._id}"
+															},
+															"adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
+															"headers": {
+															  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+															}
+														  },
+														  "onEvent": {
+															"submitSucc": {
+															  "actions": [
+																{
+																  "componentId": "form_forms",
+																  "actionType": "reload"
+																}
+															  ]
+															}
+														  }
 														}
 													  ],
-													  "mode": "normal",
-													  "initApi": {
-														"method": "post",
-														"url": "${context.rootUrl}/graphql",
-														"sendOn": "!!this.recordId",
-														"cache": 100,
-														"adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n    payload.data.fields = payload.data.instance_fields;        return payload;\n        ",
-														"data": {
-														  "query": "{data:flows(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,company_id,name,api_name,form,category,state,is_valid,current_no,description,help_text,created_by,modified_by,current,perms,object_name,instance_fields,instance_table_fields,instance_template,print_template,field_map,events,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state,_display:_ui{company_id,form,category,state,is_valid,current_no,created_by,modified_by,object_name,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
-														},
-														"headers": {
-														  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-														}
-													  },
-													  "api": {
-														"method": "post",
-														"url": "${context.rootUrl}/am/forms/addFieldsFromObject",
-														"data": {
-														  "objectName": "${objectName}",
-														  "$": "$$",
-														  "recordId": "${recordId}"
-														},
-														"requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.fields, object_name: api.body.$.object_name}",
-														"responseData": {
-														  "recordId": "${record._id}"
-														},
-														"adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
-														"headers": {
-														  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-														}
-													  },
-													  "onEvent": {
-														"submitSucc": {
-															"actions": [
-																{
-																	"componentId": "form_forms",
-																	"actionType": "reload"
-																}
-															]
-														}
-													  }
+													  "id": "u:836df7acd992"
 													}
-												  ],
-												  "id": "u:836df7acd992"
-												}
+												  }
+												],
+												"weight": 0
 											  }
-											],
-											"weight": 0
-										  }
-										},
-										"className": "m-0"
-									  }
+											},
+											"className": "m-0"
+										}
 									]
 								},
 								{
