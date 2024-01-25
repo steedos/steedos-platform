@@ -5,3 +5,4 @@ allowEdit: false
 allowRead: true
 modifyAllRecords: false
 viewAllRecords: true
+allowCreateListViews: false

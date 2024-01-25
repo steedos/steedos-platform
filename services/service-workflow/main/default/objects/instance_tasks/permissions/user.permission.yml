@@ -7,3 +7,4 @@ modifyAllRecords: false
 viewAllRecords: true
 modifyCompanyRecords: false
 viewCompanyRecords: true
+allowCreateListViews: false
