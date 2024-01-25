@@ -685,7 +685,7 @@
 					"linksClassName": "",
 					"id": "u:87e566922df2",
 					"tabsMode": "vertical",
-					"contentClassName": "bg-white",
+					"contentClassName": "bg-white overflow-x-auto",
 					"hidden": false
 				}
 			],

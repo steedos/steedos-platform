@@ -151,9 +151,9 @@ getFileFieldValue = (recordFieldId, fType)->
 		else
 			return value;
 
-getInstanceFieldValue = (objField, formField, record, object_field, spaceId, recordFieldValue) ->
+getInstanceFieldValue = (objField, formField, record, object_field, spaceId, recordFieldValue, enableAmisform) ->
 
-	if formField.steedos_field
+	if enableAmisform && formField.steedos_field
 		return recordFieldValue
 
 	recordFieldValue = record[objField.name]
@@ -449,7 +449,8 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 	})
 	# record = Creator.getCollection(objectName, spaceId).findOne(recordId)
 	record = objectFindOne(objectName, { filters: [['_id', '=', recordId]]})
-	flow = Creator.getCollection('flows').findOne(flowId, { fields: { form: 1 } })
+	flow = Creator.getCollection('flows').findOne(flowId, { fields: { form: 1, enableAmisform: 1 } })
+	enableAmisform = flow.enable_amisform
 	if ow and record
 		requiredDetails = ow.required_details || []
 		checkRequiredDetails(requiredDetails, record)
@@ -537,9 +538,9 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 						lookupFieldObj = getObjectConfig(objectFieldObjectName)
 						objectLookupField = lookupFieldObj.fields[lookupFieldName]
 
-						values[workflow_field] = getInstanceFieldValue(objectLookupField, formField, lookupObjectRecord, lookupFieldName, spaceId, record[lookupFieldName])
+						values[workflow_field] = getInstanceFieldValue(objectLookupField, formField, lookupObjectRecord, lookupFieldName, spaceId, record[lookupFieldName], enableAmisform)
 			else
-				values[workflow_field] = getInstanceFieldValue(objField, formField, record, object_field, spaceId, record[object_field])
+				values[workflow_field] = getInstanceFieldValue(objField, formField, record, object_field, spaceId, record[object_field], enableAmisform)
 
 		# 表格字段
 		_.uniq(tableFieldCodes).forEach (tfc) ->
@@ -592,7 +593,7 @@ uuflowManagerForInitApproval.initiateValues = (recordIds, flowId, spaceId, field
 							relatedObjectField = relatedObject.fields[fieldKey]
 							if !formField || !relatedObjectField
 								return
-							tableFieldValue = getInstanceFieldValue(relatedObjectField, formField, relatedRecord, fieldKey, spaceId, relatedRecord[fieldKey])
+							tableFieldValue = getInstanceFieldValue(relatedObjectField, formField, relatedRecord, fieldKey, spaceId, relatedRecord[fieldKey], enableAmisform)
 							tableValueItem[formFieldKey] = tableFieldValue
 					if !_.isEmpty(tableValueItem)
 						tableValueItem._id = relatedRecord._id
