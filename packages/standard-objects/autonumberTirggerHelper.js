@@ -175,6 +175,19 @@ const caculateAutonumber = async function (objectName, fieldName, rule, spaceId)
     return autonumber;
 };
 
+async function generateAutonumber(formula, spaceId, objectName, fieldName, doc) {
+    let rule = formula;
+    // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
+    if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
+        // 先执行公式，返回编码规则
+        rule = await objectql.computeFormula(formula, objectName, doc);
+    }
+    // 再执行编码规则
+    const autonumber = await caculateAutonumber(objectName, fieldName, rule, spaceId);
+    return autonumber;
+}
+
+
 const afterInsertAutoNumber = async function () {
     const { doc, object_name } = this;
     const spaceId = doc.space || this.spaceId;
@@ -188,15 +201,8 @@ const afterInsertAutoNumber = async function () {
     for (const k in fields) {
         const f = fields[k];
         let formula = f.formula;
-        let rule = formula;
         if (f.type == 'autonumber' && formula) {
-            // 拿到编号字段中配置的公式判断是否存在单引号/双引号，如果存在则当成公式计算；如没有则继续走编码规则计算
-            if (formula.indexOf("'") > -1 || formula.indexOf('"') > -1) {
-                // 先执行公式，返回编码规则
-                rule = await objectql.computeFormula(formula, object_name, doc);
-            }
-            // 再执行编码规则
-            setObj[k] = await caculateAutonumber(object_name, k, rule, spaceId);
+            setObj[k] = await generateAutonumber(formula, spaceId, object_name, k, doc)
         }
     }
     if (!_.isEmpty(setObj)) {
@@ -205,5 +211,6 @@ const afterInsertAutoNumber = async function () {
 }
 
 module.exports = {
-    afterInsertAutoNumber
+    afterInsertAutoNumber,
+    generateAutonumber
 }
