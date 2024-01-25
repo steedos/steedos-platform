@@ -250,6 +250,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+    allowCreateListViews: false
   admin:
     allowCreate: false
     allowDelete: false
@@ -257,6 +258,7 @@ permission_set:
     allowRead: true
     modifyAllRecords: false
     viewAllRecords: true
+    allowCreateListViews: false
   workflow_admin:
     allowCreate: false
     allowDelete: false
@@ -266,6 +268,7 @@ permission_set:
     viewAllRecords: false
     modifyCompanyRecords: false
     viewCompanyRecords: true
+    allowCreateListViews: false
     disabled_list_views:
       - inbox
       - outbox
