@@ -6,7 +6,7 @@ Template.formBuilder.onRendered ()->
 	formFields = form.current.fields
 	fields = Creator.formBuilder.transformFormFieldsIn(formFields)
 	options = Creator.formBuilder.optionsForFormFields()
-	module.dynamicImport('formBuilder').then ()->
+	module.dynamicImport('@steedos/form-builder').then ()->
 		fb = $("#fb-editor").formBuilder(options)
 		fb.promise.then (formBuilder)->
 			formBuilder.actions.setData(fields)

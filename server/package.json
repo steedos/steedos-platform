@@ -86,5 +86,8 @@
     "xiaomi-push": "^1.0.0",
     "xml2js": "^0.4.19"
   },
+  "devDependencies": {
+    "@steedos/form-builder": "3.6.2-patch.5"
+  },
   "gitHead": "977b48666fda5a16f911d9b981da6b8b37a57e5c"
 }
