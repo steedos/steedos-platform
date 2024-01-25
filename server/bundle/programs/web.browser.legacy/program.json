@@ -2,34 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b4f991e4ddcd23c99f027590c097dc7a933cf6b7.js",
+      "path": "eceddc4c46abd676a2e2268736b87df2aae8448f.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/b4f991e4ddcd23c99f027590c097dc7a933cf6b7.js?meteor_js_resource=true",
-      "size": 4302866,
-      "hash": "b4f991e4ddcd23c99f027590c097dc7a933cf6b7",
-      "sri": "ynY06a5FJjUmF3MjtG3m+2Jm/YSjPstfhMXI7BzbNlt8hG50NFw1dTZjP1qKu/22YC5jFbIQgDurxs1f59w/UQ=="
+      "url": "/eceddc4c46abd676a2e2268736b87df2aae8448f.js?meteor_js_resource=true",
+      "size": 4303077,
+      "hash": "eceddc4c46abd676a2e2268736b87df2aae8448f",
+      "sri": "kxd2qoXVB0JV8NXxyjrQstjpfOkUWyloJcB1rOrtV7KjoqH2xQECG0SIM1n/k7VeIM9zo+EeqggRRLLkjItxUQ=="
     },
     {
-      "path": "b4f991e4ddcd23c99f027590c097dc7a933cf6b7.stats.json",
+      "path": "eceddc4c46abd676a2e2268736b87df2aae8448f.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/b4f991e4ddcd23c99f027590c097dc7a933cf6b7.stats.json?meteor_js_resource=true",
-      "size": 92670,
-      "hash": "9d2aa73376f73c432f8c2ec180ee43cded67c295",
-      "sri": "uk1YI5HQfBzsWNT5bWpRHSkV0uQftWv88Qcu7RtkR/mxb0KKr2A2o6D4Y+tKhyBKCpfuac0lrlhvwYVniHG4xw=="
+      "url": "/eceddc4c46abd676a2e2268736b87df2aae8448f.stats.json?meteor_js_resource=true",
+      "size": 92683,
+      "hash": "54360b15570303a276ebf49d62d81635db3d93ee",
+      "sri": "6w0rsA44m0dawx0DdkDmTV1lJgU1Yhs8/GhzbBptHos3Ax86BoJkpOnPsHCEjmJFuhE6Corm6D6LNSnw/sgnCA=="
     },
     {
-      "path": "dynamic/node_modules/formBuilder/dist/form-builder.min.js",
+      "path": "dynamic/node_modules/@steedos/form-builder/dist/form-builder.min.js",
       "where": "client",
       "type": "dynamic js",
       "cacheable": true,
-      "url": "/dynamic/node_modules/formBuilder/dist/form-builder.min.js?hash=a5cb70db45404ca358b0a180f119c6a85180280a",
-      "size": 155205,
-      "hash": "a5cb70db45404ca358b0a180f119c6a85180280a",
-      "sri": "nGypvNyd/4UamGdxOAQmb3Jy5EFVA+FG3vvm4S8XAP65zU9qQ4gdvmBf4FWV9pfAg8hsBHySpEVO39FFR3Hc4A=="
+      "url": "/dynamic/node_modules/@steedos/form-builder/dist/form-builder.min.js?hash=40d4cb9d7a5b3ef07831a62eafaea636b1891b83",
+      "size": 146085,
+      "hash": "40d4cb9d7a5b3ef07831a62eafaea636b1891b83",
+      "sri": "dnbW1q48j3KtzpHXDViMERVHFCPgoNyDxNZD5+hzluyQ5nHg9uvZq/Eo/FNenaG0bCybOWM+61X4wq3ayULJOA=="
     },
     {
       "path": "dynamic/client/main.html",
