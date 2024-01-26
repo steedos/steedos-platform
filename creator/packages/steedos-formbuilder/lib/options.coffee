@@ -146,7 +146,7 @@ getTypeUserAttrs = ()->
 	_.each FORMBUILDERFIELDTYPES, (item)->
 		switch item
 			when 'select'
-				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display', 'is_searchable')
+				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display', 'is_searchable', 'multiple')
 			when 'radio-group'
 				typeUserAttrs[item] = _.extend {}, CODEUSERATTRS, _.pick(BASEUSERATTRS, '_id', 'is_wide', 'is_list_display', 'is_searchable')
 			when 'checkbox-group'

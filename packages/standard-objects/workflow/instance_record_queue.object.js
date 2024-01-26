@@ -251,7 +251,7 @@ const getRecordFieldValue = function (oField, wField, ofValue, wfValue, spaceId,
         }
     }
     else if (oFieldType === 'number' || oFieldType === 'currency' || oFieldType === 'percent') {
-        if (wfValue && typeof (Number(wfValue)) === 'number') {
+        if (typeof (Number(wfValue)) === 'number') {
             value = Number(wfValue);
         }
     }

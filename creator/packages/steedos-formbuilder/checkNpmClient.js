@@ -1,7 +1,7 @@
 // fix warning: xxx not installed
-require("formBuilder/package.json");
+require("@steedos/form-builder/package.json");
 
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions';
 checkNpmVersions({
-	formBuilder: "^3.1.3"
+	"@steedos/form-builder": "3.6.2-patch.1"
 }, 'steedos:formbuilder');

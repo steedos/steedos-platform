@@ -3596,6 +3596,14 @@
     lodash "4.17.21"
     moment "^2.24.0"
 
+"@steedos/form-builder@3.6.2-patch.5":
+  version "3.6.2-patch.5"
+  resolved "https://registry.npmjs.org/@steedos/form-builder/-/form-builder-3.6.2-patch.5.tgz#e72161be9f3d0589384c8545521ed3141fbf3c61"
+  integrity sha512-fIvnaq9qzWXFjcC+WgfhfbINe7zZ7kgc9KHXLwJqXdYgNBZMxwFyhxJL/DQqV8g2H3po6+7LZWUOrOonYphmIA==
+  dependencies:
+    jquery ">=3.4.1"
+    jquery-ui-sortable "*"
+
 "@steedos/mongodb-memory-server-core@^7.0.0-beta.14":
   version "7.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/@steedos/mongodb-memory-server-core/-/mongodb-memory-server-core-7.0.0-beta.14.tgz#a9b8ea6ac08160bff416c2afc35c656d7fdb9f23"
@@ -10974,6 +10982,16 @@ jest-worker@^26.2.1:
     "@types/node" "*"
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
+
+jquery-ui-sortable@*:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/jquery-ui-sortable/-/jquery-ui-sortable-1.0.0.tgz#0ee062ce02b29b36585ede3a3e0ddde666060f96"
+  integrity sha512-7xAUWoEJ/jHoj48ei8CCUtiad2uM3ie3IR2b3KB0Mpmb54IbBxzVb5vtrj0zqtd0GNQDImx+BPZml9QmK2EL3w==
+
+jquery@>=3.4.1:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 js-base64@^3.6.1:
   version "3.7.2"
