@@ -127,8 +127,8 @@ fields:
     language: json
     required: false
     is_wide: true
-    hidden: true
-    visible_on: "{{formData.type == 'amis_button' ? true: false}}"
+    # hidden: true
+    visible_on: "{{false}}"
   is_system:
     type: boolean
     label: 系统

@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-12-29 17:16:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-24 10:55:23
+ * @LastEditTime: 2024-01-26 13:17:48
  * @Description: 
  */
 
@@ -38,6 +38,7 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
 
             steedosFields.push({
                 ...field.steedos_field,
+                required: field.is_required,
                 ..._.pickBy(field, (v, k) => {
                     return k != "type" && k != "fields" && k != 'steedos_field' && k != 'options';
                 }),
@@ -50,6 +51,7 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
                     const fStatic = stepPermissions[fField.code] === 'editable' ? false : true;
                     return {
                         ...fField.steedos_field,
+                        required: fField.is_required,
                         ..._.pickBy(fField, (v, k) => {
                             return k != "type" && k != "steedos_field" && k != 'options';
                         }),
@@ -66,6 +68,7 @@ const convertFormFieldsToSteedosFields = (formFields, stepPermissions = {}, ctx)
         } else {
             steedosFields.push({
                 ...field.steedos_field,
+                required: field.is_required,
                 ..._.pickBy(field, (v, k) => {
                     return k != "type" && k != "steedos_field" && k != 'options';
                 }),
