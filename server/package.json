@@ -1,6 +1,6 @@
 {
   "name": "steedos-server",
-  "version": "2.6.6-beta.3",
+  "version": "2.6.6-beta.4",
   "main": "index.js",
   "files": [
     "/bundle/programs/server/app",
@@ -19,18 +19,18 @@
   },
   "dependencies": {
     "@babel/runtime": "7.12.18",
-    "@steedos/accounts": "2.6.6-beta.3",
-    "@steedos/auth": "2.6.6-beta.3",
-    "@steedos/core": "2.6.6-beta.3",
-    "@steedos/filters": "2.6.6-beta.3",
-    "@steedos/i18n": "2.6.6-beta.3",
-    "@steedos/meteor-bundle-dependencies": "2.6.6-beta.3",
-    "@steedos/meteor-bundle-runner": "2.6.6-beta.3",
-    "@steedos/objectql": "2.6.6-beta.3",
-    "@steedos/odata-v4-mongodb": "2.6.6-beta.3",
-    "@steedos/odata-v4-parser": "2.6.6-beta.3",
-    "@steedos/process": "2.6.6-beta.3",
-    "@steedos/standard-objects": "2.6.6-beta.3",
+    "@steedos/accounts": "2.6.6-beta.4",
+    "@steedos/auth": "2.6.6-beta.4",
+    "@steedos/core": "2.6.6-beta.4",
+    "@steedos/filters": "2.6.6-beta.4",
+    "@steedos/i18n": "2.6.6-beta.4",
+    "@steedos/meteor-bundle-dependencies": "2.6.6-beta.4",
+    "@steedos/meteor-bundle-runner": "2.6.6-beta.4",
+    "@steedos/objectql": "2.6.6-beta.4",
+    "@steedos/odata-v4-mongodb": "2.6.6-beta.4",
+    "@steedos/odata-v4-parser": "2.6.6-beta.4",
+    "@steedos/process": "2.6.6-beta.4",
+    "@steedos/standard-objects": "2.6.6-beta.4",
     "@steedos/webapp": "2.2.25",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
@@ -89,5 +89,5 @@
   "devDependencies": {
     "@steedos/form-builder": "3.6.2-patch.5"
   },
-  "gitHead": "95b25f745b2767d33081b54cadd27be6fb3dadc5"
+  "gitHead": "a3638e2feda889617a39ac12b1bc798eac51e40c"
 }
