@@ -12,4 +12,3 @@ pageAssignments:
 render_engine: amis
 type: record
 widgets: []
-hidden: true
