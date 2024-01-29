@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-08-05 14:17:44
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-01-20 17:08:17
+ * @LastEditTime: 2024-01-29 13:20:07
  * @Description: 
  */
 const objectql = require('@steedos/objectql');
@@ -13,9 +13,17 @@ async function getAll(){
     const schema = objectql.getSteedosSchema();
     const configs = await register.registerTab.getAll(schema.broker)
     const dataList = [];
-    for (const config of configs) {
-        if (config.metadata && !config.metadata.hidden) {
-            dataList.push(config.metadata); 
+    if ('production' === process.env.NODE_ENV) {
+        for (const config of configs) {
+            if (config.metadata && !config.metadata.hidden) {
+                dataList.push(config.metadata);
+            }
+        }
+    } else {
+        for (const config of configs) {
+            if (config.metadata) {
+                dataList.push(config.metadata);
+            }
         }
     }
 

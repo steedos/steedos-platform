@@ -19,7 +19,7 @@ module.exports = {
             record = Creator.odata.get("objects", record_id, "is_deleted");
         }
 
-        if (record && !record.is_deleted && record.name != 'users') {
+        if (record && !record.is_deleted && record.name != 'users' && record.created) {
             return true;
         }
     },

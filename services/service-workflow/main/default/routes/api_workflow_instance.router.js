@@ -53,8 +53,6 @@ router.get('/api/workflow/instance/:instanceId', core.requireAuthentication, asy
                 })
                 docId = insTaskDocs[0]._id;
             } else if (ins.outbox_users && ins.outbox_users.includes(userId)) {
-                box = 'outbox';
-                objectName = 'instance_tasks'
                 const insTaskDocs = await insTaskObj.find({
                     filters: [
                         ['instance', '=', insId],
@@ -64,14 +62,20 @@ router.get('/api/workflow/instance/:instanceId', core.requireAuthentication, asy
                     ],
                     fields: ['_id']
                 })
-                docId = insTaskDocs[0]._id;
+                if (!_.isEmpty(insTaskDocs)) {
+                    box = 'outbox';
+                    objectName = 'instance_tasks'
+                    docId = insTaskDocs[0]._id;
+                }
             } else if (ins.state === 'draft' && ins.submitter === userId) {
                 box = 'draft';
             } else if (ins.state === 'pending' && (ins.submitter === userId || ins.applicant === userId)) {
                 box = 'pending';
             } else if (ins.state === 'completed' && ins.submitter === userId) {
                 box = 'completed';
-            } else {
+            }
+
+            if (!box) {
                 // 验证login user_id对该流程有管理、观察申请单的权限
                 const permissions = await new Promise((resolve, reject) => {
                     Fiber(function () {

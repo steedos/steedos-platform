@@ -681,7 +681,7 @@
 							]
 						}
 					],
-					"className": "object-detail-tabs mt-3 bg-white border-b sm:rounded sm:border border-gray-300",
+					"className": "object-detail-tabs bg-white m-0 mt-2 border-y",
 					"linksClassName": "",
 					"id": "u:87e566922df2",
 					"tabsMode": "vertical",
@@ -712,5 +712,6 @@
 	},
 	"id": "page_flows_record_detail",
 	"name": "page_flows_record_detail",
-	"className": "page_flows_record_detail"
+	"className": "page_flows_record_detail",
+	"bodyClassName": "p-0"
 }

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-14 10:43:21
+ * @LastEditTime: 2024-01-29 15:31:29
  * @Description: 
  */
 "use strict";
@@ -347,6 +347,16 @@ module.exports = {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return await obj._makeNewID();
+            }
+        },
+        absoluteUrl: {
+            params: {
+                path: { type: "string" },
+                options: { type: "object", optional: true }
+            },
+            async handler(ctx) {
+                const { path, options } = ctx.params;
+                return objectql.absoluteUrl(path, options);
             }
         },
         getRecordAbsoluteUrl: {

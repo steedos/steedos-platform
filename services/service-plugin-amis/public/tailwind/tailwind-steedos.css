@@ -83,12 +83,12 @@
   float: right
 }
 
-.m-1 {
-  margin: 0.25rem
-}
-
 .m-0 {
   margin: 0px
+}
+
+.m-1 {
+  margin: 0.25rem
 }
 
 .-m-8 {
@@ -114,12 +114,12 @@
   margin-right: -2.75rem
 }
 
-.mb-4 {
-  margin-bottom: 1rem
-}
-
 .mt-2 {
   margin-top: 0.5rem
+}
+
+.mb-4 {
+  margin-bottom: 1rem
 }
 
 .mr-4 {
@@ -132,10 +132,6 @@
 
 .mb-2 {
   margin-bottom: 0.5rem
-}
-
-.mt-3 {
-  margin-top: 0.75rem
 }
 
 .mr-7 {
@@ -307,7 +303,8 @@
   border-width: 0px
 }
 
-.border-b {
+.border-y {
+  border-top-width: 1px;
   border-bottom-width: 1px
 }
 
@@ -315,8 +312,8 @@
   border-right-width: 1px
 }
 
-.border-solid {
-  border-style: solid
+.border-b {
+  border-bottom-width: 1px
 }
 
 .border-gray-300 {
@@ -502,12 +499,12 @@
     margin-top: 0.75rem
   }
 
-  .sm\:rounded {
-    border-radius: 0.25rem
-  }
-
   .sm\:rounded-lg {
     border-radius: 0.5rem
+  }
+
+  .sm\:rounded {
+    border-radius: 0.25rem
   }
 
   .sm\:border {
