@@ -158,7 +158,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     if (hasFlowsPer) {
       let query = `
         query {
-          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}]],sort:"sort_no desc"){
+          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
@@ -173,7 +173,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     data = await objectql.broker.call('api.graphql', {
       query: `
         query {
-          flows(filters:["category","in",${JSON.stringify(currentAppCategories)}],sort:"sort_no desc"){
+          flows(filters:[["category","in",${JSON.stringify(currentAppCategories)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
