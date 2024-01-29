@@ -32,6 +32,7 @@
     "@steedos/process": "2.6.6-beta.6",
     "@steedos/standard-objects": "2.6.6-beta.6",
     "@steedos/webapp": "2.2.25",
+    "@steedos/form-builder": "3.6.2-patch.5",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -85,9 +86,6 @@
     "url-search-params-polyfill": "^7.0.0",
     "xiaomi-push": "^1.0.0",
     "xml2js": "^0.4.19"
-  },
-  "devDependencies": {
-    "@steedos/form-builder": "3.6.2-patch.5"
   },
   "gitHead": "d15840851c7b43a2911874c5cfd4a9a3a9f140a4"
 }
