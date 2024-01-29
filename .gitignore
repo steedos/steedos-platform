@@ -27,6 +27,7 @@
 .pnpm-lock.yaml
 
 !/server/bundle/**/node_modules/formBuilder/dist
+!/server/bundle/**/node_modules/@steedos/form-builder/dist
 !/server/bundle/**/node_modules
 docker-volumes/**
 examples/multi-node-testing/**

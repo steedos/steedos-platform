@@ -2,24 +2,24 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "4d91d62bca22e2acf527d36153994c1cdfe2b322.js",
+      "path": "163f8f4022bc2c6221a492d0906f207b6c06e69b.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/__cordova/4d91d62bca22e2acf527d36153994c1cdfe2b322.js?meteor_js_resource=true",
-      "size": 4479358,
-      "hash": "4d91d62bca22e2acf527d36153994c1cdfe2b322",
-      "sri": "Tu5+oMKhbeRhTwWycKz5AMPcBWiy6NI2Wqlb9ekJrZIxyIauvmq/Hs+Ce5FWtC2zZZdF0KcDjTmKuCIA7wod2Q=="
+      "url": "/__cordova/163f8f4022bc2c6221a492d0906f207b6c06e69b.js?meteor_js_resource=true",
+      "size": 4479359,
+      "hash": "163f8f4022bc2c6221a492d0906f207b6c06e69b",
+      "sri": "BGSPbvHWUFYDXDSIv06wP9TVZvDIbpEUYs6dOPFvh0h0S/PTfOAC8ouQBFfMkBSy7i+VPT3Y8vdziiMEkGMk1g=="
     },
     {
-      "path": "4d91d62bca22e2acf527d36153994c1cdfe2b322.stats.json",
+      "path": "163f8f4022bc2c6221a492d0906f207b6c06e69b.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/__cordova/4d91d62bca22e2acf527d36153994c1cdfe2b322.stats.json?meteor_js_resource=true",
+      "url": "/__cordova/163f8f4022bc2c6221a492d0906f207b6c06e69b.stats.json?meteor_js_resource=true",
       "size": 82585,
-      "hash": "c43af96523d183b391370669ff80434fd1eb64c9",
-      "sri": "bAJcq5Hxy/hXUYt7V/KxyL04wSykeHL4OCG1WfO/JgxVZHpdceyDQ0XBT4Zynou5oCch6uDY3JB/B4rEOAaJUA=="
+      "hash": "10e9b05b936f750203e5c06600e4858a74b03532",
+      "sri": "HZscP9xxXxioajTzMTVE+d83DtfdIgdRntfIm6ZxLQWvh5ObRVryCXeA9j5GLcTjYGt8x9iJfmqmOXWSR5iz9A=="
     },
     {
       "path": "8cdd5ab4f65446df4b26a1db8bc957ca122670cf.css",
@@ -558,8 +558,8 @@
       "cacheable": false,
       "url": "/__cordova/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
-      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
+      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
+      "sri": null
     },
     {
       "path": "packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
@@ -568,8 +568,8 @@
       "cacheable": false,
       "url": "/packages/steedos_formbuilder/formbuilder/languages/zh-CN.lang",
       "size": 2439,
-      "hash": "41c29095fb591655d64f6862170bca966f1a0938",
-      "sri": "8LZx6iCUP2UhboPQOSgsmQZulwyOsprmS+IO6+XcEgQDv/IKad4JGZEfaklHdL3mHs3ZqCSm2a2QbIMxkWx7vg=="
+      "hash": "734a9818c1a08d28b1e1dde1ed0c967ad5b1639b",
+      "sri": null
     },
     {
       "path": "assets/icons/License-for-icons.txt",
