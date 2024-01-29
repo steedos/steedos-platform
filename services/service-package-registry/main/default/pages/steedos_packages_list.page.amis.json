@@ -7,7 +7,7 @@
       "objectApiName": "${objectName}",
       "listName": "all",
       "showHeader": true,
-      "className": "sm:border sm:rounded sm:border-gray-300 mb-4",
+      "className": "",
       "id": "u:70d5861033de",
       "crudMode": "cards",
       "crud": {

@@ -6,7 +6,6 @@
       "objectApiName": "organizations",
       "columnsTogglable": false,
       "showHeader": true,
-      "className": "sm:border bg-white sm:rounded border-gray-300 border-solid",
       "id": "u:0e66353c4170",
       "crudMode": "table",
       "crud": {
@@ -41,5 +40,5 @@
   },
   "id": "u:b7fa9418ef38",
   "name": "page_organizations_list",
-  "bodyClassName": ""
+  "bodyClassName": "p-0"
 }
