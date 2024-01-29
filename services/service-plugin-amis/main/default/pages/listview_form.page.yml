@@ -10,3 +10,4 @@ pageAssignments:
 render_engine: amis
 type: form
 widgets: []
+hidden: true
