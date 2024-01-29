@@ -173,7 +173,7 @@ actions:
                         {
                             "type": "input-file",
                             "label": "",
-                            "name": "file",
+                            "name": "__file",
                             "id": "u:a58d02614e04",
                             "btnLabel": "上传新版本",
                             "btnClassName": "m-0",
@@ -204,7 +204,7 @@ actions:
                                     "weight": 0,
                                     "actions": [
                                         {
-                                            "componentId": "u:5f901c0b917b",
+                                            "componentId": "u:a58d02614e04",
                                             "args": {},
                                             "actionType": "clear"
                                         },
@@ -294,7 +294,7 @@ actions:
                                     "weight": 0,
                                     "actions": [
                                         {
-                                            "componentId": "u:5f901c0b917b",
+                                            "componentId": "u:a58d02614e04",
                                             "args": {},
                                             "actionType": "clear"
                                         },
