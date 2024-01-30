@@ -289,10 +289,15 @@ fields:
     label: Write requires master read
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
-    visible_on: "{{formData.type === 'master_detail' ? true: false}}"
+    visible_on: c
     sort_no: 200
     amis:
       disabledOn: "${is_system == true}"
+  autonumber_enable_modify:
+    label: 允许修改编号
+    type: boolean
+    visible_on: "{{formData.type === 'autonumber' ? true: false}}"
+    sort_no: 205
   formula:
     label: Formula
     type: textarea
