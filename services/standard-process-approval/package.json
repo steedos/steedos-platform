@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-process-approval",
-    "version": "2.6.6-beta.9",
+    "version": "2.6.6",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -10,10 +10,10 @@
         "steedos"
     ],
     "dependencies": {
-        "@steedos/process": "2.6.6-beta.9"
+        "@steedos/process": "2.6.6"
     },
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "9094a6b1c0c5ca0197ae8c4d376f87571e67114a"
+    "gitHead": "781cb961f46ab549821b119ec2da24056cf8c1d4"
 }
