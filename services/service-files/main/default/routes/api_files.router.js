@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-17 10:18:04
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-01-30 10:09:17
  * @Description: 
  */
 
@@ -106,9 +106,9 @@ router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:f
 
         // Set the content type for file
         if (typeof type === "string") {
-            res.setHeader('Content-Type', type);
+            res.setHeader('Content-Type', type + ";charset=utf-8");
         } else {
-            res.setHeader('Content-Type', 'application/octet-stream');
+            res.setHeader('Content-Type', 'application/octet-stream;charset=utf-8');
         }
 
         // Add 'Content-Disposition' header if requested a download/attachment URL
