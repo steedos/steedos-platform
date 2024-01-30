@@ -335,6 +335,10 @@ InstanceformTemplate.helpers =
 		form_version = Template.instance().view.template.steedosData.form_version
 		InstanceReadOnlyTemplate.getLabel form_version.fields, code
 
+	isTextarea: (field)->
+		if field?.type == "input" && field?.is_textarea
+			return true
+
 	getCfClass: (field)->
 		if field?.type == "input" && field?.is_textarea
 			return "cfTextarea"
