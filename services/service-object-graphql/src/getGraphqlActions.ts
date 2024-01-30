@@ -744,7 +744,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 fileValue = _.map(fileRecords, (fileRecord) => {
                                     return {
                                         name: fileRecord.original?.name,
-                                        url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}/${fileRecord.original?.name}${optionsStr}`),
+                                        url: absoluteUrl(`/api/files/${storageName}/${fileRecord._id}${optionsStr}`),
                                         size: fileRecord.original?.size,
                                         type: fileRecord.original?.type,
                                     };
@@ -759,7 +759,7 @@ export async function translateToUI(objConfig, doc, userSession: any, selectorFi
                                 if (fileRecord) {
                                     fileValue = {
                                         name: fileRecord["original"]["name"],
-                                        url: absoluteUrl(`/api/files/${storageName}/${value}/${fileRecord.original?.name}${optionsStr}`),
+                                        url: absoluteUrl(`/api/files/${storageName}/${value}${optionsStr}`),
                                         size: fileRecord.original?.size,
                                         type: fileRecord.original?.type
                                     };
