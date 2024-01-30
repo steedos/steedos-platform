@@ -12,9 +12,9 @@ columns:
 mobile_columns:
   - instance_name
   - flow_name
-  - step_name
+  - instance.current_step_name
   - submitter_name
-  - start_date
+  - modified
 filter_scope: space
 filters: !!js/function |
     function(filters, data){
