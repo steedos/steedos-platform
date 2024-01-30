@@ -74,6 +74,6 @@ Template.cfTextarea.helpers({
       return value;
     // value = value.replace(/\ /g,'&nbsp;')
     //return _.clone(value).replace(new RegExp(/(\n)/g),'</br>');
-    return Spacebars.SafeString(marked.parse(value))
+    return value
   }
 });

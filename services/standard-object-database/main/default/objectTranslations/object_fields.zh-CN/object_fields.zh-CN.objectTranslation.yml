@@ -155,6 +155,10 @@ fields:
     label: 描述
     help: 
     description: 
+  autonumber_enable_modify:
+    label: 允许修改编号
+    help: 
+    description: 
   formula:
     label: 公式
     help: 字段类型为自动编号或公式时，必须填写此字段。

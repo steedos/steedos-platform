@@ -14,6 +14,10 @@ try {
 
     var file = fs.createWriteStream(filePath);
 
+    // 获取客户端版本
+    var ua = navigator.userAgent.toLowerCase();
+    var win = ua.indexOf("win") > -1 || ua.indexOf("wow") > -1;
+
     // 下载附件
     var dfile = request.get(encodeURI(file_url.href), function (res) {
       res.on('data', function (data) {

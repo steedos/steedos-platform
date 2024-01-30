@@ -202,6 +202,9 @@ const afterInsertAutoNumber = async function () {
         const f = fields[k];
         let formula = f.formula;
         if (f.type == 'autonumber' && formula) {
+            if (doc[f.name]) {
+                continue
+            }
             setObj[k] = await generateAutonumber(formula, spaceId, object_name, k, doc)
         }
     }

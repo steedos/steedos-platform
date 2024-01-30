@@ -163,6 +163,10 @@ fields:
     label: Description
     help: 
     description: 
+  autonumber_enable_modify:
+    label: Allow modification of numbers
+    help: 
+    description: 
   formula:
     label: Formula
     help: This field must be filled when the field type is 'Autonumber' or 'Formula'
