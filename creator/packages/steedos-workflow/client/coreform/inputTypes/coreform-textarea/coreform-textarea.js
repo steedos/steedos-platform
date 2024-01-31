@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2024-01-31 17:20:20
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-01-31 17:51:45
+ * @Description: 
+ */
 AutoForm.addInputType("coreform-textarea", {
   template: "cfTextarea",
   valueOut:function(){
@@ -74,6 +81,6 @@ Template.cfTextarea.helpers({
       return value;
     // value = value.replace(/\ /g,'&nbsp;')
     //return _.clone(value).replace(new RegExp(/(\n)/g),'</br>');
-    return Spacebars.SafeString(marked.parse(value))
+    return value
   }
 });

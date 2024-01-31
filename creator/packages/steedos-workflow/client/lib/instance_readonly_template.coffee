@@ -48,7 +48,11 @@ InstanceReadOnlyTemplate.afFormGroupRead = """
 					{{#if showLabel}}
 						<label>{{getLabel code}}</label>
 					{{/if}}
-					<div class='{{getCfClass this}} form-control' readonly disabled>{{{getValue code}}}</div>
+					{{#if isTextarea this}}
+						<p class='{{getCfClass this}} form-control' readonly disabled>{{{getValue code}}}</p>
+					{{else}}
+						<div class='{{getCfClass this}} form-control' readonly disabled>{{{getValue code}}}</div>
+					{{/if}}
 				{{/if}}
 			{{/if}}
 		{{/with}}
@@ -313,9 +317,7 @@ InstanceReadOnlyTemplate.getValue = (value, field, locale, utcOffset) ->
 			value = InstanceReadOnlyTemplate.formatDate(value, utcOffset);
 		when 'input'
 			if field.is_textarea
-				if Meteor.isServer
-					marked = Npm.require('marked')
-				value = Spacebars.SafeString(marked.parse(value))
+				value = value
 		when 'select'
 			selectedOption = fieldOptions.find((item) -> return item.value == value)
 			if selectedOption
