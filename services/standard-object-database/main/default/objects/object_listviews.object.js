@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-13 13:28:02
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-02-01 15:39:15
  * @Description: 
  */
 const _ = require("underscore");
@@ -65,6 +65,17 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
       checkName(doc.name);
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
         doc.shared = false;
+        delete doc.shared_to;
+        delete doc.shared_to_organizations;
+      }
+      if(doc.shared_to === "mine" || doc.shared_to === "organizations"){
+        doc.shared = false;
+      }
+      else if(doc.shared_to === "space"){
+        doc.shared = true;
+      }
+      if(doc.shared_to !== "organizations"){
+        delete doc.shared_to_organizations;
       }
       doc.filters = transformFilters(doc.filters);
     }
@@ -79,8 +90,19 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
         checkName(modifier.$set.name);
       }
 
-      if (modifier.$set.shared && !Steedos.isSpaceAdmin(doc.space, userId)) {
+      if (!Steedos.isSpaceAdmin(doc.space, userId)) {
         modifier.$set.shared = false;
+        delete modifier.$set.shared_to;
+        delete modifier.$set.shared_to_organizations;
+      }
+      if(modifier.$set.shared_to === "mine" || modifier.$set.shared_to === "organizations"){
+        modifier.$set.shared = false;
+      }
+      else if(modifier.$set.shared_to === "space"){
+        modifier.$set.shared = true;
+      }
+      if(modifier.$set.shared_to !== "organizations"){
+        delete modifier.$set.shared_to_organizations;
       }
       if(modifier.$set.filters){
         modifier.$set.filters = transformFilters(modifier.$set.filters);

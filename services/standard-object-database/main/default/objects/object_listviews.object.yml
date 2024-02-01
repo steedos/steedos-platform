@@ -38,6 +38,33 @@ fields:
   shared:
     label: Shared to All Users
     type: boolean
+    visible_on: "{{global.mode ==='read' ? true : false}}"
+    group: share_rules
+  shared_to:
+    label: Who can see this list view?
+    type: select
+    defaultValue: mine
+    options:
+      - label: Only I can view this list view.
+        value: mine
+      - label: This list view is available to all users.
+        value: space
+      - label: Share the list view with some organizations.
+        value: organizations 
+    group: share_rules
+    amis:
+      type: radios
+      inline: false
+  shared_to_organizations:
+    label: Shared to which organizations?
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    depend_on:
+      - shared_to
+    visible_on: "${shared_to ==='organizations'}"
+    group: share_rules
   show_count:
     label: Show Record Count
     type: boolean
