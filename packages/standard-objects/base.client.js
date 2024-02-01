@@ -10,11 +10,22 @@ Steedos.StandardObjects = {
                 },
             },
             standard_new:{
-                visible: function (object_name) {
+                visible: function (object_name, record_id, record_permissions, props) {
                     var permissions = Creator.getPermissions(object_name);
                     if (permissions) {
-                        return permissions["allowCreate"];
+                        if (!permissions["allowCreate"]) return false;
                     }
+                    // 在相关页，且主表对象enable_lock_detail为true，且主表记录已锁定(locked=true)时不显示子表新增按钮
+                    const _isRelated = props._isRelated
+                    if(_isRelated){
+                        const _master = props._master
+                        const { record: masterReocrd, object_name: masterObjectName } = _master
+                        const obj = Creator.getObject(masterObjectName)
+                        if (obj && obj.enable_lock_detail && masterReocrd.locked) {
+                            return false;
+                        }
+                    }
+                    return true;
                 }
             },
             standard_edit:{

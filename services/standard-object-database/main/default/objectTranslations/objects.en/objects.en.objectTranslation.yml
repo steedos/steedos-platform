@@ -94,6 +94,10 @@ fields:
     label: Enable Split
     help: 
     description: 
+  enable_lock_detail:
+    label: Enable Lock Details
+    help: When the main watch is locked all sub tables are read only.
+    description: 
   description:
     label: Description
     help: 
