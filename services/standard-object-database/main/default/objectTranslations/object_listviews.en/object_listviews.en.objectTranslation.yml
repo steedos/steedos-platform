@@ -30,6 +30,21 @@ fields:
     label: Shared to All Users
     help: 
     description: 
+  shared_to:
+    label: Who can see this list view?
+    help: 
+    description: 
+    options:
+      - label: Only I can view this list view.
+        value: mine
+      - label: This list view is available to all users.
+        value: space
+      - label: Share the list view with some organizations.
+        value: organizations 
+  shared_to_organizations:
+    label: Shared to which organizations?
+    help: 
+    description: 
   show_count:
     label: Show Record Count
     help: 
@@ -176,6 +191,7 @@ fields:
     description: 
 groups:
   advanced: Advanced
+  share_rules: Share Rules
   show_columns: Show Columns
   sort: Sort
   filters: Filters

@@ -39,26 +39,29 @@ fields:
     label: Shared to All Users
     type: boolean
     visible_on: "{{global.mode ==='read' ? true : false}}"
+    group: share_rules
   shared_to:
-    label: 谁可以查看此列表视图？
+    label: Who can see this list view?
     type: select
     defaultValue: mine
     options:
-      - label: 只有我可以查看此列表视区
+      - label: Only I can view this list view.
         value: mine
-      - label: 所有用户均可以查看此列表视图
+      - label: This list view is available to all users.
         value: space
-      - label: 与组织共享列表视图
+      - label: Share the list view with some organizations.
         value: organizations 
+    group: share_rules
   shared_to_organizations:
-    label: 共享列表视图给哪些组织？
+    label: Shared to which organizations?
     type: lookup
     reference_to: organizations
     multiple: true
-    # shared_to为organizations时才显示此字段
+    is_wide: true
     depend_on:
       - shared_to
     visible_on: "${shared_to ==='organizations'}"
+    group: share_rules
   show_count:
     label: Show Record Count
     type: boolean

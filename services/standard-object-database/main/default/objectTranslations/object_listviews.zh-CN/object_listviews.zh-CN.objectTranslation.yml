@@ -27,6 +27,21 @@ fields:
     label: 共享视图到工作区
     help: 
     description: 
+  shared_to:
+    label: 谁可以查看此列表视图？
+    help: 
+    description: 
+    options:
+      - label: 只有我可以查看此列表视图
+        value: mine
+      - label: 所有用户均可以查看此列表视图
+        value: space
+      - label: 与组织共享列表视图
+        value: organizations 
+  shared_to_organizations:
+    label: 共享列表视图给哪些组织？
+    help: 
+    description: 
   show_count:
     label: 显示条目数
     help: 
@@ -171,6 +186,7 @@ fields:
     description: 
 groups:
   advanced: 高级
+  share_rules: 共享设置
   show_columns: 显示列
   sort: 排序
   filters: 过滤
