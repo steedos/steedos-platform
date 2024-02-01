@@ -1514,7 +1514,18 @@ export class SteedosObjectType extends SteedosObjectProperties {
             pAll.push(this.callMetadataObjectServiceAction('get', { objectApiName: this.name }))
             pAll.push(getObjectLayouts(userSession.profile, userSession.spaceId, this.name))
             pAll.push(getObject("process_definition").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] }))
-            pAll.push(getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] }))
+            pAll.push(getObject("object_listviews").directFind({
+                filters: [
+                    ['space', '=', userSession.spaceId],
+                    ['object_name', '=', this.name],
+                    [
+                        ['owner', '=', userSession.userId], 'or',
+                        ['shared', '=', true], 'or',
+                        ['shared_to', '=', "space"], 'or',
+                        [['shared_to', '=', "organizations"], ['shared_to_organizations', '=', userSession.organizations_parents]]
+                    ]
+                ]
+            }))
             pAll.push(FieldPermission.getObjectFieldsPermissionGroupRole(this.name))
             pAll.push(this.getRelationsInfo())
 
