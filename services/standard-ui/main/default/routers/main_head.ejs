@@ -77,7 +77,7 @@
     loadJs(`${STEEDOS_UNPKG_URL}/marked@4.0.17/marked.min.js`);
     loadJs(`${STEEDOS_UNPKG_URL}/crypto-js@4.1.1/crypto-js.js`);
 
-    loadJs(`${STEEDOS_UNPKG_URL}/@steedos-builder/sdk@0.2.38/dist/index.umd.js`, ()=>{
+    loadJs(`${STEEDOS_UNPKG_URL}/@steedos-builder/sdk@1.0.0/dist/index.umd.js`, ()=>{
         window.Builder = BuilderSDK.Builder;
         window.builder = BuilderSDK.builder;
         window.builder.init('steedos');
