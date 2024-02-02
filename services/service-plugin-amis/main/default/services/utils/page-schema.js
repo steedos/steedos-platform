@@ -88,7 +88,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
     const content = {
         "type": "tabs",
-        "className": "",
+        "className": "steedos-record-tabs bg-white p-4 mt-3 border-y",
         "tabs": [
             detailed
         ]
