@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@steedos-builder/react": "^0.2.38",
+    "@steedos-builder/sdk": "1.0.0",
     "@steedos-ui/builder-community": "^2.2.35",
     "@steedos/core": "^2.2.18",
     "@steedos/filters": "^2.2.18",
