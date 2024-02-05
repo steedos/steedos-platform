@@ -83,12 +83,12 @@
   float: right
 }
 
-.m-0 {
-  margin: 0px
-}
-
 .m-1 {
   margin: 0.25rem
+}
+
+.m-0 {
+  margin: 0px
 }
 
 .-m-8 {
@@ -114,12 +114,16 @@
   margin-right: -2.75rem
 }
 
-.mt-2 {
-  margin-top: 0.5rem
+.mt-3 {
+  margin-top: 0.75rem
 }
 
 .mb-4 {
   margin-bottom: 1rem
+}
+
+.mt-2 {
+  margin-top: 0.5rem
 }
 
 .mr-4 {
@@ -495,10 +499,6 @@
 }
 
 @media (min-width: 640px) {
-  .sm\:mt-3 {
-    margin-top: 0.75rem
-  }
-
   .sm\:rounded-lg {
     border-radius: 0.5rem
   }
