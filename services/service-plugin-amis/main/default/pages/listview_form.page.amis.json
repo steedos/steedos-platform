@@ -7,6 +7,7 @@
         "objectApiName": "object_listviews",
         "recordId": "${recordId}",
         "className": "sm:rounded sm:border-gray-300 bg-white",
+        "layout": "normal",
         "form": {
           "id": "form_object_listviews"
         },

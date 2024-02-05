@@ -111,6 +111,7 @@ module.exports = {
 
         setObj.values = _.extend((instance.values || {}), permissions_values);
 
+        const approveDoc = {}
         if (!_.isEmpty(change_values)) {
 
             values_history = current_approve.values_history || []
@@ -120,18 +121,30 @@ module.exports = {
                 create: new Date()
             })
 
-            setObj[key_str + 'values_history'] = values_history
+            // setObj[key_str + 'values_history'] = values_history
+            approveDoc['values_history'] = values_history
+            
         }
 
-        setObj[key_str + 'is_read'] = true;
-        setObj[key_str + 'read_date'] = new Date();
-        setObj[key_str + 'values'] = setObj.values;
-        setObj[key_str + 'description'] = description;
-        setObj[key_str + 'next_steps'] = next_steps;
+        // setObj[key_str + 'is_read'] = true;
+        // setObj[key_str + 'read_date'] = new Date();
+        // setObj[key_str + 'values'] = setObj.values;
+        // setObj[key_str + 'description'] = description;
+        // setObj[key_str + 'next_steps'] = next_steps;
+        approveDoc['is_read'] = true;
+        approveDoc['read_date'] = new Date();
+        approveDoc['values'] = setObj.values;
+        approveDoc['description'] = description;
+        approveDoc['next_steps'] = next_steps;
         if (step_type == "submit" || step_type == "start") {
-            setObj[key_str + 'judge'] = "submitted";
+            approveDoc['judge'] = "submitted";
         } else {
-            setObj[key_str + 'judge'] = judge;
+            approveDoc['judge'] = judge;
+        }
+        for (const key in approveDoc) {
+            if (Object.hasOwnProperty.call(approveDoc, key)) {
+                setObj[key_str + key] = approveDoc[key]
+            }
         }
 
         setObj.modified = new Date();
@@ -143,10 +156,12 @@ module.exports = {
         var name_forumla = form_v.name_forumla;
         if (name_forumla) {
             setObj.name = uuflowManager.getInstanceName(instance, setObj.values);
+            approveDoc['instance_name'] = setObj.name
         }
 
         // 计算extras
         setObj.extras = uuflowManager.caculateExtras(setObj.values, form, instance.form_version);
+        approveDoc['extras'] = setObj.extras
 
         db.instances.update({
             _id: ins_id,
@@ -154,7 +169,7 @@ module.exports = {
         }, {
             $set: setObj
         });
-        update_instance_tasks(ins_id, trace_id, approve_id)
+        update_instance_tasks(ins_id, trace_id, approve_id, approveDoc)
         return true;
     }
 

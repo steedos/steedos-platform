@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-27 10:12:52
+ * @LastEditTime: 2024-02-05 09:49:10
  * @Description: 
  */
 'use strict';
@@ -111,11 +111,15 @@ function insert_many_instance_tasks(insId, traceId, approveIds) {
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
  * @param {String} approveId ApproveID
+ * @param {Object} doc TaskeDoc
  * @returns 更新后的instance_tasks
  */
-function update_instance_tasks(insId, traceId, approveId) {
-    const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    delete taskDoc._id
+function update_instance_tasks(insId, traceId, approveId, doc) {
+    let taskDoc = doc
+    if (!taskDoc) {
+        taskDoc = _makeTaskDoc(insId, traceId, approveId)
+        delete taskDoc._id
+    }
     const result = _update(approveId, taskDoc)
     return result
 }
@@ -125,16 +129,20 @@ function update_instance_tasks(insId, traceId, approveId) {
  * @param {String} insId 
  * @param {String} traceId 
  * @param {String[]} approveIds 
+ * @param {String[]} keys 
  * @returns 更新后的instance_tasks
  */
-function update_many_instance_tasks(insId, traceId, approveIds) {
+function update_many_instance_tasks(insId, traceId, approveIds, keys) {
     const insDoc = _getInsDoc(insId)
     const traceDoc = _getTraceDoc(insDoc, traceId)
     const results = []
     for (const aId of approveIds) {
         const approveDoc = _getApproveDoc(traceDoc, aId)
-        const taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
+        let taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
         delete taskDoc._id
+        if (!_.isEmpty(keys)) {
+            taskDoc = _.pick(taskDoc, keys)
+        }
         const result = _update(aId, taskDoc)
         results.push(result)
     }
