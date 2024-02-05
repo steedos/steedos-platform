@@ -23,20 +23,30 @@ module.exports = {
                 modified: new Date,
                 modified_by: self.userId
             };
+            let key_str = ''
+            const approveDoc = {}
             trace.approves.forEach(function (approve, idx) {
                 if (approve._id === approveId && !approve.is_read) {
-                    setObj[`traces.$.approves.${idx}.is_read`] = true;
-                    return setObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    key_str = `traces.$.approves.${idx}.`;
+                    // setObj[`traces.$.approves.${idx}.is_read`] = true;
+                    // return setObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    approveDoc[`is_read`] = true;
+                    approveDoc[`read_date`] = new Date();
                 }
             });
-            if (!_.isEmpty(setObj)) {
+            if (!_.isEmpty(approveDoc) && key_str) {
+                for (const key in approveDoc) {
+                    if (Object.hasOwnProperty.call(approveDoc, key)) {
+                        setObj[key_str + key] = approveDoc[key]
+                    }
+                }
                 db.instances.update({
                     _id: instanceId,
                     "traces._id": traceId
                 }, {
                     $set: setObj
                 });
-                update_instance_tasks(instanceId, traceId, approveId)
+                update_instance_tasks(instanceId, traceId, approveId, approveDoc)
             }
             return true;
         }
@@ -62,23 +72,35 @@ module.exports = {
         if ((instance != null ? (ref = instance.traces) != null ? ref.length : void 0 : void 0) > 0) {
             trace = instance.traces[0];
             setObj = {};
+            let key_str = ''
+            const approveDoc = {}
             trace.approves.forEach(function (approve, idx) {
                 if (approve._id === approveId) {
                     setObj['change_time'] = new Date();
-                    setObj[`traces.$.approves.${idx}.description`] = description;
-                    setObj[`traces.$.approves.${idx}.finish_date`] = finish_date;
-                    setObj[`traces.$.approves.${idx}.cost_time`] = new Date() - approve.start_date;
-                    return setObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    key_str = `traces.$.approves.${idx}.`
+                    // setObj[`traces.$.approves.${idx}.description`] = description;
+                    // setObj[`traces.$.approves.${idx}.finish_date`] = finish_date;
+                    // setObj[`traces.$.approves.${idx}.cost_time`] = new Date() - approve.start_date;
+                    // return setObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    approveDoc[`description`] = description;
+                    approveDoc[`finish_date`] = finish_date;
+                    approveDoc[`cost_time`] = new Date() - approve.start_date;
+                    approveDoc[`read_date`] = new Date();
                 }
             });
             if (!_.isEmpty(setObj)) {
+                for (const key in approveDoc) {
+                    if (Object.hasOwnProperty.call(approveDoc, key)) {
+                        setObj[key_str + key] = approveDoc[key]
+                    }
+                }
                 db.instances.update({
                     _id: instanceId,
                     "traces._id": traceId
                 }, {
                     $set: setObj
                 });
-                update_instance_tasks(instanceId, traceId, approveId)
+                update_instance_tasks(instanceId, traceId, approveId, approveDoc)
             }
             return true;
         }
@@ -115,19 +137,35 @@ module.exports = {
             trace = instance.traces[0];
             upObj = {};
             currentApproveDescription = '';
+            const approveDoc = {}
+            let key_str = ''
             trace.approves.forEach(function (approve, idx) {
                 if (approve._id === approveId) {
+                    key_str = `traces.$.approves.${idx}.`
                     currentApproveDescription = approve.description;
                     if (sign_field_code) {
                         upObj[`traces.$.approves.${idx}.sign_field_code`] = sign_field_code;
                     }
-                    upObj[`traces.$.approves.${idx}.description`] = description;
-                    upObj[`traces.$.approves.${idx}.sign_show`] = trimDescription || showBlankApproveDescription ? true : false;
-                    upObj[`traces.$.approves.${idx}.modified`] = new Date();
-                    upObj[`traces.$.approves.${idx}.modified_by`] = session_userId;
-                    return upObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    // upObj[`traces.$.approves.${idx}.description`] = description;
+                    // upObj[`traces.$.approves.${idx}.sign_show`] = trimDescription || showBlankApproveDescription ? true : false;
+                    // upObj[`traces.$.approves.${idx}.modified`] = new Date();
+                    // upObj[`traces.$.approves.${idx}.modified_by`] = session_userId;
+                    // return upObj[`traces.$.approves.${idx}.read_date`] = new Date();
+                    approveDoc[`description`] = description;
+                    approveDoc[`sign_show`] = trimDescription || showBlankApproveDescription ? true : false;
+                    approveDoc[`modified`] = new Date();
+                    approveDoc[`modified_by`] = session_userId;
+                    approveDoc[`read_date`] = new Date();
                 }
             });
+            if (key_str && !_.isEmpty(approveDoc)) {
+                for (const key in approveDoc) {
+                    if (Object.hasOwnProperty.call(approveDoc, key)) {
+                        upObj[key_str + key] = approveDoc[key]
+                    }
+                }
+            }
+
             const needUpdateApproveIds = []
             if (((ref3 = Meteor.settings.public.workflow) != null ? ref3.keepLastSignApproveDescription : void 0) === false && (!!currentApproveDescription !== !!trimDescription || showBlankApproveDescription)) {
                 ins = db.instances.findOne({
@@ -166,9 +204,9 @@ module.exports = {
                 }, {
                     $set: upObj
                 });
-                update_instance_tasks(instanceId, traceId, approveId)
+                update_instance_tasks(instanceId, traceId, approveId, approveDoc)
                 if (needUpdateApproveIds.length > 0) {
-                    update_many_instance_tasks(instanceId, traceId, needUpdateApproveIds)
+                    update_many_instance_tasks(instanceId, traceId, needUpdateApproveIds, ['sign_show', 'keepLastSignApproveDescription'])
                 }
             }
             return true;
@@ -205,7 +243,7 @@ module.exports = {
                     }, {
                         $set: setObj
                     });
-                    update_instance_tasks(obj.instance, obj.trace, [obj._id, myApprove_id])
+                    update_many_instance_tasks(obj.instance, obj.trace, [obj._id, myApprove_id], ['sign_show', 'custom_sign_show', 'read_date'])
                 }
             }
         });
