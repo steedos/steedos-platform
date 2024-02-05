@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-metadata-apps",
-  "version": "2.6.7-beta.8",
+  "version": "2.6.7-beta.9",
   "description": "",
   "main": "lib/apps.service.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@steedos/i18n": "2.6.7-beta.8",
-    "@steedos/objectql": "2.6.7-beta.8",
+    "@steedos/i18n": "2.6.7-beta.9",
+    "@steedos/objectql": "2.6.7-beta.9",
     "dotenv-flow": "^3.1.0",
     "ioredis": "^4.22.0",
     "lodash": "^4.17.21",
@@ -34,5 +34,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "3134b434a236a923da7ed02d4c82db02656fe82c"
+  "gitHead": "a9e314e2885464283c94f33ccad421357278a7c4"
 }
