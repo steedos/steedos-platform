@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-02-01 15:39:15
+ * @LastEditTime: 2024-02-05 13:35:32
  * @Description: 
  */
 const _ = require("underscore");
@@ -94,6 +94,11 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
         modifier.$set.shared = false;
         delete modifier.$set.shared_to;
         delete modifier.$set.shared_to_organizations;
+        if (!modifier.$unset) {
+          modifier.$unset = {};
+        }
+        modifier.$unset.shared_to = 1;
+        modifier.$unset.shared_to_organizations = 1;
       }
       if(modifier.$set.shared_to === "mine" || modifier.$set.shared_to === "organizations"){
         modifier.$set.shared = false;
@@ -101,8 +106,12 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
       else if(modifier.$set.shared_to === "space"){
         modifier.$set.shared = true;
       }
-      if(modifier.$set.shared_to !== "organizations"){
+      if(modifier.$set.shared_to && modifier.$set.shared_to !== "organizations"){
         delete modifier.$set.shared_to_organizations;
+        if (!modifier.$unset) {
+          modifier.$unset = {};
+        }
+        modifier.$unset.shared_to_organizations = 1;
       }
       if(modifier.$set.filters){
         modifier.$set.filters = transformFilters(modifier.$set.filters);
