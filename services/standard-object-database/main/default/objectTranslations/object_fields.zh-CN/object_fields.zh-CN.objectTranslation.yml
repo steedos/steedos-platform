@@ -262,6 +262,10 @@ fields:
     label: 必填
     help: 
     description: 
+  disable_thousands:
+    label: 不显示千分位
+    help: 
+    description:
   deleted_lookup_record_behavior:
     label: 如果相关表记录被删除怎么办？
     help: 
