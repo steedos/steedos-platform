@@ -106,6 +106,18 @@ export function objectToJson(objectConfig) {
                 }
             })
         }
+
+        // 兼容列表视图共享规则原shared字段，改为shared_to，且优先认shared_to
+        // 因为列表视图权限中依然保留了shared为true表示共享的规则，所以shared_to有值的情况下还要同步shared属性值
+        if (list_view.shared_to === "mine" || list_view.shared_to === "organizations") {
+            list_view.shared = false;
+        }
+        else if (list_view.shared_to === "space") {
+            list_view.shared = true;
+        }
+        else {
+            list_view.shared_to = "space";
+        }
     })
 
     if (objectConfig.form && !_.isString(objectConfig.form)) {
