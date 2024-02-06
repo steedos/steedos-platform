@@ -53,9 +53,6 @@ fields:
         value: organizations 
     visible_on: "${global.user.is_space_admin}"
     group: share_rules
-    amis:
-      type: radios
-      inline: false
   shared_to_organizations:
     label: Shared to which organizations?
     type: lookup

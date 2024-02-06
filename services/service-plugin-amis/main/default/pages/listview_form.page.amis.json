@@ -269,6 +269,12 @@
               "multiple": true,
               "id": "u:adb91066539e"
             }
+          },
+          "shared_to": {
+            "amis":{
+              "type": "radios",
+              "inline": false
+            }
           }
         },
         "initApiAdaptor": "\nvar data;\nif (recordId) {\n  data = payload.data || { _filters_type_controller: 'conditions' };\n  //数据格式转换\n  if (data) {\n    data.sort = lodash.map(data.sort, (item) => {\n      return item.field_name + \":\" + item.order;\n    });\n    data.searchable_fields = lodash.map(data.searchable_fields, 'field');\n\n    if (data.filters && lodash.isString(data.filters)) {\n      try {\n        data.filters = JSON.parse(data.filters);\n      } catch (e) { }\n    }\n\n    if (data.filters && lodash.isString(data.filters)) {\n      data._filters_type_controller = 'function';\n    } else {\n      data._filters_type_controller = 'conditions'\n    }\n\n    if (data._filters_type_controller === 'conditions') {\n      data._filters_conditions = window.amisConvert.filtersToConditions(data.filters || []);\n    } else {\n      data._filters_function = data.filters;\n    }\n  }\n} else {\n const uiSchema = api.body.uiSchema;\n const defaultData = api.body.defaultData;\n  let defaultValues = {};\n _.each(uiSchema && uiSchema.fields, function (field) {\n    var value = SteedosUI.getFieldDefaultValue(field, api.body.global);\n    if (!_.isNil(value)) {\n      defaultValues[field.name] = value;\n    }\n  });\n if (defaultData && _.isObject(defaultData) && !_.isArray(defaultData)) {\n    data = Object.assign({}, defaultValues, defaultData)\n  }\n}\nfor (key in data) {\n  if (data[key] === null) {\n    delete data[key];\n  }\n}\npayload.data = data;\ndelete payload.extensions; if (data.is_enable != false) { data.is_enable = true; };\nreturn payload;",
