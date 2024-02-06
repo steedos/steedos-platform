@@ -96,7 +96,20 @@
         },
         "shared":{
             "type": "boolean",
-            "description": "是否共享"
+            "description": "是否共享到工作区"
+        },
+        "shared_to":{
+            "type": "string",
+            "description": "谁可以查看此列表视图？",
+            "enum": [
+                "mine",
+                "space",
+                "organizations"
+            ]
+        },
+        "shared_to_organizations":{
+            "type": "string",
+            "description": "共享列表视图给哪些组织？"
         },
         "scrolling_mode":{
             "type":"string",
