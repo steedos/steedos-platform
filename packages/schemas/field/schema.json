@@ -449,7 +449,7 @@
         },
         "disable_thousands": {
             "type": "boolean",
-            "description": "不显示千分位"
+            "description": "不显示千分符"
         }
     }
 }

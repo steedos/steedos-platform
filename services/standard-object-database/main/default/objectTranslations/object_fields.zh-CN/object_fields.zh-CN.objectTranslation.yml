@@ -263,7 +263,7 @@ fields:
     help: 
     description: 
   disable_thousands:
-    label: 不显示千分位
+    label: 不显示千分符
     help: 
     description:
   deleted_lookup_record_behavior:

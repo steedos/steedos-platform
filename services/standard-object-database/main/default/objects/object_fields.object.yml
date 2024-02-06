@@ -696,7 +696,7 @@ fields:
     sort_no: 272
   disable_thousands:
     type: boolean
-    label: 不显示千分位
+    label: 不显示千分符
     sort_no: 273
     visible_on: "{{['number','currency','percent'].indexOf(formData.type) > -1 ? true: false}}"
   deleted_lookup_record_behavior:

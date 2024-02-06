@@ -279,7 +279,7 @@ fields:
     help: 
     description: 
   disable_thousands:
-    label: Don't display thousandths
+    label: Don't display thousands separators
     help: 
     description:
   deleted_lookup_record_behavior:
