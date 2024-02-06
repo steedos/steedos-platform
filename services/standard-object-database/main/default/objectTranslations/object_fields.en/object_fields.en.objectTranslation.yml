@@ -278,6 +278,10 @@ fields:
     label: Required
     help: 
     description: 
+  disable_thousands:
+    label: Don't display thousands separators
+    help: 
+    description:
   deleted_lookup_record_behavior:
     label: What to do if the lookup record is deleted?
     help: 

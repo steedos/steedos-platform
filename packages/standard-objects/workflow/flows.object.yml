@@ -627,6 +627,7 @@ actions:
                                                   },
                                                   {
                                                     "type": "steedos-field",
+                                                    "className": "mb-3",
                                                     "config": {
                                                       "name": "company_id",
                                                       "type": "lookup",
