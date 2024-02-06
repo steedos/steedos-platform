@@ -38,7 +38,7 @@ fields:
   shared:
     label: Shared to All Users
     type: boolean
-    visible_on: "{{global.mode ==='read' ? true : false}}"
+    visible_on: "{{false}}"
     group: share_rules
   shared_to:
     label: Who can see this list view?
