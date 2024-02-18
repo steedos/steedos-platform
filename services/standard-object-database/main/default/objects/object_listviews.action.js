@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-11-17 13:23:15
+ * @LastEditors: liaodaxue
+ * @LastEditTime: 2024-02-18 14:56:30
  * @Description: 
  */
 module.exports = {
@@ -86,7 +86,7 @@ module.exports = {
             data._filters_function = data.filters;
         }
     }
-    Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', t("creator_list_copy_list_view"), data, {});
+    Steedos.Page.Form.StandardNew.render(Session.get("app_id"), 'object_listviews', t("creator_list_copy_list_view"), { defaultData:data }, {});
   },
   copyVisible: function(object_name, record_id, record_permissions, data){
     return true;
