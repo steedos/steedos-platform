@@ -13,12 +13,12 @@ services:
       - "443:443"  
       - "9001:9001"  
     environment:
+      - STEEDOS_LICENSE=
       - ROOT_URL=http://127.0.0.1
-      - STEEDOS_LICENSE=trial
       - NPM_CACHE_ENABLED=true
       - NPM_CACHE_PACKAGE_CONTENT=true
       - NPM_REGISTRY_URL=https://registry.npmmirror.com
     tty: true
     volumes:
-      - "./storage:/steedos-storage"
+      - "./steedos-storage:/steedos-storage"
   

@@ -138,12 +138,12 @@ fi
     proxy_buffering          off;
     proxy_max_temp_file_size 0;
     proxy_redirect           off;
-    proxy_set_header  Host              \$http_host/supervisor/;
+    proxy_set_header  Host              \$http_host/unpkg/;
     proxy_set_header  X-Forwarded-For   \$proxy_add_x_forwarded_for;
     proxy_set_header  X-Forwarded-Proto \$origin_scheme;
     proxy_set_header  X-Forwarded-Host  \$origin_host;
     proxy_set_header  Connection        "";
-    proxy_pass http://localhost:3100/;
+    proxy_pass http://localhost:3100/unpkg/;
   }
 
   location /nginx/ {
