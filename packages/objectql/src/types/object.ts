@@ -1623,7 +1623,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         })
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
-        objectConfig.field_groups = objectLayout && objectLayout.field_groups
+        if(objectLayout && objectLayout.field_groups) {
+            objectConfig.field_groups = objectLayout && objectLayout.field_groups
+        }
         
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
