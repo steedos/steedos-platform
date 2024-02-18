@@ -142,7 +142,7 @@ const DevExpressOData = {
 
 class SteedosFilter {
 
-    constructor(filters, odataProtocolVersion = 4, forceLowerCase = true){
+    constructor(filters, odataProtocolVersion = 4, forceLowerCase){
         this.filters = filters || [];
         this.protocolVersion = odataProtocolVersion;
         this.forceLowerCase = forceLowerCase;
