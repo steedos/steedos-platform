@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@steedos/ee_unpkg": "0.0.2"
+    "@steedos/ee_unpkg": "1.0.0"
   }
 }

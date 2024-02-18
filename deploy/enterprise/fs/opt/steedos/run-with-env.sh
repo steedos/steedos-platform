@@ -8,9 +8,9 @@ set -o allexport
 . "$PRE_DEFINED_ENV_PATH"
 set +o allexport
 
-if [[ -z "${STEEDOS_UNPKG_URL}" ]] && [[ ! -z "${STEEDOS_LICENSE}" ]]; then
-  export STEEDOS_UNPKG_URL=/unpkg
-fi
+# if [[ -z "${STEEDOS_UNPKG_URL}" ]] && [[ ! -z "${STEEDOS_LICENSE}" ]]; then
+#   export STEEDOS_UNPKG_URL=/unpkg
+# fi
 
 if [[ -z "${STEEDOS_STORAGE_DIR}" ]]; then
   export STEEDOS_STORAGE_DIR=/steedos-storage/

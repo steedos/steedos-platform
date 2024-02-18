@@ -33,6 +33,7 @@ docker-volumes/**
 examples/multi-node-testing/**
 
 storage
+steedos-storage
 
 .env.local
 .steedos
