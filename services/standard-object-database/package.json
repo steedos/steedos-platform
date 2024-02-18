@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-object-database",
-    "version": "2.6.7-beta.11",
+    "version": "2.6.7-beta.12",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,9 +12,9 @@
     "description": "steedos package",
     "dependencies": {
         "@steedos-widgets/amis-lib": "^1.0.22",
-        "@steedos/standard-objects": "2.6.7-beta.11"
+        "@steedos/standard-objects": "2.6.7-beta.12"
     },
     "repository": {},
     "license": "MIT",
-    "gitHead": "b1608169c84996cb0ecfba0e27ef4f5cd9e245ec"
+    "gitHead": "be91bb1f1c40ab7014ea64a25c9a2f94c94d6988"
 }
