@@ -44,6 +44,7 @@ fields:
     label: Who can see this list view?
     type: select
     defaultValue: mine
+    required: true
     options:
       - label: Only I can view this list view.
         value: mine
@@ -334,7 +335,7 @@ list_views:
     columns:
       - label
       - name
-      - shared
+      - shared_to
       - owner
       - modified
       - is_enable
@@ -345,7 +346,7 @@ list_views:
     columns:
       - label
       - name
-      - shared
+      - shared_to
       - owner
       - modified
       - is_system

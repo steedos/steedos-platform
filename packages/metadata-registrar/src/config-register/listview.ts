@@ -11,6 +11,7 @@ import _ = require('lodash');
 import { MetadataRegister } from '../metadata-register';
 import { getObjectConfig } from './core';
 import { extend, loadListViews } from '../utils';
+import { DEFAULT_LISTVIEW } from '@steedos/metadata-core';
 var clone = require('clone');
 
 const _lazyLoadListViews: Dictionary<any> = {};
@@ -34,6 +35,11 @@ export const loadObjectLazyListViews = function(objectName: string){
 }
 
 export const addObjectListViewConfig = (objectName: string, json: any) => {
+    _.each(DEFAULT_LISTVIEW, (value, key) => {
+        if (!_.has(json, key)) {
+            json[key] = value;
+        }
+    });
     if (!json.name) {
         throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
