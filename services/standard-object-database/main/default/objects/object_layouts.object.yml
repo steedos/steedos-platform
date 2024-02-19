@@ -117,6 +117,9 @@ fields:
   field_groups.$.visible_on:
     type: text
     label: 显示条件
+  field_groups.$.collapsed:
+    type: boolean
+    label: 默认折叠
   fields:
     type: grid
     is_wide: true
