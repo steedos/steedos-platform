@@ -37,3 +37,4 @@ steedos-storage
 
 .env.local
 .steedos
+steedos-app/**
