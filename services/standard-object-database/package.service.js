@@ -116,7 +116,7 @@ module.exports = {
 				}
 				if(data.is_system){
 					// 'label' 先禁止编辑label , 目前由于i18n的问题导致 label无效.
-					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior', 'disable_thousands', 'autonumber_enable_modify']);
+					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior', 'enable_thousands', 'autonumber_enable_modify']);
 				}
                 return object.update(id, data, userSession)
 			},

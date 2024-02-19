@@ -278,8 +278,8 @@ fields:
     label: Required
     help: 
     description: 
-  disable_thousands:
-    label: Don't display thousands separators
+  enable_thousands:
+    label: Display thousands separators
     help: 
     description:
   deleted_lookup_record_behavior:

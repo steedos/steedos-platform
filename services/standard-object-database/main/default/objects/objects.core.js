@@ -1,4 +1,5 @@
 var objectql = require('@steedos/objectql');
+const { DEFAULT_FIELD } = require('@steedos/metadata-core');
 const register = require('@steedos/metadata-registrar');
 const clone = require('clone');
 const defaultDatasourceName = 'default';
@@ -69,6 +70,11 @@ function getObjectFields(object) {
     var fields = {};
     var table_fields = {};
     _.forEach(object_fields, function (f) {
+        _.each(DEFAULT_FIELD, (value, key) => {
+            if (!_.has(f, key)) {
+                f[key] = value;
+            }
+        });
         var cf_arr, child_fields;
         if (/^[a-zA-Z_]\w*(\.\$\.\w+){1}[a-zA-Z0-9]*$/.test(f.name)) {
             cf_arr = f.name.split(".$.");

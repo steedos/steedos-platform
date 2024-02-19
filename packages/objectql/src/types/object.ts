@@ -1644,6 +1644,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
             delete dbListView.created_by;
             delete dbListView.modified;
             delete dbListView.modified_by;
+
+            // 兼容列表视图共享规则原shared字段，改为shared_to，且优先认shared_to，老版本升级上来的历史数据中根据shared设置shared_to
+            if(!_.has(dbListView, "shared_to")) {
+                if(dbListView.shared === true){
+                    dbListView.shared_to = "space";
+                }
+                else{
+                    dbListView.shared_to = "mine";
+                }
+            }
             objectConfig.list_views[dbListView.name] = dbListView;
         })
         _.each(objectConfig.list_views, (value, key)=>{

@@ -337,7 +337,6 @@ let objectTriggers = {
                 space: doc.space,
                 owner: userId,
                 object_name: doc.name,
-                shared: true,
                 shared_to: "space",
                 filter_scope: "space",
                 columns: [{field: 'name'}],
@@ -354,7 +353,6 @@ let objectTriggers = {
                 space: doc.space,
                 owner: userId,
                 object_name: doc.name,
-                shared: true,
                 shared_to: "space",
                 filter_scope: "space",
                 columns:  [{field: 'name'}]

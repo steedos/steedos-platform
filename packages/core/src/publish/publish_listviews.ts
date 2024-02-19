@@ -1,6 +1,7 @@
 const clone = require("clone")
 const _ = require("underscore")
 import {Util} from './util'
+import { DEFAULT_LISTVIEW } from '@steedos/metadata-core';
 
 export class PublishListViews {
     spaceId:string
@@ -49,7 +50,11 @@ export class PublishListViews {
         let view = clone(listView)
         view.api_name = view.name
         view.space = this.spaceId
-        view.shared = true
+        _.each(DEFAULT_LISTVIEW, (value: any, key: any) => {
+            if (!_.has(view, key)) {
+                view[key] = value;
+            }
+        });
         view.owner = this.userId
 
         _.each(view.columns, (column, i) => {

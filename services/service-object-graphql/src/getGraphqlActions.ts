@@ -307,9 +307,9 @@ async function translateToDisplay(objectName, doc, userSession: any, selectorFie
                         displayObj[name] = doc[name] ? moment.utc(doc[name])
                             .format("HH:mm") : '';
                     } else if (fType == "number") {
-                        displayObj[name] = doc[name] ? numberToString(doc[name], field.scale, field.disable_thousands) : "";
+                        displayObj[name] = doc[name] ? numberToString(doc[name], field.scale, field.enable_thousands === false) : "";
                     } else if (fType == "currency") {
-                        displayObj[name] = doc[name] ? numberToString(doc[name], field.scale, field.disable_thousands) : "";
+                        displayObj[name] = doc[name] ? numberToString(doc[name], field.scale, field.enable_thousands === false) : "";
                     } else if (fType == "percent") {
                         displayObj[name] = doc[name] ? `${doc[name] * 100}%` : "";
                     } else if (fType == "password") {

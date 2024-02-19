@@ -24,6 +24,7 @@ export * from './output'
 export * from './util/function';
 export * from './load';
 export * from './util/match_files';
+export * from './default';
 
 const DEFAULT_PACKAGE_PATH_OLD = 'steedos-app';
 // const DEFAULT_PACKAGE_PATH = '.';

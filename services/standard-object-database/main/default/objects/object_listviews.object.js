@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-02-05 13:35:32
+ * @LastEditTime: 2024-02-19 17:28:37
  * @Description: 
  */
 const _ = require("underscore");
@@ -64,16 +64,10 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
     todo: function (userId, doc) {
       checkName(doc.name);
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
-        doc.shared = false;
-        delete doc.shared_to;
+        doc.shared_to = "mine";
         delete doc.shared_to_organizations;
       }
-      if(doc.shared_to === "mine" || doc.shared_to === "organizations"){
-        doc.shared = false;
-      }
-      else if(doc.shared_to === "space"){
-        doc.shared = true;
-      }
+      delete doc.shared;
       if(doc.shared_to !== "organizations"){
         delete doc.shared_to_organizations;
       }
@@ -85,32 +79,23 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
       modifier.$set = modifier.$set || {}
+      if (!modifier.$unset) {
+        modifier.$unset = {};
+      }
 
       if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
         checkName(modifier.$set.name);
       }
 
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
-        modifier.$set.shared = false;
-        delete modifier.$set.shared_to;
+        modifier.$set.shared_to = "mine";
         delete modifier.$set.shared_to_organizations;
-        if (!modifier.$unset) {
-          modifier.$unset = {};
-        }
-        modifier.$unset.shared_to = 1;
         modifier.$unset.shared_to_organizations = 1;
       }
-      if(modifier.$set.shared_to === "mine" || modifier.$set.shared_to === "organizations"){
-        modifier.$set.shared = false;
-      }
-      else if(modifier.$set.shared_to === "space"){
-        modifier.$set.shared = true;
-      }
+      delete modifier.$set.shared;
+      modifier.$unset.shared = 1;
       if(modifier.$set.shared_to && modifier.$set.shared_to !== "organizations"){
         delete modifier.$set.shared_to_organizations;
-        if (!modifier.$unset) {
-          modifier.$unset = {};
-        }
         modifier.$unset.shared_to_organizations = 1;
       }
       if(modifier.$set.filters){

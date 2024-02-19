@@ -302,7 +302,7 @@ module.exports = {
 
                     const _fields = {};
                     _.each(objectConfig.fields, (field)=>{
-                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale', '_reference_to', 'disable_thousands']);
+                        _fields[field.name] = _.pick(field, ['_id', 'name', 'label', 'type', 'options', 'multiple', 'reference_to', 'reference_to_field', 'data_type', 'scale', '_reference_to', 'enable_thousands']);
                     })
                     objectConfig.fields=_fields;
 
