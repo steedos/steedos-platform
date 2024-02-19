@@ -326,6 +326,14 @@
         "compactLayouts": {
             "type": "array",
             "description": "高亮字段"
+        },
+        "enable_split": {
+            "type": "boolean",
+            "description": "是否配置默认分屏"
+        },
+        "field_groups": {
+            "type": "array",
+            "description": "字段分组"
         }
     },
     "definitions": {

@@ -238,6 +238,7 @@
                                   "editable": true,
                                   "showIndex": true,
                                   "removable": true,
+                                  "inlineEditMode": true,
                                   "fields": [
                                     {
                                       "name": "group_name",
@@ -249,6 +250,22 @@
                                       "type": "text",
                                       "name": "visible_on",
                                       "label": "${'object_layouts.object_layouts_form.visible_on' | t}"
+                                    },
+                                    {
+                                      "type": "boolean",
+                                      "name": "collapsed",
+                                      "label": "${'object_layouts.object_layouts_form.collapsed' | t}"
+                                    }
+                                  ],
+                                  "columns": [
+                                    {
+                                      "name": "group_name",
+                                      "inlineEditMode": false
+                                    },
+                                    "visible_on",
+                                    {
+                                      "name": "collapsed",
+                                      "width": 50
                                     }
                                   ],
                                   "id": "u:e9f43ef94d08"
@@ -328,7 +345,7 @@
                     "actions": [
                       {
                         "actionType": "custom",
-                        "script": "const mixingGroupsFromFields = function (input, formData) {  const groupsOptions = input.field_groups_options;  const groups = formData.field_groups || []; const object_field_groups = formData.object_field_groups || []; const groupsForMixing = groupsOptions.map(function (item) {    return {      group_name: item    }  });  const mixedGroups = lodash.unionBy(groups, groupsForMixing, object_field_groups, \"group_name\");  return {    field_groups: mixedGroups  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: \"object-layout-form\",  args: {    value: mixingGroupsFromFields(eventData, context.props.data)  }});"
+                        "script": "const mixingGroupsFromFields = function (input, formData) {  const groupsOptions = input.field_groups_options;  const groups = formData.field_groups || []; const object_field_groups = formData.object_field_groups || []; const groupsForMixing = groupsOptions.map(function (item) {    return {      group_name: item    }  });  const mixedGroups = lodash.unionBy(groups, object_field_groups, groupsForMixing, \"group_name\");  return {    field_groups: mixedGroups  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: \"object-layout-form\",  args: {    value: mixingGroupsFromFields(eventData, context.props.data)  }});"
                       }
                     ]
                   }
