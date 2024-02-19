@@ -16,7 +16,7 @@ Steedos.StandardObjects = {
                         if (!permissions["allowCreate"]) return false;
                     }
                     // 在相关页，且主表对象enable_lock_detail为true，且主表记录已锁定(locked=true)时不显示子表新增按钮
-                    const _isRelated = props?._isRelated;
+                    const _isRelated = props && props._isRelated;
                     if(_isRelated){
                         const _master = props._master
                         const { record: masterReocrd, object_name: masterObjectName } = _master
