@@ -262,8 +262,8 @@ fields:
     label: 必填
     help: 
     description: 
-  disable_thousands:
-    label: 不显示千分符
+  enable_thousands:
+    label: 显示千分符
     help: 
     description:
   deleted_lookup_record_behavior:

@@ -447,9 +447,9 @@
             "type": "boolean",
             "description": "启用增强lookup模式，当开启时，该字段会弹出窗口显示可选项！"
         },
-        "disable_thousands": {
+        "enable_thousands": {
             "type": "boolean",
-            "description": "不显示千分符"
+            "description": "显示千分符"
         }
     }
 }
