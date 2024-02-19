@@ -12,7 +12,8 @@
         "start": "node server.js",
         "watch": "tsc --watch",
         "build": "tsc",
-        "uploadZip": "mocha test/unit/uploadfiles.ts --opts test/mocha.opts"
+        "uploadZip": "mocha test/unit/uploadfiles.ts --opts test/mocha.opts",
+        "test": "mocha test/unit/*.js"
     },
     "author": "",
     "license": "MIT",

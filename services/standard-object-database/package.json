@@ -12,6 +12,7 @@
     "description": "steedos package",
     "dependencies": {
         "@steedos-widgets/amis-lib": "^1.0.22",
+        "@steedos/metadata-core": "2.6.7-beta.15",
         "@steedos/standard-objects": "2.6.7-beta.15"
     },
     "repository": {},

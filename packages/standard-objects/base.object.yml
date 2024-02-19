@@ -113,6 +113,7 @@ fields:
     type: number
     omit: true
     hidden: true
+    enable_thousands: true
   locked:
     label: Locked
     type: boolean
