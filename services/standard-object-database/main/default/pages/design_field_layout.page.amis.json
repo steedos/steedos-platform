@@ -127,8 +127,6 @@
                               "recordId": "",
                               "mode": "edit",
                               "defaultData": {
-                                "name": "",
-                                "shared": false,
                                 "object": "${designObjectName}"
                               },
                               "fieldsExtend": {
@@ -227,8 +225,6 @@
                                   "recordId": "${_id}",
                                   "mode": "edit",
                                   "defaultData": {
-                                    "name": "",
-                                    "shared": false,
                                     "object": "${designObjectName}"
                                   },
                                   "fields": [
