@@ -29,7 +29,7 @@ fields:
         value: text
       - label: Textarea
         value: textarea
-      - label: Html
+      - label: Rich text
         value: html
       - label: Code
         value: code

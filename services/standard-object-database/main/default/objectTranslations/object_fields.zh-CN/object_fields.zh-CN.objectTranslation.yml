@@ -30,7 +30,7 @@ fields:
         value: text
       - label: 长文本
         value: textarea
-      - label: Html文本
+      - label: 富文本
         value: html
       - label: 代码
         value: code
