@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-02-28 09:25:02
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-07-19 14:43:14
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-02-20 16:27:30
  * @Description: 
  */
 const objectql = require("@steedos/objectql");
@@ -53,7 +53,8 @@ async function createObjectWorkflow(doc) {
             sync_type: 'every_step',
             sync_direction: 'both',
             field_map_back: fieldMap,
-            field_map: fieldMap
+            field_map: fieldMap,
+            lock_record_after_approval: true
         })
     }
 }
