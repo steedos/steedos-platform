@@ -469,6 +469,51 @@ fields:
     label: Description
     type: text
     required: false
+  auto_fill_mapping:
+    type: table
+    label: Auto Fill Mapping
+    is_wide: true
+    inlineHelpText: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
+    visible_on: "{{formData.type === 'lookup' || formData.type === 'master_detail'}}"
+    sort_no: 280
+    amis:
+      disabledOn: "${is_system == true}"
+  auto_fill_mapping.$:
+    label: Auto Fill Mapping
+    blackbox: true
+    type: object
+  auto_fill_mapping.$.from:
+    label: From:Fields in object that reference to
+    type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    depend_on:
+      - reference_to
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.reference_to){
+          return ['object', '=', values.reference_to]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  auto_fill_mapping.$.to:
+    label: To:Fields in the current form
+    type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    depend_on:
+      - object
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.object){
+          return ['object', '=', values.object]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
   formula_blank_value:
     type: select
     label: Blank Field Handling
