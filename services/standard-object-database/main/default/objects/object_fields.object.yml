@@ -448,6 +448,7 @@ fields:
     amis:
       showIndex: true
       disabledOn: "${is_system == true}"
+      inlineEditMode: true
   options.$:
     label: Options
     blackbox: true
