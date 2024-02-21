@@ -632,7 +632,7 @@ fields:
     sort_no: 320
   summary_filters:
     label: Filter Criteria
-    type: 'grid'
+    type: 'table'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     is_wide: true
     depend_on:
@@ -641,6 +641,8 @@ fields:
     sort_no: 330
     amis:
       disabledOn: "${is_system == true}"
+      inlineEditMode: true
+      showIndex: true
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
