@@ -449,6 +449,13 @@ fields:
       showIndex: true
       disabledOn: "${is_system == true}"
       inlineEditMode: true
+      columns: 
+        - label
+        - value
+        - name: color
+          width: 170
+        - name: description
+          width: 300
   options.$:
     label: Options
     blackbox: true
