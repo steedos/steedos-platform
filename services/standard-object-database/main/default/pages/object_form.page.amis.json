@@ -10,7 +10,7 @@
             "className": "",
             "enableTabs": true,
             "mode": "edit",
-            "layout": "normal",
+            "layout": "horizontal",
             "apiRequestAdaptor": "console.log('api.data.query===', api.data.query);api.data.query = api.data.query.replace('objects__update', 'objects__upsert')",
             "submitSuccActions": [
                 {
@@ -21,7 +21,12 @@
                       "position": "top-right"
                     }
                 }
-            ]
+            ],
+            "fieldsExtend": {
+                "compactLayouts": {
+                    "label": ""
+                }
+            }
         }
     ],
     "data": {

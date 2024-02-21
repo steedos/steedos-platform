@@ -20,6 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
+
       - name: Set Current Version
         run: |
           STEEDOS_VERSION=$(node -p 'require("./lerna.json").version')
@@ -77,6 +82,18 @@ jobs:
 
       - name: Build and push docker
         uses: docker/build-push-action@v3
+        if: ${{ steps.version.outputs.is_stable != 'true' }}
+        with:
+          context: ./deploy/enterprise
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # 正式版才发布 arm64
+      - name: Build and push docker
+        uses: docker/build-push-action@v3
+        if: ${{ steps.version.outputs.is_stable == 'true' }}
         with:
           context: ./deploy/enterprise
           platforms: linux/amd64,linux/arm64

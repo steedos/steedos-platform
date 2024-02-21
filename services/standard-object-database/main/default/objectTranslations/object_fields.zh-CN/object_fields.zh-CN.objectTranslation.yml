@@ -30,7 +30,7 @@ fields:
         value: text
       - label: 长文本
         value: textarea
-      - label: Html文本
+      - label: 富文本
         value: html
       - label: 代码
         value: code
@@ -153,6 +153,22 @@ fields:
     description: 
   options.$.description:
     label: 描述
+    help: 
+    description: 
+  auto_fill_mapping:
+    label: 自动填充规则
+    help: 选择数据后，将按以下映射关系将引用对象中的字段值自动填充到当前表单字段中。
+    description: 
+  auto_fill_mapping.$:
+    label: 自动填充规则
+    help: 
+    description: 
+  auto_fill_mapping.$.from:
+    label: 从：引用对象中的字段
+    help: 
+    description: 
+  auto_fill_mapping.$.to:
+    label: 填充到：当前表单字段
     help: 
     description: 
   autonumber_enable_modify:

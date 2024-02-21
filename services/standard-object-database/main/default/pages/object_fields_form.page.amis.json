@@ -9,7 +9,7 @@
             "className": "",
             "enableTabs": true,
             "mode": "edit",
-            "layout": "normal",
+            "layout": "horizontal",
             "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
             "submitSuccActions": [
                 {

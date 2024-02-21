@@ -29,7 +29,7 @@ fields:
         value: text
       - label: Textarea
         value: textarea
-      - label: Html
+      - label: Rich text
         value: html
       - label: Code
         value: code
@@ -161,6 +161,22 @@ fields:
     description: 
   options.$.description:
     label: Description
+    help: 
+    description: 
+  auto_fill_mapping:
+    label: Auto Fill Mapping
+    help: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
+    description: 
+  auto_fill_mapping.$:
+    label: Auto Fill Mapping
+    help: 
+    description: 
+  auto_fill_mapping.$.from:
+    label: From:Fields in object that reference to
+    help: 
+    description: 
+  auto_fill_mapping.$.to:
+    label: To:Fields in the current form
     help: 
     description: 
   autonumber_enable_modify:

@@ -73,7 +73,7 @@ Creator.Objects.object_fields =
 			options:
 				text: "文本",
 				textarea: "长文本"
-				html: "Html文本",
+				html: "富文本",
 				select: "选择框",
 				boolean: "Checkbox"
 				date: "日期"
