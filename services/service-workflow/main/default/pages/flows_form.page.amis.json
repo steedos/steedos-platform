@@ -9,7 +9,12 @@
             "className": "",
             "enableTabs": true,
             "mode": "edit",
-            "layout": "normal"
+            "layout": "normal",
+            "fieldsExtend": {
+                "perms": {
+                    "label": ""
+                }
+            }
         }
     ],
     "data": {
