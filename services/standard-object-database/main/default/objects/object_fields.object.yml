@@ -484,6 +484,7 @@ fields:
     visible_on: "{{formData.type === 'lookup' || formData.type === 'master_detail'}}"
     sort_no: 280
     amis:
+      enableDialog: false
       disabledOn: "${is_system == true}"
   auto_fill_mapping.$:
     label: Auto Fill Mapping
