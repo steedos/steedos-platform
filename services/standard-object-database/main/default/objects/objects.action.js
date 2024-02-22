@@ -177,6 +177,9 @@ module.exports = {
     if(!record){
         record = Creator.odata.get("objects", record_id, "is_deleted");
     }
+    if(record.is_system){
+        return false;
+    }
     if(record && !record.is_deleted){
         return Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);
     }
