@@ -69,6 +69,13 @@
                 "mode": "inline"
               }
             ],
+            "columns": [
+              {
+                "name": "tab_name",
+                "inlineEditMode": false
+              },
+              "group"
+            ],
             "headerToolbar": [
               {
                 "type": "service",
@@ -205,6 +212,7 @@
                 }
               }
             ],
+            "enableDialog": false,
             "id": "u:7949aecf0ca9"
           }
         },

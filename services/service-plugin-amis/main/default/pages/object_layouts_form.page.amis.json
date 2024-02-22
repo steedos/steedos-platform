@@ -115,7 +115,7 @@
                     "name": "visible_on"
                   }
                 ],
-                "inlineEditMode": true
+                "enableDialog": false
               }
             },
             "fields": {
@@ -178,6 +178,22 @@
                         "type": "textarea",
                         "placeholder": "-"
                       }
+                    ],
+                    "columns": [
+                      {
+                        "name": "field_name",
+                        "inlineEditMode": false
+                      },
+                      {
+                        "name": "is_readonly",
+                        "width": 50
+                      },
+                      {
+                        "name": "is_required",
+                        "width": 50
+                      },
+                      "group",
+                      "visible_on"
                     ],
                     "headerToolbar": [
                       {
@@ -323,7 +339,8 @@
                           ]
                         }
                       }
-                    }
+                    },
+                    "enableDialog": false
                   }
                 ],
                 "id": "u:ac5b7818b88f",
@@ -461,7 +478,7 @@
                       {
                         "name": "visible_on",
                         "label": "${'object_layouts.object_layouts_form.visibile_on' | t}",
-                        "type": "text",
+                        "type": "textarea",
                         "breakpoint": "*",
                         "id": "u:1e1dc52d7c33"
                       },
