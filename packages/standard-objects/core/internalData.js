@@ -187,6 +187,13 @@ async function getObject(id, userId){
 }
 exports.getObject = getObject
 
+async function isDBObject(objectName){
+    const records = await objectql.getObject('objects').directFind({filters: [['name', '=', objectName]]});
+    if(records.length > 0){
+        return true
+    }
+    return false
+}
 
 async function getObjectFields(objectName, userId, all){
     let object = await getObject(objectName, userId);
@@ -200,10 +207,10 @@ async function getObjectFields(objectName, userId, all){
         if(baseObject && baseObject.fields){
             originalFieldsName = originalFieldsName.concat(_.difference(object.originalFields, _.keys(baseObject.fields)));
         }
-
+        const canEditField = await isDBObject(objectName);
         _.each(object.fields, function(field){
             if(!field._id && (all || _.include(originalFieldsName, field.name))){
-                fields.push(Object.assign({_id: `${objectName}.${field.name}`, is_system: true, _name: field.name, object: objectName, record_permissions: Object.assign({}, permissions, {allowEdit: true})}, field))
+                fields.push(Object.assign({_id: `${objectName}.${field.name}`, is_system: true, _name: field.name, object: objectName, record_permissions: Object.assign({}, permissions, {allowEdit: canEditField})}, field))
             }
         })
         return fields
