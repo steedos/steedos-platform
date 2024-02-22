@@ -521,7 +521,7 @@ fields:
     label: Auto Fill Mapping
     is_wide: true
     inlineHelpText: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
-    visible_on: "{{formData.type === 'lookup' || formData.type === 'master_detail'}}"
+    visible_on: "{{(formData.type === 'lookup' || formData.type === 'master_detail') && !!!formData.multiple}}"
     sort_no: 280
     amis:
       enableDialog: false
