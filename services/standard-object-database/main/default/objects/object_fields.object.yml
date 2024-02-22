@@ -209,7 +209,7 @@ fields:
       className: 
         antd-Form-item: true 
         antd-Form-item--normal: true 
-        m-1: true 
+        m-0: true 
         "md:border-b": global.mode === "read"
         defaultValue_field: true 
         flex: true
