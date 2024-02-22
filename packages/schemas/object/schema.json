@@ -596,7 +596,7 @@
                                 }
                             },
                             "type": "array",
-                            "title": "The from and to propertie is required."
+                            "title": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
                         }
                     ],
                     "description": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
