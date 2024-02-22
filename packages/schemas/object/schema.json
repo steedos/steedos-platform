@@ -577,6 +577,30 @@
                     ],
                     "description": "字段选项"
                 },
+                "auto_fill_mapping": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "object",
+                                "required": ["from", "to"],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "from" : {
+                                        "type": "string",
+                                        "title": "从：引用对象中的字段"
+                                    },
+                                    "to" : {
+                                        "type": "string",
+                                        "title": "填充到：当前表单字段"
+                                    }
+                                }
+                            },
+                            "type": "array",
+                            "title": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
+                        }
+                    ],
+                    "description": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
+                },
                 "description": {
                     "type": "string",
                     "description": "字段描述"

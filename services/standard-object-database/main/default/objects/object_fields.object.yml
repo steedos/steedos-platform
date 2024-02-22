@@ -199,9 +199,49 @@ fields:
     amis:
       disabledOn: "${is_system == true}"
   defaultValue:
-    type: text
+    type: object
+    blackbox: true
     label: Default Value
     sort_no: 160
+    visible_on: "{{['autonumber','formula','summary','image','file'].indexOf(formData.type) > -1 ? false: true}}"
+    amis:
+      type: service
+      className: 
+        antd-Form-item: true 
+        antd-Form-item--normal: true 
+        m-0: true 
+        "md:border-b": global.mode === "read"
+        defaultValue_field: true 
+        flex: true
+      schemaApi:
+        url: "${context.rootUrl}/service/api/object_fields/defaultValue/schema"
+        method: post
+        data:
+          object: ${object}
+          name: ${name}
+          options: ${options}
+          type: ${type}
+          reference_to: ${reference_to}
+          multiple: ${multiple}
+          filtersFunction: ${filtersFunction}
+          reference_to_field: ${reference_to_field}
+          mode: ${global.mode}
+          scale: ${scale}
+          _id: ${_id}
+        trackExpression: "${object},${options},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
+        headers:
+          Authorization: "Bearer ${context.tenantId},${context.authToken}"
+        # sendOn: "!!this.type"
+      onEvent:
+        fetchSchemaInited:
+          weight: 0
+          actions:
+            - actionType: "setValue"
+              componentId: "service_detail_page"
+              args: 
+                value: 
+                  defaultValue: "${event.data.body[0].value}"
+              expression: "global.mode ==='read' && event.data.body[0].value"
   group:
     type: text
     label: Group
@@ -448,7 +488,7 @@ fields:
     amis:
       showIndex: true
       disabledOn: "${is_system == true}"
-      inlineEditMode: true
+      enableDialog: false
       columns: 
         - label
         - value
@@ -481,9 +521,10 @@ fields:
     label: Auto Fill Mapping
     is_wide: true
     inlineHelpText: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
-    visible_on: "{{formData.type === 'lookup' || formData.type === 'master_detail'}}"
+    visible_on: "{{(formData.type === 'lookup' || formData.type === 'master_detail') && formData.reference_to && !!!formData.multiple}}"
     sort_no: 280
     amis:
+      enableDialog: false
       disabledOn: "${is_system == true}"
   auto_fill_mapping.$:
     label: Auto Fill Mapping
