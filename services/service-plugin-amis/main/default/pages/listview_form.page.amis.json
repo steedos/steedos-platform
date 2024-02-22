@@ -84,7 +84,7 @@
                   "width": 50
                 }
               ],
-              "inlineEditMode": true
+              "enableDialog": false
             }
           },
           "sort": {
@@ -235,8 +235,15 @@
                   }
                 }
               ],
+              "columns": [
+                {
+                  "name": "field",
+                  "inlineEditMode": false
+                }
+              ],
               "addable": false,
-              "draggable": false
+              "draggable": false,
+              "enableDialog": false
             }
           },
           "searchable_fields": {

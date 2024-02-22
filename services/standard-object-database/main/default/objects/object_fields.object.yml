@@ -448,7 +448,7 @@ fields:
     amis:
       showIndex: true
       disabledOn: "${is_system == true}"
-      inlineEditMode: true
+      enableDialog: false
       columns: 
         - label
         - value
