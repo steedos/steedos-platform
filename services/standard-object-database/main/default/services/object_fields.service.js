@@ -219,6 +219,7 @@ module.exports = {
                     body = [steedos_field];
                     body[0].field.amis = {
                         // disabledOn: "!!this.defaultValue_formula",
+                        "clearable": true,
                         "className": {
                             "defaultValue_field_hidden": "!this.defaultValue && (!this.defaultValue || '').toString() && !!this.defaultValue_formula"
                         }
