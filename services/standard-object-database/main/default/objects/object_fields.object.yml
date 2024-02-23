@@ -821,6 +821,11 @@ fields:
     type: boolean
     label: Readonly
     group: ui
+  static:
+    type: boolean
+    label: Static
+    group: Advanced
+    inlineHelpText: Static mode, displayed as read-only, but the field value can be set by default, autofill, or custom scripts.
   hidden:
     type: boolean
     label: Hidden

@@ -299,6 +299,10 @@ fields:
     label: 只读
     help: 
     description: 
+  static:
+    label: 静态模式
+    help: 显示为只读，但是可以通过默认值，自动填充或自定义脚本设置该字段值
+    description: 
   hidden:
     label: 隐藏
     help: 
