@@ -2,6 +2,11 @@ const objectql = require('@steedos/objectql');
 const _ = require('lodash');
 module.exports = {
     listenTo: 'pages',
+    beforeInsert: async function(){
+        if(validator.toBoolean(process.env.STEEDOS_TENANT_ENABLE_SAAS || 'false', true) == true){
+            throw new Error('No permission')
+        }
+    },
     beforeUpdate: async function(){
         const {object_name, doc, spaceId, id} = this;
         if(_.has(doc, 'type') || _.has(doc, 'render_engine')){
