@@ -107,7 +107,7 @@ module.exports = {
                     defaultValue_schema.type = type;
                     defaultValue_schema.scale = scale;
                 }
-                
+                let body = [];
                 let steedos_field = {
                     type:'steedos-field', 
                     name:'defaultValue', 
@@ -214,11 +214,9 @@ module.exports = {
                             }
                         }
                     }
-                }
-                let body = [
-                    steedos_field
-                ]
-                if(mode === 'edit'){
+                    body = [steedos_field];
+                }else{
+                    body = [steedos_field];
                     body[0].field.amis = {
                         // disabledOn: "!!this.defaultValue_formula",
                         "className": {
