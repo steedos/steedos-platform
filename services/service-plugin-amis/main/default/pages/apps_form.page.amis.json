@@ -23,7 +23,6 @@
             "addable": false,
             "removable": true,
             "draggable": false,
-            "headerToolbarClassName": "px-1 pb-3",
             "fields": [
               {
                 "label": "${'apps.apps_form.tab' | t}",
@@ -80,6 +79,7 @@
               {
                 "type": "service",
                 "id": "tabs-options-service",
+                "className": "mb-2",
                 "body": [
                   {
                     "type": "button",
