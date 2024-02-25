@@ -12,3 +12,4 @@ options:
     value: refused
     color: ff0000
 sort_no: 330
+visible_on: "{{global.mode ==='read' ? true : false}}"
