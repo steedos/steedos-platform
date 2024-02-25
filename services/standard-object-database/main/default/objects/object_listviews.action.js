@@ -62,11 +62,11 @@ module.exports = {
     var data = newRecord || { _filters_type_controller: 'conditions' };
     //数据格式转换
     if (data) {
-        data.columns = lodash.map(data.columns, 'field');
         data.sort = lodash.map(data.sort, (item) => {
             return `${item.field_name}:${item.order || 'asc'}`
         });
-        data.mobile_columns = lodash.map(data.mobile_columns, 'field');
+
+        data.searchable_fields = lodash.map(data.searchable_fields, 'field');
 
         if (data.filters && lodash.isString(data.filters)) {
             try {
