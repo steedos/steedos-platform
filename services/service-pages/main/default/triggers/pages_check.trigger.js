@@ -1,5 +1,6 @@
 const objectql = require('@steedos/objectql');
 const _ = require('lodash');
+const validator = require('validator');
 module.exports = {
     listenTo: 'pages',
     beforeInsert: async function(){
