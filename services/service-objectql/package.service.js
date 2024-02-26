@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-01-29 15:31:29
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-25 17:30:51
  * @Description: 
  */
 "use strict";
@@ -549,8 +549,19 @@ module.exports = {
             async handler(ctx) {
                 return await this.getPrimarySpaceId()
             }
+        },
+        getObjectMetaConfig: {
+            params: {
+                objectName: { type: "string" }
+            },
+            async handler(ctx) {
+                this.broker.logger.info('objectql.getObjectMetaConfig', ctx.params)
+                const { objectName } = ctx.params
+                const obj = getObject(objectName)
+                const userSession = ctx.meta.user;
+                return await obj.getObjectMetaConfig(userSession)
+            }
         }
-
     },
 
     /**

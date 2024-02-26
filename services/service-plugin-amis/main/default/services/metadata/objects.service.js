@@ -123,8 +123,10 @@ module.exports = {
                 const lng = userSession.language || "zh-CN";
                 const objectName = ctx.params.objectName;
                 const object = await objectql.getSteedosSchema().getObject(objectName);
-                const objectConfig = object.toConfig();
+                const objectConfig = await object.getObjectMetaConfig(userSession);
                 const fields = objectConfig.fields;
+
+                console.log(`fields====>`, fields)
 
                 // image、file、lookup、master_detail、select 不参与排序
                 let ascChildren = [];
@@ -231,7 +233,7 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
                 const object = await objectql.getSteedosSchema().getObject(objectName);
-                const objectConfig = object.toConfig();
+                const objectConfig = await object.getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const include_deep = ctx.params.include_deep === "true";
@@ -270,7 +272,7 @@ module.exports = {
                     for( let i = 0; i < fieldsArr.length; i ++ ) {
                         if(!include_hide && fieldsArr[i].hidden) continue;
                         if((fieldsArr[i].type == 'lookup' || fieldsArr[i].type == 'master_detail') && fieldsArr[i].reference_to && _.isString(fieldsArr[i].reference_to)) {
-                            const r_object = await objectql.getSteedosSchema().getObject(fieldsArr[i].reference_to).toConfig();
+                            const r_object = await objectql.getSteedosSchema().getObject(fieldsArr[i].reference_to).getObjectMetaConfig(userSession);
                             steedosI18n.translationObject(lng, r_object.name, r_object);
                             if (r_object){
                                 _.forEach(r_object.fields, (f2, k2)=>{
@@ -352,7 +354,7 @@ module.exports = {
                     for( let i = 0; i < relatedListObjects.length; i ++ ) {
                         // 获得相关对象的字段
                         const relatedObject = await objectql.getSteedosSchema().getObject(relatedListObjects[i].object_name);
-                        const relatedObjectConfig = relatedObject.toConfig();
+                        const relatedObjectConfig = await relatedObject.getObjectMetaConfig(userSession);
                         steedosI18n.translationObject(lng, relatedObjectConfig.name, relatedObjectConfig);
                         const fieldsArr = [];
                         _.each(relatedObjectConfig.fields, (field, field_name) => {
@@ -403,7 +405,7 @@ module.exports = {
                 if(showHiddenField=='true'){
                     showHiddenField = true;
                 }
-                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 if(objectConfig.enable_workflow){
@@ -439,7 +441,7 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
-                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 if(objectConfig.enable_workflow){
@@ -467,7 +469,7 @@ module.exports = {
                 const userSession = ctx.meta.user;
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
-                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).toConfig();
+                const objectConfig = await objectql.getSteedosSchema().getObject(objectName).getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const actionsArr = [];
@@ -492,7 +494,7 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
                 const object = await objectql.getSteedosSchema().getObject(objectName);
-                const objectConfig = object.toConfig();
+                const objectConfig = await object.getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const options = [];
@@ -507,7 +509,7 @@ module.exports = {
                     let foo = related.split('.');
                     let rObjectName = foo[0];
                     // let rFieldName = foo[1];
-                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).toConfig();
+                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).getObjectMetaConfig(userSession);
                     steedosI18n.translationObject(lng, rObjectConfig.name, rObjectConfig);
                     let rObjectLable = rObjectConfig.label;
                     options.push({label: rObjectLable, value: rObjectName})
@@ -521,7 +523,7 @@ module.exports = {
                 const lng = userSession.language || 'zh-CN';
                 const objectName = ctx.params.objectName;
                 const object = await objectql.getSteedosSchema().getObject(objectName);
-                const objectConfig = object.toConfig();
+                const objectConfig = await object.getObjectMetaConfig(userSession);
                 steedosI18n.translationObject(lng, objectConfig.name, objectConfig);
 
                 const options = [];
@@ -575,7 +577,7 @@ module.exports = {
                     let foo = related.split('.');
                     let rObjectName = foo[0];
                     let rFieldName = foo[1];
-                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).toConfig();
+                    const rObjectConfig = await objectql.getSteedosSchema().getObject(rObjectName).getObjectMetaConfig(userSession);
                     steedosI18n.translationObject(lng, rObjectConfig.name, rObjectConfig);
                     let rObjectLable = rObjectConfig.label;
                     let rObjectFieldLable = (_.find(rObjectConfig.fields, function(field){return field.name === rFieldName}) || {}).label;

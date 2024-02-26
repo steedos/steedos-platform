@@ -1505,6 +1505,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return accessFields;
     }
 
+    public async getObjectMetaConfig(userSession, objectBaseConfig){
+        let _objectConfig = objectBaseConfig;
+        if(!_objectConfig){
+            const meta = await this.callMetadataObjectServiceAction('get', { objectApiName: this.name })
+            _objectConfig = meta.metadata;
+        }
+
+        if(_.has(global, 'getObjectMetaConfigAfter')){
+            return await (global as any).getObjectMetaConfigAfter(userSession, _objectConfig)
+        }else{
+            return _objectConfig;
+        }
+    }
+
     private async getContext(userSession, defContext){
         let { objectConfig } = defContext;
 
@@ -1532,7 +1546,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
             const [objectMeta, layouts, spaceProcessDefinition, dbListViews, rolesFieldsPermission, relationsInfo] = await Promise.all(pAll);
 
             return {
-                objectConfig: objectMeta.metadata, 
+                objectConfig: await this.getObjectMetaConfig(userSession, objectMeta.metadata), 
                 layouts, 
                 spaceProcessDefinition, 
                 dbListViews, 

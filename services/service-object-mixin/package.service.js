@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-14 10:27:19
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-25 17:29:01
  * @Description: 
  */
 "use strict";
@@ -366,6 +366,15 @@ module.exports = {
                         return await this.broker.call("objectql.dropIndex", {
                             objectName,
                             fieldName
+                        })
+                    },
+                    getObjectMetaConfig: async (userSession)=>{
+                        return await this.broker.call("objectql.getObjectMetaConfig", {
+                            objectName
+                        }, {
+                            meta: {
+                                user: userSession
+                            }
                         })
                     }
 
