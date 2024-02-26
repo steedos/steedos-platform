@@ -1,14 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-09-23 11:50:21
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-26 14:31:22
  * @Description: 
  */
 "use strict";
 // @ts-check
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const { QUERY_DOCS_TOP, REQUEST_SUCCESS_STATUS } = require('./consts')
+const { translateRecords } = require('./translate');
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql');
 
@@ -105,7 +106,10 @@ module.exports = {
                     query.filters = JSON.parse(filters)
                 }
                 if (fields) {
-                    query.fields = JSON.parse(fields)
+                    query.fields = JSON.parse(fields);
+                    if(!_.isArray(query.fields) && _.isObject(query.fields)){
+                        query.fields = _.keys(query.fields);
+                    }
                 }
                 if (top) {
                     query.top = Number(top)
@@ -136,7 +140,7 @@ module.exports = {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "items": records,
+                        "items": await translateRecords(records, objectName, fields, userSession),
                         "total": totalCount
                     }
                 }
