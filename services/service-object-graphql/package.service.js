@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-02 15:04:27
+ * @LastEditTime: 2024-02-25 17:29:55
  * @Description: 
  */
 
@@ -324,14 +324,14 @@ module.exports = {
             }
             return resolvers;
         },
-        async ChangeGlobalGraphQLSettings() {
-            const result = await Register.get(this.broker, 'globalGraphQLSettings');
-            if(result){
-                this.globalGraphQLSettings = result.metadata;
-                // 发送事件，通知ApolloService重新加载graphql schema; api 服务和graphql服务在同一个节点上.
-                this.broker.broadcastLocal('$services.changed');
-            }
-        },
+        // async ChangeGlobalGraphQLSettings() {
+        //     const result = await Register.get(this.broker, 'globalGraphQLSettings');
+        //     if(result){
+        //         this.globalGraphQLSettings = result.metadata;
+        //         // 发送事件，通知ApolloService重新加载graphql schema; api 服务和graphql服务在同一个节点上.
+        //         this.broker.broadcastLocal('$services.changed');
+        //     }
+        // },
         find: {
             async handler(objectName, query, userSession) {
                 const obj = this.getObject(objectName)
