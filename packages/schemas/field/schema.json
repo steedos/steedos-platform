@@ -141,6 +141,10 @@
             "type": "boolean",
             "description": "是否只读"
         },
+        "static": {
+            "type": "boolean",
+            "description": "静态模式，显示为只读，但是可以通过默认值，自动填充或自定义脚本设置该字段值"
+        },
         "hidden": {
             "type": "boolean",
             "description": "是否隐藏"

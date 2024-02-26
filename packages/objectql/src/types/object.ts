@@ -1623,6 +1623,17 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         })
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
+
+        _.each(objectConfig.fields, (field)=>{
+            if(field && field.static){
+                let fieldAmis = field.amis || {};
+                fieldAmis.static = true;
+                Object.assign(field, {
+                    amis: fieldAmis
+                });
+            }
+        });
+
         if(objectLayout && objectLayout.field_groups) {
             objectConfig.field_groups = objectLayout.field_groups;
         }

@@ -315,6 +315,10 @@ fields:
     label: Readonly
     help: 
     description: 
+  static:
+    label: Static
+    help: Static mode, displayed as read-only, but the field value can be set by default, autofill, or custom scripts.
+    description: 
   hidden:
     label: Hidden
     help: 

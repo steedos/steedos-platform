@@ -2,7 +2,7 @@
  * @Author: baozhoutaon@hotoa.com
  * @Date: 2022-03-29 20:33:44
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-06-15 17:40:53
+ * @LastEditTime: 2024-02-23 14:13:06
  * @Description: 
  */
 module.exports = {
@@ -31,6 +31,9 @@ module.exports = {
         Steedos.authRequest(url, options);
     },
     customPageVisible: function (object_name, record_id, permission, data) {
+        if(Meteor.settings.public.enable_saas){
+            return false;
+        }
         var record = data && data.record;
         return record && record.is_system;
     }
