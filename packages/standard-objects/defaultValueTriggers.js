@@ -114,17 +114,16 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
         else if (valueType === "string") {
             if (defaultValue.length) {
                 // 运行公式引擎
-                // console.log("==setDefaultValues=defaultValue===2222=", defaultValue);
                 defaultValue = getCompatibleDefaultValueExpression(defaultValue);
-                // console.log("==setDefaultValues=defaultValue===333=", defaultValue);
                 if(defaultValue){
                     if (defaultValue.indexOf('${') < 0) {
                         defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userSession);
                         if (field.multiple && !_.isArray(defaultValue)) {
                             defaultValue = defaultValue.split(',');
                         }
+                        doc[field.name] = defaultValue;
                     } else {
-                        // 如果写的是amis公式，刚直接忽略，简化默认值整体功能
+                        // 如果写的是amis公式，则直接忽略，简化默认值整体功能
                         // try {
                         //     const amisFormulaValue= amisFormula.evaluate(defaultValue,doc,{evalMode: field.evalMode});
                         //     // console.log('amisFormulaValue==>',defaultValue, amisFormulaValue)
@@ -138,8 +137,6 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                         //     console.log(e);
                         // }
                     }
-                    doc[field.name] = defaultValue;
-                    // console.log("==setDefaultValues=doc[field.name]====", field.name, doc[field.name]);
                 }
             }
             else {
