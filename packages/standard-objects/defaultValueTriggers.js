@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const objectql = require('@steedos/objectql');
 const auth = require('@steedos/auth');
-const amisFormula = require('amis-formula');
+// const amisFormula = require('amis-formula');
 /**
   把原来的默认值公式表达式转换成新的表达式语法，原来的表达式语法如下所示：
   ==========
@@ -118,25 +118,25 @@ const setDefaultValues = async function (doc, fields, userId, spaceId) {
                 defaultValue = getCompatibleDefaultValueExpression(defaultValue);
                 // console.log("==setDefaultValues=defaultValue===333=", defaultValue);
                 if(defaultValue){
-                    // 默认值以下 服务端字段默认值支持解析amis公式 #5155
-                    if(defaultValue.indexOf('${')<0){
+                    if (defaultValue.indexOf('${') < 0) {
                         defaultValue = await objectql.computeSimpleFormula(defaultValue, doc, userSession);
-                        if(field.multiple && !_.isArray(defaultValue)){
+                        if (field.multiple && !_.isArray(defaultValue)) {
                             defaultValue = defaultValue.split(',');
                         }
-                    }else{
-                        try {
-                            const amisFormulaValue= amisFormula.evaluate(defaultValue,doc,{evalMode: field.evalMode});
-                            // console.log('amisFormulaValue==>',defaultValue, amisFormulaValue)
-                            if(defaultValue === amisFormulaValue){
-                                throw new Error("Error:" +amisFormulaValue+"函数没有定义"); // 抛出错误
-                            }else{
-                                defaultValue = amisFormulaValue;
-                            }
-                        } catch (e) {
-                            defaultValue = null;
-                            console.log(e);
-                        }
+                    } else {
+                        // 如果写的是amis公式，刚直接忽略，简化默认值整体功能
+                        // try {
+                        //     const amisFormulaValue= amisFormula.evaluate(defaultValue,doc,{evalMode: field.evalMode});
+                        //     // console.log('amisFormulaValue==>',defaultValue, amisFormulaValue)
+                        //     if(defaultValue === amisFormulaValue){
+                        //         throw new Error("Error:" +amisFormulaValue+"函数没有定义"); // 抛出错误
+                        //     }else{
+                        //         defaultValue = amisFormulaValue;
+                        //     }
+                        // } catch (e) {
+                        //     defaultValue = null;
+                        //     console.log(e);
+                        // }
                     }
                     doc[field.name] = defaultValue;
                     // console.log("==setDefaultValues=doc[field.name]====", field.name, doc[field.name]);

@@ -313,11 +313,11 @@ fields:
     description: 
   readonly:
     label: Readonly
-    help: 
+    help: It is read-only and does not appear on the form when you create or edit records.
     description: 
   static:
-    label: Static
-    help: Static mode, displayed as read-only, but the field value can be set by default, autofill, or custom scripts.
+    label: Readonly and displayed while editing
+    help: Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.
     description: 
   hidden:
     label: Hidden

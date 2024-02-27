@@ -820,12 +820,13 @@ fields:
   readonly:
     type: boolean
     label: Readonly
+    inlineHelpText: It is read-only and does not appear on the form when you create or edit records.
     group: ui
   static:
     type: boolean
-    label: Static
-    group: Advanced
-    inlineHelpText: Static mode, displayed as read-only, but the field value can be set by default, autofill, or custom scripts.
+    label: Readonly and displayed while editing
+    group: ui
+    inlineHelpText: Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.
   hidden:
     type: boolean
     label: Hidden
