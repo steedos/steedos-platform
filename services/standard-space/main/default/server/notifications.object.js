@@ -10,7 +10,7 @@ Creator.Objects['notifications'].methods = {
     markReadAll: async function (req, res) {
         let userSession = req.user;
         let error;
-        let updatedCount = await objectql.getObject("notifications").updateMany([
+        let updatedCount = await objectql.getObject("notifications").directUpdateMany([
             ["space", "=", userSession.spaceId],
             ["owner", "=", userSession.userId],
             [["is_read", "=", null], 'or', ["is_read", "=", false]]

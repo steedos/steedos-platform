@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-08 15:16:53
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-04 14:04:06
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-27 15:18:55
  * @Description: 
  */
 'use strict';
@@ -24,7 +24,7 @@ module.exports = {
                 is_latest_approve: true
             })
             // 更新其他记录is_latest_approve为false
-            await instanceTasksObj.updateMany([
+            await instanceTasksObj.directUpdateMany([
                 ['instance', '=', instance],
                 ['handler', '=', handler],
                 ['_id', '!=', _id]
