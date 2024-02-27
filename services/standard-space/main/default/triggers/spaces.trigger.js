@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-03 11:19:39
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-09-20 14:04:26
+ * @LastEditTime: 2024-02-27 15:06:04
  * @Description: 
  */
 "use strict";
@@ -163,7 +163,7 @@ module.exports = {
             const setAdmins = doc.admins || []
             const removedAdmin = _.difference(previousDoc.admins, setAdmins);
             if (!_.isEmpty(removedAdmin)) {
-                await suObj.updateMany([
+                await suObj.directUpdateMany([
                     ['space', '=', id],
                     ['user', 'in', removedAdmin]
                 ], {
@@ -172,7 +172,7 @@ module.exports = {
             }
             const addedAdmin = _.difference(setAdmins, previousDoc.admins);
             if (!_.isEmpty(addedAdmin)) {
-                await suObj.updateMany([
+                await suObj.directUpdateMany([
                     ['space', '=', id],
                     ['user', 'in', addedAdmin]
                 ], {
