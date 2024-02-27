@@ -476,6 +476,10 @@ export class SteedosDataSourceType implements Dictionary {
         return await this._adapter.directAggregatePrefixalPipeline(tableName, query, prefixalPipeline, userId)
     }
 
+    async directUpdateMany(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType) {
+        return await this._adapter.directUpdateMany(tableName, queryFilters, doc, userId)
+    }
+
     async _makeNewID(tableName: string){
         return await this._adapter._makeNewID(tableName)
     }

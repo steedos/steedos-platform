@@ -1262,6 +1262,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
     }
 
+    async directUpdateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession){
+        doc = this.formatRecord(doc);
+        // await this.processUneditableFields(userSession, doc)
+        let clonedQueryFilters = queryFilters;
+        return await this.callAdapter('directUpdateMany', this.table_name, clonedQueryFilters, doc, userSession)
+    }
+
     async _makeNewID(){
         return await this._datasource._makeNewID(this.table_name);
     }
