@@ -35,12 +35,57 @@
                 {
                     "actionType": "toast",
                     "args": {
-                      "msgType": "success",
-                      "msg": "操作成功, 请刷新浏览器后查看效果",
-                      "position": "top-right"
+                        "msgType": "success",
+                        "msg": "操作成功, 请刷新浏览器后查看效果",
+                        "position": "top-right"
                     }
                 }
-            ]
+            ],
+            "id": "u:bb11df394baf",
+            "fieldsExtend": {
+                "readonly": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "componentId": "form_object_fields",
+                                        "args": {
+                                            "value": {
+                                                "static": false
+                                            }
+                                        },
+                                        "expression": "!!readonly"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:a32a4c461450"
+                    }
+                },
+                "static": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "componentId": "form_object_fields",
+                                        "args": {
+                                            "value": {
+                                                "readonly": false
+                                            }
+                                        },
+                                        "expression": "!!static"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:7affdbb0ef6d"
+                    }
+                }
+            }
         }
     ],
     "data": {
