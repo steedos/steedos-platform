@@ -41,7 +41,6 @@
                     }
                 }
             ],
-            "id": "u:bb11df394baf",
             "fieldsExtend": {
                 "readonly": {
                     "amis": {
@@ -50,7 +49,7 @@
                                 "actions": [
                                     {
                                         "actionType": "setValue",
-                                        "componentId": "form_object_fields",
+                                        "componentId": "steedos_object_fields_form",
                                         "args": {
                                             "value": {
                                                 "static": false
@@ -71,7 +70,7 @@
                                 "actions": [
                                     {
                                         "actionType": "setValue",
-                                        "componentId": "form_object_fields",
+                                        "componentId": "steedos_object_fields_form",
                                         "args": {
                                             "value": {
                                                 "readonly": false
@@ -84,7 +83,52 @@
                         },
                         "id": "u:7affdbb0ef6d"
                     }
+                },
+                "required": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form",
+                                        "expression": "${event.data.value}"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:adf4200a2170"
+                    }
+                },
+                "hidden": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "required": false
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form",
+                                        "expression": "${event.data.value}"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:adf4200a2170"
+                    }
                 }
+            },
+            "form": {
+                "id": "steedos_object_fields_form"
             }
         }
     ],
