@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-22 17:17:32
+ * @LastEditTime: 2024-02-27 10:33:37
  * @Description: 
  */
 "use strict";
@@ -215,9 +215,9 @@ async function updatevaildate(suDoc, doc) {
     const spaceObj = getObject('spaces')
     const userObj = getObject('users')
     var ref, ref2, ref3, ref4, ref5, ref6, ref8, repeatEmailUser, space;
-    if (suDoc.invite_state === "refused" || suDoc.invite_state === "pending") {
-        throw new Error("space_users_error_unaccepted_user_readonly");
-    }
+    // if (suDoc.invite_state === "refused" || suDoc.invite_state === "pending") {
+    //     throw new Error("space_users_error_unaccepted_user_readonly");
+    // }
     space = await spaceObj.findOne(suDoc.space);
     if (!space) {
         throw new Error("organizations_error_org_admins_only");
@@ -538,6 +538,10 @@ module.exports = {
             }
         }
 
+        if(suDoc.user != userId && _.has(doc, 'invite_state') && doc.invite_state != 'pending'){
+            throw new Error('禁止修改用户邀请状态');
+        }
+
         await updatevaildate(suDoc, doc);
 
         if (doc.organizations && doc.organizations.length > 0) {
@@ -636,7 +640,12 @@ module.exports = {
     afterUpdate: async function () {
         const { doc, previousDoc, id } = this
         const broker = getSteedosSchema().broker
-        await spaceUserCore.syncUserInfo(previousDoc, doc);
+        // 从db中查一次, 避免前端传过来的doc不安全
+        const spaceUsers = await getObject("space_users").directFind({filters: ["_id", "=", id], fields: ["invite_state"]});
+        const spaceUser = spaceUsers.length > 0 ? spaceUsers[0] : null;
+        if(spaceUser?.invite_state != "refused" && spaceUser.invite_state != "pending"){
+            await spaceUserCore.syncUserInfo(previousDoc, doc);
+        }
 
         if (doc.organizations) {
             for (const org of doc.organizations) {

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-25 14:35:28
+ * @LastEditTime: 2024-02-27 15:20:23
  * @Description: 
  */
 "use strict";
@@ -78,7 +78,7 @@ module.exports = {
                     // 1 清空 登录tokens
                     await getObject('users').update(userId, {"services.resume.loginTokens": []})
                     // 2 设置 sessions 无效
-                    await getObject('sessions').updateMany(["userId", "=", userId], {"valid": false}) 
+                    await getObject('sessions').directUpdateMany(["userId", "=", userId], {"valid": false}) 
                     // 3 记录操作日志
                     await getObject('operation_logs').insert({
                         name: '注销所有登录',

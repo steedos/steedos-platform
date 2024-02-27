@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-12 13:41:49
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-25 10:34:08
+ * @LastEditTime: 2024-02-26 17:03:13
  * @Description: 
  */
 module.exports = {
@@ -14,10 +14,10 @@ module.exports = {
             return false
         }
 
-        var record = data && data.record;
-        if(record.invite_state == 'refused' || record.invite_state == 'pending'){
-            return false;
-        }
+        // var record = data && data.record;
+        // if(record.invite_state == 'refused' || record.invite_state == 'pending'){
+        //     return false;
+        // }
 
         if (Session.get("app_id") === 'admin') {
             var space_userId = db.space_users.findOne({ user: Steedos.userId(), space: Steedos.spaceId() })._id

@@ -174,7 +174,7 @@ module.exports = {
         const { doc, id } = this
         const suObj = getObject('space_users');
         if (doc && doc.last_logon) {
-            await suObj.updateMany([['user', '=', id]], { last_logon: doc.last_logon });
+            await suObj.directUpdateMany([['user', '=', id]], { last_logon: doc.last_logon });
         }
     },
 
