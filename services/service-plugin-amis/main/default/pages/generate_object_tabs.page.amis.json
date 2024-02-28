@@ -35,6 +35,7 @@
                     "options": [],
                     "id": "u:e224b24aa867",
                     "searchable": true,
+                    "itemHeight": 40,
                     "source": {
                         "method": "get",
                         "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/generate_tabs_options",

@@ -61,6 +61,7 @@
                         {
                           "type": "transfer",
                           "name": "picked_buttons",
+                          "itemHeight": 40,
                           "sortable": true,
                           "source": {
                             "method": "get",
@@ -205,6 +206,7 @@
                             {
                               "type": "transfer",
                               "name": "picked_fields",
+                              "itemHeight": 40,
                               "sortable": true,
                               "source": "${fields_options}",
                               "value": "${fields|pick:field_name|split}",
@@ -499,6 +501,7 @@
                           "body": [
                             {
                               "type": "transfer",
+                              "itemHeight": 40,
                               "name": "picked_related_lists",
                               "sortable": true,
                               "source": "${related_lists_options}",
