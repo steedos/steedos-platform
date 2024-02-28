@@ -40,6 +40,7 @@
                         "checkAll": false,
                         "searchable": true,
                         "sortable": true,
+                        "itemHeight": 40,
                         "source": {
                           "method": "get",
                           "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",
@@ -95,6 +96,7 @@
               ],
               "id": "u:32f3e4e73115",
               "strictMode": true,
+              "itemHeight": 40,
               "source": {
                 "method": "get",
                 "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/sortFields/options",
@@ -204,6 +206,7 @@
                         "required": true,
                         "placeholder": "-",
                         "className": "col-span-2 m-0",
+                        "itemHeight": 40,
                         "checkAll": false,
                         "searchable": true,
                         "sortable": true,
@@ -260,6 +263,7 @@
               "searchResultMode": "list",
               "joinValues": false,
               "extractValue": true,
+              "itemHeight": 40,
               "source": {
                 "method": "get",
                 "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/fields/options",

@@ -114,6 +114,7 @@
                           "sortable": true,
                           "source": "${tabs_options}",
                           "searchable": true,
+                          "itemHeight": 40,
                           "id": "u:f2d36873abd1"
                         }
                       ],

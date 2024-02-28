@@ -365,6 +365,7 @@
 																				"body": [
 																				  {
 																					"type": "transfer",
+																					"itemHeight": 40,
 																					"name": "picked_fields",
 																					"sortable": true,
 																					"source": "${fields_options}",
@@ -495,6 +496,7 @@
 																			  "type": "lookup",
 																			  "amis": {
 																				"type": "transfer-picker",
+																				"itemHeight": 40,
 																				"className": "w-full steedos-flow-transfer-picker",
 																				"inputClassName": "w-full",
 																				"source": {
@@ -527,6 +529,7 @@
 																				"body": [
 																				  {
 																					"type": "transfer",
+																					"itemHeight": 40,
 																					"name": "picked_related_lists",
 																					"sortable": true,
 																					"source": "${related_lists_options}",
