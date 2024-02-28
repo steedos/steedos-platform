@@ -12,16 +12,19 @@ fields:
     searchable: true
     index: true
     is_wide: true
+    readonly: true
     name: name
   description:
     label: Description
     type: textarea
     is_wide: true
+    readonly: true
     name: description
   extention:
     label: Extention
     type: text
     disabled: true
+    readonly: true
     name: extention
   size:
     label: Size
@@ -47,6 +50,9 @@ fields:
             }
     name: parent
     filterable: true
+  allow_anonymous_downloads:
+    label: Allow Anonymous Downloads
+    type: boolean
 list_views:
   all:
     columns:
@@ -105,7 +111,10 @@ actions:
   standard_edit:
     label: Edit
     sort: 0
-    visible: false
+    visible: !<tag:yaml.org,2002:js/function> |-
+      function (object_name, record_id, record_permissions, record) {
+        return Creator.USER_CONTEXT.user.is_space_admin
+      }
     'on': record
     todo: standard_edit
   standard_delete:

@@ -26,6 +26,10 @@ fields:
     label: 所属记录
     help: 
     description: 
+  allow_anonymous_downloads:
+    label: 允许匿名下载
+    help:
+    description:
 listviews:
   all:
     label: 所有
