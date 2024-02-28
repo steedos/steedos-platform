@@ -339,6 +339,7 @@ let objectTriggers = {
                 object_name: doc.name,
                 shared_to: "space",
                 filter_scope: "space",
+                crud_mode: 'table',
                 columns: [{field: 'name'}],
                 "sort" : [
                     {
@@ -355,6 +356,7 @@ let objectTriggers = {
                 object_name: doc.name,
                 shared_to: "space",
                 filter_scope: "space",
+                crud_mode: 'table',
                 columns:  [{field: 'name'}]
             });
             
