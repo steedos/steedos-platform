@@ -110,8 +110,6 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/methods/update_server_session.coffee', 'server');
 	
-	api.addFiles('server/methods/set_space_user_password.coffee', 'server');
-
 	api.addFiles('server/lib/billing_manager.coffee', 'server');
 
 	api.addFiles('client/bootstrap.coffee', 'client');
