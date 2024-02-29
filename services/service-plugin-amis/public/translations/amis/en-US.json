@@ -129,7 +129,7 @@
   "File.repick": "Repick",
   "File.result": "Successfully uploaded {{uploaded}} files, failed to upload {{failed}} files",
   "File.retry": "Retry",
-  "File.sizeLimit": "The maximum file size is {{maxSize}} B",
+  "File.sizeLimit": "The maximum file size is {{maxSize}}",
   "File.start": "Start upload",
   "File.upload": "Upload",
   "Image.upload": "Upload image",
