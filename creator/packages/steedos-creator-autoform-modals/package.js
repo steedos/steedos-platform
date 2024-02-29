@@ -20,9 +20,6 @@ Package.on_use(function (api) {
     'raix:handlebar-helpers@0.2.5',
     'mpowaga:string-template@0.1.0'
   ], 'client');
-
-  api.add_files('lib/server/core.coffee', 'server');
-  
   api.add_files('lib/client/modals.html', 'client');
   api.add_files('lib/client/modals.coffee', 'client');
   api.add_files('lib/client/modals.less', 'client');
