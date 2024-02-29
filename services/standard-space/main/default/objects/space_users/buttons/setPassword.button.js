@@ -28,15 +28,25 @@ module.exports = {
         var doUpdate = function (inputValue) {
             window.$("body").addClass("loading");
             try {
-                Meteor.call("setSpaceUserPassword", record_id, userSession.spaceId, CryptoJS.SHA256(inputValue).toString(), function (error, result) {
-                    window.$("body").removeClass("loading");
-                    if (error) {
-                        return toastr.error(error.reason);
-                    } else {
-                        swal.close();
-                        return toastr.success(t("Change password successfully"));
-                    }
+                var result = Steedos.authRequest("/api/user/setSpaceUserPassword", {
+                    type: 'post', async: false, data: JSON.stringify({
+                        space_user_id: record_id, 
+                        space_id: userSession.spaceId, 
+                        password: CryptoJS.SHA256(inputValue).toString()
+                    })
                 });
+                window.$("body").removeClass("loading");
+                if (result.error) {
+                    toastr.error(result.error);;
+                }else{
+                    swal.close();
+                    return toastr.success(t("Change password successfully"));
+                }
+                if (!isPasswordEmpty) {
+                    // Modal.show("reset_password_modal");
+                    Steedos.openWindow(Steedos.absoluteUrl("/accounts/a/#/update-password"))
+                    return;
+                }
             } catch (err) {
                 console.error(err);
                 toastr.error(err);
