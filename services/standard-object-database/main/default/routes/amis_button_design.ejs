@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-28 10:35:46
+ * @LastEditTime: 2024-02-29 13:28:53
  * @Description: 
 -->
 <html>
@@ -101,6 +101,7 @@
             schema.data.context.tenantId = tenantId;
             schema.data.context.userId = userId;
             schema.data.context.authToken = authToken;
+            schema.data.context.user = <%- JSON.stringify(userSession) %>;
 
             return schema || initialContent
           }
