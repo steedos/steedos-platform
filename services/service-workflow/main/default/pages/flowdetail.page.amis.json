@@ -604,7 +604,8 @@
 											},
 											"className": "m-0"
 										}
-									]
+									],
+									"id": "u:46eb673db7a7"
 								},
 								{
 									"type": "steedos-object-form",
@@ -630,7 +631,7 @@
 										"current.fields.$.visibleOn"
 									],
 									"fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}",
-									"formDataFilter": "if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"}, {          \"actionType\": \"ajax\",          \"outputVar\": \"responseResult\",          \"args\": {            \"options\": {              \"silent\": false            },            \"api\": {              \"url\": \"/api/workflow/updateFormFields\",              \"method\": \"post\",              \"requestAdaptor\": \"console.log('api.data', api, 'context', context);api.data = { formId: context.current.form, fields: context.current.fields };return api;\",              \"adaptor\": \"\",              \"messages\": {              },              \"dataType\": \"json\"            }          }        })"
+									"formDataFilter": "if (!form.onEvent.change) {\n  form.onEvent.change = { actions: [] }\n};\nform.onEvent.change.actions.push({\n  actionType: \"custom\",\n  script: \"console.log('onChange event.data', event.data)\"\n}, {\n  \"actionType\": \"ajax\",\n  \"outputVar\": \"responseResult\",\n  \"args\": {\n    \"options\": { \"silent\": false },\n    \"api\": {\n      \"url\": \"/api/workflow/updateFormFields\",\n      \"method\": \"post\",\n      \"requestAdaptor\": `\n        console.log('api.data', api, 'context', context);\n        var fields = context.current.fields;\n        fields.forEach(function(item){\n          // 有时编辑children子行记录时未同步到fields属性值中，造成保存数据不成功\n          if(item.children){\n            item.fields = item.children;\n          }\n        });\n        api.data = { \n          formId: context.current.form, \n          fields: fields\n        };\n        return api;\n      `,\n      \"adaptor\": \"\",\n      \"messages\": {},\n      \"dataType\": \"json\"\n    }\n  }\n})"
 								}
 							],
 							"id": "u:827750209c5d",
