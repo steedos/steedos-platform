@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-30 10:13:13
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-29 10:24:41
  * @Description: 
  */
 "use strict";
@@ -167,6 +167,9 @@ module.exports = {
 				const dbRecord = await object.directFind({filters: ['_id','=',id]});
 				if(dbRecord.length === 0){
 					// const newId = await object._makeNewID();
+					const objectConfig = await object.toConfig();
+					let field_groups = objectConfig.field_groups || null;
+					
 					const now = new Date();
 					await object.directInsert(Object.assign({}, data, {
 						// _id: newId,
@@ -182,13 +185,14 @@ module.exports = {
 						company_ids: userSession.company_ids,
 						extend: name,
 						custom: false,
-						is_system: true
+						is_system: true,
+						field_groups: field_groups
 					}));					
 					// id = newId;
 				}
 
 				if(data.is_system){
-					data = _.pick(data, ['label', 'icon', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_workflow', 'enable_instances', 'enable_inline_edit', 'enable_tree', 'enable_enhanced_lookup', 'description', 'is_deleted'])
+					data = _.pick(data, ['label', 'icon', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_workflow', 'enable_instances', 'enable_inline_edit', 'enable_tree', 'enable_enhanced_lookup', 'description', 'is_deleted', 'field_groups'])
 				}
 
                 return object.update(id, data, userSession)

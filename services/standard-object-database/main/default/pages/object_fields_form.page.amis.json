@@ -125,6 +125,25 @@
                         },
                         "id": "u:adf4200a2170"
                     }
+                },
+                "type": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "defaultValue": null
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             },
             "form": {

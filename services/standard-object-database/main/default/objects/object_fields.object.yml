@@ -203,7 +203,7 @@ fields:
     blackbox: true
     label: Default Value
     sort_no: 160
-    visible_on: "{{['autonumber','formula','summary','image','file'].indexOf(formData.type) > -1 ? false: true}}"
+    visible_on: "{{formData.type && ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}"
     amis:
       type: service
       className: 
