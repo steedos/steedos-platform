@@ -219,7 +219,7 @@ fields:
         data:
           object: ${object}
           name: ${name}
-          options: ${options}
+          options: ${options|filter:label:isTrue|filter:value:isTrue}
           type: ${type}
           reference_to: ${reference_to}
           multiple: ${multiple}
@@ -228,7 +228,7 @@ fields:
           mode: ${global.mode}
           scale: ${scale}
           _id: ${_id}
-        trackExpression: "${object},${options|pick:label,value|json},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
+        trackExpression: "${object},${options|filter:label:isTrue|filter:value:isTrue|pick:label,value|json},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
         headers:
           Authorization: "Bearer ${context.tenantId},${context.authToken}"
         # sendOn: "!!this.type"
