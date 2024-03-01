@@ -100,7 +100,7 @@ fields:
     help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
     description: 
   create:
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     help: 
     description: 
   reference_to_field:

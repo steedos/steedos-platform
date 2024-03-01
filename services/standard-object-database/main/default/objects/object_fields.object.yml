@@ -289,7 +289,7 @@ fields:
       disabledOn: "${is_system == true}"
   create:
     type: boolean
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     defaultValue: true
     visible_on: "{{['lookup'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 185
