@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-26 14:45:14
+ * @LastEditTime: 2024-03-02 13:55:13
  * @Description: 
  */
 const _ = require('lodash')
@@ -334,15 +334,14 @@ async function translateRecordToUI(record, objectName, selectorFieldNames, userS
 }
 
 module.exports = {
-    translateRecords: async (records, objectName, fieldsString, userSession)=>{
+    translateRecords: async (records, objectName, fields, uiFields, userSession)=>{
         if(!fieldsString){
             return records;
         }
-        const fields = JSON.parse(fieldsString);
-        if(_.has(fields, '_display')){
+        if(!_.isEmpty(uiFields)){
             const resRecords= [];
             for(const record of records){
-                const _record = await translateRecordToUI(record, objectName, _.keys(fields._display), userSession);
+                const _record = await translateRecordToUI(record, objectName, uiFields, userSession);
                 resRecords.push(_record);
             }
             return resRecords;

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-26 14:31:22
+ * @LastEditTime: 2024-03-02 13:54:33
  * @Description: 
  */
 "use strict";
@@ -54,6 +54,7 @@ module.exports = {
          * @apiGroup @steedos/service-rest
          * @apiParam {String} objectName 对象API Name，如：contracts
          * @apiQuery {String} [fields] 字段名，如：'["name", "description"]'
+         * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]'
          * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
          * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
          * @apiQuery {String} [skip] 跳过条数，如：'10'
@@ -91,6 +92,7 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
                 fields: { type: 'string', optional: true },
+                uiFields: { type: 'string', optional: true },
                 filters: { type: 'string', optional: true },
                 top: { type: 'string', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'string', optional: true },
@@ -101,15 +103,17 @@ module.exports = {
                 const { objectName, fields, filters, top, skip, sort } = params
                 const userSession = ctx.meta.user;
 
+                let uiFields = [];
+                if(params.uiFields){
+                    uiFields = JSON.parse(params.uiFields)
+                }
+
                 const query = {}
                 if (filters) {
                     query.filters = JSON.parse(filters)
                 }
                 if (fields) {
                     query.fields = JSON.parse(fields);
-                    if(!_.isArray(query.fields) && _.isObject(query.fields)){
-                        query.fields = _.keys(query.fields);
-                    }
                 }
                 if (top) {
                     query.top = Number(top)
@@ -140,7 +144,7 @@ module.exports = {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "items": await translateRecords(records, objectName, fields, userSession),
+                        "items": await translateRecords(records, objectName, fields, uiFields, userSession),
                         "total": totalCount
                     }
                 }
