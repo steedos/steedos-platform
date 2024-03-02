@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-01-26 11:40:59
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-26 15:22:26
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-01 14:19:42
  * @Description: 
  */
 
@@ -14,7 +14,7 @@ amisLib.registerAction('steedos_actions_standard_approve', {
         return amisLib.runActions([
             {
                 "actionType": "custom",
-                "script": "const flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == event.data.object_name && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'obj_to_ins') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
+                "script": "var objectName = event.data.objectName || event.data.object_name;const flows = lodash.filter(Creator.object_workflows, (item) => { return item.object_name == objectName && (!item.sync_direction || item.sync_direction == 'both' || item.sync_direction == 'obj_to_ins') })\n\nevent.setData({ ...event.data, ...{ flows: flows, flowCount: flows.length } })\n\n"
             },
             {
                 "actionType": "ajax",
