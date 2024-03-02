@@ -56,6 +56,7 @@ router.get('/api/pageDesign', core.requireAuthentication, async function (req, r
             userId: userSession.userId,
             authToken: userSession.authToken,
             pageId: req.query.pageId,
+            userSession: userSession
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

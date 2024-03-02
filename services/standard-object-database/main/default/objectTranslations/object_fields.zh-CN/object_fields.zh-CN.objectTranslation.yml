@@ -100,7 +100,7 @@ fields:
     help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
     description: 
   create:
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     help: 
     description: 
   reference_to_field:
@@ -297,11 +297,11 @@ fields:
     description: 
   readonly:
     label: 只读
-    help: 
+    help: 只读，且新建和编辑记录时不显示在表单上
     description: 
   static:
-    label: 静态模式
-    help: 显示为只读，但是可以通过默认值，自动填充或自定义脚本设置该字段值
+    label: 只读且编辑时显示
+    help: 显示为只读，但是在新建和编辑记录时可以通过默认值，自动填充或自定义脚本设置该字段值
     description: 
   hidden:
     label: 隐藏

@@ -391,7 +391,7 @@
         },
         "messages": {},
         "requestAdaptor": "",
-        "adaptor": "const field_groups = payload.data.objects[0] && _.map(payload.data.objects[0].field_groups, function (obj) {\n  return {\n    \"id\": obj.group_name,\n    \"group_name\": obj.group_name,\n    \"visible_on\": obj.visible_on,\n    \"default_folded\": obj.default_folded\n  }\n});\nfield_groups.unshift({\n  id: \"隐藏\",\n  group_name: \"隐藏\",\n  visible_on: \"\",\n  is_hidden: true\n});\nfield_groups.unshift({\n  id: \"未分组\",\n  group_name: \"未分组\",\n  visible_on: \"\",\n  is_default: true\n});\n\n\n\nconst designObjectId = payload.data.objects[0] && payload.data.objects[0]._id;\nreturn payload = {\n  data: {\n    field_groups,\n    designObjectId,\n designObjectLabel: payload.data.objects[0] && payload.data.objects[0].label,\n   _master: {\n      recordId: designObjectId\n    }\n  }\n}"
+        "adaptor": "const field_groups = payload.data.objects[0] && _.map(payload.data.objects[0].field_groups, function (obj) {\n  return {\n    \"id\": obj.group_name,\n    \"group_name\": obj.group_name,\n    \"visible_on\": obj.visible_on,\n    \"collapsed\": obj.collapsed\n  }\n});\nfield_groups.unshift({\n  id: \"隐藏\",\n  group_name: \"隐藏\",\n  visible_on: \"\",\n  is_hidden: true\n});\nfield_groups.unshift({\n  id: \"未分组\",\n  group_name: \"未分组\",\n  visible_on: \"\",\n  is_default: true\n});\n\n\n\nconst designObjectId = payload.data.objects[0] && payload.data.objects[0]._id;\nreturn payload = {\n  data: {\n    field_groups,\n    designObjectId,\n designObjectLabel: payload.data.objects[0] && payload.data.objects[0].label,\n   _master: {\n      recordId: designObjectId\n    }\n  }\n}"
       },
       "messages": {},
       "onEvent": {

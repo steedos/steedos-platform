@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-04-11 10:15:40
+ * @LastEditTime: 2024-02-29 11:45:03
  * @Description: 
 -->
 <html>
@@ -83,6 +83,7 @@
             schema.data.context.tenantId = tenantId;
             schema.data.context.userId = userId;
             schema.data.context.authToken = authToken;
+            schema.data.context.user = <%- JSON.stringify(userSession) %>;
 
             if (objectName && pageType === "record") {
               const record = await axios.get(
@@ -117,11 +118,7 @@
           JSON.stringify(data.data.AmisSchema, null, 4)
         );
         if (schema.data && typeof schema.data.context === 'object' ) {
-          delete schema.data.context.userId;
-          delete schema.data.context.tenantId;
-          delete schema.data.context.authToken;
-          delete schema.data.context.user;
-          delete schema.data.context.rootUrl;
+          delete schema.data.context
         }
 
         try {

@@ -136,6 +136,17 @@ module.exports = {
                             }
                         })
                     },
+                    directUpdateMany: async (queryFilters, doc, userSession) => {
+                        return await this.broker.call("objectql.directUpdateMany", {
+                            objectName,
+                            queryFilters,
+                            doc,
+                        }, {
+                            meta: {
+                                user: userSession
+                            }
+                        })
+                    },
                     delete: async (id, userSession) => {
                         return await this.broker.call("objectql.delete", {
                             objectName: objectName,

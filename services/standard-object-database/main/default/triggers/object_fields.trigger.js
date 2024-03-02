@@ -125,14 +125,14 @@ async function checkMasterDetailTypeField(doc, oldReferenceTo) {
 
     const mastersCount = currentMasters.length;
     const detailsCount = currentDetails.length;
-    if (mastersCount > 1) {
-        throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有两种主表子表关系。");
-    }
-    else if (mastersCount > 0) {
-        if (detailsCount > 0) {
-            throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
-        }
-    }
+    if (mastersCount > 5) {
+        throw new Meteor.Error(doc.name, "您无法创建此类型的字段，因为此对象已有5种主表子表关系。");
+    } 
+    // else if (mastersCount > 0) { // 当前对象已经有1个主子表字段
+    //     if (detailsCount > 0) { // 当前对象已经作为了其他对象的主子表字段的关联对象
+    //         throw new Meteor.Error(doc.name, "由于此对象上已经存在主表子表关系，同时是另一个主表子表关系的主对象，无法创建此类字段。");
+    //     }
+    // }
 
     const detailPaths = await obj.getDetailPaths();
     const masterPaths = await refObj.getMasterPaths();

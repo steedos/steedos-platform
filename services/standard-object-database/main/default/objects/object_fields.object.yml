@@ -203,7 +203,7 @@ fields:
     blackbox: true
     label: Default Value
     sort_no: 160
-    visible_on: "{{['autonumber','formula','summary','image','file'].indexOf(formData.type) > -1 ? false: true}}"
+    visible_on: "{{formData.type && ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}"
     amis:
       type: service
       className: 
@@ -219,7 +219,7 @@ fields:
         data:
           object: ${object}
           name: ${name}
-          options: ${options}
+          options: ${options|filter:label:isTrue|filter:value:isTrue}
           type: ${type}
           reference_to: ${reference_to}
           multiple: ${multiple}
@@ -228,7 +228,7 @@ fields:
           mode: ${global.mode}
           scale: ${scale}
           _id: ${_id}
-        trackExpression: "${object},${options},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
+        trackExpression: "${object},${options|filter:label:isTrue|filter:value:isTrue|pick:label,value|json},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
         headers:
           Authorization: "Bearer ${context.tenantId},${context.authToken}"
         # sendOn: "!!this.type"
@@ -289,7 +289,7 @@ fields:
       disabledOn: "${is_system == true}"
   create:
     type: boolean
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     defaultValue: true
     visible_on: "{{['lookup'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 185
@@ -556,11 +556,42 @@ fields:
       - object
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function (filters, values) {
-        if(values && values.object){
-          return ['object', '=', values.object]
-        }else{
-          return ['_id', '=', 'no']
+        //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
+        var fieldFilters = {
+            "text": ["text", "textarea"],
+            "textarea": ["text", "textarea"],
+            "boolean": ["boolean", "toggle"],
+            "toggle": ["boolean", "toggle"],
+            "number": ["number", "currency"],
+            "currency": ["number", "currency"],
+            "lookup": ["lookup", "master_detail"],
+            "master_detail": ["lookup", "master_detail"],
+            "autonumber": ["autonumber", "text", "textarea"],
+            "email": ["email", "text", "textarea"]
+        };
+        var currentFilter = [];
+        var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+        var fromField = referenceObject && referenceObject.fields[values.auto_fill_mapping__from];
+
+        if (fromField && fromField.data_type) {
+            currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
+        }else if (fromField) {
+            currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
+            if (fromField.type == "lookup" || fromField.type == "master_detail") {
+              if (fromField.reference_to) {
+                currentFilter.push(['reference_to', '=', fromField.reference_to]);
+              }
+              if (fromField.reference_to_field) {
+                currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+              }
+            }
         }
+        if (values && values.object) {
+            currentFilter.push(['object', '=', values.object]);
+        } else {
+            currentFilter.push(['_id', '=', 'no']);
+        }
+        return currentFilter;
       }
   formula_blank_value:
     type: select
@@ -820,12 +851,13 @@ fields:
   readonly:
     type: boolean
     label: Readonly
+    inlineHelpText: It is read-only and does not appear on the form when you create or edit records.
     group: ui
   static:
     type: boolean
-    label: Static
-    group: Advanced
-    inlineHelpText: Static mode, displayed as read-only, but the field value can be set by default, autofill, or custom scripts.
+    label: Readonly and displayed while editing
+    group: ui
+    inlineHelpText: Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.
   hidden:
     type: boolean
     label: Hidden

@@ -26,6 +26,10 @@ fields:
     label: Parent
     help: 
     description: 
+  allow_anonymous_downloads:
+    label: Allow Anonymous Downloads
+    help:
+    description:
 listviews:
   all:
     label: all

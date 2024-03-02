@@ -56,6 +56,7 @@ router.get('/api/amisButtonDesign', core.requireAuthentication, async function (
             userId: userSession.userId,
             authToken: userSession.authToken,
             id: req.query.id,
+            userSession: userSession
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){

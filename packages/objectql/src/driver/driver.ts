@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2021-06-03 15:11:52
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-05-06 10:05:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-27 14:47:31
  * @Description: 
  */
 import { Dictionary } from '@salesforce/ts-types';
@@ -90,6 +90,7 @@ export interface SteedosDriver {
     directDelete(tableName: string, id: SteedosIDType | SteedosQueryOptions, userId?: SteedosIDType): any;
     directAggregate?(tableName: string, query: SteedosQueryOptions, externalPipeline: any, userId?: SteedosIDType): any;
     directAggregatePrefixalPipeline?(tableName: string, query: SteedosQueryOptions, prefixalPipeline: any, userId?: SteedosIDType): any;
+    directUpdateMany?(tableName: string, queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userId?: SteedosIDType): any;
     count(tableName: string, query: SteedosQueryOptions, userId?: SteedosIDType): any;
     formatRecord?(doc: Dictionary<any>, objectConfig: SteedosObjectType): any;
     dropEntities?(): any;

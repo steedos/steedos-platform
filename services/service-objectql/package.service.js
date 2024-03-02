@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-25 17:30:51
+ * @LastEditTime: 2024-03-02 14:06:04
  * @Description: 
  */
 "use strict";
@@ -185,6 +185,26 @@ module.exports = {
                 }
                 delete data.space;
                 return await obj.updateMany(queryFilters, data, userSession)
+            }
+        },
+        directUpdateMany: {
+            params: {
+                objectName: { type: "string" },
+                queryFilters: { type: "array", items: "any" },
+                doc: { type: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, queryFilters, doc } = ctx.params;
+                const obj = getObject(objectName)
+                let data = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+                return await obj.directUpdateMany(queryFilters, data, userSession)
             }
         },
         delete: {

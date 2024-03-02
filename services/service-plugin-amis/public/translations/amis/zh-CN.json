@@ -134,7 +134,7 @@
   "File.repick": "重新选择",
   "File.result": "已成功上传 {{uploaded}} 个文件，{{failed}} 个文件上传失败，",
   "File.retry": "重试上传",
-  "File.sizeLimit": "文件大小不超过 {{maxSize}} B",
+  "File.sizeLimit": "文件大小不超过 {{maxSize}}",
   "File.start": "开始上传",
   "File.upload": "文件上传",
   "Image.upload": "图片上传",

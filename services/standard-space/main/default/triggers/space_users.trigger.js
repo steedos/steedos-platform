@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-07 14:19:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-26 18:01:05
+ * @LastEditTime: 2024-02-27 10:33:37
  * @Description: 
  */
 "use strict";
@@ -538,7 +538,7 @@ module.exports = {
             }
         }
 
-        if(suDoc.user != userId && doc.invite_state != 'pending'){
+        if(suDoc.user != userId && _.has(doc, 'invite_state') && doc.invite_state != 'pending'){
             throw new Error('禁止修改用户邀请状态');
         }
 
