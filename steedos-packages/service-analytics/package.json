@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-analytics",
-  "version": "2.6.8-beta.13",
+  "version": "2.6.8-beta.14",
   "main": "package.service.js",
   "description": "Analytics for product",
   "scripts": {},
@@ -9,5 +9,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bab85130c5ca3bb1f6c520cb2a321694c211f3b3"
+  "gitHead": "52def4618d4b0bb424553af49f379bee09d27e3e"
 }
