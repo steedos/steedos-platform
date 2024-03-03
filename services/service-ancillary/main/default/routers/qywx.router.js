@@ -1,16 +1,16 @@
 // "use strict";
 
 const Cookies = require("cookies");
-const router =require('@steedos/router').staticRouter()
+const router = require('@steedos/router').staticRouter()
 const auth = require("@steedos/auth");
 const objectql = require('@steedos/objectql');
 const xmlparser = require('express-xml-bodyparser');
 const xml2js = require('xml2js');
-const fetch =  require('node-fetch');
+const fetch = require('node-fetch');
 
 const qywxSync = {
     write: async function (content) {
-        return broker.call('qywx.write', {content})
+        return broker.call('qywx.write', { content })
     }
 }
 
@@ -28,10 +28,10 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
     authToken = cookies.get("X-Auth-Token");
 
     state = req.query.state;
-    space = await broker.call('qywx.getSpace', {corpId: null})
+    space = await broker.call('qywx.getSpace', { corpId: null })
     // 获取access_token
-    if (space.qywx_corp_id && space.qywx_secret){
-        let response = await broker.call('qywx.getToken', {corpId: space.qywx_corp_id, secret: space.qywx_secret})
+    if (space.qywx_corp_id && space.qywx_secret) {
+        let response = await broker.call('qywx.getToken', { corpId: space.qywx_corp_id, secret: space.qywx_secret })
         token = response.access_token;
     }
 
@@ -40,7 +40,7 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         redirect_url = Meteor.absoluteUrl(state);
 
     if ((req != null ? (_ref5 = req.query) != null ? _ref5.code : void 0 : void 0) && token) {
-        userInfo = await broker.call('qywx.getUserInfo', {accessToken: token, code: req.query.code})
+        userInfo = await broker.call('qywx.getUserInfo', { accessToken: token, code: req.query.code })
     } else {
         res.writeHead(200, {
             'Content-Type': 'text/html'
@@ -85,10 +85,10 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         return res.end('');
     }
 
-    user = await broker.call('qywx.getSpaceUser', {spaceId: space._id, userInfo: userInfo})
+    user = await broker.call('qywx.getSpaceUser', { spaceId: space._id, userInfo: userInfo })
 
-    if (userInfo.user_ticket){
-        qywxUser = await broker.call('qywx.getUserDetail', {accessToken: token, userTicket: userInfo.user_ticket})
+    if (userInfo.user_ticket) {
+        qywxUser = await broker.call('qywx.getUserDetail', { accessToken: token, userTicket: userInfo.user_ticket })
     }
 
     // 默认工作区
@@ -140,20 +140,20 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         // res.write('<h1>提示 Tips</h1>');
         // res.write('<h2>请联系管理员配置企业微信工作区ID和用户ID...</h2>');
         return res.end('');
-    }else{
-        if (qywxUser){
+    } else {
+        if (qywxUser) {
             // 同步更新手机号
             let qywxMobile = qywxUser.mobile;
             let userMobile = user.mobile || "";
-            if((qywxMobile != userMobile) && (qywxMobile != "")){
-                await broker.call('qywx.updateUserMobile', {userId: user._id, mobile: qywxUser.mobile});
+            if ((qywxMobile != userMobile) && (qywxMobile != "")) {
+                await broker.call('qywx.updateUserMobile', { userId: user._id, mobile: qywxUser.mobile });
             }
 
             // 同步更新邮箱
             let qywxEmail = qywxUser.email;
             let userEmail = user.email || "";
-            if((qywxEmail != userEmail) && (qywxEmail != "")){
-                await broker.call('qywx.updateUserEmail', {userId: user._id, email: qywxUser.email});
+            if ((qywxEmail != userEmail) && (qywxEmail != "")) {
+                await broker.call('qywx.updateUserEmail', { userId: user._id, email: qywxUser.email });
             }
 
         }
@@ -170,6 +170,9 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
             }
         }
         let stampedAuthToken = auth.generateStampedLoginToken();
+
+        console.log("========>req", req);
+        console.log("========res", res);
         authtToken = stampedAuthToken.token;
         hashedToken = auth.hashStampedToken(stampedAuthToken);
         await auth.insertHashedLoginToken(user.user, hashedToken);
@@ -186,10 +189,10 @@ router.get("/api/qiyeweixin/sso_steedos", async function (req, res, next) {
     o = ServiceConfiguration.configurations.findOne({
         service: "qiyeweixin"
     });
-    at = await broker.call('qywx.getProviderToken', {corpId: o != null ? (_ref5 = o.secret) != null ? _ref5.corpid : void 0 : void 0, providerSecret: o != null ? (_ref6 = o.secret) != null ? _ref6.provider_secret : void 0 : void 0})
+    at = await broker.call('qywx.getProviderToken', { corpId: o != null ? (_ref5 = o.secret) != null ? _ref5.corpid : void 0 : void 0, providerSecret: o != null ? (_ref6 = o.secret) != null ? _ref6.provider_secret : void 0 : void 0 })
     if (at && at.provider_access_token) {
         console.log("at.provider_access_token: ", at.provider_access_token);
-        loginInfo = await broker.call('qywx.getLoginInfo', {accessToken: at.provider_access_token, authCode: req.query.auth_code})
+        loginInfo = await broker.call('qywx.getLoginInfo', { accessToken: at.provider_access_token, authCode: req.query.auth_code })
         if (loginInfo != null ? (_ref7 = loginInfo.user_info) != null ? _ref7.userid : void 0 : void 0) {
             console.log("loginInfo.user_info.userid: ", loginInfo.user_info.userid);
             user = db.space_users.findOne({
@@ -304,13 +307,13 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     // console.log(data)
     console.log(data.UserID)
     if (data.ChangeType == "create_user" || data.ChangeType == "update_user") {
-        await broker.call('qywx.userinfoPush', {userId: data.UserID})
+        await broker.call('qywx.userinfoPush', { userId: data.UserID })
     } else if (data.ChangeType == "create_party" || data.ChangeType == "update_party") {
-        await broker.call('qywx.deptinfoPush', {deptId: data.Id, name: data.name, parentId: data.ParentId})
+        await broker.call('qywx.deptinfoPush', { deptId: data.Id, name: data.name, parentId: data.ParentId })
     } else if (data.ChangeType == "delete_user") {
-        await broker.call('qywx.userinfoPush', {userId: data.UserID, status: 2})
+        await broker.call('qywx.userinfoPush', { userId: data.UserID, status: 2 })
     } else if (data.ChangeType == "delete_party") {
-        await broker.call('qywx.deptinfoPush', {deptId: data.Id, name: "", parentId: "", status: 2})
+        await broker.call('qywx.deptinfoPush', { deptId: data.Id, name: "", parentId: "", status: 2 })
     }
 
 
@@ -319,6 +322,7 @@ router.post('/api/qiyeweixin/listen', xmlparser({ trim: false, explicitArray: fa
     res.end();
 
 })
+
 
 // 同步企业微信id
 router.get('/api/sync/qywxId', async function (req, res) {
@@ -329,7 +333,7 @@ router.get('/api/sync/qywxId', async function (req, res) {
         return;
 
     let spaceUsers = await broker.call('qywx.getSpaceUsers', { corpId: space._id })
-    let response = await broker.call('qywx.getToken', { corpId: space.qywx_corp_id,secret: space.qywx_secret })
+    let response = await broker.call('qywx.getToken', { corpId: space.qywx_corp_id, secret: space.qywx_secret })
     let access_token = response.access_token;
 
     qywxSync.write("================同步企业微信id开始===================")
@@ -340,7 +344,7 @@ router.get('/api/sync/qywxId', async function (req, res) {
     for (let ui = 0; ui < spaceUsers.length; ui++) {
         if (!spaceUsers[ui].mobile)
             continue;
-        
+
         let data = {
             "mobile": spaceUsers[ui].mobile
         }
@@ -369,7 +373,8 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
     // 配置企业微信第三方应用验证参数
     var AES_KEY = process.env.STEEDOS_QYWX_SAAS_ENCODINGAESKEY || "";
     var TOKEN = process.env.STEEDOS_QYWX_SAAS_TOKEN || "";
-    var SUITEID = process.env.STEEDOS_QYWX_SAAS_SUITEID || "";
+    var suite_id = process.env.STEEDOS_QYWX_SAAS_SUITEID || "";
+    var suite_secret = process.env.STEEDOS_QYWX_SAAS_SUITE_SECRET || "";
 
     var signature = query['msg_signature'];
     var timeStamp = query['timestamp'];
@@ -378,7 +383,7 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
 
     var token = TOKEN;
     var aesKey = AES_KEY;
-    var suiteKey = SUITEID;
+    var suiteKey = suite_id;
 
     data = await broker.call('qywx.decrypt', {
         signature: signature,
@@ -389,7 +394,11 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
         aesKey: aesKey,
         encrypt: encrypt
     });
+
+    console.log("data: ", data);
     var message = await parseXML(data.data);
+
+    console.log("message: ", message);
 
     if (!message.InfoType){
         if (message.Event == "enter_agent"){
@@ -402,31 +411,133 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
     }else{
         switch (message != null ? message.InfoType : void 0) {
             case 'suite_ticket':
-                // SuiteTicket(message);
+                await broker.call('@steedos/plugin-qywx.storeSuiteTicket', {suite_id, suite_secret, message});
                 res.writeHead(200, {
                     "Content-Type": "text/plain"
                 });
                 return res.end("success");
             case 'create_auth':
+                console.log("message create-auth ",message);
+                
                 res.writeHead(200, {
                     "Content-Type": "text/plain"
                 });
                 res.end("success");
-                // return CreateAuth(message);
-            case 'cancel_auth':
-                res.writeHead(200, {
-                    "Content-Type": "text/plain"
-                });
-                res.end(result != null ? result.message : void 0);
-                // return CancelAuth(message);
+                return await broker.call('@steedos/plugin-qywx.InitializeSpace', { "auth_code": message.AuthCode});
+            case 'batch_job_result':
+                let corpid = message.ServiceCorpId;
+                let provider_secret = process.env.STEEDOS_QYWX_SAAS_PROVIDER_SECRET;
+                let batchJob = message.BatchJob;
+                // await broker.call('@steedos/plugin-qywx.contactIdTranslate', { "corpid": message.AuthCode});
+                
+                let providerTokenInfo = await broker.call('@steedos/plugin-qywx.getProviderToken', {
+                    "corpid": corpid,
+                    "provider_secret": provider_secret
+                }); 
+                let getResultInfo = await broker.call('@steedos/plugin-qywx.getResult', {
+                        "provider_access_token": providerTokenInfo.provider_access_token,
+                        "jobid": batchJob.JobId
+                    });
+                
+                console.log("getResultInfo: ",getResultInfo);
+                if (getResultInfo.contact_id_translate.url){
+                    console.log("update spaces-----")
+                    let space = await broker.call('objectql.find',{objectName: 'spaces', query: {filters: [["qywx_corp_id", "=",message.AuthCorpId]]}});
+                    console.log("find space: ",space[0]);
+                    await broker.call('objectql.directUpdate', {objectName: "spaces", id: space[0]._id, doc: {"qywx_contact_id_translate_url": getResultInfo.contact_id_translate.url}})
+                    
+                }
+                res.end("success");
+                return;
+            // case 'cancel_auth':
+            //     res.writeHead(200, {
+            //         "Content-Type": "text/plain"
+            //     });
+            //     res.end(result != null ? result.message : void 0);
+            //     return CancelAuth(message);
             // case 'change_auth':
             //     return ChangeContact(message.AuthCorpId);
-            // case 'change_contact':
-            //     return ChangeContact(message.AuthCorpId);
-            
+            case 'change_contact':
+                await broker.call('@steedos/plugin-qywx.changeContact', { "message": message });
+                res.end("success");
+                return;
         }
     }
 });
+
+
+// 企业微信第三方应用单点登录
+router.get('/api/qiyeweixin/feikongwang/auth_login', async function (req, res, next) {
+    const broker = objectql.getSteedosSchema().broker;
+    var { code,state } = req.query;
+    console.log("企业微信第三方应用单点登录",req.query)
+    let suite_id = process.env.STEEDOS_QYWX_SAAS_SUITEID;
+    let suite_secret = process.env.STEEDOS_QYWX_SAAS_SUITE_SECRET;
+
+    // getconfigurations
+    const configurations = await broker.call('@steedos/plugin-qywx.getConfigurations', {
+        "_id": suite_id
+    });
+
+    console.log("configurations", configurations)
+    let suite_ticket = configurations.suite_ticket;
+    // const auth_code = configurations.auth_code;
+    // 获取第三方应用凭证
+    const suiteAccessToken = await broker.call('@steedos/plugin-qywx.getSuiteAccessToken', {
+        "suite_id": suite_id,
+        "suite_secret": suite_secret,
+        "suite_ticket": suite_ticket
+    });
+    console.log("第三方应用凭证===1", suiteAccessToken)
+    // 获取访问用户身份
+    const userData = await broker.call('@steedos/plugin-qywx.getUserInfo3rd', {
+        "code": code,
+        "suite_access_token": suiteAccessToken.suite_access_token
+    });
+    console.log("===userData", userData);
+    // 获取访问用户敏感信息
+    const userDetailData = await broker.call('@steedos/plugin-qywx.getUserDetailInfo3rd', {
+        "suite_access_token": suiteAccessToken.suite_access_token,
+        "user_ticket": userData.user_ticket
+    });
+    console.log("访问用户敏感信息", userDetailData);
+
+
+    // 创建人员信息
+    const userInfo = await broker.call('@steedos/plugin-qywx.createSpaceUser', {
+        "user": userDetailData
+    });
+    console.log("userInfo======", userInfo);
+
+    //let redirect_url = process.env.ROOT_URL
+    // 
+    // 设置cookies,重定向
+    let stampedAuthToken = auth.generateStampedLoginToken();
+    let authtToken = stampedAuthToken.token;
+    let hashedToken = auth.hashStampedToken(stampedAuthToken);
+    await auth.insertHashedLoginToken(userInfo.userId, hashedToken);
+    auth.setAuthCookies(req, res, userInfo.userId, authtToken, userInfo.spaceId);
+    res.setHeader('X-Space-Token', userInfo.spaceId + ',' + authtToken);
+    res.redirect(302, state || '/');
+    return res.end('');
+})
+
+
+
+
+module.exports = {
+    rest: {
+        method: "POST",
+        fullPath: "/api/qiyeweixin/tofkw/auth_login",
+        authorization: false,
+        authentication: false
+    },
+    async handler(ctx) {
+        const { name } = ctx.params;
+        console.log("===name", name)
+
+    }
+}
 
 let getAbsoluteUrl = function (url) {
     var rootUrl;
@@ -462,7 +573,7 @@ destroyToken = async function (userId, loginToken) {
         let user = await steedosSchema.getObject('users').findOne(userId);
         let tokens = user.services.resume.loginTokens;
         tokens.splice(tokens.findIndex(e => e.hashedToken === loginToken), 1)
-        await steedosSchema.getObject('users').update(userId,{"services.resume.loginTokens": tokens});
+        await steedosSchema.getObject('users').update(userId, { "services.resume.loginTokens": tokens });
     } catch (error) {
         console.error(error);
         console.log("Failed to destroyToken with error: " + error);
