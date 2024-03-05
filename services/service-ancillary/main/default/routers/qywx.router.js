@@ -395,10 +395,10 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
         encrypt: encrypt
     });
 
-    console.log("data: ", data);
+    // console.log("data: ", data);
     var message = await parseXML(data.data);
 
-    console.log("message: ", message);
+    // console.log("message: ", message);
 
     if (!message.InfoType){
         if (message.Event == "enter_agent"){
