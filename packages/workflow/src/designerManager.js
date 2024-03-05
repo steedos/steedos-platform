@@ -586,7 +586,7 @@ async function _transformObjectFieldToFormField(objField, codePrefix = '') {
 /**
  * @param fields
  *      [{
- *          field_name 字段名
+ *          name 字段名
  *          is_required 是否必填
  *      }]
  * @param objFieldsMap {} 对象字段
@@ -625,8 +625,22 @@ function getObjectFieldsByNames(fieldNames = [], objFieldsMap = {}) {
 }
 
 /**
+ * 只取必要的字段
+ * @param {*} fields 
+ * @returns 
+ */
+function getNeededFields(fields) {
+    return {
+        name: fields.name,
+        label: fields.label,
+        required: fields.required
+    }
+}
+
+/**
  * 剔除掉系统字段，base对象的字段？
  * @param {*} objectName 
+ * @returns []
  */
 async function getBusinessFields(objectName) {
     if (!objectName) {
@@ -639,7 +653,7 @@ async function getBusinessFields(objectName) {
         if (Object.hasOwnProperty.call(objFields, key)) {
             let f = objFields[key]
             if (f && !baseFields[key]) {
-                instanceFields.push(f)
+                instanceFields.push(getNeededFields(f))
             }
         }
     }
