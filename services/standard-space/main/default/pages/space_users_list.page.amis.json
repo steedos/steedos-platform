@@ -78,6 +78,7 @@
                                     "labelClassName": "",
                                     "staticClassName": "",
                                     "originPosition": "left-top",
+                                    "virtualThreshold": 10000,
                                     "style": {
                                         "min-height": "500px",
                                         "max-height": "100%",
