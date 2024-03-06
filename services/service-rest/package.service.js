@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-02 13:54:33
+ * @LastEditTime: 2024-03-04 12:01:04
  * @Description: 
  */
 "use strict";
@@ -55,6 +55,7 @@ module.exports = {
          * @apiParam {String} objectName 对象API Name，如：contracts
          * @apiQuery {String} [fields] 字段名，如：'["name", "description"]'
          * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]'
+         * @apiQuery {String} [expandFields] 字段名，如：'{owner: {fields: ["name"], uiFields: ["owner"], expandFields: ...}}'
          * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
          * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
          * @apiQuery {String} [skip] 跳过条数，如：'10'
