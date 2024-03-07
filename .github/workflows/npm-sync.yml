@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-      # checkout branch 2.6
-      - name: Checkout branch 2.6
+      # checkout branch 2.7
+      - name: Checkout branch 2.7
         uses: actions/checkout@v2
         with: 
-          ref: '2.6'
+          ref: '2.7'
 
       - run: yarn --frozen-lockfile
 
