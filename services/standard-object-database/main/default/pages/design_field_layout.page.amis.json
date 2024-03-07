@@ -39,7 +39,7 @@
                               "body": [
                                 {
                                   "type": "steedos-input-table",
-                                  "inlineEditMode": true,
+                                  "enableDialog": false,
                                   "fields": [
                                     {
                                       "name": "group_name",
@@ -62,8 +62,7 @@
                                   ],
                                   "columns": [
                                     {
-                                      "name": "group_name",
-                                      "inlineEditMode": false
+                                      "name": "group_name"
                                     },
                                     "visible_on",
                                     {
@@ -76,7 +75,6 @@
                                   "editable": true,
                                   "removable": true,
                                   "draggable": false,
-                                  "showIndex": false,
                                   "id": "u:776ec89804c0",
                                   "label": ""
                                 }
