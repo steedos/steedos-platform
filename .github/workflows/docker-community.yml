@@ -17,8 +17,13 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
-        with:
+      # - name: Checkout branch 2.7
+      #   uses: actions/checkout@v2
+      #   with: 
+      #     ref: '2.7'
+      - name: Checkout branch 2.6
+        uses: actions/checkout@v2
+        with: 
           ref: '2.6'
 
       - name: Set Current Version
