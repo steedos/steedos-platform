@@ -1,0 +1,6 @@
+name: hanweb_pid
+label: Hanweb PId
+type: text
+hidden: false
+sort_no: 400
+group: 微联叮

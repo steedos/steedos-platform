@@ -1,0 +1,6 @@
+name: hanweb_iid
+label: Hanweb Id
+type: text
+hidden: false
+sort_no: 400
+group: 微联叮
