@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-09-20 16:10:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-08 16:50:58
  * @Description: 
  */
 "use strict";
@@ -14,6 +14,9 @@ const { MongoClient } = require('mongodb');
 const _ = require('lodash')
 
 const triggers = require('./src/triggers')
+
+const methods = require('./src/methods');
+const actions = require('./src/actions')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -43,6 +46,7 @@ module.exports = {
      */
     actions: {
         ...triggers,
+        ...actions
     },
 
     /**
@@ -155,7 +159,7 @@ module.exports = {
      * Methods
      */
     methods: {
-
+        ...methods
     },
 
     /**
