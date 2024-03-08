@@ -1,6 +1,6 @@
 {
   "name": "@steedos/service-plugin-amis",
-  "version": "2.6.8-beta.23",
+  "version": "2.6.8-beta.24",
   "main": "package.service.js",
   "scripts": {
     "build": "yarn build:tailwind-base && yarn build:tailwind",
@@ -13,7 +13,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5447603f901c76a80947dc0b549ed624241e28bd",
+  "gitHead": "037037db13280c61644e942bafa8edb799dd9e0d",
   "devDependencies": {
     "tailwindcss": "3.2.4"
   }
