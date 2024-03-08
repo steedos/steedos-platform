@@ -45,18 +45,27 @@
                                       "name": "group_name",
                                       "label": "名称",
                                       "type": "text",
+                                      "amis": {
+                                        "disabledOn": "${is_default || is_hidden}"
+                                      },
                                       "id": "u:31952daa443c"
                                     },
                                     {
                                       "name": "visible_on",
                                       "label": "显示条件",
                                       "type": "text",
+                                      "amis": {
+                                        "disabledOn": "${is_default || is_hidden}"
+                                      },
                                       "id": "u:8d7551abcd28",
                                       "value": null
                                     },
                                     {
                                       "name": "collapsed",
                                       "label": "默认折叠",
+                                      "amis": {
+                                        "disabledOn": "${is_default || is_hidden}"
+                                      },
                                       "type": "boolean"
                                     }
                                   ],
@@ -64,7 +73,9 @@
                                     {
                                       "name": "group_name"
                                     },
-                                    "visible_on",
+                                    {
+                                      "name": "visible_on"
+                                    },
                                     {
                                       "name": "collapsed",
                                       "width": 50
