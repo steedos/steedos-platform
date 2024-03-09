@@ -20,7 +20,7 @@ process.env.STEEDOS_UNPKG_URL =  process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "
 
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.6';
+	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.7';
 }
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
@@ -33,7 +33,7 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
 if(_.isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
-	process.env.STEEDOS_WIDGETS_VERSION = '3.6.4';
+	process.env.STEEDOS_WIDGETS_VERSION = '3.6.6';
 }
 
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
