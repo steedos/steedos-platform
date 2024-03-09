@@ -1,6 +1,6 @@
 {
   "name": "steedos-cli",
-  "version": "2.6.8-beta.18",
+  "version": "2.7.0-beta.1",
   "description": "Develop and run your enterprise apps in miniutes",
   "main": "dist/index.js",
   "scripts": {
@@ -38,8 +38,8 @@
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.8.3",
     "@oclif/plugin-help": "^5.1.12",
-    "@steedos/metadata-core": "2.6.8-beta.18",
-    "@steedos/metadata-registrar": "2.6.8-beta.18",
+    "@steedos/metadata-core": "2.7.0-beta.1",
+    "@steedos/metadata-registrar": "2.7.0-beta.1",
     "archiver": "^5.0.2",
     "chalk": "2.4.2",
     "change-case": "^3.1.0",
@@ -82,5 +82,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "97ae066b3b40dd4d61b7122ce8d99cff67756e9c"
+  "gitHead": "529efb7f06c4454d4351500c6e47bd7b7602f64d"
 }
