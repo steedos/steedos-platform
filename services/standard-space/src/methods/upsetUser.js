@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2024-03-08 16:29:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-10 15:07:37
+ * @Description: 
+ */
 const _ = require('lodash');
 
 module.exports = {
@@ -10,7 +17,10 @@ module.exports = {
                 modified: new Date()
             }, user))
         }else{
-            const users2 = await userObj.find({filters: ['username', '=', user.loginName]});
+            let users2 = [];
+            if(user.username){
+                users2 = await userObj.find({filters: ['username', '=', user.username]});
+            }
             if(users2.length > 0){
                 await userObj.directUpdate(users2[0]._id, Object.assign({
                     modified_by: spaceInfo.owner,
