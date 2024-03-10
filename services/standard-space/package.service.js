@@ -2,13 +2,14 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 13:17:06
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-08 16:50:58
+ * @LastEditTime: 2024-03-10 10:47:40
  * @Description: 
  */
 "use strict";
 const project = require('./package.json');
 const packageName = project.name;
 const packageLoader = require('@steedos/service-meteor-package-loader');
+const objectMixin = require('@steedos/service-object-mixin')
 const objectql = require('@steedos/objectql');
 const { MongoClient } = require('mongodb');
 const _ = require('lodash')
@@ -24,7 +25,7 @@ const actions = require('./src/actions')
 module.exports = {
     name: packageName,
     namespace: "steedos",
-    mixins: [packageLoader],
+    mixins: [packageLoader, objectMixin],
     /**
      * Settings
      */
@@ -158,9 +159,7 @@ module.exports = {
     /**
      * Methods
      */
-    methods: {
-        ...methods
-    },
+    methods: methods,
 
     /**
      * Service created lifecycle event handler
