@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-permission",
-    "version": "2.6.8-beta.29",
+    "version": "2.6.8-beta.30",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "d7b26b4e78700862389abb5865966929a5beaa20"
+    "gitHead": "ab990190442cdaa29b8b862517f6273216cd8b3e"
 }
