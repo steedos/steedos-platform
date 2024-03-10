@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-10 14:28:36
+ * @LastEditTime: 2024-03-10 15:34:58
  * @Description: 
  */
 "use strict";
@@ -411,7 +411,7 @@ module.exports = {
         getLog: {
             handler: function () {
                 return {
-                    debug: async function(message, details){
+                    debug: async (message, details)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'debug',
                             'name': message,
@@ -419,7 +419,7 @@ module.exports = {
                             'node_id': this.broker.nodeID
                         })
                     },
-                    info: async function(message, details){
+                    info: async (message, details)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'info',
                             'name': message,
@@ -427,7 +427,7 @@ module.exports = {
                             'node_id': this.broker.nodeID
                         })
                     },
-                    warn: async function(message, details){
+                    warn: async (message, details)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'warn',
                             'name': message,
@@ -435,7 +435,7 @@ module.exports = {
                             'node_id': this.broker.nodeID
                         })
                     }, 
-                    error: async function(message, details){
+                    error: async (message, details)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'error',
                             'name': message,
