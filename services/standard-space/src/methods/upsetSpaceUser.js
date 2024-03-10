@@ -39,7 +39,10 @@ module.exports = {
                 modified: new Date()
             }, spaceUser))
         }else{
-            const sUser2 = await spaceUsersObj.find({filters: ['username', '=', spaceUser.username]});
+            let sUser2 = []
+            if(spaceUser.username){
+                sUser2 = await spaceUsersObj.find({filters: ['username', '=', spaceUser.username]});
+            }
             if(sUser2.length > 0){
                 await spaceUsersObj.directUpdate(sUser2[0]._id, Object.assign({
                     organization,
