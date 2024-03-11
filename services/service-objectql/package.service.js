@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-27 15:21:53
+ * @LastEditTime: 2024-03-11 14:28:56
  * @Description: 
  */
 "use strict";
@@ -629,6 +629,9 @@ module.exports = {
             return doc;
         },
         getPrimarySpaceId: async function () {
+            if(this.primarySpaceId){
+                return this.primarySpaceId;
+            }
             const steedosConfig = objectql.getSteedosConfig();
             let spaceId;
             if (steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id) {
@@ -646,7 +649,8 @@ module.exports = {
                     }
                 }
             }
-            return spaceId
+            this.primarySpaceId = spaceId
+            return this.primarySpaceId
         }
     },
 

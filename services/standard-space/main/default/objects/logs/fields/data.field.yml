@@ -1,5 +1,5 @@
-name: details
+name: data
 type: code
-language: ini
+language: json
 is_wide: true
 sort_no: 200
