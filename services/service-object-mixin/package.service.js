@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-10 15:34:58
+ * @LastEditTime: 2024-03-11 14:49:35
  * @Description: 
  */
 "use strict";
@@ -408,39 +408,53 @@ module.exports = {
                 return await this.broker.call("objectql.makeNewID")
             }
         },
-        getLog: {
-            handler: function () {
+        getLogger: {
+            handler: async function (meta = {}) {
+                if(!meta.space){
+                    if(!this.primarySpaceId){
+                        this.primarySpaceId = await this.broker.call("objectql.getPrimarySpaceId");
+                    }
+                    meta.space = this.primarySpaceId;
+                }
                 return {
-                    debug: async (message, details)=>{
+                    debug: async (message, data)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'debug',
                             'name': message,
-                            'details': details,
-                            'node_id': this.broker.nodeID
+                            'data': data,
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
                         })
                     },
-                    info: async (message, details)=>{
+                    info: async (message, data)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'info',
                             'name': message,
-                            'details': details,
-                            'node_id': this.broker.nodeID
+                            'data': data,
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
                         })
                     },
-                    warn: async (message, details)=>{
+                    warn: async (message, data)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'warn',
                             'name': message,
-                            'details': details,
-                            'node_id': this.broker.nodeID
+                            'data': data,
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
                         })
                     }, 
-                    error: async (message, details)=>{
+                    error: async (message, data)=>{
                         return await this.getObject('logs').directInsert({
                             'level': 'error',
                             'name': message,
-                            'details': details,
-                            'node_id': this.broker.nodeID
+                            'data': data,
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
                         })
                     }
                 }
