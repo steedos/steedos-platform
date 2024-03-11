@@ -1,14 +1,16 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-02-05 09:49:10
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-05 16:32:39
  * @Description: 
  */
 'use strict';
 // @ts-check
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql')
+
+const DISABLE_DIRECT = process.env.STEEDOS_INSTANCE_TASKS_DISABLE_DIRECT == true || process.env.STEEDOS_INSTANCE_TASKS_DISABLE_DIRECT == 'true';
 
 function _insert(taskDoc) {
     const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
@@ -82,8 +84,10 @@ function _count(query) {
  */
 function insert_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    const newTaskDoc = _directInsert(taskDoc)
-    return newTaskDoc
+    if(DISABLE_DIRECT){
+        return _insert(taskDoc)
+    }
+    return _directInsert(taskDoc)
 }
 
 /**
@@ -201,8 +205,13 @@ function remove_instance_tasks_by_instance_id(insId) {
 function direct_remove_many_instance_tasks(approveIds) {
     const results = []
     for (const aId of approveIds) {
-        const r = _directRemove(aId)
-        results.push(r)
+        if(DISABLE_DIRECT){
+            const r = _remove(aId)
+            results.push(r)
+        }else{
+            const r = _directRemove(aId)
+            results.push(r)
+        }
     }
     return results
 }

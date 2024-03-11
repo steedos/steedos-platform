@@ -1,7 +1,7 @@
 {
   "name": "@steedos/plugin-company",
   "private": false,
-  "version": "2.6.8-beta.16",
+  "version": "2.7.0-beta.1",
   "description": "Enterprise plugin for steedos",
   "main": "index.js",
   "repository": {
@@ -17,5 +17,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "36f71bb96a08f8ef36a5751a11f849e6d8f78c70"
+  "gitHead": "529efb7f06c4454d4351500c6e47bd7b7602f64d"
 }

@@ -1,0 +1,308 @@
+{
+    "type": "service",
+    "body": [
+        {
+            "type": "steedos-object-form",
+            "label": "对象权限表单",
+            "objectApiName": "permission_objects",
+            "recordId": "${recordId}",
+            "className": "",
+            "mode": "edit",
+            "layout": "horizontal",
+            "form": {
+                "id": "steedos_permission_objects_form"
+            },
+            "id": "u:4744b581e12d",
+            "fieldsExtend": {
+                "allowRead": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowRead",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowCreate": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowCreate",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowEdit": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowEdit",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowDelete": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowDelete",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "viewAllRecords": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "viewAllRecords",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "modifyAllRecords": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "modifyAllRecords",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "viewCompanyRecords": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "viewCompanyRecords",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "modifyCompanyRecords": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "modifyCompanyRecords",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowReadFiles": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowReadFiles",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowEditFiles": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowEditFiles",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "allowDeleteFiles": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "allowDeleteFiles",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "viewAllFiles": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "viewAllFiles",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                },
+                "modifyAllFiles": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "broadcast",
+                                        "args": {
+                                            "eventName": "@permission.changed"
+                                        },
+                                        "data": {
+                                            "changedFieldName": "modifyAllFiles",
+                                            "changedFieldValue": "${event.data.value}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:10a427822d39"
+                    }
+                }
+            }
+        }
+    ],
+    "data": {
+        "context": {}
+    },
+    "name": "permission_objects_form",
+    "id": "u:bb11df394baf",
+    "onEvent": {
+        "@permission.changed": {
+            "actions": [
+                {
+                    "actionType": "custom",
+                    "script": "var changedFieldName = event.data.changedFieldName;\nvar changedFieldValue = event.data.changedFieldValue;\nvar resultData = {};\nswitch (changedFieldName) {\n  case \"allowRead\":\n    if (!changedFieldValue) {\n      resultData = {\n        allowCreate: false,\n        allowEdit: false,\n        allowDelete: false,\n        viewCompanyRecords: false,\n        modifyCompanyRecords: false,\n        modifyAllRecords: false,\n        viewAllRecords: false\n      };\n    }\n    break;\n  case \"allowCreate\":\n    if (changedFieldValue) {\n      resultData['allowRead'] = true;\n    }\n    break;\n  case \"allowEdit\":\n    if (changedFieldValue) {\n      resultData['allowRead'] = true;\n    } else {\n      resultData['modifyAllRecords'] = false;\n      resultData['modifyCompanyRecords'] = false;\n      resultData['allowDelete'] = false;\n    }\n    break;\n  case \"allowDelete\":\n    if (changedFieldValue) {\n      resultData['allowEdit'] = true;\n      resultData['allowRead'] = true;\n    } \n    break;\n  case \"viewAllRecords\":\n    if (changedFieldValue) {\n      resultData['allowRead'] = true;\n    } else {\n      resultData['modifyAllRecords'] = false;\n    }\n    break;\n  case \"modifyAllRecords\":\n    if (changedFieldValue) {\n      resultData = {\n        allowRead: true,\n        allowEdit: true,\n        allowDelete: true,\n        viewAllRecords: true\n      };\n    } \n    break;\n  case \"viewCompanyRecords\":\n    if (changedFieldValue) {\n      resultData['allowRead'] = true;\n    } else {\n      resultData['modifyCompanyRecords'] = false;\n      resultData['viewAllRecords'] = false;\n      resultData['modifyAllRecords'] = false;\n    }\n    break;\n  case \"modifyCompanyRecords\":\n    if (changedFieldValue) {\n      resultData = {\n        allowRead: true,\n        allowEdit: true,\n        allowDelete: true,\n        viewCompanyRecords: true\n      };\n    } else {\n        resultData['modifyAllRecords'] = false;\n    }\n    break;\n  case \"allowReadFiles\":\n    if (!changedFieldValue) {\n      resultData = {\n        modifyAllFiles: false,\n        viewAllFiles: false,\n        allowCreateFiles: false,\n        allowEditFiles: false,\n        allowDeleteFiles: false\n      };\n    }\n    break;\n  case \"allowCreateFiles\":\n    if (changedFieldValue) {\n      resultData['allowReadFiles'] = true;\n    }\n    break;\n  case \"allowEditFiles\":\n    if (changedFieldValue) {\n      resultData['allowReadFiles'] = true;\n    } else {\n      resultData['modifyAllFiles'] = false;\n      resultData['allowDeleteFiles'] = false;\n    }\n    break;\n  case \"allowDeleteFiles\":\n    if (changedFieldValue) {\n      resultData['allowEditFiles'] = true;\n      resultData['allowReadFiles'] = true;\n    } \n    break;\n  case \"viewAllFiles\":\n    if (changedFieldValue) {\n      resultData['allowReadFiles'] = true;\n    } else {\n      resultData['modifyAllFiles'] = false;\n    }\n    break;\n  case \"modifyAllFiles\":\n    if (changedFieldValue) {\n      resultData = {\n        allowReadFiles: true,\n        allowEditFiles: true,\n        allowDeleteFiles: true,\n        viewAllFiles: true,\n      };\n    } \n    break;\n}  \n\ndoAction({\n  \"componentId\": \"steedos_permission_objects_form\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n      \"value\": resultData\n  }\n});"
+                }
+            ]
+        }
+    }
+}
