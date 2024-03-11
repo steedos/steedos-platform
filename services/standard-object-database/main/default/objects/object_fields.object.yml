@@ -525,7 +525,6 @@ fields:
     sort_no: 280
     amis:
       enableDialog: false
-      disabledOn: "${is_system == true}"
   auto_fill_mapping.$:
     label: Auto Fill Mapping
     blackbox: true
@@ -557,6 +556,7 @@ fields:
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function (filters, values) {
         //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
+        debugger;
         var fieldFilters = {
             "text": ["text", "textarea"],
             "textarea": ["text", "textarea"],
@@ -571,7 +571,7 @@ fields:
         };
         var currentFilter = [];
         var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
-        var fromField = referenceObject && referenceObject.fields[values.auto_fill_mapping__from];
+        var fromField = referenceObject && referenceObject.fields[values.from || values.auto_fill_mapping__from];
 
         if (fromField && fromField.data_type) {
             currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
