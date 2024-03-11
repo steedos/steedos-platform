@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-04 12:01:04
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-11 09:55:41
  * @Description: 
  */
 "use strict";
@@ -54,7 +54,7 @@ module.exports = {
          * @apiGroup @steedos/service-rest
          * @apiParam {String} objectName 对象API Name，如：contracts
          * @apiQuery {String} [fields] 字段名，如：'["name", "description"]'
-         * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]'
+         * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]',此参数中的字段要求在参数fields中存在
          * @apiQuery {String} [expandFields] 字段名，如：'{owner: {fields: ["name"], uiFields: ["owner"], expandFields: ...}}'
          * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
          * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
@@ -94,6 +94,7 @@ module.exports = {
                 objectName: { type: "string" },
                 fields: { type: 'string', optional: true },
                 uiFields: { type: 'string', optional: true },
+                expandFields: { type: 'string', optional: true },
                 filters: { type: 'string', optional: true },
                 top: { type: 'string', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'string', optional: true },
@@ -107,6 +108,11 @@ module.exports = {
                 let uiFields = [];
                 if(params.uiFields){
                     uiFields = JSON.parse(params.uiFields)
+                }
+
+                let expandFields = [];
+                if(params.expandFields){
+                    expandFields = JSON.parse(params.expandFields)
                 }
 
                 const query = {}
@@ -145,7 +151,7 @@ module.exports = {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "items": await translateRecords(records, objectName, fields, uiFields, userSession),
+                        "items": await translateRecords(records, objectName, fields, uiFields, expandFields, userSession),
                         "total": totalCount
                     }
                 }

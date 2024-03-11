@@ -1,14 +1,17 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-02 14:23:07
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-11 17:26:30
  * @Description: 
  */
 const _ = require('lodash')
 
 const { getSteedosSchema, getUserLocale, absoluteUrl } = require("@steedos/objectql");
 const { translationObject } = require("@steedos/i18n")
+
+const EXPAND_SUFFIX = '__expand';
+const UI_PREFIX = '_ui';
 
 function getTranslatedFieldConfig(translatedObject, name) {
     return translatedObject.fields[name.replace(/__label$/, "")];
@@ -332,17 +335,102 @@ async function translateRecordToUI(record, objectName, selectorFieldNames, userS
     return uiDoc;
 }
 
-module.exports = {
-    translateRecords: async (records, objectName, fields, uiFields, userSession)=>{
-        if(_.isEmpty(uiFields)){
-            return records;
-        }else{
-            const resRecords= [];
-            for(const record of records){
-                record._ui = await translateRecordToUI(record, objectName, uiFields, userSession);
-                resRecords.push(record);
+async function translateRecordToExpand(record, objectName, expandFields, userSession) {
+    let steedosSchema = getSteedosSchema();
+    let object = steedosSchema.getObject(objectName);
+    let objConfig = await object.toConfig();
+    let fields = objConfig.fields;
+
+    async function _translateToExpand(record, expandFields, parentRecord) {
+        let expandObj = {};
+        for (const fieldName in expandFields) {
+            const expandField = expandFields[fieldName];
+            console.log(expandField, fieldName);
+            const expandFieldFields = expandField.fields || [];
+            const expandFieldUiFields = expandField.uiFields;
+            const expandFieldExpandFields = expandField.expandFields;
+            if(expandFieldFields.length === 0){
+                continue;
             }
-            return resRecords;
-        }
+
+            if (Object.prototype.hasOwnProperty.call(fields, fieldName) && expandFieldFields.length > 0) {
+                const field = fields[fieldName];
+                try {
+                    if (field && _.has(record, fieldName)) {
+                        let isLookup = (field.type == "lookup" || field.type == "master_detail") &&
+                            field.reference_to && _.isString(field.reference_to);
+                        let isFile = field.type == "image" || field.type == "file";
+                        if (isLookup || isFile){
+                            let refTo = field.reference_to;
+                            let refField = field.reference_to_field || '_id';
+                            if (isFile) {
+                                // TODO: cfs_images_filerecord对象不存在，需要额外处理
+                                refTo = field.type == "image" ? "cfs_images_filerecord" : "cfs_files_filerecord";
+                            }
+
+                            let refValue = record[fieldName];
+                            if (!refValue) {
+                                continue;
+                            }
+                            let refObj = steedosSchema.getObject(refTo);
+                            let refFilters = null;
+
+                            if (field.multiple) {
+                                refFilters = [refField, "in", refValue]
+                            } else {
+                                refFilters = [refField, "=", refValue]
+                            }
+
+                            let refRecords = await refObj.find({
+                                filters: refFilters,
+                                fields: expandFieldFields,
+                            });
+                            let translatedRecords = await translateRecords(refRecords, refTo, expandFieldFields, expandFieldUiFields, expandFieldExpandFields, userSession);
+                            if(field.multiple){
+                                expandObj[fieldName + EXPAND_SUFFIX] = translatedRecords;
+                            }
+                            else{
+                                expandObj[fieldName + EXPAND_SUFFIX] = translatedRecords[0];
+                            }
+                        }
+                    }
+                    else {
+                        // 如果值为空，不返回expand结果
+                    }
+                } catch (error) {
+                    // 如果报错，不返回expand结果
+                }
+
+            }
+        };
+        return expandObj
     }
+
+    let expandProps = await _translateToExpand(record, expandFields, record)
+    return expandProps;
+}
+
+async function translateRecords(records, objectName, fields, uiFields, expandFields, userSession) {
+    var hasUiFields = !_.isEmpty(uiFields);
+    var hasExpandFields = !_.isEmpty(expandFields);
+    if (hasUiFields || hasExpandFields) {
+        const resRecords = [];
+        for (const record of records) {
+            if(hasUiFields){
+                record[UI_PREFIX] = await translateRecordToUI(record, objectName, uiFields, userSession);
+            }
+            if(hasExpandFields){
+                let expandProps = await translateRecordToExpand(record, objectName, expandFields, userSession);
+                Object.assign(record, expandProps);
+            }
+            resRecords.push(record);
+        }
+        return resRecords;
+    } else {
+        return records;
+    }
+}
+
+module.exports = {
+    translateRecords
 }
