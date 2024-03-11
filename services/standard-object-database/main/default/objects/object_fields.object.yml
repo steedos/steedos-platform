@@ -556,7 +556,6 @@ fields:
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function (filters, values) {
         //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
-        debugger;
         var fieldFilters = {
             "text": ["text", "textarea"],
             "textarea": ["text", "textarea"],
