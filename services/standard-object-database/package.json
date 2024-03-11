@@ -1,6 +1,6 @@
 {
     "name": "@steedos/standard-object-database",
-    "version": "2.2.82",
+    "version": "2.2.83",
     "main": "package.service.js",
     "private": false,
     "publishConfig": {
@@ -12,5 +12,5 @@
     "description": "steedos package",
     "repository": {},
     "license": "MIT",
-    "gitHead": "523f8246fe5267a289870f746152583388bc7744"
+    "gitHead": "4dbf07b99080d2d668ea7269c582d71ed26c052d"
 }
