@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-14 10:27:19
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-10 15:34:58
  * @Description: 
  */
 "use strict";
@@ -407,8 +407,45 @@ module.exports = {
             async handler() {
                 return await this.broker.call("objectql.makeNewID")
             }
+        },
+        getLog: {
+            handler: function () {
+                return {
+                    debug: async (message, details)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'debug',
+                            'name': message,
+                            'details': details,
+                            'node_id': this.broker.nodeID
+                        })
+                    },
+                    info: async (message, details)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'info',
+                            'name': message,
+                            'details': details,
+                            'node_id': this.broker.nodeID
+                        })
+                    },
+                    warn: async (message, details)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'warn',
+                            'name': message,
+                            'details': details,
+                            'node_id': this.broker.nodeID
+                        })
+                    }, 
+                    error: async (message, details)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'error',
+                            'name': message,
+                            'details': details,
+                            'node_id': this.broker.nodeID
+                        })
+                    }
+                }
+            }
         }
-
     },
 
     /**

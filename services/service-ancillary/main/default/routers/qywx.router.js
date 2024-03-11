@@ -398,7 +398,7 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
     // console.log("data: ", data);
     var message = await parseXML(data.data);
 
-    // console.log("message: ", message);
+    console.log("message: ", message);
 
     if (!message.InfoType){
         if (message.Event == "enter_agent"){
@@ -435,9 +435,9 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
                     "provider_secret": provider_secret
                 }); 
                 let getResultInfo = await broker.call('@steedos/plugin-qywx.getResult', {
-                        "provider_access_token": providerTokenInfo.provider_access_token,
-                        "jobid": batchJob.JobId
-                    });
+                    "provider_access_token": providerTokenInfo.provider_access_token,
+                    "jobid": batchJob.JobId
+                });
                 
                 console.log("getResultInfo: ",getResultInfo);
                 if (getResultInfo.contact_id_translate.url){

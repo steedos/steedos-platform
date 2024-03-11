@@ -192,6 +192,16 @@ function sendNotifications(message, from, to){
     bulk.execute().catch(function (error) {
         console.error("通知数据插入失败，错误信息：", error);
     });
+
+    try {
+        const broker = objectql.getSteedosSchema().broker;
+        broker.emit(`notifications.hasBeenSent`, {
+            ids: notifications_ids
+        });
+    } catch (Exception) {
+        
+    } 
+
     return notifications_ids;
 }
 

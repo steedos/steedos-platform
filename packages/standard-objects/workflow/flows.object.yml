@@ -123,7 +123,7 @@ fields:
     filterable: true
   current.steps:
     label: Current Steps
-    type: grid
+    type: table
     readonly: true
     visible_on: "{{global.mode !='read' ? false : true}}"
     is_wide: true
