@@ -1,12 +1,12 @@
 {
   "name": "project-ee",
-  "version": "2.2.81",
+  "version": "2.2.82",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/ee_unpkg-local": "2.2.81",
-    "@steedos/service-enterprise": "2.2.81"
+    "@steedos/ee_unpkg-local": "2.2.82",
+    "@steedos/service-enterprise": "2.2.82"
   }
 }

@@ -1,11 +1,11 @@
 {
   "name": "project-template",
-  "version": "2.2.81",
+  "version": "2.2.82",
   "private": true,
   "scripts": {
     "start": "steedos start"
   },
   "dependencies": {
-    "@steedos/service-community": "2.2.81"
+    "@steedos/service-community": "2.2.82"
   }
 }
