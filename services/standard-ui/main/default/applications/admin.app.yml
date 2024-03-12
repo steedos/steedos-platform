@@ -153,6 +153,9 @@ tab_items:
   admin_api_keys:
     group: development
     index: 42
+  admin_logs:
+    group: advanced_settings
+    index: 50
 objects: []
 sort: 999999
 #url: /app/admin
