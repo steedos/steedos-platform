@@ -142,7 +142,9 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "disabledOn": "${is_system == true}",
+                        "searchable": true
                     }
                 }
             },
