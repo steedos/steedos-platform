@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-02-06 16:44:55
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-26 14:08:52
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-12 16:52:36
  * @Description: 
  */
 
@@ -10,7 +10,7 @@ const moment = require('moment');
 const _ = require("underscore");
 const { getSteedosSchema } = require('@steedos/objectql');
 
-export function formatFileSize(fileSize) {
+function formatFileSize(fileSize) {
     var rev, unit;
     rev = fileSize / 1024.00;
     unit = 'KB';
@@ -25,7 +25,7 @@ export function formatFileSize(fileSize) {
     return rev.toFixed(2) + unit;
 };
 
-export function getFileStorageName(type) {
+function getFileStorageName(type) {
     switch (type) {
         case 'avatar':
             return 'avatars'
@@ -38,7 +38,7 @@ export function getFileStorageName(type) {
     }
 };
 
-export function formatBasicFieldValue(valueType, field, value, objectConfig, userSession) {
+function formatBasicFieldValue(valueType, field, value, objectConfig, userSession) {
     switch (valueType) {
         case 'text':
         case 'textarea':
@@ -76,7 +76,7 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
     }
 }
 
-export function numberToString(number, scale, notThousands = false) {
+function numberToString(number, scale, notThousands = false) {
     if (typeof number === "number") {
         number = number.toString();
     }
@@ -108,29 +108,43 @@ export function numberToString(number, scale, notThousands = false) {
     }
 }
 
-export async function callObjectServiceAction(actionName, userSession, data) {
+async function callObjectServiceAction(actionName, userSession, data) {
     const broker = getSteedosSchema().broker;
     return broker.call(actionName, data, { meta: { user: userSession } })
 }
 
 // 获取object元数据
-export function getLocalService(objectApiName) {
+function getLocalService(objectApiName) {
     let steedosSchema = getSteedosSchema();
     return steedosSchema.broker.getLocalService(getObjectServiceName(objectApiName));
 }
 
-export function correctName(name) {
+function correctName(name) {
     return name.replace(/\./g, "_").replace(/\$/g, "_");
 }
 
-export function _getRelatedType(relatedFieldName, relatedObjName) {
+function _getRelatedType(relatedFieldName, relatedObjName) {
     return `${relatedFieldName}(fields: [String], filters: JSON, top: Int, skip: Int, sort: String): [${relatedObjName}] `;
 }
 
-export function getObjectServiceName(objectApiName){
+function getObjectServiceName(objectApiName){
     return `@${objectApiName}`;
 }
 
-export function getGraphqlServiceName(){
+function getGraphqlServiceName(){
     return 'graphql';
+}
+
+
+module.exports = {
+    formatFileSize,
+    getFileStorageName,
+    formatBasicFieldValue,
+    numberToString,
+    callObjectServiceAction,
+    getLocalService,
+    correctName,
+    _getRelatedType,
+    getObjectServiceName,
+    getGraphqlServiceName
 }

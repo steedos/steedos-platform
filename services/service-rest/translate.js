@@ -2,13 +2,14 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 16:40:05
+ * @LastEditTime: 2024-03-12 16:44:45
  * @Description: 
  */
 const _ = require('lodash')
 
 const { getSteedosSchema, getUserLocale, absoluteUrl } = require("@steedos/objectql");
-const { translationObject } = require("@steedos/i18n")
+const { translationObject } = require("@steedos/i18n");
+const { formatBasicFieldValue } = require("./utils");
 
 const EXPAND_SUFFIX = '__expand';
 const UI_PREFIX = '_ui';
