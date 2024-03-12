@@ -1,6 +1,7 @@
 import {DbManager} from '../../util/dbManager'
 import {deleteCommonAttribute, sortAttribute} from '../../util/attributeUtil'
-import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName } from '@steedos/metadata-core';
+import { SteedosMetadataTypeInfoKeys as TypeInfoKeys, getFullName, DEFAULT_LISTVIEW } from '@steedos/metadata-core';
+import _ = require('lodash');
 
 const collection_name = "object_listviews";
 const collection_metadata_name = TypeInfoKeys.Listview;
@@ -55,13 +56,13 @@ async function addListViewToObejcts(listview, objects, objectName){
 
 async function getAllListView(dbManager, objectName) {
 
-  var listview = await dbManager.find(collection_name, {object_name: objectName, shared: true});
+  var listview = await dbManager.find(collection_name, {object_name: objectName, $or: [{ shared: true }, { "shared_to" : "space" }]});
   return listview;
 }
 
 async function getListViewByName(dbManager, listviewName, objectName) {
 
-    var listview = await dbManager.findOne(collection_name, {name: listviewName, object_name: objectName, shared: true});
+    var listview = await dbManager.findOne(collection_name, {name: listviewName, object_name: objectName, $or: [{ shared: true }, { "shared_to" : "space" }]});
     return listview;
 }
 
@@ -70,9 +71,11 @@ export async function listviewsToDb(dbManager, listviews, objectName){
     var listview = listviews[listviewName];
     listview.name = listviewName;
     listview.object_name = objectName;
-    if(typeof listview.shared == 'undefined'){
-      listview.shared = true
-    }
+    _.each(DEFAULT_LISTVIEW, (value: any, key: any) => {
+      if (!_.has(listview, key)) {
+        listview[key] = value;
+      }
+    });
     await saveOrUpdateListView(dbManager, listview);
   }
 }

@@ -20,7 +20,7 @@ process.env.STEEDOS_UNPKG_URL =  process.env.STEEDOS_UNPKG_URL.replace(/\/+$/, "
 
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_VERSION)) {
-	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.6';
+	process.env.STEEDOS_AMIS_VERSION = '3.6.3-patch.7';
 }
 
 if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
@@ -32,8 +32,20 @@ if(_.isEmpty(process.env.STEEDOS_AMIS_URL)) {
 }
 process.env.STEEDOS_AMIS_URL =  process.env.STEEDOS_AMIS_URL.replace(/\/+$/, "");
 
+if(_.isEmpty(process.env.STEEDOS_WIDGETS_VERSION)) {
+	process.env.STEEDOS_WIDGETS_VERSION = '3.6.6';
+}
+
 if(_.isEmpty(process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS)) {
-	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = process.env.STEEDOS_UNPKG_URL + "/@steedos-widgets/amis-object@3.6.2-beta.15/dist/assets.json";
+	const widgetsVersion = process.env.STEEDOS_WIDGETS_VERSION;
+	const unpkgUrl = process.env.STEEDOS_UNPKG_URL;
+	let steedosPublicPageAsseturls = `${unpkgUrl}/@steedos-widgets/amis-object@${widgetsVersion}/dist/assets.json`;
+	if (!_.isEmpty(process.env.STEEDOS_WIDGETS_ADDITIONAL)) {
+		process.env.STEEDOS_WIDGETS_ADDITIONAL.split(',').forEach(additional => {
+			steedosPublicPageAsseturls += `,${unpkgUrl}/${additional}@${widgetsVersion}/dist/assets.json`;
+		})
+	}
+	process.env.STEEDOS_PUBLIC_PAGE_ASSETURLS = steedosPublicPageAsseturls
 }
 
 if(_.isEmpty(process.env.SERIALIZER)){

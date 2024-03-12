@@ -34,7 +34,7 @@ const FIELDTYPEMAP:any = {
     date: '日期',
     datetime: '日期时间',
     email: '邮件地址',
-    html: 'Html文本',
+    html: '富文本',
     lookup: '相关表',
     master_detail: '主表/子表',
     number: '数值',

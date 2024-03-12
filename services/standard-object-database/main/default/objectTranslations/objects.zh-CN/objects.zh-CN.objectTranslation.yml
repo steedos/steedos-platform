@@ -91,6 +91,10 @@ fields:
     label: 默认使用分栏视图
     help: 
     description: 
+  enable_lock_detail:
+    label: 锁定子表
+    help: 当主表锁定时，所有子表只读。
+    description: 
   description:
     label: 备注
     help: 

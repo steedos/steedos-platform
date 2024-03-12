@@ -16,4 +16,5 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
       return [["type","=","profile"], 'and', ["name","!=","admin"]]
     }
   }
+defaultValue: user
 sort_no: 230

@@ -141,6 +141,10 @@
             "type": "boolean",
             "description": "是否只读"
         },
+        "static": {
+            "type": "boolean",
+            "description": "静态模式，显示为只读，但是可以通过默认值，自动填充或自定义脚本设置该字段值"
+        },
         "hidden": {
             "type": "boolean",
             "description": "是否隐藏"
@@ -253,6 +257,30 @@
                 }
             ],
             "description": "字段选项"
+        },
+        "auto_fill_mapping": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "object",
+                        "required": ["from", "to"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "from" : {
+                                "type": "string",
+                                "title": "从：引用对象中的字段"
+                            },
+                            "to" : {
+                                "type": "string",
+                                "title": "填充到：当前表单字段"
+                            }
+                        }
+                    },
+                    "type": "array",
+                    "title": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
+                }
+            ],
+            "description": "自动填充规则，选择数据后，将按此规则中的映射关系把引用对象中的字段值自动填充到当前表单字段中。"
         },
         "description": {
             "type": "string",
@@ -446,6 +474,10 @@
         "enable_enhanced_lookup": {
             "type": "boolean",
             "description": "启用增强lookup模式，当开启时，该字段会弹出窗口显示可选项！"
+        },
+        "enable_thousands": {
+            "type": "boolean",
+            "description": "显示千分符"
         }
     }
 }

@@ -38,6 +38,32 @@ fields:
   shared:
     label: Shared to All Users
     type: boolean
+    visible_on: "{{false}}"
+    group: share_rules
+  shared_to:
+    label: Who can see this list view?
+    type: select
+    defaultValue: mine
+    required: true
+    options:
+      - label: Only I can view this list view.
+        value: mine
+      - label: This list view is available to all users.
+        value: space
+      - label: Share the list view with some organizations.
+        value: organizations 
+    visible_on: "${global.user.is_space_admin}"
+    group: share_rules
+  shared_to_organizations:
+    label: Shared to which organizations?
+    type: lookup
+    reference_to: organizations
+    multiple: true
+    is_wide: true
+    depend_on:
+      - shared_to
+    visible_on: "${global.user.is_space_admin && shared_to ==='organizations'}"
+    group: share_rules
   show_count:
     label: Show Record Count
     type: boolean
@@ -309,7 +335,7 @@ list_views:
     columns:
       - label
       - name
-      - shared
+      - shared_to
       - owner
       - modified
       - is_enable
@@ -320,7 +346,7 @@ list_views:
     columns:
       - label
       - name
-      - shared
+      - shared_to
       - owner
       - modified
       - is_system

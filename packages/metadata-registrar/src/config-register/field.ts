@@ -1,13 +1,14 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:34:27
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-30 11:49:51
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-02-19 13:18:08
  * @Description: 
  */
 import { getObjectConfig, getOriginalObjectConfig } from './core'
 import _ = require('lodash');
 import { MetadataRegister } from '../metadata-register';
+import { DEFAULT_FIELD } from '@steedos/metadata-core';
 import { extend, loadFields } from '../utils';
 var clone = require('clone');
 
@@ -32,6 +33,11 @@ export const loadObjectLazyFields = function(objectName: string){
 }
 
 export const addObjectFieldConfig = (objectName: string, json: any) => {
+    _.each(DEFAULT_FIELD, (value, key) => {
+        if (!_.has(json, key)) {
+            json[key] = value;
+        }
+    });
     if (!json.name) {
         throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }

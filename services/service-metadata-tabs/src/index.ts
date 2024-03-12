@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-03-28 09:35:35
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-23 10:13:41
+ * @Description: 
+ */
 import * as _ from 'lodash';
 export const METADATA_TYPE = 'tabs';
 
@@ -19,7 +26,7 @@ async function getServicesConfigs(ctx, apiName) {
         metadataType,
         metadataApiName: apiName
     }, {meta: ctx.meta})
-    return _.map(configs, 'metadata');
+    return _.map(_.orderBy(configs, 'timestamp'), 'metadata');
 }
 
 export async function refresh(ctx, apiName) {

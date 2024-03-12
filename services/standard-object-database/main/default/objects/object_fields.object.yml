@@ -199,9 +199,49 @@ fields:
     amis:
       disabledOn: "${is_system == true}"
   defaultValue:
-    type: text
+    type: object
+    blackbox: true
     label: Default Value
     sort_no: 160
+    visible_on: "{{formData.type && ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}"
+    amis:
+      type: service
+      className: 
+        antd-Form-item: true 
+        antd-Form-item--normal: true 
+        m-0: true 
+        "md:border-b": global.mode === "read"
+        defaultValue_field: true 
+        flex: true
+      schemaApi:
+        url: "${context.rootUrl}/service/api/object_fields/defaultValue/schema"
+        method: post
+        data:
+          object: ${object}
+          name: ${name}
+          options: ${options|filter:label:isTrue|filter:value:isTrue}
+          type: ${type}
+          reference_to: ${reference_to}
+          multiple: ${multiple}
+          filtersFunction: ${filtersFunction}
+          reference_to_field: ${reference_to_field}
+          mode: ${global.mode}
+          scale: ${scale}
+          _id: ${_id}
+        trackExpression: "${object},${options|filter:label:isTrue|filter:value:isTrue|pick:label,value|json},${type},${reference_to},${reference_to_field},${multiple},${filtersFunction},${_id},${scale}"
+        headers:
+          Authorization: "Bearer ${context.tenantId},${context.authToken}"
+        # sendOn: "!!this.type"
+      onEvent:
+        fetchSchemaInited:
+          weight: 0
+          actions:
+            - actionType: "setValue"
+              componentId: "service_detail_page"
+              args: 
+                value: 
+                  defaultValue: "${event.data.body[0].value}"
+              expression: "global.mode ==='read' && event.data.body[0].value"
   group:
     type: text
     label: Group
@@ -249,7 +289,7 @@ fields:
       disabledOn: "${is_system == true}"
   create:
     type: boolean
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     defaultValue: true
     visible_on: "{{['lookup'].indexOf(formData.type) > -1 ? true: false}}"
     sort_no: 185
@@ -289,10 +329,15 @@ fields:
     label: Write requires master read
     type: boolean
     inlineHelpText: Sets the minimum sharing access level required on the master record to create, edit, or delete child records. This field applies only to master-detail or junction object custom field types. true—Allows users with “Read” access to the master record permission to create, edit, or delete child records. This setting makes sharing less restrictive. false—Allows users with “Read/Write” access to the master record permission to create, edit, or delete child records. This setting is more restrictive than true, and is the default value.
-    visible_on: "{{formData.type === 'master_detail' ? true: false}}"
+    visible_on: c
     sort_no: 200
     amis:
       disabledOn: "${is_system == true}"
+  autonumber_enable_modify:
+    label: 允许修改编号
+    type: boolean
+    visible_on: "{{formData.type === 'autonumber' ? true: false}}"
+    sort_no: 205
   formula:
     label: Formula
     type: textarea
@@ -443,6 +488,14 @@ fields:
     amis:
       showIndex: true
       disabledOn: "${is_system == true}"
+      enableDialog: false
+      columns: 
+        - label
+        - value
+        - name: color
+          width: 170
+        - name: description
+          width: 300
   options.$:
     label: Options
     blackbox: true
@@ -463,6 +516,82 @@ fields:
     label: Description
     type: text
     required: false
+  auto_fill_mapping:
+    type: table
+    label: Auto Fill Mapping
+    is_wide: true
+    inlineHelpText: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
+    visible_on: "{{(formData.type === 'lookup' || formData.type === 'master_detail') && formData.reference_to && !!!formData.multiple}}"
+    sort_no: 280
+    amis:
+      enableDialog: false
+  auto_fill_mapping.$:
+    label: Auto Fill Mapping
+    blackbox: true
+    type: object
+  auto_fill_mapping.$.from:
+    label: From:Fields in object that reference to
+    type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    depend_on:
+      - reference_to
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        if(values && values.reference_to){
+          return ['object', '=', values.reference_to]
+        }else{
+          return ['_id', '=', 'no']
+        }
+      }
+  auto_fill_mapping.$.to:
+    label: To:Fields in the current form
+    type: lookup
+    reference_to: object_fields
+    reference_to_field: name
+    required: true
+    depend_on:
+      - object
+    filtersFunction: !<tag:yaml.org,2002:js/function> |-
+      function (filters, values) {
+        //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
+        var fieldFilters = {
+            "text": ["text", "textarea"],
+            "textarea": ["text", "textarea"],
+            "boolean": ["boolean", "toggle"],
+            "toggle": ["boolean", "toggle"],
+            "number": ["number", "currency"],
+            "currency": ["number", "currency"],
+            "lookup": ["lookup", "master_detail"],
+            "master_detail": ["lookup", "master_detail"],
+            "autonumber": ["autonumber", "text", "textarea"],
+            "email": ["email", "text", "textarea"]
+        };
+        var currentFilter = [];
+        var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+        var fromField = referenceObject && referenceObject.fields[values.from || values.auto_fill_mapping__from];
+
+        if (fromField && fromField.data_type) {
+            currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
+        }else if (fromField) {
+            currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
+            if (fromField.type == "lookup" || fromField.type == "master_detail") {
+              if (fromField.reference_to) {
+                currentFilter.push(['reference_to', '=', fromField.reference_to]);
+              }
+              if (fromField.reference_to_field) {
+                currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+              }
+            }
+        }
+        if (values && values.object) {
+            currentFilter.push(['object', '=', values.object]);
+        } else {
+            currentFilter.push(['_id', '=', 'no']);
+        }
+        return currentFilter;
+      }
   formula_blank_value:
     type: select
     label: Blank Field Handling
@@ -581,7 +710,7 @@ fields:
     sort_no: 320
   summary_filters:
     label: Filter Criteria
-    type: 'grid'
+    type: 'table'
     inlineHelpText: Only records meeting certain criteria should be included in the calculation, all records should be included in the calculation while the criteria is empty.
     is_wide: true
     depend_on:
@@ -590,6 +719,8 @@ fields:
     sort_no: 330
     amis:
       disabledOn: "${is_system == true}"
+      inlineEditMode: true
+      showIndex: true
   summary_filters.$:
     label: Filter Criteria
     blackbox: true
@@ -689,6 +820,12 @@ fields:
     # group: Advanced
     visible_on: "{{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false: true}}"
     sort_no: 272
+  enable_thousands:
+    type: boolean
+    label: 显示千分符
+    sort_no: 273
+    visible_on: "{{['number','currency','percent'].indexOf(formData.type) > -1 ? true: false}}"
+    defaultValue: true
   deleted_lookup_record_behavior:
     type: select
     label: 如果相关表记录被删除怎么办？
@@ -713,7 +850,13 @@ fields:
   readonly:
     type: boolean
     label: Readonly
+    inlineHelpText: It is read-only and does not appear on the form when you create or edit records.
     group: ui
+  static:
+    type: boolean
+    label: Readonly and displayed while editing
+    group: ui
+    inlineHelpText: Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.
   hidden:
     type: boolean
     label: Hidden

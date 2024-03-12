@@ -233,7 +233,8 @@ tbody .color-priority-muted *{
 
 .instance-print #instanceAmisView .antd-Table-table td {
     border-bottom: #000000 1px solid;
-    padding: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin: 0px;
 }
 
@@ -280,4 +281,26 @@ tbody .color-priority-muted *{
 
 .instance-print #instanceAmisView .antd-Form-item {
     padding: 0px !important;
+}
+
+/* 平台内的table表头都变成了无边框，审批王内的打印需要边框 */
+.instance-print #instanceAmisView .antd-Table-table thead > tr > th {
+    border-right: var(--Table-thead-borderWidth) solid #000000;
+}
+
+/* 最后一列不需要边框 */
+.instance-print #instanceAmisView .antd-Table-table thead > tr > th:last-child {
+    border-right: none;
+}
+
+/* 实际的打印中service层未撑满 */
+@media print {
+    .instance-print #instanceAmisView .steedos-input-table>.antd-Service {
+        width: 100%;
+    }
+}
+
+/* 审批王的打印中的td需要换行，否则会撑出页面 */
+.instance-print #instanceAmisView .antd-Table-table tbody > tr > td{
+    white-space: normal;
 }

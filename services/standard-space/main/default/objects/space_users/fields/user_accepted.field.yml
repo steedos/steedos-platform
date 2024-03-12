@@ -3,3 +3,4 @@ type: boolean
 label: Valid
 defaultValue: true
 sort_no: 320
+visible_on: "{{recordId ? true : false}}"

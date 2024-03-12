@@ -14,7 +14,7 @@
                 },
                 {
                     "type": "tabs",
-                    "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
+                    "className": "steedos-record-tabs bg-white p-4 mt-3 border-y",
                     "tabs": [
                         {
                             "title": "简介",

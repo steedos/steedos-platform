@@ -9,8 +9,24 @@
             "className": "",
             "enableTabs": true,
             "mode": "edit",
-            "layout": "normal",
-            "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
+            "layout": "horizontal",
+            "onEvent": {
+                "change": {
+                    "actions": [
+                        {
+                            "actionType": "setValue",
+                            "args": {
+                                "value": {
+                                    "defaultValue": ""
+                                }
+                            },
+                            "expression": "${!!event.data.defaultValue_formula}"
+                        }
+                    ]
+                }
+            },
+            "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue; if(defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{')>-1 ){ payload.data.defaultValue_formula = defaultValue_field_value; delete payload.data.defaultValue; } return payload;",
+            "apiRequestAdaptor": "if(formData.defaultValue_formula){ formData.defaultValue = formData.defaultValue_formula }  __saveData = JSON.stringify(JSON.stringify(formData)); api.data = {query: query.replace('{__saveData}', __saveData)}; api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
             "submitSuccActions": [
                 {
                     "actionType": "custom",
@@ -19,12 +35,120 @@
                 {
                     "actionType": "toast",
                     "args": {
-                      "msgType": "success",
-                      "msg": "操作成功, 请刷新浏览器后查看效果",
-                      "position": "top-right"
+                        "msgType": "success",
+                        "msg": "操作成功, 请刷新浏览器后查看效果",
+                        "position": "top-right"
                     }
                 }
-            ]
+            ],
+            "fieldsExtend": {
+                "readonly": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "componentId": "steedos_object_fields_form",
+                                        "args": {
+                                            "value": {
+                                                "static": false
+                                            }
+                                        },
+                                        "expression": "!!readonly"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:a32a4c461450"
+                    }
+                },
+                "static": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "componentId": "steedos_object_fields_form",
+                                        "args": {
+                                            "value": {
+                                                "readonly": false
+                                            }
+                                        },
+                                        "expression": "!!static"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:7affdbb0ef6d"
+                    }
+                },
+                "required": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form",
+                                        "expression": "${event.data.value}"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:adf4200a2170"
+                    }
+                },
+                "hidden": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "required": false
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form",
+                                        "expression": "${event.data.value}"
+                                    }
+                                ]
+                            }
+                        },
+                        "id": "u:adf4200a2170"
+                    }
+                },
+                "type": {
+                    "amis": {
+                        "onEvent": {
+                            "change": {
+                                "actions": [
+                                    {
+                                        "actionType": "setValue",
+                                        "args": {
+                                            "value": {
+                                                "defaultValue": null
+                                            }
+                                        },
+                                        "componentId": "steedos_object_fields_form"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "form": {
+                "id": "steedos_object_fields_form"
+            }
         }
     ],
     "data": {

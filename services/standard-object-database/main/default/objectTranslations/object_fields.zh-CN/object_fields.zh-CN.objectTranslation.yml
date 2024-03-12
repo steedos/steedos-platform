@@ -30,7 +30,7 @@ fields:
         value: text
       - label: 长文本
         value: textarea
-      - label: Html文本
+      - label: 富文本
         value: html
       - label: 代码
         value: code
@@ -100,7 +100,7 @@ fields:
     help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
     description: 
   create:
-    label: 是否显示新建按钮
+    label: 弹出选择时允许新建
     help: 
     description: 
   reference_to_field:
@@ -153,6 +153,26 @@ fields:
     description: 
   options.$.description:
     label: 描述
+    help: 
+    description: 
+  auto_fill_mapping:
+    label: 自动填充规则
+    help: 选择数据后，将按以下映射关系将引用对象中的字段值自动填充到当前表单字段中。
+    description: 
+  auto_fill_mapping.$:
+    label: 自动填充规则
+    help: 
+    description: 
+  auto_fill_mapping.$.from:
+    label: 从：引用对象中的字段
+    help: 
+    description: 
+  auto_fill_mapping.$.to:
+    label: 填充到：当前表单字段
+    help: 
+    description: 
+  autonumber_enable_modify:
+    label: 允许修改编号
     help: 
     description: 
   formula:
@@ -258,6 +278,10 @@ fields:
     label: 必填
     help: 
     description: 
+  enable_thousands:
+    label: 显示千分符
+    help: 
+    description:
   deleted_lookup_record_behavior:
     label: 如果相关表记录被删除怎么办？
     help: 
@@ -273,7 +297,11 @@ fields:
     description: 
   readonly:
     label: 只读
-    help: 
+    help: 只读，且新建和编辑记录时不显示在表单上
+    description: 
+  static:
+    label: 只读且编辑时显示
+    help: 显示为只读，但是在新建和编辑记录时可以通过默认值，自动填充或自定义脚本设置该字段值
     description: 
   hidden:
     label: 隐藏

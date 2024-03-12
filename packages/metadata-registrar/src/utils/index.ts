@@ -1,12 +1,12 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:53:45
- * @LastEditors: 易仕川 yishichuan@steedos.com
- * @LastEditTime: 2023-12-28 10:09:18
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-02-18 14:55:57
  * @Description: 
  */
 import { isJsonMap, JsonMap, has, getJsonMap } from '@salesforce/ts-types';
-import { getMD5, syncMatchFiles } from '@steedos/metadata-core';
+import { getMD5, syncMatchFiles, DEFAULT_LISTVIEW, DEFAULT_FIELD } from '@steedos/metadata-core';
 import path = require('path');
 const fs = require("fs");
 const _ = require('underscore');
@@ -160,6 +160,13 @@ export const loadObjects = (filePath: string) => {
           path.dirname(path.dirname(matchedPath))
         ).name;
       }
+      
+      _.each(DEFAULT_FIELD, (value: any, key: any)=>{
+        if(!_.has(json, key)){
+          json[key] = value;
+        }
+      });
+
       results.push(json);
     });
     return results;
@@ -180,6 +187,11 @@ export const loadObjects = (filePath: string) => {
         if(!json.object_name){
             json.object_name =  path.parse(path.dirname(path.dirname(matchedPath))).name
         }
+        _.each(DEFAULT_LISTVIEW, (value: any, key: any)=>{
+          if(!_.has(json, key)){
+            json[key] = value;
+          }
+        });
         results.push(json)
     })
     return results

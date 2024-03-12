@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-07-03 18:46:55
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-19 10:14:24
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-01 15:02:27
  * @Description: 
  */
 ; (function () {
@@ -243,6 +243,7 @@
                 })
                 Session.set("instance_form_values", {instanceId: ins._id, values: instanceValues});
                 Steedos.Page.render(root, page, {
+                    appId: Session.get("app_id"),
                     ...instanceValues
                 });
             }

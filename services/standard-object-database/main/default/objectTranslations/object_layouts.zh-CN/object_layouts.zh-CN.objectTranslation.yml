@@ -103,6 +103,10 @@ fields:
     label: 每页显示数量
     help: 
     description:
+  is_system:
+    label: 系统
+    help: 
+    description:
 listviews:
   all:
     label: 所有

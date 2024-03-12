@@ -27,11 +27,15 @@
 .pnpm-lock.yaml
 
 !/server/bundle/**/node_modules/formBuilder/dist
+!/server/bundle/**/node_modules/@steedos/form-builder/dist
 !/server/bundle/**/node_modules
+!services/standard-space/main/default/objects/logs
 docker-volumes/**
 examples/multi-node-testing/**
 
 storage
+steedos-storage
 
 .env.local
 .steedos
+steedos-app/**

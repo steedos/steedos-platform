@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-07-13 13:28:02
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-02-19 17:28:37
  * @Description: 
  */
 const _ = require("underscore");
@@ -64,7 +64,12 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
     todo: function (userId, doc) {
       checkName(doc.name);
       if (!Steedos.isSpaceAdmin(doc.space, userId)) {
-        doc.shared = false;
+        doc.shared_to = "mine";
+        delete doc.shared_to_organizations;
+      }
+      delete doc.shared;
+      if(doc.shared_to !== "organizations"){
+        delete doc.shared_to_organizations;
       }
       doc.filters = transformFilters(doc.filters);
     }
@@ -74,13 +79,24 @@ Creator.Objects['object_listviews'].triggers = Object.assign(Creator.Objects['ob
     when: "before.update",
     todo: function (userId, doc, fieldNames, modifier, options) {
       modifier.$set = modifier.$set || {}
+      if (!modifier.$unset) {
+        modifier.$unset = {};
+      }
 
       if(_.has(modifier.$set, "name") && modifier.$set.name != doc.name){
         checkName(modifier.$set.name);
       }
 
-      if (modifier.$set.shared && !Steedos.isSpaceAdmin(doc.space, userId)) {
-        modifier.$set.shared = false;
+      if (!Steedos.isSpaceAdmin(doc.space, userId)) {
+        modifier.$set.shared_to = "mine";
+        delete modifier.$set.shared_to_organizations;
+        modifier.$unset.shared_to_organizations = 1;
+      }
+      delete modifier.$set.shared;
+      modifier.$unset.shared = 1;
+      if(modifier.$set.shared_to && modifier.$set.shared_to !== "organizations"){
+        delete modifier.$set.shared_to_organizations;
+        modifier.$unset.shared_to_organizations = 1;
       }
       if(modifier.$set.filters){
         modifier.$set.filters = transformFilters(modifier.$set.filters);

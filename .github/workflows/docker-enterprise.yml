@@ -16,9 +16,21 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
+      # - name: Checkout branch 2.7
+      #   uses: actions/checkout@v2
+      #   with: 
+      #     ref: '2.7'
+      
+      # checkout branch 2.7
+      - name: Checkout branch 2.7
+        uses: actions/checkout@v2
+        with: 
+          ref: '2.7'
+
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
         with:
-          fetch-depth: 0
+          prefix: 'v'
 
       - name: Set Current Version
         run: |
@@ -67,16 +79,28 @@ jobs:
         with:
           registry: 252208178451.dkr.ecr.cn-northwest-1.amazonaws.com.cn
 
-      - name: Replace Version ~2.6 to Tag
+      - name: Replace Version ~2.7 to Tag
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           include: deploy/enterprise/app/platform/package.json
-          find: "~2.6"
+          find: "~2.7"
           replace: ${{env.STEEDOS_VERSION}}
           regex: false
 
       - name: Build and push docker
         uses: docker/build-push-action@v3
+        if: ${{ steps.version.outputs.is_stable != 'true' }}
+        with:
+          context: ./deploy/enterprise
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # 正式版才发布 arm64
+      - name: Build and push docker
+        uses: docker/build-push-action@v3
+        if: ${{ steps.version.outputs.is_stable == 'true' }}
         with:
           context: ./deploy/enterprise
           platforms: linux/amd64,linux/arm64

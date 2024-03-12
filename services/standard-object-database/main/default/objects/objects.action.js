@@ -19,7 +19,7 @@ module.exports = {
             record = Creator.odata.get("objects", record_id, "is_deleted");
         }
 
-        if (record && !record.is_deleted && record.name != 'users') {
+        if (record && !record.is_deleted && record.name != 'users' && record.created) {
             return true;
         }
     },
@@ -176,6 +176,9 @@ module.exports = {
     }
     if(!record){
         record = Creator.odata.get("objects", record_id, "is_deleted");
+    }
+    if(record.is_system){
+        return false;
     }
     if(record && !record.is_deleted){
         return Creator.baseObject.actions.standard_delete.visible.apply(this, arguments);

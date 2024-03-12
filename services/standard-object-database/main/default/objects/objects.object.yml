@@ -154,6 +154,12 @@ fields:
     label: Enable Split
     group: Switch
     defaultValue: false
+  enable_lock_detail:
+    type: boolean
+    label: Enable Lock Details
+    inlineHelpText: When the main watch is locked all sub tables are read only.
+    group: Switch
+    defaultValue: false
   # enable_audit:
   #   type: boolean
   #   label: Enable Audit
@@ -432,6 +438,8 @@ fields:
     type: text
   field_groups.$.visible_on:
     type: text
+  field_groups.$.collapsed:
+    type: boolean
   extend:
     type: text
     hidden: true

@@ -1,14 +1,16 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-28 10:36:06
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-08-27 10:12:52
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-05 16:32:39
  * @Description: 
  */
 'use strict';
 // @ts-check
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql')
+
+const DISABLE_DIRECT = process.env.STEEDOS_INSTANCE_TASKS_DISABLE_DIRECT == true || process.env.STEEDOS_INSTANCE_TASKS_DISABLE_DIRECT == 'true';
 
 function _insert(taskDoc) {
     const newTaskDoc = Meteor.wrapAsync(function (taskDoc, cb) {
@@ -82,8 +84,10 @@ function _count(query) {
  */
 function insert_instance_tasks(insId, traceId, approveId) {
     const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    const newTaskDoc = _directInsert(taskDoc)
-    return newTaskDoc
+    if(DISABLE_DIRECT){
+        return _insert(taskDoc)
+    }
+    return _directInsert(taskDoc)
 }
 
 /**
@@ -111,11 +115,15 @@ function insert_many_instance_tasks(insId, traceId, approveIds) {
  * @param {String} insId 申请单ID
  * @param {String} traceId TraceID
  * @param {String} approveId ApproveID
+ * @param {Object} doc TaskeDoc
  * @returns 更新后的instance_tasks
  */
-function update_instance_tasks(insId, traceId, approveId) {
-    const taskDoc = _makeTaskDoc(insId, traceId, approveId)
-    delete taskDoc._id
+function update_instance_tasks(insId, traceId, approveId, doc) {
+    let taskDoc = doc
+    if (!taskDoc) {
+        taskDoc = _makeTaskDoc(insId, traceId, approveId)
+        delete taskDoc._id
+    }
     const result = _update(approveId, taskDoc)
     return result
 }
@@ -125,16 +133,20 @@ function update_instance_tasks(insId, traceId, approveId) {
  * @param {String} insId 
  * @param {String} traceId 
  * @param {String[]} approveIds 
+ * @param {String[]} keys 
  * @returns 更新后的instance_tasks
  */
-function update_many_instance_tasks(insId, traceId, approveIds) {
+function update_many_instance_tasks(insId, traceId, approveIds, keys) {
     const insDoc = _getInsDoc(insId)
     const traceDoc = _getTraceDoc(insDoc, traceId)
     const results = []
     for (const aId of approveIds) {
         const approveDoc = _getApproveDoc(traceDoc, aId)
-        const taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
+        let taskDoc = _generateTaskDoc(insDoc, traceDoc, approveDoc)
         delete taskDoc._id
+        if (!_.isEmpty(keys)) {
+            taskDoc = _.pick(taskDoc, keys)
+        }
         const result = _update(aId, taskDoc)
         results.push(result)
     }
@@ -193,8 +205,13 @@ function remove_instance_tasks_by_instance_id(insId) {
 function direct_remove_many_instance_tasks(approveIds) {
     const results = []
     for (const aId of approveIds) {
-        const r = _directRemove(aId)
-        results.push(r)
+        if(DISABLE_DIRECT){
+            const r = _remove(aId)
+            results.push(r)
+        }else{
+            const r = _directRemove(aId)
+            results.push(r)
+        }
     }
     return results
 }

@@ -10,7 +10,7 @@ Creator.Objects['notifications'].methods = {
     markReadAll: async function (req, res) {
         let userSession = req.user;
         let error;
-        let updatedCount = await objectql.getObject("notifications").updateMany([
+        let updatedCount = await objectql.getObject("notifications").directUpdateMany([
             ["space", "=", userSession.spaceId],
             ["owner", "=", userSession.userId],
             [["is_read", "=", null], 'or', ["is_read", "=", false]]
@@ -192,6 +192,16 @@ function sendNotifications(message, from, to){
     bulk.execute().catch(function (error) {
         console.error("通知数据插入失败，错误信息：", error);
     });
+
+    try {
+        const broker = objectql.getSteedosSchema().broker;
+        broker.emit(`notifications.hasBeenSent`, {
+            ids: notifications_ids
+        });
+    } catch (Exception) {
+        
+    } 
+
     return notifications_ids;
 }
 

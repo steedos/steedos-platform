@@ -29,7 +29,7 @@ fields:
         value: text
       - label: Textarea
         value: textarea
-      - label: Html
+      - label: Rich text
         value: html
       - label: Code
         value: code
@@ -163,6 +163,26 @@ fields:
     label: Description
     help: 
     description: 
+  auto_fill_mapping:
+    label: Auto Fill Mapping
+    help: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
+    description: 
+  auto_fill_mapping.$:
+    label: Auto Fill Mapping
+    help: 
+    description: 
+  auto_fill_mapping.$.from:
+    label: From:Fields in object that reference to
+    help: 
+    description: 
+  auto_fill_mapping.$.to:
+    label: To:Fields in the current form
+    help: 
+    description: 
+  autonumber_enable_modify:
+    label: Allow modification of numbers
+    help: 
+    description: 
   formula:
     label: Formula
     help: This field must be filled when the field type is 'Autonumber' or 'Formula'
@@ -274,6 +294,10 @@ fields:
     label: Required
     help: 
     description: 
+  enable_thousands:
+    label: Display thousands separators
+    help: 
+    description:
   deleted_lookup_record_behavior:
     label: What to do if the lookup record is deleted?
     help: 
@@ -289,7 +313,11 @@ fields:
     description: 
   readonly:
     label: Readonly
-    help: 
+    help: It is read-only and does not appear on the form when you create or edit records.
+    description: 
+  static:
+    label: Readonly and displayed while editing
+    help: Displays as read-only, but the field value can be set by default, autofill, or custom scripts when creating and editing records.
     description: 
   hidden:
     label: Hidden

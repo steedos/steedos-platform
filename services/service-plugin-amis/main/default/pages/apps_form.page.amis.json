@@ -23,7 +23,6 @@
             "addable": false,
             "removable": true,
             "draggable": false,
-            "headerToolbarClassName": "px-1 pb-3",
             "fields": [
               {
                 "label": "${'apps.apps_form.tab' | t}",
@@ -69,10 +68,18 @@
                 "mode": "inline"
               }
             ],
+            "columns": [
+              {
+                "name": "tab_name",
+                "inlineEditMode": false
+              },
+              "group"
+            ],
             "headerToolbar": [
               {
                 "type": "service",
                 "id": "tabs-options-service",
+                "className": "mb-2",
                 "body": [
                   {
                     "type": "button",
@@ -107,6 +114,7 @@
                           "sortable": true,
                           "source": "${tabs_options}",
                           "searchable": true,
+                          "itemHeight": 40,
                           "id": "u:f2d36873abd1"
                         }
                       ],
@@ -205,6 +213,7 @@
                 }
               }
             ],
+            "enableDialog": false,
             "id": "u:7949aecf0ca9"
           }
         },

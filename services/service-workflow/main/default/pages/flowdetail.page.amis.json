@@ -1,24 +1,5 @@
 {
 	"type": "page",
-	"css": {
-		".antd-InputGroup-addOn": {
-		  "border": "none !important",
-		  "color": "#5f5f5f38"
-		},
-		".antd-InputGroup-addOn:hover": {
-		  "cursor": "pointer",
-		  "color": "#5f5f5f"
-		},
-		".m--8": {
-		  "margin": "-12px"
-		},
-		".page_flows_record_detail .antd-Combo-itemInner": {
-		  "margin": "0"
-		},
-		".steedos-flow-transfer-picker .antd-Form-value": {
-		  "width": "100%"
-		}
-	}, 
 	"body": [
 		{
 			"type": "steedos-record-service",
@@ -153,7 +134,7 @@
 																				"actions": [
 																					{
 																						"actionType": "reload",
-																						"componentId":"u:f2e8448545292"
+																						"componentId": "u:f2e8448545292"
 																					}
 																				]
 																			}
@@ -174,8 +155,7 @@
 											}
 										}
 									]
-								  }
-								,
+								},
 								{
 									"type": "form",
 									"title": "表单",
@@ -229,7 +209,7 @@
 							],
 							"id": "u:c072a969328c",
 							"unmountOnExit": true
-						},						
+						},
 						{
 							"title": "${'flows_tabs_step'|t}",
 							"body": [
@@ -268,360 +248,364 @@
 									"type": "flex",
 									"justify": "flex-end",
 									"className": "py-2",
-									"items":  [
+									"items": [
 										{
 											"type": "button",
 											"label": "${'flows.addFormFields.set_fields' | t}",
 											"visibleOn": "${_master.record.object_name}",
 											"id": "u:add_form_fields2",
 											"onEvent": {
-											  "click": {
-												"actions": [
-												  {
-													"actionType": "dialog",
-													"dialog": {
-													  "type": "dialog",
-													  "title": "${'flows.addFormFields.set_fields' | t}",
-													  "size": "lg",
-													  "data": {
-														"&": "$$",
-														"record_id": "${_master.record._id}",
-														"recordId": "${_master.record._id}",
-														"object_name": "${_master.record.object_name}"
-													  },
-													  "body": [
+												"click": {
+													"actions": [
 														{
-														  "type": "form",
-														  "debug": false,
-														  "id": "addFormFieldsForm",
-														  "title": "表单",
-														  "body": [
-															{
-															  "label": "${'flows.addFormFields.binding_objects' | t}",
-															  "type": "select",
-															  "name": "object_name",
-															  "id": "u:4e769995f638",
-															  "required": true,
-															  "joinValues": false,
-															  "extractValue": true,
-															  "labelField": "label",
-															  "valueField": "value",
-															  "labelClassName": "text-left",
-															  "en-US": {
-																"label": "Object"
-															  },
-															  "checkAll": false,
-															  "searchable": true,
-															  "source": {
-																"method": "get",
-																"url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
-																"headers": {
-																  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-																}
-															  },
-															  "multiple": false
-															},
-															{
-															  "type": "tabs",
-															  "tabs": [
-																{
-																  "title": "${'flows.addFormFields.application_form_fields' | t}",
-																  "body": [
-																	{
-																	  "type": "service",
-																	  "body": [
-																		{
-																		  "name": "instance_fields",
-																		  "type": "steedos-input-table",
-																		  "editable": true,
-																		  "removable": true,
-																		  "showIndex": true,
-																		  "fields": [
-																			{
-																			  "name": "name",
-																			  "label": "${'flows.addFormFields.field' | t}",
-																			  "type": "select",
-																			  "amis": {
-																				"source": "${fields_options}",
-																				"menuTpl": "",
-																				"id": "u:beecbd5b6b69"
-																			  },
-																			  "id": "u:b95c69a1cd84"
-																			},
-																			{
-																			  "name": "required",
-																			  "label": "${'flows.addFormFields.required' | t}",
-																			  "type": "boolean",
-																			  "id": "u:e54afb5cc05c",
-																			  "placeholder": "-"
-																			}
-																		  ],
-																		  "headerToolbar": [
-																			{
-																			  "type": "button",
-																			  "actionType": "dialog",
-																			  "dialog": {
-																				"title": "${'flows.addFormFields.select_fields' | t}",
-																				"body": [
-																				  {
-																					"type": "transfer",
-																					"name": "picked_fields",
-																					"sortable": true,
-																					"source": "${fields_options}",
-																					"value": "${instance_fields|pick:name}",
-																					"searchable": true,
-																					"joinValues": false,
-																					"extractValue": true,
-																					"id": "u:502c4ecd81b6"
-																				  }
-																				],
-																				"onEvent": {
-																				  "confirm": {
-																					"actions": [
-																					  {
-																						"actionType": "custom",
-																						"script": "var instance_fields = [];\nvar picked_fields = _.cloneDeep(event.data.picked_fields);\n\n_.forEach(picked_fields, function (field) {\n  var table_field = _.find(event.data.instance_fields, { name: field });\n  if (table_field) {\n    instance_fields.push(table_field);\n  } else {\n    instance_fields.push({\n      name: field\n    });\n  }\n});\n\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_fields\n    }\n  }\n});\n"
-																					  }
-																					]
-																				  }
-																				},
-																				"type": "dialog",
-																				"id": "u:c405734543e0",
-																				"closeOnEsc": false,
-																				"closeOnOutside": false,
-																				"size": "lg",
-																				"showCloseButton": true
-																			  },
-																			  "className": "mb-2",
-																			  "label": "${'flows.addFormFields.select_fields' | t}",
-																			  "id": "u:853b890ab524"
-																			}
-																		  ],
-																		  "amis": {
-																			"columnsTogglable": false
-																		  },
-																		  "dialog": {
-																			"title": "字段明细"
-																		  },
-																		  "columns": [
-																			{
-																			  "name": "name",
-																			  "inlineEditMode": false
-																			},
-																			{
-																			  "name": "required"
-																			}
-																		  ],
-																		  "inlineEditMode": true,
-																		  "id": "u:22121edc42b1"
-																		}
-																	  ],
-																	  "id": "u:ac5b7818b88f",
-																	  "affixFooter": false,
-																	  "api": {
-																		"method": "get",
-																		"url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options?showHiddenField=true",
-																		"adaptor": "let data = payload.data;\ndata.fields_options = data.options;\n\ndelete data.options\npayload.data = data;\nreturn payload;\n",
-																		"sendOn": "!!this.object_name",
-																		"data": null,
-																		"headers": {
-																		  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-																		}
-																	  },
-																	  "className": "col-span-2 m-0",
-																	  "placeholder": "-",
-																	  "messages": {}
-																	}
-																  ]
+															"actionType": "dialog",
+															"dialog": {
+																"type": "dialog",
+																"title": "${'flows.addFormFields.set_fields' | t}",
+																"size": "lg",
+																"data": {
+																	"&": "$$",
+																	"record_id": "${_master.record._id}",
+																	"recordId": "${_master.record._id}",
+																	"object_name": "${_master.record.object_name}"
 																},
-																{
-																  "title": "${'flows.addFormFields.application_form_subform' | t}",
-																  "body": [
+																"body": [
 																	{
-																	  "type": "service",
-																	  "id": "u:dbadaff47153",
-																	  "api": {
-																		"method": "get",
-																		"url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
-																		"sendOn": "!!this.object_name",
-																		"adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst needToRemove = ['cms_files.parent', 'tasks.related_to', 'notes.related_to', 'events.related_to', 'instances.record_ids', 'approvals.related_to', 'process_instance_history.target_object', 'audit_records.related_to'];\nconst options = [];\nfor (const item of data.options) {\n  if (!needToRemove.includes(item.value)) {\n    options.push(item);\n  }\n}\ndata.related_lists_options = options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
-																		"headers": {
-																		  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-																		}
-																	  },
-																	  "affixFooter": false,
-																	  "body": [
-																		{
-																		  "name": "instance_table_fields",
-																		  "type": "steedos-input-table",
-																		  "editable": true,
-																		  "removable": true,
-																		  "draggable": false,
-																		  "showIndex": true,
-																		  "dialog": {
-																			"title": "子表明细"
-																		  },
-																		  "columns": [
+																		"type": "form",
+																		"debug": false,
+																		"id": "addFormFieldsForm",
+																		"title": "表单",
+																		"body": [
 																			{
-																			  "name": "detail_field_fullname",
-																			  "inlineEditMode": false
-																			},
-																			"label",
-																			"field_names"
-																		  ],
-																		  "inlineEditMode": true,
-																		  "fields": [
-																			{
-																			  "name": "detail_field_fullname",
-																			  "label": "${'flows.addFormFields.subform_name' | t}",
-																			  "type": "select",
-																			  "amis": {
-																				"source": "${related_lists_options}",
-																				"menuTpl": "",
-																				"id": "u:beecbd5b6b69"
-																			  },
-																			  "id": "u:5204fc0fbe1c"
-																			},
-																			{
-																			  "name": "label",
-																			  "label": "${'flows.addFormFields.show_heading' | t}",
-																			  "type": "text",
-																			  "id": "u:1267e4351d66",
-																			  "placeholder": "-"
-																			},
-																			{
-																			  "name": "field_names",
-																			  "label": "${'flows.addFormFields.displayed_fields' | t}",
-																			  "type": "lookup",
-																			  "amis": {
-																				"type": "transfer-picker",
-																				"className": "w-full steedos-flow-transfer-picker",
-																				"inputClassName": "w-full",
-																				"source": {
-																				  "method": "get",
-																				  "url": "/service/api/amis-metadata-objects/objects/${detail_field_fullname|split:.|first}/fields/options",
-																				  "cache": 60000,
-																				  "headers": {
-																					"Authorization": "Bearer ${context.tenantId},${context.authToken}"
-																				  },
-																				  "sendOn": "${!!detail_field_fullname && !detail_field_fullname.value}"
-																				},
-																				"searchable": true,
+																				"label": "${'flows.addFormFields.binding_objects' | t}",
+																				"type": "select",
+																				"name": "object_name",
+																				"id": "u:4e769995f638",
+																				"required": true,
 																				"joinValues": false,
 																				"extractValue": true,
-																				"mode": "inline",
-																				"id": "u:a85f62af394f",
-																				"name": "field_names",
-																				"sortable": true
-																			  },
-																			  "id": "u:ce65d4020107",
-																			  "placeholder": "-"
-																			}
-																		  ],
-																		  "headerToolbar": [
-																			{
-																			  "type": "button",
-																			  "actionType": "dialog",
-																			  "dialog": {
-																				"title": "${'flows.addFormFields.select_subform' | t}",
-																				"body": [
-																				  {
-																					"type": "transfer",
-																					"name": "picked_related_lists",
-																					"sortable": true,
-																					"source": "${related_lists_options}",
-																					"value": "${instance_table_fields|pick:detail_field_fullname | split}",
-																					"joinValues": false,
-																					"extractValue": true,
-																					"searchable": true,
-																					"id": "u:ab6a6c9c8677"
-																				  }
-																				],
-																				"onEvent": {
-																				  "confirm": {
-																					"actions": [
-																					  {
-																						"actionType": "custom",
-																						"script": "const instance_table_fields = [];\nconst picked_related_lists = _.cloneDeep(event.data.picked_related_lists);\n_.forEach(picked_related_lists, function (related_list) {\n  const table_related_list = _.find(event.data.instance_table_fields, { detail_field_fullname: related_list });\n  if (table_related_list) {\n    instance_table_fields.push(table_related_list)\n  } else {\n    instance_table_fields.push({\n      detail_field_fullname: related_list\n    })\n  }\n})\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_table_fields\n    }\n  }\n});"
-																					  }
-																					]
-																				  }
+																				"labelField": "label",
+																				"valueField": "value",
+																				"labelClassName": "text-left",
+																				"en-US": {
+																					"label": "Object"
 																				},
-																				"type": "dialog",
-																				"id": "u:3663990f226a",
-																				"closeOnEsc": false,
-																				"closeOnOutside": false,
-																				"size": "lg",
-																				"showCloseButton": true
-																			  },
-																			  "className": "mb-2",
-																			  "label": "${'flows.addFormFields.select_subform' | t}",
-																			  "id": "u:b9a5d3b611d7"
+																				"checkAll": false,
+																				"searchable": true,
+																				"source": {
+																					"method": "get",
+																					"url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/options",
+																					"headers": {
+																						"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																					}
+																				},
+																				"multiple": false
+																			},
+																			{
+																				"type": "tabs",
+																				"tabs": [
+																					{
+																						"title": "${'flows.addFormFields.application_form_fields' | t}",
+																						"body": [
+																							{
+																								"type": "service",
+																								"body": [
+																									{
+																										"name": "instance_fields",
+																										"type": "steedos-input-table",
+																										"editable": true,
+																										"removable": true,
+																										"showIndex": true,
+																										"fields": [
+																											{
+																												"name": "name",
+																												"label": "${'flows.addFormFields.field' | t}",
+																												"type": "select",
+																												"amis": {
+																													"source": "${fields_options}",
+																													"menuTpl": "",
+																													"id": "u:beecbd5b6b69"
+																												},
+																												"id": "u:b95c69a1cd84"
+																											},
+																											{
+																												"name": "required",
+																												"label": "${'flows.addFormFields.required' | t}",
+																												"type": "boolean",
+																												"id": "u:e54afb5cc05c",
+																												"placeholder": "-"
+																											}
+																										],
+																										"headerToolbar": [
+																											{
+																												"type": "button",
+																												"actionType": "dialog",
+																												"dialog": {
+																													"title": "${'flows.addFormFields.select_fields' | t}",
+																													"body": [
+																														{
+																															"type": "transfer",
+																															"itemHeight": 40,
+																															"name": "picked_fields",
+																															"sortable": true,
+																															"source": "${fields_options}",
+																															"value": "${instance_fields|pick:name}",
+																															"searchable": true,
+																															"joinValues": false,
+																															"extractValue": true,
+																															"id": "u:502c4ecd81b6"
+																														}
+																													],
+																													"onEvent": {
+																														"confirm": {
+																															"actions": [
+																																{
+																																	"actionType": "custom",
+																																	"script": "var instance_fields = [];\nvar picked_fields = _.cloneDeep(event.data.picked_fields);\n\n_.forEach(picked_fields, function (field) {\n  var table_field = _.find(event.data.instance_fields, { name: field });\n  if (table_field) {\n    instance_fields.push(table_field);\n  } else {\n    instance_fields.push({\n      name: field\n    });\n  }\n});\n\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_fields\n    }\n  }\n});\n"
+																																}
+																															]
+																														}
+																													},
+																													"type": "dialog",
+																													"id": "u:c405734543e0",
+																													"closeOnEsc": false,
+																													"closeOnOutside": false,
+																													"size": "lg",
+																													"showCloseButton": true
+																												},
+																												"className": "mb-2",
+																												"label": "${'flows.addFormFields.select_fields' | t}",
+																												"id": "u:853b890ab524"
+																											}
+																										],
+																										"amis": {
+																											"columnsTogglable": false
+																										},
+																										"dialog": {
+																											"title": "字段明细"
+																										},
+																										"columns": [
+																											{
+																												"name": "name",
+																												"inlineEditMode": false
+																											},
+																											{
+																												"name": "required"
+																											}
+																										],
+																										"inlineEditMode": true,
+																										"id": "u:22121edc42b1"
+																									}
+																								],
+																								"id": "u:ac5b7818b88f",
+																								"affixFooter": false,
+																								"api": {
+																									"method": "get",
+																									"url": "/service/api/amis-metadata-objects/objects/${object_name}/fields/layout_options?showHiddenField=true",
+																									"adaptor": "let data = payload.data;\ndata.fields_options = data.options;\n\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+																									"sendOn": "!!this.object_name",
+																									"data": null,
+																									"headers": {
+																										"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																									}
+																								},
+																								"className": "col-span-2 m-0",
+																								"placeholder": "-",
+																								"messages": {}
+																							}
+																						]
+																					},
+																					{
+																						"title": "${'flows.addFormFields.application_form_subform' | t}",
+																						"body": [
+																							{
+																								"type": "service",
+																								"id": "u:dbadaff47153",
+																								"api": {
+																									"method": "get",
+																									"url": "/service/api/amis-metadata-objects/objects/${object_name}/relatedLists/options",
+																									"sendOn": "!!this.object_name",
+																									"adaptor": "let data = payload.data;\n// 移除 附件、任务、备忘、日程、审批单、历史步骤、批准步骤、审计日志\nconst needToRemove = ['cms_files.parent', 'tasks.related_to', 'notes.related_to', 'events.related_to', 'instances.record_ids', 'approvals.related_to', 'process_instance_history.target_object', 'audit_records.related_to'];\nconst options = [];\nfor (const item of data.options) {\n  if (!needToRemove.includes(item.value)) {\n    options.push(item);\n  }\n}\ndata.related_lists_options = options;\ndelete data.options\npayload.data = data;\nreturn payload;\n",
+																									"headers": {
+																										"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																									}
+																								},
+																								"affixFooter": false,
+																								"body": [
+																									{
+																										"name": "instance_table_fields",
+																										"type": "steedos-input-table",
+																										"editable": true,
+																										"removable": true,
+																										"draggable": false,
+																										"showIndex": true,
+																										"dialog": {
+																											"title": "子表明细"
+																										},
+																										"columns": [
+																											{
+																												"name": "detail_field_fullname",
+																												"inlineEditMode": false
+																											},
+																											"label",
+																											"field_names"
+																										],
+																										"inlineEditMode": true,
+																										"fields": [
+																											{
+																												"name": "detail_field_fullname",
+																												"label": "${'flows.addFormFields.subform_name' | t}",
+																												"type": "select",
+																												"amis": {
+																													"source": "${related_lists_options}",
+																													"menuTpl": "",
+																													"id": "u:beecbd5b6b69"
+																												},
+																												"id": "u:5204fc0fbe1c"
+																											},
+																											{
+																												"name": "label",
+																												"label": "${'flows.addFormFields.show_heading' | t}",
+																												"type": "text",
+																												"id": "u:1267e4351d66",
+																												"placeholder": "-"
+																											},
+																											{
+																												"name": "field_names",
+																												"label": "${'flows.addFormFields.displayed_fields' | t}",
+																												"type": "lookup",
+																												"amis": {
+																													"type": "transfer-picker",
+																													"itemHeight": 40,
+																													"className": "w-full steedos-flow-transfer-picker",
+																													"inputClassName": "w-full",
+																													"source": {
+																														"method": "get",
+																														"url": "/service/api/amis-metadata-objects/objects/${detail_field_fullname|split:.|first}/fields/options",
+																														"cache": 60000,
+																														"headers": {
+																															"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																														},
+																														"sendOn": "${!!detail_field_fullname && !detail_field_fullname.value}"
+																													},
+																													"searchable": true,
+																													"joinValues": false,
+																													"extractValue": true,
+																													"mode": "inline",
+																													"id": "u:a85f62af394f",
+																													"name": "field_names",
+																													"sortable": true
+																												},
+																												"id": "u:ce65d4020107",
+																												"placeholder": "-"
+																											}
+																										],
+																										"headerToolbar": [
+																											{
+																												"type": "button",
+																												"actionType": "dialog",
+																												"dialog": {
+																													"title": "${'flows.addFormFields.select_subform' | t}",
+																													"body": [
+																														{
+																															"type": "transfer",
+																															"itemHeight": 40,
+																															"name": "picked_related_lists",
+																															"sortable": true,
+																															"source": "${related_lists_options}",
+																															"value": "${instance_table_fields|pick:detail_field_fullname | split}",
+																															"joinValues": false,
+																															"extractValue": true,
+																															"searchable": true,
+																															"id": "u:ab6a6c9c8677"
+																														}
+																													],
+																													"onEvent": {
+																														"confirm": {
+																															"actions": [
+																																{
+																																	"actionType": "custom",
+																																	"script": "const instance_table_fields = [];\nconst picked_related_lists = _.cloneDeep(event.data.picked_related_lists);\n_.forEach(picked_related_lists, function (related_list) {\n  const table_related_list = _.find(event.data.instance_table_fields, { detail_field_fullname: related_list });\n  if (table_related_list) {\n    instance_table_fields.push(table_related_list)\n  } else {\n    instance_table_fields.push({\n      detail_field_fullname: related_list\n    })\n  }\n})\ndoAction({\n  \"componentId\": \"addFormFieldsForm\",\n  \"actionType\": \"setValue\",\n  \"args\": {\n    \"value\": {\n      instance_table_fields\n    }\n  }\n});"
+																																}
+																															]
+																														}
+																													},
+																													"type": "dialog",
+																													"id": "u:3663990f226a",
+																													"closeOnEsc": false,
+																													"closeOnOutside": false,
+																													"size": "lg",
+																													"showCloseButton": true
+																												},
+																												"className": "mb-2",
+																												"label": "${'flows.addFormFields.select_subform' | t}",
+																												"id": "u:b9a5d3b611d7"
+																											}
+																										],
+																										"id": "u:95aea10231d3"
+																									}
+																								],
+																								"messages": {}
+																							}
+																						]
+																					}
+																				]
 																			}
-																		  ],
-																		  "id": "u:95aea10231d3"
+																		],
+																		"mode": "normal",
+																		"initApi": {
+																			"method": "post",
+																			"url": "${context.rootUrl}/graphql",
+																			"sendOn": "!!this.recordId",
+																			"cache": 100,
+																			"adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n        return payload;\n        ",
+																			"data": {
+																				"query": "{data:flows(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,company_id,name,api_name,form,category,state,is_valid,current_no,description,help_text,created_by,modified_by,current,perms,object_name,instance_fields,instance_table_fields,instance_template,print_template,field_map,events,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state,_display:_ui{company_id,form,category,state,is_valid,current_no,created_by,modified_by,object_name,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
+																			},
+																			"headers": {
+																				"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																			}
+																		},
+																		"api": {
+																			"method": "post",
+																			"url": "${context.rootUrl}/am/forms/addFieldsFromObject",
+																			"data": {
+																				"objectName": "${objectName}",
+																				"$": "$$",
+																				"recordId": "${recordId}"
+																			},
+																			"requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.instance_fields, object_name: api.body.$.object_name}",
+																			"responseData": {
+																				"recordId": "${record._id}"
+																			},
+																			"adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
+																			"headers": {
+																				"Authorization": "Bearer ${context.tenantId},${context.authToken}"
+																			}
+																		},
+																		"onEvent": {
+																			"submitSucc": {
+																				"actions": [
+																					{
+																						"componentId": "form_forms",
+																						"actionType": "reload"
+																					}
+																				]
+																			}
 																		}
-																	  ],
-																	  "messages": {}
 																	}
-																  ]
-																}
-															  ]
+																],
+																"id": "u:836df7acd992"
 															}
-														  ],
-														  "mode": "normal",
-														  "initApi": {
-															"method": "post",
-															"url": "${context.rootUrl}/graphql",
-															"sendOn": "!!this.recordId",
-															"cache": 100,
-															"adaptor": "\n            if(payload.data.data){\n                var data = payload.data.data[0];\n                if(data){\n                    \n                    \n                    //初始化接口返回的字段移除字段值为null的字段\n                    for (key in data){\n                        if(data[key] === null){\n                            delete data[key];\n                        }\n                    }\n                };\n                payload.data = data;\n                delete payload.extensions;\n            }\n        return payload;\n        ",
-															"data": {
-															  "query": "{data:flows(filters:[\"_id\", \"=\", \"${recordId}\"]){_id,company_id,name,api_name,form,category,state,is_valid,current_no,description,help_text,created_by,modified_by,current,perms,object_name,instance_fields,instance_table_fields,instance_template,print_template,field_map,events,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state,_display:_ui{company_id,form,category,state,is_valid,current_no,created_by,modified_by,object_name,auto_remind,sort_no,timeout_auto_submit,allow_select_step,created,modified,instance_state}, \n    recordPermissions: _permissions{\n        allowCreate,\n        allowCreateFiles,\n        allowDelete,\n        allowDeleteFiles,\n        allowEdit,\n        allowEditFiles,\n        allowRead,\n        allowReadFiles,\n        disabled_actions,\n        disabled_list_views,\n        field_permissions,\n        modifyAllFiles,\n        modifyAllRecords,\n        modifyAssignCompanysRecords,\n        modifyCompanyRecords,\n        uneditable_fields,\n        unreadable_fields,\n        unrelated_objects,\n        viewAllFiles,\n        viewAllRecords,\n        viewAssignCompanysRecords,\n        viewCompanyRecords,\n      }\n    }}"
-															},
-															"headers": {
-															  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-															}
-														  },
-														  "api": {
-															"method": "post",
-															"url": "${context.rootUrl}/am/forms/addFieldsFromObject",
-															"data": {
-															  "objectName": "${objectName}",
-															  "$": "$$",
-															  "recordId": "${recordId}"
-															},
-															"requestAdaptor": "_.each(api.body.$.instance_table_fields, (item)=>{if(item.detail_field_fullname && _.isEmpty(item.field_names)){throw new Error('申请单子表未选择字段')}}); api.data={formId: api.body.$.form, instance_table_fields: api.body.$.instance_table_fields, instance_fields: api.body.$.instance_fields, object_name: api.body.$.object_name}",
-															"responseData": {
-															  "recordId": "${record._id}"
-															},
-															"adaptor": "\n            if(payload.errors){\n                payload.status = 2;\n                payload.msg = payload.errors[0].message;\n            }else{payload.message='字段添加成功';}\n            return payload;\n        ",
-															"headers": {
-															  "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-															}
-														  },
-														  "onEvent": {
-															"submitSucc": {
-															  "actions": [
-																{
-																  "componentId": "form_forms",
-																  "actionType": "reload"
-																}
-															  ]
-															}
-														  }
 														}
-													  ],
-													  "id": "u:836df7acd992"
-													}
-												  }
-												],
-												"weight": 0
-											  }
+													],
+													"weight": 0
+												}
 											},
 											"className": "m-0"
 										}
-									]
+									],
+									"id": "u:46eb673db7a7"
 								},
 								{
 									"type": "steedos-object-form",
@@ -647,7 +631,7 @@
 										"current.fields.$.visibleOn"
 									],
 									"fieldsExtend": "{\n  \"current\": {\n    \"label\": false\n  },\n  \"current.fields\": {\n    \"label\": false\n  }\n}",
-									"formDataFilter": "if(!form.onEvent.change){form.onEvent.change = {actions: []}}; form.onEvent.change.actions.push({actionType: \"custom\", script:\"console.log('onChange event.data', event.data)\"}, {          \"actionType\": \"ajax\",          \"outputVar\": \"responseResult\",          \"args\": {            \"options\": {              \"silent\": false            },            \"api\": {              \"url\": \"/api/workflow/updateFormFields\",              \"method\": \"post\",              \"requestAdaptor\": \"console.log('api.data', api, 'context', context);api.data = { formId: context.current.form, fields: context.current.fields };return api;\",              \"adaptor\": \"\",              \"messages\": {              },              \"dataType\": \"json\"            }          }        })"
+									"formDataFilter": "if (!form.onEvent.change) {\n  form.onEvent.change = { actions: [] }\n};\nform.onEvent.change.actions.push({\n  actionType: \"custom\",\n  script: \"console.log('onChange event.data', event.data)\"\n}, {\n  \"actionType\": \"ajax\",\n  \"outputVar\": \"responseResult\",\n  \"args\": {\n    \"options\": { \"silent\": false },\n    \"api\": {\n      \"url\": \"/api/workflow/updateFormFields\",\n      \"method\": \"post\",\n      \"requestAdaptor\": `\n        console.log('api.data', api, 'context', context);\n        var fields = (context.current.fields || []).map(function(item){\n          // 有时编辑children子行记录时未同步到fields属性值中，造成保存数据不成功\n          if(item.children){\n            var newItem = _.clone(item);\n            newItem.fields = newItem.children;\n            delete newItem.children;\n            return newItem;\n          }\n          else{\n            return item;\n          }\n        });\n        api.data = { \n          formId: context.current.form, \n          fields: fields\n        };\n        return api;\n      `,\n      \"adaptor\": \"\",\n      \"messages\": {},\n      \"dataType\": \"json\"\n    }\n  }\n})"
 								}
 							],
 							"id": "u:827750209c5d",
@@ -681,7 +665,7 @@
 							]
 						}
 					],
-					"className": "object-detail-tabs mt-3 bg-white border-b sm:rounded sm:border border-gray-300",
+					"className": "steedos-record-tabs bg-white mt-3 border-y",
 					"linksClassName": "",
 					"id": "u:87e566922df2",
 					"tabsMode": "vertical",
@@ -702,15 +686,35 @@
 	],
 	"data": {
 		"objectName": "flows",
-		"recordId": "BayiYu3sk2hv3M2HW",
+		"recordId": "9f69f849138f6a0d0ab16526",
 		"context": {
 			"rootUrl": "http://127.0.0.1:5800",
-			"tenantId": "hKdnwE55WcnWveYxS",
-			"userId": "62ede4f62161e377e35de58c",
-			"authToken": "b6475c5536a26d23d3db84e96536e08e82e1e726380cdd5cb09fc977e1d6e57c08fb23d7a1090006189d3d"
+			"tenantId": "654300b5074594d15147bcfa",
+			"userId": "654300a4074594d15147bcf8",
+			"authToken": "04ede29502d1485a485bc7f1997da4d646454ce2b23ad02705d4a13bcdaa0c79785dee779501216eae4505"
 		}
 	},
 	"id": "page_flows_record_detail",
+	"css": {
+		".antd-InputGroup-addOn": {
+			"border": "none !important",
+			"color": "#5f5f5f38"
+		},
+		".antd-InputGroup-addOn:hover": {
+			"cursor": "pointer",
+			"color": "#5f5f5f"
+		},
+		".m--8": {
+			"margin": "-12px"
+		},
+		".page_flows_record_detail .antd-Combo-itemInner": {
+			"margin": "0"
+		},
+		".steedos-flow-transfer-picker .antd-Form-value": {
+			"width": "100%"
+		}
+	},
 	"name": "page_flows_record_detail",
-	"className": "page_flows_record_detail"
+	"className": "page_flows_record_detail",
+	"bodyClassName": "p-0"
 }

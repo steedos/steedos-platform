@@ -94,9 +94,43 @@
             "type": "boolean",
             "description": "显示条目数"
         },
+        "is_enable":{
+            "type": "boolean",
+            "description": "启用"
+        },
+        "searchable_fields":{
+            "type": "array",
+            "description": "可搜索字段"
+        },
+        "enable_amis_schema":{
+            "type": "boolean",
+            "description": "是否使用 amis自定义列表"
+        },
+        "crud_mode":{
+            "type": "string",
+            "description": "crud组件mode属性，默认为table，可选table、cards 或者 list",
+            "enum": [
+                "table",
+                "cards",
+                "list"
+            ]
+        },
         "shared":{
             "type": "boolean",
-            "description": "是否共享"
+            "description": "是否共享到工作区"
+        },
+        "shared_to":{
+            "type": "string",
+            "description": "谁可以查看此列表视图？",
+            "enum": [
+                "mine",
+                "space",
+                "organizations"
+            ]
+        },
+        "shared_to_organizations":{
+            "type": "array",
+            "description": "共享列表视图给哪些组织？"
         },
         "scrolling_mode":{
             "type":"string",

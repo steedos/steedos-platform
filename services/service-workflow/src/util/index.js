@@ -10,16 +10,20 @@ const _ = (lodash = require("lodash"));
 const objectql = require('@steedos/objectql')
 
 const getFieldAmis = (field, static, fieldAmis = {}, ctx = { showBorderBottom: true }) => {
-    let className = ''
-    if (field.is_wide || field.type === 'group') {
-        if (field.type === 'table') {
-            className = 'col-span-2 m-0';
+    let className = '';
+    //在table内的字段，不应该加以下样式
+    if (ctx.inTable != true) {
+        if (field.is_wide || field.type === 'group') {
+            if (field.type === 'table') {
+                className = 'col-span-2 m-0';
+            } else {
+                className = 'col-span-2 m-1';
+            }
         } else {
-            className = 'col-span-2 m-1';
+            className = 'm-1';
         }
-    } else {
-        className = 'm-1';
     }
+    
     if (static) {
         fieldAmis.className = `${className} ${fieldAmis.className || ''}`;
         if (ctx.showBorderBottom && field.type != 'table' && ctx.inTable != true) {

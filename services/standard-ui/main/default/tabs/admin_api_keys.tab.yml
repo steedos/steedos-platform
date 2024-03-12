@@ -5,17 +5,17 @@ is_new_window: false
 label: API Key
 mobile: true
 permissions:
-  - permission: 'on'
+  - permission: 'off'
     permission_set: user
-  - permission: 'on'
+  - permission: 'off'
     permission_set: customer
-  - permission: 'on'
+  - permission: 'off'
     permission_set: supplier
   - permission: 'on'
     permission_set: admin
-  - permission: 'on'
+  - permission: 'off'
     permission_set: organization_admin
-  - permission: 'on'
+  - permission: 'off'
     permission_set: workflow_admin
 type: object
 object: api_keys

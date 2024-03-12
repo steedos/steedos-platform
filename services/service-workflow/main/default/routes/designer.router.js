@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-11-10 15:46:03
+ * @LastEditTime: 2024-02-22 14:50:14
  * @Description: 
  */
 'use strict';
@@ -10,6 +10,7 @@
 const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
+const { getObject } = require('@steedos/objectql')
 
 var DesignerAPI = {
     getAbsoluteUrl: function (url) {
@@ -30,7 +31,7 @@ var DesignerAPI = {
     sendAuthTokenExpiredResponse: function (res) {
         return this.writeResponse(res, 401, "the auth_token has expired.");
     },
-    sendHtmlResponse: function (req, res, type) {
+    sendHtmlResponse: async function (req, res, type) {
         var error_msg, query, title, url;
         query = req.query;
         url = query.url;
@@ -46,6 +47,14 @@ var DesignerAPI = {
             title = "Steedos Designer";
         }
         error_msg = "";
+
+		const space = await getObject("spaces").findOne(req.user.spaceId);
+
+		let faviconLinkHref = this.getAbsoluteUrl("/favicons/favicon.ico");
+
+        if(space && space.favicon){
+            faviconLinkHref = this.getAbsoluteUrl("/api/files/avatars/"+space.favicon);
+        }
         return this.writeResponse(res, 200, `<html>
         	<head>
         		<style>
@@ -84,7 +93,6 @@ var DesignerAPI = {
         		<meta charset="utf-8">
         		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         		<title>${title}</title>
-        		<link rel="icon" type="image/png" sizes="192x192" href="${this.getAbsoluteUrl("/favicons/android-chrome-192x192.png")}">
         		<link rel="manifest" href="${this.getAbsoluteUrl("/favicons/manifest.json")}">
         		<meta name="mobile-web-app-capable" content="yes">
         		<meta name="theme-color" content="#000">
@@ -101,12 +109,7 @@ var DesignerAPI = {
         		<meta name="apple-mobile-web-app-capable" content="yes">
         		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         		<meta name="apple-mobile-web-app-title">
-        		<link rel="icon" type="image/png" sizes="228x228" href="${this.getAbsoluteUrl("/favicons/coast-228x228.png")}">
-        		<link rel="icon" type="image/png" sizes="16x16" href="${this.getAbsoluteUrl("/favicons/favicon-16x16.png")}">
-        		<link rel="icon" type="image/png" sizes="32x32" href="${this.getAbsoluteUrl("/favicons/favicon-32x32.png")}">
-        		<link rel="icon" type="image/png" sizes="96x96" href="${this.getAbsoluteUrl("/favicons/favicon-96x96.png")}">
-        		<link rel="icon" type="image/png" sizes="230x230" href="${this.getAbsoluteUrl("/favicons/favicon-230x230.png")}">
-        		<link rel="shortcut icon" href="${this.getAbsoluteUrl("/favicons/favicon.ico")}">
+        		<link rel="shortcut icon" href="${faviconLinkHref}">
         		<link rel="yandex-tableau-widget" href="${this.getAbsoluteUrl("/favicons/yandex-browser-manifest.json")}">
         		<meta name="msapplication-TileColor" content="#fff">
         		<meta name="msapplication-TileImage" content="${this.getAbsoluteUrl("/favicons/mstile-144x144.png")}">
@@ -192,7 +195,7 @@ router.get('/api/workflow/designer', core.requireAuthentication, async function 
 		res.writeHead(200, {
 			"Content-Type": "text/html;charset=utf-8"
 		});
-        return DesignerAPI.sendHtmlResponse(req, res)
+        return await DesignerAPI.sendHtmlResponse(req, res)
     } catch (e) {
         res.status(200).send({
             errors: [{ errorMessage: e.message }]

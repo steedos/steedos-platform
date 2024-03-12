@@ -154,8 +154,18 @@ module.exports = {
             }
         });
 
-        setObj['traces.$.approves.' + index + '.is_read'] = true;
-        setObj['traces.$.approves.' + index + '.read_date'] = new Date();
+        // setObj['traces.$.approves.' + index + '.is_read'] = true;
+        // setObj['traces.$.approves.' + index + '.read_date'] = new Date();
+        const key_str = 'traces.$.approves.' + index + '.';
+        const approveDoc = {
+            is_read: true,
+            read_date: new Date()
+        }
+        for (const key in approveDoc) {
+            if (Object.hasOwnProperty.call(approveDoc, key)) {
+                setObj[key_str + key] = approveDoc[key]
+            }
+        }
 
 
         db.instances.update({
@@ -164,7 +174,7 @@ module.exports = {
         }, {
             $set: setObj
         });
-        update_instance_tasks(ins_id, trace_id, current_trace.approves[index]._id)
+        update_instance_tasks(ins_id, trace_id, current_trace.approves[index]._id, approveDoc)
         return true;
     },
 
@@ -190,19 +200,33 @@ module.exports = {
                     if (approve_id == a._id && a.type == 'cc' && a.handler == current_user_id && a.is_finished == false) {
                         var upobj = {};
                         var key_str = 'traces.$.approves.' + aidx + '.';
-                        upobj[key_str + 'is_finished'] = true;
-                        upobj[key_str + 'is_read'] = true;
-                        upobj[key_str + 'finish_date'] = new Date();
-                        upobj[key_str + 'judge'] = "submitted";
-                        upobj[key_str + 'cost_time'] = new Date() - a.start_date;
+                        const approveDoc = {
+                            'is_finished': true,
+                            'is_read': true,
+                            'finish_date': new Date(),
+                            'judge': "submitted",
+                            'cost_time': new Date() - a.start_date,
+                        }
+                        // upobj[key_str + 'is_finished'] = true;
+                        // upobj[key_str + 'is_read'] = true;
+                        // upobj[key_str + 'finish_date'] = new Date();
+                        // upobj[key_str + 'judge'] = "submitted";
+                        // upobj[key_str + 'cost_time'] = new Date() - a.start_date;
                         if (approve_id == a._id && !t.is_finished && ccHasEditPermission) {
                             myTrace = t;
                             var step = uuflowManager.getStep(instance, flow, t.step);
-                            upobj[key_str + "values"] = uuflowManager.getApproveValues(values, step["permissions"], instance.form, instance.form_version)
+                            // upobj[key_str + "values"] = uuflowManager.getApproveValues(values, step["permissions"], instance.form, instance.form_version)
+                            approveDoc['values'] = uuflowManager.getApproveValues(values, step["permissions"], instance.form, instance.form_version)
                         }
                         //设置意见，意见只添加到最后一条approve中
                         if (approve_id == a._id) {
-                            upobj[key_str + 'description'] = description;
+                            // upobj[key_str + 'description'] = description;
+                            approveDoc['description'] = description
+                        }
+                        for (const key in approveDoc) {
+                            if (Object.hasOwnProperty.call(approveDoc, key)) {
+                                upobj[key_str + key] = approveDoc[key]
+                            }
                         }
                         db.instances.update({
                             _id: ins_id,
@@ -211,7 +235,7 @@ module.exports = {
                             $set: upobj
                         })
                         // 更新
-                        update_instance_tasks(ins_id, a.trace, a._id)
+                        update_instance_tasks(ins_id, a.trace, a._id, approveDoc)
                     }
                 }
             }
@@ -422,10 +446,21 @@ module.exports = {
 
     cc_save: function (ins_id, description, myApprove, ccHasEditPermission) {
         var setObj = {};
+        const approveDoc = {}
 
         var instance = db.instances.findOne(ins_id);
         var traces = instance.traces;
         var current_user_id = this.userId;
+
+        var trace_id = myApprove.trace;
+        var approve_id = myApprove._id;
+
+        var current_trace = _.find(traces, function (t) {
+            return t._id == trace_id;
+        });
+        var current_approve = _.find(current_trace.approves, function (a) {
+            return a._id == approve_id;
+        });
 
         var myTrace;
 
@@ -467,6 +502,7 @@ module.exports = {
         });
 
         setObj['traces.$.approves.' + index + '.description'] = description;
+        approveDoc['description'] = description
 
         var updateObj = {};
 
@@ -486,6 +522,7 @@ module.exports = {
             // 计算extras
             var form = db.forms.findOne(instance.form);
             setObj.extras = uuflowManager.caculateExtras(setObj.values, form, instance.form_version);
+            approveDoc['extras'] = setObj.extras
 
             if (!_.isEmpty(change_values)) {
                 var pushObj = {};
@@ -494,9 +531,14 @@ module.exports = {
                     create: new Date()
                 }
                 updateObj.$push = pushObj;
+
+                const values_history = current_approve.values_history || []
+                values_history.push(pushObj[key_str + 'values_history'])
+                approveDoc['values_history'] = values_history
             }
 
             setObj.name = uuflowManager.getInstanceName(instance)
+            approveDoc['instance_name'] = setObj.name
         }
 
         updateObj.$set = setObj;
@@ -505,7 +547,7 @@ module.exports = {
             _id: ins_id,
             'traces._id': myApprove.trace
         }, updateObj);
-        update_instance_tasks(ins_id, myApprove.trace, myApprove._id)
+        update_instance_tasks(ins_id, myApprove.trace, myApprove._id, approveDoc)
         return true;
     }
 }

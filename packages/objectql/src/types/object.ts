@@ -97,6 +97,8 @@ abstract class SteedosObjectProperties {
     enable_inline_edit?: boolean
     enable_approvals?: boolean
     enable_process?: boolean
+    enable_split?: boolean
+    compactLayouts?: string[]
     is_view?: boolean
     hidden?: boolean
     description?: string
@@ -129,7 +131,7 @@ export interface SteedosObjectTypeConfig extends SteedosObjectProperties {
 
 export const _TRIGGERKEYS = ['beforeFind', 'beforeInsert', 'beforeUpdate', 'beforeDelete', 'afterFind', 'afterCount', 'afterFindOne', 'afterInsert', 'afterUpdate', 'afterDelete', 'beforeAggregate', 'afterAggregate']
 
-const properties = ['originalFields', 'enable_dataloader', 'label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging"]
+const properties = ['originalFields', 'enable_dataloader', 'label', 'icon', 'enable_search', 'sidebar', 'is_enable', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_api', 'enable_share', 'enable_instances', 'enable_chatter', 'enable_audit', 'enable_web_forms', 'enable_inline_edit', 'enable_approvals', 'enable_trash', 'enable_space_global', 'enable_tree', 'parent_field', 'children_field', 'enable_enhanced_lookup', 'enable_workflow', 'is_view', 'hidden', 'description', 'custom', 'owner', 'methods', '_id', 'relatedList', 'fields_serial_number', "is_enable", "in_development", "version", "paging", "enable_split", "compactLayouts", "field_groups"]
 
 export class SteedosObjectType extends SteedosObjectProperties {
 
@@ -1262,6 +1264,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return await this.callAdapter('directDelete', this.table_name, clonedId, userSession)
     }
 
+    async directUpdateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession){
+        doc = this.formatRecord(doc);
+        // await this.processUneditableFields(userSession, doc)
+        let clonedQueryFilters = queryFilters;
+        return await this.callAdapter('directUpdateMany', this.table_name, clonedQueryFilters, doc, userSession)
+    }
+
     async _makeNewID(){
         return await this._datasource._makeNewID(this.table_name);
     }
@@ -1514,7 +1523,18 @@ export class SteedosObjectType extends SteedosObjectProperties {
             pAll.push(this.callMetadataObjectServiceAction('get', { objectApiName: this.name }))
             pAll.push(getObjectLayouts(userSession.profile, userSession.spaceId, this.name))
             pAll.push(getObject("process_definition").find({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], ['active', '=', true]] }))
-            pAll.push(getObject("object_listviews").directFind({ filters: [['space', '=', userSession.spaceId], ['object_name', '=', this.name], [['owner', '=', userSession.userId], 'or', ['shared', '=', true]]] }))
+            pAll.push(getObject("object_listviews").directFind({
+                filters: [
+                    ['space', '=', userSession.spaceId],
+                    ['object_name', '=', this.name],
+                    [
+                        ['owner', '=', userSession.userId], 'or',
+                        ['shared', '=', true], 'or',
+                        ['shared_to', '=', "space"], 'or',
+                        [['shared_to', '=', "organizations"], ['shared_to_organizations', '=', userSession.organizations_parents]]
+                    ]
+                ]
+            }))
             pAll.push(FieldPermission.getObjectFieldsPermissionGroupRole(this.name))
             pAll.push(this.getRelationsInfo())
 
@@ -1612,7 +1632,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
         })
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
-        objectConfig.field_groups = objectLayout && objectLayout.field_groups
+
+        _.each(objectConfig.fields, (field)=>{
+            if(field && field.static){
+                let fieldAmis = field.amis || {};
+                fieldAmis.static = true;
+                Object.assign(field, {
+                    amis: fieldAmis
+                });
+            }
+        });
+
+        if(objectLayout && objectLayout.field_groups) {
+            objectConfig.field_groups = objectLayout.field_groups;
+        }
         
         if (spaceProcessDefinition.length > 0) {
             objectConfig.enable_process = true
@@ -1631,6 +1664,16 @@ export class SteedosObjectType extends SteedosObjectProperties {
             delete dbListView.created_by;
             delete dbListView.modified;
             delete dbListView.modified_by;
+
+            // 兼容列表视图共享规则原shared字段，改为shared_to，且优先认shared_to，老版本升级上来的历史数据中根据shared设置shared_to
+            if(!_.has(dbListView, "shared_to")) {
+                if(dbListView.shared === true){
+                    dbListView.shared_to = "space";
+                }
+                else{
+                    dbListView.shared_to = "mine";
+                }
+            }
             objectConfig.list_views[dbListView.name] = dbListView;
         })
         _.each(objectConfig.list_views, (value, key)=>{

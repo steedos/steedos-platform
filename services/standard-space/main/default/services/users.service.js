@@ -1,12 +1,14 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
- * @LastEditors: liaodaxue
- * @LastEditTime: 2023-12-18 16:20:42
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-27 15:20:23
  * @Description: 
  */
 "use strict";
 const { getObject, getSteedosConfig } = require("@steedos/objectql")
+const validator = require('validator');
+
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
@@ -76,7 +78,7 @@ module.exports = {
                     // 1 清空 登录tokens
                     await getObject('users').update(userId, {"services.resume.loginTokens": []})
                     // 2 设置 sessions 无效
-                    await getObject('sessions').updateMany(["userId", "=", userId], {"valid": false}) 
+                    await getObject('sessions').directUpdateMany(["userId", "=", userId], {"valid": false}) 
                     // 3 记录操作日志
                     await getObject('operation_logs').insert({
                         name: '注销所有登录',

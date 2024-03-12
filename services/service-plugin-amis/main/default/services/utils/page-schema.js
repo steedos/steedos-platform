@@ -49,8 +49,7 @@ const getListPageInitSchema = function (objectApiName) {
             "type": "steedos-object-listview",
             "objectApiName": objectApiName,
             "columnsTogglable": false,
-            "showHeader": true,
-            className: "sm:border bg-white sm:rounded border-gray-300 border-solid"
+            "showHeader": true
         }]
     }
 }
@@ -89,7 +88,7 @@ const getRecordPageInitSchema = async function (objectApiName, userSession) {
     }
     const content = {
         "type": "tabs",
-        "className": "sm:mt-3 bg-white sm:rounded sm:border border-gray-300 p-4",
+        "className": "steedos-record-tabs bg-white p-4 mt-3 border-y",
         "tabs": [
             detailed
         ]

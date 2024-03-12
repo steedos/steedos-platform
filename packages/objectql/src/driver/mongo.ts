@@ -423,6 +423,10 @@ export class SteedosMongoDriver implements SteedosDriver {
         return this.delete(tableName, id)
     }
 
+    async directUpdateMany(tableName: string, queryFilters: SteedosQueryFilters, data: Dictionary<any>) {
+        return this.updateMany(tableName, queryFilters, data)
+    }
+
     _makeNewID(tableName?: string){
         return new ObjectId().toHexString();
     }

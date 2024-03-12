@@ -52,6 +52,10 @@
   position: static
 }
 
+.\!static {
+  position: static !important
+}
+
 .fixed {
   position: fixed
 }
@@ -114,6 +118,10 @@
   margin-right: -2.75rem
 }
 
+.mt-3 {
+  margin-top: 0.75rem
+}
+
 .mb-4 {
   margin-bottom: 1rem
 }
@@ -126,16 +134,12 @@
   margin-right: 1rem
 }
 
-.-mt-3 {
-  margin-top: -0.75rem
-}
-
 .mb-2 {
   margin-bottom: 0.5rem
 }
 
-.mt-3 {
-  margin-top: 0.75rem
+.-mt-3 {
+  margin-top: -0.75rem
 }
 
 .mr-7 {
@@ -307,7 +311,8 @@
   border-width: 0px
 }
 
-.border-b {
+.border-y {
+  border-top-width: 1px;
   border-bottom-width: 1px
 }
 
@@ -315,8 +320,8 @@
   border-right-width: 1px
 }
 
-.border-solid {
-  border-style: solid
+.border-b {
+  border-bottom-width: 1px
 }
 
 .border-gray-300 {
@@ -379,11 +384,6 @@
   padding-bottom: 0px
 }
 
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem
-}
-
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem
@@ -407,10 +407,6 @@
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem
-}
-
-.pb-3 {
-  padding-bottom: 0.75rem
 }
 
 .pl-10 {
@@ -498,16 +494,12 @@
 }
 
 @media (min-width: 640px) {
-  .sm\:mt-3 {
-    margin-top: 0.75rem
+  .sm\:rounded-lg {
+    border-radius: 0.5rem
   }
 
   .sm\:rounded {
     border-radius: 0.25rem
-  }
-
-  .sm\:rounded-lg {
-    border-radius: 0.5rem
   }
 
   .sm\:border {

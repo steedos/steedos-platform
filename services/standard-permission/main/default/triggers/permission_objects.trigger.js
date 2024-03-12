@@ -29,7 +29,7 @@ const getInternalPermissionObjects = async function(){
             _.each(permission_set, function(v, code){
                 objectsPermissions.push(Object.assign({}, v, {
                     _id: `${code}_${objectName}`, 
-                    name: `${code}_${objectName}`, 
+                    name: `${objectName}.${code}`, 
                     permission_set_id: code, 
                     object_name: objectName,
                     allowCreateListViews: v.allowCreateListViews == false ? false : true

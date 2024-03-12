@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-14 10:43:21
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-11 14:28:56
  * @Description: 
  */
 "use strict";
@@ -187,6 +187,26 @@ module.exports = {
                 return await obj.updateMany(queryFilters, data, userSession)
             }
         },
+        directUpdateMany: {
+            params: {
+                objectName: { type: "string" },
+                queryFilters: { type: "array", items: "any" },
+                doc: { type: "object" }
+            },
+            async handler(ctx) {
+                const userSession = ctx.meta.user;
+                const { objectName, queryFilters, doc } = ctx.params;
+                const obj = getObject(objectName)
+                let data = '';
+                if (_.isString(doc)) {
+                    data = JSON.parse(doc);
+                } else {
+                    data = JSON.parse(JSON.stringify(doc));
+                }
+                delete data.space;
+                return await obj.directUpdateMany(queryFilters, data, userSession)
+            }
+        },
         delete: {
             params: {
                 objectName: { type: "string" },
@@ -347,6 +367,16 @@ module.exports = {
                 const { objectName } = ctx.params;
                 const obj = getObject(objectName)
                 return await obj._makeNewID();
+            }
+        },
+        absoluteUrl: {
+            params: {
+                path: { type: "string" },
+                options: { type: "object", optional: true }
+            },
+            async handler(ctx) {
+                const { path, options } = ctx.params;
+                return objectql.absoluteUrl(path, options);
             }
         },
         getRecordAbsoluteUrl: {
@@ -599,6 +629,9 @@ module.exports = {
             return doc;
         },
         getPrimarySpaceId: async function () {
+            if(this.primarySpaceId){
+                return this.primarySpaceId;
+            }
             const steedosConfig = objectql.getSteedosConfig();
             let spaceId;
             if (steedosConfig && steedosConfig.tenant && steedosConfig.tenant._id) {
@@ -616,7 +649,8 @@ module.exports = {
                     }
                 }
             }
-            return spaceId
+            this.primarySpaceId = spaceId
+            return this.primarySpaceId
         }
     },
 

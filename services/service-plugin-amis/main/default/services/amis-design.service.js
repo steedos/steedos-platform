@@ -140,7 +140,7 @@ module.exports = {
                         }
 
                         const objectListViews = objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
-                            filters: [['object_name', '=', object.name],  ['shared', '=', true] ],
+                            filters: [['object_name', '=', object.name], [['shared', '=', true], 'or',['shared_to', '=', "space"]]],
                             fields: "_id, name, label"
                         }, spaceId);
 
@@ -175,8 +175,7 @@ module.exports = {
                 };
 
                 const objects = objectql.getSteedosSchema().metadataDriver.find(allObjects, query, spaceId);
-
-                const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '!=', false]]})
+                const dbListViews = await objectql.getObject('object_listviews').directFind({filters: [['shared', '=', true], 'or',['shared_to', '=', "space"]]})
 
                 _.each(objects, (object)=>{
                     if(object && object.name){
@@ -205,7 +204,7 @@ module.exports = {
                         }
 
                         const objectListViews = objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
-                            filters: [['object_name', '=', object.name],  ['shared', '=', true] ],
+                            filters: [['object_name', '=', object.name], [['shared', '=', true], 'or',['shared_to', '=', "space"]]],
                             fields: "_id, name, label"
                         }, spaceId);
 
@@ -345,7 +344,7 @@ module.exports = {
                         }
 
                         const objectListViews = objectql.getSteedosSchema().metadataDriver.find(dbListViews, {
-                            filters: [['object_name', '=', object.name],  ['shared', '=', true] ],
+                            filters: [['object_name', '=', object.name], [['shared', '=', true], 'or',['shared_to', '=', "space"]]],
                             fields: "_id, name, label"
                         }, spaceId);
 

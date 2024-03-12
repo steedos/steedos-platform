@@ -31,6 +31,7 @@ fields:
     amis:
       showIndex: true
       columns: ["workflow_field", "object_field"]
+      enableDialog: false
   field_map.$.workflow_field:
     label: Field of Workflow
     type: lookup
@@ -90,6 +91,7 @@ fields:
     amis:
       showIndex: true
       columns: ["object_field","workflow_field"]
+      enableDialog: false
   field_map_back.$.object_field:
     label: Field of Object
     type: lookup

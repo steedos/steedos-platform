@@ -130,20 +130,32 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
   let output = [];
   let data = {};
   let monitorIsUnfolded = false;
-  let appFilter = `,filters:["app","=","${appId}"]`;
-  if(appId == "approve_workflow"){
-    appFilter = "";
-  }
   let categoriesData = await objectql.broker.call('api.graphql', {
     query: `
       query {
-        categories(sort:"sort_no desc"${appFilter}){
-          _id
+        categories(sort:"sort_no desc"){
+          _id,
+          app__expand{
+            code
+          }
         }
       }
     `}
   )
-  let currentAppCategories = lodash.map(categoriesData.data.categories, '_id');
+  let currentAppCategories = [];
+  if(appId == "approve_workflow"){
+    currentAppCategories = categoriesData.data.categories;
+  }else{
+    currentAppCategories = lodash.filter(categoriesData.data.categories, (category) => {
+      if(category.app__expand?.code == appId) return true;
+      else return false;
+    })
+    if(currentAppCategories.length == 0) {
+      //如果没有任何分类绑定该app，则该app显示所有分类（该规则为审批王规则）
+      currentAppCategories = categoriesData.data.categories;
+    }
+  }
+  let categoriesIds = lodash.map(currentAppCategories, '_id');
   if (!hasFlowsPer) {
     const flowIds = await new Promise(function (resolve, reject) {
       Fiber(function () {
@@ -158,7 +170,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     if (hasFlowsPer) {
       let query = `
         query {
-          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(currentAppCategories)}]],sort:"sort_no desc"){
+          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}
@@ -173,7 +185,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     data = await objectql.broker.call('api.graphql', {
       query: `
         query {
-          flows(filters:["category","in",${JSON.stringify(currentAppCategories)}],sort:"sort_no desc"){
+          flows(filters:[["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
             _id,
             name,
             category__expand{_id,name}

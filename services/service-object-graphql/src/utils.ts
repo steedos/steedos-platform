@@ -61,9 +61,9 @@ export function formatBasicFieldValue(valueType, field, value, objectConfig, use
             return value ? moment.utc(value).format("HH:mm") : '';
         case 'number':
         case 'currency':
-            return numberToString(value, field.scale);
+            return numberToString(value, field.scale, field.enable_thousands === false);
         case 'percent':
-            const str = numberToString(value * 100, field.scale);
+            const str = numberToString(value * 100, field.scale, field.enable_thousands === false);
             return str ? `${str}%` : ''
         case 'password':
             return _.isString(value) ? "******" : ""

@@ -61,6 +61,7 @@
                         {
                           "type": "transfer",
                           "name": "picked_buttons",
+                          "itemHeight": 40,
                           "sortable": true,
                           "source": {
                             "method": "get",
@@ -115,7 +116,7 @@
                     "name": "visible_on"
                   }
                 ],
-                "inlineEditMode": true
+                "enableDialog": false
               }
             },
             "fields": {
@@ -179,6 +180,22 @@
                         "placeholder": "-"
                       }
                     ],
+                    "columns": [
+                      {
+                        "name": "field_name",
+                        "inlineEditMode": false
+                      },
+                      {
+                        "name": "is_readonly",
+                        "width": 50
+                      },
+                      {
+                        "name": "is_required",
+                        "width": 50
+                      },
+                      "group",
+                      "visible_on"
+                    ],
                     "headerToolbar": [
                       {
                         "type": "button",
@@ -189,6 +206,7 @@
                             {
                               "type": "transfer",
                               "name": "picked_fields",
+                              "itemHeight": 40,
                               "sortable": true,
                               "source": "${fields_options}",
                               "value": "${fields|pick:field_name|split}",
@@ -238,6 +256,7 @@
                                   "editable": true,
                                   "showIndex": true,
                                   "removable": true,
+                                  "inlineEditMode": true,
                                   "fields": [
                                     {
                                       "name": "group_name",
@@ -249,6 +268,22 @@
                                       "type": "text",
                                       "name": "visible_on",
                                       "label": "${'object_layouts.object_layouts_form.visible_on' | t}"
+                                    },
+                                    {
+                                      "type": "boolean",
+                                      "name": "collapsed",
+                                      "label": "${'object_layouts.object_layouts_form.collapsed' | t}"
+                                    }
+                                  ],
+                                  "columns": [
+                                    {
+                                      "name": "group_name",
+                                      "inlineEditMode": false
+                                    },
+                                    "visible_on",
+                                    {
+                                      "name": "collapsed",
+                                      "width": 50
                                     }
                                   ],
                                   "id": "u:e9f43ef94d08"
@@ -306,7 +341,8 @@
                           ]
                         }
                       }
-                    }
+                    },
+                    "enableDialog": false
                   }
                 ],
                 "id": "u:ac5b7818b88f",
@@ -328,7 +364,7 @@
                     "actions": [
                       {
                         "actionType": "custom",
-                        "script": "const mixingGroupsFromFields = function (input, formData) {  const groupsOptions = input.field_groups_options;  const groups = formData.field_groups || []; const object_field_groups = formData.object_field_groups || []; const groupsForMixing = groupsOptions.map(function (item) {    return {      group_name: item    }  });  const mixedGroups = lodash.unionBy(groups, groupsForMixing, object_field_groups, \"group_name\");  return {    field_groups: mixedGroups  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: \"object-layout-form\",  args: {    value: mixingGroupsFromFields(eventData, context.props.data)  }});"
+                        "script": "const mixingGroupsFromFields = function (input, formData) {  const groupsOptions = input.field_groups_options;  const groups = formData.field_groups || []; const object_field_groups = formData.object_field_groups || []; const groupsForMixing = groupsOptions.map(function (item) {    return {      group_name: item    }  });  const mixedGroups = lodash.unionBy(groups, object_field_groups, groupsForMixing, \"group_name\");  return {    field_groups: mixedGroups  }};const eventData = event.data;doAction({  actionType: 'setValue',  componentId: \"object-layout-form\",  args: {    value: mixingGroupsFromFields(eventData, context.props.data)  }});"
                       }
                     ]
                   }
@@ -444,7 +480,7 @@
                       {
                         "name": "visible_on",
                         "label": "${'object_layouts.object_layouts_form.visibile_on' | t}",
-                        "type": "text",
+                        "type": "textarea",
                         "breakpoint": "*",
                         "id": "u:1e1dc52d7c33"
                       },
@@ -465,6 +501,7 @@
                           "body": [
                             {
                               "type": "transfer",
+                              "itemHeight": 40,
                               "name": "picked_related_lists",
                               "sortable": true,
                               "source": "${related_lists_options}",

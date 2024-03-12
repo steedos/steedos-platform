@@ -151,6 +151,7 @@
                                     data: ${masterObject.name}(filters:["${idFieldName}", "=", "${FlowRouter.getParam("record_id")}"]){
                                         ${idFieldName === relatedKeyRefToField ? idFieldName : idFieldName+','+relatedKeyRefToField},
                                         ${masterObject.NAME_FIELD_KEY},
+                                        locked,
                                         recordPermissions: _permissions{
                                             allowCreate,
                                             allowCreateFiles,
@@ -190,7 +191,8 @@
                                     record: {
                                         "${idFieldName}": data["${idFieldName}"], 
                                         "${masterObject.NAME_FIELD_KEY}": data["${masterObject.NAME_FIELD_KEY}"], 
-                                        "${relatedKeyRefToField}": data["${relatedKeyRefToField}"]
+                                        "${relatedKeyRefToField}": data["${relatedKeyRefToField}"],
+                                        "locked": data.locked
                                     }
                                 };
                             }
@@ -910,12 +912,12 @@
                                 }
                             ],
                         },
-                        {
-                            "type": "steedos-app-launcher",
-                            "showAppName": false,
-                            "appId": "${app.id}",
-                            "visibleOn": "${isMobile}"
-                        }
+                        // {
+                        //     "type": "steedos-app-launcher",
+                        //     "showAppName": false,
+                        //     "appId": "${app.id}",
+                        //     "visibleOn": "${isMobile}"
+                        // }
                     ]
                     },
                   ],

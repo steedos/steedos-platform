@@ -1,14 +1,13 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-10 13:47:47
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2023-03-17 10:18:04
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-02-28 10:34:44
  * @Description: 
  */
 
 const express = require("express");
 const router = express.Router();
-const core = require('@steedos/core');
 const {
     getCollection,
     createFileReadStream
@@ -71,17 +70,7 @@ router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:f
 
         const { collectionName: FS_COLLECTION_NAME, id } = req.params;
 
-        if (!(process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC).split(',').includes(FS_COLLECTION_NAME)) {
-            // 手动认证
-            let user = await steedosAuth.auth(req, res);
-            if (user.userId) {
-                req.user = user;
-            }
-            if (!req.user) {
-                res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
-                return;
-            }
-        }
+        let allowAnonymousDownloads = false;
 
         const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
 
@@ -91,6 +80,29 @@ router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:f
 
         if (!fileDoc) {
             throw new Error(`文件不存在`);
+        }
+
+        // 查找cms_files记录
+        const cmsFileId = fileDoc.metadata.parent;
+        if (cmsFileId) {
+            const cmsFileCol = await getCollection('cms_files')
+            const cmsFileDoc = await cmsFileCol.findOne({ _id: cmsFileId }, { fields: { allow_anonymous_downloads: 1 } });
+            if (cmsFileDoc && cmsFileDoc.allow_anonymous_downloads) {
+                allowAnonymousDownloads = true
+            }
+        }
+
+        if (!allowAnonymousDownloads &&
+            !(process.env.STEEDOS_CFS_DOWNLOAD_PUBLIC).split(',').includes(FS_COLLECTION_NAME)) {
+            // 手动认证
+            let user = await steedosAuth.auth(req, res);
+            if (user.userId) {
+                req.user = user;
+            }
+            if (!req.user) {
+                res.status(401).send({ status: 'error', message: 'You must be logged in to do this.' });
+                return;
+            }
         }
 
         const copyInfo = fileDoc.copies[FS_COLLECTION_NAME];
@@ -106,9 +118,9 @@ router.get(['/api/files/:collectionName/:id', '/api/files/:collectionName/:id/:f
 
         // Set the content type for file
         if (typeof type === "string") {
-            res.setHeader('Content-Type', type);
+            res.setHeader('Content-Type', type + ";charset=utf-8");
         } else {
-            res.setHeader('Content-Type', 'application/octet-stream');
+            res.setHeader('Content-Type', 'application/octet-stream;charset=utf-8');
         }
 
         // Add 'Content-Disposition' header if requested a download/attachment URL

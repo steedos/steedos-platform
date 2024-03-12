@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-30 10:13:13
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-02-29 10:24:41
  * @Description: 
  */
 "use strict";
@@ -116,7 +116,7 @@ module.exports = {
 				}
 				if(data.is_system){
 					// 'label' 先禁止编辑label , 目前由于i18n的问题导致 label无效.
-					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior']);
+					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior', 'enable_thousands', 'autonumber_enable_modify', 'auto_fill_mapping']);
 				}
                 return object.update(id, data, userSession)
 			},
@@ -167,6 +167,9 @@ module.exports = {
 				const dbRecord = await object.directFind({filters: ['_id','=',id]});
 				if(dbRecord.length === 0){
 					// const newId = await object._makeNewID();
+					const objectConfig = await object.toConfig();
+					let field_groups = objectConfig.field_groups || null;
+					
 					const now = new Date();
 					await object.directInsert(Object.assign({}, data, {
 						// _id: newId,
@@ -182,13 +185,14 @@ module.exports = {
 						company_ids: userSession.company_ids,
 						extend: name,
 						custom: false,
-						is_system: true
+						is_system: true,
+						field_groups: field_groups
 					}));					
 					// id = newId;
 				}
 
 				if(data.is_system){
-					data = _.pick(data, ['label', 'icon', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_workflow', 'enable_instances', 'enable_inline_edit', 'enable_tree', 'enable_enhanced_lookup', 'description', 'is_deleted'])
+					data = _.pick(data, ['label', 'icon', 'enable_files', 'enable_tasks', 'enable_notes', 'enable_events', 'enable_workflow', 'enable_instances', 'enable_inline_edit', 'enable_tree', 'enable_enhanced_lookup', 'description', 'is_deleted', 'field_groups'])
 				}
 
                 return object.update(id, data, userSession)
