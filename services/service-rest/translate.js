@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-11 17:26:30
+ * @LastEditTime: 2024-03-12 10:55:14
  * @Description: 
  */
 const _ = require('lodash')
@@ -345,7 +345,6 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
         let expandObj = {};
         for (const fieldName in expandFields) {
             const expandField = expandFields[fieldName];
-            console.log(expandField, fieldName);
             const expandFieldFields = expandField.fields || [];
             const expandFieldUiFields = expandField.uiFields;
             const expandFieldExpandFields = expandField.expandFields;
@@ -370,6 +369,8 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
 
                             let refValue = record[fieldName];
                             if (!refValue) {
+                                // 如果值为空，跟GraphQL一样，返回null值
+                                expandObj[fieldName + EXPAND_SUFFIX] = null;
                                 continue;
                             }
                             let refObj = steedosSchema.getObject(refTo);
@@ -395,10 +396,12 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
                         }
                     }
                     else {
-                        // 如果值为空，不返回expand结果
+                        // 如果值为空，跟GraphQL一样，返回null值
+                        expandObj[fieldName + EXPAND_SUFFIX] = null;
                     }
                 } catch (error) {
-                    // 如果报错，不返回expand结果
+                    // 如果报错，跟GraphQL一样，返回null值
+                    expandObj[fieldName + EXPAND_SUFFIX] = null;
                 }
 
             }
@@ -413,9 +416,15 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
 async function translateRecords(records, objectName, fields, uiFields, expandFields, userSession) {
     var hasUiFields = !_.isEmpty(uiFields);
     var hasExpandFields = !_.isEmpty(expandFields);
+    var emptyRecord = {};
+    _.each(fields || [],(field) => {
+        // GraphQL那边空值规则是返回null，openApi跟它一样
+        emptyRecord[field] = null;
+    });
     if (hasUiFields || hasExpandFields) {
         const resRecords = [];
-        for (const record of records) {
+        for (let record of records) {
+            record = Object.assign({}, emptyRecord, record); 
             if(hasUiFields){
                 record[UI_PREFIX] = await translateRecordToUI(record, objectName, uiFields, userSession);
             }

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-11 09:55:41
+ * @LastEditTime: 2024-03-12 10:39:30
  * @Description: 
  */
 "use strict";
@@ -102,8 +102,13 @@ module.exports = {
             },
             async handler(ctx) {
                 const params = ctx.params
-                const { objectName, fields, filters, top, skip, sort } = params
+                const { objectName, filters, top, skip, sort } = params
                 const userSession = ctx.meta.user;
+
+                let fields = [];
+                if(params.fields){
+                    fields = JSON.parse(params.fields)
+                }
 
                 let uiFields = [];
                 if(params.uiFields){
@@ -120,7 +125,7 @@ module.exports = {
                     query.filters = JSON.parse(filters)
                 }
                 if (fields) {
-                    query.fields = JSON.parse(fields);
+                    query.fields = fields;
                 }
                 if (top) {
                     query.top = Number(top)
