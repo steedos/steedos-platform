@@ -6,11 +6,8 @@ import { registerValidationRules } from '../metadata-register/validationRule';
  * @Description: 
  */
 const _ = require('underscore');
-const lodash = require('lodash');
 const clone = require('clone');
 const path = require('path')
-
-const _ValidationRules: any = {};
 
 const PERMISSIONS = {
     allowEdit: false,
@@ -33,12 +30,6 @@ export const getAllObjectValidationRules = async function(){
     return result;
 }
 
-
-export const removePackageValidationRules = (serviceName: string)=>{
-    _.each(_ValidationRules, (roles, objectName)=>{
-        _ValidationRules[objectName] = lodash.filter(roles, function(role) { return role.metadataServiceName != serviceName; });
-    })
-}
 
 export const loadObjectValidationRules = async function (filePath: string, serviceName: string){
     let validationRuleJsons = loadValidationRules(filePath);
