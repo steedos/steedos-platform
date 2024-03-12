@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 11:19:54
+ * @LastEditTime: 2024-03-12 16:40:05
  * @Description: 
  */
 const _ = require('lodash')
@@ -341,18 +341,14 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
     let objConfig = await object.toConfig();
     let fields = objConfig.fields;
 
-    async function _translateToExpand(record, expandFields, parentRecord) {
+    async function _translateToExpand(record, expandFields) {
         let expandObj = {};
         for (const fieldName in expandFields) {
             const expandField = expandFields[fieldName];
             let expandFieldFields = expandField.fields || [];
             const expandFieldUiFields = expandField.uiFields;
             const expandFieldExpandFields = expandField.expandFields;
-            if(expandFieldExpandFields){
-                // 跟GraphQL第一层一样，从库里查的字段要补上expandFields中的字段，即uiFields中依赖的字段可以在fields中定义，也可以在expandFields中字义
-                expandFieldFields = _.union(expandFieldFields, _.keys(expandFieldExpandFields));
-            }
-            if(expandFieldFields.length === 0){
+            if(expandFieldFields.length === 0 && _.isEmpty(expandFieldExpandFields)){
                 continue;
             }
 
@@ -386,9 +382,15 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
                                 refFilters = [refField, "=", refValue]
                             }
 
+                            let queryFields = expandFieldFields;
+                            if(expandFieldExpandFields){
+                                // 跟GraphQL第一层一样，从库里查的字段要补上expandFields中的字段，即uiFields中依赖的字段可以在fields中定义，也可以在expandFields中字义
+                                queryFields = _.union(queryFields, _.keys(expandFieldExpandFields));
+                            }
+
                             let refRecords = await refObj.find({
                                 filters: refFilters,
-                                fields: expandFieldFields,
+                                fields: queryFields,
                             });
                             let translatedRecords = await translateRecords(refRecords, refTo, expandFieldFields, expandFieldUiFields, expandFieldExpandFields, userSession);
                             if(field.multiple){
@@ -413,7 +415,7 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
         return expandObj
     }
 
-    let expandProps = await _translateToExpand(record, expandFields, record)
+    let expandProps = await _translateToExpand(record, expandFields)
     return expandProps;
 }
 
@@ -421,27 +423,28 @@ async function translateRecords(records, objectName, fields, uiFields, expandFie
     var hasUiFields = !_.isEmpty(uiFields);
     var hasExpandFields = !_.isEmpty(expandFields);
     var emptyRecord = {};
-    _.each(fields || [],(field) => {
+    _.each(fields || [], (field) => {
         // GraphQL那边空值规则是返回null，openApi跟它一样
         emptyRecord[field] = null;
     });
-    if (hasUiFields || hasExpandFields) {
-        const resRecords = [];
-        for (let record of records) {
-            record = Object.assign({}, emptyRecord, record); 
-            if(hasUiFields){
+    // 跟GraphQl一样，找出在expandFields中字义过，但是没在fields中定义的字段，需要排除掉这些字段，即只返回fields中指定的字段，record中因为expandFields额外多查出的字段不返回
+    let omitFields = _.difference(_.keys(expandFields), fields);
+    let resRecords = [];
+    for (let record of records) {
+        if (hasUiFields || hasExpandFields) {
+            record = Object.assign({}, emptyRecord, record); // 跟GraphQl一样，只返回fields中指定的字段，record中多查出的字段不返回
+            if (hasUiFields) {
                 record[UI_PREFIX] = await translateRecordToUI(record, objectName, uiFields, userSession);
             }
-            if(hasExpandFields){
+            if (hasExpandFields) {
                 let expandProps = await translateRecordToExpand(record, objectName, expandFields, userSession);
                 Object.assign(record, expandProps);
             }
-            resRecords.push(record);
         }
-        return resRecords;
-    } else {
-        return records;
+        record = _.omit(record, omitFields);
+        resRecords.push(record);
     }
+    return resRecords;
 }
 
 module.exports = {
