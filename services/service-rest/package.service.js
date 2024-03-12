@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 17:50:14
+ * @LastEditTime: 2024-03-12 18:49:20
  * @Description: 
  */
 "use strict";
@@ -162,24 +162,21 @@ module.exports = {
                     console.timeEnd('open api find before find');
                 }
 
-                if (process.env.STEEDOS_DEBUG) {
-                    console.time('open api find find record');
-                }
-                const records = await this.find(objectName, query, userSession)
-                if (process.env.STEEDOS_DEBUG) {
-                    console.timeEnd('open api find find record');
-                }
                 const countQuery = {
                     filters: query.filters
                 }
 
                 if (process.env.STEEDOS_DEBUG) {
-                    console.time('open api find find count');
+                    console.time('open api find find record and count');
                 }
-                const totalCount = await this.count(objectName, countQuery, userSession)
+                const [records, totalCount] = await Promise.all([
+                    await this.find(objectName, query, userSession),
+                    await this.count(objectName, countQuery, userSession)
+                ])
                 if (process.env.STEEDOS_DEBUG) {
-                    console.timeEnd('open api find find count');
+                    console.timeEnd('open api find find record and count');
                 }
+
 
                 if (process.env.STEEDOS_DEBUG) {
                     console.time('open api find translateRecords');
