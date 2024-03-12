@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 10:39:30
+ * @LastEditTime: 2024-03-12 11:18:49
  * @Description: 
  */
 "use strict";
@@ -115,9 +115,11 @@ module.exports = {
                     uiFields = JSON.parse(params.uiFields)
                 }
 
-                let expandFields = [];
+                let expandFields = {};
                 if(params.expandFields){
                     expandFields = JSON.parse(params.expandFields)
+                    // 跟GraphQL第一层一样，从库里查的字段要补上expandFields中的字段，即uiFields中依赖的字段可以在fields中定义，也可以在expandFields中字义
+                    fields = _.union(fields, _.keys(expandFields));
                 }
 
                 const query = {}

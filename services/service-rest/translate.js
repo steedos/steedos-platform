@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 10:55:14
+ * @LastEditTime: 2024-03-12 11:19:54
  * @Description: 
  */
 const _ = require('lodash')
@@ -345,9 +345,13 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
         let expandObj = {};
         for (const fieldName in expandFields) {
             const expandField = expandFields[fieldName];
-            const expandFieldFields = expandField.fields || [];
+            let expandFieldFields = expandField.fields || [];
             const expandFieldUiFields = expandField.uiFields;
             const expandFieldExpandFields = expandField.expandFields;
+            if(expandFieldExpandFields){
+                // 跟GraphQL第一层一样，从库里查的字段要补上expandFields中的字段，即uiFields中依赖的字段可以在fields中定义，也可以在expandFields中字义
+                expandFieldFields = _.union(expandFieldFields, _.keys(expandFieldExpandFields));
+            }
             if(expandFieldFields.length === 0){
                 continue;
             }
