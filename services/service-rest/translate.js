@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-02-26 13:29:53
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 16:44:45
+ * @LastEditTime: 2024-03-12 17:32:17
  * @Description: 
  */
 const _ = require('lodash')
@@ -389,8 +389,14 @@ async function translateRecordToExpand(record, objectName, expandFields, userSes
                                 queryFields = _.union(queryFields, _.keys(expandFieldExpandFields));
                             }
 
+                            const queryFilters = [refFilters];
+                            const spaceId = userSession.spaceId;
+                            if (refField && refField != '_id' && refTo != 'users' && refTo != 'spaces' && spaceId) {
+                                queryFilters.push(["space", "=", spaceId])
+                            }
+
                             let refRecords = await refObj.find({
-                                filters: refFilters,
+                                filters: queryFilters,
                                 fields: queryFields,
                             });
                             let translatedRecords = await translateRecords(refRecords, refTo, expandFieldFields, expandFieldUiFields, expandFieldExpandFields, userSession);
