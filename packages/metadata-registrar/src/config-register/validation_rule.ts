@@ -1,5 +1,5 @@
 import { loadFile, syncMatchFiles } from "@steedos/metadata-core";
-
+import { registerValidationRules } from '../metadata-register/validationRule';
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:34
@@ -22,47 +22,17 @@ const BASERECORD = {
     is_system: true,
     type: "validation_rule",
     record_permissions: PERMISSIONS
-  };
+};
 
-const addObjectValidationRule = function(objectName: string, json: any){
-    if(!_ValidationRules[objectName]){
-        _ValidationRules[objectName] = []
-    }
-    _ValidationRules[objectName].push(Object.assign({}, json, clone(BASERECORD), {_id: `${objectName}.${json.name}`}))
-}
-
-export const getObjectValidationRules = function(objectName: string){
-
-    return clone(_ValidationRules[objectName])
-}
-
-export const getAllObjectValidationRules = function(){
-
+export const getAllObjectValidationRules = async function(){
     let result = [];
-
-    for(let objectName in _ValidationRules){
-        let objectValidationRules = _ValidationRules[objectName]
-        result = result.concat(clone(objectValidationRules));
+    const all = await registerValidationRules.getAll(broker);
+    for(let item of all){
+        result.push(item.metadata)
     }
-    
     return result;
 }
 
-export const getObjectValidationRule = function(objectName: string, validationRuleName: string){
-    const objectValidationRules = getObjectValidationRules(objectName);
-    if(objectValidationRules){
-        return _.find(objectValidationRules, function(validationRule){
-            return validationRule.name === validationRuleName
-        })
-    }
-}
-
-export const addObjectValidationRuleConfig = (objectName: string, json: any) => {
-    if (!json.name) {
-        throw new Error('missing attribute name')
-    }
-    addObjectValidationRule(objectName, json);
-}
 
 export const removePackageValidationRules = (serviceName: string)=>{
     _.each(_ValidationRules, (roles, objectName)=>{
@@ -70,11 +40,15 @@ export const removePackageValidationRules = (serviceName: string)=>{
     })
 }
 
-export const loadObjectValidationRules = function (filePath: string, serviceName: string){
+export const loadObjectValidationRules = async function (filePath: string, serviceName: string){
     let validationRuleJsons = loadValidationRules(filePath);
-    validationRuleJsons.forEach(element => {
-        addObjectValidationRuleConfig(element.object_name, Object.assign(element, {metadataServiceName: serviceName}));
-    });
+    const data = [];
+    for (const item of validationRuleJsons) {
+        data.push(Object.assign({}, item, clone(BASERECORD), {_id: `${item.object_name}.${item.name}`}))
+    }
+    if (data.length > 0) {
+        await registerValidationRules.mregister(broker, serviceName, data)
+    }
 }
 
 const loadValidationRules = (filePath: string)=>{

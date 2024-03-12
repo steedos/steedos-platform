@@ -78,7 +78,7 @@ const loadWorkflows = (filePath: string)=>{
     return results
 }
 
-export const loadSourceWorkflows = function (filePath: string){
+export const loadSourceWorkflows = function (filePath: string, serviceName: string){
     let workflows = loadWorkflows(filePath);
     workflows.forEach(element => {
         addWorkflow(element);

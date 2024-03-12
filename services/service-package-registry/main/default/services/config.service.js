@@ -12,11 +12,6 @@ module.exports = {
                 const { serviceInfo } = ctx.params;
                 if(serviceInfo.name){
                     try {
-                        objectql.removePackageValidationRules(serviceInfo.name);
-                    } catch (error) {
-                        console.error(error)
-                    }
-                    try {
                         objectql.removePackageObjectTriggers(serviceInfo.name);
                     } catch (error) {
                         console.error(error)
