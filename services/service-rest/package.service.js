@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 16:22:22
+ * @LastEditTime: 2024-03-12 17:50:14
  * @Description: 
  */
 "use strict";
@@ -101,6 +101,13 @@ module.exports = {
                 sort: { type: 'string', optional: true }
             },
             async handler(ctx) {
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find total time');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find before find');
+                }
                 const params = ctx.params
                 const { objectName, filters, top, skip, sort } = params
                 const userSession = ctx.meta.user;
@@ -151,17 +158,46 @@ module.exports = {
                     }
                 }
 
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find before find');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find find record');
+                }
                 const records = await this.find(objectName, query, userSession)
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find find record');
+                }
                 const countQuery = {
                     filters: query.filters
                 }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find find count');
+                }
                 const totalCount = await this.count(objectName, countQuery, userSession)
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find find count');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find translateRecords');
+                }
+                const translatedRecords = await translateRecords(records, objectName, fields, uiFields, expandFields, userSession);
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find translateRecords');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find total time');
+                }
 
                 return {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "items": await translateRecords(records, objectName, fields, uiFields, expandFields, userSession),
+                        "items": translatedRecords,
                         "total": totalCount
                     }
                 }
