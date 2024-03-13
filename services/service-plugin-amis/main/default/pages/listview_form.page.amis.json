@@ -21,11 +21,11 @@
               "footerToolbar": [
                 {
                   "type": "button",
-                  "label": "设置字段",
+                  "label": "${'object_listviews.listview_form.field_set' | t}",
                   "actionType": "dialog",
                   "dialog": {
                     "type": "dialog",
-                    "title": "显示的列",
+                    "title": "${'object_listviews.listview_form.displayed_columns' | t}",
                     "size": "md",
                     "body": [
                       {
@@ -129,15 +129,15 @@
               "body": [
                 {
                   "type": "radios",
-                  "label": "过滤器配置方式",
+                  "label": "${'object_listviews.listview_form.filter_configuration_method' | t}",
                   "name": "_filters_type_controller",
                   "options": [
                     {
-                      "label": "条件组合",
+                      "label": "${'object_listviews.listview_form.conditions_combination' | t}",
                       "value": "conditions"
                     },
                     {
-                      "label": "js脚本",
+                      "label": "${'object_listviews.listview_form.javascript' | t}",
                       "value": "function"
                     }
                   ],
@@ -174,7 +174,7 @@
                 },
                 {
                   "type": "editor",
-                  "label": "js脚本",
+                  "label": "${'object_listviews.listview_form.javascript' | t}",
                   "name": "_filters_function",
                   "id": "u:84714ec9abba",
                   "visibleOn": "!!this.object_name && !!this._filters_type_controller && _filters_type_controller== 'function'",
@@ -190,11 +190,11 @@
               "footerToolbar": [
                 {
                   "type": "button",
-                  "label": "设置字段",
+                  "label": "${'object_listviews.listview_form.field_set' | t}",
                   "actionType": "dialog",
                   "dialog": {
                     "type": "dialog",
-                    "title": "显示的列",
+                    "title": "${'object_listviews.listview_form.displayed_columns' | t}",
                     "size": "md",
                     "body": [
                       {

@@ -111,7 +111,7 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
     await loadSourceProfiles(filePath, serviceName);
     await loadSourcePermissionset(filePath, serviceName);
     
-    loadObjectValidationRules(filePath, serviceName);
+    await loadObjectValidationRules(filePath, serviceName);
 
     loadSourceRoles(filePath);
 
@@ -119,7 +119,7 @@ export const addObjectConfigFiles = async (filePath: string, datasource: string,
 
     loadSourceApprovalProcesses(filePath);
 
-    loadSourceWorkflows(filePath);
+    await loadSourceWorkflows(filePath, serviceName);
 }
 
 export const addServerScriptFiles = (filePath: string) => {

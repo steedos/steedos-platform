@@ -364,8 +364,20 @@ fields:
     sort_no: 220
     amis:
       disabledOn: "${is_system == true}"
+  filters:
+    label: Lookup Relationship Filters Condition
+    type: code
+    is_wide: true
+    hidden: false
+    readonly: false
+    sort_no: 447
+    group: Advanced
+    visible_on: "{{(['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false) && !!formData.reference_to}}"
+    inlineHelpText: vWhen the field type is Lookup Relationship or Master Detail Relationship, filtering conditions can be configured for the field, filtering option list; The field values can be configured as formulas, and the fields referenced in the formulas need to be configured in Dependent Fields at the same time
+    amis:
+      disabledOn: "${is_system == true}"
   filtersFunction:
-    label: filters Function
+    label: Lookup Relationship Filters Function
     type: code
     language: javascript
     is_wide: true
@@ -556,7 +568,6 @@ fields:
     filtersFunction: !<tag:yaml.org,2002:js/function> |-
       function (filters, values) {
         //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
-        debugger;
         var fieldFilters = {
             "text": ["text", "textarea"],
             "textarea": ["text", "textarea"],

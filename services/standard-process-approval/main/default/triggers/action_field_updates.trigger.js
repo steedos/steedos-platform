@@ -9,8 +9,7 @@ const checkReevaluateParent = (doc)=>{
     }
 }
 
-const getInternalActionFieldUpdates = function(sourceActionFieldUpdates, filters){
-    let dbActionFieldUpdates = Creator.getCollection("action_field_updates").find(filters, {fields:{_id:1, name:1}}).fetch();
+const getInternalActionFieldUpdates = function(sourceActionFieldUpdates, filters, dbActionFieldUpdates){
     let actionFieldUpdates = [];
 
     if(!filters.is_system){
@@ -38,31 +37,41 @@ module.exports = {
     },
     afterFind: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        let actionFieldUpdates = [];
-        
-        if(filters.name && filters.name.$in){
-            for(let name of filters.name.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
-                if(actionFieldUpdate){
-                    actionFieldUpdates.push(actionFieldUpdate);
-                }
-            }
-        }else if(filters._id && !filters._id.$ne){
-            let action = objectql.getActionFieldUpdate(filters._id);
-            if(action){
-                actionFieldUpdates.push(action);
-            }
-        }else if(filters.object_name){
-            actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
+        let fObjectName = filters.object_name;
+        if(fObjectName){
             delete filters.object_name;
-        }else{
-            actionFieldUpdates = objectql.getAllActionFieldUpdates();
         }
 
         if(filters._id && filters._id.$ne){
             if(!_.isArray(filters._id.$ne)){
                 filters._id.$ne = [filters._id.$ne]
             }
+        }
+
+        let dbActionFieldUpdates = Creator.getCollection("action_field_updates").find(filters, {fields:{_id:1, name:1}}).fetch();
+
+
+        let actionFieldUpdates = [];
+        
+        if(filters.name && filters.name.$in){
+            for(let name of filters.name.$in){
+                let actionFieldUpdate = await objectql.getActionFieldUpdate(name);
+                if(actionFieldUpdate){
+                    actionFieldUpdates.push(actionFieldUpdate);
+                }
+            }
+        }else if(filters._id && !filters._id.$ne){
+            let action = await objectql.getActionFieldUpdate(filters._id);
+            if(action){
+                actionFieldUpdates.push(action);
+            }
+        }else if(fObjectName){
+            actionFieldUpdates = await objectql.getObjectActionFieldUpdates(fObjectName);
+        }else{
+            actionFieldUpdates = await objectql.getAllActionFieldUpdates();
+        }
+
+        if(filters._id && filters._id.$ne){
             for(let neid of filters._id.$ne){
                 actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
                     return item._id !== neid
@@ -70,47 +79,7 @@ module.exports = {
             }
         }
 
-        actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
-
-        if(actionFieldUpdates && actionFieldUpdates.length>0){
-            this.data.values = this.data.values.concat(actionFieldUpdates)
-        }
-    },
-    afterAggregate: async function(){
-        let filters = InternalData.parserFilters(this.query.filters)
-        let actionFieldUpdates = [];
-        
-        if(filters.name && filters.name.$in){
-            for(let name of filters.name.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
-                if(actionFieldUpdate){
-                    actionFieldUpdates.push(actionFieldUpdate);
-                }
-            }
-        }else if(filters._id && !filters._id.$ne){
-            let action = objectql.getActionFieldUpdate(filters._id);
-            if(action){
-                actionFieldUpdates.push(action);
-            }
-        }else if(filters.object_name){
-            actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
-            delete filters.object_name;
-        }else{
-            actionFieldUpdates = objectql.getAllActionFieldUpdates();
-        }
-
-        if(filters._id && filters._id.$ne){
-            if(!_.isArray(filters._id.$ne)){
-                filters._id.$ne = [filters._id.$ne]
-            }
-            for(let neid of filters._id.$ne){
-                actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
-                    return item._id !== neid
-                })
-            }
-        }
-
-        actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
+        actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters, dbActionFieldUpdates);
 
         if(actionFieldUpdates && actionFieldUpdates.length>0){
             this.data.values = this.data.values.concat(actionFieldUpdates)
@@ -118,31 +87,41 @@ module.exports = {
     },
     afterCount: async function(){
         let filters = InternalData.parserFilters(this.query.filters)
-        let actionFieldUpdates = [];
-        
-        if(filters.name && filters.name.$in){
-            for(let name of filters.name.$in){
-                let actionFieldUpdate = objectql.getActionFieldUpdate(name);
-                if(actionFieldUpdate){
-                    actionFieldUpdates.push(actionFieldUpdate);
-                }
-            }
-        }else if(filters._id && !filters._id.$ne){
-            let action = objectql.getActionFieldUpdate(filters._id);
-            if(action){
-                actionFieldUpdates.push(action);
-            }
-        }else if(filters.object_name){
-            actionFieldUpdates = objectql.getObjectActionFieldUpdates(filters.object_name);
+
+        let fObjectName = filters.object_name;
+        if(fObjectName){
             delete filters.object_name;
-        }else{
-            actionFieldUpdates = objectql.getAllActionFieldUpdates();
         }
 
         if(filters._id && filters._id.$ne){
             if(!_.isArray(filters._id.$ne)){
                 filters._id.$ne = [filters._id.$ne]
             }
+        }
+
+        let dbActionFieldUpdates = Creator.getCollection("action_field_updates").find(filters, {fields:{_id:1, name:1}}).fetch();
+
+        let actionFieldUpdates = [];
+        
+        if(filters.name && filters.name.$in){
+            for(let name of filters.name.$in){
+                let actionFieldUpdate = await objectql.getActionFieldUpdate(name);
+                if(actionFieldUpdate){
+                    actionFieldUpdates.push(actionFieldUpdate);
+                }
+            }
+        }else if(filters._id && !filters._id.$ne){
+            let action = await objectql.getActionFieldUpdate(filters._id);
+            if(action){
+                actionFieldUpdates.push(action);
+            }
+        }else if(fObjectName){
+            actionFieldUpdates = await objectql.getObjectActionFieldUpdates(fObjectName);
+        }else{
+            actionFieldUpdates = await  objectql.getAllActionFieldUpdates();
+        }
+
+        if(filters._id && filters._id.$ne){
             for(let neid of filters._id.$ne){
                 actionFieldUpdates = _.filter(actionFieldUpdates, function(item){
                     return item._id !== neid
@@ -150,7 +129,7 @@ module.exports = {
             }
         }
         
-        actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters);
+        actionFieldUpdates = getInternalActionFieldUpdates(actionFieldUpdates, filters, dbActionFieldUpdates);
 
         if(actionFieldUpdates && actionFieldUpdates.length>0){
             this.data.values = this.data.values + actionFieldUpdates.length
@@ -166,7 +145,7 @@ module.exports = {
                 return;
             }
 
-            let actionFieldUpdate = objectql.getActionFieldUpdate(id);
+            let actionFieldUpdate = await objectql.getActionFieldUpdate(id);
             if(actionFieldUpdate){
                 this.data.values = actionFieldUpdate;
             }

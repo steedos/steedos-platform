@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@hotoa.com
  * @Date: 2022-03-28 14:16:03
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-12-10 16:16:36
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-01-27 17:26:30
  * @Description: 
  */
 
@@ -31,6 +31,13 @@ const clientJSService = require('./lib/clientJSService');
 const questionService = require('./lib/questionService')
 const dashboardService = require('./lib/dashboardService')
 const printService = require('./lib/printService')
+
+const approvalProcessService = require('./lib/approvalProcessService')
+const flowRoleService = require('./lib/flowRoleService')
+const roleService = require('./lib/roleService')
+const validationRuleService = require('./lib/validationRuleService');
+const workflowService = require('./lib/workflowService');
+
 module.exports = {
 	name: "metadata-server",
 
@@ -62,6 +69,12 @@ module.exports = {
     this.broker.createService(questionService);
     this.broker.createService(dashboardService);
     this.broker.createService(printService);
+
+    this.broker.createService(approvalProcessService);
+    this.broker.createService(flowRoleService);
+    this.broker.createService(roleService);
+    this.broker.createService(validationRuleService);
+    this.broker.createService(workflowService);
   },
 
   async started() {

@@ -2,12 +2,12 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-11 14:49:35
+ * @LastEditTime: 2024-03-12 10:24:48
  * @Description: 
  */
 "use strict";
 // @ts-check
-
+const _ = require('lodash')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -421,7 +421,7 @@ module.exports = {
                         return await this.getObject('logs').directInsert({
                             'level': 'debug',
                             'name': message,
-                            'data': data,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
                             'node_id': this.broker.nodeID,
                             'created': new Date(),
                             ...meta
@@ -431,7 +431,7 @@ module.exports = {
                         return await this.getObject('logs').directInsert({
                             'level': 'info',
                             'name': message,
-                            'data': data,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
                             'node_id': this.broker.nodeID,
                             'created': new Date(),
                             ...meta
@@ -441,7 +441,7 @@ module.exports = {
                         return await this.getObject('logs').directInsert({
                             'level': 'warn',
                             'name': message,
-                            'data': data,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
                             'node_id': this.broker.nodeID,
                             'created': new Date(),
                             ...meta
@@ -451,7 +451,7 @@ module.exports = {
                         return await this.getObject('logs').directInsert({
                             'level': 'error',
                             'name': message,
-                            'data': data,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
                             'node_id': this.broker.nodeID,
                             'created': new Date(),
                             ...meta
