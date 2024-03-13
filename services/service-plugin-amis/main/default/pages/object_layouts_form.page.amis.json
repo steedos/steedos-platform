@@ -43,7 +43,6 @@
                 "searchable": true,
                 "id": "u:3c65447a8a6e",
                 "defaultCheckAll": false,
-                "checkAllLabel": "全选",
                 "autoComplete": "",
                 "menuTpl": ""
               }

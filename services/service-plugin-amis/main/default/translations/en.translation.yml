@@ -27,3 +27,10 @@ CustomLabels:
       set_related_list: Set Related List
       positive_order: Positive Order
       reverse_order: Reverse order
+  object_listviews:
+    listview_form:
+      field_set: Set Fields
+      displayed_columns: Displayed Columns
+      filter_configuration_method: Filter Configuration Method
+      conditions_combination: Conditions Csombination
+      javascript: javascript
