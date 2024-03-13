@@ -18,7 +18,9 @@ fields:
     type: lookup
     reference_to: objects
     reference_to_field: name
+    required: true
   target_object:
+    required: true
     type: lookup
     label: Object to Update
     reference_to: objects
@@ -31,6 +33,7 @@ fields:
     showIcon: false
     reference_to: object_fields
     reference_to_field: name
+    required: true
     depend_on:
       - object_name
       - target_object
