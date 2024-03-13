@@ -110,8 +110,12 @@ fields:
     label: Reference to field
     help: The value of the associated object saved to the current object field; For example, after object A is associated with object B, when A1 record is associated with B1 record, B1 record will be stored by default_ Save the ID in the A1 record. If the foreign key field is modified, the 'foreign key field' will be replaced_ Store the ID in the A1 record.
     description: The default is the primary key, and the default value is _id.
+  filters:
+    label: Lookup Relationship Filters Condition
+    help: When the field type is Lookup Relationship or Master Detail Relationship, filtering conditions can be configured for the field, filtering option list; The field values can be configured as formulas, and the fields referenced in the formulas need to be configured in Dependent Fields at the same time
+    description: 
   filtersFunction:
-    label: filters Function
+    label: Lookup Relationship Filters Function
     help: 
     description: 
   optionsFunction:

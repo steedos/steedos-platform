@@ -25,8 +25,8 @@
                     ]
                 }
             },
-            "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue; if(defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{')>-1 ){ payload.data.defaultValue_formula = defaultValue_field_value; delete payload.data.defaultValue; } return payload;",
-            "apiRequestAdaptor": "if(formData.defaultValue_formula){ formData.defaultValue = formData.defaultValue_formula }  __saveData = JSON.stringify(JSON.stringify(formData)); api.data = {query: query.replace('{__saveData}', __saveData)}; api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
+            "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue;\nif (defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{') > -1) {\n  payload.data.defaultValue_formula = defaultValue_field_value;\n  delete payload.data.defaultValue;\n}\n\nif (recordId) {\n  var data = payload.data;\n  if (data) {\n    data.filters = window.amisConvert.filtersToConditions(data.filters || []);\n  }\n  payload.data = data;\n}\nreturn payload;",
+            "apiRequestAdaptor": "if (formData.defaultValue_formula) {\n  formData.defaultValue = formData.defaultValue_formula\n}\nif (formData.filters) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData.filters);\n}\n__saveData = JSON.stringify(JSON.stringify(formData));\napi.data = { query: query.replace('{__saveData}', __saveData) };\napi.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert');",
             "submitSuccActions": [
                 {
                     "actionType": "custom",
@@ -142,8 +142,29 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "disabledOn": "${is_system == true}",
+                        "searchable": true
                     }
+                },
+                "filters": {
+                    "amis": {
+                        "type": "condition-builder",
+                        "description": "",
+                        "id": "u:a9f2232e30d7",
+                        "source": {
+                            "method": "get",
+                            "url": "${context.rootUrl}/service/api/amis-metadata-listviews/getFilterFields?objectName=${reference_to}",
+                            "dataType": "json",
+                            "headers": {
+                                "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                            }
+                        },
+                        "className": "col-span-2 m-0"
+                    }
+                },
+                "filtersFunction": {
+                    "hidden": true
                 }
             },
             "form": {

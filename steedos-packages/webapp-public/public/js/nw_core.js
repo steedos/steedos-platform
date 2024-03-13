@@ -86,7 +86,8 @@ if (isNode()) {
 
 nw_core.openFile = function (file_url, filename) {
 	// 文件下载增加认证参数
-	const authObject = { authToken: Accounts._storedLoginToken() }
+	const authToken = localStorage["steedos:token"] || localStorage["Meteor.loginToken"]
+	const authObject = { authToken: authToken }
 	const token = window.btoa(JSON.stringify(authObject))
 	// 如果url已经有参数则拼接token
 	if (file_url.indexOf('?') > 0) {
