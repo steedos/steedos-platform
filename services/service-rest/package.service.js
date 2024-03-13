@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-13 11:19:54
+ * @LastEditTime: 2024-03-12 18:49:20
  * @Description: 
  */
 "use strict";
@@ -194,8 +194,8 @@ module.exports = {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "rows": translatedRecords,
-                        "count": totalCount
+                        "items": translatedRecords,
+                        "total": totalCount
                     }
                 }
             }
