@@ -1,14 +1,15 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-09-23 11:50:21
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-14 10:39:22
  * @Description: 
  */
 "use strict";
 // @ts-check
 const serviceObjectMixin = require('@steedos/service-object-mixin');
 const { QUERY_DOCS_TOP, REQUEST_SUCCESS_STATUS } = require('./consts')
+const { translateRecords } = require('./translate');
 const _ = require('lodash')
 const { getObject } = require('@steedos/objectql');
 
@@ -53,6 +54,8 @@ module.exports = {
          * @apiGroup @steedos/service-rest
          * @apiParam {String} objectName 对象API Name，如：contracts
          * @apiQuery {String} [fields] 字段名，如：'["name", "description"]'
+         * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]',此参数中的字段要求在参数fields中存在
+         * @apiQuery {String} [expandFields] 字段名，如：'{owner: {fields: ["name"], uiFields: ["owner"], expandFields: ...}}'
          * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
          * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
          * @apiQuery {String} [skip] 跳过条数，如：'10'
@@ -90,22 +93,51 @@ module.exports = {
             params: {
                 objectName: { type: "string" },
                 fields: { type: 'string', optional: true },
+                uiFields: { type: 'string', optional: true },
+                expandFields: { type: 'string', optional: true },
                 filters: { type: 'string', optional: true },
                 top: { type: 'string', optional: true, default: QUERY_DOCS_TOP },
                 skip: { type: 'string', optional: true },
                 sort: { type: 'string', optional: true }
             },
             async handler(ctx) {
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find total time');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find before find');
+                }
                 const params = ctx.params
-                const { objectName, fields, filters, top, skip, sort } = params
+                const { objectName, filters, top, skip, sort } = params
                 const userSession = ctx.meta.user;
+
+                let fields = [];
+                if(params.fields){
+                    fields = JSON.parse(params.fields)
+                }
+
+                let uiFields = [];
+                if(params.uiFields){
+                    uiFields = JSON.parse(params.uiFields)
+                }
+
+                let expandFields;
+                if(params.expandFields){
+                    expandFields = JSON.parse(params.expandFields)
+                }
 
                 const query = {}
                 if (filters) {
                     query.filters = JSON.parse(filters)
                 }
                 if (fields) {
-                    query.fields = JSON.parse(fields)
+                    let queryFields = fields;
+                    if(expandFields){
+                        // 跟GraphQL第一层一样，从库里查的字段要补上expandFields中的字段，即uiFields中依赖的字段可以在fields中定义，也可以在expandFields中字义
+                        queryFields = _.union(queryFields, _.keys(expandFields));
+                    }
+                    query.fields = queryFields;
                 }
                 if (top) {
                     query.top = Number(top)
@@ -126,18 +158,124 @@ module.exports = {
                     }
                 }
 
-                const records = await this.find(objectName, query, userSession)
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find before find');
+                }
+
                 const countQuery = {
                     filters: query.filters
                 }
-                const totalCount = await this.count(objectName, countQuery, userSession)
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find find record and count');
+                }
+                const [records, totalCount] = await Promise.all([
+                    await this.find(objectName, query, userSession),
+                    await this.count(objectName, countQuery, userSession)
+                ])
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find find record and count');
+                }
+
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api find translateRecords');
+                }
+                const translatedRecords = await translateRecords(records, objectName, fields, uiFields, expandFields, userSession);
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find translateRecords');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api find total time');
+                }
 
                 return {
                     "status": REQUEST_SUCCESS_STATUS,
                     "msg": "",
                     "data": {
-                        "items": records,
+                        "items": translatedRecords,
                         "total": totalCount
+                    }
+                }
+            }
+        },
+        /**
+         * @api {GET} /api/v1/:objectName/count 获取记录个数
+         * @apiVersion 0.0.0
+         * @apiName count
+         * @apiGroup @steedos/service-rest
+         * @apiParam {String} objectName 对象API Name，如：contracts
+         * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
+         * @apiSuccess {Object[]} count  记录个数
+         * @apiSuccessExample {json} Success-Response:
+         *     HTTP/1.1 200 OK
+         *     {
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *         "count": 200 
+         *       }
+         *     }
+         * @apiErrorExample {json} Error-Response:
+         *     HTTP/1.1 500 Error
+         *     {
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
+         *     }
+         */
+        count: {
+            rest: {
+                method: "GET",
+                path: "/:objectName/count"
+            },
+            params: {
+                objectName: { type: "string" },
+                filters: { type: 'string', optional: true },
+            },
+            async handler(ctx) {
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count total time');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count before find');
+                }
+                const params = ctx.params
+                const { objectName, filters } = params
+                const userSession = ctx.meta.user;
+
+                const query = {}
+                if (filters) {
+                    query.filters = JSON.parse(filters)
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count before find');
+                }
+
+                const countQuery = {
+                    filters: query.filters
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count find count');
+                }
+                const count = await this.count(objectName, countQuery, userSession);
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count find count');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count total time');
+                }
+
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "count": count
                     }
                 }
             }
