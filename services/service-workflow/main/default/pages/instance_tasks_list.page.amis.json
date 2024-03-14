@@ -141,11 +141,12 @@
                             "badge": {
                               "className": "h-0",
                               "offset": [
-                                -13,
+                                -20,
                                 12
                               ],
                               "mode": "text",
-                              "text": "${tag | toInt}"
+                              "text": "${tag | toInt}",
+                              "overflowCount": 999
                             },
                             "id": "u:ac230c095386"
                           }
