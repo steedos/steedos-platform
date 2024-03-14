@@ -16,39 +16,15 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-      - uses: nowsprinting/check-version-format-action@v3
-        id: version
-        with:
-          prefix: 'v'
-
-      - name: Get branch names
-        id: branch-name
-        uses: tj-actions/branch-names@v5.2
-        with: 
-          strip_tag_prefix: v
-
-      - name: Get the current tag
-        if: steps.branch-name.outputs.is_tag == 'true'  # Replaces: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "tag: ${{ steps.branch-name.outputs.tag }}"
-          echo "current_branch: ${{ steps.branch-name.outputs.current_branch }}"
-          echo "ref_branch: ${{ steps.branch-name.outputs.ref_branch }}"
-
-      - name: Check valid branch
-        if: ${{ !startsWith(steps.branch-name.outputs.tag, '2.')  }}
-        run: exit 1
-
       # checkout branch 2.7
-      - name: Checkout branch 2.7
-        uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.7') }} 
-        with: 
-          ref: '2.7'
+      # - name: Checkout branch 2.7
+      #   uses: actions/checkout@v2
+      #   with: 
+      #     ref: '2.7'
       
       # checkout branch 2.6
       - name: Checkout branch 2.6
         uses: actions/checkout@v2
-        if: ${{ startsWith(steps.branch-name.outputs.tag, '2.6') }} 
         with: 
           ref: '2.6'
 
