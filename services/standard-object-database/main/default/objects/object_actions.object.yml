@@ -38,7 +38,58 @@ fields:
     # omit: true
     # hidden: true
     label: Visible
-    sort_no: 150
+    is_wide: true
+    sort_no: 200
+    defaultValue: true
+    amis:
+      type: fieldSet
+      title: 状态
+      body: 
+        - name: visible
+          label: 显示
+          type: switch
+          staticOn: ${global.mode==='edit'?false:true}
+        - name: visible_type
+          label: 条件
+          type: select
+          value: static
+          visibleOn: "${visible === true}"
+          clearable: false
+          staticOn: ${global.mode==='edit'?false:true}
+          options: 
+            - label: 静态值
+              value: static
+            - label: 表达式
+              value: expression
+  visible_type:
+    name: visible_type
+    type: select
+    readonly: true
+    visible_on: "{{false}}"
+  visibleOn:
+    type: text
+    label: 表达式
+    is_wide: true
+    sort_no: 210
+    amis:
+      type: wrapper
+      body:
+        - type: input-text
+          name: visibleOn
+          static: true
+          label: 表达式
+          visibleOn: "${global.mode != 'edit'}"
+        - type: input-formula
+          name: visibleOn
+          mixedMode: true
+          label: 表达式
+          visibleOn: "${global.mode==='edit' && visible_type == 'expression'}"
+          variables: 
+            - label: 当前记录
+              value: record
+              children: 
+                - label: 名称
+                  value: name
   'on':
     type: lookup
     label: 'On'
