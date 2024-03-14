@@ -37,6 +37,7 @@
     const STEEDOS_LOCALE = "<%=STEEDOS_LOCALE%>";
     const STEEDOS_PUBLIC_PAGE_ASSETURLS = "<%=STEEDOS_PUBLIC_PAGE_ASSETURLS%>";
     const STEEDOS_AMIS_VERSION= "<%=STEEDOS_AMIS_VERSION%>";
+    const STEEDOS_PUBLIC_USE_OPEN_API= <%=(STEEDOS_PUBLIC_USE_OPEN_API === "true" || STEEDOS_PUBLIC_USE_OPEN_API === true)%>;
 
     const platform = <%- JSON.stringify(platform) %>;
 
@@ -110,7 +111,8 @@
             steedosVersion: STEEDOS_VERSION,
             assetUrls,
             steedosAmisVersion: STEEDOS_AMIS_VERSION,
-            locale: STEEDOS_LOCALE || getBrowserLocale()
+            locale: STEEDOS_LOCALE || getBrowserLocale(),
+            useOpenAPI: STEEDOS_PUBLIC_USE_OPEN_API
         });
     });
 

@@ -13,6 +13,7 @@ public:
     store: ${STEEDOS_CFS_STORE}
   templateSpaceId: 'template'
   enable_saas: ${STEEDOS_TENANT_ENABLE_SAAS}
+  use_open_api: ${STEEDOS_PUBLIC_USE_OPEN_API}
   webservices:
     jsreport:
       url: ${JSREPORT_URL}
