@@ -256,15 +256,11 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                 }
                 if (tab.type === 'url') {
                     tab.label = translationTabLabel(userSession.language, tab.name, tab.label || tab.name);
-                    let tabUrl = tab.url;
-                    if(mobile && /^http(s?):\/\//.test(tabUrl) != true && tab.is_use_iframe){
-                        tabUrl = tabUrl
-                    }
                     let urlMenu: any = {
                         id: `${tab.name}`,
                         type: tab.type,
                         icon: tab.icon,
-                        path: `${tabUrl}`,
+                        path: `${tab.url}`,
                         name: `${tab.label}`,
                         ...props
                     };
@@ -272,7 +268,7 @@ async function tabMenus(ctx: any, appPath, tabApiName, menu, mobile, userSession
                         urlMenu.target = '_blank'
                     }else if(tab.is_use_iframe){
                         urlMenu.is_use_iframe = true;
-                        urlMenu.path = `${appPath}/tab_iframe/${tab.name}/?url=${tabUrl}`
+                        urlMenu.path = `${appPath}/tab_iframe/${tab.name}/?url=${tab.url}`
                     }
                     menu.children.push(
                         urlMenu
