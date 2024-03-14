@@ -102,8 +102,14 @@ router.post('/am/forms', async function (req, res) {
             let objectName = form["object_name"];
 			let useAmis = form["enable_amisform"]
             const instance_table_fields = form['instance_table_fields'] || []
-            const instanceFields = await designerManager.getBusinessFields(objectName)
-            const formFields = await designerManager.transformObjectFieldsToFormFields(instanceFields);
+            let instanceFields = []
+            let formFields = []
+            if (objectName) {
+                instanceFields = await designerManager.getBusinessFields(objectName)
+                const objFields = await objectql.getObject(objectName).getFields();
+                const transformObjectFields = designerManager.transformObjectFields(instanceFields, objFields);
+                formFields = await designerManager.transformObjectFieldsToFormFields(transformObjectFields);
+            }
             const tables = await designerManager.transformObjectDetailFieldsToFormTableFields(instance_table_fields)
             // 执行者的身份校验
             await designerManager.checkSpaceUserBeforeUpdate(form['space'], userId, req.user.roles)

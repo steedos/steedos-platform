@@ -19,7 +19,8 @@ Steedos.StandardObjects = {
                     const _isRelated = props && props._isRelated;
                     if(_isRelated){
                         const _master = props._master
-                        const { record: masterReocrd, object_name: masterObjectName } = _master
+                        const { record: masterReocrd } = _master;
+                        const masterObjectName = _master.objectName || _master.object_name;
                         const obj = Creator.getObject(masterObjectName)
                         if (obj && obj.enable_lock_detail && masterReocrd.locked) {
                             return false;

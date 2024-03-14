@@ -1,0 +1,12 @@
+name: permission_objects_form
+is_active: true
+label: 对象权限表单
+object_name: permission_objects
+pageAssignments:
+  - type: orgDefault
+    page: object_fields_form
+    desktop: true
+    mobile: true
+render_engine: amis
+type: form
+widgets: []

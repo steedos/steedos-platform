@@ -107,8 +107,12 @@ fields:
     label: 外键字段
     help: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
     description: '默认为主键，默认值是_id'
+  filters:
+    label: 相关表过滤条件
+    help: 当字段类型为相关表关系或主/子表关系时，可以为该字段配置过滤条件，过滤选项列表；其中字段值可以配置为公式，公式中引用的字段需要同时配置在依赖的字段中
+    description: 
   filtersFunction:
-    label: 过滤器函数
+    label: 相关表过滤器函数
     help: 
     description: 
   optionsFunction:

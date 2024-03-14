@@ -1,0 +1,7 @@
+name: all
+label: All Divisions
+columns:
+  - name
+  - level
+  - created
+filter_scope: space

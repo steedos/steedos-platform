@@ -27,3 +27,10 @@ CustomLabels:
       set_related_list: 设置子表
       positive_order: 正序
       reverse_order: 倒序
+  object_listviews:
+    listview_form:
+      field_set: 设置字段
+      displayed_columns: 显示的列
+      filter_configuration_method: 过滤器配置方式
+      conditions_combination: 条件组合
+      javascript: js脚本

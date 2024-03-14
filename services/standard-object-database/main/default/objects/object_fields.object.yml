@@ -364,8 +364,20 @@ fields:
     sort_no: 220
     amis:
       disabledOn: "${is_system == true}"
+  filters:
+    label: Lookup Relationship Filters Condition
+    type: code
+    is_wide: true
+    hidden: false
+    readonly: false
+    sort_no: 447
+    group: Advanced
+    visible_on: "{{(['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false) && !!formData.reference_to}}"
+    inlineHelpText: vWhen the field type is Lookup Relationship or Master Detail Relationship, filtering conditions can be configured for the field, filtering option list; The field values can be configured as formulas, and the fields referenced in the formulas need to be configured in Dependent Fields at the same time
+    amis:
+      disabledOn: "${is_system == true}"
   filtersFunction:
-    label: filters Function
+    label: Lookup Relationship Filters Function
     type: code
     language: javascript
     is_wide: true
@@ -525,7 +537,6 @@ fields:
     sort_no: 280
     amis:
       enableDialog: false
-      disabledOn: "${is_system == true}"
   auto_fill_mapping.$:
     label: Auto Fill Mapping
     blackbox: true
@@ -571,7 +582,7 @@ fields:
         };
         var currentFilter = [];
         var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
-        var fromField = referenceObject && referenceObject.fields[values.auto_fill_mapping__from];
+        var fromField = referenceObject && referenceObject.fields[values.from || values.auto_fill_mapping__from];
 
         if (fromField && fromField.data_type) {
             currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);

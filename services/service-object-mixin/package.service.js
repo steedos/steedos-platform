@@ -1,13 +1,13 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-25 17:29:01
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-14 17:01:50
  * @Description: 
  */
 "use strict";
 // @ts-check
-
+const _ = require('lodash')
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -416,8 +416,59 @@ module.exports = {
             async handler() {
                 return await this.broker.call("objectql.makeNewID")
             }
+        },
+        getLogger: {
+            handler: async function (meta = {}) {
+                if(!meta.space){
+                    if(!this.primarySpaceId){
+                        this.primarySpaceId = await this.broker.call("objectql.getPrimarySpaceId");
+                    }
+                    meta.space = this.primarySpaceId;
+                }
+                return {
+                    debug: async (message, data)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'debug',
+                            'name': message,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
+                        })
+                    },
+                    info: async (message, data)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'info',
+                            'name': message,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
+                        })
+                    },
+                    warn: async (message, data)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'warn',
+                            'name': message,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
+                        })
+                    }, 
+                    error: async (message, data)=>{
+                        return await this.getObject('logs').directInsert({
+                            'level': 'error',
+                            'name': message,
+                            'data': _.isString(data) ? data : JSON.stringify(data),
+                            'node_id': this.broker.nodeID,
+                            'created': new Date(),
+                            ...meta
+                        })
+                    }
+                }
+            }
         }
-
     },
 
     /**

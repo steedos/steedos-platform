@@ -5,7 +5,7 @@
       "start": "steedos start"
     },
     "dependencies": {
-      "@steedos/service-community": "~2.6"
+      "@steedos/service-community": "~2.7"
     },
     "resolutions": {
       "@azure/core-auth": "1.5.0",
