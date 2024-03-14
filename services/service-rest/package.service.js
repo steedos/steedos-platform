@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-12 18:49:20
+ * @LastEditTime: 2024-03-14 10:39:22
  * @Description: 
  */
 "use strict";
@@ -196,6 +196,86 @@ module.exports = {
                     "data": {
                         "items": translatedRecords,
                         "total": totalCount
+                    }
+                }
+            }
+        },
+        /**
+         * @api {GET} /api/v1/:objectName/count 获取记录个数
+         * @apiVersion 0.0.0
+         * @apiName count
+         * @apiGroup @steedos/service-rest
+         * @apiParam {String} objectName 对象API Name，如：contracts
+         * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
+         * @apiSuccess {Object[]} count  记录个数
+         * @apiSuccessExample {json} Success-Response:
+         *     HTTP/1.1 200 OK
+         *     {
+         *       "status": 0, // 返回 0，表示当前接口正确返回，否则按错误请求处理
+         *       "msg": "", // 返回接口处理信息
+         *       "data": {
+         *         "count": 200 
+         *       }
+         *     }
+         * @apiErrorExample {json} Error-Response:
+         *     HTTP/1.1 500 Error
+         *     {
+         *       "status": -1,
+         *       "msg": "",
+         *       "data": {}
+         *     }
+         */
+        count: {
+            rest: {
+                method: "GET",
+                path: "/:objectName/count"
+            },
+            params: {
+                objectName: { type: "string" },
+                filters: { type: 'string', optional: true },
+            },
+            async handler(ctx) {
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count total time');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count before find');
+                }
+                const params = ctx.params
+                const { objectName, filters } = params
+                const userSession = ctx.meta.user;
+
+                const query = {}
+                if (filters) {
+                    query.filters = JSON.parse(filters)
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count before find');
+                }
+
+                const countQuery = {
+                    filters: query.filters
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.time('open api count find count');
+                }
+                const count = await this.count(objectName, countQuery, userSession);
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count find count');
+                }
+
+                if (process.env.STEEDOS_DEBUG) {
+                    console.timeEnd('open api count total time');
+                }
+
+                return {
+                    "status": REQUEST_SUCCESS_STATUS,
+                    "msg": "",
+                    "data": {
+                        "count": count
                     }
                 }
             }
