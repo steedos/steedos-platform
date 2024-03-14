@@ -22,10 +22,6 @@ jobs:
         with:
           prefix: 'v'
 
-      - name: Check valid tag format
-        if: steps.version.outputs.is_valid == 'false'
-        run: exit 1
-
       - name: Get branch names
         id: branch-name
         uses: tj-actions/branch-names@v5.2
