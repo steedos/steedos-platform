@@ -83,7 +83,7 @@ fields:
           name: visibleOn
           mixedMode: true
           label: 表达式
-          visibleOn: "${global.mode==='edit' && visible_type == 'expression'}"
+          visibleOn: "${global.mode==='edit' && visible_type == 'expression' && visible === true}"
           variables: 
             - label: 当前记录
               value: record
