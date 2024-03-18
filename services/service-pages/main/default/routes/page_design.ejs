@@ -1,8 +1,8 @@
 <!--
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-06-02 17:45:15
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-29 11:45:03
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-14 18:48:28
  * @Description: 
 -->
 <html>
@@ -14,6 +14,7 @@
   <body>
     <builder-fiddle host="<%=builderHost%>"></builder-fiddle>
     <script>
+      const useOpenAPI= <%=(useOpenAPI === "true" || useOpenAPI === true)%>;
       const settings = {
         assetUrls: "<%=assetUrls%>",
         rootUrl: "<%=rootUrl%>",
@@ -22,6 +23,7 @@
         authToken: "<%=authToken%>",
         pageId: "<%=pageId%>",
         messageOnly: true,
+        useOpenAPI: useOpenAPI
       };
 
       let comp = document.querySelector("builder-fiddle");

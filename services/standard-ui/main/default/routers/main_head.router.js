@@ -57,7 +57,8 @@ router.get('/main_head.js', async function (req, res) {
             STEEDOS_LOCALE: "",
             STEEDOS_PUBLIC_PAGE_ASSETURLS: getConfig("STEEDOS_PUBLIC_PAGE_ASSETURLS", platform),
             STEEDOS_AMIS_VERSION: process.env.STEEDOS_AMIS_VERSION,
-            platform: __meteor_runtime_config__.PUBLIC_SETTINGS && __meteor_runtime_config__.PUBLIC_SETTINGS.platform || {}
+            platform: __meteor_runtime_config__.PUBLIC_SETTINGS && __meteor_runtime_config__.PUBLIC_SETTINGS.platform || {},
+            STEEDOS_PUBLIC_USE_OPEN_API: process.env.STEEDOS_PUBLIC_USE_OPEN_API
         }
         const options = {}
         ejs.renderFile(filename, data, options, function(err, str){
