@@ -246,8 +246,8 @@ jobs:
       #     draft: false
       #     prerelease: false
   docker-community:
+    needs: npm-release
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         node-version: [14.x]
@@ -356,6 +356,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   docker-enterprise:
+    needs: npm-release
     runs-on: ubuntu-latest
     strategy:
       matrix:
