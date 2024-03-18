@@ -7,7 +7,8 @@
     "@steedos/service-object-graphql": "2.6.10-beta.5",
     "@steedos/workflow": "2.6.10-beta.5",
     "lodash": "^4.17.21",
-    "node-schedule": "^2.0.0"
+    "node-schedule": "^2.0.0",
+    "he": "1.2.0"
   },
   "private": false,
   "publishConfig": {
