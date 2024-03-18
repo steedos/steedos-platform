@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-24 15:07:11
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-22 14:50:14
+ * @LastEditTime: 2024-03-18 17:37:37
  * @Description: 
  */
 'use strict';
@@ -11,6 +11,7 @@ const express = require('express');
 const router = express.Router();
 const core = require('@steedos/core');
 const { getObject } = require('@steedos/objectql')
+const he = require('he');
 
 var DesignerAPI = {
     getAbsoluteUrl: function (url) {
@@ -36,13 +37,13 @@ var DesignerAPI = {
         query = req.query;
         url = query.url;
         if (url) {
-            url = decodeURIComponent(url);
+            url = he.encode(decodeURIComponent(url));
         } else {
             DesignerAPI.sendInvalidURLResponse(res);
         }
         title = query.title;
         if (title) {
-            title = decodeURIComponent(title);
+            title = he.encode(decodeURIComponent(title));
         } else {
             title = "Steedos Designer";
         }
