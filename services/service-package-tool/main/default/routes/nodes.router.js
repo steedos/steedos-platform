@@ -281,8 +281,8 @@ router.post('/api/nodes/package/add', disabledChangePackageWithSaas, core.requir
         })
         res.status(200).send(result);
     } catch (error) {
-        console.error(error);
-        res.status(500).send(error.message);
+        console.error(error.message);
+        res.status(500).send("安装软件包异常, 请检查参数或网络");
     }
 });
 
