@@ -170,7 +170,7 @@ const getCategoriesMonitor = async (userSession, req, currentUrl) => {
     if (hasFlowsPer) {
       let query = `
         query {
-          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc"){
+          flows(filters:[["_id","in",${JSON.stringify(flowIds)}],"and",["category","in",${JSON.stringify(categoriesIds)}], "and", ["state", "=", "enabled"]],sort:"sort_no desc,name"){
             _id,
             name,
             category__expand{_id,name}
