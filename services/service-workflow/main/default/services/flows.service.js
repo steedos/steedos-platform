@@ -128,7 +128,7 @@ module.exports = {
                   ["state", "=", "enabled"],
                 ],
                 fields: ['_id', 'name', 'sort_no', 'category', 'distribute_optional_users', 'distribute_to_self', 'distribute_end_notification'], // 只取必要字段
-                sort: "sort_no,name"
+                sort: "sort_no desc,name"
               });
             const dCategoryIds = _.map(dflows, 'category')
             const dCategoryDocs = await this.getSpaceCategories(dCategoryIds, userSession);
@@ -158,7 +158,7 @@ module.exports = {
             const categoryFlows = await objectql.getObject("flows").find({
               filters: filters,
               fields: ['_id', 'name', 'sort_no', 'category', 'perms'],
-              sort: "sort_no,name",
+              sort: "sort_no desc,name",
             });
             category.flows = [];
             for (const flow of categoryFlows) {
