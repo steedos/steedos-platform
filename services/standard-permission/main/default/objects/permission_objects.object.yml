@@ -102,39 +102,6 @@ fields:
     type: boolean
     label: Allow Create ListViews
     defaultValue: true
-  disabled_list_views:
-    type: lookup
-    reference_to: object_listviews
-    label: Disabled ListViews
-    multiple: true
-    depend_on:
-      - object_name
-    defaultIcon: lead_list
-    optionsFunction: !<tag:yaml.org,2002:js/function> |-
-      function (values) {
-              var _object, _options, list_views;
-
-              _options = [];
-              var objectName = values.object_name;
-              if(_.isObject(values.object_name)){
-                objectName = objectName.name
-              }
-              _object = Creator.getObject(objectName);
-              list_views = _object.list_views;
-
-              _.forEach(list_views, function (f, k) {
-                if (k !== "default" && (!_.has(f, "shared") || f.shared)) {
-                  return _options.push({
-                    label: f.label || f.name || k,
-                    value: f._id
-                  });
-                }
-              });
-
-              return _options;
-            }
-    name: disabled_list_views
-    filterable: true
   allowExport:
     type: boolean
     label: Allow Export Excel
