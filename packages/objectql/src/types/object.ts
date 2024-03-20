@@ -2138,9 +2138,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         }
 
         // 判断处理工作区权限，公司级权限，owner权限
-        if (!_.isEmpty(userSession) && this._datasource.enable_space) {
-            this.dealWithFilters(method, args);
-            await this.dealWithMethodPermission(method, args);
+        if(!(this.enable_space_global === true && _.include(['find', 'findOne'], method))){
+            if (!_.isEmpty(userSession) && this._datasource.enable_space) {
+                this.dealWithFilters(method, args);
+                await this.dealWithMethodPermission(method, args);
+            }
         }
         let returnValue: any;
         if (this.isDirectCRUD(method)) {
