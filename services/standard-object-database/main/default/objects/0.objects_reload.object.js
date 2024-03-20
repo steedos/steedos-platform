@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-08-05 14:17:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-20 13:34:23
+ * @Description: 
+ */
 var objectql = require('@steedos/objectql');
 var objectCore = require('./objects.core.js');
 
