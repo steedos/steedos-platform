@@ -582,7 +582,7 @@ fields:
         };
         var currentFilter = [];
         var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
-        var fromField = referenceObject && referenceObject.fields[values.from || values.auto_fill_mapping__from];
+        var fromField = referenceObject && referenceObject.fields[values.from];
 
         if (fromField && fromField.data_type) {
             currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
