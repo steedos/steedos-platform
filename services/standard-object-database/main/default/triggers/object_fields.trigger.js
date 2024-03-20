@@ -243,7 +243,8 @@ module.exports = {
             if(obj){
                 this.data.values = _.map(this.data.values, (item)=>{
                     if(item.is_system){
-                        return Object.assign(item, _.find(obj.fields, (field)=>{return field.name === item.name}))
+                        const mField = _.find(obj.fields, (field)=>{return field.name === item.name})
+                        return Object.assign(item, mField, mField.override || {})
                     }else{
                         return item;
                     }
