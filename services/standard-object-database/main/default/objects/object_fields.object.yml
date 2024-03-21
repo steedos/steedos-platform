@@ -945,6 +945,9 @@ fields:
     type: boolean
     label: Enable Enhanced Lookup
     hidden: true # 这里不可以用 visible_on: "{{false}}"，否则在界面上新建字段时会被默认设置为false
+  is_customize:
+    type: boolean
+    readonly: true
 paging:
   enabled: false
 list_views:
@@ -960,6 +963,7 @@ list_views:
       - hidden
       - readonly
       - is_system
+      - is_customize
     sort:
       - field_name: sort_no
         order: asc
@@ -977,6 +981,7 @@ list_views:
       - hidden
       - readonly
       - is_system
+      - is_customize
     label: 自定义
     filters:
       - ["is_system","<>",true]
