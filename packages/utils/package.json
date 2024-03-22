@@ -1,7 +1,7 @@
 {
   "name": "@steedos/utils",
   "private": false,
-  "version": "2.6.10-beta.7",
+  "version": "2.6.10-beta.8",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -20,5 +20,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "084926627e54978808978a731d0472f96bbbeb06"
+  "gitHead": "301187c80d5cd314fd061052bd847b4d17ac448c"
 }
