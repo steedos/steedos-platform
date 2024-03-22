@@ -443,6 +443,9 @@ fields:
   extend:
     type: text
     hidden: true
+  is_customize:
+    type: boolean
+    readonly: true
 paging:
   enabled: false
 relatedList:
@@ -490,6 +493,7 @@ list_views:
       - in_development
       - is_enable
       - is_system
+      - is_customize
     label: All
     filter_scope: space
     extra_columns:
@@ -505,9 +509,10 @@ list_views:
       - in_development
       - is_enable
       - is_system
+      - is_customize
     label: Customize
     filters:
-      - ["is_system","<>",true]
+      - ["is_customize","<>",true]
     filter_scope: space
     extra_columns:
       - datasource
@@ -522,6 +527,7 @@ list_views:
       - in_development
       - is_enable
       - is_system
+      - is_customize
     label: System
     filters:
       - ["is_system","=",true]

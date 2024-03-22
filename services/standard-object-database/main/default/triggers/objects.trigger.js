@@ -17,15 +17,15 @@ module.exports = {
     afterFind: async function(){
         let userId = this.userId
         let spaceId = this.spaceId;
-        for (const doc of this.data.values) {
-            doc.fields =  Object.assign({}, doc.fields, await InternalData.getDefaultSysFields(doc.name, userId)) ;
-        }
-        // this.data.values = this.data.values.concat(await InternalData.findObjects(userId, this.query.filters));
+
+        _.each(this.data.values, (item)=>{
+            item.is_customize = true
+        })
 
         this.data.values = this.data.values.concat(await InternalData.getObjects(userId));
 
         this.data.values = objectql.getSteedosSchema().metadataDriver.find(this.data.values, this.query, spaceId);
-        
+
         _.each(this.data.values, function(value){
             if(value){
                 delete value.actions;
@@ -44,6 +44,8 @@ module.exports = {
     afterFindOne: async function(){
         if(_.isEmpty(this.data.values)){
             this.data.values = await InternalData.getObject(this.id, this.userId);
+        }else{
+            this.data.values.is_customize = true
         }
         if(this.data.values){
             delete this.data.values.actions;
@@ -104,8 +106,13 @@ module.exports = {
         // })
         await sleep(1000 * 2)
     },
+    beforeInsert: async function () {
+        let doc = this.doc;
+        delete doc.is_customize
+    },
     beforeUpdate: async function () {
         const { doc, id, object_name } = this;
+        delete doc.is_customize
         // 如果用户修改了apiname，则校验 数据源必须一致为default数据源；且数据库中不能有新的apiname对应的表
         if (_.has(doc, 'name')) {
             const obj = this.getObject(object_name);

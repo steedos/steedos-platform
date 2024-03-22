@@ -3,7 +3,7 @@ hidden: true
 fields:
   object_name:
     type: text
-  change_date:
+  change_data:
     type: object
     blackbox: true
   change_time:

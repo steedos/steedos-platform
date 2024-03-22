@@ -202,6 +202,8 @@ fields:
     label: After Edit
   compactLayouts:
     label: Highlight Fields
+  is_customize:
+    label: Customize
 groups:
   external_data_source: External data source
   switch: Switch

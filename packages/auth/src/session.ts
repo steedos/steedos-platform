@@ -112,7 +112,7 @@ export function getLoginDevice(userAgent) {
 // 解析Request对象，返回SteedosUserSession类型
 export async function auth(request: Request, response: Response): Promise<any> {
   let cookies = new Cookies(request, response);
-  let authToken: string =
+  let authToken: any =
     request.headers["x-auth-token"] || (cookies.get("X-Auth-Token") || "").replace(/"/g, "");
     let spaceToken = (cookies.get("X-Space-Token") || "").replace(/"/g, "");
   let authorization = request.headers.authorization;
@@ -141,9 +141,16 @@ export async function auth(request: Request, response: Response): Promise<any> {
     }
   }
 
+  if(request.query['X-Auth-Token']){
+    authToken = request.query['X-Auth-Token']
+  }
+
+  if(request.query['X-Space-Id']){
+    spaceId = request.query['X-Space-Id']
+  }
+
   let userAgent = getUserAgent(request) || "";
   const loginDevice = getLoginDevice(userAgent);
-
   let user = await getSession(authToken, spaceId as string, loginDevice);
   if (isTemplateSpace(spaceId)) {
     return Object.assign({ authToken: authToken }, user, loginDevice, {

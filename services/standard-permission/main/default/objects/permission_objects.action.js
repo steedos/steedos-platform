@@ -11,16 +11,16 @@ module.exports = {
         delete newDoc.is_system;
 
         let permissionSetId = doc.permission_set_id
-        if(_.includes(['admin','user','supplier','customer'], doc.permission_set_id)){
-            let dbPst = Creator.odata.query('permission_set', {$select: "_id", $filter: "(name eq '"+doc.permission_set_id+"') and (space eq '"+Steedos.getSpaceId()+"')"}, true)
-            if(dbPst && dbPst.length > 0){
-                permissionSetId = dbPst[0]._id;
-            }
+        // if(_.includes(['admin','user','supplier','customer'], doc.permission_set_id)){
+        //     let dbPst = Creator.odata.query('permission_set', {$select: "_id", $filter: "(name eq '"+doc.permission_set_id+"') and (space eq '"+Steedos.getSpaceId()+"')"}, true)
+        //     if(dbPst && dbPst.length > 0){
+        //         permissionSetId = dbPst[0]._id;
+        //     }
             
-            if(_.includes(['admin','user','supplier','customer'], permissionSetId)){
-                return toastr.error("请先自定义权限集")
-            }
-        }
+        //     if(_.includes(['admin','user','supplier','customer'], permissionSetId)){
+        //         return toastr.error("请先自定义权限集")
+        //     }
+        // }
         Creator.odata.insert(object_name, Object.assign(newDoc, {permission_set_id: permissionSetId}), function(result, error){
             if (result) {
                 if(Session.get("object_name") === 'permission_objects'){
