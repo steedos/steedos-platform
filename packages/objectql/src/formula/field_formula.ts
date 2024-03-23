@@ -1,8 +1,8 @@
 /*
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
- * @LastEditors: yinlianghui@steedos.com
- * @LastEditTime: 2022-06-17 11:53:00
+ * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
+ * @LastEditTime: 2024-03-22 16:22:29
  * @Description: 
  */
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
@@ -31,7 +31,8 @@ export const verifyObjectFieldFormulaConfig = async (fieldConfig, objectConfig):
  * @param fieldName 
  */
 export const getObjectFieldFormulaConfigs = async (objectName: string, fieldName?: string): Promise<Array<SteedosFieldFormulaTypeConfig>> => {
-    return await getFieldFormulaConfigs(objectName, fieldName);
+    let result = await getFieldFormulaConfigs(objectName, fieldName);
+    return sortFieldFormulaConfigs(result);
     // console.log('getObjectFieldFormulaConfigs from metadata services', configs);
     // let result = configs.filter((config: SteedosFieldFormulaTypeConfig) => {
     //     if (fieldName) {
