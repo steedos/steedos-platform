@@ -217,6 +217,12 @@ const initSummaryDoc = async (doc) => {
 
 module.exports = {
     afterFind: async function(){
+
+
+        _.each(this.data.values, (item)=>{
+            item.is_customize = true
+        })
+
         let filters = InternalData.parserFilters(this.query.filters);
         let objectName = filters.object;
         if(!objectName && filters._id && filters._id.indexOf(".") > -1){
@@ -243,7 +249,8 @@ module.exports = {
             if(obj){
                 this.data.values = _.map(this.data.values, (item)=>{
                     if(item.is_system){
-                        return Object.assign(item, _.find(obj.fields, (field)=>{return field.name === item.name}))
+                        const mField = _.find(obj.fields, (field)=>{return field.name === item.name})
+                        return Object.assign(item, mField, mField.override || {})
                     }else{
                         return item;
                     }
@@ -300,10 +307,13 @@ module.exports = {
                     this.data.values = field;
                 }
             }
+        }else{
+            this.data.values.is_customize = true
         }
     },
     beforeInsert: async function () {
         let doc = this.doc;
+        delete doc.is_customize
         validateDoc(doc);
         await checkFormulaInfiniteLoop(doc);
         await checkMasterDetailTypeField(doc);
@@ -328,6 +338,7 @@ module.exports = {
     },
     beforeUpdate: async function () {
         let { doc, object_name, id} = this;
+        delete doc.is_customize
         validateDoc(doc);
         // const dbDoc = await objectql.getObject(object_name).findOne(id)
         const dbDoc = objectql.wrapAsync(async function(){

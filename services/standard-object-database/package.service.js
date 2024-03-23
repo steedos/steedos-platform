@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 1985-10-26 16:15:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-02-29 10:24:41
+ * @LastEditTime: 2024-03-20 14:30:13
  * @Description: 
  */
 "use strict";
@@ -115,8 +115,7 @@ module.exports = {
 					}
 				}
 				if(data.is_system){
-					// 'label' 先禁止编辑label , 目前由于i18n的问题导致 label无效.
-					data = _.pick(data, ['defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior', 'enable_thousands', 'autonumber_enable_modify', 'auto_fill_mapping']);
+					data = _.pick(data, ['label', 'defaultValue', 'group', 'rows', 'sort_no', 'is_wide', 'index', 'sortable', 'searchable', 'filterable', 'visible_on', 'inlineHelpText', 'description', 'amis', 'required', 'unique', 'readonly', 'hidden', 'deleted_lookup_record_behavior', 'enable_thousands', 'autonumber_enable_modify', 'auto_fill_mapping']);
 				}
                 return object.update(id, data, userSession)
 			},

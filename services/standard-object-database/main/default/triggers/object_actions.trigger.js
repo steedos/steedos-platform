@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-05-28 11:07:57
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-14 10:29:44
+ * @LastEditTime: 2024-03-20 16:00:17
  * @Description: 
  */
 const InternalData = require('@steedos/standard-objects').internalData;
@@ -51,11 +51,17 @@ module.exports = {
             }
         }
 
+        // _.each(this.data.values, (item)=>{
+        //     if(item.visibleOn){
+        //         item.visible_type = "expression"
+        //     }else if(item.visible === true){
+        //         item.visible_type = "static"
+        //     }
+        // })
+
         _.each(this.data.values, (item)=>{
-            if(item.visibleOn){
-                item.visible_type = "expression"
-            }else if(item.visible === true){
-                item.visible_type = "static"
+            if(item.visible != false){
+                item.visible = true
             }
         })
 

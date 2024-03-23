@@ -363,6 +363,8 @@ fields:
     label: 启用弹出窗口查找模式
     help: 
     description: 
+  is_customize:
+    label: 自定义
 groups:
   external_data_source: 外部数据源
   advanced: 高级

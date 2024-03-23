@@ -25,8 +25,6 @@ fields:
     label: Label
     is_name: true
     sort_no: 120
-    amis:
-      disabledOn: "${is_system == true}"
   _name:
     type: text
     label: Field Name
@@ -582,7 +580,7 @@ fields:
         };
         var currentFilter = [];
         var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
-        var fromField = referenceObject && referenceObject.fields[values.from || values.auto_fill_mapping__from];
+        var fromField = referenceObject && referenceObject.fields[values.from];
 
         if (fromField && fromField.data_type) {
             currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
@@ -947,6 +945,9 @@ fields:
     type: boolean
     label: Enable Enhanced Lookup
     hidden: true # 这里不可以用 visible_on: "{{false}}"，否则在界面上新建字段时会被默认设置为false
+  is_customize:
+    type: boolean
+    readonly: true
 paging:
   enabled: false
 list_views:
@@ -962,6 +963,7 @@ list_views:
       - hidden
       - readonly
       - is_system
+      - is_customize
     sort:
       - field_name: sort_no
         order: asc
@@ -979,6 +981,7 @@ list_views:
       - hidden
       - readonly
       - is_system
+      - is_customize
     label: 自定义
     filters:
       - ["is_system","<>",true]

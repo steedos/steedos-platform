@@ -1638,6 +1638,10 @@ export class SteedosObjectType extends SteedosObjectProperties {
         objectConfig.fields = this.getAccessFields(objectConfig.fields, objectLayout, objectConfig.permissions)
 
         _.each(objectConfig.fields, (field)=>{
+            if(field.override){
+                field = Object.assign(field, field.override)
+            }
+
             if(field && field.static){
                 let fieldAmis = field.amis || {};
                 fieldAmis.static = true;

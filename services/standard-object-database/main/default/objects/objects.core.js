@@ -284,7 +284,7 @@ function getObjectFromDB(objectName) {
 
 function reloadObject(changeLog){
     var objectName = changeLog.object_name;
-    var data = changeLog.change_date;
+    var data = changeLog.change_data;
     const objectRecord = Creator.getCollection("objects").findOne({
         name: objectName
       })
@@ -298,7 +298,7 @@ function reloadObject(changeLog){
         fields: [],
         actions: []
     }
-    if(!objectRecord && objectDataSourceName){
+    if((!objectRecord || objectRecord.is_system == true) && objectDataSourceName){
 
         switch (data.type) {
             case 'field':
@@ -383,14 +383,14 @@ function triggerReloadObject(objectName, type, value, event){
     const objectRecord = Creator.getCollection("objects").findOne({
         name: objectName
       })
-    if(objectRecord){
+    if(objectRecord && objectRecord.is_system != true){
         //TODO 待支持动态加载related_list后， 删除此行代码
         // console.log(`triggerReloadObject===>`, objectName)
         Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
     }else{
         Creator.getCollection("_object_reload_logs").insert({
             object_name: objectName,
-            change_date: {
+            change_data: {
                 type: type,
                 event: event,
                 value: value

@@ -387,6 +387,8 @@ fields:
     label: Enable Enhanced Lookup
     help: 
     description: 
+  is_customize:
+    label: Customize
 groups:
   external_data_source: External data source
   advanced: Advanced

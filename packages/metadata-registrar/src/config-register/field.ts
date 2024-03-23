@@ -1,8 +1,8 @@
 /*
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-05-29 10:34:27
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-02-19 13:18:08
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-20 15:01:11
  * @Description: 
  */
 import { getObjectConfig, getOriginalObjectConfig } from './core'
@@ -41,6 +41,12 @@ export const addObjectFieldConfig = (objectName: string, json: any) => {
     if (!json.name) {
         throw new Error('missing attribute name: ' + (json as any)?.__filename)
     }
+    if(json._id && json._id != json.name){
+        json.override = {
+            label: json.label
+        }
+    }
+
     let object = getObjectConfig(objectName);
     let originalObject = getOriginalObjectConfig(objectName);
     if (object) {

@@ -2,10 +2,15 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-21 16:25:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-05-18 09:26:18
+ * @LastEditTime: 2024-03-21 11:58:43
  * @Description: 
  */
 var packageServiceName = '~database-objects'
+
+const { getObject } = require('@steedos/objectql');
+
+const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 function isPatternTrigger(data){
     const {listenTo} = data;
     if(listenTo === '*'){
@@ -36,7 +41,19 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-
+        resetObject: {
+            rest: {
+                method: "POST",
+                path: "/reset"
+            },
+            async handler(ctx) {
+                const { objectName } = ctx.params;
+                await getObject('objects').directDelete({filters: ['name','=', objectName]});
+                await getObject('object_fields').directDelete({filters: ['object','=', objectName]});
+                await sleep(2 * 1000)
+                return true;
+            }
+        }
 	},
 
 	/**

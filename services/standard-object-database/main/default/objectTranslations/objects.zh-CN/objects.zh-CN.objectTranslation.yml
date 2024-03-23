@@ -201,6 +201,8 @@ fields:
     label: 编辑页面显示之后
   compactLayouts:
     label: 高亮字段
+  is_customize:
+    label: 自定义
 groups:
   external_data_source: 外部数据源
   switch: 功能开关
