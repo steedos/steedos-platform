@@ -1,4 +1,4 @@
-import { getObject } from '../index';
+import { getObject, getMetadata } from '../index';
 import { computeFormula } from '../formula'
 import { WorkflowRule } from './types/workflow_rule';
 import { JsonMap } from "@salesforce/ts-types";
@@ -45,8 +45,7 @@ export class WorkflowRulesRunner{
         if(!_.include(['insert', 'update'], event) || !record){
             return ;
         }
-    
-        let filters = [['object_name', '=', objectName], ['space', '=', record.space], ['active', '=', true]];
+        let filters = [['object_name', '=', objectName], ['active', '=', true]];   //['space', '=', record.space], 
     
         if(fromRuleId){
             // 如果是级联触发的工作流规则，则要排除掉其原本来自的工作流规则，避免死循环
@@ -66,7 +65,8 @@ export class WorkflowRulesRunner{
     
         let allTargets: Array<FieldUpdateTarget> = [];
         let tempTargets: Array<FieldUpdateTarget> = [];
-        const wfRules = await getObject('workflow_rule').find({ filters: filters});
+        const wfRules = await getMetadata('workflow_rule').find(filters, record.space);
+        // await getObject('workflow_rule').find({ filters: filters});
         for (const wfRule of wfRules) {
             if(wfRule.trigger_type === 'onCreateOrTriggeringUpdate'){
                 tempTargets = await runWFRule(wfRule, record, userSession, previousRecord)

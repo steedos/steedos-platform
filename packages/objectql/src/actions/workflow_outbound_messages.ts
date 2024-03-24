@@ -1,12 +1,12 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-16 14:57:50
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-11-24 12:01:27
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-24 09:54:39
  * @Description: 执行出站消息
  */
 
-import { getObject } from '../index';
+import { getObject, getMetadata } from '../index';
 
 import { WorkflowOutboundMessage } from './types/workflow_outbound_message';
 
@@ -28,7 +28,8 @@ export async function runWorkflowOutboundMessageActions(ids: Array<string>, reco
         return;
     }
     let filters = [['name', 'in', ids], 'or', ['_id', 'in', ids]];
-    let docs = await getObject("workflow_outbound_messages").find({ filters: filters })
+    let docs = await getMetadata(`workflow_outbound_messages`).find(filters, userSession.spaceId);
+    // await getObject("workflow_outbound_messages").find({ filters: filters })
     for (const doc of docs) {
         await runWorkflowOutboundMessageAction(doc, recordId, userSession);
     }
