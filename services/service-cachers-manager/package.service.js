@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-03-28 09:35:35
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-01-23 16:47:39
+ * @LastEditTime: 2024-03-22 14:40:23
  * @Description: 维护内存缓存
  */
 "use strict";
@@ -186,9 +186,9 @@ module.exports = {
 			}
 		},
 		"steedos-server.started": {
-			async handler(ctx) {
+			handler(ctx) {
 				// 初始化缓存
-				await this.loadProfiles();
+				this.loadProfiles();
 			}
 		},
 		"@permission_set.*": {
@@ -266,5 +266,14 @@ module.exports = {
 		core.loadObjectTranslations();
 		this.loadActionTriggers(this.broker);
 		this.loadTriggers(this.broker);
+
+		this.broker.createService(require("./metadata-cachers.service"));
 	},
+
+	async stopped(){
+		this.actionFieldUpdateCacher?.destroy();
+		this.workflowOutboundMessageCacher?.destroy();
+		this.workflowNotificationCacher?.destroy();
+		this.workflowRuleCacher?.destroy();
+	}
 };

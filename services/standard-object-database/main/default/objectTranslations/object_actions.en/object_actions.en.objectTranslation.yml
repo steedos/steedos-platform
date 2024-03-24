@@ -2,6 +2,10 @@ name: object_actions
 label: Object Action
 description: 
 fields:
+  description:
+    label: Description
+    help: 
+    description: 
   object:
     label: Object
     help: 
