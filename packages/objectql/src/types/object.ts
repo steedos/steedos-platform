@@ -23,6 +23,7 @@ import { getCacher } from '@steedos/cachers';
 import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
+import { getInsertBaseDoc, getUpdateBaseDoc } from "./method_base";
 
 declare var TAPi18n;
 
@@ -1203,7 +1204,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
         try {
             doc = this.formatRecord(doc);
-            doc = this.getInsertBaseDoc(doc, userSession);
+            doc = await this.getInsertBaseDoc(doc, userSession);
             return await this.callAdapter('insert', this.table_name, doc, userSession)
         } catch (error) {
             this.handlerDuplicateKeyError(error, userSession)
@@ -1214,7 +1215,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         try {
             doc = this.formatRecord(doc);
-            doc = this.getUpdateBaseDoc(doc, userSession);
+            doc = await this.getUpdateBaseDoc(doc, userSession);
             // await this.processUneditableFields(userSession, doc)
             let clonedId = id;
             return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
@@ -1226,7 +1227,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        doc = this.getUpdateBaseDoc(doc, userSession);
+        doc = await this.getUpdateBaseDoc(doc, userSession);
         // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
@@ -1234,7 +1235,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
-        doc = this.getUpdateBaseDoc(doc, userSession);
+        doc = await this.getUpdateBaseDoc(doc, userSession);
         // await this.processUneditableFields(userSession, doc)
         let clonedQueryFilters = queryFilters;
         return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
@@ -2098,33 +2099,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
     //     // })
     // }
 
-    private getInsertBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        const { userId } = userSession || {};
-        doc.created = new Date();
-        doc.modified = new Date();
-        if (userId) {
-            if (!doc.owner) {
-                doc.owner = userId;
-            }
-            if (doc.owner === '{userId}') {
-                doc.owner = userId;
-            }
-            doc.created_by = userId;
-            doc.modified_by = userId;
-        }
-        return doc;
+    private async getInsertBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        return await getInsertBaseDoc(this, doc, userSession);
     }
 
-    private getUpdateBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        const { userId } = userSession || {};
-        if (!doc) {
-            return;
-        }
-        doc.modified = new Date();
-        if (userId) {
-            doc.modified_by = userId;
-        }
-        return doc;
+    private async getUpdateBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        return await getUpdateBaseDoc(this, doc, userSession);
     }
 
     private formatRecord(doc: JsonMap) {
