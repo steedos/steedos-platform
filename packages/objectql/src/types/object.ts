@@ -7,7 +7,7 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType, getDataSource } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
-import { runCurrentObjectFieldFormulas, runQuotedByObjectFieldFormulas } from '../formula';
+import { getCurrentObjectFieldFormulasDoc, runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
@@ -23,6 +23,7 @@ import { getCacher } from '@steedos/cachers';
 import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
+import { getMongoInsertBaseDoc, getMongoUpdateBaseDoc } from "./method_base";
 
 declare var TAPi18n;
 
@@ -1203,6 +1204,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async insert(doc: Dictionary<any>, userSession?: SteedosUserSession) {
         try {
             doc = this.formatRecord(doc);
+            doc = await this.getInsertBaseDoc(doc, userSession);
             return await this.callAdapter('insert', this.table_name, doc, userSession)
         } catch (error) {
             this.handlerDuplicateKeyError(error, userSession)
@@ -1213,6 +1215,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     async update(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         try {
             doc = this.formatRecord(doc);
+            doc = await this.getUpdateBaseDoc(doc, userSession);
             // await this.processUneditableFields(userSession, doc)
             let clonedId = id;
             return await this.callAdapter('update', this.table_name, clonedId, doc, userSession)
@@ -1224,6 +1227,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     async updateOne(id: SteedosIDType, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
+        doc = await this.getUpdateBaseDoc(doc, userSession);
         // await this.processUneditableFields(userSession, doc)
         let clonedId = id;
         return await this.callAdapter('updateOne', this.table_name, clonedId, doc, userSession)
@@ -1231,6 +1235,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
     // 此函数支持driver: MeteorMongo、Mongo
     async updateMany(queryFilters: SteedosQueryFilters, doc: Dictionary<any>, userSession?: SteedosUserSession) {
         doc = this.formatRecord(doc);
+        doc = await this.getUpdateBaseDoc(doc, userSession);
         // await this.processUneditableFields(userSession, doc)
         let clonedQueryFilters = queryFilters;
         return await this.callAdapter('updateMany', this.table_name, clonedQueryFilters, doc, userSession)
@@ -2010,7 +2015,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
     }
 
-    private async getTriggerContext(when: string, method: string, args: any[], recordId?: string) {
+    private async getTriggerContext(when: string, method: string, args: any[]) {
 
         let userSession = args[args.length - 1]
 
@@ -2030,10 +2035,6 @@ export class SteedosObjectType extends SteedosObjectProperties {
 
         if (method === 'insert' || method === 'update') {
             context.doc = args[args.length - 2]
-        }
-
-        if (when === 'after' && (method === 'update' || method === 'delete')) {
-            context.previousDoc = await this.findOne(recordId, {}, userSession)
         }
 
         return context
@@ -2098,6 +2099,26 @@ export class SteedosObjectType extends SteedosObjectProperties {
     //     // })
     // }
 
+    private async getInsertBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        let driver = this._datasource && this._datasource.driver;
+        if(driver == SteedosDatabaseDriverType.Mongo || driver == SteedosDatabaseDriverType.MeteorMongo){
+            return await getMongoInsertBaseDoc(this, doc, userSession);
+        }
+        else{
+            return doc;
+        }
+    }
+
+    private async getUpdateBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        let driver = this._datasource && this._datasource.driver;
+        if(driver == SteedosDatabaseDriverType.Mongo || driver == SteedosDatabaseDriverType.MeteorMongo){
+            return await getMongoUpdateBaseDoc(this, doc, userSession);
+        }
+        else{
+            return doc;
+        }
+    }
+
     private formatRecord(doc: JsonMap) {
         let adapterFormat = this._datasource["formatRecord"];
         if (typeof adapterFormat == 'function') {
@@ -2132,7 +2153,9 @@ export class SteedosObjectType extends SteedosObjectProperties {
             }
             else {
                 recordId = args[1];
-                doc = args[2];
+                if(method !== "delete"){
+                    doc = args[2];
+                }
             }
         }
 
@@ -2153,17 +2176,32 @@ export class SteedosObjectType extends SteedosObjectProperties {
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
             returnValue = await adapterMethod.apply(this._datasource, args);
         } else {
+            let previousDoc: any;
+            // update/delete时始终查一次整个record doc，公式中依赖了完整doc（比如单元格编辑等情况下doc不完整），after trigger中需要previousDoc
+            let formulaDoc = doc;
+            if (method === 'update' || method === 'delete') {
+                previousDoc = await this.findOne(recordId, {}, userSession)
+                formulaDoc = Object.assign({}, previousDoc, doc);
+            }
+            // 先把当前record的公式字段值计算完填充到doc中，如果是update，则传入的formulaDoc要求是完整的record doc，因为要考虑单元格编辑
+            // 如果是删除记录docAfterFormulaRun返回的会是undefined，不会合并到doc
+            let docAfterFormulaRun = await this.getRecordFormulaDoc(method, objectName, formulaDoc, userSession);
+            if(docAfterFormulaRun){
+                Object.assign(doc, docAfterFormulaRun);
+            }
             let beforeTriggerContext = await this.getTriggerContext('before', method, args)
             if (paramRecordId) {
                 beforeTriggerContext = Object.assign({} , beforeTriggerContext, { id: paramRecordId });
             }
             await this.runBeforeTriggers(method, beforeTriggerContext)
             await runValidationRules(method, beforeTriggerContext, args[0], userSession)
-            let afterTriggerContext = await this.getTriggerContext('after', method, args, paramRecordId)
+            let afterTriggerContext = await this.getTriggerContext('after', method, args)
+            if (method === 'update' || method === 'delete') {
+                afterTriggerContext.previousDoc = previousDoc;
+            }
             if (paramRecordId) {
                 afterTriggerContext = Object.assign({}, afterTriggerContext, { id: paramRecordId });
             }
-            let previousDoc = clone(afterTriggerContext.previousDoc);
             args.splice(args.length - 1, 1, userSession ? userSession.userId : undefined)
 
             returnValue = await adapterMethod.apply(this._datasource, args);
@@ -2218,7 +2256,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
                     recordId = <string>doc._id;
                 }
                 // 一定要先运行公式再运行汇总，以下两个函数顺序不能反
-                await this.runRecordFormula(method, objectName, recordId, doc, userSession);
+                await this.runRecordQuotedByObjectFieldFormulas(method, objectName, recordId, doc, userSession);
                 await this.runRecordSummaries(method, objectName, recordId, doc, previousDoc, userSession);
             }
             await brokeEmitEvents(objectName, method, afterTriggerContext);
@@ -2226,39 +2264,43 @@ export class SteedosObjectType extends SteedosObjectProperties {
         return returnValue
     };
 
-    private async runRecordFormula(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
-        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
-            if (method === "updateMany") {
-                // TODO:暂时不支持updateMany公式计算，因为拿不到修改了哪些数据
-                // let filters: SteedosQueryFilters = args[1];
-                // await runManyCurrentObjectFieldFormulas(objectName, filters, userSession);
-            }
-            else {
-                if(method !== "delete"){
-                    await runCurrentObjectFieldFormulas(objectName, recordId, doc, userSession, true);
-                }
-                // 新建记录时肯定不会有字段被其它对象引用，但是会有当前对象上的字段之间互相引用，所以也需要重算被引用的公式字段值
-                // 见issue: a公式字段，其中应用了b公式字段，记录保存后a字段没计算，编辑后再保存字段计算 #2946
-                const onlyForOwn = method === "insert";
-                // 删除记录时需要考虑其他对象记录中的公式字段引用了被删除的记录，其公式需要重新计算，但是不可以再重新计算自身公式字段，因为记录被删除了会报错
-                // 见issue：删除记录时并不会触发公式字段重新计算，需要评估考虑加上 #2375 删除包含公式字段的记录时报错 #3427
-                const withoutCurrent = method === "delete";
-                await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent });
-            }
+    /**
+     * 新建修改记录时，计算当前记录的公式字段值，并把运算结果返回，但是不执行db操作
+     */
+    private async getRecordFormulaDoc(method: string, objectName: string, doc: any, userSession: any) {
+        let setDoc: any;
+        if (["insert", "update"].indexOf(method) > -1) {
+            setDoc = await getCurrentObjectFieldFormulasDoc(objectName, doc, userSession);
+        }
+        return setDoc;
+    }
+
+    /**
+     * 修改和删除记录时需要考虑其他对象记录中的公式字段引用了被修改、删除的记录，其公式需要重新计算
+     * 因为当前doc的公式计算提前了，新建记录时，当前对象中有公式字段引用公式字段时不再有#2946所示bug了，所以新建记录时不需要重新运行公式计算
+     */
+    private async runRecordQuotedByObjectFieldFormulas(method: string, objectName: string, recordId: string, doc: any, userSession: any) {
+        if (["update", "delete"].indexOf(method) > -1) {
+            // 新建记录不再进这里，所以始终设置为false
+            const onlyForOwn = false;//method === "insert";
+            // 修改记录时，因为当前记录的所有公式字段已经提前计算存入变量doc了，不需要再计算当前记录中的公式字段了，所以这里排除掉
+            // 而删除记录时，本身就不需要再计算当前记录中的公式字段了，所以这里也排除掉
+            const withoutCurrent = true;//method === "delete";
+            await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent });
         }
     }
 
+    /**
+     * 增删改记录时，重算并更新汇总字段值
+     */
     private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
-        if (["insert", "update", "updateMany", "delete"].indexOf(method) > -1) {
-            if (method === "updateMany") {
-                // TODO:暂时不支持updateMany汇总计算，因为拿不到修改了哪些数据
+        if (["insert", "update", "delete"].indexOf(method) > -1) {
+            if (method === "insert") {
+                // 新建主表记录时，给主表记录中的汇总字段设置默认值
+                await runCurrentObjectFieldSummaries(objectName, recordId);
             }
-            else {
-                if (method === "insert") {
-                    await runCurrentObjectFieldSummaries(objectName, recordId);
-                }
-                await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
-            }
+            // 子表记录增删改时，计算并设置主表中汇总字段
+            await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
         }
     }
 

@@ -224,7 +224,9 @@ export const updateReferenceToFieldSummaryValue = async (referenceToId: string, 
             return;
         }
     }
-    await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
+    // await getSteedosSchema().getObject(object_name).directUpdate(referenceToId, setDoc);
+    // 改为普通update，特意触发主表记录的整个更新流程，见：#6611
+    await getSteedosSchema().getObject(object_name).update(referenceToId, setDoc);
 }
 
 export const updateQuotedByReferenceTosForSummaryType = async (referenceToIds: Array<string> | Array<JsonMap> | any, fieldSummaryConfig: SteedosFieldSummaryTypeConfig, userSession: any) => {

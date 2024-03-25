@@ -52,18 +52,19 @@ const checkCompany = async (object_name, userId, doc) => {
 
 const beforeInsertBase = async function () {
     const { doc, userId } = this;
-    doc.created = new Date();
-    doc.modified = new Date();
-    if (userId) {
-        if (!doc.owner) {
-            doc.owner = userId;
-        }
-        if (doc.owner === '{userId}') {
-            doc.owner = userId;
-        }
-        doc.created_by = userId;
-        doc.modified_by = userId;
-    }
+    // 迁移到insert函数中提前执行了
+    // doc.created = new Date();
+    // doc.modified = new Date();
+    // if (userId) {
+    //     if (!doc.owner) {
+    //         doc.owner = userId;
+    //     }
+    //     if (doc.owner === '{userId}') {
+    //         doc.owner = userId;
+    //     }
+    //     doc.created_by = userId;
+    //     doc.modified_by = userId;
+    // }
     var extras = ["spaces", "company", "organizations", "users", "space_users"];
     if (extras.indexOf(this.object_name) < 0 && doc.space) {
         /* company_ids/company_id默认值逻辑*/
@@ -100,10 +101,11 @@ const beforeUpdateBase = async function () {
     if (!doc) {
         return;
     }
-    doc.modified = new Date();
-    if (userId) {
-        doc.modified_by = userId;
-    }
+    // 迁移到update函数中提前执行了
+    // doc.modified = new Date();
+    // if (userId) {
+    //     doc.modified_by = userId;
+    // }
     var extras = ["spaces", "company", "organizations", "users", "space_users"];
     if (extras.indexOf(this.object_name) < 0) {
         /* company_ids/company_id级联修改逻辑*/
@@ -163,10 +165,10 @@ const afterDeleteBase = async function () {
 module.exports = {
     listenTo: 'base',
     beforeInsert: async function () {
-        return await beforeInsertBase.apply(this, arguments)
+        // return await beforeInsertBase.apply(this, arguments)
     },
     beforeUpdate: async function () {
-        return await beforeUpdateBase.apply(this, arguments)
+        // return await beforeUpdateBase.apply(this, arguments)
     },
     afterDelete: async function () {
         return await afterDeleteBase.apply(this, arguments)
