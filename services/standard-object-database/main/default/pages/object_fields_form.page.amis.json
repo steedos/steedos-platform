@@ -160,15 +160,7 @@
                                 "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                             }
                         },
-                        "className": "col-span-2 m-0",
-                        "formula": {
-                            "mode": "input-group",
-                            "evalMode": false,
-                            "inputSettings": {},
-                            "variables": [
-                                {}
-                            ]
-                        }
+                        "className": "col-span-2 m-0"
                     }
                 },
                 "filtersFunction": {
