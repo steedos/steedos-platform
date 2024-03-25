@@ -23,7 +23,7 @@ import { getCacher } from '@steedos/cachers';
 import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
-import { getInsertBaseDoc, getUpdateBaseDoc } from "./method_base";
+import { getMongoInsertBaseDoc, getMongoUpdateBaseDoc } from "./method_base";
 
 declare var TAPi18n;
 
@@ -2100,11 +2100,23 @@ export class SteedosObjectType extends SteedosObjectProperties {
     // }
 
     private async getInsertBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        return await getInsertBaseDoc(this, doc, userSession);
+        let driver = this._datasource && this._datasource.driver;
+        if(driver == SteedosDatabaseDriverType.Mongo || driver == SteedosDatabaseDriverType.MeteorMongo){
+            return await getMongoInsertBaseDoc(this, doc, userSession);
+        }
+        else{
+            return doc;
+        }
     }
 
     private async getUpdateBaseDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
-        return await getUpdateBaseDoc(this, doc, userSession);
+        let driver = this._datasource && this._datasource.driver;
+        if(driver == SteedosDatabaseDriverType.Mongo || driver == SteedosDatabaseDriverType.MeteorMongo){
+            return await getMongoUpdateBaseDoc(this, doc, userSession);
+        }
+        else{
+            return doc;
+        }
     }
 
     private formatRecord(doc: JsonMap) {

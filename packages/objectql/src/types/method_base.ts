@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2024-03-23 14:58:33
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-25 16:45:49
+ * @LastEditTime: 2024-03-25 17:11:14
  */
 import * as _ from 'lodash';
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
@@ -56,7 +56,7 @@ const checkCompany = async (object: any, doc: Dictionary<any>, userSession?: Ste
     }
 }
 
-export async function getInsertBaseDoc(object: any, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+export async function getMongoInsertBaseDoc(object: any, doc: Dictionary<any>, userSession?: SteedosUserSession) {
     const { userId, company_id } = userSession || {};
     doc.created = new Date();
     doc.modified = new Date();
@@ -99,7 +99,7 @@ export async function getInsertBaseDoc(object: any, doc: Dictionary<any>, userSe
     return doc;
 }
 
-export async function getUpdateBaseDoc(object: any, doc: Dictionary<any>, userSession?: SteedosUserSession) {
+export async function getMongoUpdateBaseDoc(object: any, doc: Dictionary<any>, userSession?: SteedosUserSession) {
     const { userId, company_id } = userSession || {};
     if (!doc) {
         return;
