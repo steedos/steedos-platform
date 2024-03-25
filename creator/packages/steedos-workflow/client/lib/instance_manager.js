@@ -372,7 +372,7 @@ InstanceManager.checkFormValue = async function () {
 
 		for (var k in fieldsPermision) {
 			if (fieldsPermision[k] == 'editable') {
-				InstanceManager.checkFormFieldValue($("[name='" + k + "']")[0], k);
+				InstanceManager.checkFormFieldValue($("[name='" + k + "']", $("#instanceform"))[0], k);
 			}
 		}
 	}

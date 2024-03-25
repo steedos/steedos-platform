@@ -139,6 +139,11 @@ fields:
     visible_on: "{{global.mode ==='read' ? true : false}}"
     disabled: true
     sort_no: 500
+  description:
+    label: Description
+    type: textarea
+    is_wide: true
+    sort_no: 450
 form:
   initialValues: !!js/function |
     function(){

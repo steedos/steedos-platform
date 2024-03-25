@@ -1,4 +1,4 @@
-import { getObject, computeFormula, SteedosError } from '../index';
+import { getObject, computeFormula, SteedosError, getMetadata } from '../index';
 import { runQuotedByObjectFieldFormulas } from '../formula';
 import { runQuotedByObjectFieldSummaries } from '../summary';
 import { FieldUpdateTarget } from './types/field_update_target';
@@ -106,7 +106,8 @@ export async function runFieldUpdateActions(ids: Array<string>, recordId: any, u
     }
     
     if(!_.isEmpty(filters)){
-        const actions = await getObject("action_field_updates").find({filters: filters})
+        const actions = await getMetadata(`action_field_updates`).find(filters, userSession.spaceId)
+        // await getObject("action_field_updates").find({filters: filters})
         for (const action of actions) {
             const target:FieldUpdateTarget = await runFieldUpdateAction(action, recordId, userSession);
             if(target){

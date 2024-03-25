@@ -192,6 +192,8 @@ module.exports = {
 
         var myTrace;
 
+        var is_finished; // 传阅正真结束的标记
+
         for (let tidx = 0; tidx < traces.length; tidx++) {
             const t = traces[tidx];
             if (t.approves) {
@@ -236,13 +238,14 @@ module.exports = {
                         })
                         // 更新
                         update_instance_tasks(ins_id, a.trace, a._id, approveDoc)
+                        is_finished = true;
                     }
                 }
             }
 
         }
 
-        if (myApprove) {
+        if (myApprove && is_finished) {
 
             setObj.modified = new Date();
             setObj.modified_by = this.userId;

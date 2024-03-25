@@ -2,6 +2,10 @@ name: object_actions
 label: 操作按钮
 description: 
 fields:
+  description:
+    label: 备注
+    help: 
+    description: 
   object:
     label: 所属对象
     help: 

@@ -1,11 +1,11 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-08-22 11:49:00
- * @LastEditors: sunhaolin@hotoa.com
- * @LastEditTime: 2022-12-11 14:23:55
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-24 09:53:58
  * @Description: 
  */
-import { getObject, computeFormula, getSteedosSchema } from '../index';
+import { getObject, computeFormula, getSteedosSchema, getMetadata } from '../index';
 
 import { WorkflowNotification } from './types/workflow_notification';
 
@@ -24,7 +24,8 @@ export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any
         return;
     }
     let filters = [['name', 'in', ids], 'or', ['_id', 'in', ids]];
-    let notifications = await getObject("workflow_notifications").find({ filters: filters })
+    let notifications = await getMetadata(`workflow_notifications`).find(filters, userSession.spaceId);
+    // await getObject("workflow_notifications").find({ filters: filters })
     for (const wn of notifications) {
         await runWorkflowNotifyAction(wn, recordId, userSession);
     }
