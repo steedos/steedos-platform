@@ -3,6 +3,9 @@ columns:
   - name
   - sort_no
   - hidden
+  - field: fullname
+    amis: 
+      visibleOn: ${isFilter}
 label: All Departments
 filter_scope: space
 sort:

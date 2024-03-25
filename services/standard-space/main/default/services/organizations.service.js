@@ -316,13 +316,13 @@ module.exports = {
             let graphqlResult = await this.broker.call('api.graphql', {
               query: `
                 query {
-                  rows: organizations(filters: [],sort: \"sort_no desc\") {
+                  rows: organizations(filters: ${ctx.params?.filters || "[]"},sort: \"sort_no desc\") {
                     _id,
                     name,
                     fullname,
                     sort_no,
                     hidden,
-                    _display:_ui{sort_no,hidden},
+                    _display:_ui{sort_no,hidden,fullname},
                     parent,
                     children
                   }
@@ -335,7 +335,9 @@ module.exports = {
               }
             )
             let orgs = graphqlResult.data.rows;
-            graphqlResult.data.rows = getTreeRoot(orgs);
+            if(!ctx.params?.filters) {
+                graphqlResult.data.rows = getTreeRoot(orgs);
+            }
             graphqlResult.data.count = orgs.length;
             return graphqlResult;
         }

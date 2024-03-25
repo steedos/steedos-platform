@@ -20,10 +20,12 @@
           "headers": {
             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
           },
-          "cache__": 3000
+          "cache__": 3000,
+          "requestAdaptor": "return Steedos.organizationsTree.getDeferApiRequestAdaptor(api, context, { isLookup: false });",
+          "adaptor": "return Steedos.organizationsTree.getDeferApiAdaptor(payload, response, api, context, { isLookup: false });"
         }
       },
-      "crudDataFilter": "\n// crud.api中不用写接收适配器来根据节点children计算节点defer属性值，是因为服务端接口已经计算过了\ncrud.api = {\n  \"url\": \"${context.rootUrl}/service/api/organizations/root\",\n  \"method\": \"get\",\n  \"cache__\": 300000,\n  \"headers\": {\n    \"Authorization\": \"Bearer ${context.tenantId},${context.authToken}\"\n  }\n}\n\ncrud.deferApi.requestAdaptor = `\n  var selfData = JSON.parse(JSON.stringify(api.data.self));\n  let filters = [];\n  var dep = selfData._id;\n  if (dep) {\n    filters = [['parent', '=', dep]];\n  }\n  return Object.assign({}, api, {\n    data:{\n      query: '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: \"sort_no desc\"){_id,name,sort_no,hidden,_display:_ui{sort_no,hidden},parent,children}}'\n    }\n  }); \n`;\n\ncrud.deferApi.adaptor = `\n  var data = payload.data;\n  if(data.children){\n    return payload;\n  }\n  data.rows = data.rows.map(function (optionItem) {\n    optionItem.defer = !!(optionItem.children && optionItem.children.length);\n    delete optionItem.children;\n    return optionItem;\n  });\n\n  data.children = data.rows;\n  delete data.rows;\n  delete data.count;\n  return payload;\n`\n\nreturn crud;\n"
+      "crudDataFilter": "crud.api = {\n  \"url\": \"${context.rootUrl}/service/api/organizations/root\",\n  \"method\": \"get\",\n  \"headers\": {\n    \"Authorization\": \"Bearer ${context.tenantId},${context.authToken}\"\n  },\n  \"requestAdaptor\": \"return Steedos.organizationsTree.getApiRequestAdaptor(api, context, { isLookup: false });\",\n  \"adaptor\": \"return Steedos.organizationsTree.getApiAdaptor(payload, response, api, context, { isLookup: false });\"\n};\nreturn crud;\n"
     }
   ],
   "regions": [

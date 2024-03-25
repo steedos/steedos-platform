@@ -2,6 +2,9 @@ name: lookup
 columns:
   - name
   - sort_no
+  - field: fullname
+    amis: 
+      visibleOn: ${isFilter}
 label: Lookup Departments
 filter_scope: space
 sort:
