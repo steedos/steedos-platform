@@ -250,7 +250,11 @@ module.exports = {
                 this.data.values = _.map(this.data.values, (item)=>{
                     if(item.is_system){
                         const mField = _.find(obj.fields, (field)=>{return field.name === item.name})
-                        return Object.assign(item, mField, mField.override || {})
+                        if(mField){
+                            return Object.assign(item, mField, mField?.override || {})
+                        }else{
+                            return item;
+                        }
                     }else{
                         return item;
                     }
@@ -269,6 +273,15 @@ module.exports = {
         if(query.fields && _.isArray(query.fields) && !_.include(query.fields, 'type')){
             query.fields.push('type')
         }
+
+
+        let filters = InternalData.parserFilters(this.query.filters);
+        if(filters._id && filters._id.indexOf(".") > -1){
+            const [objectName, fieldName] = filters._id.split('.');
+            query.filters = [['object', '=', objectName], ['name', '=', fieldName]]
+        }
+
+       
     },
     beforeAggregate: async function(){
         const { query } = this;
