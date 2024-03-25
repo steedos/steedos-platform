@@ -343,7 +343,7 @@ export const runQuotedByObjectFieldFormulas = async function (objectName: string
  * @param needRefetchDoc 当doc不可信赖时，需要从数据库中重新抓取doc，请传入true值
  * @param configs 如果已经根据objectName查过相关配置了，请直接传入，可以避免重复查找，提高性能
  */
-export const runCurrentObjectFieldFormulas = async function (objectName: string, recordId: string, doc: JsonMap, userSession: any, needRefetchDoc?: boolean, configs?: Array<SteedosFieldFormulaTypeConfig>) {
+export const getCurrentObjectFieldFormulasDoc = async function (objectName: string, doc: JsonMap, userSession: any, configs?: Array<SteedosFieldFormulaTypeConfig>) {
     if (!configs) {
         configs = await getObjectFieldFormulaConfigs(objectName);
     }
@@ -353,17 +353,18 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
     if (!userSession) {
         checkUserSessionNotRequiredForFieldFormulas(configs);
     }
-    // needRefetchDoc默认值为true
-    if (needRefetchDoc !== false) {
-        const formulaVarFields = pickFieldFormulaVarFields(configs);
-        doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
-    }
+    // 这里要求doc为完整doc，不再查库补字段值，提升性能
+    // if (needRefetchDoc !== false && recordId) {
+    //     const formulaVarFields = pickFieldFormulaVarFields(configs);
+    //     doc = await getSteedosSchema().getObject(objectName).findOne(recordId, { fields: formulaVarFields });
+    // }
     let setDoc = {};
     for (const config of configs) {
         doc = Object.assign({}, doc, setDoc);//setDoc中计算得到的结果应该重新并到doc中支持计算
         setDoc[config.field_name] = await computeFieldFormulaValue(doc, config, userSession);
     }
-    await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
+    return setDoc;
+    // await getSteedosSchema().getObject(objectName).directUpdate(recordId, setDoc);
 }
 
 /**
@@ -372,20 +373,20 @@ export const runCurrentObjectFieldFormulas = async function (objectName: string,
  * @param filters 
  * @param userSession 
  */
-export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, userSession: any) {
-    const configs = await getObjectFieldFormulaConfigs(objectName);
-    if (!configs.length) {
-        return;
-    }
-    if (!userSession) {
-        checkUserSessionNotRequiredForFieldFormulas(configs);
-    }
-    const formulaVarFields = pickFieldFormulaVarFields(configs);
-    let docs = await getSteedosSchema().getObject(objectName).find({ filters: filters, fields: formulaVarFields });
-    for (const doc of docs) {
-        await runCurrentObjectFieldFormulas(objectName, doc._id, doc, userSession, false, configs);
-    }
-}
+// export const runManyCurrentObjectFieldFormulas = async function (objectName: string, filters: SteedosQueryFilters, userSession: any) {
+//     const configs = await getObjectFieldFormulaConfigs(objectName);
+//     if (!configs.length) {
+//         return;
+//     }
+//     if (!userSession) {
+//         checkUserSessionNotRequiredForFieldFormulas(configs);
+//     }
+//     const formulaVarFields = pickFieldFormulaVarFields(configs);
+//     let docs = await getSteedosSchema().getObject(objectName).find({ filters: filters, fields: formulaVarFields });
+//     for (const doc of docs) {
+//         await getCurrentObjectFieldFormulasDoc(objectName, doc, userSession, false, configs);
+//     }
+// }
 
 /**
  * 修改记录时，根据查到的引用了该记录相关字段公式配置，重新计算字段公式，并把计算结果更新到数据库相关记录中
