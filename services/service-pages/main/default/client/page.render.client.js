@@ -912,12 +912,12 @@
                                 }
                             ],
                         },
-                        // {
-                        //     "type": "steedos-app-launcher",
-                        //     "showAppName": false,
-                        //     "appId": "${app.id}",
-                        //     "visibleOn": "${isMobile}"
-                        // }
+                        {
+                            "type": "steedos-app-launcher",
+                            "showAppName": false,
+                            "appId": "${app.id}",
+                            "visibleOn": "${isMobile}"
+                        }
                     ]
                     },
                   ],
