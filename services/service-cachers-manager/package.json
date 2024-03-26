@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@steedos/cachers": "2.7.0-beta.10",
-    "@steedos/metadata-registrar": "2.7.0-beta.10"
+    "@steedos/metadata-registrar": "2.7.0-beta.10",
+    "@steedos/utils": "2.7.0-beta.10"
   },
   "publishConfig": {
     "access": "public"
