@@ -75,6 +75,18 @@
                 "description": "选项卡唯一标识。"
             }
         },
+        "tab_items": {
+            "type": "object",
+            "description": "选项卡"
+        },
+        "tab_groups": {
+            "type": "array",
+            "description": "选项卡分组",
+            "items": {
+                "type": "object",
+                "description": "选项卡分组详情"
+            }
+        },
         "objects": {
             "type": "array",
             "description": "用于指定此应用下有多少对象。",
@@ -110,6 +122,10 @@
         "mobile": {
             "type": "boolean",
             "description": "在手机端显示"
+        },
+        "showSidebar": {
+            "type": "boolean",
+            "description": "显示左侧导航"
         },
         "oauth2_enabled": {
             "type": "boolean",
