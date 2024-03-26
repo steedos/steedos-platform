@@ -5,7 +5,7 @@
   "scripts": {
     "start": "steedos start",
     "k6:graphql": "k6 run -e ROOT_URL=http://127.0.0.1:5000 -e API_KEY=xxx  ./.script/test.graphql.js",
-    "k6:menus": "k6 run -e ROOT_URL=http://127.0.0.1:5100 -e API_KEY=apikey,8FzpeOTInPZcqWeFoCdSEy8s6FDpuITWPz15bIM0kNL  ./.script/test.menus.js"
+    "k6:menus": "k6 run -e ROOT_URL=http://192.168.3.38:5900 -e API_KEY=66012ab947757f99ca53043a,9c11d761dadfe363b09deda25b54fb1b491e4e5a5d930cff02ca922df8e0d9ef1da6343337371114d45277  ./.script/test.menus.js"
   },
   "dependencies": {
     "@steedos/service-community": "2.5.17-beta.1"
