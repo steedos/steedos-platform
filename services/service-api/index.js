@@ -305,10 +305,16 @@ module.exports = {
 					try {
 						res.setHeader("Content-Type", "application/json; charset=utf-8");
 						res.writeHead(err.code || 500);
+
+						let msg = err.message;
+
+						if(err.code === 422 && err.type === 'VALIDATION_ERROR'){
+							msg = err.data.map(item => item.message).join('');
+						}
+
 						res.end(JSON.stringify({
 							"status": -1,
-							"msg": err.message,
-							"data": {}
+							"msg": msg
 						}));
 					} catch (Exception) {
 						res.writeHead(500);

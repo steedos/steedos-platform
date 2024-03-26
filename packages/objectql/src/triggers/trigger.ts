@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2023-10-20 15:06:18
+ * @LastEditTime: 2024-03-26 15:10:32
  * @Description: 
  */
 const { NodeVM } = require('vm2');
@@ -22,8 +22,7 @@ function str2function(
 }
 
 
-export const runTriggerFunction = (code, thisArg, ...args)=>{
-    // console.log('runTriggerFunction', code);
+export const runTriggerFunction = async (trigger, thisArg, ...args)=>{
     const vm = new NodeVM({
         sandbox: {
             str2function,
@@ -47,9 +46,25 @@ export const runTriggerFunction = (code, thisArg, ...args)=>{
         },
         env: process.env
     });
-    let triggerInSandbox =  vm.run(`module.exports = async function(ctx){
-        ${code}
-    };`);
-
-    return triggerInSandbox.apply(thisArg, args)
+    const triggerFileName = `${trigger.listenTo}.${trigger.name}.trigger.js`;
+    let triggerInSandbox =  vm.run(`module.exports = async function(ctx){${trigger.handler}};`, triggerFileName);
+    try {
+        const runTrigger = async function(){
+            return new Promise((resolve, reject)=>{
+                triggerInSandbox.apply(thisArg, args).then((res)=>{
+                    resolve(res)
+                }).catch((error)=>{
+                    reject(error)
+                })
+            });
+        }
+        const res: any = await runTrigger();
+        return res;
+    } catch (error) {
+        const source = error.stack;
+        const errorStack = source.substring(source.indexOf("(")+1,source.indexOf(")")).replace(triggerFileName, "对象「" + trigger.listenTo + "」的「" + trigger.name +"」触发器").replace(":"," 行 ").replace(":"," 列 ");
+        const newError = new Error(error.message);
+        newError.stack = `Object Trigger Error: ${error.message}\n    at ${errorStack}`;
+        throw newError
+    }
 }

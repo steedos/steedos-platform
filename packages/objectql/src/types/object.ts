@@ -548,7 +548,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         
         for (const trigger of triggers) {
             let params = generateActionParams(when, context);
-            const result = await runTriggerFunction(trigger.metadata.handler, {
+            const result = await runTriggerFunction(trigger.metadata, {
                 getObject: getObject,
                 getUser: auth.getSessionByUserId
             }, {

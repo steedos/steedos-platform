@@ -276,7 +276,7 @@ module.exports = {
 
 
         let filters = InternalData.parserFilters(this.query.filters);
-        if(filters._id && filters._id.indexOf(".") > -1){
+        if(filters._id && _.isString(filters._id) && filters._id.indexOf(".") > -1){
             const [objectName, fieldName] = filters._id.split('.');
             query.filters = [['object', '=', objectName], ['name', '=', fieldName]]
         }
