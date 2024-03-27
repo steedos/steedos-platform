@@ -161,7 +161,7 @@ fields:
     description: 
   auto_fill_mapping:
     label: 自动填充规则
-    help: 选择数据后，将按以下映射关系将引用对象中的字段值自动填充到当前表单字段中。
+    help: 在表单中填写数据时，填写当前字段值后，将按以下映射关系自动把引用对象中的字段值填充到当前表单字段中，比如在新建付款记录表单中选择所属合同后，自动把合同金额填充到付款记录的付款金额字段中。
     description: 
   auto_fill_mapping.$:
     label: 自动填充规则
