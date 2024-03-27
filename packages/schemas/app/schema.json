@@ -135,7 +135,7 @@
             "type": "boolean",
             "description": "使用IE打开(需使用Steedos桌面客户端)"
         },
-        "is_hide_menu": {
+        "is_hide_mobile_menu": {
             "type": "boolean",
             "description": "始终隐藏手机端菜单选项卡"
         }
