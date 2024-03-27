@@ -169,7 +169,7 @@ fields:
     description: 
   auto_fill_mapping:
     label: Auto Fill Mapping
-    help: When the data is selected, the field values in the reference object are automatically filled into the current form field according to the following mapping.
+    help: In a form, after you fill in one field, other fields are automatically filled according to preset rules. For example, in the New Payment history form, after selecting a contract, the amount of the contract is automatically filled into the payment amount field.
     description: 
   auto_fill_mapping.$:
     label: Auto Fill Mapping
