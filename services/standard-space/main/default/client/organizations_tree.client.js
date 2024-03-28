@@ -29,7 +29,15 @@ Steedos.organizationsTree = {
     getApiRequestAdaptor: function (api, context, option = {}) {
         var keywordsSearchBoxName = "__keywords";
         if (option.isLookup) {
-            keywordsSearchBoxName = "__keywords_lookup__parent__to__organizations";
+            const __lookupField = context.__lookupField;
+            if(__lookupField){
+                keywordsSearchBoxName = `__keywords_lookup__${__lookupField.name.replace(/\./g, "_")}__to__${__lookupField.reference_to}`;
+            }
+            else{
+                // 没有__lookupField是异常情况，此时不传入任何过滤条件，避免使用默认的__keywords
+                keywordsSearchBoxName = "";
+                console.error("lookup字段快速搜索异常，作用域中未找到变量__lookupField");
+            }
             if (context.op === "loadOptions") {
                 var filters = [["_id", "=", context.value]];
                 return Object.assign({}, api, {
