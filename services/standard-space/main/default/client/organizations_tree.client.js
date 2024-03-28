@@ -86,25 +86,11 @@ Steedos.organizationsTree = {
 
             return payload;
         }
-        let filtersJson = api.body?.filters;
-
-        if (filtersJson) {
-            const rows = _.map(payload.data.rows, function (item) {
-                delete item.children;
-                delete item.parent;
-                return item;
-            });
-            payload.data.rows = rows;
-            payload.data = {
-                ...payload.data,
-                isFilter: true
-            };
-        } else {
-            payload.data = {
-                ...payload.data,
-                isFilter: false
-            };
-        }
+        let filtersJson = api.data?.filters;
+        payload.data = {
+            ...payload.data,
+            isFilter: !!filtersJson
+        };
         return payload;
     },
     getDeferApiRequestAdaptor: function (api, context, option = {}) {
