@@ -1,0 +1,24 @@
+name: formula
+create: true
+data_type: text
+enable_thousands: true
+filterable: false
+formula: name + "__1"
+formula_blank_value: blanks
+generated: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 公式
+multiple: false
+primary: false
+readonly: false
+searchable: false
+show_as_qr: false
+sort_no: 310
+sortable: false
+static: false
+type: formula
+unique: false
+write_requires_master_read: false

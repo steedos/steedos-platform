@@ -1,0 +1,32 @@
+name: select
+create: true
+enable_thousands: true
+filterable: false
+generated: false
+hidden: false
+index: false
+is_name: false
+is_wide: false
+label: 选择框
+multiple: false
+options:
+  - label: 选项1
+    value: 值1
+    color: '#7ed321'
+  - label: 选项2
+    value: 值2
+    color: '#d0021b'
+  - label: 选项3
+    value: 值3
+    color: '#f7f21e'
+primary: false
+readonly: false
+required: false
+searchable: false
+show_as_qr: false
+sort_no: 160
+sortable: false
+static: false
+type: select
+unique: false
+write_requires_master_read: false

@@ -1,0 +1,14 @@
+{
+  "name": "platform-ui-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.30"
+  },
+  "scripts": {
+    "test:platform": "npx playwright test --ui",
+    "codegen": "npx playwright codegen"
+  }
+}
