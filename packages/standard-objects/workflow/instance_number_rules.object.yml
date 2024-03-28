@@ -14,8 +14,8 @@ fields:
   year:
     type: number
     label: Year
-    readonly: true
-    defaultValue: YEAR(TODAY() )
+    static: true
+    defaultValue: ${YEAR(TODAY())}
     visible_on: "{{global.mode !='read' ? false : true}}"
     name: year
   first_number:
