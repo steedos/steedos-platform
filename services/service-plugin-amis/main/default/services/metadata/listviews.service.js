@@ -353,6 +353,7 @@ module.exports = {
         getSelectFieldOptions: {
             async handler(ctx) {
                 const userSession = ctx.meta.user;
+                console.log("user===",userSession,userSession.spaceId);
                 const { objectName, fieldName } = ctx.params;
                 const lng = userSession.language || "zh-CN";
                 const objectConfig = await objectql.getObjectConfig(objectName);
@@ -369,7 +370,7 @@ module.exports = {
                         referenceTo = 'space_users';
                         reference_to_field = 'user'
                     }
-                    const records = await objectql.getObject(referenceTo).find({filters: [[]]})
+                    const records = await objectql.getObject(referenceTo).find({filters: [["space","=",userSession.spaceId]]})
                     return _.map(records, (record)=>{
                         return {
                             label: record[objectConfig._NAME_FIELD_KEY || 'name'],
