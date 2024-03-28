@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-28 13:32:36
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-28 17:06:17
+ * @LastEditTime: 2024-03-28 17:17:44
  * @Description: 
  */
 
@@ -19,7 +19,7 @@ test('test', async ({ page }) => {
   await page.getByPlaceholder('手机或邮箱').click();
   await page.getByPlaceholder('手机或邮箱').fill(process.env.LOGIN_NAME);
   await page.getByPlaceholder('手机或邮箱').press('Tab');
-  await page.getByPlaceholder('密码').fill(process.env.PASSWORD);
+  await page.getByPlaceholder('密码').fill(process.env.PASSWORD || '123456');
   await page.getByRole('button', { name: '提交' }).click();
   await page.getByRole('button', { name: '新建' }).click();
   await page.locator('input[name="name"]').click();
