@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-28 16:58:12
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-28 17:02:21
+ * @LastEditTime: 2024-03-28 18:03:42
  * @Description: 
  */
 import { test, expect } from '@playwright/test';
@@ -10,7 +10,7 @@ const path =require('path');
 delete process.env.ROOT_URL
 require('dotenv-flow').config({path: path.join(__dirname, '..')});
 
-test('test', async ({ page }) => {
+test('注册账户', async ({ page }) => {
   const name = `test_${Date.now()}`;
   await page.goto(process.env.ROOT_URL);
   await page.goto(`${process.env.ROOT_URL}/accounts/a/#/login?redirect_uri=/`);

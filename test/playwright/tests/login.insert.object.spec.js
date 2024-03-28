@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-28 17:18:07
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-28 17:28:58
+ * @LastEditTime: 2024-03-28 18:17:46
  * @Description: 
  */
 import { test, expect } from '@playwright/test';
@@ -13,7 +13,7 @@ delete process.env.PASSWORD
 require('dotenv-flow').config({path: path.join(__dirname, '..')});
 
 
-test('test', async ({ page }) => {
+test('登录-新建对象-新建字段-新建记录', async ({ page }) => {
   const newObjectName = `test_obj_name_${Date.now()}`;
   // 固定显示名称, 用于对比截图
   const newObjectLabel = `测试对象`;
