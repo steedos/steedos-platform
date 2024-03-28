@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-09 14:42:55
+ * @LastEditTime: 2024-03-28 15:27:54
  * @Description: 
  */
 "use strict";
@@ -335,7 +335,15 @@ module.exports = {
               }
             )
             let orgs = graphqlResult.data.rows;
-            if(!ctx.params?.filters) {
+            if(ctx.params?.filters) {
+                // 搜索时按普通列表返回，不拼成tree结构
+                graphqlResult.data.rows  = _.map(orgs, function (item) {
+                    delete item.children;
+                    delete item.parent;
+                    return item;
+                });
+            }
+            else{
                 graphqlResult.data.rows = getTreeRoot(orgs);
             }
             graphqlResult.data.count = orgs.length;

@@ -99,10 +99,6 @@
                     "platform-professional"
                 ]
             }
-        },
-        "visibleOn": {
-            "type": "string",
-            "description": "配置公式控制按钮显隐"
         }
     }
 }
