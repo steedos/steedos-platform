@@ -2,14 +2,15 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2024-03-22 14:37:50
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-24 14:14:16
+ * @LastEditTime: 2024-03-29 14:52:13
  * @Description: 由于 collection observe 在 steedos-server.started 事件中被触发报错需要 Fiber ,添加Fiber 后, 不报错,但是无法订阅到数据. 所以单写服务处理此问题.
  * 
  */
 
 "use strict";
 const _ = require('lodash')
-const { ActionFieldUpdateCacher, WorkflowOutboundMessageCacher, WorkflowNotificationCacher, WorkflowRuleCacher } = require('./lib/index')
+const register = require('@steedos/metadata-registrar');
+const { ActionFieldUpdateCacher, WorkflowOutboundMessageCacher, WorkflowNotificationCacher, WorkflowRuleCacher, ObjectValidationRulesCacher } = require('./lib/index')
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  * 软件包服务启动后也需要抛出事件。
@@ -25,6 +26,7 @@ module.exports = {
 	events: {
 		'$packages.changed': function(){
 			this.loadMetadataWorkflows();
+			this.loadMetadataValidationRule()
 		}
 	},
 
@@ -60,6 +62,12 @@ module.exports = {
 					this.workflowOutboundMessagesCacher.set(item._id || item.name, item)
 				});
 			})
+		},
+		loadMetadataValidationRule: async function(){
+			let res = await register.getAllObjectValidationRules();
+			_.each(res, (item)=>{
+				this.objectValidationRulesCacher.set(item._id, item)
+			})
 		}
 	},
 
@@ -72,6 +80,8 @@ module.exports = {
 
         this.workflowRuleCacher = new WorkflowRuleCacher();
 
+		this.objectValidationRulesCacher = new ObjectValidationRulesCacher()
+
 		await this.loadMetadataWorkflows()
 	},
 
@@ -80,5 +90,6 @@ module.exports = {
 		this.workflowOutboundMessagesCacher?.destroy();
 		this.workflowNotificationsCacher?.destroy();
 		this.workflowRuleCacher?.destroy();
+		this.objectValidationRulesCacher?.destroy();
 	}
 };

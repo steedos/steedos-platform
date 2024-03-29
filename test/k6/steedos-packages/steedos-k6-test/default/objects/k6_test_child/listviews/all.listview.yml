@@ -1,0 +1,15 @@
+name: all
+columns:
+  - field: name
+crud_mode: table
+filter_scope: space
+filters: []
+is_enable: true
+label: 所有
+scrolling_mode: standard
+shared_to: space
+sort:
+  - field_name: created
+    order: desc
+sort_no: 100
+type: grid

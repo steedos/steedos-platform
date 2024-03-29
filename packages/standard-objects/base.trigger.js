@@ -164,12 +164,6 @@ const afterDeleteBase = async function () {
 
 module.exports = {
     listenTo: 'base',
-    beforeInsert: async function () {
-        // return await beforeInsertBase.apply(this, arguments)
-    },
-    beforeUpdate: async function () {
-        // return await beforeUpdateBase.apply(this, arguments)
-    },
     afterDelete: async function () {
         return await afterDeleteBase.apply(this, arguments)
     }

@@ -1,0 +1,35 @@
+{
+  "name": "with-k6",
+  "version": "2.5.17-beta.1",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "steedos start",
+    "pretest:openapi:crud": "./node_modules/.bin/webpack --config openapi.crud.webpack.config.js",
+    "test:openapi:crud": "node runner dist/openapi.crud.js",
+    "pretest:openapi:insert": "./node_modules/.bin/webpack --config openapi.insert.webpack.config.js",
+    "test:openapi:insert": "node runner dist/openapi.insert.js",
+    "pretest:openapi:insert:child": "./node_modules/.bin/webpack --config openapi.insert.child.webpack.config.js",
+    "test:openapi:insert:child": "node runner dist/openapi.insert.child.js",
+    "pretest:openapi:insert:update": "./node_modules/.bin/webpack --config openapi.insert.update.webpack.config.js",
+    "test:openapi:insert:update": "node runner dist/openapi.insert.update.js",
+    "pretest:openapi:insert:delete": "./node_modules/.bin/webpack --config openapi.insert.delete.webpack.config.js",
+    "test:openapi:insert:delete": "node runner dist/openapi.insert.delete.js",
+    "test:openapi:find": "node runner script/openapi.find.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/preset-env": "^7.23.5",
+    "babel-loader": "^9.1.3",
+    "casual": "^1.6.2",
+    "core-js": "^3.33.3",
+    "faker": "^5.5.3",
+    "k6": "^0.0.0",
+    "webpack": "^5.89.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4",
+    "dd-trace": "3.7.1",
+    "faker": "5.5.3"
+  }
+}

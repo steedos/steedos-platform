@@ -1,0 +1,7 @@
+name: object_k6_test_child
+desktop: true
+label: K6-子表
+mobile: true
+object: k6_test_child
+permissions: []
+type: object

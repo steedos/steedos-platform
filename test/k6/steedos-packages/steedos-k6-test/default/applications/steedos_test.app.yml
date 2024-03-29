@@ -1,0 +1,21 @@
+name: K6 测试
+code: steedos_test
+enable_nav_schema: false
+icon_slds: account
+is_creator: true
+is_new_window: false
+is_use_ie: false
+is_use_iframe: false
+locked: false
+mobile: true
+showSidebar: false
+sort: 1
+tab_items:
+  object_k6_test_main:
+    index: 1
+  object_k6_test_child:
+    index: 2
+tabs:
+  - object_k6_test_main
+  - object_k6_test_child
+visible: true

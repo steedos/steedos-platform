@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
- * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-14 10:39:22
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-03-29 13:17:21
  * @Description: 
  */
 "use strict";
@@ -57,7 +57,7 @@ module.exports = {
          * @apiQuery {String} [uiFields] 字段名，如：'["owner", "date"]',此参数中的字段要求在参数fields中存在
          * @apiQuery {String} [expandFields] 字段名，如：'{owner: {fields: ["name"], uiFields: ["owner"], expandFields: ...}}'
          * @apiQuery {String} [filters] 过滤条件，如：'[["name", "=", "test"],["amount", ">", 100]]'
-         * @apiQuery {String} [top] 获取条数，如：'10'，最多5000
+         * @apiQuery {String} [top] 获取条数，如：'10'，最多500
          * @apiQuery {String} [skip] 跳过条数，如：'10'
          * @apiQuery {String} [sort] 排序，如：'name desc'
          * @apiSuccess {Object[]} find  记录列表
@@ -154,7 +154,7 @@ module.exports = {
                         return []
                     }
                     if (query.top > QUERY_DOCS_TOP) {
-                        query.top = QUERY_DOCS_TOP   // 最多返回5000条数据
+                        query.top = QUERY_DOCS_TOP   // 最多返回500条数据
                     }
                 }
 
@@ -288,7 +288,7 @@ module.exports = {
          * @apiParam {String} objectName 对象API Name，如：contracts
          * @apiBody {String[]} [fields] 字段名，如：["name", "description"]
          * @apiBody {Object[]} [filters] 过滤条件，如：[['name', '=', 'test'],['amount', '>', 100]]
-         * @apiBody {Number} [top] 获取条数，如：10，最多5000
+         * @apiBody {Number} [top] 获取条数，如：10，最多500
          * @apiBody {Number} [skip] 跳过条数，如：10
          * @apiBody {String} [sort] 排序，如：'name desc'
          * @apiSuccess {Object[]} search  记录列表
@@ -356,7 +356,7 @@ module.exports = {
                         return []
                     }
                     if (query.top > QUERY_DOCS_TOP) {
-                        query.top = QUERY_DOCS_TOP   // 最多返回5000条数据
+                        query.top = QUERY_DOCS_TOP   // 最多返回500条数据
                     }
                 }
 

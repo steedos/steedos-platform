@@ -1,33 +1,31 @@
 {
   "type": "page",
-  "body": [
-    {
-      "type": "steedos-object-listview",
-      "objectApiName": "organizations",
-      "columnsTogglable": false,
-      "showHeader": true,
-      "id": "u:0e66353c4170",
-      "crudMode": "table",
-      "crud": {
-        "id": "u:fff9dabf57b1",
-        "deferApi": {
-          "method": "post",
-          "url": "${context.rootUrl}/graphql",
-          "data": {
-            "$self": "$$",
-            "self": "$$"
-          },
-          "headers": {
-            "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-          },
-          "cache__": 3000,
-          "requestAdaptor": "return Steedos.organizationsTree.getDeferApiRequestAdaptor(api, context, { isLookup: false });",
-          "adaptor": "return Steedos.organizationsTree.getDeferApiAdaptor(payload, response, api, context, { isLookup: false });"
-        }
-      },
-      "crudDataFilter": "crud.api = {\n  \"url\": \"${context.rootUrl}/service/api/organizations/root\",\n  \"method\": \"get\",\n  \"headers\": {\n    \"Authorization\": \"Bearer ${context.tenantId},${context.authToken}\"\n  },\n  \"requestAdaptor\": \"return Steedos.organizationsTree.getApiRequestAdaptor(api, context, { isLookup: false });\",\n  \"adaptor\": \"return Steedos.organizationsTree.getApiAdaptor(payload, response, api, context, { isLookup: false });\"\n};\nreturn crud;\n"
-    }
-  ],
+  "body": [{
+    "type": "steedos-object-listview",
+    "objectApiName": "organizations",
+    "columnsTogglable": false,
+    "showHeader": true,
+    "id": "u:0e66353c4170",
+    "crudMode": "table",
+    "crud": {
+      "id": "u:fff9dabf57b1",
+      "deferApi": {
+        "method": "post",
+        "url": "${context.rootUrl}/graphql",
+        "data": {
+          "$self": "$$",
+          "self": "$$"
+        },
+        "headers": {
+          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+        },
+        "cache__": 3000,
+        "requestAdaptor": "return Steedos.organizationsTree.getDeferApiRequestAdaptor(api, context, { isLookup: false });",
+        "adaptor": "return Steedos.organizationsTree.getDeferApiAdaptor(payload, response, api, context, { isLookup: false });"
+      }
+    },
+    "crudDataFilter": "crud.api = {\n  \"url\": \"${context.rootUrl}/service/api/organizations/root\",\n  \"method\": \"get\",\n  \"headers\": {\n    \"Authorization\": \"Bearer ${context.tenantId},${context.authToken}\"\n  },\n  \"requestAdaptor\": \"return Steedos.organizationsTree.getApiRequestAdaptor(api, context, { isLookup: false });\",\n  \"adaptor\": \"return Steedos.organizationsTree.getApiAdaptor(payload, response, api, context, { isLookup: false });\"\n};\nreturn crud;\n"
+  }],
   "regions": [
     "body"
   ],
@@ -37,7 +35,7 @@
       "rootUrl": "http://127.0.0.1:5800",
       "tenantId": "654300b5074594d15147bcfa",
       "userId": "654300a4074594d15147bcf8",
-      "authToken": "531545501717024dc6fdcc0bfb4b121b3d3ce40c71110dad0c1adb083ebdd54afddf2aa7dea7ed202bc2c0"
+      "authToken": "e9bcdfdc56579ec21b9e520e1e1a903a42fa829de27c9eb70f7e6caf8599f95e705d5aedf2336fbb818d98"
     }
   },
   "id": "u:b7fa9418ef38",

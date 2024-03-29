@@ -1,0 +1,34 @@
+name: all
+columns:
+  - field: name
+  - field: text
+  - field: textarea
+  - field: select
+  - field: color
+  - field: checkout
+  - field: toggle
+  - field: date
+  - field: datetime
+  - field: time
+  - field: number
+  - field: currency
+  - field: percent
+  - field: password
+  - field: lookup
+  - field: autonumber
+  - field: url
+  - field: formula
+  - field: summary
+crud_mode: table
+filter_scope: space
+filters: []
+is_enable: true
+label: 所有
+scrolling_mode: standard
+searchable_fields: []
+shared_to: space
+sort:
+  - field_name: created
+    order: desc
+sort_no: 100
+type: grid

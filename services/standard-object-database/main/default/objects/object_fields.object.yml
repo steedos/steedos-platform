@@ -587,11 +587,16 @@ fields:
         }else if (fromField) {
             currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
             if (fromField.type == "lookup" || fromField.type == "master_detail") {
-              if (fromField.reference_to) {
-                currentFilter.push(['reference_to', '=', fromField.reference_to]);
+              if(fromField.reference_to === "users"){
+                currentFilter.push([['reference_to', '=', "users"],"or", ['reference_to', '=', "space_users"]]);
               }
-              if (fromField.reference_to_field) {
-                currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+              else{
+                if (fromField.reference_to) {
+                  currentFilter.push(['reference_to', '=', fromField.reference_to]);
+                }
+                if (fromField.reference_to_field) {
+                  currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+                }
               }
             }
         }
@@ -964,6 +969,8 @@ list_views:
       - readonly
       - is_system
       - is_customize
+    extra_columns:
+      - reference_to #GraphQL查询对象字段时，如果过滤条件中有按reference_to过滤，要查询返回的字段不配置reference_to的话过滤结果不对，解决了#6649
     sort:
       - field_name: sort_no
         order: asc
