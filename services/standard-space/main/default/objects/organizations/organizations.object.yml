@@ -15,7 +15,6 @@ pages:
           "url": "${context.rootUrl}/service/api/organizations/root",
           "method": "get",
           "cache": 300000,
-          "data": null,
           "headers": {
             "Authorization": "Bearer ${context.tenantId},${context.authToken}"
           },
@@ -27,8 +26,7 @@ pages:
             "method": "post",
             "url": "${context.rootUrl}/graphql",
             "data": {
-              "$self": "$$",
-              "self": "$$"
+              "$self": "$$"
             },
             "headers": {
               "Authorization": "Bearer ${context.tenantId},${context.authToken}"

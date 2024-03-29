@@ -82,7 +82,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-RUN yarn --registry https://registry.npmjs.org && yarn cache clean
+RUN yarn config set registry https://registry.npmjs.org
+
+RUN yarn && yarn cache clean
 
 # steedosctl
 COPY ./app/steedosctl /opt/steedos/steedosctl
