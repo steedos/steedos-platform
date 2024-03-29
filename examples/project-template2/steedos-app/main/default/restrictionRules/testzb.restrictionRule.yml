@@ -1,0 +1,6 @@
+name: testzb
+active: true
+entry_criteria: 1==1
+locked: false
+object_name: zb
+record_filter: 1==1

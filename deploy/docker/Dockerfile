@@ -11,6 +11,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN yarn --registry https://registry.npmjs.org --production && yarn cache clean
+RUN yarn config set registry https://registry.npmjs.org
+
+RUN yarn --production && yarn cache clean
 
 CMD ["yarn", "start"]
