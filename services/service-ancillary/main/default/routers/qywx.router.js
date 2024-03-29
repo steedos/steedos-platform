@@ -171,8 +171,6 @@ router.get("/api/qiyeweixin/auth_login", async function (req, res, next) {
         }
         let stampedAuthToken = auth.generateStampedLoginToken();
 
-        console.log("========>req", req);
-        console.log("========res", res);
         authtToken = stampedAuthToken.token;
         hashedToken = auth.hashStampedToken(stampedAuthToken);
         await auth.insertHashedLoginToken(user.user, hashedToken);
@@ -191,10 +189,10 @@ router.get("/api/qiyeweixin/sso_steedos", async function (req, res, next) {
     });
     at = await broker.call('@steedos/plugin-qywx.getProviderToken', { corpId: o != null ? (_ref5 = o.secret) != null ? _ref5.corpid : void 0 : void 0, providerSecret: o != null ? (_ref6 = o.secret) != null ? _ref6.provider_secret : void 0 : void 0 })
     if (at && at.provider_access_token) {
-        console.log("at.provider_access_token: ", at.provider_access_token);
+        // console.log("at.provider_access_token: ", at.provider_access_token);
         loginInfo = await broker.call('@steedos/plugin-qywx.getLoginInfo', { accessToken: at.provider_access_token, authCode: req.query.auth_code })
         if (loginInfo != null ? (_ref7 = loginInfo.user_info) != null ? _ref7.userid : void 0 : void 0) {
-            console.log("loginInfo.user_info.userid: ", loginInfo.user_info.userid);
+            // console.log("loginInfo.user_info.userid: ", loginInfo.user_info.userid);
             user = db.space_users.findOne({
                 'qywx_id': loginInfo.user_info.userid
             });
@@ -441,9 +439,8 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
                 
                 console.log("getResultInfo: ",getResultInfo);
                 if (getResultInfo.contact_id_translate.url){
-                    console.log("update spaces-----")
                     let space = await broker.call('objectql.find',{objectName: 'spaces', query: {filters: [["qywx_corp_id", "=",message.AuthCorpId]]}});
-                    console.log("find space: ",space[0]);
+                    // console.log("find space: ",space[0]);
                     await broker.call('objectql.directUpdate', {objectName: "spaces", id: space[0]._id, doc: {"qywx_contact_id_translate_url": getResultInfo.contact_id_translate.url}})
                     
                 }
@@ -470,7 +467,7 @@ router.post('/api/qiyeweixin/callback', xmlparser({ trim: false, explicitArray: 
 router.get('/api/qiyeweixin/feikongwang/auth_login', async function (req, res, next) {
     const broker = objectql.getSteedosSchema().broker;
     var { code,state } = req.query;
-    console.log("企业微信第三方应用单点登录",req.query)
+    // console.log("企业微信第三方应用单点登录",req.query)
     let suite_id = process.env.STEEDOS_QYWX_SAAS_SUITEID;
     let suite_secret = process.env.STEEDOS_QYWX_SAAS_SUITE_SECRET;
 
@@ -479,7 +476,7 @@ router.get('/api/qiyeweixin/feikongwang/auth_login', async function (req, res, n
         "_id": suite_id
     });
 
-    console.log("configurations", configurations)
+    // console.log("configurations", configurations)
     let suite_ticket = configurations.suite_ticket;
     // const auth_code = configurations.auth_code;
     // 获取第三方应用凭证
@@ -488,26 +485,22 @@ router.get('/api/qiyeweixin/feikongwang/auth_login', async function (req, res, n
         "suite_secret": suite_secret,
         "suite_ticket": suite_ticket
     });
-    console.log("第三方应用凭证===1", suiteAccessToken)
     // 获取访问用户身份
     const userData = await broker.call('@steedos/plugin-qywx.getUserInfo3rd', {
         "code": code,
         "suite_access_token": suiteAccessToken.suite_access_token
     });
-    console.log("===userData", userData);
     // 获取访问用户敏感信息
     const userDetailData = await broker.call('@steedos/plugin-qywx.getUserDetailInfo3rd', {
         "suite_access_token": suiteAccessToken.suite_access_token,
         "user_ticket": userData.user_ticket
     });
-    console.log("访问用户敏感信息", userDetailData);
-
 
     // 创建人员信息
     const userInfo = await broker.call('@steedos/plugin-qywx.createSpaceUser', {
         "user": userDetailData
     });
-    console.log("userInfo======", userInfo);
+    // console.log("userInfo======", userInfo);
 
     //let redirect_url = process.env.ROOT_URL
     // 
@@ -534,8 +527,6 @@ module.exports = {
     },
     async handler(ctx) {
         const { name } = ctx.params;
-        console.log("===name", name)
-
     }
 }
 
