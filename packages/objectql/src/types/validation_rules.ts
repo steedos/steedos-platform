@@ -7,11 +7,12 @@
 import { computeFormula } from '../formula';
 import { SteedosTriggerContextConfig } from "./trigger";
 import { SteedosUserSession, getObject } from ".";
+import { getMetadata } from "../index";
 
 export async function runValidationRules(method: string, context: SteedosTriggerContextConfig, objectName: string, userSession: SteedosUserSession) {
     if ((method === 'insert' || method === 'update') && userSession) {
         let doc = context.doc;
-        let validationRules = await getObject('object_validation_rules').find({ filters: [['object_name', '=', objectName], ['active', '=', true]] });
+        let validationRules = await getMetadata('object_validation_rules').find([['object_name', '=', objectName], ['active', '=', true]], userSession.spaceId);
         for (const vr of validationRules) {
             let result;
             try {
