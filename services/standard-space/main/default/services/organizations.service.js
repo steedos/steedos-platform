@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-12-02 16:53:23
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-01-09 14:42:55
+ * @LastEditTime: 2024-03-29 15:57:28
  * @Description: 
  */
 "use strict";
@@ -152,11 +152,15 @@ module.exports = {
             }
         },
         getOrganizationsRootNode: {
-        // 访问地址： GET /service/api/organizations/root
-          rest: { method: 'GET', path: '/root' },
-          async handler(ctx) {
-            return this.getOrganizationsRootNode(ctx)
-          }
+            params: {
+                fields: { type: 'string', optional: true },
+                filters: { type: 'string', optional: true },
+            },
+            // 访问地址： GET /service/api/organizations/root
+            rest: { method: 'GET', path: '/root' },
+            async handler(ctx) {
+                return this.getOrganizationsRootNode(ctx)
+            }
         }
     },
 
@@ -313,18 +317,21 @@ module.exports = {
          * @returns 
          */
         async getOrganizationsRootNode(ctx) {
+            let queryFields = ctx.params?.fields || `
+                _id,
+                name,
+                fullname,
+                sort_no,
+                hidden,
+                _display:_ui{sort_no,hidden},
+                parent,
+                children
+            `;
             let graphqlResult = await this.broker.call('api.graphql', {
               query: `
                 query {
                   rows: organizations(filters: ${ctx.params?.filters || "[]"},sort: \"sort_no desc\") {
-                    _id,
-                    name,
-                    fullname,
-                    sort_no,
-                    hidden,
-                    _display:_ui{sort_no,hidden,fullname},
-                    parent,
-                    children
+                    ${queryFields}
                   }
                 }
               `},

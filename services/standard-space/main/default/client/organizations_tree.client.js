@@ -29,7 +29,6 @@ Steedos.organizationsTree = {
     getApiRequestAdaptor: function (api, context, option = {}) {
         var keywordsSearchBoxName = "__keywords";
         if (option.isLookup) {
-            keywordsSearchBoxName = "__keywords_lookup__parent__to__organizations";
             if (context.op === "loadOptions") {
                 var filters = [["_id", "=", context.value]];
                 return Object.assign({}, api, {
@@ -39,6 +38,17 @@ Steedos.organizationsTree = {
                         "query": '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: "sort_no desc"){_id,fullname,name,sort_no,_display:_ui{sort_no},parent,children}}'
                     }
                 });
+            }
+            else{
+                const __lookupField = context.__lookupField;
+                if(__lookupField){
+                    keywordsSearchBoxName = `__keywords_lookup__${__lookupField.name.replace(/\./g, "_")}__to__${__lookupField.reference_to}`;
+                }
+                else{
+                    // 没有__lookupField是异常情况，此时不传入任何过滤条件，避免使用默认的__keywords
+                    keywordsSearchBoxName = "";
+                    console.error("lookup字段快速搜索异常，作用域中未找到变量__lookupField");
+                }
             }
         }
         var allowSearchFields = this.getSearchableFields(api);
@@ -67,10 +77,27 @@ Steedos.organizationsTree = {
         if (keywordsFilters && keywordsFilters.length > 0) {
             filters.push(keywordsFilters);
         }
+
+        api.data = {};
+
         if (filters.length > 0) {
-            api.data = {
-                filters: filters
-            };
+            Object.assign(api.data, {
+                filters: JSON.stringify(filters)
+            });
+        }
+
+        const queryFields = api.body && api.body.queryFields;
+        if(queryFields){
+            Object.assign(api.data, {
+                fields: queryFields
+            });
+        }
+
+        if(api.body.$self){
+            // amis bug，接口为Get请求时，url上的data参数无法删除，只能手动把url重写掉，见：https://github.com/baidu/amis/issues/9813
+            let rootURL = api.body.$self.context && api.body.$self.context.rootUrl || "";
+            // url为${context.rootUrl}/service/api/organizations/root
+            api.url = rootURL = "/service/api/organizations/root";
         }
 
         return api;
@@ -86,25 +113,20 @@ Steedos.organizationsTree = {
 
             return payload;
         }
-        let filtersJson = api.body?.filters;
+        let filtersJson = api.data && api.data.filters;
+        payload.data = {
+            ...payload.data,
+            isFilter: !!filtersJson
+        };
 
-        if (filtersJson) {
-            const rows = _.map(payload.data.rows, function (item) {
-                delete item.children;
-                delete item.parent;
-                return item;
-            });
-            payload.data.rows = rows;
-            payload.data = {
-                ...payload.data,
-                isFilter: true
-            };
-        } else {
-            payload.data = {
-                ...payload.data,
-                isFilter: false
-            };
-        }
+        // 把上面拿到的queryFields返回到data中，以便在getDeferApiRequestAdaptor中能拿到queryFields
+        payload.data.__rootQueryFields = api.data && api.data.fields;
+
+        // 因为自动展开的第一层节点拿不到上面返回的__rootQueryFields，只能把它放到rows数据内，以便在getDeferApiRequestAdaptor中能始终能拿到queryFields
+        (payload.data.rows || []).forEach(function (item) {
+            item.__rootQueryFields = api.data && api.data.fields;
+        });
+
         return payload;
     },
     getDeferApiRequestAdaptor: function (api, context, option = {}) {
@@ -114,9 +136,12 @@ Steedos.organizationsTree = {
         if (dep) {
             filters = [['parent', '=', dep]];
         }
+
+        const queryFields = (context && context.__rootQueryFields) || "_id,fullname,name,sort_no,hidden,_display:_ui{sort_no,hidden},parent,children";
+
         return Object.assign({}, api, {
             data: {
-                query: '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: "sort_no desc"){_id,fullname,name,sort_no,hidden,_display:_ui{sort_no,hidden},parent,children}}'
+                query: '{rows:organizations(filters: ' + JSON.stringify(filters) + ', top: 5000, skip: 0, sort: "sort_no desc"){' + queryFields + '}}'
             }
         });
     },
