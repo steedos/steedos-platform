@@ -1,0 +1,4 @@
+name: enable
+is_enable: true
+label: 启用
+'on': record
