@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-29 13:17:21
+ * @LastEditTime: 2024-03-30 16:32:08
  * @Description: 
  */
 "use strict";
@@ -45,6 +45,114 @@ module.exports = {
             },
             async handler(ctx) {
                 return 'ok'
+            }
+        },
+        /**
+         * @api {POST} /api/v1/batch 批处理接口
+         * @apiVersion 0.0.0
+         * @apiGroup @steedos/service-rest
+         * @apiBody {Object[]} find 查询条件, 例如：[{objectName: 'contracts', filters: [['name', '=', 'test']], fields: ['name', 'description'], top: 10, skip: 0, sort: 'name desc'}]
+         * @apiBody {Object[]} count 查询条件, 例如：[{objectName: 'contracts', filters: [['name', '=', 'test']]}]
+         * @apiBody {Object[]} findOne 查询条件, 例如：[{objectName: 'contracts', id: "xxx", fields: ['name', 'description']}]
+         * @apiBody {Object[]} insert 插入数据, 例如:  [{objectName: 'contracts', doc: {name: 'test', description: 'test'}}]
+         * @apiBody {Object[]} update 更新数据, 例如:  [{objectName: 'contracts', id: "xxx", doc: {name: 'test', description: 'test'}}]
+         * @apiBody {Object[]} delete 删除数据, 例如:  [{objectName: 'contracts', id: "xxx"}]
+         * @apiName batch
+         */
+        batch: {
+            rest: {
+                method: "POST",
+                path: "/batch"
+            },
+            async handler(ctx){
+
+                const { find, count, findOne, insert, update, delete: deleteAs } = ctx.params;
+
+                const res = {}
+
+                const findRes = [];
+                if(find){
+                    for (const item of find) {
+                        const args = {...item};
+                        if(_.has(item, 'fields') && !_.isString(item.fields) ){
+                            args.fields = JSON.stringify(item.fields)
+                        }
+                        if(_.has(item, 'uiFields') && !_.isString(item.uiFields) ){
+                            args.uiFields = JSON.stringify(item.uiFields)
+                        }
+                        if(_.has(item, 'expandFields') && !_.isString(item.expandFields) ){
+                            args.expandFields = JSON.stringify(item.expandFields)
+                        }
+                        if(_.has(item, 'filters') && !_.isString(item.filters) ){
+                            args.filters = JSON.stringify(item.filters)
+                        }
+                        findRes.push(ctx.broker.call(`rest.find`, args).catch(err => {
+                            return err;
+                        }))
+                    }
+
+                    res.find = await Promise.all(findRes);
+                }
+                
+                const countRes = [];
+                if(count){
+                    for (const item of count) {
+                        const args = {...item};
+                        if(_.has(item, 'filters') && !_.isString(item.filters) ){
+                            args.filters = JSON.stringify(item.filters)
+                        }
+                        countRes.push(ctx.broker.call(`rest.count`, args).catch(err => {
+                            return err;
+                        }))
+                    }
+                    res.count = await Promise.all(countRes);
+                }
+
+                const findOneRes = []
+                if(findOne){
+                    for (const item of findOne) {
+                        const args = {...item};
+                        if(_.has(item, 'fields') && !_.isString(item.fields) ){
+                            args.fields = JSON.stringify(item.fields)
+                        }
+                        findOneRes.push(ctx.broker.call(`rest.findOne`, args).catch(err => {
+                            return err;
+                        }))
+                    }
+                    res.findOne = await Promise.all(findOneRes);
+                }
+
+                const insertRes = []
+                if(insert){
+                    for (const item of insert) {
+                        insertRes.push(ctx.broker.call(`rest.insert`, item).catch(err => {
+                            return err;
+                        }))
+                    }
+                    res.insert = await Promise.all(insertRes);
+                }
+
+                const updateRes = []
+                if(update){
+                    for (const item of update) {
+                        updateRes.push(ctx.broker.call(`rest.update`, item).catch(err => {
+                            return err;
+                        }))
+                    }
+                    res.update = await Promise.all(updateRes);
+                }
+
+                const deleteRes = []
+                if(deleteAs){
+                    for (const item of deleteAs) {
+                        deleteRes.push(ctx.broker.call(`rest.delete`, item).catch(err => {
+                            return err;
+                        }))
+                    }
+                    res.delete = await Promise.all(deleteRes);
+                }
+
+                return res;
             }
         },
         /**
@@ -602,8 +710,7 @@ module.exports = {
                     }
                 }
             }
-        },
-
+        }
     },
 
     /**
