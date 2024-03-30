@@ -24,6 +24,7 @@ import { uniq, isEmpty, includes, isArray } from 'lodash';
 import { runTriggerFunction } from '../triggers/trigger';
 import { MONGO_BASE_OBJECT, getObjectConfig, getPatternListeners } from "@steedos/metadata-registrar";
 import { getMongoInsertBaseDoc, getMongoUpdateBaseDoc } from "./method_base";
+import { getDefaultValuesDoc } from "./defaultValue";
 
 declare var TAPi18n;
 
@@ -1205,6 +1206,7 @@ export class SteedosObjectType extends SteedosObjectProperties {
         try {
             doc = this.formatRecord(doc);
             doc = await this.getInsertBaseDoc(doc, userSession);
+            doc = this.getDefaultValuesDoc(doc, userSession);
             return await this.callAdapter('insert', this.table_name, doc, userSession)
         } catch (error) {
             this.handlerDuplicateKeyError(error, userSession)
@@ -2117,6 +2119,11 @@ export class SteedosObjectType extends SteedosObjectProperties {
         else{
             return doc;
         }
+    }
+
+
+    private getDefaultValuesDoc(doc: Dictionary<any>, userSession?: SteedosUserSession) {
+        return getDefaultValuesDoc(this, doc, userSession);
     }
 
     private formatRecord(doc: JsonMap) {

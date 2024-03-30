@@ -349,7 +349,7 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     let baseObjectJs: any = loadFile(path.join(standardObjectsDir, "base.object.js"))
     baseObjectJs.extend = MONGO_BASE_OBJECT;
     await addObjectConfig(baseObjectJs, SYSTEM_DATASOURCE, serviceName);
-    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js','base.defaultValue.trigger.js','base.lookup.trigger.js', 'base.lockDetail.trigger.js'];
+    const baseTriggers = ['base.trigger.js', 'base.autonumber.trigger.js','base.masterDetail.trigger.js','base.recordFieldAudit.trigger.js','base.recordRecentView.trigger.js','base.tree.trigger.js','base.calendar.trigger.js','base.lookup.trigger.js', 'base.lockDetail.trigger.js'];
     _.forEach(baseTriggers, function(triggerFileName){
         let baseObjectTrigger: any = loadFile(path.join(standardObjectsDir, triggerFileName))
         baseObjectTrigger.listenTo = MONGO_BASE_OBJECT
@@ -360,7 +360,7 @@ export const loadStandardBaseObjects = async (serviceName: string) => {
     coreObject.name = SQL_BASE_OBJECT;
     await addObjectConfig(coreObject, SYSTEM_DATASOURCE, serviceName);
 
-    const coreTriggers = ['core.objectwebhooks.trigger.js','core.defaultValue.trigger.js','core.autonumber.trigger.js'];
+    const coreTriggers = ['core.objectwebhooks.trigger.js','core.autonumber.trigger.js'];
     _.forEach(coreTriggers, function(triggerFileName){
         let coreObjectTrigger:any = loadFile(path.join(standardObjectsDir, triggerFileName))
         coreObjectTrigger.listenTo = SQL_BASE_OBJECT
