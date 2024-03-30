@@ -32,62 +32,80 @@
                           "type": "dialog",
                           "title": "设置分组",
                           "size": "lg",
+                          "data": {
+                            "&": "$$",
+                            "groups": "${groups|filter:is_default:isFalse|filter:is_hidden:isFalse}",
+                            "designObjectName": "${designObjectName}"
+                          },
                           "body": [
                             {
                               "type": "form",
                               "mode": "normal",
                               "body": [
                                 {
-                                  "type": "steedos-input-table",
-                                  "enableDialog": false,
-                                  "fields": [
+                                  "type": "service",
+                                  "body": [
                                     {
-                                      "name": "group_name",
-                                      "label": "名称",
-                                      "type": "text",
-                                      "amis": {
-                                        "disabledOn": "${is_default || is_hidden}"
-                                      },
-                                      "id": "u:31952daa443c"
-                                    },
-                                    {
-                                      "name": "visible_on",
-                                      "label": "显示条件",
-                                      "type": "text",
-                                      "amis": {
-                                        "disabledOn": "${is_default || is_hidden}"
-                                      },
-                                      "id": "u:8d7551abcd28",
-                                      "value": null
-                                    },
-                                    {
-                                      "name": "collapsed",
-                                      "label": "默认折叠",
-                                      "amis": {
-                                        "disabledOn": "${is_default || is_hidden}"
-                                      },
-                                      "type": "boolean"
+                                      "type": "steedos-input-table",
+                                      "enableDialog": false,
+                                      "fields": [
+                                        {
+                                          "name": "group_name",
+                                          "label": "名称",
+                                          "type": "text",
+                                          "id": "u:31952daa443c"
+                                        },
+                                        {
+                                          "name": "visible_on",
+                                          "label": "显示条件",
+                                          "type": "text",
+                                          "amis": {
+                                            "type": "input-formula",
+                                            "name": "formula",
+                                            "evalMode": false,
+                                            "variableMode": "tabs",
+                                            "variables": "${variables}"
+                                          },
+                                          "id": "u:8d7551abcd28",
+                                          "value": null
+                                        },
+                                        {
+                                          "name": "collapsed",
+                                          "label": "默认折叠",
+                                          "type": "boolean"
+                                        }
+                                      ],
+                                      "columns": [
+                                        {
+                                          "name": "group_name"
+                                        },
+                                        {
+                                          "name": "visible_on"
+                                        },
+                                        {
+                                          "name": "collapsed",
+                                          "width": 50
+                                        }
+                                      ],
+                                      "name": "groups",
+                                      "addable": true,
+                                      "editable": true,
+                                      "removable": true,
+                                      "draggable": false,
+                                      "id": "u:776ec89804c0",
+                                      "label": "",
+                                      "visibleOn": "${variables}"
                                     }
                                   ],
-                                  "columns": [
-                                    {
-                                      "name": "group_name"
-                                    },
-                                    {
-                                      "name": "visible_on"
-                                    },
-                                    {
-                                      "name": "collapsed",
-                                      "width": 50
+                                  "api": {
+                                    "method": "get",
+                                    "url": "${context.rootUrl}/service/api/@${designObjectName}/uiSchema",
+                                    "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.fields)}};return payload;",
+                                    "cache": 30000,
+                                    "headers": {
+                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                     }
-                                  ],
-                                  "name": "groups",
-                                  "addable": true,
-                                  "editable": true,
-                                  "removable": true,
-                                  "draggable": false,
-                                  "id": "u:776ec89804c0",
-                                  "label": ""
+                                  }
                                 }
                               ]
                             }
@@ -97,7 +115,7 @@
                               "actions": [
                                 {
                                   "actionType": "custom",
-                                  "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (group.is_hidden) {\n    group.group_name = hiddenGroupName;\n    group.visible_on = \"\";\n  }\n  if (group.is_default) {\n    group.group_name = defaultGroupName;\n    group.visible_on = \"\";\n  }\n  if (!group.id) {\n    group.id = group.group_name;\n  }\n  if (!group.visible_on) {\n    group.visible_on = \"\"\n  }\n})\n\n//整理字段与分组关系的数据\nlet fieldForGroup = {};\nlet oldGroup = _.cloneDeep(event.data.fieldForGroup);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[defaultGroupName] = _.unionBy(fieldForGroup[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = fieldForGroup[defaultGroupName];\nconst hiddenGroup = fieldForGroup[hiddenGroupName];\ndelete fieldForGroup[defaultGroupName];\ndelete fieldForGroup[hiddenGroupName];\nfieldForGroup = _.merge({ [defaultGroupName]: defaultGroup }, fieldForGroup, { [hiddenGroupName]: hiddenGroup });\n\n//根据fieldForGroup调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(fieldForGroup);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field: fieldForGroup }\n  }\n});"
+                                  "script": "///整理分组数据\nconst defaultGroupName = \"未分组\";\nconst hiddenGroupName = \"隐藏\";\nlet setting_groups = _.cloneDeep(event.data.groups);\nif (!_.find(setting_groups, { is_default: true })) {\n  setting_groups.unshift({\n    \"id\": defaultGroupName,\n    \"group_name\": defaultGroupName,\n    \"visible_on\": \"\",\n    \"is_default\": true\n  })\n}\nif (!_.find(setting_groups, { is_hidden: true })) {\n  setting_groups.push({\n    id: hiddenGroupName,\n    group_name: hiddenGroupName,\n    visible_on: \"\",\n    is_hidden: true\n  });\n}\nsetting_groups.forEach(function (group) {\n  if (!group.id || group.id != group.group_name) {\n    group.id = group.group_name;\n  }\n  if (/\\$\\{.+\\}/.test(group.visible_on)) {\n    group.visible_on = group.visible_on.replaceAll('${', '\\\\${');\n  }\n})\n\n//整理字段与分组关系的数据\nlet fieldForGroup = {};\nlet oldGroup = _.cloneDeep(event.data.fieldForGroup);\nsetting_groups.forEach(function (group) {\n  if (_.has(oldGroup, group.id)) {\n    fieldForGroup[group.id] = oldGroup[group.id];\n    oldGroup = _.omit(oldGroup, group.id);\n  } else {\n    fieldForGroup[group.id] = [];\n  }\n})\nif (oldGroup && !_.isEmpty(oldGroup)) {\n  _.forEach(oldGroup, function (value, key) {\n    fieldForGroup[defaultGroupName] = _.unionBy(fieldForGroup[defaultGroupName], value);\n  });\n}\n\n//未分组 放在所有分组开头，隐藏 放在所有分组最后\nconst defaultGroup = fieldForGroup[defaultGroupName];\nconst hiddenGroup = fieldForGroup[hiddenGroupName];\ndelete fieldForGroup[defaultGroupName];\ndelete fieldForGroup[hiddenGroupName];\nfieldForGroup = _.merge({ [defaultGroupName]: defaultGroup }, fieldForGroup, { [hiddenGroupName]: hiddenGroup });\n\n//根据fieldForGroup调整groups顺序，设置分组与保存时需要groups按照顺序\nconst keys = _.keys(fieldForGroup);\nsetting_groups = _.sortBy(setting_groups, function (group) { return _.findIndex(keys, function (key) { return key == group.group_name }) });\n\ndoAction({\n  actionType: 'setValue',\n  componentId: 'service_field_design',\n  args: {\n    value: {\n      groups: setting_groups\n    }\n  }\n});\n\ndoAction({\n  actionType: 'setValue',\n  componentId: \"form_field_design\",\n  args: {\n    value: { design_field: fieldForGroup }\n  }\n});"
                                 }
                               ]
                             }
