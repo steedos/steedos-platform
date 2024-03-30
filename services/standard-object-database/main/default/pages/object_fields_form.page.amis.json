@@ -172,7 +172,7 @@
                     "name": "formula",
                     "evalMode": false,
                     "variableMode": "tabs",
-                    "variables": "${variables}",
+                    "variables": "${VisibleVariables}",
                     "id": "u:618105d5bfad"
                   }
                 }
@@ -185,7 +185,7 @@
     "api": {
       "method": "get",
       "url": "${context.rootUrl}/service/api/@${_master.record.name}/uiSchema",
-      "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.fields)}};return payload;",
+      "adaptor": "const VisibleVariables = SteedosUI.getFormulaVariables(payload.fields);\nconst defaultVariables = [VisibleVariables[1]];\npayload = {\n  data: {\n    VisibleVariables,\n    defaultVariables\n  }\n};\nreturn payload;",
       "headers": {
         "Authorization": "Bearer ${context.tenantId},${context.authToken}"
       }
