@@ -2,7 +2,7 @@
  * @Author: 殷亮辉 yinlianghui@hotoa.com
  * @Date: 2024-03-23 14:58:33
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-30 17:24:34
+ * @LastEditTime: 2024-03-30 17:30:17
  */
 import * as _ from 'lodash';
 import { Dictionary, JsonMap } from "@salesforce/ts-types";
@@ -92,11 +92,13 @@ const getCompatibleDefaultValueExpression = (express: string) => {
         }
     }
 
-    // 双引号静态默认值，删掉前后的双引号，兼容之前默认值按sf公式执行时，静态默认值要求双引号包裹的历史代码。
-    // 注意这里是全字匹配，"abc"会转为abc，但是"abc"123不会转为abc123，只会保持原样
-    const regDoubleQuote = /^\"(.+)\"$/;
-    if(regDoubleQuote.test("\"sdf\"")){
-        result = result.replace(regDoubleQuote, "$1");
+    if(result){
+        // 双引号静态默认值，删掉前后的双引号，兼容之前默认值按sf公式执行时，静态默认值要求双引号包裹的历史代码。
+        // 注意这里是全字匹配，"abc"会转为abc，但是"abc"123不会转为abc123，只会保持原样
+        const regDoubleQuote = /^\"(.+)\"$/;
+        if(regDoubleQuote.test(result)){
+            result = result.replace(regDoubleQuote, "$1");
+        }
     }
 
     return result;
