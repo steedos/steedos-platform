@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 13:18:28
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-25 13:03:30
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-01 17:51:34
  * @Description: 工作流时间触发器定时任务，用于将工作流规则中配置的时间触发器放入工作流操作执行队列
  */
 'use strict';
@@ -79,6 +79,7 @@ module.exports = {
                                     for (const doc of docs) {
                                         await queueObj.insert({
                                             'record_id': doc._id,
+                                            'object_name': object_name,
                                             'updates_field_actions': updates_field_actions,
                                             'workflow_notifications_actions': workflow_notifications_actions,
                                             'workflow_outbound_messages_actions': workflow_outbound_messages_actions,

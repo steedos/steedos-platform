@@ -96,7 +96,7 @@ export async function runFieldUpdateAction(action: any, recordId: any, userSessi
     }
 }
 
-export async function runFieldUpdateActions(ids: Array<string>, recordId: any, userSession: any){
+export async function runFieldUpdateActions(ids: Array<string>, recordId: any, userSession: any, spaceId?: string){
 
     const filters = [];
     let targets: Array<FieldUpdateTarget> = [];
@@ -106,7 +106,7 @@ export async function runFieldUpdateActions(ids: Array<string>, recordId: any, u
     }
     
     if(!_.isEmpty(filters)){
-        const actions = await getMetadata(`action_field_updates`).find(filters, userSession.spaceId)
+        const actions = await getMetadata(`action_field_updates`).find(filters, userSession?.spaceId || spaceId)
         // await getObject("action_field_updates").find({filters: filters})
         for (const action of actions) {
             const target:FieldUpdateTarget = await runFieldUpdateAction(action, recordId, userSession);

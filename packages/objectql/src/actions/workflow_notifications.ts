@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-08-22 11:49:00
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-24 09:53:58
+ * @LastEditTime: 2024-04-01 18:11:56
  * @Description: 
  */
 import { getObject, computeFormula, getSteedosSchema, getMetadata } from '../index';
@@ -19,12 +19,12 @@ declare var Creator: any;
  * @param recordId object record id
  * @param userSession 
  */
-export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any, userSession: any) {
+export async function runWorkflowNotifyActions(ids: Array<string>, recordId: any, userSession: any, spaceId?: string) {
     if (_.isEmpty(ids) || _.isEmpty(recordId)) {
         return;
     }
     let filters = [['name', 'in', ids], 'or', ['_id', 'in', ids]];
-    let notifications = await getMetadata(`workflow_notifications`).find(filters, userSession.spaceId);
+    let notifications = await getMetadata(`workflow_notifications`).find(filters, userSession?.spaceId || spaceId);
     // await getObject("workflow_notifications").find({ filters: filters })
     for (const wn of notifications) {
         await runWorkflowNotifyAction(wn, recordId, userSession);
