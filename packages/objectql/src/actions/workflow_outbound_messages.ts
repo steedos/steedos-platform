@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-16 14:57:50
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-24 09:54:39
+ * @LastEditTime: 2024-04-01 17:57:30
  * @Description: 执行出站消息
  */
 
@@ -23,12 +23,12 @@ const jwt = require('jsonwebtoken');
  * @param recordId object record id
  * @param userSession 
  */
-export async function runWorkflowOutboundMessageActions(ids: Array<string>, recordId: any, userSession: any) {
+export async function runWorkflowOutboundMessageActions(ids: Array<string>, recordId: any, userSession: any, spaceId?: string) {
     if (_.isEmpty(ids) || _.isEmpty(recordId)) {
         return;
     }
     let filters = [['name', 'in', ids], 'or', ['_id', 'in', ids]];
-    let docs = await getMetadata(`workflow_outbound_messages`).find(filters, userSession.spaceId);
+    let docs = await getMetadata(`workflow_outbound_messages`).find(filters, userSession?.spaceId || spaceId);
     // await getObject("workflow_outbound_messages").find({ filters: filters })
     for (const doc of docs) {
         await runWorkflowOutboundMessageAction(doc, recordId, userSession);

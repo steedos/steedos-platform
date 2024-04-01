@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 17:53:55
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-11-25 13:03:27
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-01 17:55:52
  * @Description: 执行工作流时间触发器队列
  */
 
@@ -65,18 +65,24 @@ module.exports = {
                             '_excuting': true // 正在执行，防止重复执行
                         })
 
-                        const { record_id, updates_field_actions, workflow_notifications_actions, workflow_outbound_messages_actions } = doc
-                        // 字段更新
-                        if (updates_field_actions) {
-                            await objectql.runFieldUpdateActions(updates_field_actions, record_id);
-                        }
-                        // 消息提醒
-                        if (workflow_notifications_actions) {
-                            await objectql.runWorkflowNotifyActions(workflow_notifications_actions, record_id);
-                        }
-                        // 出站消息
-                        if (workflow_outbound_messages_actions) {
-                            await objectql.runWorkflowOutboundMessageActions(workflow_outbound_messages_actions, record_id);
+                        const { record_id, object_name, updates_field_actions, workflow_notifications_actions, workflow_outbound_messages_actions } = doc
+
+
+                        const record = await objectql.getObject(object_name).findOne(recordId)
+
+                        if(record){
+                            // 字段更新
+                            if (updates_field_actions) {
+                                await objectql.runFieldUpdateActions(updates_field_actions, record_id, null, record.space);
+                            }
+                            // 消息提醒
+                            if (workflow_notifications_actions) {
+                                await objectql.runWorkflowNotifyActions(workflow_notifications_actions, record_id, null, record.space);
+                            }
+                            // 出站消息
+                            if (workflow_outbound_messages_actions) {
+                                await objectql.runWorkflowOutboundMessageActions(workflow_outbound_messages_actions, record_id, null, record.space);
+                            }
                         }
 
                         if (opt.keepDocs) {

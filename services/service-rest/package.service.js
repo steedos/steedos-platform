@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2023-03-23 15:12:14
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-30 16:32:08
+ * @LastEditTime: 2024-04-01 16:41:07
  * @Description: 
  */
 "use strict";
@@ -59,102 +59,102 @@ module.exports = {
          * @apiBody {Object[]} delete 删除数据, 例如:  [{objectName: 'contracts', id: "xxx"}]
          * @apiName batch
          */
-        batch: {
-            rest: {
-                method: "POST",
-                path: "/batch"
-            },
-            async handler(ctx){
+        // batch: {
+        //     rest: {
+        //         method: "POST",
+        //         path: "/batch"
+        //     },
+        //     async handler(ctx){
 
-                const { find, count, findOne, insert, update, delete: deleteAs } = ctx.params;
+        //         const { find, count, findOne, insert, update, delete: deleteAs } = ctx.params;
 
-                const res = {}
+        //         const res = {}
 
-                const findRes = [];
-                if(find){
-                    for (const item of find) {
-                        const args = {...item};
-                        if(_.has(item, 'fields') && !_.isString(item.fields) ){
-                            args.fields = JSON.stringify(item.fields)
-                        }
-                        if(_.has(item, 'uiFields') && !_.isString(item.uiFields) ){
-                            args.uiFields = JSON.stringify(item.uiFields)
-                        }
-                        if(_.has(item, 'expandFields') && !_.isString(item.expandFields) ){
-                            args.expandFields = JSON.stringify(item.expandFields)
-                        }
-                        if(_.has(item, 'filters') && !_.isString(item.filters) ){
-                            args.filters = JSON.stringify(item.filters)
-                        }
-                        findRes.push(ctx.broker.call(`rest.find`, args).catch(err => {
-                            return err;
-                        }))
-                    }
+        //         const findRes = [];
+        //         if(find){
+        //             for (const item of find) {
+        //                 const args = {...item};
+        //                 if(_.has(item, 'fields') && !_.isString(item.fields) ){
+        //                     args.fields = JSON.stringify(item.fields)
+        //                 }
+        //                 if(_.has(item, 'uiFields') && !_.isString(item.uiFields) ){
+        //                     args.uiFields = JSON.stringify(item.uiFields)
+        //                 }
+        //                 if(_.has(item, 'expandFields') && !_.isString(item.expandFields) ){
+        //                     args.expandFields = JSON.stringify(item.expandFields)
+        //                 }
+        //                 if(_.has(item, 'filters') && !_.isString(item.filters) ){
+        //                     args.filters = JSON.stringify(item.filters)
+        //                 }
+        //                 findRes.push(ctx.broker.call(`rest.find`, args).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
 
-                    res.find = await Promise.all(findRes);
-                }
+        //             res.find = await Promise.all(findRes);
+        //         }
                 
-                const countRes = [];
-                if(count){
-                    for (const item of count) {
-                        const args = {...item};
-                        if(_.has(item, 'filters') && !_.isString(item.filters) ){
-                            args.filters = JSON.stringify(item.filters)
-                        }
-                        countRes.push(ctx.broker.call(`rest.count`, args).catch(err => {
-                            return err;
-                        }))
-                    }
-                    res.count = await Promise.all(countRes);
-                }
+        //         const countRes = [];
+        //         if(count){
+        //             for (const item of count) {
+        //                 const args = {...item};
+        //                 if(_.has(item, 'filters') && !_.isString(item.filters) ){
+        //                     args.filters = JSON.stringify(item.filters)
+        //                 }
+        //                 countRes.push(ctx.broker.call(`rest.count`, args).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
+        //             res.count = await Promise.all(countRes);
+        //         }
 
-                const findOneRes = []
-                if(findOne){
-                    for (const item of findOne) {
-                        const args = {...item};
-                        if(_.has(item, 'fields') && !_.isString(item.fields) ){
-                            args.fields = JSON.stringify(item.fields)
-                        }
-                        findOneRes.push(ctx.broker.call(`rest.findOne`, args).catch(err => {
-                            return err;
-                        }))
-                    }
-                    res.findOne = await Promise.all(findOneRes);
-                }
+        //         const findOneRes = []
+        //         if(findOne){
+        //             for (const item of findOne) {
+        //                 const args = {...item};
+        //                 if(_.has(item, 'fields') && !_.isString(item.fields) ){
+        //                     args.fields = JSON.stringify(item.fields)
+        //                 }
+        //                 findOneRes.push(ctx.broker.call(`rest.findOne`, args).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
+        //             res.findOne = await Promise.all(findOneRes);
+        //         }
 
-                const insertRes = []
-                if(insert){
-                    for (const item of insert) {
-                        insertRes.push(ctx.broker.call(`rest.insert`, item).catch(err => {
-                            return err;
-                        }))
-                    }
-                    res.insert = await Promise.all(insertRes);
-                }
+        //         const insertRes = []
+        //         if(insert){
+        //             for (const item of insert) {
+        //                 insertRes.push(ctx.broker.call(`rest.insert`, item).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
+        //             res.insert = await Promise.all(insertRes);
+        //         }
 
-                const updateRes = []
-                if(update){
-                    for (const item of update) {
-                        updateRes.push(ctx.broker.call(`rest.update`, item).catch(err => {
-                            return err;
-                        }))
-                    }
-                    res.update = await Promise.all(updateRes);
-                }
+        //         const updateRes = []
+        //         if(update){
+        //             for (const item of update) {
+        //                 updateRes.push(ctx.broker.call(`rest.update`, item).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
+        //             res.update = await Promise.all(updateRes);
+        //         }
 
-                const deleteRes = []
-                if(deleteAs){
-                    for (const item of deleteAs) {
-                        deleteRes.push(ctx.broker.call(`rest.delete`, item).catch(err => {
-                            return err;
-                        }))
-                    }
-                    res.delete = await Promise.all(deleteRes);
-                }
+        //         const deleteRes = []
+        //         if(deleteAs){
+        //             for (const item of deleteAs) {
+        //                 deleteRes.push(ctx.broker.call(`rest.delete`, item).catch(err => {
+        //                     return err;
+        //                 }))
+        //             }
+        //             res.delete = await Promise.all(deleteRes);
+        //         }
 
-                return res;
-            }
-        },
+        //         return res;
+        //     }
+        // },
         /**
          * @api {GET} /api/v1/:objectName 获取列表记录
          * @apiVersion 0.0.0
