@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-11-12 17:53:55
- * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-04-01 17:55:52
+ * @LastEditors: 孙浩林 sunhaolin@steedos.com
+ * @LastEditTime: 2024-04-02 09:48:57
  * @Description: 执行工作流时间触发器队列
  */
 
@@ -68,7 +68,7 @@ module.exports = {
                         const { record_id, object_name, updates_field_actions, workflow_notifications_actions, workflow_outbound_messages_actions } = doc
 
 
-                        const record = await objectql.getObject(object_name).findOne(recordId)
+                        const record = await objectql.getObject(object_name).findOne(record_id)
 
                         if(record){
                             // 字段更新
