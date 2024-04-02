@@ -152,7 +152,9 @@ module.exports = {
                     // upObj[`traces.$.approves.${idx}.modified_by`] = session_userId;
                     // return upObj[`traces.$.approves.${idx}.read_date`] = new Date();
                     approveDoc[`description`] = description;
-                    approveDoc[`sign_show`] = trimDescription || showBlankApproveDescription ? true : false;
+                    if (trimDescription || showBlankApproveDescription) {
+                        approveDoc[`sign_show`] = true;
+                    }
                     approveDoc[`modified`] = new Date();
                     approveDoc[`modified_by`] = session_userId;
                     approveDoc[`read_date`] = new Date();
