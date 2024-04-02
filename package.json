@@ -21,7 +21,7 @@
     "@salesforce/ts-types": "1.1.2",
     "**/fibers": "5.0.3",
     "**/type-fest": "0.21.3",
-    "mime": "3.0.0"
+    "@types/mime": "3.0.0"
     
   },
   "devDependencies": {
