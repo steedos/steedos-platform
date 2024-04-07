@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2023-04-23 13:35:17
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2024-03-26 15:10:32
+ * @LastEditTime: 2024-04-02 14:00:47
  * @Description: 
  */
 const { NodeVM } = require('vm2');
@@ -65,6 +65,9 @@ export const runTriggerFunction = async (trigger, thisArg, ...args)=>{
         const errorStack = source.substring(source.indexOf("(")+1,source.indexOf(")")).replace(triggerFileName, "对象「" + trigger.listenTo + "」的「" + trigger.name +"」触发器").replace(":"," 行 ").replace(":"," 列 ");
         const newError = new Error(error.message);
         newError.stack = `Object Trigger Error: ${error.message}\n    at ${errorStack}`;
+        if(process.env.NODE_ENV === 'development'){
+            newError.message = newError.stack
+        }
         throw newError
     }
 }

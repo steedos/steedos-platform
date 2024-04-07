@@ -23,6 +23,32 @@
                             "expression": "${!!event.data.defaultValue_formula}"
                         }
                     ]
+                },
+                "inited": {
+                  "actions": [
+                    {
+                      "actionType": "ajax",
+                      "api": {
+                        "method": "get",
+                        "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${object}/fields/options",
+                        "cache": 30000,
+                        "adaptor": "const visibleOnVariables = SteedosUI.getFormulaVariables(payload.data.options);\nconst defaultValueVariables = [visibleOnVariables[1]];\npayload = {\n  data: {\n    visibleOnVariables,\n    defaultValueVariables\n  }\n};\nreturn payload;",
+                        "headers": {
+                          "Authorization": "Bearer ${context.tenantId},${context.authToken}"
+                        }
+                      }
+                    },
+                    {
+                      "actionType": "setValue",
+                      "args": {
+                        "value": {
+                          "visibleOnVariables": "${event.data.visibleOnVariables}",
+                          "defaultValueVariables": "${event.data.defaultValueVariables}"
+                        }
+                      },
+                      "componentId": "steedos_object_fields_service"
+                    }
+                  ]
                 }
             },
             "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue;\nif (defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{') > -1) {\n  payload.data.defaultValue_formula = defaultValue_field_value;\n  delete payload.data.defaultValue;\n}\n\nif (recordId) {\n  var data = payload.data;\n  if (data) {\n    data.filters = window.amisConvert.filtersToConditions(data.filters || []);\n  }\n  payload.data = data;\n}\nreturn payload;",
@@ -172,7 +198,8 @@
                     "name": "formula",
                     "evalMode": false,
                     "variableMode": "tabs",
-                    "variables": "${VisibleVariables}",
+                    "variables": "${visibleOnVariables}",
+                    "visibleOn": "${visibleOnVariables}",
                     "id": "u:618105d5bfad"
                   }
                 }
@@ -182,17 +209,9 @@
             }
         }
     ],
-    "api": {
-      "method": "get",
-      "url": "${context.rootUrl}/service/api/@${_master.record.name}/uiSchema",
-      "adaptor": "const VisibleVariables = SteedosUI.getFormulaVariables(payload.fields);\nconst defaultVariables = [VisibleVariables[1]];\npayload = {\n  data: {\n    VisibleVariables,\n    defaultVariables\n  }\n};\nreturn payload;",
-      "headers": {
-        "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-      }
-    },
     "data": {
         "context": {}
     },
     "name": "object_fields_form",
-    "id": "u:bb11df394baf"
+    "id": "steedos_object_fields_service"
 }

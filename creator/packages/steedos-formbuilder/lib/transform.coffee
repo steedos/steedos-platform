@@ -52,6 +52,11 @@ Creator.formBuilder.transformFormFieldsIn = (formFields)->
 #TODO 默认值 boolean
 				field.type = 'checkboxBoolean'
 				delete field.className
+				if field.default_value 
+					if field.default_value == 'true'
+						field.default_value = true
+					else
+						field.default_value = false
 				fields.push field
 			when 'email'
 				field.type = 'email'
@@ -173,6 +178,7 @@ Creator.formBuilder.transformFormFieldsOut = (fields)->
 				field.type = 'input'
 			when 'checkboxBoolean'
 				field.type = 'checkbox'
+				field.default_value = field.default_value.toString();
 			when 'checkbox-group'
 				field.type = 'multiSelect'
 			when 'radio-group'

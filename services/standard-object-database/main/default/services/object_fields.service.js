@@ -125,7 +125,8 @@ module.exports = {
                         "clearValueOnHidden": true,
                         "fieldName": "defaultValue"
                     }
-                    if(_.isString(value) && value.indexOf('{')>-1){
+                    const regDoubleQuote = /\$\{([^}]*)\}/g; // 更改捕获组内容：([^}]*) 匹配非 } 字符
+                    if(_.isString(value) && regDoubleQuote.test(value)){
                         // 只读时值是公式就显示公式
                         steedos_field = {
                             "type": "control",
@@ -135,7 +136,7 @@ module.exports = {
                                 "label": translatedLabel,
                                 "labelClassName": "text-left",
                                 "type": "tpl",
-                                "tpl": value.indexOf('$') > -1 ? "\\"+value : value
+                                "tpl": value.replace(regDoubleQuote, '\\${$1}')
                             }
                         }
                     }else if(['number','currency','percent'].includes(type)){
@@ -231,7 +232,8 @@ module.exports = {
                         "type": "input-formula",
                         "placeholder": "公式",
                         "variableMode": "tabs",
-                        "variables": "${defaultVariables}", //公式编辑器内引用的变量，在对象字段表单微页面内定义
+                        "variables": "${defaultValueVariables}", //公式编辑器内引用的变量，在对象字段表单微页面内定义
+                        "visibleOn": "${defaultValueVariables}",
                         // "disabledOn": "!!this.defaultValue && !!this.defaultValue.toString()",
                         "className": {
                             "defaultValue_field_formula": true,

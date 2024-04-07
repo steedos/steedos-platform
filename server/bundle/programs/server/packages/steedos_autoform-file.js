@@ -20,12 +20,12 @@ var __coffeescriptShare;
 
 (function(){
 
-////////////////////////////////////////////////////////////////////////////
-//                                                                        //
-// packages/steedos_autoform-file/lib/server/publish.coffee               //
-//                                                                        //
-////////////////////////////////////////////////////////////////////////////
-                                                                          //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                             //
+// packages/steedos_autoform-file/lib/server/publish.coffee                                                    //
+//                                                                                                             //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                               //
 __coffeescriptShare = typeof __coffeescriptShare === 'object' ? __coffeescriptShare : {}; var share = __coffeescriptShare;
 Meteor.publish('autoformFileDoc', function (collectionName, docId) {
   var collection;
@@ -39,7 +39,7 @@ Meteor.publish('autoformFileDoc', function (collectionName, docId) {
     });
   }
 });
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
 
