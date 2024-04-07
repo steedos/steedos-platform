@@ -99,8 +99,8 @@
                                   ],
                                   "api": {
                                     "method": "get",
-                                    "url": "${context.rootUrl}/service/api/@${designObjectName}/uiSchema",
-                                    "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.fields)}};return payload;",
+                                    "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${designObjectName}/fields/options",
+                                    "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.data.options)}};return payload;",
                                     "cache": 30000,
                                     "headers": {
                                       "Authorization": "Bearer ${context.tenantId},${context.authToken}"
@@ -246,50 +246,72 @@
                               "title": "编辑字段",
                               "body": [
                                 {
-                                  "type": "steedos-object-form",
-                                  "label": "对象表单",
-                                  "objectApiName": "object_fields",
-                                  "recordId": "${_id}",
-                                  "mode": "edit",
-                                  "defaultData": {
-                                    "object": "${designObjectName}"
-                                  },
-                                  "fields": [
-                                    "label",
-                                    "readonly",
-                                    "is_wide",
-                                    "visible_on"
-                                  ],
-                                  "fieldsExtend": {
-                                    "label": {
-                                      "is_wide": true,
-                                      "group": ""
+                                  "type": "service",
+                                  "body": {
+                                    "type": "steedos-object-form",
+                                    "label": "对象表单",
+                                    "objectApiName": "object_fields",
+                                    "recordId": "${_id}",
+                                    "mode": "edit",
+                                    "defaultData": {
+                                      "object": "${designObjectName}"
                                     },
-                                    "readonly": {
-                                      "group": ""
+                                    "fields": [
+                                      "label",
+                                      "readonly",
+                                      "is_wide",
+                                      "visible_on"
+                                    ],
+                                    "fieldsExtend": {
+                                      "label": {
+                                        "is_wide": true,
+                                        "group": ""
+                                      },
+                                      "readonly": {
+                                        "group": ""
+                                      },
+                                      "is_wide": {
+                                        "group": ""
+                                      },
+                                      "visible_on": {
+                                        "group": "",
+                                        "amis": {
+                                          "type": "input-formula",
+                                          "name": "formula",
+                                          "evalMode": false,
+                                          "variableMode": "tabs",
+                                          "variables": "${variables}",
+                                          "visibleOn": "${variables}",
+                                          "id": "u:618105d5bfad"
+                                        }
+                                      }
                                     },
-                                    "is_wide": {
-                                      "group": ""
-                                    },
-                                    "visible_on": {
-                                      "group": ""
+                                    "id": "u:b71796d3cb8c",
+                                    "className": "mb-4",
+                                    "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
+                                    "onEvent": {
+                                      "submitSucc": {
+                                        "weight": 0,
+                                        "actions": [
+                                          {
+                                            "actionType": "custom",
+                                            "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
+                                          }
+                                        ]
+                                      }
                                     }
                                   },
-                                  "id": "u:b71796d3cb8c",
-                                  "className": "mb-4",
-                                  "apiRequestAdaptor": "api.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert')",
-                                  "onEvent": {
-                                    "submitSucc": {
-                                      "weight": 0,
-                                      "actions": [
-                                        {
-                                          "actionType": "custom",
-                                          "script": "setTimeout(() => {\n  doAction({\n    \"actionType\": \"broadcast\",\n    \"args\": {\n      \"eventName\": \"@data.changed.object_fields\"\n    }\n  });\n}, 500);\n\n\n"
-                                        }
-                                      ]
+                                  "api": {
+                                    "method": "get",
+                                    "url": "${context.rootUrl}/service/api/amis-metadata-objects/objects/${designObjectName}/fields/options",
+                                    "adaptor": "payload = {data: {variables: SteedosUI.getFormulaVariables(payload.data.options)}};return payload;",
+                                    "cache": 30000,
+                                    "headers": {
+                                      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
                                     }
                                   }
                                 }
+                                
                               ],
                               "type": "dialog",
                               "data": {

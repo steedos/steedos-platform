@@ -231,7 +231,8 @@ module.exports = {
                         "type": "input-formula",
                         "placeholder": "公式",
                         "variableMode": "tabs",
-                        "variables": "${defaultVariables}", //公式编辑器内引用的变量，在对象字段表单微页面内定义
+                        "variables": "${defaultValueVariables}", //公式编辑器内引用的变量，在对象字段表单微页面内定义
+                        "visibleOn": "${defaultValueVariables}",
                         // "disabledOn": "!!this.defaultValue && !!this.defaultValue.toString()",
                         "className": {
                             "defaultValue_field_formula": true,
