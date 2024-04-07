@@ -555,6 +555,8 @@ list_views:
       - fields
       - is_deleted
 actions: 
+  standard_delete_many:
+    visible: false
   show_object: 
     label: Preview
     on: record
