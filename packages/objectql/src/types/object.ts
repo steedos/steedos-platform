@@ -1645,12 +1645,20 @@ export class SteedosObjectType extends SteedosObjectProperties {
                 field = Object.assign(field, field.override)
             }
 
-            if(field && field.static){
-                let fieldAmis = field.amis || {};
-                fieldAmis.static = true;
-                Object.assign(field, {
-                    amis: fieldAmis
-                });
+            if(field){
+                if(field.static){
+                    // 字段上static属性添加到amis.static中，前端界面上表现为amis static效果
+                    let fieldAmis = field.amis || {};
+                    fieldAmis.static = true;
+                    Object.assign(field, {
+                        amis: fieldAmis
+                    });
+                }
+
+                if(field.type == 'formula' || field.type == 'summary'){
+                    // 公式和汇总字段在前端表现为只读，新建编辑记录时字段值不提交到保存接口中
+                    field.readonly = true;
+                }
             }
         });
 
