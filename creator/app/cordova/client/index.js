@@ -2,7 +2,8 @@ Meteor.startup(function () {
 	if (Steedos.isCordova && Steedos.isCordova()) {
 		window.fileOpen = function (url) {
 			var fileUrl;
-			fileUrl = decodeURI(url);
+			// fileUrl = decodeURI(url);
+			fileUrl = url;
 			window.resolveLocalFileSystemURL(fileUrl, (function (fileEntry) {
 				return fileEntry.file((function (f) {
 					cordova.plugins.fileOpener2.open(fileUrl, f.type, {
