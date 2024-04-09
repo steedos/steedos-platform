@@ -1,4 +1,5 @@
 name: reload_time
+label: 重新加载时间
 type: datetime
 hidden: true
 omit: true

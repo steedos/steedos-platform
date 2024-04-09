@@ -1,3 +1,4 @@
 name: field_groups.$.visible_on
 type: text
+label: 显示条件
 sort_no: 720

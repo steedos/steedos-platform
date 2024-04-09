@@ -1,4 +1,5 @@
 name: fields_serial_number
+label: Serial Number
 type: number
 scale: 0
 omit: true

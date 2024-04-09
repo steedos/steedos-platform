@@ -1,7 +1,0 @@
-name: form.beforeEdit
-type: code
-language: javascript
-rows: 3
-is_wide: true
-hidden: true
-sort_no: 680

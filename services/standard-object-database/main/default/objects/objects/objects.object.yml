@@ -2,7 +2,7 @@ name: objects
 icon: orders
 label: Object
 version: 2
-hidden: true
+hidden: false
 enable_dataloader: false
 paging:
   enabled: false

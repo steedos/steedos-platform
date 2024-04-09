@@ -1,4 +1,5 @@
 name: field_groups
+label: 字段分组
 type: grid
 blackbox: true
 is_wide: true

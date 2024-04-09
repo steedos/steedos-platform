@@ -1,4 +1,5 @@
 name: is_deleted
+label: 已删除
 hidden: false
 omit: true
 disabled: false

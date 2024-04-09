@@ -1,4 +1,5 @@
 name: extend
+label: Extend
 type: text
 hidden: true
 sort_no: 740
