@@ -4,4 +4,7 @@ columns:
   - name
   - level
   - created
+sort:
+  - field_name: created
+    order: desc
 filter_scope: space
