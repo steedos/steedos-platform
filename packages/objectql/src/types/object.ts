@@ -2298,10 +2298,12 @@ export class SteedosObjectType extends SteedosObjectProperties {
         if (["update", "delete"].indexOf(method) > -1) {
             // 新建记录不再进这里，所以始终设置为false
             const onlyForOwn = false;//method === "insert";
-            // 修改记录时，因为当前记录的所有公式字段已经提前计算存入变量doc了，不需要再计算当前记录中的公式字段了，所以这里排除掉
-            // 而删除记录时，本身就不需要再计算当前记录中的公式字段了，所以这里也排除掉
+            // 修改记录后，因为当前记录的所有公式字段已经提前计算存入变量doc了，不需要再计算当前记录中的公式字段了，所以这里排除掉
+            // 而删除记录后，本身就不需要再计算当前记录中的公式字段了，所以这里也排除掉
             const withoutCurrent = true;//method === "delete";
-            await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent });
+            // 更新记录后，只需要查找和重算与doc中传入的字段相关的公式字段，不需要把所有公式字段都重算，优化性能
+            let fieldNames = method === "update" ? _.keys(doc) : null;
+            await runQuotedByObjectFieldFormulas(objectName, recordId, userSession, { onlyForOwn, withoutCurrent, fieldNames });
         }
     }
 
@@ -2311,11 +2313,22 @@ export class SteedosObjectType extends SteedosObjectProperties {
     private async runRecordSummaries(method: string, objectName: string, recordId: string, doc: any, previousDoc: any, userSession: any) {
         if (["insert", "update", "delete"].indexOf(method) > -1) {
             if (method === "insert") {
-                // 新建主表记录时，给主表记录中的汇总字段设置默认值
+                // 新建主表记录后，给主表记录中的汇总字段设置默认值
                 await runCurrentObjectFieldSummaries(objectName, recordId);
             }
-            // 子表记录增删改时，计算并设置主表中汇总字段
-            await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession);
+            // 更新记录后，只需要查找和重算与doc中传入的字段相关的汇总字段，不需要把所有汇总字段都重算，优化性能
+            let fieldNames = method === "update" ? _.keys(doc) : null;
+            if (fieldNames) {
+                // 如果修改了主子表字段，则重算当前子表对象关联的所有主表中的汇总字段
+                let hasMasterDetailField = !!fieldNames.find((item) => {
+                    return this.fields[item].type === "master_detail";
+                });
+                if (hasMasterDetailField) {
+                    fieldNames = null;
+                }
+            }
+            // 子表记录增删改后，计算并设置主表中汇总字段
+            await runQuotedByObjectFieldSummaries(objectName, recordId, previousDoc, userSession, { fieldNames });
         }
     }
 
