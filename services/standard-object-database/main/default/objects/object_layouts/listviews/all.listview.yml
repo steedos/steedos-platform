@@ -1,0 +1,8 @@
+name: all
+columns:
+  - label
+  - object_name
+  - profiles
+  - is_system
+label: All
+filter_scope: space

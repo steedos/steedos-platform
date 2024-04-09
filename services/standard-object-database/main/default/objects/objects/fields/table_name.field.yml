@@ -1,0 +1,10 @@
+name: table_name
+type: text
+label: Table Name
+index: true
+searchable: true
+inlineHelpText: The default data source does not support this property
+group: External data source
+amis:
+  disabledOn: '${is_system == true}'
+sort_no: 320

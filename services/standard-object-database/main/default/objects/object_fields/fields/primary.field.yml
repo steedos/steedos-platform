@@ -1,0 +1,7 @@
+name: primary
+type: boolean
+label: Primary Key
+group: External data source
+sort_no: 530
+amis:
+  disabledOn: '${is_system == true}'

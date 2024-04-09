@@ -1,0 +1,3 @@
+name: recomputeFormulaValues
+label: Recompute Formula Values
+'on': record_only

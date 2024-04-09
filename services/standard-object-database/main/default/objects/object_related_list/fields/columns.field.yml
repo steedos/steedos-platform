@@ -1,0 +1,8 @@
+name: columns
+label: Columns
+type: grid
+is_wide: true
+required: true
+depend_on:
+  - objectName
+sort_no: 120

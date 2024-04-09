@@ -1,0 +1,7 @@
+name: enable_lock_detail
+type: boolean
+label: Enable Lock Details
+inlineHelpText: When the main watch is locked all sub tables are read only.
+group: Switch
+defaultValue: false
+sort_no: 310

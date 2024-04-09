@@ -1,0 +1,6 @@
+name: visible
+type: boolean
+label: Visible
+is_wide: false
+sort_no: 140
+defaultValue: true

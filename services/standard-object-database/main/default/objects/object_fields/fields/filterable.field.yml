@@ -1,0 +1,5 @@
+name: filterable
+type: boolean
+label: Filterable
+group: ui
+sort_no: 680

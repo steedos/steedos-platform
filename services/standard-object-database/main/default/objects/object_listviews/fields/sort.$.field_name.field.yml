@@ -1,0 +1,6 @@
+name: sort.$.field_name
+label: Field Name
+type: lookup
+reference_to: object_fields
+reference_to_field: name
+sort_no: 310

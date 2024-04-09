@@ -1,0 +1,6 @@
+name: related_lists.$.filters
+label: Filters
+type: textarea
+rows: 1
+is_wide: true
+sort_no: 350

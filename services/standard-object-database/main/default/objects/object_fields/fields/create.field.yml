@@ -1,0 +1,8 @@
+name: create
+type: boolean
+label: 弹出选择时允许新建
+defaultValue: true
+visible_on: '{{[''lookup''].indexOf(formData.type) > -1 ? true: false}}'
+sort_no: 210
+amis:
+  disabledOn: '${is_system == true}'

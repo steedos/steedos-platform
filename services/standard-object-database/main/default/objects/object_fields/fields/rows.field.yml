@@ -1,0 +1,7 @@
+name: rows
+type: currency
+label: Rows
+scale: 0
+visible_on: '{{formData.type === ''textarea'' ? true: false}}'
+required: '{{formData.type === ''textarea'' ? true: false}}'
+sort_no: 320

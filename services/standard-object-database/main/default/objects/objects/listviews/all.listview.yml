@@ -1,0 +1,14 @@
+name: all
+columns:
+  - label
+  - name
+  - in_development
+  - is_enable
+  - is_system
+  - is_customize
+label: All
+filter_scope: space
+extra_columns:
+  - datasource
+  - fields
+  - is_deleted

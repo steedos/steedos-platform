@@ -1,0 +1,7 @@
+name: name
+type: text
+required: true
+label: Api Name
+is_wide: true
+group: general_information
+sort_no: 100

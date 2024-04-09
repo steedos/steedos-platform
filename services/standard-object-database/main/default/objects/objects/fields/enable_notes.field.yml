@@ -1,0 +1,5 @@
+name: enable_notes
+type: boolean
+label: Enable Notes
+group: Switch
+sort_no: 190

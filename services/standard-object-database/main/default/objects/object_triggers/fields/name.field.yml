@@ -1,0 +1,5 @@
+name: name
+data_type: text
+type: text
+visible_on: '{{false}}'
+sort_no: 110

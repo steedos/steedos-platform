@@ -1,0 +1,30 @@
+name: profiles
+type: lookup
+label: Profile
+showIcon: false
+multiple: true
+required: true
+create: false
+reference_to: permission_set
+reference_to_field: name
+is_wide: true
+defaultValue:
+  - admin
+  - user
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+    var profiles = Creator.odata.query('permission_set', {$filter: "(type eq 'profile')"}, true);
+    var result = [];
+    profiles.forEach(function (item) {
+      result.push({
+        label: item.label,
+        value: item.name
+      });
+    });
+    return result;
+
+  }
+group: general_information
+sort_no: 140

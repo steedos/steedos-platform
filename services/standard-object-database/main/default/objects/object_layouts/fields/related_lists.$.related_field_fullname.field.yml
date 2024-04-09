@@ -1,0 +1,72 @@
+name: related_lists.$.related_field_fullname
+type: lookup
+amis:
+  tpl: '${related_field_fullname.label}'
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+    if (!(values != null ? values.object_name : void 0)) {
+      values.object_name = Session.get("object_name");
+    }
+    if(values.object_name && !_.isString(values.object_name)){
+      values.object_name = values.object_name.name
+    }
+    const options = [];
+    const object = Creator.getObject(values.object_name);
+
+    let relatedLists = []
+    if(object.enable_files){
+        relatedLists.push("cms_files.parent")
+    }
+    /*
+    object.details是一个字符串，形如：testb__c.testa__c
+    object.lookup_details是一个对象，格式如下：
+    {
+      key: "testd__c.testa__c",
+      objectName: "testa__c",
+      type: "detail",
+    }
+    */
+    relatedLists = relatedLists.concat(_.union(object.details, object.lookup_details));
+
+    if(object.enable_tasks){
+        relatedLists.push("tasks.related_to")
+    }
+    if(object.enable_notes){
+        relatedLists.push("notes.related_to")
+    }
+    if(object.enable_events){
+        relatedLists.push("events.related_to")
+    }
+    if(object.enable_instances){
+        relatedLists.push("instances.record_ids")
+    }
+    if(object.enable_approvals){
+        relatedLists.push("approvals.related_to")
+    }
+    if(object.enable_process){
+        relatedLists.push("process_instance_history.target_object")
+    }
+    if(object.enable_audit){
+        relatedLists.push("audit_records.related_to")
+    }
+
+    _.each(relatedLists, function(related){
+      if (!related) return;
+      /*related可能是一个lookup_details，它是对象而不是字符串，从中取出key值*/
+      if(typeof related !== "string"){
+        related = related.key;
+      }
+      if (!related) return;
+      let foo = related.split('.');
+      let rObjectName = foo[0];
+      let rFieldName = foo[1];
+      let rObjectLable = Creator.getObject(rObjectName).label;
+      let rObjectFieldLable = (_.find(Creator.getObject(rObjectName).fields, function(field){return field.name === rFieldName}) || {}).label;
+      options.push({label: `${rObjectLable}.${rObjectFieldLable}`, value: related})
+    })
+    return options;
+
+  }
+sort_no: 300

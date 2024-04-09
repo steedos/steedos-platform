@@ -1,0 +1,8 @@
+name: all
+columns:
+  - name
+  - active
+  - description
+  - object_name
+label: All
+filter_scope: space

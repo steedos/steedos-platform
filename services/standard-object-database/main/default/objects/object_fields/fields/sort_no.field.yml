@@ -1,0 +1,8 @@
+name: sort_no
+label: Sort Number
+type: number
+defaultValue: 100
+scale: 0
+sortable: true
+group: ui
+sort_no: 550

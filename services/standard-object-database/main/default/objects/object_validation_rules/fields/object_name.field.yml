@@ -1,0 +1,8 @@
+name: object_name
+type: master_detail
+label: Object
+reference_to: objects
+write_requires_master_read: true
+reference_to_field: name
+required: true
+sort_no: 110

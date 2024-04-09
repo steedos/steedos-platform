@@ -1,0 +1,7 @@
+name: list_views
+type: object
+label: ListViews
+blackbox: true
+omit: true
+hidden: true
+sort_no: 370

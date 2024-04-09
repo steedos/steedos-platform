@@ -1,0 +1,4 @@
+name: fields.$.is_required
+label: Required
+type: boolean
+sort_no: 260

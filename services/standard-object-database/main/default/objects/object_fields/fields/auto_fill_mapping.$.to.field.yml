@@ -1,0 +1,56 @@
+name: auto_fill_mapping.$.to
+label: 'To:Fields in the current form'
+type: lookup
+reference_to: object_fields
+reference_to_field: name
+required: true
+depend_on:
+  - object
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
+    var fieldFilters = {
+        "text": ["text", "textarea"],
+        "textarea": ["text", "textarea"],
+        "boolean": ["boolean", "toggle"],
+        "toggle": ["boolean", "toggle"],
+        "number": ["number", "currency"],
+        "currency": ["number", "currency"],
+        "lookup": ["lookup", "master_detail"],
+        "master_detail": ["lookup", "master_detail"],
+        "autonumber": ["autonumber", "text", "textarea"],
+        "email": ["email", "text", "textarea"]
+    };
+    var currentFilter = [];
+    var referenceObject = BuilderAmisObject && BuilderAmisObject.AmisLib && BuilderAmisObject.AmisLib.getUISchemaSync(values.reference_to);
+    var fromField = referenceObject && referenceObject.fields[values.from];
+
+    if (fromField && fromField.data_type) {
+        currentFilter.push(['type', 'in', fieldFilters[fromField.data_type] || fromField.data_type.split()]);
+    }else if (fromField) {
+        currentFilter.push(['type', 'in', fieldFilters[fromField.type] || fromField.type.split()]);
+        if (fromField.type == "lookup" || fromField.type == "master_detail") {
+          if(fromField.reference_to === "users"){
+            currentFilter.push([['reference_to', '=', "users"],"or", ['reference_to', '=', "space_users"]]);
+          }
+          else{
+            if (fromField.reference_to) {
+              currentFilter.push(['reference_to', '=', fromField.reference_to]);
+            }
+            if (fromField.reference_to_field) {
+              currentFilter.push(['reference_to_field', '=', fromField.reference_to_field]);
+            }
+          }
+        }
+    }
+    if (values && values.object) {
+        currentFilter.push(['object', '=', values.object]);
+    } else {
+        currentFilter.push(['_id', '=', 'no']);
+    }
+    return currentFilter;
+
+  }
+sort_no: 420

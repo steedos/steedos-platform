@@ -1,0 +1,8 @@
+name: fields
+type: grid
+is_wide: true
+required: true
+depend_on:
+  - object_name
+group: fields
+sort_no: 220

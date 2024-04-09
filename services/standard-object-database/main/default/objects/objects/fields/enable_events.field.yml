@@ -1,0 +1,5 @@
+name: enable_events
+type: boolean
+label: Enable Events
+group: Switch
+sort_no: 200

@@ -1,0 +1,5 @@
+name: hidden
+type: boolean
+label: Hidden
+group: ui
+sort_no: 630

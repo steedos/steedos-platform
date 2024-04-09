@@ -1,0 +1,5 @@
+name: fields.$.visible_on
+label: Visible on
+type: textarea
+rows: 1
+sort_no: 280

@@ -1,0 +1,7 @@
+name: reload_time
+type: datetime
+hidden: true
+omit: true
+disabled: true
+readonly: true
+sort_no: 490

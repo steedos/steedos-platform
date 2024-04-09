@@ -1,0 +1,5 @@
+name: autonumber_enable_modify
+label: 允许修改编号
+type: boolean
+visible_on: '{{formData.type === ''autonumber'' ? true: false}}'
+sort_no: 250

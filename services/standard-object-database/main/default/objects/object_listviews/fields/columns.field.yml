@@ -1,0 +1,14 @@
+name: columns
+label: Columns
+type: table
+is_wide: true
+required: true
+group: show_columns
+amis:
+  columns:
+    - field
+    - name: width
+      width: 100
+    - name: wrap
+      width: 100
+sort_no: 230

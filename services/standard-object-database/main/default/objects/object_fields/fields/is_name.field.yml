@@ -1,0 +1,7 @@
+name: is_name
+type: boolean
+label: Is Name
+group: External data source
+sort_no: 560
+amis:
+  disabledOn: '${is_system == true}'

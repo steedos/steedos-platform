@@ -1,0 +1,14 @@
+name: name
+type: text
+label: API Name
+searchable: true
+filterable: true
+index: true
+required: true
+inlineHelpText: >-
+  Can only contain lowercase letters and numbers, must start with a letter,
+  cannot end with an underscore character or contain two consecutive underscore
+  characters
+amis:
+  disabledOn: '${is_system == true}'
+sort_no: 120

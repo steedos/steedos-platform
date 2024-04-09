@@ -1,0 +1,8 @@
+name: version
+readonly: true
+label: Version
+type: number
+scale: 0
+defaultValue: 2
+hidden: true
+sort_no: 330

@@ -1,0 +1,5 @@
+name: auto_fill_mapping.$
+label: Auto Fill Mapping
+blackbox: true
+type: object
+sort_no: 400

@@ -1,0 +1,5 @@
+name: searchable
+type: boolean
+label: Searchable
+group: ui
+sort_no: 670

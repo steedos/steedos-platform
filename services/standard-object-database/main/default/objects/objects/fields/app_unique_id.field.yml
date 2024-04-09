@@ -1,0 +1,5 @@
+name: app_unique_id
+type: text
+hidden: true
+label: App Unique ID
+sort_no: 440

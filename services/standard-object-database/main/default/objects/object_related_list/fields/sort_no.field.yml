@@ -1,0 +1,5 @@
+name: sort_no
+type: number
+label: Sort Number
+inlineHelpText: High Value First.
+sort_no: 250

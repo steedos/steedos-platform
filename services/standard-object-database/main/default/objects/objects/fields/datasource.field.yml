@@ -1,0 +1,10 @@
+name: datasource
+type: master_detail
+label: Datasource
+reference_to: datasources
+showIcon: false
+required: true
+defaultValue: default
+amis:
+  disabledOn: '${is_system == true}'
+sort_no: 100

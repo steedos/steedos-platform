@@ -1,0 +1,5 @@
+name: username
+type: text
+label: Database username
+group: Other connection options
+sort_no: 160

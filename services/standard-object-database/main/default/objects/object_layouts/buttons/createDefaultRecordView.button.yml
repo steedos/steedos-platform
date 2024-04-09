@@ -1,0 +1,4 @@
+name: createDefaultRecordView
+'on': list
+label: 创建默认页面布局
+visible: false

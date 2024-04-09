@@ -1,0 +1,5 @@
+name: is_system
+type: boolean
+label: System
+visible_on: '{{false}}'
+sort_no: 740

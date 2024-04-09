@@ -1,0 +1,8 @@
+name: driver
+type: select
+label: Driver
+options: >-
+  MongoDB:mongo,SQL
+  Server:sqlserver,PostgreSQL:postgres,Oracle:oracle,MySQL:mysql,Sqlite:sqlite
+required: true
+sort_no: 100

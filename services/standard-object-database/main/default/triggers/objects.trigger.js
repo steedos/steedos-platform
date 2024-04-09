@@ -1,7 +1,7 @@
 const InternalData = require('@steedos/standard-objects').internalData;
 const _ = require('underscore');
 const objectql = require('@steedos/objectql');
-const objectTree = require('../objects/objects.tree.js');
+const objectTree = require('../server/objects.tree.js');
 
 const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
 

@@ -1,0 +1,5 @@
+name: options.$.description
+label: Description
+type: text
+required: false
+sort_no: 380

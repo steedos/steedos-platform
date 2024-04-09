@@ -1,0 +1,8 @@
+name: static
+type: boolean
+label: Readonly and displayed while editing
+group: ui
+inlineHelpText: >-
+  Displays as read-only, but the field value can be set by default, autofill, or
+  custom scripts when creating and editing records.
+sort_no: 620

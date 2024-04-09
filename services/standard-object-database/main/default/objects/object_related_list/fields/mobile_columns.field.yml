@@ -1,0 +1,7 @@
+name: mobile_columns
+label: Mobile Columns
+type: grid
+is_wide: true
+depend_on:
+  - objectName
+sort_no: 170

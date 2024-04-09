@@ -1,0 +1,8 @@
+name: sort
+label: Default Sort Order
+type: grid
+is_wide: true
+depend_on:
+  - object_name
+group: sort
+sort_no: 290

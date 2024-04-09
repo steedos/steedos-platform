@@ -1,0 +1,25 @@
+name: depend_on
+type: lookup
+group: Advanced
+label: 依赖的字段
+inlineHelpText: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
+reference_to: object_fields
+reference_to_field: name
+multiple: true
+visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+depend_on:
+  - object
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    if(values && values.object){
+      return ['object', '=', values.object]
+    }else{
+      return ['_id', '=', 'no']
+    }
+
+  }
+sort_no: 200
+amis:
+  disabledOn: '${is_system == true}'

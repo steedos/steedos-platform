@@ -1,0 +1,8 @@
+name: searchable_fields
+label: Searchable Fields
+type: grid
+is_wide: true
+depend_on:
+  - object_name
+group: search_term
+sort_no: 380

@@ -1,0 +1,36 @@
+name: compactLayouts
+label: 高亮字段
+type: lookup
+multiple: true
+reference_to: object_fields
+reference_to_field: name
+group: compact_layouts
+is_wide: true
+depend_on:
+  - name
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    return ['object', '=', values.name]
+
+  }
+amis:
+  type: transfer
+  options: []
+  multiple: true
+  required: false
+  placeholder: '-'
+  className: col-span-2 m-0 w-full
+  searchable: true
+  sortable: true
+  labelField: label
+  valueField: value
+  source:
+    method: get
+    url: '/service/api/amis-metadata-objects/objects/${name}/fields/options'
+    sendOn: '${!!name && _master.recordId}'
+  joinValues: false
+  extractValue: true
+  name: compactLayouts
+sort_no: 500

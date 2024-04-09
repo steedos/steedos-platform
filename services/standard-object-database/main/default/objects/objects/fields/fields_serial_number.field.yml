@@ -1,0 +1,7 @@
+name: fields_serial_number
+type: number
+scale: 0
+omit: true
+hidden: true
+disabled: true
+sort_no: 470

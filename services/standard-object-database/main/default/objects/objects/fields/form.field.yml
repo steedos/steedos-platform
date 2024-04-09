@@ -1,0 +1,8 @@
+name: form
+type: object
+label: Form Events
+group: script
+blackbox: true
+is_wide: true
+visible_on: '{{false}}'
+sort_no: 510

@@ -1,0 +1,5 @@
+name: enable_enhanced_lookup
+type: boolean
+label: Enable Enhanced Lookup
+hidden: true
+sort_no: 750

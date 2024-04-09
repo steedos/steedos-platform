@@ -1,0 +1,5 @@
+name: options.$.color
+label: Color
+type: color
+required: false
+sort_no: 370

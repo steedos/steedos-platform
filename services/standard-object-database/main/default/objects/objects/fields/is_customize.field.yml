@@ -1,0 +1,4 @@
+name: is_customize
+type: boolean
+readonly: true
+sort_no: 750

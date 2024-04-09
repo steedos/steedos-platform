@@ -1,0 +1,6 @@
+name: enable_search
+type: boolean
+label: Enable Search
+group: Switch
+hidden: true
+sort_no: 160

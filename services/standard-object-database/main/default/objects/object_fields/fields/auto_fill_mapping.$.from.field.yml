@@ -1,0 +1,20 @@
+name: auto_fill_mapping.$.from
+label: 'From:Fields in object that reference to'
+type: lookup
+reference_to: object_fields
+reference_to_field: name
+required: true
+depend_on:
+  - reference_to
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    if(values && values.reference_to){
+      return ['object', '=', values.reference_to]
+    }else{
+      return ['_id', '=', 'no']
+    }
+
+  }
+sort_no: 410

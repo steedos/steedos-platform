@@ -1,0 +1,5 @@
+name: related_lists.$.label
+label: Label
+type: text
+inlineHelpText: default is the object name
+sort_no: 310

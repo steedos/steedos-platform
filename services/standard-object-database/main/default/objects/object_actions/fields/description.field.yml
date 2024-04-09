@@ -1,0 +1,5 @@
+name: description
+label: Description
+type: textarea
+is_wide: true
+sort_no: 190

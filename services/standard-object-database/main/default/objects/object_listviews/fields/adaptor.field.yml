@@ -1,0 +1,8 @@
+name: adaptor
+label: Adaptor
+type: code
+language: javascript
+is_wide: true
+inlineHelpText: '函数签名: (payload, response, api) => payload'
+group: data_interface
+sort_no: 450

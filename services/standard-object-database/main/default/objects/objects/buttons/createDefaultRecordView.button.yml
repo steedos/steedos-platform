@@ -1,0 +1,3 @@
+name: createDefaultRecordView
+'on': record_only_more
+label: 创建默认页面布局

@@ -1,0 +1,6 @@
+name: related_lists.$.page_size
+label: Page Size
+type: number
+scale: 0
+defaultValue: 5
+sort_no: 370

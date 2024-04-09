@@ -1,0 +1,5 @@
+name: enable_tasks
+type: boolean
+label: Enable Tasks
+group: Switch
+sort_no: 180

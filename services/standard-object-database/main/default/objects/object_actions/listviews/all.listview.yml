@@ -1,0 +1,11 @@
+name: all
+columns:
+  - label
+  - name
+  - object
+  - 'on'
+  - is_enable
+  - modified
+  - is_system
+label: All
+filter_scope: space

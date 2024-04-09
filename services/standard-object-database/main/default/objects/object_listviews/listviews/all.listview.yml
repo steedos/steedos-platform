@@ -1,0 +1,11 @@
+name: all
+columns:
+  - label
+  - name
+  - shared_to
+  - owner
+  - modified
+  - is_enable
+  - is_system
+label: All List Views
+filter_scope: space

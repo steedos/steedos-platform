@@ -1,0 +1,41 @@
+name: objectName
+label: Related Object
+type: lookup
+required: true
+depend_on:
+  - object_name
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+          var object_name = values.object_name
+          if(_.isObject(object_name)){
+            object_name = object_name.name
+          }
+          var _options;
+
+          _options = [];
+
+          _.forEach(Creator.objectsByName, function (o, k) {
+            if(_.includes(['cms_files', 'instances', 'tasks', 'notes', 'events', 'approvals', 'audit_records'], k)){
+              return _options.push({
+                label: o.label,
+                value: k,
+                icon: o.icon
+              });
+            }else{
+              _.each(o.fields, function(field, fieldName){
+                if((field.type === 'master_detail' || field.type === 'lookup') && field.reference_to && field.reference_to == object_name){
+                  return _options.push({
+                    label: o.label,
+                    value: k,
+                    icon: o.icon
+                  });
+                }
+              })
+            }
+          });
+          return _.uniq(_options, function(item){ return item.value});
+        
+  }
+sort_no: 110

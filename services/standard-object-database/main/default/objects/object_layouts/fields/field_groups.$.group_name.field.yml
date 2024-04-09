@@ -1,0 +1,4 @@
+name: field_groups.$.group_name
+type: text
+label: 名称
+sort_no: 190

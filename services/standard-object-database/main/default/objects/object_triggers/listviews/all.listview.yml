@@ -1,0 +1,9 @@
+name: all
+columns:
+  - name
+  - listenTo
+  - when
+  - isEnabled
+  - is_system
+label: All
+filter_scope: space

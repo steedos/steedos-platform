@@ -1,0 +1,7 @@
+name: is_deleted
+hidden: false
+omit: true
+disabled: false
+readonly: false
+visible_on: '{{global.mode ===''read'' ? true : false}}'
+sort_no: 480

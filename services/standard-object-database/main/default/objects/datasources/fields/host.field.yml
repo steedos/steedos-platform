@@ -1,0 +1,5 @@
+name: host
+type: text
+label: Database host
+group: Other connection options
+sort_no: 130

@@ -1,0 +1,22 @@
+name: icon
+type: lookup
+label: Icon
+required: true
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(
+  ) {
+
+          var options;
+          options = [];
+
+          _.forEach(Creator.resources.sldsIcons.standard, function (svg) {
+            return options.push({
+              value: svg,
+              label: svg,
+              icon: svg
+            });
+          });
+          return options;
+        
+  }
+sort_no: 130

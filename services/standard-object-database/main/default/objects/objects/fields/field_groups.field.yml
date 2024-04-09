@@ -1,0 +1,7 @@
+name: field_groups
+type: grid
+blackbox: true
+is_wide: true
+hidden: false
+visible_on: '${false}'
+sort_no: 700

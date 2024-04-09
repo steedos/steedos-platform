@@ -1,0 +1,11 @@
+name: reference_to
+type: lookup
+label: Reference to
+reference_to: objects
+reference_to_field: name
+visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+required: '{{[''lookup'',''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+sort_no: 190
+amis:
+  menuTpl: '<div>${label}(${value})</div>'
+  disabledOn: '${is_system == true}'

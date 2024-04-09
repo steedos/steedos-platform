@@ -1,0 +1,7 @@
+name: enable_share
+type: boolean
+defaultValue: false
+label: Enable Share
+group: Switch
+hidden: true
+sort_no: 220

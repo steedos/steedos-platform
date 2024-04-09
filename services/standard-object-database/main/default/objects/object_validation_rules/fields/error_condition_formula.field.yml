@@ -1,0 +1,9 @@
+name: error_condition_formula
+type: textarea
+is_wide: true
+label: errorConditionFormula
+inlineHelpText: >-
+  The formula defined in the validation rule. If the formula returns a value of
+  true, an error message is displayed.
+required: true
+sort_no: 140

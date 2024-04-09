@@ -1,0 +1,9 @@
+name: enable_enhanced_lookup
+type: boolean
+label: Enable Enhanced Lookup
+inlineHelpText: >-
+  When enabled, the lookup field associated with this object displays its
+  options as a pop-up window.
+group: Switch
+defaultValue: true
+sort_no: 280

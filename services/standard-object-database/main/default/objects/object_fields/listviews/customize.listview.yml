@@ -1,0 +1,19 @@
+name: customize
+columns:
+  - label
+  - name
+  - group
+  - type
+  - object
+  - sort_no
+  - modified
+  - hidden
+  - readonly
+  - is_system
+  - is_customize
+label: 自定义
+filters:
+  - - is_system
+    - <>
+    - true
+filter_scope: space

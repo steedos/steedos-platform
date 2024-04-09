@@ -1,0 +1,7 @@
+name: fields
+type: object
+label: Fields
+blackbox: true
+omit: true
+hidden: true
+sort_no: 360

@@ -1,0 +1,6 @@
+name: form.afterDelete
+type: code
+language: javascript
+rows: 3
+is_wide: true
+sort_no: 620
