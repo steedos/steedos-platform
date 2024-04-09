@@ -19,8 +19,6 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
     fieldNames?: Array<string>,
     quotedByConfigs?: Array<SteedosFieldSummaryTypeConfig>
 } = {}) {
-    // console.log("===runQuotedByObjectFieldSummaries===objectName===", objectName);
-    // console.log("===runQuotedByObjectFieldSummaries===recordId===", recordId);
     let { fieldNames, quotedByConfigs } = options;
     if (!quotedByConfigs) {
         quotedByConfigs = await getObjectQuotedByFieldSummaryConfigs(objectName, fieldNames);
@@ -32,31 +30,35 @@ export const runQuotedByObjectFieldSummaries = async function (objectName: strin
     // 这样就可以实现同时把同一组的汇总字段全部算好后一次性update主表记录的多个汇总字段值（包括COUNT、SUM、MIN、MAX、AVG在内所有汇总类型）。
     // 以解决 [Bug]: 主表上有汇总同一个子表对象的多个汇总字段时，每个汇总字段的计算结果会分别执行一次主表update，应该合并为只执行一次主表update #6692
     let groupedQuotedByConfigs = _.groupBy(quotedByConfigs, (config) => config.object_name);
+    // console.log("===runQuotedByObjectFieldSummaries===_.keys(groupedQuotedByConfigs)===", _.keys(groupedQuotedByConfigs));
     for (const masterObjectName in groupedQuotedByConfigs) {
+        // console.log("===runQuotedByObjectFieldSummaries===masterObjectName===", masterObjectName);
         const itemQuotedByConfigs = groupedQuotedByConfigs[masterObjectName];
         // docs表示要更新的主表记录内容按masterRecordId拼成键值对象，其格式为：{masterRecordId:{sumFieldName1: sumValue1, sumFieldName2: sumValue2}}, 比如：{ '65fea8c5585318611ab701a2': { sum_a__c: 33, sum_amount__c: 100 } }
         let docs = {};
         // quotedByReferenceTosForSummaryTypeConfigs表示要进一步查找并计算引用了主表上相关汇总字段的其它公式和汇总字段的相关masterRecordIds和config，其格式为：{masterRecordIds:<string[]>xxx, config: <SteedosFieldSummaryTypeConfig>yyy}
-        let quotedByReferenceTosForSummaryTypeConfigs = [];
+        // let quotedByReferenceTosForSummaryTypeConfigs = [];
         for (const config of itemQuotedByConfigs) {
             let values = await getQuotedByObjectFieldSummaryValues(objectName, recordId, previousDoc, config, userSession);
             if(!_.isEmpty(values)){
-                quotedByReferenceTosForSummaryTypeConfigs.push({
-                    masterRecordIds: _.keys(values), 
-                    config
-                });
+                // quotedByReferenceTosForSummaryTypeConfigs.push({
+                //     masterRecordIds: _.keys(values), 
+                //     config
+                // });
                 docs = _.defaultsDeep(values, docs);
             }
         }
+        // console.log("===runQuotedByObjectFieldSummaries===docs===", docs);
         for (const masterRecordId in docs) {
             // 同一组里面的itemQuotedByConfigs，其object_name, reference_to_field_reference_to值肯定是相同的，其中object_name值就是masterObjectName，所以这里传入第一个config即可
             await updateReferenceToFieldSummaryValue(masterRecordId, docs[masterRecordId], itemQuotedByConfigs[0], userSession);
         }
 
-        for (const config of quotedByReferenceTosForSummaryTypeConfigs) {
-            // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
-            await updateQuotedByReferenceTosForSummaryType(config.masterRecordIds, config.config, userSession);
-        }
+        // console.log("===runQuotedByObjectFieldSummaries===quotedByReferenceTosForSummaryTypeConfigs===", JSON.stringify(quotedByReferenceTosForSummaryTypeConfigs));
+        // for (const config of quotedByReferenceTosForSummaryTypeConfigs) {
+        //     // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
+        //     await updateQuotedByReferenceTosForSummaryType(config.masterRecordIds, config.config, userSession);
+        // }
     }
 }
 
@@ -188,9 +190,9 @@ export const updateReferenceTosFieldSummaryValue = async (referenceToIds: Array<
             await updateReferenceToFieldSummaryValue(masterRecordId, docs[masterRecordId], fieldSummaryConfig, userSession);
         }
 
-        let referenceToIds = _.keys(docs);
-        // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
-        await updateQuotedByReferenceTosForSummaryType(referenceToIds, fieldSummaryConfig, userSession);
+        // let referenceToIds = _.keys(docs);
+        // // 这里特意重新遍历一次referenceToIds而不是直接在updateReferenceToFieldSummaryValue函数中每次更新一条记录后立即处理被引用字段的级联变更，见：公式或汇总触发级联重算时，数据类型变更可能会造成无法重算 #965
+        // await updateQuotedByReferenceTosForSummaryType(referenceToIds, fieldSummaryConfig, userSession);
     }
 }
 
