@@ -1,0 +1,10 @@
+name: type
+type: select
+options:
+  - label: Record
+    value: record
+  - label: Page
+    value: page
+defaultValue: '"record"'
+hidden: true
+sort_no: 130

@@ -1,0 +1,8 @@
+name: error_message
+type: textarea
+is_wide: true
+label: errorMessage
+inlineHelpText: >-
+  The message that appears if the validation rule fails. The message must be 255
+  characters or less.
+sort_no: 150

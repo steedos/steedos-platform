@@ -1,0 +1,87 @@
+name: language
+type: select
+label: 语言
+required: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
+options:
+  - label: bat
+    value: bat
+  - label: c
+    value: c
+  - label: coffeescript
+    value: coffeescript
+  - label: cpp
+    value: cpp
+  - label: csharp
+    value: csharp
+  - label: css
+    value: css
+  - label: dockerfile
+    value: dockerfile
+  - label: fsharp
+    value: fsharp
+  - label: go
+    value: go
+  - label: handlebars
+    value: handlebars
+  - label: html
+    value: html
+  - label: ini
+    value: ini
+  - label: java
+    value: java
+  - label: javascript
+    value: javascript
+  - label: json
+    value: json
+  - label: less
+    value: less
+  - label: lua
+    value: lua
+  - label: markdown
+    value: markdown
+  - label: msdax
+    value: msdax
+  - label: objective-c
+    value: objective-c
+  - label: php
+    value: php
+  - label: plaintext
+    value: plaintext
+  - label: postiats
+    value: postiats
+  - label: powershell
+    value: powershell
+  - label: pug
+    value: pug
+  - label: python
+    value: python
+  - label: r
+    value: r
+  - label: razor
+    value: razor
+  - label: ruby
+    value: ruby
+  - label: sb
+    value: sb
+  - label: scss
+    value: scss
+  - label: shell
+    value: shell
+  - label: sol
+    value: sol
+  - label: sql
+    value: sql
+  - label: swift
+    value: swift
+  - label: typescript
+    value: typescript
+  - label: vb
+    value: vb
+  - label: xml
+    value: xml
+  - label: yaml
+    value: yaml
+sort_no: 150
+visible_on: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
+amis:
+  disabledOn: '${is_system == true}'

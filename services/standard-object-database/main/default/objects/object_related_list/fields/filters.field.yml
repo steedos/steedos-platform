@@ -1,0 +1,5 @@
+name: filters
+label: Filters
+type: textarea
+is_wide: true
+sort_no: 240

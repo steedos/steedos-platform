@@ -1,0 +1,14 @@
+name: customize
+columns:
+  - label
+  - name
+  - shared_to
+  - owner
+  - modified
+  - is_system
+label: 自定义
+filters:
+  - - is_system
+    - <>
+    - true
+filter_scope: space

@@ -1,0 +1,15 @@
+name: shared_to
+label: Who can see this list view?
+type: select
+defaultValue: mine
+required: true
+options:
+  - label: Only I can view this list view.
+    value: mine
+  - label: This list view is available to all users.
+    value: space
+  - label: Share the list view with some organizations.
+    value: organizations
+visible_on: '${global.user.is_space_admin}'
+group: share_rules
+sort_no: 150

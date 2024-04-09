@@ -1,0 +1,21 @@
+name: mobile_columns.$.field
+label: Field
+type: lookup
+multiple: false
+is_wide: false
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+          if (!(values != null ? values.objectName : void 0)) {
+            values.objectName = Session.get("object_name");
+          }
+
+          if(values.objectName && !_.isString(values.objectName)){
+            values.objectName = values.objectName.name
+          }
+
+          return Creator.getObjectFieldOptions(values != null ? values.objectName : void 0, true);
+        
+  }
+sort_no: 190

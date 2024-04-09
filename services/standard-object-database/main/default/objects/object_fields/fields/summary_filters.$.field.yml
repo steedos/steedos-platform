@@ -1,0 +1,5 @@
+name: summary_filters.$
+label: Filter Criteria
+blackbox: true
+type: object
+sort_no: 480

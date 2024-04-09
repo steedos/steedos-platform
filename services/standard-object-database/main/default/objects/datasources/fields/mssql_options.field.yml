@@ -1,0 +1,6 @@
+name: mssql_options
+type: textarea
+label: Mssql connection options
+is_wide: true
+group: Mssql
+sort_no: 180

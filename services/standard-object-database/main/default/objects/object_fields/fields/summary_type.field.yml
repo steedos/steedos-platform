@@ -1,0 +1,20 @@
+name: summary_type
+type: select
+label: Roll-Up Type
+inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+options:
+  - label: COUNT
+    value: count
+  - label: SUM
+    value: sum
+  - label: MIN
+    value: min
+  - label: MAX
+    value: max
+  - label: AVG
+    value: avg
+visible_on: '{{formData.type === ''summary'' ? true: false}}'
+required: '{{formData.type === ''summary'' ? true: false}}'
+sort_no: 450
+amis:
+  disabledOn: '${is_system == true}'

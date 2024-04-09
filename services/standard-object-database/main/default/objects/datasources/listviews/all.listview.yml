@@ -1,0 +1,9 @@
+name: all
+columns:
+  - label
+  - name
+  - is_enable
+  - driver
+  - is_system
+label: All
+filter_scope: space

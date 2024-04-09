@@ -1,0 +1,5 @@
+name: app_version
+hidden: true
+label: App Version
+sort_no: 450
+type: text

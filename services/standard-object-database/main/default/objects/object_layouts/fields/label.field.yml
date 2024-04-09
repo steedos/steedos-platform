@@ -1,0 +1,8 @@
+name: label
+type: text
+required: true
+label: Label
+is_wide: true
+is_name: true
+group: general_information
+sort_no: 110

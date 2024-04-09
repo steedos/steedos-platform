@@ -1,0 +1,5 @@
+name: is_wide
+type: boolean
+label: Is Wide
+sort_no: 600
+group: ui

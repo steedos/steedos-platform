@@ -1,0 +1,7 @@
+name: relatedList
+blackbox: true
+hidden: true
+label: Related List
+omit: true
+sort_no: 390
+type: grid

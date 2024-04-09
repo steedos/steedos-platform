@@ -1,0 +1,24 @@
+name: buttons.$.button_name
+type: lookup
+reference_to: object_actions
+reference_to_field: name
+depend_on:
+  - object_name
+amis:
+  autoComplete:
+    method: get
+    url: >-
+      ${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/actions/options
+    sendOn: '!!this.object_name'
+    headers:
+      Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+    cache: 120000
+  source:
+    method: get
+    url: >-
+      ${context.rootUrl}/service/api/amis-metadata-objects/objects/${object_name}/actions/options
+    sendOn: '!!this.object_name'
+    headers:
+      Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+    cache: 120000
+sort_no: 160

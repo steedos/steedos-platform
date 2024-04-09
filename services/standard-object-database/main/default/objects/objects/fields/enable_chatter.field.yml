@@ -1,0 +1,6 @@
+name: enable_chatter
+group: Switch
+hidden: true
+label: Enable Chatter
+sort_no: 250
+type: boolean

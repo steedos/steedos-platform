@@ -1,0 +1,6 @@
+name: port
+type: number
+scale: 0
+label: Database host port
+group: Other connection options
+sort_no: 140

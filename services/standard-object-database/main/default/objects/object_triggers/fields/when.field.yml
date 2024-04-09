@@ -1,0 +1,22 @@
+name: when
+label: Execution Time Option
+type: select
+required: true
+multiple: true
+is_wide: true
+options:
+  - label: 新增记录之前
+    value: beforeInsert
+  - label: 新增记录之后
+    value: afterInsert
+  - label: 修改记录之前
+    value: beforeUpdate
+  - label: 修改记录之后
+    value: afterUpdate
+  - label: 删除记录之前
+    value: beforeDelete
+  - label: 删除记录之后
+    value: afterDelete
+  - label: 查询记录之前
+    value: beforeFind
+sort_no: 130

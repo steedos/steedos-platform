@@ -1,0 +1,7 @@
+name: object_name
+label: To Object
+type: master_detail
+required: true
+reference_to: objects
+reference_to_field: name
+sort_no: 100

@@ -1,0 +1,5 @@
+name: inlineHelpText
+label: Prompt text
+type: textarea
+is_wide: true
+sort_no: 710

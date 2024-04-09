@@ -1,0 +1,6 @@
+name: shared
+label: Shared to All Users
+type: boolean
+visible_on: '{{false}}'
+group: share_rules
+sort_no: 140

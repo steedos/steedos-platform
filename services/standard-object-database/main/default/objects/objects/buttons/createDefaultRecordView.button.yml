@@ -1,0 +1,5 @@
+name: createDefaultRecordView
+is_enable: true
+label: 创建默认页面布局
+'on': record_only_more
+visible: false

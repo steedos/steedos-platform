@@ -1,0 +1,37 @@
+name: summary_filters.$.operation
+label: Operator
+type: lookup
+showIcon: false
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+    if(values.summary_object){
+      if(!this.template){
+        let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
+        return options;
+      }
+      const filter = _.find(values.summary_filters, function (item) {
+        return item._id === values._grid_row_id
+      })
+      if(filter){
+        var field = filter.field;
+        if(field){
+          var object_fields = Creator.getObject(values.summary_object).fields
+          var filter_field_type;
+          if(object_fields[field]){
+            if(Creator.getFieldDataType){
+              filter_field_type = Creator.getFieldDataType(object_fields, field);
+            }
+            else{
+              filter_field_type = object_fields[field].type;
+            }
+            return Steedos.ObjectFieldManager.getSummaryFiltersOperation(filter_field_type);
+          }
+        }
+      }
+    }
+    return [];
+
+  }
+sort_no: 500

@@ -1,0 +1,4 @@
+name: testConnection
+label: Test connection
+'on': record
+visible: true

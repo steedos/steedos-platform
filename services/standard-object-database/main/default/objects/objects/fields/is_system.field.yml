@@ -1,0 +1,8 @@
+name: is_system
+disabled: true
+hidden: false
+label: System
+readonly: true
+sort_no: 70
+type: boolean
+visible_on: '{{global.mode ===''read'' ? true : false}}'

@@ -1,0 +1,12 @@
+name: multiple
+type: boolean
+label: Multiple
+inlineHelpText: >-
+  Single choice and multiple choice switch to each other. Please resubmit the
+  existing records or modify the saving format of this field in the database.
+visible_on: >-
+  {{['select', 'lookup', 'image','file'].indexOf(formData.type) > -1 ? true:
+  false}}
+sort_no: 230
+amis:
+  disabledOn: '${is_system == true}'

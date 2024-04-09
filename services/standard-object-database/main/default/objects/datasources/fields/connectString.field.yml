@@ -1,0 +1,6 @@
+name: connectString
+type: textarea
+label: connectString
+is_wide: true
+group: Oracle
+sort_no: 190

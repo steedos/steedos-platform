@@ -1,0 +1,10 @@
+name: type
+type: select
+sort_no: 160
+visible_on: '${false}'
+options:
+  - label: Custom JavaScript
+    value: script
+  - label: Amis Button
+    value: amis_button
+defaultValue: amis_button

@@ -1,0 +1,10 @@
+name: sort.$.order
+label: Sort Order
+type: select
+defaultValue: asc
+options:
+  - label: ASC
+    value: asc
+  - label: DESC
+    value: desc
+sort_no: 230

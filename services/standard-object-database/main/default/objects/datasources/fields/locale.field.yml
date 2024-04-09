@@ -1,0 +1,5 @@
+name: locale
+type: text
+label: Locale
+group: advanced
+sort_no: 230

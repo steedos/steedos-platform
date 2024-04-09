@@ -76,4 +76,3 @@ is_enable: true
 label: 重置
 'on': record_only_more
 type: amis_button
-visible: true

@@ -1,0 +1,7 @@
+permission_set_id: user
+allowCreate: true
+allowDelete: true
+allowEdit: true
+allowRead: false
+modifyAllRecords: false
+viewAllRecords: false

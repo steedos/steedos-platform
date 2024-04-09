@@ -1,0 +1,6 @@
+name: enable_files
+group: Switch
+hidden: false
+label: Enable Files
+sort_no: 140
+type: boolean

@@ -2,7 +2,7 @@
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
  * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2023-10-07 18:04:23
+ * @LastEditTime: 2024-04-09 17:24:34
  * @Description: 
  */
 "use strict";
@@ -60,7 +60,8 @@ module.exports = {
 		/**
 		 * 获取附件数据，调用示例：
 		 * const fileData = await this.broker.call('~packages-@steedos/service-files.getFileById', {
-				fileId: fileId
+				fileId: fileId,
+				collectionName, // 集合名，如 files
 			})
 			const buffer = Buffer.from(fileData)
 		 */
@@ -68,17 +69,21 @@ module.exports = {
 			params: {
 				fileId: {
 					type: 'string'
+				},
+				collectionName: {
+					type: 'string',
+					default: 'files'
 				}
 			},
 			async handler(ctx) {
-				const { fileId } = ctx.params
+				const { fileId, collectionName } = ctx.params
 				// console.log('>'.repeat(20), 'getFileById', fileId)
 				return await new Promise(function (resolve, reject) {
 					Fiber(function () {
 						try {
-							let file = cfs.files.findOne(fileId);
+							let file = cfs[collectionName].findOne(fileId);
 							if (file) {
-								var stream = file.createReadStream('files');
+								var stream = file.createReadStream(collectionName);
 								var chunks = [];
 								stream.on('data', function (chunk) {
 									return chunks.push(chunk);
@@ -106,8 +111,10 @@ module.exports = {
 		 * const stream = fs.createReadStream(filepath);
 			const fileDoc = await this.broker.call('~packages-@steedos/service-files.uploadCollectionFile', stream, {
 				meta: {
+					collectionName, // 集合名，如 files
 					filename, // 文件名
-					owner // 所有者ID
+					owner, // 所有者ID
+					metadata : {}
 				}
 			})
 		 */
@@ -116,7 +123,7 @@ module.exports = {
 				return await new Promise(function (resolve, reject) {
 					try {
 						const stream = ctx.params
-						const { filename, owner } = ctx.meta
+						const { filename, owner, metadata = {}, collectionName = "files" } = ctx.meta
 						// console.log('>'.repeat(20), 'uploadCollectionFile:', filename)
 						if (!filename || !owner) {
 							throw new Error('need filename and owner')
@@ -133,8 +140,7 @@ module.exports = {
 							// console.log('All writes are now complete.');
 							const fileStats = fs.statSync(tempFilepath)
 
-							const FS_COLLECTION_NAME = "files";
-							const DB_COLLECTION_NAME = `cfs.${FS_COLLECTION_NAME}.filerecord`;
+							const DB_COLLECTION_NAME = `cfs.${collectionName}.filerecord`;
 							const collection = await getCollection(DB_COLLECTION_NAME);
 
 							const mimeInfo = await FileType.fromFile(tempFilepath)
@@ -143,10 +149,11 @@ module.exports = {
 								name: filename,
 								size: fileStats.size,
 								mimetype,
-								fsCollectionName: FS_COLLECTION_NAME
+								fsCollectionName: collectionName
 							});
 
 							newFile.metadata = {
+								...metadata,
 								owner
 							};
 							// 保存文件

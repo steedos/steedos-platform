@@ -1,0 +1,3 @@
+name: copy
+label: 复制
+'on': record_only

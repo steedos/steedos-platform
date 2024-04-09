@@ -1,0 +1,10 @@
+name: column_name
+type: text
+label: Database column name
+inlineHelpText: Only supports relational databases.
+searchable: true
+index: true
+group: External data source
+sort_no: 520
+amis:
+  disabledOn: '${is_system == true}'

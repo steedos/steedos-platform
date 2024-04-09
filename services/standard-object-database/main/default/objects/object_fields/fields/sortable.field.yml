@@ -1,0 +1,5 @@
+name: sortable
+type: boolean
+label: Sortable
+group: ui
+sort_no: 660

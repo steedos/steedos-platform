@@ -1,0 +1,4 @@
+name: field_groups.$.collapsed
+type: boolean
+label: 默认折叠
+sort_no: 210

@@ -1,0 +1,11 @@
+name: name
+type: text
+label: Name
+searchable: true
+index: true
+required: true
+inlineHelpText: >-
+  Can only contain lowercase letters and numbers, must start with a letter,
+  cannot end with an underscore character or contain two consecutive underscore
+  characters
+sort_no: 120

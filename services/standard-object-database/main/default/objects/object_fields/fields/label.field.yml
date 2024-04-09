@@ -1,0 +1,6 @@
+name: label
+type: text
+required: true
+label: Label
+is_name: true
+sort_no: 110

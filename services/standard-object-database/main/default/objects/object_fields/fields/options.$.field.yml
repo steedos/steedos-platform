@@ -1,0 +1,5 @@
+name: options.$
+label: Options
+blackbox: true
+type: object
+sort_no: 340

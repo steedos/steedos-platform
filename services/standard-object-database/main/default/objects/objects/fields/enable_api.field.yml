@@ -1,0 +1,7 @@
+name: enable_api
+defaultValue: true
+group: Switch
+hidden: true
+label: Enable API
+sort_no: 210
+type: boolean

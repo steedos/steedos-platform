@@ -1,0 +1,10 @@
+name: _name
+type: text
+label: Field Name
+searchable: true
+index: true
+required: true
+visible_on: '{{global.mode !=''read'' ? true : false}}'
+sort_no: 120
+amis:
+  disabledOn: '${is_system == true}'

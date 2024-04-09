@@ -1,0 +1,8 @@
+name: searchable_fields.$.field
+label: Field
+type: lookup
+multiple: false
+is_wide: false
+reference_to: object_fields
+reference_to_field: name
+sort_no: 400

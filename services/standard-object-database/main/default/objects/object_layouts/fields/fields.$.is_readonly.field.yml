@@ -1,0 +1,4 @@
+name: fields.$.is_readonly
+label: Readonly
+type: boolean
+sort_no: 250

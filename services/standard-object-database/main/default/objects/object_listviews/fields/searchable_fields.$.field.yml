@@ -1,0 +1,5 @@
+name: searchable_fields.$
+label: Column
+blackbox: true
+type: object
+sort_no: 390

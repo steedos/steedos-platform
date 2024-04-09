@@ -1,0 +1,6 @@
+name: sort_no
+label: Sort no
+type: number
+scale: 0
+defaultValue: 100
+sort_no: 200

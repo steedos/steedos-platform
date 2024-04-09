@@ -1,0 +1,17 @@
+name: object
+type: master_detail
+label: Object
+reference_to: objects
+reference_to_field: name
+required: true
+write_requires_master_read: true
+filters:
+  - name
+  - notcontains
+  - - base
+    - core
+    - space_users_invite
+    - _object_reload_logs
+sort_no: 100
+amis:
+  disabledOn: 'true'

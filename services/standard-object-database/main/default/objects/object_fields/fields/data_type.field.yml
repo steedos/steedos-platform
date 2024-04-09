@@ -1,0 +1,18 @@
+name: data_type
+type: lookup
+label: Data Type
+inlineHelpText: This field must be filled when the field type is 'Formula'
+depend_on:
+  - type
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+    return Steedos.getFieldDataTypes(values);
+
+  }
+visible_on: '{{[''formula'',''select''].indexOf(formData.type) > -1 ? true: false}}'
+required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
+sort_no: 270
+amis:
+  disabledOn: '${is_system == true}'

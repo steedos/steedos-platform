@@ -1,0 +1,10 @@
+name: all
+columns:
+  - object_name
+  - objectName
+  - sort_no
+label: All List Views
+filter_scope: space
+sort:
+  - - sort_no
+    - desc

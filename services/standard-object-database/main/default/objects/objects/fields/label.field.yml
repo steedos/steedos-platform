@@ -1,0 +1,9 @@
+name: label
+filterable: true
+hidden: false
+is_name: true
+label: Label
+required: true
+searchable: true
+sort_no: 10
+type: text

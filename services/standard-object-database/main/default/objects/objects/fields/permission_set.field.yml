@@ -1,0 +1,7 @@
+name: permission_set
+blackbox: true
+hidden: true
+label: Permission Set
+omit: true
+sort_no: 400
+type: object

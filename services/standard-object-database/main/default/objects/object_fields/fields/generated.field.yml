@@ -1,0 +1,7 @@
+name: generated
+type: boolean
+label: Generated
+group: External data source
+sort_no: 540
+amis:
+  disabledOn: '${is_system == true}'

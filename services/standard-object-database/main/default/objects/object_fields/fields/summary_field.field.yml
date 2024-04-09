@@ -1,0 +1,78 @@
+name: summary_field
+type: lookup
+label: Field to Aggregate
+reference_to: object_fields
+reference_to_field: name
+inlineHelpText: >-
+  If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT,
+  this field must be filled in, Only fields that aggregate number, currency,
+  date, and datetime types are supported.
+depend_on:
+  - summary_object
+  - summary_type
+defaultIcon: service_contract
+enable_enhanced_lookup: false
+amis:
+  disabledOn: '${is_system == true}'
+  autoComplete:
+    method: get
+    url: >-
+      ${context.rootUrl}/service/api/@${summary_object}/uiSchema?summary_object=${summary_object}&summary_type=${summary_type}&term=${term}
+    data:
+      summary_type: '${summary_type}'
+    headers:
+      Authorization: 'Bearer ${context.tenantId},${context.authToken}'
+    sendOn: '!!this.summary_object && !!this.summary_type'
+    adaptor: |-
+      const summary_type = api.body.summary_type;
+      const term = api.query.term;
+      let fields = payload.fields;
+      let options = [];
+      if (fields) {
+        if (summary_type && summary_type !== "count") {
+          if (summary_type === "sum" || summary_type === "avg") {
+            /*sum/avg类型可以汇总数值、金额、百分比字段*/
+            _.forEach(fields, (value, key) => {
+              let fieldType = value.type;
+              if (["formula", "summary"].indexOf(fieldType) > -1) {
+                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                fieldType = value.data_type;
+              }
+              if (["number", "currency", "percent"].indexOf(fieldType) > -1) {
+                options.push({ label: value.label, value: value.name });
+              }
+            })
+          }
+          else {
+            /*min、max类型可以汇总数值、金额、百分比、日期、日期时间字段*/
+            _.forEach(fields, (value, key) => {
+              let fieldType = value.type;
+              if (["formula", "summary"].indexOf(fieldType) > -1) {
+                /*要聚合的字段为公式或汇总字段时，按其字段数据类型判断是否支持聚合*/
+                fieldType = value.data_type;
+              }
+              if (["number", "currency", "percent", "date", "datetime"].indexOf(fieldType) > -1) {
+                options.push({ label: value.label, value: value.name });
+              }
+            })
+          }
+        }
+        if (term) {
+          options = _.filter(options, (item) => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+          })
+        }
+      }
+      payload = {
+        data: { options: options },
+        msg: "",
+        status: 0
+      }
+      return payload;
+visible_on: >-
+  {{formData.type === 'summary' && formData.summary_object &&
+  formData.summary_type && formData.summary_type !== 'count'}}
+required: >-
+  {{formData.type === 'summary' && formData.summary_type !== 'count' ? true:
+  false}}
+sort_no: 460

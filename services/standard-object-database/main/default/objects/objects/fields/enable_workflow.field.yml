@@ -1,0 +1,6 @@
+name: enable_workflow
+group: Switch
+hidden: false
+label: Enable Workflow
+sort_no: 180
+type: boolean

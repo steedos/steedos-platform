@@ -1,0 +1,5 @@
+name: is_enable
+type: toggle
+label: Enable
+defaultValue: true
+sort_no: 210

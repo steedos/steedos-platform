@@ -1,0 +1,6 @@
+name: enable_split
+defaultValue: false
+group: Switch
+label: Enable Split
+sort_no: 300
+type: boolean

@@ -1,0 +1,8 @@
+name: reload_time
+disabled: true
+hidden: true
+label: 重新加载时间
+omit: true
+readonly: true
+sort_no: 490
+type: datetime

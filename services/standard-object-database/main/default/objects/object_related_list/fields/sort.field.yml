@@ -1,0 +1,7 @@
+name: sort
+label: Default Sort Order
+type: grid
+is_wide: true
+depend_on:
+  - objectName
+sort_no: 200

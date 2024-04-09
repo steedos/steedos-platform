@@ -1,0 +1,25 @@
+name: handler
+label: Handler
+type: code
+language: javascript
+is_wide: true
+required: true
+defaultValue: |-
+  // global: {_:lodash, moment, validator, filters}
+  // ctx
+  // objects
+  // services
+editorDidMount: >-
+  if(window._registerCompletionItemProviderTrigger){
+    return ;
+  }
+
+  window._registerCompletionItemProviderTrigger = true;
+
+  const result = Steedos.authRequest("/service/api/suggestions/trigger.d.ts",
+  {async: false});
+
+  monaco.languages.typescript.javascriptDefaults.addExtraLib(
+    result
+  );
+sort_no: 150

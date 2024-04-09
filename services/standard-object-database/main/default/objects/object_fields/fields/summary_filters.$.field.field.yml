@@ -1,0 +1,15 @@
+name: summary_filters.$.field
+label: Field
+type: lookup
+showIcon: false
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+    if(values.summary_object){
+      return Creator.getObjectFilterFieldOptions(values.summary_object)
+    }
+    return []
+
+  }
+sort_no: 490

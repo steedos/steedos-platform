@@ -1,0 +1,7 @@
+name: sidebar
+blackbox: true
+hidden: true
+label: Sidebar
+omit: true
+sort_no: 350
+type: object

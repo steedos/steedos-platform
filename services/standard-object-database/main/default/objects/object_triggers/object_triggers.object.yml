@@ -1,0 +1,8 @@
+name: object_triggers
+icon: apex
+label: Object Triggers
+version: 2
+hidden: true
+enable_dataloader: false
+paging:
+  enabled: false

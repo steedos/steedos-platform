@@ -1,0 +1,9 @@
+name: amis_schema
+label: Amis Schema
+type: code
+group: advanced
+language: json
+required: false
+is_wide: true
+visible_on: '{{false}}'
+sort_no: 430

@@ -1,0 +1,6 @@
+name: enable_notes
+group: Switch
+hidden: false
+label: Enable Notes
+sort_no: 160
+type: boolean

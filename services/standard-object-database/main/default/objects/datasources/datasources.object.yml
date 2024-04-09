@@ -1,0 +1,6 @@
+name: datasources
+label: DataSource
+icon: entity
+hidden: true
+version: 2
+enable_dataloader: false

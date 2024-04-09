@@ -1,0 +1,5 @@
+name: mobile_columns.$
+label: Column
+blackbox: true
+type: object
+sort_no: 180

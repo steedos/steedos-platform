@@ -1,0 +1,26 @@
+name: reference_to_field
+type: lookup
+group: Advanced
+label: 外键字段
+inlineHelpText: >-
+  关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
+description: 默认为主键
+reference_to: object_fields
+reference_to_field: name
+visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
+depend_on:
+  - reference_to
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(filters,values
+  ) {
+
+    if(values && values.reference_to){
+      return ['object', '=', values.reference_to]
+    }else{
+      return ['_id', '=', 'no']
+    }
+
+  }
+sort_no: 220
+amis:
+  disabledOn: '${is_system == true}'

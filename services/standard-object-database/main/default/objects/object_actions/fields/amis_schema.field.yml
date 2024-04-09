@@ -1,0 +1,8 @@
+name: amis_schema
+label: Amis Schema
+sort_no: 170
+type: code
+language: json
+required: false
+is_wide: true
+visible_on: '{{false}}'

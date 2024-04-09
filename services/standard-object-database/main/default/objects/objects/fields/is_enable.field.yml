@@ -1,0 +1,8 @@
+name: is_enable
+amis:
+  disabledOn: '${is_system == true}'
+defaultValue: true
+hidden: false
+label: Enable
+sort_no: 40
+type: boolean

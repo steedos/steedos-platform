@@ -1,0 +1,33 @@
+name: sort.$.field_name
+label: Field Name
+type: lookup
+optionsFunction: !<tag:yaml.org,2002:js/function> |-
+  function anonymous(values
+  ) {
+
+          var _object, _options, fields, icon;
+          if(values.objectName && !_.isString(values.objectName)){
+            values.objectName = values.objectName.name
+          }
+          _options = [];
+          _object = Creator.getObject(values != null ? values.objectName : void 0);
+          fields = Creator.getFields(values != null ? values.objectName : void 0);
+          icon = _object.icon;
+
+          _.forEach(fields, function (f) {
+            var label;
+
+            if (!_object.fields[f].hidden) {
+              label = _object.fields[f].label;
+              return _options.push({
+                label: label || f,
+                value: f,
+                icon: icon
+              });
+            }
+          });
+
+          return _options;
+        
+  }
+sort_no: 220

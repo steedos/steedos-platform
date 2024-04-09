@@ -1,0 +1,7 @@
+name: triggers
+blackbox: true
+hidden: true
+label: Triggers
+omit: true
+sort_no: 410
+type: object

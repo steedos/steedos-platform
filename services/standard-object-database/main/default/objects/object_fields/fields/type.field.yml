@@ -1,0 +1,61 @@
+name: type
+type: select
+label: Type
+required: true
+options:
+  - label: Text
+    value: text
+  - label: Textarea
+    value: textarea
+  - label: Html
+    value: html
+  - label: Code
+    value: code
+  - label: Markdown
+    value: markdown
+  - label: Select
+    value: select
+  - label: Color
+    value: color
+  - label: Boolean
+    value: boolean
+  - label: Toggle
+    value: toggle
+  - label: Date
+    value: date
+  - label: Datetime
+    value: datetime
+  - label: Time
+    value: time
+  - label: Number
+    value: number
+  - label: Currency
+    value: currency
+  - label: Percent
+    value: percent
+  - label: Password
+    value: password
+  - label: Lookup
+    value: lookup
+  - label: Master Detail
+    value: master_detail
+  - label: Autonumber
+    value: autonumber
+  - label: Url
+    value: url
+  - label: Email
+    value: email
+  - label: Location
+    value: location
+  - label: Image
+    value: image
+  - label: File
+    value: file
+  - label: Formula
+    value: formula
+  - label: 累计汇总
+    value: summary
+sort_no: 140
+amis:
+  disabledOn: '${is_system == true}'
+  searchable: true

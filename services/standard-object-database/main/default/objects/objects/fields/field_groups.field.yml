@@ -1,0 +1,8 @@
+name: field_groups
+blackbox: true
+hidden: false
+is_wide: true
+label: 字段分组
+sort_no: 90
+type: grid
+visible_on: '${false}'

@@ -1,0 +1,7 @@
+name: actions
+blackbox: true
+hidden: true
+label: Actions
+omit: true
+sort_no: 380
+type: object

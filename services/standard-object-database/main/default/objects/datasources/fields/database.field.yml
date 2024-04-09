@@ -1,0 +1,5 @@
+name: database
+type: text
+label: Database name
+group: Other connection options
+sort_no: 150
