@@ -1,6 +1,7 @@
 name: enable_inline_edit
-type: boolean
 defaultValue: true
-label: Enable Single Field Edit
 group: Switch
-sort_no: 260
+hidden: false
+label: Enable Single Field Edit
+sort_no: 200
+type: boolean

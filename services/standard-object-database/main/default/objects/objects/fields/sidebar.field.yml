@@ -1,7 +1,7 @@
 name: sidebar
-type: object
-label: Sidebar
 blackbox: true
-omit: true
 hidden: true
+label: Sidebar
+omit: true
 sort_no: 350
+type: object

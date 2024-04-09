@@ -1,8 +1,8 @@
 name: fields_serial_number
-label: Serial Number
-type: number
-scale: 0
-omit: true
-hidden: true
 disabled: true
+hidden: true
+label: Serial Number
+omit: true
+scale: 0
 sort_no: 470
+type: number

@@ -1,6 +1,6 @@
 name: enable_split
-type: boolean
-label: Enable Split
-group: Switch
 defaultValue: false
+group: Switch
+label: Enable Split
 sort_no: 300
+type: boolean

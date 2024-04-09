@@ -1,7 +1,7 @@
 name: enable_share
-type: boolean
 defaultValue: false
-label: Enable Share
 group: Switch
 hidden: true
+label: Enable Share
 sort_no: 220
+type: boolean

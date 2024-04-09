@@ -1,8 +1,8 @@
 name: is_deleted
-label: 已删除
-hidden: false
-omit: true
 disabled: false
+hidden: false
+label: 已删除
+omit: true
 readonly: false
+sort_no: 80
 visible_on: '{{global.mode ===''read'' ? true : false}}'
-sort_no: 480

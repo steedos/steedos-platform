@@ -1,14 +1,15 @@
 name: in_development
-type: select
-label: Development State
+amis:
+  disabledOn: '${is_system == true}'
+defaultValue: '1'
+hidden: false
 inlineHelpText: Developing ( Only administrators can access. )
+label: Development State
 options:
   - label: Developing ( Only administrators can access. )
     value: '1'
   - label: Deployed
     value: '0'
-defaultValue: '1'
 required: true
-amis:
-  disabledOn: '${is_system == true}'
-sort_no: 150
+sort_no: 50
+type: select

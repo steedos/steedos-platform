@@ -1,5 +1,5 @@
 name: extend
-label: Extend
-type: text
 hidden: true
+label: Extend
 sort_no: 740
+type: text

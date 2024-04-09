@@ -1,6 +1,6 @@
 name: custom
-label: Custom
-type: boolean
-omit: true
 hidden: true
+label: Custom
+omit: true
 sort_no: 420
+type: boolean

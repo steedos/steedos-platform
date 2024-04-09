@@ -6,9 +6,11 @@ columns:
   - is_enable
   - is_system
   - is_customize
-label: All
-filter_scope: space
 extra_columns:
   - datasource
   - fields
   - is_deleted
+filter_scope: space
+label: All
+shared: true
+shared_to: space

@@ -1,5 +1,6 @@
 name: is_customize
+hidden: false
 label: 是否自定义
-type: boolean
 readonly: true
-sort_no: 750
+sort_no: 130
+type: boolean

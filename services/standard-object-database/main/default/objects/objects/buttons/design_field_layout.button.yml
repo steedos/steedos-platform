@@ -1,3 +1,4 @@
 name: design_field_layout
-'on': record_only
+is_enable: true
 label: 设计字段布局
+'on': record_only

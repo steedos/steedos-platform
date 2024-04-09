@@ -1,6 +1,6 @@
 name: enable_chatter
-type: boolean
-label: Enable Chatter
 group: Switch
 hidden: true
+label: Enable Chatter
 sort_no: 250
+type: boolean

@@ -1,7 +1,8 @@
 name: is_enable
-label: Enable
-type: boolean
-defaultValue: true
 amis:
   disabledOn: '${is_system == true}'
-sort_no: 140
+defaultValue: true
+hidden: false
+label: Enable
+sort_no: 40
+type: boolean

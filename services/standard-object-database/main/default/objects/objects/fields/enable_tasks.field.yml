@@ -1,5 +1,6 @@
 name: enable_tasks
-type: boolean
-label: Enable Tasks
 group: Switch
-sort_no: 180
+hidden: false
+label: Enable Tasks
+sort_no: 150
+type: boolean

@@ -1,6 +1,6 @@
 name: enable_tree
-type: boolean
-label: Enable Tree
-inlineHelpText: Enable a tree structure to display records
 group: Switch
+inlineHelpText: Enable a tree structure to display records
+label: Enable Tree
 sort_no: 270
+type: boolean

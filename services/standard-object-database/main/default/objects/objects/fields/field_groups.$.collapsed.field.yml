@@ -1,4 +1,5 @@
 name: field_groups.$.collapsed
-type: boolean
+hidden: false
 label: 默认折叠
-sort_no: 730
+sort_no: 120
+type: boolean

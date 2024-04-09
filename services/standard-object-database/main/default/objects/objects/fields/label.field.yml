@@ -1,8 +1,9 @@
 name: label
-type: text
+filterable: true
+hidden: false
+is_name: true
 label: Label
 required: true
-is_name: true
 searchable: true
-filterable: true
-sort_no: 110
+sort_no: 10
+type: text

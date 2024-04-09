@@ -1,20 +1,4 @@
 name: compactLayouts
-label: 高亮字段
-type: lookup
-multiple: true
-reference_to: object_fields
-reference_to_field: name
-group: compact_layouts
-is_wide: true
-depend_on:
-  - name
-filtersFunction: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(filters,values
-  ) {
-
-    return ['object', '=', values.name]
-
-  }
 amis:
   type: transfer
   options: []
@@ -33,4 +17,22 @@ amis:
   joinValues: false
   extractValue: true
   name: compactLayouts
+depend_on:
+  - name
+filtersFunction: !<tag:yaml.org,2002:js/function> |-
+  function(filters,values
+  ) {
+
+
+    return ['object', '=', values.name]
+
+
+  }
+group: compact_layouts
+is_wide: true
+label: 高亮字段
+multiple: true
+reference_to: object_fields
+reference_to_field: name
 sort_no: 500
+type: lookup

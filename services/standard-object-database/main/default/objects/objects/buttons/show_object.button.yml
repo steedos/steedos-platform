@@ -1,3 +1,4 @@
 name: show_object
+is_enable: true
 label: Preview
 'on': record

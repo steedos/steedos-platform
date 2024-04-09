@@ -1,7 +1,7 @@
 name: enable_api
-type: boolean
 defaultValue: true
+group: Switch
 hidden: true
 label: Enable API
-group: Switch
 sort_no: 210
+type: boolean

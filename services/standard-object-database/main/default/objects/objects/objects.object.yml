@@ -1,9 +1,9 @@
 name: objects
+custom: true
+enable_dataloader: false
+hidden: false
 icon: orders
 label: Object
-version: 2
-hidden: false
-enable_dataloader: false
 paging:
   enabled: false
 relatedList:
@@ -41,3 +41,4 @@ relatedList:
   - restriction_rules
   - share_rules
   - process
+version: 2

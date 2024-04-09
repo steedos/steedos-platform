@@ -1,7 +1,8 @@
 name: is_system
-type: boolean
+disabled: true
+hidden: false
 label: System
 readonly: true
+sort_no: 70
+type: boolean
 visible_on: '{{global.mode ===''read'' ? true : false}}'
-disabled: true
-sort_no: 460

@@ -1,6 +1,6 @@
 name: enable_search
-type: boolean
-label: Enable Search
 group: Switch
 hidden: true
+label: Enable Search
 sort_no: 160
+type: boolean

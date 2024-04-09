@@ -1,5 +1,6 @@
 name: enable_files
-type: boolean
-label: Enable Files
 group: Switch
-sort_no: 170
+hidden: false
+label: Enable Files
+sort_no: 140
+type: boolean

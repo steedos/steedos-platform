@@ -1,10 +1,12 @@
 name: datasource
-type: master_detail
-label: Datasource
-reference_to: datasources
-showIcon: false
-required: true
-defaultValue: default
 amis:
   disabledOn: '${is_system == true}'
+defaultValue: default
+filters: []
+group: External data source
+label: Datasource
+reference_to: datasources
+required: false
+showIcon: false
 sort_no: 100
+type: master_detail

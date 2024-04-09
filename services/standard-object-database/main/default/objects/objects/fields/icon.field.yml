@@ -1,10 +1,10 @@
 name: icon
-type: lookup
+hidden: false
 label: Icon
-required: true
 optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(
+  function(
   ) {
+
 
           var options;
           options = [];
@@ -18,5 +18,8 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
           });
           return options;
         
+
   }
-sort_no: 130
+required: true
+sort_no: 30
+type: lookup

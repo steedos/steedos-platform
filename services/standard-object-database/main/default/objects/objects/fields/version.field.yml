@@ -1,8 +1,8 @@
 name: version
-readonly: true
-label: Version
-type: number
-scale: 0
 defaultValue: 2
 hidden: true
+label: Version
+readonly: true
+scale: 0
 sort_no: 330
+type: number

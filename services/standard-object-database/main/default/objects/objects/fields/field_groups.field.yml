@@ -1,8 +1,8 @@
 name: field_groups
-label: 字段分组
-type: grid
 blackbox: true
-is_wide: true
 hidden: false
+is_wide: true
+label: 字段分组
+sort_no: 90
+type: grid
 visible_on: '${false}'
-sort_no: 700

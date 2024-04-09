@@ -1,5 +1,6 @@
-module.exports = { 
-design_field_layout:function (object_name, record_id, item_element) {
+module.exports = {
+
+    design_field_layout: function(object_name, record_id, item_element) {
         var record = this.record || Creator.getObjectById(record_id);
         if (record && record.record) {
             record = record.record;
@@ -10,7 +11,7 @@ design_field_layout:function (object_name, record_id, item_element) {
 
         window.open(Creator.getRelativeUrl("/api/page/view/design_field_layout?designObjectName=" + record.name));
     },
-design_field_layoutVisible:function (object_name, record_id, record_permissions, data) {
+    design_field_layoutVisible: function(object_name, record_id, record_permissions, data) {
         var record = data && data.record;
         if (!Creator.isSpaceAdmin()) {
             return false
@@ -23,4 +24,5 @@ design_field_layoutVisible:function (object_name, record_id, record_permissions,
             return true;
         }
     }
- }
+
+}
