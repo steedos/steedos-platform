@@ -7,3 +7,6 @@ label: 字段分组
 sort_no: 60
 type: grid
 visible_on: '${false}'
+defaultValue: 
+  - group_name: 系统信息
+    collapsed: true
