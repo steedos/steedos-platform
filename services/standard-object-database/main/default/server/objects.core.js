@@ -383,8 +383,7 @@ function triggerReloadObject(objectName, type, value, event){
     const objectRecord = Creator.getCollection("objects").findOne({
         name: objectName
       })
-    if(objectRecord && objectRecord.is_system != true){
-        //TODO 待支持动态加载related_list后， 删除此行代码
+    if(objectRecord && objectRecord.is_system != true && objectName != "objects" && objectName != "object_fields"){
         // console.log(`triggerReloadObject===>`, objectName)
         Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
     }else{
