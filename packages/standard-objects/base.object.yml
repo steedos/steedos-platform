@@ -334,6 +334,3 @@ permission_set:
     viewCompanyRecords: false
     modifyAllRecords: false
     viewAllRecords: false
-field_groups: 
-  - group_name: 系统信息
-    collapsed: true
