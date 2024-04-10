@@ -1010,7 +1010,7 @@ CustomLabels:
   objects_enable_instances: 显示审批单子表
   objects_description: 描述
   objects_amis_details: 详情
-  objects_amis_field: 对象字段
+  objects_amis_field: 字段与关系
   objects_amis_list_view: 列表视图
   objects_amis_action_button: 操作按钮
   objects_amis_object_page: 对象页面

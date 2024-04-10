@@ -16,7 +16,7 @@ fields:
     description: 
   _name:
     label: 字段名
-    help: 
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
     description: 
   name:
     label: API 名称
@@ -187,7 +187,7 @@ fields:
     label: 数据类型
     help: 字段类型为公式时，必须填写此字段。
     options:
-      - label: 复选框
+      - label: 布尔
         value: boolean
       - label: 数值
         value: number
@@ -368,7 +368,7 @@ fields:
 groups:
   external_data_source: 外部数据源
   advanced: 高级
-  ui: 界面布局
+  ui: 界面
 listviews:
   all:
     label: 所有

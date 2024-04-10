@@ -385,7 +385,7 @@ function triggerReloadObject(objectName, type, value, event)
     const objectRecord = Creator.getCollection("objects").findOne({
         name: objectName
       })
-    if(objectRecord && objectRecord.is_system != true && objectName != "objects"){
+    if(objectRecord && objectRecord.is_system != true && objectName != "objects" && objectName != "object_fields"){
         Creator.getCollection("objects").update({name: objectName}, {$set: {reload_time: new Date()}})
     }else{
         Creator.getCollection("_object_reload_logs").insert({
