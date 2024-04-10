@@ -1,6 +1,9 @@
 name: enable_workflow
-group: Switch
-hidden: false
+defaultValue: true
+filters: []
+hidden: true
 label: Enable Workflow
-sort_no: 180
+required: false
+sort_no: 260
 type: boolean
+visible_on: '{{false}}'

@@ -94,7 +94,7 @@
         },
         "enable_instances": {
             "type": "boolean",
-            "description": "允许查看申请单"
+            "description": "显示审批单子表"
         },
         "enable_chatter": {
             "type": "boolean",

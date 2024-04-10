@@ -1,44 +1,12 @@
 name: objects
 custom: true
 enable_dataloader: false
+field_groups:
+  - group_name: switch
+  - group_name: advanced
 hidden: false
 icon: orders
-label: Object
+label: Objects
 paging:
   enabled: false
-relatedList:
-  - objectName: object_fields
-    columns:
-      - label
-      - name
-      - type
-      - object
-      - group
-      - sort_no
-  - objectName: object_listviews
-    columns:
-      - label
-      - name
-      - shared
-      - owner
-  - objectName: object_actions
-    columns:
-      - label
-      - name
-      - object
-      - 'on'
-      - is_enable
-  - objectName: object_layouts
-    columns:
-      - label
-      - name
-      - object_name
-      - profiles
-  - permission_objects
-  - object_workflows
-  - process_definition
-  - object_validation_rules
-  - restriction_rules
-  - share_rules
-  - process
 version: 2

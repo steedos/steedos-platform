@@ -1,5 +1,6 @@
 name: extend
-hidden: true
+hidden: false
 label: Extend
-sort_no: 740
+sort_no: 470
 type: text
+visible_on: '{{false}}'

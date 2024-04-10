@@ -1,6 +1,6 @@
 name: enable_events
-group: Switch
+group: switch
 hidden: false
 label: Enable Events
-sort_no: 170
+sort_no: 160
 type: boolean

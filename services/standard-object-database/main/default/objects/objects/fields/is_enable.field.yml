@@ -2,7 +2,10 @@ name: is_enable
 amis:
   disabledOn: '${is_system == true}'
 defaultValue: true
-hidden: false
+filters: []
+hidden: true
 label: Enable
-sort_no: 40
+required: false
+sort_no: 250
 type: boolean
+visible_on: '{{false}}'

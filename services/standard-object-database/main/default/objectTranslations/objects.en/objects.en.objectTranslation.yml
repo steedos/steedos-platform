@@ -162,44 +162,6 @@ fields:
     label: 
     help: 
     description: 
-  form:
-    label: Form Events
-  form.initialValues:
-    label: Initial Values
-  form.validate:
-    label: Validate
-  form.beforeInsert:
-    label: Before Insert
-  form.onRendered:
-    label: On Rendered
-  form.onDestroy:
-    label: On Destroy
-  form.onValuesChange:
-    label: On Change
-  form.beforeUpdate:
-    label: Before Update
-  form.beforeDelete:
-    label: Before Delete
-  form.afterInsert:
-    label: After Insert
-  form.afterUpdate:
-    label: After Update
-  form.afterDelete:
-    label: After Delete
-  form.errorInsert:
-    label: Insert Error
-  form.errorUpdate:
-    label: Update Error
-  form.errorDelete:
-    label: Delete Error
-  form.beforeView:
-    label: Before View
-  form.afterView:
-    label: After View
-  form.beforeEdit:
-    label: Before Edit
-  form.afterEdit:
-    label: After Edit
   compactLayouts:
     label: Highlight Fields
   is_customize:
@@ -208,7 +170,7 @@ groups:
   external_data_source: External data source
   switch: Switch
   script: Script
-  compact_layouts: Highlight Fields
+  advanced: Advanced
 listviews:
   all:
     label: All Objects

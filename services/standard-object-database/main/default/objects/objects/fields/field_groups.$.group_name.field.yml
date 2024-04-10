@@ -1,5 +1,5 @@
 name: field_groups.$.group_name
 hidden: false
 label: 名称
-sort_no: 100
+sort_no: 90
 type: text

@@ -11,5 +11,5 @@ options:
   - label: Deployed
     value: '0'
 required: true
-sort_no: 50
+sort_no: 40
 type: select

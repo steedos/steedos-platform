@@ -4,5 +4,5 @@ hidden: false
 label: 已删除
 omit: true
 readonly: false
-sort_no: 80
-visible_on: '{{global.mode ===''read'' ? true : false}}'
+sort_no: 280
+visible_on: '{{false}}'

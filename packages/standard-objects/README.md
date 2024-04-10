@@ -30,7 +30,7 @@
 
 - 任务 [tasks](/packages/standard-objects/tasks.object.yml)：用于日常任务管理，也可以用于管理对象的相关任务，当在对象上勾选了 ”[允许添加任务](https://www.steedos.cn/docs/admin/create_object#关于对象功能开关)“ 开关后，业务人员就可以在该对象记录详细界面看到该记录相关的任务子表。任务被创建后，其被分派人可以收到推送通知。
 
-- 日程 [events](/packages/standard-objects/events.object.yml)：用于日常日程管理，也可以用于管理对象的相关日程，当在对象勾选了”[允许添加事件](https://www.steedos.cn/docs/admin/create_object#关于对象功能开关)“开关后，业务人员就可以在该对象记录详细界面看到该记录相关的日程子表。日程被创建后，其被分派人可以收到推送通知。
+- 日程 [events](/packages/standard-objects/events.object.yml)：用于日常日程管理，也可以用于管理对象的相关日程，当在对象勾选了”[允许添加日程](https://www.steedos.cn/docs/admin/create_object#关于对象功能开关)“开关后，业务人员就可以在该对象记录详细界面看到该记录相关的日程子表。日程被创建后，其被分派人可以收到推送通知。
 
 - 备忘 [notes](/packages/standard-objects/notes.object.yml)：用于日常备忘管理，也可以用于管理对象的相关备忘，当在对象勾选了”[允许添加备注](https://www.steedos.cn/docs/admin/create_object#关于对象功能开关)“开关后，业务人员就可以在该对象记录详细界面看到该记录相关的备忘子表。
 
