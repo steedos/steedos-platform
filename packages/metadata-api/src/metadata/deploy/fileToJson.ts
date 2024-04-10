@@ -453,7 +453,7 @@ async function loadObjectFields(filePath){
         let matchedPath = matchedPaths[k];
         let field = {};
         let json = loadFile(matchedPath);
-        let fieldName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.field.'));
+        let fieldName = matchedPath.substring(matchedPath.lastIndexOf('/')+1, matchedPath.indexOf('.field.yml'));
 
         try {
             if(json){

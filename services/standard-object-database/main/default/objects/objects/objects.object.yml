@@ -4,7 +4,7 @@ enable_dataloader: false
 field_groups:
   - group_name: switch
   - group_name: advanced
-hidden: false
+hidden: true
 icon: orders
 label: Objects
 paging:

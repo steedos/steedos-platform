@@ -1,0 +1,4 @@
+name: standard_new
+is_enable: true
+label: 新建
+'on': list
