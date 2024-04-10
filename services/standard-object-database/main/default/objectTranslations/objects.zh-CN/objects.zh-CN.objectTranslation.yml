@@ -7,11 +7,11 @@ fields:
     help: 
     description: 
   label:
-    label: 显示名
+    label: 显示名称
     help: 
     description: 
   name:
-    label: API 名称
+    label: 对象名
     help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
     description: 
   table_name:
@@ -52,7 +52,7 @@ fields:
     help: 
     description: 
   enable_events:
-    label: 允许添加事件
+    label: 允许添加日程
     help: 
     description: 
   enable_api:
@@ -68,7 +68,7 @@ fields:
     help: 
     description: 
   enable_instances:
-    label: 允许查看申请单
+    label: 显示审批单子表
     help: 
     description: 
   enable_chatter:
@@ -161,53 +161,14 @@ fields:
     label: 
     help: 
     description: 
-  form:
-    label: 表单事件
-  form.initialValues:
-    label: 初始化数据
-  form.validate:
-    label: 验证数据
-  form.beforeInsert:
-    label: 新增数据之前
-  form.onRendered:
-    label: 表单加载后
-  form.onDestroy:
-    label: 表单销毁时
-  form.onValuesChange:
-    label: 数据变化时
-  form.beforeUpdate:
-    label: 修改数据之前
-  form.beforeDelete:
-    label: 删除数据之前
-  form.afterInsert:
-    label: 新增数据之后
-  form.afterUpdate:
-    label: 修改数据之后
-  form.afterDelete:
-    label: 删除数据之后
-  form.errorInsert:
-    label: 新增数据报错之后
-  form.errorUpdate:
-    label: 修改数据报错之后
-  form.errorDelete:
-    label: 删除数据报错之后
-  form.beforeView:
-    label: 记录显示之前
-  form.afterView:
-    label: 记录显示之后
-  form.beforeEdit:
-    label: 编辑页面显示之前
-  form.afterEdit:
-    label: 编辑页面显示之后
   compactLayouts:
     label: 高亮字段
   is_customize:
     label: 自定义
 groups:
   external_data_source: 外部数据源
-  switch: 功能开关
-  script: 脚本
-  compact_layouts: 高亮字段
+  switch: 界面
+  advanced: 高级
 listviews:
   all:
     label: 全部

@@ -1,8 +1,9 @@
 name: field_groups
 blackbox: true
+filters: []
 hidden: false
 is_wide: true
 label: 字段分组
-sort_no: 90
+sort_no: 60
 type: grid
 visible_on: '${false}'

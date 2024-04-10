@@ -2,5 +2,5 @@ name: is_customize
 hidden: false
 label: 是否自定义
 readonly: true
-sort_no: 130
+sort_no: 100
 type: boolean

@@ -4,5 +4,6 @@ hidden: true
 label: 重新加载时间
 omit: true
 readonly: true
-sort_no: 490
+sort_no: 450
 type: datetime
+visible_on: '{{false}}'

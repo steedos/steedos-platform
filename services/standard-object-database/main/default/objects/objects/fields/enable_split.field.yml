@@ -1,6 +1,7 @@
 name: enable_split
 defaultValue: false
-group: Switch
+group: advanced
+hidden: false
 label: Enable Split
-sort_no: 300
+sort_no: 240
 type: boolean

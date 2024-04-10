@@ -1,4 +1,5 @@
 name: is_customize
+label: Customized
 type: boolean
 readonly: true
 sort_no: 760

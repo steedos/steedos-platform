@@ -1,7 +1,7 @@
 name: enable_api
 defaultValue: true
-group: Switch
 hidden: true
 label: Enable API
-sort_no: 210
+sort_no: 270
 type: boolean
+visible_on: '{{false}}'

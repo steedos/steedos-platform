@@ -239,36 +239,3 @@ permission_set:
     allowRead: false
     modifyAllRecords: false
     viewAllRecords: false
-form:
-  initialValues: !!js/function |
-    function(){
-      var listView = Creator.getListView();
-      if(listView && listView.name === 'profile'){
-        return {type: 'profile'}
-      }
-      return {}
-    }
-  beforeEdit: !!js/function |
-    function(){
-      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
-    }
-  afterEdit: !!js/function |
-    function(){
-      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.PermissionSetManager.changeSchema(this.doc, this.schema);
-    }
-  beforeInsert: !!js/function |
-    function(){
-      if(this.doc && _.isString(this.doc.users)){
-        this.doc.users = this.doc.users.split(',');
-      }
-    }
-  beforeUpdate: !!js/function |
-    function(){
-      if(this.doc && _.isString(this.doc.users)){
-        this.doc.users = this.doc.users.split(',');
-      }
-    }

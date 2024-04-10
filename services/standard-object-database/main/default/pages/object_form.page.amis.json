@@ -21,12 +21,7 @@
                       "position": "top-right"
                     }
                 }
-            ],
-            "fieldsExtend": {
-                "compactLayouts": {
-                    "label": ""
-                }
-            }
+            ]
         }
     ],
     "data": {

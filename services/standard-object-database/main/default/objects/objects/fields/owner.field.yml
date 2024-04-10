@@ -3,5 +3,6 @@ hidden: true
 index: true
 label: Owner
 omit: true
-sort_no: 430
+sort_no: 410
 sortable: true
+visible_on: '{{false}}'

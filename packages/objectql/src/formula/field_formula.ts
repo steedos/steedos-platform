@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-03-22 16:22:29
+ * @LastEditTime: 2024-04-10 18:04:18
  * @Description: 
  */
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
@@ -97,6 +97,44 @@ export const getObjectQuotedByFieldFormulaConfigs = async (objectName: string, f
     const otherConfigs = configsOnOtherObjects; //注意otherConfigs其实也包括当前对象上的公式字段，只是不包含引用自身字段的公式字段
     const allConfigs = ownConfigs.concat(otherConfigs);
     return { ownConfigs, otherConfigs, allConfigs }
+}
+
+
+/**
+ * 获取当前对象中在哪些当前对象上的字段公式中被引用，修改当前对象记录时调用，新建记录时直接重算所有公式字段，不调用这个函数
+ * @param objectName 
+ * @param fieldNames 必填
+ * 返回需要重算的公式字段配置，注意这里要返回的字段配置包含的不只是直接引用，还有间接引用过传入的fieldNames中字段的公式配置，所以该函数中使用了递归查找
+ */
+export const getCurrentObjectQuotedByFieldFormulaConfigs = async (objectName: string, fieldNames: Array<string>, options?: any): Promise<Array<SteedosFieldFormulaTypeConfig>> => {
+    if(!options){
+        options = {
+            count: 0,
+            result: [],
+            configs: null
+        };
+    }
+    let configs = options.configs;
+    if(!configs){
+        configs = await getFieldFormulaConfigs(objectName);
+        options.configs = configs;
+    }
+    let configsOnCurrentObject = [];
+    configs.forEach((config: SteedosFieldFormulaTypeConfig) => {
+        let isQuoting = isFieldFormulaConfigQuotingObjectAndFields(config, objectName, fieldNames);
+        if (isQuoting) {
+            configsOnCurrentObject.push(config);
+        }
+    });
+    // options.count < 20只是为了保险避免死循环的可能，理论上并不可能出现死循环，因为启用服务时会判断元数据中公式字段之前的引用关系，不允许出现公式字段之间互相引用的情况。
+    if(configsOnCurrentObject.length > 0 && options.count < 20){
+        options.count++;
+        options.result = options.result.concat(configsOnCurrentObject);
+        return await getCurrentObjectQuotedByFieldFormulaConfigs(objectName, _.map(configsOnCurrentObject, "field_name"), options);
+    }
+    // 当前对象上的字段一定要做排序
+    const result = sortFieldFormulaConfigs(options.result);
+    return result;
 }
 
 /**

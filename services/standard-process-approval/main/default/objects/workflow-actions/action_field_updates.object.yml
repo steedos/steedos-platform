@@ -89,19 +89,6 @@ fields:
   instance_state:
     hidden: true
   # todo:
-form:
-  beforeEdit: !!js/function |
-    function(){
-      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
-    }
-  afterEdit: !!js/function |
-    function(){
-      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.ProcessFieldUpdatesManager.changeSchema(this.doc, this.schema);
-    }
 list_views:
   all:
     label: All

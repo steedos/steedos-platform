@@ -1,5 +1,5 @@
 name: field_groups.$.visible_on
 hidden: false
 label: 显示条件
-sort_no: 110
+sort_no: 70
 type: text

@@ -1,6 +1,6 @@
 name: enable_notes
-group: Switch
+group: switch
 hidden: false
 label: Enable Notes
-sort_no: 160
+sort_no: 170
 type: boolean

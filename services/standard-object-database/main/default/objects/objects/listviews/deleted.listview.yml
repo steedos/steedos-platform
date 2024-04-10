@@ -3,7 +3,6 @@ columns:
   - label
   - name
   - in_development
-  - is_enable
   - is_system
 extra_columns:
   - datasource

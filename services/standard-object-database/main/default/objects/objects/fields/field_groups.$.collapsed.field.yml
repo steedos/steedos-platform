@@ -1,5 +1,5 @@
 name: field_groups.$.collapsed
 hidden: false
 label: 默认折叠
-sort_no: 120
+sort_no: 80
 type: boolean

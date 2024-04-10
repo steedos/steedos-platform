@@ -7,7 +7,7 @@ import { SteedosTriggerTypeConfig, SteedosTriggerContextConfig } from "./trigger
 import { SteedosQueryOptions, SteedosQueryFilters } from "./query";
 import { SteedosDataSourceType, SteedosDatabaseDriverType, getDataSource } from "./datasource";
 import { SteedosFieldDBType } from '../driver/fieldDBType';
-import { getCurrentObjectFieldFormulasDoc, runQuotedByObjectFieldFormulas } from '../formula';
+import { getCurrentObjectFieldFormulasDoc, runQuotedByObjectFieldFormulas, getCurrentObjectQuotedByFieldFormulaConfigs } from '../formula';
 import { runQuotedByObjectFieldSummaries, runCurrentObjectFieldSummaries } from '../summary';
 import { formatFiltersToODataQuery } from "@steedos/filters";
 import { WorkflowRulesRunner } from '../actions';
@@ -2193,14 +2193,13 @@ export class SteedosObjectType extends SteedosObjectProperties {
         } else {
             let previousDoc: any;
             // update/delete时始终查一次整个record doc，公式中依赖了完整doc（比如单元格编辑等情况下doc不完整），after trigger中需要previousDoc
-            let formulaDoc = doc;
             if (method === 'update' || method === 'delete') {
                 previousDoc = await this.findOne(recordId, {}, userSession)
-                formulaDoc = Object.assign({}, previousDoc, doc);
             }
-            // 先把当前record的公式字段值计算完填充到doc中，如果是update，则传入的formulaDoc要求是完整的record doc，因为要考虑单元格编辑
-            // 如果是删除记录docAfterFormulaRun返回的会是undefined，不会合并到doc
-            let docAfterFormulaRun = await this.getRecordFormulaDoc(method, objectName, formulaDoc, userSession);
+            // 先把当前record的公式字段值计算结果填充到doc中。
+            // 如果是update，则要额外传入previousDoc，与doc合并成完整的record doc，因为公式运算时需要当前记录完整的doc，比如单元格编辑时doc中只有当前字段值
+            // 如果是删除记录docAfterFormulaRun返回的会是undefined，不会影响doc
+            let docAfterFormulaRun = await this.getRecordFormulaDoc(method, objectName, doc, previousDoc, userSession);
             if(docAfterFormulaRun){
                 Object.assign(doc, docAfterFormulaRun);
             }
@@ -2282,10 +2281,19 @@ export class SteedosObjectType extends SteedosObjectProperties {
     /**
      * 新建修改记录时，计算当前记录的公式字段值，并把运算结果返回，但是不执行db操作
      */
-    private async getRecordFormulaDoc(method: string, objectName: string, doc: any, userSession: any) {
+    private async getRecordFormulaDoc(method: string, objectName: string, doc: any, previousDoc: any, userSession: any) {
         let setDoc: any;
         if (["insert", "update"].indexOf(method) > -1) {
-            setDoc = await getCurrentObjectFieldFormulasDoc(objectName, doc, userSession);
+            // 更新记录前计算当前记录公式字段值时，只需要查找和重算与doc中传入的字段相关的公式字段，不需要把所有公式字段都重算，优化性能
+            let fieldNames = method === "update" ? _.keys(doc) : null;
+            let quotedByConfigs: any;
+            if(fieldNames){
+                quotedByConfigs = await getCurrentObjectQuotedByFieldFormulaConfigs(objectName, fieldNames);
+            }
+            // 这里把previousDoc, doc合并后传入，因为公式运算可能需要完整的doc参与
+            let formulaDoc = Object.assign({}, previousDoc, doc);
+            // 只有修改记录时才需要传入quotedByConfigs，该参数为空时，getCurrentObjectFieldFormulasDoc函数内会找到当前对象所有公式字段，比如新建记录时需要计算所有公式字段值
+            setDoc = await getCurrentObjectFieldFormulasDoc(objectName, formulaDoc, userSession, quotedByConfigs);
         }
         return setDoc;
     }

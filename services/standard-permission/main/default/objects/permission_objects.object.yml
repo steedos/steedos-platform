@@ -340,14 +340,3 @@ permission_set:
     allowRead: true
     modifyAllRecords: true
     viewAllRecords: true
-form:
-  beforeView: !!js/function |
-    function(){
-      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
-      Creator.processPermissions(this.doc);
-    }
-  beforeEdit: !!js/function |
-    function(){
-      /*附件权限需要兼容之前没有附件权限配置功能时的设置，取好默认值显示即可*/
-      Creator.processPermissions(this.doc);
-    }
