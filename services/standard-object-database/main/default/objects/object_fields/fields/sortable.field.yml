@@ -3,3 +3,4 @@ type: boolean
 label: Sortable
 group: ui
 sort_no: 660
+defaultValue: true
