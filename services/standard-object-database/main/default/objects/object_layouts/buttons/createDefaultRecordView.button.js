@@ -1,6 +1,6 @@
 module.exports = { 
 createDefaultRecordView:function (object_name, record_id, item_element) {
-    if(object_name === 'objects' && this.record && this.record.record){
+    if(object_name === 'object_layouts' && this.record && this.record.record){
       const objectApiName = this.record.record.name;
       $("body").addClass("loading");
       const res = Steedos.authRequest(`/service/api/@${objectApiName}/defUiSchema`, { type: 'post', async: false});
@@ -14,7 +14,8 @@ createDefaultRecordView:function (object_name, record_id, item_element) {
     }
   },
 createDefaultRecordViewVisible:function(object_name, record_id, record_permissions, data){
-    if(!Creator.isSpaceAdmin() || data.record.name == 'users'){
+  
+    if(!Creator.isSpaceAdmin()){
         return false
     }
     return true;
