@@ -2,7 +2,7 @@
  * @Author: yinlianghui@steedos.com
  * @Date: 2022-04-13 10:31:03
  * @LastEditors: 殷亮辉 yinlianghui@hotoa.com
- * @LastEditTime: 2024-04-10 14:51:02
+ * @LastEditTime: 2024-04-10 18:04:18
  * @Description: 
  */
 import { SteedosFieldFormulaTypeConfig, SteedosQuotedByFieldFormulasTypeConfig } from './type';
@@ -110,18 +110,20 @@ export const getCurrentObjectQuotedByFieldFormulaConfigs = async (objectName: st
     if(!options){
         options = {
             count: 0,
-            result: []
+            result: [],
+            configs: null
         };
     }
-    const configs = await getFieldFormulaConfigs(); //TODO 此处代码需要优化，取了所有配置。此处代码迁移到metadata objects services
+    let configs = options.configs;
+    if(!configs){
+        configs = await getFieldFormulaConfigs(objectName);
+        options.configs = configs;
+    }
     let configsOnCurrentObject = [];
     configs.forEach((config: SteedosFieldFormulaTypeConfig) => {
         let isQuoting = isFieldFormulaConfigQuotingObjectAndFields(config, objectName, fieldNames);
         if (isQuoting) {
-            let isCurrent = config.object_name === objectName;
-            if (isCurrent) {
-                configsOnCurrentObject.push(config);
-            }
+            configsOnCurrentObject.push(config);
         }
     });
     // options.count < 20只是为了保险避免死循环的可能，理论上并不可能出现死循环，因为启用服务时会判断元数据中公式字段之前的引用关系，不允许出现公式字段之间互相引用的情况。
