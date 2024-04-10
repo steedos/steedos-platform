@@ -4,13 +4,5 @@ icon: actions_and_buttons
 enable_dataloader: false
 hidden: true
 version: 2
-form:
-  initialValues: !<tag:yaml.org,2002:js/function> |-
-    function anonymous(
-    ) {
-
-      return {type: 'amis_button'}
-
-    }
 paging:
   enabled: false

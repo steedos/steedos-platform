@@ -131,25 +131,6 @@ list_views:
       - editable
       - is_system
     filter_scope: space
-form:
-  onValuesChange: !!js/function |
-    function(props){
-      const { changedValues, values, form } = props;
-      const readonlyFields = ['created', 'created_by', 'modified', 'modified_by'];
-      if(changedValues.editable){
-        if(window._.include(readonlyFields, values.field)){
-          return setTimeout(function(){
-            form.setFieldsValue({editable: false})
-          }, 50)
-        }
-        form.setFieldsValue({readable: true});
-      }
-      
-      if(_.has(changedValues, 'readable') && !changedValues.readable && values.editable){
-        form.setFieldsValue({editable: false})
-      }
-    }
-
 permission_set:
   user:
     allowCreate: false

@@ -17,8 +17,3 @@ hidden: true
 icon: contract
 is_enable: true
 version: 2
-form:
- afterView: !!js/function |
-      function(){
-        $('[data-object-name="process_versions"]').hide()
-      }

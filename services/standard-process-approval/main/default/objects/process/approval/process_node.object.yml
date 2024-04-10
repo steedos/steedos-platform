@@ -214,31 +214,6 @@ fields:
         }
       }
     group: Rejection Actions
-form:
-  beforeInsert:
-    function(){
-      if(_.isString(this.doc.assigned_approver_users)){
-        this.doc.assigned_approver_users = this.doc.assigned_approver_users.split(',')
-      }
-    }
-  beforeUpdate:
-    function(){
-      if(_.isString(this.doc.assigned_approver_users)){
-        this.doc.assigned_approver_users = this.doc.assigned_approver_users.split(',')
-      }
-    }
-  beforeEdit: !!js/function |
-    function(){
-      Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
-    }
-  afterEdit: !!js/function |
-    function(){
-      Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
-    }
-  beforeView: !!js/function |
-    function(){
-      Steedos.ProcessNodeManager.changeSchema(this.doc, this.schema);
-    }
 list_views:
   all:
     label: All
