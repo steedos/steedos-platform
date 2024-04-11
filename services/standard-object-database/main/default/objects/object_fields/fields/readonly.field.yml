@@ -1,8 +1,9 @@
 name: readonly
-type: boolean
-label: Readonly
+group: ui
+hidden: false
 inlineHelpText: >-
   It is read-only and does not appear on the form when you create or edit
   records.
-group: ui
-sort_no: 610
+label: Readonly
+sort_no: 510
+type: boolean

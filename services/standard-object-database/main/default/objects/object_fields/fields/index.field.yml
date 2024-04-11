@@ -1,8 +1,9 @@
 name: index
-type: boolean
-label: Is Index Field
 group: Advanced
-sort_no: 640
+hidden: false
 inlineHelpText: >-
   The Creation Is Executed Once A Day By Default And The Existing Indexes Are
   Not Repeatedly Created.
+label: Is Index Field
+sort_no: 640
+type: boolean

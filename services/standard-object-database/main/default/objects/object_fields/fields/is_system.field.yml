@@ -1,5 +1,6 @@
 name: is_system
-type: boolean
+hidden: false
+readonly: true
 label: System
-visible_on: '{{false}}'
-sort_no: 740
+sort_no: 470
+type: boolean

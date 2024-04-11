@@ -1,13 +1,4 @@
 name: options
-type: table
-label: Options
-is_wide: true
-inlineHelpText: >-
-  The label and value of each option cannot be empty. Set the background color
-  to FFFFFF in hexadecimal format.
-visible_on: '{{formData.type === ''select'' ? true: false}}'
-required: '{{formData.type === ''select'' ? true: false}}'
-sort_no: 330
 amis:
   showIndex: true
   disabledOn: '${is_system == true}'
@@ -19,3 +10,13 @@ amis:
       width: 170
     - name: description
       width: 300
+hidden: false
+inlineHelpText: >-
+  The label and value of each option cannot be empty. Set the background color
+  to FFFFFF in hexadecimal format.
+is_wide: true
+label: Options
+required: '{{formData.type === ''select'' ? true: false}}'
+sort_no: 230
+type: table
+visible_on: '{{formData.type === ''select'' ? true: false}}'

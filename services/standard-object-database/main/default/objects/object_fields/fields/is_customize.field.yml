@@ -1,5 +1,6 @@
 name: is_customize
+hidden: false
 label: Customized
-type: boolean
 readonly: true
-sort_no: 760
+sort_no: 460
+type: boolean

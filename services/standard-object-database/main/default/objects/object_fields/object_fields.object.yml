@@ -1,20 +1,19 @@
 name: object_fields
-icon: textbox
+custom: true
 enable_api: true
-enable_inline_edit: false
-enable_enhanced_lookup: true
 enable_dataloader: false
-hidden: false
-label: Object Fields
-version: 2
-paging:
-  enabled: false
-relatedList:
-  - permission_fields
+enable_enhanced_lookup: true
+enable_inline_edit: false
+field_groups:
+  - group_name: ui
+    visible_on: ''
+  - group_name: Advanced
+    visible_on: ''
+  - group_name: External data source
+    visible_on: ''
 form:
   initialValues: !<tag:yaml.org,2002:js/function> |-
-    function anonymous(
-    ) {
+    function() {
 
       //应用程序微页面内Session.get("record_id")获取不到值（比如设计字段布局微页面）
       var object = Creator.odata.get('objects', Session.get("record_id") || (this.master && this.master.recordId), "fields_serial_number");
@@ -28,4 +27,11 @@ form:
       return {}
 
     }
-  
+hidden: false
+icon: textbox
+label: Object Fields
+paging:
+  enabled: false
+relatedList:
+  - permission_fields
+version: 2

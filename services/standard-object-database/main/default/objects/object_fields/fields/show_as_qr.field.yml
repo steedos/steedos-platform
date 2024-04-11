@@ -1,7 +1,8 @@
 name: show_as_qr
-type: boolean
-label: Show_as_qr
-visible_on: '{{formData.type === ''url'' ? true: false}}'
-sort_no: 690
 amis:
   disabledOn: '${is_system == true}'
+hidden: false
+label: Show_as_qr
+sort_no: 400
+type: boolean
+visible_on: '{{formData.type === ''url'' ? true: false}}'

@@ -1,7 +1,8 @@
 name: generated
-type: boolean
-label: Generated
-group: External data source
-sort_no: 540
 amis:
   disabledOn: '${is_system == true}'
+group: Advanced
+hidden: false
+label: Generated
+sort_no: 650
+type: boolean

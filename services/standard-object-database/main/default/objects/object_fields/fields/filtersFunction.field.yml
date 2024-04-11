@@ -1,14 +1,15 @@
 name: filtersFunction
-label: Lookup Relationship Filters Function
-type: code
-language: javascript
-is_wide: true
-visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 290
-group: Advanced
 amis:
   disabledOn: '${is_system == true}'
   placeholder: |-
     function(filters, values){
 
     }
+hidden: false
+is_wide: true
+label: Lookup Relationship Filters Function
+language: javascript
+readonly: true
+sort_no: 80
+type: code
+visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'

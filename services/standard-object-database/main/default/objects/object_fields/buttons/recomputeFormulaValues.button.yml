@@ -1,3 +1,4 @@
 name: recomputeFormulaValues
+is_enable: true
 label: Recompute Formula Values
 'on': record_only

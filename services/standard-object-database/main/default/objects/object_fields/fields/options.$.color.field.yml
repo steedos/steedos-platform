@@ -1,5 +1,6 @@
 name: options.$.color
+hidden: false
 label: Color
-type: color
 required: false
-sort_no: 370
+sort_no: 270
+type: color

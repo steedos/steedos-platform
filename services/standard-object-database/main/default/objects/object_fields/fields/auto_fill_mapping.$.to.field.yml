@@ -1,14 +1,10 @@
 name: auto_fill_mapping.$.to
-label: 'To:Fields in the current form'
-type: lookup
-reference_to: object_fields
-reference_to_field: name
-required: true
 depend_on:
   - object
 filtersFunction: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(filters,values
+  function(filters,values
   ) {
+
 
     //按照from字段类型给予不同的过滤限制,具体规则参考https://github.com/steedos/steedos-platform/issues/6496
     var fieldFilters = {
@@ -52,5 +48,12 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
     }
     return currentFilter;
 
+
   }
-sort_no: 420
+hidden: false
+label: 'To:Fields in the current form'
+reference_to: object_fields
+reference_to_field: name
+required: true
+sort_no: 320
+type: lookup

@@ -1,7 +1,9 @@
 name: type
-type: select
+amis:
+  disabledOn: '${is_system == true}'
+  searchable: true
+hidden: false
 label: Type
-required: true
 options:
   - label: Text
     value: text
@@ -55,7 +57,6 @@ options:
     value: formula
   - label: 累计汇总
     value: summary
-sort_no: 140
-amis:
-  disabledOn: '${is_system == true}'
-  searchable: true
+required: true
+sort_no: 50
+type: select

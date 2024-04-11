@@ -1,25 +1,26 @@
 name: scale
-type: currency
-label: Scale
-scale: 0
 amis:
   value: 2
   disabledOn: '${is_system == true}'
-min: 0
+hidden: false
 inlineHelpText: >-
   If the field type is a Percent, this indicates the number of decimal places
   the field will display, for example, two decimal places will display as
   10.20%.
-visible_on: >-
-  {{ (function(){ if(['number', 'currency', 'percent',
-  'summary'].indexOf(formData.type) > -1){ return true; } else{
-  if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency',
-  'percent'].indexOf(formData.data_type) > -1){ return true; } else{ return
-  false; } } })() }}
+label: Scale
+min: 0
 required: >-
   {{ (function(){ if(['number', 'currency', 'percent',
   'summary'].indexOf(formData.type) > -1){ return true; } else{
   if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency',
   'percent'].indexOf(formData.data_type) > -1){ return true; } else{ return
   false; } } })() }}
-sort_no: 310
+scale: 0
+sort_no: 200
+type: currency
+visible_on: >-
+  {{ (function(){ if(['number', 'currency', 'percent',
+  'summary'].indexOf(formData.type) > -1){ return true; } else{
+  if(['formula'].indexOf(formData.type) > -1 && ['number', 'currency',
+  'percent'].indexOf(formData.data_type) > -1){ return true; } else{ return
+  false; } } })() }}

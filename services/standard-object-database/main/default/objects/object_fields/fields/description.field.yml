@@ -1,5 +1,6 @@
 name: description
-label: Description
-type: textarea
+hidden: false
 is_wide: true
-sort_no: 720
+label: Description
+sort_no: 450
+type: textarea

@@ -1,14 +1,15 @@
 name: name
-type: text
-label: API Name
-searchable: true
+amis:
+  disabledOn: '${is_system == true}'
+hidden: false
 index: true
 inlineHelpText: >-
   Can only contain lowercase letters and numbers, must start with a letter,
   cannot end with an underscore character or contain two consecutive underscore
   characters
+label: API Name
 readonly: true
+searchable: true
+sort_no: 40
+type: text
 visible_on: '{{global.mode !=''read'' ? false : true}}'
-sort_no: 130
-amis:
-  disabledOn: '${is_system == true}'

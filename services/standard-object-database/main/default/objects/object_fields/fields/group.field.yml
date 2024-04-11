@@ -1,4 +1,7 @@
 name: group
-type: text
+group: ui
+hidden: false
 label: Group
-sort_no: 170
+readonly: true
+sort_no: 560
+type: text

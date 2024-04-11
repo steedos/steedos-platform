@@ -300,16 +300,16 @@ fields:
     help: 
     description: 
   readonly:
-    label: 只读
-    help: 只读，且新建和编辑记录时不显示在表单上
+    label: 编辑时隐藏
+    help: 编辑时不显示此字段
     description: 
   static:
-    label: 只读且编辑时显示
-    help: 显示为只读，但是在新建和编辑记录时可以通过默认值，自动填充或自定义脚本设置该字段值
+    label: 编辑时只读
+    help: 可以通过默认值，自动填充或自定义脚本设置该字段值
     description: 
   hidden:
-    label: 隐藏
-    help: 
+    label: 全局隐藏
+    help: 默认隐藏此字段，如果配置了字段权限，会覆盖此属性。
     description: 
   omit:
     label: 新建、编辑时隐藏
@@ -340,8 +340,8 @@ fields:
     help: 
     description: 
   visible_on:
-    label: 字段显示公式
-    help: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes#%E5%AD%97%E6%AE%B5%E6%98%BE%E7%A4%BA%E5%85%AC%E5%BC%8F' target='_blank'>查看帮助</a>
+    label: 显示公式
+    help: 根据公式判断是否显示字段
     description: 
   inlineHelpText:
     label: 提示文本
@@ -357,11 +357,11 @@ fields:
       设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于·主表/子表·字段类型。勾选表示允许具有'读取'访问权限的用户创建、编辑或删除子记录。反之表示允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。
     description: 
   amis:
-    label: Amis 属性
-    help: <a href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7' target='_blank'>查看帮助</a>
+    label: Amis 配置
+    help: 使用 amis 配置字段显示样式
   enable_enhanced_lookup:
-    label: 启用弹出窗口查找模式
-    help: 
+    label: 弹出选择
+    help: 被其他字段引用时，使用弹出框选择记录。
     description: 
   is_customize:
     label: 自定义

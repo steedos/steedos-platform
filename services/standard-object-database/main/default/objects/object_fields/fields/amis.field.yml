@@ -1,11 +1,12 @@
 name: amis
-label: Amis 属性
-type: code
-language: json
-is_wide: true
-group: Advanced
-sort_no: 730
+group: ui
+hidden: false
 inlineHelpText: >-
   <a
   href='https://docs.steedos.com/zh-CN/no-code/customize/fields/field-attributes/#amis-%E5%B1%9E%E6%80%A7'
   target='_blank'>查看帮助</a>
+is_wide: true
+label: Amis 属性
+language: json
+sort_no: 540
+type: code

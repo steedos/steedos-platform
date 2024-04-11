@@ -1,15 +1,16 @@
 name: summary_filters
-label: Filter Criteria
-type: table
-inlineHelpText: >-
-  Only records meeting certain criteria should be included in the calculation,
-  all records should be included in the calculation while the criteria is empty.
-is_wide: true
-depend_on:
-  - summary_object
-visible_on: '{{formData.type === ''summary'' && global.mode !=''read'' ? true: false}}'
-sort_no: 470
 amis:
   disabledOn: '${is_system == true}'
   inlineEditMode: true
   showIndex: true
+depend_on:
+  - summary_object
+hidden: false
+inlineHelpText: >-
+  Only records meeting certain criteria should be included in the calculation,
+  all records should be included in the calculation while the criteria is empty.
+is_wide: true
+label: Filter Criteria
+sort_no: 350
+type: table
+visible_on: '{{formData.type === ''summary'' && global.mode !=''read'' ? true: false}}'

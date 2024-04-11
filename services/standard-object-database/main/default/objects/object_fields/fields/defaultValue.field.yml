@@ -1,11 +1,4 @@
 name: defaultValue
-type: object
-blackbox: true
-label: Default Value
-sort_no: 160
-visible_on: >-
-  {{formData.type &&
-  ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}
 amis:
   type: service
   className:
@@ -44,3 +37,12 @@ amis:
             value:
               defaultValue: '${event.data.body[0].value}'
           expression: 'global.mode ===''read'' && event.data.body[0].value'
+blackbox: true
+hidden: false
+is_wide: true
+label: Default Value
+sort_no: 430
+type: object
+visible_on: >-
+  {{formData.type &&
+  ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}
