@@ -1,14 +1,7 @@
 name: defaultValue
 amis:
   type: service
-  className:
-    antd-Form-item: true
-    antd-Form-item--normal: true
-    m-0: true
-    'md:border-b': global.mode === "read"
-    defaultValue_field: true
-    flex: true
-    'col-span-2 m-0': uiSchema && uiSchema.fields.defaultValue.is_wide
+  className: "antd-Form-item antd-Form-item--normal m-0 defaultValue_field steedos-defaultValue-${type}-${global.mode} ${type !== 'html' ? 'flex steedos-defaultValue-flex-grow' : ''} ${global.mode === 'read' ? 'md:border-b' : ''} ${uiSchema && uiSchema.fields.defaultValue.is_wide ? 'col-span-2 m-0' : ''}"
   schemaApi:
     url: '${context.rootUrl}/service/api/object_fields/defaultValue/schema'
     method: post

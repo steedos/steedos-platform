@@ -214,7 +214,8 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
 (function () {
   try {
       var styleCss = $(`<style>
-          .defaultValue_field div:first-child{
+          .defaultValue_field.steedos-defaultValue-flex-grow div:first-child{
+              /*有steedos-defaultValue-flex-grow样式类时才加上flex-grow，是为了排除掉html字段类型，因为html类型字段不可以配置flex-grow属性(配置为0或unset也不行)，否则html字段类型的顶部toolbar高度样式异常*/
               flex-grow: 1;
           }
           .defaultValue_field .defaultValue_field_formula{
@@ -232,6 +233,11 @@ Steedos.ObjectFieldManager.getSummaryFiltersOperation = function(field_type) {
           }
           .defaultValue_field .defaultValue_field_hidden{
               display: none;
+          }
+          .defaultValue_field.steedos-defaultValue-html-edit .defaultValue_field_formula_hidden .antd-Form-label{
+              /*html字段类型默认值，显示为静态值编辑器时，因为移除了flex样式类，不再把amis公式配置按钮显示在右侧，而是换行显示，此时label不可以display: none，否则缩进不对*/
+              display: block;
+              visibility: hidden;
           }
           .defaultValue_field .defaultValue_field_formula_hidden{
               flex-grow: 0;
