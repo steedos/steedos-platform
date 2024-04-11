@@ -123,7 +123,7 @@ fields:
     help: 
     description: 
   hidden:
-    label: 不可见
+    label: 全局隐藏
     help: 如果配置了字段权限，会覆盖此属性。
     description: 
   index:
@@ -439,6 +439,8 @@ fields:
     description: 
 groups:
   advanced: 高级
+  amis: Amis
+  auto_fill: 自动填充
   ui: 表单
 listviews:
   all:

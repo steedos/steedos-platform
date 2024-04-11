@@ -7,7 +7,6 @@ columns:
   - object
   - sort_no
   - modified
-  - hidden
   - readonly
   - is_system
   - is_customize
