@@ -260,15 +260,15 @@ fields:
     description: 
   column_name:
     label: 数据库字段名
-    help: 仅支持关系型数据库
+    help: 仅在外部数据源时生效
     description: 
   primary:
     label: 主键
-    help: 
+    help: 仅在外部数据源时生效
     description: 
   generated:
     label: 自增
-    help: 
+    help: 仅在外部数据源时生效
     description: 
   sort_no:
     label: 排序号
@@ -300,15 +300,15 @@ fields:
     help: 
     description: 
   readonly:
-    label: 编辑时隐藏
-    help: 编辑时不显示此字段
+    label: 服务端只读
+    help: 编辑时不加载此字段，数据不会提交到服务端。
     description: 
   static:
-    label: 编辑时只读
-    help: 可以通过默认值，自动填充或自定义脚本设置该字段值
+    label: 前端只读
+    help: 编辑时显示此字段，数据会提交到服务端，可动态赋值。
     description: 
   hidden:
-    label: 全局隐藏
+    label: 不可见
     help: 默认隐藏此字段，如果配置了字段权限，会覆盖此属性。
     description: 
   omit:
@@ -368,7 +368,7 @@ fields:
 groups:
   external_data_source: 外部数据源
   advanced: 高级
-  ui: 界面
+  ui: 表单
 listviews:
   all:
     label: 所有
