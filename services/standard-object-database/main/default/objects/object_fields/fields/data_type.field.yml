@@ -11,11 +11,13 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
 
 
+
     return Steedos.getFieldDataTypes(values);
+
 
 
   }
 required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 180
+sort_no: 160
 type: lookup
 visible_on: '{{[''formula'',''select''].indexOf(formData.type) > -1 ? true: false}}'

@@ -3,6 +3,6 @@ amis:
   disabledOn: '${is_system == true}'
 hidden: false
 label: Show_as_qr
-sort_no: 400
+sort_no: 330
 type: boolean
 visible_on: '{{formData.type === ''url'' ? true: false}}'

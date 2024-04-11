@@ -1,5 +1,5 @@
 name: amis
-group: ui
+group: amis
 hidden: false
 inlineHelpText: >-
   <a
@@ -8,5 +8,5 @@ inlineHelpText: >-
 is_wide: true
 label: Amis 属性
 language: json
-sort_no: 540
+sort_no: 550
 type: code

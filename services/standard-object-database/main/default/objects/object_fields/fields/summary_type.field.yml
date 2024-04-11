@@ -16,6 +16,6 @@ options:
   - label: AVG
     value: avg
 required: '{{formData.type === ''summary'' ? true: false}}'
-sort_no: 100
+sort_no: 90
 type: select
 visible_on: '{{formData.type === ''summary'' ? true: false}}'

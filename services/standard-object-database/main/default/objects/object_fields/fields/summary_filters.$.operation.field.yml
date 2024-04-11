@@ -6,6 +6,7 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
 
 
+
     if(values.summary_object){
       if(!this.template){
         let options = Steedos.ObjectFieldManager.getSummaryFiltersOperation();
@@ -34,7 +35,8 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
     return [];
 
 
+
   }
 showIcon: false
-sort_no: 380
+sort_no: 310
 type: lookup

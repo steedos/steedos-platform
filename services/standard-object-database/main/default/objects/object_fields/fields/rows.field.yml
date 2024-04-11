@@ -3,6 +3,6 @@ hidden: false
 label: Rows
 required: '{{formData.type === ''textarea'' ? true: false}}'
 scale: 0
-sort_no: 220
+sort_no: 200
 type: currency
 visible_on: '{{formData.type === ''textarea'' ? true: false}}'

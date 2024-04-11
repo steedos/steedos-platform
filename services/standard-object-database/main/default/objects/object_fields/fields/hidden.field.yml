@@ -1,6 +1,6 @@
 name: hidden
-group: ui
 hidden: false
 label: Hidden
-sort_no: 490
+sort_no: 670
 type: boolean
+visible_on: '{{false}}'

@@ -8,7 +8,7 @@ amis:
     'md:border-b': global.mode === "read"
     defaultValue_field: true
     flex: true
-    'col-span-2 m-0': uiSchema && uiSchema.fields.defaultValue.is_wide
+    col-span-2 m-0: uiSchema && uiSchema.fields.defaultValue.is_wide
   schemaApi:
     url: '${context.rootUrl}/service/api/object_fields/defaultValue/schema'
     method: post
@@ -42,7 +42,7 @@ blackbox: true
 hidden: false
 is_wide: true
 label: Default Value
-sort_no: 430
+sort_no: 350
 type: object
 visible_on: >-
   {{formData.type &&

@@ -17,6 +17,6 @@ inlineHelpText: >-
 is_wide: true
 label: Options
 required: '{{formData.type === ''select'' ? true: false}}'
-sort_no: 230
+sort_no: 210
 type: table
 visible_on: '{{formData.type === ''select'' ? true: false}}'

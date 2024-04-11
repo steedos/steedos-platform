@@ -11,6 +11,6 @@ inlineHelpText: >-
   access to the master record permission to create, edit, or delete child
   records. This setting is more restrictive than true, and is the default value.
 label: Write requires master read
-sort_no: 130
+sort_no: 110
 type: boolean
 visible_on: '{{formData.type === ''master_detail'' ? true: false}}'

@@ -2,8 +2,9 @@ name: create
 amis:
   disabledOn: '${is_system == true}'
 defaultValue: true
+group: ui
 hidden: false
 label: 弹出选择时允许新建
-sort_no: 110
+sort_no: 440
 type: boolean
 visible_on: '{{[''lookup''].indexOf(formData.type) > -1 ? true: false}}'

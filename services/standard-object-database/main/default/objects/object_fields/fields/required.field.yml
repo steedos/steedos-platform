@@ -1,7 +1,8 @@
 name: required
+group: ui
 hidden: false
 label: Required
-sort_no: 410
+sort_no: 380
 type: boolean
 visible_on: >-
   {{['autonumber','summary','formula'].indexOf(formData.type) > -1 ? false:

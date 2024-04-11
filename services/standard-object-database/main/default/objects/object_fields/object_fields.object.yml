@@ -6,11 +6,14 @@ enable_enhanced_lookup: true
 enable_inline_edit: false
 field_groups:
   - group_name: ui
-    visible_on: ''
+  - group_name: auto_fill
+    visible_on: false
+    collapsed: false
+  - group_name: amis
   - group_name: Advanced
-    visible_on: ''
+    collapsed: true
   - group_name: External data source
-    visible_on: ''
+    collapsed: false
 form:
   initialValues: !<tag:yaml.org,2002:js/function> |-
     function() {

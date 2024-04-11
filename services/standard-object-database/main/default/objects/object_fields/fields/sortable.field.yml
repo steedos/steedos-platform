@@ -3,5 +3,5 @@ defaultValue: true
 group: Advanced
 hidden: false
 label: Sortable
-sort_no: 590
+sort_no: 580
 type: boolean

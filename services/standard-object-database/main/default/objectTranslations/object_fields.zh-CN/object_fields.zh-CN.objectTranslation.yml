@@ -74,8 +74,8 @@ fields:
       - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
         value: retain
   depend_on:
-    label: 依赖的字段
-    help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
+    label: 依赖字段
+    help: 依赖字段的变化会触发当前字段重算
     description: 
   description:
     label: 描述
@@ -124,7 +124,7 @@ fields:
     description: 
   hidden:
     label: 不可见
-    help: 默认隐藏此字段，如果配置了字段权限，会覆盖此属性。
+    help: 如果配置了字段权限，会覆盖此属性。
     description: 
   index:
     label: 创建索引
@@ -272,16 +272,16 @@ fields:
     help: 
     description: 
   precision:
-    label: 精度(数字长度)
-    help: 
+    label: 数字位数
+    help: 小数点左边的数字位数
     description: 
   primary:
     label: 主键
     help: 仅在外部数据源时生效
     description: 
   readonly:
-    label: 服务端只读
-    help: 编辑时不加载此字段，数据不会提交到服务端。
+    label: 只读
+    help: 只读字段不显示在表单上，数据不会提交到服务端。
     description: 
   reference_to:
     label: 引用对象
@@ -302,7 +302,7 @@ fields:
     description: 
   scale:
     label: 小数位数
-    help: 如果字段类型为百分比，此处表示字段显示时的小数位数，比如2位小数会显示为10.20%。
+    help: 
     description: 
   searchable:
     label: 启用列表页快速搜索
@@ -321,19 +321,19 @@ fields:
     help: 
     description: 
   static:
-    label: 前端只读
-    help: 编辑时显示此字段，数据会提交到服务端，可动态赋值。
+    label: 静态
+    help: 静态字段在表单上显示，用户不可编辑，可动态赋值。
     description: 
   summary_field:
-    label: 要聚合的字段
+    label: 汇总字段
     help: 字段类型为累计汇总且汇总类型不是COUNT时，必须填写此字段，只支持聚合数值、金额、日期、日期时间类型的字段。
     description: 
   summary_filters:
-    label: 过滤条件
+    label: 汇总过滤条件
     help: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
     description: 
   summary_filters.$:
-    label: Filter Criteria
+    label: 汇总过滤条件
     help: 
     description: 
   summary_filters.$.field:

@@ -4,6 +4,6 @@ amis:
 defaultValue: bd09
 hidden: false
 label: 坐标类型
-sort_no: 160
+sort_no: 140
 type: text
 visible_on: '{{[''location''].indexOf(formData.type) > -1 ? true: false}}'

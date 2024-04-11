@@ -2,5 +2,5 @@ name: options.$.value
 hidden: false
 label: Value
 required: true
-sort_no: 260
+sort_no: 240
 type: text

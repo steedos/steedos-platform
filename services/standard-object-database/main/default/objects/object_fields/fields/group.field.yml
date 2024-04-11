@@ -3,5 +3,5 @@ group: ui
 hidden: false
 label: Group
 readonly: true
-sort_no: 560
+sort_no: 480
 type: text

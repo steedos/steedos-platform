@@ -6,6 +6,7 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
 
 
+
     if(values && values.reference_to){
       return ['object', '=', values.reference_to]
     }else{
@@ -13,11 +14,13 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
     }
 
 
+
   }
+group: auto_fill
 hidden: false
 label: 'From:Fields in object that reference to'
 reference_to: object_fields
 reference_to_field: name
 required: true
-sort_no: 310
+sort_no: 530
 type: lookup

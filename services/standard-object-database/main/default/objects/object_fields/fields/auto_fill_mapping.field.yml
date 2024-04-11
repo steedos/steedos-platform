@@ -1,6 +1,7 @@
 name: auto_fill_mapping
 amis:
   enableDialog: false
+group: auto_fill
 hidden: false
 inlineHelpText: >-
   When the data is selected, the field values in the reference object are
@@ -8,7 +9,7 @@ inlineHelpText: >-
   mapping.
 is_wide: true
 label: Auto Fill Mapping
-sort_no: 290
+sort_no: 500
 type: table
 visible_on: >-
   {{(formData.type === 'lookup' || formData.type === 'master_detail') &&

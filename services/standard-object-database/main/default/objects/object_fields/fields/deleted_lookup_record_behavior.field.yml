@@ -13,6 +13,6 @@ options:
   - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
     value: retain
 required: true
-sort_no: 120
+sort_no: 100
 type: select
 visible_on: '{{ ''lookup'' === formData.type ? true: false }}'

@@ -2,5 +2,5 @@ name: searchable
 group: Advanced
 hidden: false
 label: Searchable
-sort_no: 570
+sort_no: 560
 type: boolean

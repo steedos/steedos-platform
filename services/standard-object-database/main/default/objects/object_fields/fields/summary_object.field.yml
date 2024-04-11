@@ -27,6 +27,6 @@ label: Object to Summarize
 reference_to: objects
 reference_to_field: name
 required: '{{formData.type === ''summary'' ? true: false}}'
-sort_no: 90
+sort_no: 80
 type: lookup
 visible_on: '{{formData.type === ''summary'' ? true: false}}'

@@ -11,6 +11,6 @@ inlineHelpText: >-
   all records should be included in the calculation while the criteria is empty.
 is_wide: true
 label: Filter Criteria
-sort_no: 350
+sort_no: 280
 type: table
 visible_on: '{{formData.type === ''summary'' && global.mode !=''read'' ? true: false}}'

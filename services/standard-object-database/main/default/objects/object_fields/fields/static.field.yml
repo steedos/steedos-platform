@@ -5,5 +5,5 @@ inlineHelpText: >-
   Displays as read-only, but the field value can be set by default, autofill, or
   custom scripts when creating and editing records.
 label: Readonly and displayed while editing
-sort_no: 520
+sort_no: 410
 type: boolean

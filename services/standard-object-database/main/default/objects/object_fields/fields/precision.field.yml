@@ -11,7 +11,7 @@ required: >-
   'percent'].indexOf(formData.data_type) > -1){ return true; } else{ return
   false; } } })() }}
 scale: 0
-sort_no: 190
+sort_no: 180
 type: currency
 visible_on: >-
   {{ (function(){ if(['number', 'currency', 'percent',

@@ -6,13 +6,15 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
 
 
+
     if(values.summary_object){
       return Creator.getObjectFilterFieldOptions(values.summary_object)
     }
     return []
 
 
+
   }
 showIcon: false
-sort_no: 370
+sort_no: 300
 type: lookup

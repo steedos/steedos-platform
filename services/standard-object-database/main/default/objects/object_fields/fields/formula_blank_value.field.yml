@@ -12,6 +12,6 @@ options:
   - label: Treat blank fields as blanks
     value: blanks
 required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 330
+sort_no: 170
 type: select
 visible_on: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'

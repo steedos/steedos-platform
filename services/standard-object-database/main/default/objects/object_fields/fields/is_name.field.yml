@@ -4,5 +4,5 @@ amis:
 group: Advanced
 hidden: false
 label: Is Name
-sort_no: 670
+sort_no: 650
 type: boolean

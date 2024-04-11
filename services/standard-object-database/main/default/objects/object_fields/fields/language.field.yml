@@ -83,6 +83,6 @@ options:
   - label: yaml
     value: yaml
 required: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 150
+sort_no: 130
 type: select
 visible_on: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'

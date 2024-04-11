@@ -72,7 +72,7 @@ reference_to_field: name
 required: >-
   {{formData.type === 'summary' && formData.summary_type !== 'count' ? true:
   false}}
-sort_no: 340
+sort_no: 270
 type: lookup
 visible_on: >-
   {{formData.type === 'summary' && formData.summary_object &&

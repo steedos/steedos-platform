@@ -1,6 +1,6 @@
 name: is_system
 hidden: false
-readonly: true
 label: System
-sort_no: 470
+readonly: true
+sort_no: 370
 type: boolean

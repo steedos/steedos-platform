@@ -5,6 +5,6 @@ hidden: false
 label: Sort Number
 readonly: true
 scale: 0
-sort_no: 550
+sort_no: 490
 sortable: true
 type: number

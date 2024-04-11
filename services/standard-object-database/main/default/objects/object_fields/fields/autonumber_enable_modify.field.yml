@@ -1,6 +1,6 @@
 name: autonumber_enable_modify
 hidden: false
 label: 允许修改编号
-sort_no: 140
+sort_no: 120
 type: boolean
 visible_on: '{{formData.type === ''autonumber'' ? true: false}}'

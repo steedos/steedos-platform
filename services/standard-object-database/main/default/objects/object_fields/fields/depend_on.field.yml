@@ -8,6 +8,7 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
   ) {
 
 
+
     if(values && values.object){
       return ['object', '=', values.object]
     }else{
@@ -15,14 +16,15 @@ filtersFunction: !<tag:yaml.org,2002:js/function> |-
     }
 
 
+
   }
-group: Advanced
+group: ui
 hidden: false
 inlineHelpText: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
 label: 依赖的字段
 multiple: true
 reference_to: object_fields
 reference_to_field: name
-sort_no: 600
+sort_no: 470
 type: lookup
 visible_on: '{{[''lookup'', ''master_detail''].indexOf(formData.type) > -1 ? true: false}}'

@@ -2,5 +2,5 @@ name: filterable
 group: Advanced
 hidden: false
 label: Filterable
-sort_no: 580
+sort_no: 570
 type: boolean

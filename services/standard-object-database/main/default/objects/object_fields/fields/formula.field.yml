@@ -6,6 +6,6 @@ inlineHelpText: This field must be filled when the field type is 'Autonumber' or
 is_wide: true
 label: Formula
 required: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 170
+sort_no: 150
 type: textarea
 visible_on: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'

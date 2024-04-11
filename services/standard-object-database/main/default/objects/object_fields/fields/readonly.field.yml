@@ -5,5 +5,5 @@ inlineHelpText: >-
   It is read-only and does not appear on the form when you create or edit
   records.
 label: Readonly
-sort_no: 510
+sort_no: 400
 type: boolean

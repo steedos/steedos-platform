@@ -2,5 +2,5 @@ name: options.$
 blackbox: true
 hidden: false
 label: Options
-sort_no: 240
+sort_no: 220
 type: object

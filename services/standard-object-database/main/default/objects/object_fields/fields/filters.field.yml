@@ -1,6 +1,7 @@
 name: filters
 amis:
   disabledOn: '${is_system == true}'
+group: ui
 hidden: false
 inlineHelpText: >-
   vWhen the field type is Lookup Relationship or Master Detail Relationship,
@@ -10,7 +11,7 @@ inlineHelpText: >-
 is_wide: true
 label: Lookup Relationship Filters Condition
 readonly: false
-sort_no: 70
+sort_no: 460
 type: code
 visible_on: >-
   {{(['lookup', 'master_detail'].indexOf(formData.type) > -1 ? true: false) &&

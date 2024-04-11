@@ -2,5 +2,5 @@ name: is_wide
 group: ui
 hidden: false
 label: Is Wide
-sort_no: 500
+sort_no: 390
 type: boolean
