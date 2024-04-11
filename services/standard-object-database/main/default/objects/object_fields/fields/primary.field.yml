@@ -1,7 +1,12 @@
 name: primary
-type: boolean
-label: Primary Key
-group: External data source
-sort_no: 530
 amis:
   disabledOn: '${is_system == true}'
+filters: []
+group: Advanced
+hidden: false
+label: Primary Key
+sort_no: 600
+type: boolean
+visible_on: >-
+  ${_master.record.datasource != null &&(_master.record.datasource != "meteor")
+  &&(_master.record.datasource != "default")}

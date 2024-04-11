@@ -1,7 +1,8 @@
 name: language
-type: select
+amis:
+  disabledOn: '${is_system == true}'
+hidden: false
 label: 语言
-required: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
 options:
   - label: bat
     value: bat
@@ -81,7 +82,7 @@ options:
     value: xml
   - label: yaml
     value: yaml
-sort_no: 150
+required: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
+sort_no: 130
+type: select
 visible_on: '{{[''code''].indexOf(formData.type) > -1 ? true: false}}'
-amis:
-  disabledOn: '${is_system == true}'

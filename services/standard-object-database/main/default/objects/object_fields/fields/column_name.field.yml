@@ -1,10 +1,15 @@
 name: column_name
-type: text
-label: Database column name
-inlineHelpText: Only supports relational databases.
-searchable: true
-index: true
-group: External data source
-sort_no: 520
 amis:
   disabledOn: '${is_system == true}'
+filters: []
+group: Advanced
+hidden: false
+index: true
+inlineHelpText: Only supports relational databases.
+label: Database column name
+searchable: true
+sort_no: 590
+type: text
+visible_on: >-
+  ${_master.record.datasource != null &&(_master.record.datasource != "meteor")
+  &&(_master.record.datasource != "default")}

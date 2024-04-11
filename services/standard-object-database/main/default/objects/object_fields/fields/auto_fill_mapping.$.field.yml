@@ -1,5 +1,7 @@
 name: auto_fill_mapping.$
-label: Auto Fill Mapping
 blackbox: true
+group: auto_fill
+hidden: false
+label: Auto Fill Mapping
+sort_no: 510
 type: object
-sort_no: 400

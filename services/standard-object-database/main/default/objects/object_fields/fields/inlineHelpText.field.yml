@@ -1,5 +1,7 @@
 name: inlineHelpText
-label: Prompt text
-type: textarea
+group: ui
+hidden: false
 is_wide: true
-sort_no: 710
+label: Prompt text
+sort_no: 420
+type: textarea

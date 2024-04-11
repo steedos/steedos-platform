@@ -1,5 +1,6 @@
 name: options.$.description
+hidden: false
 label: Description
-type: text
 required: false
-sort_no: 380
+sort_no: 260
+type: text

@@ -1,10 +1,11 @@
 name: summary_filters.$.operation
+hidden: false
 label: Operator
-type: lookup
-showIcon: false
 optionsFunction: !<tag:yaml.org,2002:js/function> |-
-  function anonymous(values
+  function(values
   ) {
+
+
 
     if(values.summary_object){
       if(!this.template){
@@ -33,5 +34,9 @@ optionsFunction: !<tag:yaml.org,2002:js/function> |-
     }
     return [];
 
+
+
   }
-sort_no: 500
+showIcon: false
+sort_no: 310
+type: lookup

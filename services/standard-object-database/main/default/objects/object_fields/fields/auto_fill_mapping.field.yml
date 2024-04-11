@@ -1,14 +1,16 @@
 name: auto_fill_mapping
-type: table
-label: Auto Fill Mapping
-is_wide: true
+amis:
+  enableDialog: false
+group: auto_fill
+hidden: false
 inlineHelpText: >-
   When the data is selected, the field values in the reference object are
   automatically filled into the current form field according to the following
   mapping.
+is_wide: true
+label: Auto Fill Mapping
+sort_no: 500
+type: table
 visible_on: >-
   {{(formData.type === 'lookup' || formData.type === 'master_detail') &&
   formData.reference_to && !!!formData.multiple}}
-sort_no: 390
-amis:
-  enableDialog: false

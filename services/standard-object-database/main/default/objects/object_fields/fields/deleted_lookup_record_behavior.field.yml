@@ -1,17 +1,18 @@
 name: deleted_lookup_record_behavior
-type: select
-label: 如果相关表记录被删除怎么办？
-required: true
-visible_on: '{{ ''lookup'' === formData.type ? true: false }}'
-options:
-  - label: 清除此字段的值。 如果您将此字段设为必填，您不能选择此选项。
-    value: clear
-  - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
-    value: retain
-sort_no: 590
-is_wide: true
 amis:
   disabledOn: '${required==true}'
   value: >-
     ${IFS(true===required, "retain", !required &&
     !deleted_lookup_record_behavior, "clear", deleted_lookup_record_behavior)}
+hidden: false
+is_wide: true
+label: 如果相关表记录被删除怎么办？
+options:
+  - label: 清除此字段的值。 如果您将此字段设为必填，您不能选择此选项。
+    value: clear
+  - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
+    value: retain
+required: true
+sort_no: 100
+type: select
+visible_on: '{{ ''lookup'' === formData.type ? true: false }}'

@@ -1,5 +1,6 @@
 name: options.$.label
+hidden: false
 label: Label
-type: text
 required: true
-sort_no: 350
+sort_no: 230
+type: text

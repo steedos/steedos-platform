@@ -1,7 +1,8 @@
-permission_set_id: admin
 allowCreate: true
 allowDelete: true
 allowEdit: true
 allowRead: true
 modifyAllRecords: true
+permission_set_id: admin
 viewAllRecords: true
+field_permissions: []

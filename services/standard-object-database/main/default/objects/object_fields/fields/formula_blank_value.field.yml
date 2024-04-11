@@ -1,16 +1,17 @@
 name: formula_blank_value
-type: select
-label: Blank Field Handling
+amis:
+  disabledOn: '${is_system == true}'
+hidden: false
 inlineHelpText: >-
   If your formula references any number or currency fields, specify what happens
   to the formula output when their values are blank.
+label: Blank Field Handling
 options:
   - label: Treat blank fields as zeroes
     value: zeroes
   - label: Treat blank fields as blanks
     value: blanks
-visible_on: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
 required: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 430
-amis:
-  disabledOn: '${is_system == true}'
+sort_no: 170
+type: select
+visible_on: '{{[''formula''].indexOf(formData.type) > -1 ? true: false}}'

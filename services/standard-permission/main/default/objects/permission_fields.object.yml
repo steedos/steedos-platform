@@ -76,10 +76,10 @@ fields:
       }
   readable:
     type: boolean
-    label: 允许查看
+    label: 可见
     sort_no: 150
   editable:
-    label: 允许编辑
+    label: 可编辑
     type: boolean
     sort_no: 160
   is_system:

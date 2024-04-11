@@ -1,5 +1,6 @@
 name: options.$.value
+hidden: false
 label: Value
-type: text
 required: true
-sort_no: 360
+sort_no: 240
+type: text

@@ -1,7 +1,12 @@
 name: generated
-type: boolean
-label: Generated
-group: External data source
-sort_no: 540
 amis:
   disabledOn: '${is_system == true}'
+filters: []
+group: Advanced
+hidden: false
+label: Generated
+sort_no: 630
+type: boolean
+visible_on: >-
+  ${_master.record.datasource != null &&(_master.record.datasource != "meteor")
+  &&(_master.record.datasource != "default")}

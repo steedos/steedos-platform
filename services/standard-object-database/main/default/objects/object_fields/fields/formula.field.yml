@@ -1,10 +1,11 @@
 name: formula
-label: Formula
-type: textarea
-inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
-is_wide: true
-visible_on: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
-required: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
-sort_no: 260
 amis:
   disabledOn: '${is_system == true}'
+hidden: false
+inlineHelpText: This field must be filled when the field type is 'Autonumber' or 'Formula'
+is_wide: true
+label: Formula
+required: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'
+sort_no: 150
+type: textarea
+visible_on: '{{[''autonumber'', ''formula''].indexOf(formData.type) > -1 ? true: false}}'

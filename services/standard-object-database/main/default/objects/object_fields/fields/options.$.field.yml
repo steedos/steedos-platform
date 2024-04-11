@@ -1,5 +1,6 @@
 name: options.$
-label: Options
 blackbox: true
+hidden: false
+label: Options
+sort_no: 220
 type: object
-sort_no: 340

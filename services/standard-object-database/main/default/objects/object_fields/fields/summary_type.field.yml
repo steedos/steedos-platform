@@ -1,7 +1,9 @@
 name: summary_type
-type: select
-label: Roll-Up Type
+amis:
+  disabledOn: '${is_system == true}'
+hidden: false
 inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+label: Roll-Up Type
 options:
   - label: COUNT
     value: count
@@ -13,8 +15,7 @@ options:
     value: max
   - label: AVG
     value: avg
-visible_on: '{{formData.type === ''summary'' ? true: false}}'
 required: '{{formData.type === ''summary'' ? true: false}}'
-sort_no: 450
-amis:
-  disabledOn: '${is_system == true}'
+sort_no: 90
+type: select
+visible_on: '{{formData.type === ''summary'' ? true: false}}'

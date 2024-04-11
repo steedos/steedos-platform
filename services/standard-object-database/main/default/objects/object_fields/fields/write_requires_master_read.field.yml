@@ -1,6 +1,7 @@
 name: write_requires_master_read
-label: Write requires master read
-type: boolean
+amis:
+  disabledOn: '${is_system == true}'
+hidden: false
 inlineHelpText: >-
   Sets the minimum sharing access level required on the master record to create,
   edit, or delete child records. This field applies only to master-detail or
@@ -9,7 +10,7 @@ inlineHelpText: >-
   setting makes sharing less restrictive. false—Allows users with “Read/Write”
   access to the master record permission to create, edit, or delete child
   records. This setting is more restrictive than true, and is the default value.
+label: Write requires master read
+sort_no: 110
+type: boolean
 visible_on: '{{formData.type === ''master_detail'' ? true: false}}'
-sort_no: 240
-amis:
-  disabledOn: '${is_system == true}'

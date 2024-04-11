@@ -1,11 +1,4 @@
 name: summary_object
-type: lookup
-label: Object to Summarize
-inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
-reference_to: objects
-reference_to_field: name
-depend_on:
-  - object
 amis:
   disabledOn: '${is_system == true}'
   source:
@@ -26,6 +19,14 @@ amis:
     adaptor: ''
     sendOn: this.object
     requestAdaptor: ''
-visible_on: '{{formData.type === ''summary'' ? true: false}}'
+depend_on:
+  - object
+hidden: false
+inlineHelpText: This field must be filled in when the field type is 'Roll-Up Summary'.
+label: Object to Summarize
+reference_to: objects
+reference_to_field: name
 required: '{{formData.type === ''summary'' ? true: false}}'
-sort_no: 440
+sort_no: 80
+type: lookup
+visible_on: '{{formData.type === ''summary'' ? true: false}}'

@@ -1,5 +1,6 @@
 name: filterable
-type: boolean
+group: Advanced
+hidden: false
 label: Filterable
-group: ui
-sort_no: 680
+sort_no: 570
+type: boolean

@@ -7,14 +7,15 @@ columns:
   - object
   - sort_no
   - modified
-  - hidden
   - readonly
   - is_system
   - is_customize
 extra_columns:
   - reference_to
+filter_scope: space
+label: All
+shared: true
+shared_to: space
 sort:
   - field_name: sort_no
     order: asc
-label: All
-filter_scope: space

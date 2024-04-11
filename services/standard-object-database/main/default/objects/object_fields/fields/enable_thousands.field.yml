@@ -1,6 +1,8 @@
 name: enable_thousands
-type: boolean
-label: 显示千分符
-sort_no: 580
-visible_on: '{{[''number'',''currency'',''percent''].indexOf(formData.type) > -1 ? true: false}}'
 defaultValue: true
+group: ui
+hidden: false
+label: 显示千分符
+sort_no: 450
+type: boolean
+visible_on: '{{[''number'',''currency'',''percent''].indexOf(formData.type) > -1 ? true: false}}'

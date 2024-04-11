@@ -1,5 +1,7 @@
 name: enable_enhanced_lookup
-type: boolean
+group: ui
+hidden: false
 label: Enable Enhanced Lookup
-hidden: true
-sort_no: 750
+sort_no: 430
+type: boolean
+visible_on: '{{[''lookup''].indexOf(formData.type) > -1 ? true: false}}'

@@ -1,5 +1,6 @@
 name: searchable
-type: boolean
+group: Advanced
+hidden: false
 label: Searchable
-group: ui
-sort_no: 670
+sort_no: 560
+type: boolean

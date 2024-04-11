@@ -1,5 +1,6 @@
 name: hidden
-type: boolean
+hidden: false
 label: Hidden
-group: ui
-sort_no: 630
+sort_no: 670
+type: boolean
+visible_on: '{{false}}'

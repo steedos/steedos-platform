@@ -1,5 +1,6 @@
 name: summary_filters.$
-label: Filter Criteria
 blackbox: true
+hidden: false
+label: Filter Criteria
+sort_no: 290
 type: object
-sort_no: 480

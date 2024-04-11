@@ -1,5 +1,6 @@
 name: is_wide
-type: boolean
-label: Is Wide
-sort_no: 600
 group: ui
+hidden: false
+label: Is Wide
+sort_no: 390
+type: boolean

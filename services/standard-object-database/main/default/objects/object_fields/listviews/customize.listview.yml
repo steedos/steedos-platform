@@ -7,13 +7,14 @@ columns:
   - object
   - sort_no
   - modified
-  - hidden
   - readonly
   - is_system
   - is_customize
-label: 自定义
+filter_scope: space
 filters:
   - - is_system
     - <>
     - true
-filter_scope: space
+label: 自定义
+shared: true
+shared_to: space

@@ -1,17 +1,4 @@
 name: summary_field
-type: lookup
-label: Field to Aggregate
-reference_to: object_fields
-reference_to_field: name
-inlineHelpText: >-
-  If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT,
-  this field must be filled in, Only fields that aggregate number, currency,
-  date, and datetime types are supported.
-depend_on:
-  - summary_object
-  - summary_type
-defaultIcon: service_contract
-enable_enhanced_lookup: false
 amis:
   disabledOn: '${is_system == true}'
   autoComplete:
@@ -69,10 +56,24 @@ amis:
         status: 0
       }
       return payload;
-visible_on: >-
-  {{formData.type === 'summary' && formData.summary_object &&
-  formData.summary_type && formData.summary_type !== 'count'}}
+defaultIcon: service_contract
+depend_on:
+  - summary_object
+  - summary_type
+enable_enhanced_lookup: false
+hidden: false
+inlineHelpText: >-
+  If the field type is a 'Roll-Up Summary' and the 'Roll-Up Type' is not COUNT,
+  this field must be filled in, Only fields that aggregate number, currency,
+  date, and datetime types are supported.
+label: Field to Aggregate
+reference_to: object_fields
+reference_to_field: name
 required: >-
   {{formData.type === 'summary' && formData.summary_type !== 'count' ? true:
   false}}
-sort_no: 460
+sort_no: 270
+type: lookup
+visible_on: >-
+  {{formData.type === 'summary' && formData.summary_object &&
+  formData.summary_type && formData.summary_type !== 'count'}}

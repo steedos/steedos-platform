@@ -1,20 +1,7 @@
 name: defaultValue
-type: object
-blackbox: true
-label: Default Value
-sort_no: 160
-visible_on: >-
-  {{formData.type &&
-  ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}
 amis:
   type: service
-  className:
-    antd-Form-item: true
-    antd-Form-item--normal: true
-    m-0: true
-    'md:border-b': global.mode === "read"
-    defaultValue_field: true
-    flex: true
+  className: "antd-Form-item antd-Form-item--normal m-0 defaultValue_field steedos-defaultValue-${type}-${global.mode} ${type !== 'html' ? 'flex steedos-defaultValue-flex-grow' : ''} ${global.mode === 'read' ? 'md:border-b' : ''} ${uiSchema && uiSchema.fields.defaultValue.is_wide ? 'col-span-2 m-0' : ''}"
   schemaApi:
     url: '${context.rootUrl}/service/api/object_fields/defaultValue/schema'
     method: post
@@ -44,3 +31,12 @@ amis:
             value:
               defaultValue: '${event.data.body[0].value}'
           expression: 'global.mode ===''read'' && event.data.body[0].value'
+blackbox: true
+hidden: false
+is_wide: true
+label: Default Value
+sort_no: 350
+type: object
+visible_on: >-
+  {{formData.type &&
+  ['autonumber','formula','summary','image','file'].indexOf(formData.type) < 0}}

@@ -2,11 +2,12 @@ name: field_groups
 blackbox: true
 filters: []
 hidden: false
+readonly: true
 is_wide: true
 label: 字段分组
 sort_no: 60
 type: grid
-visible_on: '${false}'
+group: switch
 defaultValue: 
   - group_name: 系统信息
     collapsed: true
