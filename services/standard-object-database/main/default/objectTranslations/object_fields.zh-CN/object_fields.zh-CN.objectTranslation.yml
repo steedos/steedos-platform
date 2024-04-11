@@ -2,25 +2,370 @@ name: object_fields
 label: 对象字段
 description: 
 fields:
-  object:
-    label: 所属对象
+  _name:
+    label: 字段名
+    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description: 
+  amis:
+    label: Amis 配置
+    help: 使用 amis 配置字段显示样式
+  auto_fill_mapping:
+    label: 自动填充规则
+    help: 在表单中，填写某个字段后，会根据预设规则自动填充其他字段。例如，在新建付款记录表单中，选择合同后，会自动将合同的金额填入付款金额字段。
+    description: 
+  auto_fill_mapping.$:
+    label: 自动填充规则
+    help: 
+    description: 
+  auto_fill_mapping.$.from:
+    label: 从：引用对象中的字段
+    help: 
+    description: 
+  auto_fill_mapping.$.to:
+    label: 填充到：当前表单字段
+    help: 
+    description: 
+  autonumber_enable_modify:
+    label: 允许修改编号
+    help: 
+    description: 
+  column_name:
+    label: 数据库字段名
+    help: 仅在外部数据源时生效
+    description: 
+  coordinatesType:
+    label: 坐标类型
+    help: 
+    description: 
+  create:
+    label: 弹出选择时允许新建
+    help: 
+    description: 
+  data_type:
+    label: 数据类型
+    help: 字段类型为公式时，必须填写此字段。
+    options:
+      - label: 布尔
+        value: boolean
+      - label: 数值
+        value: number
+      - label: 金额
+        value: currency
+      - label: 百分比
+        value: percent
+      - label: 文本
+        value: text
+      - label: 日期
+        value: date
+      - label: 日期时间
+        value: datetime
+    description: 
+  defaultValue:
+    label: 默认值
+    help: 
+    description: 
+  deleted_lookup_record_behavior:
+    label: 如果相关表记录被删除怎么办？
+    help: 
+    description: 
+    options:
+      - label: 清除此字段的值。 如果您将此字段设为必填，您不能选择此选项。
+        value: clear
+      - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
+        value: retain
+  depend_on:
+    label: 依赖的字段
+    help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
+    description: 
+  description:
+    label: 描述
+    help: 
+    description: 
+  enable_enhanced_lookup:
+    label: 弹出选择
+    help: 被其他字段引用时，使用弹出框选择记录。
+    description: 
+  enable_thousands:
+    label: 显示千分符
+    help: 
+    description: 
+  filterable:
+    label: 列表页过滤器默认字段
+    help: 
+    description: 
+  filters:
+    label: 相关表过滤条件
+    help: 当字段类型为相关表关系或主/子表关系时，可以为该字段配置过滤条件，过滤选项列表；其中字段值可以配置为公式，公式中引用的字段需要同时配置在依赖的字段中
+    description: 
+  filtersFunction:
+    label: 相关表过滤器函数
+    help: 
+    description: 
+  formula:
+    label: 公式
+    help: 字段类型为自动编号或公式时，必须填写此字段。
+    description: 
+  formula_blank_value:
+    label: 空白字段处理
+    help: 如果您的公式引用了任何数字和货币字段，请指定当这些字段值为空时如何处理公式输出。
+    options:
+      - label: 将空白字段视为零
+        value: zeroes
+      - label: 将空白字段视为空白
+        value: blanks
+    description: 
+  generated:
+    label: 自增
+    help: 仅在外部数据源时生效
+    description: 
+  group:
+    label: 字段分组
+    help: 
+    description: 
+  hidden:
+    label: 不可见
+    help: 默认隐藏此字段，如果配置了字段权限，会覆盖此属性。
+    description: 
+  index:
+    label: 创建索引
+    help: 默认每天凌晨执行一次创建，已有的索引不重复创建。
+    description: 
+  inlineHelpText:
+    label: 提示文本
+    help: 
+    description: 
+  is_customize:
+    label: 自定义
+  is_name:
+    label: 名称字段
     help: 
     description: 
   is_system:
     label: 系统
     help: 
     description: 
+  is_wide:
+    label: 宽字段
+    help: 
+    description: 
   label:
     label: 显示名称
     help: 
     description: 
-  _name:
-    label: 字段名
-    help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+  language:
+    label: 语言
+    help: 
+    options:
+      - label: bat
+        value: bat
+      - label: c
+        value: c
+      - label: coffeescript
+        value: coffeescript
+      - label: cpp
+        value: cpp
+      - label: csharp
+        value: csharp
+      - label: css
+        value: css
+      - label: dockerfile
+        value: dockerfile
+      - label: fsharp
+        value: fsharp
+      - label: go
+        value: go
+      - label: handlebars
+        value: handlebars
+      - label: html
+        value: html
+      - label: ini
+        value: ini
+      - label: java
+        value: java
+      - label: javascript
+        value: javascript
+      - label: json
+        value: json
+      - label: less
+        value: less
+      - label: lua
+        value: lua
+      - label: markdown
+        value: markdown
+      - label: msdax
+        value: msdax
+      - label: objective-c
+        value: objective-c
+      - label: php
+        value: php
+      - label: plaintext
+        value: plaintext
+      - label: postiats
+        value: postiats
+      - label: powershell
+        value: powershell
+      - label: pug
+        value: pug
+      - label: python
+        value: python
+      - label: r
+        value: r
+      - label: razor
+        value: razor
+      - label: ruby
+        value: ruby
+      - label: sb
+        value: sb
+      - label: scss
+        value: scss
+      - label: shell
+        value: shell
+      - label: sol
+        value: sol
+      - label: sql
+        value: sql
+      - label: swift
+        value: swift
+      - label: typescript
+        value: typescript
+      - label: vb
+        value: vb
+      - label: xml
+        value: xml
+      - label: yaml
+        value: yaml
+    description: 
+  multiple:
+    label: 多选
+    help: 单选<==>多选 相互切换，请自行重新提交已有记录或在数据库中统一修改此字段的保存格式。
     description: 
   name:
     label: API 名称
     help: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+    description: 
+  object:
+    label: 所属对象
+    help: 
+    description: 
+  options:
+    label: 选择项
+    help: 选择项的每个选项显示名及选项值不能为空，背景颜色请设置为ffffff这种格式的16进制数值。
+    description: 
+  options.$:
+    label: Options
+    help: 
+    description: 
+  options.$.color:
+    label: 背景颜色
+    help: 
+    description: 
+  options.$.description:
+    label: 描述
+    help: 
+    description: 
+  options.$.label:
+    label: 显示名
+    help: 
+    description: 
+  options.$.value:
+    label: 选项值
+    help: 
+    description: 
+  precision:
+    label: 精度(数字长度)
+    help: 
+    description: 
+  primary:
+    label: 主键
+    help: 仅在外部数据源时生效
+    description: 
+  readonly:
+    label: 服务端只读
+    help: 编辑时不加载此字段，数据不会提交到服务端。
+    description: 
+  reference_to:
+    label: 引用对象
+    help: 
+    description: 
+  reference_to_field:
+    label: 外键字段
+    help: >-
+      关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
+    description: 默认为主键，默认值是_id
+  required:
+    label: 必填
+    help: 
+    description: 
+  rows:
+    label: 多行文本行数
+    help: 
+    description: 
+  scale:
+    label: 小数位数
+    help: 如果字段类型为百分比，此处表示字段显示时的小数位数，比如2位小数会显示为10.20%。
+    description: 
+  searchable:
+    label: 启用列表页快速搜索
+    help: 
+    description: 
+  show_as_qr:
+    label: 显示为二维码
+    help: 
+    description: 
+  sort_no:
+    label: 排序号
+    help: 
+    description: 
+  sortable:
+    label: 可排序
+    help: 
+    description: 
+  static:
+    label: 前端只读
+    help: 编辑时显示此字段，数据会提交到服务端，可动态赋值。
+    description: 
+  summary_field:
+    label: 要聚合的字段
+    help: 字段类型为累计汇总且汇总类型不是COUNT时，必须填写此字段，只支持聚合数值、金额、日期、日期时间类型的字段。
+    description: 
+  summary_filters:
+    label: 过滤条件
+    help: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
+    description: 
+  summary_filters.$:
+    label: Filter Criteria
+    help: 
+    description: 
+  summary_filters.$.field:
+    label: 字段
+    help: 
+    description: 
+  summary_filters.$.operation:
+    label: 运算符
+    help: 
+    description: 
+  summary_filters.$.value:
+    label: 值
+    help: 
+    description: 
+  summary_object:
+    label: 要汇总的对象
+    help: 字段类型为累计汇总时，必须填写此字段。
+    description: 
+  summary_type:
+    label: 汇总类型
+    help: 字段类型为累计汇总时，必须填写此字段。
+    options:
+      - label: COUNT
+        value: count
+      - label: SUM
+        value: sum
+      - label: MIN
+        value: min
+      - label: MAX
+        value: max
+      - label: AVG
+        value: avg
     description: 
   type:
     label: 字段类型
@@ -79,294 +424,20 @@ fields:
       - label: 累计汇总
         value: summary
     description: 
-  defaultValue:
-    label: 默认值
-    help: 
-    description: 
-  group:
-    label: 字段分组
-    help: 
-    description: 
-  coordinatesType:
-    label: 坐标类型
-    help: 
-    description: 
-  reference_to:
-    label: 引用对象
-    help: 
-    description: 
-  depend_on:
-    label: 依赖的字段
-    help: 联动字段；例如：A是B依赖的字段，当A字段值发生改变，B字段选项值会随之改变。
-    description: 
-  create:
-    label: 弹出选择时允许新建
-    help: 
-    description: 
-  reference_to_field:
-    label: 外键字段
-    help: 关联的对象保存到当前对象字段的值；例如：A对象关联B对象后，当A1记录关联了B1记录，默认会存B1记录的_id存到A1记录中。如果修改了外键字段后，会将“外键字段”替换_id存储到A1记录中。
-    description: '默认为主键，默认值是_id'
-  filters:
-    label: 相关表过滤条件
-    help: 当字段类型为相关表关系或主/子表关系时，可以为该字段配置过滤条件，过滤选项列表；其中字段值可以配置为公式，公式中引用的字段需要同时配置在依赖的字段中
-    description: 
-  filtersFunction:
-    label: 相关表过滤器函数
-    help: 
-    description: 
-  optionsFunction:
-    label: 选择项函数
-    help: 
-    description: 
-  precision:
-    label: 精度(数字长度)
-    help: 
-    description: 
-  scale:
-    label: 小数位数
-    help: 如果字段类型为百分比，此处表示字段显示时的小数位数，比如2位小数会显示为10.20%。
-    description: 
-  rows:
-    label: 多行文本行数
-    help: 
-    description: 
-  multiple:
-    label: 多选
-    help: 单选<==>多选 相互切换，请自行重新提交已有记录或在数据库中统一修改此字段的保存格式。
-    description: 
-  options:
-    label: 选择项
-    help: 选择项的每个选项显示名及选项值不能为空，背景颜色请设置为ffffff这种格式的16进制数值。
-    description: 
-  options.$:
-    label: Options
-    help: 
-    description: 
-  options.$.label:
-    label: 显示名
-    help: 
-    description: 
-  options.$.value:
-    label: 选项值
-    help: 
-    description: 
-  options.$.color:
-    label: 背景颜色
-    help: 
-    description: 
-  options.$.description:
-    label: 描述
-    help: 
-    description: 
-  auto_fill_mapping:
-    label: 自动填充规则
-    help: 在表单中，填写某个字段后，会根据预设规则自动填充其他字段。例如，在新建付款记录表单中，选择合同后，会自动将合同的金额填入付款金额字段。
-    description: 
-  auto_fill_mapping.$:
-    label: 自动填充规则
-    help: 
-    description: 
-  auto_fill_mapping.$.from:
-    label: 从：引用对象中的字段
-    help: 
-    description: 
-  auto_fill_mapping.$.to:
-    label: 填充到：当前表单字段
-    help: 
-    description: 
-  autonumber_enable_modify:
-    label: 允许修改编号
-    help: 
-    description: 
-  formula:
-    label: 公式
-    help: 字段类型为自动编号或公式时，必须填写此字段。
-    description: 
-  data_type:
-    label: 数据类型
-    help: 字段类型为公式时，必须填写此字段。
-    options:
-      - label: 布尔
-        value: boolean
-      - label: 数值
-        value: number
-      - label: 金额
-        value: currency
-      - label: 百分比
-        value: percent
-      - label: 文本
-        value: text
-      - label: 日期
-        value: date
-      - label: 日期时间
-        value: datetime
-    description: 
-  formula_blank_value:
-    label: 空白字段处理
-    help: 如果您的公式引用了任何数字和货币字段，请指定当这些字段值为空时如何处理公式输出。
-    options:
-      - label: 将空白字段视为零
-        value: zeroes
-      - label: 将空白字段视为空白
-        value: blanks
-    description: 
-  summary_object:
-    label: 要汇总的对象
-    help: 字段类型为累计汇总时，必须填写此字段。
-    description: 
-  summary_type:
-    label: 汇总类型
-    help: 字段类型为累计汇总时，必须填写此字段。
-    options:
-      - label: COUNT
-        value: count
-      - label: SUM
-        value: sum
-      - label: MIN
-        value: min
-      - label: MAX
-        value: max
-      - label: AVG
-        value: avg
-    description: 
-  summary_field:
-    label: 要聚合的字段
-    help: 字段类型为累计汇总且汇总类型不是COUNT时，必须填写此字段，只支持聚合数值、金额、日期、日期时间类型的字段。
-    description: 
-  summary_filters:
-    label: 过滤条件
-    help: 此计算仅应包括符合特定条件的记录，当过滤条件为空时，所有记录都应包括在计算中。
-    description: 
-  summary_filters.$:
-    label: Filter Criteria
-    help: 
-    description: 
-  summary_filters.$.field:
-    label: 字段
-    help: 
-    description: 
-  summary_filters.$.operation:
-    label: 运算符
-    help: 
-    description: 
-  summary_filters.$.value:
-    label: 值
-    help: 
-    description: 
-  summary_depend_on:
-    label: 汇总依赖的字段
-    help: 汇总时依赖了子表的哪些字段，当这些字段值变更时会触发重算主表记录的汇总字段值
-    description: 
-  column_name:
-    label: 数据库字段名
-    help: 仅在外部数据源时生效
-    description: 
-  primary:
-    label: 主键
-    help: 仅在外部数据源时生效
-    description: 
-  generated:
-    label: 自增
-    help: 仅在外部数据源时生效
-    description: 
-  sort_no:
-    label: 排序号
-    help: 
-    description: 
-  is_name:
-    label: 名称字段
-    help: 
-    description: 
-  required:
-    label: 必填
-    help: 
-    description: 
-  enable_thousands:
-    label: 显示千分符
-    help: 
-    description:
-  deleted_lookup_record_behavior:
-    label: 如果相关表记录被删除怎么办？
-    help: 
-    description: 
-    options:
-      - label: 清除此字段的值。 如果您将此字段设为必填，您不能选择此选项。
-        value: clear
-      - label: 不允许删除＂作为相关表关系的一部分的相关表记录＂。
-        value: retain
-  is_wide:
-    label: 宽字段
-    help: 
-    description: 
-  readonly:
-    label: 服务端只读
-    help: 编辑时不加载此字段，数据不会提交到服务端。
-    description: 
-  static:
-    label: 前端只读
-    help: 编辑时显示此字段，数据会提交到服务端，可动态赋值。
-    description: 
-  hidden:
-    label: 不可见
-    help: 默认隐藏此字段，如果配置了字段权限，会覆盖此属性。
-    description: 
-  omit:
-    label: 新建、编辑时隐藏
-    help: 
-    description: 
-  index:
-    label: 创建索引
-    help: 默认每天凌晨执行一次创建，已有的索引不重复创建。
-    description: 
   unique:
     label: 创建唯一索引
     help: 默认每天凌晨执行一次创建，已有的索引不重复创建。
     description: 
-  sortable:
-    label: 可排序
-    help: 
-    description: 
-  searchable:
-    label: 启用列表页快速搜索
-    help: 
-    description: 
-  filterable:
-    label: 列表页过滤器默认字段
-    help: 
-    description: 
-  show_as_qr:
-    label: 显示为二维码
-    help: 
-    description: 
   visible_on:
     label: 显示公式
     help: 根据公式判断是否显示字段
-    description: 
-  inlineHelpText:
-    label: 提示文本
-    help: 
-    description: 
-  description:
-    label: 描述
-    help: 
     description: 
   write_requires_master_read:
     label: 当用户对主表记录有读取权限时对子表记录可以增删改
     help: >-
       设置主记录上创建、编辑或删除子记录所需的最低访问级别。此字段仅适用于·主表/子表·字段类型。勾选表示允许具有'读取'访问权限的用户创建、编辑或删除子记录。反之表示允许具有'读取/写入'访问权限的用户创建、编辑或删除子记录的权限。
     description: 
-  amis:
-    label: Amis 配置
-    help: 使用 amis 配置字段显示样式
-  enable_enhanced_lookup:
-    label: 弹出选择
-    help: 被其他字段引用时，使用弹出框选择记录。
-    description: 
-  is_customize:
-    label: 自定义
 groups:
-  external_data_source: 外部数据源
   advanced: 高级
   ui: 表单
 listviews:
@@ -379,7 +450,11 @@ actions:
     label: 重算公式值
   recomputeSummaryValues:
     label: 批量重算汇总值
+  standard_new:
+    label: 新建
 CustomLabels:
+  object_fields__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
+  object_fields__error_name_max_length: API 名称长度不能大于20个字符
   object_fields_field_allowedValues: 允许的值
   object_fields_field_filters: 过滤器
   object_fields_field_filters.$: 
@@ -387,9 +462,7 @@ CustomLabels:
   object_fields_field_filters_$_operation: 运算符
   object_fields_field_filters_$_value: 值
   object_fields_field_summary_filters.$: 
-  object_fields_group_reference: 相关表、主表/子表
-  object_fields_group_number: 金额、数值
   object_fields_group_formula: 公式
+  object_fields_group_number: 金额、数值
+  object_fields_group_reference: 相关表、主表/子表
   object_fields_group_summary: 累计汇总
-  object_fields__error_name_invalid_format: API 名称只能包含小写字母、数字，必须以字母开头，不能以下划线字符结尾或包含两个连续的下划线字符
-  object_fields__error_name_max_length: API 名称长度不能大于20个字符
