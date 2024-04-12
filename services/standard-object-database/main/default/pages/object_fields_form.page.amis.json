@@ -48,7 +48,7 @@
             }
         },
         "initApiAdaptor": "const defaultValue_field_value = payload.data.defaultValue;\nif (defaultValue_field_value && _.isString(defaultValue_field_value) && defaultValue_field_value.indexOf('{') > -1) {\n  payload.data.defaultValue_formula = defaultValue_field_value;\n  delete payload.data.defaultValue;\n}\n\nif (recordId) {\n  var data = payload.data;\n  if (data) {\n    data.filters = window.amisConvert.filtersToConditions(data.filters || []);\n  }\n  payload.data = data;\n}\nreturn payload;",
-        "apiRequestAdaptor": "if (formData.defaultValue_formula) {\n  formData.defaultValue = formData.defaultValue_formula\n}\nif (formData.filters) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData.filters);\n}\n__saveData = JSON.stringify(JSON.stringify(formData));\napi.data = { query: query.replace('{__saveData}', __saveData) };\napi.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert');",
+        "apiRequestAdaptor": "if (formData.defaultValue_formula) {\n  formData.defaultValue = formData.defaultValue_formula\n}\nif ((formData.defaultValue_formula === \"\" || _.isNil(formData.defaultValue_formula)) && (formData.defaultValue === \"\" || _.isNil(formData.defaultValue))) { \n  // 清空默认值公式编辑器中内容后，如果没有再给defaultValue设置值，则要把defaultValue值清空\n  formData.defaultValue = null;\n}\ndelete formData.defaultValue_formula;\nif (formData.filters) {\n  formData.filters = window.amisConvert.conditionsToFilters(formData.filters);\n}\n__saveData = JSON.stringify(JSON.stringify(formData));\napi.data = { query: query.replace('{__saveData}', __saveData) };\napi.data.query = api.data.query.replace('object_fields__update', 'object_fields__upsert');",
         "submitSuccActions": [{
                 "actionType": "custom",
                 "script": "setTimeout(function(){doAction({'actionType': 'setValue','componentId': 'form_object_fields','args': {'value': {'sort_no': event.data.sort_no + 10}}})}, 300)"
@@ -199,6 +199,6 @@
     "data": {
         "context": {}
     },
-    "id": "steedos_object_fields_service",
-    "name": "object_fields_form"
+    "name": "object_fields_form",
+    "id": "steedos_object_fields_service"
 }
