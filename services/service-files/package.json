@@ -13,7 +13,8 @@
     "file-type": "16.5.4",
     "formidable": "2.0.1",
     "mkdirp": "^1.0.4",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "mime-types": "2.1.35"
   },
   "gitHead": "3ff30ac23eea83fafd51df11bf5d818e73c005ed"
 }
