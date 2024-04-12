@@ -1,8 +1,8 @@
 /*
  * @Author: sunhaolin@hotoa.com
  * @Date: 2022-06-08 09:38:56
- * @LastEditors: 孙浩林 sunhaolin@steedos.com
- * @LastEditTime: 2024-04-09 17:24:34
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2024-04-12 18:00:45
  * @Description: 
  */
 "use strict";
@@ -18,7 +18,7 @@ const os = require('os')
 const fs = require('fs')
 const hexoid = require('hexoid')
 const toHexoId = hexoid(25)
-const FileType = require('file-type');
+var mime = require('mime-types')
 const {
 	getCollection,
 	File,
@@ -143,8 +143,7 @@ module.exports = {
 							const DB_COLLECTION_NAME = `cfs.${collectionName}.filerecord`;
 							const collection = await getCollection(DB_COLLECTION_NAME);
 
-							const mimeInfo = await FileType.fromFile(tempFilepath)
-							const mimetype = mimeInfo.mime
+							const mimetype = mime.lookup(filename)
 							const newFile = new File({
 								name: filename,
 								size: fileStats.size,
