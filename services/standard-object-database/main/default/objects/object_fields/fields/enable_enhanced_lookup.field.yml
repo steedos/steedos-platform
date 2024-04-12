@@ -1,4 +1,5 @@
 name: enable_enhanced_lookup
+defaultValue: true
 group: ui
 hidden: false
 label: Enable Enhanced Lookup

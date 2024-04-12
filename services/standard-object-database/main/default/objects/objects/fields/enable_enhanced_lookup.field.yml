@@ -8,3 +8,4 @@ inlineHelpText: >-
 label: Enable Enhanced Lookup
 sort_no: 230
 type: boolean
+visible_on: '{{false}}'
