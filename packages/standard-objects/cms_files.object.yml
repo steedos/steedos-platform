@@ -206,7 +206,8 @@ actions:
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('parent', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;"
+                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('parent', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;",
+                                "adaptor": "if(payload.errors && payload.errors.length > 0){payload = {status: 500,msg: payload.errors[0].errorMessage}};return payload;"
                             },
                             "onEvent": {
                                 "success": {
@@ -239,6 +240,19 @@ actions:
                                           }
                                         }
                                     ]
+                                },
+                                "fail": {
+                                "actions": [
+                                  {
+                                    "actionType": "custom",
+                                    "script": "doAction({'actionType': 'toast', 'args': {msgType: 'error', position: 'top-right', closeButton: true, showIcon: true, msg: context.state.error}});"
+                                  },
+                                    {
+                                        "componentId": "u:a58d02614e04",
+                                        "args": {},
+                                        "actionType": "clear"
+                                    }
+                                  ]
                                 }
                             }
                         }
@@ -296,7 +310,8 @@ actions:
                                 "method": "post",
                                 "messages": {},
                                 "dataType": "form-data",
-                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;"
+                                "requestAdaptor": "const superData = (typeof context != 'undefined') ? context : api.body; api.data.append('record_id', superData._master.recordId);api.data.append('object_name', superData._master.objectName); api.data.append('space', superData.global.spaceId);api.data.append('owner', superData.global.userId);api.data.append('owner_name', superData.global.user.name);return api;",
+                                "adaptor": "if(payload.errors && payload.errors.length > 0){payload = {status: 500,msg: payload.errors[0].errorMessage}};return payload;"
                             },
                             "onEvent": {
                                 "success": {
@@ -325,6 +340,19 @@ actions:
                                           "script": "doAction({\n  componentId: `steedos-record-related-list-${context.props.data.objectName}`,\n  actionType: \"setValue\",\n  args: {\n    value: { \"$count\": undefined }\n  }\n}); SteedosUI.getRef(context.props.data.scopeId).parent?.getComponentById(`listview_${context.props.data.objectName}`).handleAction({}, { actionType: 'reload'})"
                                         }
                                     ]
+                                },
+                                "fail": {
+                                "actions": [
+                                    {
+                                    "actionType": "custom",
+                                    "script": "doAction({'actionType': 'toast', 'args': {msgType: 'error', position: 'top-right', closeButton: true, showIcon: true, msg: event.data.error.message}});"
+                                  },
+                                    {
+                                        "componentId": "u:a58d02614e04",
+                                        "args": {},
+                                        "actionType": "clear"
+                                    }
+                                  ]
                                 }
                             }
                         }
